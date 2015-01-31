@@ -1,11 +1,20 @@
 crimeanfederaluniversity@gmail.com
 Pass: 777qwe777
 
-https://hosting.parking.ru
-Login: crimeanfeder
-Pass: 777qwe777
-
 https://github.com/crimeanfederaluniversity/Projects
 Repository URL:https://github.com/crimeanfederaluniversity/Projects.git
 Login: crimeanfederaluniversity
 Pass: 777qwe777
+
+
+
+
+https://hosting.parking.ru
+Login: crimeanfeder
+Pass: 777qwe777
+Адрес сервера базы данных: sql10-12-rus.corp.parking.ru
+База данных: crimeanfeder_3 (данные 5 Mb, лог  1 Mb)
+Логин: crimeanfeder_3
+Пароль: 777qwe777
+Строка соединения: Data Source=sql10-12-rus.corp.parking.ru;Initial Catalog=crimeanfeder_3;User ID=crimeanfeder_3;Password=777qwe777
+
