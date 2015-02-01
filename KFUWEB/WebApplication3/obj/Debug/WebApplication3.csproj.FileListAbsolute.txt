@@ -1,0 +1,17 @@
+c:\users\кирюха\documents\visual studio 2012\Projects\WebApplication3\WebApplication3\bin\WebApplication3.dll
+c:\users\кирюха\documents\visual studio 2012\Projects\WebApplication3\WebApplication3\bin\WebApplication3.pdb
+c:\users\кирюха\documents\visual studio 2012\Projects\WebApplication3\WebApplication3\obj\Debug\WebApplication3.csprojResolveAssemblyReference.cache
+c:\users\кирюха\documents\visual studio 2012\Projects\WebApplication3\WebApplication3\obj\Debug\WebApplication3.dll
+c:\users\кирюха\documents\visual studio 2012\Projects\WebApplication3\WebApplication3\obj\Debug\WebApplication3.pdb
+C:\KPI\WebApplication3\WebApplication3\bin\WebApplication3.dll.config
+C:\KPI\WebApplication3\WebApplication3\bin\WebApplication3.dll
+C:\KPI\WebApplication3\WebApplication3\bin\WebApplication3.pdb
+C:\KPI\WebApplication3\WebApplication3\obj\Debug\WebApplication3.csprojResolveAssemblyReference.cache
+C:\KPI\WebApplication3\WebApplication3\obj\Debug\WebApplication3.dll
+C:\KPI\WebApplication3\WebApplication3\obj\Debug\WebApplication3.pdb
+D:\SiV@S\YandexDisk\Отдел Автоматизации КФУ\KPI\WebApplication3\WebApplication3\bin\WebApplication3.dll.config
+D:\SiV@S\YandexDisk\Отдел Автоматизации КФУ\KPI\WebApplication3\WebApplication3\bin\WebApplication3.dll
+D:\SiV@S\YandexDisk\Отдел Автоматизации КФУ\KPI\WebApplication3\WebApplication3\bin\WebApplication3.pdb
+D:\SiV@S\YandexDisk\Отдел Автоматизации КФУ\KPI\WebApplication3\WebApplication3\obj\Debug\WebApplication3.csprojResolveAssemblyReference.cache
+D:\SiV@S\YandexDisk\Отдел Автоматизации КФУ\KPI\WebApplication3\WebApplication3\obj\Debug\WebApplication3.dll
+D:\SiV@S\YandexDisk\Отдел Автоматизации КФУ\KPI\WebApplication3\WebApplication3\obj\Debug\WebApplication3.pdb
