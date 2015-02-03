@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="crimeanfeder_5" Class="KPIWebDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=sql10-12-rus.corp.parking.ru;Initial Catalog=crimeanfeder_5;Persist Security Info=True;User ID=crimeanfeder_5" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.UsersTable" Member="UsersTables">
+    <Type Name="UsersTable">
+      <Column Name="UsersTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Login" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="FK_RolesTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FK_FirstLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_SecondLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_ThirdLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_FourthLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_FifthLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="UsersTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTables" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedBasicParametersTable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ReportArchiveTable" Member="ReportArchiveTables">
+    <Type Name="ReportArchiveTable">
+      <Column Name="ReportArchiveTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Calculeted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Sent" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SentDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="RecipientConfirmed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="StartDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DateToSend" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="ReportArchiveTable_ReportAndRolesMapping" Member="ReportAndRolesMappings" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="ReportAndRolesMapping" />
+      <Association Name="ReportArchiveTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTables" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="CollectedBasicParametersTable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ReportAndRolesMapping" Member="ReportAndRolesMappings">
+    <Type Name="ReportAndRolesMapping">
+      <Column Name="ReportAndRolesMappingID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FK_RolesTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FK_ReportArchiveTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ReportArchiveTable_ReportAndRolesMapping" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BasicParametersTable" Member="BasicParametersTables">
+    <Type Name="BasicParametersTable">
+      <Column Name="BasicParametersTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="AbbreviationEN" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="AbbreviationRU" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Measure" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="BasicParametersTable_BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTables" ThisKey="BasicParametersTableID" OtherKey="FK_BasicParametersTable" Type="BasicParametersAndRolesMappingTable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTables">
+    <Type Name="BasicParametersAndRolesMappingTable">
+      <Column Name="BasicParametersAndRolesMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FK_RolesTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FK_BasicParametersTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="BasicParametersTable_BasicParametersAndRolesMappingTable" Member="BasicParametersTable" ThisKey="FK_BasicParametersTable" OtherKey="BasicParametersTableID" Type="BasicParametersTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CollectedBasicParametersTable" Member="CollectedBasicParametersTables">
+    <Type Name="CollectedBasicParametersTable">
+      <Column Name="CollectedBasicParametersTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FK_ReportArchiveTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LastChangeDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="SavedDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UserIP" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="CollectedValue" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="FK_BasicParametersTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="ReportArchiveTable_CollectedBasicParametersTable" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
+      <Association Name="UsersTable_CollectedBasicParametersTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

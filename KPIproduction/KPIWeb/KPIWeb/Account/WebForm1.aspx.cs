@@ -16,15 +16,21 @@ namespace KPIWeb.Account
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-           Users user = (Users)Session["sessionKPI"];
-            Label1.Text = "Логин " + user.login.ToString();
-            Label2.Text = "Пароль" + user.password.ToString();
-            Label3.Text = "Актив " + user.active.ToString();
-            Label4.Text = "ID " + user.id_users.ToString();
-            Label5.Text = "fk_fifth_stage " + user.fk_fifth_stage.ToString();
-            Label6.Text = "fk_second_stage" + user.fk_second_stage.ToString();
-            Label7.Text = "fk_third_stage" + user.fk_third_stage.ToString();
-
+            UsersTable user = (UsersTable)Session["user"];
+            if (user == null)
+            {
+                Response.Redirect("Login.aspx");
+            }
+            else
+            {
+                Label1.Text = "Логин " + user.Login;
+                Label2.Text = "Пароль" + user.Password;
+                Label3.Text = "Актив " + user.Active;
+                Label4.Text = "ID " + user.UsersTableID.ToString();
+                Label5.Text = "FK_FirstLevelSubdivisionTable " + user.FK_FirstLevelSubdivisionTable.ToString();
+                Label6.Text = "FK_SecondLevelSubdivisionTable " + user.FK_SecondLevelSubdivisionTable.ToString();
+                Label7.Text = "FK_ThirdLevelSubdivisionTable " + user.FK_ThirdLevelSubdivisionTable.ToString();
+            }
 
         }
     }
