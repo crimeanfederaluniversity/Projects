@@ -4,60 +4,39 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Сводная таблица показателей</title>
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
+        <div>
+            <h2>Ввведите значения в таблицу показателей и нажмите кнопку "Сохранить" внизу формы</h2>
+            <br />
+            <asp:GridView ID="GridviewCollectedBasicParameters" runat="server" ShowFooter="true" AutoGenerateColumns="false">
+                <Columns>
 
-    <asp:GridView ID="gv1" runat="server" AutoGenerateColumns="False" 
-                    OnRowEditing="gv1_RowEditing" 
-                    OnRowUpdating="gv1_RowUpdating" CellPadding="4" ForeColor="#333333">
-                    <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                    <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
-                    <Columns>
-                    <asp:CommandField ShowEditButton="True" />
-                        <asp:BoundField DataField="BasicParametersTableID" HeaderText="BasicParametersTableID" InsertVisible="False" 
-                            ReadOnly="True" SortExpression="BasicParametersTableID" />
+                    <asp:BoundField DataField="CurrentReportArchiveID" HeaderText="Current Report ID" Visible="false" />
+                    <asp:BoundField DataField="BasicParametersTableID" HeaderText="Basic Parameter ID" Visible="false" />
 
-                        <asp:TemplateField HeaderText="sno" InsertVisible="False" SortExpression="sno">
-                            <EditItemTemplate>
-                                <asp:TextBox ID="TextBox6" runat="server" Visible='<%# IsInEditMode %>' Text='<%# Bind("BasicParametersTableID") %>'></asp:TextBox>
-                            </EditItemTemplate>
-                            <ItemTemplate>
-                                <asp:Label ID="Label6" runat="server" Visible='<%# !(bool) IsInEditMode %>' Text='<%# Bind("BasicParametersTableID") %>'></asp:Label>
-                                <asp:TextBox ID="TextBox6" runat="server" Visible='<%# IsInEditMode %>' Text='<%# Bind("BasicParametersTableID") %>'></asp:TextBox>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField HeaderText="parameters" SortExpression="parameters">
-                            <EditItemTemplate>
-                                <asp:TextBox ID="TextBox2" runat="server" Visible='<%# IsInEditMode %>' Text='<%# Bind("Name") %>'></asp:TextBox>
-                            </EditItemTemplate>
-                            <ItemTemplate>
-                                <asp:Label ID="Label2" runat="server" Visible='<%# !(bool) IsInEditMode %>' Text='<%# Bind("Name") %>'></asp:Label>
-                                <asp:TextBox ID="TextBox2" runat="server" Visible='<%# IsInEditMode %>' Text='<%# Bind("Name") %>'></asp:TextBox>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField HeaderText="unit" SortExpression="unit">
-                            <EditItemTemplate>
-                                <asp:TextBox ID="TextBox3" runat="server" Visible='<%# IsInEditMode %>' Text='<%# Bind("CollectedValue") %>'></asp:TextBox>
-                            </EditItemTemplate>
-                            <ItemTemplate>
-                                <asp:Label ID="Label3" runat="server" Visible='<%# !(bool) IsInEditMode %>' Text='<%# Bind("CollectedValue") %>'></asp:Label>
-                                <asp:TextBox ID="TextBox3" runat="server" Visible='<%# IsInEditMode %>' Text='<%# Bind("CollectedValue") %>'></asp:TextBox>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField HeaderText="spval" SortExpression="spval">
-                        </asp:TemplateField>
-                    </Columns>
-                    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
-                    <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-                    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                    <EditRowStyle BackColor="#999999" />
-                    <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
-                </asp:GridView>
+                    <asp:TemplateField Visible="false" InsertVisible="False" SortExpression="sno">
+                        <ItemTemplate>
+                            <asp:Label ID="LabelCollectedBasicParametersTableID" runat="server" Visible="false" Text='<%# Bind("CollectedBasicParametersTableID") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
-    </div>
+                    <asp:BoundField DataField="Name" HeaderText="Название показателя" />
+
+                    <asp:TemplateField HeaderText="Значение">
+                        <ItemTemplate>
+                            <asp:TextBox ID="TextBoxCollectedValue" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("CollectedValue") %>'></asp:TextBox>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                </Columns>
+            </asp:GridView>
+            <br />
+            <asp:Button ID="ButtonSave" Width="100%" runat="server" Text="Сохранить" OnClick="ButtonSave_Click" />
+
+        </div>
     </form>
 </body>
 </html>

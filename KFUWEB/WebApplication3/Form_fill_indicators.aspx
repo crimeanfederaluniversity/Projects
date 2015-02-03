@@ -34,7 +34,7 @@
         
 
         
-        < <asp:GridView ID="GridView1" runat="server"
+        <asp:GridView ID="GridView1" runat="server"
             DataSourceID="SqlDataSource4" DataKeyNames="name" AutoGenerateColumns="False"
             Font-Names="Trebuchet MS" Font-Size="Small" ForeColor="#333333" GridLines="None"
             RowStyle-CssClass="Row" AutoGenerateEditButton="True">
