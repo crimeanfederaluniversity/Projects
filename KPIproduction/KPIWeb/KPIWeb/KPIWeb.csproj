@@ -38,6 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>Support\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
@@ -207,6 +210,7 @@
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
     <Content Include="StatisticsDepartment\ReportViewer.aspx" />
+    <Content Include="StatisticsDepartment\StastisticsHomePage.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -306,6 +310,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>KPIWeb.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Logging\LogHandler.cs" />
+    <Compile Include="Logging\LogWriter.cs" />
     <Compile Include="MessageBox.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -353,6 +359,14 @@
     <Compile Include="StatisticsDepartment\ReportViewer.aspx.designer.cs">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
     </Compile>
+    <Compile Include="StatisticsDepartment\StastisticsHomePage.aspx.cs">
+      <DependentUpon>StastisticsHomePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StatisticsDepartment\StastisticsHomePage.aspx.designer.cs">
+      <DependentUpon>StastisticsHomePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Role.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

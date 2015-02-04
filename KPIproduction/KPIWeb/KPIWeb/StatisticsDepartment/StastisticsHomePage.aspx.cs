@@ -5,18 +5,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace KPIWeb
+namespace KPIWeb.StatisticsDepartment
 {
-    public partial class _Default : Page
+    public partial class StastisticsHomePage : System.Web.UI.Page
     {
-        UsersTable user;
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            user = (UsersTable)Session["user"];
 
-            if (user == null)
-                Response.Redirect("~/Account/Login.aspx");
         }
     }
 }

@@ -202,3 +202,4 @@ C:\Users\V\Desktop\Project\trunk\KPIproduction\KPIWeb\KPIWeb\bin\Microsoft.Owin.
 C:\Users\V\Desktop\Project\trunk\KPIproduction\KPIWeb\KPIWeb\obj\Debug\KPIWeb.csprojResolveAssemblyReference.cache
 C:\Users\V\Desktop\Project\trunk\KPIproduction\KPIWeb\KPIWeb\obj\Debug\KPIWeb.dll
 C:\Users\V\Desktop\Project\trunk\KPIproduction\KPIWeb\KPIWeb\obj\Debug\KPIWeb.pdb
+c:\Projects\trunk\KPIproduction\KPIWeb\KPIWeb\bin\log4net.dll

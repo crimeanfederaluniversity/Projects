@@ -16,58 +16,58 @@ namespace KPIWeb.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-                /*
-                RegisterHyperLink.NavigateUrl = "Register";
-                //OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
-                var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
-                if (!String.IsNullOrEmpty(returnUrl))
-                {
-                    RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
-                }
-                */
+            //
         }
 
         protected void LogIn(object sender, EventArgs e)
         {
-            if (IsValid)
+            try
             {
-                KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-                UsersTable user = (from usersTables in KPIWebDataContext.UsersTables
-                                   where usersTables.Login == UserName.Text &&
-                                   usersTables.Password == Password.Text
-                                   select usersTables).FirstOrDefault();
-
-                if (user != null)
+                if (IsValid)
                 {
-                    Session["user"] = user;
+                    KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+                    UsersTable user = (from usersTables in KPIWebDataContext.UsersTables
+                                       where usersTables.Login == UserName.Text &&
+                                       usersTables.Password == Password.Text
+                                       select usersTables).FirstOrDefault();
 
-                    if (user.FK_RolesTable == 13)
+                    if (user != null)
                     {
-                        List<int> ReportArchiveIDList = (from reportArchiveTables in KPIWebDataContext.ReportArchiveTables
-                                                         join reportAndRolesMappings in KPIWebDataContext.ReportAndRolesMappings on reportArchiveTables.ReportArchiveTableID equals reportAndRolesMappings.FK_ReportArchiveTable
-                                                         where reportAndRolesMappings.FK_RolesTable == user.FK_RolesTable &&
-                                                         reportArchiveTables.Active == true &&
-                                                         reportArchiveTables.StartDateTime < DateTime.Now &&
-                                                         reportArchiveTables.EndDateTime > DateTime.Now
-                                                         select reportArchiveTables.ReportArchiveTableID).ToList();
+                        Session["user"] = user;
 
-                        if (ReportArchiveIDList != null && ReportArchiveIDList.Count > 0)
+                        if (user.FK_RolesTable == 13)
                         {
-                            Response.Redirect("~/Reports/FillingTheReport.aspx");
-                        }
-                        else
-                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('В настоящий момент для Вас нет активных отчетов для заполнения.');", true);
-                    }
+                            List<int> ReportArchiveIDList = (from reportArchiveTables in KPIWebDataContext.ReportArchiveTables
+                                                             join reportAndRolesMappings in KPIWebDataContext.ReportAndRolesMappings on reportArchiveTables.ReportArchiveTableID equals reportAndRolesMappings.FK_ReportArchiveTable
+                                                             where reportAndRolesMappings.FK_RolesTable == user.FK_RolesTable &&
+                                                             reportArchiveTables.Active == true &&
+                                                             reportArchiveTables.StartDateTime < DateTime.Now &&
+                                                             reportArchiveTables.EndDateTime > DateTime.Now
+                                                             select reportArchiveTables.ReportArchiveTableID).ToList();
 
-                    if (user.FK_RolesTable == 16)
-                        Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");
+                            if (ReportArchiveIDList != null && ReportArchiveIDList.Count > 0)
+                            {
+                                Response.Redirect("~/Reports/FillingTheReport.aspx");
+                            }
+                            else
+                                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('В настоящий момент для Вас нет активных отчетов для заполнения.');", true);
+                        }
+
+                        if (user.FK_RolesTable == 16)
+                            Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");
+                    }
+                    else
+                    {
+                        FailureText.Text = "Неверное имя пользователя или пароль.";
+                        ErrorMessage.Visible = true;
+                    }
                 }
-                else
-                {
-                    FailureText.Text = "Неверное имя пользователя или пароль.";
-                    ErrorMessage.Visible = true;
-                }
+            }
+            catch(Exception ex)
+            {
+                LogHandler.LogWriter.WriteError(ex);
+                //LogHandler.LogWriter.WriteError(ex, "Error message");
+                //LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Info message");
             }
         }
     }

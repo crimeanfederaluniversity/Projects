@@ -31,16 +31,6 @@ namespace KPIWeb.StatisticsDepartment
             }
         }
 
-        protected void SOGridView_RowCommand(object sender,
-  GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "Select")
-            {
-                // Retrieve the CommandArgument property
-                int cellvalue = Convert.ToInt32(e.CommandArgument); // or convert to other datatype
-            }
-        }
-
         protected void ButtonEditReport_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -50,7 +40,6 @@ namespace KPIWeb.StatisticsDepartment
                 Session["ReportArchiveTableID"] = reportArchiveTableID;
                 Response.Redirect("~/Reports/EditReport.aspx");
             }
-            int i = 0;
         }
 
         protected void GenerateReport_Click(object sender, EventArgs e)

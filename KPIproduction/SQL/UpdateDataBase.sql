@@ -25,7 +25,8 @@ GO
 CREATE TABLE [dbo].[RolesTable](
 	[RolesTableID] [int] IDENTITY(1,1) NOT NULL,
 	[Active] [bit] NOT NULL,
-	[Name] [varchar](1000) NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[Role] [int] NOT NULL,
 CONSTRAINT [PK__RolesTable] PRIMARY KEY CLUSTERED 
 (
 	[RolesTableID] ASC
