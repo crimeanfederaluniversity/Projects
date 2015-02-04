@@ -41,19 +41,27 @@ namespace KPIWeb.Account
                 if (user != null)
                 {
                     Session["user"] = user;
-                    List<int> ReportArchiveIDList = (from reportArchiveTables in KPIWebDataContext.ReportArchiveTables
-                                                     join reportAndRolesMappings in KPIWebDataContext.ReportAndRolesMappings on reportArchiveTables.ReportArchiveTableID equals reportAndRolesMappings.FK_ReportArchiveTable
-                                                     where reportAndRolesMappings.FK_RolesTable == user.FK_RolesTable &&
-                                                     reportArchiveTables.Active == true &&
-                                                     reportArchiveTables.StartDateTime < DateTime.Now &&
-                                                     reportArchiveTables.EndDateTime > DateTime.Now
-                                                     select reportArchiveTables.ReportArchiveTableID).ToList();
 
-                    if (ReportArchiveIDList != null && ReportArchiveIDList.Count > 0)
+                    if (user.FK_RolesTable == 13)
                     {
-                        Response.Redirect("~/Reports/FillingTheReport.aspx");
+                        List<int> ReportArchiveIDList = (from reportArchiveTables in KPIWebDataContext.ReportArchiveTables
+                                                         join reportAndRolesMappings in KPIWebDataContext.ReportAndRolesMappings on reportArchiveTables.ReportArchiveTableID equals reportAndRolesMappings.FK_ReportArchiveTable
+                                                         where reportAndRolesMappings.FK_RolesTable == user.FK_RolesTable &&
+                                                         reportArchiveTables.Active == true &&
+                                                         reportArchiveTables.StartDateTime < DateTime.Now &&
+                                                         reportArchiveTables.EndDateTime > DateTime.Now
+                                                         select reportArchiveTables.ReportArchiveTableID).ToList();
+
+                        if (ReportArchiveIDList != null && ReportArchiveIDList.Count > 0)
+                        {
+                            Response.Redirect("~/Reports/FillingTheReport.aspx");
+                        }
+                        else
+                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('В настоящий момент для Вас нет активных отчетов для заполнения.');", true);
                     }
-                    //Response.Redirect("WebForm1.aspx");
+
+                    if (user.FK_RolesTable == 16)
+                        Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");
                 }
                 else
                 {

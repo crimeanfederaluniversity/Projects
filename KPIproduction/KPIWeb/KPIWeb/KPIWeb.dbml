@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="crimeanfeder_5" Class="KPIWebDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=V-PC\DATABASE_1;Initial Catalog=crimeanfeder_5;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=sql10-12-rus.corp.parking.ru;Initial Catalog=crimeanfeder_5;User ID=crimeanfeder_5" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.UsersTable" Member="UsersTables">
     <Type Name="UsersTable">
       <Column Name="UsersTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -17,6 +17,7 @@
       <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="RolesTable_UsersTable" Member="RolesTable" ThisKey="FK_RolesTable" OtherKey="RolesTableID" Type="RolesTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ReportArchiveTable" Member="ReportArchiveTables">
@@ -42,6 +43,7 @@
       <Column Name="FK_RolesTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="FK_ReportArchiveTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="ReportArchiveTable_ReportAndRolesMapping" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
+      <Association Name="RolesTable_ReportAndRolesMapping" Member="RolesTable" ThisKey="FK_RolesTable" OtherKey="RolesTableID" Type="RolesTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.BasicParametersTable" Member="BasicParametersTables">
@@ -62,6 +64,7 @@
       <Column Name="FK_RolesTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="FK_BasicParametersTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="BasicParametersTable_BasicParametersAndRolesMappingTable" Member="BasicParametersTable" ThisKey="FK_BasicParametersTable" OtherKey="BasicParametersTableID" Type="BasicParametersTable" IsForeignKey="true" />
+      <Association Name="RolesTable_BasicParametersAndRolesMappingTable" Member="RolesTable" ThisKey="FK_RolesTable" OtherKey="RolesTableID" Type="RolesTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CollectedBasicParametersTable" Member="CollectedBasicParametersTables">
@@ -107,6 +110,25 @@
       <Column Name="FK_SecondLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RolesTable" Member="RolesTables">
+    <Type Name="RolesTable">
+      <Column Name="RolesTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Association Name="RolesTable_UsersTable" Member="UsersTables" ThisKey="RolesTableID" OtherKey="FK_RolesTable" Type="UsersTable" />
+      <Association Name="RolesTable_ReportAndRolesMapping" Member="ReportAndRolesMappings" ThisKey="RolesTableID" OtherKey="FK_RolesTable" Type="ReportAndRolesMapping" />
+      <Association Name="RolesTable_BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTables" ThisKey="RolesTableID" OtherKey="FK_RolesTable" Type="BasicParametersAndRolesMappingTable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IndicatorsTable" Member="IndicatorsTables">
+    <Type Name="IndicatorsTable">
+      <Column Name="IndicatorsTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="Measure" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Formula" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

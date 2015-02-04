@@ -341,3 +341,23 @@ GO
 
 ALTER TABLE [dbo].[ReportAndRolesMapping] CHECK CONSTRAINT [FK_ReportAndRolesMapping_ReportArchiveTable]
 GO
+
+
+
+--------------------------------------------------------------
+-- Evgeniy Potapov
+-- 04.02.2015
+-- Add Table [ReportAndRolesMapping]
+--------------------------------------------------------------
+CREATE TABLE [dbo].[IndicatorsTable](
+	[IndicatorsTableID] [int] IDENTITY(1,1) NOT NULL,
+	[Active] [bit] NULL,
+	[Name] [varchar](1000) NOT NULL,
+	[Measure] [varchar](10) NOT NULL,
+	[Formula] [varchar](500) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IndicatorsTableID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO

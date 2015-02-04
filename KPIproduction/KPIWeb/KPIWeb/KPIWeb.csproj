@@ -170,7 +170,9 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Reports\EditReport.aspx" />
     <Content Include="Reports\FillingTheReport.aspx" />
+    <Content Include="Reports\GenerateReport.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -204,6 +206,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
+    <Content Include="StatisticsDepartment\ReportViewer.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -279,6 +282,7 @@
     <Compile Include="AutomationDepartment\AddLevel.aspx.designer.cs">
       <DependentUpon>AddLevel.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CalculateIndicator.cs" />
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -305,12 +309,26 @@
     <Compile Include="MessageBox.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\EditReport.aspx.cs">
+      <DependentUpon>EditReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\EditReport.aspx.designer.cs">
+      <DependentUpon>EditReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\FillingTheReport.aspx.cs">
       <DependentUpon>FillingTheReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Reports\FillingTheReport.aspx.designer.cs">
       <DependentUpon>FillingTheReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GenerateReport.aspx.cs">
+      <DependentUpon>GenerateReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GenerateReport.aspx.designer.cs">
+      <DependentUpon>GenerateReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -328,6 +346,13 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Account\Users.cs" />
+    <Compile Include="StatisticsDepartment\ReportViewer.aspx.cs">
+      <DependentUpon>ReportViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StatisticsDepartment\ReportViewer.aspx.designer.cs">
+      <DependentUpon>ReportViewer.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

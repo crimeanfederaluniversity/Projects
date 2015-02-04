@@ -77,8 +77,8 @@ namespace KPIWeb.Reports
                                                                                  where item.FK_BasicParametersTable == basicParameter.BasicParametersTableID
                                                                                  select item).FirstOrDefault();
 
-                        DataRow dataRow = null;
-                        dataRow = dataTable.NewRow();
+                        DataRow dataRow = dataTable.NewRow();
+
                         dataRow["CurrentReportArchiveID"] = currentReportArchiveID;
                         dataRow["BasicParametersTableID"] = basicParameter.BasicParametersTableID;
                         dataRow["Name"] = basicParameter.Name;

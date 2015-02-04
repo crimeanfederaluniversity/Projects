@@ -17,7 +17,7 @@
                     <asp:BoundField DataField="CurrentReportArchiveID" HeaderText="Current Report ID" Visible="false" />
                     <asp:BoundField DataField="BasicParametersTableID" HeaderText="Basic Parameter ID" Visible="false" />
 
-                    <asp:TemplateField Visible="false" InsertVisible="False" SortExpression="sno">
+                    <asp:TemplateField Visible="false" InsertVisible="False">
                         <ItemTemplate>
                             <asp:Label ID="LabelCollectedBasicParametersTableID" runat="server" Visible="false" Text='<%# Bind("CollectedBasicParametersTableID") %>'></asp:Label>
                         </ItemTemplate>
