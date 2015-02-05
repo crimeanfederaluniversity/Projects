@@ -9,13 +9,53 @@
     <div class="form-horizontal">
         <h4>Create a new account.</h4>
         <hr />
+
         <asp:ValidationSummary runat="server" CssClass="text-danger" />
+
+
+
+                <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Choose University</asp:Label>
+            <div class="col-md-10">               
+                <asp:DropDownList ID="DropDownList1" runat="server" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged"> </asp:DropDownList>
+            </div>
+        </div>
+         <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Choose Faculty</asp:Label>
+            <div class="col-md-10">               
+                <asp:DropDownList ID="DropDownList2" runat="server" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="DropDownList2_SelectedIndexChanged"> </asp:DropDownList>
+            </div>
+        </div>
+         <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Choose кафедра)</asp:Label>
+            <div class="col-md-10">               
+                <asp:DropDownList ID="DropDownList3" CssClass="form-control" runat="server"  AutoPostBack="True"> </asp:DropDownList>
+            </div>
+        </div>
+         <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Choose Role</asp:Label>
+            <div class="col-md-10">               
+                <asp:DropDownList ID="DropDownList4" CssClass="form-control" runat="server"  AutoPostBack="True" > </asp:DropDownList>
+            </div>
+        </div>
+
+
+
+
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label">User name</asp:Label>
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="UserName" CssClass="form-control" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName"
                     CssClass="text-danger" ErrorMessage="The user name field is required." />
+            </div>
+        </div>
+         <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Email</asp:Label>
+            <div class="col-md-10">
+                <asp:TextBox runat="server" ID="Email" CssClass="form-control" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
+                    CssClass="text-danger" ErrorMessage="The Email is required." />
             </div>
         </div>
         <div class="form-group">
@@ -28,6 +68,7 @@
         </div>
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Confirm password</asp:Label>
+
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="ConfirmPassword" TextMode="Password" CssClass="form-control" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="ConfirmPassword"
@@ -36,6 +77,9 @@
                     CssClass="text-danger" Display="Dynamic" ErrorMessage="The password and confirmation password do not match." />
             </div>
         </div>
+       
+      
+   
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <asp:Button runat="server" OnClick="CreateUser_Click" Text="Register" CssClass="btn btn-default" />
