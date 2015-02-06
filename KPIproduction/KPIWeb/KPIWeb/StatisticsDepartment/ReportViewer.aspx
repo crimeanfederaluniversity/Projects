@@ -10,7 +10,7 @@
     <form id="form1" runat="server">
         <div>
             <h1>Список активных кампаний</h1>
-            <asp:GridView ID="GridviewActiveCampaign" runat="server" ShowFooter="true" AutoGenerateColumns="false">
+            <asp:GridView ID="GridviewActiveCampaign" runat="server" ShowFooter="True"  AutoGenerateColumns="False" OnSelectedIndexChanged="GridviewActiveCampaign_SelectedIndexChanged">
                 <Columns>
 
                     <asp:BoundField DataField="ReportArchiveTableID" HeaderText="ID отчета" />
@@ -30,11 +30,16 @@
                             <asp:Button ID="ButtonEditReport" runat="server" CommandName="Select" Text="Редактировать" Width="75px" CommandArgument='<%# Eval("ReportArchiveTableID") %>' OnClick="ButtonEditReport_Click"/>
                         </ItemTemplate>
                     </asp:TemplateField>
+                    
+                     <asp:TemplateField HeaderText="Сгенерировать отчет">
+                        <ItemTemplate>
+                            <asp:Label ID="LabelReportArchiveTableID2" runat="server" Text='<%# Bind("ReportArchiveTableID") %>' Visible="false"></asp:Label>
+                            <asp:Button ID="ButtonEditReport2" runat="server" CommandName="Select" Text="Сгенерировать" Width="75px" CommandArgument='<%# Eval("ReportArchiveTableID") %>' OnClick="ButtonEditReport_Click_2"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
                 </Columns>
             </asp:GridView>
-
-            <asp:Button ID="GenerateReport" runat="server" OnClick="GenerateReport_Click" Text="Сгенерировать отчет для кампании №2" />
 
         </div>
     </form>

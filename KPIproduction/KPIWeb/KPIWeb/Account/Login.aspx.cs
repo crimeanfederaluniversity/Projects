@@ -16,9 +16,7 @@ namespace KPIWeb.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //
         }
-
         protected void LogIn(object sender, EventArgs e)
         {
             try
@@ -26,7 +24,7 @@ namespace KPIWeb.Account
                 if (IsValid)
                 {
                     KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-                    UsersTable user = (from usersTables in KPIWebDataContext.UsersTables
+                    UsersTable user = (from usersTables in KPIWebDataContext.UsersTable
                                        where usersTables.Login == UserName.Text &&
                                        usersTables.Password == Password.Text
                                        select usersTables).FirstOrDefault();
@@ -35,10 +33,11 @@ namespace KPIWeb.Account
                     {
                         Session["user"] = user;
 
-                        if (user.FK_RolesTable == 13)
+                        if (user.FK_RolesTable == 7)
                         {
                             List<int> ReportArchiveIDList = (from reportArchiveTables in KPIWebDataContext.ReportArchiveTables
-                                                             join reportAndRolesMappings in KPIWebDataContext.ReportAndRolesMappings on reportArchiveTables.ReportArchiveTableID equals reportAndRolesMappings.FK_ReportArchiveTable
+                                                             join reportAndRolesMappings in KPIWebDataContext.ReportAndRolesMappings 
+                                                             on reportArchiveTables.ReportArchiveTableID equals reportAndRolesMappings.FK_ReportArchiveTable
                                                              where reportAndRolesMappings.FK_RolesTable == user.FK_RolesTable &&
                                                              reportArchiveTables.Active == true &&
                                                              reportArchiveTables.StartDateTime < DateTime.Now &&
@@ -53,7 +52,7 @@ namespace KPIWeb.Account
                                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('В настоящий момент для Вас нет активных отчетов для заполнения.');", true);
                         }
 
-                        if (user.FK_RolesTable == 16)
+                        if (user.FK_RolesTable == 13)
                             Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");
                     }
                     else
@@ -69,6 +68,11 @@ namespace KPIWeb.Account
                 //LogHandler.LogWriter.WriteError(ex, "Error message");
                 //LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Info message");
             }
+        }
+
+        protected void RememberMe_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

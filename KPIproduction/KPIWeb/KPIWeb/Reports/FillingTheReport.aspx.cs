@@ -21,10 +21,10 @@ namespace KPIWeb.Reports
             if (!Page.IsPostBack)
             {
                 KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-                UsersTable user = (from usersTables in KPIWebDataContext.UsersTables
-                                   where usersTables.Login == "Physics" &&
-                                   usersTables.Password == "Physics"
-                                   select usersTables).FirstOrDefault();
+                UsersTable user = (from usersTable in KPIWebDataContext.UsersTable
+                                   where usersTable.Login == "user11" &&
+                                   usersTable.Password == "user11"
+                                   select usersTable).FirstOrDefault();
                 Session["user"] = user;
 
                 user = (UsersTable)Session["user"];
@@ -36,6 +36,8 @@ namespace KPIWeb.Reports
                     //KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
 
                     //Список ID всех активных кампаний для данного пользователя
+
+                    
                     List<int> ReportArchiveIDList = (from reportArchiveTables in KPIWebDataContext.ReportArchiveTables
                                                      join reportAndRolesMappings in KPIWebDataContext.ReportAndRolesMappings on
                                                      reportArchiveTables.ReportArchiveTableID equals reportAndRolesMappings.FK_ReportArchiveTable
@@ -115,6 +117,7 @@ namespace KPIWeb.Reports
 
                     GridviewCollectedBasicParameters.DataSource = dataTable;
                     GridviewCollectedBasicParameters.DataBind();
+                     
                 }
             }
         }

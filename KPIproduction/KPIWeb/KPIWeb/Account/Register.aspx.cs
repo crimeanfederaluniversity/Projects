@@ -12,10 +12,12 @@ using System.Web.UI.WebControls;
 
 namespace KPIWeb.Account
 {
+
     public partial class Register : Page
     {
-
-        protected void Button_click_add()
+         
+     //   int[] connect_ = new int[100];
+        protected void CreateUser_Click(object sender, EventArgs e)
         {
             KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
             UsersTable user = new UsersTable();
@@ -36,30 +38,42 @@ namespace KPIWeb.Account
             if (int.TryParse(DropDownList3.SelectedValue, out selectedValue) && selectedValue > 0)
                 user.FK_ThirdLevelSubdivisionTable = selectedValue;
 
-            selectedValue = -1;
+          /*  selectedValue = -1;
             if (int.TryParse(DropDownList4.SelectedValue, out selectedValue) && selectedValue > 0)
-                user.FK_RolesTable = selectedValue;   
+                user.FK_RolesTable = selectedValue;
+         */   
+            kPiDataContext.UsersTable.InsertOnSubmit(user);
+            kPiDataContext.SubmitChanges();   //// ПОЛЬЗОВАТЕЛЬ СОЗДАН
 
-            kPiDataContext.UsersTables.InsertOnSubmit(user);
+            KPIWebDataContext kPiDataContext1 = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            List<UsersTable> UsersTable_ = (from item in kPiDataContext1.UsersTable
+                                            where item.Login == UserName.Text select item).ToList();
+            int ID_=-1;
+            foreach (var item in UsersTable_)
+                ID_=item.UsersTableID;
+            ////////УЗНАЛИ ИД ПОЛЬЗОВАТЕЛЯ
+            int i = 0;
+            foreach (ListItem  Li in CheckBoxList1.Items)
+            { 
+                if (Li.Selected)
+                {
+                    UsersAndRolesMappingTable UserAndRoleMap = new UsersAndRolesMappingTable();
+                    UserAndRoleMap.Active = true;
+                    selectedValue = -1;
+                   // if (int.TryParse(CheckBoxList1.SelectedValue, out selectedValue) && selectedValue > 0)
 
-            kPiDataContext.SubmitChanges();
-        }
+                   // UserAndRoleMap.FK_RolesTable = connect_[i];
 
-        protected void CreateUser_Click(object sender, EventArgs e)
-        {
-           // var manager = new UserManager();
-          //  var user = new ApplicationUser() { UserName = UserName.Text };
-          //  IdentityResult result = manager.Create(user, Password.Text);
-         //   if (result.Succeeded)
-         //   {
-                Button_click_add();    
-               // IdentityHelper.SignIn(manager, user, isPersistent: false);
-               // IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
-          //  }
-          ///  else 
-          //  {
-          //      ErrorMessage.Text = result.Errors.FirstOrDefault();
-          //  }
+                    UserAndRoleMap.FK_RolesTable = int.Parse(CheckBoxList1.Items[i].Value);
+
+                    UserAndRoleMap.FK_UsersTable = ID_;
+                    kPiDataContext1.UsersAndRolesMappingTable.InsertOnSubmit(UserAndRoleMap);
+                    
+                }
+                i++;
+            }
+            kPiDataContext1.SubmitChanges();
+
         }
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -83,10 +97,9 @@ namespace KPIWeb.Account
 
                     dictionary.Add(-1, "Выберите значение");
 
-                    foreach (var item in second_stageList)
-                        dictionary.Add(item.SecondLevelSubdivisionTableID, item.Name);
 
-                  //  DropDownListRoleStage2.Enabled = true;
+
+                    //  DropDownListRoleStage2.Enabled = true;
 
                     DropDownList2.DataTextField = "Value";
                     DropDownList2.DataValueField = "Key";
@@ -100,10 +113,12 @@ namespace KPIWeb.Account
         {
             if (!Page.IsPostBack)
             {
-                KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+                KPIWebDataContext kPiDataContext =
+                    new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
 
-                List<FirstLevelSubdivisionTable> First_stageList = (from item in kPiDataContext.FirstLevelSubdivisionTable
-                                                     select item).OrderBy(mc => mc.Name).ToList();
+                List<FirstLevelSubdivisionTable> First_stageList =
+                    (from item in kPiDataContext.FirstLevelSubdivisionTable
+                        select item).OrderBy(mc => mc.Name).ToList();
 
                 var dictionary = new Dictionary<int, string>();
                 dictionary.Add(0, "Выберите значение");
@@ -116,29 +131,45 @@ namespace KPIWeb.Account
                 DropDownList1.DataSource = dictionary;
                 DropDownList1.DataBind();
 
-                List<RolesTable> RolesTableList = (from item in kPiDataContext.RolesTables select item).OrderBy(mc => mc.Name).ToList();
+                List<RolesTable> RolesTableList =
+                    (from item in kPiDataContext.RolesTable select item).OrderBy(mc => mc.Name).ToList();
 
                 var dictionary_roles = new Dictionary<int, string>();
                 dictionary_roles.Add(0, "Выберите значение");
 
+                int i = 0;
                 foreach (var item in RolesTableList)
-                    dictionary_roles.Add(item.RolesTableID, item.Name);
+                {
+                    CheckBoxList1.Items.Add(item.Name);
+                    CheckBoxList1.Items[i].Value = item.RolesTableID.ToString();
+                    i++;
+                    // ListItem it;
+                    //// it.Text = item.Name;
+                    // it.Value = item.RolesTableID;
+                    // CheckBoxList1.Items.Add();
+                    // dictionary_roles.Add(item.RolesTableID, item.Name);
+                    //connect_[i] = item.RolesTableID;
+                    // i++;                                      
+                }
+                //Session["hill"] = connect_;
 
+              /*  CheckBoxList1.DataTextField = "Value";
+                CheckBoxList1.DataValueField = "Key";
+                CheckBoxList1.DataSource = dictionary_roles;
+                CheckBoxList1.DataBind();*/
+/*
                 DropDownList4.DataTextField = "Value";
                 DropDownList4.DataValueField = "Key";
                 DropDownList4.DataSource = dictionary_roles;
-                DropDownList4.DataBind();
+                DropDownList4.DataBind();*/
             }
         }
 
         protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
         {
             DropDownList3.Items.Clear();
-
             KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
-
             int SelectedValue = -1;
-
             if (int.TryParse(DropDownList2.SelectedValue, out SelectedValue) && SelectedValue != -1)
             {
                 List<ThirdLevelSubdivisionTable> third_stage = (from item in kPiDataContext.ThirdLevelSubdivisionTable
@@ -153,15 +184,18 @@ namespace KPIWeb.Account
 
                     foreach (var item in third_stage)
                         dictionary.Add(item.ThirdLevelSubdivisionTableID, item.Name);
-
                   //  DropDownListRoleStage3.Enabled = true;
-
                     DropDownList3.DataTextField = "Value";
                     DropDownList3.DataValueField = "Key";
                     DropDownList3.DataSource = dictionary;
                     DropDownList3.DataBind();
                 }
             }
+        }
+
+        protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

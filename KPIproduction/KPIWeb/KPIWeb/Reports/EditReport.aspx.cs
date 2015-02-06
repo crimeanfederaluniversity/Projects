@@ -62,7 +62,7 @@ namespace KPIWeb.Reports
                             CalendarSentDateTime.SelectedDate = (DateTime)ReportArchiveTable.SentDateTime;
                     }
 
-                    List<RolesTable> rolesTable = (from item in KPIWebDataContext.RolesTables
+                    List<RolesTable> rolesTable = (from item in KPIWebDataContext.RolesTable
                                                    where item.Active == true
                                                    select item).ToList();
 
@@ -172,6 +172,7 @@ namespace KPIWeb.Reports
             }
 
             KPIWebDataContext.SubmitChanges();
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Данные успешно сохранены');", true);
         }
     }
 }

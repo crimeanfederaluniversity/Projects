@@ -41,11 +41,24 @@ namespace KPIWeb.StatisticsDepartment
                 Response.Redirect("~/Reports/EditReport.aspx");
             }
         }
-
+        protected void ButtonEditReport_Click_2(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            int reportArchiveTableID = 0;
+            if (int.TryParse(button.CommandArgument, out reportArchiveTableID) && reportArchiveTableID > 0)
+            {
+                Session["ReportArchiveTableID"] = reportArchiveTableID;
+                Response.Redirect("~/Reports/GenerateReport.aspx");
+            }
+        }
         protected void GenerateReport_Click(object sender, EventArgs e)
         {
-            Session["ReportArchiveTableID"] = 2;
-            Response.Redirect("~/Reports/GenerateReport.aspx");
+            
+        }
+
+        protected void GridviewActiveCampaign_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

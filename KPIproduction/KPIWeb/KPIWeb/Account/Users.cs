@@ -10,7 +10,13 @@ namespace WebApplication3
         Robot = 1,
         Superadmin = 2,
         AutomationDepartment = 3,
-        StatisticsDepartment = 4
+        StatisticsDepartment = 4,
+        HumanResources = 5,
+        PlanningEconomicDepartment = 6,
+        PostgraduateDepartment = 7,
+        InternationalDepartment = 8,
+        DeansOffice = 9,
+        Faculty = 10
     }
 
 }
