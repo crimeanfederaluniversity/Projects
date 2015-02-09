@@ -9,15 +9,24 @@ using System.Configuration;
 using System.Net;
 using System.Data;
 using System.Collections.Specialized;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
+using System.Data.SqlClient;
+using System.IO;
+using System.Web.UI.HtmlControls;
 
 namespace KPIWeb.Reports
 {
     public partial class FillingTheReport : System.Web.UI.Page
     {
         UsersTable user;
+       // DataTable dtt;// (DataTable)GridviewCollectedBasicParameters.DataSource;
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //dtt = (DataTable)GridviewCollectedBasicParameters.DataSource;
+            //DataTable dt = (DataTable)GridviewCollectedBasicParameters.DataSource;
+
             if (!Page.IsPostBack)
             {
                 KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
@@ -58,7 +67,7 @@ namespace KPIWeb.Reports
                                                                        select basicParametersTables).ToList();
 
                     //Список ранее введенных пользователем данных для данной кампании (отчета)
-                    List<CollectedBasicParametersTable> сollectedBasicParametersTable = (from collectedBasicParameters in KPIWebDataContext.CollectedBasicParametersTables
+                    List<CollectedBasicParametersTable> сollectedBasicParametersTable = (from collectedBasicParameters in KPIWebDataContext.CollectedBasicParametersTable
                                                                                          where (from item in basicParametersTable select item.BasicParametersTableID).ToList().Contains((int)collectedBasicParameters.FK_BasicParametersTable) &&
                                                                                          collectedBasicParameters.FK_UsersTable == user.UsersTableID &&
                                                                                          collectedBasicParameters.FK_ReportArchiveTable == currentReportArchiveID
@@ -100,7 +109,7 @@ namespace KPIWeb.Reports
                             dataRow["CollectedBasicParametersTableID"] = string.Empty;
                             dataRow["CollectedValue"] = string.Empty;
 
-                            KPIWebDataContext.CollectedBasicParametersTables.InsertOnSubmit(newItem);
+                            KPIWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(newItem);
                         }
                         else
                         {
@@ -117,7 +126,8 @@ namespace KPIWeb.Reports
 
                     GridviewCollectedBasicParameters.DataSource = dataTable;
                     GridviewCollectedBasicParameters.DataBind();
-                     
+
+                   
                 }
             }
         }
@@ -162,7 +172,7 @@ namespace KPIWeb.Reports
                 if (tempDictionary.Count > 0)
                 {
                     //Список ранее введенных пользователем данных для данной кампании (отчета)
-                    List<CollectedBasicParametersTable> сollectedBasicParametersTable = (from collectedBasicParameters in KPIWebDataContext.CollectedBasicParametersTables
+                    List<CollectedBasicParametersTable> сollectedBasicParametersTable = (from collectedBasicParameters in KPIWebDataContext.CollectedBasicParametersTable
                                                                                          where (from item in tempDictionary select item.Key).ToList().Contains((int)collectedBasicParameters.CollectedBasicParametersTableID)
                                                                                          select collectedBasicParameters).ToList();
 
@@ -181,7 +191,50 @@ namespace KPIWeb.Reports
                 }
             }
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            int rowIndex = 0;
+            Dictionary<int, double> tempDictionary = new Dictionary<int, double>();
+            DataTable collectedBasicParametersTable = (DataTable)ViewState["CollectedBasicParametersTable"];
+            if (collectedBasicParametersTable.Rows.Count > 0)
+            {
+                for (int i = 1; i <= collectedBasicParametersTable.Rows.Count; i++)
+                {
+                    TextBox textBox = (TextBox)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("TextBoxCollectedValue");
+                    Label label = (Label)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("LabelCollectedBasicParametersTableID");
+
+                    if (textBox != null && label != null)
+                    {
+                        double collectedValue = -1;
+                        if (double.TryParse(textBox.Text, out collectedValue) && collectedValue > -1)
+                        {
+                            int collectedBasicParametersTableID = -1;
+                            if (int.TryParse(label.Text, out collectedBasicParametersTableID) && collectedBasicParametersTableID > -1)
+                                tempDictionary.Add(collectedBasicParametersTableID, collectedValue);
+                        }
+                    }
+                    rowIndex++;
+                }
+            }
+            DataTable dt = collectedBasicParametersTable;
+            Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel.Workbook excelBook = excelApp.Workbooks.Add(1);
+            Microsoft.Office.Interop.Excel.Worksheet excelWorksheet = (Microsoft.Office.Interop.Excel.Worksheet)excelBook.Worksheets.get_Item(1);
+            Microsoft.Office.Interop.Excel.Range rng = null;
+            DataRow dRow;
+            DataColumn dCol;
+            for (int _row = 0; _row < dt.Rows.Count; _row++)
+            {
+                for (int _col = 3; _col < dt.Columns.Count; _col++)//костыль
+                {
+                    dRow = dt.Rows[_row];
+                    dCol = dt.Columns[_col];
+                    rng = (Microsoft.Office.Interop.Excel.Range)excelWorksheet.Cells[_row + 1, _col -2]; //костыль
+                    rng.Value2 = dRow[dCol.ColumnName].ToString();
+                }
+            }
+            excelApp.Visible = true;
+        }       
     }
 }
-
-//http://www.aspsnippets.com/Articles/Save-and-Retrieve-Dynamic-TextBox-values-in-GridView-to-SQL-Server-Database.aspx
