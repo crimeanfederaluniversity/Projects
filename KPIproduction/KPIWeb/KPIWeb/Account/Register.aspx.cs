@@ -18,7 +18,7 @@ namespace KPIWeb.Account
          
      //   int[] connect_ = new int[100];
         protected void CreateUser_Click(object sender, EventArgs e)
-        {
+        {   
             KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
             UsersTable user = new UsersTable();
             user.Active = true;
@@ -111,6 +111,18 @@ namespace KPIWeb.Account
        
         protected void Page_Load(object sender, EventArgs e)
         {
+            UsersTable user = (UsersTable) Session["user"];
+            
+            if (user == null)
+            {               
+                Response.Redirect("Login.aspx");
+            }
+
+            if (user.Login != "admin")
+            {               
+                Response.Redirect("Login.aspx");
+            }
+
             if (!Page.IsPostBack)
             {
                 KPIWebDataContext kPiDataContext =
