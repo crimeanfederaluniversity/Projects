@@ -11,6 +11,10 @@
     <div>
     
     </div>
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Активные отчеты" Width="250px" />
+        <br />
+        <br />
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Создать отчет" Width="250px" />
     </form>
 </body>
 </html>

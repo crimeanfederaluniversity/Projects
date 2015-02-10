@@ -7,7 +7,7 @@ namespace KPIWeb
 {
     public class CalculateIndicator
     {
-        public static double? Calculate(int IndicatorsTableID, int ReportArchiveTableID)
+        public static double Calculate(int IndicatorsTableID, int ReportArchiveTableID)
         {
             double? returnValue = -1;
 
@@ -1449,7 +1449,10 @@ namespace KPIWeb
 
 
             }
-            return returnValue;
+           /* double? tmp;
+           /* tmp = Math.Round(returnValue, 3);//Convert.ToString(returnValue.ToString());
+           */
+            return (double)Math.Round((double)returnValue, 3);
         }
     }
 }

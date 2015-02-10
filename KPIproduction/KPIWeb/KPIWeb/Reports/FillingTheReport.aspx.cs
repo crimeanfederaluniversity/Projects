@@ -59,9 +59,9 @@ namespace KPIWeb.Reports
 
                 //Список всех базовых параметров "принадлежащих" данному пользователю
                 List<BasicParametersTable> basicParametersTable =
-                    (from basicParametersTables in KPIWebDataContext.BasicParametersTables
+                    (from basicParametersTables in KPIWebDataContext.BasicParametersTable
                         join basicParametersAndRolesMappingTables in
-                            KPIWebDataContext.BasicParametersAndRolesMappingTables on
+                            KPIWebDataContext.BasicParametersAndRolesMappingTable on
                             basicParametersTables.BasicParametersTableID equals
                             basicParametersAndRolesMappingTables.FK_BasicParametersTable
                         where basicParametersAndRolesMappingTables.FK_RolesTable == RoleID

@@ -50,7 +50,7 @@ namespace KPIWeb.Reports
                         DataRow dataRow = dataTable.NewRow();
                         dataRow["IndicatorsTableID"] = item.IndicatorsTableID;
                         dataRow["Name"] = item.Name;
-                        dataRow["IndicatorsValue"] = CalculateIndicator.Calculate(item.IndicatorsTableID, reportArchiveTableID);
+                        dataRow["IndicatorsValue"] = string.Format("{0:N2}"+item.Measure, CalculateIndicator.Calculate(item.IndicatorsTableID, reportArchiveTableID)); 
 
                         dataTable.Rows.Add(dataRow);
 

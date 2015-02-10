@@ -17,6 +17,7 @@ namespace KPIWeb.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
         }
         protected void LogIn(object sender, EventArgs e)
         {
@@ -30,92 +31,30 @@ namespace KPIWeb.Account
                                        where usersTables.Login == UserName.Text &&
                                        usersTables.Password == Password.Text
                                        select usersTables).FirstOrDefault();
-                   /* int  UserID = (from usersTables in KPIWebDataContext.UsersTable
-                                       where usersTables.Login == UserName.Text &&
-                                       usersTables.Password == Password.Text
-                                       select usersTables.UsersTableID).FirstOrDefault();
-                    */
                     if (user != null)
                     {
                         Session["user"] = user;
                         Session["UserID"] = user.UsersTableID;
 
-                        if (user.Login == "admin")
-                        {
-                            Response.Redirect("~/AutomationDepartment/Main.aspx");
-                        }
-                        else if (user.Login == "statistics")
-                        {
-                            Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");
-                        }
-                        else
-                        {
-                            Response.Redirect("~/Reports/ChooseReport.aspx");
-                        }
-
-                    }
-                    /*
                         List<RolesTable> UserRoles = (from a in KPIWebDataContext.UsersAndRolesMappingTable
-                                                join b in KPIWebDataContext.RolesTable
-                                                on a.FK_RolesTable equals b.RolesTableID
-                                                where a.FK_UsersTable == UserID && b.Active==true
-                                                select b).ToList();
-                        ////////получили список ID на нужные роли
-                        foreach (RolesTable UserRole in UserRoles)
+                                                      join b in KPIWebDataContext.RolesTable
+                                                      on a.FK_RolesTable equals b.RolesTableID
+                                                      where a.FK_UsersTable == user.UsersTableID && b.Active == true
+                                                      select b).ToList();
+
+                        foreach (RolesTable Role in UserRoles)
                         {
-                            
-                            if (UserRole.Active==true) 
+                            if (Role.Role == 10)
                             {
-                                if (UserRole.CanEdit == true)
-                                {*/
-
-                                    /*List<int> ReportArchiveIDList = (from reportArchiveTables in KPIWebDataContext.ReportArchiveTables
-                                                                     join reportAndRolesMappings in KPIWebDataContext.ReportAndRolesMappings
-                                                                     on reportArchiveTables.ReportArchiveTableID equals reportAndRolesMappings.FK_ReportArchiveTable
-                                                                     where reportAndRolesMappings.FK_RolesTable == user.FK_RolesTable &&
-                                                                     reportArchiveTables.Active == true &&
-                                                                     reportArchiveTables.StartDateTime < DateTime.Now &&
-                                                                     reportArchiveTables.EndDateTime > DateTime.Now
-                                                                     select reportArchiveTables.ReportArchiveTableID).ToList();*/
-                    /*
-                                }
-                                if (UserRole.CanView==true)
-                                {
-                                    //showforview
-                                }
-                            }       */                    
-                       // }
-                   // }
-
-
-
-                    /*
-                    if (user != null)
-                    {
-                        Session["user"] = user;
-
-                        if (user.FK_RolesTable == 7)
-                        {
-                            List<int> ReportArchiveIDList = (from reportArchiveTables in KPIWebDataContext.ReportArchiveTables
-                                                             join reportAndRolesMappings in KPIWebDataContext.ReportAndRolesMappings 
-                                                             on reportArchiveTables.ReportArchiveTableID equals reportAndRolesMappings.FK_ReportArchiveTable
-                                                             where reportAndRolesMappings.FK_RolesTable == user.FK_RolesTable &&
-                                                             reportArchiveTables.Active == true &&
-                                                             reportArchiveTables.StartDateTime < DateTime.Now &&
-                                                             reportArchiveTables.EndDateTime > DateTime.Now
-                                                             select reportArchiveTables.ReportArchiveTableID).ToList();
-
-                            if (ReportArchiveIDList != null && ReportArchiveIDList.Count > 0)
-                            {
-                                Response.Redirect("~/Reports/FillingTheReport.aspx");
+                                Response.Redirect("~/AutomationDepartment/Main.aspx");
                             }
-                            else
-                                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('В настоящий момент для Вас нет активных отчетов для заполнения.');", true);
+                            else if(Role.Role==8)
+                            {
+                                Response.Redirect("~/StatisticsDepartment/StastisticsHomePage.aspx");
+                            }
                         }
-
-                        if (user.FK_RolesTable == 13)
-                            Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");
-                    }*/
+                        Response.Redirect("~/Reports/ChooseReport.aspx");
+                    }            
                     else
                     {
                         FailureText.Text = "Неверное имя пользователя или пароль.";

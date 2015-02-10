@@ -9,6 +9,7 @@ using KPIWeb.Models;
 using System.Configuration;
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
+using Microsoft.Ajax.Utilities;
 
 namespace KPIWeb.Account
 {
@@ -110,24 +111,28 @@ namespace KPIWeb.Account
         }
        
         protected void Page_Load(object sender, EventArgs e)
-        {
-            UsersTable user = (UsersTable) Session["user"];
-            
+        {          
+            UsersTable user = (UsersTable) Session["user"];                   
             if (user == null)
-            {               
-                Response.Redirect("Login.aspx");
-            }
-
-            if (user.Login != "admin")
-            {               
-                Response.Redirect("Login.aspx");
-            }
-
-            if (!Page.IsPostBack)
             {
-                KPIWebDataContext kPiDataContext =
-                    new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
-
+                Response.Redirect("~/Account/Login.aspx");
+            }
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            List<RolesTable> UserRoles = (from a in kPiDataContext.UsersAndRolesMappingTable
+                                          join b in kPiDataContext.RolesTable
+                                          on a.FK_RolesTable equals b.RolesTableID
+                                          where a.FK_UsersTable == user.UsersTableID && b.Active == true
+                                          select b).ToList();            
+            foreach (RolesTable Role in UserRoles)
+            {
+                if (Role.Role != 10) //нельзя давать пользователю роли и заполняющего и админа 
+                {
+                    Response.Redirect("~/Account/Login.aspx");
+                }              
+            }
+          
+            if (!Page.IsPostBack)
+            {              
                 List<FirstLevelSubdivisionTable> First_stageList =
                     (from item in kPiDataContext.FirstLevelSubdivisionTable
                         select item).OrderBy(mc => mc.Name).ToList();

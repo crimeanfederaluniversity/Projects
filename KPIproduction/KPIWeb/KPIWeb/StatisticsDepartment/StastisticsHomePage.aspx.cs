@@ -13,5 +13,15 @@ namespace KPIWeb.StatisticsDepartment
         {
 
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/StatisticsDepartment/ReportCreate.aspx");
+        }
     }
 }

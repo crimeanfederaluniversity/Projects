@@ -176,6 +176,8 @@
       <LastGenOutput>KPIWeb.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="AutomationDepartment\RoleMapping.aspx" />
+    <Content Include="AutomationDepartment\IsAvailibleMappingRole.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Reports\ChooseReport.aspx" />
     <Content Include="Reports\EditReport.aspx" />
@@ -214,6 +216,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
+    <Content Include="StatisticsDepartment\ReportCreate.aspx" />
     <Content Include="StatisticsDepartment\ReportViewer.aspx" />
     <Content Include="StatisticsDepartment\StastisticsHomePage.aspx" />
     <Content Include="ViewSwitcher.ascx" />
@@ -372,6 +375,13 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Account\Users.cs" />
+    <Compile Include="StatisticsDepartment\ReportCreate.aspx.cs">
+      <DependentUpon>ReportCreate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StatisticsDepartment\ReportCreate.aspx.designer.cs">
+      <DependentUpon>ReportCreate.aspx</DependentUpon>
+    </Compile>
     <Compile Include="StatisticsDepartment\ReportViewer.aspx.cs">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -394,10 +404,23 @@
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
+    <Compile Include="AutomationDepartment\RoleMapping.aspx.cs">
+      <DependentUpon>RoleMapping.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutomationDepartment\RoleMapping.aspx.designer.cs">
+      <DependentUpon>RoleMapping.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AutomationDepartment\IsAvailibleMappingRole.aspx.cs">
+      <DependentUpon>IsAvailibleMappingRole.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutomationDepartment\IsAvailibleMappingRole.aspx.designer.cs">
+      <DependentUpon>IsAvailibleMappingRole.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
