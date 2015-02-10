@@ -54,15 +54,15 @@ namespace KPIWeb
     partial void InsertIndicatorsTable(IndicatorsTable instance);
     partial void UpdateIndicatorsTable(IndicatorsTable instance);
     partial void DeleteIndicatorsTable(IndicatorsTable instance);
-    partial void InsertRolesTable(RolesTable instance);
-    partial void UpdateRolesTable(RolesTable instance);
-    partial void DeleteRolesTable(RolesTable instance);
     partial void InsertUsersAndRolesMappingTable(UsersAndRolesMappingTable instance);
     partial void UpdateUsersAndRolesMappingTable(UsersAndRolesMappingTable instance);
     partial void DeleteUsersAndRolesMappingTable(UsersAndRolesMappingTable instance);
     partial void InsertUsersTable(UsersTable instance);
     partial void UpdateUsersTable(UsersTable instance);
     partial void DeleteUsersTable(UsersTable instance);
+    partial void InsertRolesTable(RolesTable instance);
+    partial void UpdateRolesTable(RolesTable instance);
+    partial void DeleteRolesTable(RolesTable instance);
     partial void InsertCollectedBasicParametersTable(CollectedBasicParametersTable instance);
     partial void UpdateCollectedBasicParametersTable(CollectedBasicParametersTable instance);
     partial void DeleteCollectedBasicParametersTable(CollectedBasicParametersTable instance);
@@ -162,14 +162,6 @@ namespace KPIWeb
 			}
 		}
 		
-		public System.Data.Linq.Table<RolesTable> RolesTable
-		{
-			get
-			{
-				return this.GetTable<RolesTable>();
-			}
-		}
-		
 		public System.Data.Linq.Table<UsersAndRolesMappingTable> UsersAndRolesMappingTable
 		{
 			get
@@ -183,6 +175,14 @@ namespace KPIWeb
 			get
 			{
 				return this.GetTable<UsersTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<RolesTable> RolesTable
+		{
+			get
+			{
+				return this.GetTable<RolesTable>();
 			}
 		}
 		
@@ -1957,252 +1957,6 @@ namespace KPIWeb
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RolesTable")]
-	public partial class RolesTable : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _RolesTableID;
-		
-		private bool _Active;
-		
-		private string _Name;
-		
-		private int _Role;
-		
-		private EntitySet<ReportAndRolesMapping> _ReportAndRolesMapping;
-		
-		private EntitySet<BasicParametersAndRolesMappingTable> _BasicParametersAndRolesMappingTable;
-		
-		private EntitySet<UsersAndRolesMappingTable> _UsersAndRolesMappingTable;
-		
-		private EntitySet<UsersTable> _UsersTable;
-		
-    #region Определения метода расширяемости
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnRolesTableIDChanging(int value);
-    partial void OnRolesTableIDChanged();
-    partial void OnActiveChanging(bool value);
-    partial void OnActiveChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnRoleChanging(int value);
-    partial void OnRoleChanged();
-    #endregion
-		
-		public RolesTable()
-		{
-			this._ReportAndRolesMapping = new EntitySet<ReportAndRolesMapping>(new Action<ReportAndRolesMapping>(this.attach_ReportAndRolesMapping), new Action<ReportAndRolesMapping>(this.detach_ReportAndRolesMapping));
-			this._BasicParametersAndRolesMappingTable = new EntitySet<BasicParametersAndRolesMappingTable>(new Action<BasicParametersAndRolesMappingTable>(this.attach_BasicParametersAndRolesMappingTable), new Action<BasicParametersAndRolesMappingTable>(this.detach_BasicParametersAndRolesMappingTable));
-			this._UsersAndRolesMappingTable = new EntitySet<UsersAndRolesMappingTable>(new Action<UsersAndRolesMappingTable>(this.attach_UsersAndRolesMappingTable), new Action<UsersAndRolesMappingTable>(this.detach_UsersAndRolesMappingTable));
-			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RolesTableID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int RolesTableID
-		{
-			get
-			{
-				return this._RolesTableID;
-			}
-			set
-			{
-				if ((this._RolesTableID != value))
-				{
-					this.OnRolesTableIDChanging(value);
-					this.SendPropertyChanging();
-					this._RolesTableID = value;
-					this.SendPropertyChanged("RolesTableID");
-					this.OnRolesTableIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
-		public bool Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Role", DbType="Int NOT NULL")]
-		public int Role
-		{
-			get
-			{
-				return this._Role;
-			}
-			set
-			{
-				if ((this._Role != value))
-				{
-					this.OnRoleChanging(value);
-					this.SendPropertyChanging();
-					this._Role = value;
-					this.SendPropertyChanged("Role");
-					this.OnRoleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_ReportAndRolesMapping", Storage="_ReportAndRolesMapping", ThisKey="RolesTableID", OtherKey="FK_RolesTable")]
-		public EntitySet<ReportAndRolesMapping> ReportAndRolesMapping
-		{
-			get
-			{
-				return this._ReportAndRolesMapping;
-			}
-			set
-			{
-				this._ReportAndRolesMapping.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_BasicParametersAndRolesMappingTable", Storage="_BasicParametersAndRolesMappingTable", ThisKey="RolesTableID", OtherKey="FK_RolesTable")]
-		public EntitySet<BasicParametersAndRolesMappingTable> BasicParametersAndRolesMappingTable
-		{
-			get
-			{
-				return this._BasicParametersAndRolesMappingTable;
-			}
-			set
-			{
-				this._BasicParametersAndRolesMappingTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_UsersAndRolesMappingTable", Storage="_UsersAndRolesMappingTable", ThisKey="RolesTableID", OtherKey="FK_RolesTable")]
-		public EntitySet<UsersAndRolesMappingTable> UsersAndRolesMappingTable
-		{
-			get
-			{
-				return this._UsersAndRolesMappingTable;
-			}
-			set
-			{
-				this._UsersAndRolesMappingTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_UsersTable", Storage="_UsersTable", ThisKey="RolesTableID", OtherKey="FK_RolesTable")]
-		public EntitySet<UsersTable> UsersTable
-		{
-			get
-			{
-				return this._UsersTable;
-			}
-			set
-			{
-				this._UsersTable.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_ReportAndRolesMapping(ReportAndRolesMapping entity)
-		{
-			this.SendPropertyChanging();
-			entity.RolesTable = this;
-		}
-		
-		private void detach_ReportAndRolesMapping(ReportAndRolesMapping entity)
-		{
-			this.SendPropertyChanging();
-			entity.RolesTable = null;
-		}
-		
-		private void attach_BasicParametersAndRolesMappingTable(BasicParametersAndRolesMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.RolesTable = this;
-		}
-		
-		private void detach_BasicParametersAndRolesMappingTable(BasicParametersAndRolesMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.RolesTable = null;
-		}
-		
-		private void attach_UsersAndRolesMappingTable(UsersAndRolesMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.RolesTable = this;
-		}
-		
-		private void detach_UsersAndRolesMappingTable(UsersAndRolesMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.RolesTable = null;
-		}
-		
-		private void attach_UsersTable(UsersTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.RolesTable = this;
-		}
-		
-		private void detach_UsersTable(UsersTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.RolesTable = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UsersAndRolesMappingTable")]
 	public partial class UsersAndRolesMappingTable : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2217,9 +1971,9 @@ namespace KPIWeb
 		
 		private int _FK_RolesTable;
 		
-		private EntityRef<RolesTable> _RolesTable;
-		
 		private EntityRef<UsersTable> _UsersTable;
+		
+		private EntityRef<RolesTable> _RolesTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -2237,8 +1991,8 @@ namespace KPIWeb
 		
 		public UsersAndRolesMappingTable()
 		{
-			this._RolesTable = default(EntityRef<RolesTable>);
 			this._UsersTable = default(EntityRef<UsersTable>);
+			this._RolesTable = default(EntityRef<RolesTable>);
 			OnCreated();
 		}
 		
@@ -2330,40 +2084,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_UsersAndRolesMappingTable", Storage="_RolesTable", ThisKey="FK_RolesTable", OtherKey="RolesTableID", IsForeignKey=true)]
-		public RolesTable RolesTable
-		{
-			get
-			{
-				return this._RolesTable.Entity;
-			}
-			set
-			{
-				RolesTable previousValue = this._RolesTable.Entity;
-				if (((previousValue != value) 
-							|| (this._RolesTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._RolesTable.Entity = null;
-						previousValue.UsersAndRolesMappingTable.Remove(this);
-					}
-					this._RolesTable.Entity = value;
-					if ((value != null))
-					{
-						value.UsersAndRolesMappingTable.Add(this);
-						this._FK_RolesTable = value.RolesTableID;
-					}
-					else
-					{
-						this._FK_RolesTable = default(int);
-					}
-					this.SendPropertyChanged("RolesTable");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_UsersAndRolesMappingTable", Storage="_UsersTable", ThisKey="FK_UsersTable", OtherKey="UsersTableID", IsForeignKey=true)]
 		public UsersTable UsersTable
 		{
@@ -2394,6 +2114,40 @@ namespace KPIWeb
 						this._FK_UsersTable = default(int);
 					}
 					this.SendPropertyChanged("UsersTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_UsersAndRolesMappingTable", Storage="_RolesTable", ThisKey="FK_RolesTable", OtherKey="RolesTableID", IsForeignKey=true)]
+		public RolesTable RolesTable
+		{
+			get
+			{
+				return this._RolesTable.Entity;
+			}
+			set
+			{
+				RolesTable previousValue = this._RolesTable.Entity;
+				if (((previousValue != value) 
+							|| (this._RolesTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._RolesTable.Entity = null;
+						previousValue.UsersAndRolesMappingTable.Remove(this);
+					}
+					this._RolesTable.Entity = value;
+					if ((value != null))
+					{
+						value.UsersAndRolesMappingTable.Add(this);
+						this._FK_RolesTable = value.RolesTableID;
+					}
+					else
+					{
+						this._FK_RolesTable = default(int);
+					}
+					this.SendPropertyChanged("RolesTable");
 				}
 			}
 		}
@@ -2453,8 +2207,6 @@ namespace KPIWeb
 		
 		private EntityRef<FirstLevelSubdivisionTable> _FirstLevelSubdivisionTable;
 		
-		private EntityRef<RolesTable> _RolesTable;
-		
 		private EntityRef<SecondLevelSubdivisionTable> _SecondLevelSubdivisionTable;
 		
 		private EntityRef<ThirdLevelSubdivisionTable> _ThirdLevelSubdivisionTable;
@@ -2492,7 +2244,6 @@ namespace KPIWeb
 			this._UsersAndRolesMappingTable = new EntitySet<UsersAndRolesMappingTable>(new Action<UsersAndRolesMappingTable>(this.attach_UsersAndRolesMappingTable), new Action<UsersAndRolesMappingTable>(this.detach_UsersAndRolesMappingTable));
 			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
 			this._FirstLevelSubdivisionTable = default(EntityRef<FirstLevelSubdivisionTable>);
-			this._RolesTable = default(EntityRef<RolesTable>);
 			this._SecondLevelSubdivisionTable = default(EntityRef<SecondLevelSubdivisionTable>);
 			this._ThirdLevelSubdivisionTable = default(EntityRef<ThirdLevelSubdivisionTable>);
 			OnCreated();
@@ -2721,10 +2472,6 @@ namespace KPIWeb
 			{
 				if ((this._FK_RolesTable != value))
 				{
-					if (this._RolesTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnFK_RolesTableChanging(value);
 					this.SendPropertyChanging();
 					this._FK_RolesTable = value;
@@ -2790,40 +2537,6 @@ namespace KPIWeb
 						this._FK_FirstLevelSubdivisionTable = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("FirstLevelSubdivisionTable");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_UsersTable", Storage="_RolesTable", ThisKey="FK_RolesTable", OtherKey="RolesTableID", IsForeignKey=true)]
-		public RolesTable RolesTable
-		{
-			get
-			{
-				return this._RolesTable.Entity;
-			}
-			set
-			{
-				RolesTable previousValue = this._RolesTable.Entity;
-				if (((previousValue != value) 
-							|| (this._RolesTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._RolesTable.Entity = null;
-						previousValue.UsersTable.Remove(this);
-					}
-					this._RolesTable.Entity = value;
-					if ((value != null))
-					{
-						value.UsersTable.Add(this);
-						this._FK_RolesTable = value.RolesTableID;
-					}
-					else
-					{
-						this._FK_RolesTable = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("RolesTable");
 				}
 			}
 		}
@@ -2938,6 +2651,272 @@ namespace KPIWeb
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RolesTable")]
+	public partial class RolesTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _RolesTableID;
+		
+		private bool _Active;
+		
+		private string _RoleName;
+		
+		private int _Role;
+		
+		private System.Nullable<bool> _CanView;
+		
+		private System.Nullable<bool> _CanEdit;
+		
+		private EntitySet<ReportAndRolesMapping> _ReportAndRolesMapping;
+		
+		private EntitySet<BasicParametersAndRolesMappingTable> _BasicParametersAndRolesMappingTable;
+		
+		private EntitySet<UsersAndRolesMappingTable> _UsersAndRolesMappingTable;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnRolesTableIDChanging(int value);
+    partial void OnRolesTableIDChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnRoleNameChanging(string value);
+    partial void OnRoleNameChanged();
+    partial void OnRoleChanging(int value);
+    partial void OnRoleChanged();
+    partial void OnCanViewChanging(System.Nullable<bool> value);
+    partial void OnCanViewChanged();
+    partial void OnCanEditChanging(System.Nullable<bool> value);
+    partial void OnCanEditChanged();
+    #endregion
+		
+		public RolesTable()
+		{
+			this._ReportAndRolesMapping = new EntitySet<ReportAndRolesMapping>(new Action<ReportAndRolesMapping>(this.attach_ReportAndRolesMapping), new Action<ReportAndRolesMapping>(this.detach_ReportAndRolesMapping));
+			this._BasicParametersAndRolesMappingTable = new EntitySet<BasicParametersAndRolesMappingTable>(new Action<BasicParametersAndRolesMappingTable>(this.attach_BasicParametersAndRolesMappingTable), new Action<BasicParametersAndRolesMappingTable>(this.detach_BasicParametersAndRolesMappingTable));
+			this._UsersAndRolesMappingTable = new EntitySet<UsersAndRolesMappingTable>(new Action<UsersAndRolesMappingTable>(this.attach_UsersAndRolesMappingTable), new Action<UsersAndRolesMappingTable>(this.detach_UsersAndRolesMappingTable));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RolesTableID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int RolesTableID
+		{
+			get
+			{
+				return this._RolesTableID;
+			}
+			set
+			{
+				if ((this._RolesTableID != value))
+				{
+					this.OnRolesTableIDChanging(value);
+					this.SendPropertyChanging();
+					this._RolesTableID = value;
+					this.SendPropertyChanged("RolesTableID");
+					this.OnRolesTableIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoleName", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string RoleName
+		{
+			get
+			{
+				return this._RoleName;
+			}
+			set
+			{
+				if ((this._RoleName != value))
+				{
+					this.OnRoleNameChanging(value);
+					this.SendPropertyChanging();
+					this._RoleName = value;
+					this.SendPropertyChanged("RoleName");
+					this.OnRoleNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Role", DbType="Int NOT NULL")]
+		public int Role
+		{
+			get
+			{
+				return this._Role;
+			}
+			set
+			{
+				if ((this._Role != value))
+				{
+					this.OnRoleChanging(value);
+					this.SendPropertyChanging();
+					this._Role = value;
+					this.SendPropertyChanged("Role");
+					this.OnRoleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanView", DbType="Bit")]
+		public System.Nullable<bool> CanView
+		{
+			get
+			{
+				return this._CanView;
+			}
+			set
+			{
+				if ((this._CanView != value))
+				{
+					this.OnCanViewChanging(value);
+					this.SendPropertyChanging();
+					this._CanView = value;
+					this.SendPropertyChanged("CanView");
+					this.OnCanViewChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanEdit", DbType="Bit")]
+		public System.Nullable<bool> CanEdit
+		{
+			get
+			{
+				return this._CanEdit;
+			}
+			set
+			{
+				if ((this._CanEdit != value))
+				{
+					this.OnCanEditChanging(value);
+					this.SendPropertyChanging();
+					this._CanEdit = value;
+					this.SendPropertyChanged("CanEdit");
+					this.OnCanEditChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_ReportAndRolesMapping", Storage="_ReportAndRolesMapping", ThisKey="RolesTableID", OtherKey="FK_RolesTable")]
+		public EntitySet<ReportAndRolesMapping> ReportAndRolesMapping
+		{
+			get
+			{
+				return this._ReportAndRolesMapping;
+			}
+			set
+			{
+				this._ReportAndRolesMapping.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_BasicParametersAndRolesMappingTable", Storage="_BasicParametersAndRolesMappingTable", ThisKey="RolesTableID", OtherKey="FK_RolesTable")]
+		public EntitySet<BasicParametersAndRolesMappingTable> BasicParametersAndRolesMappingTable
+		{
+			get
+			{
+				return this._BasicParametersAndRolesMappingTable;
+			}
+			set
+			{
+				this._BasicParametersAndRolesMappingTable.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_UsersAndRolesMappingTable", Storage="_UsersAndRolesMappingTable", ThisKey="RolesTableID", OtherKey="FK_RolesTable")]
+		public EntitySet<UsersAndRolesMappingTable> UsersAndRolesMappingTable
+		{
+			get
+			{
+				return this._UsersAndRolesMappingTable;
+			}
+			set
+			{
+				this._UsersAndRolesMappingTable.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_ReportAndRolesMapping(ReportAndRolesMapping entity)
+		{
+			this.SendPropertyChanging();
+			entity.RolesTable = this;
+		}
+		
+		private void detach_ReportAndRolesMapping(ReportAndRolesMapping entity)
+		{
+			this.SendPropertyChanging();
+			entity.RolesTable = null;
+		}
+		
+		private void attach_BasicParametersAndRolesMappingTable(BasicParametersAndRolesMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.RolesTable = this;
+		}
+		
+		private void detach_BasicParametersAndRolesMappingTable(BasicParametersAndRolesMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.RolesTable = null;
+		}
+		
+		private void attach_UsersAndRolesMappingTable(UsersAndRolesMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.RolesTable = this;
+		}
+		
+		private void detach_UsersAndRolesMappingTable(UsersAndRolesMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.RolesTable = null;
 		}
 	}
 	

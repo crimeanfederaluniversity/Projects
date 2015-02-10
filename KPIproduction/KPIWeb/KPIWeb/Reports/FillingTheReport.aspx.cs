@@ -18,118 +18,126 @@ namespace KPIWeb.Reports
 {
     public partial class FillingTheReport : System.Web.UI.Page
     {
-        UsersTable user;
-       // DataTable dtt;// (DataTable)GridviewCollectedBasicParameters.DataSource;
-
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            //dtt = (DataTable)GridviewCollectedBasicParameters.DataSource;
-            //DataTable dt = (DataTable)GridviewCollectedBasicParameters.DataSource;
-
             if (!Page.IsPostBack)
             {
+                int UserID = (int) Session["UserID"];
+                int ReportID;
+                int RoleID;
+                string param = Session["Params"].ToString();
+                string[] tmp = param.Split('_');
+                ReportID = Convert.ToInt32(tmp[0]);
+                RoleID = Convert.ToInt32(tmp[1]);
                 KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-                UsersTable user = (from usersTable in KPIWebDataContext.UsersTable
-                                   where usersTable.Login == "user11" &&
-                                   usersTable.Password == "user11"
-                                   select usersTable).FirstOrDefault();
-                Session["user"] = user;
 
-                user = (UsersTable)Session["user"];
+                UsersTable user = (from usersTable in KPIWebDataContext.UsersTable
+                    where usersTable.UsersTableID == UserID
+                    select usersTable).FirstOrDefault();
 
                 if (user == null)
+                {
                     Response.Redirect("Login.aspx");
+                }
                 else
                 {
-                    //KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+                //KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+                //Список ID всех активных кампаний для данного пользователя
+                    /* List<int> ReportArchiveIDList = (from reportArchiveTables in KPIWebDataContext.ReportArchiveTables
+                                                         join reportAndRolesMappings in KPIWebDataContext.ReportAndRolesMappings on
+                                                         reportArchiveTables.ReportArchiveTableID equals reportAndRolesMappings.FK_ReportArchiveTable
+                                                         where reportAndRolesMappings.FK_RolesTable == user.FK_RolesTable &&
+                                                         reportArchiveTables.Active == true &&
+                                                         reportArchiveTables.StartDateTime < DateTime.Now &&
+                                                         reportArchiveTables.EndDateTime > DateTime.Now
+                                                         select reportArchiveTables.ReportArchiveTableID).ToList();
 
-                    //Список ID всех активных кампаний для данного пользователя
+                        int currentReportArchiveID = ReportArchiveIDList.FirstOrDefault();
+                      */
+                    ViewState["CurrentReportArchiveID"] = ReportID;
+                 
 
-                    
-                    List<int> ReportArchiveIDList = (from reportArchiveTables in KPIWebDataContext.ReportArchiveTables
-                                                     join reportAndRolesMappings in KPIWebDataContext.ReportAndRolesMappings on
-                                                     reportArchiveTables.ReportArchiveTableID equals reportAndRolesMappings.FK_ReportArchiveTable
-                                                     where reportAndRolesMappings.FK_RolesTable == user.FK_RolesTable &&
-                                                     reportArchiveTables.Active == true &&
-                                                     reportArchiveTables.StartDateTime < DateTime.Now &&
-                                                     reportArchiveTables.EndDateTime > DateTime.Now
-                                                     select reportArchiveTables.ReportArchiveTableID).ToList();
+                //Список всех базовых параметров "принадлежащих" данному пользователю
+                List<BasicParametersTable> basicParametersTable =
+                    (from basicParametersTables in KPIWebDataContext.BasicParametersTables
+                        join basicParametersAndRolesMappingTables in
+                            KPIWebDataContext.BasicParametersAndRolesMappingTables on
+                            basicParametersTables.BasicParametersTableID equals
+                            basicParametersAndRolesMappingTables.FK_BasicParametersTable
+                        where basicParametersAndRolesMappingTables.FK_RolesTable == RoleID
+                        select basicParametersTables).ToList();
 
-                    int currentReportArchiveID = ReportArchiveIDList.FirstOrDefault();
-                    ViewState["CurrentReportArchiveID"] = currentReportArchiveID;
+                //Список ранее введенных пользователем данных для данной кампании (отчета)
+                List<CollectedBasicParametersTable> сollectedBasicParametersTable =
+                    (from collectedBasicParameters in KPIWebDataContext.CollectedBasicParametersTable
+                        where
+                            (from item in basicParametersTable select item.BasicParametersTableID).ToList()
+                                .Contains((int) collectedBasicParameters.FK_BasicParametersTable) &&
+                            collectedBasicParameters.FK_UsersTable == UserID &&
+                            collectedBasicParameters.FK_ReportArchiveTable == ReportID
+                        select collectedBasicParameters).ToList();
 
-                    //Список всех базовых параметров "принадлежащих" данному пользователю
-                    List<BasicParametersTable> basicParametersTable = (from basicParametersTables in KPIWebDataContext.BasicParametersTables
-                                                                       join basicParametersAndRolesMappingTables in KPIWebDataContext.BasicParametersAndRolesMappingTables on
-                                                                       basicParametersTables.BasicParametersTableID equals basicParametersAndRolesMappingTables.FK_BasicParametersTable
-                                                                       where basicParametersAndRolesMappingTables.FK_RolesTable == user.FK_RolesTable
-                                                                       select basicParametersTables).ToList();
+                DataTable dataTable = new DataTable();
+                dataTable.Columns.Add(new DataColumn("CurrentReportArchiveID", typeof (string)));
+                dataTable.Columns.Add(new DataColumn("BasicParametersTableID", typeof (string)));
+                dataTable.Columns.Add(new DataColumn("CollectedBasicParametersTableID", typeof (string)));
+                dataTable.Columns.Add(new DataColumn("Name", typeof (string)));
+                dataTable.Columns.Add(new DataColumn("CollectedValue", typeof (string)));
 
-                    //Список ранее введенных пользователем данных для данной кампании (отчета)
-                    List<CollectedBasicParametersTable> сollectedBasicParametersTable = (from collectedBasicParameters in KPIWebDataContext.CollectedBasicParametersTable
-                                                                                         where (from item in basicParametersTable select item.BasicParametersTableID).ToList().Contains((int)collectedBasicParameters.FK_BasicParametersTable) &&
-                                                                                         collectedBasicParameters.FK_UsersTable == user.UsersTableID &&
-                                                                                         collectedBasicParameters.FK_ReportArchiveTable == currentReportArchiveID
-                                                                                         select collectedBasicParameters).ToList();
+                //Добавляем недостающие строки в базу CollectedBasicParametersTable с пустыми значениями в столбце "CollectedValue"
+                //+ заполняем обьект dataTable
+                foreach (BasicParametersTable basicParameter in basicParametersTable)
+                {
+                    CollectedBasicParametersTable сollectedBasicParameter = (from item in сollectedBasicParametersTable
+                        where item.FK_BasicParametersTable == basicParameter.BasicParametersTableID
+                        select item).FirstOrDefault();
 
-                    DataTable dataTable = new DataTable();
-                    dataTable.Columns.Add(new DataColumn("CurrentReportArchiveID", typeof(string)));
-                    dataTable.Columns.Add(new DataColumn("BasicParametersTableID", typeof(string)));
-                    dataTable.Columns.Add(new DataColumn("CollectedBasicParametersTableID", typeof(string)));
-                    dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
-                    dataTable.Columns.Add(new DataColumn("CollectedValue", typeof(string)));
+                    DataRow dataRow = dataTable.NewRow();
 
-                    //Добавляем недостающие строки в базу CollectedBasicParametersTable с пустыми значениями в столбце "CollectedValue"
-                    //+ заполняем обьект dataTable
-                    foreach (BasicParametersTable basicParameter in basicParametersTable)
+                    dataRow["CurrentReportArchiveID"] = ReportID;
+                    dataRow["BasicParametersTableID"] = basicParameter.BasicParametersTableID;
+                    dataRow["Name"] = basicParameter.Name;
+
+                    if (сollectedBasicParameter == null)
                     {
-                        CollectedBasicParametersTable сollectedBasicParameter = (from item in сollectedBasicParametersTable
-                                                                                 where item.FK_BasicParametersTable == basicParameter.BasicParametersTableID
-                                                                                 select item).FirstOrDefault();
+                        string localIP =
+                            Dns.GetHostEntry(Dns.GetHostName())
+                                .AddressList.Where(
+                                    ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                                .Select(ip => ip.ToString())
+                                .FirstOrDefault() ?? "";
 
-                        DataRow dataRow = dataTable.NewRow();
+                        CollectedBasicParametersTable newItem = new CollectedBasicParametersTable();
+                        newItem.Active = true;
+                        newItem.FK_UsersTable = UserID;
+                        newItem.FK_ReportArchiveTable = ReportID;
+                        newItem.FK_BasicParametersTable = basicParameter.BasicParametersTableID;
+                        newItem.UserIP = localIP;
+                        newItem.LastChangeDateTime = DateTime.Now;
 
-                        dataRow["CurrentReportArchiveID"] = currentReportArchiveID;
-                        dataRow["BasicParametersTableID"] = basicParameter.BasicParametersTableID;
-                        dataRow["Name"] = basicParameter.Name;
+                        dataRow["CollectedBasicParametersTableID"] = string.Empty;
+                        dataRow["CollectedValue"] = string.Empty;
 
-                        if (сollectedBasicParameter == null)
-                        {
-                            string localIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
-
-                            CollectedBasicParametersTable newItem = new CollectedBasicParametersTable();
-                            newItem.Active = true;
-                            newItem.FK_UsersTable = user.UsersTableID;
-                            newItem.FK_ReportArchiveTable = currentReportArchiveID;
-                            newItem.FK_BasicParametersTable = basicParameter.BasicParametersTableID;
-                            newItem.UserIP = localIP;
-                            newItem.LastChangeDateTime = DateTime.Now;
-
-                            dataRow["CollectedBasicParametersTableID"] = string.Empty;
-                            dataRow["CollectedValue"] = string.Empty;
-
-                            KPIWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(newItem);
-                        }
-                        else
-                        {
-                            dataRow["CollectedBasicParametersTableID"] = сollectedBasicParameter.CollectedBasicParametersTableID;
-                            dataRow["CollectedValue"] = сollectedBasicParameter.CollectedValue;
-                        }
-
-                        dataTable.Rows.Add(dataRow);
+                        KPIWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(newItem);
+                    }
+                    else
+                    {
+                        dataRow["CollectedBasicParametersTableID"] =
+                            сollectedBasicParameter.CollectedBasicParametersTableID;
+                        dataRow["CollectedValue"] = сollectedBasicParameter.CollectedValue;
                     }
 
-                    KPIWebDataContext.SubmitChanges();
-
-                    ViewState["CollectedBasicParametersTable"] = dataTable;
-
-                    GridviewCollectedBasicParameters.DataSource = dataTable;
-                    GridviewCollectedBasicParameters.DataBind();
-
-                   
+                    dataTable.Rows.Add(dataRow);
                 }
+
+                KPIWebDataContext.SubmitChanges();
+
+                ViewState["CollectedBasicParametersTable"] = dataTable;
+
+                GridviewCollectedBasicParameters.DataSource = dataTable;
+                GridviewCollectedBasicParameters.DataBind();
             }
+        }
         }
 
         protected void ButtonSave_Click(object sender, EventArgs e)
@@ -142,7 +150,7 @@ namespace KPIWeb.Reports
                 int currentReportArchiveID = (int)ViewState["CurrentReportArchiveID"];
 
                 KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-                user = (UsersTable)Session["user"];
+               // user = (UsersTable)Session["user"];
 
                 Dictionary<int, double> tempDictionary = new Dictionary<int, double>();
 

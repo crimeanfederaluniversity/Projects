@@ -108,7 +108,7 @@ namespace KPIWeb.Account
                 }
             }
         }
-
+       
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -132,7 +132,7 @@ namespace KPIWeb.Account
                 DropDownList1.DataBind();
 
                 List<RolesTable> RolesTableList =
-                    (from item in kPiDataContext.RolesTable select item).OrderBy(mc => mc.Name).ToList();
+                    (from item in kPiDataContext.RolesTable select item).OrderBy(mc => mc.RoleName).ToList();
 
                 var dictionary_roles = new Dictionary<int, string>();
                 dictionary_roles.Add(0, "Выберите значение");
@@ -140,28 +140,10 @@ namespace KPIWeb.Account
                 int i = 0;
                 foreach (var item in RolesTableList)
                 {
-                    CheckBoxList1.Items.Add(item.Name);
+                    CheckBoxList1.Items.Add(item.RoleName);
                     CheckBoxList1.Items[i].Value = item.RolesTableID.ToString();
-                    i++;
-                    // ListItem it;
-                    //// it.Text = item.Name;
-                    // it.Value = item.RolesTableID;
-                    // CheckBoxList1.Items.Add();
-                    // dictionary_roles.Add(item.RolesTableID, item.Name);
-                    //connect_[i] = item.RolesTableID;
-                    // i++;                                      
+                    i++;                                  
                 }
-                //Session["hill"] = connect_;
-
-              /*  CheckBoxList1.DataTextField = "Value";
-                CheckBoxList1.DataValueField = "Key";
-                CheckBoxList1.DataSource = dictionary_roles;
-                CheckBoxList1.DataBind();*/
-/*
-                DropDownList4.DataTextField = "Value";
-                DropDownList4.DataValueField = "Key";
-                DropDownList4.DataSource = dictionary_roles;
-                DropDownList4.DataBind();*/
             }
         }
 

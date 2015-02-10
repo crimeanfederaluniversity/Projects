@@ -88,7 +88,7 @@ namespace KPIWeb.Reports
                             dataRow["RoleChecked"] = false;
 
                         dataRow["RolesTableID"] = role.RolesTableID;
-                        dataRow["Name"] = role.Name;
+                        dataRow["Name"] = role.RoleName;
 
                         dataTable.Rows.Add(dataRow);
                     }

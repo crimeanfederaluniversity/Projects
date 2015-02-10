@@ -37,7 +37,7 @@
             <asp:Button ID="ButtonSave" Width="100%" runat="server" Text="Сохранить" OnClick="ButtonSave_Click" />
 
         </div>
-        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Экспортировать в excel" Width="1008px" />
     </form>
 </body>
 </html>

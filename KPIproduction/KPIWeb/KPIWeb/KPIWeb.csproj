@@ -160,6 +160,7 @@
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="Account\WebForm1.aspx" />
     <Content Include="AutomationDepartment\AddLevel.aspx" />
+    <Content Include="AutomationDepartment\Main.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -176,6 +177,7 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Reports\ChooseReport.aspx" />
     <Content Include="Reports\EditReport.aspx" />
     <Content Include="Reports\FillingTheReport.aspx" />
     <Content Include="Reports\GenerateReport.aspx" />
@@ -289,6 +291,13 @@
     <Compile Include="AutomationDepartment\AddLevel.aspx.designer.cs">
       <DependentUpon>AddLevel.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AutomationDepartment\Main.aspx.cs">
+      <DependentUpon>Main.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutomationDepartment\Main.aspx.designer.cs">
+      <DependentUpon>Main.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CalculateIndicator.cs" />
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
@@ -318,6 +327,13 @@
     <Compile Include="MessageBox.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\ChooseReport.aspx.cs">
+      <DependentUpon>ChooseReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\ChooseReport.aspx.designer.cs">
+      <DependentUpon>ChooseReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\EditReport.aspx.cs">
       <DependentUpon>EditReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -381,6 +397,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
