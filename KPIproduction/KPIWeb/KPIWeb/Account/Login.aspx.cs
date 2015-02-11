@@ -7,9 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
-using System.Web.UI;
 using KPIWeb.Models;
+using Microsoft.Office.Interop.Excel;
 using WebApplication3;
+using Page = System.Web.UI.Page;
 
 namespace KPIWeb.Account
 {
@@ -26,15 +27,14 @@ namespace KPIWeb.Account
                 if (IsValid)
                 {
                     KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-
                     UsersTable user = (from usersTables in KPIWebDataContext.UsersTable
                                        where usersTables.Login == UserName.Text &&
                                        usersTables.Password == Password.Text
                                        select usersTables).FirstOrDefault();
                     if (user != null)
                     {
-                        Session["user"] = user;
-                        Session["UserID"] = user.UsersTableID;
+                        Serialization UserSerId = new Serialization(user.UsersTableID);
+                        Session["UserID"] = UserSerId;
 
                         List<RolesTable> UserRoles = (from a in KPIWebDataContext.UsersAndRolesMappingTable
                                                       join b in KPIWebDataContext.RolesTable

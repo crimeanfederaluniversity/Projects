@@ -12,16 +12,17 @@ namespace KPIWeb.AutomationDepartment
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            UsersTable user = (UsersTable)Session["user"];
-            if (user == null)
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("~/Account/Login.aspx");
             }
+            int UserId = UserSer.Id;
             KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
             List<RolesTable> UserRoles = (from a in kPiDataContext.UsersAndRolesMappingTable
                                           join b in kPiDataContext.RolesTable
                                           on a.FK_RolesTable equals b.RolesTableID
-                                          where a.FK_UsersTable == user.UsersTableID && b.Active == true
+                                          where a.FK_UsersTable == UserId && b.Active == true
                                           select b).ToList();
             foreach (RolesTable Role in UserRoles)
             {

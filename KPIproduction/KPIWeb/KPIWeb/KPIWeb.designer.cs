@@ -1723,39 +1723,39 @@ namespace KPIWeb
 	public partial class UsersTable : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _UsersTableID;
-		
-		private bool _Active;
-		
-		private string _Login;
-		
-		private string _Password;
-		
-		private string _Email;
-		
-		private System.Nullable<int> _FK_FirstLevelSubdivisionTable;
-		
-		private System.Nullable<int> _FK_SecondLevelSubdivisionTable;
-		
-		private System.Nullable<int> _FK_ThirdLevelSubdivisionTable;
-		
-		private System.Nullable<int> _FK_FourthLevelSubdivisionTable;
-		
-		private System.Nullable<int> _FK_FifthLevelSubdivisionTable;
-		
-		private System.Nullable<int> _FK_RolesTable;
-		
-		private EntitySet<UsersAndRolesMappingTable> _UsersAndRolesMappingTable;
-		
-		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
-		
-		private EntityRef<FirstLevelSubdivisionTable> _FirstLevelSubdivisionTable;
-		
-		private EntityRef<SecondLevelSubdivisionTable> _SecondLevelSubdivisionTable;
-		
-		private EntityRef<ThirdLevelSubdivisionTable> _ThirdLevelSubdivisionTable;
+		protected static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+
+        protected int _UsersTableID;
+
+        protected bool _Active;
+
+        protected string _Login;
+
+        protected string _Password;
+
+        protected string _Email;
+
+        protected System.Nullable<int> _FK_FirstLevelSubdivisionTable;
+
+        protected System.Nullable<int> _FK_SecondLevelSubdivisionTable;
+
+        protected System.Nullable<int> _FK_ThirdLevelSubdivisionTable;
+
+        protected System.Nullable<int> _FK_FourthLevelSubdivisionTable;
+
+        protected System.Nullable<int> _FK_FifthLevelSubdivisionTable;
+
+        protected System.Nullable<int> _FK_RolesTable;
+
+        protected EntitySet<UsersAndRolesMappingTable> _UsersAndRolesMappingTable;
+
+        protected EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
+
+        protected EntityRef<FirstLevelSubdivisionTable> _FirstLevelSubdivisionTable;
+
+        protected EntityRef<SecondLevelSubdivisionTable> _SecondLevelSubdivisionTable;
+
+        protected EntityRef<ThirdLevelSubdivisionTable> _ThirdLevelSubdivisionTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();

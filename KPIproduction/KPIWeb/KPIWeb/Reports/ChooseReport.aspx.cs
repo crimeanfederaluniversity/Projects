@@ -12,13 +12,22 @@ namespace KPIWeb.Reports
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
             {
-                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-                int UserID = (int) Session["UserID"];
+                Response.Redirect("~/Account/Login.aspx");
+            }
+            //////////////////////////////////////////////////////////////////////////
+            if (!Page.IsPostBack)
+            {                            
+                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();      
+                List<RolesTable> UserRoles = (from a in kpiWebDataContext.UsersAndRolesMappingTable
+                                              join b in kpiWebDataContext.RolesTable
+                                               on a.FK_RolesTable equals b.RolesTableID
+                                                where a.FK_UsersTable == UserSer.Id && b.Active == true
+                                                select b).ToList();
 
                 DataTable dataTable = new DataTable();
-
                 dataTable.Columns.Add(new DataColumn("ReportID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("RoleID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("ReportName", typeof(string)));
@@ -26,16 +35,6 @@ namespace KPIWeb.Reports
                 dataTable.Columns.Add(new DataColumn("Param", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("StartDate", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("EndDate", typeof(string)));
-
-
-
-                List<RolesTable> UserRoles = (from a in kpiWebDataContext.UsersAndRolesMappingTable
-                                              join b in kpiWebDataContext.RolesTable
-                        on a.FK_RolesTable equals b.RolesTableID
-                    where a.FK_UsersTable == UserID && b.Active == true
-                    select b).ToList();
-
-                int i = 0;
 
                 foreach (RolesTable UserRole in UserRoles)
                 {
@@ -63,7 +62,7 @@ namespace KPIWeb.Reports
                                 dataRow["StartDate"] = Report.StartDateTime.ToString().Split(' ')[0];
                                 dataRow["EndDate"] = Report.EndDateTime.ToString().Split(' ')[0]; ;
                                 dataTable.Rows.Add(dataRow);              
-                                i++;
+                                //i++;
                             }
                         }
                         if ((UserRole.CanView == true) && (UserRole.CanEdit != true))
@@ -83,7 +82,9 @@ namespace KPIWeb.Reports
         {
             Button button = (Button)sender;
             {
-                Session["Params"] = button.CommandArgument.ToString() ;
+                //Session["Params"] = button.CommandArgument.ToString() ;
+                Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
+                Session["Params"] = paramSerialization;
                 Response.Redirect("~/Reports/FillingTheReport.aspx");
             }
         }

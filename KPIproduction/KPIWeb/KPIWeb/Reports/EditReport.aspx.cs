@@ -15,29 +15,20 @@ namespace KPIWeb.Reports
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Account/Login.aspx");
+            }
+            ////////////////////////////////////////////////////////////////////////////
+            Serialization ReportId = (Serialization)Session["ReportArchiveTableID"];
             if (!Page.IsPostBack)
             {
-                //KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-                //UsersTable user = (from usersTables in KPIWebDataContext.UsersTables
-                //                   where usersTables.Login == "Statistical" &&
-                //                   usersTables.Password == "Statistical"
-                //                   select usersTables).FirstOrDefault();
-                //Session["user"] = user;
-
-                //Session["ReportArchiveTableID"] = 2;
-
-
-                user = (UsersTable)Session["user"];
-
-                if (user == null)
-                    Response.Redirect("~/Account/Login.aspx");
-
-                if (Session["ReportArchiveTableID"] != null)
+             
                 {
-                    int reportArchiveTableID = (int)Session["ReportArchiveTableID"];
+                    int reportArchiveTableID = ReportId.ReportArchiveID;///////////////
 
                     KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-
                     ReportArchiveTable ReportArchiveTable = (from item in KPIWebDataContext.ReportArchiveTables
                                                              where item.ReportArchiveTableID == reportArchiveTableID
                                                              select item).FirstOrDefault();
@@ -106,9 +97,11 @@ namespace KPIWeb.Reports
             int rowIndex = 0;
             int reportArchiveTableID = 0;
 
-            if (Session["ReportArchiveTableID"] != null)
-                reportArchiveTableID = (int)Session["ReportArchiveTableID"];
+            //if (Session["ReportArchiveTableID"] != null)
+            //    reportArchiveTableID = (int)Session["ReportArchiveTableID"];
 
+            Serialization ReportId = (Serialization)Session["ReportArchiveTableID"];
+            reportArchiveTableID = ReportId.ReportArchiveID;
             KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
 
             ReportArchiveTable reportArchiveTable = (from item in KPIWebDataContext.ReportArchiveTables

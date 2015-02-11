@@ -10,18 +10,29 @@ namespace KPIWeb.StatisticsDepartment
     public partial class ReportViewer : System.Web.UI.Page
     {
         UsersTable user;
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
-                user = (UsersTable)Session["user"];
-
-                if (user == null)
+                Serialization UserSer = (Serialization)Session["UserID"];
+                if (UserSer == null)
+                {
                     Response.Redirect("~/Account/Login.aspx");
-
+                }
                 KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-
+                List<RolesTable> UserRoles = (from a in KPIWebDataContext.UsersAndRolesMappingTable
+                                              join b in KPIWebDataContext.RolesTable
+                                              on a.FK_RolesTable equals b.RolesTableID
+                                              where a.FK_UsersTable == UserSer.Id && b.Active == true
+                                              select b).ToList();
+                /////////////////////////////////////////////////////////////////////////////////////////////////
+                foreach (RolesTable Role in UserRoles)
+                {
+                    if (Role.Role != 8) //нельзя давать пользователю роли и заполняющего и админа 
+                    {
+                        Response.Redirect("~/Account/Login.aspx");
+                    }
+                }			
                 List<ReportArchiveTable> ReportArchiveTable = (from item in KPIWebDataContext.ReportArchiveTables
                                                                where item.Active == true
                                                                select item).ToList();
@@ -37,7 +48,9 @@ namespace KPIWeb.StatisticsDepartment
             int reportArchiveTableID = 0;
             if (int.TryParse(button.CommandArgument, out reportArchiveTableID) && reportArchiveTableID > 0)
             {
-                Session["ReportArchiveTableID"] = reportArchiveTableID;
+                //Session["ReportArchiveTableID"] = reportArchiveTableID;
+                Serialization ReportID = new Serialization((int)reportArchiveTableID, null);
+                Session["ReportArchiveTableID"] = ReportID;
                 Response.Redirect("~/Reports/EditReport.aspx");
             }
         }
@@ -47,18 +60,18 @@ namespace KPIWeb.StatisticsDepartment
             int reportArchiveTableID = 0;
             if (int.TryParse(button.CommandArgument, out reportArchiveTableID) && reportArchiveTableID > 0)
             {
-                Session["ReportArchiveTableID"] = reportArchiveTableID;
+                //Session["ReportArchiveTableID"] = reportArchiveTableID;
+                Serialization ReportID = new Serialization((int)reportArchiveTableID, null);
+                Session["ReportArchiveTableID"] = ReportID;
                 Response.Redirect("~/Reports/GenerateReport.aspx");
             }
         }
         protected void GenerateReport_Click(object sender, EventArgs e)
-        {
-            
+        {            
         }
 
         protected void GridviewActiveCampaign_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
     }
 }

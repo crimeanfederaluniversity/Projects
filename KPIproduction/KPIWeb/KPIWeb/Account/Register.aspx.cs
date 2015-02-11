@@ -17,7 +17,6 @@ namespace KPIWeb.Account
     public partial class Register : Page
     {
          
-     //   int[] connect_ = new int[100];
         protected void CreateUser_Click(object sender, EventArgs e)
         {   
             KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
@@ -76,7 +75,6 @@ namespace KPIWeb.Account
             kPiDataContext1.SubmitChanges();
 
         }
-
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
             DropDownList2.Items.Clear();
@@ -109,19 +107,25 @@ namespace KPIWeb.Account
                 }
             }
         }
-       
+     
         protected void Page_Load(object sender, EventArgs e)
         {          
-            UsersTable user = (UsersTable) Session["user"];                   
+            /*UsersTable user = (UsersTable) Session["user"];                   
             if (user == null)
             {
                 Response.Redirect("~/Account/Login.aspx");
+            }*/
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Account/Login.aspx");
             }
+            int UserId = UserSer.Id;
             KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
             List<RolesTable> UserRoles = (from a in kPiDataContext.UsersAndRolesMappingTable
                                           join b in kPiDataContext.RolesTable
                                           on a.FK_RolesTable equals b.RolesTableID
-                                          where a.FK_UsersTable == user.UsersTableID && b.Active == true
+                                          where a.FK_UsersTable == UserId && b.Active == true
                                           select b).ToList();            
             foreach (RolesTable Role in UserRoles)
             {

@@ -18,15 +18,30 @@ namespace KPIWeb.Reports
 {
     public partial class FillingTheReport : System.Web.UI.Page
     {
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Account/Login.aspx");
+            }
+
+            Serialization paramSerialization = (Serialization)Session["Params"];
+            if (paramSerialization == null)
+            {
+                Response.Redirect("~/Account/Login.aspx");
+            }
+            /////////////////////////////////////////////////////////////////////////
             if (!Page.IsPostBack)
             {
-                int UserID = (int) Session["UserID"];
+
+                int UserID = UserSer.Id;
                 int ReportID;
                 int RoleID;
-                string param = Session["Params"].ToString();
-                string[] tmp = param.Split('_');
+                //string param = Session["Params"].ToString();
+               // string tmp1 = paramSerialization.ReportStr.ToString();
+                string[] tmp = paramSerialization.ReportStr.Split('_');
                 ReportID = Convert.ToInt32(tmp[0]);
                 RoleID = Convert.ToInt32(tmp[1]);
                 KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();

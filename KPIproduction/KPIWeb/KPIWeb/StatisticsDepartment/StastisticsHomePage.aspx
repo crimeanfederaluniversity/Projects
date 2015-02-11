@@ -15,6 +15,8 @@
         <br />
         <br />
         <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Создать отчет" Width="250px" />
+        <br />
+        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
     </form>
 </body>
 </html>

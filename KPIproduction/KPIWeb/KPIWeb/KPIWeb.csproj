@@ -359,6 +359,7 @@
       <DependentUpon>GenerateReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\GridViewExportUtil.cs" />
+    <Compile Include="Serialization.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

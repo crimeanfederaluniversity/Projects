@@ -15,28 +15,26 @@ namespace KPIWeb.Reports
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Account/Login.aspx");
+            }
+            				
             if (!Page.IsPostBack)
             {
-                //KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-                //UsersTable user = (from usersTables in KPIWebDataContext.UsersTables
-                //                   where usersTables.Login == "Statistical" &&
-                //                   usersTables.Password == "Statistical"
-                //                   select usersTables).FirstOrDefault();
-                //Session["user"] = user;
+                KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+                UsersTable user = (from usersTables in KPIWebDataContext.UsersTable
+                                   where usersTables.UsersTableID == UserSer.Id
+                                   select usersTables).FirstOrDefault();
 
-                //Session["ReportArchiveTableID"] = 2;
+                Serialization ReportId = (Serialization)Session["ReportArchiveTableID"];
 
-                user = (UsersTable)Session["user"];
-
-                if (user == null)
-                    Response.Redirect("~/Account/Login.aspx");
-
-                if (Session["ReportArchiveTableID"] != null)
+                if (ReportId != null) ////////////////////////////////////////
                 {
-                    int reportArchiveTableID = (int)Session["ReportArchiveTableID"];
 
-                    KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-
+                    int reportArchiveTableID = ReportId.ReportArchiveID;    
+              
                     List<IndicatorsTable> indicatorsTable = (from item in KPIWebDataContext.IndicatorsTables
                                                              select item).ToList();
 
@@ -53,9 +51,7 @@ namespace KPIWeb.Reports
                         dataRow["IndicatorsValue"] = string.Format("{0:N2}"+item.Measure, CalculateIndicator.Calculate(item.IndicatorsTableID, reportArchiveTableID)); 
 
                         dataTable.Rows.Add(dataRow);
-
                     }
-
                     GridviewReport.DataSource = dataTable;
                     GridviewReport.DataBind();
                 }
