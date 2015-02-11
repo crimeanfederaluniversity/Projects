@@ -22,9 +22,10 @@ namespace KPIWeb.Reports
             }
             ////////////////////////////////////////////////////////////////////////////
             Serialization ReportId = (Serialization)Session["ReportArchiveTableID"];
+
             if (!Page.IsPostBack)
             {
-             
+                if (ReportId.Id != 0)
                 {
                     int reportArchiveTableID = ReportId.ReportArchiveID;///////////////
 
@@ -166,6 +167,11 @@ namespace KPIWeb.Reports
 
             KPIWebDataContext.SubmitChanges();
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Данные успешно сохранены');", true);
+        }
+
+        protected void CalendarStartDateTime_SelectionChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

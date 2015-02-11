@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EditReport.aspx.cs" Inherits="KPIWeb.Reports.EditReport" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="EditReport.aspx.cs" Inherits="KPIWeb.Reports.EditReport" %>
 
 <!DOCTYPE html>
 
@@ -52,18 +52,15 @@
 
                 <tr>
                     <td>Стартовая дата отчета
-                    </td>
-                    <td>
-                        <asp:Calendar ID="CalendarStartDateTime" runat="server" SelectionMode="Day" ShowGridLines="True">
+                        <br />
+                        <asp:Calendar ID="CalendarStartDateTime" runat="server" SelectionMode="Day" ShowGridLines="True" OnSelectionChanged="CalendarStartDateTime_SelectionChanged">
                             <SelectedDayStyle BackColor="Yellow" ForeColor="Red"></SelectedDayStyle>
                         </asp:Calendar>
                     </td>
-                </tr>
-
-                <tr>
-                    <td>Конечная дата отчета
-                    </td>
                     <td>
+                        &nbsp;&nbsp;
+                        Конечная дата отчета
+                        <br />
                         <asp:Calendar ID="CalendarEndDateTime" runat="server" SelectionMode="Day" ShowGridLines="True">
                             <SelectedDayStyle BackColor="Yellow" ForeColor="Red"></SelectedDayStyle>
                         </asp:Calendar>
@@ -71,17 +68,18 @@
                 </tr>
 
                 <tr>
-                    <td>Запланированная дата отправки отчета
-                    </td>
+                    <td>Запланированная дата отправки отчета</td>
+                    <td>
+                        &nbsp;&nbsp;
+                        Дата отправки отчета
+                        </td>
+                </tr>
+
+                <tr>
                     <td>
                         <asp:Calendar ID="CalendarDateToSend" runat="server" SelectionMode="Day" ShowGridLines="True">
                             <SelectedDayStyle BackColor="Yellow" ForeColor="Red"></SelectedDayStyle>
                         </asp:Calendar>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Дата отправки отчета
                     </td>
                     <td>
                         <asp:Calendar ID="CalendarSentDateTime" runat="server" SelectionMode="Day" ShowGridLines="True">
@@ -90,11 +88,9 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <td>Выберите роли задействованные в кампании (отчете)
-                    </td>
-                    <td>
-                        <asp:GridView ID="GridviewRoles" runat="server" ShowFooter="true" AutoGenerateColumns="false">
+                </table>
+            <br />
+            Выберите роли задействованные в кампании (отчете)<asp:GridView ID="GridviewRoles" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="680px">
                             <Columns>
 
                                 <asp:TemplateField HeaderText="Активен">
@@ -108,11 +104,8 @@
 
                             </Columns>
                         </asp:GridView>
-                    </td>
-                </tr>
-
-            </table>
-            <asp:Button ID="ButtonSave" runat="server" Width="100%" Text="Сохранить" OnClick="ButtonSave_Click" />
+                    <br />
+            <asp:Button ID="ButtonSave" runat="server" Width="71%" Text="Сохранить" OnClick="ButtonSave_Click" />
         </div>
     </form>
 </body>

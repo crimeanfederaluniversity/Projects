@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="IsAvailibleMappingRole.aspx.cs" Inherits="KPIWeb.WebForm2" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="IsAvailibleMappingRole.aspx.cs" Inherits="KPIWeb.WebForm2" %>
 
 <!DOCTYPE html>
 

@@ -40,7 +40,11 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/StatisticsDepartment/ReportCreate.aspx");
+            Serialization ReportID = new Serialization(0, null);
+            Session["ReportArchiveTableID"] = ReportID;
+            Response.Redirect("~/Reports/EditReport.aspx");
+
+            //Response.Redirect("~/StatisticsDepartment/ReportCreate.aspx");
         }
     }
 }

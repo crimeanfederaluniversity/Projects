@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="StastisticsHomePage.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.StastisticsHomePage" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="StastisticsHomePage.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.StastisticsHomePage" %>
 
 <!DOCTYPE html>
 
