@@ -37,7 +37,6 @@ namespace KPIWeb.Reports
               
                     List<IndicatorsTable> indicatorsTable = (from item in KPIWebDataContext.IndicatorsTables
                                                              select item).ToList();
-
                     DataTable dataTable = new DataTable();
                     dataTable.Columns.Add(new DataColumn("IndicatorsTableID", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("Name", typeof(string)));

@@ -13,10 +13,8 @@ using Microsoft.Ajax.Utilities;
 
 namespace KPIWeb.Account
 {
-
     public partial class Register : Page
-    {
-         
+    {        
         protected void CreateUser_Click(object sender, EventArgs e)
         {   
             KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
@@ -96,9 +94,8 @@ namespace KPIWeb.Account
 
                     dictionary.Add(-1, "Выберите значение");
 
-
-
-                    //  DropDownListRoleStage2.Enabled = true;
+                    foreach (var item in second_stageList)
+                        dictionary.Add(item.SecondLevelSubdivisionTableID, item.Name);
 
                     DropDownList2.DataTextField = "Value";
                     DropDownList2.DataValueField = "Key";
@@ -106,15 +103,9 @@ namespace KPIWeb.Account
                     DropDownList2.DataBind();
                 }
             }
-        }
-     
+        }    
         protected void Page_Load(object sender, EventArgs e)
         {          
-            /*UsersTable user = (UsersTable) Session["user"];                   
-            if (user == null)
-            {
-                Response.Redirect("~/Account/Login.aspx");
-            }*/
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
@@ -152,6 +143,7 @@ namespace KPIWeb.Account
                 DropDownList1.DataSource = dictionary;
                 DropDownList1.DataBind();
 
+
                 List<RolesTable> RolesTableList =
                     (from item in kPiDataContext.RolesTable select item).OrderBy(mc => mc.RoleName).ToList();
 
@@ -167,7 +159,6 @@ namespace KPIWeb.Account
                 }
             }
         }
-
         protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
         {
             DropDownList3.Items.Clear();
@@ -186,8 +177,7 @@ namespace KPIWeb.Account
                     dictionary.Add(-1, "Выберите значение");
 
                     foreach (var item in third_stage)
-                        dictionary.Add(item.ThirdLevelSubdivisionTableID, item.Name);
-                  //  DropDownListRoleStage3.Enabled = true;
+                    dictionary.Add(item.ThirdLevelSubdivisionTableID, item.Name);
                     DropDownList3.DataTextField = "Value";
                     DropDownList3.DataValueField = "Key";
                     DropDownList3.DataSource = dictionary;
@@ -195,7 +185,6 @@ namespace KPIWeb.Account
                 }
             }
         }
-
         protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
         {
 

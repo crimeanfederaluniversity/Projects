@@ -43,8 +43,6 @@ namespace KPIWeb.StatisticsDepartment
             Serialization ReportID = new Serialization(0, null);
             Session["ReportArchiveTableID"] = ReportID;
             Response.Redirect("~/Reports/EditReport.aspx");
-
-            //Response.Redirect("~/StatisticsDepartment/ReportCreate.aspx");
         }
     }
 }

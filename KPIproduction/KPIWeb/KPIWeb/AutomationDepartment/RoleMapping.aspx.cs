@@ -42,8 +42,6 @@ namespace KPIWeb
                 role = (from roles in kpiWebDataContext.RolesTable
                     select roles.RoleName).ToList();
 
-
-
                 foreach (string name in role)
                 {
                     DropDownList1.Items.Add(name);
@@ -60,9 +58,7 @@ namespace KPIWeb
 
         private void RefreshGridView()
         {
-
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-
             var vrCountry = (from a in kpiWebDataContext.BasicParametersTable select a).Except(
                 from b in kpiWebDataContext.BasicParametersTable
                 join c in kpiWebDataContext.BasicParametersAndRolesMappingTable on b.BasicParametersTableID equals
@@ -79,46 +75,26 @@ namespace KPIWeb
             foreach (var obj in vrCountry)
             {
                 DataRow dataRow = dataTable.NewRow();
-
-
-                /*  if (obj.Active == true)
-                {
-                    dataRow["EditChecked"] = true;
-                    dataRow["ViewChecked"] = true;
-                }
-                else
-                {
-                    dataRow["EditChecked"] = false;
-                    dataRow["ViewChecked"] = false;
-                }
-                */
-
                 dataRow["EditChecked"] = false;
                 dataRow["ViewChecked"] = false;
-
                 dataRow["Name"] = " " + obj.BasicParametersTableID + ". " + obj.Name;
-
-
                 dataTable.Rows.Add(dataRow);
                 i++;
             }
 
             ViewState["GridviewRoleMapping"] = dataTable;
-
             GridviewRoles.DataSource = dataTable;
             GridviewRoles.DataBind();
         }
 
         protected void Button1_Click(object sender, EventArgs e)
-        {
-           
+        {           
             int rowIndex = 0;
             KPIWebDataContext kpiWebDataContext2 = new KPIWebDataContext();
             var vrCountry = (from a in kpiWebDataContext2.BasicParametersTable select a).Except(
                                    from b in kpiWebDataContext2.BasicParametersTable
                                    join c in kpiWebDataContext2.BasicParametersAndRolesMappingTable on
-                                       b.BasicParametersTableID equals
-                                       c.FK_BasicParametersTable
+                                   b.BasicParametersTableID equals c.FK_BasicParametersTable
                                    select b).ToList();
 
             var vrRoleName = (from a in kpiWebDataContext2.RolesTable
@@ -131,53 +107,46 @@ namespace KPIWeb
 
                 if (dataTable.Rows.Count > 0)
                 {
-
                     for (int i = 1; i <= dataTable.Rows.Count; i++)
                     {
-
                         CheckBox checkBoxCanEdit = (CheckBox)GridviewRoles.Rows[rowIndex].FindControl("CheckBoxCanEdit");
                         CheckBox checkBoxCanView = (CheckBox)GridviewRoles.Rows[rowIndex].FindControl("CheckBoxCanView");
-                        
 
-                        if (checkBoxCanView != null  && checkBoxCanEdit != null)
-                            if (checkBoxCanEdit.Checked == true || checkBoxCanView.Checked == true)
+                        if (checkBoxCanView != null && checkBoxCanEdit != null)
                         {
-
-                            using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
+                            if (checkBoxCanEdit.Checked == true || checkBoxCanView.Checked == true)
                             {
-                                
+
+                                using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
+                                {
                                     BasicParametersAndRolesMappingTable bparmTables =
                                         new BasicParametersAndRolesMappingTable();
                                     bparmTables.Active = true;
-                                bparmTables.FK_RolesTable = vrRoleName[0].RolesTableID;
-
-                                bparmTables.FK_BasicParametersTable = vrCountry[rowIndex].BasicParametersTableID;
+                                    bparmTables.FK_RolesTable = vrRoleName[0].RolesTableID;
+                                    bparmTables.FK_BasicParametersTable = vrCountry[rowIndex].BasicParametersTableID;
                                     indexkorel++;
-                                   
-
                                     if (checkBoxCanEdit.Checked == true)
-                                    bparmTables.CanEdit = true;
-                                else
-                                {
-                                    bparmTables.CanEdit = false;
-                                }
-                                if (checkBoxCanView.Checked == true)
-                                    bparmTables.CanView = true;
-                                else
-                                {
-                                    bparmTables.CanView = false;
-                                }
-
+                                        bparmTables.CanEdit = true;
+                                    else
+                                    {
+                                        bparmTables.CanEdit = false;
+                                    }
+                                    if (checkBoxCanView.Checked == true)
+                                        bparmTables.CanView = true;
+                                    else
+                                    {
+                                        bparmTables.CanView = false;
+                                    }
                                     kpiWebDataContext.BasicParametersAndRolesMappingTable.InsertOnSubmit(bparmTables);
                                     kpiWebDataContext.SubmitChanges();
-                                
-
+                                }
                             }
+                            rowIndex++;
                         }
-                        rowIndex++;
                     } 
-                }
-            } RefreshGridView();
+               }
+           }   
+           RefreshGridView();
         }
     }
 }

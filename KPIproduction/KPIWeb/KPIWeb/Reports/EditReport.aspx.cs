@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 using System.Data;
+using System.Threading;
 
 namespace KPIWeb.Reports
 {
@@ -25,7 +26,7 @@ namespace KPIWeb.Reports
 
             if (!Page.IsPostBack)
             {
-                if (ReportId.Id != 0)
+                if (ReportId.ReportArchiveID != 0)
                 {
                     int reportArchiveTableID = ReportId.ReportArchiveID;///////////////
 
@@ -57,11 +58,9 @@ namespace KPIWeb.Reports
                     List<RolesTable> rolesTable = (from item in KPIWebDataContext.RolesTable
                                                    where item.Active == true
                                                    select item).ToList();
-
                     List<ReportAndRolesMapping> reportAndRolesMapping = (from item in KPIWebDataContext.ReportAndRolesMappings
                                                                          where item.FK_ReportArchiveTable == reportArchiveTableID
                                                                          select item).ToList();
-
                     DataTable dataTable = new DataTable();
                     dataTable.Columns.Add(new DataColumn("RolesTableID", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("RoleChecked", typeof(bool)));
@@ -90,83 +89,139 @@ namespace KPIWeb.Reports
                     GridviewRoles.DataSource = dataTable;
                     GridviewRoles.DataBind();
                 }
+                else //создаем новый отчет
+                {
+                    KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+                    ButtonSave.Text="Сохранить новую кампанию";
+                    List<RolesTable> rolesTable = (from item in KPIWebDataContext.RolesTable
+                                                   where item.Active == true
+                                                   select item).ToList();
+                    DataTable dataTable = new DataTable();
+                    dataTable.Columns.Add(new DataColumn("RolesTableID", typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("RoleChecked", typeof(bool)));
+                    dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
+                    foreach (var role in rolesTable)
+                    {
+                        DataRow dataRow = dataTable.NewRow();                      
+                        dataRow["RoleChecked"] = false;
+                        dataRow["RolesTableID"] = role.RolesTableID;
+                        dataRow["Name"] = role.RoleName;
+
+                        dataTable.Rows.Add(dataRow);
+                    }
+                    ViewState["GridviewRoles"] = dataTable;
+                    GridviewRoles.DataSource = dataTable;
+                    GridviewRoles.DataBind();
+                }
             }
         }
 
         protected void ButtonSave_Click(object sender, EventArgs e)
         {
-            int rowIndex = 0;
-            int reportArchiveTableID = 0;
-
-            //if (Session["ReportArchiveTableID"] != null)
-            //    reportArchiveTableID = (int)Session["ReportArchiveTableID"];
 
             Serialization ReportId = (Serialization)Session["ReportArchiveTableID"];
-            reportArchiveTableID = ReportId.ReportArchiveID;
             KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+            ReportArchiveTable reportArchiveTable = new ReportArchiveTable();
 
-            ReportArchiveTable reportArchiveTable = (from item in KPIWebDataContext.ReportArchiveTables
-                                                     where item.ReportArchiveTableID == reportArchiveTableID
-                                                     select item).FirstOrDefault();
+            int reportArchiveTableID = 0;
 
-            if (reportArchiveTable == null)
-                reportArchiveTable = new ReportArchiveTable();
-
-            reportArchiveTable.Active = CheckBoxActive.Checked;
-            reportArchiveTable.Calculeted = CheckBoxCalculeted.Checked;
-            reportArchiveTable.Sent = CheckBoxSent.Checked;
-            reportArchiveTable.RecipientConfirmed = CheckBoxRecipientConfirmed.Checked;
-            reportArchiveTable.Name = TextBoxName.Text;
-
-            if (CalendarStartDateTime.SelectedDate > DateTime.MinValue)
-                reportArchiveTable.StartDateTime = CalendarStartDateTime.SelectedDate;
-
-            if (CalendarEndDateTime.SelectedDate > DateTime.MinValue)
-                reportArchiveTable.EndDateTime = CalendarEndDateTime.SelectedDate;
-
-            if (CalendarDateToSend.SelectedDate > DateTime.MinValue)
-                reportArchiveTable.DateToSend = CalendarDateToSend.SelectedDate;
-
-            if (CalendarSentDateTime.SelectedDate > DateTime.MinValue)
-                reportArchiveTable.SentDateTime = CalendarSentDateTime.SelectedDate;
-
-            if (ViewState["GridviewRoles"] != null)
+            if (ReportId.ReportArchiveID == 0) // создаем новую запись в БД и узнаем ей айди
             {
-                DataTable dataTable = (DataTable)ViewState["GridviewRoles"];
+                reportArchiveTable.Active = CheckBoxActive.Checked;
+                reportArchiveTable.Calculeted = CheckBoxCalculeted.Checked;
+                reportArchiveTable.Sent = CheckBoxSent.Checked;
+                reportArchiveTable.RecipientConfirmed = CheckBoxRecipientConfirmed.Checked;
+                reportArchiveTable.Name = TextBoxName.Text;
 
-                if (dataTable.Rows.Count > 0)
-                {
-                    List<ReportAndRolesMapping> reportAndRolesMappingList = (from item in KPIWebDataContext.ReportAndRolesMappings
-                                                                         where item.FK_ReportArchiveTable == reportArchiveTableID
-                                                                         select item).ToList();
+                if (CalendarStartDateTime.SelectedDate > DateTime.MinValue)
+                    reportArchiveTable.StartDateTime = CalendarStartDateTime.SelectedDate;
 
-                    KPIWebDataContext.ReportAndRolesMappings.DeleteAllOnSubmit(reportAndRolesMappingList);
+                if (CalendarEndDateTime.SelectedDate > DateTime.MinValue)
+                    reportArchiveTable.EndDateTime = CalendarEndDateTime.SelectedDate;
 
-                    for (int i = 1; i <= dataTable.Rows.Count; i++)
-                    {
-                        Label label = (Label)GridviewRoles.Rows[rowIndex].Cells[0].FindControl("LabelRolesTableID");
-                        CheckBox checkBox = (CheckBox)GridviewRoles.Rows[rowIndex].FindControl("CheckBoxRoleChecked");
+                if (CalendarDateToSend.SelectedDate > DateTime.MinValue)
+                    reportArchiveTable.DateToSend = CalendarDateToSend.SelectedDate;
 
-                        if(label != null && checkBox != null)
-                        {
-                            int rolesTableID = -1;
-                            if (int.TryParse(label.Text, out rolesTableID) && rolesTableID > -1 && checkBox.Checked == true)
-                            {
-                                ReportAndRolesMapping reportAndRolesMapping = new ReportAndRolesMapping();
-                                reportAndRolesMapping.Active = true;
-                                reportAndRolesMapping.FK_RolesTable = rolesTableID;
-                                reportAndRolesMapping.FK_ReportArchiveTable = reportArchiveTableID;
+                if (CalendarSentDateTime.SelectedDate > DateTime.MinValue)
+                    reportArchiveTable.SentDateTime = CalendarSentDateTime.SelectedDate;
 
-                                KPIWebDataContext.ReportAndRolesMappings.InsertOnSubmit(reportAndRolesMapping);
-                            }
-                        }
-                        rowIndex++;
-                    }
-                }
+                KPIWebDataContext.ReportArchiveTables.InsertOnSubmit(reportArchiveTable);
+                KPIWebDataContext.SubmitChanges();
+
+                reportArchiveTableID = (from record in KPIWebDataContext.ReportArchiveTables
+                                         orderby record.ReportArchiveTableID descending
+                                         select record.ReportArchiveTableID).FirstOrDefault();
             }
 
-            KPIWebDataContext.SubmitChanges();
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Данные успешно сохранены');", true);
+            else //Не надо создавать новую запись в БД берем айди из сессии
+            {
+                reportArchiveTableID = ReportId.ReportArchiveID; 
+            }
+                int rowIndex = 0;
+                reportArchiveTable = (from item in KPIWebDataContext.ReportArchiveTables
+                    where item.ReportArchiveTableID == reportArchiveTableID
+                    select item).FirstOrDefault();
+
+                if (reportArchiveTable == null)
+                    reportArchiveTable = new ReportArchiveTable();
+
+                reportArchiveTable.Active = CheckBoxActive.Checked;
+                reportArchiveTable.Calculeted = CheckBoxCalculeted.Checked;
+                reportArchiveTable.Sent = CheckBoxSent.Checked;
+                reportArchiveTable.RecipientConfirmed = CheckBoxRecipientConfirmed.Checked;
+                reportArchiveTable.Name = TextBoxName.Text;
+
+                if (CalendarStartDateTime.SelectedDate > DateTime.MinValue)
+                    reportArchiveTable.StartDateTime = CalendarStartDateTime.SelectedDate;
+
+                if (CalendarEndDateTime.SelectedDate > DateTime.MinValue)
+                    reportArchiveTable.EndDateTime = CalendarEndDateTime.SelectedDate;
+
+                if (CalendarDateToSend.SelectedDate > DateTime.MinValue)
+                    reportArchiveTable.DateToSend = CalendarDateToSend.SelectedDate;
+
+                if (CalendarSentDateTime.SelectedDate > DateTime.MinValue)
+                    reportArchiveTable.SentDateTime = CalendarSentDateTime.SelectedDate;
+            
+                if (ViewState["GridviewRoles"] != null)
+                {
+                    DataTable dataTable = (DataTable) ViewState["GridviewRoles"];
+
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        List<ReportAndRolesMapping> reportAndRolesMappingList =
+                            (from item in KPIWebDataContext.ReportAndRolesMappings
+                                where item.FK_ReportArchiveTable == reportArchiveTableID
+                                select item).ToList();
+
+                        KPIWebDataContext.ReportAndRolesMappings.DeleteAllOnSubmit(reportAndRolesMappingList);
+
+                        for (int i = 1; i <= dataTable.Rows.Count; i++)
+                        {
+                            Label label = (Label) GridviewRoles.Rows[rowIndex].Cells[0].FindControl("LabelRolesTableID");
+                            CheckBox checkBox =
+                                (CheckBox) GridviewRoles.Rows[rowIndex].FindControl("CheckBoxRoleChecked");
+
+                            if (label != null && checkBox != null)
+                            {
+                                int rolesTableID = -1;
+                                if (int.TryParse(label.Text, out rolesTableID) && rolesTableID > -1 &&
+                                    checkBox.Checked == true)
+                                {
+                                    ReportAndRolesMapping reportAndRolesMapping = new ReportAndRolesMapping();
+                                    reportAndRolesMapping.Active = true;
+                                    reportAndRolesMapping.FK_RolesTable = rolesTableID;
+                                    reportAndRolesMapping.FK_ReportArchiveTable = reportArchiveTableID;
+
+                                    KPIWebDataContext.ReportAndRolesMappings.InsertOnSubmit(reportAndRolesMapping);
+                                }
+                            }
+                            rowIndex++;                     
+                        }
+                }
+                KPIWebDataContext.SubmitChanges();
+                Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");
+            }
         }
 
         protected void CalendarStartDateTime_SelectionChanged(object sender, EventArgs e)

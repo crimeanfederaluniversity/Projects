@@ -16,7 +16,12 @@
                                 <asp:BoundField DataField="IndicatorsValue" HeaderText="Значение индикатора" />
                             </Columns>
                         </asp:GridView>
+        <br />
     </div>
+        <asp:Button ID="Button1" runat="server" Text="Экспортировать данные в excel" Width="400px" />
+        <br />
+        <br />
+        <asp:Button ID="Button2" runat="server" Text="Печать" Width="400px" />
     </form>
 </body>
 </html>

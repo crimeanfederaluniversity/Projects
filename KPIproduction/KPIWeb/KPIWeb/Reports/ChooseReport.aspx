@@ -9,11 +9,11 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        Выберите отчет для заполнения<br />
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
+        <h2>Список активных отчетов</h2><br />
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" style="margin-top: 0px">
              <Columns>
                  
-                 <asp:BoundField DataField="ReportID" HeaderText="Current Report ID" Visible="false" />
+                 <asp:BoundField DataField="ReportID"   HeaderText="Current Report ID" Visible="false" />
                  <asp:BoundField DataField="RoleID" HeaderText="Current Report ID" Visible="false" />
                  <asp:BoundField DataField="ReportName" HeaderText="Название отчета" Visible="True" />
                  <asp:BoundField DataField="RoleName" HeaderText="Роль" Visible="True" />
@@ -21,17 +21,17 @@
                  <asp:BoundField DataField="EndDate" HeaderText="Конечная дата отчета" Visible="True" />
                  <asp:BoundField DataField="Param" HeaderText="Current Report ID" Visible="false" />
 
-                    <asp:TemplateField HeaderText="Редактировать">
+                    <asp:TemplateField HeaderText="Ввод данных">
                         <ItemTemplate>
                             <asp:Label ID="LabelReportArchiveTableID1" runat="server" Text='<%# Bind("ReportID") %>' Visible="false"></asp:Label>
-                            <asp:Button ID="ButtonEditReport" runat="server" CommandName="Select" Text="Редактировать" Width="150px" CommandArgument='<%# Eval("Param") %>' OnClick="ButtonEditClick"/>
+                            <asp:Button ID="ButtonEditReport" runat="server" CommandName="Select" Text="Редактировать" Width="250px" CommandArgument='<%# Eval("Param") %>' OnClick="ButtonEditClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                    <asp:TemplateField HeaderText="Просмотр">
+                    <asp:TemplateField HeaderText="Просмотр введенных данных">
                         <ItemTemplate>
                             <asp:Label ID="LabelReportArchiveTableID2" runat="server" Text='<%# Bind("ReportID") %>' Visible="false"></asp:Label>
-                            <asp:Button ID="ButtonViewReport" runat="server" CommandName="Select" Text="Просмотреть" Width="150px" CommandArgument='<%# Eval("Param") %>' OnClick="ButtonViewClick"/>
+                            <asp:Button ID="ButtonViewReport" runat="server" CommandName="Select" Text="Просмотреть" Width="200px" CommandArgument='<%# Eval("Param") %>' OnClick="ButtonViewClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                    

@@ -18,15 +18,16 @@
                         </p>
                     </asp:PlaceHolder>
                     <div class="form-group">
-                        <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label">Имя&nbsp;пользователя</asp:Label>
-                        <div class="col-md-10">
-                            <asp:TextBox runat="server" ID="UserName" CssClass="form-control" />
+                        <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label">Имя&nbsp;пользователя&nbsp;</asp:Label>
+                        
+                        <div class="col-md-10" >
+                            <asp:TextBox  runat="server" ID="UserName" CssClass="form-control" />
                             <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName"
                                 CssClass="text-danger" ErrorMessage="Поле &quot;Имя пользователя&quot; обязательное." />
                         </div>
                     </div>
                     <div class="form-group">
-                        <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Пароль</asp:Label>
+                        <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Пароль    </asp:Label>
                         <div class="col-md-10">
                             <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
                             <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="Поле &quot;Пароль&quot; обязательное." />

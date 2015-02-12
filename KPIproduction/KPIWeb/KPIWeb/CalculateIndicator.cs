@@ -1431,7 +1431,6 @@ namespace KPIWeb
                     returnValue = (B_R_pk + M_R_pk + A_R_pk) / (B_pk + M_pk + A_pk);
                     break;
 
-
                 case 21:
                     // Количество базовых кафедр, открытых на предприятиях и в организациях реального сектора экономики
                     returnValue = (from item in KPIWebDataContext.CollectedBasicParametersTable
@@ -1440,19 +1439,11 @@ namespace KPIWeb
                                    select item.CollectedValue).Sum();
                     break;
 
-
-
                 default:
                     returnValue = -1;
                     break;
-
-
-
             }
-           /* double? tmp;
-           /* tmp = Math.Round(returnValue, 3);//Convert.ToString(returnValue.ToString());
-           */
-            return (double)Math.Round((double)returnValue, 3);
+            return (double)returnValue;
         }
     }
 }

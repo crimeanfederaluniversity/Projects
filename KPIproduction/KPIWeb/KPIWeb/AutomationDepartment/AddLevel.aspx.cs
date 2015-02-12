@@ -34,7 +34,6 @@ namespace KPIWeb.AutomationDepartment
 
             if (!Page.IsPostBack)
             {
-              //  KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
                 List<FirstLevelSubdivisionTable> First_stageList = (from item in kPiDataContext.FirstLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
                 var dictionary = new Dictionary<int, string>();
                 dictionary.Add(0, "Выберите значение");
@@ -67,10 +66,8 @@ namespace KPIWeb.AutomationDepartment
                     var dictionary = new Dictionary<int, string>();
 
                     dictionary.Add(-1, "Выберите значение");
-
                     foreach (var item in second_stageList)
                         dictionary.Add(item.SecondLevelSubdivisionTableID, item.Name);
-
                     DropDownList2.Enabled = true;
                     DropDownList2.DataTextField = "Value";
                     DropDownList2.DataValueField = "Key";
@@ -113,9 +110,7 @@ namespace KPIWeb.AutomationDepartment
 
         protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
-
         protected void Button1_Click(object sender, EventArgs e)
         {
             string s = TextBox1.Text;
@@ -198,8 +193,6 @@ namespace KPIWeb.AutomationDepartment
                 TextBox2.Text = "";
                 TextBox3.Text = "";
 
-
-
                 KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
                 List<FirstLevelSubdivisionTable> First_stageList = (from item in kPiDataContext.FirstLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
                 var dictionary = new Dictionary<int, string>();
@@ -212,7 +205,11 @@ namespace KPIWeb.AutomationDepartment
                 DropDownList1.DataValueField = "Key";
                 DropDownList1.DataSource = dictionary;
                 DropDownList1.DataBind();
-        
+        }
+
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/AutomationDepartment/Main.aspx");
         }
     }
 }

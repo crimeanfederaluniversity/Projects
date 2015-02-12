@@ -62,7 +62,6 @@ namespace KPIWeb.Reports
                                 dataRow["StartDate"] = Report.StartDateTime.ToString().Split(' ')[0];
                                 dataRow["EndDate"] = Report.EndDateTime.ToString().Split(' ')[0]; ;
                                 dataTable.Rows.Add(dataRow);              
-                                //i++;
                             }
                         }
                         if ((UserRole.CanView == true) && (UserRole.CanEdit != true))
@@ -73,7 +72,6 @@ namespace KPIWeb.Reports
                 }
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
-                //GridView1.FindControl("Param").Visible = false;
             }
 
         }
@@ -82,7 +80,6 @@ namespace KPIWeb.Reports
         {
             Button button = (Button)sender;
             {
-                //Session["Params"] = button.CommandArgument.ToString() ;
                 Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
                 Session["Params"] = paramSerialization;
                 Response.Redirect("~/Reports/FillingTheReport.aspx");

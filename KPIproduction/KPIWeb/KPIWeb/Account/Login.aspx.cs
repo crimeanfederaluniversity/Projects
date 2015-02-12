@@ -50,7 +50,8 @@ namespace KPIWeb.Account
                             }
                             else if(Role.Role==8)
                             {
-                                Response.Redirect("~/StatisticsDepartment/StastisticsHomePage.aspx");
+                                Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");
+                                //Response.Redirect("~/StatisticsDepartment/StastisticsHomePage.aspx");
                             }
                         }
                         Response.Redirect("~/Reports/ChooseReport.aspx");
@@ -69,7 +70,6 @@ namespace KPIWeb.Account
                // LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Info message");
             }
         }
-
         protected void RememberMe_CheckedChanged(object sender, EventArgs e)
         {
 

@@ -11,8 +11,7 @@
     <form id="form1" runat="server">
     <div>
     
-        Форма добавления подразделений<br />
-        <br />
+        <h2>Форма добавления подразделений</h2>
         <asp:Label ID="Label1" runat="server" Text="Академия"></asp:Label>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <asp:Label ID="Label2" runat="server" Text="Факультет"></asp:Label>
@@ -38,7 +37,8 @@
         <asp:Button ID="Button3" runat="server" Height="25px" OnClick="Button3_Click" Text="Добавить кафедру" Width="210px" />
         <br />
         <br />
-        <asp:Button ID="Button4" runat="server" Height="25px" OnClick="Button4_Click" Text="Обновить страницу" Width="630px" />
+        <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Меню администрирования" Width="300px" />
+        <asp:Button ID="Button4" runat="server" Height="25px" OnClick="Button4_Click" Text="Обновить страницу" Width="330px" />
     </form>
 </body>
 </html>
