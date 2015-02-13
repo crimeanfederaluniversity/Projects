@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="ReportCreate.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.ReportCreate" %>
+﻿<%@ Page Language="C#" Title="Создание отчета" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="ReportCreate.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.ReportCreate" %>
 
 <!DOCTYPE html>
 

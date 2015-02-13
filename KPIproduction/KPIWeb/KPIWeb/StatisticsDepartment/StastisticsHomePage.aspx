@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="StastisticsHomePage.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.StastisticsHomePage" %>
+﻿<%@ Page Language="C#" Title="Отдел статистики" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="StastisticsHomePage.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.StastisticsHomePage" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <h2>Отдел статистики</h2>

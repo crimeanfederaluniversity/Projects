@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="ReportViewer.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.ReportViewer" %>
+﻿<%@ Page Language="C#" Title="Активные кампании" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="ReportViewer.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.ReportViewer" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div>

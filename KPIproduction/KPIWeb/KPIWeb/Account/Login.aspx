@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Log in" Language="C#" EnableViewStateMac="false" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="KPIWeb.Account.Login" Async="true" %>
+﻿<%@ Page Title="Вход" Language="C#" EnableViewStateMac="false" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="KPIWeb.Account.Login" Async="true" %>
 
 <%--<%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>--%>
 
@@ -48,8 +48,8 @@
                     </div>
                 </div>
                 <p>
-                    <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Зарегистрируейтесь</asp:HyperLink>
-                    если&nbsp;Вы&nbsp;еще&nbsp;не&nbsp;имеете&nbsp;аккаунта.
+                    <!-- <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Зарегистрируейтесь</asp:HyperLink>
+                    если&nbsp;Вы&nbsp;еще&nbsp;не&nbsp;имеете&nbsp;аккаунта. -->
                 </p>
             </section>
         </div>

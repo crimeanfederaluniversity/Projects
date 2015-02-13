@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="AddLevel.aspx.cs" Inherits="KPIWeb.AutomationDepartment.AddLevel" %>
+﻿<%@ Page Language="C#" Title="Добавление структуры" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="AddLevel.aspx.cs" Inherits="KPIWeb.AutomationDepartment.AddLevel" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
         <h2>Форма добавления подразделений</h2>

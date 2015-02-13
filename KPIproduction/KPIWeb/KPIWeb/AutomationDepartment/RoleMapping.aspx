@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="RoleMapping.aspx.cs" Inherits="KPIWeb.WebForm1" %>
+﻿<%@ Page Language="C#" Title="Распределение показателей" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="RoleMapping.aspx.cs" Inherits="KPIWeb.WebForm1" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
      <h2>Форма распределения прав на базовые показатели</h2>
