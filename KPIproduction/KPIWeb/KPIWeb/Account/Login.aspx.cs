@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using KPIWeb.Models;
+using log4net;
 using Microsoft.Office.Interop.Excel;
 using WebApplication3;
 using Page = System.Web.UI.Page;
@@ -18,10 +19,10 @@ namespace KPIWeb.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "123");
         }
         protected void LogIn(object sender, EventArgs e)
-        {
+        {          
             try
             {
                 if (IsValid)
@@ -33,6 +34,8 @@ namespace KPIWeb.Account
                                        select usersTables).FirstOrDefault();
                     if (user != null)
                     {
+                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, DateTime.Now.ToString() + "Пользователь " + user.Login + " вошел в систему ");
+   
                         Serialization UserSerId = new Serialization(user.UsersTableID);
                         Session["UserID"] = UserSerId;
 
@@ -41,7 +44,7 @@ namespace KPIWeb.Account
                                                       on a.FK_RolesTable equals b.RolesTableID
                                                       where a.FK_UsersTable == user.UsersTableID && b.Active == true
                                                       select b).ToList();
-
+                        
                         foreach (RolesTable Role in UserRoles)
                         {
                             if (Role.Role == 10)
@@ -51,7 +54,6 @@ namespace KPIWeb.Account
                             else if(Role.Role==8)
                             {
                                 Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");
-                                //Response.Redirect("~/StatisticsDepartment/StastisticsHomePage.aspx");
                             }
                         }
                         Response.Redirect("~/Reports/ChooseReport.aspx");
@@ -73,6 +75,11 @@ namespace KPIWeb.Account
         protected void RememberMe_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Account/TEST.aspx");
         }
     }
 }
