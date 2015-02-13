@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Security;
 using KPIWeb.Models;
 using log4net;
-using Microsoft.Office.Interop.Excel;
+//using Microsoft.Office.Interop.Excel;
 using WebApplication3;
 using Page = System.Web.UI.Page;
 

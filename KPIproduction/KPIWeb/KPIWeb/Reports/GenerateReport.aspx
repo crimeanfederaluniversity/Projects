@@ -1,13 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="GenerateReport.aspx.cs" Inherits="KPIWeb.Reports.GenerateReport" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="GenerateReport.aspx.cs" Inherits="KPIWeb.Reports.GenerateReport" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">\
+        <h2>Отчет</h2>
     <div>
     <asp:GridView ID="GridviewReport" runat="server" ShowFooter="true" AutoGenerateColumns="false">
                             <Columns>
@@ -22,6 +16,5 @@
         <br />
         <br />
         <asp:Button ID="Button2" runat="server" Text="Печать" Width="400px" />
-    </form>
-</body>
-</html>
+
+</asp:Content>

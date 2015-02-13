@@ -1,19 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="IsAvailibleMappingRole.aspx.cs" Inherits="KPIWeb.WebForm2" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="IsAvailibleMappingRole.aspx.cs" Inherits="KPIWeb.WebForm2" %>
 
-<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div>
-    
-    </div>
+ <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+  
         <asp:GridView ID="GridView1" runat="server">
         </asp:GridView>
-    </form>
-</body>
-</html>
+ </asp:Content>

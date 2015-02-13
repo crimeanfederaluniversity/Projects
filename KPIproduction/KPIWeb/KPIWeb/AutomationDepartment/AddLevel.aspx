@@ -1,16 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="AddLevel.aspx.cs" Inherits="KPIWeb.AutomationDepartment.AddLevel" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="AddLevel.aspx.cs" Inherits="KPIWeb.AutomationDepartment.AddLevel" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div>
-    
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
         <h2>Форма добавления подразделений</h2>
         <asp:Label ID="Label1" runat="server" Text="Академия"></asp:Label>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -39,6 +29,5 @@
         <br />
         <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Меню администрирования" Width="300px" />
         <asp:Button ID="Button4" runat="server" Height="25px" OnClick="Button4_Click" Text="Обновить страницу" Width="330px" />
-    </form>
-</body>
-</html>
+
+</asp:Content>

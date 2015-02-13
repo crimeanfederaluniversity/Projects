@@ -1,13 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="FillingTheReport.aspx.cs" Inherits="KPIWeb.Reports.FillingTheReport" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="FillingTheReport.aspx.cs" Inherits="KPIWeb.Reports.FillingTheReport" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Сводная таблица показателей</title>
-</head>
-<body>
-    <form id="form1" runat="server">
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
         <div>
             <h2>Ввведите значения в таблицу показателей и нажмите кнопку "Сохранить" внизу формы</h2>
             <br />
@@ -40,6 +33,4 @@
 
         </div>
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Экспортировать в excel" Width="400px" />
-    </form>
-</body>
-</html>
+</asp:Content>

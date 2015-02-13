@@ -192,7 +192,7 @@ namespace KPIWeb.Reports
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            int rowIndex = 0;
+            /*int rowIndex = 0;
             Dictionary<int, double> tempDictionary = new Dictionary<int, double>();
             DataTable collectedBasicParametersTable = (DataTable)ViewState["CollectedBasicParametersTable"];
             if (collectedBasicParametersTable.Rows.Count > 0)
@@ -232,7 +232,7 @@ namespace KPIWeb.Reports
                     rng.Value2 = dRow[dCol.ColumnName].ToString();
                 }
             }
-            excelApp.Visible = true;
+            excelApp.Visible = true;*/
         }
     }
 }

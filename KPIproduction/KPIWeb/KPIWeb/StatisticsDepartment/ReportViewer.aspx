@@ -1,14 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="ReportViewer.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.ReportViewer" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="ReportViewer.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.ReportViewer" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <div>
             <h1>Список активных кампаний</h1>
             <asp:GridView ID="GridviewActiveCampaign" runat="server" ShowFooter="True"  AutoGenerateColumns="False" OnSelectedIndexChanged="GridviewActiveCampaign_SelectedIndexChanged">
                 <Columns>
@@ -45,6 +38,5 @@
         </div>
         <br />
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Создать новую кампанию" Width="400px" />
-    </form>
-</body>
-</html>
+
+</asp:Content>

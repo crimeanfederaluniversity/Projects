@@ -1,15 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="RoleMapping.aspx.cs" Inherits="KPIWeb.WebForm1" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="RoleMapping.aspx.cs" Inherits="KPIWeb.WebForm1" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div>
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+     <h2>Форма распределения прав на базовые показатели</h2>
         <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
         </asp:DropDownList>
     <asp:GridView ID="GridviewRoles" runat="server" ShowFooter="true" AutoGenerateColumns="false">
@@ -29,7 +21,5 @@
                         </asp:GridView>
         <br />
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Сохранить" Width="235px" Visible="False" />
-    </div>
-    </form>
-</body>
-</html>
+
+</asp:Content>
