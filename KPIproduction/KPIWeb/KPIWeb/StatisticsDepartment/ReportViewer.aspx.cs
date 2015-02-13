@@ -109,5 +109,10 @@ namespace KPIWeb.StatisticsDepartment
             Session["ReportArchiveTableID"] = ReportID;
             Response.Redirect("~/Reports/EditReport.aspx");
         }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/StatisticsDepartment/Indicators.aspx");
+        }
     }
 }
