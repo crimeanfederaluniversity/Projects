@@ -114,5 +114,15 @@ namespace KPIWeb.StatisticsDepartment
         {
             Response.Redirect("~/StatisticsDepartment/Indicators.aspx");
         }
+
+        protected void Button2_Click1(object sender, EventArgs e)
+        {
+            Response.Redirect("~/StatisticsDepartment/Indicators.aspx");
+        }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/StatisticsDepartment/BasicParametrs.aspx"); 
+        }
     }
 }

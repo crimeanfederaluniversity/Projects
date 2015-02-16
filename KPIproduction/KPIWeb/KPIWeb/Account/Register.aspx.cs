@@ -36,10 +36,6 @@ namespace KPIWeb.Account
             if (int.TryParse(DropDownList3.SelectedValue, out selectedValue) && selectedValue > 0)
                 user.FK_ThirdLevelSubdivisionTable = selectedValue;
 
-          /*  selectedValue = -1;
-            if (int.TryParse(DropDownList4.SelectedValue, out selectedValue) && selectedValue > 0)
-                user.FK_RolesTable = selectedValue;
-         */   
             kPiDataContext.UsersTable.InsertOnSubmit(user);
             kPiDataContext.SubmitChanges();   //// ПОЛЬЗОВАТЕЛЬ СОЗДАН
 
@@ -113,14 +109,19 @@ namespace KPIWeb.Account
             }
             int UserId = UserSer.Id;
             KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+
             List<RolesTable> UserRoles = (from a in kPiDataContext.UsersAndRolesMappingTable
                                           join b in kPiDataContext.RolesTable
                                           on a.FK_RolesTable equals b.RolesTableID
                                           where a.FK_UsersTable == UserId && b.Active == true
-                                          select b).ToList();            
+                                          select b).ToList();
+
+            UsersTable userTable = (from a in kPiDataContext.UsersTable where a.UsersTableID == UserId select a).FirstOrDefault();
+  
+
             foreach (RolesTable Role in UserRoles)
             {
-                if (Role.Role != 10) //нельзя давать пользователю роли и заполняющего и админа 
+                if (userTable.AccessLevel != 10) //нельзя давать пользователю роли и заполняющего и админа 
                 {
                     Response.Redirect("~/Account/Login.aspx");
                 }              

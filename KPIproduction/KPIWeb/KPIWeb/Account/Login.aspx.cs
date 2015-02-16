@@ -39,39 +39,35 @@ namespace KPIWeb.Account
                         Serialization UserSerId = new Serialization(user.UsersTableID);
                         Session["UserID"] = UserSerId;
 
-                        List<RolesTable> UserRoles = (from a in KPIWebDataContext.UsersAndRolesMappingTable
-                                                      join b in KPIWebDataContext.RolesTable
-                                                      on a.FK_RolesTable equals b.RolesTableID
-                                                      where a.FK_UsersTable == user.UsersTableID && b.Active == true
-                                                      select b).ToList();
-                        
-                        foreach (RolesTable Role in UserRoles)
-                        {
-                            if (Role.Role == 10)
+                        UsersTable userTable = (from a in KPIWebDataContext.UsersTable where a.UsersTableID == user.UsersTableID select a).FirstOrDefault();
+                        int accessLevel = (int)userTable.AccessLevel;
+                        if (accessLevel == 10)
                             {
                                 Response.Redirect("~/AutomationDepartment/Main.aspx");
                             }
-                            else if(Role.Role==8)
+                            else if(accessLevel==8)
                             {
                                 Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");
-                            }
+                            }                        
+                            else
+                            {
+                                Response.Redirect("~/Reports/ChooseReport.aspx");
+                            }                        
+                        }            
+                        else
+                        {
+                            FailureText.Text = "Неверное имя пользователя или пароль.";
+                            ErrorMessage.Visible = true;
                         }
-                        Response.Redirect("~/Reports/ChooseReport.aspx");
-                    }            
-                    else
-                    {
-                        FailureText.Text = "Неверное имя пользователя или пароль.";
-                        ErrorMessage.Visible = true;
                     }
                 }
+                catch(Exception ex)
+                {
+                    LogHandler.LogWriter.WriteError(ex);
+                   // LogHandler.LogWriter.WriteError(ex, "Error message");
+                   // LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Info message");
+                }
             }
-            catch(Exception ex)
-            {
-                LogHandler.LogWriter.WriteError(ex);
-               // LogHandler.LogWriter.WriteError(ex, "Error message");
-               // LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Info message");
-            }
-        }
         protected void RememberMe_CheckedChanged(object sender, EventArgs e)
         {
 

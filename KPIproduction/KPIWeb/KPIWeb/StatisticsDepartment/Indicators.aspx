@@ -15,7 +15,7 @@
         <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" Height="26px" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" Width="500px">
         </asp:DropDownList>
         <br />
-        <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label>
+        <asp:Label ID="Label5" runat="server" Text="0"></asp:Label>
         <br />
         <asp:Label ID="Label1" runat="server" Text="Название индикатора"></asp:Label>
         <br />

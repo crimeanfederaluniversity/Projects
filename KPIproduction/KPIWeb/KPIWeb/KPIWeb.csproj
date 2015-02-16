@@ -159,9 +159,6 @@
     <Content Include="Account\OpenAuthProviders.ascx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
-    <Content Include="Account\TEST.aspx" />
-    <Content Include="Account\WebForm1.aspx" />
-    <Content Include="Account\WebForm2.aspx" />
     <Content Include="AutomationDepartment\AddLevel.aspx" />
     <Content Include="AutomationDepartment\Main.aspx" />
     <Content Include="Contact.aspx" />
@@ -219,6 +216,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
+    <Content Include="StatisticsDepartment\BasicParametrs.aspx" />
     <Content Include="StatisticsDepartment\Indicators.aspx" />
     <Content Include="StatisticsDepartment\ReportCreate.aspx" />
     <Content Include="StatisticsDepartment\ReportViewer.aspx" />
@@ -273,27 +271,6 @@
     </Compile>
     <Compile Include="Account\RegisterExternalLogin.aspx.designer.cs">
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Account\TEST.aspx.cs">
-      <DependentUpon>TEST.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Account\TEST.aspx.designer.cs">
-      <DependentUpon>TEST.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Account\WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Account\WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Account\WebForm2.aspx.cs">
-      <DependentUpon>WebForm2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Account\WebForm2.aspx.designer.cs">
-      <DependentUpon>WebForm2.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
@@ -396,6 +373,13 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Account\Users.cs" />
+    <Compile Include="StatisticsDepartment\BasicParametrs.aspx.cs">
+      <DependentUpon>BasicParametrs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StatisticsDepartment\BasicParametrs.aspx.designer.cs">
+      <DependentUpon>BasicParametrs.aspx</DependentUpon>
+    </Compile>
     <Compile Include="StatisticsDepartment\Indicators.aspx.cs">
       <DependentUpon>Indicators.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
