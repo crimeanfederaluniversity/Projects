@@ -40,11 +40,11 @@ namespace KPIWeb.Reports
                 {
                     if (UserRole.Active == true)
                     {
-                        if (UserRole.CanEdit == true)
+                        //if (UserRole.CanEdit == true)
                         {
                             //нужны репорты только активные, надо проверить дату
-                            List<ReportArchiveTable> ReportArchive = (from c in kpiWebDataContext.ReportAndRolesMappings
-                                                                      join d in kpiWebDataContext.ReportArchiveTables
+                            List<ReportArchiveTable> ReportArchive = (from c in kpiWebDataContext.ReportAndRolesMapping
+                                                                      join d in kpiWebDataContext.ReportArchiveTable
                                                                         on c.FK_ReportArchiveTable equals d.ReportArchiveTableID
                                                                         where (c.FK_RolesTable == UserRole.RolesTableID) && 
                                                                         (c.Active == true) &&
@@ -64,7 +64,7 @@ namespace KPIWeb.Reports
                                 dataTable.Rows.Add(dataRow);              
                             }
                         }
-                        if ((UserRole.CanView == true) && (UserRole.CanEdit != true))
+                        //if ((UserRole.CanView == true) && (UserRole.CanEdit != true))
                         {
                             ///отчеты только просматриваемые
                         }

@@ -20,19 +20,16 @@ namespace KPIWeb
             {
                 Response.Redirect("~/Account/Login.aspx");
             }
+
+            int userID = UserSer.Id;
             KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
-            List<RolesTable> UserRoles = (from a in kPiDataContext.UsersAndRolesMappingTable
-                                          join b in kPiDataContext.RolesTable
-                                          on a.FK_RolesTable equals b.RolesTableID
-                                          where a.FK_UsersTable == UserSer.Id && b.Active == true
-                                          select b).ToList();
-            foreach (RolesTable Role in UserRoles)
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            if (userTable.AccessLevel != 10)
             {
-                if (Role.Role != 10) //нельзя давать пользователю роли и заполняющего и админа 
-                {
-                    Response.Redirect("~/Account/Login.aspx");
-                }
-            }	
+                Response.Redirect("~/Account/Login.aspx");
+            }
             //////////////////////////////////////////////////////////////////////////////////////////////////
             if (!IsPostBack)
             {
@@ -119,8 +116,7 @@ namespace KPIWeb
 
                                 using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
                                 {
-                                    BasicParametersAndRolesMappingTable bparmTables =
-                                        new BasicParametersAndRolesMappingTable();
+                                    BasicParametersAndRolesMappingTable bparmTables = new BasicParametersAndRolesMappingTable();
                                     bparmTables.Active = true;
                                     bparmTables.FK_RolesTable = vrRoleName[0].RolesTableID;
                                     bparmTables.FK_BasicParametersTable = vrCountry[rowIndex].BasicParametersTableID;

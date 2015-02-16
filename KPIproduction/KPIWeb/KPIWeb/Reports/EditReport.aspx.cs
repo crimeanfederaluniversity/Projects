@@ -31,7 +31,7 @@ namespace KPIWeb.Reports
                     int reportArchiveTableID = ReportId.ReportArchiveID;///////////////
 
                     KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-                    ReportArchiveTable ReportArchiveTable = (from item in KPIWebDataContext.ReportArchiveTables
+                    ReportArchiveTable ReportArchiveTable = (from item in KPIWebDataContext.ReportArchiveTable
                                                              where item.ReportArchiveTableID == reportArchiveTableID
                                                              select item).FirstOrDefault();
                     if (ReportArchiveTable != null)
@@ -58,7 +58,7 @@ namespace KPIWeb.Reports
                     List<RolesTable> rolesTable = (from item in KPIWebDataContext.RolesTable
                                                    where item.Active == true
                                                    select item).ToList();
-                    List<ReportAndRolesMapping> reportAndRolesMapping = (from item in KPIWebDataContext.ReportAndRolesMappings
+                    List<ReportAndRolesMapping> reportAndRolesMapping = (from item in KPIWebDataContext.ReportAndRolesMapping
                                                                          where item.FK_ReportArchiveTable == reportArchiveTableID
                                                                          select item).ToList();
                     DataTable dataTable = new DataTable();
@@ -145,10 +145,10 @@ namespace KPIWeb.Reports
                 if (CalendarSentDateTime.SelectedDate > DateTime.MinValue)
                     reportArchiveTable.SentDateTime = CalendarSentDateTime.SelectedDate;
 
-                KPIWebDataContext.ReportArchiveTables.InsertOnSubmit(reportArchiveTable);
+                KPIWebDataContext.ReportArchiveTable.InsertOnSubmit(reportArchiveTable);
                 KPIWebDataContext.SubmitChanges();
 
-                reportArchiveTableID = (from record in KPIWebDataContext.ReportArchiveTables
+                reportArchiveTableID = (from record in KPIWebDataContext.ReportArchiveTable
                                          orderby record.ReportArchiveTableID descending
                                          select record.ReportArchiveTableID).FirstOrDefault();
             }
@@ -158,7 +158,7 @@ namespace KPIWeb.Reports
                 reportArchiveTableID = ReportId.ReportArchiveID; 
             }
                 int rowIndex = 0;
-                reportArchiveTable = (from item in KPIWebDataContext.ReportArchiveTables
+                reportArchiveTable = (from item in KPIWebDataContext.ReportArchiveTable
                     where item.ReportArchiveTableID == reportArchiveTableID
                     select item).FirstOrDefault();
 
@@ -190,11 +190,11 @@ namespace KPIWeb.Reports
                     if (dataTable.Rows.Count > 0)
                     {
                         List<ReportAndRolesMapping> reportAndRolesMappingList =
-                            (from item in KPIWebDataContext.ReportAndRolesMappings
+                            (from item in KPIWebDataContext.ReportAndRolesMapping
                                 where item.FK_ReportArchiveTable == reportArchiveTableID
                                 select item).ToList();
 
-                        KPIWebDataContext.ReportAndRolesMappings.DeleteAllOnSubmit(reportAndRolesMappingList);
+                        KPIWebDataContext.ReportAndRolesMapping.DeleteAllOnSubmit(reportAndRolesMappingList);
 
                         for (int i = 1; i <= dataTable.Rows.Count; i++)
                         {
@@ -213,7 +213,7 @@ namespace KPIWeb.Reports
                                     reportAndRolesMapping.FK_RolesTable = rolesTableID;
                                     reportAndRolesMapping.FK_ReportArchiveTable = reportArchiveTableID;
 
-                                    KPIWebDataContext.ReportAndRolesMappings.InsertOnSubmit(reportAndRolesMapping);
+                                    KPIWebDataContext.ReportAndRolesMapping.InsertOnSubmit(reportAndRolesMapping);
                                 }
                             }
                             rowIndex++;                     

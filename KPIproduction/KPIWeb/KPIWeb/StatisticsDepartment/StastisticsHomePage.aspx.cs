@@ -17,20 +17,16 @@ namespace KPIWeb.StatisticsDepartment
             {
                 Response.Redirect("~/Account/Login.aspx");
             }
+
+            int userID = UserSer.Id;
             KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
-            List<RolesTable> UserRoles = (from a in kPiDataContext.UsersAndRolesMappingTable
-                                          join b in kPiDataContext.RolesTable
-                                          on a.FK_RolesTable equals b.RolesTableID
-                                          where a.FK_UsersTable == UserSer.Id && b.Active == true
-                                          select b).ToList();
-            ////////////////////////////////////////////////////////////////////////////////////
-            foreach (RolesTable Role in UserRoles)
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            if (userTable.AccessLevel != 10)
             {
-                if (Role.Role != 8) //нельзя давать пользователю роли и заполняющего и статистики 
-                {
-                    Response.Redirect("~/Account/Login.aspx");
-                }
-            }								            
+                Response.Redirect("~/Account/Login.aspx");
+            }							            
         }
 
         protected void Button1_Click(object sender, EventArgs e)

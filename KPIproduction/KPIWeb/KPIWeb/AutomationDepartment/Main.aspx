@@ -17,4 +17,14 @@
         <br />
         <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Проверить полноту перекрытия показателей" Width="400px" Height="50" Font-Size="Large"/>
  
+<br />
+<br />
+<asp:Button ID="Button5" runat="server" Height="50px" OnClick="Button5_Click" Text="Редактировани индикаторов" Width="400px" />
+<br />
+<br />
+<asp:Button ID="Button6" runat="server" Height="50px" OnClick="Button6_Click" Text="Редактировать базовые показатели" Width="400px" />
+<br />
+<br />
+<asp:Button ID="Button7" runat="server" Height="50px" OnClick="Button7_Click" Text="Редактор отчетов" Width="400px" />
+ 
 </asp:Content>

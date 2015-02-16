@@ -45,10 +45,10 @@ namespace KPIWeb.Account
                             {
                                 Response.Redirect("~/AutomationDepartment/Main.aspx");
                             }
-                            else if(accessLevel==8)
+                           /* else if(accessLevel==8)
                             {
                                 Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");
-                            }                        
+                            }   */                     
                             else
                             {
                                 Response.Redirect("~/Reports/ChooseReport.aspx");

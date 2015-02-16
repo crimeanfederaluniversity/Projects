@@ -17,21 +17,17 @@ namespace KPIWeb.AutomationDepartment
             {
                 Response.Redirect("~/Account/Login.aspx");
             }
-            int UserId = UserSer.Id;
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
-            List<RolesTable> UserRoles = (from a in kPiDataContext.UsersAndRolesMappingTable
-                                          join b in kPiDataContext.RolesTable
-                                          on a.FK_RolesTable equals b.RolesTableID
-                                          where a.FK_UsersTable == UserId && b.Active == true
-                                          select b).ToList();
-            foreach (RolesTable Role in UserRoles)
-            {
-                if (Role.Role != 10) //нельзя давать пользователю роли и заполняющего и админа 
-                {
-                    Response.Redirect("Login.aspx");
-                }
-            }
 
+            int userID = UserSer.Id;
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            if (userTable.AccessLevel != 10)
+            {
+                Response.Redirect("~/Account/Login.aspx");
+            }
+            ////////////////////////////////////////////////////////////////////
             if (!Page.IsPostBack)
             {
                 List<FirstLevelSubdivisionTable> First_stageList = (from item in kPiDataContext.FirstLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();

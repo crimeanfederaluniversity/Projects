@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -20,21 +21,18 @@ namespace KPIWeb.StatisticsDepartment
                 {
                     Response.Redirect("~/Account/Login.aspx");
                 }
-                KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-                List<RolesTable> UserRoles = (from a in KPIWebDataContext.UsersAndRolesMappingTable
-                                              join b in KPIWebDataContext.RolesTable
-                                              on a.FK_RolesTable equals b.RolesTableID
-                                              where a.FK_UsersTable == UserSer.Id && b.Active == true
-                                              select b).ToList();
-                /////////////////////////////////////////////////////////////////////////////////////////////////
-                foreach (RolesTable Role in UserRoles)
+
+                int userID = UserSer.Id;
+                KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+                UsersTable userTable =
+                    (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+                if (userTable.AccessLevel != 10)
                 {
-                    if (Role.Role != 8) //нельзя давать пользователю роли и заполняющего и админа 
-                    {
-                        Response.Redirect("~/Account/Login.aspx");
-                    }
-                }			
-                List<ReportArchiveTable> ReportArchiveTable = (from item in KPIWebDataContext.ReportArchiveTables
+                    Response.Redirect("~/Account/Login.aspx");
+                }
+		        ///////////////////////////////////////////////////
+                List<ReportArchiveTable> ReportArchiveTable = (from item in kPiDataContext.ReportArchiveTable
                                                                where item.Active == true
                                                                select item).ToList();
 
@@ -117,12 +115,12 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void Button2_Click1(object sender, EventArgs e)
         {
-            Response.Redirect("~/StatisticsDepartment/Indicators.aspx");
+            
         }
 
         protected void Button3_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/StatisticsDepartment/BasicParametrs.aspx"); 
+            
         }
     }
 }

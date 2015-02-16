@@ -41,10 +41,5 @@
 
     <br />
     <br />
-    <asp:Button ID="Button2" runat="server" OnClick="Button2_Click1" Text="Редактирование базовых показателей" Width="400px" />
-
-    <br />
-    <br />
-    <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Базовые показатели" Width="400px" />
-
+    
 </asp:Content>

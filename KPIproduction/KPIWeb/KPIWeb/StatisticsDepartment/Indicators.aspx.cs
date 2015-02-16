@@ -12,33 +12,23 @@ namespace KPIWeb.StatisticsDepartment
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
                 Response.Redirect("~/Account/Login.aspx");
             }
-            int UserId = UserSer.Id;
+
+            int userID = UserSer.Id;
             KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
-            List<RolesTable> UserRoles = (from a in kPiDataContext.UsersAndRolesMappingTable
-                                          join b in kPiDataContext.RolesTable
-                                          on a.FK_RolesTable equals b.RolesTableID
-                                          where a.FK_UsersTable == UserId && b.Active == true
-                                          select b).ToList();
-            foreach (RolesTable Role in UserRoles)
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            if (userTable.AccessLevel != 10)
             {
-                if (Role.Role != 8) //нельзя давать пользователю роли и заполняющего и админа 
-                {
-                    Response.Redirect("Login.aspx");
-                }
+                Response.Redirect("~/Account/Login.aspx");
             }
-            /*
-            Label1.Text = "0";
-            IndicatorName.Text = "";
-            IndicatorFormula.Text = "";
-            IndicatorMeasure.Text = "";
-            */
-            List<IndicatorsTable> indicatorList = (from item in kPiDataContext.IndicatorsTables select item).ToList();
+            ////////////////////////////////////////////////////////////////
+            List<IndicatorsTable> indicatorList = (from item in kPiDataContext.IndicatorsTable select item).ToList();
             var dictionary = new Dictionary<int, string>();
             dictionary.Add(0, "Добавить новый индикатор");
 
@@ -66,7 +56,7 @@ namespace KPIWeb.StatisticsDepartment
                 {
                     KPIWebDataContext kPiDataContext =
                         new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
-                    IndicatorsTable indicator = (from item in kPiDataContext.IndicatorsTables
+                    IndicatorsTable indicator = (from item in kPiDataContext.IndicatorsTable
                         where item.IndicatorsTableID == SelectedValue
                         select item).FirstOrDefault();
                     if (indicator.Active == true) CheckBox1.Checked = true;
@@ -91,7 +81,7 @@ namespace KPIWeb.StatisticsDepartment
             {
                 if (SelectedValue > 0)
                 {
-                    IndicatorsTable indicators = (from item in kPiDataContext.IndicatorsTables
+                    IndicatorsTable indicators = (from item in kPiDataContext.IndicatorsTable
                         where item.IndicatorsTableID == SelectedValue
                         select item).FirstOrDefault();
                     //indicators.IndicatorsTableID = SelectedValue;
@@ -110,7 +100,7 @@ namespace KPIWeb.StatisticsDepartment
                     indicators.Name = IndicatorName.Text;
                     indicators.Formula = IndicatorFormula.Text;
                     indicators.Measure = IndicatorMeasure.Text;
-                    kPiDataContext.IndicatorsTables.InsertOnSubmit(indicators);
+                    kPiDataContext.IndicatorsTable.InsertOnSubmit(indicators);
                     kPiDataContext.SubmitChanges();
                 }
             }
