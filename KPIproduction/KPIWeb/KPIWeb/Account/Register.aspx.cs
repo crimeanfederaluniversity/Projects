@@ -36,6 +36,8 @@ namespace KPIWeb.Account
             if (int.TryParse(DropDownList3.SelectedValue, out selectedValue) && selectedValue > 0)
                 user.FK_ThirdLevelSubdivisionTable = selectedValue;
 
+            user.AccessLevel = 10;
+
             kPiDataContext.UsersTable.InsertOnSubmit(user);
             kPiDataContext.SubmitChanges();   //// ПОЛЬЗОВАТЕЛЬ СОЗДАН
 

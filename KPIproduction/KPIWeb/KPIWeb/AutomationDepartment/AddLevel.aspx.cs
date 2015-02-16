@@ -121,6 +121,8 @@ namespace KPIWeb.AutomationDepartment
                     FirstLevelSubdivisionTable fs = new FirstLevelSubdivisionTable();
                     fs.Active = true;
                     fs.Name = t2;
+                    fs.FK_ZeroLevelSubvisionTable = 1;
+
                     kPiDataContext.FirstLevelSubdivisionTable.InsertOnSubmit(fs);
                 }
             }
