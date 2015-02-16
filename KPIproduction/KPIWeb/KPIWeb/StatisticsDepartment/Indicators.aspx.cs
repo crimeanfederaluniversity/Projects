@@ -28,18 +28,21 @@ namespace KPIWeb.StatisticsDepartment
                 Response.Redirect("~/Account/Login.aspx");
             }
             ////////////////////////////////////////////////////////////////
-            List<IndicatorsTable> indicatorList = (from item in kPiDataContext.IndicatorsTable select item).ToList();
-            var dictionary = new Dictionary<int, string>();
-            dictionary.Add(0, "Добавить новый индикатор");
 
-            foreach (IndicatorsTable item in indicatorList)
-                dictionary.Add(item.IndicatorsTableID, item.Name);
+            if (!Page.IsPostBack)
+            {
+                List<IndicatorsTable> indicatorList = (from item in kPiDataContext.IndicatorsTable select item).ToList();
+                var dictionary = new Dictionary<int, string>();
+                dictionary.Add(0, "Добавить новый индикатор");
 
-            DropDownList1.DataTextField = "Value";
-            DropDownList1.DataValueField = "Key";
-            DropDownList1.DataSource = dictionary;
-            DropDownList1.DataBind();
-           
+                foreach (IndicatorsTable item in indicatorList)
+                    dictionary.Add(item.IndicatorsTableID, item.Name);
+
+                DropDownList1.DataTextField = "Value";
+                DropDownList1.DataValueField = "Key";
+                DropDownList1.DataSource = dictionary;
+                DropDownList1.DataBind();
+            }
         }
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)

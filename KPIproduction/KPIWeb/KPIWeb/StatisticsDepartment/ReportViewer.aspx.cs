@@ -32,42 +32,6 @@ namespace KPIWeb.StatisticsDepartment
                     Response.Redirect("~/Account/Login.aspx");
                 }
 		        ///////////////////////////////////////////////////
-                List<ReportArchiveTable> ReportArchiveTable = (from item in kPiDataContext.ReportArchiveTable
-                                                               where item.Active == true
-                                                               select item).ToList();
-
-                DataTable dataTable = new DataTable();
-                dataTable.Columns.Add(new DataColumn("ReportArchiveTableID", typeof(string)));
-                dataTable.Columns.Add(new DataColumn("Active", typeof(string)));
-                dataTable.Columns.Add(new DataColumn("Calculeted", typeof(string)));
-                dataTable.Columns.Add(new DataColumn("Sent", typeof(string)));
-                dataTable.Columns.Add(new DataColumn("SentDateTime", typeof(string)));
-                dataTable.Columns.Add(new DataColumn("RecipientConfirmed", typeof(string)));
-                dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
-                dataTable.Columns.Add(new DataColumn("StartDateTime", typeof(string)));
-                dataTable.Columns.Add(new DataColumn("EndDateTime", typeof(string)));
-                dataTable.Columns.Add(new DataColumn("DateToSend", typeof(string)));
-
-                foreach (ReportArchiveTable reportTable in ReportArchiveTable)
-                {
-                    DataRow dataRow = dataTable.NewRow();
-                    dataRow["ReportArchiveTableID"] = reportTable.ReportArchiveTableID.ToString();
-                    dataRow["Active"] = reportTable.Active ? "Да" : "Нет";
-                    dataRow["Calculeted"] = reportTable.Calculeted ? "Да" : "Нет";
-                    dataRow["Sent"] = reportTable.Sent ? "Да" : "Нет";
-                    dataRow["SentDateTime"] = reportTable.SentDateTime.ToString().Split(' ')[0];
-                    dataRow["RecipientConfirmed"] = reportTable.RecipientConfirmed ? "Да" : "Нет";
-                    dataRow["Name"] = reportTable.Name;
-                    dataRow["StartDateTime"] = reportTable.StartDateTime.ToString().Split(' ')[0];
-                    dataRow["EndDateTime"] = reportTable.EndDateTime.ToString().Split(' ')[0];
-                    dataRow["DateToSend"] = reportTable.DateToSend.ToString().Split(' ')[0];
-                    dataTable.Rows.Add(dataRow);
-                }
-
-
-                //GridviewActiveCampaign.DataSource = ReportArchiveTable;
-                GridviewActiveCampaign.DataSource = dataTable;
-                GridviewActiveCampaign.DataBind();
             }
         }
 
