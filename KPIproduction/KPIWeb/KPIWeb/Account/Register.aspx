@@ -38,6 +38,30 @@
             <div class="col-md-10">               
                 <asp:CheckBoxList ID="CheckBoxList1" CssClass="form-control" runat="server"  AutoPostBack="True" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" >
                 </asp:CheckBoxList>
+                <br />
+</div>  
+                 <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Выберите шаблон</asp:Label>
+            <div class="col-md-10">               
+                <asp:DropDownList ID="DropDownList4" CssClass="form-control" runat="server"  AutoPostBack="True" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged"> </asp:DropDownList>
+            </div>
+        </div>
+               <asp:GridView ID="GridviewRoles" runat="server" ShowFooter="true" AutoGenerateColumns="false">
+                            <Columns>
+
+                                <asp:TemplateField HeaderText="Ред|Просм">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LabelRolesTableID" runat="server" Visible="false" Text='<%# Bind("Name") %>'></asp:Label>
+                                        <asp:CheckBox ID="CheckBoxCanEdit" runat="server" Checked='<%# Bind("EditChecked") %>'></asp:CheckBox>
+                                        <asp:CheckBox ID="CheckBoxCanView" runat="server" Checked='<%# Bind("ViewChecked") %>'></asp:CheckBox>
+                                        <asp:CheckBox ID="CheckBoxVerify" runat="server"  Checked='<%# Bind("VerifyChecked") %>'></asp:CheckBox>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:BoundField DataField="Name" HeaderText="Роль" />
+
+                            </Columns>
+                        </asp:GridView>
             </div>
         </div>
 
@@ -85,5 +109,6 @@
                 <asp:Button runat="server" OnClick="CreateUser_Click" Text="Зарегистрировать" CssClass="btn btn-default" />
             </div>
         </div>
+    </div>
     </div>
 </asp:Content>

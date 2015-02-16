@@ -8,6 +8,7 @@ using System.Web.UI;
 using KPIWeb.Models;
 using System.Configuration;
 using System.Collections.Generic;
+using System.Data;
 using System.Web.UI.WebControls;
 using Microsoft.Ajax.Utilities;
 
@@ -103,7 +104,8 @@ namespace KPIWeb.Account
             }
         }    
         protected void Page_Load(object sender, EventArgs e)
-        {          
+        {
+           
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
@@ -118,6 +120,18 @@ namespace KPIWeb.Account
                                           where a.FK_UsersTable == UserId && b.Active == true
                                           select b).ToList();
 
+            List<string> role = new List<string>();
+
+            role = (from roles in kPiDataContext.RolesTable
+                    select roles.RoleName).ToList();
+
+            foreach (string name in role)
+            {
+                DropDownList4.Items.Add(name);
+            }
+
+          
+
             UsersTable userTable = (from a in kPiDataContext.UsersTable where a.UsersTableID == UserId select a).FirstOrDefault();
   
 
@@ -130,7 +144,8 @@ namespace KPIWeb.Account
             }
           
             if (!Page.IsPostBack)
-            {              
+            {
+              
                 List<FirstLevelSubdivisionTable> First_stageList =
                     (from item in kPiDataContext.FirstLevelSubdivisionTable
                         select item).OrderBy(mc => mc.Name).ToList();
@@ -192,5 +207,44 @@ namespace KPIWeb.Account
         {
 
         }
+
+        private void RefreshGridView()
+        {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            var vrCountry = (from a in kpiWebDataContext.BasicParametersTable select a).Except(
+                from b in kpiWebDataContext.BasicParametersTable
+                join c in kpiWebDataContext.BasicParametersAndRolesMappingTable on b.BasicParametersTableID equals
+                    c.FK_BasicParametersTable
+                select b);
+
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add(new DataColumn("VerifyChecked", typeof(bool)));
+            dataTable.Columns.Add(new DataColumn("EditChecked", typeof(bool)));
+            dataTable.Columns.Add(new DataColumn("ViewChecked", typeof(bool)));
+            dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
+
+            int i = 1;
+
+            foreach (var obj in vrCountry)
+            {
+                DataRow dataRow = dataTable.NewRow();
+                dataRow["EditChecked"] = false;
+                dataRow["ViewChecked"] = false;
+                dataRow["VerifyChecked"] = false;
+                dataRow["Name"] = " " + obj.BasicParametersTableID + ". " + obj.Name;
+                dataTable.Rows.Add(dataRow);
+                i++;
+            }
+
+            ViewState["GridviewRoleMapping"] = dataTable;
+            GridviewRoles.DataSource = dataTable;
+            GridviewRoles.DataBind();
+        }
+
+        protected void DropDownList4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshGridView();
+        }
     }
+
 }
