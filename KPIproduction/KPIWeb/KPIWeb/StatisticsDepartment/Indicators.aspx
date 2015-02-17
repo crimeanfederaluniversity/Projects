@@ -40,6 +40,15 @@
         ----------------------------------------------------------------------------------------------------<br />
         <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Посчитать поле формулы с тестовыми данными" Width="500px" />
         <br />
+        <br />
+        <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Рассчитать для подраздления" Width="284px" />
+        <asp:TextBox ID="TextBox2" runat="server" Width="27px"></asp:TextBox>
+        <asp:TextBox ID="TextBox3" runat="server" Width="27px"></asp:TextBox>
+        <asp:TextBox ID="TextBox4" runat="server" Width="27px"></asp:TextBox>
+        <asp:TextBox ID="TextBox5" runat="server" Width="27px"></asp:TextBox>
+        <asp:TextBox ID="TextBox6" runat="server" Width="27px"></asp:TextBox>
+        <asp:TextBox ID="TextBox7" runat="server" Width="27px"></asp:TextBox>
+        <br />
         <asp:Label ID="Label8" runat="server" Text="Результат или список ошибок"></asp:Label>
         <br />
         <asp:TextBox ID="TextBox1" runat="server" Height="100px" ReadOnly="True" TextMode="MultiLine" Width="500px"></asp:TextBox>

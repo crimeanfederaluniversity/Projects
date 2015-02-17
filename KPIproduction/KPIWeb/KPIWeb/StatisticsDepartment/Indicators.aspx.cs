@@ -119,7 +119,7 @@ namespace KPIWeb.StatisticsDepartment
             }
             else
             {
-                TextBox1.Text = CalculateAbb.Calculate(IndicatorFormula.Text, 32).ToString();
+                TextBox1.Text = CalculateAbb.Calculate(IndicatorFormula.Text, 1).ToString();
             }
             
         }
@@ -137,6 +137,20 @@ namespace KPIWeb.StatisticsDepartment
         protected void Button1_Click(object sender, EventArgs e)
         {
             
+        }
+
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            if (TextBox2.Text == "") TextBox2.Text = 0.ToString();
+            if (TextBox3.Text == "") TextBox3.Text = 0.ToString();
+            if (TextBox4.Text == "") TextBox4.Text = 0.ToString();
+            if (TextBox5.Text == "") TextBox5.Text = 0.ToString();
+            if (TextBox6.Text == "") TextBox6.Text = 0.ToString();
+            if (TextBox7.Text == "") TextBox7.Text = 0.ToString();
+
+            TextBox1.Text = CalculateAbb.CalculateForLevel(IndicatorFormula.Text, 1,
+            Convert.ToInt32(TextBox2.Text), Convert.ToInt32(TextBox3.Text), Convert.ToInt32(TextBox4.Text),
+            Convert.ToInt32(TextBox5.Text), Convert.ToInt32(TextBox6.Text), Convert.ToInt32(TextBox7.Text)).ToString();
         }
     }
 }

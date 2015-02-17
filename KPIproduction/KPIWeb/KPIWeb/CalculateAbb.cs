@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.WebPages;
+using System.Text.RegularExpressions;
 
 namespace KPIWeb
 {
@@ -107,7 +108,14 @@ namespace KPIWeb
                 {
                     if (!str.IsFloat())
                     {
+                        string tmp;
+                        tmp = 
                         tmpStr = tmpStr.Replace(str, replaseAbbWithValue(str,report)); // 1 аббревиатура / 2 номер отчета
+
+                        /*string tmp;
+                        int idx = tmp.LastIndexOf(s1);
+                        if (idx != -1)
+                            s = s.Remove(idx, s1.Length).Insert(idx, s2);*/
                     }
                 }
             }
@@ -117,8 +125,6 @@ namespace KPIWeb
 
         static public double CalculateForLevel(string input, int report, int Lv0, int Lv1, int Lv2, int Lv3, int Lv4, int Lv5)
         {
-
-
             string tmpStr;
             tmpStr = input;
             deleteSpaces(tmpStr);
@@ -130,7 +136,8 @@ namespace KPIWeb
                 {
                     if (!str.IsFloat())
                     {
-                        tmpStr = tmpStr.Replace(str, replaseAbbWithValue(str, report)); // 1 аббревиатура / 2 номер отчета
+                       // tmpStr = tmpStr.Replace(str, replaseAbbWithValue(str, report)); // 1 аббревиатура / 2 номер отчета
+                        tmpStr = tmpStr.Replace(str, replaseAbbWithValueForLevel(str, report, Lv0, Lv1, Lv2, Lv3, Lv4, Lv5));
                     }
                 }
             }
