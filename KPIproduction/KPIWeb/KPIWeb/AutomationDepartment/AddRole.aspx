@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AddRole.aspx.cs" Inherits="KPIWeb.AutomationDepartment.AddRole" %>
+﻿<%@ Page Language="C#" CodeBehind="AddRole.aspx.cs" Inherits="KPIWeb.AutomationDepartment.AddRole"  AutoEventWireup="true" EnableViewStateMac="false" %>
 
 <!DOCTYPE html>
 
@@ -27,17 +27,37 @@
         _________________________________________________________________<br />
         <br />
         Привязка показателей к роли<br />
-        <asp:DropDownList ID="DropDownList1" runat="server" Height="28px" Width="328px">
+        <asp:DropDownList ID="DropDownList1" runat="server" Height="28px" Width="328px" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="True">
         </asp:DropDownList>
         <asp:Button ID="Button2" runat="server" Text="Загрузить в таблицу" Width="169px" OnClick="Button2_Click" />
         <br />
         <br />
+        <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Сохранить изменения" Width="497px" />
+        <br />
+        <br />
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
             <Columns>
-                <asp:CheckBoxField DataField="ch1"  HeaderText="Чт." runat="server"/>
-                <asp:CheckBoxField DataField="ch2"  HeaderText="Ред." runat="server"/>
-                <asp:CheckBoxField DataField="ch3"  HeaderText="Под." runat="server"/>
-                <asp:BoundField DataField="name"   runat="server"/>
+            <asp:TemplateField HeaderText="Название">
+                                    <ItemTemplate>
+                                        <asp:Label ID="Label2" runat="server" Visible="False" Text='<%# Bind("BasicId") %>'></asp:Label>
+                                        <asp:Label ID="Label1" runat="server" Visible="True" Text='<%# Bind("Name") %>'></asp:Label>
+                                    </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Ред">
+                                    <ItemTemplate>
+                                        <asp:CheckBox ID="CheckBoxCanEdit" runat="server" Checked='<%# Bind("EditChecked") %>'></asp:CheckBox>                                                                                                                   
+                                    </ItemTemplate>
+            </asp:TemplateField>
+                <asp:TemplateField HeaderText="Просм">
+                                    <ItemTemplate>
+                                         <asp:CheckBox ID="CheckBoxCanView" runat="server" Checked='<%# Bind("ViewChecked") %>'></asp:CheckBox>                          
+                                    </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Подтв">
+                                    <ItemTemplate>
+                                         <asp:CheckBox ID="CheckBoxVerify" runat="server"  Checked='<%# Bind("VerifyChecked") %>'></asp:CheckBox>                        
+                                    </ItemTemplate>
+            </asp:TemplateField>
             </Columns>
         </asp:GridView>
     </form>

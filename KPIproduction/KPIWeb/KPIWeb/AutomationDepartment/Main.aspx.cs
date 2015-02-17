@@ -64,5 +64,10 @@ namespace KPIWeb.AutomationDepartment
         {
             Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");  
         }
+
+        protected void Button8_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/AutomationDepartment/AddRole.aspx");
+        }
     }
 }

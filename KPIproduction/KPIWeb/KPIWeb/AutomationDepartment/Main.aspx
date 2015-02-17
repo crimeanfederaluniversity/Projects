@@ -27,4 +27,8 @@
 <br />
 <asp:Button ID="Button7" runat="server" Height="50px" OnClick="Button7_Click" Text="Редактор отчетов" Width="400px" />
  
+       <br />
+       <br />
+       <asp:Button ID="Button8" runat="server" Height="50px" OnClick="Button8_Click" Text="Добавление роли/шаблона" Width="400px" />
+ 
 </asp:Content>
