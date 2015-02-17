@@ -108,14 +108,9 @@ namespace KPIWeb
                 {
                     if (!str.IsFloat())
                     {
-                        string tmp;
-                        tmp = 
-                        tmpStr = tmpStr.Replace(str, replaseAbbWithValue(str,report)); // 1 аббревиатура / 2 номер отчета
-
-                        /*string tmp;
-                        int idx = tmp.LastIndexOf(s1);
+                        int idx = tmpStr.IndexOf(str);
                         if (idx != -1)
-                            s = s.Remove(idx, s1.Length).Insert(idx, s2);*/
+                            tmpStr = tmpStr.Remove(idx, str.Length).Insert(idx, replaseAbbWithValue(str, report));
                     }
                 }
             }
@@ -136,8 +131,9 @@ namespace KPIWeb
                 {
                     if (!str.IsFloat())
                     {
-                       // tmpStr = tmpStr.Replace(str, replaseAbbWithValue(str, report)); // 1 аббревиатура / 2 номер отчета
-                        tmpStr = tmpStr.Replace(str, replaseAbbWithValueForLevel(str, report, Lv0, Lv1, Lv2, Lv3, Lv4, Lv5));
+                        int idx = tmpStr.IndexOf(str);
+                        if (idx != -1)
+                            tmpStr = tmpStr.Remove(idx, str.Length).Insert(idx, replaseAbbWithValueForLevel(str, report, Lv0, Lv1, Lv2, Lv3, Lv4, Lv5));                                                               
                     }
                 }
             }
