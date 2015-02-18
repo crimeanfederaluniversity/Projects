@@ -9,11 +9,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-    
-        
-
-
+    <div>   
         <asp:Menu ID="Menu1" runat="server"  Width="168px"  Orientation="Horizontal" StaticEnableDefaultPopOutImage="False"   OnMenuItemClick="Menu1_MenuItemClick" >
              <Items>
         <asp:MenuItem Text="Проверка базовых показателей" Value="0">
@@ -26,6 +22,7 @@
         </asp:MenuItem>
     </Items>
         </asp:Menu>
+
         <br />
         <br />
         <br />
