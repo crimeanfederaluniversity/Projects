@@ -42,6 +42,8 @@ namespace KPIWeb.Account
             kPiDataContext.UsersTable.InsertOnSubmit(user);
             kPiDataContext.SubmitChanges();   //// ПОЛЬЗОВАТЕЛЬ СОЗДАН
 
+            int userID = user.UsersTableID;
+
             KPIWebDataContext kPiDataContext1 = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
             List<UsersTable> UsersTable_ = (from item in kPiDataContext1.UsersTable
                                             where item.Login == UserName.Text select item).ToList();
@@ -71,6 +73,63 @@ namespace KPIWeb.Account
             }
             kPiDataContext1.SubmitChanges();
 
+            ///////////////////////////////////////////шаблон//////////////////////////////////
+            int rowIndex = 0;
+
+            if (ViewState["GridviewRoleMapping"] != null)
+            {
+                int currentRoleId = Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value);
+                KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+                DataTable roleBasicParametrs = (DataTable)ViewState["GridviewRoleMapping"];
+
+                if (roleBasicParametrs.Rows.Count > 0)
+                {
+                    for (int k = 1; k <= roleBasicParametrs.Rows.Count; k++)
+                    {
+                        CheckBox canEdit = (CheckBox)GridviewRoles.Rows[rowIndex].FindControl("CheckBoxCanEdit");
+                        CheckBox canView = (CheckBox)GridviewRoles.Rows[rowIndex].FindControl("CheckBoxCanView");
+                        CheckBox canConfirm = (CheckBox)GridviewRoles.Rows[rowIndex].FindControl("CheckBoxVerify");
+                        Label label = (Label)GridviewRoles.Rows[rowIndex].FindControl("Label2");
+
+                        BasicParametrsAndUsersMapping BasicAndUsers = new BasicParametrsAndUsersMapping();
+
+                       
+                            BasicAndUsers.Active = true;
+                            BasicAndUsers.FK_ParametrsTable = Convert.ToInt32(label.Text);
+                            BasicAndUsers.CanConfirm = canConfirm.Checked;
+                            BasicAndUsers.CanEdit = canEdit.Checked;
+                            BasicAndUsers.CanView = canView.Checked;
+                            BasicAndUsers.FK_UsersTable = userID;
+
+                            KPIWebDataContext.BasicParametrsAndUsersMapping.InsertOnSubmit(BasicAndUsers);
+                            KPIWebDataContext.SubmitChanges();
+
+                       /* if (BasicAndRole != null)
+                        {
+                            BasicAndRole.CanConfirm = canConfirm.Checked;
+                            BasicAndRole.CanEdit = canEdit.Checked;
+                            BasicAndRole.CanView = canView.Checked;
+                            KPIWebDataContext.SubmitChanges();
+                        }
+                        else if ((canConfirm.Checked) || (canView.Checked) || (canEdit.Checked))
+                        {
+                            BasicAndRole = new BasicParametersAndRolesMappingTable();
+                            BasicAndRole.FK_BasicParametersTable = Convert.ToInt32(label.Text);
+                            BasicAndRole.FK_RolesTable = currentRoleId;
+                            BasicAndRole.Active = true;
+                            BasicAndRole.CanConfirm = canConfirm.Checked;
+                            BasicAndRole.CanEdit = canEdit.Checked;
+                            BasicAndRole.CanView = canView.Checked;
+                            KPIWebDataContext.BasicParametersAndRolesMappingTable.InsertOnSubmit(BasicAndRole);
+                            KPIWebDataContext.SubmitChanges();
+                        }*/
+
+
+                        rowIndex++;
+                    }
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Пользователь зарегестрирован');", true);
+                }
+            }
         }
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -120,14 +179,18 @@ namespace KPIWeb.Account
                                           where a.FK_UsersTable == UserId && b.Active == true
                                           select b).ToList();
 
-            List<string> role = new List<string>();
-
-            role = (from roles in kPiDataContext.RolesTable
-                    select roles.RoleName).ToList();
-
-            foreach (string name in role)
+            if (!Page.IsPostBack)
             {
-                DropDownList4.Items.Add(name);
+                List<RolesTable> Roles = (from a in kPiDataContext.RolesTable
+                                          where a.Active == true
+                                          select a).ToList();
+                int i = 0;
+                foreach (RolesTable role in Roles)
+                {
+                    DropDownList4.Items.Add(role.RoleName);
+                    DropDownList4.Items[i].Value = role.RolesTableID.ToString();
+                    i++;
+                }
             }
 
           
@@ -208,34 +271,45 @@ namespace KPIWeb.Account
 
         }
 
-        private void RefreshGridView()
+        private void RefreshGridView() // стягиваем с базы в грид с проставленными галочками основываясь на дроп дауне
         {
+            GridviewRoles.DataSource = null;
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-            var vrCountry = (from a in kpiWebDataContext.BasicParametersTable select a).Except(
-                from b in kpiWebDataContext.BasicParametersTable
-                join c in kpiWebDataContext.BasicParametersAndRolesMappingTable on b.BasicParametersTableID equals
-                    c.FK_BasicParametersTable
-                select b);
+            var vrCountry = (from b in kpiWebDataContext.BasicParametersTable select b);
 
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add(new DataColumn("VerifyChecked", typeof(bool)));
             dataTable.Columns.Add(new DataColumn("EditChecked", typeof(bool)));
             dataTable.Columns.Add(new DataColumn("ViewChecked", typeof(bool)));
             dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
-
+            dataTable.Columns.Add(new DataColumn("BasicId", typeof(string)));
             int i = 1;
 
             foreach (var obj in vrCountry)
             {
                 DataRow dataRow = dataTable.NewRow();
-                dataRow["EditChecked"] = false;
-                dataRow["ViewChecked"] = false;
-                dataRow["VerifyChecked"] = false;
-                dataRow["Name"] = " " + obj.BasicParametersTableID + ". " + obj.Name;
+                BasicParametersAndRolesMappingTable roleAndBasicMapping =
+                    (from a in kpiWebDataContext.BasicParametersAndRolesMappingTable
+                     where a.FK_BasicParametersTable == obj.BasicParametersTableID
+                     && a.FK_RolesTable == Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value)
+                     select a).FirstOrDefault();
+                if (roleAndBasicMapping != null)
+                {
+                    dataRow["EditChecked"] = roleAndBasicMapping.CanEdit;
+                    dataRow["ViewChecked"] = roleAndBasicMapping.CanView;
+                    dataRow["VerifyChecked"] = roleAndBasicMapping.CanConfirm;
+                }
+                else
+                {
+                    dataRow["EditChecked"] = false;
+                    dataRow["ViewChecked"] = false;
+                    dataRow["VerifyChecked"] = false;
+                }
+                dataRow["BasicId"] = obj.BasicParametersTableID.ToString();
+                dataRow["Name"] = obj.Name;
                 dataTable.Rows.Add(dataRow);
                 i++;
             }
-
             ViewState["GridviewRoleMapping"] = dataTable;
             GridviewRoles.DataSource = dataTable;
             GridviewRoles.DataBind();

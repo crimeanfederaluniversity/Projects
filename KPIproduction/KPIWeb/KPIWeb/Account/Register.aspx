@@ -46,23 +46,31 @@
                 <asp:DropDownList ID="DropDownList4" CssClass="form-control" runat="server"  AutoPostBack="True" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged"> </asp:DropDownList>
             </div>
         </div>
-               <asp:GridView ID="GridviewRoles" runat="server" ShowFooter="true" AutoGenerateColumns="false">
-                            <Columns>
-
-                                <asp:TemplateField HeaderText="Ред|Просм">
+               <asp:GridView ID="GridviewRoles" runat="server" AutoGenerateColumns="False">
+            <Columns>
+            <asp:TemplateField HeaderText="Название">
                                     <ItemTemplate>
-                                        <asp:Label ID="LabelRolesTableID" runat="server" Visible="false" Text='<%# Bind("Name") %>'></asp:Label>
-                                        <asp:CheckBox ID="CheckBoxCanEdit" runat="server" Checked='<%# Bind("EditChecked") %>'></asp:CheckBox>
-                                        <asp:CheckBox ID="CheckBoxCanView" runat="server" Checked='<%# Bind("ViewChecked") %>'></asp:CheckBox>
-                                        <asp:CheckBox ID="CheckBoxVerify" runat="server"  Checked='<%# Bind("VerifyChecked") %>'></asp:CheckBox>
-                                        
+                                        <asp:Label ID="Label2" runat="server" Visible="False" Text='<%# Bind("BasicId") %>'></asp:Label>
+                                        <asp:Label ID="Label1" runat="server" Visible="True" Text='<%# Bind("Name") %>'></asp:Label>
                                     </ItemTemplate>
-                                </asp:TemplateField>
-
-                                <asp:BoundField DataField="Name" HeaderText="Роль" />
-
-                            </Columns>
-                        </asp:GridView>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Редак">
+                                    <ItemTemplate>
+                                        <asp:CheckBox ID="CheckBoxCanEdit" runat="server" Checked='<%# Bind("EditChecked") %>'></asp:CheckBox>                                                                                                                   
+                                    </ItemTemplate>
+            </asp:TemplateField>
+                <asp:TemplateField HeaderText="Просм">
+                                    <ItemTemplate>
+                                         <asp:CheckBox ID="CheckBoxCanView" runat="server" Checked='<%# Bind("ViewChecked") %>'></asp:CheckBox>                          
+                                    </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Подтв">
+                                    <ItemTemplate>
+                                         <asp:CheckBox ID="CheckBoxVerify" runat="server"  Checked='<%# Bind("VerifyChecked") %>'></asp:CheckBox>                        
+                                    </ItemTemplate>
+            </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
             </div>
         </div>
 
