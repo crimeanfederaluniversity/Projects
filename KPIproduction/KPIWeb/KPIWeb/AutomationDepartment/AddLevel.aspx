@@ -30,7 +30,10 @@
         <asp:Button ID="Button3" runat="server" Height="25px" OnClick="Button3_Click" Text="Добавить кафедру" Width="210px" />
         <br />
         <br />
-        <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Меню администрирования" Width="300px" />
-        <asp:Button ID="Button4" runat="server" Height="25px" OnClick="Button4_Click" Text="Обновить страницу" Width="330px" />
+        <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Меню администрирования" Width="630px" />
+
+        <br />
+        <br />
+        <br />
 
 </asp:Content>

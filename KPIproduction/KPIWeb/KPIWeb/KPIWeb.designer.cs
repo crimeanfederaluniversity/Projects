@@ -90,6 +90,9 @@ namespace KPIWeb
     partial void InsertUsersTable(UsersTable instance);
     partial void UpdateUsersTable(UsersTable instance);
     partial void DeleteUsersTable(UsersTable instance);
+    partial void InsertReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable instance);
+    partial void UpdateReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable instance);
+    partial void DeleteReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable instance);
     #endregion
 		
 		public KPIWebDataContext() : 
@@ -279,6 +282,14 @@ namespace KPIWeb
 			get
 			{
 				return this.GetTable<UsersTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTable
+		{
+			get
+			{
+				return this.GetTable<ReportArchiveAndLevelMappingTable>();
 			}
 		}
 	}
@@ -2375,6 +2386,8 @@ namespace KPIWeb
 		
 		private EntitySet<UsersTable> _UsersTable;
 		
+		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTable;
+		
 		private EntityRef<ZeroLevelSubdivisionTable> _ZeroLevelSubdivisionTable;
 		
     #region Определения метода расширяемости
@@ -2395,6 +2408,7 @@ namespace KPIWeb
 		{
 			this._SecondLevelSubdivisionTable = new EntitySet<SecondLevelSubdivisionTable>(new Action<SecondLevelSubdivisionTable>(this.attach_SecondLevelSubdivisionTable), new Action<SecondLevelSubdivisionTable>(this.detach_SecondLevelSubdivisionTable));
 			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
+			this._ReportArchiveAndLevelMappingTable = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTable), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTable));
 			this._ZeroLevelSubdivisionTable = default(EntityRef<ZeroLevelSubdivisionTable>);
 			OnCreated();
 		}
@@ -2509,6 +2523,19 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTable", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubmisionTableId")]
+		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTable
+		{
+			get
+			{
+				return this._ReportArchiveAndLevelMappingTable;
+			}
+			set
+			{
+				this._ReportArchiveAndLevelMappingTable.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ZeroLevelSubdivisionTable_FirstLevelSubdivisionTable", Storage="_ZeroLevelSubdivisionTable", ThisKey="FK_ZeroLevelSubvisionTable", OtherKey="ZeroLevelSubdivisionTableID", IsForeignKey=true)]
 		public ZeroLevelSubdivisionTable ZeroLevelSubdivisionTable
 		{
@@ -2582,6 +2609,18 @@ namespace KPIWeb
 		}
 		
 		private void detach_UsersTable(UsersTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.FirstLevelSubdivisionTable = null;
+		}
+		
+		private void attach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.FirstLevelSubdivisionTable = this;
+		}
+		
+		private void detach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = null;
@@ -3711,6 +3750,8 @@ namespace KPIWeb
 		
 		private EntitySet<ReportAndRolesMapping> _ReportAndRolesMapping;
 		
+		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTable;
+		
     #region Определения метода расширяемости
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -3741,6 +3782,7 @@ namespace KPIWeb
 		{
 			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
 			this._ReportAndRolesMapping = new EntitySet<ReportAndRolesMapping>(new Action<ReportAndRolesMapping>(this.attach_ReportAndRolesMapping), new Action<ReportAndRolesMapping>(this.detach_ReportAndRolesMapping));
+			this._ReportArchiveAndLevelMappingTable = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTable), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTable));
 			OnCreated();
 		}
 		
@@ -3970,6 +4012,19 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTable", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTableId")]
+		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTable
+		{
+			get
+			{
+				return this._ReportArchiveAndLevelMappingTable;
+			}
+			set
+			{
+				this._ReportArchiveAndLevelMappingTable.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -4009,6 +4064,18 @@ namespace KPIWeb
 		}
 		
 		private void detach_ReportAndRolesMapping(ReportAndRolesMapping entity)
+		{
+			this.SendPropertyChanging();
+			entity.ReportArchiveTable = null;
+		}
+		
+		private void attach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.ReportArchiveTable = this;
+		}
+		
+		private void detach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = null;
@@ -5612,6 +5679,222 @@ namespace KPIWeb
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ReportArchiveAndLevelMappingTable")]
+	public partial class ReportArchiveAndLevelMappingTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ReportArchiveAndLevelMappingTableId;
+		
+		private bool _Active;
+		
+		private int _FK_ReportArchiveTableId;
+		
+		private int _FK_FirstLevelSubmisionTableId;
+		
+		private EntityRef<FirstLevelSubdivisionTable> _FirstLevelSubdivisionTable;
+		
+		private EntityRef<ReportArchiveTable> _ReportArchiveTable;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnReportArchiveAndLevelMappingTableIdChanging(int value);
+    partial void OnReportArchiveAndLevelMappingTableIdChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnFK_ReportArchiveTableIdChanging(int value);
+    partial void OnFK_ReportArchiveTableIdChanged();
+    partial void OnFK_FirstLevelSubmisionTableIdChanging(int value);
+    partial void OnFK_FirstLevelSubmisionTableIdChanged();
+    #endregion
+		
+		public ReportArchiveAndLevelMappingTable()
+		{
+			this._FirstLevelSubdivisionTable = default(EntityRef<FirstLevelSubdivisionTable>);
+			this._ReportArchiveTable = default(EntityRef<ReportArchiveTable>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReportArchiveAndLevelMappingTableId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ReportArchiveAndLevelMappingTableId
+		{
+			get
+			{
+				return this._ReportArchiveAndLevelMappingTableId;
+			}
+			set
+			{
+				if ((this._ReportArchiveAndLevelMappingTableId != value))
+				{
+					this.OnReportArchiveAndLevelMappingTableIdChanging(value);
+					this.SendPropertyChanging();
+					this._ReportArchiveAndLevelMappingTableId = value;
+					this.SendPropertyChanged("ReportArchiveAndLevelMappingTableId");
+					this.OnReportArchiveAndLevelMappingTableIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ReportArchiveTableId", DbType="Int NOT NULL")]
+		public int FK_ReportArchiveTableId
+		{
+			get
+			{
+				return this._FK_ReportArchiveTableId;
+			}
+			set
+			{
+				if ((this._FK_ReportArchiveTableId != value))
+				{
+					if (this._ReportArchiveTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_ReportArchiveTableIdChanging(value);
+					this.SendPropertyChanging();
+					this._FK_ReportArchiveTableId = value;
+					this.SendPropertyChanged("FK_ReportArchiveTableId");
+					this.OnFK_ReportArchiveTableIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FirstLevelSubmisionTableId", DbType="Int NOT NULL")]
+		public int FK_FirstLevelSubmisionTableId
+		{
+			get
+			{
+				return this._FK_FirstLevelSubmisionTableId;
+			}
+			set
+			{
+				if ((this._FK_FirstLevelSubmisionTableId != value))
+				{
+					if (this._FirstLevelSubdivisionTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_FirstLevelSubmisionTableIdChanging(value);
+					this.SendPropertyChanging();
+					this._FK_FirstLevelSubmisionTableId = value;
+					this.SendPropertyChanged("FK_FirstLevelSubmisionTableId");
+					this.OnFK_FirstLevelSubmisionTableIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_FirstLevelSubdivisionTable", ThisKey="FK_FirstLevelSubmisionTableId", OtherKey="FirstLevelSubdivisionTableID", IsForeignKey=true)]
+		public FirstLevelSubdivisionTable FirstLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FirstLevelSubdivisionTable.Entity;
+			}
+			set
+			{
+				FirstLevelSubdivisionTable previousValue = this._FirstLevelSubdivisionTable.Entity;
+				if (((previousValue != value) 
+							|| (this._FirstLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FirstLevelSubdivisionTable.Entity = null;
+						previousValue.ReportArchiveAndLevelMappingTable.Remove(this);
+					}
+					this._FirstLevelSubdivisionTable.Entity = value;
+					if ((value != null))
+					{
+						value.ReportArchiveAndLevelMappingTable.Add(this);
+						this._FK_FirstLevelSubmisionTableId = value.FirstLevelSubdivisionTableID;
+					}
+					else
+					{
+						this._FK_FirstLevelSubmisionTableId = default(int);
+					}
+					this.SendPropertyChanged("FirstLevelSubdivisionTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveTable", ThisKey="FK_ReportArchiveTableId", OtherKey="ReportArchiveTableID", IsForeignKey=true)]
+		public ReportArchiveTable ReportArchiveTable
+		{
+			get
+			{
+				return this._ReportArchiveTable.Entity;
+			}
+			set
+			{
+				ReportArchiveTable previousValue = this._ReportArchiveTable.Entity;
+				if (((previousValue != value) 
+							|| (this._ReportArchiveTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ReportArchiveTable.Entity = null;
+						previousValue.ReportArchiveAndLevelMappingTable.Remove(this);
+					}
+					this._ReportArchiveTable.Entity = value;
+					if ((value != null))
+					{
+						value.ReportArchiveAndLevelMappingTable.Add(this);
+						this._FK_ReportArchiveTableId = value.ReportArchiveTableID;
+					}
+					else
+					{
+						this._FK_ReportArchiveTableId = default(int);
+					}
+					this.SendPropertyChanged("ReportArchiveTable");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

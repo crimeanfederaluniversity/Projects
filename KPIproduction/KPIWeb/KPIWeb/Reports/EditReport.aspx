@@ -94,6 +94,11 @@
 
                 </table>
             <br />
+            Выберите академии участвующие в отчете<br />
+            <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="16px" Width="325px">
+            </asp:CheckBoxList>
+            <br />
+            <br />
             Выберите роли задействованные в кампании (отчете)<asp:GridView ID="GridviewRoles" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="500px">
                             <Columns>
 

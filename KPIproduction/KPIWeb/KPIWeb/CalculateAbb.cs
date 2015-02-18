@@ -21,6 +21,7 @@ namespace KPIWeb
                          select collect.CollectedValue).Sum();
             return a.ToString();
         }
+
         public static string replaseAbbWithValueForLevel(string input, int reportId, int Lv0, int Lv1, int Lv2, int Lv3, int Lv4, int Lv5)
         {
             KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
@@ -40,6 +41,7 @@ namespace KPIWeb
                          select collect.CollectedValue).Sum();
             return a.ToString();
         }
+    
         public static string deleteSpaces(string input)
         {
             string tmpStr = input;
@@ -133,7 +135,7 @@ namespace KPIWeb
                     {
                         int idx = tmpStr.IndexOf(str);
                         if (idx != -1)
-                            tmpStr = tmpStr.Remove(idx, str.Length).Insert(idx, replaseAbbWithValueForLevel(str, report, Lv0, Lv1, Lv2, Lv3, Lv4, Lv5));                                                               
+                        tmpStr = tmpStr.Remove(idx, str.Length).Insert(idx, replaseAbbWithValueForLevel(str, report, Lv0, Lv1, Lv2, Lv3, Lv4, Lv5));                                                               
                     }
                 }
             }

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Configuration;
+using Microsoft.Ajax.Utilities;
 
 namespace KPIWeb.AutomationDepartment
 {
@@ -128,6 +129,8 @@ namespace KPIWeb.AutomationDepartment
             }
             kPiDataContext.SubmitChanges();
             TextBox1.Text = "";
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Изменения внесены');", true);         
+            clearall();
         }
 
         protected void Button2_Click(object sender, EventArgs e)
@@ -153,7 +156,9 @@ namespace KPIWeb.AutomationDepartment
                 }
                 kPiDataContext.SubmitChanges();
                 TextBox2.Text = "";
-            }          
+            }
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Изменения внесены');", true);
+            clearall();
         }
 
         protected void Button3_Click(object sender, EventArgs e)
@@ -180,34 +185,42 @@ namespace KPIWeb.AutomationDepartment
                 kPiDataContext.SubmitChanges();
                 TextBox3.Text = "";
             }
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Изменения внесены');", true);
+            clearall();
         }
 
-        protected void Button4_Click(object sender, EventArgs e)
+        protected void clearall()
         {
-             DropDownList1.Items.Clear();
-                DropDownList2.Items.Clear();
-                DropDownList3.Items.Clear();
-                TextBox1.Text = "";
-                TextBox2.Text = "";
-                TextBox3.Text = "";
+            DropDownList1.Items.Clear();
+            DropDownList2.Items.Clear();
+            DropDownList3.Items.Clear();
+            TextBox1.Text = "";
+            TextBox2.Text = "";
+            TextBox3.Text = "";
 
-                KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
-                List<FirstLevelSubdivisionTable> First_stageList = (from item in kPiDataContext.FirstLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
-                var dictionary = new Dictionary<int, string>();
-                dictionary.Add(0, "Выберите значение");
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            List<FirstLevelSubdivisionTable> First_stageList = (from item in kPiDataContext.FirstLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
+            var dictionary = new Dictionary<int, string>();
+            dictionary.Add(0, "Выберите значение");
 
-                foreach (var item in First_stageList)
-                    dictionary.Add(item.FirstLevelSubdivisionTableID, item.Name);
+            foreach (var item in First_stageList)
+                dictionary.Add(item.FirstLevelSubdivisionTableID, item.Name);
 
-                DropDownList1.DataTextField = "Value";
-                DropDownList1.DataValueField = "Key";
-                DropDownList1.DataSource = dictionary;
-                DropDownList1.DataBind();
+            DropDownList1.DataTextField = "Value";
+            DropDownList1.DataValueField = "Key";
+            DropDownList1.DataSource = dictionary;
+            DropDownList1.DataBind();
         }
+  
 
         protected void Button5_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/AutomationDepartment/Main.aspx");
+        }
+      
+        protected void Button6_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

@@ -219,7 +219,6 @@
     <Content Include="Site.Master" />
     <Content Include="StatisticsDepartment\BasicParametrs.aspx" />
     <Content Include="StatisticsDepartment\Indicators.aspx" />
-    <Content Include="StatisticsDepartment\ReportCreate.aspx" />
     <Content Include="StatisticsDepartment\ReportViewer.aspx" />
     <Content Include="StatisticsDepartment\StastisticsHomePage.aspx" />
     <Content Include="ViewSwitcher.ascx" />
@@ -394,13 +393,6 @@
     </Compile>
     <Compile Include="StatisticsDepartment\Indicators.aspx.designer.cs">
       <DependentUpon>Indicators.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="StatisticsDepartment\ReportCreate.aspx.cs">
-      <DependentUpon>ReportCreate.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="StatisticsDepartment\ReportCreate.aspx.designer.cs">
-      <DependentUpon>ReportCreate.aspx</DependentUpon>
     </Compile>
     <Compile Include="StatisticsDepartment\ReportViewer.aspx.cs">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
