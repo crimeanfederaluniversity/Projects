@@ -72,6 +72,9 @@ namespace KPIWeb
     partial void InsertSecondLevelSubdivisionTable(SecondLevelSubdivisionTable instance);
     partial void UpdateSecondLevelSubdivisionTable(SecondLevelSubdivisionTable instance);
     partial void DeleteSecondLevelSubdivisionTable(SecondLevelSubdivisionTable instance);
+    partial void InsertSpecializationTable(SpecializationTable instance);
+    partial void UpdateSpecializationTable(SpecializationTable instance);
+    partial void DeleteSpecializationTable(SpecializationTable instance);
     partial void InsertThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
     partial void UpdateThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
     partial void DeleteThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
@@ -246,6 +249,14 @@ namespace KPIWeb
 			get
 			{
 				return this.GetTable<SecondLevelSubdivisionTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<SpecializationTable> SpecializationTable
+		{
+			get
+			{
+				return this.GetTable<SpecializationTable>();
 			}
 		}
 		
@@ -1464,9 +1475,13 @@ namespace KPIWeb
 		
 		private System.Nullable<int> _FK_BasicParametersTable;
 		
+		private System.Nullable<int> _FK_SpecializationTable;
+		
 		private EntityRef<BasicParametersTable> _BasicParametersTable;
 		
 		private EntityRef<ReportArchiveTable> _ReportArchiveTable;
+		
+		private EntityRef<SpecializationTable> _SpecializationTable;
 		
 		private EntityRef<UsersTable> _UsersTable;
 		
@@ -1492,12 +1507,15 @@ namespace KPIWeb
     partial void OnCollectedValueChanged();
     partial void OnFK_BasicParametersTableChanging(System.Nullable<int> value);
     partial void OnFK_BasicParametersTableChanged();
+    partial void OnFK_SpecializationTableChanging(System.Nullable<int> value);
+    partial void OnFK_SpecializationTableChanged();
     #endregion
 		
 		public CollectedBasicParametersTable()
 		{
 			this._BasicParametersTable = default(EntityRef<BasicParametersTable>);
 			this._ReportArchiveTable = default(EntityRef<ReportArchiveTable>);
+			this._SpecializationTable = default(EntityRef<SpecializationTable>);
 			this._UsersTable = default(EntityRef<UsersTable>);
 			OnCreated();
 		}
@@ -1694,6 +1712,30 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_SpecializationTable", DbType="Int")]
+		public System.Nullable<int> FK_SpecializationTable
+		{
+			get
+			{
+				return this._FK_SpecializationTable;
+			}
+			set
+			{
+				if ((this._FK_SpecializationTable != value))
+				{
+					if (this._SpecializationTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_SpecializationTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_SpecializationTable = value;
+					this.SendPropertyChanged("FK_SpecializationTable");
+					this.OnFK_SpecializationTableChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_CollectedBasicParametersTable", Storage="_BasicParametersTable", ThisKey="FK_BasicParametersTable", OtherKey="BasicParametersTableID", IsForeignKey=true)]
 		public BasicParametersTable BasicParametersTable
 		{
@@ -1758,6 +1800,40 @@ namespace KPIWeb
 						this._FK_ReportArchiveTable = default(int);
 					}
 					this.SendPropertyChanged("ReportArchiveTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SpecializationTable_CollectedBasicParametersTable", Storage="_SpecializationTable", ThisKey="FK_SpecializationTable", OtherKey="SpecializationTableID", IsForeignKey=true)]
+		public SpecializationTable SpecializationTable
+		{
+			get
+			{
+				return this._SpecializationTable.Entity;
+			}
+			set
+			{
+				SpecializationTable previousValue = this._SpecializationTable.Entity;
+				if (((previousValue != value) 
+							|| (this._SpecializationTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._SpecializationTable.Entity = null;
+						previousValue.CollectedBasicParametersTable.Remove(this);
+					}
+					this._SpecializationTable.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedBasicParametersTable.Add(this);
+						this._FK_SpecializationTable = value.SpecializationTableID;
+					}
+					else
+					{
+						this._FK_SpecializationTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("SpecializationTable");
 				}
 			}
 		}
@@ -3855,6 +3931,168 @@ namespace KPIWeb
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SpecializationTable")]
+	public partial class SpecializationTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _SpecializationTableID;
+		
+		private bool _Active;
+		
+		private string _SpecializationNumber;
+		
+		private string _SpecializationName;
+		
+		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnSpecializationTableIDChanging(int value);
+    partial void OnSpecializationTableIDChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnSpecializationNumberChanging(string value);
+    partial void OnSpecializationNumberChanged();
+    partial void OnSpecializationNameChanging(string value);
+    partial void OnSpecializationNameChanged();
+    #endregion
+		
+		public SpecializationTable()
+		{
+			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecializationTableID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int SpecializationTableID
+		{
+			get
+			{
+				return this._SpecializationTableID;
+			}
+			set
+			{
+				if ((this._SpecializationTableID != value))
+				{
+					this.OnSpecializationTableIDChanging(value);
+					this.SendPropertyChanging();
+					this._SpecializationTableID = value;
+					this.SendPropertyChanged("SpecializationTableID");
+					this.OnSpecializationTableIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecializationNumber", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		public string SpecializationNumber
+		{
+			get
+			{
+				return this._SpecializationNumber;
+			}
+			set
+			{
+				if ((this._SpecializationNumber != value))
+				{
+					this.OnSpecializationNumberChanging(value);
+					this.SendPropertyChanging();
+					this._SpecializationNumber = value;
+					this.SendPropertyChanged("SpecializationNumber");
+					this.OnSpecializationNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecializationName", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string SpecializationName
+		{
+			get
+			{
+				return this._SpecializationName;
+			}
+			set
+			{
+				if ((this._SpecializationName != value))
+				{
+					this.OnSpecializationNameChanging(value);
+					this.SendPropertyChanging();
+					this._SpecializationName = value;
+					this.SendPropertyChanged("SpecializationName");
+					this.OnSpecializationNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SpecializationTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTable", ThisKey="SpecializationTableID", OtherKey="FK_SpecializationTable")]
+		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTable
+		{
+			get
+			{
+				return this._CollectedBasicParametersTable;
+			}
+			set
+			{
+				this._CollectedBasicParametersTable.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.SpecializationTable = this;
+		}
+		
+		private void detach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.SpecializationTable = null;
 		}
 	}
 	
