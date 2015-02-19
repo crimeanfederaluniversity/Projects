@@ -20,7 +20,7 @@ namespace KPIWeb.Reports
 {
     public partial class FillingTheReport : System.Web.UI.Page
     {
-
+        /*
         protected void Page_Load(object sender, EventArgs e)
         {
             Serialization UserSer = (Serialization)Session["UserID"];
@@ -39,12 +39,11 @@ namespace KPIWeb.Reports
             {
 
                 int UserID = UserSer.Id;
-                int ReportID;
-                int RoleID;
-                string[] tmp = paramSerialization.ReportStr.Split('_');
-                ReportID = Convert.ToInt32(tmp[0]);
-                RoleID = Convert.ToInt32(tmp[1]);
+                int ReportArchiveID;
+                ReportArchiveID = Convert.ToInt32(paramSerialization.ReportStr);
+         
                 KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+               
                 UsersTable user = (from usersTable in KPIWebDataContext.UsersTable
                                    where usersTable.UsersTableID == UserID
                                    select usersTable).FirstOrDefault();
@@ -55,17 +54,20 @@ namespace KPIWeb.Reports
                 }
                 else
                 {
-                    ViewState["CurrentReportArchiveID"] = ReportID;
+                    
+                    ViewState["CurrentReportArchiveID"] = ReportArchiveID;
                     //Список всех базовых параметров "принадлежащих" данному пользователю
                     List<BasicParametersTable> basicParametersTable =
-                        (from basicParametersTables in KPIWebDataContext.BasicParametersTable
-                         join basicParametersAndRolesMappingTables in
-                             KPIWebDataContext.BasicParametersAndRolesMappingTable on
-                             basicParametersTables.BasicParametersTableID equals
-                             basicParametersAndRolesMappingTables.FK_BasicParametersTable
-                         where basicParametersAndRolesMappingTables.FK_RolesTable == RoleID
-                         select basicParametersTables).ToList();
-
+                        (from a in KPIWebDataContext.BasicParametersTable
+                         join b in KPIWebDataContext.BasicParametrsAndUsersMapping 
+                         on a.BasicParametersTableID equals b.FK_ParametrsTable
+                         //join c in KPIWebDataContext.UsersTable 
+                         join c in KPIWebDataContext.user
+                         join c in KPIWebDataContext.ReportArchiveTable
+                         on                             //on b.FK_UsersTable equals  c.UsersTableID
+                         where b.FK_UsersTable == UserID
+                         select a).ToList();
+                    
                     //Список ранее введенных пользователем данных для данной кампании (отчета)
                     List<CollectedBasicParametersTable> сollectedBasicParametersTable =
                         (from collectedBasicParameters in KPIWebDataContext.CollectedBasicParametersTable
@@ -75,14 +77,14 @@ namespace KPIWeb.Reports
                              collectedBasicParameters.FK_UsersTable == UserID &&
                              collectedBasicParameters.FK_ReportArchiveTable == ReportID
                          select collectedBasicParameters).ToList();
-
+                    
                     DataTable dataTable = new DataTable();
                     dataTable.Columns.Add(new DataColumn("CurrentReportArchiveID", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("BasicParametersTableID", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("CollectedBasicParametersTableID", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("CollectedValue", typeof(string)));
-
+                    
                     //Добавляем недостающие строки в базу CollectedBasicParametersTable с пустыми значениями в столбце "CollectedValue"
                     //+ заполняем обьект dataTable
                     foreach (BasicParametersTable basicParameter in basicParametersTable)
@@ -125,7 +127,8 @@ namespace KPIWeb.Reports
                     KPIWebDataContext.SubmitChanges();
                     ViewState["CollectedBasicParametersTable"] = dataTable;
                     GridviewCollectedBasicParameters.DataSource = dataTable;
-                    GridviewCollectedBasicParameters.DataBind();                  
+                    GridviewCollectedBasicParameters.DataBind();      
+                     
                 }
             }
         }
@@ -232,7 +235,8 @@ namespace KPIWeb.Reports
                     rng.Value2 = dRow[dCol.ColumnName].ToString();
                 }
             }
-            excelApp.Visible = true;*/
-        }
+            excelApp.Visible = true;
+            
+        }*/
     }
 }

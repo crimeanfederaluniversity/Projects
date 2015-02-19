@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.WebPages;
+using Microsoft.Ajax.Utilities;
 
 namespace KPIWeb.StatisticsDepartment
 {
@@ -147,12 +148,24 @@ namespace KPIWeb.StatisticsDepartment
             string tmpStr;
             tmpStr = TextBox9.Text;
             string[] tmpStrArr = tmpStr.Split('\r');
+            int i = 0;
+           
             foreach (string tmpStrf in tmpStrArr)
             {
-                
                 string tmp = tmpStrf.Replace("\n", "");
-                if ((tmp.Split('#').Length - 1) == 3)
+                if (((tmp.Split('#').Length - 1) != 3) && (tmp != ""))            
                 {
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ошибка в строке"+i.ToString()+"');", true);
+                    i = 0;
+                    break;
+                }
+                i++;
+            }
+            if (i>0)
+            {
+                foreach (string tmpStrf in tmpStrArr)
+                {
+                    string tmp = tmpStrf.Replace("\n", "");
                     BasicParametersTable basicParametr = new BasicParametersTable();
                     string[] strArrf = tmp.Split('#');
                     basicParametr.Name = strArrf[0];
@@ -160,7 +173,7 @@ namespace KPIWeb.StatisticsDepartment
                     basicParametr.AbbreviationRU = strArrf[2];
                     basicParametr.Measure = strArrf[3];
                     kPiDataContext.BasicParametersTable.InsertOnSubmit(basicParametr);
-                }              
+                }
             }
             kPiDataContext.SubmitChanges();
         }      

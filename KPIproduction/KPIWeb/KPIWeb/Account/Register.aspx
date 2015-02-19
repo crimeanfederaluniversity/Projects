@@ -34,12 +34,6 @@
         </div>
 
          <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Выберите роли</asp:Label>
-            <div class="col-md-10">               
-                <asp:CheckBoxList ID="CheckBoxList1" CssClass="form-control" runat="server"  AutoPostBack="True" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" >
-                </asp:CheckBoxList>
-                <br />
-</div>  
                  <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Выберите шаблон</asp:Label>
             <div class="col-md-10">               

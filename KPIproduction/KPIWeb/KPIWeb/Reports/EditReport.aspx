@@ -98,23 +98,49 @@
             <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="16px" Width="325px">
             </asp:CheckBoxList>
             <br />
+            <asp:Button ID="ButtonSave" runat="server" Width="500px" Text="Сохранить" OnClick="ButtonSave_Click" />
             <br />
-            Выберите роли задействованные в кампании (отчете)<asp:GridView ID="GridviewRoles" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="500px">
-                            <Columns>
+            <br />
 
+            <asp:GridView ID="IndicatorsTable" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="1000px">
+                            <Columns>
+                                <asp:BoundField DataField="IndicatorName" HeaderText="Индикатор" />
                                 <asp:TemplateField HeaderText="Активен">
                                     <ItemTemplate>
-                                        <asp:Label ID="LabelRolesTableID" runat="server" Visible="false" Text='<%# Bind("RolesTableID") %>'></asp:Label>
-                                        <asp:CheckBox ID="CheckBoxRoleChecked" runat="server" Checked='<%# Bind("RoleChecked") %>'></asp:CheckBox>
+                                        <asp:Label ID="IndicatorID" runat="server" Visible="false" Text='<%# Bind("IndicatorID") %>'></asp:Label>
+                                        <asp:CheckBox ID="IndicatorCheckBox" runat="server" Checked='<%# Bind("IndicatorCheckBox") %>'></asp:CheckBox>
+                                    </ItemTemplate>
+                                </asp:TemplateField>                       
+                            </Columns>
+            </asp:GridView>
+            
+             <br />
+            
+             <asp:GridView ID="CalculatedParametrsTable" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="1000px">
+                            <Columns>
+                                <asp:BoundField DataField="CalculatedParametrsName" HeaderText="Расчетный параметр" />
+                                <asp:TemplateField HeaderText="Активен">
+                                    <ItemTemplate>
+                                        <asp:Label ID="CalculatedParametrsID" runat="server" Visible="false" Text='<%# Bind("CalculatedParametrsID") %>'></asp:Label>
+                                        <asp:CheckBox ID="CalculatedParametrsCheckBox" runat="server" Checked='<%# Bind("CalculatedParametrsCheckBox") %>'></asp:CheckBox>
+                                    </ItemTemplate>
+                                </asp:TemplateField>                                
+                            </Columns>
+            </asp:GridView>
+
+            <br />
+
+            <asp:GridView ID="BasicParametrsTable" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="1000px" OnSelectedIndexChanged="BasicParametrsTable_SelectedIndexChanged">
+                            <Columns>
+                                <asp:BoundField DataField="BasicParametrsName" HeaderText="Базовый параметр" />
+                                <asp:TemplateField HeaderText="Активен">
+                                    <ItemTemplate>
+                                        <asp:Label ID="BasicParametrsID" runat="server" Visible="false" Text='<%# Bind("BasicParametrsID") %>'></asp:Label>
+                                        <asp:CheckBox ID="BasicParametrsCheckBox" runat="server" Checked='<%# Bind("BasicParametrsCheckBox") %>'></asp:CheckBox>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-
-                                <asp:BoundField DataField="Name" HeaderText="Роль" />
-
                             </Columns>
-                        </asp:GridView>
-                    <br />
-            <asp:Button ID="ButtonSave" runat="server" Width="500px" Text="Сохранить" OnClick="ButtonSave_Click" />
+            </asp:GridView>
         </div>
 
 </asp:Content>

@@ -39,7 +39,7 @@ namespace KPIWeb.Reports
             {
                 if (ReportId.ReportArchiveID != 0)
                 {
-                    int reportArchiveTableID = ReportId.ReportArchiveID;///////////////
+                    int reportArchiveTableID = ReportId.ReportArchiveID;
 
                     KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
                     ReportArchiveTable ReportArchiveTable = (from item in KPIWebDataContext.ReportArchiveTable
@@ -51,6 +51,7 @@ namespace KPIWeb.Reports
                         CheckBoxCalculeted.Checked = ReportArchiveTable.Calculeted;
                         CheckBoxSent.Checked = ReportArchiveTable.Sent;
                         CheckBoxRecipientConfirmed.Checked = ReportArchiveTable.RecipientConfirmed;
+                        
                         TextBoxName.Text = ReportArchiveTable.Name;
 
                         if (ReportArchiveTable.StartDateTime != null)
@@ -65,7 +66,7 @@ namespace KPIWeb.Reports
                         if (ReportArchiveTable.SentDateTime != null)
                             CalendarSentDateTime.SelectedDate = (DateTime)ReportArchiveTable.SentDateTime;
                     }
-
+                    ////заполнили поля
                     List<FirstLevelSubdivisionTable> academies =
                         (from item in KPIWebDataContext.FirstLevelSubdivisionTable
                          where item.Active==true
@@ -83,6 +84,62 @@ namespace KPIWeb.Reports
                         CheckBoxList1.Items[i].Value = academy.FirstLevelSubdivisionTableID.ToString();
                         i++;
                     }            
+                    //////////////////////////////////////////////////////////////////////////////////
+                    ///////////////////////////////////////////////////////////////////////////////////////////////////////                
+                    List<IndicatorsTable> indicatorTable =
+                    (from item in KPIWebDataContext.IndicatorsTable where item.Active == true select item).ToList();
+                    DataTable dataTableIndicator = new DataTable();
+
+                    dataTableIndicator.Columns.Add(new DataColumn("IndicatorID", typeof(string)));
+                    dataTableIndicator.Columns.Add(new DataColumn("IndicatorName", typeof(string)));
+                    dataTableIndicator.Columns.Add(new DataColumn("IndicatorCheckBox", typeof(bool)));
+                    foreach (IndicatorsTable indicator in indicatorTable)
+                    {
+                        DataRow dataRow = dataTableIndicator.NewRow();
+                        dataRow["IndicatorID"] = indicator.IndicatorsTableID.ToString();
+                        dataRow["IndicatorName"] = indicator.Name;
+                        dataRow["IndicatorCheckBox"] = false;
+                        dataTableIndicator.Rows.Add(dataRow);
+                    }
+                    IndicatorsTable.DataSource = dataTableIndicator;
+                    IndicatorsTable.DataBind();
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    List<CalculatedParametrs> calcParams =
+                    (from item in KPIWebDataContext.CalculatedParametrs where item.Active == true select item).ToList();
+                    DataTable dataTableCalc = new DataTable();
+
+                    dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsID", typeof(string)));
+                    dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsName", typeof(string)));
+                    dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsCheckBox", typeof(bool)));
+                    foreach (CalculatedParametrs calcParam in calcParams)
+                    {
+                        DataRow dataRow = dataTableCalc.NewRow();
+                        dataRow["CalculatedParametrsID"] = calcParam.CalculatedParametrsID.ToString();
+                        dataRow["CalculatedParametrsName"] = calcParam.Name;
+                        dataRow["CalculatedParametrsCheckBox"] = false;
+                        dataTableCalc.Rows.Add(dataRow);
+                    }
+                    CalculatedParametrsTable.DataSource = dataTableCalc;
+                    CalculatedParametrsTable.DataBind();
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    List<BasicParametersTable> basicParams =
+                  (from item in KPIWebDataContext.BasicParametersTable where item.Active == true select item).ToList();
+                    DataTable dataTableBasic = new DataTable();
+
+                    dataTableBasic.Columns.Add(new DataColumn("BasicParametrsID", typeof(string)));
+                    dataTableBasic.Columns.Add(new DataColumn("BasicParametrsName", typeof(string)));
+                    dataTableBasic.Columns.Add(new DataColumn("BasicParametrsCheckBox", typeof(bool)));
+                    foreach (BasicParametersTable basic in basicParams)
+                    {
+                        DataRow dataRow = dataTableBasic.NewRow();
+                        dataRow["BasicParametrsID"] = basic.BasicParametersTableID.ToString();
+                        dataRow["BasicParametrsName"] = basic.Name;
+                        dataRow["BasicParametrsCheckBox"] = false;
+                        dataTableBasic.Rows.Add(dataRow);
+                    }
+                    BasicParametrsTable.DataSource = dataTableBasic;
+                    BasicParametrsTable.DataBind();
+                    ///////////////////////////////////////////////////////////////////////////////////////////////////
                 }
                 else //создаем новый отчет
                 {
@@ -100,7 +157,62 @@ namespace KPIWeb.Reports
                         CheckBoxList1.Items.Add(academy.Name);
                         CheckBoxList1.Items[i].Value = academy.FirstLevelSubdivisionTableID.ToString();
                         i++;
-                    }                  
+                    }        
+////////////////////////////////////////////////////////////////////////////////////////////////////                
+                    List<IndicatorsTable> indicatorTable =
+                    (from item in KPIWebDataContext.IndicatorsTable where item.Active == true select item).ToList();
+                    DataTable dataTableIndicator = new DataTable();
+
+                    dataTableIndicator.Columns.Add(new DataColumn("IndicatorID", typeof(string)));
+                    dataTableIndicator.Columns.Add(new DataColumn("IndicatorName", typeof(string)));
+                    dataTableIndicator.Columns.Add(new DataColumn("IndicatorCheckBox", typeof(bool)));
+                    foreach (IndicatorsTable indicator in indicatorTable)
+                    {
+                        DataRow dataRow = dataTableIndicator.NewRow();
+                        dataRow["IndicatorID"] = indicator.IndicatorsTableID.ToString();
+                        dataRow["IndicatorName"] = indicator.Name;
+                        dataRow["IndicatorCheckBox"] = false;
+                        dataTableIndicator.Rows.Add(dataRow);
+                    }
+                    IndicatorsTable.DataSource = dataTableIndicator;
+                    IndicatorsTable.DataBind();
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    List<CalculatedParametrs> calcParams =
+                    (from item in KPIWebDataContext.CalculatedParametrs where item.Active == true select item).ToList();
+                    DataTable dataTableCalc = new DataTable();
+
+                    dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsID", typeof(string)));
+                    dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsName", typeof(string)));
+                    dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsCheckBox", typeof(bool)));
+                    foreach (CalculatedParametrs calcParam in calcParams)
+                    {
+                        DataRow dataRow = dataTableCalc.NewRow();
+                        dataRow["CalculatedParametrsID"] = calcParam.CalculatedParametrsID.ToString();
+                        dataRow["CalculatedParametrsName"] = calcParam.Name;
+                        dataRow["CalculatedParametrsCheckBox"] = false;
+                        dataTableCalc.Rows.Add(dataRow);
+                    }
+                    CalculatedParametrsTable.DataSource = dataTableCalc;
+                    CalculatedParametrsTable.DataBind();
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    List<BasicParametersTable> basicParams =
+                  (from item in KPIWebDataContext.BasicParametersTable where item.Active == true select item).ToList();
+                    DataTable dataTableBasic = new DataTable();
+
+                    dataTableBasic.Columns.Add(new DataColumn("BasicParametrsID", typeof(string)));
+                    dataTableBasic.Columns.Add(new DataColumn("BasicParametrsName", typeof(string)));
+                    dataTableBasic.Columns.Add(new DataColumn("BasicParametrsCheckBox", typeof(bool)));
+                    foreach (BasicParametersTable basic in basicParams)
+                    {
+                        DataRow dataRow = dataTableBasic.NewRow();
+                        dataRow["BasicParametrsID"] = basic.BasicParametersTableID.ToString();
+                        dataRow["BasicParametrsName"] = basic.Name;
+                        dataRow["BasicParametrsCheckBox"] = false;
+                        dataTableBasic.Rows.Add(dataRow);
+                    }
+                    BasicParametrsTable.DataSource = dataTableBasic;
+                    BasicParametrsTable.DataBind();
+///////////////////////////////////////////////////////////////////////////////////////////////////
                 }
             }
         }
@@ -119,7 +231,7 @@ namespace KPIWeb.Reports
                 reportArchiveTable.Calculeted = CheckBoxCalculeted.Checked;
                 reportArchiveTable.Sent = CheckBoxSent.Checked;
                 reportArchiveTable.RecipientConfirmed = CheckBoxRecipientConfirmed.Checked;
-                reportArchiveTable.Name = TextBoxName.Text;
+              //  reportArchiveTable.Name = TextBoxName.Text;
 
                 if (CalendarStartDateTime.SelectedDate > DateTime.MinValue)
                     reportArchiveTable.StartDateTime = CalendarStartDateTime.SelectedDate;
@@ -155,7 +267,7 @@ namespace KPIWeb.Reports
             reportArchiveTable.Calculeted = CheckBoxCalculeted.Checked;
             reportArchiveTable.Sent = CheckBoxSent.Checked;
             reportArchiveTable.RecipientConfirmed = CheckBoxRecipientConfirmed.Checked;
-            reportArchiveTable.Name = TextBoxName.Text;
+          //  reportArchiveTable.Name = TextBoxName.Text;
 
             if (CalendarStartDateTime.SelectedDate > DateTime.MinValue)
                 reportArchiveTable.StartDateTime = CalendarStartDateTime.SelectedDate;
@@ -209,6 +321,11 @@ namespace KPIWeb.Reports
         }
 
         protected void CalendarStartDateTime_SelectionChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void BasicParametrsTable_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

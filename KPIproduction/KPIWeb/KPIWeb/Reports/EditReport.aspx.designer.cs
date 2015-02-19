@@ -103,15 +103,6 @@ namespace KPIWeb.Reports {
         protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxList1;
         
         /// <summary>
-        /// GridviewRoles элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridviewRoles;
-        
-        /// <summary>
         /// ButtonSave элемент управления.
         /// </summary>
         /// <remarks>
@@ -119,5 +110,32 @@ namespace KPIWeb.Reports {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonSave;
+        
+        /// <summary>
+        /// IndicatorsTable элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView IndicatorsTable;
+        
+        /// <summary>
+        /// CalculatedParametrsTable элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView CalculatedParametrsTable;
+        
+        /// <summary>
+        /// BasicParametrsTable элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView BasicParametrsTable;
     }
 }

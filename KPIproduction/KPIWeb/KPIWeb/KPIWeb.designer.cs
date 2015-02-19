@@ -45,9 +45,6 @@ namespace KPIWeb
     partial void InsertCalculatedParametrs(CalculatedParametrs instance);
     partial void UpdateCalculatedParametrs(CalculatedParametrs instance);
     partial void DeleteCalculatedParametrs(CalculatedParametrs instance);
-    partial void InsertCalculatedParametrsAndBasicParametrsMappingTable(CalculatedParametrsAndBasicParametrsMappingTable instance);
-    partial void UpdateCalculatedParametrsAndBasicParametrsMappingTable(CalculatedParametrsAndBasicParametrsMappingTable instance);
-    partial void DeleteCalculatedParametrsAndBasicParametrsMappingTable(CalculatedParametrsAndBasicParametrsMappingTable instance);
     partial void InsertCollectedBasicParametersTable(CollectedBasicParametersTable instance);
     partial void UpdateCollectedBasicParametersTable(CollectedBasicParametersTable instance);
     partial void DeleteCollectedBasicParametersTable(CollectedBasicParametersTable instance);
@@ -60,18 +57,12 @@ namespace KPIWeb
     partial void InsertFourthLevelSubdivisionTable(FourthLevelSubdivisionTable instance);
     partial void UpdateFourthLevelSubdivisionTable(FourthLevelSubdivisionTable instance);
     partial void DeleteFourthLevelSubdivisionTable(FourthLevelSubdivisionTable instance);
-    partial void InsertIndicatorsAndBasicParamersTable(IndicatorsAndBasicParamersTable instance);
-    partial void UpdateIndicatorsAndBasicParamersTable(IndicatorsAndBasicParamersTable instance);
-    partial void DeleteIndicatorsAndBasicParamersTable(IndicatorsAndBasicParamersTable instance);
-    partial void InsertIndicatorsAndCalculatedParametrsMappingTable(IndicatorsAndCalculatedParametrsMappingTable instance);
-    partial void UpdateIndicatorsAndCalculatedParametrsMappingTable(IndicatorsAndCalculatedParametrsMappingTable instance);
-    partial void DeleteIndicatorsAndCalculatedParametrsMappingTable(IndicatorsAndCalculatedParametrsMappingTable instance);
     partial void InsertIndicatorsTable(IndicatorsTable instance);
     partial void UpdateIndicatorsTable(IndicatorsTable instance);
     partial void DeleteIndicatorsTable(IndicatorsTable instance);
-    partial void InsertReportAndRolesMapping(ReportAndRolesMapping instance);
-    partial void UpdateReportAndRolesMapping(ReportAndRolesMapping instance);
-    partial void DeleteReportAndRolesMapping(ReportAndRolesMapping instance);
+    partial void InsertReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable instance);
+    partial void UpdateReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable instance);
+    partial void DeleteReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable instance);
     partial void InsertReportArchiveTable(ReportArchiveTable instance);
     partial void UpdateReportArchiveTable(ReportArchiveTable instance);
     partial void DeleteReportArchiveTable(ReportArchiveTable instance);
@@ -84,15 +75,12 @@ namespace KPIWeb
     partial void InsertThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
     partial void UpdateThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
     partial void DeleteThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
-    partial void InsertUsersAndRolesMappingTable(UsersAndRolesMappingTable instance);
-    partial void UpdateUsersAndRolesMappingTable(UsersAndRolesMappingTable instance);
-    partial void DeleteUsersAndRolesMappingTable(UsersAndRolesMappingTable instance);
+    partial void InsertUsersAndReportMappingTable(UsersAndReportMappingTable instance);
+    partial void UpdateUsersAndReportMappingTable(UsersAndReportMappingTable instance);
+    partial void DeleteUsersAndReportMappingTable(UsersAndReportMappingTable instance);
     partial void InsertUsersTable(UsersTable instance);
     partial void UpdateUsersTable(UsersTable instance);
     partial void DeleteUsersTable(UsersTable instance);
-    partial void InsertReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable instance);
-    partial void UpdateReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable instance);
-    partial void DeleteReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable instance);
     #endregion
 		
 		public KPIWebDataContext() : 
@@ -165,14 +153,6 @@ namespace KPIWeb
 			}
 		}
 		
-		public System.Data.Linq.Table<CalculatedParametrsAndBasicParametrsMappingTable> CalculatedParametrsAndBasicParametrsMappingTable
-		{
-			get
-			{
-				return this.GetTable<CalculatedParametrsAndBasicParametrsMappingTable>();
-			}
-		}
-		
 		public System.Data.Linq.Table<CollectedBasicParametersTable> CollectedBasicParametersTable
 		{
 			get
@@ -205,22 +185,6 @@ namespace KPIWeb
 			}
 		}
 		
-		public System.Data.Linq.Table<IndicatorsAndBasicParamersTable> IndicatorsAndBasicParamersTable
-		{
-			get
-			{
-				return this.GetTable<IndicatorsAndBasicParamersTable>();
-			}
-		}
-		
-		public System.Data.Linq.Table<IndicatorsAndCalculatedParametrsMappingTable> IndicatorsAndCalculatedParametrsMappingTable
-		{
-			get
-			{
-				return this.GetTable<IndicatorsAndCalculatedParametrsMappingTable>();
-			}
-		}
-		
 		public System.Data.Linq.Table<IndicatorsTable> IndicatorsTable
 		{
 			get
@@ -229,11 +193,35 @@ namespace KPIWeb
 			}
 		}
 		
-		public System.Data.Linq.Table<ReportAndRolesMapping> ReportAndRolesMapping
+		public System.Data.Linq.Table<ReportArchiveAndBasicParametrsMappingTable> ReportArchiveAndBasicParametrsMappingTable
 		{
 			get
 			{
-				return this.GetTable<ReportAndRolesMapping>();
+				return this.GetTable<ReportArchiveAndBasicParametrsMappingTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ReportArchiveAndCalculatedParametrsMappingTable> ReportArchiveAndCalculatedParametrsMappingTable
+		{
+			get
+			{
+				return this.GetTable<ReportArchiveAndCalculatedParametrsMappingTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ReportArchiveAndIndicatorsMappingTable> ReportArchiveAndIndicatorsMappingTable
+		{
+			get
+			{
+				return this.GetTable<ReportArchiveAndIndicatorsMappingTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTable
+		{
+			get
+			{
+				return this.GetTable<ReportArchiveAndLevelMappingTable>();
 			}
 		}
 		
@@ -269,11 +257,11 @@ namespace KPIWeb
 			}
 		}
 		
-		public System.Data.Linq.Table<UsersAndRolesMappingTable> UsersAndRolesMappingTable
+		public System.Data.Linq.Table<UsersAndReportMappingTable> UsersAndReportMappingTable
 		{
 			get
 			{
-				return this.GetTable<UsersAndRolesMappingTable>();
+				return this.GetTable<UsersAndReportMappingTable>();
 			}
 		}
 		
@@ -282,14 +270,6 @@ namespace KPIWeb
 			get
 			{
 				return this.GetTable<UsersTable>();
-			}
-		}
-		
-		public System.Data.Linq.Table<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTable
-		{
-			get
-			{
-				return this.GetTable<ReportArchiveAndLevelMappingTable>();
 			}
 		}
 	}
@@ -770,11 +750,7 @@ namespace KPIWeb
 		
 		private EntitySet<BasicParametrsAndUsersMapping> _BasicParametrsAndUsersMapping;
 		
-		private EntitySet<CalculatedParametrsAndBasicParametrsMappingTable> _CalculatedParametrsAndBasicParametrsMappingTable;
-		
 		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
-		
-		private EntitySet<IndicatorsAndBasicParamersTable> _IndicatorsAndBasicParamersTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -798,9 +774,7 @@ namespace KPIWeb
 		{
 			this._BasicParametersAndRolesMappingTable = new EntitySet<BasicParametersAndRolesMappingTable>(new Action<BasicParametersAndRolesMappingTable>(this.attach_BasicParametersAndRolesMappingTable), new Action<BasicParametersAndRolesMappingTable>(this.detach_BasicParametersAndRolesMappingTable));
 			this._BasicParametrsAndUsersMapping = new EntitySet<BasicParametrsAndUsersMapping>(new Action<BasicParametrsAndUsersMapping>(this.attach_BasicParametrsAndUsersMapping), new Action<BasicParametrsAndUsersMapping>(this.detach_BasicParametrsAndUsersMapping));
-			this._CalculatedParametrsAndBasicParametrsMappingTable = new EntitySet<CalculatedParametrsAndBasicParametrsMappingTable>(new Action<CalculatedParametrsAndBasicParametrsMappingTable>(this.attach_CalculatedParametrsAndBasicParametrsMappingTable), new Action<CalculatedParametrsAndBasicParametrsMappingTable>(this.detach_CalculatedParametrsAndBasicParametrsMappingTable));
 			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
-			this._IndicatorsAndBasicParamersTable = new EntitySet<IndicatorsAndBasicParamersTable>(new Action<IndicatorsAndBasicParamersTable>(this.attach_IndicatorsAndBasicParamersTable), new Action<IndicatorsAndBasicParamersTable>(this.detach_IndicatorsAndBasicParamersTable));
 			OnCreated();
 		}
 		
@@ -904,7 +878,7 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Measure", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Measure", DbType="VarChar(10)")]
 		public string Measure
 		{
 			get
@@ -950,19 +924,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_CalculatedParametrsAndBasicParametrsMappingTable", Storage="_CalculatedParametrsAndBasicParametrsMappingTable", ThisKey="BasicParametersTableID", OtherKey="FK_BasicParametrTable")]
-		public EntitySet<CalculatedParametrsAndBasicParametrsMappingTable> CalculatedParametrsAndBasicParametrsMappingTable
-		{
-			get
-			{
-				return this._CalculatedParametrsAndBasicParametrsMappingTable;
-			}
-			set
-			{
-				this._CalculatedParametrsAndBasicParametrsMappingTable.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTable", ThisKey="BasicParametersTableID", OtherKey="FK_BasicParametersTable")]
 		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTable
 		{
@@ -973,19 +934,6 @@ namespace KPIWeb
 			set
 			{
 				this._CollectedBasicParametersTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_IndicatorsAndBasicParamersTable", Storage="_IndicatorsAndBasicParamersTable", ThisKey="BasicParametersTableID", OtherKey="FK_BasicParametrTable")]
-		public EntitySet<IndicatorsAndBasicParamersTable> IndicatorsAndBasicParamersTable
-		{
-			get
-			{
-				return this._IndicatorsAndBasicParamersTable;
-			}
-			set
-			{
-				this._IndicatorsAndBasicParamersTable.Assign(value);
 			}
 		}
 		
@@ -1033,18 +981,6 @@ namespace KPIWeb
 			entity.BasicParametersTable = null;
 		}
 		
-		private void attach_CalculatedParametrsAndBasicParametrsMappingTable(CalculatedParametrsAndBasicParametrsMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.BasicParametersTable = this;
-		}
-		
-		private void detach_CalculatedParametrsAndBasicParametrsMappingTable(CalculatedParametrsAndBasicParametrsMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.BasicParametersTable = null;
-		}
-		
 		private void attach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
@@ -1052,18 +988,6 @@ namespace KPIWeb
 		}
 		
 		private void detach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.BasicParametersTable = null;
-		}
-		
-		private void attach_IndicatorsAndBasicParamersTable(IndicatorsAndBasicParamersTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.BasicParametersTable = this;
-		}
-		
-		private void detach_IndicatorsAndBasicParamersTable(IndicatorsAndBasicParamersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.BasicParametersTable = null;
@@ -1374,10 +1298,6 @@ namespace KPIWeb
 		
 		private string _Formula;
 		
-		private EntitySet<CalculatedParametrsAndBasicParametrsMappingTable> _CalculatedParametrsAndBasicParametrsMappingTable;
-		
-		private EntitySet<IndicatorsAndCalculatedParametrsMappingTable> _IndicatorsAndCalculatedParametrsMappingTable;
-		
     #region Определения метода расширяемости
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1396,8 +1316,6 @@ namespace KPIWeb
 		
 		public CalculatedParametrs()
 		{
-			this._CalculatedParametrsAndBasicParametrsMappingTable = new EntitySet<CalculatedParametrsAndBasicParametrsMappingTable>(new Action<CalculatedParametrsAndBasicParametrsMappingTable>(this.attach_CalculatedParametrsAndBasicParametrsMappingTable), new Action<CalculatedParametrsAndBasicParametrsMappingTable>(this.detach_CalculatedParametrsAndBasicParametrsMappingTable));
-			this._IndicatorsAndCalculatedParametrsMappingTable = new EntitySet<IndicatorsAndCalculatedParametrsMappingTable>(new Action<IndicatorsAndCalculatedParametrsMappingTable>(this.attach_IndicatorsAndCalculatedParametrsMappingTable), new Action<IndicatorsAndCalculatedParametrsMappingTable>(this.detach_IndicatorsAndCalculatedParametrsMappingTable));
 			OnCreated();
 		}
 		
@@ -1497,272 +1415,6 @@ namespace KPIWeb
 					this._Formula = value;
 					this.SendPropertyChanged("Formula");
 					this.OnFormulaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametrs_CalculatedParametrsAndBasicParametrsMappingTable", Storage="_CalculatedParametrsAndBasicParametrsMappingTable", ThisKey="CalculatedParametrsID", OtherKey="FK_CalculatedParametrsTable")]
-		public EntitySet<CalculatedParametrsAndBasicParametrsMappingTable> CalculatedParametrsAndBasicParametrsMappingTable
-		{
-			get
-			{
-				return this._CalculatedParametrsAndBasicParametrsMappingTable;
-			}
-			set
-			{
-				this._CalculatedParametrsAndBasicParametrsMappingTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametrs_IndicatorsAndCalculatedParametrsMappingTable", Storage="_IndicatorsAndCalculatedParametrsMappingTable", ThisKey="CalculatedParametrsID", OtherKey="FK_CalculatedParametrsTable")]
-		public EntitySet<IndicatorsAndCalculatedParametrsMappingTable> IndicatorsAndCalculatedParametrsMappingTable
-		{
-			get
-			{
-				return this._IndicatorsAndCalculatedParametrsMappingTable;
-			}
-			set
-			{
-				this._IndicatorsAndCalculatedParametrsMappingTable.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_CalculatedParametrsAndBasicParametrsMappingTable(CalculatedParametrsAndBasicParametrsMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.CalculatedParametrs = this;
-		}
-		
-		private void detach_CalculatedParametrsAndBasicParametrsMappingTable(CalculatedParametrsAndBasicParametrsMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.CalculatedParametrs = null;
-		}
-		
-		private void attach_IndicatorsAndCalculatedParametrsMappingTable(IndicatorsAndCalculatedParametrsMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.CalculatedParametrs = this;
-		}
-		
-		private void detach_IndicatorsAndCalculatedParametrsMappingTable(IndicatorsAndCalculatedParametrsMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.CalculatedParametrs = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CalculatedParametrsAndBasicParametrsMappingTable")]
-	public partial class CalculatedParametrsAndBasicParametrsMappingTable : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _CalculatedParametrsAndBasicParametrsMappingTableID;
-		
-		private bool _Active;
-		
-		private int _FK_CalculatedParametrsTable;
-		
-		private int _FK_BasicParametrTable;
-		
-		private EntityRef<BasicParametersTable> _BasicParametersTable;
-		
-		private EntityRef<CalculatedParametrs> _CalculatedParametrs;
-		
-    #region Определения метода расширяемости
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnCalculatedParametrsAndBasicParametrsMappingTableIDChanging(int value);
-    partial void OnCalculatedParametrsAndBasicParametrsMappingTableIDChanged();
-    partial void OnActiveChanging(bool value);
-    partial void OnActiveChanged();
-    partial void OnFK_CalculatedParametrsTableChanging(int value);
-    partial void OnFK_CalculatedParametrsTableChanged();
-    partial void OnFK_BasicParametrTableChanging(int value);
-    partial void OnFK_BasicParametrTableChanged();
-    #endregion
-		
-		public CalculatedParametrsAndBasicParametrsMappingTable()
-		{
-			this._BasicParametersTable = default(EntityRef<BasicParametersTable>);
-			this._CalculatedParametrs = default(EntityRef<CalculatedParametrs>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CalculatedParametrsAndBasicParametrsMappingTableID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int CalculatedParametrsAndBasicParametrsMappingTableID
-		{
-			get
-			{
-				return this._CalculatedParametrsAndBasicParametrsMappingTableID;
-			}
-			set
-			{
-				if ((this._CalculatedParametrsAndBasicParametrsMappingTableID != value))
-				{
-					this.OnCalculatedParametrsAndBasicParametrsMappingTableIDChanging(value);
-					this.SendPropertyChanging();
-					this._CalculatedParametrsAndBasicParametrsMappingTableID = value;
-					this.SendPropertyChanged("CalculatedParametrsAndBasicParametrsMappingTableID");
-					this.OnCalculatedParametrsAndBasicParametrsMappingTableIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
-		public bool Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_CalculatedParametrsTable", DbType="Int NOT NULL")]
-		public int FK_CalculatedParametrsTable
-		{
-			get
-			{
-				return this._FK_CalculatedParametrsTable;
-			}
-			set
-			{
-				if ((this._FK_CalculatedParametrsTable != value))
-				{
-					if (this._CalculatedParametrs.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_CalculatedParametrsTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_CalculatedParametrsTable = value;
-					this.SendPropertyChanged("FK_CalculatedParametrsTable");
-					this.OnFK_CalculatedParametrsTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_BasicParametrTable", DbType="Int NOT NULL")]
-		public int FK_BasicParametrTable
-		{
-			get
-			{
-				return this._FK_BasicParametrTable;
-			}
-			set
-			{
-				if ((this._FK_BasicParametrTable != value))
-				{
-					if (this._BasicParametersTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_BasicParametrTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_BasicParametrTable = value;
-					this.SendPropertyChanged("FK_BasicParametrTable");
-					this.OnFK_BasicParametrTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_CalculatedParametrsAndBasicParametrsMappingTable", Storage="_BasicParametersTable", ThisKey="FK_BasicParametrTable", OtherKey="BasicParametersTableID", IsForeignKey=true)]
-		public BasicParametersTable BasicParametersTable
-		{
-			get
-			{
-				return this._BasicParametersTable.Entity;
-			}
-			set
-			{
-				BasicParametersTable previousValue = this._BasicParametersTable.Entity;
-				if (((previousValue != value) 
-							|| (this._BasicParametersTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._BasicParametersTable.Entity = null;
-						previousValue.CalculatedParametrsAndBasicParametrsMappingTable.Remove(this);
-					}
-					this._BasicParametersTable.Entity = value;
-					if ((value != null))
-					{
-						value.CalculatedParametrsAndBasicParametrsMappingTable.Add(this);
-						this._FK_BasicParametrTable = value.BasicParametersTableID;
-					}
-					else
-					{
-						this._FK_BasicParametrTable = default(int);
-					}
-					this.SendPropertyChanged("BasicParametersTable");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametrs_CalculatedParametrsAndBasicParametrsMappingTable", Storage="_CalculatedParametrs", ThisKey="FK_CalculatedParametrsTable", OtherKey="CalculatedParametrsID", IsForeignKey=true)]
-		public CalculatedParametrs CalculatedParametrs
-		{
-			get
-			{
-				return this._CalculatedParametrs.Entity;
-			}
-			set
-			{
-				CalculatedParametrs previousValue = this._CalculatedParametrs.Entity;
-				if (((previousValue != value) 
-							|| (this._CalculatedParametrs.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._CalculatedParametrs.Entity = null;
-						previousValue.CalculatedParametrsAndBasicParametrsMappingTable.Remove(this);
-					}
-					this._CalculatedParametrs.Entity = value;
-					if ((value != null))
-					{
-						value.CalculatedParametrsAndBasicParametrsMappingTable.Add(this);
-						this._FK_CalculatedParametrsTable = value.CalculatedParametrsID;
-					}
-					else
-					{
-						this._FK_CalculatedParametrsTable = default(int);
-					}
-					this.SendPropertyChanged("CalculatedParametrs");
 				}
 			}
 		}
@@ -2382,11 +2034,11 @@ namespace KPIWeb
 		
 		private System.Nullable<int> _FK_ZeroLevelSubvisionTable;
 		
+		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTable;
+		
 		private EntitySet<SecondLevelSubdivisionTable> _SecondLevelSubdivisionTable;
 		
 		private EntitySet<UsersTable> _UsersTable;
-		
-		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTable;
 		
 		private EntityRef<ZeroLevelSubdivisionTable> _ZeroLevelSubdivisionTable;
 		
@@ -2406,9 +2058,9 @@ namespace KPIWeb
 		
 		public FirstLevelSubdivisionTable()
 		{
+			this._ReportArchiveAndLevelMappingTable = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTable), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTable));
 			this._SecondLevelSubdivisionTable = new EntitySet<SecondLevelSubdivisionTable>(new Action<SecondLevelSubdivisionTable>(this.attach_SecondLevelSubdivisionTable), new Action<SecondLevelSubdivisionTable>(this.detach_SecondLevelSubdivisionTable));
 			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
-			this._ReportArchiveAndLevelMappingTable = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTable), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTable));
 			this._ZeroLevelSubdivisionTable = default(EntityRef<ZeroLevelSubdivisionTable>);
 			OnCreated();
 		}
@@ -2497,6 +2149,19 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTable", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubmisionTableId")]
+		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTable
+		{
+			get
+			{
+				return this._ReportArchiveAndLevelMappingTable;
+			}
+			set
+			{
+				this._ReportArchiveAndLevelMappingTable.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable", Storage="_SecondLevelSubdivisionTable", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubdivisionTable")]
 		public EntitySet<SecondLevelSubdivisionTable> SecondLevelSubdivisionTable
 		{
@@ -2520,19 +2185,6 @@ namespace KPIWeb
 			set
 			{
 				this._UsersTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTable", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubmisionTableId")]
-		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTable
-		{
-			get
-			{
-				return this._ReportArchiveAndLevelMappingTable;
-			}
-			set
-			{
-				this._ReportArchiveAndLevelMappingTable.Assign(value);
 			}
 		}
 		
@@ -2590,6 +2242,18 @@ namespace KPIWeb
 			}
 		}
 		
+		private void attach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.FirstLevelSubdivisionTable = this;
+		}
+		
+		private void detach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.FirstLevelSubdivisionTable = null;
+		}
+		
 		private void attach_SecondLevelSubdivisionTable(SecondLevelSubdivisionTable entity)
 		{
 			this.SendPropertyChanging();
@@ -2609,18 +2273,6 @@ namespace KPIWeb
 		}
 		
 		private void detach_UsersTable(UsersTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.FirstLevelSubdivisionTable = null;
-		}
-		
-		private void attach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.FirstLevelSubdivisionTable = this;
-		}
-		
-		private void detach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = null;
@@ -2858,438 +2510,6 @@ namespace KPIWeb
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IndicatorsAndBasicParamersTable")]
-	public partial class IndicatorsAndBasicParamersTable : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IndicatorsAndBasicParamersTableID;
-		
-		private bool _Active;
-		
-		private int _FK_BasicParametrTable;
-		
-		private int _FK_IndicatorTable;
-		
-		private EntityRef<BasicParametersTable> _BasicParametersTable;
-		
-		private EntityRef<IndicatorsTable> _IndicatorsTable;
-		
-    #region Определения метода расширяемости
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIndicatorsAndBasicParamersTableIDChanging(int value);
-    partial void OnIndicatorsAndBasicParamersTableIDChanged();
-    partial void OnActiveChanging(bool value);
-    partial void OnActiveChanged();
-    partial void OnFK_BasicParametrTableChanging(int value);
-    partial void OnFK_BasicParametrTableChanged();
-    partial void OnFK_IndicatorTableChanging(int value);
-    partial void OnFK_IndicatorTableChanged();
-    #endregion
-		
-		public IndicatorsAndBasicParamersTable()
-		{
-			this._BasicParametersTable = default(EntityRef<BasicParametersTable>);
-			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IndicatorsAndBasicParamersTableID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IndicatorsAndBasicParamersTableID
-		{
-			get
-			{
-				return this._IndicatorsAndBasicParamersTableID;
-			}
-			set
-			{
-				if ((this._IndicatorsAndBasicParamersTableID != value))
-				{
-					this.OnIndicatorsAndBasicParamersTableIDChanging(value);
-					this.SendPropertyChanging();
-					this._IndicatorsAndBasicParamersTableID = value;
-					this.SendPropertyChanged("IndicatorsAndBasicParamersTableID");
-					this.OnIndicatorsAndBasicParamersTableIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
-		public bool Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_BasicParametrTable", DbType="Int NOT NULL")]
-		public int FK_BasicParametrTable
-		{
-			get
-			{
-				return this._FK_BasicParametrTable;
-			}
-			set
-			{
-				if ((this._FK_BasicParametrTable != value))
-				{
-					if (this._BasicParametersTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_BasicParametrTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_BasicParametrTable = value;
-					this.SendPropertyChanged("FK_BasicParametrTable");
-					this.OnFK_BasicParametrTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_IndicatorTable", DbType="Int NOT NULL")]
-		public int FK_IndicatorTable
-		{
-			get
-			{
-				return this._FK_IndicatorTable;
-			}
-			set
-			{
-				if ((this._FK_IndicatorTable != value))
-				{
-					if (this._IndicatorsTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_IndicatorTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_IndicatorTable = value;
-					this.SendPropertyChanged("FK_IndicatorTable");
-					this.OnFK_IndicatorTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_IndicatorsAndBasicParamersTable", Storage="_BasicParametersTable", ThisKey="FK_BasicParametrTable", OtherKey="BasicParametersTableID", IsForeignKey=true)]
-		public BasicParametersTable BasicParametersTable
-		{
-			get
-			{
-				return this._BasicParametersTable.Entity;
-			}
-			set
-			{
-				BasicParametersTable previousValue = this._BasicParametersTable.Entity;
-				if (((previousValue != value) 
-							|| (this._BasicParametersTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._BasicParametersTable.Entity = null;
-						previousValue.IndicatorsAndBasicParamersTable.Remove(this);
-					}
-					this._BasicParametersTable.Entity = value;
-					if ((value != null))
-					{
-						value.IndicatorsAndBasicParamersTable.Add(this);
-						this._FK_BasicParametrTable = value.BasicParametersTableID;
-					}
-					else
-					{
-						this._FK_BasicParametrTable = default(int);
-					}
-					this.SendPropertyChanged("BasicParametersTable");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_IndicatorsAndBasicParamersTable", Storage="_IndicatorsTable", ThisKey="FK_IndicatorTable", OtherKey="IndicatorsTableID", IsForeignKey=true)]
-		public IndicatorsTable IndicatorsTable
-		{
-			get
-			{
-				return this._IndicatorsTable.Entity;
-			}
-			set
-			{
-				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
-				if (((previousValue != value) 
-							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._IndicatorsTable.Entity = null;
-						previousValue.IndicatorsAndBasicParamersTable.Remove(this);
-					}
-					this._IndicatorsTable.Entity = value;
-					if ((value != null))
-					{
-						value.IndicatorsAndBasicParamersTable.Add(this);
-						this._FK_IndicatorTable = value.IndicatorsTableID;
-					}
-					else
-					{
-						this._FK_IndicatorTable = default(int);
-					}
-					this.SendPropertyChanged("IndicatorsTable");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IndicatorsAndCalculatedParametrsMappingTable")]
-	public partial class IndicatorsAndCalculatedParametrsMappingTable : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IndicatorsAndCalculatedParametrsMappingTableID;
-		
-		private bool _Active;
-		
-		private int _FK_CalculatedParametrsTable;
-		
-		private int _FK_IndicatorsTable;
-		
-		private EntityRef<CalculatedParametrs> _CalculatedParametrs;
-		
-		private EntityRef<IndicatorsTable> _IndicatorsTable;
-		
-    #region Определения метода расширяемости
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIndicatorsAndCalculatedParametrsMappingTableIDChanging(int value);
-    partial void OnIndicatorsAndCalculatedParametrsMappingTableIDChanged();
-    partial void OnActiveChanging(bool value);
-    partial void OnActiveChanged();
-    partial void OnFK_CalculatedParametrsTableChanging(int value);
-    partial void OnFK_CalculatedParametrsTableChanged();
-    partial void OnFK_IndicatorsTableChanging(int value);
-    partial void OnFK_IndicatorsTableChanged();
-    #endregion
-		
-		public IndicatorsAndCalculatedParametrsMappingTable()
-		{
-			this._CalculatedParametrs = default(EntityRef<CalculatedParametrs>);
-			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IndicatorsAndCalculatedParametrsMappingTableID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IndicatorsAndCalculatedParametrsMappingTableID
-		{
-			get
-			{
-				return this._IndicatorsAndCalculatedParametrsMappingTableID;
-			}
-			set
-			{
-				if ((this._IndicatorsAndCalculatedParametrsMappingTableID != value))
-				{
-					this.OnIndicatorsAndCalculatedParametrsMappingTableIDChanging(value);
-					this.SendPropertyChanging();
-					this._IndicatorsAndCalculatedParametrsMappingTableID = value;
-					this.SendPropertyChanged("IndicatorsAndCalculatedParametrsMappingTableID");
-					this.OnIndicatorsAndCalculatedParametrsMappingTableIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
-		public bool Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_CalculatedParametrsTable", DbType="Int NOT NULL")]
-		public int FK_CalculatedParametrsTable
-		{
-			get
-			{
-				return this._FK_CalculatedParametrsTable;
-			}
-			set
-			{
-				if ((this._FK_CalculatedParametrsTable != value))
-				{
-					if (this._CalculatedParametrs.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_CalculatedParametrsTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_CalculatedParametrsTable = value;
-					this.SendPropertyChanged("FK_CalculatedParametrsTable");
-					this.OnFK_CalculatedParametrsTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_IndicatorsTable", DbType="Int NOT NULL")]
-		public int FK_IndicatorsTable
-		{
-			get
-			{
-				return this._FK_IndicatorsTable;
-			}
-			set
-			{
-				if ((this._FK_IndicatorsTable != value))
-				{
-					if (this._IndicatorsTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_IndicatorsTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_IndicatorsTable = value;
-					this.SendPropertyChanged("FK_IndicatorsTable");
-					this.OnFK_IndicatorsTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametrs_IndicatorsAndCalculatedParametrsMappingTable", Storage="_CalculatedParametrs", ThisKey="FK_CalculatedParametrsTable", OtherKey="CalculatedParametrsID", IsForeignKey=true)]
-		public CalculatedParametrs CalculatedParametrs
-		{
-			get
-			{
-				return this._CalculatedParametrs.Entity;
-			}
-			set
-			{
-				CalculatedParametrs previousValue = this._CalculatedParametrs.Entity;
-				if (((previousValue != value) 
-							|| (this._CalculatedParametrs.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._CalculatedParametrs.Entity = null;
-						previousValue.IndicatorsAndCalculatedParametrsMappingTable.Remove(this);
-					}
-					this._CalculatedParametrs.Entity = value;
-					if ((value != null))
-					{
-						value.IndicatorsAndCalculatedParametrsMappingTable.Add(this);
-						this._FK_CalculatedParametrsTable = value.CalculatedParametrsID;
-					}
-					else
-					{
-						this._FK_CalculatedParametrsTable = default(int);
-					}
-					this.SendPropertyChanged("CalculatedParametrs");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_IndicatorsAndCalculatedParametrsMappingTable", Storage="_IndicatorsTable", ThisKey="FK_IndicatorsTable", OtherKey="IndicatorsTableID", IsForeignKey=true)]
-		public IndicatorsTable IndicatorsTable
-		{
-			get
-			{
-				return this._IndicatorsTable.Entity;
-			}
-			set
-			{
-				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
-				if (((previousValue != value) 
-							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._IndicatorsTable.Entity = null;
-						previousValue.IndicatorsAndCalculatedParametrsMappingTable.Remove(this);
-					}
-					this._IndicatorsTable.Entity = value;
-					if ((value != null))
-					{
-						value.IndicatorsAndCalculatedParametrsMappingTable.Add(this);
-						this._FK_IndicatorsTable = value.IndicatorsTableID;
-					}
-					else
-					{
-						this._FK_IndicatorsTable = default(int);
-					}
-					this.SendPropertyChanged("IndicatorsTable");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IndicatorsTable")]
 	public partial class IndicatorsTable : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -3305,10 +2525,6 @@ namespace KPIWeb
 		private string _Measure;
 		
 		private string _Formula;
-		
-		private EntitySet<IndicatorsAndBasicParamersTable> _IndicatorsAndBasicParamersTable;
-		
-		private EntitySet<IndicatorsAndCalculatedParametrsMappingTable> _IndicatorsAndCalculatedParametrsMappingTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -3328,8 +2544,6 @@ namespace KPIWeb
 		
 		public IndicatorsTable()
 		{
-			this._IndicatorsAndBasicParamersTable = new EntitySet<IndicatorsAndBasicParamersTable>(new Action<IndicatorsAndBasicParamersTable>(this.attach_IndicatorsAndBasicParamersTable), new Action<IndicatorsAndBasicParamersTable>(this.detach_IndicatorsAndBasicParamersTable));
-			this._IndicatorsAndCalculatedParametrsMappingTable = new EntitySet<IndicatorsAndCalculatedParametrsMappingTable>(new Action<IndicatorsAndCalculatedParametrsMappingTable>(this.attach_IndicatorsAndCalculatedParametrsMappingTable), new Action<IndicatorsAndCalculatedParametrsMappingTable>(this.detach_IndicatorsAndCalculatedParametrsMappingTable));
 			OnCreated();
 		}
 		
@@ -3433,32 +2647,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_IndicatorsAndBasicParamersTable", Storage="_IndicatorsAndBasicParamersTable", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorTable")]
-		public EntitySet<IndicatorsAndBasicParamersTable> IndicatorsAndBasicParamersTable
-		{
-			get
-			{
-				return this._IndicatorsAndBasicParamersTable;
-			}
-			set
-			{
-				this._IndicatorsAndBasicParamersTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_IndicatorsAndCalculatedParametrsMappingTable", Storage="_IndicatorsAndCalculatedParametrsMappingTable", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
-		public EntitySet<IndicatorsAndCalculatedParametrsMappingTable> IndicatorsAndCalculatedParametrsMappingTable
-		{
-			get
-			{
-				return this._IndicatorsAndCalculatedParametrsMappingTable;
-			}
-			set
-			{
-				this._IndicatorsAndCalculatedParametrsMappingTable.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -3478,87 +2666,306 @@ namespace KPIWeb
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ReportArchiveAndBasicParametrsMappingTable")]
+	public partial class ReportArchiveAndBasicParametrsMappingTable
+	{
 		
-		private void attach_IndicatorsAndBasicParamersTable(IndicatorsAndBasicParamersTable entity)
+		private int _ReportArchiveAndBasicParametrsMappingTableID;
+		
+		private bool _Active;
+		
+		private int _FK_ReportArchiveTable;
+		
+		private int _FK_BasicParametrsTable;
+		
+		public ReportArchiveAndBasicParametrsMappingTable()
 		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = this;
 		}
 		
-		private void detach_IndicatorsAndBasicParamersTable(IndicatorsAndBasicParamersTable entity)
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReportArchiveAndBasicParametrsMappingTableID", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		public int ReportArchiveAndBasicParametrsMappingTableID
 		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = null;
+			get
+			{
+				return this._ReportArchiveAndBasicParametrsMappingTableID;
+			}
+			set
+			{
+				if ((this._ReportArchiveAndBasicParametrsMappingTableID != value))
+				{
+					this._ReportArchiveAndBasicParametrsMappingTableID = value;
+				}
+			}
 		}
 		
-		private void attach_IndicatorsAndCalculatedParametrsMappingTable(IndicatorsAndCalculatedParametrsMappingTable entity)
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
 		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = this;
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this._Active = value;
+				}
+			}
 		}
 		
-		private void detach_IndicatorsAndCalculatedParametrsMappingTable(IndicatorsAndCalculatedParametrsMappingTable entity)
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ReportArchiveTable", DbType="Int NOT NULL")]
+		public int FK_ReportArchiveTable
 		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = null;
+			get
+			{
+				return this._FK_ReportArchiveTable;
+			}
+			set
+			{
+				if ((this._FK_ReportArchiveTable != value))
+				{
+					this._FK_ReportArchiveTable = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_BasicParametrsTable", DbType="Int NOT NULL")]
+		public int FK_BasicParametrsTable
+		{
+			get
+			{
+				return this._FK_BasicParametrsTable;
+			}
+			set
+			{
+				if ((this._FK_BasicParametrsTable != value))
+				{
+					this._FK_BasicParametrsTable = value;
+				}
+			}
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ReportAndRolesMapping")]
-	public partial class ReportAndRolesMapping : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ReportArchiveAndCalculatedParametrsMappingTable")]
+	public partial class ReportArchiveAndCalculatedParametrsMappingTable
+	{
+		
+		private int _ReportArchiveAndCalculatedParametrsMappingTableID;
+		
+		private bool _Active;
+		
+		private int _FK_ReportArchiveTable;
+		
+		private int _FK_CalculatedParametrsTable;
+		
+		public ReportArchiveAndCalculatedParametrsMappingTable()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReportArchiveAndCalculatedParametrsMappingTableID", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		public int ReportArchiveAndCalculatedParametrsMappingTableID
+		{
+			get
+			{
+				return this._ReportArchiveAndCalculatedParametrsMappingTableID;
+			}
+			set
+			{
+				if ((this._ReportArchiveAndCalculatedParametrsMappingTableID != value))
+				{
+					this._ReportArchiveAndCalculatedParametrsMappingTableID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this._Active = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ReportArchiveTable", DbType="Int NOT NULL")]
+		public int FK_ReportArchiveTable
+		{
+			get
+			{
+				return this._FK_ReportArchiveTable;
+			}
+			set
+			{
+				if ((this._FK_ReportArchiveTable != value))
+				{
+					this._FK_ReportArchiveTable = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_CalculatedParametrsTable", DbType="Int NOT NULL")]
+		public int FK_CalculatedParametrsTable
+		{
+			get
+			{
+				return this._FK_CalculatedParametrsTable;
+			}
+			set
+			{
+				if ((this._FK_CalculatedParametrsTable != value))
+				{
+					this._FK_CalculatedParametrsTable = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ReportArchiveAndIndicatorsMappingTable")]
+	public partial class ReportArchiveAndIndicatorsMappingTable
+	{
+		
+		private int _ReportArchiveAndIndicatorsMappingTableID;
+		
+		private bool _Active;
+		
+		private int _FK_ReportArchiveTable;
+		
+		private int _FK_IndicatorsTable;
+		
+		public ReportArchiveAndIndicatorsMappingTable()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReportArchiveAndIndicatorsMappingTableID", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		public int ReportArchiveAndIndicatorsMappingTableID
+		{
+			get
+			{
+				return this._ReportArchiveAndIndicatorsMappingTableID;
+			}
+			set
+			{
+				if ((this._ReportArchiveAndIndicatorsMappingTableID != value))
+				{
+					this._ReportArchiveAndIndicatorsMappingTableID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this._Active = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ReportArchiveTable", DbType="Int NOT NULL")]
+		public int FK_ReportArchiveTable
+		{
+			get
+			{
+				return this._FK_ReportArchiveTable;
+			}
+			set
+			{
+				if ((this._FK_ReportArchiveTable != value))
+				{
+					this._FK_ReportArchiveTable = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_IndicatorsTable", DbType="Int NOT NULL")]
+		public int FK_IndicatorsTable
+		{
+			get
+			{
+				return this._FK_IndicatorsTable;
+			}
+			set
+			{
+				if ((this._FK_IndicatorsTable != value))
+				{
+					this._FK_IndicatorsTable = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ReportArchiveAndLevelMappingTable")]
+	public partial class ReportArchiveAndLevelMappingTable : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _ReportAndRolesMappingID;
+		private int _ReportArchiveAndLevelMappingTableId;
 		
 		private bool _Active;
 		
-		private int _FK_RolesTable;
+		private int _FK_ReportArchiveTableId;
 		
-		private int _FK_ReportArchiveTable;
+		private int _FK_FirstLevelSubmisionTableId;
+		
+		private EntityRef<FirstLevelSubdivisionTable> _FirstLevelSubdivisionTable;
 		
 		private EntityRef<ReportArchiveTable> _ReportArchiveTable;
-		
-		private EntityRef<RolesTable> _RolesTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnReportAndRolesMappingIDChanging(int value);
-    partial void OnReportAndRolesMappingIDChanged();
+    partial void OnReportArchiveAndLevelMappingTableIdChanging(int value);
+    partial void OnReportArchiveAndLevelMappingTableIdChanged();
     partial void OnActiveChanging(bool value);
     partial void OnActiveChanged();
-    partial void OnFK_RolesTableChanging(int value);
-    partial void OnFK_RolesTableChanged();
-    partial void OnFK_ReportArchiveTableChanging(int value);
-    partial void OnFK_ReportArchiveTableChanged();
+    partial void OnFK_ReportArchiveTableIdChanging(int value);
+    partial void OnFK_ReportArchiveTableIdChanged();
+    partial void OnFK_FirstLevelSubmisionTableIdChanging(int value);
+    partial void OnFK_FirstLevelSubmisionTableIdChanged();
     #endregion
 		
-		public ReportAndRolesMapping()
+		public ReportArchiveAndLevelMappingTable()
 		{
+			this._FirstLevelSubdivisionTable = default(EntityRef<FirstLevelSubdivisionTable>);
 			this._ReportArchiveTable = default(EntityRef<ReportArchiveTable>);
-			this._RolesTable = default(EntityRef<RolesTable>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReportAndRolesMappingID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ReportAndRolesMappingID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReportArchiveAndLevelMappingTableId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ReportArchiveAndLevelMappingTableId
 		{
 			get
 			{
-				return this._ReportAndRolesMappingID;
+				return this._ReportArchiveAndLevelMappingTableId;
 			}
 			set
 			{
-				if ((this._ReportAndRolesMappingID != value))
+				if ((this._ReportArchiveAndLevelMappingTableId != value))
 				{
-					this.OnReportAndRolesMappingIDChanging(value);
+					this.OnReportArchiveAndLevelMappingTableIdChanging(value);
 					this.SendPropertyChanging();
-					this._ReportAndRolesMappingID = value;
-					this.SendPropertyChanged("ReportAndRolesMappingID");
-					this.OnReportAndRolesMappingIDChanged();
+					this._ReportArchiveAndLevelMappingTableId = value;
+					this.SendPropertyChanged("ReportArchiveAndLevelMappingTableId");
+					this.OnReportArchiveAndLevelMappingTableIdChanged();
 				}
 			}
 		}
@@ -3583,55 +2990,89 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_RolesTable", DbType="Int NOT NULL")]
-		public int FK_RolesTable
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ReportArchiveTableId", DbType="Int NOT NULL")]
+		public int FK_ReportArchiveTableId
 		{
 			get
 			{
-				return this._FK_RolesTable;
+				return this._FK_ReportArchiveTableId;
 			}
 			set
 			{
-				if ((this._FK_RolesTable != value))
-				{
-					if (this._RolesTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_RolesTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_RolesTable = value;
-					this.SendPropertyChanged("FK_RolesTable");
-					this.OnFK_RolesTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ReportArchiveTable", DbType="Int NOT NULL")]
-		public int FK_ReportArchiveTable
-		{
-			get
-			{
-				return this._FK_ReportArchiveTable;
-			}
-			set
-			{
-				if ((this._FK_ReportArchiveTable != value))
+				if ((this._FK_ReportArchiveTableId != value))
 				{
 					if (this._ReportArchiveTable.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnFK_ReportArchiveTableChanging(value);
+					this.OnFK_ReportArchiveTableIdChanging(value);
 					this.SendPropertyChanging();
-					this._FK_ReportArchiveTable = value;
-					this.SendPropertyChanged("FK_ReportArchiveTable");
-					this.OnFK_ReportArchiveTableChanged();
+					this._FK_ReportArchiveTableId = value;
+					this.SendPropertyChanged("FK_ReportArchiveTableId");
+					this.OnFK_ReportArchiveTableIdChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ReportAndRolesMapping", Storage="_ReportArchiveTable", ThisKey="FK_ReportArchiveTable", OtherKey="ReportArchiveTableID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FirstLevelSubmisionTableId", DbType="Int NOT NULL")]
+		public int FK_FirstLevelSubmisionTableId
+		{
+			get
+			{
+				return this._FK_FirstLevelSubmisionTableId;
+			}
+			set
+			{
+				if ((this._FK_FirstLevelSubmisionTableId != value))
+				{
+					if (this._FirstLevelSubdivisionTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_FirstLevelSubmisionTableIdChanging(value);
+					this.SendPropertyChanging();
+					this._FK_FirstLevelSubmisionTableId = value;
+					this.SendPropertyChanged("FK_FirstLevelSubmisionTableId");
+					this.OnFK_FirstLevelSubmisionTableIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_FirstLevelSubdivisionTable", ThisKey="FK_FirstLevelSubmisionTableId", OtherKey="FirstLevelSubdivisionTableID", IsForeignKey=true)]
+		public FirstLevelSubdivisionTable FirstLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FirstLevelSubdivisionTable.Entity;
+			}
+			set
+			{
+				FirstLevelSubdivisionTable previousValue = this._FirstLevelSubdivisionTable.Entity;
+				if (((previousValue != value) 
+							|| (this._FirstLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FirstLevelSubdivisionTable.Entity = null;
+						previousValue.ReportArchiveAndLevelMappingTable.Remove(this);
+					}
+					this._FirstLevelSubdivisionTable.Entity = value;
+					if ((value != null))
+					{
+						value.ReportArchiveAndLevelMappingTable.Add(this);
+						this._FK_FirstLevelSubmisionTableId = value.FirstLevelSubdivisionTableID;
+					}
+					else
+					{
+						this._FK_FirstLevelSubmisionTableId = default(int);
+					}
+					this.SendPropertyChanged("FirstLevelSubdivisionTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveTable", ThisKey="FK_ReportArchiveTableId", OtherKey="ReportArchiveTableID", IsForeignKey=true)]
 		public ReportArchiveTable ReportArchiveTable
 		{
 			get
@@ -3648,53 +3089,19 @@ namespace KPIWeb
 					if ((previousValue != null))
 					{
 						this._ReportArchiveTable.Entity = null;
-						previousValue.ReportAndRolesMapping.Remove(this);
+						previousValue.ReportArchiveAndLevelMappingTable.Remove(this);
 					}
 					this._ReportArchiveTable.Entity = value;
 					if ((value != null))
 					{
-						value.ReportAndRolesMapping.Add(this);
-						this._FK_ReportArchiveTable = value.ReportArchiveTableID;
+						value.ReportArchiveAndLevelMappingTable.Add(this);
+						this._FK_ReportArchiveTableId = value.ReportArchiveTableID;
 					}
 					else
 					{
-						this._FK_ReportArchiveTable = default(int);
+						this._FK_ReportArchiveTableId = default(int);
 					}
 					this.SendPropertyChanged("ReportArchiveTable");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_ReportAndRolesMapping", Storage="_RolesTable", ThisKey="FK_RolesTable", OtherKey="RolesTableID", IsForeignKey=true)]
-		public RolesTable RolesTable
-		{
-			get
-			{
-				return this._RolesTable.Entity;
-			}
-			set
-			{
-				RolesTable previousValue = this._RolesTable.Entity;
-				if (((previousValue != value) 
-							|| (this._RolesTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._RolesTable.Entity = null;
-						previousValue.ReportAndRolesMapping.Remove(this);
-					}
-					this._RolesTable.Entity = value;
-					if ((value != null))
-					{
-						value.ReportAndRolesMapping.Add(this);
-						this._FK_RolesTable = value.RolesTableID;
-					}
-					else
-					{
-						this._FK_RolesTable = default(int);
-					}
-					this.SendPropertyChanged("RolesTable");
 				}
 			}
 		}
@@ -3738,19 +3145,19 @@ namespace KPIWeb
 		
 		private bool _RecipientConfirmed;
 		
-		private string _Name;
-		
 		private System.Nullable<System.DateTime> _StartDateTime;
 		
 		private System.Nullable<System.DateTime> _EndDateTime;
 		
 		private System.Nullable<System.DateTime> _DateToSend;
 		
+		private string _Name;
+		
 		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
-		private EntitySet<ReportAndRolesMapping> _ReportAndRolesMapping;
-		
 		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTable;
+		
+		private EntitySet<UsersAndReportMappingTable> _UsersAndReportMappingTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -3768,21 +3175,21 @@ namespace KPIWeb
     partial void OnSentDateTimeChanged();
     partial void OnRecipientConfirmedChanging(bool value);
     partial void OnRecipientConfirmedChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
     partial void OnStartDateTimeChanging(System.Nullable<System.DateTime> value);
     partial void OnStartDateTimeChanged();
     partial void OnEndDateTimeChanging(System.Nullable<System.DateTime> value);
     partial void OnEndDateTimeChanged();
     partial void OnDateToSendChanging(System.Nullable<System.DateTime> value);
     partial void OnDateToSendChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
     #endregion
 		
 		public ReportArchiveTable()
 		{
 			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
-			this._ReportAndRolesMapping = new EntitySet<ReportAndRolesMapping>(new Action<ReportAndRolesMapping>(this.attach_ReportAndRolesMapping), new Action<ReportAndRolesMapping>(this.detach_ReportAndRolesMapping));
 			this._ReportArchiveAndLevelMappingTable = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTable), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTable));
+			this._UsersAndReportMappingTable = new EntitySet<UsersAndReportMappingTable>(new Action<UsersAndReportMappingTable>(this.attach_UsersAndReportMappingTable), new Action<UsersAndReportMappingTable>(this.detach_UsersAndReportMappingTable));
 			OnCreated();
 		}
 		
@@ -3906,26 +3313,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(100)")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDateTime", DbType="DateTime")]
 		public System.Nullable<System.DateTime> StartDateTime
 		{
@@ -3986,6 +3373,26 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(500) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTable", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
 		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTable
 		{
@@ -3999,19 +3406,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ReportAndRolesMapping", Storage="_ReportAndRolesMapping", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
-		public EntitySet<ReportAndRolesMapping> ReportAndRolesMapping
-		{
-			get
-			{
-				return this._ReportAndRolesMapping;
-			}
-			set
-			{
-				this._ReportAndRolesMapping.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTable", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTableId")]
 		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTable
 		{
@@ -4022,6 +3416,19 @@ namespace KPIWeb
 			set
 			{
 				this._ReportArchiveAndLevelMappingTable.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_UsersAndReportMappingTable", Storage="_UsersAndReportMappingTable", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
+		public EntitySet<UsersAndReportMappingTable> UsersAndReportMappingTable
+		{
+			get
+			{
+				return this._UsersAndReportMappingTable;
+			}
+			set
+			{
+				this._UsersAndReportMappingTable.Assign(value);
 			}
 		}
 		
@@ -4057,18 +3464,6 @@ namespace KPIWeb
 			entity.ReportArchiveTable = null;
 		}
 		
-		private void attach_ReportAndRolesMapping(ReportAndRolesMapping entity)
-		{
-			this.SendPropertyChanging();
-			entity.ReportArchiveTable = this;
-		}
-		
-		private void detach_ReportAndRolesMapping(ReportAndRolesMapping entity)
-		{
-			this.SendPropertyChanging();
-			entity.ReportArchiveTable = null;
-		}
-		
 		private void attach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
@@ -4076,6 +3471,18 @@ namespace KPIWeb
 		}
 		
 		private void detach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.ReportArchiveTable = null;
+		}
+		
+		private void attach_UsersAndReportMappingTable(UsersAndReportMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.ReportArchiveTable = this;
+		}
+		
+		private void detach_UsersAndReportMappingTable(UsersAndReportMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = null;
@@ -4096,10 +3503,6 @@ namespace KPIWeb
 		
 		private EntitySet<BasicParametersAndRolesMappingTable> _BasicParametersAndRolesMappingTable;
 		
-		private EntitySet<ReportAndRolesMapping> _ReportAndRolesMapping;
-		
-		private EntitySet<UsersAndRolesMappingTable> _UsersAndRolesMappingTable;
-		
     #region Определения метода расширяемости
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -4115,8 +3518,6 @@ namespace KPIWeb
 		public RolesTable()
 		{
 			this._BasicParametersAndRolesMappingTable = new EntitySet<BasicParametersAndRolesMappingTable>(new Action<BasicParametersAndRolesMappingTable>(this.attach_BasicParametersAndRolesMappingTable), new Action<BasicParametersAndRolesMappingTable>(this.detach_BasicParametersAndRolesMappingTable));
-			this._ReportAndRolesMapping = new EntitySet<ReportAndRolesMapping>(new Action<ReportAndRolesMapping>(this.attach_ReportAndRolesMapping), new Action<ReportAndRolesMapping>(this.detach_ReportAndRolesMapping));
-			this._UsersAndRolesMappingTable = new EntitySet<UsersAndRolesMappingTable>(new Action<UsersAndRolesMappingTable>(this.attach_UsersAndRolesMappingTable), new Action<UsersAndRolesMappingTable>(this.detach_UsersAndRolesMappingTable));
 			OnCreated();
 		}
 		
@@ -4193,32 +3594,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_ReportAndRolesMapping", Storage="_ReportAndRolesMapping", ThisKey="RolesTableID", OtherKey="FK_RolesTable")]
-		public EntitySet<ReportAndRolesMapping> ReportAndRolesMapping
-		{
-			get
-			{
-				return this._ReportAndRolesMapping;
-			}
-			set
-			{
-				this._ReportAndRolesMapping.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_UsersAndRolesMappingTable", Storage="_UsersAndRolesMappingTable", ThisKey="RolesTableID", OtherKey="FK_RolesTable")]
-		public EntitySet<UsersAndRolesMappingTable> UsersAndRolesMappingTable
-		{
-			get
-			{
-				return this._UsersAndRolesMappingTable;
-			}
-			set
-			{
-				this._UsersAndRolesMappingTable.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -4246,30 +3621,6 @@ namespace KPIWeb
 		}
 		
 		private void detach_BasicParametersAndRolesMappingTable(BasicParametersAndRolesMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.RolesTable = null;
-		}
-		
-		private void attach_ReportAndRolesMapping(ReportAndRolesMapping entity)
-		{
-			this.SendPropertyChanging();
-			entity.RolesTable = this;
-		}
-		
-		private void detach_ReportAndRolesMapping(ReportAndRolesMapping entity)
-		{
-			this.SendPropertyChanging();
-			entity.RolesTable = null;
-		}
-		
-		private void attach_UsersAndRolesMappingTable(UsersAndRolesMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.RolesTable = this;
-		}
-		
-		private void detach_UsersAndRolesMappingTable(UsersAndRolesMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.RolesTable = null;
@@ -4738,27 +4089,21 @@ namespace KPIWeb
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UsersAndRolesMappingTable")]
-	public partial class UsersAndRolesMappingTable : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UsersAndReportMappingTable")]
+	public partial class UsersAndReportMappingTable : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _UsersAndRolesMappingTableID;
+		private int _UsersAndReportArchiveTableID;
 		
 		private bool _Active;
 		
 		private int _FK_UsersTable;
 		
-		private int _FK_RolesTable;
+		private int _FK_ReportArchiveTable;
 		
-		private System.Nullable<bool> _CanEdit;
-		
-		private System.Nullable<bool> _CanView;
-		
-		private System.Nullable<bool> _CanConfirm;
-		
-		private EntityRef<RolesTable> _RolesTable;
+		private EntityRef<ReportArchiveTable> _ReportArchiveTable;
 		
 		private EntityRef<UsersTable> _UsersTable;
 		
@@ -4766,45 +4111,39 @@ namespace KPIWeb
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnUsersAndRolesMappingTableIDChanging(int value);
-    partial void OnUsersAndRolesMappingTableIDChanged();
+    partial void OnUsersAndReportArchiveTableIDChanging(int value);
+    partial void OnUsersAndReportArchiveTableIDChanged();
     partial void OnActiveChanging(bool value);
     partial void OnActiveChanged();
     partial void OnFK_UsersTableChanging(int value);
     partial void OnFK_UsersTableChanged();
-    partial void OnFK_RolesTableChanging(int value);
-    partial void OnFK_RolesTableChanged();
-    partial void OnCanEditChanging(System.Nullable<bool> value);
-    partial void OnCanEditChanged();
-    partial void OnCanViewChanging(System.Nullable<bool> value);
-    partial void OnCanViewChanged();
-    partial void OnCanConfirmChanging(System.Nullable<bool> value);
-    partial void OnCanConfirmChanged();
+    partial void OnFK_ReportArchiveTableChanging(int value);
+    partial void OnFK_ReportArchiveTableChanged();
     #endregion
 		
-		public UsersAndRolesMappingTable()
+		public UsersAndReportMappingTable()
 		{
-			this._RolesTable = default(EntityRef<RolesTable>);
+			this._ReportArchiveTable = default(EntityRef<ReportArchiveTable>);
 			this._UsersTable = default(EntityRef<UsersTable>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UsersAndRolesMappingTableID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int UsersAndRolesMappingTableID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UsersAndReportArchiveTableID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int UsersAndReportArchiveTableID
 		{
 			get
 			{
-				return this._UsersAndRolesMappingTableID;
+				return this._UsersAndReportArchiveTableID;
 			}
 			set
 			{
-				if ((this._UsersAndRolesMappingTableID != value))
+				if ((this._UsersAndReportArchiveTableID != value))
 				{
-					this.OnUsersAndRolesMappingTableIDChanging(value);
+					this.OnUsersAndReportArchiveTableIDChanging(value);
 					this.SendPropertyChanging();
-					this._UsersAndRolesMappingTableID = value;
-					this.SendPropertyChanged("UsersAndRolesMappingTableID");
-					this.OnUsersAndRolesMappingTableIDChanged();
+					this._UsersAndReportArchiveTableID = value;
+					this.SendPropertyChanged("UsersAndReportArchiveTableID");
+					this.OnUsersAndReportArchiveTableIDChanged();
 				}
 			}
 		}
@@ -4853,125 +4192,65 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_RolesTable", DbType="Int NOT NULL")]
-		public int FK_RolesTable
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ReportArchiveTable", DbType="Int NOT NULL")]
+		public int FK_ReportArchiveTable
 		{
 			get
 			{
-				return this._FK_RolesTable;
+				return this._FK_ReportArchiveTable;
 			}
 			set
 			{
-				if ((this._FK_RolesTable != value))
+				if ((this._FK_ReportArchiveTable != value))
 				{
-					if (this._RolesTable.HasLoadedOrAssignedValue)
+					if (this._ReportArchiveTable.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnFK_RolesTableChanging(value);
+					this.OnFK_ReportArchiveTableChanging(value);
 					this.SendPropertyChanging();
-					this._FK_RolesTable = value;
-					this.SendPropertyChanged("FK_RolesTable");
-					this.OnFK_RolesTableChanged();
+					this._FK_ReportArchiveTable = value;
+					this.SendPropertyChanged("FK_ReportArchiveTable");
+					this.OnFK_ReportArchiveTableChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanEdit", DbType="Bit")]
-		public System.Nullable<bool> CanEdit
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_UsersAndReportMappingTable", Storage="_ReportArchiveTable", ThisKey="FK_ReportArchiveTable", OtherKey="ReportArchiveTableID", IsForeignKey=true)]
+		public ReportArchiveTable ReportArchiveTable
 		{
 			get
 			{
-				return this._CanEdit;
+				return this._ReportArchiveTable.Entity;
 			}
 			set
 			{
-				if ((this._CanEdit != value))
-				{
-					this.OnCanEditChanging(value);
-					this.SendPropertyChanging();
-					this._CanEdit = value;
-					this.SendPropertyChanged("CanEdit");
-					this.OnCanEditChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanView", DbType="Bit")]
-		public System.Nullable<bool> CanView
-		{
-			get
-			{
-				return this._CanView;
-			}
-			set
-			{
-				if ((this._CanView != value))
-				{
-					this.OnCanViewChanging(value);
-					this.SendPropertyChanging();
-					this._CanView = value;
-					this.SendPropertyChanged("CanView");
-					this.OnCanViewChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanConfirm", DbType="Bit")]
-		public System.Nullable<bool> CanConfirm
-		{
-			get
-			{
-				return this._CanConfirm;
-			}
-			set
-			{
-				if ((this._CanConfirm != value))
-				{
-					this.OnCanConfirmChanging(value);
-					this.SendPropertyChanging();
-					this._CanConfirm = value;
-					this.SendPropertyChanged("CanConfirm");
-					this.OnCanConfirmChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_UsersAndRolesMappingTable", Storage="_RolesTable", ThisKey="FK_RolesTable", OtherKey="RolesTableID", IsForeignKey=true)]
-		public RolesTable RolesTable
-		{
-			get
-			{
-				return this._RolesTable.Entity;
-			}
-			set
-			{
-				RolesTable previousValue = this._RolesTable.Entity;
+				ReportArchiveTable previousValue = this._ReportArchiveTable.Entity;
 				if (((previousValue != value) 
-							|| (this._RolesTable.HasLoadedOrAssignedValue == false)))
+							|| (this._ReportArchiveTable.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._RolesTable.Entity = null;
-						previousValue.UsersAndRolesMappingTable.Remove(this);
+						this._ReportArchiveTable.Entity = null;
+						previousValue.UsersAndReportMappingTable.Remove(this);
 					}
-					this._RolesTable.Entity = value;
+					this._ReportArchiveTable.Entity = value;
 					if ((value != null))
 					{
-						value.UsersAndRolesMappingTable.Add(this);
-						this._FK_RolesTable = value.RolesTableID;
+						value.UsersAndReportMappingTable.Add(this);
+						this._FK_ReportArchiveTable = value.ReportArchiveTableID;
 					}
 					else
 					{
-						this._FK_RolesTable = default(int);
+						this._FK_ReportArchiveTable = default(int);
 					}
-					this.SendPropertyChanged("RolesTable");
+					this.SendPropertyChanged("ReportArchiveTable");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_UsersAndRolesMappingTable", Storage="_UsersTable", ThisKey="FK_UsersTable", OtherKey="UsersTableID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_UsersAndReportMappingTable", Storage="_UsersTable", ThisKey="FK_UsersTable", OtherKey="UsersTableID", IsForeignKey=true)]
 		public UsersTable UsersTable
 		{
 			get
@@ -4988,12 +4267,12 @@ namespace KPIWeb
 					if ((previousValue != null))
 					{
 						this._UsersTable.Entity = null;
-						previousValue.UsersAndRolesMappingTable.Remove(this);
+						previousValue.UsersAndReportMappingTable.Remove(this);
 					}
 					this._UsersTable.Entity = value;
 					if ((value != null))
 					{
-						value.UsersAndRolesMappingTable.Add(this);
+						value.UsersAndReportMappingTable.Add(this);
 						this._FK_UsersTable = value.UsersTableID;
 					}
 					else
@@ -5060,7 +4339,7 @@ namespace KPIWeb
 		
 		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
-		private EntitySet<UsersAndRolesMappingTable> _UsersAndRolesMappingTable;
+		private EntitySet<UsersAndReportMappingTable> _UsersAndReportMappingTable;
 		
 		private EntityRef<FifthLevelSubdivisionTable> _FifthLevelSubdivisionTable;
 		
@@ -5108,7 +4387,7 @@ namespace KPIWeb
 		{
 			this._BasicParametrsAndUsersMapping = new EntitySet<BasicParametrsAndUsersMapping>(new Action<BasicParametrsAndUsersMapping>(this.attach_BasicParametrsAndUsersMapping), new Action<BasicParametrsAndUsersMapping>(this.detach_BasicParametrsAndUsersMapping));
 			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
-			this._UsersAndRolesMappingTable = new EntitySet<UsersAndRolesMappingTable>(new Action<UsersAndRolesMappingTable>(this.attach_UsersAndRolesMappingTable), new Action<UsersAndRolesMappingTable>(this.detach_UsersAndRolesMappingTable));
+			this._UsersAndReportMappingTable = new EntitySet<UsersAndReportMappingTable>(new Action<UsersAndReportMappingTable>(this.attach_UsersAndReportMappingTable), new Action<UsersAndReportMappingTable>(this.detach_UsersAndReportMappingTable));
 			this._FifthLevelSubdivisionTable = default(EntityRef<FifthLevelSubdivisionTable>);
 			this._FirstLevelSubdivisionTable = default(EntityRef<FirstLevelSubdivisionTable>);
 			this._FourthLevelSubdivisionTable = default(EntityRef<FourthLevelSubdivisionTable>);
@@ -5408,16 +4687,16 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_UsersAndRolesMappingTable", Storage="_UsersAndRolesMappingTable", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
-		public EntitySet<UsersAndRolesMappingTable> UsersAndRolesMappingTable
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_UsersAndReportMappingTable", Storage="_UsersAndReportMappingTable", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
+		public EntitySet<UsersAndReportMappingTable> UsersAndReportMappingTable
 		{
 			get
 			{
-				return this._UsersAndRolesMappingTable;
+				return this._UsersAndReportMappingTable;
 			}
 			set
 			{
-				this._UsersAndRolesMappingTable.Assign(value);
+				this._UsersAndReportMappingTable.Assign(value);
 			}
 		}
 		
@@ -5669,232 +4948,16 @@ namespace KPIWeb
 			entity.UsersTable = null;
 		}
 		
-		private void attach_UsersAndRolesMappingTable(UsersAndRolesMappingTable entity)
+		private void attach_UsersAndReportMappingTable(UsersAndReportMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_UsersAndRolesMappingTable(UsersAndRolesMappingTable entity)
+		private void detach_UsersAndReportMappingTable(UsersAndReportMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ReportArchiveAndLevelMappingTable")]
-	public partial class ReportArchiveAndLevelMappingTable : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ReportArchiveAndLevelMappingTableId;
-		
-		private bool _Active;
-		
-		private int _FK_ReportArchiveTableId;
-		
-		private int _FK_FirstLevelSubmisionTableId;
-		
-		private EntityRef<FirstLevelSubdivisionTable> _FirstLevelSubdivisionTable;
-		
-		private EntityRef<ReportArchiveTable> _ReportArchiveTable;
-		
-    #region Определения метода расширяемости
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnReportArchiveAndLevelMappingTableIdChanging(int value);
-    partial void OnReportArchiveAndLevelMappingTableIdChanged();
-    partial void OnActiveChanging(bool value);
-    partial void OnActiveChanged();
-    partial void OnFK_ReportArchiveTableIdChanging(int value);
-    partial void OnFK_ReportArchiveTableIdChanged();
-    partial void OnFK_FirstLevelSubmisionTableIdChanging(int value);
-    partial void OnFK_FirstLevelSubmisionTableIdChanged();
-    #endregion
-		
-		public ReportArchiveAndLevelMappingTable()
-		{
-			this._FirstLevelSubdivisionTable = default(EntityRef<FirstLevelSubdivisionTable>);
-			this._ReportArchiveTable = default(EntityRef<ReportArchiveTable>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReportArchiveAndLevelMappingTableId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ReportArchiveAndLevelMappingTableId
-		{
-			get
-			{
-				return this._ReportArchiveAndLevelMappingTableId;
-			}
-			set
-			{
-				if ((this._ReportArchiveAndLevelMappingTableId != value))
-				{
-					this.OnReportArchiveAndLevelMappingTableIdChanging(value);
-					this.SendPropertyChanging();
-					this._ReportArchiveAndLevelMappingTableId = value;
-					this.SendPropertyChanged("ReportArchiveAndLevelMappingTableId");
-					this.OnReportArchiveAndLevelMappingTableIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
-		public bool Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ReportArchiveTableId", DbType="Int NOT NULL")]
-		public int FK_ReportArchiveTableId
-		{
-			get
-			{
-				return this._FK_ReportArchiveTableId;
-			}
-			set
-			{
-				if ((this._FK_ReportArchiveTableId != value))
-				{
-					if (this._ReportArchiveTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_ReportArchiveTableIdChanging(value);
-					this.SendPropertyChanging();
-					this._FK_ReportArchiveTableId = value;
-					this.SendPropertyChanged("FK_ReportArchiveTableId");
-					this.OnFK_ReportArchiveTableIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FirstLevelSubmisionTableId", DbType="Int NOT NULL")]
-		public int FK_FirstLevelSubmisionTableId
-		{
-			get
-			{
-				return this._FK_FirstLevelSubmisionTableId;
-			}
-			set
-			{
-				if ((this._FK_FirstLevelSubmisionTableId != value))
-				{
-					if (this._FirstLevelSubdivisionTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_FirstLevelSubmisionTableIdChanging(value);
-					this.SendPropertyChanging();
-					this._FK_FirstLevelSubmisionTableId = value;
-					this.SendPropertyChanged("FK_FirstLevelSubmisionTableId");
-					this.OnFK_FirstLevelSubmisionTableIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_FirstLevelSubdivisionTable", ThisKey="FK_FirstLevelSubmisionTableId", OtherKey="FirstLevelSubdivisionTableID", IsForeignKey=true)]
-		public FirstLevelSubdivisionTable FirstLevelSubdivisionTable
-		{
-			get
-			{
-				return this._FirstLevelSubdivisionTable.Entity;
-			}
-			set
-			{
-				FirstLevelSubdivisionTable previousValue = this._FirstLevelSubdivisionTable.Entity;
-				if (((previousValue != value) 
-							|| (this._FirstLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._FirstLevelSubdivisionTable.Entity = null;
-						previousValue.ReportArchiveAndLevelMappingTable.Remove(this);
-					}
-					this._FirstLevelSubdivisionTable.Entity = value;
-					if ((value != null))
-					{
-						value.ReportArchiveAndLevelMappingTable.Add(this);
-						this._FK_FirstLevelSubmisionTableId = value.FirstLevelSubdivisionTableID;
-					}
-					else
-					{
-						this._FK_FirstLevelSubmisionTableId = default(int);
-					}
-					this.SendPropertyChanged("FirstLevelSubdivisionTable");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveTable", ThisKey="FK_ReportArchiveTableId", OtherKey="ReportArchiveTableID", IsForeignKey=true)]
-		public ReportArchiveTable ReportArchiveTable
-		{
-			get
-			{
-				return this._ReportArchiveTable.Entity;
-			}
-			set
-			{
-				ReportArchiveTable previousValue = this._ReportArchiveTable.Entity;
-				if (((previousValue != value) 
-							|| (this._ReportArchiveTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._ReportArchiveTable.Entity = null;
-						previousValue.ReportArchiveAndLevelMappingTable.Remove(this);
-					}
-					this._ReportArchiveTable.Entity = value;
-					if ((value != null))
-					{
-						value.ReportArchiveAndLevelMappingTable.Add(this);
-						this._FK_ReportArchiveTableId = value.ReportArchiveTableID;
-					}
-					else
-					{
-						this._FK_ReportArchiveTableId = default(int);
-					}
-					this.SendPropertyChanged("ReportArchiveTable");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 }

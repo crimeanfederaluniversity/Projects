@@ -29,12 +29,11 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
       <Column Name="AbbreviationEN" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
       <Column Name="AbbreviationRU" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="Measure" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Measure" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
       <Association Name="BasicParametersTable_BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTable" ThisKey="BasicParametersTableID" OtherKey="FK_BasicParametersTable" Type="BasicParametersAndRolesMappingTable" />
       <Association Name="BasicParametersTable_BasicParametrsAndUsersMapping" Member="BasicParametrsAndUsersMapping" ThisKey="BasicParametersTableID" OtherKey="FK_ParametrsTable" Type="BasicParametrsAndUsersMapping" />
-      <Association Name="BasicParametersTable_CalculatedParametrsAndBasicParametrsMappingTable" Member="CalculatedParametrsAndBasicParametrsMappingTable" ThisKey="BasicParametersTableID" OtherKey="FK_BasicParametrTable" Type="CalculatedParametrsAndBasicParametrsMappingTable" />
       <Association Name="BasicParametersTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="BasicParametersTableID" OtherKey="FK_BasicParametersTable" Type="CollectedBasicParametersTable" />
-      <Association Name="BasicParametersTable_IndicatorsAndBasicParamersTable" Member="IndicatorsAndBasicParamersTable" ThisKey="BasicParametersTableID" OtherKey="FK_BasicParametrTable" Type="IndicatorsAndBasicParamersTable" />
+      <Association Name="BasicParametersTable_ReportArchiveAndBasicParametrsMappingTable" Member="ReportArchiveAndBasicParametrsMappingTable" ThisKey="BasicParametersTableID" OtherKey="FK_BasicParametrsTable" Type="ReportArchiveAndBasicParametrsMappingTable" />
     </Type>
   </Table>
   <Table Name="dbo.BasicParametrsAndUsersMapping" Member="BasicParametrsAndUsersMapping">
@@ -57,18 +56,7 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
       <Column Name="Measure" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
       <Column Name="Formula" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
-      <Association Name="CalculatedParametrs_CalculatedParametrsAndBasicParametrsMappingTable" Member="CalculatedParametrsAndBasicParametrsMappingTable" ThisKey="CalculatedParametrsID" OtherKey="FK_CalculatedParametrsTable" Type="CalculatedParametrsAndBasicParametrsMappingTable" />
-      <Association Name="CalculatedParametrs_IndicatorsAndCalculatedParametrsMappingTable" Member="IndicatorsAndCalculatedParametrsMappingTable" ThisKey="CalculatedParametrsID" OtherKey="FK_CalculatedParametrsTable" Type="IndicatorsAndCalculatedParametrsMappingTable" />
-    </Type>
-  </Table>
-  <Table Name="dbo.CalculatedParametrsAndBasicParametrsMappingTable" Member="CalculatedParametrsAndBasicParametrsMappingTable">
-    <Type Name="CalculatedParametrsAndBasicParametrsMappingTable">
-      <Column Name="CalculatedParametrsAndBasicParametrsMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="FK_CalculatedParametrsTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FK_BasicParametrTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="BasicParametersTable_CalculatedParametrsAndBasicParametrsMappingTable" Member="BasicParametersTable" ThisKey="FK_BasicParametrTable" OtherKey="BasicParametersTableID" Type="BasicParametersTable" IsForeignKey="true" />
-      <Association Name="CalculatedParametrs_CalculatedParametrsAndBasicParametrsMappingTable" Member="CalculatedParametrs" ThisKey="FK_CalculatedParametrsTable" OtherKey="CalculatedParametrsID" Type="CalculatedParametrs" IsForeignKey="true" />
+      <Association Name="CalculatedParametrs_ReportArchiveAndCalculatedParametrsMappingTable" Member="ReportArchiveAndCalculatedParametrsMappingTable" ThisKey="CalculatedParametrsID" OtherKey="FK_CalculatedParametrsTable" Type="ReportArchiveAndCalculatedParametrsMappingTable" />
     </Type>
   </Table>
   <Table Name="dbo.CollectedBasicParametersTable" Member="CollectedBasicParametersTable">
@@ -103,9 +91,9 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="FK_ZeroLevelSubvisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="FirstLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" Member="ReportArchiveAndLevelMappingTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubmisionTableId" Type="ReportArchiveAndLevelMappingTable" />
       <Association Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="SecondLevelSubdivisionTable" />
       <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="UsersTable" />
-      <Association Name="FirstLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" Member="ReportArchiveAndLevelMappingTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubmisionTableId" Type="ReportArchiveAndLevelMappingTable" />
       <Association Name="ZeroLevelSubdivisionTable_FirstLevelSubdivisionTable" Member="ZeroLevelSubdivisionTable" ThisKey="FK_ZeroLevelSubvisionTable" OtherKey="ZeroLevelSubdivisionTableID" Type="ZeroLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
@@ -120,26 +108,6 @@
       <Association Name="ThirdLevelSubdivisionTable_FourthLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.IndicatorsAndBasicParamersTable" Member="IndicatorsAndBasicParamersTable">
-    <Type Name="IndicatorsAndBasicParamersTable">
-      <Column Name="IndicatorsAndBasicParamersTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="FK_BasicParametrTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FK_IndicatorTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="BasicParametersTable_IndicatorsAndBasicParamersTable" Member="BasicParametersTable" ThisKey="FK_BasicParametrTable" OtherKey="BasicParametersTableID" Type="BasicParametersTable" IsForeignKey="true" />
-      <Association Name="IndicatorsTable_IndicatorsAndBasicParamersTable" Member="IndicatorsTable" ThisKey="FK_IndicatorTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.IndicatorsAndCalculatedParametrsMappingTable" Member="IndicatorsAndCalculatedParametrsMappingTable">
-    <Type Name="IndicatorsAndCalculatedParametrsMappingTable">
-      <Column Name="IndicatorsAndCalculatedParametrsMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="FK_CalculatedParametrsTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FK_IndicatorsTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="CalculatedParametrs_IndicatorsAndCalculatedParametrsMappingTable" Member="CalculatedParametrs" ThisKey="FK_CalculatedParametrsTable" OtherKey="CalculatedParametrsID" Type="CalculatedParametrs" IsForeignKey="true" />
-      <Association Name="IndicatorsTable_IndicatorsAndCalculatedParametrsMappingTable" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.IndicatorsTable" Member="IndicatorsTable">
     <Type Name="IndicatorsTable">
       <Column Name="IndicatorsTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -147,18 +115,47 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
       <Column Name="Measure" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
       <Column Name="Formula" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Association Name="IndicatorsTable_IndicatorsAndBasicParamersTable" Member="IndicatorsAndBasicParamersTable" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorTable" Type="IndicatorsAndBasicParamersTable" />
-      <Association Name="IndicatorsTable_IndicatorsAndCalculatedParametrsMappingTable" Member="IndicatorsAndCalculatedParametrsMappingTable" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="IndicatorsAndCalculatedParametrsMappingTable" />
+      <Association Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable" Member="ReportArchiveAndIndicatorsMappingTable" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="ReportArchiveAndIndicatorsMappingTable" />
     </Type>
   </Table>
-  <Table Name="dbo.ReportAndRolesMapping" Member="ReportAndRolesMapping">
-    <Type Name="ReportAndRolesMapping">
-      <Column Name="ReportAndRolesMappingID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.ReportArchiveAndBasicParametrsMappingTable" Member="ReportArchiveAndBasicParametrsMappingTable">
+    <Type Name="ReportArchiveAndBasicParametrsMappingTable">
+      <Column Name="ReportArchiveAndBasicParametrsMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="FK_RolesTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="FK_ReportArchiveTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="ReportArchiveTable_ReportAndRolesMapping" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
-      <Association Name="RolesTable_ReportAndRolesMapping" Member="RolesTable" ThisKey="FK_RolesTable" OtherKey="RolesTableID" Type="RolesTable" IsForeignKey="true" />
+      <Column Name="FK_BasicParametrsTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="BasicParametersTable_ReportArchiveAndBasicParametrsMappingTable" Member="BasicParametersTable" ThisKey="FK_BasicParametrsTable" OtherKey="BasicParametersTableID" Type="BasicParametersTable" IsForeignKey="true" />
+      <Association Name="ReportArchiveTable_ReportArchiveAndBasicParametrsMappingTable" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ReportArchiveAndCalculatedParametrsMappingTable" Member="ReportArchiveAndCalculatedParametrsMappingTable">
+    <Type Name="ReportArchiveAndCalculatedParametrsMappingTable">
+      <Column Name="ReportArchiveAndCalculatedParametrsMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FK_ReportArchiveTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FK_CalculatedParametrsTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="CalculatedParametrs_ReportArchiveAndCalculatedParametrsMappingTable" Member="CalculatedParametrs" ThisKey="FK_CalculatedParametrsTable" OtherKey="CalculatedParametrsID" Type="CalculatedParametrs" IsForeignKey="true" />
+      <Association Name="ReportArchiveTable_ReportArchiveAndCalculatedParametrsMappingTable" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ReportArchiveAndIndicatorsMappingTable" Member="ReportArchiveAndIndicatorsMappingTable">
+    <Type Name="ReportArchiveAndIndicatorsMappingTable">
+      <Column Name="ReportArchiveAndIndicatorsMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FK_ReportArchiveTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FK_IndicatorsTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
+      <Association Name="ReportArchiveTable_ReportArchiveAndIndicatorsMappingTable" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ReportArchiveAndLevelMappingTable" Member="ReportArchiveAndLevelMappingTable">
+    <Type Name="ReportArchiveAndLevelMappingTable">
+      <Column Name="ReportArchiveAndLevelMappingTableId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FK_ReportArchiveTableId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FK_FirstLevelSubmisionTableId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="FirstLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubmisionTableId" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="ReportArchiveTable_ReportArchiveAndLevelMappingTable" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTableId" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ReportArchiveTable" Member="ReportArchiveTable">
@@ -169,13 +166,16 @@
       <Column Name="Sent" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="SentDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="RecipientConfirmed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="StartDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="EndDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="DateToSend" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Association Name="ReportArchiveTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="CollectedBasicParametersTable" />
-      <Association Name="ReportArchiveTable_ReportAndRolesMapping" Member="ReportAndRolesMapping" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="ReportAndRolesMapping" />
+      <Association Name="ReportArchiveTable_ReportArchiveAndBasicParametrsMappingTable" Member="ReportArchiveAndBasicParametrsMappingTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="ReportArchiveAndBasicParametrsMappingTable" />
+      <Association Name="ReportArchiveTable_ReportArchiveAndCalculatedParametrsMappingTable" Member="ReportArchiveAndCalculatedParametrsMappingTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="ReportArchiveAndCalculatedParametrsMappingTable" />
+      <Association Name="ReportArchiveTable_ReportArchiveAndIndicatorsMappingTable" Member="ReportArchiveAndIndicatorsMappingTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="ReportArchiveAndIndicatorsMappingTable" />
       <Association Name="ReportArchiveTable_ReportArchiveAndLevelMappingTable" Member="ReportArchiveAndLevelMappingTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTableId" Type="ReportArchiveAndLevelMappingTable" />
+      <Association Name="ReportArchiveTable_UsersAndReportMappingTable" Member="UsersAndReportMappingTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="UsersAndReportMappingTable" />
     </Type>
   </Table>
   <Table Name="dbo.RolesTable" Member="RolesTable">
@@ -184,8 +184,6 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="RoleName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
       <Association Name="RolesTable_BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTable" ThisKey="RolesTableID" OtherKey="FK_RolesTable" Type="BasicParametersAndRolesMappingTable" />
-      <Association Name="RolesTable_ReportAndRolesMapping" Member="ReportAndRolesMapping" ThisKey="RolesTableID" OtherKey="FK_RolesTable" Type="ReportAndRolesMapping" />
-      <Association Name="RolesTable_UsersAndRolesMappingTable" Member="UsersAndRolesMappingTable" ThisKey="RolesTableID" OtherKey="FK_RolesTable" Type="UsersAndRolesMappingTable" />
     </Type>
   </Table>
   <Table Name="dbo.SecondLevelSubdivisionTable" Member="SecondLevelSubdivisionTable">
@@ -210,17 +208,14 @@
       <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.UsersAndRolesMappingTable" Member="UsersAndRolesMappingTable">
-    <Type Name="UsersAndRolesMappingTable">
-      <Column Name="UsersAndRolesMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.UsersAndReportMappingTable" Member="UsersAndReportMappingTable">
+    <Type Name="UsersAndReportMappingTable">
+      <Column Name="UsersAndReportArchiveTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FK_RolesTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CanEdit" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="CanView" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="CanConfirm" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="RolesTable_UsersAndRolesMappingTable" Member="RolesTable" ThisKey="FK_RolesTable" OtherKey="RolesTableID" Type="RolesTable" IsForeignKey="true" />
-      <Association Name="UsersTable_UsersAndRolesMappingTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
+      <Column Name="FK_ReportArchiveTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ReportArchiveTable_UsersAndReportMappingTable" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
+      <Association Name="UsersTable_UsersAndReportMappingTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.UsersTable" Member="UsersTable">
@@ -239,23 +234,13 @@
       <Column Name="FK_ZeroLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="UsersTable_BasicParametrsAndUsersMapping" Member="BasicParametrsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="BasicParametrsAndUsersMapping" />
       <Association Name="UsersTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedBasicParametersTable" />
-      <Association Name="UsersTable_UsersAndRolesMappingTable" Member="UsersAndRolesMappingTable" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="UsersAndRolesMappingTable" />
+      <Association Name="UsersTable_UsersAndReportMappingTable" Member="UsersAndReportMappingTable" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="UsersAndReportMappingTable" />
       <Association Name="FifthLevelSubdivisionTable_UsersTable" Member="FifthLevelSubdivisionTable" ThisKey="FK_FifthLevelSubdivisionTable" OtherKey="FifthLevelSubdivisionTableID" Type="FifthLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="FourthLevelSubdivisionTable_UsersTable" Member="FourthLevelSubdivisionTable" ThisKey="FK_FourthLevelSubdivisionTable" OtherKey="FourthLevelSubdivisionTableID" Type="FourthLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="ZeroLevelSubdivisionTable_UsersTable" Member="ZeroLevelSubdivisionTable" ThisKey="FK_ZeroLevelSubdivisionTable" OtherKey="ZeroLevelSubdivisionTableID" Type="ZeroLevelSubdivisionTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ReportArchiveAndLevelMappingTable" Member="ReportArchiveAndLevelMappingTable">
-    <Type Name="ReportArchiveAndLevelMappingTable">
-      <Column Name="ReportArchiveAndLevelMappingTableId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="FK_ReportArchiveTableId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FK_FirstLevelSubmisionTableId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="FirstLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubmisionTableId" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
-      <Association Name="ReportArchiveTable_ReportArchiveAndLevelMappingTable" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTableId" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
