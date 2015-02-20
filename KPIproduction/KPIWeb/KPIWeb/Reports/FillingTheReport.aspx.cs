@@ -52,58 +52,112 @@ namespace KPIWeb.Reports
                               && c.CanEdit == true
                               && c.Active == true
                         select b).ToList();
-                /////нашли все нужные базовые показатели
-                foreach (BasicParametersTable basicParam in basicParams) // создадим строки для ввода данных которых нет
+                /////нашли все нужные базовые показатели по( пользователь и отчет)           
+                UsersTable user = (from a in kpiWebDataContext.UsersTable
+                    where a.UsersTableID == UserID
+                    select a).FirstOrDefault();
+
+                int l_0 = user.FK_ZeroLevelSubdivisionTable   == null ? 0 : (int)user.FK_ZeroLevelSubdivisionTable;
+                int l_1 = user.FK_FirstLevelSubdivisionTable  == null ? 0 : (int)user.FK_FirstLevelSubdivisionTable;
+                int l_2 = user.FK_SecondLevelSubdivisionTable == null ? 0 : (int)user.FK_SecondLevelSubdivisionTable;
+                int l_3 = user.FK_ThirdLevelSubdivisionTable  == null ? 0 : (int)user.FK_ThirdLevelSubdivisionTable;
+                int l_4 = user.FK_FourthLevelSubdivisionTable == null ? 0 : (int)user.FK_FourthLevelSubdivisionTable;
+                int l_5 = user.FK_FifthLevelSubdivisionTable  == null ? 0 : (int)user.FK_FifthLevelSubdivisionTable;
+                ///узнали все о пользователе
+                List<SpecializationTable> specializationList = (from a in kpiWebDataContext.SpecializationTable
+                    join b in kpiWebDataContext.SpecializationAndLevelMappingTable
+                        on a.SpecializationTableID equals b.FK_SpecializationTable
+                    where ((b.FK_ZeroLevelSubcisionTable      == l_0) || (l_0 == 0))
+                          && ((b.FK_ZeroLevelSubcisionTable   == l_1) || (l_1 == 0))
+                          && ((b.FK_SecondLevelSubcisionTable == l_2) || (l_2 == 0))
+                          && ((b.FK_ThirdLevelSubcisionTable  == l_3) || (l_3 == 0))
+                          && ((b.FK_FourthLevelSubcisionTable == l_4) || (l_4 == 0))
+                          && ((b.FK_FifthLevelSubcisionTable  == l_5) || (l_5 == 0))
+                    select a).ToList();
+                // узнали все специальности под пользователем
+                foreach (SpecializationTable specialization in specializationList)
                 {
-                    CollectedBasicParametersTable collectedTemp =
-                        (from a in kpiWebDataContext.CollectedBasicParametersTable
-                            where a.FK_UsersTable == UserID
-                                  && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
-                                  && a.FK_ReportArchiveTable == ReportArchiveID
-                            select a).FirstOrDefault();
-                    if (collectedTemp == null) // надо создать
+
+                    foreach (BasicParametersTable basicParam in basicParams) // создадим строки для ввода данных которых нет
                     {
-                        collectedTemp = new CollectedBasicParametersTable();
-                        collectedTemp.Active = true;
-                        collectedTemp.FK_UsersTable = UserID;
-                        collectedTemp.FK_BasicParametersTable = basicParam.BasicParametersTableID;
-                        collectedTemp.FK_ReportArchiveTable = ReportArchiveID;
-                        collectedTemp.CollectedValue = 0;
-                        collectedTemp.UserIP= Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
-                        collectedTemp.LastChangeDateTime =  DateTime.Now;
-                        collectedTemp.SavedDateTime =  DateTime.Now;
-                        kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedTemp);
-                        kpiWebDataContext.SubmitChanges();
+                        CollectedBasicParametersTable collectedTemp =
+                            (from a in kpiWebDataContext.CollectedBasicParametersTable
+                             where a.FK_UsersTable == UserID
+                                   && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
+                                   && a.FK_ReportArchiveTable == ReportArchiveID
+                                   && a.FK_SpecializationTable == specialization.SpecializationTableID
+                             select a).FirstOrDefault();
+                        if (collectedTemp == null) // надо создать
+                        {
+                            collectedTemp = new CollectedBasicParametersTable();
+                            collectedTemp.Active = true;
+                            collectedTemp.FK_UsersTable = UserID;
+                            collectedTemp.FK_BasicParametersTable = basicParam.BasicParametersTableID;
+                            collectedTemp.FK_ReportArchiveTable = ReportArchiveID;
+                            collectedTemp.CollectedValue = 0;
+                            collectedTemp.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
+                            collectedTemp.LastChangeDateTime = DateTime.Now;
+                            collectedTemp.SavedDateTime = DateTime.Now;
+                            collectedTemp.FK_SpecializationTable = specialization.SpecializationTableID;
+                            kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedTemp);
+                            kpiWebDataContext.SubmitChanges();
+                        }
                     }
                 }
                 ///база данных готово к выводу
-                List<CollectedBasicParametersTable> collectedTable =
-                    (from a in kpiWebDataContext.CollectedBasicParametersTable
-                        where a.FK_ReportArchiveTable == ReportArchiveID
-                           && a.FK_UsersTable == UserID
-                        select a).ToList();             
+                
+                //создаем дататейбл
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("CurrentReportArchiveID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("BasicParametersTableID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("CollectedBasicParametersTableID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
-                dataTable.Columns.Add(new DataColumn("CollectedValue", typeof(string)));
+                int i = 0;
+                
+                foreach (SpecializationTable specialization in specializationList)
+                {
+                    dataTable.Columns.Add(new DataColumn("Value"+i.ToString(), typeof(string)));
+                    i++;
+                }
+                for (int k = i; k <= 8; k++)
+                {
+                    dataTable.Columns.Add(new DataColumn("Value" + k.ToString(), typeof(string)));
+                }
 
-                foreach (CollectedBasicParametersTable collectedBasic in collectedTable)
+                foreach (BasicParametersTable basicParam in basicParams) // создадим строки для ввода данных которых нет
                 {
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["CurrentReportArchiveID"] = ReportArchiveID;
-                    dataRow["BasicParametersTableID"] = collectedBasic.FK_BasicParametersTable;
-                    dataRow["Name"] = (from a in kpiWebDataContext.BasicParametersTable
-                        where a.BasicParametersTableID == collectedBasic.FK_BasicParametersTable
-                        select a.Name).FirstOrDefault();
+                    dataRow["BasicParametersTableID"] = basicParam.BasicParametersTableID;            
+                    dataRow["Name"] = basicParam.Name;
+                    /*
                     dataRow["CollectedBasicParametersTableID"] = collectedBasic.CollectedBasicParametersTableID;
                     dataRow["CollectedValue"] = collectedBasic.CollectedValue;
+                    */
+                    int j = 0;
+                    
+                    foreach (SpecializationTable specialization in specializationList)
+                    {
+                        dataRow["Value"+j.ToString()] =
+                            (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                where a.FK_UsersTable == UserID
+                                      && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
+                                      && a.FK_ReportArchiveTable == ReportArchiveID
+                                      && a.FK_SpecializationTable == specialization.SpecializationTableID
+                                select a.CollectedValue).FirstOrDefault();
+                        j++;
+                    }
                     dataTable.Rows.Add(dataRow);
                 }
+
                 ViewState["CollectedBasicParametersTable"] = dataTable;
                 ViewState["CurrentReportArchiveID"] = ReportArchiveID;
                 GridviewCollectedBasicParameters.DataSource = dataTable;
+
+                for (int j=0; j < i; j++)
+                {
+                    GridviewCollectedBasicParameters.Columns[j+4].Visible = true;
+                }              
                 GridviewCollectedBasicParameters.DataBind();
             }
         }

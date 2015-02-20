@@ -4,7 +4,7 @@
         <div>
             <h2>Ввведите значения в таблицу показателей и нажмите кнопку "Сохранить" внизу формы</h2>
             <br />
-            <asp:GridView ID="GridviewCollectedBasicParameters" BorderStyle="Solid" runat="server" ShowFooter="true" AutoGenerateColumns="false" BorderColor="Black" BorderWidth="1px" CellPadding="0">
+            <asp:GridView ID="GridviewCollectedBasicParameters" BorderStyle="Solid" runat="server" ShowFooter="true" AutoGenerateColumns="False" BorderColor="Black" BorderWidth="1px" CellPadding="0">
                 <Columns>
 
                     <asp:BoundField DataField="CurrentReportArchiveID" HeaderText="Current Report ID" Visible="false" />
@@ -17,13 +17,53 @@
                     </asp:TemplateField>
 
                     <asp:BoundField DataField="Name" HeaderText="Название показателя" />
-
-                    <asp:TemplateField HeaderText="Значение">
+                   
+                     <asp:TemplateField Visible="false" HeaderText="Значение">
                         <ItemTemplate>
-                            <asp:TextBox ID="TextBoxCollectedValue" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("CollectedValue") %>'></asp:TextBox>
+                            <asp:TextBox ID="Value0" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value0") %>'></asp:TextBox>
+                        </ItemTemplate>
+                    </asp:TemplateField>  
+                    <asp:TemplateField Visible="false" HeaderText="Значение">
+                        <ItemTemplate>
+                            <asp:TextBox ID="Value1" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value1") %>'></asp:TextBox>
+                        </ItemTemplate>
+                    </asp:TemplateField>               
+                     <asp:TemplateField Visible="false" HeaderText="Значение">
+                        <ItemTemplate>
+                            <asp:TextBox ID="Value2" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value2") %>'></asp:TextBox>
                         </ItemTemplate>
                     </asp:TemplateField>
-
+                    <asp:TemplateField Visible="false" HeaderText="Значение">
+                        <ItemTemplate>
+                            <asp:TextBox ID="Value3" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value3") %>'></asp:TextBox>
+                        </ItemTemplate>
+                    </asp:TemplateField>     
+                     <asp:TemplateField Visible="false" HeaderText="Значение">
+                        <ItemTemplate>
+                            <asp:TextBox ID="Value4" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value4") %>'></asp:TextBox>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                     <asp:TemplateField Visible="false" HeaderText="Значение">
+                        <ItemTemplate>
+                            <asp:TextBox ID="Value5" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value5") %>'></asp:TextBox>
+                        </ItemTemplate>
+                    </asp:TemplateField>               
+                     <asp:TemplateField Visible="false" HeaderText="Значение">
+                        <ItemTemplate>
+                            <asp:TextBox ID="Value6" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value6") %>'></asp:TextBox>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField  Visible="false" HeaderText="Значение">
+                        <ItemTemplate>
+                            <asp:TextBox ID="Value7" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value7") %>'></asp:TextBox>
+                        </ItemTemplate>
+                    </asp:TemplateField>     
+                     <asp:TemplateField Visible="false" HeaderText="Значение">
+                        <ItemTemplate>
+                            <asp:TextBox ID="Value8" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value8") %>'></asp:TextBox>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+         
                 </Columns>
             </asp:GridView>
             <br />
