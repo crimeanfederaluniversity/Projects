@@ -192,11 +192,6 @@ namespace KPIWeb.Account
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Произошла ошибка.');", true);
             }
         }
-       /* protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-        */
         private void RefreshGridView() // стягиваем с базы в грид с проставленными галочками основываясь на дроп дауне
         {
             GridviewRoles.DataSource = null;
@@ -240,7 +235,6 @@ namespace KPIWeb.Account
             GridviewRoles.DataSource = dataTable;
             GridviewRoles.DataBind();
         }
-
         protected void DropDownList4_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshGridView();

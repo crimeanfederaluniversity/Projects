@@ -19,6 +19,7 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Association Name="ZeroLevelSubdivisionTable_FirstLevelSubdivisionTable" Member="FirstLevelSubdivisionTable" ThisKey="ZeroLevelSubdivisionTableID" OtherKey="FK_ZeroLevelSubvisionTable" Type="FirstLevelSubdivisionTable" />
+      <Association Name="ZeroLevelSubdivisionTable_SpecializationAndLevelMappingTable" Member="SpecializationAndLevelMappingTable" ThisKey="ZeroLevelSubdivisionTableID" OtherKey="FK_ZeroLevelSubcisionTable" Type="SpecializationAndLevelMappingTable" />
       <Association Name="ZeroLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="ZeroLevelSubdivisionTableID" OtherKey="FK_ZeroLevelSubdivisionTable" Type="UsersTable" />
     </Type>
   </Table>
@@ -83,6 +84,7 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="FK_FourthLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="FifthLevelSubdivisionTable_SpecializationAndLevelMappingTable" Member="SpecializationAndLevelMappingTable" ThisKey="FifthLevelSubdivisionTableID" OtherKey="FK_FifthLevelSubcisionTable" Type="SpecializationAndLevelMappingTable" />
       <Association Name="FifthLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="FifthLevelSubdivisionTableID" OtherKey="FK_FifthLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="FourthLevelSubdivisionTable_FifthLevelSubdivisionTable" Member="FourthLevelSubdivisionTable" ThisKey="FK_FourthLevelSubdivisionTable" OtherKey="FourthLevelSubdivisionTableID" Type="FourthLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
@@ -95,6 +97,7 @@
       <Column Name="FK_ZeroLevelSubvisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="FirstLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" Member="ReportArchiveAndLevelMappingTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubmisionTableId" Type="ReportArchiveAndLevelMappingTable" />
       <Association Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="SecondLevelSubdivisionTable" />
+      <Association Name="FirstLevelSubdivisionTable_SpecializationAndLevelMappingTable" Member="SpecializationAndLevelMappingTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubcisionTable" Type="SpecializationAndLevelMappingTable" />
       <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="ZeroLevelSubdivisionTable_FirstLevelSubdivisionTable" Member="ZeroLevelSubdivisionTable" ThisKey="FK_ZeroLevelSubvisionTable" OtherKey="ZeroLevelSubdivisionTableID" Type="ZeroLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
@@ -106,6 +109,7 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="FK_ThirdLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="FourthLevelSubdivisionTable_FifthLevelSubdivisionTable" Member="FifthLevelSubdivisionTable" ThisKey="FourthLevelSubdivisionTableID" OtherKey="FK_FourthLevelSubdivisionTable" Type="FifthLevelSubdivisionTable" />
+      <Association Name="FourthLevelSubdivisionTable_SpecializationAndLevelMappingTable" Member="SpecializationAndLevelMappingTable" ThisKey="FourthLevelSubdivisionTableID" OtherKey="FK_FourthLevelSubcisionTable" Type="SpecializationAndLevelMappingTable" />
       <Association Name="FourthLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="FourthLevelSubdivisionTableID" OtherKey="FK_FourthLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="ThirdLevelSubdivisionTable_FourthLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
@@ -194,9 +198,30 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="FK_FirstLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="SecondLevelSubdivisionTable_SpecializationAndLevelMappingTable" Member="SpecializationAndLevelMappingTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubcisionTable" Type="SpecializationAndLevelMappingTable" />
       <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="ThirdLevelSubdivisionTable" />
       <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SpecializationAndLevelMappingTable" Member="SpecializationAndLevelMappingTable">
+    <Type Name="SpecializationAndLevelMappingTable">
+      <Column Name="SpecializationAndLevelMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FK_ZeroLevelSubcisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_FirstLevelSubcisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_SecondLevelSubcisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_ThirdLevelSubcisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_FourthLevelSubcisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_FifthLevelSubcisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_SpecializationTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="FifthLevelSubdivisionTable_SpecializationAndLevelMappingTable" Member="FifthLevelSubdivisionTable" ThisKey="FK_FifthLevelSubcisionTable" OtherKey="FifthLevelSubdivisionTableID" Type="FifthLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="FirstLevelSubdivisionTable_SpecializationAndLevelMappingTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubcisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="FourthLevelSubdivisionTable_SpecializationAndLevelMappingTable" Member="FourthLevelSubdivisionTable" ThisKey="FK_FourthLevelSubcisionTable" OtherKey="FourthLevelSubdivisionTableID" Type="FourthLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="SecondLevelSubdivisionTable_SpecializationAndLevelMappingTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubcisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="ZeroLevelSubdivisionTable_SpecializationAndLevelMappingTable" Member="ZeroLevelSubdivisionTable" ThisKey="FK_ZeroLevelSubcisionTable" OtherKey="ZeroLevelSubdivisionTableID" Type="ZeroLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="SpecializationTable_SpecializationAndLevelMappingTable" Member="SpecializationTable" ThisKey="FK_SpecializationTable" OtherKey="SpecializationTableID" Type="SpecializationTable" IsForeignKey="true" />
+      <Association Name="ThirdLevelSubdivisionTable_SpecializationAndLevelMappingTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubcisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.SpecializationTable" Member="SpecializationTable">
@@ -206,6 +231,7 @@
       <Column Name="SpecializationNumber" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
       <Column Name="SpecializationName" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Association Name="SpecializationTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="SpecializationTableID" OtherKey="FK_SpecializationTable" Type="CollectedBasicParametersTable" />
+      <Association Name="SpecializationTable_SpecializationAndLevelMappingTable" Member="SpecializationAndLevelMappingTable" ThisKey="SpecializationTableID" OtherKey="FK_SpecializationTable" Type="SpecializationAndLevelMappingTable" />
     </Type>
   </Table>
   <Table Name="dbo.ThirdLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable">
@@ -215,6 +241,7 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="FK_SecondLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="ThirdLevelSubdivisionTable_FourthLevelSubdivisionTable" Member="FourthLevelSubdivisionTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="FourthLevelSubdivisionTable" />
+      <Association Name="ThirdLevelSubdivisionTable_SpecializationAndLevelMappingTable" Member="SpecializationAndLevelMappingTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubcisionTable" Type="SpecializationAndLevelMappingTable" />
       <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
