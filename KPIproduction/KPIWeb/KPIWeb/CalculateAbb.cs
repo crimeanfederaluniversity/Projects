@@ -141,5 +141,25 @@ namespace KPIWeb
             }
             return Polish.Calculate(tmpStr);
         }
+
+        public static double? SumForLevel(int BasicId, int report, int Lv0, int Lv1, int Lv2, int Lv3, int Lv4, int Lv5)
+        {
+            KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+            double? a = (from collect in KPIWebDataContext.CollectedBasicParametersTable
+                         join basic in KPIWebDataContext.BasicParametersTable
+                         on collect.FK_BasicParametersTable equals basic.BasicParametersTableID
+                         join user in KPIWebDataContext.UsersTable
+                         on collect.FK_UsersTable equals user.UsersTableID
+                         where collect.FK_ReportArchiveTable == report
+                         && basic.BasicParametersTableID == BasicId
+                         && (user.FK_ZeroLevelSubdivisionTable == Lv0 || Lv0 == 0)
+                         && (user.FK_FirstLevelSubdivisionTable == Lv1 || Lv1 == 0)
+                         && (user.FK_SecondLevelSubdivisionTable == Lv2 || Lv2 == 0)
+                         && (user.FK_ThirdLevelSubdivisionTable == Lv3 || Lv3 == 0)
+                         && (user.FK_FourthLevelSubdivisionTable == Lv4 || Lv4 == 0)
+                         && (user.FK_FifthLevelSubdivisionTable == Lv5 || Lv5 == 0)
+                         select collect.CollectedValue).Sum();
+            return a;
+        }
     }
 }

@@ -38,6 +38,7 @@ namespace KPIWeb.Account
                 user.FK_ThirdLevelSubdivisionTable = selectedValue;
 
             user.AccessLevel = 0; ///////НАДО ПРОДУМАТЬ
+            user.FK_ZeroLevelSubdivisionTable = 1;
 
             kPiDataContext.UsersTable.InsertOnSubmit(user);
             kPiDataContext.SubmitChanges();   

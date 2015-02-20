@@ -32,5 +32,4 @@
             <br />
 
         </div>
-        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Экспортировать в excel" Width="400px" />
-</asp:Content>
+        </asp:Content>

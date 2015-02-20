@@ -167,6 +167,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Head\HeadChooseReport.aspx" />
+    <Content Include="Head\HeadShowReportResult.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -322,6 +324,20 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Head\HeadChooseReport.aspx.cs">
+      <DependentUpon>HeadChooseReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Head\HeadChooseReport.aspx.designer.cs">
+      <DependentUpon>HeadChooseReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Head\HeadShowReportResult.aspx.cs">
+      <DependentUpon>HeadShowReportResult.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Head\HeadShowReportResult.aspx.designer.cs">
+      <DependentUpon>HeadShowReportResult.aspx</DependentUpon>
     </Compile>
     <Compile Include="KPIWeb.designer.cs">
       <AutoGen>True</AutoGen>

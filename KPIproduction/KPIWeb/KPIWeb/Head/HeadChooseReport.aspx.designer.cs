@@ -7,27 +7,27 @@
 // </автоматически создаваемое>
 //------------------------------------------------------------------------------
 
-namespace KPIWeb.Reports {
+namespace KPIWeb.Head {
     
     
-    public partial class FillingTheReport {
+    public partial class ChooseReport {
         
         /// <summary>
-        /// GridviewCollectedBasicParameters элемент управления.
+        /// form1 элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridviewCollectedBasicParameters;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// ButtonSave элемент управления.
+        /// GridView1 элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonSave;
+        protected global::System.Web.UI.WebControls.GridView GridView1;
     }
 }

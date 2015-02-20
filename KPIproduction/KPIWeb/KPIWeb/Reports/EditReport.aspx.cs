@@ -7,7 +7,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 using System.Data;
+using System.Text;
 using System.Threading;
+using System.Web.WebPages;
 
 namespace KPIWeb.Reports
 {
@@ -15,6 +17,152 @@ namespace KPIWeb.Reports
     {
         UsersTable user;
 
+
+        protected void FillGridVIews(int reportID)
+        {            
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////                
+            List<IndicatorsTable> indicatorTable =
+            (from item in kPiDataContext.IndicatorsTable where item.Active == true select item).ToList();
+            DataTable dataTableIndicator = new DataTable();
+
+            dataTableIndicator.Columns.Add(new DataColumn("IndicatorID", typeof(string)));
+            dataTableIndicator.Columns.Add(new DataColumn("IndicatorName", typeof(string)));
+            dataTableIndicator.Columns.Add(new DataColumn("IndicatorCheckBox", typeof(bool)));
+            foreach (IndicatorsTable indicator in indicatorTable)
+            {
+                DataRow dataRow = dataTableIndicator.NewRow();
+                dataRow["IndicatorID"] = indicator.IndicatorsTableID.ToString();
+                dataRow["IndicatorName"] = indicator.Name;
+                dataRow["IndicatorCheckBox"] = ((from a in kPiDataContext.ReportArchiveAndIndicatorsMappingTable
+                                                 where a.Active == true
+                                                 && a.FK_IndicatorsTable == indicator.IndicatorsTableID
+                                                 && a.FK_ReportArchiveTable == reportID
+                                                 select a).Count() > 0) ? true : false; 
+                dataTableIndicator.Rows.Add(dataRow);                
+            }            
+            IndicatorsTable.DataSource = dataTableIndicator;
+            IndicatorsTable.DataBind();
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////
+            List<CalculatedParametrs> calcParams =
+            (from item in kPiDataContext.CalculatedParametrs where item.Active == true select item).ToList();
+            DataTable dataTableCalc = new DataTable();
+
+            dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsID", typeof(string)));
+            dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsName", typeof(string)));
+            dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsCheckBox", typeof(bool)));
+            foreach (CalculatedParametrs calcParam in calcParams)
+            {
+                DataRow dataRow = dataTableCalc.NewRow();
+                dataRow["CalculatedParametrsID"] = calcParam.CalculatedParametrsID.ToString();
+                dataRow["CalculatedParametrsName"] = calcParam.Name;
+                dataRow["CalculatedParametrsCheckBox"] = ((from a in kPiDataContext.ReportArchiveAndCalculatedParametrsMappingTable
+                                                           where a.Active == true
+                                                           && a.FK_CalculatedParametrsTable == calcParam.CalculatedParametrsID
+                                                           && a.FK_ReportArchiveTable == reportID
+                                                           select a).Count() > 0) ? true : false; 
+                dataTableCalc.Rows.Add(dataRow);
+            }
+            CalculatedParametrsTable.DataSource = dataTableCalc;
+            CalculatedParametrsTable.DataBind();
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////
+            List<BasicParametersTable> basicParams =
+          (from item in kPiDataContext.BasicParametersTable where item.Active == true select item).ToList();
+            DataTable dataTableBasic = new DataTable();
+
+            dataTableBasic.Columns.Add(new DataColumn("BasicParametrsID", typeof(string)));
+            dataTableBasic.Columns.Add(new DataColumn("BasicParametrsName", typeof(string)));
+            dataTableBasic.Columns.Add(new DataColumn("BasicParametrsCheckBox", typeof(bool)));
+            foreach (BasicParametersTable basic in basicParams)
+            {
+                DataRow dataRow = dataTableBasic.NewRow();
+                dataRow["BasicParametrsID"] = basic.BasicParametersTableID.ToString();
+                dataRow["BasicParametrsName"] = basic.Name;
+                dataRow["BasicParametrsCheckBox"] = ((from a in kPiDataContext.ReportArchiveAndBasicParametrsMappingTable
+                                                      where a.Active == true
+                                                      && a.FK_BasicParametrsTable == basic.BasicParametersTableID
+                                                      && a.FK_ReportArchiveTable == reportID
+                                                      select a).Count() > 0) ? true : false; 
+                dataTableBasic.Rows.Add(dataRow);
+            }
+            BasicParametrsTable.DataSource = dataTableBasic;
+            BasicParametrsTable.DataBind();
+            ///////////////////////////////////////////////////////////////////////////////////////////////////
+            ViewState["BasicDataTable"] = dataTableBasic;
+            ViewState["CalculateDataTable"] = dataTableCalc;
+            ViewState["IndicatorDataTable"] = dataTableIndicator;
+
+            /////////////////////////////////////////////////////////////////////
+
+            for (int i = 0; i < dataTableBasic.Rows.Count; i++)
+            {
+                CheckBox chekBox = (CheckBox)BasicParametrsTable.Rows[i].FindControl("BasicParametrsCheckBox");
+                if (chekBox.Checked == true)
+                {
+                    chekBox.Enabled = false;
+                }
+            }
+
+            for (int i = 0; i < dataTableCalc.Rows.Count; i++)
+            {
+                CheckBox chekBox = (CheckBox)CalculatedParametrsTable.Rows[i].FindControl("CalculatedParametrsCheckBox");
+                if (chekBox.Checked == true)
+                {
+                    chekBox.Enabled = false;
+                }
+            }
+
+            for (int i = 0; i < dataTableIndicator.Rows.Count; i++)
+            {
+                CheckBox chekBox = (CheckBox)IndicatorsTable.Rows[i].FindControl("IndicatorCheckBox");
+                if (chekBox.Checked == true)
+                {
+                    chekBox.Enabled = false;
+                }
+            }
+        }
+
+        protected List<int> getBasicByIndicatorNCalc(List<int> indArr, List<int> calcArr)
+        {
+            List<int> basicListTemp = new List<int>();
+
+            StringBuilder AllInOne= new StringBuilder();
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+
+            foreach (int tmp in indArr)
+            {
+                IndicatorsTable indTable = (from a in kpiWebDataContext.IndicatorsTable 
+                                            where a.IndicatorsTableID==tmp
+                                            select a).FirstOrDefault();
+                AllInOne.Append(indTable.Formula+"*");
+            }
+
+            foreach (int tmp in calcArr)
+            {
+                CalculatedParametrs calcTable = (from a in kpiWebDataContext.CalculatedParametrs
+                                            where a.CalculatedParametrsID == tmp
+                                            select a).FirstOrDefault();
+                AllInOne.Append(calcTable.Formula + "*");
+            }      
+
+            string [] abbArr = AllInOne.ToString().Split('/', '^', '+', '-', '(', ')', '*', ' ');
+            string strArr = "";
+            foreach (string str in abbArr)
+            {
+                if ((str != null) && (str != " ") && (!str.IsEmpty()))
+                {
+                    if (!str.IsFloat())
+                    {
+                        basicListTemp.Add(Convert.ToInt32((from a in kpiWebDataContext.BasicParametersTable
+                                                where a.AbbreviationEN == str
+                                                select a.BasicParametersTableID).FirstOrDefault()));
+                    }
+                }
+            }
+
+            return basicListTemp;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             Serialization UserSer = (Serialization)Session["UserID"];
@@ -85,61 +233,7 @@ namespace KPIWeb.Reports
                         i++;
                     }            
                     //////////////////////////////////////////////////////////////////////////////////
-                    ///////////////////////////////////////////////////////////////////////////////////////////////////////                
-                    List<IndicatorsTable> indicatorTable =
-                    (from item in KPIWebDataContext.IndicatorsTable where item.Active == true select item).ToList();
-                    DataTable dataTableIndicator = new DataTable();
-
-                    dataTableIndicator.Columns.Add(new DataColumn("IndicatorID", typeof(string)));
-                    dataTableIndicator.Columns.Add(new DataColumn("IndicatorName", typeof(string)));
-                    dataTableIndicator.Columns.Add(new DataColumn("IndicatorCheckBox", typeof(bool)));
-                    foreach (IndicatorsTable indicator in indicatorTable)
-                    {
-                        DataRow dataRow = dataTableIndicator.NewRow();
-                        dataRow["IndicatorID"] = indicator.IndicatorsTableID.ToString();
-                        dataRow["IndicatorName"] = indicator.Name;
-                        dataRow["IndicatorCheckBox"] = false;
-                        dataTableIndicator.Rows.Add(dataRow);
-                    }
-                    IndicatorsTable.DataSource = dataTableIndicator;
-                    IndicatorsTable.DataBind();
-                    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    List<CalculatedParametrs> calcParams =
-                    (from item in KPIWebDataContext.CalculatedParametrs where item.Active == true select item).ToList();
-                    DataTable dataTableCalc = new DataTable();
-
-                    dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsID", typeof(string)));
-                    dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsName", typeof(string)));
-                    dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsCheckBox", typeof(bool)));
-                    foreach (CalculatedParametrs calcParam in calcParams)
-                    {
-                        DataRow dataRow = dataTableCalc.NewRow();
-                        dataRow["CalculatedParametrsID"] = calcParam.CalculatedParametrsID.ToString();
-                        dataRow["CalculatedParametrsName"] = calcParam.Name;
-                        dataRow["CalculatedParametrsCheckBox"] = false;
-                        dataTableCalc.Rows.Add(dataRow);
-                    }
-                    CalculatedParametrsTable.DataSource = dataTableCalc;
-                    CalculatedParametrsTable.DataBind();
-                    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    List<BasicParametersTable> basicParams =
-                  (from item in KPIWebDataContext.BasicParametersTable where item.Active == true select item).ToList();
-                    DataTable dataTableBasic = new DataTable();
-
-                    dataTableBasic.Columns.Add(new DataColumn("BasicParametrsID", typeof(string)));
-                    dataTableBasic.Columns.Add(new DataColumn("BasicParametrsName", typeof(string)));
-                    dataTableBasic.Columns.Add(new DataColumn("BasicParametrsCheckBox", typeof(bool)));
-                    foreach (BasicParametersTable basic in basicParams)
-                    {
-                        DataRow dataRow = dataTableBasic.NewRow();
-                        dataRow["BasicParametrsID"] = basic.BasicParametersTableID.ToString();
-                        dataRow["BasicParametrsName"] = basic.Name;
-                        dataRow["BasicParametrsCheckBox"] = false;
-                        dataTableBasic.Rows.Add(dataRow);
-                    }
-                    BasicParametrsTable.DataSource = dataTableBasic;
-                    BasicParametrsTable.DataBind();
-                    ///////////////////////////////////////////////////////////////////////////////////////////////////
+                   FillGridVIews(3);
                 }
                 else //создаем новый отчет
                 {
@@ -158,61 +252,7 @@ namespace KPIWeb.Reports
                         CheckBoxList1.Items[i].Value = academy.FirstLevelSubdivisionTableID.ToString();
                         i++;
                     }        
-////////////////////////////////////////////////////////////////////////////////////////////////////                
-                    List<IndicatorsTable> indicatorTable =
-                    (from item in KPIWebDataContext.IndicatorsTable where item.Active == true select item).ToList();
-                    DataTable dataTableIndicator = new DataTable();
-
-                    dataTableIndicator.Columns.Add(new DataColumn("IndicatorID", typeof(string)));
-                    dataTableIndicator.Columns.Add(new DataColumn("IndicatorName", typeof(string)));
-                    dataTableIndicator.Columns.Add(new DataColumn("IndicatorCheckBox", typeof(bool)));
-                    foreach (IndicatorsTable indicator in indicatorTable)
-                    {
-                        DataRow dataRow = dataTableIndicator.NewRow();
-                        dataRow["IndicatorID"] = indicator.IndicatorsTableID.ToString();
-                        dataRow["IndicatorName"] = indicator.Name;
-                        dataRow["IndicatorCheckBox"] = false;
-                        dataTableIndicator.Rows.Add(dataRow);
-                    }
-                    IndicatorsTable.DataSource = dataTableIndicator;
-                    IndicatorsTable.DataBind();
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    List<CalculatedParametrs> calcParams =
-                    (from item in KPIWebDataContext.CalculatedParametrs where item.Active == true select item).ToList();
-                    DataTable dataTableCalc = new DataTable();
-
-                    dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsID", typeof(string)));
-                    dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsName", typeof(string)));
-                    dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsCheckBox", typeof(bool)));
-                    foreach (CalculatedParametrs calcParam in calcParams)
-                    {
-                        DataRow dataRow = dataTableCalc.NewRow();
-                        dataRow["CalculatedParametrsID"] = calcParam.CalculatedParametrsID.ToString();
-                        dataRow["CalculatedParametrsName"] = calcParam.Name;
-                        dataRow["CalculatedParametrsCheckBox"] = false;
-                        dataTableCalc.Rows.Add(dataRow);
-                    }
-                    CalculatedParametrsTable.DataSource = dataTableCalc;
-                    CalculatedParametrsTable.DataBind();
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    List<BasicParametersTable> basicParams =
-                  (from item in KPIWebDataContext.BasicParametersTable where item.Active == true select item).ToList();
-                    DataTable dataTableBasic = new DataTable();
-
-                    dataTableBasic.Columns.Add(new DataColumn("BasicParametrsID", typeof(string)));
-                    dataTableBasic.Columns.Add(new DataColumn("BasicParametrsName", typeof(string)));
-                    dataTableBasic.Columns.Add(new DataColumn("BasicParametrsCheckBox", typeof(bool)));
-                    foreach (BasicParametersTable basic in basicParams)
-                    {
-                        DataRow dataRow = dataTableBasic.NewRow();
-                        dataRow["BasicParametrsID"] = basic.BasicParametersTableID.ToString();
-                        dataRow["BasicParametrsName"] = basic.Name;
-                        dataRow["BasicParametrsCheckBox"] = false;
-                        dataTableBasic.Rows.Add(dataRow);
-                    }
-                    BasicParametrsTable.DataSource = dataTableBasic;
-                    BasicParametrsTable.DataBind();
-///////////////////////////////////////////////////////////////////////////////////////////////////
+                    FillGridVIews(0);
                 }
             }
         }
@@ -221,7 +261,7 @@ namespace KPIWeb.Reports
         {
 
             Serialization ReportId = (Serialization) Session["ReportArchiveTableID"];
-            KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             ReportArchiveTable reportArchiveTable = new ReportArchiveTable();
 
             int reportArchiveTableID = 0;
@@ -231,7 +271,7 @@ namespace KPIWeb.Reports
                 reportArchiveTable.Calculeted = CheckBoxCalculeted.Checked;
                 reportArchiveTable.Sent = CheckBoxSent.Checked;
                 reportArchiveTable.RecipientConfirmed = CheckBoxRecipientConfirmed.Checked;
-              //  reportArchiveTable.Name = TextBoxName.Text;
+                reportArchiveTable.Name = TextBoxName.Text;
 
                 if (CalendarStartDateTime.SelectedDate > DateTime.MinValue)
                     reportArchiveTable.StartDateTime = CalendarStartDateTime.SelectedDate;
@@ -245,8 +285,8 @@ namespace KPIWeb.Reports
                 if (CalendarSentDateTime.SelectedDate > DateTime.MinValue)
                     reportArchiveTable.SentDateTime = CalendarSentDateTime.SelectedDate;
 
-                KPIWebDataContext.ReportArchiveTable.InsertOnSubmit(reportArchiveTable);
-                KPIWebDataContext.SubmitChanges();
+                kpiWebDataContext.ReportArchiveTable.InsertOnSubmit(reportArchiveTable);
+                kpiWebDataContext.SubmitChanges();
 
                 reportArchiveTableID = reportArchiveTable.ReportArchiveTableID;              
             }
@@ -254,7 +294,7 @@ namespace KPIWeb.Reports
             else //если запись в бд уже есть
             {
                 reportArchiveTableID = ReportId.ReportArchiveID;
-                reportArchiveTable = (from item in KPIWebDataContext.ReportArchiveTable
+                reportArchiveTable = (from item in kpiWebDataContext.ReportArchiveTable
                                       where item.ReportArchiveTableID == reportArchiveTableID
                                       select item).FirstOrDefault();
             }
@@ -267,7 +307,7 @@ namespace KPIWeb.Reports
             reportArchiveTable.Calculeted = CheckBoxCalculeted.Checked;
             reportArchiveTable.Sent = CheckBoxSent.Checked;
             reportArchiveTable.RecipientConfirmed = CheckBoxRecipientConfirmed.Checked;
-          //  reportArchiveTable.Name = TextBoxName.Text;
+            reportArchiveTable.Name = TextBoxName.Text;
 
             if (CalendarStartDateTime.SelectedDate > DateTime.MinValue)
                 reportArchiveTable.StartDateTime = CalendarStartDateTime.SelectedDate;
@@ -286,7 +326,7 @@ namespace KPIWeb.Reports
                 if (checkItem.Selected)
                 {
                     ReportArchiveAndLevelMappingTable repNRole =
-                        (from item in KPIWebDataContext.ReportArchiveAndLevelMappingTable
+                        (from item in kpiWebDataContext.ReportArchiveAndLevelMappingTable
                             where item.FK_FirstLevelSubmisionTableId == Convert.ToInt32(checkItem.Value)
                                   && item.FK_ReportArchiveTableId == reportArchiveTableID
                             select item).FirstOrDefault();
@@ -300,13 +340,13 @@ namespace KPIWeb.Reports
                         repNRole.Active = true;
                         repNRole.FK_FirstLevelSubmisionTableId = Convert.ToInt32(checkItem.Value);
                         repNRole.FK_ReportArchiveTableId = reportArchiveTableID;
-                        KPIWebDataContext.ReportArchiveAndLevelMappingTable.InsertOnSubmit(repNRole);
+                        kpiWebDataContext.ReportArchiveAndLevelMappingTable.InsertOnSubmit(repNRole);
                     }
                 }
                 else
                 {
                     ReportArchiveAndLevelMappingTable repNRole =
-                        (from item in KPIWebDataContext.ReportArchiveAndLevelMappingTable
+                        (from item in kpiWebDataContext.ReportArchiveAndLevelMappingTable
                             where item.FK_FirstLevelSubmisionTableId == Convert.ToInt32(checkItem.Value)
                                   && item.FK_ReportArchiveTableId == reportArchiveTableID
                             select item).FirstOrDefault();
@@ -316,7 +356,168 @@ namespace KPIWeb.Reports
                     }
                 }
             }
-            KPIWebDataContext.SubmitChanges();
+            kpiWebDataContext.SubmitChanges();
+            ////////////////////////////////////////////////////////пора записать данные в таблицы связей 
+
+            if ((ViewState["BasicDataTable"] != null) && (ViewState["CalculateDataTable"] != null) && (ViewState["IndicatorDataTable"] != null))
+            {
+                DataTable dt_basic = (DataTable)ViewState["BasicDataTable"];
+                DataTable dt_calculate = (DataTable)ViewState["CalculateDataTable"];
+                DataTable dt_indicator = (DataTable)ViewState["IndicatorDataTable"];
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                for (int i = 0; i < dt_basic.Rows.Count; i++)
+                {
+                    CheckBox chekBox = (CheckBox)BasicParametrsTable.Rows[i].FindControl("BasicParametrsCheckBox");
+                    Label label = (Label)BasicParametrsTable.Rows[i].FindControl("BasicParametrsID");
+                    if (chekBox.Checked == true)
+                    {
+                        ReportArchiveAndBasicParametrsMappingTable basicParam =
+                            (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                                where a.FK_BasicParametrsTable == Convert.ToInt32(label.Text)
+                                      && a.FK_ReportArchiveTable == reportArchiveTableID
+                                select a).FirstOrDefault();
+                        if (basicParam != null)
+                        {
+                            basicParam.Active = true;
+                        }
+                        else
+                        {
+                            basicParam = new ReportArchiveAndBasicParametrsMappingTable();
+                            basicParam.Active = true;
+                            basicParam.FK_BasicParametrsTable = Convert.ToInt32(label.Text);
+                            basicParam.FK_ReportArchiveTable = reportArchiveTableID;
+                            kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable.InsertOnSubmit(basicParam);
+                        }
+                        kpiWebDataContext.SubmitChanges();
+                    }
+                    else
+                    {
+                        ReportArchiveAndBasicParametrsMappingTable basicParam =
+                            (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                             where a.FK_BasicParametrsTable == Convert.ToInt32(label.Text)
+                                   && a.FK_ReportArchiveTable == reportArchiveTableID
+                             select a).FirstOrDefault();
+                        if (basicParam != null)
+                        {
+                            basicParam.Active = false;
+                            kpiWebDataContext.SubmitChanges();
+                        }                
+                    }
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////////////
+                List<int> calcId = new List<int>();
+
+                ////////////////////////////////////////////////////////////////////////////////////////////////////
+                for (int i = 0; i < dt_calculate.Rows.Count; i++)
+                {
+                    CheckBox chekBox = (CheckBox)CalculatedParametrsTable.Rows[i].FindControl("CalculatedParametrsCheckBox");
+                    Label label = (Label)CalculatedParametrsTable.Rows[i].FindControl("CalculatedParametrsID");
+                    if (chekBox.Checked == true)
+                    {
+                        calcId.Add(Convert.ToInt32(label.Text));
+                        ReportArchiveAndCalculatedParametrsMappingTable calcParam =
+                            (from a in kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable
+                             where a.FK_CalculatedParametrsTable == Convert.ToInt32(label.Text)
+                                   && a.FK_ReportArchiveTable == reportArchiveTableID
+                             select a).FirstOrDefault();
+                        if (calcParam != null)
+                        {
+                            calcParam.Active = true;
+                        }
+                        else
+                        {
+                            calcParam = new ReportArchiveAndCalculatedParametrsMappingTable();
+                            calcParam.Active = true;
+                            calcParam.FK_CalculatedParametrsTable = Convert.ToInt32(label.Text);
+                            calcParam.FK_ReportArchiveTable = reportArchiveTableID;
+                            kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable.InsertOnSubmit(calcParam);
+                        }
+                        kpiWebDataContext.SubmitChanges();
+                    }
+                    else
+                    {
+                        ReportArchiveAndCalculatedParametrsMappingTable calcParam =
+                            (from a in kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable
+                             where a.FK_CalculatedParametrsTable == Convert.ToInt32(label.Text)
+                                   && a.FK_ReportArchiveTable == reportArchiveTableID
+                             select a).FirstOrDefault();
+                        if (calcParam != null)
+                        {
+                            calcParam.Active = false;
+                            kpiWebDataContext.SubmitChanges();
+                        }
+                    }
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////
+                List<int> indId = new List<int>();
+               ///////////////////////////////////////////////////////////////////////////////////////////////////
+                for (int i = 0; i < dt_indicator.Rows.Count; i++)
+                {
+                    CheckBox chekBox = (CheckBox)IndicatorsTable.Rows[i].FindControl("IndicatorCheckBox");
+                    Label label = (Label)IndicatorsTable.Rows[i].FindControl("IndicatorID");
+                    if (chekBox.Checked == true)
+                    {
+                        indId.Add(Convert.ToInt32(label.Text));
+                        ReportArchiveAndIndicatorsMappingTable indicators =
+                            (from a in kpiWebDataContext.ReportArchiveAndIndicatorsMappingTable
+                             where a.FK_IndicatorsTable == Convert.ToInt32(label.Text)
+                                   && a.FK_ReportArchiveTable == reportArchiveTableID
+                             select a).FirstOrDefault();
+                        if (indicators != null)
+                        {
+                            indicators.Active = true;
+                        }
+                        else
+                        {
+                            indicators = new ReportArchiveAndIndicatorsMappingTable();
+                            indicators.Active = true;
+                            indicators.FK_IndicatorsTable = Convert.ToInt32(label.Text);
+                            indicators.FK_ReportArchiveTable = reportArchiveTableID;
+                            kpiWebDataContext.ReportArchiveAndIndicatorsMappingTable.InsertOnSubmit(indicators);
+                        }
+                        kpiWebDataContext.SubmitChanges();
+                    }
+                    else
+                    {
+                        ReportArchiveAndIndicatorsMappingTable indicators =
+                            (from a in kpiWebDataContext.ReportArchiveAndIndicatorsMappingTable
+                             where a.FK_IndicatorsTable == Convert.ToInt32(label.Text)
+                                   && a.FK_ReportArchiveTable == reportArchiveTableID
+                             select a).FirstOrDefault();
+                        if (indicators != null)
+                        {
+                            indicators.Active = false;
+                            kpiWebDataContext.SubmitChanges();
+                        }
+                    }
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////////////////
+                ///нужнополучить список айдишников нужных базовых показателей
+
+                List<int> baseParamID = getBasicByIndicatorNCalc(indId,calcId);
+
+                foreach (int baseID in baseParamID)
+                {
+                        ReportArchiveAndBasicParametrsMappingTable basicParam =
+                            (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                             where a.FK_BasicParametrsTable == baseID
+                             && a.FK_ReportArchiveTable == reportArchiveTableID
+                             select a).FirstOrDefault();
+                        if (basicParam != null)
+                        {
+                            basicParam.Active = true;
+                        }
+                        else
+                        {
+                            basicParam = new ReportArchiveAndBasicParametrsMappingTable();
+                            basicParam.Active = true;
+                            basicParam.FK_BasicParametrsTable = baseID;
+                            basicParam.FK_ReportArchiveTable = reportArchiveTableID;
+                            kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable.InsertOnSubmit(basicParam);
+                        }
+                        kpiWebDataContext.SubmitChanges();
+                 }                
+            }
             Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");       
         }
 
@@ -328,6 +529,32 @@ namespace KPIWeb.Reports
         protected void BasicParametrsTable_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {   
+            Serialization ReportId = (Serialization) Session["ReportArchiveTableID"];
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            var deleteBasic = from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                                     where a.FK_ReportArchiveTable == ReportId.ReportArchiveID select a;
+            var deleteCalc = from a in kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable
+                                     where a.FK_ReportArchiveTable == ReportId.ReportArchiveID select a;
+            var deleteIndicator = from a in kpiWebDataContext.ReportArchiveAndIndicatorsMappingTable
+                                     where a.FK_ReportArchiveTable == ReportId.ReportArchiveID select a;
+            foreach (var delB in deleteBasic)
+            {
+                kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable.DeleteOnSubmit(delB);
+            }
+            foreach (var delC in deleteCalc)
+            {
+                kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable.DeleteOnSubmit(delC);
+            }
+            foreach (var delI in deleteIndicator)
+            {
+                kpiWebDataContext.ReportArchiveAndIndicatorsMappingTable.DeleteOnSubmit(delI);
+            }
+            kpiWebDataContext.SubmitChanges();
+            Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");                     
         }
     }
 }
