@@ -21,4 +21,5 @@ Pass: 777qwe777
 Строка соединения: Data Source=sql10-12-rus.corp.parking.ru;Initial Catalog=crimeanfeder_3;User ID=crimeanfeder_3;Password=777qwe777
 
 ПОСЛЕДНЯЯ БАЗА ДАННЫХ
-Data Source=sql10-12-rus.corp.parking.ru;Initial Catalog=crimeanfeder_11;User ID=crimeanfeder_11;Password=777qwe777
+Data Source=sql10-12-rus.corp.parking.ru;Initial Catalog=crimeanfeder_12;User ID=crimeanfeder_12;Password=777qwe777
+
