@@ -223,6 +223,7 @@
     <Content Include="StatisticsDepartment\Indicators.aspx" />
     <Content Include="StatisticsDepartment\ReportViewer.aspx" />
     <Content Include="StatisticsDepartment\StastisticsHomePage.aspx" />
+    <Content Include="Test.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -322,6 +323,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Encode.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -423,6 +425,13 @@
     </Compile>
     <Compile Include="StatisticsDepartment\StastisticsHomePage.aspx.designer.cs">
       <DependentUpon>StastisticsHomePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Test.aspx.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Test.aspx.designer.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
     </Compile>
     <Compile Include="Types\Role.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
