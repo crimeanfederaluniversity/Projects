@@ -429,35 +429,15 @@ namespace KPIWeb.Reports
                 ViewState["CurrentReportArchiveID"] = ReportArchiveID;
                 ViewState["ValueColumnCnt"] = additionalColumnCount;
                 GridviewCollectedBasicParameters.DataSource = dataTable;
+
                 for (int j = 0; j < additionalColumnCount; j++)
                 {
                     GridviewCollectedBasicParameters.Columns[j + 5].Visible = true;
                     GridviewCollectedBasicParameters.Columns[j + 5].HeaderText = columnNames[j];
                 }
-
-              
-                 GridviewCollectedBasicParameters.DataBind();
-
-            }
-
-
-            ///////// Попытка скрыть пустые TextBox'ы
-            int rowIndex = 0;
-
-
-            if (GridviewCollectedBasicParameters.Rows.Count > 0)
-            {
-                for (int i = 1; i <= GridviewCollectedBasicParameters.Rows.Count; i++)
-                {
-                   // TextBox tb = (TextBox)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("Value" + rowIndex);
-                    //if (tb.Text == "" || tb.Text == null || tb.Text.Count() == 0)
-                        GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("Value" + rowIndex).Visible = false;
-                    rowIndex++;
-                    GridviewCollectedBasicParameters.DataBind();
-                }
-
-
                 GridviewCollectedBasicParameters.DataBind();
+
+
 
             }
         }
@@ -467,23 +447,25 @@ namespace KPIWeb.Reports
 
         protected void ButtonSave_Click(object sender, EventArgs e)
         {
-           
+
             StringCollection sc = new StringCollection();
             if (ViewState["CollectedBasicParametersTable"] != null && ViewState["CurrentReportArchiveID"] != null)
             {
-                int currentReportArchiveID = (int)ViewState["CurrentReportArchiveID"];
+                int currentReportArchiveID = (int) ViewState["CurrentReportArchiveID"];
                 KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
                 Dictionary<int, double> tempDictionary = new Dictionary<int, double>();
-                DataTable collectedBasicParametersTable = (DataTable)ViewState["CollectedBasicParametersTable"];
+                DataTable collectedBasicParametersTable = (DataTable) ViewState["CollectedBasicParametersTable"];
                 int columnCnt = (int) ViewState["ValueColumnCnt"];
                 if (collectedBasicParametersTable.Rows.Count > 0)
                 {
                     int rowIndex = 0;
-                    for (int i = 1; i <= collectedBasicParametersTable.Rows.Count; i++)//в каждой строчке
+                    for (int i = 1; i <= collectedBasicParametersTable.Rows.Count; i++) //в каждой строчке
                     {
                         ////сохраняем свои
-                        TextBox mytextBox = (TextBox)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("MyValue");
-                        Label mylabel = (Label)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("MyCollectId");
+                        TextBox mytextBox =
+                            (TextBox) GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("MyValue");
+                        Label mylabel =
+                            (Label) GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("MyCollectId");
 
                         if (mytextBox != null && mylabel != null)
                         {
@@ -491,16 +473,22 @@ namespace KPIWeb.Reports
                             if (double.TryParse(mytextBox.Text, out collectedValue) && collectedValue > -1)
                             {
                                 int collectedBasicParametersTableID = -1;
-                                if (int.TryParse(mylabel.Text, out collectedBasicParametersTableID) && collectedBasicParametersTableID > -1)
+                                if (int.TryParse(mylabel.Text, out collectedBasicParametersTableID) &&
+                                    collectedBasicParametersTableID > -1)
                                     tempDictionary.Add(collectedBasicParametersTableID, collectedValue);
                             }
-                        } 
+                        }
                         ///сохранили свои данные
                         /// //сохраним вложенные данные
                         for (int k = 0; k < columnCnt; k++) // пройдемся по каждой колонке
                         {
-                            TextBox textBox = (TextBox)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("Value"+k.ToString());
-                            Label label = (Label)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("CollectId" + k.ToString());
+                            TextBox textBox =
+                                (TextBox)
+                                    GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("Value" + k.ToString());
+                            Label label =
+                                (Label)
+                                    GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("CollectId" +
+                                                                                                k.ToString());
 
                             if (textBox != null && label != null)
                             {
@@ -508,32 +496,76 @@ namespace KPIWeb.Reports
                                 if (double.TryParse(textBox.Text, out collectedValue) && collectedValue > -1)
                                 {
                                     int collectedBasicParametersTableID = -1;
-                                    if (int.TryParse(label.Text, out collectedBasicParametersTableID) && collectedBasicParametersTableID > -1)
+                                    if (int.TryParse(label.Text, out collectedBasicParametersTableID) &&
+                                        collectedBasicParametersTableID > -1)
                                         tempDictionary.Add(collectedBasicParametersTableID, collectedValue);
                                 }
-                            }                        
+                            }
                         }
                         rowIndex++;
-                    }                    
+                    }
                 }
                 if (tempDictionary.Count > 0)
                 {
                     //Список ранее введенных пользователем данных для данной кампании (отчета)
-                    List<CollectedBasicParametersTable> сollectedBasicParametersTable = (from collectedBasicParameters in KPIWebDataContext.CollectedBasicParametersTable
-                                                                                         where (from item in tempDictionary select item.Key).ToList().Contains((int)collectedBasicParameters.CollectedBasicParametersTableID)
-                                                                                         select collectedBasicParameters).ToList();
+                    List<CollectedBasicParametersTable> сollectedBasicParametersTable =
+                        (from collectedBasicParameters in KPIWebDataContext.CollectedBasicParametersTable
+                            where
+                                (from item in tempDictionary select item.Key).ToList()
+                                    .Contains((int) collectedBasicParameters.CollectedBasicParametersTableID)
+                            select collectedBasicParameters).ToList();
 
-                    string localIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
+                    string localIP =
+                        Dns.GetHostEntry(Dns.GetHostName())
+                            .AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                            .Select(ip => ip.ToString())
+                            .FirstOrDefault() ?? "";
                     foreach (var сollectedBasicParameter in сollectedBasicParametersTable)
                     {
-                        сollectedBasicParameter.CollectedValue = (from item in tempDictionary where item.Key == сollectedBasicParameter.CollectedBasicParametersTableID select item.Value).FirstOrDefault();
+                        сollectedBasicParameter.CollectedValue =
+                            (from item in tempDictionary
+                                where item.Key == сollectedBasicParameter.CollectedBasicParametersTableID
+                                select item.Value).FirstOrDefault();
                         сollectedBasicParameter.LastChangeDateTime = DateTime.Now;
                         сollectedBasicParameter.UserIP = localIP;
                     }
                     KPIWebDataContext.SubmitChanges();
-                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Данные успешно сохранены');", true);
+                    Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                        "alert('Данные успешно сохранены');", true);
+                }
+            }
+        }
+
+        protected void GridviewCollectedBasicParameters_DataBound(object sender, EventArgs e)
+        {
+           
+        }
+
+        protected void GridviewCollectedBasicParameters_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+
+            // Скрываем неактивные TextBox's
+            int rowIndex = 0;
+            var lblMinutes2 = e.Row.FindControl("MyValue") as TextBox;
+            if (lblMinutes2 != null && lblMinutes2.Text.Count() == 0)
+                lblMinutes2.Visible = false;
+
+            for (int i = 1; i <= GridviewCollectedBasicParameters.Columns.Count; i++)
+            {
+                {
+                   
+
+                    var lblMinutes = e.Row.FindControl("Value" + rowIndex) as TextBox;
+                    if (lblMinutes != null && lblMinutes.Text.Count() == 0)
+                        lblMinutes.Visible = false;
+                    rowIndex++;
+
+
                 }
             }
         }
     }
+
+
+
 }

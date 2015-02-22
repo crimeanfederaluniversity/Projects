@@ -4,7 +4,7 @@
         <div>
             <h2>Ввведите значения в таблицу показателей и нажмите кнопку "Сохранить" внизу формы</h2>
             <br />
-            <asp:GridView ID="GridviewCollectedBasicParameters" BorderStyle="Solid" runat="server" ShowFooter="true" AutoGenerateColumns="False" BorderColor="Black" BorderWidth="1px" CellPadding="0">
+            <asp:GridView ID="GridviewCollectedBasicParameters" BorderStyle="Solid" runat="server" ShowFooter="true" AutoGenerateColumns="False" BorderColor="Black" BorderWidth="1px" CellPadding="0" OnDataBound="GridviewCollectedBasicParameters_DataBound" OnRowDataBound="GridviewCollectedBasicParameters_RowDataBound">
                 <Columns>
 
                     <asp:BoundField DataField="CurrentReportArchiveID" HeaderText="Current Report ID" Visible="false" />
