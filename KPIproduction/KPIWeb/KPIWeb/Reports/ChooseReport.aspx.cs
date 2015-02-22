@@ -140,12 +140,10 @@ namespace KPIWeb.Reports
             {
                 if (item.Selected)
                 {
-                        SpecializationTable spec = (from a in kPiDataContext.SpecializationTable
-                        join b in kPiDataContext.FourthLevelSubdivisionTable
-                            on a.SpecializationTableID equals b.FK_Specialization
-                        where b.FK_ThirdLevelSubdivisionTable == SelectedValue
-                        && b.Active == true
-                        select a).ToList().Count) > 0
+                    FourthLevelSubdivisionTable fourth = (from a in kPiDataContext.FourthLevelSubdivisionTable
+                        where a.FK_Specialization == Convert.ToInt32(item.Value)
+
+                        select a).FirstOrDefault();
                 }
                 {
                     

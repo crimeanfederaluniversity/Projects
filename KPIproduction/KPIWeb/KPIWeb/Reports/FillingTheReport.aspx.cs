@@ -511,5 +511,30 @@ namespace KPIWeb.Reports
                 }
             }
         }
+
+        protected void GridviewCollectedBasicParameters_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            // Скрываем неактивные TextBox's
+            int rowIndex = 0;
+            var lblMinutes2 = e.Row.FindControl("MyValue") as TextBox;
+            if (lblMinutes2 != null && lblMinutes2.Text.Count() == 0)
+                lblMinutes2.Visible = false;
+
+            for (int i = 1; i <= GridviewCollectedBasicParameters.Columns.Count; i++)
+            {
+                {
+
+
+                    var lblMinutes = e.Row.FindControl("Value" + rowIndex) as TextBox;
+                    if (lblMinutes != null && lblMinutes.Text.Count() == 0)
+                        lblMinutes.Visible = false;
+                    rowIndex++;
+
+
+                }
+            }
+
+
+        }
     }
 }
