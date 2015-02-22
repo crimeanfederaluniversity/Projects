@@ -38,7 +38,11 @@ namespace KPIWeb.Reports
                                                 && d.StartDateTime < DateTime.Now 
                                                 && d.EndDateTime > DateTime.Now
                                                 select d).ToList();
-                                           
+                ///тут мы получили список активных отччетов пользователя
+                /// пользователь привязан к таблице первого подразделения
+                /// таблица первого подразделения привязана к таблице отчетов(через таблицу связи)
+                /// на данный момент отчет можно назначать только первому подразделению!!!    
+                ///                        
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("ReportArchiveID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("ReportName", typeof(string)));
@@ -50,12 +54,13 @@ namespace KPIWeb.Reports
                     DataRow dataRow = dataTable.NewRow();
                                 dataRow["ReportArchiveID"] = ReportRow.ReportArchiveTableID.ToString();
                                 dataRow["ReportName"] = ReportRow.Name;
-                                dataRow["StartDate"] = ReportRow.StartDateTime.ToString().Split(' ')[0];
+                                dataRow["StartDate"] = ReportRow.StartDateTime.ToString().Split(' ')[0];//только дата// время обрезается сплитом
                                 dataRow["EndDate"] = ReportRow.EndDateTime.ToString().Split(' ')[0]; ;
                                 dataTable.Rows.Add(dataRow); 
                 }           
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
+                ///вывели все отчеты с параметрами в гридвью
             }
         }
 
@@ -64,7 +69,7 @@ namespace KPIWeb.Reports
             Button button = (Button)sender;
             {
                 Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
-                Session["ReportArchiveID"] = paramSerialization;
+                Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчета
                 Response.Redirect("~/Reports/FillingTheReport.aspx");
             }
         }

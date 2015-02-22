@@ -20,7 +20,7 @@ namespace KPIWeb.Reports
 
         protected void FillGridVIews(int reportID)
         {            
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             ///////////////////////////////////////////////////////////////////////////////////////////////////////                
             List<IndicatorsTable> indicatorTable =
             (from item in kPiDataContext.IndicatorsTable where item.Active == true select item).ToList();
