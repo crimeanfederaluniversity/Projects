@@ -233,7 +233,7 @@ namespace KPIWeb.Reports
                         i++;
                     }            
                     //////////////////////////////////////////////////////////////////////////////////
-                   FillGridVIews(3);
+                    FillGridVIews(reportArchiveTableID);
                 }
                 else //создаем новый отчет
                 {

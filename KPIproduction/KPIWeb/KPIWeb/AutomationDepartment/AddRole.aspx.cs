@@ -169,6 +169,9 @@ namespace KPIWeb.AutomationDepartment
                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Данные успешно сохранены');", true);
                 }
             }
+            Response.Redirect("~/AutomationDepartment/AddRole.aspx");
         }
+    
+    
     }
 }

@@ -130,7 +130,7 @@ namespace KPIWeb.Reports
                 dataTable.Columns.Add(new DataColumn("MyValue", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("MyCollectId", typeof (string)));
 
-                for (int k = 0; k <= 19; k++)
+                for (int k = 0; k <= 19; k++)  //создаем кучу полей
                 {
                     dataTable.Columns.Add(new DataColumn("Value" + k.ToString(), typeof(string)));
                     dataTable.Columns.Add(new DataColumn("CollectId" + k.ToString(), typeof(string)));
@@ -163,7 +163,7 @@ namespace KPIWeb.Reports
                 
 
                
-                //узнали базовые параметры первого подчиненного
+                
                 int additionalColumnCount = 0;
                 List<string> columnNames=new List<string>();
 
@@ -180,6 +180,64 @@ namespace KPIWeb.Reports
                     }
                     case 2://я Факультет
                     {
+                        List<BasicParametersTable> LevelUpBasicParams0 =
+                        (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                         join b in kpiWebDataContext.BasicParametersTable
+                             on a.FK_BasicParametrsTable equals b.BasicParametersTableID
+                         join c in kpiWebDataContext.BasicParametrsAndUsersMapping
+                             on b.BasicParametersTableID equals c.FK_ParametrsTable
+                         where a.FK_ReportArchiveTable == ReportArchiveID
+                         && b.SubvisionLevel == userLevel + 1////ВНИМАНИЕ
+                         && c.FK_UsersTable == UserID
+                         && a.Active == true
+                         && c.CanEdit == true
+                         && c.Active == true
+                         select b).ToList();
+                        ///узнай все специальности
+                        List<ThirdLevelSubdivisionTable> fakulties =
+                            (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                             where a.FK_SecondLevelSubdivisionTable == l_2
+                             select a).ToList();
+                        /// пройдемся и создадим пустые показатели)))
+                        foreach (ThirdLevelSubdivisionTable fak in fakulties)
+                        {
+                            columnNames.Add(fak.Name);
+                            foreach (BasicParametersTable basicParam in LevelUpBasicParams0) // создадим строки для ввода данных которых нет
+                            {
+                                CollectedBasicParametersTable collectedTemp =
+                                    (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                     where
+                                           a.FK_BasicParametersTable == basicParam.BasicParametersTableID
+                                           && a.FK_ReportArchiveTable == ReportArchiveID
+                                            && (a.FK_ZeroLevelSubdivisionTable == user.FK_ZeroLevelSubdivisionTable)
+                                            && (a.FK_FirstLevelSubdivisionTable == user.FK_FirstLevelSubdivisionTable)
+                                            && (a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable)
+                                            && (a.FK_ThirdLevelSubdivisionTable == fak.ThirdLevelSubdivisionTableID)
+                                     select a).FirstOrDefault();
+                                if (collectedTemp == null) // надо создать
+                                {
+                                    collectedTemp = new CollectedBasicParametersTable();
+                                    collectedTemp.Active = true;
+                                    collectedTemp.FK_UsersTable = UserID;
+                                    collectedTemp.FK_BasicParametersTable = basicParam.BasicParametersTableID;
+                                    collectedTemp.FK_ReportArchiveTable = ReportArchiveID;
+                                    collectedTemp.CollectedValue = 0;
+                                    collectedTemp.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
+                                    collectedTemp.LastChangeDateTime = DateTime.Now;
+                                    collectedTemp.SavedDateTime = DateTime.Now;
+                                    collectedTemp.FK_ZeroLevelSubdivisionTable = user.FK_ZeroLevelSubdivisionTable;
+                                    collectedTemp.FK_FirstLevelSubdivisionTable = user.FK_FirstLevelSubdivisionTable;
+                                    collectedTemp.FK_SecondLevelSubdivisionTable = user.FK_SecondLevelSubdivisionTable;
+                                    collectedTemp.FK_ThirdLevelSubdivisionTable = fak.ThirdLevelSubdivisionTableID;
+                                    collectedTemp.FK_FifthLevelSubdivisionTable = user.FK_FifthLevelSubdivisionTable;
+                                    kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedTemp);
+                                    kpiWebDataContext.SubmitChanges();
+                                }
+
+                            }
+                        }
+                        /// ////////////////////////////////////////////////////////////////////сделали кафедры
+                        ////////////////////////////////////////////////////////////////////////начинаем делать специальности
                         List<BasicParametersTable> LevelUpBasicParams =
                         (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
                          join b in kpiWebDataContext.BasicParametersTable
@@ -242,9 +300,36 @@ namespace KPIWeb.Reports
                                
                             }                                                                                              
                         }
-                        additionalColumnCount = Specialzations.Count;
-                        //заполним все что можем
+                        additionalColumnCount = Specialzations.Count+fakulties.Count;
 
+                        //заполним все что можем для кафедры
+                        int firstAddCnt = 0; // считаем количество кафедр для сдвига
+                        foreach (BasicParametersTable basicParam in LevelUpBasicParams0)
+                        {
+                            DataRow dataRow = dataTable.NewRow();
+                            dataRow["CurrentReportArchiveID"] = ReportArchiveID;
+                            dataRow["BasicParametersTableID"] = basicParam.BasicParametersTableID;
+                            dataRow["Name"] = basicParam.Name;
+                            int i = 0;
+                            foreach (ThirdLevelSubdivisionTable fak in fakulties)
+                            {
+                                CollectedBasicParametersTable collectedBasicTmp =
+                                    (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                     where a.FK_BasicParametersTable == basicParam.BasicParametersTableID
+                                        && a.FK_ReportArchiveTable == ReportArchiveID
+                                         && (a.FK_ZeroLevelSubdivisionTable == user.FK_ZeroLevelSubdivisionTable)
+                                         && (a.FK_FirstLevelSubdivisionTable == user.FK_FirstLevelSubdivisionTable)
+                                         && (a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable)
+                                         && (a.FK_ThirdLevelSubdivisionTable == fak.ThirdLevelSubdivisionTableID)
+                                     select a).FirstOrDefault();
+                                dataRow["Value" + i] = collectedBasicTmp.CollectedValue.ToString();
+                                dataRow["CollectId" + i] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
+                                i++;
+                                firstAddCnt++;
+                            }
+                            dataTable.Rows.Add(dataRow);
+                        } 
+                        //////////////////////////////////////////////// а теперь для специальности
                         foreach (BasicParametersTable basicParam in LevelUpBasicParams)
                         {
                             DataRow dataRow = dataTable.NewRow();
@@ -264,8 +349,8 @@ namespace KPIWeb.Reports
                                          && (a.FK_ThirdLevelSubdivisionTable == spec.FK_ThirdLevelSubdivisionTable)
                                          && (a.FK_FourthLevelSubdivisionTable == spec.FourthLevelSubdivisionTableID)
                                         select a).FirstOrDefault();
-                                dataRow["Value"+i] = collectedBasicTmp.CollectedValue.ToString();
-                                dataRow["CollectId"+i] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
+                                dataRow["Value" + (i + firstAddCnt)] = collectedBasicTmp.CollectedValue.ToString();
+                                dataRow["CollectId" + (i + firstAddCnt)] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
                                 i++;
                             }
                             dataTable.Rows.Add(dataRow);
