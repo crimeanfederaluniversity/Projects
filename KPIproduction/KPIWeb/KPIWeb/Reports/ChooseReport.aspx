@@ -27,4 +27,14 @@
                    
                 </Columns>
         </asp:GridView>
+           <br />
+           <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" Height="50px" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" Width="500px">
+           </asp:DropDownList>
+           <br />
+           <br />
+           <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="33px" Width="500px">
+           </asp:CheckBoxList>
+           <br />
+           <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Сохранить внесенные изменения" Width="500px" />
+           <br />
        </asp:Content>

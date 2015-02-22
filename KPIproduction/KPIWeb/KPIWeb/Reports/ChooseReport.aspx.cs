@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.DynamicData;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -61,6 +62,27 @@ namespace KPIWeb.Reports
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
                 ///вывели все отчеты с параметрами в гридвью
+                /// 
+                ///                 
+                List<ThirdLevelSubdivisionTable> ThirdLevel = (
+                    from item in kpiWebDataContext.ThirdLevelSubdivisionTable
+                    join b in kpiWebDataContext.UsersTable
+                    on item.FK_SecondLevelSubdivisionTable equals b.FK_SecondLevelSubdivisionTable
+                    where b.UsersTableID == UserSer.Id 
+                    select  item).ToList();
+
+
+
+                var dictionary = new Dictionary<int, string>();
+                dictionary.Add(0, "Выберите значение");
+
+                foreach (ThirdLevelSubdivisionTable item in ThirdLevel)
+                    dictionary.Add(item.ThirdLevelSubdivisionTableID, item.Name);
+
+                DropDownList1.DataTextField = "Value";
+                DropDownList1.DataValueField = "Key";
+                DropDownList1.DataSource = dictionary;
+                DropDownList1.DataBind();
             }
         }
 
@@ -82,6 +104,54 @@ namespace KPIWeb.Reports
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CheckBoxList1.Items.Clear();
+             KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            int SelectedValue = -1;
+            if (int.TryParse(DropDownList1.SelectedValue, out SelectedValue) && SelectedValue != -1)
+            {
+                List<SpecializationTable> specializationTableData = (from a in kPiDataContext.SpecializationTable
+                                                                     select a).ToList();
+                int i = 0;
+                foreach (SpecializationTable spec in specializationTableData)
+                {
+                    CheckBoxList1.Items.Add(spec.Name);
+                    CheckBoxList1.Items[i].Value = spec.SpecializationTableID.ToString();
+                    CheckBoxList1.Items[i].Selected = ((from a in kPiDataContext.SpecializationTable
+                        join b in kPiDataContext.FourthLevelSubdivisionTable
+                            on a.SpecializationTableID equals b.FK_Specialization
+                        where b.FK_ThirdLevelSubdivisionTable == SelectedValue
+                        && b.Active == true
+                        select a).ToList().Count) > 0
+                        ? true
+                        : false;
+                }          
+            }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+             KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            
+            foreach (ListItem item in CheckBoxList1.Items)
+            {
+                if (item.Selected)
+                {
+                        SpecializationTable spec = (from a in kPiDataContext.SpecializationTable
+                        join b in kPiDataContext.FourthLevelSubdivisionTable
+                            on a.SpecializationTableID equals b.FK_Specialization
+                        where b.FK_ThirdLevelSubdivisionTable == SelectedValue
+                        && b.Active == true
+                        select a).ToList().Count) > 0
+                }
+                {
+                    
+
+                }
+            }
         }
     }
 }

@@ -81,6 +81,9 @@ namespace KPIWeb
     partial void InsertSecondLevelSubdivisionTable(SecondLevelSubdivisionTable instance);
     partial void UpdateSecondLevelSubdivisionTable(SecondLevelSubdivisionTable instance);
     partial void DeleteSecondLevelSubdivisionTable(SecondLevelSubdivisionTable instance);
+    partial void InsertSpecializationTable(SpecializationTable instance);
+    partial void UpdateSpecializationTable(SpecializationTable instance);
+    partial void DeleteSpecializationTable(SpecializationTable instance);
     partial void InsertThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
     partial void UpdateThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
     partial void DeleteThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
@@ -252,6 +255,14 @@ namespace KPIWeb
 			get
 			{
 				return this.GetTable<SecondLevelSubdivisionTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<SpecializationTable> SpecializationTable
+		{
+			get
+			{
+				return this.GetTable<SpecializationTable>();
 			}
 		}
 		
@@ -774,6 +785,8 @@ namespace KPIWeb
 		
 		private System.Nullable<int> _SubvisionLevel;
 		
+		private System.Nullable<int> _ForeignStudents;
+		
 		private EntitySet<BasicParametersAndRolesMappingTable> _BasicParametersAndRolesMappingTable;
 		
 		private EntitySet<BasicParametrsAndUsersMapping> _BasicParametrsAndUsersMapping;
@@ -800,6 +813,8 @@ namespace KPIWeb
     partial void OnMeasureChanged();
     partial void OnSubvisionLevelChanging(System.Nullable<int> value);
     partial void OnSubvisionLevelChanged();
+    partial void OnForeignStudentsChanging(System.Nullable<int> value);
+    partial void OnForeignStudentsChanged();
     #endregion
 		
 		public BasicParametersTable()
@@ -947,6 +962,26 @@ namespace KPIWeb
 					this._SubvisionLevel = value;
 					this.SendPropertyChanged("SubvisionLevel");
 					this.OnSubvisionLevelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ForeignStudents", DbType="Int")]
+		public System.Nullable<int> ForeignStudents
+		{
+			get
+			{
+				return this._ForeignStudents;
+			}
+			set
+			{
+				if ((this._ForeignStudents != value))
+				{
+					this.OnForeignStudentsChanging(value);
+					this.SendPropertyChanging();
+					this._ForeignStudents = value;
+					this.SendPropertyChanged("ForeignStudents");
+					this.OnForeignStudentsChanged();
 				}
 			}
 		}
@@ -2845,11 +2880,15 @@ namespace KPIWeb
 		
 		private int _FK_ThirdLevelSubdivisionTable;
 		
+		private System.Nullable<int> _FK_Specialization;
+		
 		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
 		private EntitySet<FifthLevelSubdivisionTable> _FifthLevelSubdivisionTable;
 		
 		private EntitySet<UsersTable> _UsersTable;
+		
+		private EntityRef<SpecializationTable> _SpecializationTable;
 		
 		private EntityRef<ThirdLevelSubdivisionTable> _ThirdLevelSubdivisionTable;
 		
@@ -2865,6 +2904,8 @@ namespace KPIWeb
     partial void OnNameChanged();
     partial void OnFK_ThirdLevelSubdivisionTableChanging(int value);
     partial void OnFK_ThirdLevelSubdivisionTableChanged();
+    partial void OnFK_SpecializationChanging(System.Nullable<int> value);
+    partial void OnFK_SpecializationChanged();
     #endregion
 		
 		public FourthLevelSubdivisionTable()
@@ -2872,6 +2913,7 @@ namespace KPIWeb
 			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
 			this._FifthLevelSubdivisionTable = new EntitySet<FifthLevelSubdivisionTable>(new Action<FifthLevelSubdivisionTable>(this.attach_FifthLevelSubdivisionTable), new Action<FifthLevelSubdivisionTable>(this.detach_FifthLevelSubdivisionTable));
 			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
+			this._SpecializationTable = default(EntityRef<SpecializationTable>);
 			this._ThirdLevelSubdivisionTable = default(EntityRef<ThirdLevelSubdivisionTable>);
 			OnCreated();
 		}
@@ -2960,6 +3002,30 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Specialization", DbType="Int")]
+		public System.Nullable<int> FK_Specialization
+		{
+			get
+			{
+				return this._FK_Specialization;
+			}
+			set
+			{
+				if ((this._FK_Specialization != value))
+				{
+					if (this._SpecializationTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_SpecializationChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Specialization = value;
+					this.SendPropertyChanged("FK_Specialization");
+					this.OnFK_SpecializationChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTable", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FK_FourthLevelSubdivisionTable")]
 		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTable
 		{
@@ -2996,6 +3062,40 @@ namespace KPIWeb
 			set
 			{
 				this._UsersTable.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SpecializationTable_FourthLevelSubdivisionTable", Storage="_SpecializationTable", ThisKey="FK_Specialization", OtherKey="SpecializationTableID", IsForeignKey=true)]
+		public SpecializationTable SpecializationTable
+		{
+			get
+			{
+				return this._SpecializationTable.Entity;
+			}
+			set
+			{
+				SpecializationTable previousValue = this._SpecializationTable.Entity;
+				if (((previousValue != value) 
+							|| (this._SpecializationTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._SpecializationTable.Entity = null;
+						previousValue.FourthLevelSubdivisionTable.Remove(this);
+					}
+					this._SpecializationTable.Entity = value;
+					if ((value != null))
+					{
+						value.FourthLevelSubdivisionTable.Add(this);
+						this._FK_Specialization = value.SpecializationTableID;
+					}
+					else
+					{
+						this._FK_Specialization = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("SpecializationTable");
+				}
 			}
 		}
 		
@@ -4952,6 +5052,216 @@ namespace KPIWeb
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SpecializationTable")]
+	public partial class SpecializationTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _SpecializationTableID;
+		
+		private bool _Active;
+		
+		private string _Name;
+		
+		private string _SpecializationNumber;
+		
+		private System.Nullable<int> _FieldOfExpertise;
+		
+		private System.Nullable<bool> _ForeignStudents;
+		
+		private EntitySet<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnSpecializationTableIDChanging(int value);
+    partial void OnSpecializationTableIDChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnSpecializationNumberChanging(string value);
+    partial void OnSpecializationNumberChanged();
+    partial void OnFieldOfExpertiseChanging(System.Nullable<int> value);
+    partial void OnFieldOfExpertiseChanged();
+    partial void OnForeignStudentsChanging(System.Nullable<bool> value);
+    partial void OnForeignStudentsChanged();
+    #endregion
+		
+		public SpecializationTable()
+		{
+			this._FourthLevelSubdivisionTable = new EntitySet<FourthLevelSubdivisionTable>(new Action<FourthLevelSubdivisionTable>(this.attach_FourthLevelSubdivisionTable), new Action<FourthLevelSubdivisionTable>(this.detach_FourthLevelSubdivisionTable));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecializationTableID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int SpecializationTableID
+		{
+			get
+			{
+				return this._SpecializationTableID;
+			}
+			set
+			{
+				if ((this._SpecializationTableID != value))
+				{
+					this.OnSpecializationTableIDChanging(value);
+					this.SendPropertyChanging();
+					this._SpecializationTableID = value;
+					this.SendPropertyChanged("SpecializationTableID");
+					this.OnSpecializationTableIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(1000) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecializationNumber", DbType="VarChar(50)")]
+		public string SpecializationNumber
+		{
+			get
+			{
+				return this._SpecializationNumber;
+			}
+			set
+			{
+				if ((this._SpecializationNumber != value))
+				{
+					this.OnSpecializationNumberChanging(value);
+					this.SendPropertyChanging();
+					this._SpecializationNumber = value;
+					this.SendPropertyChanged("SpecializationNumber");
+					this.OnSpecializationNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FieldOfExpertise", DbType="Int")]
+		public System.Nullable<int> FieldOfExpertise
+		{
+			get
+			{
+				return this._FieldOfExpertise;
+			}
+			set
+			{
+				if ((this._FieldOfExpertise != value))
+				{
+					this.OnFieldOfExpertiseChanging(value);
+					this.SendPropertyChanging();
+					this._FieldOfExpertise = value;
+					this.SendPropertyChanged("FieldOfExpertise");
+					this.OnFieldOfExpertiseChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ForeignStudents", DbType="Bit")]
+		public System.Nullable<bool> ForeignStudents
+		{
+			get
+			{
+				return this._ForeignStudents;
+			}
+			set
+			{
+				if ((this._ForeignStudents != value))
+				{
+					this.OnForeignStudentsChanging(value);
+					this.SendPropertyChanging();
+					this._ForeignStudents = value;
+					this.SendPropertyChanged("ForeignStudents");
+					this.OnForeignStudentsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SpecializationTable_FourthLevelSubdivisionTable", Storage="_FourthLevelSubdivisionTable", ThisKey="SpecializationTableID", OtherKey="FK_Specialization")]
+		public EntitySet<FourthLevelSubdivisionTable> FourthLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FourthLevelSubdivisionTable;
+			}
+			set
+			{
+				this._FourthLevelSubdivisionTable.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_FourthLevelSubdivisionTable(FourthLevelSubdivisionTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.SpecializationTable = this;
+		}
+		
+		private void detach_FourthLevelSubdivisionTable(FourthLevelSubdivisionTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.SpecializationTable = null;
 		}
 	}
 	
