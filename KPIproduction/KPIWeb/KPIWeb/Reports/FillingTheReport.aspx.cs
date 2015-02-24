@@ -600,8 +600,6 @@ namespace KPIWeb.Reports
 
         protected void GridviewCollectedBasicParameters_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            GridviewCollectedBasicParameters.PageIndex = e.NewPageIndex;
-            GridviewCollectedBasicParameters.DataBind();
         }
     }
 }
