@@ -73,7 +73,10 @@ namespace KPIWeb
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
-            Context.GetOwinContext().Authentication.SignOut();
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            Response.Redirect("~/Account/Login.aspx");
+            //Context.GetOwinContext().Authentication.SignOut();
         }
     }
 

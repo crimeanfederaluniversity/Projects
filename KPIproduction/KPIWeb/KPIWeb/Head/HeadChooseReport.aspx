@@ -1,14 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="HeadChooseReport.aspx.cs" Inherits="KPIWeb.Head.ChooseReport" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="HeadChooseReport.aspx.cs" Inherits="KPIWeb.Head.ChooseReport" %>
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div>
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" style="margin-top: 0px">
              <Columns>
@@ -29,6 +20,5 @@
                 </Columns>
         </asp:GridView>
     </div>
-    </form>
-</body>
-</html>
+</asp:Content>
+

@@ -1,14 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="BasicParametrs.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.BasicParametrs" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="BasicParametrs.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.BasicParametrs" %>
 
-<!DOCTYPE html>
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
     <div>   
         <asp:Menu ID="Menu1" runat="server"  Width="168px"  Orientation="Horizontal" StaticEnableDefaultPopOutImage="False"   OnMenuItemClick="Menu1_MenuItemClick" >
              <Items>
@@ -83,7 +76,7 @@
                 <td class="TabArea" style="width: 600px">
                     Вставте в текстовое поле
                     <br />
-                    Название параметра#Аббревиатура англ#Аббревиатура рус#единица измерения<br />
+                    Название параметра#Аббревиатура англ#Аббревиатура рус#единица измерения#уровень вводящего#только для иностранных<br />
                     <asp:TextBox ID="TextBox9" runat="server" Height="332px" TextMode="MultiLine" Width="595px"></asp:TextBox>
                     <br />
                     <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Добавить введенные данные" Width="596px" />
@@ -102,6 +95,4 @@
     </div>
         <br />
         <br />
-    </form>
-</body>
-</html>
+</asp:Content>

@@ -21,16 +21,26 @@ namespace KPIWeb.Reports
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Serialization UserSer = (Serialization) Session["UserID"];
+            Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Account/Login.aspx");
+                Response.Redirect("~/Default.aspx");
+            }
+
+            int userID = UserSer.Id;
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            if (userTable.AccessLevel != 0)
+            {
+                Response.Redirect("~/Default.aspx");
             }
 
             Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
             if (paramSerialization == null)
             {
-                Response.Redirect("~/Account/Login.aspx");
+                Response.Redirect("~/Default.aspx");
             }
             /////////////////////////////////////////////////////////////////////////
             if (!Page.IsPostBack)
@@ -191,10 +201,10 @@ namespace KPIWeb.Reports
                          && c.CanEdit == true
                          && c.Active == true
                          select b).ToList();
-                        ///узнай все специальности
                         List<ThirdLevelSubdivisionTable> fakulties =
                             (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
                              where a.FK_SecondLevelSubdivisionTable == l_2
+                             && a.Active == true
                              select a).ToList();
                         /// пройдемся и создадим пустые показатели)))
                         foreach (ThirdLevelSubdivisionTable fak in fakulties)
@@ -239,9 +249,11 @@ namespace KPIWeb.Reports
 
                         List<FourthLevelSubdivisionTable> Specialzations =
                             (from a in kpiWebDataContext.FourthLevelSubdivisionTable
-                             join b in kpiWebDataContext.ThirdLevelSubdivisionTable
-                             on a.FK_ThirdLevelSubdivisionTable equals b.ThirdLevelSubdivisionTableID
-                             where b.FK_SecondLevelSubdivisionTable == l_2                          
+                                join b in kpiWebDataContext.ThirdLevelSubdivisionTable
+                                    on a.FK_ThirdLevelSubdivisionTable equals b.ThirdLevelSubdivisionTableID
+                                where b.FK_SecondLevelSubdivisionTable == l_2
+                                      && a.Active == true 
+                                      && b.Active == true
                          select a).ToList();                       
                         /// пройдемся и создадим пустые показатели)))
                         List<BasicParametersTable> LevelUpBasicParams =
@@ -263,7 +275,9 @@ namespace KPIWeb.Reports
 
                         foreach (FourthLevelSubdivisionTable spec in Specialzations)
                         {
-                            columnNames.Add(spec.Name);
+                            columnNames.Add((from a in kpiWebDataContext.SpecializationTable
+                                                 where a.SpecializationTableID==spec.FK_Specialization
+                                                 select a.Name).FirstOrDefault().ToString());
                            
                             ///узнай все специальности
                             foreach (BasicParametersTable basicParam in LevelUpBasicParams) // создадим строки для ввода данных которых нет
@@ -351,8 +365,9 @@ namespace KPIWeb.Reports
                                 dataRow["Value" + i] = collectedBasicTmp.CollectedValue.ToString();
                                 dataRow["CollectId" + i] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
                                 i++;
-                                firstAddCnt++;
+                                
                             }
+                            firstAddCnt=fakulties.Count;
                             dataTable.Rows.Add(dataRow);
                         } 
                         //////////////////////////////////////////////// а теперь для специальности
@@ -403,12 +418,6 @@ namespace KPIWeb.Reports
                             }
                             dataTable.Rows.Add(dataRow);
                         } 
-
-                         
-                        //базочка готова
-
-                        /// создай дататейбл
-                        /// заполни дататейбл
                         break;
                     }
                     case 3://вытаскиваем все специальности
@@ -515,6 +524,7 @@ namespace KPIWeb.Reports
         protected void GridviewCollectedBasicParameters_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             // Скрываем неактивные TextBox's
+            
             int rowIndex = 0;
             var lblMinutes2 = e.Row.FindControl("MyValue") as TextBox;
             if (lblMinutes2 != null && lblMinutes2.Text.Count() == 0)
@@ -533,7 +543,7 @@ namespace KPIWeb.Reports
 
                 }
             }
-
+            
 
         }
     }

@@ -48,6 +48,9 @@ namespace KPIWeb
     partial void InsertCollectedBasicParametersTable(CollectedBasicParametersTable instance);
     partial void UpdateCollectedBasicParametersTable(CollectedBasicParametersTable instance);
     partial void DeleteCollectedBasicParametersTable(CollectedBasicParametersTable instance);
+    partial void InsertFieldOfExpertise(FieldOfExpertise instance);
+    partial void UpdateFieldOfExpertise(FieldOfExpertise instance);
+    partial void DeleteFieldOfExpertise(FieldOfExpertise instance);
     partial void InsertFifthLevelSubdivisionTable(FifthLevelSubdivisionTable instance);
     partial void UpdateFifthLevelSubdivisionTable(FifthLevelSubdivisionTable instance);
     partial void DeleteFifthLevelSubdivisionTable(FifthLevelSubdivisionTable instance);
@@ -167,6 +170,14 @@ namespace KPIWeb
 			get
 			{
 				return this.GetTable<CollectedBasicParametersTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<FieldOfExpertise> FieldOfExpertise
+		{
+			get
+			{
+				return this.GetTable<FieldOfExpertise>();
 			}
 		}
 		
@@ -2345,6 +2356,144 @@ namespace KPIWeb
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FieldOfExpertise")]
+	public partial class FieldOfExpertise : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _FieldOfExpertiseID;
+		
+		private bool _Active;
+		
+		private string _Name;
+		
+		private EntitySet<SpecializationTable> _SpecializationTable;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnFieldOfExpertiseIDChanging(int value);
+    partial void OnFieldOfExpertiseIDChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public FieldOfExpertise()
+		{
+			this._SpecializationTable = new EntitySet<SpecializationTable>(new Action<SpecializationTable>(this.attach_SpecializationTable), new Action<SpecializationTable>(this.detach_SpecializationTable));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FieldOfExpertiseID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int FieldOfExpertiseID
+		{
+			get
+			{
+				return this._FieldOfExpertiseID;
+			}
+			set
+			{
+				if ((this._FieldOfExpertiseID != value))
+				{
+					this.OnFieldOfExpertiseIDChanging(value);
+					this.SendPropertyChanging();
+					this._FieldOfExpertiseID = value;
+					this.SendPropertyChanged("FieldOfExpertiseID");
+					this.OnFieldOfExpertiseIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(1000) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldOfExpertise_SpecializationTable", Storage="_SpecializationTable", ThisKey="FieldOfExpertiseID", OtherKey="FK_FieldOfExpertise")]
+		public EntitySet<SpecializationTable> SpecializationTable
+		{
+			get
+			{
+				return this._SpecializationTable;
+			}
+			set
+			{
+				this._SpecializationTable.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_SpecializationTable(SpecializationTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.FieldOfExpertise = this;
+		}
+		
+		private void detach_SpecializationTable(SpecializationTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.FieldOfExpertise = null;
 		}
 	}
 	
@@ -5069,11 +5218,13 @@ namespace KPIWeb
 		
 		private string _SpecializationNumber;
 		
-		private System.Nullable<int> _FieldOfExpertise;
+		private System.Nullable<int> _FK_FieldOfExpertise;
 		
 		private System.Nullable<bool> _ForeignStudents;
 		
 		private EntitySet<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
+		
+		private EntityRef<FieldOfExpertise> _FieldOfExpertise;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -5087,8 +5238,8 @@ namespace KPIWeb
     partial void OnNameChanged();
     partial void OnSpecializationNumberChanging(string value);
     partial void OnSpecializationNumberChanged();
-    partial void OnFieldOfExpertiseChanging(System.Nullable<int> value);
-    partial void OnFieldOfExpertiseChanged();
+    partial void OnFK_FieldOfExpertiseChanging(System.Nullable<int> value);
+    partial void OnFK_FieldOfExpertiseChanged();
     partial void OnForeignStudentsChanging(System.Nullable<bool> value);
     partial void OnForeignStudentsChanged();
     #endregion
@@ -5096,6 +5247,7 @@ namespace KPIWeb
 		public SpecializationTable()
 		{
 			this._FourthLevelSubdivisionTable = new EntitySet<FourthLevelSubdivisionTable>(new Action<FourthLevelSubdivisionTable>(this.attach_FourthLevelSubdivisionTable), new Action<FourthLevelSubdivisionTable>(this.detach_FourthLevelSubdivisionTable));
+			this._FieldOfExpertise = default(EntityRef<FieldOfExpertise>);
 			OnCreated();
 		}
 		
@@ -5179,22 +5331,26 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FieldOfExpertise", DbType="Int")]
-		public System.Nullable<int> FieldOfExpertise
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FieldOfExpertise", DbType="Int")]
+		public System.Nullable<int> FK_FieldOfExpertise
 		{
 			get
 			{
-				return this._FieldOfExpertise;
+				return this._FK_FieldOfExpertise;
 			}
 			set
 			{
-				if ((this._FieldOfExpertise != value))
+				if ((this._FK_FieldOfExpertise != value))
 				{
-					this.OnFieldOfExpertiseChanging(value);
+					if (this._FieldOfExpertise.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_FieldOfExpertiseChanging(value);
 					this.SendPropertyChanging();
-					this._FieldOfExpertise = value;
-					this.SendPropertyChanged("FieldOfExpertise");
-					this.OnFieldOfExpertiseChanged();
+					this._FK_FieldOfExpertise = value;
+					this.SendPropertyChanged("FK_FieldOfExpertise");
+					this.OnFK_FieldOfExpertiseChanged();
 				}
 			}
 		}
@@ -5229,6 +5385,40 @@ namespace KPIWeb
 			set
 			{
 				this._FourthLevelSubdivisionTable.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldOfExpertise_SpecializationTable", Storage="_FieldOfExpertise", ThisKey="FK_FieldOfExpertise", OtherKey="FieldOfExpertiseID", IsForeignKey=true)]
+		public FieldOfExpertise FieldOfExpertise
+		{
+			get
+			{
+				return this._FieldOfExpertise.Entity;
+			}
+			set
+			{
+				FieldOfExpertise previousValue = this._FieldOfExpertise.Entity;
+				if (((previousValue != value) 
+							|| (this._FieldOfExpertise.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FieldOfExpertise.Entity = null;
+						previousValue.SpecializationTable.Remove(this);
+					}
+					this._FieldOfExpertise.Entity = value;
+					if ((value != null))
+					{
+						value.SpecializationTable.Add(this);
+						this._FK_FieldOfExpertise = value.FieldOfExpertiseID;
+					}
+					else
+					{
+						this._FK_FieldOfExpertise = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("FieldOfExpertise");
+				}
 			}
 		}
 		
@@ -5279,6 +5469,8 @@ namespace KPIWeb
 		
 		private int _FK_SecondLevelSubdivisionTable;
 		
+		private System.Nullable<int> _Parametrs;
+		
 		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
 		private EntitySet<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
@@ -5299,6 +5491,8 @@ namespace KPIWeb
     partial void OnNameChanged();
     partial void OnFK_SecondLevelSubdivisionTableChanging(int value);
     partial void OnFK_SecondLevelSubdivisionTableChanged();
+    partial void OnParametrsChanging(System.Nullable<int> value);
+    partial void OnParametrsChanged();
     #endregion
 		
 		public ThirdLevelSubdivisionTable()
@@ -5390,6 +5584,26 @@ namespace KPIWeb
 					this._FK_SecondLevelSubdivisionTable = value;
 					this.SendPropertyChanged("FK_SecondLevelSubdivisionTable");
 					this.OnFK_SecondLevelSubdivisionTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Parametrs", DbType="Int")]
+		public System.Nullable<int> Parametrs
+		{
+			get
+			{
+				return this._Parametrs;
+			}
+			set
+			{
+				if ((this._Parametrs != value))
+				{
+					this.OnParametrsChanging(value);
+					this.SendPropertyChanging();
+					this._Parametrs = value;
+					this.SendPropertyChanged("Parametrs");
+					this.OnParametrsChanged();
 				}
 			}
 		}

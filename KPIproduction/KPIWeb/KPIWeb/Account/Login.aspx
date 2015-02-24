@@ -35,14 +35,6 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <div class="checkbox">
-                                <asp:CheckBox runat="server" ID="RememberMe" OnCheckedChanged="RememberMe_CheckedChanged" />
-                                <asp:Label runat="server" AssociatedControlID="RememberMe">Запомнить&nbsp;меня?</asp:Label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
                             <asp:Button runat="server" OnClick="LogIn" Text="Войти" CssClass="btn btn-default" />
                         </div>
                     </div>

@@ -15,7 +15,7 @@ namespace KPIWeb.AutomationDepartment
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Account/Login.aspx");
+                Response.Redirect("~/Default.aspx");
             }
 
             int userID = UserSer.Id;
@@ -25,7 +25,7 @@ namespace KPIWeb.AutomationDepartment
 
             if (userTable.AccessLevel != 10)
             {
-                Response.Redirect("~/Account/Login.aspx");
+                Response.Redirect("~/Default.aspx");
             }
         }
         

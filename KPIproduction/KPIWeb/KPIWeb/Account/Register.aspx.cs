@@ -17,53 +17,55 @@ namespace KPIWeb.Account
     public partial class Register : Page
     {        
         protected void CreateUser_Click(object sender, EventArgs e)
-        {   
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
-            UsersTable user = new UsersTable();
-            user.Active = true;
-            user.Login = UserName.Text;
-            user.Password = Password.Text;
-            user.Email = Email.Text;
-
-            int selectedValue = -1;
-            if (int.TryParse(DropDownList1.SelectedValue, out selectedValue) && selectedValue > 0)
-                user.FK_FirstLevelSubdivisionTable = selectedValue;
-
-            selectedValue = -1;
-            if (int.TryParse(DropDownList2.SelectedValue, out selectedValue) && selectedValue > 0)
-                user.FK_SecondLevelSubdivisionTable = selectedValue;
-
-            selectedValue = -1;
-            if (int.TryParse(DropDownList3.SelectedValue, out selectedValue) && selectedValue > 0)
-                user.FK_ThirdLevelSubdivisionTable = selectedValue;
-
-            user.AccessLevel = 0; ///////НАДО ПРОДУМАТЬ
-            user.FK_ZeroLevelSubdivisionTable = 1;
-
-            kPiDataContext.UsersTable.InsertOnSubmit(user);
-            kPiDataContext.SubmitChanges();   
-            //// ПОЛЬЗОВАТЕЛЬ СОЗДАН
-
-            int userID = user.UsersTableID;
-
-            ///////////////////////////////////////////шаблон//////////////////////////////////
-            int rowIndex = 0;
-
-            if (ViewState["GridviewRoleMapping"] != null)
+        {
+            try
             {
-                int currentRoleId = Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value);
-                DataTable roleBasicParametrs = (DataTable)ViewState["GridviewRoleMapping"];
+                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+                UsersTable user = new UsersTable();
+                user.Active = true;
+                user.Login = UserName.Text;
+                user.Password = Password.Text;
+                user.Email = Email.Text;
 
-                if (roleBasicParametrs.Rows.Count > 0)
+                int selectedValue = -1;
+                if (int.TryParse(DropDownList1.SelectedValue, out selectedValue) && selectedValue > 0)
+                    user.FK_FirstLevelSubdivisionTable = selectedValue;
+
+                selectedValue = -1;
+                if (int.TryParse(DropDownList2.SelectedValue, out selectedValue) && selectedValue > 0)
+                    user.FK_SecondLevelSubdivisionTable = selectedValue;
+
+                selectedValue = -1;
+                if (int.TryParse(DropDownList3.SelectedValue, out selectedValue) && selectedValue > 0)
+                    user.FK_ThirdLevelSubdivisionTable = selectedValue;
+
+                user.AccessLevel = 0; ///////НАДО ПРОДУМАТЬ
+                user.FK_ZeroLevelSubdivisionTable = 1;
+
+                kPiDataContext.UsersTable.InsertOnSubmit(user);
+                kPiDataContext.SubmitChanges();
+                //// ПОЛЬЗОВАТЕЛЬ СОЗДАН
+
+                int userID = user.UsersTableID;
+
+                ///////////////////////////////////////////шаблон//////////////////////////////////
+                int rowIndex = 0;
+
+                if (ViewState["GridviewRoleMapping"] != null)
                 {
-                    for (int k = 1; k <= roleBasicParametrs.Rows.Count; k++)
-                    {
-                        CheckBox canEdit = (CheckBox)GridviewRoles.Rows[rowIndex].FindControl("CheckBoxCanEdit");
-                        CheckBox canView = (CheckBox)GridviewRoles.Rows[rowIndex].FindControl("CheckBoxCanView");
-                        CheckBox canConfirm = (CheckBox)GridviewRoles.Rows[rowIndex].FindControl("CheckBoxVerify");
-                        Label label = (Label)GridviewRoles.Rows[rowIndex].FindControl("Label2");
+                    int currentRoleId = Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value);
+                    DataTable roleBasicParametrs = (DataTable) ViewState["GridviewRoleMapping"];
 
-                        BasicParametrsAndUsersMapping BasicAndUsers = new BasicParametrsAndUsersMapping();                      
+                    if (roleBasicParametrs.Rows.Count > 0)
+                    {
+                        for (int k = 1; k <= roleBasicParametrs.Rows.Count; k++)
+                        {
+                            CheckBox canEdit = (CheckBox) GridviewRoles.Rows[rowIndex].FindControl("CheckBoxCanEdit");
+                            CheckBox canView = (CheckBox) GridviewRoles.Rows[rowIndex].FindControl("CheckBoxCanView");
+                            CheckBox canConfirm = (CheckBox) GridviewRoles.Rows[rowIndex].FindControl("CheckBoxVerify");
+                            Label label = (Label) GridviewRoles.Rows[rowIndex].FindControl("Label2");
+
+                            BasicParametrsAndUsersMapping BasicAndUsers = new BasicParametrsAndUsersMapping();
                             BasicAndUsers.Active = true;
                             BasicAndUsers.FK_ParametrsTable = Convert.ToInt32(label.Text);
                             BasicAndUsers.CanConfirm = canConfirm.Checked;
@@ -71,11 +73,17 @@ namespace KPIWeb.Account
                             BasicAndUsers.CanView = canView.Checked;
                             BasicAndUsers.FK_UsersTable = userID;
                             kPiDataContext.BasicParametrsAndUsersMapping.InsertOnSubmit(BasicAndUsers);
-                            kPiDataContext.SubmitChanges();            
-                        rowIndex++;
+                            kPiDataContext.SubmitChanges();
+                            rowIndex++;
+                        }
+                        Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                            "alert('Пользователь зарегестрирован');", true);
                     }
-                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Пользователь зарегестрирован');", true);
                 }
+            }
+            catch (Exception ex)
+            {
+                LogHandler.LogWriter.WriteError(ex);
             }
         }
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)

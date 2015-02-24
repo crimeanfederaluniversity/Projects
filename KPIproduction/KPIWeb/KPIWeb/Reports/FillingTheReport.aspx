@@ -10,14 +10,18 @@
                     <asp:BoundField DataField="CurrentReportArchiveID" HeaderText="Current Report ID" Visible="false" />
                     <asp:BoundField DataField="BasicParametersTableID" HeaderText="Basic Parameter ID" Visible="false" />
 
-                    <asp:TemplateField Visible="false" InsertVisible="False">
+                    <asp:TemplateField Visible="false"  InsertVisible="False">
                         <ItemTemplate>
-                            <asp:Label ID="LabelCollectedBasicParametersTableID" runat="server" Visible="false" Text='<%# Bind("CollectedBasicParametersTableID") %>'></asp:Label>
+                            <asp:Label ID="LabelCollectedBasicParametersTableID"  runat="server" Visible="false" Text='<%# Bind("CollectedBasicParametersTableID") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
-
-                    <asp:BoundField DataField="Name" HeaderText="Название показателя" />
-                   
+                    
+                    <asp:TemplateField HeaderText="Название показателя" >
+                        <ItemTemplate>
+                            <asp:Label ID="Name"  runat="server" Visible="True" Width="500" Text='<%# Bind("Name") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    
                     <asp:TemplateField HeaderText="Значение">
                         <ItemTemplate>
                             <asp:TextBox ID="MyValue" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("MyValue") %>'></asp:TextBox>

@@ -17,7 +17,7 @@ namespace KPIWeb.StatisticsDepartment
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Account/Login.aspx");
+                Response.Redirect("~/Default.aspx");
             }
 
             int userID = UserSer.Id;
@@ -27,7 +27,7 @@ namespace KPIWeb.StatisticsDepartment
 
             if (userTable.AccessLevel != 10)
             {
-                Response.Redirect("~/Account/Login.aspx");
+                Response.Redirect("~/Default.aspx");
             }
         }
 
@@ -153,7 +153,7 @@ namespace KPIWeb.StatisticsDepartment
             foreach (string tmpStrf in tmpStrArr)
             {
                 string tmp = tmpStrf.Replace("\n", "");
-                if (((tmp.Split('#').Length - 1) != 3) && (tmp != ""))            
+                if (((tmp.Split('#').Length - 1) != 5) && (tmp != ""))            
                 {
                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ошибка в строке"+i.ToString()+"');", true);
                     i = 0;
@@ -165,14 +165,32 @@ namespace KPIWeb.StatisticsDepartment
             {
                 foreach (string tmpStrf in tmpStrArr)
                 {
-                    string tmp = tmpStrf.Replace("\n", "");
-                    BasicParametersTable basicParametr = new BasicParametersTable();
-                    string[] strArrf = tmp.Split('#');
-                    basicParametr.Name = strArrf[0];
-                    basicParametr.AbbreviationEN = strArrf[1];
-                    basicParametr.AbbreviationRU = strArrf[2];
-                    basicParametr.Measure = strArrf[3];
-                    kPiDataContext.BasicParametersTable.InsertOnSubmit(basicParametr);
+                    if (tmpStrf.Length > 10)
+                    {
+                        string tmp = tmpStrf.Replace("\n", "");
+                        BasicParametersTable basicParametr = new BasicParametersTable();
+                        string[] strArrf = tmp.Split('#');
+                        strArrf[0] = strArrf[0].TrimEnd();
+                        strArrf[0] = strArrf[0].TrimStart();
+                        strArrf[1] = strArrf[1].TrimEnd();
+                        strArrf[1] = strArrf[1].TrimStart();
+                        strArrf[2] = strArrf[2].TrimEnd();
+                        strArrf[2] = strArrf[2].TrimStart();
+                        strArrf[3] = strArrf[3].TrimEnd();
+                        strArrf[3] = strArrf[3].TrimStart();
+                        strArrf[4] = strArrf[4].TrimEnd();
+                        strArrf[4] = strArrf[4].TrimStart();
+                        strArrf[5] = strArrf[5].TrimEnd();
+                        strArrf[5] = strArrf[5].TrimStart();
+                        basicParametr.Active = true;
+                        basicParametr.Name = strArrf[0];
+                        basicParametr.AbbreviationEN = strArrf[1];
+                        basicParametr.AbbreviationRU = strArrf[2];
+                        basicParametr.Measure = strArrf[3];
+                        basicParametr.SubvisionLevel = Convert.ToInt32(strArrf[4]);
+                        basicParametr.ForeignStudents = Convert.ToInt32(strArrf[5]);
+                        kPiDataContext.BasicParametersTable.InsertOnSubmit(basicParametr);
+                    }
                 }
             }
             kPiDataContext.SubmitChanges();

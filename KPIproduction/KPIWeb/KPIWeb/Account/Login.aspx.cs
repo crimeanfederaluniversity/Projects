@@ -9,7 +9,6 @@ using System.Web;
 using System.Web.Security;
 using KPIWeb.Models;
 using log4net;
-//using Microsoft.Office.Interop.Excel;
 using WebApplication3;
 using Page = System.Web.UI.Page;
 
@@ -18,11 +17,16 @@ namespace KPIWeb.Account
     public partial class Login : Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
-            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "123");
+        {         
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer != null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
         }
+
         protected void LogIn(object sender, EventArgs e)
-        {          
+        {                    
             try
             {
                 if (IsValid)
@@ -34,28 +38,15 @@ namespace KPIWeb.Account
                                        select usersTables).FirstOrDefault();
                     if (user != null)
                     {
-                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, DateTime.Now.ToString() + "Пользователь " + user.Login + " вошел в систему ");
-   
+                        FormsAuthentication.SetAuthCookie(user.Login, true);
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO,"Пользователь " + user.Login + " вошел в систему "); 
                         Serialization UserSerId = new Serialization(user.UsersTableID);
                         Session["UserID"] = UserSerId;
-
-                        UsersTable userTable = (from a in KPIWebDataContext.UsersTable where a.UsersTableID == user.UsersTableID select a).FirstOrDefault();
-                        int accessLevel = (int)userTable.AccessLevel;
-                        if (accessLevel == 10)
-                            {
-                                Response.Redirect("~/AutomationDepartment/Main.aspx");
-                            }
-                            else if(accessLevel==5)
-                            {
-                                Response.Redirect("~/Head/HeadChooseReport.aspx");
-                            }                        
-                            else
-                            {
-                                Response.Redirect("~/Reports/ChooseReport.aspx");
-                            }                        
+                        Response.Redirect("~/Default.aspx");                   
                         }            
                         else
                         {
+                            LogHandler.LogWriter.WriteLog(LogCategory.INFO,"Неудачная попытка авторизации " + user.Login); 
                             FailureText.Text = "Неверное имя пользователя или пароль.";
                             ErrorMessage.Visible = true;
                         }
@@ -64,18 +55,8 @@ namespace KPIWeb.Account
                 catch(Exception ex)
                 {
                     LogHandler.LogWriter.WriteError(ex);
-                   // LogHandler.LogWriter.WriteError(ex, "Error message");
-                   // LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Info message");
+                   
                 }
             }
-        protected void RememberMe_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Account/TEST.aspx");
-        }
     }
 }

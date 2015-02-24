@@ -14,24 +14,23 @@ namespace KPIWeb.StatisticsDepartment
         UsersTable user;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
             {
-                Serialization UserSer = (Serialization)Session["UserID"];
-                if (UserSer == null)
-                {
-                    Response.Redirect("~/Account/Login.aspx");
-                }
+                Response.Redirect("~/Default.aspx");
+            }
 
-                int userID = UserSer.Id;
-                KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
-                UsersTable userTable =
-                    (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+            int userID = UserSer.Id;
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-                if (userTable.AccessLevel != 10)
-                {
-                    Response.Redirect("~/Account/Login.aspx");
-                }
-		        ///////////////////////////////////////////////////
+            if (userTable.AccessLevel != 10)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            if (!Page.IsPostBack)
+            {              
                 List<ReportArchiveTable> ReportArchiveTable_ = (from item in kPiDataContext.ReportArchiveTable
                                                                where item.Active == true
                                                                select item).ToList();

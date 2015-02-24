@@ -1,15 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Indicators.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.Indicators" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Indicators.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.Indicators" %>
 
-<!DOCTYPE html>
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
     <div>          
+        <br />
+        <br />
         <asp:Menu ID="Menu1" runat="server"  Width="168px"  Orientation="Horizontal" StaticEnableDefaultPopOutImage="False"   OnMenuItemClick="Menu1_MenuItemClick" >
              <Items>
                 <asp:MenuItem Text="Добавление и редактирование индикатора" Value="0">
@@ -96,6 +91,6 @@
         <br />
     
     </div>                   
-    </form>
-</body>
-</html>
+
+</asp:Content>
+

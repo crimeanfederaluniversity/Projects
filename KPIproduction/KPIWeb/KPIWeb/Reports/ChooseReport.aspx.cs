@@ -17,11 +17,26 @@ namespace KPIWeb.Reports
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Account/Login.aspx");
+                Response.Redirect("~/Default.aspx");
+            }
+
+            int userID = UserSer.Id;
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            if (userTable.AccessLevel != 0)
+            {
+                Response.Redirect("~/Default.aspx");
             }
             //////////////////////////////////////////////////////////////////////////
             if (!Page.IsPostBack)
             {
+                CheckBoxList1.Visible = false;
+                CheckBox1.Visible = false;
+                Button1.Visible = false;
+                Label1.Visible = false;
+                ////////////
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));         
                 List<ReportArchiveTable> reportsArchiveTablesTable =  (
                                                 from a in kpiWebDataContext.UsersTable
@@ -113,28 +128,70 @@ namespace KPIWeb.Reports
             int SelectedValue = -1;
             if (int.TryParse(DropDownList1.SelectedValue, out SelectedValue) && SelectedValue != -1)
             {
-                List<SpecializationTable> specializationTableData = (from a in kPiDataContext.SpecializationTable
-                                                                     select a).ToList();
-                int i = 0;
-                foreach (SpecializationTable spec in specializationTableData)
+                if (SelectedValue == 0)
                 {
-                    CheckBoxList1.Items.Add(spec.Name);
-                    CheckBoxList1.Items[i].Value = spec.SpecializationTableID.ToString();
-                    CheckBoxList1.Items[i].Selected = ((from a in kPiDataContext.SpecializationTable
-                        join b in kPiDataContext.FourthLevelSubdivisionTable
-                            on a.SpecializationTableID equals b.FK_Specialization
-                        where b.FK_ThirdLevelSubdivisionTable == SelectedValue
-                        && b.Active == true
-                        select a).ToList().Count) > 0
+                    CheckBoxList1.Visible = false;
+                    CheckBox1.Visible = false;
+                    Button1.Visible = false;
+                    Label1.Visible = false;
+                }
+                else
+                {
+                    CheckBoxList1.Visible = true;
+                    CheckBox1.Visible = true;
+                    Button1.Visible = true;
+                    Label1.Visible = true;
+
+                    ViewState["FourthLevel"] = SelectedValue;
+                    CheckBox1.Checked = ((from a in kPiDataContext.ThirdLevelSubdivisionTable
+                        where a.ThirdLevelSubdivisionTableID == SelectedValue
+                              && a.Parametrs == 1
+                        select a).ToList().Count > 0)
                         ? true
                         : false;
-                }          
+
+                    List<SpecializationTable> specializationTableData = (from a in kPiDataContext.SpecializationTable
+                        select a).ToList();
+                    int i = 0;
+                    foreach (SpecializationTable spec in specializationTableData)
+                    {
+                        CheckBoxList1.Items.Add(spec.Name);
+                        CheckBoxList1.Items[i].Value = spec.SpecializationTableID.ToString();
+                        CheckBoxList1.Items[i].Selected = ((from a in kPiDataContext.SpecializationTable
+                            join b in kPiDataContext.FourthLevelSubdivisionTable
+                                on a.SpecializationTableID equals b.FK_Specialization
+                            where b.FK_ThirdLevelSubdivisionTable == SelectedValue
+                                  && b.Active == true
+                                  && b.FK_Specialization == spec.SpecializationTableID
+                            select a).ToList().Count) > 0
+                            ? true
+                            : false;
+                        i++;
+                    }
+                }
             }
+            
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
              KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+
+           int fourthId = Convert.ToInt32(ViewState["FourthLevel"]) ;
+                ThirdLevelSubdivisionTable thirdLevel =
+                (from a in kPiDataContext.ThirdLevelSubdivisionTable
+                    where a.ThirdLevelSubdivisionTableID == fourthId
+                    select a).FirstOrDefault();
+                if (thirdLevel == null)
+                {
+                    //ERROR
+                }
+                else
+                {
+                    thirdLevel.Parametrs = Convert.ToInt32(CheckBox1.Checked);
+                    kPiDataContext.SubmitChanges();
+                } 
+
             
             foreach (ListItem item in CheckBoxList1.Items)
             {
@@ -142,14 +199,42 @@ namespace KPIWeb.Reports
                 {
                     FourthLevelSubdivisionTable fourth = (from a in kPiDataContext.FourthLevelSubdivisionTable
                         where a.FK_Specialization == Convert.ToInt32(item.Value)
-
+                        && a.FK_ThirdLevelSubdivisionTable == Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value)
                         select a).FirstOrDefault();
+                    if (fourth!=null)
+                    {
+                        fourth.Active = true;
+                    }
+                    else
+                    {
+                        fourth = new FourthLevelSubdivisionTable();
+                        fourth.Active = true;
+                        fourth.FK_Specialization = Convert.ToInt32(item.Value);
+                        fourth.FK_ThirdLevelSubdivisionTable =
+                            Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value);
+                        fourth.Name = "V";
+                        kPiDataContext.FourthLevelSubdivisionTable.InsertOnSubmit(fourth);
+                    }
+                    kPiDataContext.SubmitChanges();
                 }
+                else
                 {
-                    
-
+                    FourthLevelSubdivisionTable fourth = (from a in kPiDataContext.FourthLevelSubdivisionTable
+                                                          where a.FK_Specialization == Convert.ToInt32(item.Value)
+                                                          && a.FK_ThirdLevelSubdivisionTable == Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value)
+                                                          select a).FirstOrDefault();
+                    if (fourth != null)
+                    {
+                        fourth.Active = false;
+                        kPiDataContext.SubmitChanges();
+                    }
                 }
             }
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

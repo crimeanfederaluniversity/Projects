@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Security.Principal;
@@ -16,9 +17,19 @@ namespace KPIWeb.Head
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Account/Login.aspx");
+                Response.Redirect("~/Default.aspx");
             }
 
+            int userID = UserSer.Id;
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            UsersTable userTable_ =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            if (userTable_.AccessLevel != 5)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            /////////////////////////////////////////////////////////////////
             Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
             if (paramSerialization == null)
             {

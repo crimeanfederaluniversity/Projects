@@ -23,14 +23,41 @@ namespace KPIWeb.Account
 
         private bool HasPassword(UserManager manager)
         {
-            var user = manager.FindById(User.Identity.GetUserId());
-            return (user != null && user.PasswordHash != null);
+            //var user = manager.FindById(User.Identity.GetUserId());
+           // return (user != null && user.PasswordHash != null);
+            return true;
         }
 
         protected void Page_Load()
         {
+            KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+            Serialization UserSer = (Serialization)Session["UserID"];
+                if (UserSer == null)
+                {
+                    Response.Redirect("~/Account/Login.aspx");
+                }
+                        UsersTable userTable = (from a in KPIWebDataContext.UsersTable where a.UsersTableID == UserSer.Id select a).FirstOrDefault();
+                        int accessLevel = (int)userTable.AccessLevel;
+                        if (accessLevel == 10)
+                            {
+                                Response.Redirect("~/AutomationDepartment/Main.aspx");
+                            }
+                            else if(accessLevel==5)
+                            {
+                                Response.Redirect("~/Head/HeadChooseReport.aspx");
+                            }                        
+                            else if (accessLevel == 0)
+                            {
+                                Response.Redirect("~/Reports/ChooseReport.aspx");
+                            }                                                          
+                            else
+                            {
+                                Response.Redirect("~/Account/Login.aspx");
+                            }
+
             if (!IsPostBack)
             {
+                
                 // Determine the sections to render
                 UserManager manager = new UserManager();
                 if (HasPassword(manager))

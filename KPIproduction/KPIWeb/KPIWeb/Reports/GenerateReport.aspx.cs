@@ -15,6 +15,7 @@ namespace KPIWeb.Reports
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Response.Redirect("~/Default.aspx");
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {

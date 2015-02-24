@@ -1,14 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="HeadShowReportResult.aspx.cs" Inherits="KPIWeb.Head.HeadShowReportResult" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="HeadShowReportResult.aspx.cs" Inherits="KPIWeb.Head.HeadShowReportResult" %>
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div>
         Резульаты для вашей академии<br />
     <asp:GridView ID="IndicatorsTable" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="1000px">
@@ -35,6 +26,5 @@
                             </Columns>
             </asp:GridView>
     </div>
-    </form>
-</body>
-</html>
+</asp:Content>
+

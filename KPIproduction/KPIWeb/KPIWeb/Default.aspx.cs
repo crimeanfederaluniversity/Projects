@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -12,11 +13,47 @@ namespace KPIWeb
         UsersTable user;
 
         protected void Page_Load(object sender, EventArgs e)
-        {
-            user = (UsersTable)Session["user"];
-
-            if (user == null)
+        {     
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                FormsAuthentication.SignOut();
+                Session.Abandon();
                 Response.Redirect("~/Account/Login.aspx");
+            }
+            KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+            UsersTable user = (from usersTables in KPIWebDataContext.UsersTable
+                               where usersTables.UsersTableID == UserSer.Id
+                               select usersTables).FirstOrDefault();
+            if (user != null)
+            {
+                FormsAuthentication.SetAuthCookie(user.Login, true);
+                int accessLevel = (int) user.AccessLevel;
+                if (accessLevel == 10)
+                {
+                    Response.Redirect("~/AutomationDepartment/Main.aspx");
+                }
+                else if (accessLevel == 5)
+                {
+                    Response.Redirect("~/Head/HeadChooseReport.aspx");
+                }
+                else if ( accessLevel == 0)
+                {
+                    Response.Redirect("~/Reports/ChooseReport.aspx");
+                }
+                else //если входим сюда то что то не так) скорей всего пользователю не присвоен уровень в UsersTable
+                {
+                    FormsAuthentication.SignOut();
+                    Session.Abandon();
+                    Response.Redirect("~/Account/Login.aspx");
+                }
+            }
+            else
+            {
+                FormsAuthentication.SignOut();
+                Session.Abandon();
+                Response.Redirect("~/Account/Login.aspx");
+            }
         }
     }
 }
