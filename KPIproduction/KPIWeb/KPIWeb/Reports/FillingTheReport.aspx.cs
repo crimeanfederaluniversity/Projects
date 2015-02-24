@@ -19,6 +19,7 @@ namespace KPIWeb.Reports
 {
     public partial class FillingTheReport : System.Web.UI.Page
     {
+        public int col_ = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             Serialization UserSer = (Serialization)Session["UserID"];
@@ -174,8 +175,10 @@ namespace KPIWeb.Reports
 
                 int additionalColumnCount = 0;
                 List<string> columnNames=new List<string>();
-
-                /// 
+                columnNames.Add("Факультет:\r\n" + (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                    where a.SecondLevelSubdivisionTableID == user.FK_SecondLevelSubdivisionTable
+                    select a.Name).FirstOrDefault());
+                 
                 switch (userLevel) // это штука пока будет работать только для пользователя деканата 
                 {
                     case  0: //вытаскиваем все универы
@@ -209,7 +212,7 @@ namespace KPIWeb.Reports
                         /// пройдемся и создадим пустые показатели)))
                         foreach (ThirdLevelSubdivisionTable fak in fakulties)
                         {
-                            columnNames.Add(fak.Name);
+                            columnNames.Add("Кафедра:\n\r" + fak.Name);
                             foreach (BasicParametersTable basicParam in LevelUpBasicParams0) // создадим строки для ввода данных которых нет
                             {
                                 CollectedBasicParametersTable collectedTemp =
@@ -275,7 +278,7 @@ namespace KPIWeb.Reports
 
                         foreach (FourthLevelSubdivisionTable spec in Specialzations)
                         {
-                            columnNames.Add((from a in kpiWebDataContext.SpecializationTable
+                            columnNames.Add("Специальность:\n\r" + (from a in kpiWebDataContext.SpecializationTable
                                                  where a.SpecializationTableID==spec.FK_Specialization
                                                  select a.Name).FirstOrDefault().ToString());
                            
@@ -444,7 +447,10 @@ namespace KPIWeb.Reports
                  for (int j = 0; j < additionalColumnCount; j++)
                  {
                      GridviewCollectedBasicParameters.Columns[j + 5].Visible = true;
-                     GridviewCollectedBasicParameters.Columns[j + 5].HeaderText = columnNames[j];
+                 } 
+                 for (int j = 0; j < additionalColumnCount+1; j++)
+                 {
+                     GridviewCollectedBasicParameters.Columns[j + 4].HeaderText = columnNames[j];
                  }                 
                  GridviewCollectedBasicParameters.DataBind();
             }
@@ -523,33 +529,79 @@ namespace KPIWeb.Reports
 
         protected void GridviewCollectedBasicParameters_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            // Скрываем неактивные TextBox's
-            
+            Color color;
+            Color disableColor = System.Drawing.Color.DarkGray;
+            if (col_== 0)
+            {
+                col_ = 1;
+                color = System.Drawing.Color.LightBlue;
+                
+            }
+            else
+            {
+                col_ = 0;
+                color = System.Drawing.Color.LightGray;
+            }
+
+            e.Row.BackColor = color;
+
+            // Скрываем неактивные TextBox's           
             int rowIndex = 0;
             var lblMinutes2 = e.Row.FindControl("MyValue") as TextBox;
+           
             if (lblMinutes2 != null && lblMinutes2.Text.Count() == 0)
             {
-                lblMinutes2.Enabled = false;
-                lblMinutes2.BackColor = Color.DarkGray;
+                if (e.Row.RowType == DataControlRowType.DataRow)
+                {
+                    DataControlFieldCell d = lblMinutes2.Parent as DataControlFieldCell;
+                    d.BackColor = disableColor;
+                }
+                lblMinutes2.Visible = false;
             }
+            else if (lblMinutes2 != null)
+            {
+                lblMinutes2.BackColor = color;
+            }
+        
+           
+
+
             for (int i = 1; i <= GridviewCollectedBasicParameters.Columns.Count; i++)
             {
                 {
-
-
-                    var lblMinutes = e.Row.FindControl("Value" + rowIndex) as TextBox;
+                    var lblMinutes = e.Row.FindControl("Value" + rowIndex) as TextBox;                    
                     if (lblMinutes != null && lblMinutes.Text.Count() == 0)
+                    {                       
+                        lblMinutes.Visible = false;
+                        if (e.Row.RowType == DataControlRowType.DataRow)
+                        {
+                            DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
+                            d.BackColor = disableColor;
+                        }
+                    }
+                    else if (lblMinutes != null)
                     {
-                        lblMinutes.BackColor = Color.DarkGray;
-                        lblMinutes.Enabled = false;
+                        lblMinutes.BackColor = color;
                     }
                     rowIndex++;
-
-
                 }
-            }
-            
+            }      
+        }
 
+        protected void GridviewCollectedBasicParameters_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void GridviewCollectedBasicParameters_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
+        {
+
+        }
+
+        protected void GridviewCollectedBasicParameters_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridviewCollectedBasicParameters.PageIndex = e.NewPageIndex;
+            GridviewCollectedBasicParameters.DataBind();
         }
     }
 }
