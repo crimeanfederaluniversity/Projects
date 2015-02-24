@@ -528,8 +528,10 @@ namespace KPIWeb.Reports
             int rowIndex = 0;
             var lblMinutes2 = e.Row.FindControl("MyValue") as TextBox;
             if (lblMinutes2 != null && lblMinutes2.Text.Count() == 0)
-                lblMinutes2.Visible = false;
-
+            {
+                lblMinutes2.Enabled = false;
+                lblMinutes2.BackColor = Color.DarkGray;
+            }
             for (int i = 1; i <= GridviewCollectedBasicParameters.Columns.Count; i++)
             {
                 {
@@ -537,7 +539,10 @@ namespace KPIWeb.Reports
 
                     var lblMinutes = e.Row.FindControl("Value" + rowIndex) as TextBox;
                     if (lblMinutes != null && lblMinutes.Text.Count() == 0)
-                        lblMinutes.Visible = false;
+                    {
+                        lblMinutes.BackColor = Color.DarkGray;
+                        lblMinutes.Enabled = false;
+                    }
                     rowIndex++;
 
 
