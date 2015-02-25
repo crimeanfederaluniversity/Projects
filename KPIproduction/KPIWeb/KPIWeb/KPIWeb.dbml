@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="crimeanfeder_8" Class="KPIWebDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=V-PC\DATABASE_1;Initial Catalog=crimeanfeder_8;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="crimeanfeder_8ConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="crimeanfeder_9" Class="KPIWebDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=V-PC\DATABASE_1;Initial Catalog=crimeanfeder_9;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="crimeanfeder_8ConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTable">
     <Type Name="BasicParametersAndRolesMappingTable">
       <Column Name="BasicParametersAndRolesMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -34,9 +34,22 @@
       <Column Name="SubvisionLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ForeignStudents" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="BasicParametersTable_BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTable" ThisKey="BasicParametersTableID" OtherKey="FK_BasicParametersTable" Type="BasicParametersAndRolesMappingTable" />
+      <Association Name="BasicParametersTable_BasicParametrAdditional" Member="BasicParametrAdditional" ThisKey="BasicParametersTableID" OtherKey="BasicParametrAdditionalID" Type="BasicParametrAdditional" Cardinality="One" />
       <Association Name="BasicParametersTable_BasicParametrsAndUsersMapping" Member="BasicParametrsAndUsersMapping" ThisKey="BasicParametersTableID" OtherKey="FK_ParametrsTable" Type="BasicParametrsAndUsersMapping" />
       <Association Name="BasicParametersTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="BasicParametersTableID" OtherKey="FK_BasicParametersTable" Type="CollectedBasicParametersTable" />
       <Association Name="BasicParametersTable_ReportArchiveAndBasicParametrsMappingTable" Member="ReportArchiveAndBasicParametrsMappingTable" ThisKey="BasicParametersTableID" OtherKey="FK_BasicParametrsTable" Type="ReportArchiveAndBasicParametrsMappingTable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BasicParametrAdditional" Member="BasicParametrAdditional">
+    <Type Name="BasicParametrAdditional">
+      <Column Name="BasicParametrAdditionalID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Param1" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Param2" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Param3" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Param4" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Param5" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="BasicParametersTable_BasicParametrAdditional" Member="BasicParametersTable" ThisKey="BasicParametrAdditionalID" OtherKey="BasicParametersTableID" Type="BasicParametersTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.BasicParametrsAndUsersMapping" Member="BasicParametrsAndUsersMapping">
@@ -122,15 +135,28 @@
       <Association Name="ZeroLevelSubdivisionTable_FirstLevelSubdivisionTable" Member="ZeroLevelSubdivisionTable" ThisKey="FK_ZeroLevelSubvisionTable" OtherKey="ZeroLevelSubdivisionTableID" Type="ZeroLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.FourthLevelParametrs" Member="FourthLevelParametrs">
+    <Type Name="FourthLevelParametrs">
+      <Column Name="FourthLevelParametrsID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsModernEducationTechnologies" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsNetworkComunication" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsInvalidStudentsFacilities" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsForeignStudentsAccept" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Param5" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="FourthLevelSubdivisionTable_FourthLevelParametrs" Member="FourthLevelSubdivisionTable" ThisKey="FourthLevelParametrsID" OtherKey="FourthLevelSubdivisionTableID" Type="FourthLevelSubdivisionTable" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.FourthLevelSubdivisionTable" Member="FourthLevelSubdivisionTable">
     <Type Name="FourthLevelSubdivisionTable">
       <Column Name="FourthLevelSubdivisionTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="FK_ThirdLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FK_Specialization" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_Specialization" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="FourthLevelSubdivisionTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="FourthLevelSubdivisionTableID" OtherKey="FK_FourthLevelSubdivisionTable" Type="CollectedBasicParametersTable" />
       <Association Name="FourthLevelSubdivisionTable_FifthLevelSubdivisionTable" Member="FifthLevelSubdivisionTable" ThisKey="FourthLevelSubdivisionTableID" OtherKey="FK_FourthLevelSubdivisionTable" Type="FifthLevelSubdivisionTable" />
+      <Association Name="FourthLevelSubdivisionTable_FourthLevelParametrs" Member="FourthLevelParametrs" ThisKey="FourthLevelSubdivisionTableID" OtherKey="FourthLevelParametrsID" Type="FourthLevelParametrs" Cardinality="One" />
       <Association Name="FourthLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="FourthLevelSubdivisionTableID" OtherKey="FK_FourthLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="SpecializationTable_FourthLevelSubdivisionTable" Member="SpecializationTable" ThisKey="FK_Specialization" OtherKey="SpecializationTableID" Type="SpecializationTable" IsForeignKey="true" />
       <Association Name="ThirdLevelSubdivisionTable_FourthLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
@@ -232,9 +258,16 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
       <Column Name="SpecializationNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="FK_FieldOfExpertise" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ForeignStudents" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="SpecializationTable_FourthLevelSubdivisionTable" Member="FourthLevelSubdivisionTable" ThisKey="SpecializationTableID" OtherKey="FK_Specialization" Type="FourthLevelSubdivisionTable" />
       <Association Name="FieldOfExpertise_SpecializationTable" Member="FieldOfExpertise" ThisKey="FK_FieldOfExpertise" OtherKey="FieldOfExpertiseID" Type="FieldOfExpertise" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ThirdLevelParametrs" Member="ThirdLevelParametrs">
+    <Type Name="ThirdLevelParametrs">
+      <Column Name="ThirdLevelParametrsID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CanGraduate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="ThirdLevelSubdivisionTable_ThirdLevelParametrs" Member="ThirdLevelSubdivisionTable" ThisKey="ThirdLevelParametrsID" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ThirdLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable">
@@ -243,9 +276,9 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="FK_SecondLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Parametrs" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="ThirdLevelSubdivisionTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="CollectedBasicParametersTable" />
       <Association Name="ThirdLevelSubdivisionTable_FourthLevelSubdivisionTable" Member="FourthLevelSubdivisionTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="FourthLevelSubdivisionTable" />
+      <Association Name="ThirdLevelSubdivisionTable_ThirdLevelParametrs" Member="ThirdLevelParametrs" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="ThirdLevelParametrsID" Type="ThirdLevelParametrs" Cardinality="One" />
       <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
     </Type>

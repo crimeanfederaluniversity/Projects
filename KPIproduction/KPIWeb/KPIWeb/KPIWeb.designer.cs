@@ -22,7 +22,7 @@ namespace KPIWeb
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="crimeanfeder_8")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="crimeanfeder_9")]
 	public partial class KPIWebDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -39,6 +39,9 @@ namespace KPIWeb
     partial void InsertBasicParametersTable(BasicParametersTable instance);
     partial void UpdateBasicParametersTable(BasicParametersTable instance);
     partial void DeleteBasicParametersTable(BasicParametersTable instance);
+    partial void InsertBasicParametrAdditional(BasicParametrAdditional instance);
+    partial void UpdateBasicParametrAdditional(BasicParametrAdditional instance);
+    partial void DeleteBasicParametrAdditional(BasicParametrAdditional instance);
     partial void InsertBasicParametrsAndUsersMapping(BasicParametrsAndUsersMapping instance);
     partial void UpdateBasicParametrsAndUsersMapping(BasicParametrsAndUsersMapping instance);
     partial void DeleteBasicParametrsAndUsersMapping(BasicParametrsAndUsersMapping instance);
@@ -57,6 +60,9 @@ namespace KPIWeb
     partial void InsertFirstLevelSubdivisionTable(FirstLevelSubdivisionTable instance);
     partial void UpdateFirstLevelSubdivisionTable(FirstLevelSubdivisionTable instance);
     partial void DeleteFirstLevelSubdivisionTable(FirstLevelSubdivisionTable instance);
+    partial void InsertFourthLevelParametrs(FourthLevelParametrs instance);
+    partial void UpdateFourthLevelParametrs(FourthLevelParametrs instance);
+    partial void DeleteFourthLevelParametrs(FourthLevelParametrs instance);
     partial void InsertFourthLevelSubdivisionTable(FourthLevelSubdivisionTable instance);
     partial void UpdateFourthLevelSubdivisionTable(FourthLevelSubdivisionTable instance);
     partial void DeleteFourthLevelSubdivisionTable(FourthLevelSubdivisionTable instance);
@@ -87,6 +93,9 @@ namespace KPIWeb
     partial void InsertSpecializationTable(SpecializationTable instance);
     partial void UpdateSpecializationTable(SpecializationTable instance);
     partial void DeleteSpecializationTable(SpecializationTable instance);
+    partial void InsertThirdLevelParametrs(ThirdLevelParametrs instance);
+    partial void UpdateThirdLevelParametrs(ThirdLevelParametrs instance);
+    partial void DeleteThirdLevelParametrs(ThirdLevelParametrs instance);
     partial void InsertThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
     partial void UpdateThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
     partial void DeleteThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
@@ -149,6 +158,14 @@ namespace KPIWeb
 			}
 		}
 		
+		public System.Data.Linq.Table<BasicParametrAdditional> BasicParametrAdditional
+		{
+			get
+			{
+				return this.GetTable<BasicParametrAdditional>();
+			}
+		}
+		
 		public System.Data.Linq.Table<BasicParametrsAndUsersMapping> BasicParametrsAndUsersMapping
 		{
 			get
@@ -194,6 +211,14 @@ namespace KPIWeb
 			get
 			{
 				return this.GetTable<FirstLevelSubdivisionTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<FourthLevelParametrs> FourthLevelParametrs
+		{
+			get
+			{
+				return this.GetTable<FourthLevelParametrs>();
 			}
 		}
 		
@@ -274,6 +299,14 @@ namespace KPIWeb
 			get
 			{
 				return this.GetTable<SpecializationTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ThirdLevelParametrs> ThirdLevelParametrs
+		{
+			get
+			{
+				return this.GetTable<ThirdLevelParametrs>();
 			}
 		}
 		
@@ -800,6 +833,8 @@ namespace KPIWeb
 		
 		private EntitySet<BasicParametersAndRolesMappingTable> _BasicParametersAndRolesMappingTable;
 		
+		private EntityRef<BasicParametrAdditional> _BasicParametrAdditional;
+		
 		private EntitySet<BasicParametrsAndUsersMapping> _BasicParametrsAndUsersMapping;
 		
 		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
@@ -831,6 +866,7 @@ namespace KPIWeb
 		public BasicParametersTable()
 		{
 			this._BasicParametersAndRolesMappingTable = new EntitySet<BasicParametersAndRolesMappingTable>(new Action<BasicParametersAndRolesMappingTable>(this.attach_BasicParametersAndRolesMappingTable), new Action<BasicParametersAndRolesMappingTable>(this.detach_BasicParametersAndRolesMappingTable));
+			this._BasicParametrAdditional = default(EntityRef<BasicParametrAdditional>);
 			this._BasicParametrsAndUsersMapping = new EntitySet<BasicParametrsAndUsersMapping>(new Action<BasicParametrsAndUsersMapping>(this.attach_BasicParametrsAndUsersMapping), new Action<BasicParametrsAndUsersMapping>(this.detach_BasicParametrsAndUsersMapping));
 			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
 			this._ReportArchiveAndBasicParametrsMappingTable = new EntitySet<ReportArchiveAndBasicParametrsMappingTable>(new Action<ReportArchiveAndBasicParametrsMappingTable>(this.attach_ReportArchiveAndBasicParametrsMappingTable), new Action<ReportArchiveAndBasicParametrsMappingTable>(this.detach_ReportArchiveAndBasicParametrsMappingTable));
@@ -1010,6 +1046,35 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_BasicParametrAdditional", Storage="_BasicParametrAdditional", ThisKey="BasicParametersTableID", OtherKey="BasicParametrAdditionalID", IsUnique=true, IsForeignKey=false)]
+		public BasicParametrAdditional BasicParametrAdditional
+		{
+			get
+			{
+				return this._BasicParametrAdditional.Entity;
+			}
+			set
+			{
+				BasicParametrAdditional previousValue = this._BasicParametrAdditional.Entity;
+				if (((previousValue != value) 
+							|| (this._BasicParametrAdditional.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BasicParametrAdditional.Entity = null;
+						previousValue.BasicParametersTable = null;
+					}
+					this._BasicParametrAdditional.Entity = value;
+					if ((value != null))
+					{
+						value.BasicParametersTable = this;
+					}
+					this.SendPropertyChanged("BasicParametrAdditional");
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_BasicParametrsAndUsersMapping", Storage="_BasicParametrsAndUsersMapping", ThisKey="BasicParametersTableID", OtherKey="FK_ParametrsTable")]
 		public EntitySet<BasicParametrsAndUsersMapping> BasicParametrsAndUsersMapping
 		{
@@ -1115,6 +1180,253 @@ namespace KPIWeb
 		{
 			this.SendPropertyChanging();
 			entity.BasicParametersTable = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BasicParametrAdditional")]
+	public partial class BasicParametrAdditional : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _BasicParametrAdditionalID;
+		
+		private bool _Active;
+		
+		private bool _Param1;
+		
+		private bool _Param2;
+		
+		private bool _Param3;
+		
+		private bool _Param4;
+		
+		private bool _Param5;
+		
+		private EntityRef<BasicParametersTable> _BasicParametersTable;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnBasicParametrAdditionalIDChanging(int value);
+    partial void OnBasicParametrAdditionalIDChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnParam1Changing(bool value);
+    partial void OnParam1Changed();
+    partial void OnParam2Changing(bool value);
+    partial void OnParam2Changed();
+    partial void OnParam3Changing(bool value);
+    partial void OnParam3Changed();
+    partial void OnParam4Changing(bool value);
+    partial void OnParam4Changed();
+    partial void OnParam5Changing(bool value);
+    partial void OnParam5Changed();
+    #endregion
+		
+		public BasicParametrAdditional()
+		{
+			this._BasicParametersTable = default(EntityRef<BasicParametersTable>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BasicParametrAdditionalID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int BasicParametrAdditionalID
+		{
+			get
+			{
+				return this._BasicParametrAdditionalID;
+			}
+			set
+			{
+				if ((this._BasicParametrAdditionalID != value))
+				{
+					if (this._BasicParametersTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBasicParametrAdditionalIDChanging(value);
+					this.SendPropertyChanging();
+					this._BasicParametrAdditionalID = value;
+					this.SendPropertyChanged("BasicParametrAdditionalID");
+					this.OnBasicParametrAdditionalIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param1", DbType="Bit NOT NULL")]
+		public bool Param1
+		{
+			get
+			{
+				return this._Param1;
+			}
+			set
+			{
+				if ((this._Param1 != value))
+				{
+					this.OnParam1Changing(value);
+					this.SendPropertyChanging();
+					this._Param1 = value;
+					this.SendPropertyChanged("Param1");
+					this.OnParam1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param2", DbType="Bit NOT NULL")]
+		public bool Param2
+		{
+			get
+			{
+				return this._Param2;
+			}
+			set
+			{
+				if ((this._Param2 != value))
+				{
+					this.OnParam2Changing(value);
+					this.SendPropertyChanging();
+					this._Param2 = value;
+					this.SendPropertyChanged("Param2");
+					this.OnParam2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param3", DbType="Bit NOT NULL")]
+		public bool Param3
+		{
+			get
+			{
+				return this._Param3;
+			}
+			set
+			{
+				if ((this._Param3 != value))
+				{
+					this.OnParam3Changing(value);
+					this.SendPropertyChanging();
+					this._Param3 = value;
+					this.SendPropertyChanged("Param3");
+					this.OnParam3Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param4", DbType="Bit NOT NULL")]
+		public bool Param4
+		{
+			get
+			{
+				return this._Param4;
+			}
+			set
+			{
+				if ((this._Param4 != value))
+				{
+					this.OnParam4Changing(value);
+					this.SendPropertyChanging();
+					this._Param4 = value;
+					this.SendPropertyChanged("Param4");
+					this.OnParam4Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param5", DbType="Bit NOT NULL")]
+		public bool Param5
+		{
+			get
+			{
+				return this._Param5;
+			}
+			set
+			{
+				if ((this._Param5 != value))
+				{
+					this.OnParam5Changing(value);
+					this.SendPropertyChanging();
+					this._Param5 = value;
+					this.SendPropertyChanged("Param5");
+					this.OnParam5Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_BasicParametrAdditional", Storage="_BasicParametersTable", ThisKey="BasicParametrAdditionalID", OtherKey="BasicParametersTableID", IsForeignKey=true)]
+		public BasicParametersTable BasicParametersTable
+		{
+			get
+			{
+				return this._BasicParametersTable.Entity;
+			}
+			set
+			{
+				BasicParametersTable previousValue = this._BasicParametersTable.Entity;
+				if (((previousValue != value) 
+							|| (this._BasicParametersTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BasicParametersTable.Entity = null;
+						previousValue.BasicParametrAdditional = null;
+					}
+					this._BasicParametersTable.Entity = value;
+					if ((value != null))
+					{
+						value.BasicParametrAdditional = this;
+						this._BasicParametrAdditionalID = value.BasicParametersTableID;
+					}
+					else
+					{
+						this._BasicParametrAdditionalID = default(int);
+					}
+					this.SendPropertyChanged("BasicParametersTable");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -3015,6 +3327,253 @@ namespace KPIWeb
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FourthLevelParametrs")]
+	public partial class FourthLevelParametrs : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _FourthLevelParametrsID;
+		
+		private bool _Active;
+		
+		private bool _IsModernEducationTechnologies;
+		
+		private bool _IsNetworkComunication;
+		
+		private bool _IsInvalidStudentsFacilities;
+		
+		private bool _IsForeignStudentsAccept;
+		
+		private bool _Param5;
+		
+		private EntityRef<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnFourthLevelParametrsIDChanging(int value);
+    partial void OnFourthLevelParametrsIDChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnIsModernEducationTechnologiesChanging(bool value);
+    partial void OnIsModernEducationTechnologiesChanged();
+    partial void OnIsNetworkComunicationChanging(bool value);
+    partial void OnIsNetworkComunicationChanged();
+    partial void OnIsInvalidStudentsFacilitiesChanging(bool value);
+    partial void OnIsInvalidStudentsFacilitiesChanged();
+    partial void OnIsForeignStudentsAcceptChanging(bool value);
+    partial void OnIsForeignStudentsAcceptChanged();
+    partial void OnParam5Changing(bool value);
+    partial void OnParam5Changed();
+    #endregion
+		
+		public FourthLevelParametrs()
+		{
+			this._FourthLevelSubdivisionTable = default(EntityRef<FourthLevelSubdivisionTable>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FourthLevelParametrsID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int FourthLevelParametrsID
+		{
+			get
+			{
+				return this._FourthLevelParametrsID;
+			}
+			set
+			{
+				if ((this._FourthLevelParametrsID != value))
+				{
+					if (this._FourthLevelSubdivisionTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFourthLevelParametrsIDChanging(value);
+					this.SendPropertyChanging();
+					this._FourthLevelParametrsID = value;
+					this.SendPropertyChanged("FourthLevelParametrsID");
+					this.OnFourthLevelParametrsIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsModernEducationTechnologies", DbType="Bit NOT NULL")]
+		public bool IsModernEducationTechnologies
+		{
+			get
+			{
+				return this._IsModernEducationTechnologies;
+			}
+			set
+			{
+				if ((this._IsModernEducationTechnologies != value))
+				{
+					this.OnIsModernEducationTechnologiesChanging(value);
+					this.SendPropertyChanging();
+					this._IsModernEducationTechnologies = value;
+					this.SendPropertyChanged("IsModernEducationTechnologies");
+					this.OnIsModernEducationTechnologiesChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsNetworkComunication", DbType="Bit NOT NULL")]
+		public bool IsNetworkComunication
+		{
+			get
+			{
+				return this._IsNetworkComunication;
+			}
+			set
+			{
+				if ((this._IsNetworkComunication != value))
+				{
+					this.OnIsNetworkComunicationChanging(value);
+					this.SendPropertyChanging();
+					this._IsNetworkComunication = value;
+					this.SendPropertyChanged("IsNetworkComunication");
+					this.OnIsNetworkComunicationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsInvalidStudentsFacilities", DbType="Bit NOT NULL")]
+		public bool IsInvalidStudentsFacilities
+		{
+			get
+			{
+				return this._IsInvalidStudentsFacilities;
+			}
+			set
+			{
+				if ((this._IsInvalidStudentsFacilities != value))
+				{
+					this.OnIsInvalidStudentsFacilitiesChanging(value);
+					this.SendPropertyChanging();
+					this._IsInvalidStudentsFacilities = value;
+					this.SendPropertyChanged("IsInvalidStudentsFacilities");
+					this.OnIsInvalidStudentsFacilitiesChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsForeignStudentsAccept", DbType="Bit NOT NULL")]
+		public bool IsForeignStudentsAccept
+		{
+			get
+			{
+				return this._IsForeignStudentsAccept;
+			}
+			set
+			{
+				if ((this._IsForeignStudentsAccept != value))
+				{
+					this.OnIsForeignStudentsAcceptChanging(value);
+					this.SendPropertyChanging();
+					this._IsForeignStudentsAccept = value;
+					this.SendPropertyChanged("IsForeignStudentsAccept");
+					this.OnIsForeignStudentsAcceptChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param5", DbType="Bit NOT NULL")]
+		public bool Param5
+		{
+			get
+			{
+				return this._Param5;
+			}
+			set
+			{
+				if ((this._Param5 != value))
+				{
+					this.OnParam5Changing(value);
+					this.SendPropertyChanging();
+					this._Param5 = value;
+					this.SendPropertyChanged("Param5");
+					this.OnParam5Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_FourthLevelParametrs", Storage="_FourthLevelSubdivisionTable", ThisKey="FourthLevelParametrsID", OtherKey="FourthLevelSubdivisionTableID", IsForeignKey=true)]
+		public FourthLevelSubdivisionTable FourthLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FourthLevelSubdivisionTable.Entity;
+			}
+			set
+			{
+				FourthLevelSubdivisionTable previousValue = this._FourthLevelSubdivisionTable.Entity;
+				if (((previousValue != value) 
+							|| (this._FourthLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FourthLevelSubdivisionTable.Entity = null;
+						previousValue.FourthLevelParametrs = null;
+					}
+					this._FourthLevelSubdivisionTable.Entity = value;
+					if ((value != null))
+					{
+						value.FourthLevelParametrs = this;
+						this._FourthLevelParametrsID = value.FourthLevelSubdivisionTableID;
+					}
+					else
+					{
+						this._FourthLevelParametrsID = default(int);
+					}
+					this.SendPropertyChanged("FourthLevelSubdivisionTable");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FourthLevelSubdivisionTable")]
 	public partial class FourthLevelSubdivisionTable : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -3029,11 +3588,13 @@ namespace KPIWeb
 		
 		private int _FK_ThirdLevelSubdivisionTable;
 		
-		private System.Nullable<int> _FK_Specialization;
+		private int _FK_Specialization;
 		
 		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
 		private EntitySet<FifthLevelSubdivisionTable> _FifthLevelSubdivisionTable;
+		
+		private EntityRef<FourthLevelParametrs> _FourthLevelParametrs;
 		
 		private EntitySet<UsersTable> _UsersTable;
 		
@@ -3053,7 +3614,7 @@ namespace KPIWeb
     partial void OnNameChanged();
     partial void OnFK_ThirdLevelSubdivisionTableChanging(int value);
     partial void OnFK_ThirdLevelSubdivisionTableChanged();
-    partial void OnFK_SpecializationChanging(System.Nullable<int> value);
+    partial void OnFK_SpecializationChanging(int value);
     partial void OnFK_SpecializationChanged();
     #endregion
 		
@@ -3061,6 +3622,7 @@ namespace KPIWeb
 		{
 			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
 			this._FifthLevelSubdivisionTable = new EntitySet<FifthLevelSubdivisionTable>(new Action<FifthLevelSubdivisionTable>(this.attach_FifthLevelSubdivisionTable), new Action<FifthLevelSubdivisionTable>(this.detach_FifthLevelSubdivisionTable));
+			this._FourthLevelParametrs = default(EntityRef<FourthLevelParametrs>);
 			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
 			this._SpecializationTable = default(EntityRef<SpecializationTable>);
 			this._ThirdLevelSubdivisionTable = default(EntityRef<ThirdLevelSubdivisionTable>);
@@ -3151,8 +3713,8 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Specialization", DbType="Int")]
-		public System.Nullable<int> FK_Specialization
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Specialization", DbType="Int NOT NULL")]
+		public int FK_Specialization
 		{
 			get
 			{
@@ -3201,6 +3763,35 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_FourthLevelParametrs", Storage="_FourthLevelParametrs", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FourthLevelParametrsID", IsUnique=true, IsForeignKey=false)]
+		public FourthLevelParametrs FourthLevelParametrs
+		{
+			get
+			{
+				return this._FourthLevelParametrs.Entity;
+			}
+			set
+			{
+				FourthLevelParametrs previousValue = this._FourthLevelParametrs.Entity;
+				if (((previousValue != value) 
+							|| (this._FourthLevelParametrs.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FourthLevelParametrs.Entity = null;
+						previousValue.FourthLevelSubdivisionTable = null;
+					}
+					this._FourthLevelParametrs.Entity = value;
+					if ((value != null))
+					{
+						value.FourthLevelSubdivisionTable = this;
+					}
+					this.SendPropertyChanged("FourthLevelParametrs");
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_UsersTable", Storage="_UsersTable", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FK_FourthLevelSubdivisionTable")]
 		public EntitySet<UsersTable> UsersTable
 		{
@@ -3241,7 +3832,7 @@ namespace KPIWeb
 					}
 					else
 					{
-						this._FK_Specialization = default(Nullable<int>);
+						this._FK_Specialization = default(int);
 					}
 					this.SendPropertyChanged("SpecializationTable");
 				}
@@ -5220,8 +5811,6 @@ namespace KPIWeb
 		
 		private System.Nullable<int> _FK_FieldOfExpertise;
 		
-		private System.Nullable<bool> _ForeignStudents;
-		
 		private EntitySet<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
 		
 		private EntityRef<FieldOfExpertise> _FieldOfExpertise;
@@ -5240,8 +5829,6 @@ namespace KPIWeb
     partial void OnSpecializationNumberChanged();
     partial void OnFK_FieldOfExpertiseChanging(System.Nullable<int> value);
     partial void OnFK_FieldOfExpertiseChanged();
-    partial void OnForeignStudentsChanging(System.Nullable<bool> value);
-    partial void OnForeignStudentsChanged();
     #endregion
 		
 		public SpecializationTable()
@@ -5355,26 +5942,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ForeignStudents", DbType="Bit")]
-		public System.Nullable<bool> ForeignStudents
-		{
-			get
-			{
-				return this._ForeignStudents;
-			}
-			set
-			{
-				if ((this._ForeignStudents != value))
-				{
-					this.OnForeignStudentsChanging(value);
-					this.SendPropertyChanging();
-					this._ForeignStudents = value;
-					this.SendPropertyChanged("ForeignStudents");
-					this.OnForeignStudentsChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SpecializationTable_FourthLevelSubdivisionTable", Storage="_FourthLevelSubdivisionTable", ThisKey="SpecializationTableID", OtherKey="FK_Specialization")]
 		public EntitySet<FourthLevelSubdivisionTable> FourthLevelSubdivisionTable
 		{
@@ -5455,6 +6022,157 @@ namespace KPIWeb
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ThirdLevelParametrs")]
+	public partial class ThirdLevelParametrs : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ThirdLevelParametrsID;
+		
+		private bool _Active;
+		
+		private bool _CanGraduate;
+		
+		private EntityRef<ThirdLevelSubdivisionTable> _ThirdLevelSubdivisionTable;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnThirdLevelParametrsIDChanging(int value);
+    partial void OnThirdLevelParametrsIDChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnCanGraduateChanging(bool value);
+    partial void OnCanGraduateChanged();
+    #endregion
+		
+		public ThirdLevelParametrs()
+		{
+			this._ThirdLevelSubdivisionTable = default(EntityRef<ThirdLevelSubdivisionTable>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ThirdLevelParametrsID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int ThirdLevelParametrsID
+		{
+			get
+			{
+				return this._ThirdLevelParametrsID;
+			}
+			set
+			{
+				if ((this._ThirdLevelParametrsID != value))
+				{
+					if (this._ThirdLevelSubdivisionTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnThirdLevelParametrsIDChanging(value);
+					this.SendPropertyChanging();
+					this._ThirdLevelParametrsID = value;
+					this.SendPropertyChanged("ThirdLevelParametrsID");
+					this.OnThirdLevelParametrsIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanGraduate", DbType="Bit NOT NULL")]
+		public bool CanGraduate
+		{
+			get
+			{
+				return this._CanGraduate;
+			}
+			set
+			{
+				if ((this._CanGraduate != value))
+				{
+					this.OnCanGraduateChanging(value);
+					this.SendPropertyChanging();
+					this._CanGraduate = value;
+					this.SendPropertyChanged("CanGraduate");
+					this.OnCanGraduateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_ThirdLevelParametrs", Storage="_ThirdLevelSubdivisionTable", ThisKey="ThirdLevelParametrsID", OtherKey="ThirdLevelSubdivisionTableID", IsForeignKey=true)]
+		public ThirdLevelSubdivisionTable ThirdLevelSubdivisionTable
+		{
+			get
+			{
+				return this._ThirdLevelSubdivisionTable.Entity;
+			}
+			set
+			{
+				ThirdLevelSubdivisionTable previousValue = this._ThirdLevelSubdivisionTable.Entity;
+				if (((previousValue != value) 
+							|| (this._ThirdLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ThirdLevelSubdivisionTable.Entity = null;
+						previousValue.ThirdLevelParametrs = null;
+					}
+					this._ThirdLevelSubdivisionTable.Entity = value;
+					if ((value != null))
+					{
+						value.ThirdLevelParametrs = this;
+						this._ThirdLevelParametrsID = value.ThirdLevelSubdivisionTableID;
+					}
+					else
+					{
+						this._ThirdLevelParametrsID = default(int);
+					}
+					this.SendPropertyChanged("ThirdLevelSubdivisionTable");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ThirdLevelSubdivisionTable")]
 	public partial class ThirdLevelSubdivisionTable : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -5469,11 +6187,11 @@ namespace KPIWeb
 		
 		private int _FK_SecondLevelSubdivisionTable;
 		
-		private System.Nullable<int> _Parametrs;
-		
 		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
 		private EntitySet<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
+		
+		private EntityRef<ThirdLevelParametrs> _ThirdLevelParametrs;
 		
 		private EntitySet<UsersTable> _UsersTable;
 		
@@ -5491,14 +6209,13 @@ namespace KPIWeb
     partial void OnNameChanged();
     partial void OnFK_SecondLevelSubdivisionTableChanging(int value);
     partial void OnFK_SecondLevelSubdivisionTableChanged();
-    partial void OnParametrsChanging(System.Nullable<int> value);
-    partial void OnParametrsChanged();
     #endregion
 		
 		public ThirdLevelSubdivisionTable()
 		{
 			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
 			this._FourthLevelSubdivisionTable = new EntitySet<FourthLevelSubdivisionTable>(new Action<FourthLevelSubdivisionTable>(this.attach_FourthLevelSubdivisionTable), new Action<FourthLevelSubdivisionTable>(this.detach_FourthLevelSubdivisionTable));
+			this._ThirdLevelParametrs = default(EntityRef<ThirdLevelParametrs>);
 			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
 			this._SecondLevelSubdivisionTable = default(EntityRef<SecondLevelSubdivisionTable>);
 			OnCreated();
@@ -5588,26 +6305,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Parametrs", DbType="Int")]
-		public System.Nullable<int> Parametrs
-		{
-			get
-			{
-				return this._Parametrs;
-			}
-			set
-			{
-				if ((this._Parametrs != value))
-				{
-					this.OnParametrsChanging(value);
-					this.SendPropertyChanging();
-					this._Parametrs = value;
-					this.SendPropertyChanged("Parametrs");
-					this.OnParametrsChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTable", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevelSubdivisionTable")]
 		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTable
 		{
@@ -5631,6 +6328,35 @@ namespace KPIWeb
 			set
 			{
 				this._FourthLevelSubdivisionTable.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_ThirdLevelParametrs", Storage="_ThirdLevelParametrs", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="ThirdLevelParametrsID", IsUnique=true, IsForeignKey=false)]
+		public ThirdLevelParametrs ThirdLevelParametrs
+		{
+			get
+			{
+				return this._ThirdLevelParametrs.Entity;
+			}
+			set
+			{
+				ThirdLevelParametrs previousValue = this._ThirdLevelParametrs.Entity;
+				if (((previousValue != value) 
+							|| (this._ThirdLevelParametrs.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ThirdLevelParametrs.Entity = null;
+						previousValue.ThirdLevelSubdivisionTable = null;
+					}
+					this._ThirdLevelParametrs.Entity = value;
+					if ((value != null))
+					{
+						value.ThirdLevelSubdivisionTable = this;
+					}
+					this.SendPropertyChanged("ThirdLevelParametrs");
+				}
 			}
 		}
 		
