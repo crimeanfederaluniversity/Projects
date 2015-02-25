@@ -46,10 +46,11 @@
                  <asp:TemplateField HeaderText="Удалить специальность из списка">
                         <ItemTemplate>
                             <asp:Label ID="DeleteSpecializationLabel" runat="server" Text='<%# Bind("DeleteSpecializationLabel") %>' Visible="false"></asp:Label>
-                            <asp:Button ID="DeleteSpecializationButton" runat="server" CommandName="Select" Text="Удалить" Width="200px" CommandArgument='<%# Eval("DeleteSpecializationButton") %>' OnClick="DeleteSpecializationButtonClick"/>
+                            <asp:Button ID="DeleteSpecializationButton" runat="server" CommandName="Select" Text="Удалить" Width="200px" CommandArgument='<%# Eval("SpecializationID") %>' OnClick="DeleteSpecializationButtonClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>   
                                            
+       
                 </Columns>
        </asp:GridView>
         <br />
@@ -69,7 +70,7 @@
                  <asp:TemplateField HeaderText="Добавление специальности">
                         <ItemTemplate>
                             <asp:Label ID="AddSpecializationLabel" runat="server" Text='<%# Bind("AddSpecializationLabel") %>' Visible="false"></asp:Label>
-                            <asp:Button ID="AddSpecializationButton" runat="server" CommandName="Select" Text="Добавить" Width="200px" CommandArgument='<%# Eval("AddSpecializationButton") %>' OnClick="AddSpecializationButtonClick"/>
+                            <asp:Button ID="AddSpecializationButton" runat="server" CommandName="Select" Text="Добавить" Width="200px" CommandArgument='<%# Eval("SpecializationNumber") %>' OnClick="AddSpecializationButtonClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>            
                </Columns>              

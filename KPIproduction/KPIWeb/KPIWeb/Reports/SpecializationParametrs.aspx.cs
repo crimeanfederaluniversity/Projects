@@ -23,6 +23,7 @@ namespace KPIWeb.Reports
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
+            ViewState["UserTable"] = userTable.FK_ThirdLevelSubdivisionTable;
             if (userTable.AccessLevel != 0)
             {
                 Response.Redirect("~/Default.aspx");
@@ -30,11 +31,11 @@ namespace KPIWeb.Reports
             if (!Page.IsPostBack)
             {
                 int UserID = UserSer.Id;
-                List<SpecializationTable> specializationTableData= (from a in kPiDataContext.SpecializationTable
-                    join b in kPiDataContext.FourthLevelSubdivisionTable
-                    on a.SpecializationTableID equals b.FK_Specialization
-                    where b.FK_ThirdLevelSubdivisionTable == userTable.FK_ThirdLevelSubdivisionTable
-                    select a).ToList();
+                List<SpecializationTable> specializationTableData = (from a in kPiDataContext.SpecializationTable
+                                                                     join b in kPiDataContext.FourthLevelSubdivisionTable
+                                                                     on a.SpecializationTableID equals b.FK_Specialization
+                                                                     where b.FK_ThirdLevelSubdivisionTable == userTable.FK_ThirdLevelSubdivisionTable && b.Active == true
+                                                                     select a).ToList();
 
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("SpecializationID", typeof(string)));
@@ -72,12 +73,80 @@ namespace KPIWeb.Reports
 
         protected void DeleteSpecializationButtonClick(object sender, EventArgs e)
         {
-        
+         Button button = (Button)sender;
+            {
+                using (KPIWebDataContext kPiDataContext = new KPIWebDataContext())
+                {
+                    var check =
+                    (from a in kPiDataContext.FourthLevelSubdivisionTable where a.FK_Specialization == Convert.ToInt32(button.CommandArgument) select a)
+                        .FirstOrDefault();
+
+                    check.Active = false;
+                    kPiDataContext.SubmitChanges();
+                }
+                Response.Redirect("~/Reports/SpecializationParametrs.aspx");
+
+            }
+
         }
 
         protected void AddSpecializationButtonClick(object sender, EventArgs e)
         {
-        
+           
+            bool isHere = false;
+            Button button = (Button)sender;
+            {
+                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+                var par = button.CommandArgument.ToString();
+                var check =
+                    (from a in kPiDataContext.SpecializationTable where a.SpecializationNumber == par select a)
+                        .FirstOrDefault();
+
+              /*  List<SpecializationTable> specializationTableData = (from a in kPiDataContext.SpecializationTable
+                                                                     join b in kPiDataContext.FourthLevelSubdivisionTable
+                                                                     on a.SpecializationTableID equals b.FK_Specialization
+                                                                     where b.FK_ThirdLevelSubdivisionTable == (int)ViewState["UserTable"]
+                                                                     select a).ToList();
+
+                if (check != null)
+                {
+
+                    foreach (SpecializationTable spec in specializationTableData)
+                    {
+                        if (spec.SpecializationNumber.Equals(par)) isHere = true;
+                    }
+                }*/
+
+                if (!isHere)
+                {
+                     using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
+                     {
+                        FourthLevelSubdivisionTable forthlvlsudtab = (from a in kpiWebDataContext.FourthLevelSubdivisionTable
+                            where a.FK_Specialization == check.SpecializationTableID && a.FK_ThirdLevelSubdivisionTable == (int)ViewState["UserTable"]
+                            select a).FirstOrDefault();
+
+                        if (forthlvlsudtab != null)
+                        {
+                             forthlvlsudtab.Active = true;
+                         }
+                         else
+                        {
+                         forthlvlsudtab = new FourthLevelSubdivisionTable();
+                             forthlvlsudtab.FK_Specialization = check.SpecializationTableID;
+                             forthlvlsudtab.Active = true;
+                             forthlvlsudtab.Name = check.Name;
+                             forthlvlsudtab.FK_ThirdLevelSubdivisionTable = (int)ViewState["UserTable"];
+                             kpiWebDataContext.FourthLevelSubdivisionTable.InsertOnSubmit(forthlvlsudtab);
+                             //Page.DataBind();
+                         }
+                         kpiWebDataContext.SubmitChanges();
+                     }
+
+                }
+                Response.Redirect("~/Reports/SpecializationParametrs.aspx");
+            }
+
+                
         }
         protected void Button1_Click(object sender, EventArgs e)
         {
