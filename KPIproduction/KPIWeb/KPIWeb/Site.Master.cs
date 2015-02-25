@@ -17,6 +17,7 @@ namespace KPIWeb
 
         protected void Page_Init(object sender, EventArgs e)
         {
+            /*
             // The code below helps to protect against XSRF attacks
             var requestCookie = Request.Cookies[AntiXsrfTokenKey];
             Guid requestCookieGuidValue;
@@ -45,6 +46,7 @@ namespace KPIWeb
             }
 
             Page.PreLoad += master_Page_PreLoad;
+             */
         }
 
         protected void master_Page_PreLoad(object sender, EventArgs e)

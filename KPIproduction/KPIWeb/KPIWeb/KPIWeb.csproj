@@ -186,6 +186,7 @@
     <Content Include="Reports\EditReport.aspx" />
     <Content Include="Reports\FillingTheReport.aspx" />
     <Content Include="Reports\GenerateReport.aspx" />
+    <Content Include="Reports\SpecializationParametrs.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -379,6 +380,13 @@
       <DependentUpon>GenerateReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\GridViewExportUtil.cs" />
+    <Compile Include="Reports\SpecializationParametrs.aspx.cs">
+      <DependentUpon>SpecializationParametrs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\SpecializationParametrs.aspx.designer.cs">
+      <DependentUpon>SpecializationParametrs.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Serialization.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

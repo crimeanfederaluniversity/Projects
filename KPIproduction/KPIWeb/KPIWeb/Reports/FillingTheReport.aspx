@@ -20,22 +20,15 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                     
-                    <asp:TemplateField HeaderText="Название показателя" >
+                    <asp:TemplateField  HeaderText="Название показателя" >
                         <ItemTemplate>
-                            <asp:Label ID="Name"  runat="server" Visible="True" Width="500" Text='<%# Bind("Name") %>'></asp:Label>
+                            <asp:Label ID="Name"  runat="server" Visible="True" Text='<%# Bind("Name") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    
-                    <asp:TemplateField HeaderText="Значение">
-                        <ItemTemplate>
-                            <asp:TextBox ID="MyValue" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("MyValue") %>'></asp:TextBox>
-                            <asp:Label ID="MyCollectId" runat="server" Visible="false" Text='<%# Bind("MyCollectId") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField> 
-
-                     <asp:TemplateField Visible="false" HeaderText="Значение">
-                        <ItemTemplate>
-                            <asp:TextBox ID="Value0" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value0") %>'></asp:TextBox>
+                             
+                     <asp:TemplateField Visible="false"   HeaderText="Значение">
+                        <ItemTemplate >
+                            <asp:TextBox ID="Value0"  style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value0") %>'></asp:TextBox>
                             <asp:Label ID="CollectId0" runat="server" Visible="false" Text='<%# Bind("CollectId0") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>  

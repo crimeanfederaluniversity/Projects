@@ -3,7 +3,9 @@
 
        <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
         <h2>СпиСписок активных отчетов</h2><br />
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" style="margin-top: 0px">
+        <asp:GridView ID="GridView1" runat="server" 
+            AutoGenerateColumns="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" 
+            style="margin-top: 0px">
              <Columns>
                  
                  <asp:BoundField DataField="ReportArchiveID"   HeaderText="Current Report ID" Visible="false" />    
@@ -28,20 +30,6 @@
                 </Columns>
         </asp:GridView>
            <br />
-           Настройка параметров кафедр и выбор специальностей 
-           <br />
-           <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" Height="50px" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" Width="500px">
-           </asp:DropDownList>
-           <br />
-           <br />
-           <asp:CheckBox ID="CheckBox1" runat="server" Text="Кафедра является выпускающей?" TextAlign="Left" Visible="False" />
-           <br />
-           <br />
-           <asp:Label ID="Label1" runat="server" Text="Отметьте направления подготовки на выбранной кафедре"></asp:Label>
-           <br />
-           <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="33px" Width="500px">
-           </asp:CheckBoxList>
-           <br />
-           <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Сохранить внесенные изменения" Width="500px" />
+           <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Форма выбора специальностей и их параметров" Width="903px" />
            <br />
        </asp:Content>
