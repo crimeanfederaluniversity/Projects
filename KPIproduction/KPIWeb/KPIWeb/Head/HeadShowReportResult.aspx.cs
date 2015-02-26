@@ -42,6 +42,7 @@ namespace KPIWeb.Head
                 int ReportArchiveID;
                 ReportArchiveID = Convert.ToInt32(paramSerialization.ReportStr);
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+
                 UsersTable userTable = (from a in kpiWebDataContext.UsersTable where a.UsersTableID == UserID select a).FirstOrDefault();
                 int l_0 = (userTable.FK_ZeroLevelSubdivisionTable == null)?0:(int)userTable.FK_ZeroLevelSubdivisionTable;
                 int l_1 = (userTable.FK_FirstLevelSubdivisionTable == null) ? 0 : (int)userTable.FK_FirstLevelSubdivisionTable;
@@ -49,8 +50,7 @@ namespace KPIWeb.Head
                 int l_3 = (userTable.FK_ThirdLevelSubdivisionTable == null) ? 0 : (int)userTable.FK_ThirdLevelSubdivisionTable;
                 int l_4 = (userTable.FK_FourthLevelSubdivisionTable == null) ? 0 : (int)userTable.FK_FourthLevelSubdivisionTable;
                 int l_5 = (userTable.FK_FifthLevelSubdivisionTable == null) ? 0 : (int)userTable.FK_FifthLevelSubdivisionTable;
-
-                
+               
                 DataTable dt_basic = new DataTable();
                 DataTable dt_calculate = new DataTable();
                 DataTable dt_indicator = new DataTable();
@@ -68,19 +68,31 @@ namespace KPIWeb.Head
                     (from a in kpiWebDataContext.BasicParametersTable
                         join b in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
                         on a.BasicParametersTableID equals b.FK_BasicParametrsTable
-                        where b.FK_ReportArchiveTable == ReportArchiveID 
+                        join c in kpiWebDataContext.BasicParametrsAndUsersMapping 
+                        on a.BasicParametersTableID equals  c.FK_ParametrsTable
+                        where b.FK_ReportArchiveTable == ReportArchiveID
+                        && c.FK_UsersTable == UserID
+                        && c.CanView == true
                         select  a).ToList();
                 List<CalculatedParametrs> list_calcParams = 
                     (from a in kpiWebDataContext.CalculatedParametrs
                         join b in kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable
                         on a.CalculatedParametrsID equals b.FK_CalculatedParametrsTable
+                        join c in kpiWebDataContext.CalculatedParametrsAndUsersMapping
+                        on a.CalculatedParametrsID equals c.FK_CalculatedParametrsTable
                         where b.FK_ReportArchiveTable == ReportArchiveID 
+                        && c.FK_UsersTable == UserID
+                        && c.CanView == true
                         select  a).ToList();
                 List<IndicatorsTable> list_indicators =
                     (from a in kpiWebDataContext.IndicatorsTable
                      join b in kpiWebDataContext.ReportArchiveAndIndicatorsMappingTable
                      on a.IndicatorsTableID equals b.FK_IndicatorsTable
+                     join c in kpiWebDataContext.IndicatorsAndUsersMapping
+                     on a.IndicatorsTableID equals c.FK_IndicatorsTable
                      where b.FK_ReportArchiveTable == ReportArchiveID
+                     && c.FK_UsresTable == UserID
+                     && c.CanView == true
                      select a).ToList();
 
                 foreach (BasicParametersTable basicParametr in list_basicParametrs)
@@ -96,7 +108,7 @@ namespace KPIWeb.Head
                 {
                     DataRow dataRow = dt_calculate.NewRow();
                     dataRow["CalculatedParametrsName"] = calcParam.Name;
-                    dataRow["CalculatedParametrsResult"] = CalculateAbb.CalculateForLevel(calcParam.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5);
+                    dataRow["CalculatedParametrsResult"] = CalculateAbb.CalculateForLevel(calcParam.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5,0);
                     dt_calculate.Rows.Add(dataRow);
                 }
 
@@ -104,7 +116,7 @@ namespace KPIWeb.Head
                 {
                     DataRow dataRow = dt_indicator.NewRow();
                     dataRow["IndicatorName"] = indicator.Name;
-                    dataRow["IndicatorResult"] = CalculateAbb.CalculateForLevel(indicator.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5);
+                    dataRow["IndicatorResult"] = CalculateAbb.CalculateForLevel(indicator.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5,0);
                     dt_indicator.Rows.Add(dataRow);
                 }
 

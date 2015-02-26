@@ -182,6 +182,14 @@ namespace KPIWeb
 			}
 		}
 		
+		public System.Data.Linq.Table<CalculatedParametrsAndUsersMapping> CalculatedParametrsAndUsersMapping
+		{
+			get
+			{
+				return this.GetTable<CalculatedParametrsAndUsersMapping>();
+			}
+		}
+		
 		public System.Data.Linq.Table<CollectedBasicParametersTable> CollectedBasicParametersTable
 		{
 			get
@@ -227,6 +235,14 @@ namespace KPIWeb
 			get
 			{
 				return this.GetTable<FourthLevelSubdivisionTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<IndicatorsAndUsersMapping> IndicatorsAndUsersMapping
+		{
+			get
+			{
+				return this.GetTable<IndicatorsAndUsersMapping>();
 			}
 		}
 		
@@ -831,6 +847,8 @@ namespace KPIWeb
 		
 		private System.Nullable<int> _ForeignStudents;
 		
+		private System.Nullable<int> _FK_FieldOfExpertise;
+		
 		private EntitySet<BasicParametersAndRolesMappingTable> _BasicParametersAndRolesMappingTable;
 		
 		private EntityRef<BasicParametrAdditional> _BasicParametrAdditional;
@@ -840,6 +858,8 @@ namespace KPIWeb
 		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
 		private EntitySet<ReportArchiveAndBasicParametrsMappingTable> _ReportArchiveAndBasicParametrsMappingTable;
+		
+		private EntityRef<FieldOfExpertise> _FieldOfExpertise;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -861,6 +881,8 @@ namespace KPIWeb
     partial void OnSubvisionLevelChanged();
     partial void OnForeignStudentsChanging(System.Nullable<int> value);
     partial void OnForeignStudentsChanged();
+    partial void OnFK_FieldOfExpertiseChanging(System.Nullable<int> value);
+    partial void OnFK_FieldOfExpertiseChanged();
     #endregion
 		
 		public BasicParametersTable()
@@ -870,6 +892,7 @@ namespace KPIWeb
 			this._BasicParametrsAndUsersMapping = new EntitySet<BasicParametrsAndUsersMapping>(new Action<BasicParametrsAndUsersMapping>(this.attach_BasicParametrsAndUsersMapping), new Action<BasicParametrsAndUsersMapping>(this.detach_BasicParametrsAndUsersMapping));
 			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
 			this._ReportArchiveAndBasicParametrsMappingTable = new EntitySet<ReportArchiveAndBasicParametrsMappingTable>(new Action<ReportArchiveAndBasicParametrsMappingTable>(this.attach_ReportArchiveAndBasicParametrsMappingTable), new Action<ReportArchiveAndBasicParametrsMappingTable>(this.detach_ReportArchiveAndBasicParametrsMappingTable));
+			this._FieldOfExpertise = default(EntityRef<FieldOfExpertise>);
 			OnCreated();
 		}
 		
@@ -1033,6 +1056,30 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FieldOfExpertise", DbType="Int")]
+		public System.Nullable<int> FK_FieldOfExpertise
+		{
+			get
+			{
+				return this._FK_FieldOfExpertise;
+			}
+			set
+			{
+				if ((this._FK_FieldOfExpertise != value))
+				{
+					if (this._FieldOfExpertise.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_FieldOfExpertiseChanging(value);
+					this.SendPropertyChanging();
+					this._FK_FieldOfExpertise = value;
+					this.SendPropertyChanged("FK_FieldOfExpertise");
+					this.OnFK_FieldOfExpertiseChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_BasicParametersAndRolesMappingTable", Storage="_BasicParametersAndRolesMappingTable", ThisKey="BasicParametersTableID", OtherKey="FK_BasicParametersTable")]
 		public EntitySet<BasicParametersAndRolesMappingTable> BasicParametersAndRolesMappingTable
 		{
@@ -1111,6 +1158,40 @@ namespace KPIWeb
 			set
 			{
 				this._ReportArchiveAndBasicParametrsMappingTable.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldOfExpertise_BasicParametersTable", Storage="_FieldOfExpertise", ThisKey="FK_FieldOfExpertise", OtherKey="FieldOfExpertiseID", IsForeignKey=true)]
+		public FieldOfExpertise FieldOfExpertise
+		{
+			get
+			{
+				return this._FieldOfExpertise.Entity;
+			}
+			set
+			{
+				FieldOfExpertise previousValue = this._FieldOfExpertise.Entity;
+				if (((previousValue != value) 
+							|| (this._FieldOfExpertise.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FieldOfExpertise.Entity = null;
+						previousValue.BasicParametersTable.Remove(this);
+					}
+					this._FieldOfExpertise.Entity = value;
+					if ((value != null))
+					{
+						value.BasicParametersTable.Add(this);
+						this._FK_FieldOfExpertise = value.FieldOfExpertiseID;
+					}
+					else
+					{
+						this._FK_FieldOfExpertise = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("FieldOfExpertise");
+				}
 			}
 		}
 		
@@ -1193,17 +1274,19 @@ namespace KPIWeb
 		
 		private bool _Active;
 		
-		private bool _Param1;
+		private bool _ForForeignStudents;
 		
-		private bool _Param2;
+		private int _FK_FieldOfExpertise;
 		
-		private bool _Param3;
+		private System.Nullable<bool> _Param3;
 		
-		private bool _Param4;
+		private System.Nullable<bool> _Param4;
 		
-		private bool _Param5;
+		private System.Nullable<bool> _Param5;
 		
 		private EntityRef<BasicParametersTable> _BasicParametersTable;
+		
+		private EntityRef<FieldOfExpertise> _FieldOfExpertise;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -1213,21 +1296,22 @@ namespace KPIWeb
     partial void OnBasicParametrAdditionalIDChanged();
     partial void OnActiveChanging(bool value);
     partial void OnActiveChanged();
-    partial void OnParam1Changing(bool value);
-    partial void OnParam1Changed();
-    partial void OnParam2Changing(bool value);
-    partial void OnParam2Changed();
-    partial void OnParam3Changing(bool value);
+    partial void OnForForeignStudentsChanging(bool value);
+    partial void OnForForeignStudentsChanged();
+    partial void OnFK_FieldOfExpertiseChanging(int value);
+    partial void OnFK_FieldOfExpertiseChanged();
+    partial void OnParam3Changing(System.Nullable<bool> value);
     partial void OnParam3Changed();
-    partial void OnParam4Changing(bool value);
+    partial void OnParam4Changing(System.Nullable<bool> value);
     partial void OnParam4Changed();
-    partial void OnParam5Changing(bool value);
+    partial void OnParam5Changing(System.Nullable<bool> value);
     partial void OnParam5Changed();
     #endregion
 		
 		public BasicParametrAdditional()
 		{
 			this._BasicParametersTable = default(EntityRef<BasicParametersTable>);
+			this._FieldOfExpertise = default(EntityRef<FieldOfExpertise>);
 			OnCreated();
 		}
 		
@@ -1275,48 +1359,52 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param1", DbType="Bit NOT NULL")]
-		public bool Param1
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ForForeignStudents", DbType="Bit NOT NULL")]
+		public bool ForForeignStudents
 		{
 			get
 			{
-				return this._Param1;
+				return this._ForForeignStudents;
 			}
 			set
 			{
-				if ((this._Param1 != value))
+				if ((this._ForForeignStudents != value))
 				{
-					this.OnParam1Changing(value);
+					this.OnForForeignStudentsChanging(value);
 					this.SendPropertyChanging();
-					this._Param1 = value;
-					this.SendPropertyChanged("Param1");
-					this.OnParam1Changed();
+					this._ForForeignStudents = value;
+					this.SendPropertyChanged("ForForeignStudents");
+					this.OnForForeignStudentsChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param2", DbType="Bit NOT NULL")]
-		public bool Param2
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FieldOfExpertise", DbType="Int NOT NULL")]
+		public int FK_FieldOfExpertise
 		{
 			get
 			{
-				return this._Param2;
+				return this._FK_FieldOfExpertise;
 			}
 			set
 			{
-				if ((this._Param2 != value))
+				if ((this._FK_FieldOfExpertise != value))
 				{
-					this.OnParam2Changing(value);
+					if (this._FieldOfExpertise.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_FieldOfExpertiseChanging(value);
 					this.SendPropertyChanging();
-					this._Param2 = value;
-					this.SendPropertyChanged("Param2");
-					this.OnParam2Changed();
+					this._FK_FieldOfExpertise = value;
+					this.SendPropertyChanged("FK_FieldOfExpertise");
+					this.OnFK_FieldOfExpertiseChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param3", DbType="Bit NOT NULL")]
-		public bool Param3
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param3", DbType="Bit")]
+		public System.Nullable<bool> Param3
 		{
 			get
 			{
@@ -1335,8 +1423,8 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param4", DbType="Bit NOT NULL")]
-		public bool Param4
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param4", DbType="Bit")]
+		public System.Nullable<bool> Param4
 		{
 			get
 			{
@@ -1355,8 +1443,8 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param5", DbType="Bit NOT NULL")]
-		public bool Param5
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param5", DbType="Bit")]
+		public System.Nullable<bool> Param5
 		{
 			get
 			{
@@ -1405,6 +1493,40 @@ namespace KPIWeb
 						this._BasicParametrAdditionalID = default(int);
 					}
 					this.SendPropertyChanged("BasicParametersTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldOfExpertise_BasicParametrAdditional", Storage="_FieldOfExpertise", ThisKey="FK_FieldOfExpertise", OtherKey="FieldOfExpertiseID", IsForeignKey=true)]
+		public FieldOfExpertise FieldOfExpertise
+		{
+			get
+			{
+				return this._FieldOfExpertise.Entity;
+			}
+			set
+			{
+				FieldOfExpertise previousValue = this._FieldOfExpertise.Entity;
+				if (((previousValue != value) 
+							|| (this._FieldOfExpertise.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FieldOfExpertise.Entity = null;
+						previousValue.BasicParametrAdditional.Remove(this);
+					}
+					this._FieldOfExpertise.Entity = value;
+					if ((value != null))
+					{
+						value.BasicParametrAdditional.Add(this);
+						this._FK_FieldOfExpertise = value.FieldOfExpertiseID;
+					}
+					else
+					{
+						this._FK_FieldOfExpertise = default(int);
+					}
+					this.SendPropertyChanged("FieldOfExpertise");
 				}
 			}
 		}
@@ -1734,6 +1856,8 @@ namespace KPIWeb
 		
 		private string _Formula;
 		
+		private string _AbbreviationEN;
+		
 		private EntitySet<ReportArchiveAndCalculatedParametrsMappingTable> _ReportArchiveAndCalculatedParametrsMappingTable;
 		
     #region Определения метода расширяемости
@@ -1750,6 +1874,8 @@ namespace KPIWeb
     partial void OnMeasureChanged();
     partial void OnFormulaChanging(string value);
     partial void OnFormulaChanged();
+    partial void OnAbbreviationENChanging(string value);
+    partial void OnAbbreviationENChanged();
     #endregion
 		
 		public CalculatedParametrs()
@@ -1858,6 +1984,26 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AbbreviationEN", DbType="VarChar(50)")]
+		public string AbbreviationEN
+		{
+			get
+			{
+				return this._AbbreviationEN;
+			}
+			set
+			{
+				if ((this._AbbreviationEN != value))
+				{
+					this.OnAbbreviationENChanging(value);
+					this.SendPropertyChanging();
+					this._AbbreviationEN = value;
+					this.SendPropertyChanged("AbbreviationEN");
+					this.OnAbbreviationENChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametrs_ReportArchiveAndCalculatedParametrsMappingTable", Storage="_ReportArchiveAndCalculatedParametrsMappingTable", ThisKey="CalculatedParametrsID", OtherKey="FK_CalculatedParametrsTable")]
 		public EntitySet<ReportArchiveAndCalculatedParametrsMappingTable> ReportArchiveAndCalculatedParametrsMappingTable
 		{
@@ -1904,6 +2050,141 @@ namespace KPIWeb
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CalculatedParametrsAndUsersMapping")]
+	public partial class CalculatedParametrsAndUsersMapping
+	{
+		
+		private int _CalculatedParametrsAndUsersMappingID;
+		
+		private bool _Active;
+		
+		private System.Nullable<bool> _CanEdit;
+		
+		private System.Nullable<bool> _CanView;
+		
+		private System.Nullable<bool> _CanConfirm;
+		
+		private System.Nullable<int> _FK_UsersTable;
+		
+		private System.Nullable<int> _FK_CalculatedParametrsTable;
+		
+		public CalculatedParametrsAndUsersMapping()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CalculatedParametrsAndUsersMappingID", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		public int CalculatedParametrsAndUsersMappingID
+		{
+			get
+			{
+				return this._CalculatedParametrsAndUsersMappingID;
+			}
+			set
+			{
+				if ((this._CalculatedParametrsAndUsersMappingID != value))
+				{
+					this._CalculatedParametrsAndUsersMappingID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this._Active = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanEdit", DbType="Bit")]
+		public System.Nullable<bool> CanEdit
+		{
+			get
+			{
+				return this._CanEdit;
+			}
+			set
+			{
+				if ((this._CanEdit != value))
+				{
+					this._CanEdit = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanView", DbType="Bit")]
+		public System.Nullable<bool> CanView
+		{
+			get
+			{
+				return this._CanView;
+			}
+			set
+			{
+				if ((this._CanView != value))
+				{
+					this._CanView = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanConfirm", DbType="Bit")]
+		public System.Nullable<bool> CanConfirm
+		{
+			get
+			{
+				return this._CanConfirm;
+			}
+			set
+			{
+				if ((this._CanConfirm != value))
+				{
+					this._CanConfirm = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_UsersTable", DbType="Int")]
+		public System.Nullable<int> FK_UsersTable
+		{
+			get
+			{
+				return this._FK_UsersTable;
+			}
+			set
+			{
+				if ((this._FK_UsersTable != value))
+				{
+					this._FK_UsersTable = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_CalculatedParametrsTable", DbType="Int")]
+		public System.Nullable<int> FK_CalculatedParametrsTable
+		{
+			get
+			{
+				return this._FK_CalculatedParametrsTable;
+			}
+			set
+			{
+				if ((this._FK_CalculatedParametrsTable != value))
+				{
+					this._FK_CalculatedParametrsTable = value;
+				}
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CollectedBasicParametersTable")]
 	public partial class CollectedBasicParametersTable : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1939,6 +2220,10 @@ namespace KPIWeb
 		private System.Nullable<int> _FK_FourthLevelSubdivisionTable;
 		
 		private System.Nullable<int> _FK_FifthLevelSubdivisionTable;
+		
+		private System.Nullable<bool> _ConfirmedThirdLevel;
+		
+		private System.Nullable<bool> _ConfirmedHead;
 		
 		private EntityRef<BasicParametersTable> _BasicParametersTable;
 		
@@ -1992,6 +2277,10 @@ namespace KPIWeb
     partial void OnFK_FourthLevelSubdivisionTableChanged();
     partial void OnFK_FifthLevelSubdivisionTableChanging(System.Nullable<int> value);
     partial void OnFK_FifthLevelSubdivisionTableChanged();
+    partial void OnConfirmedThirdLevelChanging(System.Nullable<bool> value);
+    partial void OnConfirmedThirdLevelChanged();
+    partial void OnConfirmedHeadChanging(System.Nullable<bool> value);
+    partial void OnConfirmedHeadChanged();
     #endregion
 		
 		public CollectedBasicParametersTable()
@@ -2344,6 +2633,46 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ConfirmedThirdLevel", DbType="Bit")]
+		public System.Nullable<bool> ConfirmedThirdLevel
+		{
+			get
+			{
+				return this._ConfirmedThirdLevel;
+			}
+			set
+			{
+				if ((this._ConfirmedThirdLevel != value))
+				{
+					this.OnConfirmedThirdLevelChanging(value);
+					this.SendPropertyChanging();
+					this._ConfirmedThirdLevel = value;
+					this.SendPropertyChanged("ConfirmedThirdLevel");
+					this.OnConfirmedThirdLevelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ConfirmedHead", DbType="Bit")]
+		public System.Nullable<bool> ConfirmedHead
+		{
+			get
+			{
+				return this._ConfirmedHead;
+			}
+			set
+			{
+				if ((this._ConfirmedHead != value))
+				{
+					this.OnConfirmedHeadChanging(value);
+					this.SendPropertyChanging();
+					this._ConfirmedHead = value;
+					this.SendPropertyChanged("ConfirmedHead");
+					this.OnConfirmedHeadChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_CollectedBasicParametersTable", Storage="_BasicParametersTable", ThisKey="FK_BasicParametersTable", OtherKey="BasicParametersTableID", IsForeignKey=true)]
 		public BasicParametersTable BasicParametersTable
 		{
@@ -2683,6 +3012,10 @@ namespace KPIWeb
 		
 		private string _Name;
 		
+		private EntitySet<BasicParametersTable> _BasicParametersTable;
+		
+		private EntitySet<BasicParametrAdditional> _BasicParametrAdditional;
+		
 		private EntitySet<SpecializationTable> _SpecializationTable;
 		
     #region Определения метода расширяемости
@@ -2699,6 +3032,8 @@ namespace KPIWeb
 		
 		public FieldOfExpertise()
 		{
+			this._BasicParametersTable = new EntitySet<BasicParametersTable>(new Action<BasicParametersTable>(this.attach_BasicParametersTable), new Action<BasicParametersTable>(this.detach_BasicParametersTable));
+			this._BasicParametrAdditional = new EntitySet<BasicParametrAdditional>(new Action<BasicParametrAdditional>(this.attach_BasicParametrAdditional), new Action<BasicParametrAdditional>(this.detach_BasicParametrAdditional));
 			this._SpecializationTable = new EntitySet<SpecializationTable>(new Action<SpecializationTable>(this.attach_SpecializationTable), new Action<SpecializationTable>(this.detach_SpecializationTable));
 			OnCreated();
 		}
@@ -2763,6 +3098,32 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldOfExpertise_BasicParametersTable", Storage="_BasicParametersTable", ThisKey="FieldOfExpertiseID", OtherKey="FK_FieldOfExpertise")]
+		public EntitySet<BasicParametersTable> BasicParametersTable
+		{
+			get
+			{
+				return this._BasicParametersTable;
+			}
+			set
+			{
+				this._BasicParametersTable.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldOfExpertise_BasicParametrAdditional", Storage="_BasicParametrAdditional", ThisKey="FieldOfExpertiseID", OtherKey="FK_FieldOfExpertise")]
+		public EntitySet<BasicParametrAdditional> BasicParametrAdditional
+		{
+			get
+			{
+				return this._BasicParametrAdditional;
+			}
+			set
+			{
+				this._BasicParametrAdditional.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldOfExpertise_SpecializationTable", Storage="_SpecializationTable", ThisKey="FieldOfExpertiseID", OtherKey="FK_FieldOfExpertise")]
 		public EntitySet<SpecializationTable> SpecializationTable
 		{
@@ -2794,6 +3155,30 @@ namespace KPIWeb
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_BasicParametersTable(BasicParametersTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.FieldOfExpertise = this;
+		}
+		
+		private void detach_BasicParametersTable(BasicParametersTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.FieldOfExpertise = null;
+		}
+		
+		private void attach_BasicParametrAdditional(BasicParametrAdditional entity)
+		{
+			this.SendPropertyChanging();
+			entity.FieldOfExpertise = this;
+		}
+		
+		private void detach_BasicParametrAdditional(BasicParametrAdditional entity)
+		{
+			this.SendPropertyChanging();
+			entity.FieldOfExpertise = null;
 		}
 		
 		private void attach_SpecializationTable(SpecializationTable entity)
@@ -3927,6 +4312,141 @@ namespace KPIWeb
 		{
 			this.SendPropertyChanging();
 			entity.FourthLevelSubdivisionTable = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IndicatorsAndUsersMapping")]
+	public partial class IndicatorsAndUsersMapping
+	{
+		
+		private int _IndicatorsAndUsersMappingID;
+		
+		private bool _Active;
+		
+		private System.Nullable<bool> _CanEdit;
+		
+		private System.Nullable<bool> _CanView;
+		
+		private System.Nullable<bool> _CanConfirm;
+		
+		private System.Nullable<int> _FK_UsresTable;
+		
+		private System.Nullable<int> _FK_IndicatorsTable;
+		
+		public IndicatorsAndUsersMapping()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IndicatorsAndUsersMappingID", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		public int IndicatorsAndUsersMappingID
+		{
+			get
+			{
+				return this._IndicatorsAndUsersMappingID;
+			}
+			set
+			{
+				if ((this._IndicatorsAndUsersMappingID != value))
+				{
+					this._IndicatorsAndUsersMappingID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this._Active = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanEdit", DbType="Bit")]
+		public System.Nullable<bool> CanEdit
+		{
+			get
+			{
+				return this._CanEdit;
+			}
+			set
+			{
+				if ((this._CanEdit != value))
+				{
+					this._CanEdit = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanView", DbType="Bit")]
+		public System.Nullable<bool> CanView
+		{
+			get
+			{
+				return this._CanView;
+			}
+			set
+			{
+				if ((this._CanView != value))
+				{
+					this._CanView = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CanConfirm", DbType="Bit")]
+		public System.Nullable<bool> CanConfirm
+		{
+			get
+			{
+				return this._CanConfirm;
+			}
+			set
+			{
+				if ((this._CanConfirm != value))
+				{
+					this._CanConfirm = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_UsresTable", DbType="Int")]
+		public System.Nullable<int> FK_UsresTable
+		{
+			get
+			{
+				return this._FK_UsresTable;
+			}
+			set
+			{
+				if ((this._FK_UsresTable != value))
+				{
+					this._FK_UsresTable = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_IndicatorsTable", DbType="Int")]
+		public System.Nullable<int> FK_IndicatorsTable
+		{
+			get
+			{
+				return this._FK_IndicatorsTable;
+			}
+			set
+			{
+				if ((this._FK_IndicatorsTable != value))
+				{
+					this._FK_IndicatorsTable = value;
+				}
+			}
 		}
 	}
 	

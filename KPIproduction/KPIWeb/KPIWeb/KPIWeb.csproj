@@ -161,6 +161,7 @@
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="AutomationDepartment\AddLevel.aspx" />
     <Content Include="AutomationDepartment\AddRole.aspx" />
+    <Content Include="AutomationDepartment\AddSpecialization.aspx" />
     <Content Include="AutomationDepartment\Main.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
@@ -298,6 +299,13 @@
     </Compile>
     <Compile Include="AutomationDepartment\AddRole.aspx.designer.cs">
       <DependentUpon>AddRole.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AutomationDepartment\AddSpecialization.aspx.cs">
+      <DependentUpon>AddSpecialization.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutomationDepartment\AddSpecialization.aspx.designer.cs">
+      <DependentUpon>AddSpecialization.aspx</DependentUpon>
     </Compile>
     <Compile Include="AutomationDepartment\Main.aspx.cs">
       <DependentUpon>Main.aspx</DependentUpon>

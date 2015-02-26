@@ -4,6 +4,14 @@
         <div>
             <h2>Ввведите значения в таблицу показателей и нажмите кнопку "Сохранить" внизу формы</h2>
             <br />
+
+           
+<asp:TextBox ID="txtOnlyValidDate" runat="server"></asp:TextBox>
+<asp:CompareValidator ID="CompareValidator1" runat="server" 
+ControlToValidate="txtOnlyValidDate" ErrorMessage="CompareValidator" 
+Operator="DataTypeCheck" Type="Integer"></asp:CompareValidator>
+
+
             <asp:GridView ID="GridviewCollectedBasicParameters" BorderStyle="Solid" runat="server" ShowFooter="true" AutoGenerateColumns="False" 
                 BorderColor="Black" BorderWidth="1px" CellPadding="0" 
           
@@ -28,7 +36,7 @@
                              
                      <asp:TemplateField Visible="false"   HeaderText="Значение">
                         <ItemTemplate >
-                            <asp:TextBox ID="Value0"  style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value0") %>'></asp:TextBox>
+                            <asp:TextBox ID="Value0" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value0") %>'></asp:TextBox>
                             <asp:Label ID="CollectId0" runat="server" Visible="false" Text='<%# Bind("CollectId0") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>  

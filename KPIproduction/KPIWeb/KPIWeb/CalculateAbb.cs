@@ -11,41 +11,100 @@ namespace KPIWeb
 {
     public class CalculateAbb
     {
-        public static string replaseAbbWithValue(string input,int reportId)
+        public static string replaseAbbWithValueForLevel(string input, int reportId, int Lv0, int Lv1, int Lv2, int Lv3,
+            int Lv4, int Lv5)
         {
-            KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-            double? a = (from collect in KPIWebDataContext.CollectedBasicParametersTable
-                         join basic in KPIWebDataContext.BasicParametersTable
-                         on collect.FK_BasicParametersTable equals basic.BasicParametersTableID
-                         where collect.FK_ReportArchiveTable == reportId && basic.AbbreviationEN== input
-                         select collect.CollectedValue).Sum();
-            return a.ToString();
-        }
+            string abbTmp = input;
+            string[] tmpArr = abbTmp.Split('#');
+            if (tmpArr.Length < 2) //значит в аббревиатуре нет #
+            {
+                KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+                double? a = (from collect in KPIWebDataContext.CollectedBasicParametersTable
+                    join basic in KPIWebDataContext.BasicParametersTable
+                        on collect.FK_BasicParametersTable equals basic.BasicParametersTableID
+                    join user in KPIWebDataContext.UsersTable
+                        on collect.FK_UsersTable equals user.UsersTableID
+                    where collect.FK_ReportArchiveTable == reportId
+                          && basic.AbbreviationEN == abbTmp
+                          && (user.FK_ZeroLevelSubdivisionTable   == Lv0 || Lv0 == 0)
+                          && (user.FK_FirstLevelSubdivisionTable  == Lv1 || Lv1 == 0)
+                          && (user.FK_SecondLevelSubdivisionTable == Lv2 || Lv2 == 0)
+                          && (user.FK_ThirdLevelSubdivisionTable  == Lv3 || Lv3 == 0)
+                          && (user.FK_FourthLevelSubdivisionTable == Lv4 || Lv4 == 0)
+                          && (user.FK_FifthLevelSubdivisionTable  == Lv5 || Lv5 == 0)
+                    select collect.CollectedValue).Sum();
+                return a.ToString();
+            }
+            else
+            {
+                switch (tmpArr[0])
+                {
+                    case "0": // тут у нас базовые показатели
+                    {
+                        KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+                        double? a = (from collect in KPIWebDataContext.CollectedBasicParametersTable
+                            join basic in KPIWebDataContext.BasicParametersTable
+                                on collect.FK_BasicParametersTable equals basic.BasicParametersTableID
+                            join user in KPIWebDataContext.UsersTable
+                                on collect.FK_UsersTable equals user.UsersTableID
+                            where collect.FK_ReportArchiveTable == reportId
+                                  && basic.AbbreviationEN == tmpArr[1]
+                                  && (user.FK_ZeroLevelSubdivisionTable == Lv0 || Lv0 == 0)
+                                  && (user.FK_FirstLevelSubdivisionTable == Lv1 || Lv1 == 0)
+                                  && (user.FK_SecondLevelSubdivisionTable == Lv2 || Lv2 == 0)
+                                  && (user.FK_ThirdLevelSubdivisionTable == Lv3 || Lv3 == 0)
+                                  && (user.FK_FourthLevelSubdivisionTable == Lv4 || Lv4 == 0)
+                                  && (user.FK_FifthLevelSubdivisionTable == Lv5 || Lv5 == 0)
+                            select collect.CollectedValue).Sum();
+                        return a.ToString();
+                        break;
+                    }
+                    case "1": // РЕКУРСИЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯЯ
+                    {
+                        KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+                        string tmpStr = (from a in KPIWebDataContext.CalculatedParametrs
+                            where a.AbbreviationEN == tmpArr[1]
+                            select a.Formula).FirstOrDefault();
+                        return CalculateForLevel(tmpStr, reportId, Lv0, Lv1, Lv2, Lv3, Lv4, Lv5, 0).ToString();
+                        break;
+                    }
+                    case "2": // Другое)
+                    {
+                        switch (tmpArr[1])
+                        {
+                            case "helo":
+                            {
+                                return "11";
+                                break;
+                            }
+                            case "bibi":
+                            {
+                                return "12";
+                                break;
+                            }
+                            default:
+                            {
+                                return "11";
+                            }
 
-        public static string replaseAbbWithValueForLevel(string input, int reportId, int Lv0, int Lv1, int Lv2, int Lv3, int Lv4, int Lv5)
-        {
-            KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-            double? a = (from collect in KPIWebDataContext.CollectedBasicParametersTable
-                         join basic in KPIWebDataContext.BasicParametersTable                         
-                         on collect.FK_BasicParametersTable equals basic.BasicParametersTableID
-                         join user in KPIWebDataContext.UsersTable
-                         on collect.FK_UsersTable equals user.UsersTableID
-                         where collect.FK_ReportArchiveTable == reportId 
-                         && basic.AbbreviationEN == input
-                         && (user.FK_ZeroLevelSubdivisionTable   == Lv0 || Lv0==0)
-                         && (user.FK_FirstLevelSubdivisionTable  == Lv1 || Lv1==0)
-                         && (user.FK_SecondLevelSubdivisionTable == Lv2 || Lv2==0)
-                         && (user.FK_ThirdLevelSubdivisionTable  == Lv3 || Lv3==0)
-                         && (user.FK_FourthLevelSubdivisionTable == Lv4 || Lv4==0)
-                         && (user.FK_FifthLevelSubdivisionTable  == Lv5 || Lv5==0)
-                         select collect.CollectedValue).Sum();
-            return a.ToString();
+                        }
+                        break;
+                    }
+                    default: // кто-то где-то затупил
+                    {
+                        //надо вывести ошибку
+                        break;
+                    }
+                }
+            }
+            return "0";
         }
+    
     
         public static string deleteSpaces(string input)
         {
             string tmpStr = input;
-            //tmpStr = tmpStr.Replace(" ", string.Empty);      
+            tmpStr = tmpStr.Replace(" ","");      
             return tmpStr;
         }
 
@@ -97,31 +156,9 @@ namespace KPIWeb
             return tmpStr;
         }
 
-        static public double Calculate(string input, int report)
+        static public double CalculateForLevel(string input, int report, int Lv0, int Lv1, int Lv2, int Lv3, int Lv4, int Lv5, int param1)
         {
-            string tmpStr;
-            tmpStr = input;
-            deleteSpaces(tmpStr);
-            string[] abbArray = splitString(tmpStr);
-            //tmpStr = "";
-            foreach (string str in abbArray)
-            {
-                if ((str != null) && (str != " ") && (!str.IsEmpty()))
-                {
-                    if (!str.IsFloat())
-                    {
-                        int idx = tmpStr.IndexOf(str);
-                        if (idx != -1)
-                            tmpStr = tmpStr.Remove(idx, str.Length).Insert(idx, replaseAbbWithValue(str, report));
-                    }
-                }
-            }
-            return Polish.Calculate(tmpStr);
-           // return tmpStr;
-        }
 
-        static public double CalculateForLevel(string input, int report, int Lv0, int Lv1, int Lv2, int Lv3, int Lv4, int Lv5)
-        {
             string tmpStr;
             tmpStr = input;
             deleteSpaces(tmpStr);

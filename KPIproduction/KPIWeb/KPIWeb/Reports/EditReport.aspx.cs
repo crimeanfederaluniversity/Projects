@@ -123,7 +123,7 @@ namespace KPIWeb.Reports
             }
         }
 
-        protected List<int> getBasicByIndicatorNCalc(List<int> indArr, List<int> calcArr)
+        protected List<int> getBasicByIndicatorNCalc(List<int> indArr, List<int> calcArr)   //////переделать
         {
             List<int> basicListTemp = new List<int>();
 
@@ -493,7 +493,7 @@ namespace KPIWeb.Reports
                 }
                 ////////////////////////////////////////////////////////////////////////////////////////////////////
                 ///нужнополучить список айдишников нужных базовых показателей
-
+                /*
                 List<int> baseParamID = getBasicByIndicatorNCalc(indId,calcId);
 
                 foreach (int baseID in baseParamID)
@@ -516,7 +516,7 @@ namespace KPIWeb.Reports
                             kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable.InsertOnSubmit(basicParam);
                         }
                         kpiWebDataContext.SubmitChanges();
-                 }                
+                 }   */             
             }
             Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");       
         }

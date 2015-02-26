@@ -146,15 +146,7 @@ namespace KPIWeb.StatisticsDepartment
         protected void Button2_Click(object sender, EventArgs e)
         {
 
-            string tmp_check = CalculateAbb.CheckAbbString(IndicatorFormula0.Text);
-            if (tmp_check != "0")
-            {
-                TextBox1.Text = tmp_check;
-            }
-            else
-            {
-                TextBox1.Text = CalculateAbb.Calculate(IndicatorFormula0.Text, 1).ToString();
-            }
+           
             
         }///Рассчет
 
@@ -177,9 +169,9 @@ namespace KPIWeb.StatisticsDepartment
             if (TextBox6.Text == "") TextBox6.Text = 0.ToString();
             if (TextBox7.Text == "") TextBox7.Text = 0.ToString();
 
-            TextBox1.Text = CalculateAbb.CalculateForLevel(IndicatorFormula.Text, 1,
+            TextBox1.Text = CalculateAbb.CalculateForLevel(IndicatorFormula0.Text,1005,
             Convert.ToInt32(TextBox2.Text), Convert.ToInt32(TextBox3.Text), Convert.ToInt32(TextBox4.Text),
-            Convert.ToInt32(TextBox5.Text), Convert.ToInt32(TextBox6.Text), Convert.ToInt32(TextBox7.Text)).ToString();
+            Convert.ToInt32(TextBox5.Text), Convert.ToInt32(TextBox6.Text), Convert.ToInt32(TextBox7.Text),0).ToString();
         }//Рассчет с подразделениями
 
         protected void Menu1_MenuItemClick(object sender, MenuEventArgs e)
