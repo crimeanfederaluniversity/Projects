@@ -19,7 +19,7 @@ namespace KPIWeb.StatisticsDepartment
             }
 
             int userID = UserSer.Id;
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
@@ -48,7 +48,7 @@ namespace KPIWeb.StatisticsDepartment
                 if (SelectedValue > 0)
                 {
                     KPIWebDataContext kPiDataContext =
-                        new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+                        new KPIWebDataContext();
                     if ((int)ViewState["state"] == 0) ///// индикаторы
                     {
                         IndicatorsTable indicator = (from item in kPiDataContext.IndicatorsTable
@@ -70,6 +70,7 @@ namespace KPIWeb.StatisticsDepartment
                         else CheckBox1.Checked = false;
                         Label5.Text = calcParams.CalculatedParametrsID.ToString();
                         IndicatorName.Text = calcParams.Name;
+                        TextBox8.Text = calcParams.AbbreviationEN;
                         IndicatorFormula.Text = calcParams.Formula;
                         IndicatorMeasure.Text = calcParams.Measure;
                     }                   
@@ -110,6 +111,7 @@ namespace KPIWeb.StatisticsDepartment
                         else calcParams.Active = false;
                         calcParams.Name = IndicatorName.Text;
                         calcParams.Formula = IndicatorFormula.Text;
+                        calcParams.AbbreviationEN = TextBox8.Text; 
                         calcParams.Measure = IndicatorMeasure.Text;
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Расчетный показатель изменен');", true);    
                     }
@@ -135,6 +137,7 @@ namespace KPIWeb.StatisticsDepartment
                         calcParams.Name = IndicatorName.Text;
                         calcParams.Formula = IndicatorFormula.Text;
                         calcParams.Measure = IndicatorMeasure.Text;
+                        calcParams.AbbreviationEN = TextBox8.Text;
                         kPiDataContext.CalculatedParametrs.InsertOnSubmit(calcParams);
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Расчетный параметр создан');", true);
                     }          
@@ -222,6 +225,7 @@ namespace KPIWeb.StatisticsDepartment
                         Label5.Text = "0";
                         IndicatorName.Text = "";
                         IndicatorFormula.Text = "";
+                        TextBox8.Text = "";
                         IndicatorMeasure.Text = "";
                     }
                     ViewState["state"] = 1;

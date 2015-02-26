@@ -42,7 +42,11 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Label ID="Label4" runat="server" Text="Активен"></asp:Label>
                 <asp:CheckBox ID="CheckBox1" runat="server" />
-                <br />
+                 <br />
+                 <br />
+                 Аббревиатура<br />
+                 <asp:TextBox ID="TextBox8" runat="server" Width="294px"></asp:TextBox>
+                 <br />
                 <br />
                 <asp:Label ID="Label2" runat="server" Text="Формула рассчета"></asp:Label>
                 <br />
