@@ -187,8 +187,8 @@ namespace KPIWeb.StatisticsDepartment
                         basicParametr.AbbreviationEN = strArrf[1];
                         basicParametr.AbbreviationRU = strArrf[2];
                         basicParametr.Measure = strArrf[3];
-                        basicParametr.SubvisionLevel = Convert.ToInt32(strArrf[4]);
-                        basicParametr.ForeignStudents = Convert.ToInt32(strArrf[5]);
+                       // basicParametr.SubvisionLevel = Convert.ToInt32(strArrf[4]);
+                      //  basicParametr.ForeignStudents = Convert.ToInt32(strArrf[5]);
                         kPiDataContext.BasicParametersTable.InsertOnSubmit(basicParametr);
                     }
                 }

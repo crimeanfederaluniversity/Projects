@@ -76,7 +76,7 @@ namespace KPIWeb.Reports
                             on b.BasicParametersTableID equals c.FK_ParametrsTable
                         where a.FK_ReportArchiveTable == ReportArchiveID
                         && c.FK_UsersTable==UserID
-                        && b.SubvisionLevel == userLevel
+                       // && b.SubvisionLevel == userLevel
                         && a.Active == true
                         && c.CanEdit == true
                         && c.Active == true
@@ -186,7 +186,7 @@ namespace KPIWeb.Reports
                         join c in kpiWebDataContext.BasicParametrsAndUsersMapping
                             on b.BasicParametersTableID equals c.FK_ParametrsTable
                         where a.FK_ReportArchiveTable == ReportArchiveID
-                        && b.SubvisionLevel == userLevel + 1////ВНИМАНИЕ
+                      //  && b.SubvisionLevel == userLevel + 1////ВНИМАНИЕ
                         && c.FK_UsersTable == UserID
                         && a.Active == true
                         && c.CanEdit == true

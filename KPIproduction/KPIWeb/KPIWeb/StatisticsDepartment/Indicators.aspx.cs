@@ -192,6 +192,7 @@ namespace KPIWeb.StatisticsDepartment
                         Label5.Text = "0";
                         IndicatorName.Text = "";
                         IndicatorFormula.Text = "";
+                        TextBox8.Text = "";
                         IndicatorMeasure.Text = "";
                     }
                     ViewState["state"] = 0;

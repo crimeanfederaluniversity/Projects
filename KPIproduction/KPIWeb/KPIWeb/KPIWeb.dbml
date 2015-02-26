@@ -29,27 +29,23 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
       <Column Name="AbbreviationEN" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="AbbreviationRU" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="Measure" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
-      <Column Name="SubvisionLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ForeignStudents" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_FieldOfExpertise" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AbbreviationRU" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Measure" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
       <Association Name="BasicParametersTable_BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTable" ThisKey="BasicParametersTableID" OtherKey="FK_BasicParametersTable" Type="BasicParametersAndRolesMappingTable" />
       <Association Name="BasicParametersTable_BasicParametrAdditional" Member="BasicParametrAdditional" ThisKey="BasicParametersTableID" OtherKey="BasicParametrAdditionalID" Type="BasicParametrAdditional" Cardinality="One" />
       <Association Name="BasicParametersTable_BasicParametrsAndUsersMapping" Member="BasicParametrsAndUsersMapping" ThisKey="BasicParametersTableID" OtherKey="FK_ParametrsTable" Type="BasicParametrsAndUsersMapping" />
       <Association Name="BasicParametersTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="BasicParametersTableID" OtherKey="FK_BasicParametersTable" Type="CollectedBasicParametersTable" />
       <Association Name="BasicParametersTable_ReportArchiveAndBasicParametrsMappingTable" Member="ReportArchiveAndBasicParametrsMappingTable" ThisKey="BasicParametersTableID" OtherKey="FK_BasicParametrsTable" Type="ReportArchiveAndBasicParametrsMappingTable" />
-      <Association Name="FieldOfExpertise_BasicParametersTable" Member="FieldOfExpertise" ThisKey="FK_FieldOfExpertise" OtherKey="FieldOfExpertiseID" Type="FieldOfExpertise" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.BasicParametrAdditional" Member="BasicParametrAdditional">
     <Type Name="BasicParametrAdditional">
       <Column Name="BasicParametrAdditionalID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="ForForeignStudents" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="FK_FieldOfExpertise" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Param3" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Param4" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ForForeignStudents" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_FieldOfExpertise" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SubvisionLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsGraduating" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="Param5" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="BasicParametersTable_BasicParametrAdditional" Member="BasicParametersTable" ThisKey="BasicParametrAdditionalID" OtherKey="BasicParametersTableID" Type="BasicParametersTable" IsForeignKey="true" />
       <Association Name="FieldOfExpertise_BasicParametrAdditional" Member="FieldOfExpertise" ThisKey="FK_FieldOfExpertise" OtherKey="FieldOfExpertiseID" Type="FieldOfExpertise" IsForeignKey="true" />
@@ -128,7 +124,6 @@
       <Column Name="FieldOfExpertiseID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
-      <Association Name="FieldOfExpertise_BasicParametersTable" Member="BasicParametersTable" ThisKey="FieldOfExpertiseID" OtherKey="FK_FieldOfExpertise" Type="BasicParametersTable" />
       <Association Name="FieldOfExpertise_BasicParametrAdditional" Member="BasicParametrAdditional" ThisKey="FieldOfExpertiseID" OtherKey="FK_FieldOfExpertise" Type="BasicParametrAdditional" />
       <Association Name="FieldOfExpertise_SpecializationTable" Member="SpecializationTable" ThisKey="FieldOfExpertiseID" OtherKey="FK_FieldOfExpertise" Type="SpecializationTable" />
     </Type>
