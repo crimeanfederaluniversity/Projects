@@ -114,7 +114,7 @@ namespace KPIWeb.AutomationDepartment
             foreach (string tmpStrf in tmpStrArr)
             {
                 string tmp = tmpStrf.Replace("\n", "");
-                if (((tmp.Split('#').Length - 1) != 5) && (tmp != ""))
+                if (((tmp.Split('#').Length - 1) != 9) && (tmp != ""))
                 {
                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ошибка в строке" + i.ToString() + "');", true);
                     i = 0;
@@ -144,15 +144,20 @@ namespace KPIWeb.AutomationDepartment
                         strArrf[4] = strArrf[4].TrimStart();
                         strArrf[5] = strArrf[5].TrimEnd();
                         strArrf[5] = strArrf[5].TrimStart();
+                        strArrf[6] = strArrf[6].TrimEnd();
+                        strArrf[6] = strArrf[6].TrimStart();
+                        strArrf[7] = strArrf[7].TrimEnd();
+                        strArrf[7] = strArrf[7].TrimStart();
+                        strArrf[8] = strArrf[8].TrimEnd();
+                        strArrf[8] = strArrf[8].TrimStart();
+                        strArrf[9] = strArrf[9].TrimEnd();
+                        strArrf[9] = strArrf[9].TrimStart();
 
                         basicParametr.Active = true;
                         basicParametr.Name = strArrf[0];
                         basicParametr.AbbreviationEN = strArrf[1];
                         basicParametr.AbbreviationRU = strArrf[2];
                         basicParametr.Measure = strArrf[3];
-                        //basicParametr.SubvisionLevel = Convert.ToInt32(strArrf[4]);
-                       // basicParametr.FK_FieldOfExpertise = Convert.ToInt32(strArrf[5]);
-                       // basicParametr.ForeignStudents = Convert.ToInt32(strArrf[6]);
                         kPiDataContext.BasicParametersTable.InsertOnSubmit(basicParametr);
                         kPiDataContext.SubmitChanges();
 
@@ -160,14 +165,16 @@ namespace KPIWeb.AutomationDepartment
                         basicParamAdd.BasicParametrAdditionalID = basicParametr.BasicParametersTableID;
                         basicParamAdd.Active = true;
                         basicParamAdd.ForForeignStudents = (Convert.ToInt32(strArrf[4])>0)?true:false;
-                        basicParamAdd.FK_FieldOfExpertise = Convert.ToInt32(strArrf[5]);
+                        basicParamAdd.SubvisionLevel = Convert.ToInt32(strArrf[5]);
                         basicParamAdd.IsGraduating = (Convert.ToInt32(strArrf[6]) > 0) ? true : false;
+                        basicParamAdd.Calculated = (Convert.ToInt32(strArrf[7]) > 0) ? true : false;
+                        basicParamAdd.SpecType = Convert.ToInt32(strArrf[8]);
+                        basicParamAdd.DataType = Convert.ToInt32(strArrf[9]);
                         kPiDataContext.BasicParametrAdditional.InsertOnSubmit(basicParamAdd);
                     }
                 }
                 kPiDataContext.SubmitChanges();
-            }
-            
+            }           
         }
     }
 }

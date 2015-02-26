@@ -1169,7 +1169,11 @@ namespace KPIWeb
 		
 		private System.Nullable<bool> _IsGraduating;
 		
-		private System.Nullable<bool> _Param5;
+		private System.Nullable<bool> _Calculated;
+		
+		private System.Nullable<int> _SpecType;
+		
+		private System.Nullable<int> _DataType;
 		
 		private EntityRef<BasicParametersTable> _BasicParametersTable;
 		
@@ -1191,8 +1195,12 @@ namespace KPIWeb
     partial void OnSubvisionLevelChanged();
     partial void OnIsGraduatingChanging(System.Nullable<bool> value);
     partial void OnIsGraduatingChanged();
-    partial void OnParam5Changing(System.Nullable<bool> value);
-    partial void OnParam5Changed();
+    partial void OnCalculatedChanging(System.Nullable<bool> value);
+    partial void OnCalculatedChanged();
+    partial void OnSpecTypeChanging(System.Nullable<int> value);
+    partial void OnSpecTypeChanged();
+    partial void OnDataTypeChanging(System.Nullable<int> value);
+    partial void OnDataTypeChanged();
     #endregion
 		
 		public BasicParametrAdditional()
@@ -1330,22 +1338,62 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param5", DbType="Bit")]
-		public System.Nullable<bool> Param5
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Calculated", DbType="Bit")]
+		public System.Nullable<bool> Calculated
 		{
 			get
 			{
-				return this._Param5;
+				return this._Calculated;
 			}
 			set
 			{
-				if ((this._Param5 != value))
+				if ((this._Calculated != value))
 				{
-					this.OnParam5Changing(value);
+					this.OnCalculatedChanging(value);
 					this.SendPropertyChanging();
-					this._Param5 = value;
-					this.SendPropertyChanged("Param5");
-					this.OnParam5Changed();
+					this._Calculated = value;
+					this.SendPropertyChanged("Calculated");
+					this.OnCalculatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecType", DbType="Int")]
+		public System.Nullable<int> SpecType
+		{
+			get
+			{
+				return this._SpecType;
+			}
+			set
+			{
+				if ((this._SpecType != value))
+				{
+					this.OnSpecTypeChanging(value);
+					this.SendPropertyChanging();
+					this._SpecType = value;
+					this.SendPropertyChanged("SpecType");
+					this.OnSpecTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DataType", DbType="Int")]
+		public System.Nullable<int> DataType
+		{
+			get
+			{
+				return this._DataType;
+			}
+			set
+			{
+				if ((this._DataType != value))
+				{
+					this.OnDataTypeChanging(value);
+					this.SendPropertyChanging();
+					this._DataType = value;
+					this.SendPropertyChanged("DataType");
+					this.OnDataTypeChanged();
 				}
 			}
 		}
