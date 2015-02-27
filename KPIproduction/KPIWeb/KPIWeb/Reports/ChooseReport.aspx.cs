@@ -32,6 +32,7 @@ namespace KPIWeb.Reports
             //////////////////////////////////////////////////////////////////////////
             if (!Page.IsPostBack)
             {
+                
                 ////////////
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));         
                 List<ReportArchiveTable> reportsArchiveTablesTable =  (
@@ -81,16 +82,35 @@ namespace KPIWeb.Reports
             Button button = (Button)sender;
             {
                 Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
-                Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчета
+                Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчета               
+                Serialization modeSer = new Serialization(0,null,null);
+                Session["mode"] = modeSer;
                 Response.Redirect("~/Reports/FillingTheReport.aspx");
             }
         }
 
         protected void ButtonViewClick(object sender, EventArgs e)
         {
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Данная функция находится на стадии разработки');", true);
+            Button button = (Button)sender;
+            {
+                Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
+                Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчета               
+                Serialization modeSer = new Serialization(1, null, null);
+                Session["mode"] = modeSer;
+                Response.Redirect("~/Reports/FillingTheReport.aspx");
+            }
         }
-
+        protected void ButtonConfirmClick(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            {
+                Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
+                Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчета               
+                Serialization modeSer = new Serialization(2, null, null);
+                Session["mode"] = modeSer;
+                Response.Redirect("~/Reports/FillingTheReport.aspx");
+            }
+        }
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
 

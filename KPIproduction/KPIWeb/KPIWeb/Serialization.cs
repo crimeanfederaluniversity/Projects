@@ -11,6 +11,8 @@ namespace KPIWeb
         public int Id { get; set; }
         public int ReportArchiveID { get; set; }
         public string ReportStr { get; set; }
+
+        public int mode { get; set; }
         public Serialization(int IdTmp)
         {
             this.Id = IdTmp;
@@ -23,6 +25,11 @@ namespace KPIWeb
         public Serialization(int ArchiveIdTmp,object obj)
         {
             this.ReportArchiveID = ArchiveIdTmp;
+        }
+
+        public Serialization(int mode, object obj, object obj2)
+        {
+            this.mode = mode;
         }
     }
 

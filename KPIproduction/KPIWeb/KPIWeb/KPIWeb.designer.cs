@@ -3627,17 +3627,17 @@ namespace KPIWeb
 		
 		private int _FourthLevelParametrsID;
 		
-		private bool _Active;
+		private System.Nullable<bool> _Active;
 		
-		private bool _IsModernEducationTechnologies;
+		private System.Nullable<bool> _IsModernEducationTechnologies;
 		
-		private bool _IsNetworkComunication;
+		private System.Nullable<bool> _IsNetworkComunication;
 		
-		private bool _IsInvalidStudentsFacilities;
+		private System.Nullable<bool> _IsInvalidStudentsFacilities;
 		
-		private bool _IsForeignStudentsAccept;
+		private System.Nullable<bool> _IsForeignStudentsAccept;
 		
-		private bool _Param5;
+		private System.Nullable<int> _SpecType;
 		
 		private EntityRef<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
 		
@@ -3647,18 +3647,18 @@ namespace KPIWeb
     partial void OnCreated();
     partial void OnFourthLevelParametrsIDChanging(int value);
     partial void OnFourthLevelParametrsIDChanged();
-    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanging(System.Nullable<bool> value);
     partial void OnActiveChanged();
-    partial void OnIsModernEducationTechnologiesChanging(bool value);
+    partial void OnIsModernEducationTechnologiesChanging(System.Nullable<bool> value);
     partial void OnIsModernEducationTechnologiesChanged();
-    partial void OnIsNetworkComunicationChanging(bool value);
+    partial void OnIsNetworkComunicationChanging(System.Nullable<bool> value);
     partial void OnIsNetworkComunicationChanged();
-    partial void OnIsInvalidStudentsFacilitiesChanging(bool value);
+    partial void OnIsInvalidStudentsFacilitiesChanging(System.Nullable<bool> value);
     partial void OnIsInvalidStudentsFacilitiesChanged();
-    partial void OnIsForeignStudentsAcceptChanging(bool value);
+    partial void OnIsForeignStudentsAcceptChanging(System.Nullable<bool> value);
     partial void OnIsForeignStudentsAcceptChanged();
-    partial void OnParam5Changing(bool value);
-    partial void OnParam5Changed();
+    partial void OnSpecTypeChanging(System.Nullable<int> value);
+    partial void OnSpecTypeChanged();
     #endregion
 		
 		public FourthLevelParametrs()
@@ -3691,8 +3691,8 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
-		public bool Active
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
 		{
 			get
 			{
@@ -3711,8 +3711,8 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsModernEducationTechnologies", DbType="Bit NOT NULL")]
-		public bool IsModernEducationTechnologies
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsModernEducationTechnologies", DbType="Bit")]
+		public System.Nullable<bool> IsModernEducationTechnologies
 		{
 			get
 			{
@@ -3731,8 +3731,8 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsNetworkComunication", DbType="Bit NOT NULL")]
-		public bool IsNetworkComunication
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsNetworkComunication", DbType="Bit")]
+		public System.Nullable<bool> IsNetworkComunication
 		{
 			get
 			{
@@ -3751,8 +3751,8 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsInvalidStudentsFacilities", DbType="Bit NOT NULL")]
-		public bool IsInvalidStudentsFacilities
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsInvalidStudentsFacilities", DbType="Bit")]
+		public System.Nullable<bool> IsInvalidStudentsFacilities
 		{
 			get
 			{
@@ -3771,8 +3771,8 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsForeignStudentsAccept", DbType="Bit NOT NULL")]
-		public bool IsForeignStudentsAccept
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsForeignStudentsAccept", DbType="Bit")]
+		public System.Nullable<bool> IsForeignStudentsAccept
 		{
 			get
 			{
@@ -3791,22 +3791,22 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Param5", DbType="Bit NOT NULL")]
-		public bool Param5
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpecType", DbType="Int")]
+		public System.Nullable<int> SpecType
 		{
 			get
 			{
-				return this._Param5;
+				return this._SpecType;
 			}
 			set
 			{
-				if ((this._Param5 != value))
+				if ((this._SpecType != value))
 				{
-					this.OnParam5Changing(value);
+					this.OnSpecTypeChanging(value);
 					this.SendPropertyChanging();
-					this._Param5 = value;
-					this.SendPropertyChanged("Param5");
-					this.OnParam5Changed();
+					this._SpecType = value;
+					this.SendPropertyChanged("SpecType");
+					this.OnSpecTypeChanged();
 				}
 			}
 		}

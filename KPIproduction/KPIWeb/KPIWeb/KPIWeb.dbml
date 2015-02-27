@@ -157,12 +157,12 @@
   <Table Name="dbo.FourthLevelParametrs" Member="FourthLevelParametrs">
     <Type Name="FourthLevelParametrs">
       <Column Name="FourthLevelParametrsID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="IsModernEducationTechnologies" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="IsNetworkComunication" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="IsInvalidStudentsFacilities" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="IsForeignStudentsAccept" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Param5" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsModernEducationTechnologies" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsNetworkComunication" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsInvalidStudentsFacilities" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsForeignStudentsAccept" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="SpecType" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="FourthLevelSubdivisionTable_FourthLevelParametrs" Member="FourthLevelSubdivisionTable" ThisKey="FourthLevelParametrsID" OtherKey="FourthLevelSubdivisionTableID" Type="FourthLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>

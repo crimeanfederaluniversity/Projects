@@ -2,7 +2,7 @@
 
 
        <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-        <h2>СпиСписок активных отчетов</h2><br />
+        <h2>Список активных отчетов</h2><br />
         <asp:GridView ID="GridView1" runat="server" 
             AutoGenerateColumns="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" 
             style="margin-top: 0px">
@@ -15,15 +15,19 @@
 
                     <asp:TemplateField HeaderText="Ввод данных">
                         <ItemTemplate>
-                            <asp:Label ID="LabelReportArchiveTableID1" runat="server" Text='<%# Bind("ReportArchiveID") %>' Visible="false"></asp:Label>
-                            <asp:Button ID="ButtonEditReport" runat="server" CommandName="Select" Text="Редактировать" Width="250px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonEditClick"/>
+                            <asp:Button ID="ButtonEditReport" runat="server" CommandName="Select" Text="Редактировать" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonEditClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Просмотр введенных данных">
                         <ItemTemplate>
-                            <asp:Label ID="LabelReportArchiveTableID2" runat="server" Text='<%# Bind("ReportArchiveID") %>' Visible="false"></asp:Label>
                             <asp:Button ID="ButtonViewReport" runat="server" CommandName="Select" Text="Просмотреть" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonViewClick"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                  <asp:TemplateField HeaderText="Просмотр и подтверждение данных">
+                        <ItemTemplate>
+                            <asp:Button ID="ButtonConfirmReport" runat="server" CommandName="Select" Text="Просмотреть и подтвердить" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonConfirmClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                    
