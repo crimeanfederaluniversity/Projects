@@ -21,8 +21,99 @@ namespace KPIWeb.Reports
     {
         public int col_ = 0;
 
-        protected void CalcCalculate()
+        protected void CalcCalculate(int ReportArchiveID, int UserID, UsersTable user, int l_0, int l_1, int l_2, int l_3, int l_4, int l_5)
         {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+
+            List<BasicParametersTable> KafBasicParams =
+            (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+             join b in kpiWebDataContext.BasicParametersTable
+             on a.FK_BasicParametrsTable equals b.BasicParametersTableID
+             join c in kpiWebDataContext.BasicParametrsAndUsersMapping
+             on b.BasicParametersTableID equals c.FK_ParametrsTable
+             join d in kpiWebDataContext.BasicParametrAdditional
+             on b.BasicParametersTableID equals d.BasicParametrAdditionalID
+             where
+                   a.FK_ReportArchiveTable == ReportArchiveID  //из нужного отчета
+                && c.FK_UsersTable == UserID // свяный с пользователем
+                && d.SubvisionLevel == 3 //нужный уровень заполняющего
+                && a.Active == true  // запись в таблице связей показателя и отчета активна
+
+                && c.Active == true  // запись в таблице связей показателя и пользователей активна
+                && d.Calculated == true // этот показатель нужно вводить а не считать
+             select b).ToList();
+
+            //узнали показатели кафедры(отчет,разрешенияПользователя,Уровеньвводяшего,вводящийся показатель)          
+            foreach (BasicParametersTable basicParam in KafBasicParams) //пройдемся по показателям
+            {
+                //если этото параметр и эта кафедра дружат
+                ThirdLevelParametrs thirdParametrs =
+                    (from a in kpiWebDataContext.ThirdLevelParametrs
+                     where a.ThirdLevelParametrsID == l_3
+                     select a).FirstOrDefault();
+                // узнали параметры специальности
+                BasicParametrAdditional basicParametrs =
+                    (from a in kpiWebDataContext.BasicParametrAdditional
+                     where
+                         a.BasicParametrAdditionalID == basicParam.BasicParametersTableID
+                     select a).FirstOrDefault();
+                //узнали параметры базового показателя
+                if ((thirdParametrs.CanGraduate == true) || (basicParametrs.IsGraduating == false)) //фильтруем базовые показатели для невыпускающих кафедр
+                {                    
+                    CollectedBasicParametersTable collectedBasicTmp =
+                        (from a in kpiWebDataContext.CollectedBasicParametersTable
+                         where a.FK_ZeroLevelSubdivisionTable ==    user.FK_ZeroLevelSubdivisionTable
+                             && a.FK_FirstLevelSubdivisionTable ==  user.FK_FirstLevelSubdivisionTable
+                             && a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable
+                             && a.FK_ThirdLevelSubdivisionTable ==  user.FK_ThirdLevelSubdivisionTable
+                             && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
+                             && a.FK_ReportArchiveTable == ReportArchiveID
+                         select a).FirstOrDefault();
+                    if (collectedBasicTmp == null) // надо создать
+                    {
+                        collectedBasicTmp = new CollectedBasicParametersTable();
+                        collectedBasicTmp.Active = true;
+                        collectedBasicTmp.FK_UsersTable = UserID;
+                        collectedBasicTmp.FK_BasicParametersTable = basicParam.BasicParametersTableID;
+                        collectedBasicTmp.FK_ReportArchiveTable = ReportArchiveID;
+                        ///поехали страдать
+                        double tmp = 0;
+                        if (basicParam.AbbreviationEN == "a_Och_M") tmp = Convert.ToDouble(
+                            (from a in kpiWebDataContext.CollectedBasicParametersTable 
+                             join b in kpiWebDataContext.FourthLevelParametrs
+                             on a.FK_FourthLevelSubdivisionTable equals b.FourthLevelParametrsID
+                             join c in kpiWebDataContext.ThirdLevelParametrs
+                             on a.FK_ThirdLevelSubdivisionTable equals c.ThirdLevelParametrsID
+                             join d in kpiWebDataContext.FourthLevelSubdivisionTable
+                             on a.FK_FourthLevelSubdivisionTable equals d.FourthLevelSubdivisionTableID
+                             join e in kpiWebDataContext.SpecializationTable
+                             on d.FK_Specialization equals  e.SpecializationTableID
+                             where 
+                                a.FK_ZeroLevelSubdivisionTable ==    user.FK_ZeroLevelSubdivisionTable
+                             && a.FK_FirstLevelSubdivisionTable ==  user.FK_FirstLevelSubdivisionTable
+                             && a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable
+                             && a.FK_ThirdLevelSubdivisionTable ==  user.FK_ThirdLevelSubdivisionTable
+                             && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
+                             && a.FK_ReportArchiveTable == ReportArchiveID
+                             && b.SpecType == 3
+                             && (e.FK_FieldOfExpertise == 10 || e.FK_FieldOfExpertise == 11 || e.FK_FieldOfExpertise == 12)
+                                 select a.CollectedValue).Sum());
+
+                        //прекратили
+                        collectedBasicTmp.CollectedValue = tmp;
+                        collectedBasicTmp.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
+                        collectedBasicTmp.LastChangeDateTime = DateTime.Now;
+                        collectedBasicTmp.SavedDateTime = DateTime.Now;
+                        collectedBasicTmp.FK_ZeroLevelSubdivisionTable = user.FK_ZeroLevelSubdivisionTable;
+                        collectedBasicTmp.FK_FirstLevelSubdivisionTable = user.FK_FirstLevelSubdivisionTable;
+                        collectedBasicTmp.FK_SecondLevelSubdivisionTable = user.FK_SecondLevelSubdivisionTable;
+                        collectedBasicTmp.FK_ThirdLevelSubdivisionTable = user.FK_ThirdLevelSubdivisionTable;
+
+                        kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
+                        kpiWebDataContext.SubmitChanges();
+                    }
+                }
+            }
 
         }
 
@@ -150,7 +241,7 @@ namespace KPIWeb.Reports
                                          a.BasicParametrAdditionalID == basicParam.BasicParametersTableID
                                      select a).FirstOrDefault();
                                 //узнали параметры базового показателя
-                                if ((thirdParametrs.CanGraduate==true)||(basicParametrs.IsGraduating==false)) //фильтруем базовые показатели для невыпускающих кафедр
+                                if ((thirdParametrs.CanGraduate == true) || (basicParametrs.IsGraduating == false)) //фильтруем базовые показатели для невыпускающих кафедр
                                 {
                                     DataRow dataRow = dataTable.NewRow();
                                     dataRow["CurrentReportArchiveID"] = ReportArchiveID;
@@ -158,13 +249,13 @@ namespace KPIWeb.Reports
                                     dataRow["Name"] = basicParam.Name;
                                     CollectedBasicParametersTable collectedBasicTmp =
                                         (from a in kpiWebDataContext.CollectedBasicParametersTable
-                                            where a.FK_ZeroLevelSubdivisionTable == user.FK_ZeroLevelSubdivisionTable                                                 
-                                                && a.FK_FirstLevelSubdivisionTable == user.FK_FirstLevelSubdivisionTable 
-                                                && a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable
-                                                && a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable                                                                                               
-                                                && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
-                                                && a.FK_ReportArchiveTable == ReportArchiveID
-                                            select a).FirstOrDefault();
+                                         where a.FK_ZeroLevelSubdivisionTable == user.FK_ZeroLevelSubdivisionTable
+                                             && a.FK_FirstLevelSubdivisionTable == user.FK_FirstLevelSubdivisionTable
+                                             && a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable
+                                             && a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
+                                             && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
+                                             && a.FK_ReportArchiveTable == ReportArchiveID
+                                         select a).FirstOrDefault();
                                     if (collectedBasicTmp == null) // надо создать
                                     {
                                         collectedBasicTmp = new CollectedBasicParametersTable();
@@ -173,13 +264,13 @@ namespace KPIWeb.Reports
                                         collectedBasicTmp.FK_BasicParametersTable = basicParam.BasicParametersTableID;
                                         collectedBasicTmp.FK_ReportArchiveTable = ReportArchiveID;
                                         collectedBasicTmp.CollectedValue = 0;
-                                        collectedBasicTmp.UserIP =Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip =>ip.AddressFamily ==System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
+                                        collectedBasicTmp.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
                                         collectedBasicTmp.LastChangeDateTime = DateTime.Now;
                                         collectedBasicTmp.SavedDateTime = DateTime.Now;
-                                        collectedBasicTmp.FK_ZeroLevelSubdivisionTable =user.FK_ZeroLevelSubdivisionTable;
+                                        collectedBasicTmp.FK_ZeroLevelSubdivisionTable = user.FK_ZeroLevelSubdivisionTable;
                                         collectedBasicTmp.FK_FirstLevelSubdivisionTable = user.FK_FirstLevelSubdivisionTable;
                                         collectedBasicTmp.FK_SecondLevelSubdivisionTable = user.FK_SecondLevelSubdivisionTable;
-                                        collectedBasicTmp.FK_ThirdLevelSubdivisionTable =user.FK_ThirdLevelSubdivisionTable;
+                                        collectedBasicTmp.FK_ThirdLevelSubdivisionTable = user.FK_ThirdLevelSubdivisionTable;
 
                                         kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
                                         kpiWebDataContext.SubmitChanges();
@@ -196,8 +287,8 @@ namespace KPIWeb.Reports
                             additionalColumnCount += 1;
 
                             if ((from zz in kpiWebDataContext.ThirdLevelParametrs
-                                        where zz.ThirdLevelParametrsID == l_3
-                                        select zz.CanGraduate).FirstOrDefault() == true) // кафедра выпускающая значит специальности есть
+                                 where zz.ThirdLevelParametrsID == l_3
+                                 select zz.CanGraduate).FirstOrDefault() == true) // кафедра выпускающая значит специальности есть
                             {
                                 List<BasicParametersTable> SpecBasicParams =
                                     (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
@@ -226,16 +317,16 @@ namespace KPIWeb.Reports
                                            && a.Active == true
                                      select a).ToList();
                                 //Получили список специальностей для кафедры под пользователем 
-                                
+
                                 foreach (FourthLevelSubdivisionTable spec in Specialzations)
                                 {
                                     columnNames.Add("Специальность:\n\r" +
                                                     (from a in kpiWebDataContext.SpecializationTable
-                                                        where a.SpecializationTableID == spec.FK_Specialization
-                                                        select a.Name).FirstOrDefault().ToString());
+                                                     where a.SpecializationTableID == spec.FK_Specialization
+                                                     select a.Name).FirstOrDefault().ToString());
                                     //запомнили название специальности // оно нам пригодится)
                                 }
-                                
+
                                 foreach (BasicParametersTable specBasicParam in SpecBasicParams)
                                 {
                                     int i = additionalColumnCount;
@@ -252,12 +343,12 @@ namespace KPIWeb.Reports
                                         j = 0;//если хоть одной специальности базовый показатель нужен то мы его выведем
                                         FourthLevelParametrs fourthParametrs =
                                             (from a in kpiWebDataContext.FourthLevelParametrs
-                                                where a.FourthLevelParametrsID == spec.FourthLevelSubdivisionTableID
-                                                select a).FirstOrDefault();
+                                             where a.FourthLevelParametrsID == spec.FourthLevelSubdivisionTableID
+                                             select a).FirstOrDefault();
                                         // узнали параметры специальности
                                         //если этото параметр и эта специальность дружат                                
-                                        if (((fourthParametrs.IsForeignStudentsAccept==true) || (basicParametrs.ForForeignStudents==false)) //это для иностранцев
-                                            &&(fourthParametrs.SpecType == basicParametrs.SpecType)||(basicParametrs.SpecType==0)) // это для деления на магистров аспирантов итд
+                                        if (((fourthParametrs.IsForeignStudentsAccept == true) || (basicParametrs.ForForeignStudents == false)) //это для иностранцев
+                                            && (fourthParametrs.SpecType == basicParametrs.SpecType) || (basicParametrs.SpecType == 0)) // это для деления на магистров аспирантов итд
                                         {
                                             j++; //потом проверка и следовательно БП нуно выводить
                                             CollectedBasicParametersTable collectedBasicTmp =
@@ -288,8 +379,8 @@ namespace KPIWeb.Reports
                                                 collectedBasicTmp.FK_FourthLevelSubdivisionTable = spec.FourthLevelSubdivisionTableID;
                                                 kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
                                                 kpiWebDataContext.SubmitChanges();
-                                            }                                                                                       
-                                            dataRow["Name"] = specBasicParam.Name;                                            
+                                            }
+                                            dataRow["Name"] = specBasicParam.Name;
                                             dataRow["Value" + i] = collectedBasicTmp.CollectedValue.ToString();
                                             dataRow["CollectId" + i] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
                                         }
@@ -325,23 +416,23 @@ namespace KPIWeb.Reports
                 ViewState["CurrentReportArchiveID"] = ReportArchiveID;
                 ViewState["ValueColumnCnt"] = additionalColumnCount;
 
-                if (mode==0)
+                if (mode == 0)
                 {
                     ButtonSave.Text = "Сохранить внесенные данные";
                     Label1.Text = "Ввведите значения в таблицу показателей и нажмите кнопку внизу формы для сохранения данных";
                 }
                 else if
-                    (mode==1)
+                    (mode == 1)
                 {
                     Label1.Text = "Просмотр введенных данных";
                     ButtonSave.Text = "Вернуться в меню выбора отчета";
                 }
                 else
-                if (mode == 2)
-                {
-                    Label1.Text = "Проверьте корректность введенных данных. Если данные верны, нажмите кнопку внизу формы";
-                    ButtonSave.Text = "Подтвердить правильность введенных данных";
-                }
+                    if (mode == 2)
+                    {
+                        Label1.Text = "Проверьте корректность введенных данных. Если данные верны, нажмите кнопку внизу формы";
+                        ButtonSave.Text = "Подтвердить правильность введенных данных";
+                    }
 
                 GridviewCollectedBasicParameters.DataSource = dataTable;
                 for (int j = 0; j < additionalColumnCount; j++)
@@ -359,8 +450,8 @@ namespace KPIWeb.Reports
             {
                 KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
                 Dictionary<int, double> tempDictionary = new Dictionary<int, double>();
-                DataTable collectedBasicParametersTable = (DataTable) ViewState["CollectedBasicParametersTable"];
-                int columnCnt = (int) ViewState["ValueColumnCnt"];
+                DataTable collectedBasicParametersTable = (DataTable)ViewState["CollectedBasicParametersTable"];
+                int columnCnt = (int)ViewState["ValueColumnCnt"];
 
                 Serialization modeSer = (Serialization)Session["mode"];
                 if (modeSer == null)
@@ -403,34 +494,34 @@ namespace KPIWeb.Reports
                 }
 
                 if (mode == 0)
-                {                  
+                {
                     if (tempDictionary.Count > 0)
                     {
                         //Список ранее введенных пользователем данных для данной кампании (отчета)
                         List<CollectedBasicParametersTable> сollectedBasicParametersTable =
                             (from collectedBasicParameters in KPIWebDataContext.CollectedBasicParametersTable
-                                where (from item in tempDictionary select item.Key).ToList()
-                                .Contains((int) collectedBasicParameters.CollectedBasicParametersTableID)
-                                select collectedBasicParameters).ToList();
+                             where (from item in tempDictionary select item.Key).ToList()
+                             .Contains((int)collectedBasicParameters.CollectedBasicParametersTableID)
+                             select collectedBasicParameters).ToList();
 
-                        string localIP =Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()) .FirstOrDefault() ?? "";
+                        string localIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
                         foreach (var сollectedBasicParameter in сollectedBasicParametersTable)
                         {
                             сollectedBasicParameter.CollectedValue =
                                 (from item in tempDictionary
-                                    where item.Key == сollectedBasicParameter.CollectedBasicParametersTableID
-                                    select item.Value).FirstOrDefault();
+                                 where item.Key == сollectedBasicParameter.CollectedBasicParametersTableID
+                                 select item.Value).FirstOrDefault();
                             сollectedBasicParameter.LastChangeDateTime = DateTime.Now;
                             сollectedBasicParameter.UserIP = localIP;
                         }
                         KPIWebDataContext.SubmitChanges();
-                        Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                             "alert('Данные успешно подтверждены');", true);
                     }
-                    CalcCalculate();
+                   // CalcCalculate();
                     //надо рассчитать рассчетные
                 }
-                else if (mode==1)
+                else if (mode == 1)
                 {
                     Response.Redirect("~/Reports/ChooseReport.aspx");
                 }
@@ -444,7 +535,7 @@ namespace KPIWeb.Reports
                              where (from item in tempDictionary select item.Key).ToList()
                              .Contains((int)collectedBasicParameters.CollectedBasicParametersTableID)
                              select collectedBasicParameters).ToList();
-                      
+
                         foreach (var сollectedBasicParameter in сollectedBasicParametersTable)
                         {
                             сollectedBasicParameter.ConfirmedThirdLevel = true;
