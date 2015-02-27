@@ -186,6 +186,13 @@ namespace KPIWeb.Reports
                                 FourthLevelParametrs fourthLevelParametrsTables = new FourthLevelParametrs();
                                 fourthLevelParametrsTables.FourthLevelParametrsID = Convert.ToInt32(labelId.Text);
                                 fourthLevelParametrsTables.IsForeignStudentsAccept = true;
+                                var code = (from f4 in kpiWebDataContext.FourthLevelSubdivisionTable     // получаем код специальности
+                                            join spec in kpiWebDataContext.SpecializationTable
+                                            on f4.FK_Specialization equals spec.SpecializationTableID
+                                            where f4.FourthLevelSubdivisionTableID == Convert.ToInt32(labelId.Text)
+                                            select spec.SpecializationNumber).FirstOrDefault();
+
+                                fourthLevelParametrsTables.SpecType = Action.Encode(code);
 
                                 kpiWebDataContext.FourthLevelParametrs.InsertOnSubmit(fourthLevelParametrsTables);
                                 kpiWebDataContext.SubmitChanges();
