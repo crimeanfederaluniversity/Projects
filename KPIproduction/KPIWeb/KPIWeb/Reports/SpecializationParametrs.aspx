@@ -8,35 +8,44 @@
         <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server">           
              <Columns>               
                  <asp:BoundField DataField="SpecializationID"   HeaderText="Current Report ID" Visible="false" />    
-                 <asp:BoundField DataField="SpecializationName" HeaderText="Название специальности" Visible="True" />          
+                 <asp:BoundField DataField="SpecializationName" HeaderText="Название специальности" Visible="True" />         
                
-                    <asp:TemplateField HeaderText="Param1">
-                        <ItemTemplate>
+                   
+                 <asp:TemplateField HeaderText="Id специальности" Visible = "True" >
+                        <ItemTemplate> 
+                            <asp:Label ID="FourthlvlId" runat="server" Text='<%# Bind("FourthlvlId") %>'  Visible="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>   
+
+                   <asp:TemplateField HeaderText="Param1" Visible = "False" >
+                        <ItemTemplate> 
                             <asp:Label ID="Param1Label" runat="server" Text='<%# Bind("Param1Label") %>' Visible="false"></asp:Label>
                             <asp:CheckBox ID="Param1CheckBox" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param1CheckBox") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>     
 
-                     <asp:TemplateField HeaderText="Param2">
+                     <asp:TemplateField HeaderText="Param2" Visible = "False">
                         <ItemTemplate>
                             <asp:Label ID="Param2Label" runat="server" Text='<%# Bind("Param2Label") %>' Visible="false"></asp:Label>
                             <asp:CheckBox ID="Param2CheckBox" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param2CheckBox") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>   
 
-                    <asp:TemplateField HeaderText="Param3">
+                    <asp:TemplateField HeaderText="Param3" Visible = "False">
                         <ItemTemplate>
                             <asp:Label ID="Param3Label" runat="server" Text='<%# Bind("Param3Label") %>' Visible="false"></asp:Label>
                             <asp:CheckBox ID="Param3CheckBox" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param3CheckBox") %>' />
                         </ItemTemplate>
                     </asp:TemplateField> 
-                  <asp:TemplateField HeaderText="Param4">
+                     
+                  <asp:TemplateField HeaderText="Param4" Visible = "True">
                         <ItemTemplate>
                             <asp:Label ID="Param4Label" runat="server" Text='<%# Bind("Param4Label") %>' Visible="false"></asp:Label>
-                            <asp:CheckBox ID="Param4CheckBox" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param4CheckBox") %>' />
+                            <asp:CheckBox ID="Param4CheckBox" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param4Label") %>' />
                         </ItemTemplate>
                     </asp:TemplateField> 
-                  <asp:TemplateField HeaderText="Param5">
+                 
+                  <asp:TemplateField HeaderText="Param5" Visible = "False">
                         <ItemTemplate>
                             <asp:Label ID="Param5Label" runat="server" Text='<%# Bind("Param5Label") %>' Visible="false"></asp:Label>
                             <asp:CheckBox ID="Param5CheckBox" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param5CheckBox") %>' />

@@ -36,10 +36,13 @@ namespace KPIWeb.Reports
                                                                      on a.SpecializationTableID equals b.FK_Specialization
                                                                      where b.FK_ThirdLevelSubdivisionTable == userTable.FK_ThirdLevelSubdivisionTable && b.Active == true
                                                                      select a).ToList();
+                
 
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("SpecializationID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("SpecializationName", typeof(string)));
+
+                dataTable.Columns.Add(new DataColumn("FourthlvlId", typeof(int)));
 
                 dataTable.Columns.Add(new DataColumn("Param1Label", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Param1CheckBox", typeof(string)));
@@ -64,8 +67,17 @@ namespace KPIWeb.Reports
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["SpecializationID"] = spec.SpecializationTableID ;
                     dataRow["SpecializationName"] = spec.Name;
+                    dataRow["FourthlvlId"] = (from a in kPiDataContext.FourthLevelSubdivisionTable
+                        where
+                            a.FK_ThirdLevelSubdivisionTable == userTable.FK_ThirdLevelSubdivisionTable &&
+                            a.FK_Specialization == spec.SpecializationTableID
+                        select a.FourthLevelSubdivisionTableID).FirstOrDefault();
+
                     dataTable.Rows.Add(dataRow);
+
+                    
                 }
+                ViewState["GridviewSpec"] = dataTable;
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
             }
@@ -148,9 +160,46 @@ namespace KPIWeb.Reports
 
                 
         }
+
         protected void Button1_Click(object sender, EventArgs e)
         {
-        
+            int rowIndex = 0;
+            if (ViewState["GridviewSpec"] != null)
+            {
+                DataTable dataTable = (DataTable) ViewState["GridviewSpec"];
+
+
+
+                if (dataTable.Rows.Count > 0)
+                {
+
+                    for (int i = 1; i <= dataTable.Rows.Count; i++)
+                    {
+
+                        CheckBox checkBoxparam = (CheckBox) GridView1.Rows[rowIndex].FindControl("Param4CheckBox");
+                        Label labelId = (Label) GridView1.Rows[rowIndex].FindControl("FourthlvlId");
+                        rowIndex++;
+                         if (checkBoxparam.Checked == true)
+                        {
+                            using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
+                            {
+                                FourthLevelParametrs fourthLevelParametrsTables = new FourthLevelParametrs();
+                                fourthLevelParametrsTables.FourthLevelParametrsID = Convert.ToInt32(labelId.Text);
+                                fourthLevelParametrsTables.IsForeignStudentsAccept = true;
+
+                                kpiWebDataContext.FourthLevelParametrs.InsertOnSubmit(fourthLevelParametrsTables);
+                                kpiWebDataContext.SubmitChanges();
+                            }
+
+                        }
+
+                    }
+                }
+            }
+
+
+
+
         }
 
         protected void Button2_Click(object sender, EventArgs e)

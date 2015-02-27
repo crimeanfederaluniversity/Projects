@@ -182,6 +182,7 @@
     </Content>
     <Content Include="AutomationDepartment\RoleMapping.aspx" />
     <Content Include="AutomationDepartment\IsAvailibleMappingRole.aspx" />
+    <Content Include="WebForm3.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Reports\ChooseReport.aspx" />
     <Content Include="Reports\EditReport.aspx" />
@@ -461,6 +462,13 @@
     </Compile>
     <Compile Include="AutomationDepartment\IsAvailibleMappingRole.aspx.designer.cs">
       <DependentUpon>IsAvailibleMappingRole.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm3.aspx.cs">
+      <DependentUpon>WebForm3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm3.aspx.designer.cs">
+      <DependentUpon>WebForm3.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

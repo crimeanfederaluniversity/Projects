@@ -33,12 +33,22 @@
                      <asp:TemplateField Visible="false"   HeaderText="Значение">
                         <ItemTemplate >
                             <asp:TextBox ID="Value0" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value0") %>'></asp:TextBox>
+                            <asp:RangeValidator runat="server" ID="ValidateDayOff2" ControlToValidate="Value0" 
+                            MinimumValue="0" Type="Double" 
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="dynamic" 
+                            SetFocusOnError="True">Ошибка!!
+                        </asp:RangeValidator>
                             <asp:Label ID="CollectId0" runat="server" Visible="false" Text='<%# Bind("CollectId0") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>  
                     <asp:TemplateField Visible="false" HeaderText="Значение">
                         <ItemTemplate>
                             <asp:TextBox ID="Value1" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value1") %>'></asp:TextBox>
+                            <asp:RangeValidator runat="server" ID="ValidateDayOff3" ControlToValidate="Value1" 
+                            MinimumValue="0" Type="Double" 
+                            ErrorMessage="Значение даты не входит в указанный диапазон" Display="dynamic" ForeColor="Red"
+                            SetFocusOnError="True">Ошибка!!
+                            </asp:RangeValidator>
                             <asp:Label ID="CollectId1" runat="server" Visible="false" Text='<%# Bind("CollectId1") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>               
