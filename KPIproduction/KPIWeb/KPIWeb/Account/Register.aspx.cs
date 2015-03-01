@@ -15,11 +15,101 @@ using Microsoft.Ajax.Utilities;
 namespace KPIWeb.Account
 {
     public partial class Register : Page
-    {        
+    {
+        protected void FillGridVIews(int reportID_)
+        {
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////                
+            List<IndicatorsTable> indicatorTable =
+            (from item in kPiDataContext.IndicatorsTable where item.Active == true select item).ToList();
+            DataTable dataTableIndicator = new DataTable();
+
+            dataTableIndicator.Columns.Add(new DataColumn("IndicatorID", typeof(string)));
+            dataTableIndicator.Columns.Add(new DataColumn("IndicatorName", typeof(string)));
+            dataTableIndicator.Columns.Add(new DataColumn("IndicatorEditCheckBox", typeof(bool)));
+            dataTableIndicator.Columns.Add(new DataColumn("IndicatorViewCheckBox", typeof(bool)));
+            dataTableIndicator.Columns.Add(new DataColumn("IndicatorConfirmCheckBox", typeof(bool)));
+            foreach (IndicatorsTable indicator in indicatorTable)
+            {
+                DataRow dataRow = dataTableIndicator.NewRow();
+                dataRow["IndicatorID"] = indicator.IndicatorsTableID.ToString();
+                dataRow["IndicatorName"] = indicator.Name;
+                dataRow["IndicatorEditCheckBox"] = false;
+                dataRow["IndicatorViewCheckBox"] = false;
+                dataRow["IndicatorConfirmCheckBox"] = false;
+                /*dataRow["IndicatorCheckBox"] = ((from a in kPiDataContext.ReportArchiveAndIndicatorsMappingTable
+                                                 where a.Active == true
+                                                 && a.FK_IndicatorsTable == indicator.IndicatorsTableID
+                                                 && a.FK_ReportArchiveTable == reportID
+                                                 select a).Count() > 0) ? true : false;*/
+                dataTableIndicator.Rows.Add(dataRow);
+            }
+            Gridview1.DataSource = dataTableIndicator;
+            Gridview1.DataBind();
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////
+            List<CalculatedParametrs> calcParams =
+            (from item in kPiDataContext.CalculatedParametrs where item.Active == true select item).ToList();
+            DataTable dataTableCalc = new DataTable();
+
+            dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsID", typeof(string)));
+            dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsName", typeof(string)));
+            dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsEditCheckBox", typeof(bool)));
+            dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsViewCheckBox", typeof(bool)));
+            dataTableCalc.Columns.Add(new DataColumn("CalculatedParametrsConfirmCheckBox", typeof(bool)));
+            foreach (CalculatedParametrs calcParam in calcParams)
+            {
+                DataRow dataRow = dataTableCalc.NewRow();
+                dataRow["CalculatedParametrsID"] = calcParam.CalculatedParametrsID.ToString();
+                dataRow["CalculatedParametrsName"] = calcParam.Name;
+                dataRow["CalculatedParametrsEditCheckBox"] = false;
+                dataRow["CalculatedParametrsViewCheckBox"] = false;
+                dataRow["CalculatedParametrsConfirmCheckBox"] = false;
+                /*dataRow["CalculatedParametrsCheckBox"] = ((from a in kPiDataContext.ReportArchiveAndCalculatedParametrsMappingTable
+                                                           where a.Active == true
+                                                           && a.FK_CalculatedParametrsTable == calcParam.CalculatedParametrsID
+                                                           && a.FK_ReportArchiveTable == reportID
+                                                           select a).Count() > 0) ? true : false;*/
+                dataTableCalc.Rows.Add(dataRow);
+            }
+            Gridview2.DataSource = dataTableCalc;
+            Gridview2.DataBind();
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////
+            List<BasicParametersTable> basicParams =
+          (from item in kPiDataContext.BasicParametersTable where item.Active == true select item).ToList();
+            DataTable dataTableBasic = new DataTable();
+
+            dataTableBasic.Columns.Add(new DataColumn("BasicParametrsID", typeof(string)));
+            dataTableBasic.Columns.Add(new DataColumn("BasicParametrsName", typeof(string)));
+            dataTableBasic.Columns.Add(new DataColumn("BasicParametrsEditCheckBox", typeof(bool)));
+            dataTableBasic.Columns.Add(new DataColumn("BasicParametrsViewCheckBox", typeof(bool)));
+            dataTableBasic.Columns.Add(new DataColumn("BasicParametrsConfirmCheckBox", typeof(bool)));
+            foreach (BasicParametersTable basic in basicParams)
+            {
+                DataRow dataRow = dataTableBasic.NewRow();
+                dataRow["BasicParametrsID"] = basic.BasicParametersTableID.ToString();
+                dataRow["BasicParametrsName"] = basic.Name;
+                dataRow["BasicParametrsEditCheckBox"] = false;
+                dataRow["BasicParametrsViewCheckBox"] = false;
+                dataRow["BasicParametrsConfirmCheckBox"] = false;
+                /*dataRow["BasicParametrsCheckBox"] = ((from a in kPiDataContext.ReportArchiveAndBasicParametrsMappingTable
+                                                      where a.Active == true
+                                                      && a.FK_BasicParametrsTable == basic.BasicParametersTableID
+                                                      && a.FK_ReportArchiveTable == reportID
+                                                      select a).Count() > 0) ? true : false;*/
+                dataTableBasic.Rows.Add(dataRow);
+            }
+            Gridview3.DataSource = dataTableBasic;
+            Gridview3.DataBind();
+            ///////////////////////////////////////////////////////////////////////////////////////////////////
+            ViewState["BasicDataTable"] = dataTableBasic;
+            ViewState["CalculateDataTable"] = dataTableCalc;
+            ViewState["IndicatorDataTable"] = dataTableIndicator;            
+        }
         protected void CreateUser_Click(object sender, EventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 KPIWebDataContext kPiDataContext = new KPIWebDataContext();
                 UsersTable user = new UsersTable();
                 user.Active = true;
@@ -51,40 +141,82 @@ namespace KPIWeb.Account
                 ///////////////////////////////////////////шаблон//////////////////////////////////
                 int rowIndex = 0;
 
-                if (ViewState["GridviewRoleMapping"] != null)
+                int currentRoleId = Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value);
+                DataTable roleBasicParametrs = (DataTable)ViewState["GridviewRoleMapping"];
+
+                if (Gridview3.Rows.Count > 0)
                 {
-                    int currentRoleId = Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value);
-                    DataTable roleBasicParametrs = (DataTable) ViewState["GridviewRoleMapping"];
-
-                    if (roleBasicParametrs.Rows.Count > 0)
+                    for (int k = 1; k <= Gridview3.Rows.Count; k++)
                     {
-                        for (int k = 1; k <= roleBasicParametrs.Rows.Count; k++)
-                        {
-                            CheckBox canEdit = (CheckBox) GridviewRoles.Rows[rowIndex].FindControl("CheckBoxCanEdit");
-                            CheckBox canView = (CheckBox) GridviewRoles.Rows[rowIndex].FindControl("CheckBoxCanView");
-                            CheckBox canConfirm = (CheckBox) GridviewRoles.Rows[rowIndex].FindControl("CheckBoxVerify");
-                            Label label = (Label) GridviewRoles.Rows[rowIndex].FindControl("Label2");
+                        CheckBox canEdit = (CheckBox)Gridview3.Rows[rowIndex].FindControl("BasicParametrsEditCheckBox");
+                        CheckBox canView = (CheckBox)Gridview3.Rows[rowIndex].FindControl("BasicParametrsViewCheckBox");
+                        CheckBox canConfirm = (CheckBox)Gridview3.Rows[rowIndex].FindControl("BasicParametrsConfirmCheckBox");
+                        Label label = (Label)Gridview3.Rows[rowIndex].FindControl("BasicParametrsID");
 
-                            BasicParametrsAndUsersMapping BasicAndUsers = new BasicParametrsAndUsersMapping();
-                            BasicAndUsers.Active = true;
-                            BasicAndUsers.FK_ParametrsTable = Convert.ToInt32(label.Text);
-                            BasicAndUsers.CanConfirm = canConfirm.Checked;
-                            BasicAndUsers.CanEdit = canEdit.Checked;
-                            BasicAndUsers.CanView = canView.Checked;
-                            BasicAndUsers.FK_UsersTable = userID;
-                            kPiDataContext.BasicParametrsAndUsersMapping.InsertOnSubmit(BasicAndUsers);
-                            kPiDataContext.SubmitChanges();
-                            rowIndex++;
+                        BasicParametrsAndUsersMapping BasicAndUsers = new BasicParametrsAndUsersMapping();
+                        BasicAndUsers.Active = true;
+                        BasicAndUsers.FK_ParametrsTable = Convert.ToInt32(label.Text);
+                        BasicAndUsers.CanConfirm = canConfirm.Checked;
+                        BasicAndUsers.CanEdit = canEdit.Checked;
+                        BasicAndUsers.CanView = canView.Checked;
+                        BasicAndUsers.FK_UsersTable = userID;
+                        kPiDataContext.BasicParametrsAndUsersMapping.InsertOnSubmit(BasicAndUsers);
+                        kPiDataContext.SubmitChanges();
+                        rowIndex++;
+                    }
+                    if (DropDownList5.SelectedIndex == 2)// если человек руководитель
+                    {
+                        rowIndex = 0;
+                        if (Gridview1.Rows.Count > 0)
+                        {
+                            for (int k = 1; k <= Gridview1.Rows.Count; k++)
+                            {
+                                CheckBox canEdit = (CheckBox)Gridview1.Rows[rowIndex].FindControl("IndicatorEditCheckBox");
+                                CheckBox canView = (CheckBox)Gridview1.Rows[rowIndex].FindControl("IndicatorViewCheckBox");
+                                CheckBox canConfirm = (CheckBox)Gridview1.Rows[rowIndex].FindControl("IndicatorConfirmCheckBox");
+                                Label label = (Label)Gridview1.Rows[rowIndex].FindControl("IndicatorID");
+
+                                IndicatorsAndUsersMapping indAndUser = new IndicatorsAndUsersMapping();
+                                indAndUser.Active = true;
+                                indAndUser.FK_IndicatorsTable = Convert.ToInt32(label.Text);
+                                indAndUser.CanConfirm = canConfirm.Checked;
+                                indAndUser.CanEdit = canEdit.Checked;
+                                indAndUser.CanView = canView.Checked;
+                                indAndUser.FK_UsresTable = userID;
+                                kPiDataContext.IndicatorsAndUsersMapping.InsertOnSubmit(indAndUser);
+                                kPiDataContext.SubmitChanges();
+                                rowIndex++;
+                            }
                         }
-                        Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
-                            "alert('Пользователь зарегестрирован');", true);
+                        rowIndex = 0;
+                        if (Gridview2.Rows.Count > 0)
+                        {
+                            for (int k = 1; k <= Gridview2.Rows.Count; k++)
+                            {
+                                CheckBox canEdit = (CheckBox)Gridview2.Rows[rowIndex].FindControl("CalculatedParametrsEditCheckBox");
+                                CheckBox canView = (CheckBox)Gridview2.Rows[rowIndex].FindControl("CalculatedParametrsViewCheckBox");
+                                CheckBox canConfirm = (CheckBox)Gridview2.Rows[rowIndex].FindControl("CalculatedParametrsConfirmCheckBox");
+                                Label label = (Label)Gridview2.Rows[rowIndex].FindControl("CalculatedParametrsID");
+
+                                CalculatedParametrsAndUsersMapping calcAndUser = new CalculatedParametrsAndUsersMapping();
+                                calcAndUser.Active = true;
+                                calcAndUser.FK_CalculatedParametrsTable = Convert.ToInt32(label.Text);
+                                calcAndUser.CanConfirm = canConfirm.Checked;
+                                calcAndUser.CanEdit = canEdit.Checked;
+                                calcAndUser.CanView = canView.Checked;
+                                calcAndUser.FK_UsersTable = userID;
+                                kPiDataContext.CalculatedParametrsAndUsersMapping.InsertOnSubmit(calcAndUser);
+                                kPiDataContext.SubmitChanges();
+                                rowIndex++;
+                            }
+                        }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                LogHandler.LogWriter.WriteError(ex);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    LogHandler.LogWriter.WriteError(ex);
+            //}
         }
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -122,6 +254,7 @@ namespace KPIWeb.Account
         }    
         protected void Page_Load(object sender, EventArgs e)
         {
+
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
@@ -140,6 +273,15 @@ namespace KPIWeb.Account
             ///////////////////////////////////////////////////проверили на админа
             if (!Page.IsPostBack)
             {
+                Gridview1.Visible = false;
+                Label25.Visible = false;
+                Gridview2.Visible = false;
+                Label26.Visible = false;
+                Gridview3.Visible = false;
+                Label27.Visible = false;
+                DropDownList4.Visible = false;
+                Label24.Visible = false;
+
                 List<RolesTable> Roles = (from a in kPiDataContext.RolesTable
                                           where a.Active == true
                                           select a).ToList();
@@ -160,6 +302,8 @@ namespace KPIWeb.Account
 
                 foreach (var item in First_stageList)
                     dictionary.Add(item.FirstLevelSubdivisionTableID, item.Name);
+
+                FillGridVIews(0);
 
                 DropDownList1.DataTextField = "Value";
                 DropDownList1.DataValueField = "Key";
@@ -203,7 +347,7 @@ namespace KPIWeb.Account
     
         protected void DropDownList4_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GridviewRoles.DataSource = null;
+            Gridview3.DataSource = null;
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             var vrCountry = (from b in kpiWebDataContext.BasicParametersTable select b);
 
@@ -241,13 +385,50 @@ namespace KPIWeb.Account
                 i++;
             }
             ViewState["GridviewRoleMapping"] = dataTable;
-            GridviewRoles.DataSource = dataTable;
-            GridviewRoles.DataBind();
+            Gridview3.DataSource = dataTable;
+            Gridview3.DataBind();
         }
 
         protected void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
            // if 
+        }
+
+        protected void DropDownList5_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (DropDownList5.SelectedIndex == 0 || DropDownList5.SelectedIndex ==3)
+            {
+                Gridview1.Visible = false;
+                Label25.Visible = false;
+                Gridview2.Visible = false;
+                Label26.Visible = false;
+                Gridview3.Visible = false;
+                Label27.Visible = false;
+                DropDownList4.Visible = false;
+                Label24.Visible = false;
+            }
+            else if (DropDownList5.SelectedIndex == 1)
+            {
+                Gridview1.Visible = false;
+                Label25.Visible = false;
+                Gridview2.Visible = false;
+                Label26.Visible = false;
+                Gridview3.Visible = true;
+                Label27.Visible = true;
+                DropDownList4.Visible = true;
+                Label24.Visible = true;
+            }
+            else if (DropDownList5.SelectedIndex == 2)
+            {
+                Gridview1.Visible = true;
+                Label25.Visible = true;
+                Gridview2.Visible = true;
+                Label26.Visible = true;
+                Gridview3.Visible = true;
+                Label27.Visible = true;
+                DropDownList4.Visible = false;
+                Label24.Visible = false;
+            }
         }
     }
 
