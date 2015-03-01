@@ -105,14 +105,14 @@ namespace KPIWeb.Reports
         protected void AddSpecializationButtonClick(object sender, EventArgs e)
         {
            
-            bool isHere = false;
+           
             Button button = (Button)sender;
             {
                 KPIWebDataContext kPiDataContext = new KPIWebDataContext();
                 var par = button.CommandArgument.ToString();
                 var check =
                     (from a in kPiDataContext.SpecializationTable where a.SpecializationNumber == par select a)
-                        .FirstOrDefault();
+                        .FirstOrDefault(); // выбираем специальности по её коду
 
               /*  List<SpecializationTable> specializationTableData = (from a in kPiDataContext.SpecializationTable
                                                                      join b in kPiDataContext.FourthLevelSubdivisionTable
@@ -129,9 +129,7 @@ namespace KPIWeb.Reports
                     }
                 }*/
 
-                if (!isHere)
-                {
-                     using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
+                     using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext()) // проверяем есть/нет записываем в базу
                      {
                         FourthLevelSubdivisionTable forthlvlsudtab = (from a in kpiWebDataContext.FourthLevelSubdivisionTable
                             where a.FK_Specialization == check.SpecializationTableID && a.FK_ThirdLevelSubdivisionTable == (int)ViewState["UserTable"]
@@ -149,12 +147,41 @@ namespace KPIWeb.Reports
                              forthlvlsudtab.Name = check.Name;
                              forthlvlsudtab.FK_ThirdLevelSubdivisionTable = (int)ViewState["UserTable"];
                              kpiWebDataContext.FourthLevelSubdivisionTable.InsertOnSubmit(forthlvlsudtab);
-                             //Page.DataBind();
                          }
+
+
+                        kpiWebDataContext.SubmitChanges();
+
+                         // Добавляем запись в таблицу параметров для этой специальности
+
+                         FourthLevelParametrs fourthLevelParametrs = (from a in kpiWebDataContext.FourthLevelParametrs
+                             where a.FourthLevelParametrsID == forthlvlsudtab.FourthLevelSubdivisionTableID
+                             select a).FirstOrDefault();
+
+                         if (fourthLevelParametrs == null)
+                         {
+                             fourthLevelParametrs = new FourthLevelParametrs();
+                             fourthLevelParametrs.Active = true;
+                             fourthLevelParametrs.IsModernEducationTechnologies = false;
+                             fourthLevelParametrs.IsNetworkComunication = false;
+                             fourthLevelParametrs.IsInvalidStudentsFacilities = false;
+                             fourthLevelParametrs.IsForeignStudentsAccept = false;
+                             fourthLevelParametrs.FourthLevelParametrsID = forthlvlsudtab.FourthLevelSubdivisionTableID;
+
+                             var code = (from f4 in kpiWebDataContext.FourthLevelSubdivisionTable     // получаем код специальности
+                                            join spec in kpiWebDataContext.SpecializationTable
+                                            on f4.FK_Specialization equals spec.SpecializationTableID
+                                            where f4.FourthLevelSubdivisionTableID == forthlvlsudtab.FourthLevelSubdivisionTableID
+                                            select spec.SpecializationNumber).FirstOrDefault();
+
+                             fourthLevelParametrs.SpecType = Action.Encode(code);
+                             kpiWebDataContext.FourthLevelParametrs.InsertOnSubmit(fourthLevelParametrs);
+                         }
+
+
                          kpiWebDataContext.SubmitChanges();
                      }
 
-                }
                 Response.Redirect("~/Reports/SpecializationParametrs.aspx");
             }
 
@@ -176,30 +203,27 @@ namespace KPIWeb.Reports
                     for (int i = 1; i <= dataTable.Rows.Count; i++)
                     {
 
-                        CheckBox checkBoxparam = (CheckBox) GridView1.Rows[rowIndex].FindControl("Param4CheckBox");
+                        CheckBox checkBoxparamIsModern = (CheckBox) GridView1.Rows[rowIndex].FindControl("IsModern");
+                        CheckBox checkBoxparamIsNetwork = (CheckBox)GridView1.Rows[rowIndex].FindControl("IsNetwork");
+                        CheckBox checkBoxparamIsInvalid = (CheckBox)GridView1.Rows[rowIndex].FindControl("IsInvalid");
+                        CheckBox checkBoxparamIsForeign = (CheckBox)GridView1.Rows[rowIndex].FindControl("IsForeign");
                         Label labelId = (Label) GridView1.Rows[rowIndex].FindControl("FourthlvlId");
                         rowIndex++;
-                         if (checkBoxparam.Checked == true)
-                        {
+                        var ss = labelId.Text;
                             using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
                             {
-                                FourthLevelParametrs fourthLevelParametrsTables = new FourthLevelParametrs();
-                                fourthLevelParametrsTables.FourthLevelParametrsID = Convert.ToInt32(labelId.Text);
-                                fourthLevelParametrsTables.IsForeignStudentsAccept = true;
-                                var code = (from f4 in kpiWebDataContext.FourthLevelSubdivisionTable     // получаем код специальности
-                                            join spec in kpiWebDataContext.SpecializationTable
-                                            on f4.FK_Specialization equals spec.SpecializationTableID
-                                            where f4.FourthLevelSubdivisionTableID == Convert.ToInt32(labelId.Text)
-                                            select spec.SpecializationNumber).FirstOrDefault();
+                                FourthLevelParametrs fourthLevelParametrsTables = (from a in kpiWebDataContext.FourthLevelParametrs where a.FourthLevelParametrsID == Convert.ToInt32(labelId.Text) select a).FirstOrDefault();
 
-                                fourthLevelParametrsTables.SpecType = Action.Encode(code);
+                                if (fourthLevelParametrsTables != null)
+                                {
+                                    fourthLevelParametrsTables.IsModernEducationTechnologies =checkBoxparamIsModern.Checked;
+                                    fourthLevelParametrsTables.IsNetworkComunication = checkBoxparamIsNetwork.Checked;
+                                    fourthLevelParametrsTables.IsInvalidStudentsFacilities = checkBoxparamIsInvalid.Checked;
+                                    fourthLevelParametrsTables.IsForeignStudentsAccept = checkBoxparamIsForeign.Checked;
+                                }
 
-                                kpiWebDataContext.FourthLevelParametrs.InsertOnSubmit(fourthLevelParametrsTables);
                                 kpiWebDataContext.SubmitChanges();
                             }
-
-                        }
-
                     }
                 }
             }
@@ -235,6 +259,39 @@ namespace KPIWeb.Reports
             }
             GridView2.DataSource = dataTable;
             GridView2.DataBind();
+        }
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            // Проставляем галочки в GridView  
+
+            for (int i = 0; i <= GridView1.Rows.Count; i++)
+            {
+                var fourthlvlId = e.Row.FindControl("FourthlvlId") as Label;
+                var checkBoxparamIsModern = e.Row.FindControl("IsModern") as CheckBox;
+                var checkBoxparamIsNetwork = e.Row.FindControl("IsNetwork") as CheckBox;
+                var checkBoxparamIsInvalid = e.Row.FindControl("IsInvalid") as CheckBox;
+                var checkBoxparamIsForeign = e.Row.FindControl("IsForeign") as CheckBox;
+
+                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+                FourthLevelParametrs fourthLevelParametrs = new FourthLevelParametrs();
+
+                if (fourthlvlId != null)
+                fourthLevelParametrs = (from a in kpiWebDataContext.FourthLevelParametrs where a.FourthLevelParametrsID == Convert.ToInt32(fourthlvlId.Text) select a).FirstOrDefault(); 
+
+                if (fourthLevelParametrs != null)
+                {
+                    if (checkBoxparamIsModern != null)
+                        checkBoxparamIsModern.Checked = fourthLevelParametrs.IsModernEducationTechnologies.Value;
+                    if (checkBoxparamIsNetwork != null)
+                        checkBoxparamIsNetwork.Checked = fourthLevelParametrs.IsNetworkComunication.Value;
+                    if (checkBoxparamIsInvalid != null)
+                        checkBoxparamIsInvalid.Checked = fourthLevelParametrs.IsInvalidStudentsFacilities.Value;
+                    if (checkBoxparamIsForeign != null)
+                        checkBoxparamIsForeign.Checked = fourthLevelParametrs.IsForeignStudentsAccept.Value;
+                }
+
+            }
         }
     }
 }
