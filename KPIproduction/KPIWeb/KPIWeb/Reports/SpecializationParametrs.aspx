@@ -15,40 +15,40 @@
                  <asp:BoundField DataField="SpecializationName" HeaderText="Название специальности" Visible="True" />         
                
                    
-                 <asp:TemplateField HeaderText="Id специальности" Visible = "False" >
+                 <asp:TemplateField HeaderText="Id специальности" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "False" >
                         <ItemTemplate> 
                             <asp:Label ID="FourthlvlId" runat="server" Text='<%# Bind("FourthlvlId") %>'  Visible="True"></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>   
                  
-                  <asp:TemplateField HeaderText="Номер специальности" Visible = "True" >
+                  <asp:TemplateField HeaderText="Номер специальности" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="SpecNumber" runat="server" Text='<%# Bind("SpecNumber") %>'  Visible="True"></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>  
 
-                   <asp:TemplateField HeaderText="Совеременные образовательные технологии" Visible = "True" >
+                   <asp:TemplateField HeaderText="Используются совеременные образовательные технологии" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="ParamLabel1" runat="server" Text='<%# Bind("Param1Label") %>' Visible="false"></asp:Label>
                             <asp:CheckBox ID="IsModern" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param1CheckBox") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>     
 
-                     <asp:TemplateField HeaderText="Интернет" Visible = "True">
+                     <asp:TemplateField HeaderText="Осуществляется сетевое взаимодействие"  HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:Label ID="ParamLabel2" runat="server" Text='<%# Bind("Param2Label") %>' Visible="false"></asp:Label>
                             <asp:CheckBox ID="IsNetwork" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param2CheckBox") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>   
 
-                    <asp:TemplateField HeaderText="С ограничеными возможнос" Visible = "True">
+                    <asp:TemplateField HeaderText="Осуществляется обучение студентов с особыми потребностяим" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:Label ID="ParamLabel3" runat="server" Text='<%# Bind("Param3Label") %>' Visible="false"></asp:Label>
                             <asp:CheckBox ID="IsInvalid" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param3CheckBox") %>' />
                         </ItemTemplate>
                     </asp:TemplateField> 
                      
-                  <asp:TemplateField HeaderText="Иностранные" Visible = "True">
+                  <asp:TemplateField HeaderText="Осуществляется обучение иностранных студентов" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:Label ID="ParamLabel4" runat="server" Text='<%# Bind("Param4Label") %>' Visible="false"></asp:Label>
                             <asp:CheckBox ID="IsForeign" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param4Label") %>' />
