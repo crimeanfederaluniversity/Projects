@@ -104,6 +104,9 @@
             <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Очистить все связи" Width="500px" />
             <br />
             <br />
+            <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Отметить все" Width="500px" />
+            <br />
+            <br />
 
             <asp:GridView ID="IndicatorsTable" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="1000px">
                             <Columns>

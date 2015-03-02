@@ -148,6 +148,10 @@
             <asp:Button ID="ButtonSave" Width="400px" runat="server" Text="Сохранить" OnClick="ButtonSave_Click" />
 
             <br />
+            <br />
+            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Экспорт в excell" Width="400px" />
+
+            <br />
 
         </div>
         </asp:Content>

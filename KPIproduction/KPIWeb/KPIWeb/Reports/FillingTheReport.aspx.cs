@@ -350,6 +350,7 @@ namespace KPIWeb.Reports
                 /// -1 никто ниоткуда/// 0 с Кфу /// 1 с Академии/// 2 с Факультета/// 3 с кафедры/// 4 с специализация/// 5 с под специализацией,пока нет
                 ///узнали все о пользователе
                 List<string> columnNames = new List<string>(); // сюда сохраняем названия колонок
+                List<string> basicNames  = new List<string>();
                 /////создаем дататейбл
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("CurrentReportArchiveID", typeof(string)));
@@ -423,6 +424,7 @@ namespace KPIWeb.Reports
                                     dataRow["CurrentReportArchiveID"] = ReportArchiveID;
                                     dataRow["BasicParametersTableID"] = basicParam.BasicParametersTableID;
                                     dataRow["Name"] = basicParam.Name;
+                                    basicNames.Add(basicParam.Name);
                                     CollectedBasicParametersTable collectedBasicTmp =
                                         (from a in kpiWebDataContext.CollectedBasicParametersTable
                                          where a.FK_ZeroLevelSubdivisionTable == user.FK_ZeroLevelSubdivisionTable
@@ -559,11 +561,13 @@ namespace KPIWeb.Reports
                                             }                                     
                                             dataRow["Value" + i] = collectedBasicTmp.CollectedValue.ToString();
                                             dataRow["CollectId" + i] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
+                                            
                                         }
                                         i++;
                                     }
                                     if (j > 0)
                                     {
+                                        basicNames.Add(specBasicParam.Name);
                                         dataRow["Name"] = specBasicParam.Name;
                                         dataRow["CurrentReportArchiveID"] = ReportArchiveID;
                                         dataRow["BasicParametersTableID"] = specBasicParam.BasicParametersTableID;
@@ -592,6 +596,9 @@ namespace KPIWeb.Reports
                 ViewState["CollectedBasicParametersTable"] = dataTable;
                 ViewState["CurrentReportArchiveID"] = ReportArchiveID;
                 ViewState["ValueColumnCnt"] = additionalColumnCount;
+                ViewState["ColumnName"] = columnNames;
+                ViewState["basicNames"] = basicNames;
+                
 
                 if (mode == 0)
                 {
@@ -848,6 +855,84 @@ namespace KPIWeb.Reports
 
         protected void GridviewCollectedBasicParameters_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            int rowIndex = 0;
+             
+            
+            /*
+            if (collectedBasicParametersTable.Rows.Count > 0)
+            {
+                for (int i = 1; i <= collectedBasicParametersTable.Rows.Count; i++)
+                {
+
+                    TextBox textBox = (TextBox)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("TextBoxCollectedValue");
+                    Label label = (Label)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("LabelCollectedBasicParametersTableID");
+
+                    if (textBox != null && label != null)
+                    {
+                        double collectedValue = -1;
+                        if (double.TryParse(textBox.Text, out collectedValue) && collectedValue > -1)
+                        {
+                            int collectedBasicParametersTableID = -1;
+                            if (int.TryParse(label.Text, out collectedBasicParametersTableID) && collectedBasicParametersTableID > -1)
+                                tempDictionary.Add(collectedBasicParametersTableID, collectedValue);
+                        }
+                    }
+                    rowIndex++;
+                }
+            }*/
+            DataTable collectedBasicParametersTable = (DataTable)ViewState["CollectedBasicParametersTable"];
+            DataTable dt = collectedBasicParametersTable;
+            Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel.Workbook excelBook = excelApp.Workbooks.Add(1);
+            Microsoft.Office.Interop.Excel.Worksheet excelWorksheet = (Microsoft.Office.Interop.Excel.Worksheet)excelBook.Worksheets.get_Item(1);
+            Microsoft.Office.Interop.Excel.Range rng = null;
+            DataRow dRow;
+            DataColumn dCol;
+            int colcnt = (int) ViewState["ValueColumnCnt"];
+            List<string> colNames =  (List<string>) ViewState["ColumnName"];
+
+
+            for (int i = 0; i < colcnt; i++)
+            {
+                rng = (Microsoft.Office.Interop.Excel.Range)excelWorksheet.Cells[1, i+2]; //костыль
+                rng.Value2 = colNames[i];
+            }
+            List<string> basicNames =  (List<string>) ViewState["basicNames"] ;
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                rng = (Microsoft.Office.Interop.Excel.Range)excelWorksheet.Cells[i+2,1]; //костыль
+
+                rng.Value2 = basicNames[i];
+            }
+
+            for (int _row = 0; _row < dt.Rows.Count; _row++)
+            {
+                
+                for (int _col = 3; _col < dt.Columns.Count; _col++)//костыль
+                {
+                    dRow = dt.Rows[_row];
+                    dCol = dt.Columns[_col];
+                    rng = (Microsoft.Office.Interop.Excel.Range)excelWorksheet.Cells[_row + 2, _col - 1]; //костыль
+                    TextBox tb = (TextBox)GridviewCollectedBasicParameters.Rows[_row].FindControl("Value" + (_col - 3)); // костылище
+                    //rng.Value2 = dRow[dCol.ColumnName].ToString();
+
+                
+
+                    if (tb!=null)
+                    {
+                        rng.Value2 = tb.Text;
+                    }
+
+                        
+                        
+                }
+            }
+            excelApp.Visible = true;
         }
     }
 }

@@ -557,5 +557,26 @@ namespace KPIWeb.Reports
             kpiWebDataContext.SubmitChanges();
             Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");                     
         }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < IndicatorsTable.Rows.Count; i++)
+            {
+                CheckBox chekBox = (CheckBox)IndicatorsTable.Rows[i].FindControl("IndicatorCheckBox");
+                chekBox.Checked = true;
+            }
+
+            for (int i = 0; i < CalculatedParametrsTable.Rows.Count; i++)
+            {
+                CheckBox chekBox = (CheckBox)CalculatedParametrsTable.Rows[i].FindControl("CalculatedParametrsCheckBox");
+                chekBox.Checked = true;
+            }
+
+            for (int i = 0; i < BasicParametrsTable.Rows.Count; i++)
+            {
+                CheckBox chekBox = (CheckBox)BasicParametrsTable.Rows[i].FindControl("BasicParametrsCheckBox");
+                chekBox.Checked = true;
+            }
+        }
     }
 }
