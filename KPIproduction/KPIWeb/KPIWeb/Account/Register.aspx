@@ -159,8 +159,11 @@
         <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Почтовый адрес</asp:Label>
         <div class="col-md-10">
             <asp:TextBox runat="server" ID="Email" CssClass="form-control" />
-            <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
-                CssClass="text-danger" ErrorMessage="Введите почтовый адрес." />
+             <asp:RegularExpressionValidator ID="valid_email" runat="server"
+            ErrorMessage="Неверный почтовый адрес" CssClass="text-danger"
+            ControlToValidate="Email"
+            ValidationExpression ="[0-9a-zA-Z\.\-]+@+([a-z]{1,})+\.+([a-z]{2,})"/>
+            
         </div>
     </div>
     <div class="form-group">
@@ -187,7 +190,10 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
+            <br />
             <asp:Button runat="server" OnClick="CreateUser_Click" Text="Зарегистрировать" CssClass="btn btn-default" />
+            <br />
+            <br />
         </div>
     </div>
 
