@@ -11,11 +11,17 @@
                  <asp:BoundField DataField="SpecializationName" HeaderText="Название специальности" Visible="True" />         
                
                    
-                 <asp:TemplateField HeaderText="Id специальности" Visible = "True" >
+                 <asp:TemplateField HeaderText="Id специальности" Visible = "False" >
                         <ItemTemplate> 
                             <asp:Label ID="FourthlvlId" runat="server" Text='<%# Bind("FourthlvlId") %>'  Visible="True"></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>   
+                 
+                  <asp:TemplateField HeaderText="Номер специальности" Visible = "True" >
+                        <ItemTemplate> 
+                            <asp:Label ID="SpecNumber" runat="server" Text='<%# Bind("SpecNumber") %>'  Visible="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>  
 
                    <asp:TemplateField HeaderText="Совеременные образовательные технологии" Visible = "True" >
                         <ItemTemplate> 
@@ -62,8 +68,10 @@
        
                 </Columns>
        </asp:GridView>
+        <asp:CheckBox ID="CheckBox1" runat="server" Text="Является ли кафедра выпускающей" />
         <br />
         <asp:Button ID="Button1" runat="server" Text="Сохранить" Width="702px" OnClick="Button1_Click" />
+        <br />
         <br />
         <br />
         Поиск по коду и названию специальност<br />

@@ -36,13 +36,15 @@ namespace KPIWeb.Reports
                                                                      on a.SpecializationTableID equals b.FK_Specialization
                                                                      where b.FK_ThirdLevelSubdivisionTable == userTable.FK_ThirdLevelSubdivisionTable && b.Active == true
                                                                      select a).ToList();
-                
+
+                CheckBox1.Checked = (from a in kPiDataContext.ThirdLevelParametrs where a.ThirdLevelParametrsID == userTable.FK_ThirdLevelSubdivisionTable select a.CanGraduate).FirstOrDefault();
 
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("SpecializationID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("SpecializationName", typeof(string)));
 
                 dataTable.Columns.Add(new DataColumn("FourthlvlId", typeof(int)));
+                dataTable.Columns.Add(new DataColumn("SpecNumber", typeof(string)));
 
                 dataTable.Columns.Add(new DataColumn("Param1Label", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Param1CheckBox", typeof(string)));
@@ -73,6 +75,7 @@ namespace KPIWeb.Reports
                             a.FK_Specialization == spec.SpecializationTableID
                         select a.FourthLevelSubdivisionTableID).FirstOrDefault();
 
+                    dataRow["SpecNumber"] = spec.SpecializationNumber;
                     dataTable.Rows.Add(dataRow);
 
                     
@@ -213,6 +216,7 @@ namespace KPIWeb.Reports
                             using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
                             {
                                 FourthLevelParametrs fourthLevelParametrsTables = (from a in kpiWebDataContext.FourthLevelParametrs where a.FourthLevelParametrsID == Convert.ToInt32(labelId.Text) select a).FirstOrDefault();
+                                ThirdLevelParametrs thirdLevelParametrs = (from a in kpiWebDataContext.ThirdLevelParametrs where a.ThirdLevelParametrsID == (int)ViewState["UserTable"] select a).FirstOrDefault();
 
                                 if (fourthLevelParametrsTables != null)
                                 {
@@ -222,13 +226,16 @@ namespace KPIWeb.Reports
                                     fourthLevelParametrsTables.IsForeignStudentsAccept = checkBoxparamIsForeign.Checked;
                                 }
 
+                                if (thirdLevelParametrs != null)
+                                    thirdLevelParametrs.CanGraduate = CheckBox1.Checked;
+
                                 kpiWebDataContext.SubmitChanges();
                             }
                     }
                 }
             }
 
-
+            Response.Redirect("~/Reports/ChooseReport.aspx");
 
 
         }
@@ -257,6 +264,7 @@ namespace KPIWeb.Reports
                 dataRow["SpecializationNumber"] = spec.SpecializationNumber;
                 dataTable.Rows.Add(dataRow);
             }
+
             GridView2.DataSource = dataTable;
             GridView2.DataBind();
         }
