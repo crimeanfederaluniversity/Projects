@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -34,7 +35,8 @@ namespace KPIWeb.Reports
                 List<SpecializationTable> specializationTableData = (from a in kPiDataContext.SpecializationTable
                                                                      join b in kPiDataContext.FourthLevelSubdivisionTable
                                                                      on a.SpecializationTableID equals b.FK_Specialization
-                                                                     where b.FK_ThirdLevelSubdivisionTable == userTable.FK_ThirdLevelSubdivisionTable && b.Active == true
+                                                                     where b.FK_ThirdLevelSubdivisionTable == userTable.FK_ThirdLevelSubdivisionTable 
+                                                                     && b.Active == true
                                                                      select a).ToList();
 
                 CheckBox1.Checked = (from a in kPiDataContext.ThirdLevelParametrs where a.ThirdLevelParametrsID == userTable.FK_ThirdLevelSubdivisionTable select a.CanGraduate).FirstOrDefault();
@@ -84,6 +86,24 @@ namespace KPIWeb.Reports
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
             }
+            if (CheckBox1.Checked)
+            {
+                GridView1.Visible = true;
+                Label3.Visible    = true;
+                Label1.Visible    = true;
+                GridView2.Visible = true;
+                Button2.Visible   = true;
+                TextBox1.Visible  = true;
+            }
+            else
+            {
+                GridView1.Visible = false;
+                Label3.Visible = false;
+                Label1.Visible = false;
+                GridView2.Visible = false;
+                Button2.Visible = false;
+                TextBox1.Visible = false;
+            }
         }
 
         protected void DeleteSpecializationButtonClick(object sender, EventArgs e)
@@ -93,7 +113,8 @@ namespace KPIWeb.Reports
                 using (KPIWebDataContext kPiDataContext = new KPIWebDataContext())
                 {
                     var check =
-                    (from a in kPiDataContext.FourthLevelSubdivisionTable where a.FK_Specialization == Convert.ToInt32(button.CommandArgument) select a)
+                    (from a in kPiDataContext.FourthLevelSubdivisionTable where 
+                         a.FourthLevelSubdivisionTableID == Convert.ToInt32(button.CommandArgument) select a)
                         .FirstOrDefault();
 
                     check.Active = false;
@@ -299,6 +320,28 @@ namespace KPIWeb.Reports
                         checkBoxparamIsForeign.Checked = fourthLevelParametrs.IsForeignStudentsAccept.Value;
                 }
 
+            }
+        }
+
+        protected void CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CheckBox1.Checked)
+            {
+                GridView1.Visible = true;
+                Label3.Visible = true;
+                Label1.Visible = true;
+                GridView2.Visible = true;
+                Button2.Visible = true;
+                TextBox1.Visible = true;
+            }
+            else
+            {
+                GridView1.Visible = false;
+                Label3.Visible = false;
+                Label1.Visible = false;
+                GridView2.Visible = false;
+                Button2.Visible = false;
+                TextBox1.Visible = false;
             }
         }
     }

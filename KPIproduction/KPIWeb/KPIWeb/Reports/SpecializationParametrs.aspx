@@ -3,7 +3,11 @@
     <div>   
         <br />
         <br />
-        Список специальностей приклепненных к кафедре<br />
+        <asp:CheckBox ID="CheckBox1" runat="server" Text="Кафедра является выпускающей" AutoPostBack="True" OnCheckedChanged="CheckBox1_CheckedChanged" />
+        <br />
+        <br />
+        <asp:Label ID="Label1" runat="server" Text="Список специальностей приклепненных к кафедре"></asp:Label>
+        <br />
     </div>
         <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server" OnRowDataBound="GridView1_RowDataBound">           
              <Columns>               
@@ -61,20 +65,19 @@
                  <asp:TemplateField HeaderText="Удалить специальность из списка">
                         <ItemTemplate>
                             <asp:Label ID="DeleteSpecializationLabel" runat="server" Text='<%# Bind("DeleteSpecializationLabel") %>' Visible="false"></asp:Label>
-                            <asp:Button ID="DeleteSpecializationButton" runat="server" CommandName="Select" Text="Удалить" Width="200px" CommandArgument='<%# Eval("SpecializationID") %>' OnClick="DeleteSpecializationButtonClick"/>
+                            <asp:Button ID="DeleteSpecializationButton" runat="server" CommandName="Select" Text="Удалить" Width="200px" CommandArgument='<%# Eval("FourthlvlId") %>' OnClick="DeleteSpecializationButtonClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>   
                                            
        
                 </Columns>
        </asp:GridView>
-        <asp:CheckBox ID="CheckBox1" runat="server" Text="Является ли кафедра выпускающей" />
         <br />
         <asp:Button ID="Button1" runat="server" Text="Сохранить" Width="702px" OnClick="Button1_Click" />
         <br />
         <br />
+        <asp:Label ID="Label3" runat="server" Text="Поиск по коду и названию специальност"></asp:Label>
         <br />
-        Поиск по коду и названию специальност<br />
         <asp:TextBox ID="TextBox1" runat="server" Width="271px"></asp:TextBox>
         <br />
         <asp:Button ID="Button2" runat="server" Text="Поиск" Width="277px" OnClick="Button2_Click" />

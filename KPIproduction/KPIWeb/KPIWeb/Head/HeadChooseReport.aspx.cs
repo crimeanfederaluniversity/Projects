@@ -96,16 +96,22 @@ namespace KPIWeb.Head
             {
                 Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
                 Session["ReportArchiveID"] = paramSerialization;
-                Serialization modeSer = new Serialization(0, null, null);
+                Serialization modeSer = new Serialization(1, null, null);
                 Session["mode"] = modeSer;
-
-
                 if (CheckBox1.Checked)
                 {
-                    Serialization level = new Serialization(1,
-                        Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value),
-                        Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value),
-                        Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value),0, 0);
+                    int value = 0;
+                    int l_1 = 0;
+                    if (DropDownList1.SelectedIndex > 0)
+                        l_1  = Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value);
+                    int l_2 = 0;
+                    if (DropDownList2.SelectedIndex > 0)
+                        l_2 = Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value);
+                    int l_3 = 0;
+                    if (DropDownList3.SelectedIndex > 0)
+                        l_3 = Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value);
+
+                    Serialization level = new Serialization(1,l_1,l_2,l_3,0, 0);
                     Session["level"] = level;
                 }
                 else
@@ -126,6 +132,28 @@ namespace KPIWeb.Head
                 Session["ReportArchiveID"] = paramSerialization;
                 Serialization modeSer = new Serialization(2, null, null);
                 Session["mode"] = modeSer;
+                if (CheckBox1.Checked)
+                {
+                    int value = 0;
+                    int l_1 = 0;
+                    if (DropDownList1.SelectedIndex > 0)
+                        l_1 = Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value);
+                    int l_2 = 0;
+                    if (DropDownList2.SelectedIndex > 0)
+                        l_2 = Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value);
+                    int l_3 = 0;
+                    if (DropDownList3.SelectedIndex > 0)
+                        l_3 = Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value);
+
+                    Serialization level = new Serialization(1, l_1, l_2, l_3, 0, 0);
+                    Session["level"] = level;
+                }
+                else
+                {
+                    Serialization level = new Serialization(0, 0, 0, 0, 0, 0);
+                    Session["level"] = level;
+                }
+
                 Response.Redirect("~/Head/HeadShowReportResult.aspx");
             }
         }

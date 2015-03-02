@@ -64,7 +64,20 @@ namespace KPIWeb.Head
                 int l_3 = (userTable.FK_ThirdLevelSubdivisionTable == null) ? 0 : (int)userTable.FK_ThirdLevelSubdivisionTable;
                 int l_4 = (userTable.FK_FourthLevelSubdivisionTable == null) ? 0 : (int)userTable.FK_FourthLevelSubdivisionTable;
                 int l_5 = (userTable.FK_FifthLevelSubdivisionTable == null) ? 0 : (int)userTable.FK_FifthLevelSubdivisionTable;
-               
+
+                Serialization level = (Serialization)Session["level"];
+                if (level == null)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+                //int level = level.mode; // 0 заполняем // 1 смотрим // 2 смотрим и подтверждаем
+                l_0 = level.l0;
+                l_1 = level.l1;
+                l_2 = level.l2;
+                l_3 = level.l3;
+                l_4 = level.l4;
+                l_5 = level.l5;
+
                 DataTable dt_basic = new DataTable();
                 DataTable dt_calculate = new DataTable();
                 DataTable dt_indicator = new DataTable();
