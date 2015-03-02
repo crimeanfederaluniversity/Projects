@@ -130,6 +130,17 @@ namespace KPIWeb.Account
                     user.FK_ThirdLevelSubdivisionTable = selectedValue;
 
                 user.AccessLevel = 0; ///////НАДО ПРОДУМАТЬ
+
+            if (DropDownList5.SelectedIndex == 2)
+            {
+                user.AccessLevel = 5;
+            }
+
+            if (DropDownList5.SelectedIndex == 3)
+            {
+                user.AccessLevel = 10;
+            }
+
                 user.FK_ZeroLevelSubdivisionTable = 1;
 
                 kPiDataContext.UsersTable.InsertOnSubmit(user);

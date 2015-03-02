@@ -11,6 +11,7 @@ namespace KPIWeb
 {
     public class CalculateAbb
     {
+        public static List<string> errorList = new List<string>();
         public static string replaseAbbWithValueForLevel(string input, int reportId, int Lv0, int Lv1, int Lv2, int Lv3,
             int Lv4, int Lv5)
         {
@@ -33,6 +34,15 @@ namespace KPIWeb
                           && (user.FK_FourthLevelSubdivisionTable == Lv4 || Lv4 == 0)
                           && (user.FK_FifthLevelSubdivisionTable  == Lv5 || Lv5 == 0)
                     select collect.CollectedValue).Sum();
+                if (a == null) // так быть не должно)
+                {
+                    a = 0;
+                    //LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Замена аббревиатуры вернула NULL "+
+                   // abbTmp+" "+Lv0+" "+Lv1+" "+Lv2+" "+Lv3+" "+Lv4+" "+Lv5+" " +reportId); 
+                  //  errorList.Add("Замена аббревиатуры вернула NULL "+
+                  //  abbTmp+" "+Lv0+" "+Lv1+" "+Lv2+" "+Lv3+" "+Lv4+" "+Lv5+" " +reportId);
+                    
+                }
                 return a.ToString();
             }
             else
@@ -86,7 +96,6 @@ namespace KPIWeb
                             {
                                 return "11";
                             }
-
                         }
                         break;
                     }
@@ -99,8 +108,8 @@ namespace KPIWeb
             }
             return "0";
         }
-    
-    
+
+
         public static string deleteSpaces(string input)
         {
             string tmpStr = input;
@@ -156,9 +165,8 @@ namespace KPIWeb
             return tmpStr;
         }
 
-        static public double CalculateForLevel(string input, int report, int Lv0, int Lv1, int Lv2, int Lv3, int Lv4, int Lv5, int param1)
+        public static double CalculateForLevel(string input, int report, int Lv0, int Lv1, int Lv2, int Lv3, int Lv4, int Lv5, int param1)
         {
-
             string tmpStr;
             tmpStr = input;
             deleteSpaces(tmpStr);
@@ -176,6 +184,8 @@ namespace KPIWeb
                     }
                 }
             }
+          //  LogHandler.LogWriter.WriteLog(LogCategory.ERROR, errorList.ToString());
+            
             return Polish.Calculate(tmpStr);
         }
 

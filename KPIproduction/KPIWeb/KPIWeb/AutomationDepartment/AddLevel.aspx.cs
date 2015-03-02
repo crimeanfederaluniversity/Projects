@@ -180,6 +180,13 @@ namespace KPIWeb.AutomationDepartment
                         ts.Name = t2;
                         ts.FK_SecondLevelSubdivisionTable = SelectedValue;
                         kPiDataContext.ThirdLevelSubdivisionTable.InsertOnSubmit(ts);
+                        kPiDataContext.SubmitChanges();
+
+                        ThirdLevelParametrs tp = new ThirdLevelParametrs();
+                        tp.Active = true;
+                        tp.CanGraduate = true;
+                        tp.ThirdLevelParametrsID = ts.ThirdLevelSubdivisionTableID;
+                        kPiDataContext.ThirdLevelParametrs.InsertOnSubmit(tp);
                     }
                 }
                 kPiDataContext.SubmitChanges();

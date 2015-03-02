@@ -35,7 +35,21 @@ namespace KPIWeb.Head
             {
                 Response.Redirect("~/Account/Login.aspx");
             }
+            Serialization modeSer = (Serialization)Session["mode"];
+            if (modeSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и подтверждаем
 
+            if (mode == 1)
+            {
+                Button1.Text = "Вернуться в меню выбора";
+            }
+            else if (mode == 2)
+            {
+                Button1.Text = "Подтвердить правильность рассчитанных данных";
+            }
             if (!Page.IsPostBack)
             {
                 int UserID = UserSer.Id;
@@ -108,7 +122,7 @@ namespace KPIWeb.Head
                 {
                     DataRow dataRow = dt_calculate.NewRow();
                     dataRow["CalculatedParametrsName"] = calcParam.Name;
-                    dataRow["CalculatedParametrsResult"] = CalculateAbb.CalculateForLevel(calcParam.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5,0);
+                    dataRow["CalculatedParametrsResult"] = CalculateAbb.CalculateForLevel(calcParam.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0);
                     dt_calculate.Rows.Add(dataRow);
                 }
 
@@ -116,7 +130,7 @@ namespace KPIWeb.Head
                 {
                     DataRow dataRow = dt_indicator.NewRow();
                     dataRow["IndicatorName"] = indicator.Name;
-                    dataRow["IndicatorResult"] = CalculateAbb.CalculateForLevel(indicator.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5,0);
+                    dataRow["IndicatorResult"] = CalculateAbb.CalculateForLevel(indicator.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0);
                     dt_indicator.Rows.Add(dataRow);
                 }
 
@@ -126,6 +140,25 @@ namespace KPIWeb.Head
                 CalculatedParametrsTable.DataBind();
                 IndicatorsTable.DataSource = dt_indicator;
                 IndicatorsTable.DataBind();
+            }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Serialization modeSer = (Serialization)Session["mode"];
+            if (modeSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и подтверждаем
+
+            if (mode == 1)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            else if (mode == 2)
+            {
+                //вытаскиваем и подтвердаем
             }
         }
     }
