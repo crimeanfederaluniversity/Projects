@@ -12,8 +12,6 @@
 
         <asp:ValidationSummary runat="server" CssClass="text-danger" />
 
-
-
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Выберите университет</asp:Label>
             <div class="col-md-10">
@@ -29,7 +27,6 @@
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Выберите кафедру</asp:Label>
             <div class="col-md-10">
-                <br />
                 <asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="True">
                 </asp:DropDownList>
             </div>
@@ -37,14 +34,17 @@
         
              <div class="form-group">
                  <br />
-                 <asp:Label ID="Label3" runat="server" Text="Тип пользователя"></asp:Label>
-                 <br />
+                 &nbsp;&nbsp;&nbsp;
+                 <div class="col-md-10">
+                     <asp:Label ID="Label3" runat="server" Text="Тип пользователя" Font-Bold="True"></asp:Label>
                  <asp:DropDownList ID="DropDownList5" runat="server" OnSelectedIndexChanged="DropDownList5_SelectedIndexChanged" AutoPostBack="True">
                      <asp:ListItem Value="-1">Выберите должность</asp:ListItem>
                      <asp:ListItem Value="0">Вносящий данные</asp:ListItem>
                      <asp:ListItem Value="5">Руководство</asp:ListItem>
                      <asp:ListItem Value="10">Администратор</asp:ListItem>
                  </asp:DropDownList>
+                      </div>
+                 
                  <br />
             </div>
         
@@ -53,10 +53,14 @@
         <div class="form-group">
             <div class="form-group">
                 <div class="col-md-10">
-                    <asp:Label ID="Label24" runat="server" Text="Выберите шаблон"></asp:Label>
                     <br />
+&nbsp;&nbsp;&nbsp;
+                     <div class="col-md-10">
+                         <asp:Label ID="Label24" runat="server" Text="Выберите шаблон" Font-Bold="True"></asp:Label>
                     <asp:DropDownList ID="DropDownList4" CssClass="form-control" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged"></asp:DropDownList>
-                    <br />
+                  </div>
+                    
+                           <br />
                 </div>
             </div>
             <asp:Label ID="Label25" runat="server" Text="Индикаторы"></asp:Label>
