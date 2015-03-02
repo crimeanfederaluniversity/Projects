@@ -141,8 +141,8 @@ namespace KPIWeb.Account
                 ///////////////////////////////////////////шаблон//////////////////////////////////
                 int rowIndex = 0;
 
-                int currentRoleId = Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value);
-                DataTable roleBasicParametrs = (DataTable)ViewState["GridviewRoleMapping"];
+                //int currentRoleId = Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value);
+                //DataTable roleBasicParametrs = (DataTable)ViewState["GridviewRoleMapping"];
 
                 if (Gridview3.Rows.Count > 0)
                 {

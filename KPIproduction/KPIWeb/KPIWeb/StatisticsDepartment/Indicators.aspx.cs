@@ -172,7 +172,7 @@ namespace KPIWeb.StatisticsDepartment
             if (TextBox6.Text == "") TextBox6.Text = 0.ToString();
             if (TextBox7.Text == "") TextBox7.Text = 0.ToString();
 
-            TextBox1.Text = CalculateAbb.CalculateForLevel(IndicatorFormula0.Text,1005,
+            TextBox1.Text = CalculateAbb.CalculateForLevel(IndicatorFormula0.Text,2007,
             Convert.ToInt32(TextBox2.Text), Convert.ToInt32(TextBox3.Text), Convert.ToInt32(TextBox4.Text),
             Convert.ToInt32(TextBox5.Text), Convert.ToInt32(TextBox6.Text), Convert.ToInt32(TextBox7.Text),0).ToString();
         }//Рассчет с подразделениями

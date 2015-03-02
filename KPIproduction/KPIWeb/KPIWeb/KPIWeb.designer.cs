@@ -111,7 +111,7 @@ namespace KPIWeb
     #endregion
 		
 		public KPIWebDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["crimeanfeder_8ConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["crimeanfeder_9ConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -4820,7 +4820,7 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Formula", DbType="VarChar(500)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Formula", DbType="VarChar(5000)")]
 		public string Formula
 		{
 			get

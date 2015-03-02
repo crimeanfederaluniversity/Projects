@@ -513,19 +513,19 @@ namespace KPIWeb.Reports
                                                 a.BasicParametrAdditionalID == specBasicParam.BasicParametersTableID
                                             select a).FirstOrDefault();
                                     //узнали параметры базового показателя
-                                    int j = 0;
+                                    int j = 0;//если хоть одной специальности базовый показатель нужен то мы его выведем
                                     foreach (FourthLevelSubdivisionTable spec in Specialzations)
                                     {
-                                        j = 0;//если хоть одной специальности базовый показатель нужен то мы его выведем
+                                       
                                         FourthLevelParametrs fourthParametrs =
                                             (from a in kpiWebDataContext.FourthLevelParametrs
                                              where a.FourthLevelParametrsID == spec.FourthLevelSubdivisionTableID
                                              select a).FirstOrDefault();
                                         // узнали параметры специальности
                                         //если этото параметр и эта специальность дружат  
-                                        ///УБЕРЕШЬ ЭТОТ NULL 
-                                        if (fourthParametrs==null||(((fourthParametrs.IsForeignStudentsAccept == true) || (basicParametrs.ForForeignStudents == false)) //это для иностранцев
-                                            && (fourthParametrs.SpecType == basicParametrs.SpecType) || (basicParametrs.SpecType == 0))) // это для деления на магистров аспирантов итд
+                                    //    if (fourthParametrs != null)
+                                        if (((fourthParametrs.IsForeignStudentsAccept == true) || (basicParametrs.ForForeignStudents == false)) //это для иностранцев
+                                            && ((fourthParametrs.SpecType == basicParametrs.SpecType) || (basicParametrs.SpecType == 0))) // это для деления на магистров аспирантов итд
                                         {
                                             j++; //потом проверка и следовательно БП нуно выводить
                                             CollectedBasicParametersTable collectedBasicTmp =
@@ -556,8 +556,7 @@ namespace KPIWeb.Reports
                                                 collectedBasicTmp.FK_FourthLevelSubdivisionTable = spec.FourthLevelSubdivisionTableID;
                                                 kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
                                                 kpiWebDataContext.SubmitChanges();
-                                            }
-                                            dataRow["Name"] = specBasicParam.Name;
+                                            }                                     
                                             dataRow["Value" + i] = collectedBasicTmp.CollectedValue.ToString();
                                             dataRow["CollectId" + i] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
                                         }
@@ -565,6 +564,7 @@ namespace KPIWeb.Reports
                                     }
                                     if (j > 0)
                                     {
+                                        dataRow["Name"] = specBasicParam.Name;
                                         dataRow["CurrentReportArchiveID"] = ReportArchiveID;
                                         dataRow["BasicParametersTableID"] = specBasicParam.BasicParametersTableID;
                                         dataTable.Rows.Add(dataRow);
@@ -775,9 +775,13 @@ namespace KPIWeb.Reports
             }
             int mode = modeSer.mode;
 
+
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             for (int i = 1; i <= GridviewCollectedBasicParameters.Columns.Count; i++)
             {
                 {
+                    
+
                     var lblMinutes = e.Row.FindControl("Value" + rowIndex) as TextBox;
                     if (lblMinutes != null)
                     {
@@ -794,6 +798,39 @@ namespace KPIWeb.Reports
                     }
                     else if (lblMinutes != null)
                     {
+                        Label lbl = e.Row.FindControl("CollectId" + rowIndex) as Label; ;
+                        RangeValidator Validator = e.Row.FindControl("Validate" + rowIndex) as RangeValidator;
+                        int type =Convert.ToInt32((from a in kpiWebDataContext.CollectedBasicParametersTable
+                            join b in kpiWebDataContext.BasicParametrAdditional
+                                on a.FK_BasicParametersTable equals b.BasicParametrAdditionalID
+                            where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
+                            select b.DataType).FirstOrDefault());
+
+                        if (Validator != null)
+                        {
+                            if (type == 0)
+                            {
+                                Validator.MinimumValue = "0";
+                                Validator.MaximumValue = "1";
+                                Validator.Type = ValidationDataType.Integer;
+                                Validator.Text = "Только 0 или 1";
+                            }
+                            if (type == 1)
+                            {
+                                Validator.MinimumValue = "0";
+                                Validator.MaximumValue = "10000";
+                                Validator.Type = ValidationDataType.Integer;
+                                Validator.Text = "Только целочисленное значение";
+                            }
+                            if (type == 2)
+                            {
+                                Validator.MinimumValue = "0";
+                                Validator.MaximumValue = "10000000";
+                                Validator.Type = ValidationDataType.Double;
+                                Validator.Text = "Только цифры и запятая";
+                            }
+                        }
+
                         lblMinutes.BackColor = color;
                     }
                     rowIndex++;
@@ -803,12 +840,10 @@ namespace KPIWeb.Reports
 
         protected void GridviewCollectedBasicParameters_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         protected void GridviewCollectedBasicParameters_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
         {
-
         }
 
         protected void GridviewCollectedBasicParameters_PageIndexChanging(object sender, GridViewPageEventArgs e)
