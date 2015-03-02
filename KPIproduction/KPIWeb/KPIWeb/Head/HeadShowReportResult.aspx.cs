@@ -99,7 +99,9 @@ namespace KPIWeb.Head
                         on a.BasicParametersTableID equals  c.FK_ParametrsTable
                         where b.FK_ReportArchiveTable == ReportArchiveID
                         && c.FK_UsersTable == UserID
-                        && c.CanView == true
+                        && (((c.CanEdit == true) && mode == 0)
+                        || ((c.CanView == true) && mode == 1)
+                        || ((c.CanConfirm == true) && mode == 2))
                         select  a).ToList();
                 List<CalculatedParametrs> list_calcParams = 
                     (from a in kpiWebDataContext.CalculatedParametrs
@@ -109,7 +111,9 @@ namespace KPIWeb.Head
                         on a.CalculatedParametrsID equals c.FK_CalculatedParametrsTable
                         where b.FK_ReportArchiveTable == ReportArchiveID 
                         && c.FK_UsersTable == UserID
-                        && c.CanView == true
+                         && (((c.CanEdit == true) && mode == 0)
+                                || ((c.CanView == true) && mode == 1)
+                                || ((c.CanConfirm == true) && mode == 2))
                         select  a).ToList();
                 List<IndicatorsTable> list_indicators =
                     (from a in kpiWebDataContext.IndicatorsTable
@@ -119,7 +123,9 @@ namespace KPIWeb.Head
                      on a.IndicatorsTableID equals c.FK_IndicatorsTable
                      where b.FK_ReportArchiveTable == ReportArchiveID
                      && c.FK_UsresTable == UserID
-                     && c.CanView == true
+                     && (((c.CanEdit == true) && mode == 0)
+                                || ((c.CanView == true) && mode == 1)
+                                || ((c.CanConfirm == true) && mode == 2))
                      select a).ToList();
 
                 foreach (BasicParametersTable basicParametr in list_basicParametrs)
