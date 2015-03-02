@@ -5,7 +5,7 @@
         <h2>Список активных отчетов</h2><br />
         <asp:GridView ID="GridView1" runat="server" 
             AutoGenerateColumns="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" 
-            style="margin-top: 0px">
+            style="margin-top: 0px" OnRowDataBound="GridView1_RowDataBound">
              <Columns>
                  
                  <asp:BoundField DataField="ReportArchiveID"   HeaderText="Current Report ID" Visible="false" />    

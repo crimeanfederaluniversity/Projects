@@ -125,5 +125,133 @@ namespace KPIWeb.Reports
         {
 
         }
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userID = UserSer.Id;
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            for (int i = 1; i <= GridView1.Columns.Count; i++)
+            {
+                Button btnEdit = e.Row.FindControl("ButtonEditReport") as Button;
+                Button btnView = e.Row.FindControl("ButtonViewReport") as Button;
+                Button btnConfirm = e.Row.FindControl("ButtonConfirmReport") as Button;
+                if (btnEdit != null)
+                {
+                    int ReportArchiveID = Convert.ToInt32(btnEdit.CommandArgument);
+
+                    int kaf_edit =
+                        (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                            join b in kpiWebDataContext.BasicParametersTable
+                                on a.FK_BasicParametrsTable equals b.BasicParametersTableID
+                            join c in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                on b.BasicParametersTableID equals c.FK_ParametrsTable
+                            join d in kpiWebDataContext.BasicParametrAdditional
+                                on b.BasicParametersTableID equals d.BasicParametrAdditionalID
+                            where
+                                a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчета
+                                && c.FK_UsersTable == userID // свяный с пользователем
+                                && d.SubvisionLevel == 3 //нужный уровень заполняющего
+                                && a.Active == true // запись в таблице связей показателя и отчета активна
+                                && c.CanEdit == true
+                                && c.Active == true // запись в таблице связей показателя и пользователей активна
+                                && d.Calculated == false
+                            // этот показатель нужно вводить а не считать
+                            select b).ToList().Count;
+                    int kaf_view =
+                        (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                            join b in kpiWebDataContext.BasicParametersTable
+                                on a.FK_BasicParametrsTable equals b.BasicParametersTableID
+                            join c in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                on b.BasicParametersTableID equals c.FK_ParametrsTable
+                            join d in kpiWebDataContext.BasicParametrAdditional
+                                on b.BasicParametersTableID equals d.BasicParametrAdditionalID
+                            where
+                                a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчета
+                                && c.FK_UsersTable == userID // свяный с пользователем
+                                && d.SubvisionLevel == 3 //нужный уровень заполняющего
+                                && a.Active == true // запись в таблице связей показателя и отчета активна
+                                && c.CanView == true
+                                && c.Active == true // запись в таблице связей показателя и пользователей активна
+                                && d.Calculated == false
+                            // этот показатель нужно вводить а не считать
+                            select b).ToList().Count;
+                    int kaf_conf =
+                        (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                            join b in kpiWebDataContext.BasicParametersTable
+                                on a.FK_BasicParametrsTable equals b.BasicParametersTableID
+                            join c in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                on b.BasicParametersTableID equals c.FK_ParametrsTable
+                            join d in kpiWebDataContext.BasicParametrAdditional
+                                on b.BasicParametersTableID equals d.BasicParametrAdditionalID
+                            where
+                                a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчета
+                                && c.FK_UsersTable == userID // свяный с пользователем
+                                && d.SubvisionLevel == 3 //нужный уровень заполняющего
+                                && a.Active == true // запись в таблице связей показателя и отчета активна
+                                && c.CanConfirm == true
+                                && c.Active == true // запись в таблице связей показателя и пользователей активна
+                                && d.Calculated == false
+                            // этот показатель нужно вводить а не считать
+                            select b).ToList().Count;
+
+                    int specEdit =
+                        (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                            join b in kpiWebDataContext.BasicParametersTable
+                                on a.FK_BasicParametrsTable equals b.BasicParametersTableID
+                            join c in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                on b.BasicParametersTableID equals c.FK_ParametrsTable
+                            join d in kpiWebDataContext.BasicParametrAdditional
+                                on b.BasicParametersTableID equals d.BasicParametrAdditionalID
+                            where a.FK_ReportArchiveTable == ReportArchiveID //для отчета
+                                  && d.SubvisionLevel == 4 // для уровня заполняющего
+                                  && d.Calculated == false //только вводимые параметры
+                                  && c.FK_UsersTable == userID // связаннаые с пользователем
+                                  && a.Active == true
+                                  && c.CanEdit == true
+                                  && c.Active == true
+                            select b).ToList().Count;
+                    int specView =
+                        (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                            join b in kpiWebDataContext.BasicParametersTable
+                                on a.FK_BasicParametrsTable equals b.BasicParametersTableID
+                            join c in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                on b.BasicParametersTableID equals c.FK_ParametrsTable
+                            join d in kpiWebDataContext.BasicParametrAdditional
+                                on b.BasicParametersTableID equals d.BasicParametrAdditionalID
+                            where a.FK_ReportArchiveTable == ReportArchiveID //для отчета
+                                  && d.SubvisionLevel == 4 // для уровня заполняющего
+                                  && d.Calculated == false //только вводимые параметры
+                                  && c.FK_UsersTable == userID // связаннаые с пользователем
+                                  && a.Active == true
+                                  && c.CanView == true
+                                  && c.Active == true
+                            select b).ToList().Count;
+                    int specConf =
+                        (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                            join b in kpiWebDataContext.BasicParametersTable
+                                on a.FK_BasicParametrsTable equals b.BasicParametersTableID
+                            join c in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                on b.BasicParametersTableID equals c.FK_ParametrsTable
+                            join d in kpiWebDataContext.BasicParametrAdditional
+                                on b.BasicParametersTableID equals d.BasicParametrAdditionalID
+                            where a.FK_ReportArchiveTable == ReportArchiveID //для отчета
+                                  && d.SubvisionLevel == 4 // для уровня заполняющего
+                                  && d.Calculated == false //только вводимые параметры
+                                  && c.FK_UsersTable == userID // связаннаые с пользователем
+                                  && a.Active == true
+                                  && c.CanConfirm == true
+                                  && c.Active == true
+                            select b).ToList().Count;
+                    btnEdit.Enabled = (kaf_edit + specEdit) > 0 ? true : false;
+                    btnView.Enabled = (kaf_view + specView) > 0 ? true : false;
+                    btnConfirm.Enabled = (kaf_conf + specConf) > 0 ? true : false;
+                }
+            }
+        }
     }
 }
