@@ -713,7 +713,7 @@ namespace KPIWeb.Reports
                         }
                         KPIWebDataContext.SubmitChanges();
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Данные успешно подтверждены');", true);
+                            "alert('Данные успешно сохранены');", true);
                     }
                     CalcCalculate(ReportArchiveID,user);
                    //надо рассчитать рассчетные

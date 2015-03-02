@@ -53,7 +53,7 @@
         <div class="form-group">
             <div class="form-group">
                 <div class="col-md-10">
-                    <asp:Label ID="Label24" runat="server" Text="Выберите должность"></asp:Label>
+                    <asp:Label ID="Label24" runat="server" Text="Выберите шаблон"></asp:Label>
                     <br />
                     <asp:DropDownList ID="DropDownList4" CssClass="form-control" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged"></asp:DropDownList>
                     <br />
@@ -115,7 +115,7 @@
             </asp:GridView>
             <br />
             <asp:Label ID="Label27" runat="server" Text="Базовые показатели"></asp:Label>
-            <asp:GridView ID="Gridview3" runat="server" AutoGenerateColumns="False">
+            <asp:GridView ID="Gridview3" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="Gridview3_SelectedIndexChanged">
                 <Columns>
                     <asp:TemplateField HeaderText="Название">
                         <ItemTemplate>
