@@ -311,6 +311,7 @@ namespace KPIWeb.Reports
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
@@ -389,18 +390,101 @@ namespace KPIWeb.Reports
                 #endregion
                 //создали макет дататейбла
                 int additionalColumnCount = 0;
+                #region
+                if (userLevel!=3)
+                {
+                    List<BasicParametersTable> BasicParams =
+                            (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                             join b in kpiWebDataContext.BasicParametersTable
+                             on a.FK_BasicParametrsTable equals b.BasicParametersTableID
+                             join c in kpiWebDataContext.BasicParametrsAndUsersMapping
+                             on b.BasicParametersTableID equals c.FK_ParametrsTable
+                             join d in kpiWebDataContext.BasicParametrAdditional
+                             on b.BasicParametersTableID equals d.BasicParametrAdditionalID
+                             where
+                                   a.FK_ReportArchiveTable == ReportArchiveID  //из нужного отчета
+                                && c.FK_UsersTable == UserID // свяный с пользователем
+                                && d.SubvisionLevel == userLevel //нужный уровень заполняющего
+                                && a.Active == true  // запись в таблице связей показателя и отчета активна
+
+                                && (((c.CanEdit == true) && mode == 0)
+                                || ((c.CanView == true) && mode == 1)
+                                || ((c.CanConfirm == true) && mode == 2)) // фильтруем по правам пользователя
+
+                                && c.Active == true  // запись в таблице связей показателя и пользователей активна
+                                && d.Calculated == false // этот показатель нужно вводить а не считать
+                             select b).ToList();
+                    //узнали показатели
+                    foreach (BasicParametersTable basicParam in BasicParams) //пройдемся по показателям
+                    {
+                            DataRow dataRow = dataTable.NewRow();
+                            dataRow["CurrentReportArchiveID"] = ReportArchiveID;
+                            dataRow["BasicParametersTableID"] = basicParam.BasicParametersTableID;
+                            dataRow["Name"] = basicParam.Name;
+                            basicNames.Add(basicParam.Name);
+                            CollectedBasicParametersTable collectedBasicTmp =
+                                (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                 where a.FK_ZeroLevelSubdivisionTable == user.FK_ZeroLevelSubdivisionTable
+                                     && a.FK_FirstLevelSubdivisionTable == user.FK_FirstLevelSubdivisionTable
+                                     && a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable
+                                     && a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
+                                     && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
+                                     && a.FK_ReportArchiveTable == ReportArchiveID
+                                 select a).FirstOrDefault();
+                            if (collectedBasicTmp == null) // надо создать
+                            {
+                                collectedBasicTmp = new CollectedBasicParametersTable();
+                                collectedBasicTmp.Active = true;
+                                collectedBasicTmp.FK_UsersTable = UserID;
+                                collectedBasicTmp.FK_BasicParametersTable = basicParam.BasicParametersTableID;
+                                collectedBasicTmp.FK_ReportArchiveTable = ReportArchiveID;
+                                collectedBasicTmp.CollectedValue = null;
+                                collectedBasicTmp.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
+                                collectedBasicTmp.LastChangeDateTime = DateTime.Now;
+                                collectedBasicTmp.SavedDateTime = DateTime.Now;
+                                collectedBasicTmp.FK_ZeroLevelSubdivisionTable = user.FK_ZeroLevelSubdivisionTable;
+                                collectedBasicTmp.FK_FirstLevelSubdivisionTable = user.FK_FirstLevelSubdivisionTable;
+                                collectedBasicTmp.FK_SecondLevelSubdivisionTable = user.FK_SecondLevelSubdivisionTable;
+                                collectedBasicTmp.FK_ThirdLevelSubdivisionTable = user.FK_ThirdLevelSubdivisionTable;
+
+                                kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
+                                kpiWebDataContext.SubmitChanges();
+                            }
+                            dataRow["Value0"] = collectedBasicTmp.CollectedValue.ToString();
+                            dataRow["CollectId0"] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
+                            dataRow["NotNull0"] = 1.ToString();
+                            dataTable.Rows.Add(dataRow);
+                        }
+                    additionalColumnCount += 1;
+                    }
+                   /* columnNames.Add("Кафедра:\r\n" + (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                                                      where a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
+                                                      select a.Name).FirstOrDefault());
+                    * */
+                #endregion
                 switch (userLevel) // это штука пока будет работать только для пользователя кафедры
                 {
                     case 0: //я КФУ
                         {
+                            columnNames.Add((from a in kpiWebDataContext.ZeroLevelSubdivisionTable
+                                                              where a.ZeroLevelSubdivisionTableID == user.FK_ZeroLevelSubdivisionTable
+                                                              select a.Name).FirstOrDefault());
                             break;
                         }
                     case 1: //Я Акакдемия
                         {
+                            //"Академия:\r\n" + 
+                            columnNames.Add((from a in kpiWebDataContext.FirstLevelSubdivisionTable
+                                                              where a.FirstLevelSubdivisionTableID == user.FK_FirstLevelSubdivisionTable
+                                                              select a.Name).FirstOrDefault());
                             break;
                         }
                     case 2://я Факультет
                         {
+                            //"Факультет:\r\n" + 
+                            columnNames.Add((from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                                                              where a.SecondLevelSubdivisionTableID == user.FK_SecondLevelSubdivisionTable
+                                                              select a.Name).FirstOrDefault());
                             break;
                         }
                     case 3: //я кафедра
