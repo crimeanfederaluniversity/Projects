@@ -31,4 +31,8 @@
        <br />
        <asp:Button ID="Button8" runat="server" Height="50px" OnClick="Button8_Click" Text="Добавление роли/шаблона" Width="400px" />
  
+       <br />
+       <br />
+       <asp:Button ID="Button9" runat="server" Height="50px" OnClick="Button9_Click" Text="Быстр добл БП/Спец/ОблЗнан" Width="400px" />
+ 
 </asp:Content>

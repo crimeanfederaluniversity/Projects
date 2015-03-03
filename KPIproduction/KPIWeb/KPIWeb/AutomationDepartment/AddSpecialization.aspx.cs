@@ -11,7 +11,21 @@ namespace KPIWeb.AutomationDepartment
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
 
+            int userID = UserSer.Id;
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            if (userTable.AccessLevel != 10)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
         }
 
         protected void Button1_Click(object sender, EventArgs e) //пока безо всяких проверок
