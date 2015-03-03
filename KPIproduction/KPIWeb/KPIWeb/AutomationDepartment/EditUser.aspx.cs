@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -168,7 +169,7 @@ namespace KPIWeb.AutomationDepartment
 
                                         user.Login = TextBoxLogin.Text;
 
-                                        if (!TextBoxPassword.Text.Equals("********"))
+                                        if (!TextBoxPassword.Text.Equals("********") || (!Regex.IsMatch(TextBoxPassword.Text, @"/*")) || (!TextBoxEmail.Text.Equals("********") || (!Regex.IsMatch(TextBoxEmail.Text, @"/*"))))
                                         {
                                             user.Password = TextBoxPassword.Text;
                                             user.Email = TextBoxEmail.Text;
@@ -213,6 +214,7 @@ namespace KPIWeb.AutomationDepartment
 
         protected void CheckBox1_CheckedChanged1(object sender, EventArgs e)
         {
+            if (!TextBox1.Text.Any()) CheckBox1.Checked = false;
             RefreshGrid();
         }
     }
