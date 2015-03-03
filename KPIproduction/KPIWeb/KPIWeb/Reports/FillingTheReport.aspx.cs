@@ -358,10 +358,12 @@ namespace KPIWeb.Reports
                 dataTable.Columns.Add(new DataColumn("CollectedBasicParametersTableID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
 
+
                 for (int k = 0; k <= 10; k++)  //создаем кучу полей
                 {
                     dataTable.Columns.Add(new DataColumn("Value" + k.ToString(), typeof(string)));
                     dataTable.Columns.Add(new DataColumn("CollectId" + k.ToString(), typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("NotNull" + k.ToString(), typeof(string)));                    
                 }
                 int additionalColumnCount = 0;
                 switch (userLevel) // это штука пока будет работать только для пользователя кафедры
@@ -455,6 +457,7 @@ namespace KPIWeb.Reports
                                     }
                                     dataRow["Value0"] = collectedBasicTmp.CollectedValue.ToString();
                                     dataRow["CollectId0"] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
+                                    dataRow["NotNull0"] = 1.ToString();
                                     dataTable.Rows.Add(dataRow);
                                 }
                             }
@@ -561,7 +564,7 @@ namespace KPIWeb.Reports
                                             }                                     
                                             dataRow["Value" + i] = collectedBasicTmp.CollectedValue.ToString();
                                             dataRow["CollectId" + i] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
-                                            
+                                            dataRow["NotNull" + i] = 1.ToString();                                       
                                         }
                                         i++;
                                     }
@@ -788,52 +791,56 @@ namespace KPIWeb.Reports
             {
                 {                   
                     var lblMinutes = e.Row.FindControl("Value" + rowIndex) as TextBox;
-                    if (lblMinutes != null && lblMinutes.Text.Count() == 0)
+                    var NotNullLbl = e.Row.FindControl("NotNull" + rowIndex) as Label;
+                    if (NotNullLbl != null)
                     {
-                        lblMinutes.Visible = false;
-                        if (e.Row.RowType == DataControlRowType.DataRow)
+                        if (NotNullLbl.Text.Count() == 0)
                         {
-                            DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
-                            d.BackColor = disableColor;
+                            lblMinutes.Visible = false;
+                            if (e.Row.RowType == DataControlRowType.DataRow)
+                            {
+                                DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
+                                d.BackColor = disableColor;
+                            }
                         }
-                    }
-                    else if (lblMinutes != null)
-                    {
-                        lblMinutes.ReadOnly = (mode == 0) ? false : true;
-                        Label lbl = e.Row.FindControl("CollectId" + rowIndex) as Label; ;
-                        RangeValidator Validator = e.Row.FindControl("Validate" + rowIndex) as RangeValidator;
-                        int type =Convert.ToInt32((from a in kpiWebDataContext.CollectedBasicParametersTable
-                            join b in kpiWebDataContext.BasicParametrAdditional
-                                on a.FK_BasicParametersTable equals b.BasicParametrAdditionalID
-                            where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
-                            select b.DataType).FirstOrDefault());
+                        else 
+                        {
+                            lblMinutes.ReadOnly = (mode == 0) ? false : true;
+                            Label lbl = e.Row.FindControl("CollectId" + rowIndex) as Label; ;
+                            RangeValidator Validator = e.Row.FindControl("Validate" + rowIndex) as RangeValidator;
+                            int type = Convert.ToInt32((from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                        join b in kpiWebDataContext.BasicParametrAdditional
+                                                            on a.FK_BasicParametersTable equals b.BasicParametrAdditionalID
+                                                        where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
+                                                        select b.DataType).FirstOrDefault());
 
-                        if (Validator != null)
-                        {
-                            if (type == 0)
+                            if (Validator != null)
                             {
-                                Validator.MinimumValue = "0";
-                                Validator.MaximumValue = "1";
-                                Validator.Type = ValidationDataType.Integer;
-                                Validator.Text = "Только 0 или 1";
+                                if (type == 0)
+                                {
+                                    Validator.MinimumValue = "0";
+                                    Validator.MaximumValue = "1";
+                                    Validator.Type = ValidationDataType.Integer;
+                                    Validator.Text = "Только 0 или 1";
+                                }
+                                if (type == 1)
+                                {
+                                    Validator.MinimumValue = "0";
+                                    Validator.MaximumValue = "10000";
+                                    Validator.Type = ValidationDataType.Integer;
+                                    Validator.Text = "Только целочисленное значение";
+                                }
+                                if (type == 2)
+                                {
+                                    Validator.MinimumValue = "0";
+                                    Validator.MaximumValue = "10000000";
+                                    Validator.Type = ValidationDataType.Double;
+                                    Validator.Text = "Только цифры и запятая";
+                                }
                             }
-                            if (type == 1)
-                            {
-                                Validator.MinimumValue = "0";
-                                Validator.MaximumValue = "10000";
-                                Validator.Type = ValidationDataType.Integer;
-                                Validator.Text = "Только целочисленное значение";
-                            }
-                            if (type == 2)
-                            {
-                                Validator.MinimumValue = "0";
-                                Validator.MaximumValue = "10000000";
-                                Validator.Type = ValidationDataType.Double;
-                                Validator.Text = "Только цифры и запятая";
-                            }
+                            lblMinutes.BackColor = color;
                         }
-                        lblMinutes.BackColor = color;
-                    }
+                    }                                      
                     rowIndex++;
                 }
             }

@@ -37,8 +37,8 @@ namespace KPIWeb.Account
                                        usersTables.Password == Password.Text
                                        select usersTables).FirstOrDefault();
                     if (user != null)
-                    {
-                        FormsAuthentication.SetAuthCookie(user.Login, true);
+                    {                     
+                       // FormsAuthentication.SetAuthCookie("Hello", true);
                         LogHandler.LogWriter.WriteLog(LogCategory.INFO,"Пользователь " + user.Login + " вошел в систему "); 
                         Serialization UserSerId = new Serialization(user.UsersTableID);
                         Session["UserID"] = UserSerId;

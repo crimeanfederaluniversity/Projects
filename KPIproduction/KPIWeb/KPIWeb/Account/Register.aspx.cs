@@ -111,6 +111,12 @@ namespace KPIWeb.Account
             //try
             //{
                 KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+                if ((from a in kPiDataContext.UsersTable where a.Login == UserName.Text select a).ToList().Count>0)
+                {
+                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Пользователь с таким логином уже существует, выберите другой логин!');", true);    
+                }
+                else
+                {
                 UsersTable user = new UsersTable();
                 user.Active = true;
                 user.Login = UserName.Text;
@@ -228,6 +234,7 @@ namespace KPIWeb.Account
             //{
             //    LogHandler.LogWriter.WriteError(ex);
             //}
+             }
         }
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {

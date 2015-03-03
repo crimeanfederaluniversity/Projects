@@ -32,6 +32,7 @@
                              
                      <asp:TemplateField Visible="false"   HeaderText="Значение">
                         <ItemTemplate >
+                            <asp:Label ID="NotNull0"  runat="server" Visible="false" Text='<%# Bind("NotNull0") %>'></asp:Label>
                             <asp:TextBox ID="Value0" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value0") %>'></asp:TextBox>
                              <asp:RangeValidator runat="server" ID="Validate0" ControlToValidate="Value0" 
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
@@ -43,6 +44,7 @@
 
                     <asp:TemplateField Visible="false" HeaderText="Значение">
                         <ItemTemplate>
+                            <asp:Label ID="NotNull1"  runat="server" Visible="false" Text='<%# Bind("NotNull1") %>'></asp:Label>
                             <asp:TextBox ID="Value1" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value1") %>'></asp:TextBox>
                             <asp:RangeValidator runat="server" ID="Validate1" ControlToValidate="Value1" 
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
@@ -53,6 +55,7 @@
                     </asp:TemplateField>               
                      <asp:TemplateField Visible="false" HeaderText="Значение">
                         <ItemTemplate>
+                            <asp:Label ID="NotNull2"  runat="server" Visible="false" Text='<%# Bind("NotNull2") %>'></asp:Label>
                             <asp:TextBox ID="Value2" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value2") %>'></asp:TextBox>
                              <asp:RangeValidator runat="server" ID="Validate2" ControlToValidate="Value2" 
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
@@ -63,6 +66,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField Visible="false" HeaderText="Значение">
                         <ItemTemplate>
+                            <asp:Label ID="NotNull3"  runat="server" Visible="false" Text='<%# Bind("NotNull3") %>'></asp:Label>
                             <asp:TextBox ID="Value3" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value3") %>'></asp:TextBox>
                              <asp:RangeValidator runat="server" ID="Validate3" ControlToValidate="Value3" 
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
@@ -73,6 +77,7 @@
                     </asp:TemplateField>     
                      <asp:TemplateField Visible="false" HeaderText="Значение">
                         <ItemTemplate>
+                            <asp:Label ID="NotNull4"  runat="server" Visible="false" Text='<%# Bind("NotNull4") %>'></asp:Label>
                             <asp:TextBox ID="Value4" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value4") %>'></asp:TextBox>
                              <asp:RangeValidator runat="server" ID="Validate4" ControlToValidate="Value4" 
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
@@ -83,6 +88,7 @@
                     </asp:TemplateField>
                      <asp:TemplateField Visible="false" HeaderText="Значение">
                         <ItemTemplate>
+                            <asp:Label ID="NotNull5"  runat="server" Visible="false" Text='<%# Bind("NotNull5") %>'></asp:Label>
                             <asp:TextBox ID="Value5" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value5") %>'></asp:TextBox>
                              <asp:RangeValidator runat="server" ID="Validate5" ControlToValidate="Value5" 
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
@@ -93,6 +99,7 @@
                     </asp:TemplateField>               
                      <asp:TemplateField Visible="false" HeaderText="Значение">
                         <ItemTemplate>
+                            <asp:Label ID="NotNull6"  runat="server" Visible="false" Text='<%# Bind("NotNull6") %>'></asp:Label>
                             <asp:TextBox ID="Value6" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value6") %>'></asp:TextBox>
                              <asp:RangeValidator runat="server" ID="Validate6" ControlToValidate="Value6" 
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
@@ -103,6 +110,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField  Visible="false" HeaderText="Значение">
                         <ItemTemplate>
+                            <asp:Label ID="NotNull7"  runat="server" Visible="false" Text='<%# Bind("NotNull7") %>'></asp:Label>
                             <asp:TextBox ID="Value7" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value7") %>'></asp:TextBox>
                              <asp:RangeValidator runat="server" ID="Validate7" ControlToValidate="Value7" 
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
@@ -113,6 +121,7 @@
                     </asp:TemplateField>     
                      <asp:TemplateField Visible="false" HeaderText="Значение">
                         <ItemTemplate>
+                            <asp:Label ID="NotNull8"  runat="server" Visible="false" Text='<%# Bind("NotNull8") %>'></asp:Label>
                             <asp:TextBox ID="Value8" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value8") %>'></asp:TextBox>
                              <asp:RangeValidator runat="server" ID="Validate8" ControlToValidate="Value8" 
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
@@ -124,6 +133,7 @@
                     
                     <asp:TemplateField Visible="false" HeaderText="Значение">
                         <ItemTemplate>
+                            <asp:Label ID="NotNull9"  runat="server" Visible="false" Text='<%# Bind("NotNull9") %>'></asp:Label>
                             <asp:TextBox ID="Value9" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value9") %>'></asp:TextBox>
                             <asp:RangeValidator runat="server" ID="Validate9" ControlToValidate="Value9" 
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
@@ -134,6 +144,7 @@
                     </asp:TemplateField>  
                     <asp:TemplateField Visible="false" HeaderText="Значение">
                         <ItemTemplate>
+                            <asp:Label ID="NotNull10"  runat="server" Visible="false" Text='<%# Bind("NotNull10") %>'></asp:Label>
                             <asp:TextBox ID="Value10" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value10") %>'></asp:TextBox>
                             <asp:RangeValidator runat="server" ID="Validate10" ControlToValidate="Value10" 
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
