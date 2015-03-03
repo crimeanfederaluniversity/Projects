@@ -84,12 +84,18 @@ namespace KPIWeb.Head
 
                 dt_basic.Columns.Add(new DataColumn("BasicParametrsName", typeof(string)));
                 dt_basic.Columns.Add(new DataColumn("BasicParametrsResult", typeof(string)));
+                dt_basic.Columns.Add(new DataColumn("checkBoxBasicId", typeof(string)));
+                dt_basic.Columns.Add(new DataColumn("checkBoxBasic", typeof(string)));
 
                 dt_calculate.Columns.Add(new DataColumn("CalculatedParametrsName", typeof(string)));
                 dt_calculate.Columns.Add(new DataColumn("CalculatedParametrsResult", typeof(string)));
+                dt_calculate.Columns.Add(new DataColumn("checkBoxCalcId", typeof(string)));
+                dt_calculate.Columns.Add(new DataColumn("checkBoxCalc", typeof(string)));
 
                 dt_indicator.Columns.Add(new DataColumn("IndicatorName", typeof(string)));
                 dt_indicator.Columns.Add(new DataColumn("IndicatorResult", typeof(string)));
+                dt_indicator.Columns.Add(new DataColumn("checkBoxIndId", typeof(string)));
+                dt_indicator.Columns.Add(new DataColumn("checkBoxInd", typeof(string)));
 
                 List<BasicParametersTable> list_basicParametrs = 
                     (from a in kpiWebDataContext.BasicParametersTable
@@ -133,15 +139,16 @@ namespace KPIWeb.Head
                     DataRow dataRow = dt_basic.NewRow();
                     dataRow["BasicParametrsName"] = basicParametr.Name;
                     dataRow["BasicParametrsResult"] = CalculateAbb.SumForLevel(basicParametr.BasicParametersTableID, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5).ToString();
+                    dataRow["checkBoxBasicId"] = 1;
                     dt_basic.Rows.Add(dataRow);
                 }
                 
-
                 foreach (CalculatedParametrs calcParam in list_calcParams)
                 {
                     DataRow dataRow = dt_calculate.NewRow();
                     dataRow["CalculatedParametrsName"] = calcParam.Name;
                     dataRow["CalculatedParametrsResult"] = CalculateAbb.CalculateForLevel(calcParam.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0);
+                    dataRow["checkBoxCalcId"] = 1;
                     dt_calculate.Rows.Add(dataRow);
                 }
 
@@ -150,6 +157,7 @@ namespace KPIWeb.Head
                     DataRow dataRow = dt_indicator.NewRow();
                     dataRow["IndicatorName"] = indicator.Name;
                     dataRow["IndicatorResult"] = CalculateAbb.CalculateForLevel(indicator.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0);
+                    dataRow["checkBoxIndId"] = 1;
                     dt_indicator.Rows.Add(dataRow);
                 }
 

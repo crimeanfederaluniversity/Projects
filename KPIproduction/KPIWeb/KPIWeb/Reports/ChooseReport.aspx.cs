@@ -247,9 +247,12 @@ namespace KPIWeb.Reports
                                   && c.CanConfirm == true
                                   && c.Active == true
                             select b).ToList().Count;
-                    btnEdit.Enabled = (kaf_edit + specEdit) > 0 ? true : false;
-                    btnView.Enabled = (kaf_view + specView) > 0 ? true : false;
-                    btnConfirm.Enabled = (kaf_conf + specConf) > 0 ? true : false;
+                    //btnEdit.Enabled = (kaf_edit + specEdit) > 0 ? true : false;
+                    //btnView.Enabled = (kaf_view + specView) > 0 ? true : false;
+                    //btnConfirm.Enabled = (kaf_conf + specConf) > 0 ? true : false;
+                    btnConfirm.Enabled = true;
+                    btnEdit.Enabled = true;
+                    btnView.Enabled = true;
                 }
             }
         }
