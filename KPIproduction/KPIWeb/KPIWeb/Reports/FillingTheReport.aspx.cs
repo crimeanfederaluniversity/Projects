@@ -44,6 +44,9 @@ namespace KPIWeb.Reports
                          && z.AbbreviationEN == basicAbb
                          && a.FK_ReportArchiveTable == ReportArchiveID
                          && b.SpecType == spectype_
+                         && a.Active == true
+                         && d.Active ==true
+                         && a.Active == true
                          && (e.FK_FieldOfExpertise == 10 || e.FK_FieldOfExpertise == 11 || e.FK_FieldOfExpertise == 12)
                          select a.CollectedValue).Sum());
 
@@ -65,6 +68,9 @@ namespace KPIWeb.Reports
                        && z.AbbreviationEN == basicAbb
                        && a.FK_ReportArchiveTable == ReportArchiveID
                        && b.IsForeignStudentsAccept == true
+                       && a.Active == true
+                       && z.Active == true
+                       && b.Active == true
                        select a.CollectedValue).Sum());
         }
 
@@ -81,8 +87,12 @@ namespace KPIWeb.Reports
                         on a.ThirdLevelSubdivisionTableID equals d.ThirdLevelParametrsID
                     where c.SpecType == SpecType
                           && a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
-                          && d.CanGraduate == true                 
+                          && d.CanGraduate == true
+                          && a.Active == true
+                         // && z.Active == true
+                          && b.Active == true
                        select b).ToList().Count);
+
         }
         protected double pattern4(UsersTable user, int ReportArchiveID, int SpecType)
         {
@@ -99,6 +109,8 @@ namespace KPIWeb.Reports
                        && a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
                        && d.CanGraduate == true
                        && c.IsInvalidStudentsFacilities == true
+                       && a.Active == true                      
+                       && b.Active == true
                  select b).ToList().Count);
         }
 
@@ -117,6 +129,8 @@ namespace KPIWeb.Reports
                        && a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
                        && d.CanGraduate == true
                        && c.IsNetworkComunication == true
+                       && a.Active == true
+                       && b.Active == true
                  select b).ToList().Count);
         }
 
@@ -134,6 +148,8 @@ namespace KPIWeb.Reports
                  where c.SpecType == SpecType
                        && a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
                        && d.CanGraduate == true
+                       && a.Active == true
+                       && b.Active == true
                        && c.IsModernEducationTechnologies == true
                  select b).ToList().Count);
         }
@@ -318,6 +334,7 @@ namespace KPIWeb.Reports
             /////////////////////////////////////////////////////////////////////////
             if (!Page.IsPostBack)
             {
+                #region
                 Serialization modeSer = (Serialization)Session["mode"];
                 if (modeSer == null)
                 {
@@ -332,6 +349,7 @@ namespace KPIWeb.Reports
                 UsersTable user = (from a in kpiWebDataContext.UsersTable
                                    where a.UsersTableID == UserID
                                    select a).FirstOrDefault();
+                
                 int l_0 = user.FK_ZeroLevelSubdivisionTable == null ? 0 : (int)user.FK_ZeroLevelSubdivisionTable;
                 int l_1 = user.FK_FirstLevelSubdivisionTable == null ? 0 : (int)user.FK_FirstLevelSubdivisionTable;
                 int l_2 = user.FK_SecondLevelSubdivisionTable == null ? 0 : (int)user.FK_SecondLevelSubdivisionTable;
@@ -346,9 +364,12 @@ namespace KPIWeb.Reports
                 userLevel = l_2 == 0 ? 1 : userLevel;
                 userLevel = l_1 == 0 ? 0 : userLevel;
                 userLevel = l_0 == 0 ? -1 : userLevel;
+                 
                 ////ранги пользователя
                 /// -1 никто ниоткуда/// 0 с Кфу /// 1 с Академии/// 2 с Факультета/// 3 с кафедры/// 4 с специализация/// 5 с под специализацией,пока нет
+                #endregion
                 ///узнали все о пользователе
+                #region
                 List<string> columnNames = new List<string>(); // сюда сохраняем названия колонок
                 List<string> basicNames  = new List<string>(); // сюда названия параметров для excel
                 /////создаем дататейбл
@@ -363,18 +384,19 @@ namespace KPIWeb.Reports
                 {
                     dataTable.Columns.Add(new DataColumn("Value" + k.ToString(), typeof(string)));
                     dataTable.Columns.Add(new DataColumn("CollectId" + k.ToString(), typeof(string)));
-                    dataTable.Columns.Add(new DataColumn("NotNull" + k.ToString(), typeof(string)));                    
+                    dataTable.Columns.Add(new DataColumn("NotNull" + k.ToString(), typeof(string)));
                 }
+                #endregion
+                //создали макет дататейбла
                 int additionalColumnCount = 0;
                 switch (userLevel) // это штука пока будет работать только для пользователя кафедры
                 {
-                    case 0: //вытаскиваем все универы
+                    case 0: //я КФУ
                         {
                             break;
                         }
-                    case 1: //вытаскиваем все факультеты
+                    case 1: //Я Акакдемия
                         {
-
                             break;
                         }
                     case 2://я Факультет
@@ -383,6 +405,7 @@ namespace KPIWeb.Reports
                         }
                     case 3: //я кафедра
                         {
+                            #region
                             List<BasicParametersTable> KafBasicParams =
                             (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
                              join b in kpiWebDataContext.BasicParametersTable
@@ -464,9 +487,10 @@ namespace KPIWeb.Reports
                             columnNames.Add("Кафедра:\r\n" + (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
                                                               where a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
                                                               select a.Name).FirstOrDefault());
+                            #endregion
                             //Кафедра готова
                             additionalColumnCount += 1;
-
+                            #region
                             if ((from zz in kpiWebDataContext.ThirdLevelParametrs
                                  where zz.ThirdLevelParametrsID == l_3
                                  select zz.CanGraduate).FirstOrDefault() == true) // кафедра выпускающая значит специальности есть
@@ -528,7 +552,6 @@ namespace KPIWeb.Reports
                                              select a).FirstOrDefault();
                                         // узнали параметры специальности
                                         //если этото параметр и эта специальность дружат  
-                                    //    if (fourthParametrs != null)
                                         if (((fourthParametrs.IsForeignStudentsAccept == true) || (basicParametrs.ForForeignStudents == false)) //это для иностранцев
                                             && ((fourthParametrs.SpecType == basicParametrs.SpecType) || (basicParametrs.SpecType == 0))) // это для деления на магистров аспирантов итд
                                         {
@@ -580,8 +603,11 @@ namespace KPIWeb.Reports
                                 }
                                 additionalColumnCount += Specialzations.Count;
                             }
+                            #endregion
+                            // специальности готовы
                             break;
                         }
+                    #region
                     case 4://пока рано//у нас нет ничего глубже специальности
                         {
                             break;
@@ -594,6 +620,8 @@ namespace KPIWeb.Reports
                         {
                             break;
                         }
+                    #endregion
+                        //неиспользуемая часть свича
                 }
 
                 ViewState["CollectedBasicParametersTable"] = dataTable;
@@ -601,8 +629,6 @@ namespace KPIWeb.Reports
                 ViewState["ValueColumnCnt"] = additionalColumnCount;
                 ViewState["ColumnName"] = columnNames;
                 ViewState["basicNames"] = basicNames;
-                
-
                 if (mode == 0)
                 {
                     ButtonSave.Text = "Сохранить внесенные данные";
@@ -620,7 +646,6 @@ namespace KPIWeb.Reports
                         Label1.Text = "Проверьте корректность введенных данных. Если данные верны, нажмите кнопку внизу формы";
                         ButtonSave.Text = "Подтвердить правильность введенных данных";
                     }
-
                 GridviewCollectedBasicParameters.DataSource = dataTable;
                 for (int j = 0; j < additionalColumnCount; j++)
                 {

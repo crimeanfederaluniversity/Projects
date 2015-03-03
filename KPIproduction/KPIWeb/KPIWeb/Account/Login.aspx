@@ -10,7 +10,7 @@
             <section id="loginForm">
                 <div class="form-horizontal">
                     <p />
-                    <h4>Пожалуйста,&nbsp;авторизуйтесть&nbsp;для&nbsp;начала&nbsp;работы.</h4>
+                    <h4>Пожалуйста,&nbsp;авторизуйтесь&nbsp;для&nbsp;начала&nbsp;работы.</h4>
                     <hr />
                       <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
                         <p class="text-danger">
