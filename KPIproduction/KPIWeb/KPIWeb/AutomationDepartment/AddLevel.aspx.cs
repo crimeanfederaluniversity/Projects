@@ -135,65 +135,78 @@ namespace KPIWeb.AutomationDepartment
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            int SelectedValue = -1;
-            if (int.TryParse(DropDownList1.SelectedValue, out SelectedValue) && SelectedValue != -1)
+            if (DropDownList1.SelectedItem.Text.Equals("Выберите значение"))
+                Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script", "alert('Выберите сначала Академию!');", true);
+            else
             {
-                string s = TextBox2.Text;
-                string[] lines = s.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
-                KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
-                foreach (string line in lines)
+                int SelectedValue = -1;
+                if (int.TryParse(DropDownList1.SelectedValue, out SelectedValue) && SelectedValue != -1)
                 {
-                    string t1 = line.TrimEnd(' ');
-                    string t2 = t1.TrimStart(' ');
-                    if (t2.Length > 2)
+                    string s = TextBox2.Text;
+                    string[] lines = s.Split(new string[] {"\n"}, StringSplitOptions.RemoveEmptyEntries);
+                    KPIWebDataContext kPiDataContext =
+                        new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+                    foreach (string line in lines)
                     {
-                        SecondLevelSubdivisionTable ss = new SecondLevelSubdivisionTable();
-                        ss.Active = true;
-                        ss.Name = t2;
-                        ss.FK_FirstLevelSubdivisionTable = SelectedValue;
-                        kPiDataContext.SecondLevelSubdivisionTable.InsertOnSubmit(ss);
+                        string t1 = line.TrimEnd(' ');
+                        string t2 = t1.TrimStart(' ');
+                        if (t2.Length > 2)
+                        {
+                            SecondLevelSubdivisionTable ss = new SecondLevelSubdivisionTable();
+                            ss.Active = true;
+                            ss.Name = t2;
+                            ss.FK_FirstLevelSubdivisionTable = SelectedValue;
+                            kPiDataContext.SecondLevelSubdivisionTable.InsertOnSubmit(ss);
+                        }
                     }
+                    kPiDataContext.SubmitChanges();
+                    TextBox2.Text = "";
                 }
-                kPiDataContext.SubmitChanges();
-                TextBox2.Text = "";
+                Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script", "alert('Изменения внесены');", true);
+                clearall();
             }
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Изменения внесены');", true);
-            clearall();
         }
 
         protected void Button3_Click(object sender, EventArgs e)
         {
-            int SelectedValue = -1;
-            if (int.TryParse(DropDownList2.SelectedValue, out SelectedValue) && SelectedValue != -1)
+            if (DropDownList2.SelectedItem == null || (DropDownList2.SelectedItem != null && DropDownList2.SelectedItem.Text.Equals("Выберите значение")))
+                Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                    "alert('Выберите сначала Академию/Факультет!');", true);
+            else
             {
-                string s = TextBox3.Text;
-                string[] lines = s.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
-                KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
-                foreach (string line in lines)
+                int SelectedValue = -1;
+                if (int.TryParse(DropDownList2.SelectedValue, out SelectedValue) && SelectedValue != -1)
                 {
-                    string t1 = line.TrimEnd(' ');
-                    string t2 = t1.TrimStart(' ');
-                    if (t2.Length > 2)
+                    string s = TextBox3.Text;
+                    string[] lines = s.Split(new string[] {"\n"}, StringSplitOptions.RemoveEmptyEntries);
+                    KPIWebDataContext kPiDataContext =
+                        new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+                    foreach (string line in lines)
                     {
-                        ThirdLevelSubdivisionTable ts = new ThirdLevelSubdivisionTable();
-                        ts.Active = true;
-                        ts.Name = t2;
-                        ts.FK_SecondLevelSubdivisionTable = SelectedValue;
-                        kPiDataContext.ThirdLevelSubdivisionTable.InsertOnSubmit(ts);
-                        kPiDataContext.SubmitChanges();
+                        string t1 = line.TrimEnd(' ');
+                        string t2 = t1.TrimStart(' ');
+                        if (t2.Length > 2)
+                        {
+                            ThirdLevelSubdivisionTable ts = new ThirdLevelSubdivisionTable();
+                            ts.Active = true;
+                            ts.Name = t2;
+                            ts.FK_SecondLevelSubdivisionTable = SelectedValue;
+                            kPiDataContext.ThirdLevelSubdivisionTable.InsertOnSubmit(ts);
+                            kPiDataContext.SubmitChanges();
 
-                        ThirdLevelParametrs tp = new ThirdLevelParametrs();
-                        tp.Active = true;
-                        tp.CanGraduate = true;
-                        tp.ThirdLevelParametrsID = ts.ThirdLevelSubdivisionTableID;
-                        kPiDataContext.ThirdLevelParametrs.InsertOnSubmit(tp);
+                            ThirdLevelParametrs tp = new ThirdLevelParametrs();
+                            tp.Active = true;
+                            tp.CanGraduate = true;
+                            tp.ThirdLevelParametrsID = ts.ThirdLevelSubdivisionTableID;
+                            kPiDataContext.ThirdLevelParametrs.InsertOnSubmit(tp);
+                        }
                     }
+                    kPiDataContext.SubmitChanges();
+                    TextBox3.Text = "";
                 }
-                kPiDataContext.SubmitChanges();
-                TextBox3.Text = "";
+                Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script", "alert('Изменения внесены');", true);
+                clearall();
             }
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Изменения внесены');", true);
-            clearall();
         }
 
         protected void clearall()
