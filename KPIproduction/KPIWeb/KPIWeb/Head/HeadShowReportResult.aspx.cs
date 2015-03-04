@@ -200,9 +200,9 @@ namespace KPIWeb.Head
                 {
                     DataRow dataRow = dt_basic.NewRow();
                     dataRow["BasicParametrsName"] = basicParametr.Name;
-
                     dataRow["BasicParametrsResult"] = CalculateAbb.SumForLevel(basicParametr.BasicParametersTableID, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5).ToString();
                     dataRow["checkBoxBasicId"] = 1;
+                    
                     dt_basic.Rows.Add(dataRow);
                 }
 
@@ -232,6 +232,51 @@ namespace KPIWeb.Head
             {
                 //вытаскиваем и подтвердаем
             }
+        }
+
+        protected void IndicatorsTable_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userID = UserSer.Id;
+            Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
+            if (paramSerialization == null)
+            {
+                Response.Redirect("~/Account/Login.aspx");
+            }
+            Serialization modeSer = (Serialization)Session["mode"];
+            if (modeSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и подтверждаем
+
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+
+            var chB = e.Row.FindControl("checkBoxInd") as CheckBox;      
+            var lbl = e.Row.FindControl("checkBoxIndId") as Label;
+            if(chB !=null)
+            {
+                if (mode != 2)
+                {
+                    chB.Visible = false;
+                }
+                else
+                {
+                    chB.Checked = (from a in kpiWebDataContext.CollectedIndocators
+                                   where a.FK_Indicators == Convert.ToInt32(lbl.Text)
+                                   && a.FK_ReportArchiveTable == paramSerialization.ReportArchiveID
+                                   select a.Confirmed).FirstOrDefault() == true ? true : false;
+                    if (chB.Checked)
+                    {
+                        chB.Enabled = false;
+                    }
+                }
+            }
+
         }
     }
 }

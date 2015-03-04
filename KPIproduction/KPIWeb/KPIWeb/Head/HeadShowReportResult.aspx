@@ -5,14 +5,14 @@
         <br />
         <br />
         Резульаты для вашей академии<br />
-    <asp:GridView ID="IndicatorsTable" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="1000px">
+    <asp:GridView ID="IndicatorsTable" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="1000px" OnRowDataBound="IndicatorsTable_RowDataBound">
                             <Columns>
                                 <asp:BoundField DataField="IndicatorName" HeaderText="Индикатор" />
                                 <asp:BoundField DataField="IndicatorResult" HeaderText="Результат" />
 
                                 <asp:TemplateField HeaderText="Подтверждение" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "true" >
                                     <ItemTemplate> 
-                                        <asp:CheckBox ID="checkBoxInd" runat="server" Text='<%# Bind("checkBoxInd") %>' Visible="True"></asp:CheckBox>
+                                        <asp:CheckBox ID="checkBoxInd" runat="server" Visible="True"></asp:CheckBox>
                                         <asp:Label ID="checkBoxIndId"  runat="server" Visible="false" Text='<%# Bind("checkBoxIndId") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
@@ -27,7 +27,7 @@
                                 <asp:BoundField DataField="CalculatedParametrsResult" HeaderText="Результат" />   
                                 <asp:TemplateField HeaderText="Подтверждение" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "true" >
                                     <ItemTemplate> 
-                                        <asp:CheckBox ID="checkBoxCalc" runat="server" Text='<%# Bind("checkBoxCalc") %>'  Visible="True"></asp:CheckBox>
+                                        <asp:CheckBox ID="checkBoxCalc" runat="server" Visible="True"></asp:CheckBox>
                                         <asp:Label ID="checkBoxCalcId"  runat="server" Visible="false" Text='<%# Bind("checkBoxCalcId") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>              
@@ -42,7 +42,7 @@
                                 <asp:BoundField DataField="BasicParametrsResult" HeaderText="Результат(сумма)" /> 
                                 <asp:TemplateField HeaderText="Подтверждение" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "true" >
                                     <ItemTemplate> 
-                                        <asp:CheckBox ID="checkBoxBasic" runat="server" Text='<%# Bind("checkBoxBasic") %>'  Visible="True"></asp:CheckBox>
+                                        <asp:CheckBox ID="checkBoxBasic" runat="server" Visible="True"></asp:CheckBox>
                                         <asp:Label ID="checkBoxBasicId"  runat="server" Visible="false" Text='<%# Bind("checkBoxBasicId") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>                          
