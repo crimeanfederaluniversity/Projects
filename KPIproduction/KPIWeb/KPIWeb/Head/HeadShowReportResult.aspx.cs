@@ -20,7 +20,6 @@ namespace KPIWeb.Head
             {
                 Response.Redirect("~/Default.aspx");
             }
-
             int userID = UserSer.Id;
             KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
             UsersTable userTable_ =
@@ -51,7 +50,6 @@ namespace KPIWeb.Head
             {
                 Button1.Text = "Подтвердить правильность рассчитанных данных";
             }
-
             if (!Page.IsPostBack)
             {
                 int UserID = UserSer.Id;
@@ -80,15 +78,15 @@ namespace KPIWeb.Head
                 l_4 = level.l4;
                 l_5 = level.l5;
 
-                DataTable dt_basic = new DataTable();
+                //DataTable dt_basic = new DataTable();
                 DataTable dt_calculate = new DataTable();
                 DataTable dt_indicator = new DataTable();
-
+                /*
                 dt_basic.Columns.Add(new DataColumn("BasicParametrsName", typeof(string)));
                 dt_basic.Columns.Add(new DataColumn("BasicParametrsResult", typeof(string)));
                 dt_basic.Columns.Add(new DataColumn("checkBoxBasicId", typeof(string)));
                 dt_basic.Columns.Add(new DataColumn("checkBoxBasic", typeof(string)));
-
+                */
                 dt_calculate.Columns.Add(new DataColumn("CalculatedParametrsName", typeof(string)));
                 dt_calculate.Columns.Add(new DataColumn("CalculatedParametrsResult", typeof(string)));
                 dt_calculate.Columns.Add(new DataColumn("checkBoxCalcId", typeof(string)));
@@ -98,7 +96,7 @@ namespace KPIWeb.Head
                 dt_indicator.Columns.Add(new DataColumn("IndicatorResult", typeof(string)));
                 dt_indicator.Columns.Add(new DataColumn("checkBoxIndId", typeof(string)));
                 dt_indicator.Columns.Add(new DataColumn("checkBoxInd", typeof(string)));
-
+                /*
                 List<BasicParametersTable> list_basicParametrs = 
                     (from a in kpiWebDataContext.BasicParametersTable
                         join b in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
@@ -110,7 +108,7 @@ namespace KPIWeb.Head
                         && (((c.CanEdit == true) && mode == 0)
                         || ((c.CanView == true) && mode == 1)
                         || ((c.CanConfirm == true) && mode == 2))
-                        select  a).ToList();
+                        select  a).ToList();*/
                 List<CalculatedParametrs> list_calcParams = 
                     (from a in kpiWebDataContext.CalculatedParametrs
                         join b in kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable
@@ -142,15 +140,18 @@ namespace KPIWeb.Head
                         kpiWebDataContext.CollectedCalculatedParametrs.InsertOnSubmit(colCalc);
                         kpiWebDataContext.SubmitChanges();
                     }
+                    if (colCalc.Confirmed!=true)
+                    {
                         colCalc.CollectedValue = CalculateAbb.CalculateForLevel(calcPar.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0);
                         colCalc.LastChangeDateTime = DateTime.Now;
                         colCalc.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
                         kpiWebDataContext.SubmitChanges();
-
+                    }
+                        
                         DataRow dataRow = dt_calculate.NewRow();
                         dataRow["CalculatedParametrsName"] = calcPar.Name;
                         dataRow["CalculatedParametrsResult"] = colCalc.CollectedValue;
-                        dataRow["checkBoxCalcId"] = 1;
+                        dataRow["checkBoxCalcId"] = colCalc.CollectedCalculatedParametrsID;
                         dt_calculate.Rows.Add(dataRow);
                 }
                 List<IndicatorsTable> list_indicators =
@@ -185,17 +186,28 @@ namespace KPIWeb.Head
                         kpiWebDataContext.CollectedIndocators.InsertOnSubmit(colInd);
                         kpiWebDataContext.SubmitChanges();
                     }
-                    colInd.CollectedValue = CalculateAbb.CalculateForLevel(indicator.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0);
-                    colInd.LastChangeDateTime = DateTime.Now;
-                    colInd.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
-                    kpiWebDataContext.SubmitChanges();
+                    double tmp;
+                        tmp = CalculateAbb.CalculateForLevel(indicator.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0); 
+                    if (colInd.Confirmed!=true)
+                    {
+                        if((tmp<0)||(tmp>99999999999))
+                        {
+                            tmp = 0;
+                        }
+                        colInd.CollectedValue = tmp;
+                        colInd.LastChangeDateTime = DateTime.Now;
+                        colInd.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
+                        kpiWebDataContext.SubmitChanges();
+                    }
+
 
                     DataRow dataRow = dt_indicator.NewRow();
                     dataRow["IndicatorName"] = indicator.Name;
-                    dataRow["IndicatorResult"] = colInd.CollectedValue;
-                    dataRow["checkBoxIndId"] = 1;
+                    dataRow["IndicatorResult"] = tmp;
+                    dataRow["checkBoxIndId"] = colInd.CollectedIndocatorsID;
                     dt_indicator.Rows.Add(dataRow);
                 }
+                /*
                 foreach (BasicParametersTable basicParametr in list_basicParametrs)
                 {
                     DataRow dataRow = dt_basic.NewRow();
@@ -205,13 +217,18 @@ namespace KPIWeb.Head
                     
                     dt_basic.Rows.Add(dataRow);
                 }
-
-                BasicParametrsTable.DataSource = dt_basic;
-                BasicParametrsTable.DataBind();
+                */
+                //BasicParametrsTable.DataSource = dt_basic;
+                //BasicParametrsTable.DataBind();
                 CalculatedParametrsTable.DataSource = dt_calculate;
                 CalculatedParametrsTable.DataBind();
                 IndicatorsTable.DataSource = dt_indicator;
                 IndicatorsTable.DataBind();
+                if (mode == 2)
+                {
+                    IndicatorsTable.Columns[2].Visible = true;
+                    CalculatedParametrsTable.Columns[2].Visible = true;
+                }
             }
         }
 
@@ -230,9 +247,38 @@ namespace KPIWeb.Head
             }
             else if (mode == 2)
             {
-                //вытаскиваем и подтвердаем
+                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+                for (int i=0; i<IndicatorsTable.Rows.Count;i++)
+                {
+                    var chB = IndicatorsTable.Rows[i].FindControl("checkBoxInd") as CheckBox;
+                    var lbl = IndicatorsTable.Rows[i].FindControl("checkBoxIndId") as Label;
+                    if (chB.Checked)
+                    {
+                        CollectedIndocators ColIndicator = (from a in kpiWebDataContext.CollectedIndocators
+                                                                where a.CollectedIndocatorsID == Convert.ToInt32(lbl.Text) 
+                                                            select a ).FirstOrDefault();
+                        ColIndicator.Confirmed = true;
+                        kpiWebDataContext.SubmitChanges();
+                    }                   
+                }
+
+                for (int i=0; i<CalculatedParametrsTable.Rows.Count;i++)
+                {
+                    var chB = CalculatedParametrsTable.Rows[i].FindControl("checkBoxCalc") as CheckBox;
+                    var lbl = CalculatedParametrsTable.Rows[i].FindControl("checkBoxCalcId") as Label;
+                    if (chB.Checked)
+                    {
+                        CollectedCalculatedParametrs ColCalc = (from a in kpiWebDataContext.CollectedCalculatedParametrs
+                                                                where a.CollectedCalculatedParametrsID == Convert.ToInt32(lbl.Text)
+                                                                    select a).FirstOrDefault();
+                        ColCalc.Confirmed = true;
+                        kpiWebDataContext.SubmitChanges();
+                    }                   
+                }             
             }
         }
+
+
 
         protected void IndicatorsTable_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -247,6 +293,8 @@ namespace KPIWeb.Head
             {
                 Response.Redirect("~/Account/Login.aspx");
             }
+            int ReportArchiveID = Convert.ToInt32(paramSerialization.ReportStr);
+
             Serialization modeSer = (Serialization)Session["mode"];
             if (modeSer == null)
             {
@@ -266,9 +314,9 @@ namespace KPIWeb.Head
                 }
                 else
                 {
+                    e.Row.Visible = true;
                     chB.Checked = (from a in kpiWebDataContext.CollectedIndocators
-                                   where a.FK_Indicators == Convert.ToInt32(lbl.Text)
-                                   && a.FK_ReportArchiveTable == paramSerialization.ReportArchiveID
+                                   where a.CollectedIndocatorsID == Convert.ToInt32(lbl.Text)
                                    select a.Confirmed).FirstOrDefault() == true ? true : false;
                     if (chB.Checked)
                     {
@@ -277,6 +325,51 @@ namespace KPIWeb.Head
                 }
             }
 
+        }
+
+        protected void CalculatedParametrsTable_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userID = UserSer.Id;
+            Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
+            if (paramSerialization == null)
+            {
+                Response.Redirect("~/Account/Login.aspx");
+            }
+            int ReportArchiveID = Convert.ToInt32(paramSerialization.ReportStr);
+
+            Serialization modeSer = (Serialization)Session["mode"];
+            if (modeSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и подтверждаем
+            ///////
+            var chB = e.Row.FindControl("checkBoxCalc") as CheckBox;
+            var lbl = e.Row.FindControl("checkBoxCalcId") as Label;
+            if (chB != null)
+            {
+                if (mode != 2)
+                {
+                    chB.Visible = false;
+                }
+                else
+                {
+                    e.Row.Visible = true;
+                    chB.Checked = (from a in kpiWebDataContext.CollectedCalculatedParametrs
+                                   where a.CollectedCalculatedParametrsID == Convert.ToInt32(lbl.Text)
+                                   select a.Confirmed).FirstOrDefault() == true ? true : false;
+                    if (chB.Checked)
+                    {
+                        chB.Enabled = false;
+                    }
+                }
+            }
         }
     }
 }

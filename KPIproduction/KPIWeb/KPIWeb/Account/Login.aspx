@@ -18,7 +18,7 @@
                         </p>
                     </asp:PlaceHolder>
                     <div class="form-group">
-                        <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label">Имя&nbsp;пользователя&nbsp;</asp:Label>
+                        <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label">Логин</asp:Label>
                         
                         <div class="col-md-10" >
                             <asp:TextBox  runat="server" ID="UserName" CssClass="form-control" />
@@ -26,6 +26,7 @@
                                 CssClass="text-danger" ErrorMessage="Поле &quot;Имя пользователя&quot; обязательное." />
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Пароль    </asp:Label>
                         <div class="col-md-10">
@@ -38,6 +39,7 @@
                             <asp:Button runat="server" OnClick="LogIn" Text="Войти" CssClass="btn btn-default" />
                         </div>
                     </div>
+                    </br>
                 </div>
                 <p>
                     <!-- <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Зарегистрируейтесь</asp:HyperLink>

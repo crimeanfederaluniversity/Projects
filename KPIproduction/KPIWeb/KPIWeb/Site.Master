@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - Программный комплекс КПЭ-КФУ</title>
+    <title><%: Page.Title %> - ИАС «КФУ-мониторинг»</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -47,7 +47,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <!--<a class="navbar-brand" runat="server" href="~/">Программный комплекс КПЭ-КФУ</a>-->
-                    <a class="navbar-brand" runat="server" href="~/">КПЭ-КФУ</a>
+                    <a class="navbar-brand" runat="server" href="~/">ИАС «КФУ-мониторинг»</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -79,7 +79,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Программный комплекс КПЭ-КФУ</p>
+                <p>&copy; <%: DateTime.Now.Year %>   ИАС «КФУ-мониторинг»</p>
             </footer>
         </div>
     </form>
