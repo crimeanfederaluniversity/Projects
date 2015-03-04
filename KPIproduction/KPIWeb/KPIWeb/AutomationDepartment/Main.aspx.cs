@@ -72,6 +72,11 @@ namespace KPIWeb.AutomationDepartment
 
         protected void Button9_Click(object sender, EventArgs e)
         {
+            Response.Redirect("~/AutomationDepartment/AddSpecialization.aspx");
+        }
+
+        protected void Button10_Click(object sender, EventArgs e)
+        {
             Response.Redirect("~/AutomationDepartment/EditUser.aspx");
         }
     }

@@ -165,10 +165,11 @@
         <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Почтовый адрес</asp:Label>
         <div class="col-md-10">
             <asp:TextBox runat="server" ID="Email" CssClass="form-control" />
-             <asp:RegularExpressionValidator ID="valid_email" runat="server"
-            ErrorMessage="Неверный почтовый адрес" CssClass="text-danger"
-            ControlToValidate="Email"
-            ValidationExpression ="[0-9a-zA-Z\.\-]+@+([a-z]{1,})+\.+([a-z]{2,})"/>
+            <asp:RegularExpressionValidator ID="valid_email" runat="server"
+                                            ErrorMessage="Неверный почтовый адрес" CssClass="text-danger"
+                                            ControlToValidate="Email"
+                                            ValidationExpression="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"/>
+                 <!--"[0-9a-zA-Z\.\-]+@+([a-z]{1,})+\.+([a-z]{2,})"/>-->
             
         </div>
     </div>
