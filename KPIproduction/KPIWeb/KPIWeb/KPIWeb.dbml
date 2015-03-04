@@ -75,6 +75,7 @@
       <Column Name="Formula" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
       <Column Name="AbbreviationEN" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="CalculatedParametrs_CalculatedParametrsAndUsersMapping" Member="CalculatedParametrsAndUsersMapping" ThisKey="CalculatedParametrsID" OtherKey="FK_CalculatedParametrsTable" Type="CalculatedParametrsAndUsersMapping" />
+      <Association Name="CalculatedParametrs_CollectedCalculatedParametrs" Member="CollectedCalculatedParametrs" ThisKey="CalculatedParametrsID" OtherKey="FK_CalculatedParametrs" Type="CollectedCalculatedParametrs" />
       <Association Name="CalculatedParametrs_ReportArchiveAndCalculatedParametrsMappingTable" Member="ReportArchiveAndCalculatedParametrsMappingTable" ThisKey="CalculatedParametrsID" OtherKey="FK_CalculatedParametrsTable" Type="ReportArchiveAndCalculatedParametrsMappingTable" />
     </Type>
   </Table>
@@ -119,6 +120,40 @@
       <Association Name="SecondLevelSubdivisionTable_CollectedBasicParametersTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="ThirdLevelSubdivisionTable_CollectedBasicParametersTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="UsersTable_CollectedBasicParametersTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CollectedCalculatedParametrs" Member="CollectedCalculatedParametrs">
+    <Type Name="CollectedCalculatedParametrs">
+      <Column Name="CollectedCalculatedParametrsID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FK_CalculatedParametrs" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CollectedValue" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="LastChangeDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SavedDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UserIP" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Confirmed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_ReportArchiveTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="CalculatedParametrs_CollectedCalculatedParametrs" Member="CalculatedParametrs" ThisKey="FK_CalculatedParametrs" OtherKey="CalculatedParametrsID" Type="CalculatedParametrs" IsForeignKey="true" />
+      <Association Name="ReportArchiveTable_CollectedCalculatedParametrs" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
+      <Association Name="UsersTable_CollectedCalculatedParametrs" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CollectedIndocators" Member="CollectedIndocators">
+    <Type Name="CollectedIndocators">
+      <Column Name="CollectedIndocatorsID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FK_Indicators" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CollectedValue" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="LastChangeDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SavedDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UserIP" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Confirmed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_ReportArchiveTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="IndicatorsTable_CollectedIndocators" Member="IndicatorsTable" ThisKey="FK_Indicators" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
+      <Association Name="ReportArchiveTable_CollectedIndocators" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
+      <Association Name="UsersTable_CollectedIndocators" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.FieldOfExpertise" Member="FieldOfExpertise">
@@ -201,6 +236,7 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
       <Column Name="Measure" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
       <Column Name="Formula" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
+      <Association Name="IndicatorsTable_CollectedIndocators" Member="CollectedIndocators" ThisKey="IndicatorsTableID" OtherKey="FK_Indicators" Type="CollectedIndocators" />
       <Association Name="IndicatorsTable_IndicatorsAndUsersMapping" Member="IndicatorsAndUsersMapping" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="IndicatorsAndUsersMapping" />
       <Association Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable" Member="ReportArchiveAndIndicatorsMappingTable" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="ReportArchiveAndIndicatorsMappingTable" />
     </Type>
@@ -258,6 +294,8 @@
       <Column Name="DateToSend" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Association Name="ReportArchiveTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="CollectedBasicParametersTable" />
+      <Association Name="ReportArchiveTable_CollectedCalculatedParametrs" Member="CollectedCalculatedParametrs" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="CollectedCalculatedParametrs" />
+      <Association Name="ReportArchiveTable_CollectedIndocators" Member="CollectedIndocators" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="CollectedIndocators" />
       <Association Name="ReportArchiveTable_ReportArchiveAndBasicParametrsMappingTable" Member="ReportArchiveAndBasicParametrsMappingTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="ReportArchiveAndBasicParametrsMappingTable" />
       <Association Name="ReportArchiveTable_ReportArchiveAndCalculatedParametrsMappingTable" Member="ReportArchiveAndCalculatedParametrsMappingTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="ReportArchiveAndCalculatedParametrsMappingTable" />
       <Association Name="ReportArchiveTable_ReportArchiveAndIndicatorsMappingTable" Member="ReportArchiveAndIndicatorsMappingTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="ReportArchiveAndIndicatorsMappingTable" />
@@ -333,6 +371,8 @@
       <Association Name="UsersTable_BasicParametrsAndUsersMapping" Member="BasicParametrsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="BasicParametrsAndUsersMapping" />
       <Association Name="UsersTable_CalculatedParametrsAndUsersMapping" Member="CalculatedParametrsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CalculatedParametrsAndUsersMapping" />
       <Association Name="UsersTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedBasicParametersTable" />
+      <Association Name="UsersTable_CollectedCalculatedParametrs" Member="CollectedCalculatedParametrs" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedCalculatedParametrs" />
+      <Association Name="UsersTable_CollectedIndocators" Member="CollectedIndocators" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedIndocators" />
       <Association Name="UsersTable_IndicatorsAndUsersMapping" Member="IndicatorsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsresTable" Type="IndicatorsAndUsersMapping" />
       <Association Name="FifthLevelSubdivisionTable_UsersTable" Member="FifthLevelSubdivisionTable" ThisKey="FK_FifthLevelSubdivisionTable" OtherKey="FifthLevelSubdivisionTableID" Type="FifthLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />

@@ -170,6 +170,8 @@ namespace KPIWeb
             string tmpStr;
             tmpStr = input;
             deleteSpaces(tmpStr);
+            tmpStr = tmpStr.Replace("\r", "");
+            tmpStr = tmpStr.Replace("\n", "");
             string[] abbArray = splitString(tmpStr);
             //tmpStr = "";
             foreach (string str in abbArray)
@@ -180,12 +182,12 @@ namespace KPIWeb
                     {
                         int idx = tmpStr.IndexOf(str);
                         if (idx != -1)
-                        tmpStr = tmpStr.Remove(idx, str.Length).Insert(idx, replaseAbbWithValueForLevel(str, report, Lv0, Lv1, Lv2, Lv3, Lv4, Lv5));                                                               
+
+                        tmpStr = tmpStr.Remove(idx, str.Length).Insert(idx,replaseAbbWithValueForLevel(str, report, Lv0, Lv1, Lv2, Lv3, Lv4, Lv5) );                                                               
                     }
                 }
             }
-          //  LogHandler.LogWriter.WriteLog(LogCategory.ERROR, errorList.ToString());
-            
+          //  LogHandler.LogWriter.WriteLog(LogCategory.ERROR, errorList.ToString());            
             return Polish.Calculate(tmpStr);
         }
 
