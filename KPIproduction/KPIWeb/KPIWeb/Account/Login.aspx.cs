@@ -26,7 +26,9 @@ namespace KPIWeb.Account
         }
 
         protected void LogIn(object sender, EventArgs e)
-        {                    
+        {
+            // FailureText.Text = "Error!";
+            // FailureText.Visible = true;
             try
             {
                 if (IsValid)

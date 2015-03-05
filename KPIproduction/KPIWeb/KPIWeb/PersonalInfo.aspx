@@ -4,7 +4,7 @@
     <div>
     
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:Image ID="Image1" runat="server" ImageUrl="http://ipc-bigyalta.org/wp-content/uploads/tnu-250x188.jpg" />
+        <asp:Image ID="Image1" runat="server" ImageUrl="https://pp.vk.me/c625524/v625524720/2064f/l9xw4aIkqac.jpg" CssClass="glyphicon-cloud" />
         <br />
     
         <br />
@@ -25,6 +25,28 @@
         <asp:Label ID="Label7" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Courier New" Font-Size="X-Large" Text="Логин: "></asp:Label>
         <br />
         <asp:Label ID="Label8" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Courier New" Font-Size="X-Large" Text="Логин: "></asp:Label>
+        <br />
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Сменить пароль" CssClass="form-control" />
+        <br />
+        <br />
+        <asp:Label ID="Label9" runat="server" Text="Текущий пароль" Visible="False"></asp:Label>
+&nbsp;&nbsp;
+        <asp:TextBox ID="TextBox1" TextMode="Password" runat="server" Visible="False" CssClass="form-control"></asp:TextBox>
+        <br />
+        <br />
+        <asp:Label ID="Label10" runat="server" Text="Новый пароль" Visible="False"></asp:Label>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <asp:TextBox ID="TextBox2" TextMode="Password" runat="server" Visible="False" CssClass="form-control"></asp:TextBox>
+        <br />
+        <br />
+        <asp:Label ID="Label11" runat="server" Text="Подтверждение" Visible="False"></asp:Label>
+&nbsp;&nbsp;&nbsp;
+        <asp:TextBox ID="TextBox3" TextMode="Password" runat="server" Visible="False" CssClass="form-control"></asp:TextBox>
+        <br />
+        <br />
+        <asp:Button ID="Button2" runat="server" Text="Сохранить изменения" Visible="False" CssClass="form-control" OnClick="Button2_Click" />
+        <br />
+        <br />
         <br />
         <br />
     

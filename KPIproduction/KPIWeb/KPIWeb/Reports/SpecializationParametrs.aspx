@@ -48,7 +48,7 @@
                         </ItemTemplate>
                     </asp:TemplateField> 
                      
-                  <asp:TemplateField HeaderText="Осуществляется обучение иностранных студентов" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                  <asp:TemplateField HeaderText="Предусмотрено обучение иностранных студентов" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:Label ID="ParamLabel4" runat="server" Text='<%# Bind("Param4Label") %>' Visible="false"></asp:Label>
                             <asp:CheckBox ID="IsForeign" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param4Label") %>' />
@@ -76,7 +76,7 @@
         <asp:Button ID="Button1" runat="server" Text="Сохранить" Width="702px" OnClick="Button1_Click" />
         <br />
         <br />
-        <asp:Label ID="Label3" runat="server" Text="Поиск по коду и названию специальност"></asp:Label>
+        <asp:Label ID="Label3" runat="server" Text="Поиск специальности по коду и названию"></asp:Label>
         <br />
         <asp:TextBox ID="TextBox1" runat="server" Width="271px"></asp:TextBox>
         <br />
