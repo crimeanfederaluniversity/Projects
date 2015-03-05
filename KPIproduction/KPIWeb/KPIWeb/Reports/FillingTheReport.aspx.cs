@@ -381,7 +381,7 @@ namespace KPIWeb.Reports
                 dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
 
 
-                for (int k = 0; k <= 10; k++)  //создаем кучу полей
+                for (int k = 0; k <= 25; k++)  //создаем кучу полей
                 {
                     dataTable.Columns.Add(new DataColumn("Value" + k.ToString(), typeof(string)));
                     dataTable.Columns.Add(new DataColumn("CollectId" + k.ToString(), typeof(string)));
@@ -716,6 +716,8 @@ namespace KPIWeb.Reports
                 if (mode == 0)
                 {
                     ButtonSave.Text = "Сохранить внесенные данные";
+                    ButtonSave.Visible = true;
+                    Button2.Text = "Вернуться в меню без сохранения";
                     Label1.Text = "Ввведите значения в таблицу показателей и нажмите кнопку внизу формы для сохранения данных";
                 }
                 else if
@@ -723,12 +725,16 @@ namespace KPIWeb.Reports
                 {
                     Label1.Text = "Просмотр введенных данных";
                     ButtonSave.Text = "Вернуться в меню выбора отчета";
+                    
+                    Button2.Visible = false;
                 }
                 else
                     if (mode == 2)
                     {
                         Label1.Text = "Проверьте корректность введенных данных. Если данные верны, нажмите кнопку внизу формы";
-                        ButtonSave.Text = "Подтвердить правильность введенных данных";
+                        ButtonSave.Visible = true;
+                        Button2.Text = "Вернуться в меню без подтверждения данных";
+                        ButtonSave.Text = "Подтвердить данные и отправить";
                     }
                 GridviewCollectedBasicParameters.DataSource = dataTable;
                 for (int j = 0; j < additionalColumnCount; j++)
@@ -1006,6 +1012,11 @@ namespace KPIWeb.Reports
                 }
             }
             excelApp.Visible = true;
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Default.aspx");
         }
     }
 }

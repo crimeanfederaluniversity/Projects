@@ -142,7 +142,7 @@ namespace KPIWeb.Head
                     }
                     if (colCalc.Confirmed!=true)
                     {
-                        colCalc.CollectedValue = CalculateAbb.CalculateForLevel(calcPar.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0);
+                        colCalc.CollectedValue = CalculateAbb.CalculateForLevel(1,calcPar.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0);
                         colCalc.LastChangeDateTime = DateTime.Now;
                         colCalc.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
                         kpiWebDataContext.SubmitChanges();
@@ -187,7 +187,7 @@ namespace KPIWeb.Head
                         kpiWebDataContext.SubmitChanges();
                     }
                     double tmp;
-                        tmp = CalculateAbb.CalculateForLevel(indicator.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0); 
+                        tmp = CalculateAbb.CalculateForLevel(2,indicator.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0); 
                     if (colInd.Confirmed!=true)
                     {
                         if((tmp<0)||(tmp>99999999999))

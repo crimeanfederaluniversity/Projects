@@ -12,39 +12,57 @@ namespace KPIWeb
     public class CalculateAbb
     {
         public static List<string> errorList = new List<string>();
-        public static string replaseAbbWithValueForLevel(string input, int reportId, int Lv0, int Lv1, int Lv2, int Lv3,
+        public static string replaseAbbWithValueForLevel(int type, string input, int reportId, int Lv0, int Lv1, int Lv2, int Lv3,
             int Lv4, int Lv5)
         {
             string abbTmp = input;
             string[] tmpArr = abbTmp.Split('#');
+            KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+            double? a=0;
             if (tmpArr.Length < 2) //значит в аббревиатуре нет #
             {
-                KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-                double? a = (from collect in KPIWebDataContext.CollectedBasicParametersTable
-                    join basic in KPIWebDataContext.BasicParametersTable
-                        on collect.FK_BasicParametersTable equals basic.BasicParametersTableID
-                    join user in KPIWebDataContext.UsersTable
-                        on collect.FK_UsersTable equals user.UsersTableID
-                    where collect.FK_ReportArchiveTable == reportId
-                          && basic.AbbreviationEN == abbTmp
-                          && (user.FK_ZeroLevelSubdivisionTable   == Lv0 || Lv0 == 0)
-                          && (user.FK_FirstLevelSubdivisionTable  == Lv1 || Lv1 == 0)
-                          && (user.FK_SecondLevelSubdivisionTable == Lv2 || Lv2 == 0)
-                          && (user.FK_ThirdLevelSubdivisionTable  == Lv3 || Lv3 == 0)
-                          && (user.FK_FourthLevelSubdivisionTable == Lv4 || Lv4 == 0)
-                          && (user.FK_FifthLevelSubdivisionTable  == Lv5 || Lv5 == 0)
-                    select collect.CollectedValue).Sum();
-                if (a == null) // так быть не должно)
-                {
-                    a = 0;
-                    //LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Замена аббревиатуры вернула NULL "+
-                   // abbTmp+" "+Lv0+" "+Lv1+" "+Lv2+" "+Lv3+" "+Lv4+" "+Lv5+" " +reportId); 
-                  //  errorList.Add("Замена аббревиатуры вернула NULL "+
-                  //  abbTmp+" "+Lv0+" "+Lv1+" "+Lv2+" "+Lv3+" "+Lv4+" "+Lv5+" " +reportId);
-                    
+                if (type == 1) // считаем по аббревиатурам базовых
+                {                   
+                     a = (from collect in KPIWebDataContext.CollectedBasicParametersTable
+                                 join basic in KPIWebDataContext.BasicParametersTable
+                                     on collect.FK_BasicParametersTable equals basic.BasicParametersTableID
+                                 join user in KPIWebDataContext.UsersTable
+                                     on collect.FK_UsersTable equals user.UsersTableID
+                                 where collect.FK_ReportArchiveTable == reportId
+                                       && basic.AbbreviationEN == abbTmp
+                                       && (user.FK_ZeroLevelSubdivisionTable == Lv0 || Lv0 == 0)
+                                       && (user.FK_FirstLevelSubdivisionTable == Lv1 || Lv1 == 0)
+                                       && (user.FK_SecondLevelSubdivisionTable == Lv2 || Lv2 == 0)
+                                       && (user.FK_ThirdLevelSubdivisionTable == Lv3 || Lv3 == 0)
+                                       && (user.FK_FourthLevelSubdivisionTable == Lv4 || Lv4 == 0)
+                                       && (user.FK_FifthLevelSubdivisionTable == Lv5 || Lv5 == 0)
+                                 select collect.CollectedValue).Sum();
+                    if (a == null) // так быть не должно)
+                    {
+                        a = 0;
+                       //  LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Замена аббревиатуры вернула NULL "+
+                       //  abbTmp+" "+Lv0+" "+Lv1+" "+Lv2+" "+Lv3+" "+Lv4+" "+Lv5+" " +reportId); 
+                    }
                 }
+                else if (type == 2) // по рассчитанным рассчетным
+                {
+                    a = (from collect in KPIWebDataContext.CollectedCalculatedParametrs
+                                 join calc in KPIWebDataContext.CalculatedParametrs
+                                     on collect.FK_CalculatedParametrs equals calc.CalculatedParametrsID                               
+                                 where collect.FK_ReportArchiveTable == reportId
+                                       && calc.AbbreviationEN == abbTmp                                    
+                                 select collect.CollectedValue).Sum();
+                    if (a == null) // так быть не должно)
+                    {
+                        a = 0;
+                       // LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Замена аббревиатуры вернула NULL "+
+                       // abbTmp+" "+Lv0+" "+Lv1+" "+Lv2+" "+Lv3+" "+Lv4+" "+Lv5+" " +reportId); 
+                    }
+                }
+                
                 return a.ToString();
             }
+            /*
             else
             {
                 switch (tmpArr[0])
@@ -103,9 +121,9 @@ namespace KPIWeb
                     {
                         //надо вывести ошибку
                         break;
-                    }
-                }
-            }
+                    }*/
+                //}
+            //}
             return "0";
         }
 
@@ -165,7 +183,7 @@ namespace KPIWeb
             return tmpStr;
         }
 
-        public static double CalculateForLevel(string input, int report, int Lv0, int Lv1, int Lv2, int Lv3, int Lv4, int Lv5, int param1)
+        public static double CalculateForLevel(int type,string input, int report, int Lv0, int Lv1, int Lv2, int Lv3, int Lv4, int Lv5, int param1)
         {
             string tmpStr;
             tmpStr = input;
@@ -183,7 +201,7 @@ namespace KPIWeb
                         int idx = tmpStr.IndexOf(str);
                         if (idx != -1)
 
-                        tmpStr = tmpStr.Remove(idx, str.Length).Insert(idx,replaseAbbWithValueForLevel(str, report, Lv0, Lv1, Lv2, Lv3, Lv4, Lv5) );                                                               
+                            tmpStr = tmpStr.Remove(idx, str.Length).Insert(idx, replaseAbbWithValueForLevel(type, str, report, Lv0, Lv1, Lv2, Lv3, Lv4, Lv5));                                                               
                     }
                 }
             }

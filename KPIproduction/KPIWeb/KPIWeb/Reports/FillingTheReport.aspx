@@ -152,7 +152,175 @@
                             SetFocusOnError="True">
                         </asp:RangeValidator><asp:Label ID="CollectId10" runat="server" Visible="false" Text='<%# Bind("CollectId10") %>'></asp:Label>
                         </ItemTemplate>
-                    </asp:TemplateField>                                 
+                    </asp:TemplateField>     
+
+                     <asp:TemplateField Visible="false"   HeaderText="Значение">
+                        <ItemTemplate >
+                            <asp:Label ID="NotNull11"  runat="server" Visible="false" Text='<%# Bind("NotNull11") %>'></asp:Label>
+                            <asp:TextBox ID="Value11" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value11") %>'></asp:TextBox>
+                             <asp:RangeValidator runat="server" ID="Validate11" ControlToValidate="Value11" 
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
+                            SetFocusOnError="True" Text="ERRorr">
+                        </asp:RangeValidator>
+                            <asp:Label ID="CollectId11" runat="server" Visible="false" Text='<%# Bind("CollectId11") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>  
+
+                    <asp:TemplateField Visible="false"   HeaderText="Значение">
+                        <ItemTemplate >
+                            <asp:Label ID="NotNull12"  runat="server" Visible="false" Text='<%# Bind("NotNull12") %>'></asp:Label>
+                            <asp:TextBox ID="Value12" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value12") %>'></asp:TextBox>
+                             <asp:RangeValidator runat="server" ID="Validate12" ControlToValidate="Value12" 
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
+                            SetFocusOnError="True" Text="ERRorr">
+                        </asp:RangeValidator>
+                            <asp:Label ID="CollectId12" runat="server" Visible="false" Text='<%# Bind("CollectId12") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>  
+                    <asp:TemplateField Visible="false"   HeaderText="Значение">
+                        <ItemTemplate >
+                            <asp:Label ID="NotNull13"  runat="server" Visible="false" Text='<%# Bind("NotNull13") %>'></asp:Label>
+                            <asp:TextBox ID="Value13" style="text-align:center" BorderWidth="13" runat="server" Text='<%# Bind("Value13") %>'></asp:TextBox>
+                             <asp:RangeValidator runat="server" ID="Validate13" ControlToValidate="Value13" 
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
+                            SetFocusOnError="True" Text="ERRorr">
+                        </asp:RangeValidator>
+                            <asp:Label ID="CollectId13" runat="server" Visible="false" Text='<%# Bind("CollectId13") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>  
+                    <asp:TemplateField Visible="false"   HeaderText="Значение">
+                        <ItemTemplate >
+                            <asp:Label ID="NotNull14"  runat="server" Visible="false" Text='<%# Bind("NotNull14") %>'></asp:Label>
+                            <asp:TextBox ID="Value14" style="text-align:center" BorderWidth="14" runat="server" Text='<%# Bind("Value14") %>'></asp:TextBox>
+                             <asp:RangeValidator runat="server" ID="Validate14" ControlToValidate="Value14" 
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
+                            SetFocusOnError="True" Text="ERRorr">
+                        </asp:RangeValidator>
+                            <asp:Label ID="CollectId14" runat="server" Visible="false" Text='<%# Bind("CollectId14") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField> 
+                    <asp:TemplateField Visible="false"   HeaderText="Значение">
+                        <ItemTemplate >
+                            <asp:Label ID="NotNull15"  runat="server" Visible="false" Text='<%# Bind("NotNull15") %>'></asp:Label>
+                            <asp:TextBox ID="Value15" style="text-align:center" BorderWidth="15" runat="server" Text='<%# Bind("Value15") %>'></asp:TextBox>
+                             <asp:RangeValidator runat="server" ID="Validate15" ControlToValidate="Value15" 
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
+                            SetFocusOnError="True" Text="ERRorr">
+                        </asp:RangeValidator>
+                            <asp:Label ID="CollectId15" runat="server" Visible="false" Text='<%# Bind("CollectId15") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField> 
+                    <asp:TemplateField Visible="false"   HeaderText="Значение">
+                        <ItemTemplate >
+                            <asp:Label ID="NotNull16"  runat="server" Visible="false" Text='<%# Bind("NotNull16") %>'></asp:Label>
+                            <asp:TextBox ID="Value16" style="text-align:center" BorderWidth="16" runat="server" Text='<%# Bind("Value16") %>'></asp:TextBox>
+                             <asp:RangeValidator runat="server" ID="Validate16" ControlToValidate="Value16" 
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
+                            SetFocusOnError="True" Text="ERRorr">
+                        </asp:RangeValidator>
+                            <asp:Label ID="CollectId16" runat="server" Visible="false" Text='<%# Bind("CollectId16") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField> 
+                    <asp:TemplateField Visible="false"   HeaderText="Значение">
+                        <ItemTemplate >
+                            <asp:Label ID="NotNull17"  runat="server" Visible="false" Text='<%# Bind("NotNull17") %>'></asp:Label>
+                            <asp:TextBox ID="Value17" style="text-align:center" BorderWidth="17" runat="server" Text='<%# Bind("Value17") %>'></asp:TextBox>
+                             <asp:RangeValidator runat="server" ID="Validate17" ControlToValidate="Value17" 
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
+                            SetFocusOnError="True" Text="ERRorr">
+                        </asp:RangeValidator>
+                            <asp:Label ID="CollectId17" runat="server" Visible="false" Text='<%# Bind("CollectId17") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField> 
+                    <asp:TemplateField Visible="false"   HeaderText="Значение">
+                        <ItemTemplate >
+                            <asp:Label ID="NotNull18"  runat="server" Visible="false" Text='<%# Bind("NotNull18") %>'></asp:Label>
+                            <asp:TextBox ID="Value18" style="text-align:center" BorderWidth="18" runat="server" Text='<%# Bind("Value18") %>'></asp:TextBox>
+                             <asp:RangeValidator runat="server" ID="Validate18" ControlToValidate="Value18" 
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
+                            SetFocusOnError="True" Text="ERRorr">
+                        </asp:RangeValidator>
+                            <asp:Label ID="CollectId18" runat="server" Visible="false" Text='<%# Bind("CollectId18") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField> 
+                    <asp:TemplateField Visible="false"   HeaderText="Значение">
+                        <ItemTemplate >
+                            <asp:Label ID="NotNull19"  runat="server" Visible="false" Text='<%# Bind("NotNull19") %>'></asp:Label>
+                            <asp:TextBox ID="Value19" style="text-align:center" BorderWidth="19" runat="server" Text='<%# Bind("Value19") %>'></asp:TextBox>
+                             <asp:RangeValidator runat="server" ID="Validate19" ControlToValidate="Value19" 
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
+                            SetFocusOnError="True" Text="ERRorr">
+                        </asp:RangeValidator>
+                            <asp:Label ID="CollectId19" runat="server" Visible="false" Text='<%# Bind("CollectId19") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField> 
+                    <asp:TemplateField Visible="false"   HeaderText="Значение">
+                        <ItemTemplate >
+                            <asp:Label ID="NotNull20"  runat="server" Visible="false" Text='<%# Bind("NotNull20") %>'></asp:Label>
+                            <asp:TextBox ID="Value20" style="text-align:center" BorderWidth="20" runat="server" Text='<%# Bind("Value20") %>'></asp:TextBox>
+                             <asp:RangeValidator runat="server" ID="Validate20" ControlToValidate="Value20" 
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
+                            SetFocusOnError="True" Text="ERRorr">
+                        </asp:RangeValidator>
+                            <asp:Label ID="CollectId20" runat="server" Visible="false" Text='<%# Bind("CollectId20") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField> 
+                    <asp:TemplateField Visible="false"   HeaderText="Значение">
+                        <ItemTemplate >
+                            <asp:Label ID="NotNull21"  runat="server" Visible="false" Text='<%# Bind("NotNull21") %>'></asp:Label>
+                            <asp:TextBox ID="Value21" style="text-align:center" BorderWidth="21" runat="server" Text='<%# Bind("Value21") %>'></asp:TextBox>
+                             <asp:RangeValidator runat="server" ID="Validate21" ControlToValidate="Value21" 
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
+                            SetFocusOnError="True" Text="ERRorr">
+                        </asp:RangeValidator>
+                            <asp:Label ID="CollectId21" runat="server" Visible="false" Text='<%# Bind("CollectId21") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField> 
+                    <asp:TemplateField Visible="false"   HeaderText="Значение">
+                        <ItemTemplate >
+                            <asp:Label ID="NotNull22"  runat="server" Visible="false" Text='<%# Bind("NotNull22") %>'></asp:Label>
+                            <asp:TextBox ID="Value22" style="text-align:center" BorderWidth="22" runat="server" Text='<%# Bind("Value22") %>'></asp:TextBox>
+                             <asp:RangeValidator runat="server" ID="Validate22" ControlToValidate="Value22" 
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
+                            SetFocusOnError="True" Text="ERRorr">
+                        </asp:RangeValidator>
+                            <asp:Label ID="CollectId22" runat="server" Visible="false" Text='<%# Bind("CollectId22") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField> 
+                    <asp:TemplateField Visible="false"   HeaderText="Значение">
+                        <ItemTemplate >
+                            <asp:Label ID="NotNull23"  runat="server" Visible="false" Text='<%# Bind("NotNull23") %>'></asp:Label>
+                            <asp:TextBox ID="Value23" style="text-align:center" BorderWidth="23" runat="server" Text='<%# Bind("Value23") %>'></asp:TextBox>
+                             <asp:RangeValidator runat="server" ID="Validate23" ControlToValidate="Value23" 
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
+                            SetFocusOnError="True" Text="ERRorr">
+                        </asp:RangeValidator>
+                            <asp:Label ID="CollectId23" runat="server" Visible="false" Text='<%# Bind("CollectId23") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField> 
+                    <asp:TemplateField Visible="false"   HeaderText="Значение">
+                        <ItemTemplate >
+                            <asp:Label ID="NotNull24"  runat="server" Visible="false" Text='<%# Bind("NotNull24") %>'></asp:Label>
+                            <asp:TextBox ID="Value24" style="text-align:center" BorderWidth="24" runat="server" Text='<%# Bind("Value24") %>'></asp:TextBox>
+                             <asp:RangeValidator runat="server" ID="Validate24" ControlToValidate="Value24" 
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
+                            SetFocusOnError="True" Text="ERRorr">
+                        </asp:RangeValidator>
+                            <asp:Label ID="CollectId24" runat="server" Visible="false" Text='<%# Bind("CollectId24") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField> 
+                    <asp:TemplateField Visible="false"   HeaderText="Значение">
+                        <ItemTemplate >
+                            <asp:Label ID="NotNull25"  runat="server" Visible="false" Text='<%# Bind("NotNull25") %>'></asp:Label>
+                            <asp:TextBox ID="Value25" style="text-align:center" BorderWidth="25" runat="server" Text='<%# Bind("Value25") %>'></asp:TextBox>
+                             <asp:RangeValidator runat="server" ID="Validate25" ControlToValidate="Value25" 
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
+                            SetFocusOnError="True" Text="ERRorr">
+                        </asp:RangeValidator>
+                            <asp:Label ID="CollectId25" runat="server" Visible="false" Text='<%# Bind("CollectId25") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>                     
+
                 </Columns>
             </asp:GridView>
             <br />
@@ -160,7 +328,13 @@
 
             <br />
             <br />
-            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Экспорт в excell" Width="400px" />
+            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Экспорт в excel" Width="400px" />
+
+            <br />
+            <br />
+            <asp:Button ID="Button2" runat="server" Height="25px" OnClick="Button2_Click" Text="Вернутся в меню без сохранения" Width="400px" />
+
+            <br />
 
             <br />
 
