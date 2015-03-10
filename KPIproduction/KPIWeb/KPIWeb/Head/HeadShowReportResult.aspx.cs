@@ -99,7 +99,7 @@ namespace KPIWeb.Head
 
                 dt_indicator.Columns.Add(new DataColumn("IndicatorName", typeof(string)));
                 dt_indicator.Columns.Add(new DataColumn("IndicatorResult", typeof(string)));
-                dt_indicator.Columns.Add(new DataColumn("ConfCnt", typeof(string)));
+                dt_indicator.Columns.Add(new DataColumn("info0", typeof(string)));
                 //dt_indicator.Columns.Add(new DataColumn("checkBoxInd", typeof(string)));
                 /*
                 List<BasicParametersTable> list_basicParametrs = 
@@ -148,9 +148,10 @@ namespace KPIWeb.Head
                         kpiWebDataContext.CollectedCalculatedParametrs.InsertOnSubmit(colCalc);
                         kpiWebDataContext.SubmitChanges();
                      }
+                    float tmp = 0;
                         if (colCalc.Confirmed != true)
                         {
-                            float tmp = (float)CalculateAbb.CalculateForLevel(1, calcPar.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0); ;
+                            tmp = (float)CalculateAbb.CalculateForLevel(1, calcPar.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0); ;
 
                             if ((tmp < -(float)1E+20) || (tmp > (float)1E+20)
                                 || (tmp == null) || (float.IsNaN(tmp))
@@ -163,12 +164,24 @@ namespace KPIWeb.Head
                             colCalc.CollectedValue = tmp;
                             kpiWebDataContext.SubmitChanges();
                         }
-                                         
+                        else
+                        {
+                            tmp = (float)colCalc.CollectedValue;
+                        }
+                                               
                         DataRow dataRow = dt_calculate.NewRow();
                         dataRow["CalculatedParametrsName"] = calcPar.Name;
-                        dataRow["CalculatedParametrsResult"] = colCalc.CollectedValue;
+
+                        if (tmp == (float)1E+20)
+                        {
+                            dataRow["CalculatedParametrsResult"] = "Недостаточно данных";
+                        }
+                        else
+                        {
+                            dataRow["CalculatedParametrsResult"] = tmp.ToString("0.000");
+                        }
+                            
                         dataRow["checkBoxCalcId"] = colCalc.CollectedCalculatedParametrsID;
-                        
                         int Allcnt = 0;
                         int Insertcnt = 0;
                         int Confcnt = 0;
@@ -297,10 +310,9 @@ namespace KPIWeb.Head
                     }
                     else
                     {
-                        dataRow["IndicatorResult"] = tmp;
+                        dataRow["IndicatorResult"] = tmp.ToString("0.000");
                     }
-                    dataRow["checkBoxIndId"] = colInd.CollectedIndocatorsID;
-                    dataRow["info0"] = Allcnt + "/" + Confcnt;
+                    dataRow["info0"] = Confcnt +"  из "+ Allcnt;
                     dt_indicator.Rows.Add(dataRow);
                 }
                 #endregion

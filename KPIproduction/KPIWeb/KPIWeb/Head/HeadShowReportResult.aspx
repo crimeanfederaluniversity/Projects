@@ -4,14 +4,14 @@
         <br />
         <br />
         <br />
-        Резульаты для вашей академии<br />
+        Резульаты<br />
     <asp:GridView ID="IndicatorsTable" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="1000px" OnRowDataBound="IndicatorsTable_RowDataBound">
                             <Columns>
                                 <asp:BoundField DataField="IndicatorName" HeaderText="Индикатор" />
                                 <asp:BoundField DataField="IndicatorResult" HeaderText="Результат" />
-                                <asp:TemplateField HeaderText="Подтверждение" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "false" >
+                                <asp:TemplateField HeaderText="Подтвердено рассчетных показателей" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "true" >
                                     <ItemTemplate> 
-                                        <asp:Label ID="ConfCnt"  runat="server" Visible="true" Text='<%# Bind("ConfCnt") %>'></asp:Label>
+                                        <asp:Label ID="info0"  runat="server" Visible="true" Text='<%# Bind("info0") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

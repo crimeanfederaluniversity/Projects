@@ -7,16 +7,15 @@
     <h4>Создание нового аккаунта.</h4>
     <asp:ValidationSummary runat="server" CssClass="text-danger" />
     </br>
-            </br>
-            </br>
-            </br>
-            </br>
-            </br>
-            </br>
-            </br>
-            </br>
-            </br>
-
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
         <div>
             <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Выберите университет</asp:Label>
             </br>
@@ -24,7 +23,7 @@
                 <asp:DropDownList ID="DropDownList1" runat="server" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged"></asp:DropDownList>
             </div>
         </div>
-    </br>
+     </br>
      </br>
         <div>
             <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Выберите факультет</asp:Label>
@@ -32,7 +31,7 @@
                 <asp:DropDownList ID="DropDownList2" runat="server" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="DropDownList2_SelectedIndexChanged"></asp:DropDownList>
             </div>
         </div>
-    </br>
+     </br>
      </br>
         <div>
             <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Выберите кафедру</asp:Label>
@@ -41,7 +40,7 @@
                 </asp:DropDownList>
             </div>
         </div>
-    </br>
+     </br>
      </br>
         <div>
             <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Тип пользователя</asp:Label>
@@ -63,7 +62,6 @@
             </div>
         </div>
     </br>
-
         <div>
             <asp:Label ID="Label25" runat="server" Text="Индикаторы"></asp:Label>
             <asp:GridView ID="Gridview1" runat="server" AutoGenerateColumns="False">
