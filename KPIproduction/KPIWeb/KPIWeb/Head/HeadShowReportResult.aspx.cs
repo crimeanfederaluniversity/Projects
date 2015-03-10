@@ -99,8 +99,8 @@ namespace KPIWeb.Head
 
                 dt_indicator.Columns.Add(new DataColumn("IndicatorName", typeof(string)));
                 dt_indicator.Columns.Add(new DataColumn("IndicatorResult", typeof(string)));
-                dt_indicator.Columns.Add(new DataColumn("checkBoxIndId", typeof(string)));
-                dt_indicator.Columns.Add(new DataColumn("checkBoxInd", typeof(string)));
+                dt_indicator.Columns.Add(new DataColumn("ConfCnt", typeof(string)));
+                //dt_indicator.Columns.Add(new DataColumn("checkBoxInd", typeof(string)));
                 /*
                 List<BasicParametersTable> list_basicParametrs = 
                     (from a in kpiWebDataContext.BasicParametersTable
@@ -114,6 +114,7 @@ namespace KPIWeb.Head
                         || ((c.CanView == true) && mode == 1)
                         || ((c.CanConfirm == true) && mode == 2))
                         select  a).ToList();*/
+                #region
                 List<CalculatedParametrs> list_calcParams = 
                     (from a in kpiWebDataContext.CalculatedParametrs
                         join b in kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable
@@ -126,12 +127,14 @@ namespace KPIWeb.Head
                                 || ((c.CanView == true) && mode == 1)
                                 || ((c.CanConfirm == true) && mode == 2))
                         select  a).ToList();
-                foreach(CalculatedParametrs calcPar in list_calcParams)
+                
+                foreach (CalculatedParametrs calcPar in list_calcParams)
                 {
                     CollectedCalculatedParametrs colCalc = (from a in kpiWebDataContext.CollectedCalculatedParametrs
                     where a.FK_ReportArchiveTable == ReportArchiveID
                     && a.FK_CalculatedParametrs == calcPar.CalculatedParametrsID
                     select a).FirstOrDefault();
+                                            
                     if(colCalc==null)
                     {
                         colCalc = new CollectedCalculatedParametrs();
@@ -139,20 +142,28 @@ namespace KPIWeb.Head
                         colCalc.FK_ReportArchiveTable = ReportArchiveID;
                         colCalc.Confirmed =false;
                         colCalc.Active = true;
-                        colCalc.FK_UsersTable = userID;
-                        colCalc.CollectedValue = null;                       
+                        colCalc.FK_UsersTable = userID;                                                   
+                        colCalc.CollectedValue = null;
                         colCalc.SavedDateTime = DateTime.Now;
                         kpiWebDataContext.CollectedCalculatedParametrs.InsertOnSubmit(colCalc);
                         kpiWebDataContext.SubmitChanges();
-                    }
-                    if (colCalc.Confirmed!=true)
-                    {
-                        colCalc.CollectedValue = CalculateAbb.CalculateForLevel(1,calcPar.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0);
-                        colCalc.LastChangeDateTime = DateTime.Now;
-                        colCalc.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
-                        kpiWebDataContext.SubmitChanges();
-                    }
-                        
+                     }
+                        if (colCalc.Confirmed != true)
+                        {
+                            float tmp = (float)CalculateAbb.CalculateForLevel(1, calcPar.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0); ;
+
+                            if ((tmp < -(float)1E+20) || (tmp > (float)1E+20)
+                                || (tmp == null) || (float.IsNaN(tmp))
+                                || (float.IsInfinity(tmp)) || (float.IsNegativeInfinity(tmp))
+                                || (float.IsPositiveInfinity(tmp)) || (!tmp.ToString().IsFloat()))
+                            {
+                                tmp = (float)1E+20;
+                            }
+
+                            colCalc.CollectedValue = tmp;
+                            kpiWebDataContext.SubmitChanges();
+                        }
+                                         
                         DataRow dataRow = dt_calculate.NewRow();
                         dataRow["CalculatedParametrsName"] = calcPar.Name;
                         dataRow["CalculatedParametrsResult"] = colCalc.CollectedValue;
@@ -211,10 +222,10 @@ namespace KPIWeb.Head
                                  Allcnt += tmpAll;
                         }
                         dataRow["info0"] =Allcnt+"/"+ Insertcnt + "/" + Confcnt;
-                        //узнать количество (кол-во_БП*колво_подразделений этого БП)
-                        //dataRow["info1"] = 1; //с кол-вом подтвержденных
                         dt_calculate.Rows.Add(dataRow);
                 }
+                #endregion
+                #region
                 List<IndicatorsTable> list_indicators =
                     (from a in kpiWebDataContext.IndicatorsTable
                      join b in kpiWebDataContext.ReportArchiveAndIndicatorsMappingTable
@@ -228,6 +239,7 @@ namespace KPIWeb.Head
                                 || ((c.CanConfirm == true) && mode == 2))
                      select a).ToList();
                 ///////////////////////////теперь индикаторы
+                
                 foreach (IndicatorsTable indicator in list_indicators)
                 {
                     CollectedIndocators colInd = (from a in kpiWebDataContext.CollectedIndocators
@@ -248,7 +260,6 @@ namespace KPIWeb.Head
                         kpiWebDataContext.SubmitChanges();
                     }
                     float tmp;
-
                         tmp = (float)CalculateAbb.CalculateForLevel(2,indicator.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0); 
                     if (colInd.Confirmed!=true)
                     {
@@ -265,6 +276,18 @@ namespace KPIWeb.Head
                         kpiWebDataContext.SubmitChanges();
                     }
 
+                    List<int> CollectedId = CalculateAbb.GetCollectIdList(indicator.Formula);
+
+                        int Allcnt = CollectedId.Count();
+                        int Confcnt = 0;
+                        foreach(int collected in CollectedId)
+                        {
+                            int tmpAll = (from a in kpiWebDataContext.CollectedCalculatedParametrs
+                             where a.FK_CalculatedParametrs == collected                            
+                             && a.Confirmed == true
+                             select a).ToList().Count();
+                            Confcnt += tmpAll;
+                        }
 
                     DataRow dataRow = dt_indicator.NewRow();
                     dataRow["IndicatorName"] = indicator.Name;
@@ -277,28 +300,18 @@ namespace KPIWeb.Head
                         dataRow["IndicatorResult"] = tmp;
                     }
                     dataRow["checkBoxIndId"] = colInd.CollectedIndocatorsID;
+                    dataRow["info0"] = Allcnt + "/" + Confcnt;
                     dt_indicator.Rows.Add(dataRow);
                 }
-                /*
-                foreach (BasicParametersTable basicParametr in list_basicParametrs)
-                {
-                    DataRow dataRow = dt_basic.NewRow();
-                    dataRow["BasicParametrsName"] = basicParametr.Name;
-                    dataRow["BasicParametrsResult"] = CalculateAbb.SumForLevel(basicParametr.BasicParametersTableID, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5).ToString();
-                    dataRow["checkBoxBasicId"] = 1;
-                    
-                    dt_basic.Rows.Add(dataRow);
-                }
-                */
-                //BasicParametrsTable.DataSource = dt_basic;
-                //BasicParametrsTable.DataBind();
+                #endregion
+
                 CalculatedParametrsTable.DataSource = dt_calculate;
                 CalculatedParametrsTable.DataBind();
                 IndicatorsTable.DataSource = dt_indicator;
                 IndicatorsTable.DataBind();
                 if (mode == 2)
                 {
-                    IndicatorsTable.Columns[2].Visible = true;
+                    //IndicatorsTable.Columns[2].Visible = true;
                     CalculatedParametrsTable.Columns[2].Visible = true;
                 }
             }

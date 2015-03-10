@@ -79,5 +79,10 @@ namespace KPIWeb.AutomationDepartment
         {
             Response.Redirect("~/AutomationDepartment/EditUser.aspx");
         }
+
+        protected void Button11_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Account/Register_.aspx");
+        }
     }
 }

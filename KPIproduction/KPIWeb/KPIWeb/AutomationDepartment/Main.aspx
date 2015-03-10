@@ -39,4 +39,8 @@
        <br />
        <asp:Button ID="Button10" runat="server" Height="50px" OnClick="Button10_Click" Text="База пользователей" Width="400px" />
  
+       <br />
+       <br />
+       <asp:Button ID="Button11" runat="server" OnClick="Button11_Click" Text="Button" Width="400px" />
+ 
 </asp:Content>

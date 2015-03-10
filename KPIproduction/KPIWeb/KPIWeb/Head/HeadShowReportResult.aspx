@@ -9,14 +9,11 @@
                             <Columns>
                                 <asp:BoundField DataField="IndicatorName" HeaderText="Индикатор" />
                                 <asp:BoundField DataField="IndicatorResult" HeaderText="Результат" />
-
                                 <asp:TemplateField HeaderText="Подтверждение" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "false" >
                                     <ItemTemplate> 
-                                        <asp:CheckBox ID="checkBoxInd" runat="server" Visible="True"></asp:CheckBox>
-                                        <asp:Label ID="checkBoxIndId"  runat="server" Visible="false" Text='<%# Bind("checkBoxIndId") %>'></asp:Label>
+                                        <asp:Label ID="ConfCnt"  runat="server" Visible="true" Text='<%# Bind("ConfCnt") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-
                             </Columns>
             </asp:GridView>
         <br />

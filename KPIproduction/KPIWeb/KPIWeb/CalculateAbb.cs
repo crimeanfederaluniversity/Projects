@@ -162,7 +162,35 @@ namespace KPIWeb
             //  LogHandler.LogWriter.WriteLog(LogCategory.ERROR, errorList.ToString());            
             return tmpList;
         }
-
+        public static List<int> GetCollectIdList(string input)
+        {
+            KPIWebDataContext kpiweb = new KPIWebDataContext();
+            List<int> tmpList = new List<int>();
+            string tmpStr;
+            tmpStr = input;
+            deleteSpaces(tmpStr);
+            tmpStr = tmpStr.Replace("\r", "");
+            tmpStr = tmpStr.Replace("\n", "");
+            string[] abbArray = splitString(tmpStr);
+            foreach (string str in abbArray)
+            {
+                if ((str != null) && (str != " ") && (!str.IsEmpty()))
+                {
+                    if (!str.IsFloat())
+                    {
+                        int result = (from a in kpiweb.CalculatedParametrs
+                                      where a.AbbreviationEN == str
+                                      select a.CalculatedParametrsID).FirstOrDefault();
+                        if ((result != null) && (result > 0))
+                        {
+                            tmpList.Add(result);
+                        }
+                    }
+                }
+            }
+            //  LogHandler.LogWriter.WriteLog(LogCategory.ERROR, errorList.ToString());            
+            return tmpList;
+        }
         public static string[] splitString(string input)
         {
             string tmpStr = input;
