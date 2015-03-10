@@ -4,7 +4,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <%--<h2><%: Title %>.</h2>--%>
-
+    </br> </br> </br> </br> </br> </br> </br> </br> </br> </br> </br> </br> 
     <div class="row">
         <div class="col-md-8">
             <section id="loginForm">
@@ -39,7 +39,7 @@
                             <asp:Button runat="server" OnClick="LogIn" Text="Войти" CssClass="btn btn-default" />
                         </div>
                     </div>
-                    </br>
+
                 </div>
                 <p>
                     <!-- <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Зарегистрируейтесь</asp:HyperLink>

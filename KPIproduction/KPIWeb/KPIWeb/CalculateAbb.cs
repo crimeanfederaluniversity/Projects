@@ -126,8 +126,6 @@ namespace KPIWeb
             //}
             return "0";
         }
-
-
         public static string deleteSpaces(string input)
         {
             string tmpStr = input;

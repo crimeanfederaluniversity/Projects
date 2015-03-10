@@ -8,6 +8,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Net;
+using System.Text.RegularExpressions;
+using System.Dynamic;
+using System.Text;
+using System.Web.WebPages;
 
 namespace KPIWeb.Head
 {
@@ -91,6 +95,7 @@ namespace KPIWeb.Head
                 dt_calculate.Columns.Add(new DataColumn("CalculatedParametrsResult", typeof(string)));
                 dt_calculate.Columns.Add(new DataColumn("checkBoxCalcId", typeof(string)));
                 dt_calculate.Columns.Add(new DataColumn("checkBoxCalc", typeof(string)));
+                dt_calculate.Columns.Add(new DataColumn("info0", typeof(string)));
 
                 dt_indicator.Columns.Add(new DataColumn("IndicatorName", typeof(string)));
                 dt_indicator.Columns.Add(new DataColumn("IndicatorResult", typeof(string)));
@@ -152,6 +157,9 @@ namespace KPIWeb.Head
                         dataRow["CalculatedParametrsName"] = calcPar.Name;
                         dataRow["CalculatedParametrsResult"] = colCalc.CollectedValue;
                         dataRow["checkBoxCalcId"] = colCalc.CollectedCalculatedParametrsID;
+                        dataRow["info0"] = 1;
+                        //узнать количество (кол-во_БП*колво_подразделений этого БП)
+                        //dataRow["info1"] = 1; //с кол-вом подтвержденных
                         dt_calculate.Rows.Add(dataRow);
                 }
                 List<IndicatorsTable> list_indicators =
@@ -186,14 +194,18 @@ namespace KPIWeb.Head
                         kpiWebDataContext.CollectedIndocators.InsertOnSubmit(colInd);
                         kpiWebDataContext.SubmitChanges();
                     }
-                    double tmp;
-                        tmp = CalculateAbb.CalculateForLevel(2,indicator.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0); 
+                    float tmp;
+
+                        tmp = (float)CalculateAbb.CalculateForLevel(2,indicator.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0); 
                     if (colInd.Confirmed!=true)
                     {
-                        if((tmp<0)||(tmp>99999999999))
+                        if ((tmp < -(float)1E+20) || (tmp > (float)1E+20)
+                            ||(tmp==null)||(float.IsNaN(tmp))
+                            ||(float.IsInfinity(tmp))||(float.IsNegativeInfinity(tmp))
+                            ||(float.IsPositiveInfinity(tmp))|| (!tmp.ToString().IsFloat()))
                         {
-                            tmp = 0;
-                        }
+                            tmp = (float) 1E+20;
+                        }                     
                         colInd.CollectedValue = tmp;
                         colInd.LastChangeDateTime = DateTime.Now;
                         colInd.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
@@ -203,7 +215,14 @@ namespace KPIWeb.Head
 
                     DataRow dataRow = dt_indicator.NewRow();
                     dataRow["IndicatorName"] = indicator.Name;
-                    dataRow["IndicatorResult"] = tmp;
+                    if (tmp == (float) 1E+20)
+                    {
+                        dataRow["IndicatorResult"] = "Недостаточно данных";
+                    }
+                    else
+                    {
+                        dataRow["IndicatorResult"] = tmp;
+                    }
                     dataRow["checkBoxIndId"] = colInd.CollectedIndocatorsID;
                     dt_indicator.Rows.Add(dataRow);
                 }

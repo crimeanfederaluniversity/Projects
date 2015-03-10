@@ -3,7 +3,7 @@
     <div>
         <br />
         <br />
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" style="margin-top: 0px">
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" style="margin-top: 0px" OnRowDataBound="GridView1_RowDataBound">
              <Columns>
                  
                  <asp:BoundField DataField="ReportArchiveID"   HeaderText="Current Report ID" Visible="false" />    
@@ -25,7 +25,12 @@
                             <asp:Button ID="ButtonConfirmReport" runat="server" CommandName="Select" Text="Просмотреть и подтвердить" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonConfirmClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
-                   
+
+                 <asp:TemplateField HeaderText="Подтверждено">
+                        <ItemTemplate>
+                            <asp:Label ID="info0" runat="server" Text='<%# Bind("info0") %>' Visible="true"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
         </asp:GridView>
         <br />

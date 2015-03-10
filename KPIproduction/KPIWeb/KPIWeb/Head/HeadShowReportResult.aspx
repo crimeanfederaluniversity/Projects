@@ -30,7 +30,14 @@
                                         <asp:CheckBox ID="checkBoxCalc" runat="server" Visible="True"></asp:CheckBox>
                                         <asp:Label ID="checkBoxCalcId"  runat="server" Visible="false" Text='<%# Bind("checkBoxCalcId") %>'></asp:Label>
                                     </ItemTemplate>
-                                </asp:TemplateField>              
+                                </asp:TemplateField>  
+                                
+                                <asp:TemplateField HeaderText="Внесенные данные" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "true" >
+                                    <ItemTemplate>                                      
+                                        <asp:Label ID="info0"  runat="server" Visible="true" Text='<%# Bind("info0") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField> 
+
                             </Columns>
             </asp:GridView>
 

@@ -21,7 +21,7 @@ namespace KPIWeb.Reports
     {
         public int col_ = 0;
 
-        protected double pattern1(UsersTable user, int ReportArchiveID ,int spectype_, string basicAbb)
+        protected double pattern1(UsersTable user, int ReportArchiveID, int spectype_, string basicAbb)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             return Convert.ToDouble(
@@ -45,13 +45,13 @@ namespace KPIWeb.Reports
                          && a.FK_ReportArchiveTable == ReportArchiveID
                          && b.SpecType == spectype_
                          && a.Active == true
-                         && d.Active ==true
+                         && d.Active == true
                          && a.Active == true
                          && (e.FK_FieldOfExpertise == 10 || e.FK_FieldOfExpertise == 11 || e.FK_FieldOfExpertise == 12)
                          select a.CollectedValue).Sum());
 
         }
-        protected double pattern2(UsersTable user, int ReportArchiveID,string basicAbb)
+        protected double pattern2(UsersTable user, int ReportArchiveID, string basicAbb)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             return Convert.ToDouble(
@@ -79,19 +79,19 @@ namespace KPIWeb.Reports
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             return Convert.ToDouble(
                 (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
-                    join b in kpiWebDataContext.FourthLevelSubdivisionTable
-                        on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
-                    join c in kpiWebDataContext.FourthLevelParametrs
-                        on b.FourthLevelSubdivisionTableID equals c.FourthLevelParametrsID
-                    join d in kpiWebDataContext.ThirdLevelParametrs
-                        on a.ThirdLevelSubdivisionTableID equals d.ThirdLevelParametrsID
-                    where c.SpecType == SpecType
-                          && a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
-                          && d.CanGraduate == true
-                          && a.Active == true
-                         // && z.Active == true
-                          && b.Active == true
-                       select b).ToList().Count);
+                 join b in kpiWebDataContext.FourthLevelSubdivisionTable
+                     on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
+                 join c in kpiWebDataContext.FourthLevelParametrs
+                     on b.FourthLevelSubdivisionTableID equals c.FourthLevelParametrsID
+                 join d in kpiWebDataContext.ThirdLevelParametrs
+                     on a.ThirdLevelSubdivisionTableID equals d.ThirdLevelParametrsID
+                 where c.SpecType == SpecType
+                       && a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
+                       && d.CanGraduate == true
+                       && a.Active == true
+                     // && z.Active == true
+                       && b.Active == true
+                 select b).ToList().Count);
 
         }
         protected double pattern4(UsersTable user, int ReportArchiveID, int SpecType)
@@ -109,7 +109,7 @@ namespace KPIWeb.Reports
                        && a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
                        && d.CanGraduate == true
                        && c.IsInvalidStudentsFacilities == true
-                       && a.Active == true                      
+                       && a.Active == true
                        && b.Active == true
                  select b).ToList().Count);
         }
@@ -180,13 +180,13 @@ namespace KPIWeb.Reports
             {
                 CollectedBasicParametersTable collectedBasicTmp =
                     (from a in kpiWebDataContext.CollectedBasicParametersTable
-                        where a.FK_ZeroLevelSubdivisionTable == user.FK_ZeroLevelSubdivisionTable
-                              && a.FK_FirstLevelSubdivisionTable == user.FK_FirstLevelSubdivisionTable
-                              && a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable
-                              && a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
-                              && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
-                              && a.FK_ReportArchiveTable == ReportArchiveID
-                        select a).FirstOrDefault();
+                     where a.FK_ZeroLevelSubdivisionTable == user.FK_ZeroLevelSubdivisionTable
+                           && a.FK_FirstLevelSubdivisionTable == user.FK_FirstLevelSubdivisionTable
+                           && a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable
+                           && a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
+                           && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
+                           && a.FK_ReportArchiveTable == ReportArchiveID
+                     select a).FirstOrDefault();
                 if (collectedBasicTmp != null) // надо создать
                 {
                     collectedBasicTmp.ConfirmedThirdLevel = true;
@@ -216,97 +216,97 @@ namespace KPIWeb.Reports
 
             //узнали показатели кафедры(отчет,разрешенияПользователя,Уровеньвводяшего,вводящийся показатель)          
             foreach (BasicParametersTable basicParam in calcBasicParams) //пройдемся по показателям
-            {           
-                    CollectedBasicParametersTable collectedBasicTmp =
-                        (from a in kpiWebDataContext.CollectedBasicParametersTable
-                         where a.FK_ZeroLevelSubdivisionTable ==    user.FK_ZeroLevelSubdivisionTable
-                             && a.FK_FirstLevelSubdivisionTable ==  user.FK_FirstLevelSubdivisionTable
-                             && a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable
-                             && a.FK_ThirdLevelSubdivisionTable ==  user.FK_ThirdLevelSubdivisionTable
-                             && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
-                             && a.FK_ReportArchiveTable == ReportArchiveID
-                         select a).FirstOrDefault();
-                    if (collectedBasicTmp == null) // надо создать
-                    {
-                        collectedBasicTmp = new CollectedBasicParametersTable();
-                        collectedBasicTmp.Active = true;
-                        collectedBasicTmp.FK_UsersTable = user.UsersTableID;
-                        collectedBasicTmp.FK_BasicParametersTable = basicParam.BasicParametersTableID;
-                        collectedBasicTmp.FK_ReportArchiveTable = ReportArchiveID;                        
-                        collectedBasicTmp.CollectedValue = 0;
-                        collectedBasicTmp.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
-                        collectedBasicTmp.LastChangeDateTime = DateTime.Now;
-                        collectedBasicTmp.SavedDateTime = DateTime.Now;
-                        collectedBasicTmp.FK_ZeroLevelSubdivisionTable = user.FK_ZeroLevelSubdivisionTable;
-                        collectedBasicTmp.FK_FirstLevelSubdivisionTable = user.FK_FirstLevelSubdivisionTable;
-                        collectedBasicTmp.FK_SecondLevelSubdivisionTable = user.FK_SecondLevelSubdivisionTable;
-                        collectedBasicTmp.FK_ThirdLevelSubdivisionTable = user.FK_ThirdLevelSubdivisionTable;
+            {
+                CollectedBasicParametersTable collectedBasicTmp =
+                    (from a in kpiWebDataContext.CollectedBasicParametersTable
+                     where a.FK_ZeroLevelSubdivisionTable == user.FK_ZeroLevelSubdivisionTable
+                         && a.FK_FirstLevelSubdivisionTable == user.FK_FirstLevelSubdivisionTable
+                         && a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable
+                         && a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
+                         && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
+                         && a.FK_ReportArchiveTable == ReportArchiveID
+                     select a).FirstOrDefault();
+                if (collectedBasicTmp == null) // надо создать
+                {
+                    collectedBasicTmp = new CollectedBasicParametersTable();
+                    collectedBasicTmp.Active = true;
+                    collectedBasicTmp.FK_UsersTable = user.UsersTableID;
+                    collectedBasicTmp.FK_BasicParametersTable = basicParam.BasicParametersTableID;
+                    collectedBasicTmp.FK_ReportArchiveTable = ReportArchiveID;
+                    collectedBasicTmp.CollectedValue = 0;
+                    collectedBasicTmp.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
+                    collectedBasicTmp.LastChangeDateTime = DateTime.Now;
+                    collectedBasicTmp.SavedDateTime = DateTime.Now;
+                    collectedBasicTmp.FK_ZeroLevelSubdivisionTable = user.FK_ZeroLevelSubdivisionTable;
+                    collectedBasicTmp.FK_FirstLevelSubdivisionTable = user.FK_FirstLevelSubdivisionTable;
+                    collectedBasicTmp.FK_SecondLevelSubdivisionTable = user.FK_SecondLevelSubdivisionTable;
+                    collectedBasicTmp.FK_ThirdLevelSubdivisionTable = user.FK_ThirdLevelSubdivisionTable;
 
-                        kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
-                        kpiWebDataContext.SubmitChanges();
-                    }
-                    ////////////////////////////////////////////////////////////////
-                    /// ///поехали страдать
-                    double tmp = 0;
-                    //магистры
-                    if (basicParam.AbbreviationEN == "a_Och_M_IZO") tmp = pattern1(user, ReportArchiveID, 3, "a_Och_M");
-                    if (basicParam.AbbreviationEN == "b_OchZ_M_IZO") tmp =pattern1(user, ReportArchiveID, 3, "b_OchZ_M");                   
-                    if (basicParam.AbbreviationEN == "c_Z_M_IZO") tmp = pattern1(user, ReportArchiveID, 3, "c_Z_M");                     
-                    if (basicParam.AbbreviationEN == "d_E_M_IZO") tmp = pattern1(user, ReportArchiveID, 3, "d_E_M");
+                    kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
+                    kpiWebDataContext.SubmitChanges();
+                }
+                ////////////////////////////////////////////////////////////////
+                /// ///поехали страдать
+                double tmp = 0;
+                //магистры
+                if (basicParam.AbbreviationEN == "a_Och_M_IZO") tmp = pattern1(user, ReportArchiveID, 3, "a_Och_M");
+                if (basicParam.AbbreviationEN == "b_OchZ_M_IZO") tmp = pattern1(user, ReportArchiveID, 3, "b_OchZ_M");
+                if (basicParam.AbbreviationEN == "c_Z_M_IZO") tmp = pattern1(user, ReportArchiveID, 3, "c_Z_M");
+                if (basicParam.AbbreviationEN == "d_E_M_IZO") tmp = pattern1(user, ReportArchiveID, 3, "d_E_M");
 
-                    if (basicParam.AbbreviationEN == "a_Och_M_NoIn") tmp = pattern2(user, ReportArchiveID, "a_Och_M");
-                    if (basicParam.AbbreviationEN == "b_OchZ_M_NoIn") tmp = pattern2(user, ReportArchiveID,  "b_OchZ_M");
-                    if (basicParam.AbbreviationEN == "c_Z_M_NoIn") tmp = pattern2(user, ReportArchiveID, "c_Z_M");
-                    if (basicParam.AbbreviationEN == "d_E_M_NoIn") tmp = pattern2(user, ReportArchiveID, "d_E_M");
-                    //специалисты
-                    if (basicParam.AbbreviationEN == "a_Och_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "a_Och_S");
-                    if (basicParam.AbbreviationEN == "b_OchZ_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "b_OchZ_S");
-                    if (basicParam.AbbreviationEN == "c_Z_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "c_Z_S");
-                    if (basicParam.AbbreviationEN == "d_E_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "d_E_S");
+                if (basicParam.AbbreviationEN == "a_Och_M_NoIn") tmp = pattern2(user, ReportArchiveID, "a_Och_M");
+                if (basicParam.AbbreviationEN == "b_OchZ_M_NoIn") tmp = pattern2(user, ReportArchiveID, "b_OchZ_M");
+                if (basicParam.AbbreviationEN == "c_Z_M_NoIn") tmp = pattern2(user, ReportArchiveID, "c_Z_M");
+                if (basicParam.AbbreviationEN == "d_E_M_NoIn") tmp = pattern2(user, ReportArchiveID, "d_E_M");
+                //специалисты
+                if (basicParam.AbbreviationEN == "a_Och_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "a_Och_S");
+                if (basicParam.AbbreviationEN == "b_OchZ_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "b_OchZ_S");
+                if (basicParam.AbbreviationEN == "c_Z_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "c_Z_S");
+                if (basicParam.AbbreviationEN == "d_E_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "d_E_S");
 
-                    if (basicParam.AbbreviationEN == "a_Och_S_NoIn") tmp = pattern2(user, ReportArchiveID, "a_Och_S");
-                    if (basicParam.AbbreviationEN == "b_OchZ_S_NoIn") tmp = pattern2(user, ReportArchiveID, "b_OchZ_S");
-                    if (basicParam.AbbreviationEN == "c_Z_S_NoIn") tmp = pattern2(user, ReportArchiveID, "c_Z_S");
-                    if (basicParam.AbbreviationEN == "d_E_S_NoIn") tmp = pattern2(user, ReportArchiveID, "d_E_S");
-                    //бакалавры
-                    if (basicParam.AbbreviationEN == "a_Och_B_IZO") tmp = pattern1(user, ReportArchiveID, 1, "a_Och_B");
-                    if (basicParam.AbbreviationEN == "b_OchZ_B_IZO") tmp = pattern1(user, ReportArchiveID, 1, "b_OchZ_B");
-                    if (basicParam.AbbreviationEN == "c_Z_B_IZO") tmp = pattern1(user, ReportArchiveID, 1, "c_Z_B");
-                    if (basicParam.AbbreviationEN == "d_E_B_IZO") tmp = pattern1(user, ReportArchiveID, 1, "d_E_B");
+                if (basicParam.AbbreviationEN == "a_Och_S_NoIn") tmp = pattern2(user, ReportArchiveID, "a_Och_S");
+                if (basicParam.AbbreviationEN == "b_OchZ_S_NoIn") tmp = pattern2(user, ReportArchiveID, "b_OchZ_S");
+                if (basicParam.AbbreviationEN == "c_Z_S_NoIn") tmp = pattern2(user, ReportArchiveID, "c_Z_S");
+                if (basicParam.AbbreviationEN == "d_E_S_NoIn") tmp = pattern2(user, ReportArchiveID, "d_E_S");
+                //бакалавры
+                if (basicParam.AbbreviationEN == "a_Och_B_IZO") tmp = pattern1(user, ReportArchiveID, 1, "a_Och_B");
+                if (basicParam.AbbreviationEN == "b_OchZ_B_IZO") tmp = pattern1(user, ReportArchiveID, 1, "b_OchZ_B");
+                if (basicParam.AbbreviationEN == "c_Z_B_IZO") tmp = pattern1(user, ReportArchiveID, 1, "c_Z_B");
+                if (basicParam.AbbreviationEN == "d_E_B_IZO") tmp = pattern1(user, ReportArchiveID, 1, "d_E_B");
 
-                    if (basicParam.AbbreviationEN == "a_Och_B_NoIn") tmp = pattern2(user, ReportArchiveID, "a_Och_B");
-                    if (basicParam.AbbreviationEN == "b_OchZ_B_NoIn") tmp = pattern2(user, ReportArchiveID, "b_OchZ_B");
-                    if (basicParam.AbbreviationEN == "c_Z_B_NoIn") tmp = pattern2(user, ReportArchiveID, "c_Z_B");
-                    if (basicParam.AbbreviationEN == "d_E_B_NoIn") tmp = pattern2(user, ReportArchiveID, "d_E_B");
-                    ////
-                    if (basicParam.AbbreviationEN == "OOP_B") tmp = pattern3(user, ReportArchiveID, 1);
-                    if (basicParam.AbbreviationEN == "OOP_S") tmp = pattern3(user, ReportArchiveID, 2);
-                    if (basicParam.AbbreviationEN == "OOP_M") tmp = pattern3(user, ReportArchiveID, 3);
-                    if (basicParam.AbbreviationEN == "OOP_A") tmp = pattern3(user, ReportArchiveID, 4);
+                if (basicParam.AbbreviationEN == "a_Och_B_NoIn") tmp = pattern2(user, ReportArchiveID, "a_Och_B");
+                if (basicParam.AbbreviationEN == "b_OchZ_B_NoIn") tmp = pattern2(user, ReportArchiveID, "b_OchZ_B");
+                if (basicParam.AbbreviationEN == "c_Z_B_NoIn") tmp = pattern2(user, ReportArchiveID, "c_Z_B");
+                if (basicParam.AbbreviationEN == "d_E_B_NoIn") tmp = pattern2(user, ReportArchiveID, "d_E_B");
+                ////
+                if (basicParam.AbbreviationEN == "OOP_B") tmp = pattern3(user, ReportArchiveID, 1);
+                if (basicParam.AbbreviationEN == "OOP_S") tmp = pattern3(user, ReportArchiveID, 2);
+                if (basicParam.AbbreviationEN == "OOP_M") tmp = pattern3(user, ReportArchiveID, 3);
+                if (basicParam.AbbreviationEN == "OOP_A") tmp = pattern3(user, ReportArchiveID, 4);
 
-                    if (basicParam.AbbreviationEN == "kol_B_OP") tmp = pattern4(user, ReportArchiveID, 1);
-                    if (basicParam.AbbreviationEN == "kol_S_OP") tmp = pattern4(user, ReportArchiveID, 2);
-                    if (basicParam.AbbreviationEN == "kol_M_OP") tmp = pattern4(user, ReportArchiveID, 3);
-                    if (basicParam.AbbreviationEN == "kol_A_OP") tmp = pattern4(user, ReportArchiveID, 4);
+                if (basicParam.AbbreviationEN == "kol_B_OP") tmp = pattern4(user, ReportArchiveID, 1);
+                if (basicParam.AbbreviationEN == "kol_S_OP") tmp = pattern4(user, ReportArchiveID, 2);
+                if (basicParam.AbbreviationEN == "kol_M_OP") tmp = pattern4(user, ReportArchiveID, 3);
+                if (basicParam.AbbreviationEN == "kol_A_OP") tmp = pattern4(user, ReportArchiveID, 4);
 
-                    if (basicParam.AbbreviationEN == "kol_B_OP_SV") tmp = pattern5(user, ReportArchiveID, 1);
-                    if (basicParam.AbbreviationEN == "kol_S_OP_SV") tmp = pattern5(user, ReportArchiveID, 2);
-                    if (basicParam.AbbreviationEN == "kol_M_OP_SV") tmp = pattern5(user, ReportArchiveID, 3);
-                    if (basicParam.AbbreviationEN == "kol_A_OP_SV") tmp = pattern5(user, ReportArchiveID, 4);
+                if (basicParam.AbbreviationEN == "kol_B_OP_SV") tmp = pattern5(user, ReportArchiveID, 1);
+                if (basicParam.AbbreviationEN == "kol_S_OP_SV") tmp = pattern5(user, ReportArchiveID, 2);
+                if (basicParam.AbbreviationEN == "kol_M_OP_SV") tmp = pattern5(user, ReportArchiveID, 3);
+                if (basicParam.AbbreviationEN == "kol_A_OP_SV") tmp = pattern5(user, ReportArchiveID, 4);
 
 
-                    if (basicParam.AbbreviationEN == "OOP_B_SOT") tmp = pattern6(user, ReportArchiveID, 1);
-                    if (basicParam.AbbreviationEN == "OOP_S_SOT") tmp = pattern6(user, ReportArchiveID, 2);
-                    if (basicParam.AbbreviationEN == "OOP_M_SOT") tmp = pattern6(user, ReportArchiveID, 3);
-                    if (basicParam.AbbreviationEN == "OOP_A_SOT") tmp = pattern6(user, ReportArchiveID, 4);
-                    if (tmp==null)
+                if (basicParam.AbbreviationEN == "OOP_B_SOT") tmp = pattern6(user, ReportArchiveID, 1);
+                if (basicParam.AbbreviationEN == "OOP_S_SOT") tmp = pattern6(user, ReportArchiveID, 2);
+                if (basicParam.AbbreviationEN == "OOP_M_SOT") tmp = pattern6(user, ReportArchiveID, 3);
+                if (basicParam.AbbreviationEN == "OOP_A_SOT") tmp = pattern6(user, ReportArchiveID, 4);
+                if (tmp == null)
                     tmp = 0;
                 collectedBasicTmp.CollectedValue = tmp;
                 kpiWebDataContext.SubmitChanges();
                 //прекратили
                 //////////////////////////////////////////////////////////////////
             }
-            
+
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -350,7 +350,7 @@ namespace KPIWeb.Reports
                 UsersTable user = (from a in kpiWebDataContext.UsersTable
                                    where a.UsersTableID == UserID
                                    select a).FirstOrDefault();
-                
+
                 int l_0 = user.FK_ZeroLevelSubdivisionTable == null ? 0 : (int)user.FK_ZeroLevelSubdivisionTable;
                 int l_1 = user.FK_FirstLevelSubdivisionTable == null ? 0 : (int)user.FK_FirstLevelSubdivisionTable;
                 int l_2 = user.FK_SecondLevelSubdivisionTable == null ? 0 : (int)user.FK_SecondLevelSubdivisionTable;
@@ -365,14 +365,14 @@ namespace KPIWeb.Reports
                 userLevel = l_2 == 0 ? 1 : userLevel;
                 userLevel = l_1 == 0 ? 0 : userLevel;
                 userLevel = l_0 == 0 ? -1 : userLevel;
-                 
+
                 ////ранги пользователя
                 /// -1 никто ниоткуда/// 0 с Кфу /// 1 с Академии/// 2 с Факультета/// 3 с кафедры/// 4 с специализация/// 5 с под специализацией,пока нет
                 #endregion
                 ///узнали все о пользователе
                 #region
                 List<string> columnNames = new List<string>(); // сюда сохраняем названия колонок
-                List<string> basicNames  = new List<string>(); // сюда названия параметров для excel
+                List<string> basicNames = new List<string>(); // сюда названия параметров для excel
                 /////создаем дататейбл
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("CurrentReportArchiveID", typeof(string)));
@@ -391,7 +391,7 @@ namespace KPIWeb.Reports
                 //создали макет дататейбла
                 int additionalColumnCount = 0;
                 #region
-                if (userLevel!=3)
+                if (userLevel != 3)
                 {
                     List<BasicParametersTable> BasicParams =
                             (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
@@ -417,74 +417,74 @@ namespace KPIWeb.Reports
                     //узнали показатели
                     foreach (BasicParametersTable basicParam in BasicParams) //пройдемся по показателям
                     {
-                            DataRow dataRow = dataTable.NewRow();
-                            dataRow["CurrentReportArchiveID"] = ReportArchiveID;
-                            dataRow["BasicParametersTableID"] = basicParam.BasicParametersTableID;
-                            dataRow["Name"] = basicParam.Name;
-                            basicNames.Add(basicParam.Name);
-                            CollectedBasicParametersTable collectedBasicTmp =
-                                (from a in kpiWebDataContext.CollectedBasicParametersTable
-                                 where a.FK_ZeroLevelSubdivisionTable == user.FK_ZeroLevelSubdivisionTable
-                                     && a.FK_FirstLevelSubdivisionTable == user.FK_FirstLevelSubdivisionTable
-                                     && a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable
-                                     && a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
-                                     && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
-                                     && a.FK_ReportArchiveTable == ReportArchiveID
-                                 select a).FirstOrDefault();
-                            if (collectedBasicTmp == null) // надо создать
-                            {
-                                collectedBasicTmp = new CollectedBasicParametersTable();
-                                collectedBasicTmp.Active = true;
-                                collectedBasicTmp.FK_UsersTable = UserID;
-                                collectedBasicTmp.FK_BasicParametersTable = basicParam.BasicParametersTableID;
-                                collectedBasicTmp.FK_ReportArchiveTable = ReportArchiveID;
-                                collectedBasicTmp.CollectedValue = null;
-                                collectedBasicTmp.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
-                                collectedBasicTmp.LastChangeDateTime = DateTime.Now;
-                                collectedBasicTmp.SavedDateTime = DateTime.Now;
-                                collectedBasicTmp.FK_ZeroLevelSubdivisionTable = user.FK_ZeroLevelSubdivisionTable;
-                                collectedBasicTmp.FK_FirstLevelSubdivisionTable = user.FK_FirstLevelSubdivisionTable;
-                                collectedBasicTmp.FK_SecondLevelSubdivisionTable = user.FK_SecondLevelSubdivisionTable;
-                                collectedBasicTmp.FK_ThirdLevelSubdivisionTable = user.FK_ThirdLevelSubdivisionTable;
+                        DataRow dataRow = dataTable.NewRow();
+                        dataRow["CurrentReportArchiveID"] = ReportArchiveID;
+                        dataRow["BasicParametersTableID"] = basicParam.BasicParametersTableID;
+                        dataRow["Name"] = basicParam.Name;
+                        basicNames.Add(basicParam.Name);
+                        CollectedBasicParametersTable collectedBasicTmp =
+                            (from a in kpiWebDataContext.CollectedBasicParametersTable
+                             where a.FK_ZeroLevelSubdivisionTable == user.FK_ZeroLevelSubdivisionTable
+                                 && a.FK_FirstLevelSubdivisionTable == user.FK_FirstLevelSubdivisionTable
+                                 && a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable
+                                 && a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
+                                 && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
+                                 && a.FK_ReportArchiveTable == ReportArchiveID
+                             select a).FirstOrDefault();
+                        if (collectedBasicTmp == null) // надо создать
+                        {
+                            collectedBasicTmp = new CollectedBasicParametersTable();
+                            collectedBasicTmp.Active = true;
+                            collectedBasicTmp.FK_UsersTable = UserID;
+                            collectedBasicTmp.FK_BasicParametersTable = basicParam.BasicParametersTableID;
+                            collectedBasicTmp.FK_ReportArchiveTable = ReportArchiveID;
+                            collectedBasicTmp.CollectedValue = null;
+                            collectedBasicTmp.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
+                            collectedBasicTmp.LastChangeDateTime = DateTime.Now;
+                            collectedBasicTmp.SavedDateTime = DateTime.Now;
+                            collectedBasicTmp.FK_ZeroLevelSubdivisionTable = user.FK_ZeroLevelSubdivisionTable;
+                            collectedBasicTmp.FK_FirstLevelSubdivisionTable = user.FK_FirstLevelSubdivisionTable;
+                            collectedBasicTmp.FK_SecondLevelSubdivisionTable = user.FK_SecondLevelSubdivisionTable;
+                            collectedBasicTmp.FK_ThirdLevelSubdivisionTable = user.FK_ThirdLevelSubdivisionTable;
 
-                                kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
-                                kpiWebDataContext.SubmitChanges();
-                            }
-                            dataRow["Value0"] = collectedBasicTmp.CollectedValue.ToString();
-                            dataRow["CollectId0"] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
-                            dataRow["NotNull0"] = 1.ToString();
-                            dataTable.Rows.Add(dataRow);
+                            kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
+                            kpiWebDataContext.SubmitChanges();
                         }
-                    additionalColumnCount += 1;
+                        dataRow["Value0"] = collectedBasicTmp.CollectedValue.ToString();
+                        dataRow["CollectId0"] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
+                        dataRow["NotNull0"] = 1.ToString();
+                        dataTable.Rows.Add(dataRow);
                     }
-                   /* columnNames.Add("Кафедра:\r\n" + (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
-                                                      where a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
-                                                      select a.Name).FirstOrDefault());
-                    * */
+                    additionalColumnCount += 1;
+                }
+                /* columnNames.Add("Кафедра:\r\n" + (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                                                   where a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
+                                                   select a.Name).FirstOrDefault());
+                 * */
                 #endregion
                 switch (userLevel) // это штука пока будет работать только для пользователя кафедры
                 {
                     case 0: //я КФУ
                         {
                             columnNames.Add((from a in kpiWebDataContext.ZeroLevelSubdivisionTable
-                                                              where a.ZeroLevelSubdivisionTableID == user.FK_ZeroLevelSubdivisionTable
-                                                              select a.Name).FirstOrDefault());
+                                             where a.ZeroLevelSubdivisionTableID == user.FK_ZeroLevelSubdivisionTable
+                                             select a.Name).FirstOrDefault());
                             break;
                         }
                     case 1: //Я Акакдемия
                         {
                             //"Академия:\r\n" + 
                             columnNames.Add((from a in kpiWebDataContext.FirstLevelSubdivisionTable
-                                                              where a.FirstLevelSubdivisionTableID == user.FK_FirstLevelSubdivisionTable
-                                                              select a.Name).FirstOrDefault());
+                                             where a.FirstLevelSubdivisionTableID == user.FK_FirstLevelSubdivisionTable
+                                             select a.Name).FirstOrDefault());
                             break;
                         }
                     case 2://я Факультет
                         {
                             //"Факультет:\r\n" + 
                             columnNames.Add((from a in kpiWebDataContext.SecondLevelSubdivisionTable
-                                                              where a.SecondLevelSubdivisionTableID == user.FK_SecondLevelSubdivisionTable
-                                                              select a.Name).FirstOrDefault());
+                                             where a.SecondLevelSubdivisionTableID == user.FK_SecondLevelSubdivisionTable
+                                             select a.Name).FirstOrDefault());
                             break;
                         }
                     case 3: //я кафедра
@@ -629,7 +629,7 @@ namespace KPIWeb.Reports
                                     int j = 0;//если хоть одной специальности базовый показатель нужен то мы его выведем
                                     foreach (FourthLevelSubdivisionTable spec in Specialzations)
                                     {
-                                       
+
                                         FourthLevelParametrs fourthParametrs =
                                             (from a in kpiWebDataContext.FourthLevelParametrs
                                              where a.FourthLevelParametrsID == spec.FourthLevelSubdivisionTableID
@@ -668,10 +668,10 @@ namespace KPIWeb.Reports
                                                 collectedBasicTmp.FK_FourthLevelSubdivisionTable = spec.FourthLevelSubdivisionTableID;
                                                 kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
                                                 kpiWebDataContext.SubmitChanges();
-                                            }                                     
+                                            }
                                             dataRow["Value" + i] = collectedBasicTmp.CollectedValue.ToString();
                                             dataRow["CollectId" + i] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
-                                            dataRow["NotNull" + i] = 1.ToString();                                       
+                                            dataRow["NotNull" + i] = 1.ToString();
                                         }
                                         i++;
                                     }
@@ -705,7 +705,7 @@ namespace KPIWeb.Reports
                             break;
                         }
                     #endregion
-                        //неиспользуемая часть свича
+                    //неиспользуемая часть свича
                 }
 
                 ViewState["CollectedBasicParametersTable"] = dataTable;
@@ -715,6 +715,7 @@ namespace KPIWeb.Reports
                 ViewState["basicNames"] = basicNames;
                 if (mode == 0)
                 {
+                    Button3.Visible = false;
                     ButtonSave.Text = "Сохранить внесенные данные";
                     ButtonSave.Visible = true;
                     Button2.Text = "Вернуться в меню без сохранения";
@@ -723,18 +724,20 @@ namespace KPIWeb.Reports
                 else if
                     (mode == 1)
                 {
+                    Button3.Visible = false;
                     Label1.Text = "Просмотр введенных данных";
                     ButtonSave.Text = "Вернуться в меню выбора отчета";
-                    
+
                     Button2.Visible = false;
                 }
                 else
                     if (mode == 2)
                     {
+                        Button3.Visible = true;
                         Label1.Text = "Проверьте корректность введенных данных. Если данные верны, нажмите кнопку внизу формы";
                         ButtonSave.Visible = true;
                         Button2.Text = "Вернуться в меню без подтверждения данных";
-                        ButtonSave.Text = "Подтвердить данные и отправить";
+                        ButtonSave.Text = "Подтвердить правильность введенных данных";
                     }
                 GridviewCollectedBasicParameters.DataSource = dataTable;
                 for (int j = 0; j < additionalColumnCount; j++)
@@ -753,7 +756,7 @@ namespace KPIWeb.Reports
             {
                 Response.Redirect("~/Default.aspx");
             }
-        
+
             Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
             if (paramSerialization == null)
             {
@@ -782,41 +785,36 @@ namespace KPIWeb.Reports
                 }
                 int mode = modeSer.mode;
 
-                if (collectedBasicParametersTable.Rows.Count > 0)
-                {
-                    int rowIndex = 0;
-                    for (int i = 1; i <= collectedBasicParametersTable.Rows.Count; i++) //в каждой строчке
-                    {
-                        /// //сохраним вложенные данные
-                        for (int k = 0; k < columnCnt; k++) // пройдемся по каждой колонке
-                        {
-                            TextBox textBox =
-                                (TextBox)
-                                    GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("Value" +
-                                                                                                k.ToString());
-                            Label label =
-                                (Label)
-                                    GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("CollectId" +
-                                                                                                k.ToString());
 
-                            if (textBox != null && label != null)
-                            {
-                                double collectedValue = -1;
-                                if (double.TryParse(textBox.Text, out collectedValue) && collectedValue > -1)
-                                {
-                                    int collectedBasicParametersTableID = -1;
-                                    if (int.TryParse(label.Text, out collectedBasicParametersTableID) &&
-                                        collectedBasicParametersTableID > -1)
-                                        tempDictionary.Add(collectedBasicParametersTableID, collectedValue);
-                                }
-                            }
-                        }
-                        rowIndex++;
-                    }
-                }
 
                 if (mode == 0)
                 {
+                    if (collectedBasicParametersTable.Rows.Count > 0)
+                    {
+                        int rowIndex = 0;
+                        for (int i = 1; i <= collectedBasicParametersTable.Rows.Count; i++) //в каждой строчке
+                        {
+                            /// //сохраним вложенные данные
+                            for (int k = 0; k < columnCnt; k++) // пройдемся по каждой колонке
+                            {
+                                TextBox textBox = (TextBox)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("Value" + k.ToString());
+                                Label label = (Label)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("CollectId" + k.ToString());
+
+                                if (textBox != null && label != null)
+                                {
+                                    double collectedValue = -1;
+                                    if (double.TryParse(textBox.Text, out collectedValue) && collectedValue > -1)
+                                    {
+                                        int collectedBasicParametersTableID = -1;
+                                        if (int.TryParse(label.Text, out collectedBasicParametersTableID) &&
+                                            collectedBasicParametersTableID > -1)
+                                            tempDictionary.Add(collectedBasicParametersTableID, collectedValue);
+                                    }
+                                }
+                            }
+                            rowIndex++;
+                        }
+                    }
                     if (tempDictionary.Count > 0)
                     {
                         //Список ранее введенных пользователем данных для данной кампании (отчета)
@@ -838,10 +836,10 @@ namespace KPIWeb.Reports
                         }
                         KPIWebDataContext.SubmitChanges();
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Данные успешно сохранены');", true);
+                            "alert('Внесенные данные сохранены');", true);
                     }
-                    CalcCalculate(ReportArchiveID,user);
-                   //надо рассчитать рассчетные
+                    CalcCalculate(ReportArchiveID, user);
+                    //надо рассчитать рассчетные
                 }
                 else if (mode == 1)
                 {
@@ -849,9 +847,57 @@ namespace KPIWeb.Reports
                 }
                 else if (mode == 2)
                 {
+                    int dataCount = 0;
+                    int dataConfCount = 0;
+                    if (collectedBasicParametersTable.Rows.Count > 0)
+                    {
+                        int rowIndex = 0;
+                        for (int i = 1; i <= collectedBasicParametersTable.Rows.Count; i++) //в каждой строчке
+                        {
+                            /// //сохраним вложенные данные
+
+                            for (int k = 0; k < columnCnt; k++) // пройдемся по каждой колонке
+                            {
+                                TextBox textBox = (TextBox)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("Value" + k.ToString());
+                                Label label = (Label)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("CollectId" + k.ToString());
+                                CheckBox chBox = (CheckBox)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("Checked" + k.ToString());
+                                Label NotNullLbl = (Label)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("NotNull" + k.ToString());
+                                if (textBox != null && label != null && chBox != null)
+                                {
+
+                                    if (NotNullLbl.Text.Any())
+                                        dataCount++;
+
+                                    if (chBox.Checked)
+                                    {
+                                        if (!textBox.Text.Any())
+                                        {
+                                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                                            "alert('Нельзя подтверждать незаполненные данные');", true);
+                                            return;
+                                        }
+                                        else
+                                        {
+                                            dataConfCount++;
+                                            double collectedValue = -1;
+                                            if (double.TryParse(textBox.Text, out collectedValue) && collectedValue > -1)
+                                            {
+                                                int collectedBasicParametersTableID = -1;
+                                                if (int.TryParse(label.Text, out collectedBasicParametersTableID) &&
+                                                    collectedBasicParametersTableID > -1)
+                                                    tempDictionary.Add(collectedBasicParametersTableID, collectedValue);
+                                            }
+                                        }
+
+                                    }
+                                }
+                            }
+                            rowIndex++;
+                        }
+                    }
+
                     if (tempDictionary.Count > 0)
                     {
-                        //Список ранее введенных пользователем данных для данной кампании (отчета)
                         List<CollectedBasicParametersTable> сollectedBasicParametersTable =
                             (from collectedBasicParameters in KPIWebDataContext.CollectedBasicParametersTable
                              where (from item in tempDictionary select item.Key).ToList()
@@ -863,11 +909,17 @@ namespace KPIWeb.Reports
                             сollectedBasicParameter.ConfirmedThirdLevel = true;
                         }
                         KPIWebDataContext.SubmitChanges();
-                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Данные успешно подтверждены');", true);
+                        if (dataConfCount == dataCount)
+                        {
+                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                            "alert('Вами подтверждены значения всех базовых показателей. Окончательный отчет отправлен');", true);
+                        }
+                        else
+                        {
+                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                            "alert('Вами подтверждены данные " + dataConfCount.ToString() + " базовых показателей из " + dataCount.ToString() + "');", true);
+                        }
                     }
-
-                    //надо подтвердить рассчетные
                 }
                 else
                 {
@@ -879,6 +931,7 @@ namespace KPIWeb.Reports
         protected void GridviewCollectedBasicParameters_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             Color color;
+            Color confirmedColor = System.Drawing.Color.LimeGreen;
             Color disableColor = System.Drawing.Color.LightGray;
             if (col_ == 0)
             {
@@ -904,7 +957,7 @@ namespace KPIWeb.Reports
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             for (int i = 1; i <= GridviewCollectedBasicParameters.Columns.Count; i++)
             {
-                {                   
+                {
                     var lblMinutes = e.Row.FindControl("Value" + rowIndex) as TextBox;
                     var NotNullLbl = e.Row.FindControl("NotNull" + rowIndex) as Label;
                     if (NotNullLbl != null)
@@ -918,44 +971,100 @@ namespace KPIWeb.Reports
                                 d.BackColor = disableColor;
                             }
                         }
-                        else 
+                        else
                         {
-                            lblMinutes.ReadOnly = (mode == 0) ? false : true;
-                            Label lbl = e.Row.FindControl("CollectId" + rowIndex) as Label; ;
+                            Label lbl = e.Row.FindControl("CollectId" + rowIndex) as Label;
                             RangeValidator Validator = e.Row.FindControl("Validate" + rowIndex) as RangeValidator;
-                            int type = Convert.ToInt32((from a in kpiWebDataContext.CollectedBasicParametersTable
-                                                        join b in kpiWebDataContext.BasicParametrAdditional
-                                                            on a.FK_BasicParametersTable equals b.BasicParametrAdditionalID
-                                                        where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
-                                                        select b.DataType).FirstOrDefault());
-
-                            if (Validator != null)
+                            if (mode == 0) // редактировать
                             {
-                                if (type == 0)
+                                int type = Convert.ToInt32((from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                            join b in kpiWebDataContext.BasicParametrAdditional
+                                                                on a.FK_BasicParametersTable equals b.BasicParametrAdditionalID
+                                                            where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
+                                                            select b.DataType).FirstOrDefault());
+
+                                bool isconf = Convert.ToBoolean((from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                                 where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
+                                                                 select a.ConfirmedThirdLevel).FirstOrDefault());
+                                if (isconf == true)
                                 {
-                                    Validator.MinimumValue = "0";
-                                    Validator.MaximumValue = "1";
-                                    Validator.Type = ValidationDataType.Integer;
-                                    Validator.Text = "Только 0 или 1";
+                                    lblMinutes.ReadOnly = true;
+                                    DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
+                                    d.BackColor = confirmedColor;
+                                    lblMinutes.BackColor = confirmedColor;
                                 }
-                                if (type == 1)
+                                else
                                 {
-                                    Validator.MinimumValue = "0";
-                                    Validator.MaximumValue = "10000";
-                                    Validator.Type = ValidationDataType.Integer;
-                                    Validator.Text = "Только целочисленное значение";
-                                }
-                                if (type == 2)
-                                {
-                                    Validator.MinimumValue = "0";
-                                    Validator.MaximumValue = "10000000";
-                                    Validator.Type = ValidationDataType.Double;
-                                    Validator.Text = "Только цифры и запятая";
+                                    DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
+                                    d.BackColor = color;
+                                    lblMinutes.BackColor = color;
+
+                                    if (Validator != null)
+                                    {
+                                        if (type == 0)
+                                        {
+                                            Validator.MinimumValue = "0";
+                                            Validator.MaximumValue = "1";
+                                            Validator.Type = ValidationDataType.Integer;
+                                            Validator.Text = "Только 0 или 1";
+                                        }
+                                        if (type == 1)
+                                        {
+                                            Validator.MinimumValue = "0";
+                                            Validator.MaximumValue = "10000";
+                                            Validator.Type = ValidationDataType.Integer;
+                                            Validator.Text = "Только целочисленное значение";
+                                        }
+                                        if (type == 2)
+                                        {
+                                            Validator.MinimumValue = "0";
+                                            Validator.MaximumValue = "10000000";
+                                            Validator.Type = ValidationDataType.Double;
+                                            Validator.Text = "Только цифры и запятая";
+                                        }
+                                    }
                                 }
                             }
-                            lblMinutes.BackColor = color;
+                            else if (mode == 1) //смотреть
+                            {
+                                lblMinutes.ReadOnly = true;
+                                lblMinutes.BackColor = color;
+                            }
+                            else if (mode == 2) // подтверждать
+                            {
+                                bool isconf = Convert.ToBoolean((from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                                 where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
+                                                                 select a.ConfirmedThirdLevel).FirstOrDefault());
+                                var chBox = e.Row.FindControl("Checked" + rowIndex) as CheckBox;
+                                chBox.Visible = true;
+                                lblMinutes.ReadOnly = true;
+                                Validator.MinimumValue = "0";
+                                Validator.MaximumValue = "10000000";
+                                Validator.Type = ValidationDataType.Double;
+                                Validator.Text = "Невозможно подтвердить";
+                                if (isconf == true)
+                                {
+                                    lblMinutes.ReadOnly = true;
+                                    DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
+                                    d.BackColor = confirmedColor;
+                                    lblMinutes.BackColor = confirmedColor;
+                                    chBox.Checked = true;
+                                    chBox.Enabled = false;
+                                    chBox.BackColor = confirmedColor;
+                                }
+                                else
+                                {
+                                    //lblMinutes.ReadOnly = false;
+                                    DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
+                                    d.BackColor = color;
+                                    lblMinutes.BackColor = color;
+                                    chBox.Checked = false;
+                                    chBox.Enabled = true;
+                                    chBox.BackColor = color;
+                                }
+                            }
                         }
-                    }                                      
+                    }
                     rowIndex++;
                 }
             }
@@ -984,31 +1093,31 @@ namespace KPIWeb.Reports
             Microsoft.Office.Interop.Excel.Range rng = null;
             DataRow dRow;
             DataColumn dCol;
-            int colcnt = (int) ViewState["ValueColumnCnt"];
-            List<string> colNames =  (List<string>) ViewState["ColumnName"];
+            int colcnt = (int)ViewState["ValueColumnCnt"];
+            List<string> colNames = (List<string>)ViewState["ColumnName"];
             for (int i = 0; i < colcnt; i++)
             {
-                rng = (Microsoft.Office.Interop.Excel.Range)excelWorksheet.Cells[1, i+2]; //костыль
+                rng = (Microsoft.Office.Interop.Excel.Range)excelWorksheet.Cells[1, i + 2]; //костыль
                 rng.Value2 = colNames[i];
             }
-            List<string> basicNames =  (List<string>) ViewState["basicNames"] ;
+            List<string> basicNames = (List<string>)ViewState["basicNames"];
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                rng = (Microsoft.Office.Interop.Excel.Range)excelWorksheet.Cells[i+2,1]; //костыль
+                rng = (Microsoft.Office.Interop.Excel.Range)excelWorksheet.Cells[i + 2, 1]; //костыль
                 rng.Value2 = basicNames[i];
             }
             for (int _row = 0; _row < dt.Rows.Count; _row++)
-            {               
+            {
                 for (int _col = 3; _col < dt.Columns.Count; _col++)//костыль
                 {
                     dRow = dt.Rows[_row];
                     dCol = dt.Columns[_col];
                     rng = (Microsoft.Office.Interop.Excel.Range)excelWorksheet.Cells[_row + 2, _col - 1]; //костыль
                     TextBox tb = (TextBox)GridviewCollectedBasicParameters.Rows[_row].FindControl("Value" + (_col - 3)); // костылище
-                    if (tb!=null)
+                    if (tb != null)
                     {
                         rng.Value2 = tb.Text;
-                    }                   
+                    }
                 }
             }
             excelApp.Visible = true;
@@ -1017,6 +1126,30 @@ namespace KPIWeb.Reports
         protected void Button2_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Default.aspx");
+        }
+
+        protected void Button3_Click(object sender, EventArgs e)////проставить везде галочки
+        {
+            if (GridviewCollectedBasicParameters.Rows.Count > 0)
+            {
+                int rowIndex = 0;
+                for (int i = 1; i <= GridviewCollectedBasicParameters.Rows.Count; i++) //в каждой строчке
+                {
+                    for (int k = 0; k < 20; k++) // пройдемся по каждой колонке
+                    {
+                        TextBox textBox = (TextBox)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("Value" + k.ToString());
+                        Label label = (Label)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("CollectId" + k.ToString());
+                        CheckBox chBox = (CheckBox)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("Checked" + k.ToString());
+                        Label NotNullLbl = (Label)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("NotNull" + k.ToString());
+                        if (textBox != null && label != null && chBox != null)
+                        {
+                            if (NotNullLbl.Text.Any())
+                                chBox.Checked = true;
+                        }                      
+                    }
+                    rowIndex++;
+                }
+            }
         }
     }
 }

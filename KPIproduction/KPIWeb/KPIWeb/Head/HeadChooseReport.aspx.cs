@@ -6,11 +6,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Drawing;
 
 namespace KPIWeb.Head
 {
     public partial class ChooseReport : System.Web.UI.Page
     {
+        public int col_ = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             Serialization UserSer = (Serialization)Session["UserID"];
@@ -73,17 +75,41 @@ namespace KPIWeb.Head
                 dataTable.Columns.Add(new DataColumn("ReportName", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("StartDate", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("EndDate", typeof(string)));
-
+                dataTable.Columns.Add(new DataColumn("info0", typeof(string)));
+                List<int> conf_enable = new List<int>() ;
                 foreach (ReportArchiveTable ReportRow in reportsArchiveTablesTable)
                 {
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ReportArchiveID"] = ReportRow.ReportArchiveTableID.ToString();
                     dataRow["ReportName"] = ReportRow.Name;
                     dataRow["StartDate"] = ReportRow.StartDateTime.ToString().Split(' ')[0];
-                    dataRow["EndDate"] = ReportRow.EndDateTime.ToString().Split(' ')[0]; ;
+                    dataRow["EndDate"] = ReportRow.EndDateTime.ToString().Split(' ')[0];
+                    int calcConf=(from a in kpiWebDataContext.CollectedCalculatedParametrs
+                                        where a.FK_ReportArchiveTable == ReportRow.ReportArchiveTableID
+                                            && a.FK_UsersTable == userID
+                                            && a.Confirmed ==true select a).ToList().Count();
+                    int calcAll = (from a in kpiWebDataContext.CalculatedParametrs
+                                        join b in kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable
+                                        on a.CalculatedParametrsID equals b.FK_CalculatedParametrsTable
+                                        join c in kpiWebDataContext.CalculatedParametrsAndUsersMapping
+                                        on a.CalculatedParametrsID equals c.FK_CalculatedParametrsTable
+                                        where b.FK_ReportArchiveTable == ReportRow.ReportArchiveTableID
+                                         && c.FK_UsersTable == userID
+                                         && c.CanConfirm == true
+                                        select a).ToList().Count();
+
+                    dataRow["info0"] =  calcConf+" из "+ calcAll;
+                    if (calcAll==calcConf)
+                    {
+                        conf_enable.Add(0);
+                    }
+                    else
+                    {
+                        conf_enable.Add(1);
+                    }
                     dataTable.Rows.Add(dataRow);
                 }
-
+                ViewState["confEnable"] = conf_enable;
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
             }
@@ -246,6 +272,46 @@ namespace KPIWeb.Head
                 DropDownList2.Visible = false;
                 DropDownList3.Visible = false;
             }
+        }
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            Color color;
+            Color confirmedColor = System.Drawing.Color.LimeGreen;
+            Color disableColor = System.Drawing.Color.LightGray;
+            if (col_ == 0)
+            {
+                col_ = 1;
+                color = System.Drawing.Color.FloralWhite;
+            }
+            else
+            {
+                col_ = 0;
+                color = System.Drawing.Color.GhostWhite;
+            }
+            e.Row.BackColor = color;
+            List<int> ConfEnable = (List<int>)ViewState["confEnable"];
+            var ConfBut = e.Row.FindControl("ButtonConfirmReport") as Button;
+            var info0 = e.Row.FindControl("info0") as Label;
+            if ((e.Row.RowIndex >= 0) && e.Row.RowIndex < ConfEnable.Count())
+            {
+                if (ConfEnable[e.Row.RowIndex] == 1)
+                {
+                    ConfBut.Enabled = true;
+                }
+                else
+                {
+                    ConfBut.Enabled = false;
+                    ConfBut.BackColor = disableColor;
+                    DataControlFieldCell d = ConfBut.Parent as DataControlFieldCell;
+                    d.BackColor = disableColor;
+                    info0.BackColor = confirmedColor;
+                    DataControlFieldCell f = info0.Parent as DataControlFieldCell;
+                    f.BackColor = confirmedColor;
+
+                }
+            }
+
         }
     }
 }
