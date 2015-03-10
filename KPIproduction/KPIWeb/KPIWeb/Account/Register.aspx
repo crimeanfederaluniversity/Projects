@@ -175,7 +175,7 @@
             <asp:RegularExpressionValidator ID="valid_email" runat="server"
                 ErrorMessage="Неверный почтовый адрес" CssClass="text-danger"
                 ControlToValidate="Email"
-                ValidationExpression="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" />
+                ValidationExpression="^([A-Za-z0-9_-]+\.)*[A-Za-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" />
 
         </div>
     </div>

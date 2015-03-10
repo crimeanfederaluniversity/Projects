@@ -235,6 +235,8 @@ namespace KPIWeb.Account
             //    LogHandler.LogWriter.WriteError(ex);
             //}
              }
+
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Пользователь зарегистрирован');", true);
         }
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
