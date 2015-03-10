@@ -157,7 +157,60 @@ namespace KPIWeb.Head
                         dataRow["CalculatedParametrsName"] = calcPar.Name;
                         dataRow["CalculatedParametrsResult"] = colCalc.CollectedValue;
                         dataRow["checkBoxCalcId"] = colCalc.CollectedCalculatedParametrsID;
-                        dataRow["info0"] = 1;
+                        
+                        int Allcnt = 0;
+                        int Insertcnt = 0;
+                        int Confcnt = 0;
+                        List<int> BasicIdList = CalculateAbb.GetBasicIdList(calcPar.Formula);
+                        foreach (int Basic in BasicIdList)
+                        { 
+                             int tmpInsert = (from a in kpiWebDataContext.CollectedBasicParametersTable
+                             where a.FK_BasicParametersTable == Basic
+                             && (a.FK_ZeroLevelSubdivisionTable   == l_0 || l_0 == 0)
+                             && (a.FK_FirstLevelSubdivisionTable  == l_1 || l_1 == 0)
+                             && (a.FK_SecondLevelSubdivisionTable == l_2 || l_2 == 0)
+                             && (a.FK_ThirdLevelSubdivisionTable  == l_3 || l_3 == 0)
+                             && (a.FK_FourthLevelSubdivisionTable == l_4 || l_4 == 0)
+                             && (a.FK_FifthLevelSubdivisionTable  == l_5 || l_5 == 0)   
+                             && a.CollectedValue != null
+                             && a.FK_ReportArchiveTable == ReportArchiveID
+                             select a).ToList().Count();
+                             Insertcnt+=tmpInsert;
+
+                             int tmpconf = (from a in kpiWebDataContext.CollectedBasicParametersTable
+                             where a.FK_BasicParametersTable == Basic
+                             && (a.FK_ZeroLevelSubdivisionTable   == l_0 || l_0 == 0)
+                             && (a.FK_FirstLevelSubdivisionTable  == l_1 || l_1 == 0)
+                             && (a.FK_SecondLevelSubdivisionTable == l_2 || l_2 == 0)
+                             && (a.FK_ThirdLevelSubdivisionTable  == l_3 || l_3 == 0)
+                             && (a.FK_FourthLevelSubdivisionTable == l_4 || l_4 == 0)
+                             && (a.FK_FifthLevelSubdivisionTable  == l_5 || l_5 == 0)   
+                             && a.ConfirmedThirdLevel == true
+                             && a.FK_ReportArchiveTable == ReportArchiveID
+                             select a).ToList().Count();
+                             Confcnt+=tmpconf;
+
+                             int tmpAll = (from a in kpiWebDataContext.BasicParametersTable
+                                           join b in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                           on a.BasicParametersTableID equals b.FK_ParametrsTable
+                                           join c in kpiWebDataContext.UsersTable 
+                                           on b.FK_UsersTable equals c.UsersTableID
+                                           join d in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                                           on a.BasicParametersTableID equals d.FK_BasicParametrsTable
+                                           where 
+                                                b.CanEdit == true
+                                             && d.FK_ReportArchiveTable == ReportArchiveID
+                                             && (c.FK_ZeroLevelSubdivisionTable   == l_0 || l_0 == 0)
+                                             && (c.FK_FirstLevelSubdivisionTable  == l_1 || l_1 == 0)
+                                             && (c.FK_SecondLevelSubdivisionTable == l_2 || l_2 == 0)
+                                             && (c.FK_ThirdLevelSubdivisionTable  == l_3 || l_3 == 0)
+                                             && (c.FK_FourthLevelSubdivisionTable == l_4 || l_4 == 0)
+                                             && (c.FK_FifthLevelSubdivisionTable  == l_5 || l_5 == 0) 
+                                             && a.BasicParametersTableID == Basic
+                                            select a).ToList().Count();
+                                 Allcnt += tmpAll;
+                        }
+                        dataRow["info0"] =Allcnt+"/"+ Insertcnt + "/" + Confcnt;
                         //узнать количество (кол-во_БП*колво_подразделений этого БП)
                         //dataRow["info1"] = 1; //с кол-вом подтвержденных
                         dt_calculate.Rows.Add(dataRow);
