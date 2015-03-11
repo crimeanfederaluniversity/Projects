@@ -213,25 +213,61 @@ namespace KPIWeb.Head
                              && a.FK_ReportArchiveTable == ReportArchiveID
                              select a).ToList().Count();
                              Confcnt+=tmpconf;
-
-                             int tmpAll = (from a in kpiWebDataContext.BasicParametersTable
+                             BasicParametrAdditional bpt = (from a in kpiWebDataContext.BasicParametrAdditional
+                                                         where a.BasicParametrAdditionalID == Basic
+                                                         select a).FirstOrDefault();
+                             int tmpAll = 0 ;
+                             if (bpt.SubvisionLevel == 4)
+                             {                                         
+                                 tmpAll = (from a in kpiWebDataContext.UsersTable
                                            join b in kpiWebDataContext.BasicParametrsAndUsersMapping
-                                           on a.BasicParametersTableID equals b.FK_ParametrsTable
-                                           join c in kpiWebDataContext.UsersTable 
-                                           on b.FK_UsersTable equals c.UsersTableID
-                                           join d in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
-                                           on a.BasicParametersTableID equals d.FK_BasicParametrsTable
-                                           where 
-                                                b.CanEdit == true
-                                             && d.FK_ReportArchiveTable == ReportArchiveID
-                                             && (c.FK_ZeroLevelSubdivisionTable   == l_0 || l_0 == 0)
-                                             && (c.FK_FirstLevelSubdivisionTable  == l_1 || l_1 == 0)
-                                             && (c.FK_SecondLevelSubdivisionTable == l_2 || l_2 == 0)
-                                             && (c.FK_ThirdLevelSubdivisionTable  == l_3 || l_3 == 0)
-                                             && (c.FK_FourthLevelSubdivisionTable == l_4 || l_4 == 0)
-                                             && (c.FK_FifthLevelSubdivisionTable  == l_5 || l_5 == 0) 
-                                             && a.BasicParametersTableID == Basic
-                                            select a).ToList().Count();
+                                           on a.UsersTableID equals b.FK_UsersTable
+                                           join c in kpiWebDataContext.ThirdLevelSubdivisionTable
+                                           on a.FK_ThirdLevelSubdivisionTable equals c.ThirdLevelSubdivisionTableID
+                                           join d in kpiWebDataContext.ThirdLevelParametrs
+                                           on c.ThirdLevelSubdivisionTableID equals d.ThirdLevelParametrsID
+                                           join ee in kpiWebDataContext.FourthLevelSubdivisionTable
+                                           on c.ThirdLevelSubdivisionTableID equals ee.FK_ThirdLevelSubdivisionTable
+                                           join f in kpiWebDataContext.FourthLevelParametrs
+                                           on ee.FourthLevelSubdivisionTableID equals f.FourthLevelParametrsID
+                                           where
+                                           ((f.SpecType == bpt.SpecType) || (bpt.SpecType==0))
+                                           && d.CanGraduate == true
+                                           && a.Active == true
+                                           && b.Active == true
+                                           && c.Active == true
+                                           && ee.Active == true
+                                           && b.FK_ParametrsTable == Basic
+                                           && b.CanEdit == true
+                                           && ((f.IsForeignStudentsAccept == true) || (f.IsForeignStudentsAccept == bpt.ForForeignStudents))
+                                           //для того чтобы специальность с иностранными студентами считала свои базовые показатели
+                                           ///если БП только для инстранцев второе условие будет true
+                                           ///если оба true то будут считаться специально с иностранцами
+                                           ///если БП для всех то один true один false
+                                           ///будут считаться все специальности
+                                           select b).ToList().Count();   
+                             }
+                             else
+                             {
+                                 tmpAll = (from a in kpiWebDataContext.BasicParametersTable
+                                               join b in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                               on a.BasicParametersTableID equals b.FK_ParametrsTable
+                                               join c in kpiWebDataContext.UsersTable
+                                               on b.FK_UsersTable equals c.UsersTableID
+                                               join d in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                                               on a.BasicParametersTableID equals d.FK_BasicParametrsTable
+                                               where
+                                                    b.CanEdit == true
+                                                 && d.FK_ReportArchiveTable == ReportArchiveID
+                                                 && (c.FK_ZeroLevelSubdivisionTable == l_0 || l_0 == 0)
+                                                 && (c.FK_FirstLevelSubdivisionTable == l_1 || l_1 == 0)
+                                                 && (c.FK_SecondLevelSubdivisionTable == l_2 || l_2 == 0)
+                                                 && (c.FK_ThirdLevelSubdivisionTable == l_3 || l_3 == 0)
+                                                 && (c.FK_FourthLevelSubdivisionTable == l_4 || l_4 == 0)
+                                                 && (c.FK_FifthLevelSubdivisionTable == l_5 || l_5 == 0)
+                                                 && a.BasicParametersTableID == Basic
+                                               select a).ToList().Count();
+                             }
                                  Allcnt += tmpAll;
                         }
                         dataRow["info0"] =Allcnt+"/"+ Insertcnt + "/" + Confcnt;

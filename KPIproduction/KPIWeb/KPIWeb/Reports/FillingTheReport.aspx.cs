@@ -46,7 +46,6 @@ namespace KPIWeb.Reports
                          && b.SpecType == spectype_
                          && a.Active == true
                          && d.Active == true
-                         && a.Active == true
                          && (e.FK_FieldOfExpertise == 10 || e.FK_FieldOfExpertise == 11 || e.FK_FieldOfExpertise == 12)
                          select a.CollectedValue).Sum());
 
@@ -217,34 +216,7 @@ namespace KPIWeb.Reports
             //узнали показатели кафедры(отчет,разрешенияПользователя,Уровеньвводяшего,вводящийся показатель)          
             foreach (BasicParametersTable basicParam in calcBasicParams) //пройдемся по показателям
             {
-                CollectedBasicParametersTable collectedBasicTmp =
-                    (from a in kpiWebDataContext.CollectedBasicParametersTable
-                     where a.FK_ZeroLevelSubdivisionTable == user.FK_ZeroLevelSubdivisionTable
-                         && a.FK_FirstLevelSubdivisionTable == user.FK_FirstLevelSubdivisionTable
-                         && a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable
-                         && a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
-                         && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
-                         && a.FK_ReportArchiveTable == ReportArchiveID
-                     select a).FirstOrDefault();
-                if (collectedBasicTmp == null) // надо создать
-                {
-                    collectedBasicTmp = new CollectedBasicParametersTable();
-                    collectedBasicTmp.Active = true;
-                    collectedBasicTmp.FK_UsersTable = user.UsersTableID;
-                    collectedBasicTmp.FK_BasicParametersTable = basicParam.BasicParametersTableID;
-                    collectedBasicTmp.FK_ReportArchiveTable = ReportArchiveID;
-                    collectedBasicTmp.CollectedValue = 0;
-                    collectedBasicTmp.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
-                    collectedBasicTmp.LastChangeDateTime = DateTime.Now;
-                    collectedBasicTmp.SavedDateTime = DateTime.Now;
-                    collectedBasicTmp.FK_ZeroLevelSubdivisionTable = user.FK_ZeroLevelSubdivisionTable;
-                    collectedBasicTmp.FK_FirstLevelSubdivisionTable = user.FK_FirstLevelSubdivisionTable;
-                    collectedBasicTmp.FK_SecondLevelSubdivisionTable = user.FK_SecondLevelSubdivisionTable;
-                    collectedBasicTmp.FK_ThirdLevelSubdivisionTable = user.FK_ThirdLevelSubdivisionTable;
-
-                    kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
-                    kpiWebDataContext.SubmitChanges();
-                }
+                
                 ////////////////////////////////////////////////////////////////
                 /// ///поехали страдать
                 double tmp = 0;
@@ -259,7 +231,7 @@ namespace KPIWeb.Reports
                 if (basicParam.AbbreviationEN == "c_Z_M_NoIn") tmp = pattern2(user, ReportArchiveID, "c_Z_M");
                 if (basicParam.AbbreviationEN == "d_E_M_NoIn") tmp = pattern2(user, ReportArchiveID, "d_E_M");
                 //специалисты
-                if (basicParam.AbbreviationEN == "a_Och_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "a_Och_S");
+                if (basicParam.AbbreviationEN == "a_Och_S_IZO")  tmp = pattern1(user, ReportArchiveID, 2, "a_Och_S");
                 if (basicParam.AbbreviationEN == "b_OchZ_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "b_OchZ_S");
                 if (basicParam.AbbreviationEN == "c_Z_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "c_Z_S");
                 if (basicParam.AbbreviationEN == "d_E_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "d_E_S");
@@ -299,9 +271,39 @@ namespace KPIWeb.Reports
                 if (basicParam.AbbreviationEN == "OOP_S_SOT") tmp = pattern6(user, ReportArchiveID, 2);
                 if (basicParam.AbbreviationEN == "OOP_M_SOT") tmp = pattern6(user, ReportArchiveID, 3);
                 if (basicParam.AbbreviationEN == "OOP_A_SOT") tmp = pattern6(user, ReportArchiveID, 4);
-                if (tmp == null)
-                    tmp = 0;
-                collectedBasicTmp.CollectedValue = tmp;
+
+                if (tmp != null)
+                {
+                    CollectedBasicParametersTable collectedBasicTmp =
+                        (from a in kpiWebDataContext.CollectedBasicParametersTable
+                         where a.FK_ZeroLevelSubdivisionTable == user.FK_ZeroLevelSubdivisionTable
+                             && a.FK_FirstLevelSubdivisionTable == user.FK_FirstLevelSubdivisionTable
+                             && a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable
+                             && a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
+                             && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
+                             && a.FK_ReportArchiveTable == ReportArchiveID
+                         select a).FirstOrDefault();
+                    if (collectedBasicTmp == null) // надо создать
+                    {
+                        collectedBasicTmp = new CollectedBasicParametersTable();
+                        collectedBasicTmp.Active = true;
+                        collectedBasicTmp.FK_UsersTable = user.UsersTableID;
+                        collectedBasicTmp.FK_BasicParametersTable = basicParam.BasicParametersTableID;
+                        collectedBasicTmp.FK_ReportArchiveTable = ReportArchiveID;
+                        collectedBasicTmp.CollectedValue = tmp;
+                        collectedBasicTmp.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
+                        collectedBasicTmp.LastChangeDateTime = DateTime.Now;
+                        collectedBasicTmp.SavedDateTime = DateTime.Now;
+                        collectedBasicTmp.FK_ZeroLevelSubdivisionTable = user.FK_ZeroLevelSubdivisionTable;
+                        collectedBasicTmp.FK_FirstLevelSubdivisionTable = user.FK_FirstLevelSubdivisionTable;
+                        collectedBasicTmp.FK_SecondLevelSubdivisionTable = user.FK_SecondLevelSubdivisionTable;
+                        collectedBasicTmp.FK_ThirdLevelSubdivisionTable = user.FK_ThirdLevelSubdivisionTable;
+
+                        kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
+                        kpiWebDataContext.SubmitChanges();
+                    }
+                }
+
                 kpiWebDataContext.SubmitChanges();
                 //прекратили
                 //////////////////////////////////////////////////////////////////
@@ -992,6 +994,10 @@ namespace KPIWeb.Reports
                                     DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
                                     d.BackColor = confirmedColor;
                                     lblMinutes.BackColor = confirmedColor;
+                                    if (Validator != null)
+                                    {
+                                        Validator.Enabled = false;
+                                    }
                                 }
                                 else
                                 {
@@ -1029,6 +1035,10 @@ namespace KPIWeb.Reports
                             {
                                 lblMinutes.ReadOnly = true;
                                 lblMinutes.BackColor = color;
+                                if (Validator != null)
+                                {
+                                    Validator.Enabled = false;
+                                }
                             }
                             else if (mode == 2) // подтверждать
                             {
