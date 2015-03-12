@@ -110,7 +110,11 @@ namespace KPIWeb.Head
                                 || ((c.CanView == true) && mode == 1)
                                 || ((c.CanConfirm == true) && mode == 2))
                         select  a).ToList();
-                
+
+                List<int> AllcntList = new List<int>();
+                List<int> InsertcntList = new List<int>();
+                List<int> ConfcntList = new List<int>();
+
                 foreach (CalculatedParametrs calcPar in list_calcParams)
                 {
                     CollectedCalculatedParametrs colCalc = (from a in kpiWebDataContext.CollectedCalculatedParametrs
@@ -265,9 +269,24 @@ namespace KPIWeb.Head
                              }
                                  Allcnt += tmpAll;
                         }
-                        dataRow["info0"] =Allcnt+"/"+ Insertcnt + "/" + Confcnt;
+                        if (Allcnt == 0)
+                        {
+                            dataRow["info0"] = "Авто";
+                        }
+                        else
+                        {
+                            dataRow["info0"] = Allcnt + "/" + Insertcnt + "/" + Confcnt;
+                        }
                         dt_calculate.Rows.Add(dataRow);
+                        AllcntList.Add(Allcnt);
+                        InsertcntList.Add(Insertcnt);
+                        ConfcntList.Add(Confcnt);
                 }
+
+                ViewState["AllcntC"] = AllcntList;
+                ViewState["InsertcntC"] = InsertcntList;
+                ViewState["ConfcntC"] = ConfcntList;
+
                 #endregion
                 #region
                 List<IndicatorsTable> list_indicators =
@@ -345,6 +364,7 @@ namespace KPIWeb.Head
                     }
                     dataRow["info0"] = Confcnt +"  из "+ Allcnt;
                     dt_indicator.Rows.Add(dataRow);
+
                 }
                 #endregion
 
@@ -352,6 +372,9 @@ namespace KPIWeb.Head
                 CalculatedParametrsTable.DataBind();
                 IndicatorsTable.DataSource = dt_indicator;
                 IndicatorsTable.DataBind();
+
+                
+
                 if (mode == 2)
                 {
                     //IndicatorsTable.Columns[2].Visible = true;
@@ -508,28 +531,82 @@ namespace KPIWeb.Head
                 Response.Redirect("~/Default.aspx");
             }
             int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и подтверждаем
-            ///////
-            var chB = e.Row.FindControl("checkBoxCalc") as CheckBox;
-            var lbl = e.Row.FindControl("checkBoxCalcId") as Label;
-            if (chB != null)
+            List<int> AllcntList = (List<int>)ViewState["AllcntC"];
+            List<int> InsertcntList = (List<int>)ViewState["InsertcntC"];
+            List<int> ConfcntList = (List<int>)ViewState["ConfcntC"];
+
+            if ((e.Row.RowIndex >= 0) && (e.Row.RowIndex < AllcntList.Count()))
             {
-                if (mode != 2)
+                var chB = e.Row.FindControl("checkBoxCalc") as CheckBox;
+                var lbl = e.Row.FindControl("checkBoxCalcId") as Label;
+
+                int Allcnt = AllcntList[e.Row.RowIndex];
+                int Insertcnt = InsertcntList[e.Row.RowIndex];
+                int Confcnt = ConfcntList[e.Row.RowIndex];
+
+                Color boxColor = color;
+             
+                if (Allcnt == Insertcnt)
                 {
-                    chB.Visible = false;
+                    boxColor = System.Drawing.Color.LightSalmon;
                 }
-                else
+
+                if ((Allcnt == Insertcnt)&&(Allcnt == Confcnt))
                 {
-                    e.Row.Visible = true;
-                    chB.Checked = (from a in kpiWebDataContext.CollectedCalculatedParametrs
-                                   where a.CollectedCalculatedParametrsID == Convert.ToInt32(lbl.Text)
-                                   select a.Confirmed).FirstOrDefault() == true ? true : false;
-                    if (chB.Checked)
+                    boxColor = System.Drawing.Color.Yellow;
+                }
+
+
+                if (chB != null) //Параметр подтвержден
+                {
+                    if (mode != 2)
                     {
-                        chB.Enabled = false;
+                        chB.Visible = false;
+                        chB.Checked = (from a in kpiWebDataContext.CollectedCalculatedParametrs
+                                       where a.CollectedCalculatedParametrsID == Convert.ToInt32(lbl.Text)
+                                       select a.Confirmed).FirstOrDefault() == true ? true : false;
+                        if (chB.Checked)
+                        {
+                            boxColor = System.Drawing.Color.LimeGreen;
+                        }
+                    }
+                    else
+                    {
+                        chB.Visible = true;
+                        chB.Checked = (from a in kpiWebDataContext.CollectedCalculatedParametrs
+                                       where a.CollectedCalculatedParametrsID == Convert.ToInt32(lbl.Text)
+                                       select a.Confirmed).FirstOrDefault() == true ? true : false;
+
+                        if (chB.Checked)
+                        {
+                            boxColor = System.Drawing.Color.LimeGreen;
+                            chB.Enabled = false;
+                        }
+                        if ((Allcnt != Insertcnt) || (Insertcnt != Confcnt))
+                        {
+                            chB.Enabled = false;
+                        }
+                        if (Allcnt == 0)
+                        {
+                            chB.Enabled = false;
+                        }
                     }
                 }
-            }
-        }
+                if (Allcnt == 0)
+                {
+                    boxColor = System.Drawing.Color.LightSkyBlue;
+                }
 
+                if ((Confcnt > Insertcnt) || (Insertcnt > Allcnt))
+                {
+                    boxColor = System.Drawing.Color.Red;
+                }
+
+                var lbl_ = e.Row.FindControl("info0") as Label;
+                lbl_.BackColor = boxColor;
+                DataControlFieldCell d = lbl_.Parent as DataControlFieldCell;
+                d.BackColor = boxColor;
+            }            
+        }
     }
 }

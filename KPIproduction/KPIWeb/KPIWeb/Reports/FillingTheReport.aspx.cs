@@ -482,10 +482,10 @@ namespace KPIWeb.Reports
                         basicNames.Add(basicParam.Name);
                         CollectedBasicParametersTable collectedBasicTmp =
                             (from a in kpiWebDataContext.CollectedBasicParametersTable
-                             where a.FK_ZeroLevelSubdivisionTable == user.FK_ZeroLevelSubdivisionTable
-                                 && a.FK_FirstLevelSubdivisionTable == user.FK_FirstLevelSubdivisionTable
-                                 && a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable
-                                 && a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
+                             where ((a.FK_ZeroLevelSubdivisionTable == l_0) || l_0 == 0)
+                                 && ((a.FK_FirstLevelSubdivisionTable == l_1) || l_1 == 0)
+                                 && ((a.FK_SecondLevelSubdivisionTable == l_2) || l_2 == 0)
+                                 && ((a.FK_ThirdLevelSubdivisionTable == l_3) || l_3 == 0)
                                  && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
                                  && a.FK_ReportArchiveTable == ReportArchiveID
                              select a).FirstOrDefault();
@@ -893,6 +893,7 @@ namespace KPIWeb.Reports
                             сollectedBasicParameter.UserIP = localIP;
                         }
                         KPIWebDataContext.SubmitChanges();
+                   
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                             "alert('Внесенные данные сохранены');", true);
                     }
