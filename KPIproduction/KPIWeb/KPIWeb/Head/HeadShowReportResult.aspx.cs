@@ -12,11 +12,13 @@ using System.Text.RegularExpressions;
 using System.Dynamic;
 using System.Text;
 using System.Web.WebPages;
+using System.Drawing;
 
 namespace KPIWeb.Head
 {
     public partial class HeadShowReportResult : System.Web.UI.Page
     {
+        public int col_ = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             Serialization UserSer = (Serialization)Session["UserID"];
@@ -82,15 +84,9 @@ namespace KPIWeb.Head
                 l_4 = level.l4;
                 l_5 = level.l5;
 
-                //DataTable dt_basic = new DataTable();
                 DataTable dt_calculate = new DataTable();
                 DataTable dt_indicator = new DataTable();
-                /*
-                dt_basic.Columns.Add(new DataColumn("BasicParametrsName", typeof(string)));
-                dt_basic.Columns.Add(new DataColumn("BasicParametrsResult", typeof(string)));
-                dt_basic.Columns.Add(new DataColumn("checkBoxBasicId", typeof(string)));
-                dt_basic.Columns.Add(new DataColumn("checkBoxBasic", typeof(string)));
-                */
+
                 dt_calculate.Columns.Add(new DataColumn("CalculatedParametrsName", typeof(string)));
                 dt_calculate.Columns.Add(new DataColumn("CalculatedParametrsResult", typeof(string)));
                 dt_calculate.Columns.Add(new DataColumn("checkBoxCalcId", typeof(string)));
@@ -100,20 +96,7 @@ namespace KPIWeb.Head
                 dt_indicator.Columns.Add(new DataColumn("IndicatorName", typeof(string)));
                 dt_indicator.Columns.Add(new DataColumn("IndicatorResult", typeof(string)));
                 dt_indicator.Columns.Add(new DataColumn("info0", typeof(string)));
-                //dt_indicator.Columns.Add(new DataColumn("checkBoxInd", typeof(string)));
-                /*
-                List<BasicParametersTable> list_basicParametrs = 
-                    (from a in kpiWebDataContext.BasicParametersTable
-                        join b in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
-                        on a.BasicParametersTableID equals b.FK_BasicParametrsTable
-                        join c in kpiWebDataContext.BasicParametrsAndUsersMapping 
-                        on a.BasicParametersTableID equals  c.FK_ParametrsTable
-                        where b.FK_ReportArchiveTable == ReportArchiveID
-                        && c.FK_UsersTable == UserID
-                        && (((c.CanEdit == true) && mode == 0)
-                        || ((c.CanView == true) && mode == 1)
-                        || ((c.CanConfirm == true) && mode == 2))
-                        select  a).ToList();*/
+
                 #region
                 List<CalculatedParametrs> list_calcParams = 
                     (from a in kpiWebDataContext.CalculatedParametrs
@@ -385,14 +368,17 @@ namespace KPIWeb.Head
                 {
                     var chB = IndicatorsTable.Rows[i].FindControl("checkBoxInd") as CheckBox;
                     var lbl = IndicatorsTable.Rows[i].FindControl("checkBoxIndId") as Label;
-                    if (chB.Checked)
+                    if (chB != null)
                     {
-                        CollectedIndocators ColIndicator = (from a in kpiWebDataContext.CollectedIndocators
-                                                                where a.CollectedIndocatorsID == Convert.ToInt32(lbl.Text) 
-                                                            select a ).FirstOrDefault();
-                        ColIndicator.Confirmed = true;
-                        kpiWebDataContext.SubmitChanges();
-                    }                   
+                        if (chB.Checked)
+                        {
+                            CollectedIndocators ColIndicator = (from a in kpiWebDataContext.CollectedIndocators
+                                                                where a.CollectedIndocatorsID == Convert.ToInt32(lbl.Text)
+                                                                select a).FirstOrDefault();
+                            ColIndicator.Confirmed = true;
+                            kpiWebDataContext.SubmitChanges();
+                        }
+                    }
                 }
 
                 for (int i=0; i<CalculatedParametrsTable.Rows.Count;i++)
@@ -410,8 +396,6 @@ namespace KPIWeb.Head
                 }             
             }
         }
-
-
 
         protected void IndicatorsTable_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -434,6 +418,21 @@ namespace KPIWeb.Head
                 Response.Redirect("~/Default.aspx");
             }
             int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и подтверждаем
+
+            Color color;
+            Color confirmedColor = System.Drawing.Color.LimeGreen;
+            Color disableColor = System.Drawing.Color.LightGray;
+            if (col_ == 0)
+            {
+                col_ = 1;
+                color = System.Drawing.Color.FloralWhite;
+            }
+            else
+            {
+                col_ = 0;
+                color = System.Drawing.Color.GhostWhite;
+            }
+            e.Row.BackColor = color;
 
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
 
@@ -462,6 +461,21 @@ namespace KPIWeb.Head
 
         protected void CalculatedParametrsTable_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            Color color;
+            Color confirmedColor = System.Drawing.Color.LimeGreen;
+            Color disableColor = System.Drawing.Color.LightGray;
+            if (col_ == 0)
+            {
+                col_ = 1;
+                color = System.Drawing.Color.FloralWhite;
+            }
+            else
+            {
+                col_ = 0;
+                color = System.Drawing.Color.GhostWhite;
+            }
+            e.Row.BackColor = color;
+
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
@@ -504,5 +518,6 @@ namespace KPIWeb.Head
                 }
             }
         }
+
     }
 }

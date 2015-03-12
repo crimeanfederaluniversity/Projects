@@ -48,7 +48,6 @@ namespace KPIWeb.Reports
                          && d.Active == true
                          && (e.FK_FieldOfExpertise == 10 || e.FK_FieldOfExpertise == 11 || e.FK_FieldOfExpertise == 12)
                          select a.CollectedValue).Sum());
-
         }
         protected double pattern2(UsersTable user, int ReportArchiveID, string basicAbb)
         {
