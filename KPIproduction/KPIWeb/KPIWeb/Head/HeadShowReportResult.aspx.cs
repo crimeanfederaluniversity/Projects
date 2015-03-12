@@ -172,7 +172,10 @@ namespace KPIWeb.Head
                         foreach (int Basic in BasicIdList)
                         { 
                              int tmpInsert = (from a in kpiWebDataContext.CollectedBasicParametersTable
-                             where a.FK_BasicParametersTable == Basic
+                                              join b in kpiWebDataContext.BasicParametrAdditional
+                                              on a.FK_BasicParametersTable equals b.BasicParametrAdditionalID
+                             where b.Calculated == false
+                             &&  a.FK_BasicParametersTable == Basic
                              && (a.FK_ZeroLevelSubdivisionTable   == l_0 || l_0 == 0)
                              && (a.FK_FirstLevelSubdivisionTable  == l_1 || l_1 == 0)
                              && (a.FK_SecondLevelSubdivisionTable == l_2 || l_2 == 0)
@@ -185,7 +188,10 @@ namespace KPIWeb.Head
                              Insertcnt+=tmpInsert;
 
                              int tmpconf = (from a in kpiWebDataContext.CollectedBasicParametersTable
-                             where a.FK_BasicParametersTable == Basic
+                                            join b in kpiWebDataContext.BasicParametrAdditional
+                                            on a.FK_BasicParametersTable equals b.BasicParametrAdditionalID
+                                            where b.Calculated == false                                            
+                             && a.FK_BasicParametersTable == Basic
                              && (a.FK_ZeroLevelSubdivisionTable   == l_0 || l_0 == 0)
                              && (a.FK_FirstLevelSubdivisionTable  == l_1 || l_1 == 0)
                              && (a.FK_SecondLevelSubdivisionTable == l_2 || l_2 == 0)
@@ -213,8 +219,11 @@ namespace KPIWeb.Head
                                            on c.ThirdLevelSubdivisionTableID equals ee.FK_ThirdLevelSubdivisionTable
                                            join f in kpiWebDataContext.FourthLevelParametrs
                                            on ee.FourthLevelSubdivisionTableID equals f.FourthLevelParametrsID
+                                           join z in kpiWebDataContext.BasicParametrAdditional
+                                           on b.FK_ParametrsTable equals z.BasicParametrAdditionalID
                                            where
-                                           ((f.SpecType == bpt.SpecType) || (bpt.SpecType==0))
+                                           z.Calculated == false
+                                           && ((f.SpecType == bpt.SpecType) || (bpt.SpecType==0))
                                            && d.CanGraduate == true
                                            && a.Active == true
                                            && b.Active == true
@@ -239,8 +248,11 @@ namespace KPIWeb.Head
                                                on b.FK_UsersTable equals c.UsersTableID
                                                join d in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
                                                on a.BasicParametersTableID equals d.FK_BasicParametrsTable
+                                                join z in kpiWebDataContext.BasicParametrAdditional
+                                                on b.FK_ParametrsTable equals z.BasicParametrAdditionalID
                                                where
-                                                    b.CanEdit == true
+                                                 z.Calculated==false
+                                                    && b.CanEdit == true
                                                  && d.FK_ReportArchiveTable == ReportArchiveID
                                                  && (c.FK_ZeroLevelSubdivisionTable == l_0 || l_0 == 0)
                                                  && (c.FK_FirstLevelSubdivisionTable == l_1 || l_1 == 0)
