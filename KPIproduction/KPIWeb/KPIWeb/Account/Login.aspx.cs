@@ -36,7 +36,8 @@ namespace KPIWeb.Account
                     KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
                     UsersTable user = (from usersTables in KPIWebDataContext.UsersTable
                                        where usersTables.Login == UserName.Text &&
-                                       usersTables.Password == Password.Text
+                                       usersTables.Password == Password.Text &&
+                                       usersTables.Active == true
                                        select usersTables).FirstOrDefault();
                     if (user != null)
                     {                     

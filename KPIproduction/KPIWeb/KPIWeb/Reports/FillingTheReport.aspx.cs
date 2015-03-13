@@ -459,16 +459,13 @@ namespace KPIWeb.Reports
                              on b.BasicParametersTableID equals c.FK_ParametrsTable
                              join d in kpiWebDataContext.BasicParametrAdditional
                              on b.BasicParametersTableID equals d.BasicParametrAdditionalID
-                             where
-                                   a.FK_ReportArchiveTable == ReportArchiveID  //из нужного отчета
+                             where a.FK_ReportArchiveTable == ReportArchiveID  //из нужного отчета
                                 && c.FK_UsersTable == UserID // свяный с пользователем
                                 && d.SubvisionLevel == userLevel //нужный уровень заполняющего
                                 && a.Active == true  // запись в таблице связей показателя и отчета активна
-
                                 && (((c.CanEdit == true) && mode == 0)
                                 || ((c.CanView == true) && mode == 1)
                                 || ((c.CanConfirm == true) && mode == 2)) // фильтруем по правам пользователя
-
                                 && c.Active == true  // запись в таблице связей показателя и пользователей активна
                                 && d.Calculated == false // этот показатель нужно вводить а не считать
                              select b).ToList();
@@ -1074,14 +1071,14 @@ namespace KPIWeb.Reports
                                         if (type == 1)
                                         {
                                             Validator.MinimumValue = "0";
-                                            Validator.MaximumValue = "10000";
+                                            Validator.MaximumValue = "1000000";
                                             Validator.Type = ValidationDataType.Integer;
                                             Validator.Text = "Только целочисленное значение";
                                         }
                                         if (type == 2)
                                         {
                                             Validator.MinimumValue = "0";
-                                            Validator.MaximumValue = "10000000";
+                                            Validator.MaximumValue = "1000000000000";
                                             Validator.Type = ValidationDataType.Double;
                                             Validator.Text = "Только цифры и запятая";
                                         }

@@ -171,6 +171,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Head\HeadChooseReport.aspx" />
     <Content Include="Head\HeadShowReportResult.aspx" />
+    <Content Include="Head\HeadShowStructure.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -358,6 +359,13 @@
     </Compile>
     <Compile Include="Head\HeadShowReportResult.aspx.designer.cs">
       <DependentUpon>HeadShowReportResult.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Head\HeadShowStructure.aspx.cs">
+      <DependentUpon>HeadShowStructure.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Head\HeadShowStructure.aspx.designer.cs">
+      <DependentUpon>HeadShowStructure.aspx</DependentUpon>
     </Compile>
     <Compile Include="KPIWeb.designer.cs">
       <AutoGen>True</AutoGen>
