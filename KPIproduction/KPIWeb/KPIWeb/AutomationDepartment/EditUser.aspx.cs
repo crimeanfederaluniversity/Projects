@@ -30,7 +30,7 @@ namespace KPIWeb.AutomationDepartment
                 Response.Redirect("~/Default.aspx");
             }
             ////////////////////////////////////////////////////////
-           
+
             ViewState["Password"] = "112233";
             if (!IsPostBack)
             {
@@ -67,6 +67,13 @@ namespace KPIWeb.AutomationDepartment
                     users = (from a in kpiWebDataContext.UsersTable where a.Active == true select a).ToList();
                 }
 
+                List<ZeroLevelSubdivisionTable> zeroLevelSubdivisionTable = (from a in kpiWebDataContext.ZeroLevelSubdivisionTable select a).ToList();
+                List<FirstLevelSubdivisionTable> firstLevelSubdivisionTable = (from a in kpiWebDataContext.FirstLevelSubdivisionTable select a).ToList();
+                List<SecondLevelSubdivisionTable> secondLevelSubdivisionTable = (from a in kpiWebDataContext.SecondLevelSubdivisionTable select a).ToList();
+                List<ThirdLevelSubdivisionTable> thirdLevelSubdivisionTable = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable select a).ToList();
+                List<FourthLevelSubdivisionTable> fourthLevelSubdivisionTable = (from a in kpiWebDataContext.FourthLevelSubdivisionTable select a).ToList();
+                List<FifthLevelSubdivisionTable> fifthLevelSubdivisionTable = (from a in kpiWebDataContext.FifthLevelSubdivisionTable select a).ToList();
+
                 foreach (var user in users)
                 {
                     DataRow dataRow = dataTable.NewRow();
@@ -82,13 +89,33 @@ namespace KPIWeb.AutomationDepartment
                         dataRow["Password"] = "********";
                         dataRow["Email"] = "********";
                     }
-                    dataRow["Firstlvl"] = user.FK_FirstLevelSubdivisionTable;
-                    dataRow["Secondlvl"] = user.FK_SecondLevelSubdivisionTable;
-                    dataRow["Thirdlvl"] = user.FK_ThirdLevelSubdivisionTable;
-                    dataRow["Fourthlvl"] = user.FK_FourthLevelSubdivisionTable;
-                    dataRow["Fifthlvl"] = user.FifthLevelSubdivisionTable;
+
+                    dataRow["Firstlvl"] = (from a in firstLevelSubdivisionTable
+                                           where a.FirstLevelSubdivisionTableID == user.FK_FirstLevelSubdivisionTable
+                                           select a.Name).FirstOrDefault();
+
+                    dataRow["Secondlvl"] = (from a in secondLevelSubdivisionTable
+                                            where a.SecondLevelSubdivisionTableID == user.FK_SecondLevelSubdivisionTable
+                                            select a.Name).FirstOrDefault();
+
+                    dataRow["Thirdlvl"] = (from a in thirdLevelSubdivisionTable
+                                           where a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
+                                           select a.Name).FirstOrDefault();
+
+                    dataRow["Fourthlvl"] = (from a in fourthLevelSubdivisionTable
+                                            where a.FourthLevelSubdivisionTableID == user.FK_FourthLevelSubdivisionTable
+                                            select a.Name).FirstOrDefault();
+
+                    dataRow["Fifthlvl"] = (from a in fifthLevelSubdivisionTable
+                                           where a.FifthLevelSubdivisionTableID == user.FK_FirstLevelSubdivisionTable
+                                           select a.Name).FirstOrDefault();
+
                     dataRow["Acceslvl"] = user.AccessLevel;
-                    dataRow["Zerolvl"] = user.FK_ZeroLevelSubdivisionTable;
+
+                    dataRow["Zerolvl"] = (from a in zeroLevelSubdivisionTable
+                                          where a.ZeroLevelSubdivisionTableID == user.FK_ZeroLevelSubdivisionTable
+                                          select a.Name).FirstOrDefault();
+
                     dataTable.Rows.Add(dataRow);
                 }
 
