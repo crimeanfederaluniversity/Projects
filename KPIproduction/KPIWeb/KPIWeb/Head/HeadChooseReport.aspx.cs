@@ -146,7 +146,7 @@ namespace KPIWeb.Head
                     Session["level"] = level;
                 }
 
-                Response.Redirect("~/Head/HeadShowReportResult.aspx");
+                Response.Redirect("~/Head/HeadShowResult.aspx");
             }
         }
         protected void ButtonConfirmClick(object sender, EventArgs e)
@@ -180,7 +180,7 @@ namespace KPIWeb.Head
                     Session["level"] = level;
                 }
 
-                Response.Redirect("~/Head/HeadShowReportResult.aspx");
+                Response.Redirect("~/Head/HeadShowResult.aspx");
             }
         }
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)

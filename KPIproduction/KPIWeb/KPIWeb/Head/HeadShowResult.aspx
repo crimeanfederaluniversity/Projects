@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="HeadShowReportResult.aspx.cs" Inherits="KPIWeb.Head.HeadShowReportResult" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="HeadShowResult.aspx.cs" Inherits="KPIWeb.Head.HeadShowResult" %>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div>
         <br />
@@ -56,4 +56,3 @@
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" Width="340px" />
     </div>
 </asp:Content>
-

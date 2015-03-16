@@ -170,7 +170,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Head\HeadChooseReport.aspx" />
-    <Content Include="Head\HeadShowReportResult.aspx" />
+    <Content Include="Head\HeadShowResult.aspx" />
     <Content Include="Head\HeadShowStructure.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -353,12 +353,12 @@
     <Compile Include="Head\HeadChooseReport.aspx.designer.cs">
       <DependentUpon>HeadChooseReport.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Head\HeadShowReportResult.aspx.cs">
-      <DependentUpon>HeadShowReportResult.aspx</DependentUpon>
+    <Compile Include="Head\HeadShowResult.aspx.cs">
+      <DependentUpon>HeadShowResult.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Head\HeadShowReportResult.aspx.designer.cs">
-      <DependentUpon>HeadShowReportResult.aspx</DependentUpon>
+    <Compile Include="Head\HeadShowResult.aspx.designer.cs">
+      <DependentUpon>HeadShowResult.aspx</DependentUpon>
     </Compile>
     <Compile Include="Head\HeadShowStructure.aspx.cs">
       <DependentUpon>HeadShowStructure.aspx</DependentUpon>

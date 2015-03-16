@@ -10,7 +10,7 @@
 namespace KPIWeb.Head {
     
     
-    public partial class HeadShowReportResult {
+    public partial class HeadShowResult {
         
         /// <summary>
         /// IndicatorsTable элемент управления.

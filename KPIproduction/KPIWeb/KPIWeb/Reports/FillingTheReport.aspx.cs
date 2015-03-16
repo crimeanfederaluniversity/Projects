@@ -1018,6 +1018,8 @@ namespace KPIWeb.Reports
                     var NotNullLbl = e.Row.FindControl("NotNull" + rowIndex) as Label;
                     if (NotNullLbl != null)
                     {
+
+
                         if (NotNullLbl.Text.Count() == 0)
                         {
                             lblMinutes.Visible = false;
@@ -1031,6 +1033,11 @@ namespace KPIWeb.Reports
                         {
                             Label lbl = e.Row.FindControl("CollectId" + rowIndex) as Label;
                             RangeValidator Validator = e.Row.FindControl("Validate" + rowIndex) as RangeValidator;
+
+                            bool isconf = Convert.ToBoolean((from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                             where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
+                                                             select a.ConfirmedThirdLevel).FirstOrDefault());
+
                             if (mode == 0) // редактировать
                             {
                                 int type = Convert.ToInt32((from a in kpiWebDataContext.CollectedBasicParametersTable
@@ -1038,10 +1045,7 @@ namespace KPIWeb.Reports
                                                                 on a.FK_BasicParametersTable equals b.BasicParametrAdditionalID
                                                             where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
                                                             select b.DataType).FirstOrDefault());
-
-                                bool isconf = Convert.ToBoolean((from a in kpiWebDataContext.CollectedBasicParametersTable
-                                                                 where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
-                                                                 select a.ConfirmedThirdLevel).FirstOrDefault());
+                               
                                 if (isconf == true)
                                 {
                                     lblMinutes.ReadOnly = true;
@@ -1087,18 +1091,25 @@ namespace KPIWeb.Reports
                             }
                             else if (mode == 1) //смотреть
                             {
+
                                 lblMinutes.ReadOnly = true;
                                 lblMinutes.BackColor = color;
+
+                                if (isconf == true)
+                                {
+                                    lblMinutes.ReadOnly = true;
+                                    DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
+                                    d.BackColor = confirmedColor;
+                                    lblMinutes.BackColor = confirmedColor;
+                                }
+
                                 if (Validator != null)
                                 {
                                     Validator.Enabled = false;
                                 }
                             }
                             else if (mode == 2) // подтверждать
-                            {
-                                bool isconf = Convert.ToBoolean((from a in kpiWebDataContext.CollectedBasicParametersTable
-                                                                 where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
-                                                                 select a.ConfirmedThirdLevel).FirstOrDefault());
+                            {                               
                                 var chBox = e.Row.FindControl("Checked" + rowIndex) as CheckBox;
                                 chBox.Visible = true;
                                 lblMinutes.ReadOnly = true;
