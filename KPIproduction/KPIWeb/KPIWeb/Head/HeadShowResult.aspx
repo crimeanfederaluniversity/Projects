@@ -39,19 +39,24 @@
             </asp:GridView>
 
             <br />
-        <!--
-            <asp:GridView ID="BasicParametrsTable" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="1000px" Visible="False">
-                            <Columns>
-                                <asp:BoundField DataField="BasicParametrsName" HeaderText="Базовый параметр" />
-                                <asp:BoundField DataField="BasicParametrsResult" HeaderText="Результат(сумма)" /> 
-                                <asp:TemplateField HeaderText="Подтверждение" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "true" >
-                                    <ItemTemplate> 
-                                        <asp:CheckBox ID="checkBoxBasic" runat="server" Visible="True"></asp:CheckBox>
-                                        <asp:Label ID="checkBoxBasicId"  runat="server" Visible="false" Text='<ПРОЦЕНТ# Bind("checkBoxBasicId") ПРОЦЕНТ>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>                          
-                            </Columns>
-            </asp:GridView>-->
+        <asp:Button ID="Button8" runat="server" Enabled="False" />
+&nbsp;<asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+        <br />
+        <asp:Button ID="Button7" runat="server" Enabled="False" />
+&nbsp;<asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
+        <br />
+        <asp:Button ID="Button4" runat="server" Enabled="False" />
+&nbsp;<asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
+        <br />
+        <asp:Button ID="Button5" runat="server" Enabled="False" />
+&nbsp;<asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
+        <br />
+        <asp:Button ID="Button6" runat="server" Enabled="False" />
+&nbsp;<asp:Label ID="Label5" runat="server" Text="Label"></asp:Label>
+        <br />
+        <asp:Button ID="Button9" runat="server" Enabled="False" />
+&nbsp;<asp:Label ID="Label6" runat="server" Text="Label"></asp:Label>
+        <br />
         <br />
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" Width="340px" />
     </div>

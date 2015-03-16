@@ -271,7 +271,9 @@ namespace KPIWeb.Head
                     }
                     else
                     {
-                        dataRow["info0"] = Allcnt + "/" + Insertcnt + "/" + Confcnt;
+                      
+                       // dataRow["info0"] = Allcnt + "/" Insertcnt + "/" + Confcnt;
+                        dataRow["info0"] = (((double)Insertcnt / (double)Allcnt) * 100).ToString("0.0") + "%/" + (((double)Confcnt / (double)Insertcnt) * 100).ToString("0.0") + "%";
                     }
                     dt_calculate.Rows.Add(dataRow);
                     AllcntList.Add(Allcnt);
@@ -377,13 +379,28 @@ namespace KPIWeb.Head
                 IndicatorsTable.DataSource = dt_indicator;
                 IndicatorsTable.DataBind();
 
+                Button8.BackColor = System.Drawing.Color.LightSalmon;
+                Button7.BackColor = System.Drawing.Color.Yellow;
+                Button4.BackColor = System.Drawing.Color.LimeGreen;
+                Button5.BackColor = System.Drawing.Color.Red;
+                Button6.BackColor = System.Drawing.Color.LightSkyBlue;
+                Button9.BackColor = System.Drawing.Color.FloralWhite;
 
+                Label1.Text = "Данные Полностью заполнены и частично подтверждены";
+                Label2.Text = "Данные Заполнены и подтверждены уровнем ответственных ниже";
+                Label3.Text = "Данные готовы к отправке (заполнены и подтверждены)";
+                Label4.Text = "Ошибка";
+                Label5.Text = "Данные рассчитываются автоматически";
+                Label6.Text = "Данные неполностью заполнены";
+                
 
                 if (mode == 2)
                 {
                     //IndicatorsTable.Columns[2].Visible = true;
                     CalculatedParametrsTable.Columns[2].Visible = true;
                 }
+
+                
             }
         }
 
@@ -609,5 +626,11 @@ namespace KPIWeb.Head
                 }
             }
         }
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+          
+        }
+
     }
 }
