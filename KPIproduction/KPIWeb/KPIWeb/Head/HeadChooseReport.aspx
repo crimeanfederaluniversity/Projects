@@ -25,6 +25,13 @@
                             <asp:Button ID="ButtonConfirmReport" runat="server" CommandName="Select" Text="Просмотреть и подтвердить" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonConfirmClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
+                 
+                 <asp:TemplateField HeaderText="Просмотреть прогресс внесения данных по структурам">
+                        <ItemTemplate>
+                            <asp:Label ID="LabelStruct" runat="server" Text='<%# Bind("ReportArchiveID") %>' Visible="false"></asp:Label>
+                            <asp:Button ID="ButtonStruct" runat="server" CommandName="Select" Text="Просмотреть структуру" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonStructClick"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
                  <asp:TemplateField HeaderText="Подтверждено">
                         <ItemTemplate>

@@ -76,6 +76,11 @@ namespace KPIWeb.Head
                 dataTable.Columns.Add(new DataColumn("StartDate", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("EndDate", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("info0", typeof(string)));
+
+              //  dataTable.Columns.Add(new DataColumn("ButtonStruct", typeof(string)));
+            //    dataTable.Columns.Add(new DataColumn("LabelStruct", typeof(string)));
+                
+                    
                 List<int> conf_enable = new List<int>() ;
                 foreach (ReportArchiveTable ReportRow in reportsArchiveTablesTable)
                 {
@@ -99,6 +104,8 @@ namespace KPIWeb.Head
                                         select a).ToList().Count();
 
                     dataRow["info0"] =  calcConf+" из "+ calcAll;
+
+                    
                     if (calcAll==calcConf)
                     {
                         conf_enable.Add(0);
@@ -150,8 +157,7 @@ namespace KPIWeb.Head
             }
         }
         protected void ButtonConfirmClick(object sender, EventArgs e)
-        {
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Данная функция находится на стадии разработки');", true);
+        {         
             Button button = (Button)sender;
             {
                 Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
@@ -183,6 +189,17 @@ namespace KPIWeb.Head
                 Response.Redirect("~/Head/HeadShowResult.aspx");
             }
         }
+
+        protected void ButtonStructClick(object sender, EventArgs e)
+        {           
+            Button button = (Button)sender;
+            {
+                Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
+                Session["ReportArchiveID"] = paramSerialization;
+                Response.Redirect("~/Head/HeadShowStructure.aspx");
+            }
+        }
+
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -292,15 +309,18 @@ namespace KPIWeb.Head
             e.Row.BackColor = color;
             List<int> ConfEnable = (List<int>)ViewState["confEnable"];
             var ConfBut = e.Row.FindControl("ButtonConfirmReport") as Button;
+            var StructBut = e.Row.FindControl("ButtonStruct") as Button;
             var info0 = e.Row.FindControl("info0") as Label;
             if ((e.Row.RowIndex >= 0) && e.Row.RowIndex < ConfEnable.Count())
             {
                 if (ConfEnable[e.Row.RowIndex] == 1)
                 {
+                    StructBut.Enabled = true;
                     ConfBut.Enabled = true;
                 }
                 else
                 {
+                    StructBut.Enabled = false;
                     ConfBut.Enabled = false;
                     ConfBut.BackColor = disableColor;
                     DataControlFieldCell d = ConfBut.Parent as DataControlFieldCell;

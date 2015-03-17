@@ -890,12 +890,13 @@ namespace KPIWeb.Reports
                             сollectedBasicParameter.UserIP = localIP;
                         }
                         KPIWebDataContext.SubmitChanges();
-                   
-                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Внесенные данные сохранены');", true);
+
+
                     }
-                    CalcCalculate(ReportArchiveID, user);
                     //надо рассчитать рассчетные
+                    CalcCalculate(ReportArchiveID, user);
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                           "alert('Внесенные данные сохранены');", true);                    
                 }
                 else if (mode == 1)
                 {
@@ -969,18 +970,21 @@ namespace KPIWeb.Reports
                         {
                             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                             "alert('Вами подтверждены значения всех базовых показателей. Окончательный отчет отправлен');", true);
+
                         }
                         else
                         {
                             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                             "alert('Вами подтверждены данные " + dataConfCount.ToString() + " базовых показателей из " + dataCount.ToString() + "');", true);
                         }
+
+                        
                     }
                 }
                 else
                 {
                     //ERROR
-                }
+                }                
             }
         }
 
