@@ -123,30 +123,21 @@ namespace KPIWeb.Reports
             }
         }
 
-        protected List<int> getBasicByIndicatorNCalc(List<int> indArr, List<int> calcArr)   //////переделать
+        protected List<int> getCalcByIndicator(List<int> indArr)
         {
-            List<int> basicListTemp = new List<int>();
-
-            StringBuilder AllInOne= new StringBuilder();
+            List<int> calcListTemp = new List<int>();
+            StringBuilder AllInOne = new StringBuilder();
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
 
             foreach (int tmp in indArr)
             {
-                IndicatorsTable indTable = (from a in kpiWebDataContext.IndicatorsTable 
-                                            where a.IndicatorsTableID==tmp
+                IndicatorsTable indTable = (from a in kpiWebDataContext.IndicatorsTable
+                                            where a.IndicatorsTableID == tmp
                                             select a).FirstOrDefault();
-                AllInOne.Append(indTable.Formula+"*");
+                AllInOne.Append(indTable.Formula + "*");
             }
 
-            foreach (int tmp in calcArr)
-            {
-                CalculatedParametrs calcTable = (from a in kpiWebDataContext.CalculatedParametrs
-                                            where a.CalculatedParametrsID == tmp
-                                            select a).FirstOrDefault();
-                AllInOne.Append(calcTable.Formula + "*");
-            }      
-
-            string [] abbArr = AllInOne.ToString().Split('/', '^', '+', '-', '(', ')', '*', ' ');
+            string[] abbArr = AllInOne.ToString().Split('/', '^', '+', '-', '(', ')', '*', ' ', '\n', '\r');
             string strArr = "";
             foreach (string str in abbArr)
             {
@@ -154,9 +145,58 @@ namespace KPIWeb.Reports
                 {
                     if (!str.IsFloat())
                     {
-                        basicListTemp.Add(Convert.ToInt32((from a in kpiWebDataContext.BasicParametersTable
-                                                where a.AbbreviationEN == str
-                                                select a.BasicParametersTableID).FirstOrDefault()));
+                        int tmpp = Convert.ToInt32((from a in kpiWebDataContext.CalculatedParametrs
+                                                    where a.AbbreviationEN == str
+                                                    select a.CalculatedParametrsID).FirstOrDefault());
+                        if (tmpp == 0)
+                        {
+                            //ERROR//нужно записать в лог str// это аббревиатура
+                        }
+                        else
+                        {
+                            calcListTemp.Add(tmpp);
+                        }
+                        
+                    }
+                }
+            }
+            return calcListTemp;           
+        }
+
+        protected List<int> getBasicByCalc(List<int> calcArr)
+        {
+            List<int> basicListTemp = new List<int>();
+            StringBuilder AllInOne = new StringBuilder();
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            foreach (int tmp in calcArr)
+            {
+                CalculatedParametrs calcTable = (from a in kpiWebDataContext.CalculatedParametrs
+                                                 where a.CalculatedParametrsID == tmp
+                                                 select a).FirstOrDefault();
+                AllInOne.Append(calcTable.Formula + "*");
+            }
+
+            string[] abbArr = AllInOne.ToString().Split('/', '^', '+', '-', '(', ')', '*', ' ','\n','\r');
+            string strArr = "";
+
+            foreach (string str in abbArr)
+            {
+                if ((str != null) && (str != " ") && (!str.IsEmpty()))
+                {
+                    if (!str.IsFloat())
+                    {
+                        int tmpp = Convert.ToInt32((from a in kpiWebDataContext.BasicParametersTable
+                            where a.AbbreviationEN == str
+                            select a.BasicParametersTableID).FirstOrDefault());
+                        if (tmpp==0)
+                        {
+                            //ERROR//нужно записать в лог str
+                        }
+                        else
+                        {
+                            basicListTemp.Add(tmpp);
+                        }
+                        
                     }
                 }
             }
@@ -268,6 +308,7 @@ namespace KPIWeb.Reports
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             ReportArchiveTable reportArchiveTable = new ReportArchiveTable();
 
+            #region //запись в базу нового отчета или внесение изменений в старый
             int reportArchiveTableID = 0;
             if (ReportId.ReportArchiveID == 0) // создаем новую запись в БД и узнаем ей айди
             {
@@ -330,7 +371,9 @@ namespace KPIWeb.Reports
 
             if (CalendarReportRecived.SelectedDate > DateTime.MinValue)
                 reportArchiveTable.RecivedDateTime = CalendarReportRecived.SelectedDate;
-
+            #endregion
+           
+            #region //связь отчета со структурным подразд 1 уровня создание или изменение
             foreach (ListItem checkItem in CheckBoxList1.Items)
             {
                 if (checkItem.Selected)
@@ -367,6 +410,7 @@ namespace KPIWeb.Reports
                 }
             }
             kpiWebDataContext.SubmitChanges();
+            #endregion
             ////////////////////////////////////////////////////////пора записать данные в таблицы связей 
 
             if ((ViewState["BasicDataTable"] != null) && (ViewState["CalculateDataTable"] != null) && (ViewState["IndicatorDataTable"] != null))
@@ -503,10 +547,40 @@ namespace KPIWeb.Reports
                 }
                 ////////////////////////////////////////////////////////////////////////////////////////////////////
                 ///нужнополучить список айдишников нужных базовых показателей
-                /*
-                List<int> baseParamID = getBasicByIndicatorNCalc(indId,calcId);
+                List<int> CalcID = getCalcByIndicator(indId);
+                foreach (int tmp in CalcID)
+                {
+                    calcId.Add(tmp);
+                }
 
-                foreach (int baseID in baseParamID)
+                #region
+                foreach (int CalcParamID in calcId)
+                {
+                    ReportArchiveAndCalculatedParametrsMappingTable calcParam =
+                        (from a in kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable
+                         where a.FK_CalculatedParametrsTable == CalcParamID
+                         && a.FK_ReportArchiveTable == reportArchiveTableID
+                         select a).FirstOrDefault();
+                    if (calcParam != null)
+                    {
+                        calcParam.Active = true;
+                    }
+                    else
+                    {
+                        calcParam = new ReportArchiveAndCalculatedParametrsMappingTable();
+                        calcParam.Active = true;
+                        calcParam.FK_CalculatedParametrsTable = CalcParamID;
+                        calcParam.FK_ReportArchiveTable = reportArchiveTableID;
+                        kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable.InsertOnSubmit(calcParam);
+                    }
+                    kpiWebDataContext.SubmitChanges();
+                }
+                #endregion
+
+                List<int> BaseID = getBasicByCalc(calcId);
+
+                #region
+                foreach (int baseID in BaseID)
                 {
                         ReportArchiveAndBasicParametrsMappingTable basicParam =
                             (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
@@ -526,7 +600,9 @@ namespace KPIWeb.Reports
                             kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable.InsertOnSubmit(basicParam);
                         }
                         kpiWebDataContext.SubmitChanges();
-                 }   */             
+                }
+                #endregion
+
             }
             Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");       
         }

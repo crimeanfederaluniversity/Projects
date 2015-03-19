@@ -1,22 +1,17 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using KPIWeb.Models;
-using System.Configuration;
-using System.Collections.Generic;
-using System.Data;
 using System.Web.UI.WebControls;
-using Microsoft.Ajax.Utilities;
 
-namespace KPIWeb.Account
+namespace KPIWeb.AutomationDepartment
 {
-    public partial class Register : Page
+    public partial class Regisration : System.Web.UI.Page
     {
-        protected void FillGridVIews(int reportID_)
+protected void FillGridVIews(int reportID_)
         {
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             ///////////////////////////////////////////////////////////////////////////////////////////////////////                
@@ -106,22 +101,254 @@ namespace KPIWeb.Account
             ViewState["CalculateDataTable"] = dataTableCalc;
             ViewState["IndicatorDataTable"] = dataTableIndicator;            
         }
-        protected void CreateUser_Click(object sender, EventArgs e)
+        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //try
-            //{
-                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
-                if ((from a in kPiDataContext.UsersTable where a.Login == UserName.Text select a).ToList().Count>0)
+            DropDownList2.Items.Clear();
+            DropDownList3.Items.Clear();
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            int SelectedValue = -1;
+            if (int.TryParse(DropDownList1.SelectedValue, out SelectedValue) && SelectedValue != -1)
+            {
+                List<SecondLevelSubdivisionTable> second_stageList =
+                    (from item in kPiDataContext.SecondLevelSubdivisionTable
+                        where item.FK_FirstLevelSubdivisionTable == SelectedValue
+                        select item).OrderBy(mc => mc.SecondLevelSubdivisionTableID).ToList();
+
+                if (second_stageList != null && second_stageList.Count() > 0)
                 {
-                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Пользователь с таким логином уже существует, выберите другой логин!');", true);    
+                    var dictionary = new Dictionary<int, string>();
+                    dictionary.Add(-1, "Выберите значение");
+                    foreach (var item in second_stageList)
+                        dictionary.Add(item.SecondLevelSubdivisionTableID, item.Name);
+                    DropDownList2.DataTextField = "Value";
+                    DropDownList2.DataValueField = "Key";
+                    DropDownList2.DataSource = dictionary;
+                    DropDownList2.DataBind();
                 }
                 else
                 {
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Произошла ошибка.');", true);                   
+                }
+            }
+            else
+            {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Произошла ошибка.');", true);
+            }
+        }    
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Account/Login.aspx");
+            }
+
+            int userID = UserSer.Id;
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            if ((userTable.AccessLevel != 10) && (userTable.AccessLevel != 9))
+            {
+                Response.Redirect("~/Account/Login.aspx");
+            }
+            ///////////////////////////////////////////////////проверили на админа
+            if (!Page.IsPostBack)
+            {
+                Gridview1.Visible = false;
+                Label25.Visible = false;
+                Gridview2.Visible = false;
+                Label26.Visible = false;
+                Gridview3.Visible = false;
+                Label27.Visible = false;
+                DropDownList4.Visible = false;
+                Label24.Visible = false;
+
+                List<RolesTable> Roles = (from a in kPiDataContext.RolesTable
+                                          where a.Active == true
+                                          select a).ToList();
+                int i = 1;
+                DropDownList4.Items.Add("Выберите шаблон");
+                foreach (RolesTable role in Roles)
+                {
+                    DropDownList4.Items.Add(role.RoleName);
+                    DropDownList4.Items[i].Value = role.RolesTableID.ToString();
+                    i++;
+                }
+             ////записали роли в дроп даун
+                List<FirstLevelSubdivisionTable> First_stageList =
+                    (from item in kPiDataContext.FirstLevelSubdivisionTable
+                        select item).OrderBy(mc => mc.Name).ToList();
+
+                var dictionary = new Dictionary<int, string>();
+                dictionary.Add(0, "Выберите значение");
+
+                foreach (var item in First_stageList)
+                    dictionary.Add(item.FirstLevelSubdivisionTableID, item.Name);
+
+                FillGridVIews(0);
+
+                DropDownList1.DataTextField = "Value";
+                DropDownList1.DataValueField = "Key";
+                DropDownList1.DataSource = dictionary;
+                DropDownList1.DataBind();           
+            /// записали академии в дроп даун
+            /// 
+            /// в зависимости от того кто вошел изменяем интерфейс
+                if (userTable.AccessLevel == 9)
+                {
+                    UserNameText.Enabled = false;
+                    UserNameLabel.Enabled = false;
+                    errorNoName.Enabled = false;
+                    UserNameText.Visible = false;
+                    UserNameLabel.Visible = false;
+                    errorNoName.Visible = false;
+
+                    PasswordText.Enabled = false;
+                    PassLabel.Enabled = false;
+                    errorNoPass.Enabled = false;
+                    PasswordText.Visible = false;
+                    PassLabel.Visible = false;
+                    errorNoPass.Visible = false;
+
+                    ConfirmPasswordText.Enabled = false;
+                    ConfPassLabel.Enabled = false;
+                    errorNoConfirm.Enabled = false;
+                    ErrorWrongConfirm.Enabled = false;
+                    ConfirmPasswordText.Visible = false;
+                    ConfPassLabel.Visible = false;
+                    errorNoConfirm.Visible = false;
+                    ErrorWrongConfirm.Visible = false;                                                      
+                }
+            }
+        }
+ 
+        protected void DropDownList4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+          
+        }
+
+        protected void CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+           // if 
+        }
+
+        protected void DropDownList5_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Account/Login.aspx");
+            }
+
+            int userID = UserSer.Id;
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+                Gridview1.Visible = false;
+                Label25.Visible = false;
+                Gridview2.Visible = false;
+                Label26.Visible = false;
+                Gridview3.Visible = false;
+                Label27.Visible = false;
+                DropDownList4.Visible = false;
+                Label24.Visible = false;
+
+                if (DropDownList5.SelectedIndex == 0 || DropDownList5.SelectedIndex == 3)
+                {                  
+                }
+                else if (DropDownList5.SelectedIndex == 1)
+                {                                        
+                    if (userTable.AccessLevel == 10)
+                     {
+                        Gridview3.Visible = true;
+                        Label27.Visible = true;
+                        DropDownList4.Visible = true;
+                        Label24.Visible = true;
+                     }
+                     else if (userTable.AccessLevel == 9)
+                     {            
+                        DropDownList4.Visible = true;
+                        Label24.Visible = true;
+                     }             
+                }
+                else if (DropDownList5.SelectedIndex == 2)
+                {
+                    if (userTable.AccessLevel == 10)
+                    {
+                        Gridview1.Visible = true;
+                        Label25.Visible = true;
+                        Gridview2.Visible = true;
+                        Label26.Visible = true;
+                        Gridview3.Visible = true;
+                        Label27.Visible = true;
+                    }
+                    else if (userTable.AccessLevel == 9)
+                    {
+                    }
+                }
+        
+            }
+        
+        protected void Gridview3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void DropDownList2_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+            DropDownList3.Items.Clear();
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            int SelectedValue = -1;
+            if (int.TryParse(DropDownList2.SelectedValue, out SelectedValue) && SelectedValue != -1)
+            {
+                List<ThirdLevelSubdivisionTable> third_stage = (from item in kPiDataContext.ThirdLevelSubdivisionTable
+                                                                where item.FK_SecondLevelSubdivisionTable == SelectedValue
+                                                                select item).OrderBy(mc => mc.ThirdLevelSubdivisionTableID).ToList();
+
+                if (third_stage != null && third_stage.Count() > 0)
+                {
+                    var dictionary = new Dictionary<int, string>();
+                    dictionary.Add(-1, "Выберите значение");
+                    foreach (var item in third_stage)
+                        dictionary.Add(item.ThirdLevelSubdivisionTableID, item.Name);
+                    DropDownList3.DataTextField = "Value";
+                    DropDownList3.DataValueField = "Key";
+                    DropDownList3.DataSource = dictionary;
+                    DropDownList3.DataBind();
+                }
+                else
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Произошла ошибка.');", true);
+                }
+            }
+            else
+            {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Произошла ошибка.');", true);
+            }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            if (((from a in kPiDataContext.UsersTable where a.Login == UserNameText.Text select a).ToList().Count > 0)&&(UserNameText.Text.Length>2))
+            {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Пользователь с таким логином уже существует, выберите другой логин!');", true);
+            }
+
+            else if ((from a in kPiDataContext.UsersTable where a.Email == EmailText.Text select a).ToList().Count > 0)
+            {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Введенный адрес электронной почты уже зарегестрирован, введите другой');", true);
+            }
+            else
+            {
                 UsersTable user = new UsersTable();
                 user.Active = true;
-                user.Login = UserName.Text;
-                user.Password = Password.Text;
-                user.Email = Email.Text;
+                user.Login = UserNameText.Text;
+                user.Password = PasswordText.Text;
+                user.Email = EmailText.Text;
 
                 int selectedValue = -1;
                 if (int.TryParse(DropDownList1.SelectedValue, out selectedValue) && selectedValue > 0)
@@ -137,15 +364,15 @@ namespace KPIWeb.Account
 
                 user.AccessLevel = 0; ///////НАДО ПРОДУМАТЬ
 
-            if (DropDownList5.SelectedIndex == 2)
-            {
-                user.AccessLevel = 5;
-            }
+                if (DropDownList5.SelectedIndex == 2)
+                {
+                    user.AccessLevel = 5;
+                }
 
-            if (DropDownList5.SelectedIndex == 3)
-            {
-                user.AccessLevel = 10;
-            }
+                if (DropDownList5.SelectedIndex == 3)
+                {
+                    user.AccessLevel = 10;
+                }
 
                 user.FK_ZeroLevelSubdivisionTable = 1;
 
@@ -157,9 +384,6 @@ namespace KPIWeb.Account
 
                 ///////////////////////////////////////////шаблон//////////////////////////////////
                 int rowIndex = 0;
-
-                //int currentRoleId = Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value);
-                //DataTable roleBasicParametrs = (DataTable)ViewState["GridviewRoleMapping"];
 
                 if (Gridview3.Rows.Count > 0)
                 {
@@ -229,144 +453,11 @@ namespace KPIWeb.Account
                         }
                     }
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    LogHandler.LogWriter.WriteError(ex);
-            //}
-             }
-
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Пользователь зарегистрирован');", true);
+            }           
         }
-        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DropDownList2.Items.Clear();
-            DropDownList3.Items.Clear();
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
-            int SelectedValue = -1;
-            if (int.TryParse(DropDownList1.SelectedValue, out SelectedValue) && SelectedValue != -1)
-            {
-                List<SecondLevelSubdivisionTable> second_stageList =
-                    (from item in kPiDataContext.SecondLevelSubdivisionTable
-                        where item.FK_FirstLevelSubdivisionTable == SelectedValue
-                        select item).OrderBy(mc => mc.SecondLevelSubdivisionTableID).ToList();
 
-                if (second_stageList != null && second_stageList.Count() > 0)
-                {
-                    var dictionary = new Dictionary<int, string>();
-                    dictionary.Add(-1, "Выберите значение");
-                    foreach (var item in second_stageList)
-                        dictionary.Add(item.SecondLevelSubdivisionTableID, item.Name);
-                    DropDownList2.DataTextField = "Value";
-                    DropDownList2.DataValueField = "Key";
-                    DropDownList2.DataSource = dictionary;
-                    DropDownList2.DataBind();
-                }
-                else
-                {
-                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Произошла ошибка.');", true);                   
-                }
-            }
-            else
-            {
-                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Произошла ошибка.');", true);
-            }
-        }    
-        protected void Page_Load(object sender, EventArgs e)
-        {
-
-            Serialization UserSer = (Serialization)Session["UserID"];
-            if (UserSer == null)
-            {
-                Response.Redirect("~/Account/Login.aspx");
-            }
-
-            int userID = UserSer.Id;
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
-            UsersTable userTable =
-                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
-
-            if (userTable.AccessLevel != 10)
-            {
-                Response.Redirect("~/Account/Login.aspx");
-            }
-            ///////////////////////////////////////////////////проверили на админа
-            if (!Page.IsPostBack)
-            {
-                Gridview1.Visible = false;
-                Label25.Visible = false;
-                Gridview2.Visible = false;
-                Label26.Visible = false;
-                Gridview3.Visible = false;
-                Label27.Visible = false;
-                DropDownList4.Visible = false;
-                Label24.Visible = false;
-
-                List<RolesTable> Roles = (from a in kPiDataContext.RolesTable
-                                          where a.Active == true
-                                          select a).ToList();
-                int i = 1;
-                DropDownList4.Items.Add("Выберите шаблон");
-                foreach (RolesTable role in Roles)
-                {
-                    DropDownList4.Items.Add(role.RoleName);
-                    DropDownList4.Items[i].Value = role.RolesTableID.ToString();
-                    i++;
-                }
-             ////записали роли в дроп даун
-                List<FirstLevelSubdivisionTable> First_stageList =
-                    (from item in kPiDataContext.FirstLevelSubdivisionTable
-                        select item).OrderBy(mc => mc.Name).ToList();
-
-                var dictionary = new Dictionary<int, string>();
-                dictionary.Add(0, "Выберите значение");
-
-                foreach (var item in First_stageList)
-                    dictionary.Add(item.FirstLevelSubdivisionTableID, item.Name);
-
-                FillGridVIews(0);
-
-                DropDownList1.DataTextField = "Value";
-                DropDownList1.DataValueField = "Key";
-                DropDownList1.DataSource = dictionary;
-                DropDownList1.DataBind();           
-            /// записали академии в дроп даун
-            }
-        }
-        protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DropDownList3.Items.Clear();
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
-            int SelectedValue = -1;
-            if (int.TryParse(DropDownList2.SelectedValue, out SelectedValue) && SelectedValue != -1)
-            {
-                List<ThirdLevelSubdivisionTable> third_stage = (from item in kPiDataContext.ThirdLevelSubdivisionTable
-                    where item.FK_SecondLevelSubdivisionTable == SelectedValue
-                    select item).OrderBy(mc => mc.ThirdLevelSubdivisionTableID).ToList();
-
-                if (third_stage != null && third_stage.Count() > 0)
-                {
-                    var dictionary = new Dictionary<int, string>();
-                    dictionary.Add(-1, "Выберите значение");
-                    foreach (var item in third_stage)
-                        dictionary.Add(item.ThirdLevelSubdivisionTableID, item.Name);
-                    DropDownList3.DataTextField = "Value";
-                    DropDownList3.DataValueField = "Key";
-                    DropDownList3.DataSource = dictionary;
-                    DropDownList3.DataBind();
-                }
-                else
-                {
-                    Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script", "alert('Произошла ошибка.');",true);
-                }
-            }
-            else
-            {
-                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Произошла ошибка.');", true);
-            }
-        }
-    
-        protected void DropDownList4_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DropDownList4_SelectedIndexChanged1(object sender, EventArgs e)
         {
             if (DropDownList4.SelectedIndex != 0)
             {
@@ -375,11 +466,11 @@ namespace KPIWeb.Account
                 var vrCountry = (from b in kpiWebDataContext.BasicParametersTable select b);
 
                 DataTable dataTable = new DataTable();
-                dataTable.Columns.Add(new DataColumn("BasicParametrsConfirmCheckBox", typeof (bool)));
-                dataTable.Columns.Add(new DataColumn("BasicParametrsEditCheckBox", typeof (bool)));
-                dataTable.Columns.Add(new DataColumn("BasicParametrsViewCheckBox", typeof (bool)));
-                dataTable.Columns.Add(new DataColumn("BasicParametrsName", typeof (string)));
-                dataTable.Columns.Add(new DataColumn("BasicParametrsID", typeof (string)));
+                dataTable.Columns.Add(new DataColumn("BasicParametrsConfirmCheckBox", typeof(bool)));
+                dataTable.Columns.Add(new DataColumn("BasicParametrsEditCheckBox", typeof(bool)));
+                dataTable.Columns.Add(new DataColumn("BasicParametrsViewCheckBox", typeof(bool)));
+                dataTable.Columns.Add(new DataColumn("BasicParametrsName", typeof(string)));
+                dataTable.Columns.Add(new DataColumn("BasicParametrsID", typeof(string)));
                 int i = 1;
 
                 foreach (var obj in vrCountry)
@@ -387,11 +478,11 @@ namespace KPIWeb.Account
                     DataRow dataRow = dataTable.NewRow();
                     BasicParametersAndRolesMappingTable roleAndBasicMapping =
                         (from a in kpiWebDataContext.BasicParametersAndRolesMappingTable
-                            where a.FK_BasicParametersTable == obj.BasicParametersTableID
-                                  &&
-                                  a.FK_RolesTable ==
-                                  Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value)
-                            select a).FirstOrDefault();
+                         where a.FK_BasicParametersTable == obj.BasicParametersTableID
+                               &&
+                               a.FK_RolesTable ==
+                               Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value)
+                         select a).FirstOrDefault();
                     if (roleAndBasicMapping != null)
                     {
                         dataRow["BasicParametrsEditCheckBox"] = roleAndBasicMapping.CanEdit;
@@ -414,53 +505,5 @@ namespace KPIWeb.Account
                 Gridview3.DataBind();
             }
         }
-
-        protected void CheckBox1_CheckedChanged(object sender, EventArgs e)
-        {
-           // if 
-        }
-
-        protected void DropDownList5_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (DropDownList5.SelectedIndex == 0 || DropDownList5.SelectedIndex ==3)
-            {
-                Gridview1.Visible = false;
-                Label25.Visible = false;
-                Gridview2.Visible = false;
-                Label26.Visible = false;
-                Gridview3.Visible = false;
-                Label27.Visible = false;
-                DropDownList4.Visible = false;
-                Label24.Visible = false;
-            }
-            else if (DropDownList5.SelectedIndex == 1)
-            {
-                Gridview1.Visible = false;
-                Label25.Visible = false;
-                Gridview2.Visible = false;
-                Label26.Visible = false;
-                Gridview3.Visible = true;
-                Label27.Visible = true;
-                DropDownList4.Visible = true;
-                Label24.Visible = true;
-            }
-            else if (DropDownList5.SelectedIndex == 2)
-            {
-                Gridview1.Visible = true;
-                Label25.Visible = true;
-                Gridview2.Visible = true;
-                Label26.Visible = true;
-                Gridview3.Visible = true;
-                Label27.Visible = true;
-                DropDownList4.Visible = false;
-                Label24.Visible = false;
-            }
-        }
-
-        protected void Gridview3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
-
 }

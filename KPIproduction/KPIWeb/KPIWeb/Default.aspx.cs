@@ -19,7 +19,7 @@ namespace KPIWeb
             {
                 FormsAuthentication.SignOut();
                 Session.Abandon();
-                Response.Redirect("~/Account/Login.aspx");
+                Response.Redirect("~/Account/UserLogin.aspx");
             }
             KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
             UsersTable user = (from usersTables in KPIWebDataContext.UsersTable
@@ -73,14 +73,14 @@ namespace KPIWeb
                 {
                     FormsAuthentication.SignOut();
                     Session.Abandon();
-                    Response.Redirect("~/Account/Login.aspx");
+                    Response.Redirect("~/Account/UserLogin.aspx");
                 }
             }
             else
             {
                 FormsAuthentication.SignOut();
                 Session.Abandon();
-                Response.Redirect("~/Account/Login.aspx");
+                Response.Redirect("~/Account/UserLogin.aspx");
             }
         }
     }

@@ -25,7 +25,7 @@ namespace KPIWeb.AutomationDepartment
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            if (userTable.AccessLevel != 10)
+            if ((userTable.AccessLevel != 10)&&(userTable.AccessLevel != 9))
             {
                 Response.Redirect("~/Default.aspx");
             }
@@ -243,6 +243,11 @@ namespace KPIWeb.AutomationDepartment
         {
             if (!TextBox1.Text.Any()) CheckBox1.Checked = false;
             RefreshGrid();
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/AutomationDepartment/Regisration.aspx");
         }
     }
 }

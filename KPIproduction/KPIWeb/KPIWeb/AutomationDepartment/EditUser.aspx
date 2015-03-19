@@ -3,6 +3,9 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
         <h2><%: Title %></h2>
     <div>
+       &nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Добавить нового пользователя" Width="594px" />
+        <br />
+        <br />
        <asp:Label ID="Label1" runat="server" Text="Пароль доступа"></asp:Label>
 
  &nbsp;

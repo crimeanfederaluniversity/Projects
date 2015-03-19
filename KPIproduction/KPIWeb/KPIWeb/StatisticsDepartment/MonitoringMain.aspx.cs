@@ -42,5 +42,10 @@ namespace KPIWeb.StatisticsDepartment
         {
             Response.Redirect("~/StatisticsDepartment/Indicators.aspx");
         }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/AutomationDepartment/EditUser.aspx");
+        }
     }
 }

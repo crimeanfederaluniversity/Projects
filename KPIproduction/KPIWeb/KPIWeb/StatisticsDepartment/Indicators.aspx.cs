@@ -110,7 +110,7 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void Button3_Click(object sender, EventArgs e)
         {
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));            
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();            
             int SelectedValue = -1;
             if (int.TryParse(Label5.Text, out SelectedValue) && SelectedValue != -1)
             {

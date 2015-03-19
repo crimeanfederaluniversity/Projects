@@ -77,7 +77,7 @@ namespace KPIWeb
         {
             FormsAuthentication.SignOut();
             Session.Abandon();
-            Response.Redirect("~/Account/Login.aspx");
+            Response.Redirect("~/Account/UserLogin.aspx");
             //Context.GetOwinContext().Authentication.SignOut();
         }
     }

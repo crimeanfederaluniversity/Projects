@@ -1,23 +1,16 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Security;
-using KPIWeb.Models;
-using log4net;
-using WebApplication3;
-using Page = System.Web.UI.Page;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace KPIWeb.Account
 {
-    public partial class Login : Page
+    public partial class UserLogin : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {         
+        {
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer != null)
             {
@@ -25,23 +18,22 @@ namespace KPIWeb.Account
             }
         }
 
-        protected void LogIn(object sender, EventArgs e)
+        protected void Button1_Click(object sender, EventArgs e)
         {
-            // FailureText.Text = "Error!";
-            // FailureText.Visible = true;
             try
             {
                 if (IsValid)
                 {
                     KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
                     UsersTable user = (from usersTables in KPIWebDataContext.UsersTable
-                                       where usersTables.Login == UserName.Text &&
+                                       where
+                                       (usersTables.Login == UserName.Text) || (usersTables.Email == UserName.Text)
+                                        &&
                                        usersTables.Password == Password.Text &&
                                        usersTables.Active == true
                                        select usersTables).FirstOrDefault();
                     if (user != null)
                     {                     
-                       // FormsAuthentication.SetAuthCookie("Hello", true);
                         LogHandler.LogWriter.WriteLog(LogCategory.INFO,"Пользователь " + user.Login + " вошел в систему "); 
                         Serialization UserSerId = new Serialization(user.UsersTableID);
                         Session["UserID"] = UserSerId;
@@ -50,7 +42,7 @@ namespace KPIWeb.Account
                         else
                         {
                             LogHandler.LogWriter.WriteLog(LogCategory.INFO,"Неудачная попытка авторизации " + user.Login); 
-                            FailureText.Text = "Неверное имя пользователя или пароль.";
+                            FailureText.Text = "Неверный адрес электронной почты или пароль.";
                             ErrorMessage.Visible = true;
                         }
                     }
@@ -60,6 +52,7 @@ namespace KPIWeb.Account
                     LogHandler.LogWriter.WriteError(ex);
                    
                 }
-            }
+            
+        }
     }
 }
