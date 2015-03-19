@@ -183,6 +183,7 @@
     <Content Include="AutomationDepartment\RoleMapping.aspx" />
     <Content Include="AutomationDepartment\IsAvailibleMappingRole.aspx" />
     <Content Include="PersonalInfo.aspx" />
+    <Content Include="StatisticsDepartment\AddSpecialization.aspx" />
     <Content Include="StatisticsDepartment\MonitoringMain.aspx" />
     <Content Include="WebForm3.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -423,6 +424,13 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Account\Users.cs" />
+    <Compile Include="StatisticsDepartment\AddSpecialization.aspx.cs">
+      <DependentUpon>AddSpecialization.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StatisticsDepartment\AddSpecialization.aspx.designer.cs">
+      <DependentUpon>AddSpecialization.aspx</DependentUpon>
+    </Compile>
     <Compile Include="StatisticsDepartment\BasicParametrs.aspx.cs">
       <DependentUpon>BasicParametrs.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
