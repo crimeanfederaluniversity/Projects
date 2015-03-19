@@ -57,16 +57,13 @@
                             <asp:Label ID="IndicatorName" runat="server" Visible="True" Text='<%# Bind("IndicatorName") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Редак">
-                        <ItemTemplate>
-                            <asp:CheckBox ID="IndicatorEditCheckBox" runat="server" Checked='<%# Bind("IndicatorEditCheckBox") %>'></asp:CheckBox>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Просм">
+
+                    <asp:TemplateField  HeaderText="Просм">
                         <ItemTemplate>
                             <asp:CheckBox ID="IndicatorViewCheckBox" runat="server" Checked='<%# Bind("IndicatorViewCheckBox") %>'></asp:CheckBox>
                         </ItemTemplate>
                     </asp:TemplateField>
+
                     <asp:TemplateField HeaderText="Подтв">
                         <ItemTemplate>
                             <asp:CheckBox ID="IndicatorConfirmCheckBox" runat="server" Checked='<%# Bind("IndicatorConfirmCheckBox") %>'></asp:CheckBox>
@@ -85,11 +82,7 @@
                          <asp:Label ID="CalculatedParametrsName" runat="server" Visible="True" Text='<%# Bind("CalculatedParametrsName") %>'></asp:Label>
                      </ItemTemplate>
                  </asp:TemplateField>
-                 <asp:TemplateField HeaderText="Редак">
-                     <ItemTemplate>
-                         <asp:CheckBox ID="CalculatedParametrsEditCheckBox" runat="server" Checked='<%# Bind("CalculatedParametrsEditCheckBox") %>'></asp:CheckBox>
-                     </ItemTemplate>
-                 </asp:TemplateField>
+                                 
                  <asp:TemplateField HeaderText="Просм">
                      <ItemTemplate>
                          <asp:CheckBox ID="CalculatedParametrsViewCheckBox" runat="server" Checked='<%# Bind("CalculatedParametrsViewCheckBox") %>'></asp:CheckBox>
