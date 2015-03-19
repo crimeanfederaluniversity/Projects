@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing;
 using System.Linq;
 using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.Office.Interop.Excel;
+using Page = System.Web.UI.Page;
 
 namespace KPIWeb.StatisticsDepartment
 {
@@ -23,7 +25,7 @@ namespace KPIWeb.StatisticsDepartment
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            if (userTable.AccessLevel != 10)
+            if ((userTable.AccessLevel != 10)&&(userTable.AccessLevel != 9))
             {
                 Response.Redirect("~/Default.aspx");
             }
@@ -35,12 +37,36 @@ namespace KPIWeb.StatisticsDepartment
             }
         }
 
+        protected bool abbExists(string abb,int id)
+        {
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+         //   int indabbcnt = from a in kPiDataContext.IndicatorsTable
+           //                 where a.
+            int calcabbcnt = (from a in kPiDataContext.CalculatedParametrs
+                where a.AbbreviationEN == abb
+                && a.CalculatedParametrsID!=id
+                select a).ToList().Count();
+            int basicabbcnt = (from a in kPiDataContext.BasicParametersTable
+                where a.AbbreviationEN == abb
+                && a.BasicParametersTableID!=id
+                select a).ToList().Count();
+            if ((calcabbcnt + basicabbcnt) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Label5.Text = "0";
             IndicatorName.Text = "";
             IndicatorFormula.Text = "";
             IndicatorMeasure.Text = "";
+            TextBoxAbb.Text = "";
+            LabelAbbError.Visible = false;
            
             int SelectedValue = -1;
             if (int.TryParse(DropDownList1.SelectedValue, out SelectedValue) && SelectedValue != -1)
@@ -70,7 +96,7 @@ namespace KPIWeb.StatisticsDepartment
                         else CheckBox1.Checked = false;
                         Label5.Text = calcParams.CalculatedParametrsID.ToString();
                         IndicatorName.Text = calcParams.Name;
-                        TextBox8.Text = calcParams.AbbreviationEN;
+                        TextBoxAbb.Text = calcParams.AbbreviationEN;
                         IndicatorFormula.Text = calcParams.Formula;
                         IndicatorMeasure.Text = calcParams.Measure;
                     }                   
@@ -104,16 +130,26 @@ namespace KPIWeb.StatisticsDepartment
                     }
                     else if ((int)ViewState["state"] == 1)///рассчетные показатели
                     {
-                        CalculatedParametrs calcParams = (from item in kPiDataContext.CalculatedParametrs
-                                                      where item.CalculatedParametrsID == SelectedValue
-                                                      select item).FirstOrDefault();
-                        if (CheckBox1.Checked) calcParams.Active = true;
-                        else calcParams.Active = false;
-                        calcParams.Name = IndicatorName.Text;
-                        calcParams.Formula = IndicatorFormula.Text;
-                        calcParams.AbbreviationEN = TextBox8.Text; 
-                        calcParams.Measure = IndicatorMeasure.Text;
-                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Расчетный показатель изменен');", true);    
+                        if (abbExists(TextBoxAbb.Text,
+                            Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value)))
+                        {
+                            Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                                "alert('Аббревиатура не является уникальной, измените её');", true);
+                        }
+                        else
+                        {
+                            CalculatedParametrs calcParams = (from item in kPiDataContext.CalculatedParametrs
+                                where item.CalculatedParametrsID == SelectedValue
+                                select item).FirstOrDefault();
+                            if (CheckBox1.Checked) calcParams.Active = true;
+                            else calcParams.Active = false;
+                            calcParams.Name = IndicatorName.Text;
+                            calcParams.Formula = IndicatorFormula.Text;
+                            calcParams.AbbreviationEN = TextBoxAbb.Text;
+                            calcParams.Measure = IndicatorMeasure.Text;
+                            Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                                "alert('Расчетный показатель изменен');", true);
+                        }
                     }
                 }
                 else
@@ -131,15 +167,22 @@ namespace KPIWeb.StatisticsDepartment
                     }
                     else if ((int)ViewState["state"] == 1)///рассчетные показатели
                     {
-                        CalculatedParametrs calcParams = new CalculatedParametrs();
-                        if (CheckBox1.Checked) calcParams.Active = true;
-                        else calcParams.Active = false;
-                        calcParams.Name = IndicatorName.Text;
-                        calcParams.Formula = IndicatorFormula.Text;
-                        calcParams.Measure = IndicatorMeasure.Text;
-                        calcParams.AbbreviationEN = TextBox8.Text;
-                        kPiDataContext.CalculatedParametrs.InsertOnSubmit(calcParams);
-                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Расчетный параметр создан');", true);
+                        if (abbExists(TextBoxAbb.Text,Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value)))
+                        {
+                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Аббревиатура не является уникальной, измените её');", true);
+                        }
+                        else
+                        {
+                            CalculatedParametrs calcParams = new CalculatedParametrs();
+                            if (CheckBox1.Checked) calcParams.Active = true;
+                            else calcParams.Active = false;
+                            calcParams.Name = IndicatorName.Text;
+                            calcParams.Formula = IndicatorFormula.Text;
+                            calcParams.Measure = IndicatorMeasure.Text;
+                            calcParams.AbbreviationEN = TextBoxAbb.Text;
+                            kPiDataContext.CalculatedParametrs.InsertOnSubmit(calcParams);
+                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Расчетный параметр создан');", true);                         
+                        }                
                     }          
                 }
                 kPiDataContext.SubmitChanges();
@@ -148,9 +191,7 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-
-           
-            
+                    
         }///Рассчет
 
         protected void Button4_Click(object sender, EventArgs e)
@@ -192,7 +233,7 @@ namespace KPIWeb.StatisticsDepartment
                         Label5.Text = "0";
                         IndicatorName.Text = "";
                         IndicatorFormula.Text = "";
-                        TextBox8.Text = "";
+                        //TextBox8.Text = "";
                         IndicatorMeasure.Text = "";
                     }
                     ViewState["state"] = 0;
@@ -200,7 +241,9 @@ namespace KPIWeb.StatisticsDepartment
                     addtitle.Text = "Форма редактирования индикаторов";
                     Label1.Text = "Название индикатора";
                     Button3.Text = "Сохранить изменения индикатора";
-
+                    TextBoxAbb.Visible = false;
+                    LabelAbb.Visible = false;
+                    LabelAbbError.Visible = false;
                    // DropDownList1.DataSource=""
                     KPIWebDataContext kPiDataContext =
                         new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
@@ -226,13 +269,16 @@ namespace KPIWeb.StatisticsDepartment
                         Label5.Text = "0";
                         IndicatorName.Text = "";
                         IndicatorFormula.Text = "";
-                        TextBox8.Text = "";
+                        TextBoxAbb.Text = "";
                         IndicatorMeasure.Text = "";
                     }
                     ViewState["state"] = 1;
                     addtitle.Text = "Форма редактирования расчетного показателя";
                     Label1.Text = "Название расчетного показателя";
                     Button3.Text = "Сохранить изменения расчетного показателя";
+                    TextBoxAbb.Visible = true;
+                    LabelAbb.Visible = true;
+                    LabelAbbError.Visible = false;
 
                     KPIWebDataContext kPiDataContext =
                         new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
@@ -264,6 +310,23 @@ namespace KPIWeb.StatisticsDepartment
                 {
                     break;
                 }
+            }
+        }
+
+        protected void TextBoxAbb_TextChanged(object sender, EventArgs e)
+        {
+            LabelAbbError.Visible = true;
+            if (!abbExists(TextBoxAbb.Text,Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value)))
+            {
+                LabelAbbError.ForeColor = Color.Green;
+                LabelAbbError.Text = "Аббревиатура уникальна.";
+                LabelAbbError.Visible = true;
+            }
+            else
+            {
+                LabelAbbError.ForeColor = Color.Red;
+                LabelAbbError.Text = "Аббревиатура не является уникальной.";
+                LabelAbbError.Visible = true;
             }
         }
     }

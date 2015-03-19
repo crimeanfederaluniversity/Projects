@@ -18,8 +18,8 @@
             
                 <Columns>
 
-                    <asp:BoundField DataField="CurrentReportArchiveID" HeaderText="Current Report ID" Visible="false" />
-                    <asp:BoundField DataField="BasicParametersTableID" HeaderText="Basic Parameter ID" Visible="false" />
+                    <asp:BoundField DataField="CurrentReportArchiveID" HeaderText="Код показателя" Visible="false" />
+                    <asp:BoundField DataField="BasicParametersTableID" HeaderText="Basic Parameter ID" Visible="true" />
 
                     <asp:TemplateField Visible="false"  InsertVisible="False">
                         <ItemTemplate>

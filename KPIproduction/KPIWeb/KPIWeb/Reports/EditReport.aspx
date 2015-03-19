@@ -94,6 +94,8 @@
 
                 </table>
             <br />
+            <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Выделить все" Width="286px" />
+            <br />
             Выберите академии участвующие в отчете<br />
             <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="16px" Width="325px">
             </asp:CheckBoxList>

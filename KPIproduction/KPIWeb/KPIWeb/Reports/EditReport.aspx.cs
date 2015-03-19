@@ -578,5 +578,13 @@ namespace KPIWeb.Reports
                 chekBox.Checked = true;
             }
         }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < CheckBoxList1.Items.Count; i++)
+            {
+                CheckBoxList1.Items[i].Selected = true;
+            }
+        }
     }
 }

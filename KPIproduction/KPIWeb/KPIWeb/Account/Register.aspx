@@ -46,10 +46,11 @@
             <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Тип пользователя</asp:Label>
             <div class="col-md-10">
                 <asp:DropDownList ID="DropDownList5" runat="server" CssClass="form-control" OnSelectedIndexChanged="DropDownList5_SelectedIndexChanged" AutoPostBack="True">
-                    <asp:ListItem Value="-1">Выберите должность</asp:ListItem>
-                    <asp:ListItem Value="0">Вносящий данные</asp:ListItem>
+                    <asp:ListItem Value="-1">Выберите статус</asp:ListItem>
+                    <asp:ListItem Value="0">Исполнитель</asp:ListItem>
                     <asp:ListItem Value="5">Руководство</asp:ListItem>
-                    <asp:ListItem Value="10">Администратор</asp:ListItem>
+                    <asp:ListItem Value="9">Администратор</asp:ListItem>
+                    
                 </asp:DropDownList>
             </div>
         </div>

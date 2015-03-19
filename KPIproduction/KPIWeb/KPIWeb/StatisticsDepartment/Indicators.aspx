@@ -44,8 +44,12 @@
                 <asp:CheckBox ID="CheckBox1" runat="server" />
                  <br />
                  <br />
-                 Аббревиатура<br />
-                 <asp:TextBox ID="TextBox8" runat="server" Width="294px"></asp:TextBox>
+                 <asp:Label ID="LabelAbb" runat="server" Text="Аббревиатура"></asp:Label>
+                 <br />
+                 <asp:TextBox ID="TextBoxAbb" runat="server" Width="294px" AutoPostBack="True" OnTextChanged="TextBoxAbb_TextChanged"></asp:TextBox>
+                 &nbsp;&nbsp;&nbsp;
+                 <br />
+                 <asp:Label ID="LabelAbbError" runat="server" ForeColor="Red" Visible="False"></asp:Label>
                  <br />
                 <br />
                 <asp:Label ID="Label2" runat="server" Text="Формула рассчета"></asp:Label>

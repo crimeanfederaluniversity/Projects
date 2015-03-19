@@ -57,6 +57,10 @@ namespace KPIWeb
                 {
                     Response.Redirect("~/AutomationDepartment/Main.aspx");
                 }
+                else if (accessLevel == 9)
+                {
+                    Response.Redirect("~/StatisticsDepartment/MonitoringMain.aspx");
+                }
                 else if (accessLevel == 5)
                 {
                     Response.Redirect("~/Head/HeadChooseReport.aspx");

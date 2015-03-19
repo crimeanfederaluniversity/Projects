@@ -9,7 +9,7 @@
                             <Columns>
                                 <asp:BoundField DataField="IndicatorName" HeaderText="Индикатор" />
                                 <asp:BoundField DataField="IndicatorResult" HeaderText="Результат" />
-                                <asp:TemplateField HeaderText="Подтвердено рассчетных показателей" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "true" >
+                                <asp:TemplateField HeaderText="Подтверждено рассчетных показателей" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "true" >
                                     <ItemTemplate> 
                                         <asp:Label ID="info0"  runat="server" Visible="true" Text='<%# Bind("info0") %>'></asp:Label>
                                     </ItemTemplate>

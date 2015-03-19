@@ -11,7 +11,6 @@
                  <asp:BoundField DataField="StartDate" HeaderText="Начальная дата отчета" Visible="True" />
                  <asp:BoundField DataField="EndDate" HeaderText="Конечная дата отчета" Visible="True" />
 
-
                     <asp:TemplateField HeaderText="Просмотр результатов отчета">
                         <ItemTemplate>
                             <asp:Label ID="LabelReportArchiveTableID2" runat="server" Text='<%# Bind("ReportArchiveID") %>' Visible="false"></asp:Label>
