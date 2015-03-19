@@ -5,6 +5,14 @@
     <h2>Редактирование отчета</h2>
         <div>
             <table>
+                  <tr>
+                    <td>Название отчета
+                    </td>
+                    <td>
+                        <asp:TextBox Width="400 px" runat="server" ID="TextBoxName" />
+                    </td>
+                </tr>
+
                 <tr>
                     <td>Активный отчет
                     </td>
@@ -20,12 +28,32 @@
                         <asp:CheckBox runat="server" ID="CheckBoxCalculeted" />
                     </td>
                 </tr>
+                
+                <tr>
+                    <td>Планируемая дата отправки
+                    </td>
+                    <td>
+                        <asp:Calendar ID="CalendarDateToSend" runat="server" SelectionMode="Day" ShowGridLines="True">
+                            <SelectedDayStyle BackColor="Yellow" ForeColor="Red"></SelectedDayStyle>
+                        </asp:Calendar>
+                    </td>
+                </tr>
 
                 <tr>
                     <td>Отчет отправлен
                     </td>
                     <td>
                         <asp:CheckBox runat="server" ID="CheckBoxSent" />
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Дата отправки
+                    </td>
+                    <td>
+                        <asp:Calendar ID="CalendarSentDateTime" runat="server" SelectionMode="Day" ShowGridLines="True" Height="77px">
+                            <SelectedDayStyle BackColor="Yellow" ForeColor="Red"></SelectedDayStyle>
+                        </asp:Calendar>
                     </td>
                 </tr>
 
@@ -36,23 +64,24 @@
                         <asp:CheckBox runat="server" ID="CheckBoxRecipientConfirmed" />
                     </td>
                 </tr>
-
-                <tr>
-                    <td>Наименование отчета
+                
+                  <tr>
+                    <td>Дата принятия получателем
                     </td>
                     <td>
-                        <asp:TextBox Width="400 px" runat="server" ID="TextBoxName" />
+                        <asp:Calendar ID="CalendarReportRecived" runat="server" SelectionMode="Day" ShowGridLines="True" Height="77px">
+                            <SelectedDayStyle BackColor="Yellow" ForeColor="Red"></SelectedDayStyle>
+                        </asp:Calendar>
                     </td>
                 </tr>
+
+              
                 
                 <tr>
                     <td>
-                        <br />
                         Стартовая дата отчета
                         </td>
                     <td>
-                        &nbsp;
-                        <br />
                         Конечная дата отчета</td>
                 </tr>
 
@@ -71,30 +100,14 @@
 
                 <tr>
                     <td>
-                        <br />
-                        Запланированная дата отправки отчета&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </td>
                     <td>
-                        &nbsp;&nbsp;
-                        <br />
-                        Дата отправки отчета </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <asp:Calendar ID="CalendarDateToSend" runat="server" SelectionMode="Day" ShowGridLines="True">
-                            <SelectedDayStyle BackColor="Yellow" ForeColor="Red"></SelectedDayStyle>
-                        </asp:Calendar>
-                    </td>
-                    <td>
-                        <asp:Calendar ID="CalendarSentDateTime" runat="server" SelectionMode="Day" ShowGridLines="True">
-                            <SelectedDayStyle BackColor="Yellow" ForeColor="Red"></SelectedDayStyle>
-                        </asp:Calendar>
-                    </td>
+                        &nbsp;</td>
                 </tr>
 
                 </table>
             <br />
-            <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Выделить все" Width="286px" />
+            <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Выделить все академии" Width="286px" />
             <br />
             Выберите академии участвующие в отчете<br />
             <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="16px" Width="325px">

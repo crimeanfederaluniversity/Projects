@@ -6681,6 +6681,8 @@ namespace KPIWeb
 		
 		private string _Name;
 		
+		private System.Nullable<System.DateTime> _RecivedDateTime;
+		
 		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
 		private EntitySet<CollectedCalculatedParametrs> _CollectedCalculatedParametrs;
@@ -6719,6 +6721,8 @@ namespace KPIWeb
     partial void OnDateToSendChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
+    partial void OnRecivedDateTimeChanging(System.Nullable<System.DateTime> value);
+    partial void OnRecivedDateTimeChanged();
     #endregion
 		
 		public ReportArchiveTable()
@@ -6929,6 +6933,26 @@ namespace KPIWeb
 					this._Name = value;
 					this.SendPropertyChanged("Name");
 					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RecivedDateTime", DbType="DateTime")]
+		public System.Nullable<System.DateTime> RecivedDateTime
+		{
+			get
+			{
+				return this._RecivedDateTime;
+			}
+			set
+			{
+				if ((this._RecivedDateTime != value))
+				{
+					this.OnRecivedDateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._RecivedDateTime = value;
+					this.SendPropertyChanged("RecivedDateTime");
+					this.OnRecivedDateTimeChanged();
 				}
 			}
 		}

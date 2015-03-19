@@ -31,6 +31,18 @@
                             <asp:Button ID="ButtonEditReport2" runat="server" CommandName="Select" Text="Сгенерировать" Width="150px" CommandArgument='<%# Eval("ReportArchiveTableID") %>' OnClick="ButtonEditReport_Click_2"/>
                         </ItemTemplate>
                     </asp:TemplateField>
+                    
+                    <asp:TemplateField HeaderText="Просмотреть отчет">
+                        <ItemTemplate>
+                            <asp:Button ID="ButtonViewReport" runat="server" CommandName="Select" Text="Просмотреть" Width="150px" CommandArgument='<%# Eval("ReportArchiveTableID") %>' OnClick="ButtonViewReportClick"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Просмотреть уровень заполненности">
+                        <ItemTemplate>
+                            <asp:Button ID="ButtonViewStruct" runat="server" CommandName="Select" Text="Просмотреть" Width="150px" CommandArgument='<%# Eval("ReportArchiveTableID") %>' OnClick="ButtonViewStruct"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
                 </Columns>
             </asp:GridView>

@@ -111,6 +111,29 @@ namespace KPIWeb.StatisticsDepartment
             Response.Redirect("~/StatisticsDepartment/Indicators.aspx");
         }
 
+        protected void ButtonViewReportClick(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            {
+                Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
+                Session["ReportArchiveID"] = paramSerialization;
+                Serialization modeSer = new Serialization(1, null, null);
+                Session["mode"] = modeSer;               
+                Serialization level = new Serialization(0, 0, 0, 0, 0, 0);
+                Session["level"] = level;
+                Response.Redirect("~/Head/HeadShowResult.aspx");
+            }
+        }
 
+        protected void ButtonViewStruct(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            {
+                Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
+                Session["ReportArchiveID"] = paramSerialization;
+                Response.Redirect("~/Head/HeadShowStructure.aspx");
+            }
+        }
+        
     }
 }

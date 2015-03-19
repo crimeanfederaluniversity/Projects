@@ -177,7 +177,7 @@ namespace KPIWeb.Reports
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            if (userTable.AccessLevel != 10)
+            if ((userTable.AccessLevel != 10)&&(userTable.AccessLevel != 9))
             {
                 Response.Redirect("~/Default.aspx");
             }
@@ -214,6 +214,9 @@ namespace KPIWeb.Reports
 
                         if (ReportArchiveTable.SentDateTime != null)
                             CalendarSentDateTime.SelectedDate = (DateTime)ReportArchiveTable.SentDateTime;
+
+                        if (ReportArchiveTable.RecivedDateTime != null)
+                            CalendarReportRecived.SelectedDate = (DateTime)ReportArchiveTable.RecivedDateTime;
                     }
                     ////заполнили поля
                     List<FirstLevelSubdivisionTable> academies =
@@ -286,6 +289,9 @@ namespace KPIWeb.Reports
                 if (CalendarSentDateTime.SelectedDate > DateTime.MinValue)
                     reportArchiveTable.SentDateTime = CalendarSentDateTime.SelectedDate;
 
+                if (CalendarReportRecived.SelectedDate > DateTime.MinValue)
+                    reportArchiveTable.RecivedDateTime = CalendarReportRecived.SelectedDate;
+
                 kpiWebDataContext.ReportArchiveTable.InsertOnSubmit(reportArchiveTable);
                 kpiWebDataContext.SubmitChanges();
 
@@ -321,6 +327,9 @@ namespace KPIWeb.Reports
 
             if (CalendarSentDateTime.SelectedDate > DateTime.MinValue)
                 reportArchiveTable.SentDateTime = CalendarSentDateTime.SelectedDate;
+
+            if (CalendarReportRecived.SelectedDate > DateTime.MinValue)
+                reportArchiveTable.RecivedDateTime = CalendarReportRecived.SelectedDate;
 
             foreach (ListItem checkItem in CheckBoxList1.Items)
             {

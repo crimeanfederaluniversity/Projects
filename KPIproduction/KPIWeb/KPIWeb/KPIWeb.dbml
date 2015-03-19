@@ -293,6 +293,7 @@
       <Column Name="EndDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="DateToSend" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="RecivedDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="ReportArchiveTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="CollectedBasicParametersTable" />
       <Association Name="ReportArchiveTable_CollectedCalculatedParametrs" Member="CollectedCalculatedParametrs" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="CollectedCalculatedParametrs" />
       <Association Name="ReportArchiveTable_CollectedIndocators" Member="CollectedIndocators" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="CollectedIndocators" />

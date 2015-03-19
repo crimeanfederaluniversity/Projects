@@ -23,10 +23,18 @@ namespace KPIWeb.Head
                 Response.Redirect("~/Default.aspx");
             }
             int userID = UserSer.Id;
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             UsersTable userTable_ =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
+
+            if ((userTable_.AccessLevel == 9)||(userTable_.AccessLevel == 10))
+            {
+                userTable_ =
+                    (from a in kPiDataContext.UsersTable where a.UsersTableID == 7104 select a).FirstOrDefault(); // чтобы мониторинг мог зайти
+                userID = userTable_.UsersTableID;//чтобы мониторинг мог зайти
+            }
+            
             if (userTable_.AccessLevel != 5)
             {
                 Response.Redirect("~/Default.aspx");
@@ -54,18 +62,18 @@ namespace KPIWeb.Head
             }
             if (!Page.IsPostBack)
             {
-                int UserID = UserSer.Id;
+               // int UserID = UserSer.Id;
                 int ReportArchiveID;
                 ReportArchiveID = Convert.ToInt32(paramSerialization.ReportStr);
-                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+              ///  kPiDataContext kPiDataContext = new kPiDataContext();
 
-                UsersTable userTable = (from a in kpiWebDataContext.UsersTable where a.UsersTableID == UserID select a).FirstOrDefault();
-                int l_0 = (userTable.FK_ZeroLevelSubdivisionTable == null) ? 0 : (int)userTable.FK_ZeroLevelSubdivisionTable;
-                int l_1 = (userTable.FK_FirstLevelSubdivisionTable == null) ? 0 : (int)userTable.FK_FirstLevelSubdivisionTable;
-                int l_2 = (userTable.FK_SecondLevelSubdivisionTable == null) ? 0 : (int)userTable.FK_SecondLevelSubdivisionTable;
-                int l_3 = (userTable.FK_ThirdLevelSubdivisionTable == null) ? 0 : (int)userTable.FK_ThirdLevelSubdivisionTable;
-                int l_4 = (userTable.FK_FourthLevelSubdivisionTable == null) ? 0 : (int)userTable.FK_FourthLevelSubdivisionTable;
-                int l_5 = (userTable.FK_FifthLevelSubdivisionTable == null) ? 0 : (int)userTable.FK_FifthLevelSubdivisionTable;
+              //  UsersTable userTable = (from a in kPiDataContext.UsersTable where a.UsersTableID == UserID select a).FirstOrDefault();
+                int l_0 = (userTable_.FK_ZeroLevelSubdivisionTable == null) ? 0 : (int)userTable_.FK_ZeroLevelSubdivisionTable;
+                int l_1 = (userTable_.FK_FirstLevelSubdivisionTable == null) ? 0 : (int)userTable_.FK_FirstLevelSubdivisionTable;
+                int l_2 = (userTable_.FK_SecondLevelSubdivisionTable == null) ? 0 : (int)userTable_.FK_SecondLevelSubdivisionTable;
+                int l_3 = (userTable_.FK_ThirdLevelSubdivisionTable == null) ? 0 : (int)userTable_.FK_ThirdLevelSubdivisionTable;
+                int l_4 = (userTable_.FK_FourthLevelSubdivisionTable == null) ? 0 : (int)userTable_.FK_FourthLevelSubdivisionTable;
+                int l_5 = (userTable_.FK_FifthLevelSubdivisionTable == null) ? 0 : (int)userTable_.FK_FifthLevelSubdivisionTable;
 
                 Serialization level = (Serialization)Session["level"];
                 if (level == null)
@@ -95,13 +103,13 @@ namespace KPIWeb.Head
 
                 #region
                 List<CalculatedParametrs> list_calcParams =
-                    (from a in kpiWebDataContext.CalculatedParametrs
-                     join b in kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable
+                    (from a in kPiDataContext.CalculatedParametrs
+                     join b in kPiDataContext.ReportArchiveAndCalculatedParametrsMappingTable
                      on a.CalculatedParametrsID equals b.FK_CalculatedParametrsTable
-                     join c in kpiWebDataContext.CalculatedParametrsAndUsersMapping
+                     join c in kPiDataContext.CalculatedParametrsAndUsersMapping
                      on a.CalculatedParametrsID equals c.FK_CalculatedParametrsTable
                      where b.FK_ReportArchiveTable == ReportArchiveID
-                     && c.FK_UsersTable == UserID
+                     && c.FK_UsersTable == userID
                       && (((c.CanEdit == true) && mode == 0)
                              || ((c.CanView == true) && mode == 1)
                              || ((c.CanConfirm == true) && mode == 2))
@@ -113,7 +121,7 @@ namespace KPIWeb.Head
 
                 foreach (CalculatedParametrs calcPar in list_calcParams)
                 {
-                    CollectedCalculatedParametrs colCalc = (from a in kpiWebDataContext.CollectedCalculatedParametrs
+                    CollectedCalculatedParametrs colCalc = (from a in kPiDataContext.CollectedCalculatedParametrs
                                                             where a.FK_ReportArchiveTable == ReportArchiveID
                                                             && a.FK_CalculatedParametrs == calcPar.CalculatedParametrsID
                                                             select a).FirstOrDefault();
@@ -128,8 +136,8 @@ namespace KPIWeb.Head
                         colCalc.FK_UsersTable = userID;
                         colCalc.CollectedValue = null;
                         colCalc.SavedDateTime = DateTime.Now;
-                        kpiWebDataContext.CollectedCalculatedParametrs.InsertOnSubmit(colCalc);
-                        kpiWebDataContext.SubmitChanges();
+                        kPiDataContext.CollectedCalculatedParametrs.InsertOnSubmit(colCalc);
+                        kPiDataContext.SubmitChanges();
                     }
                     float tmp = 0;
                     if (colCalc.Confirmed != true)
@@ -145,7 +153,7 @@ namespace KPIWeb.Head
                         }
 
                         colCalc.CollectedValue = tmp;
-                        kpiWebDataContext.SubmitChanges();
+                        kPiDataContext.SubmitChanges();
                     }
                     else
                     {
@@ -171,8 +179,8 @@ namespace KPIWeb.Head
                     List<int> BasicIdList = CalculateAbb.GetBasicIdList(calcPar.Formula);
                     foreach (int Basic in BasicIdList)
                     {
-                        int tmpInsert = (from a in kpiWebDataContext.CollectedBasicParametersTable
-                                         join b in kpiWebDataContext.BasicParametrAdditional
+                        int tmpInsert = (from a in kPiDataContext.CollectedBasicParametersTable
+                                         join b in kPiDataContext.BasicParametrAdditional
                                          on a.FK_BasicParametersTable equals b.BasicParametrAdditionalID
                                          where b.Calculated == false
                                          && a.FK_BasicParametersTable == Basic
@@ -187,8 +195,8 @@ namespace KPIWeb.Head
                                          select a).ToList().Count();
                         Insertcnt += tmpInsert;
 
-                        int tmpconf = (from a in kpiWebDataContext.CollectedBasicParametersTable
-                                       join b in kpiWebDataContext.BasicParametrAdditional
+                        int tmpconf = (from a in kPiDataContext.CollectedBasicParametersTable
+                                       join b in kPiDataContext.BasicParametrAdditional
                                        on a.FK_BasicParametersTable equals b.BasicParametrAdditionalID
                                        where b.Calculated == false
                         && a.FK_BasicParametersTable == Basic
@@ -202,24 +210,24 @@ namespace KPIWeb.Head
                         && a.FK_ReportArchiveTable == ReportArchiveID
                                        select a).ToList().Count();
                         Confcnt += tmpconf;
-                        BasicParametrAdditional bpt = (from a in kpiWebDataContext.BasicParametrAdditional
+                        BasicParametrAdditional bpt = (from a in kPiDataContext.BasicParametrAdditional
                                                        where a.BasicParametrAdditionalID == Basic
                                                        select a).FirstOrDefault();
                         int tmpAll = 0;
                         if (bpt.SubvisionLevel == 4)
                         {
-                            tmpAll = (from a in kpiWebDataContext.UsersTable
-                                      join b in kpiWebDataContext.BasicParametrsAndUsersMapping
+                            tmpAll = (from a in kPiDataContext.UsersTable
+                                      join b in kPiDataContext.BasicParametrsAndUsersMapping
                                       on a.UsersTableID equals b.FK_UsersTable
-                                      join c in kpiWebDataContext.ThirdLevelSubdivisionTable
+                                      join c in kPiDataContext.ThirdLevelSubdivisionTable
                                       on a.FK_ThirdLevelSubdivisionTable equals c.ThirdLevelSubdivisionTableID
-                                      join d in kpiWebDataContext.ThirdLevelParametrs
+                                      join d in kPiDataContext.ThirdLevelParametrs
                                       on c.ThirdLevelSubdivisionTableID equals d.ThirdLevelParametrsID
-                                      join ee in kpiWebDataContext.FourthLevelSubdivisionTable
+                                      join ee in kPiDataContext.FourthLevelSubdivisionTable
                                       on c.ThirdLevelSubdivisionTableID equals ee.FK_ThirdLevelSubdivisionTable
-                                      join f in kpiWebDataContext.FourthLevelParametrs
+                                      join f in kPiDataContext.FourthLevelParametrs
                                       on ee.FourthLevelSubdivisionTableID equals f.FourthLevelParametrsID
-                                      join z in kpiWebDataContext.BasicParametrAdditional
+                                      join z in kPiDataContext.BasicParametrAdditional
                                       on b.FK_ParametrsTable equals z.BasicParametrAdditionalID
                                       where
                                       z.Calculated == false
@@ -241,14 +249,14 @@ namespace KPIWeb.Head
                         }
                         else
                         {
-                            tmpAll = (from a in kpiWebDataContext.BasicParametersTable
-                                      join b in kpiWebDataContext.BasicParametrsAndUsersMapping
+                            tmpAll = (from a in kPiDataContext.BasicParametersTable
+                                      join b in kPiDataContext.BasicParametrsAndUsersMapping
                                       on a.BasicParametersTableID equals b.FK_ParametrsTable
-                                      join c in kpiWebDataContext.UsersTable
+                                      join c in kPiDataContext.UsersTable
                                       on b.FK_UsersTable equals c.UsersTableID
-                                      join d in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                                      join d in kPiDataContext.ReportArchiveAndBasicParametrsMappingTable
                                       on a.BasicParametersTableID equals d.FK_BasicParametrsTable
-                                      join z in kpiWebDataContext.BasicParametrAdditional
+                                      join z in kPiDataContext.BasicParametrAdditional
                                       on b.FK_ParametrsTable equals z.BasicParametrAdditionalID
                                       where
                                         z.Calculated == false
@@ -291,13 +299,13 @@ namespace KPIWeb.Head
                 List<int> AllcntListI = new List<int>();
                 List<int> ConfcntListI = new List<int>();
                 List<IndicatorsTable> list_indicators =
-                    (from a in kpiWebDataContext.IndicatorsTable
-                     join b in kpiWebDataContext.ReportArchiveAndIndicatorsMappingTable
+                    (from a in kPiDataContext.IndicatorsTable
+                     join b in kPiDataContext.ReportArchiveAndIndicatorsMappingTable
                      on a.IndicatorsTableID equals b.FK_IndicatorsTable
-                     join c in kpiWebDataContext.IndicatorsAndUsersMapping
+                     join c in kPiDataContext.IndicatorsAndUsersMapping
                      on a.IndicatorsTableID equals c.FK_IndicatorsTable
                      where b.FK_ReportArchiveTable == ReportArchiveID
-                     && c.FK_UsresTable == UserID
+                     && c.FK_UsresTable == userID
                      && (((c.CanEdit == true) && mode == 0)
                                 || ((c.CanView == true) && mode == 1)
                                 || ((c.CanConfirm == true) && mode == 2))
@@ -306,7 +314,7 @@ namespace KPIWeb.Head
 
                 foreach (IndicatorsTable indicator in list_indicators)
                 {
-                    CollectedIndocators colInd = (from a in kpiWebDataContext.CollectedIndocators
+                    CollectedIndocators colInd = (from a in kPiDataContext.CollectedIndocators
                                                   where a.FK_ReportArchiveTable == ReportArchiveID
                                                   && a.FK_Indicators == indicator.IndicatorsTableID
                                                   select a).FirstOrDefault();
@@ -320,8 +328,8 @@ namespace KPIWeb.Head
                         colInd.FK_UsersTable = userID;
                         colInd.CollectedValue = null;
                         colInd.SavedDateTime = DateTime.Now;
-                        kpiWebDataContext.CollectedIndocators.InsertOnSubmit(colInd);
-                        kpiWebDataContext.SubmitChanges();
+                        kPiDataContext.CollectedIndocators.InsertOnSubmit(colInd);
+                        kPiDataContext.SubmitChanges();
                     }
                     float tmp;
                     tmp = (float)CalculateAbb.CalculateForLevel(2, indicator.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0);
@@ -337,7 +345,7 @@ namespace KPIWeb.Head
                         colInd.CollectedValue = tmp;
                         colInd.LastChangeDateTime = DateTime.Now;
                         colInd.UserIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
-                        kpiWebDataContext.SubmitChanges();
+                        kPiDataContext.SubmitChanges();
                     }
 
                     List<int> CollectedId = CalculateAbb.GetCollectIdList(indicator.Formula);
@@ -346,7 +354,7 @@ namespace KPIWeb.Head
                     int Confcnt = 0;
                     foreach (int collected in CollectedId)
                     {
-                        int tmpAll = (from a in kpiWebDataContext.CollectedCalculatedParametrs
+                        int tmpAll = (from a in kPiDataContext.CollectedCalculatedParametrs
                                       where a.FK_CalculatedParametrs == collected
                                       && a.Confirmed == true
                                       select a).ToList().Count();
@@ -419,7 +427,7 @@ namespace KPIWeb.Head
             }
             else if (mode == 2)
             {
-                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
                 for (int i = 0; i < IndicatorsTable.Rows.Count; i++)
                 {
                     var chB = IndicatorsTable.Rows[i].FindControl("checkBoxInd") as CheckBox;
@@ -428,11 +436,11 @@ namespace KPIWeb.Head
                     {
                         if (chB.Checked)
                         {
-                            CollectedIndocators ColIndicator = (from a in kpiWebDataContext.CollectedIndocators
+                            CollectedIndocators ColIndicator = (from a in kPiDataContext.CollectedIndocators
                                                                 where a.CollectedIndocatorsID == Convert.ToInt32(lbl.Text)
                                                                 select a).FirstOrDefault();
                             ColIndicator.Confirmed = true;
-                            kpiWebDataContext.SubmitChanges();
+                            kPiDataContext.SubmitChanges();
                         }
                     }
                 }
@@ -443,11 +451,11 @@ namespace KPIWeb.Head
                     var lbl = CalculatedParametrsTable.Rows[i].FindControl("checkBoxCalcId") as Label;
                     if (chB.Checked)
                     {
-                        CollectedCalculatedParametrs ColCalc = (from a in kpiWebDataContext.CollectedCalculatedParametrs
+                        CollectedCalculatedParametrs ColCalc = (from a in kPiDataContext.CollectedCalculatedParametrs
                                                                 where a.CollectedCalculatedParametrsID == Convert.ToInt32(lbl.Text)
                                                                 select a).FirstOrDefault();
                         ColCalc.Confirmed = true;
-                        kpiWebDataContext.SubmitChanges();
+                        kPiDataContext.SubmitChanges();
                     }
                 }
             }
@@ -455,26 +463,28 @@ namespace KPIWeb.Head
 
         protected void IndicatorsTable_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            Serialization UserSer = (Serialization)Session["UserID"];
+           /* Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
                 Response.Redirect("~/Default.aspx");
             }
-            int userID = UserSer.Id;
+            int userID = UserSer.Id;*/
+            /*
             Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
             if (paramSerialization == null)
             {
                 Response.Redirect("~/Account/Login.aspx");
             }
             int ReportArchiveID = Convert.ToInt32(paramSerialization.ReportStr);
-
+            */
+            /*
             Serialization modeSer = (Serialization)Session["mode"];
             if (modeSer == null)
             {
                 Response.Redirect("~/Default.aspx");
             }
             int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и подтверждаем
-
+            */
             Color color;
             Color confirmedColor = System.Drawing.Color.LimeGreen;
             Color disableColor = System.Drawing.Color.LightGray;
@@ -526,9 +536,9 @@ namespace KPIWeb.Head
             }
             e.Row.BackColor = color;
 
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             Serialization UserSer = (Serialization)Session["UserID"];
-            if (UserSer == null)
+           /* if (UserSer == null)
             {
                 Response.Redirect("~/Default.aspx");
             }
@@ -539,13 +549,15 @@ namespace KPIWeb.Head
                 Response.Redirect("~/Account/Login.aspx");
             }
             int ReportArchiveID = Convert.ToInt32(paramSerialization.ReportStr);
-
+            */
+            
             Serialization modeSer = (Serialization)Session["mode"];
             if (modeSer == null)
             {
                 Response.Redirect("~/Default.aspx");
             }
             int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и подтверждаем
+             
             List<int> AllcntList = (List<int>)ViewState["AllcntC"];
             List<int> InsertcntList = (List<int>)ViewState["InsertcntC"];
             List<int> ConfcntList = (List<int>)ViewState["ConfcntC"];
@@ -571,13 +583,12 @@ namespace KPIWeb.Head
                     boxColor = System.Drawing.Color.Yellow;
                 }
 
-
                 if (chB != null) //Параметр подтвержден
                 {
                     if (mode != 2)
                     {
                         chB.Visible = false;
-                        chB.Checked = (from a in kpiWebDataContext.CollectedCalculatedParametrs
+                        chB.Checked = (from a in kPiDataContext.CollectedCalculatedParametrs
                                        where a.CollectedCalculatedParametrsID == Convert.ToInt32(lbl.Text)
                                        select a.Confirmed).FirstOrDefault() == true ? true : false;
                         if (chB.Checked)
@@ -588,7 +599,7 @@ namespace KPIWeb.Head
                     else
                     {
                         chB.Visible = true;
-                        chB.Checked = (from a in kpiWebDataContext.CollectedCalculatedParametrs
+                        chB.Checked = (from a in kPiDataContext.CollectedCalculatedParametrs
                                        where a.CollectedCalculatedParametrsID == Convert.ToInt32(lbl.Text)
                                        select a.Confirmed).FirstOrDefault() == true ? true : false;
 

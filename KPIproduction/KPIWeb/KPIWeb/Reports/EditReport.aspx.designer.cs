@@ -13,6 +13,15 @@ namespace KPIWeb.Reports {
     public partial class EditReport {
         
         /// <summary>
+        /// TextBoxName элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBoxName;
+        
+        /// <summary>
         /// CheckBoxActive элемент управления.
         /// </summary>
         /// <remarks>
@@ -31,6 +40,15 @@ namespace KPIWeb.Reports {
         protected global::System.Web.UI.WebControls.CheckBox CheckBoxCalculeted;
         
         /// <summary>
+        /// CalendarDateToSend элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar CalendarDateToSend;
+        
+        /// <summary>
         /// CheckBoxSent элемент управления.
         /// </summary>
         /// <remarks>
@@ -38,6 +56,15 @@ namespace KPIWeb.Reports {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox CheckBoxSent;
+        
+        /// <summary>
+        /// CalendarSentDateTime элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar CalendarSentDateTime;
         
         /// <summary>
         /// CheckBoxRecipientConfirmed элемент управления.
@@ -49,13 +76,13 @@ namespace KPIWeb.Reports {
         protected global::System.Web.UI.WebControls.CheckBox CheckBoxRecipientConfirmed;
         
         /// <summary>
-        /// TextBoxName элемент управления.
+        /// CalendarReportRecived элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxName;
+        protected global::System.Web.UI.WebControls.Calendar CalendarReportRecived;
         
         /// <summary>
         /// CalendarStartDateTime элемент управления.
@@ -74,24 +101,6 @@ namespace KPIWeb.Reports {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Calendar CalendarEndDateTime;
-        
-        /// <summary>
-        /// CalendarDateToSend элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar CalendarDateToSend;
-        
-        /// <summary>
-        /// CalendarSentDateTime элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar CalendarSentDateTime;
         
         /// <summary>
         /// Button3 элемент управления.
