@@ -31,11 +31,12 @@ namespace KPIWeb.StatisticsDepartment
         protected void Button5_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");
+
         }
 
         protected void Button4_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/StatisticsDepartment/BasicParametrs.aspx"); 
+            Response.Redirect("~/StatisticsDepartment/BasicParametrs.aspx");
         }
 
         protected void Button3_Click(object sender, EventArgs e)
@@ -46,6 +47,11 @@ namespace KPIWeb.StatisticsDepartment
         protected void Button2_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/AutomationDepartment/EditUser.aspx");
+        }
+
+        protected void Button6_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/StatisticsDepartment/AddSpecialization.aspx");
         }
     }
 }

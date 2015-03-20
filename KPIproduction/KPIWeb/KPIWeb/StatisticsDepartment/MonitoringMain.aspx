@@ -23,5 +23,5 @@
         <asp:Button ID="Button5" runat="server" Font-Size="15pt" Height="50px" Text=" Управление отчетами" Width="400px" OnClick="Button5_Click" />
     <br />
     <br />
-        <asp:Button ID="Button6" runat="server" Font-Size="15pt" Height="50px" Text="Прикрепление спецальностей" Width="400px" OnClick="Button5_Click" />
+        <asp:Button ID="Button6" runat="server" Font-Size="15pt" Height="50px" Text="Прикрепление спецальностей" Width="400px" OnClick="Button6_Click" />
 </asp:Content>
