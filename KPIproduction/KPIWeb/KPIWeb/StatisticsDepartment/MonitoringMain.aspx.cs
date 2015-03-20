@@ -30,7 +30,7 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void Button5_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");  
+            Response.Redirect("~/StatisticsDepartment/AddSpecialization.aspx");
         }
 
         protected void Button4_Click(object sender, EventArgs e)

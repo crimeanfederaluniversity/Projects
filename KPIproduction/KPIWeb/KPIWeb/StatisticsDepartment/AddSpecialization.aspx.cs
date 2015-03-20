@@ -13,8 +13,22 @@ namespace KPIWeb.StatisticsDepartment
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
 
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            int userID = UserSer.Id;
+
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            if ((userTable.AccessLevel != 10) && (userTable.AccessLevel != 9))
+            {
+                Response.Redirect("~/Default.aspx");
+            }
 
             if (!IsPostBack)
             {
@@ -324,8 +338,9 @@ namespace KPIWeb.StatisticsDepartment
 
 
                 Isgraduate.CanGraduate = true;
-            else
+            else if (Isgraduate != null)
                 Isgraduate.CanGraduate = false;
+           
 
             kpiWeb.SubmitChanges();
 
