@@ -11,7 +11,7 @@ namespace KPIWeb.AutomationDepartment
 {
     public partial class Regisration : System.Web.UI.Page
     {
-protected void FillGridVIews(int reportID_)
+        protected void FillGridVIews(int reportID_)
         {
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             ///////////////////////////////////////////////////////////////////////////////////////////////////////                
@@ -223,17 +223,14 @@ protected void FillGridVIews(int reportID_)
                 }
             }
         }
- 
         protected void DropDownList4_SelectedIndexChanged(object sender, EventArgs e)
         {
           
         }
-
         protected void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
            // if 
         }
-
         protected void DropDownList5_SelectedIndexChanged(object sender, EventArgs e)
         {
             Serialization UserSer = (Serialization)Session["UserID"];
@@ -290,13 +287,11 @@ protected void FillGridVIews(int reportID_)
                     }
                 }
         
-            }
-        
+            }    
         protected void Gridview3_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
-
         protected void DropDownList2_SelectedIndexChanged1(object sender, EventArgs e)
         {
             DropDownList3.Items.Clear();
@@ -329,10 +324,11 @@ protected void FillGridVIews(int reportID_)
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Произошла ошибка.');", true);
             }
         }
-
         protected void Button1_Click(object sender, EventArgs e)
         {
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+
+            
             if (((from a in kPiDataContext.UsersTable where a.Login == UserNameText.Text select a).ToList().Count > 0)&&(UserNameText.Text.Length>2))
             {
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Пользователь с таким логином уже существует, выберите другой логин!');", true);
@@ -340,123 +336,192 @@ protected void FillGridVIews(int reportID_)
 
             else if ((from a in kPiDataContext.UsersTable where a.Email == EmailText.Text select a).ToList().Count > 0)
             {
-                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Введенный адрес электронной почты уже зарегестрирован, введите другой');", true);
+                Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                    "alert('Введенный адрес электронной почты уже зарегестрирован, введите другой');", true);
             }
             else
             {
-                UsersTable user = new UsersTable();
-                user.Active = true;
-                user.Login = UserNameText.Text;
-                user.Password = PasswordText.Text;
-                user.Email = EmailText.Text;
+                #region check for user with the same basic parametrs allouence
 
-                int selectedValue = -1;
-                if (int.TryParse(DropDownList1.SelectedValue, out selectedValue) && selectedValue > 0)
-                    user.FK_FirstLevelSubdivisionTable = selectedValue;
-
-                selectedValue = -1;
-                if (int.TryParse(DropDownList2.SelectedValue, out selectedValue) && selectedValue > 0)
-                    user.FK_SecondLevelSubdivisionTable = selectedValue;
-
-                selectedValue = -1;
-                if (int.TryParse(DropDownList3.SelectedValue, out selectedValue) && selectedValue > 0)
-                    user.FK_ThirdLevelSubdivisionTable = selectedValue;
-
-                user.AccessLevel = 0; ///////НАДО ПРОДУМАТЬ
-
-                if (DropDownList5.SelectedIndex == 2)
-                {
-                    user.AccessLevel = 5;
-                }
-
-                if (DropDownList5.SelectedIndex == 3)
-                {
-                    user.AccessLevel = 10;
-                }
-
-                user.FK_ZeroLevelSubdivisionTable = 1;
-
-                kPiDataContext.UsersTable.InsertOnSubmit(user);
-                kPiDataContext.SubmitChanges();
-                //// ПОЛЬЗОВАТЕЛЬ СОЗДАН
-
-                int userID = user.UsersTableID;
-
-                ///////////////////////////////////////////шаблон//////////////////////////////////
+                int match_cnt_sum = 0;
                 int rowIndex = 0;
-
                 if (Gridview3.Rows.Count > 0)
                 {
+
                     for (int k = 1; k <= Gridview3.Rows.Count; k++)
                     {
-                        CheckBox canEdit = (CheckBox)Gridview3.Rows[rowIndex].FindControl("BasicParametrsEditCheckBox");
-                        CheckBox canView = (CheckBox)Gridview3.Rows[rowIndex].FindControl("BasicParametrsViewCheckBox");
-                        CheckBox canConfirm = (CheckBox)Gridview3.Rows[rowIndex].FindControl("BasicParametrsConfirmCheckBox");
-                        Label label = (Label)Gridview3.Rows[rowIndex].FindControl("BasicParametrsID");
+                        CheckBox canEdit = (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsEditCheckBox");
+                        CheckBox canView = (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsViewCheckBox");
+                        CheckBox canConfirm =
+                            (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsConfirmCheckBox");
+                        Label label = (Label) Gridview3.Rows[rowIndex].FindControl("BasicParametrsID");
 
-                        BasicParametrsAndUsersMapping BasicAndUsers = new BasicParametrsAndUsersMapping();
-                        BasicAndUsers.Active = true;
-                        BasicAndUsers.FK_ParametrsTable = Convert.ToInt32(label.Text);
-                        BasicAndUsers.CanConfirm = canConfirm.Checked;
-                        BasicAndUsers.CanEdit = canEdit.Checked;
-                        BasicAndUsers.CanView = canView.Checked;
-                        BasicAndUsers.FK_UsersTable = userID;
-                        kPiDataContext.BasicParametrsAndUsersMapping.InsertOnSubmit(BasicAndUsers);
-                        kPiDataContext.SubmitChanges();
-                        rowIndex++;
+                        //BasicParametrsAndUsersMapping BasicAndUsers = new BasicParametrsAndUsersMapping();
+
+                        int match_cnt = (from a in kPiDataContext.BasicParametrsAndUsersMapping
+                            join b in kPiDataContext.UsersTable
+                                on a.FK_UsersTable equals b.UsersTableID
+                            where
+                                ((a.CanConfirm == canConfirm.Checked)||(a.CanEdit == canEdit.Checked))
+                                && a.Active == true
+                                && b.Active == true
+                                && b.FK_ZeroLevelSubdivisionTable == 1
+                                &&
+                                ((b.FK_FirstLevelSubdivisionTable ==
+                                  Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value)) ||
+                                 (DropDownList1.SelectedIndex == 0) || (DropDownList1.SelectedIndex == null))
+                                &&
+                                ((b.FK_FirstLevelSubdivisionTable ==
+                                  Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value)) ||
+                                 (DropDownList2.SelectedIndex == 0) || (DropDownList2.SelectedIndex == null))
+                                &&
+                                ((b.FK_FirstLevelSubdivisionTable ==
+                                  Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value)) ||
+                                 (DropDownList3.SelectedIndex == 0) || (DropDownList3.SelectedIndex == null))
+                            select a).ToList().Count();
+                        match_cnt_sum += match_cnt;
                     }
-                    if (DropDownList5.SelectedIndex == 2)// если человек руководитель
-                    {
-                        rowIndex = 0;
-                        if (Gridview1.Rows.Count > 0)
-                        {
-                            for (int k = 1; k <= Gridview1.Rows.Count; k++)
-                            {
-                                CheckBox canEdit = (CheckBox)Gridview1.Rows[rowIndex].FindControl("IndicatorEditCheckBox");
-                                CheckBox canView = (CheckBox)Gridview1.Rows[rowIndex].FindControl("IndicatorViewCheckBox");
-                                CheckBox canConfirm = (CheckBox)Gridview1.Rows[rowIndex].FindControl("IndicatorConfirmCheckBox");
-                                Label label = (Label)Gridview1.Rows[rowIndex].FindControl("IndicatorID");
 
-                                IndicatorsAndUsersMapping indAndUser = new IndicatorsAndUsersMapping();
-                                indAndUser.Active = true;
-                                indAndUser.FK_IndicatorsTable = Convert.ToInt32(label.Text);
-                                indAndUser.CanConfirm = canConfirm.Checked;
-                                indAndUser.CanEdit = canEdit.Checked;
-                                indAndUser.CanView = canView.Checked;
-                                indAndUser.FK_UsresTable = userID;
-                                kPiDataContext.IndicatorsAndUsersMapping.InsertOnSubmit(indAndUser);
-                                kPiDataContext.SubmitChanges();
-                                rowIndex++;
-                            }
-                        }
-                        rowIndex = 0;
-                        if (Gridview2.Rows.Count > 0)
-                        {
-                            for (int k = 1; k <= Gridview2.Rows.Count; k++)
-                            {
-                                CheckBox canEdit = (CheckBox)Gridview2.Rows[rowIndex].FindControl("CalculatedParametrsEditCheckBox");
-                                CheckBox canView = (CheckBox)Gridview2.Rows[rowIndex].FindControl("CalculatedParametrsViewCheckBox");
-                                CheckBox canConfirm = (CheckBox)Gridview2.Rows[rowIndex].FindControl("CalculatedParametrsConfirmCheckBox");
-                                Label label = (Label)Gridview2.Rows[rowIndex].FindControl("CalculatedParametrsID");
-
-                                CalculatedParametrsAndUsersMapping calcAndUser = new CalculatedParametrsAndUsersMapping();
-                                calcAndUser.Active = true;
-                                calcAndUser.FK_CalculatedParametrsTable = Convert.ToInt32(label.Text);
-                                calcAndUser.CanConfirm = canConfirm.Checked;
-                                calcAndUser.CanEdit = canEdit.Checked;
-                                calcAndUser.CanView = canView.Checked;
-                                calcAndUser.FK_UsersTable = userID;
-                                kPiDataContext.CalculatedParametrsAndUsersMapping.InsertOnSubmit(calcAndUser);
-                                kPiDataContext.SubmitChanges();
-                                rowIndex++;
-                            }
-                        }
-                    }
                 }
-                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Пользователь зарегистрирован');", true);
-            }           
-        }
 
+
+                #endregion
+
+                if (match_cnt_sum > 0)
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                        "alert('Пользователь для заданного подразделения с " + match_cnt_sum +
+                        " совпадениями возможностей редактирования поджтвержения существует');", true);
+                }
+                else
+                {
+                    UsersTable user = new UsersTable();
+                    user.Active = true;
+                    user.Login = UserNameText.Text;
+                    user.Password = PasswordText.Text;
+                    user.Email = EmailText.Text;
+
+                    int selectedValue = -1;
+                    if (int.TryParse(DropDownList1.SelectedValue, out selectedValue) && selectedValue > 0)
+                        user.FK_FirstLevelSubdivisionTable = selectedValue;
+
+                    selectedValue = -1;
+                    if (int.TryParse(DropDownList2.SelectedValue, out selectedValue) && selectedValue > 0)
+                        user.FK_SecondLevelSubdivisionTable = selectedValue;
+
+                    selectedValue = -1;
+                    if (int.TryParse(DropDownList3.SelectedValue, out selectedValue) && selectedValue > 0)
+                        user.FK_ThirdLevelSubdivisionTable = selectedValue;
+
+                    user.AccessLevel = 0; ///////НАДО ПРОДУМАТЬ
+
+                    if (DropDownList5.SelectedIndex == 2)
+                    {
+                        user.AccessLevel = 5;
+                    }
+
+                    if (DropDownList5.SelectedIndex == 3)
+                    {
+                        user.AccessLevel = 10;
+                    }
+
+                    user.FK_ZeroLevelSubdivisionTable = 1;
+
+                    kPiDataContext.UsersTable.InsertOnSubmit(user);
+                    kPiDataContext.SubmitChanges();
+                    //// ПОЛЬЗОВАТЕЛЬ СОЗДАН
+
+                    int userID = user.UsersTableID;
+
+                    ///////////////////////////////////////////шаблон//////////////////////////////////
+                    rowIndex = 0;
+
+                    if (Gridview3.Rows.Count > 0)
+                    {
+                        for (int k = 1; k <= Gridview3.Rows.Count; k++)
+                        {
+                            CheckBox canEdit =
+                                (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsEditCheckBox");
+                            CheckBox canView =
+                                (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsViewCheckBox");
+                            CheckBox canConfirm =
+                                (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsConfirmCheckBox");
+                            Label label = (Label) Gridview3.Rows[rowIndex].FindControl("BasicParametrsID");
+
+                            BasicParametrsAndUsersMapping BasicAndUsers = new BasicParametrsAndUsersMapping();
+                            BasicAndUsers.Active = true;
+                            BasicAndUsers.FK_ParametrsTable = Convert.ToInt32(label.Text);
+                            BasicAndUsers.CanConfirm = canConfirm.Checked;
+                            BasicAndUsers.CanEdit = canEdit.Checked;
+                            BasicAndUsers.CanView = canView.Checked;
+                            BasicAndUsers.FK_UsersTable = userID;
+                            kPiDataContext.BasicParametrsAndUsersMapping.InsertOnSubmit(BasicAndUsers);
+                            kPiDataContext.SubmitChanges();
+                            rowIndex++;
+                        }
+                        if (DropDownList5.SelectedIndex == 2) // если человек руководитель
+                        {
+                            rowIndex = 0;
+                            if (Gridview1.Rows.Count > 0)
+                            {
+                                for (int k = 1; k <= Gridview1.Rows.Count; k++)
+                                {
+                                    CheckBox canEdit =
+                                        (CheckBox) Gridview1.Rows[rowIndex].FindControl("IndicatorEditCheckBox");
+                                    CheckBox canView =
+                                        (CheckBox) Gridview1.Rows[rowIndex].FindControl("IndicatorViewCheckBox");
+                                    CheckBox canConfirm =
+                                        (CheckBox) Gridview1.Rows[rowIndex].FindControl("IndicatorConfirmCheckBox");
+                                    Label label = (Label) Gridview1.Rows[rowIndex].FindControl("IndicatorID");
+
+                                    IndicatorsAndUsersMapping indAndUser = new IndicatorsAndUsersMapping();
+                                    indAndUser.Active = true;
+                                    indAndUser.FK_IndicatorsTable = Convert.ToInt32(label.Text);
+                                    indAndUser.CanConfirm = canConfirm.Checked;
+                                    indAndUser.CanEdit = canEdit.Checked;
+                                    indAndUser.CanView = canView.Checked;
+                                    indAndUser.FK_UsresTable = userID;
+                                    kPiDataContext.IndicatorsAndUsersMapping.InsertOnSubmit(indAndUser);
+                                    kPiDataContext.SubmitChanges();
+                                    rowIndex++;
+                                }
+                            }
+                            rowIndex = 0;
+                            if (Gridview2.Rows.Count > 0)
+                            {
+                                for (int k = 1; k <= Gridview2.Rows.Count; k++)
+                                {
+                                    CheckBox canEdit =
+                                        (CheckBox)
+                                            Gridview2.Rows[rowIndex].FindControl("CalculatedParametrsEditCheckBox");
+                                    CheckBox canView =
+                                        (CheckBox)
+                                            Gridview2.Rows[rowIndex].FindControl("CalculatedParametrsViewCheckBox");
+                                    CheckBox canConfirm =
+                                        (CheckBox)
+                                            Gridview2.Rows[rowIndex].FindControl("CalculatedParametrsConfirmCheckBox");
+                                    Label label = (Label) Gridview2.Rows[rowIndex].FindControl("CalculatedParametrsID");
+
+                                    CalculatedParametrsAndUsersMapping calcAndUser =
+                                        new CalculatedParametrsAndUsersMapping();
+                                    calcAndUser.Active = true;
+                                    calcAndUser.FK_CalculatedParametrsTable = Convert.ToInt32(label.Text);
+                                    calcAndUser.CanConfirm = canConfirm.Checked;
+                                    calcAndUser.CanEdit = canEdit.Checked;
+                                    calcAndUser.CanView = canView.Checked;
+                                    calcAndUser.FK_UsersTable = userID;
+                                    kPiDataContext.CalculatedParametrsAndUsersMapping.InsertOnSubmit(calcAndUser);
+                                    kPiDataContext.SubmitChanges();
+                                    rowIndex++;
+                                }
+                            }
+                        }
+                    }
+                    Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                        "alert('Пользователь зарегистрирован');", true);
+                }
+            }
+        }
         protected void DropDownList4_SelectedIndexChanged1(object sender, EventArgs e)
         {
             if (DropDownList4.SelectedIndex != 0)

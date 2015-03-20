@@ -18,10 +18,10 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                 <asp:TemplateField HeaderText="Просмотр и подтверждение отчета">
+                 <asp:TemplateField HeaderText="Просмотр и утверждение отчета">
                         <ItemTemplate>
                             <asp:Label ID="LabelReport" runat="server" Text='<%# Bind("ReportArchiveID") %>' Visible="false"></asp:Label>
-                            <asp:Button ID="ButtonConfirmReport" runat="server" CommandName="Select" Text="Просмотреть и подтвердить" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonConfirmClick"/>
+                            <asp:Button ID="ButtonConfirmReport" runat="server" CommandName="Select" Text="Просмотреть и утвердить" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonConfirmClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                  

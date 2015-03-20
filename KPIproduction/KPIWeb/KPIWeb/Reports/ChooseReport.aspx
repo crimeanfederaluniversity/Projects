@@ -25,9 +25,9 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                  <asp:TemplateField HeaderText="Просмотр и подтверждение данных">
+                  <asp:TemplateField HeaderText="Просмотр и утверждение данных">
                         <ItemTemplate>
-                            <asp:Button ID="ButtonConfirmReport" runat="server" CommandName="Select" Text="Просмотреть и подтвердить" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonConfirmClick"/>
+                            <asp:Button ID="ButtonConfirmReport" runat="server" CommandName="Select" Text="Просмотреть и утвердить" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonConfirmClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                    

@@ -50,7 +50,7 @@ namespace KPIWeb.Head
             {
                 Response.Redirect("~/Default.aspx");
             }
-            int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и подтверждаем
+            int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и утверждаем
 
             if (mode == 1)
             {
@@ -80,7 +80,7 @@ namespace KPIWeb.Head
                 {
                     Response.Redirect("~/Default.aspx");
                 }
-                //int level = level.mode; // 0 заполняем // 1 смотрим // 2 смотрим и подтверждаем
+                //int level = level.mode; // 0 заполняем // 1 смотрим // 2 смотрим и утверждаем
                 l_0 = level.l0;
                 l_1 = level.l1;
                 l_2 = level.l2;
@@ -394,9 +394,9 @@ namespace KPIWeb.Head
                 Button6.BackColor = System.Drawing.Color.LightSkyBlue;
                 Button9.BackColor = System.Drawing.Color.FloralWhite;
 
-                Label1.Text = "Данные Полностью заполнены и частично подтверждены";
-                Label2.Text = "Данные Заполнены и подтверждены уровнем ответственных ниже";
-                Label3.Text = "Данные готовы к отправке (заполнены и подтверждены)";
+                Label1.Text = "Данные Полностью заполнены и частично утверждены";
+                Label2.Text = "Данные Заполнены и утверждены уровнем ответственных ниже";
+                Label3.Text = "Данные готовы к отправке (заполнены и утверждены)";
                 Label4.Text = "Ошибка";
                 Label5.Text = "Данные рассчитываются автоматически";
                 Label6.Text = "Данные неполностью заполнены";
@@ -419,7 +419,7 @@ namespace KPIWeb.Head
             {
                 Response.Redirect("~/Default.aspx");
             }
-            int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и подтверждаем
+            int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и утверждаем
 
             if (mode == 1)
             {
@@ -483,7 +483,7 @@ namespace KPIWeb.Head
             {
                 Response.Redirect("~/Default.aspx");
             }
-            int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и подтверждаем
+            int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и утверждаем
             */
             Color color;
             Color confirmedColor = System.Drawing.Color.LimeGreen;
@@ -556,7 +556,7 @@ namespace KPIWeb.Head
             {
                 Response.Redirect("~/Default.aspx");
             }
-            int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и подтверждаем
+            int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и утверждаем
              
             List<int> AllcntList = (List<int>)ViewState["AllcntC"];
             List<int> InsertcntList = (List<int>)ViewState["InsertcntC"];
@@ -583,7 +583,7 @@ namespace KPIWeb.Head
                     boxColor = System.Drawing.Color.Yellow;
                 }
 
-                if (chB != null) //Параметр подтвержден
+                if (chB != null) //Параметр утвержден
                 {
                     if (mode != 2)
                     {

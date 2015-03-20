@@ -399,7 +399,7 @@ namespace KPIWeb.Reports
                 {
                     Response.Redirect("~/Default.aspx");
                 }
-                int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и подтверждаем
+                int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и утверждаем
                 ////////////////
                 int UserID = UserSer.Id;
                 int ReportArchiveID;
@@ -791,7 +791,7 @@ namespace KPIWeb.Reports
                         Button3.Visible = true;
                         Label1.Text = "Проверьте корректность введенных данных. Если данные верны, нажмите кнопку внизу формы";
                         ButtonSave.Visible = true;
-                        Button2.Text = "Вернуться в меню без подтверждения данных";
+                        Button2.Text = "Вернуться в меню без утверждения данных";
                         ButtonSave.Text = "Подтвердить правильность введенных данных";
                     }
                 GridviewCollectedBasicParameters.DataSource = dataTable;
@@ -930,7 +930,7 @@ namespace KPIWeb.Reports
                                         if (!textBox.Text.Any())
                                         {
                                             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                                            "alert('Нельзя подтверждать незаполненные данные');", true);
+                                            "alert('Нельзя утвердить незаполненные данные');", true);
                                             return;
                                         }
                                         else
@@ -969,13 +969,13 @@ namespace KPIWeb.Reports
                         if (dataConfCount == dataCount)
                         {
                             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Вами подтверждены значения всех базовых показателей. Окончательный отчет отправлен');", true);
+                            "alert('Вами утверждены значения всех базовых показателей. Окончательный отчет отправлен');", true);
 
                         }
                         else
                         {
                             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Вами подтверждены данные " + dataConfCount.ToString() + " базовых показателей из " + dataCount.ToString() + "');", true);
+                            "alert('Вами утверждены данные " + dataConfCount.ToString() + " базовых показателей из " + dataCount.ToString() + "');", true);
                         }
 
                         
@@ -1112,7 +1112,7 @@ namespace KPIWeb.Reports
                                     Validator.Enabled = false;
                                 }
                             }
-                            else if (mode == 2) // подтверждать
+                            else if (mode == 2) // утверждать
                             {                               
                                 var chBox = e.Row.FindControl("Checked" + rowIndex) as CheckBox;
                                 chBox.Visible = true;
@@ -1120,7 +1120,7 @@ namespace KPIWeb.Reports
                                 Validator.MinimumValue = "0";
                                 Validator.MaximumValue = "10000000";
                                 Validator.Type = ValidationDataType.Double;
-                                Validator.Text = "Невозможно подтвердить";
+                                Validator.Text = "Невозможно утвердить";
                                 if (isconf == true)
                                 {
                                     lblMinutes.ReadOnly = true;
