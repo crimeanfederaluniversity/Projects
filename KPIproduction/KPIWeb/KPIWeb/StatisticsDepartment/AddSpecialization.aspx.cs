@@ -178,7 +178,7 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Данные успешно сохранены!');", true);
         }
 
         protected void Button2_Click(object sender, EventArgs e)
@@ -386,6 +386,11 @@ namespace KPIWeb.StatisticsDepartment
                 //Response.Redirect("~/StatisticsDepartment/AddSpecialization.aspx");
 
             }
+        }
+
+        protected void CheckBox2_CheckedChanged(object sender, EventArgs e)
+        {
+           
         }
     }
 }

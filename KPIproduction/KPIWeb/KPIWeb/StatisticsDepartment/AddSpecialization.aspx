@@ -19,6 +19,9 @@
             <asp:CheckBox ID="CheckBox1" runat="server" AutoPostBack="True" OnCheckedChanged="CheckBox1_CheckedChanged" Text="Кафедра является выпускающей" Enabled="False" />
             <br />
             <br />
+            <asp:CheckBox ID="CheckBox2" runat="server" AutoPostBack="True" OnCheckedChanged="CheckBox2_CheckedChanged" Text="Кафедра является базовой" />
+            <br />
+            <br />
             <asp:Label ID="Label4" runat="server" Text="Список специальностей приклепненных к кафедре"></asp:Label>
 <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server" >           
              <Columns>               
