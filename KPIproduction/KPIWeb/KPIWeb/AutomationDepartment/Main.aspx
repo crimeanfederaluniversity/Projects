@@ -19,21 +19,21 @@
  
 <br />
 <br />
-<asp:Button ID="Button5" runat="server" Height="50px" OnClick="Button5_Click" Text="Редактировани индикаторов" Width="400px" />
+<asp:Button ID="Button5" runat="server" Height="50px" OnClick="Button5_Click" Text="Редактировать индикаторы" Width="400px" />
 <br />
 <br />
 <asp:Button ID="Button6" runat="server" Height="50px" OnClick="Button6_Click" Text="Редактировать базовые показатели" Width="400px" />
 <br />
 <br />
-<asp:Button ID="Button7" runat="server" Height="50px" OnClick="Button7_Click" Text="Редактор отчетов" Width="400px" />
+<asp:Button ID="Button7" runat="server" Height="50px" OnClick="Button7_Click" Text="Редактировать отчеты" Width="400px" />
  
        <br />
        <br />
-       <asp:Button ID="Button8" runat="server" Height="50px" OnClick="Button8_Click" Text="Добавление роли/шаблона" Width="400px" />
+       <asp:Button ID="Button8" runat="server" Height="50px" OnClick="Button8_Click" Text="Добавить новый шаблон/роль" Width="400px" />
  
        <br />
        <br />
-       <asp:Button ID="Button9" runat="server" Height="50px" OnClick="Button9_Click" Text="Быстр добл БП/Спец/ОблЗнан" Width="400px" />
+       <asp:Button ID="Button9" runat="server" Height="50px" OnClick="Button9_Click" Text="Добавление области знаний/индикатора/формулы/специальности" Width="400px" />
  
        <br />
        <br />

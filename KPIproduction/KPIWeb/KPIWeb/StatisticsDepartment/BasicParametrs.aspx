@@ -24,7 +24,7 @@
         <table width="600" height="400" cellpadding=0 cellspacing=0>
             <tr valign="top">
                 <td class="TabArea" style="width: 600px">
-                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Отчет по существуюзим показателям" Width="375px" />
+                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Отчет по существующим показателям" Width="375px" />
                     <br />
                     <br />
                     <asp:TextBox ID="TextBox1" runat="server" Height="238px" TextMode="MultiLine" Width="368px"></asp:TextBox>
@@ -38,7 +38,7 @@
                 <td class="TabArea" style="width: 600px">
                     Введите ID<br />
                     <asp:TextBox ID="TextBox8" runat="server"></asp:TextBox>
-                    <asp:Button ID="Button2" runat="server" Text="Загрузить параетры показателя" Width="209px" OnClick="Button2_Click" />
+                    <asp:Button ID="Button2" runat="server" Text="Загрузить" Width="181px" OnClick="Button2_Click" />
                     <br />
                     <br />
                     ID<br />

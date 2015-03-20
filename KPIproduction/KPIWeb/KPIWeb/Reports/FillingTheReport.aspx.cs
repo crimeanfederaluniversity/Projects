@@ -1163,7 +1163,7 @@ namespace KPIWeb.Reports
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            int rowIndex = 0;
+            /*int rowIndex = 0;
             DataTable collectedBasicParametersTable = (DataTable)ViewState["CollectedBasicParametersTable"];
             DataTable dt = collectedBasicParametersTable;
             Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
@@ -1199,7 +1199,7 @@ namespace KPIWeb.Reports
                     }
                 }
             }
-            excelApp.Visible = true;
+            excelApp.Visible = true;*/
         }
 
         protected void Button2_Click(object sender, EventArgs e)

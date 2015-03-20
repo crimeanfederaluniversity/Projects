@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
-using Microsoft.Office.Interop.Excel;
+//using Microsoft.Office.Interop.Excel;
 using Page = System.Web.UI.Page;
 
 namespace KPIWeb.StatisticsDepartment
