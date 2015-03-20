@@ -2,7 +2,7 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div>
     
-        Создание новой роли<br />
+        <span style="font-size: 30pt">Создание новой роли</span><br />
     
     </div>
         Название роли

@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="SpecializationParametrs.aspx.cs" Inherits="KPIWeb.Reports.SpecializationParametrs" %>
     <asp:Content runat="server" ID="BodyContent"  ContentPlaceHolderID="MainContent">
-    <div>   
-        <br />
+        <div>   
+            <span style="font-size: 30px">Добавление специальностей к кафедре, определение параметров</span><br />
         <br />
         <asp:CheckBox ID="CheckBox1" runat="server" Text="Кафедра является выпускающей" AutoPostBack="True" OnCheckedChanged="CheckBox1_CheckedChanged" />
         <br />

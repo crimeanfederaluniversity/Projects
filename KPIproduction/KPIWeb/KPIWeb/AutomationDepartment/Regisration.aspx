@@ -4,7 +4,7 @@
   
       
     <div>
-        <br />
+        <span style="font-size: 30px">Регистрация нового пользователя</span><br />
         <br />
         <asp:Label ID="Label1" runat="server" Text="Выберите университет"></asp:Label>
         <br />

@@ -6,10 +6,17 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
+    <style type="text/css">
+        .auto-style1 {
+            font-size: 30pt;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
     <div>
+    
+        <span class="auto-style1">Добавление областей знаний, формул для расчета и базовых показатей</span><br />
     
         вводим области знаний<br />
         активен(0,1)#название области знаний<br />

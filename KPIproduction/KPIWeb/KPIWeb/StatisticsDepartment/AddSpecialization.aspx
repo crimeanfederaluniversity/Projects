@@ -1,17 +1,20 @@
 ﻿<%@ Page Title="Добавление специальностей к кафедре" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddSpecialization.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.AddSpecialization" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">   
-        <h2><%: Title %></h2>
+        <h2><span style="font-size: 30px">Добавление специальностей к кафедре, определение параметров</span></h2>
         <div>
   
-    <asp:Label ID="Label1" runat="server" Text="Label" ></asp:Label>
+    <asp:Label ID="Label1" runat="server" Text="Выберите университет" ></asp:Label>
+            <br />
     <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
     </asp:DropDownList>
     <br />
-    <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
+    <asp:Label ID="Label2" runat="server" Text="Выберите факультет"></asp:Label>
+            <br />
     <asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList2_SelectedIndexChanged">
     </asp:DropDownList>
             <br />
-            <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
+            <asp:Label ID="Label3" runat="server" Text="Выберите кафедру"></asp:Label>
+            <br />
             <asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged">
             </asp:DropDownList>
             <br />
