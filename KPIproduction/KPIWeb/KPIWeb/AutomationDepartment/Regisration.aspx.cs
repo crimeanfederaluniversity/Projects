@@ -374,17 +374,17 @@ namespace KPIWeb.AutomationDepartment
                         int second = 0;
                         int third = 0;
 
-                        if ((DropDownList1.SelectedIndex!=null)&&(DropDownList1.SelectedIndex != 0))
+                        if ((DropDownList1.SelectedIndex!=null)&&(DropDownList1.SelectedIndex > 0))
                         {
                             first = Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value);
                         }
 
-                        if ((DropDownList2.SelectedIndex!=null)&&(DropDownList2.SelectedIndex != 0))
+                        if ((DropDownList2.SelectedIndex!=null)&&(DropDownList2.SelectedIndex > 0))
                         {
                             second = Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value);
                         }
 
-                        if ((DropDownList3.SelectedIndex!=null)&&(DropDownList3.SelectedIndex != 0))
+                        if ((DropDownList3.SelectedIndex!=null)&&(DropDownList3.SelectedIndex > 0))
                         {
                             third = Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value);
                         }
@@ -398,9 +398,9 @@ namespace KPIWeb.AutomationDepartment
                                 && b.Active == true
                                 && b.FK_ZeroLevelSubdivisionTable == 1
                                 && a.FK_ParametrsTable == Convert.ToInt32(label.Text)
-                                && ((b.FK_FirstLevelSubdivisionTable == first) || (first == 0))
-                                && ((b.FK_SecondLevelSubdivisionTable == second) || (second == 0))                                
-                                && ((b.FK_ThirdLevelSubdivisionTable == third) || (third == 0))                               
+                                && ((b.FK_FirstLevelSubdivisionTable == first) || (b.FK_FirstLevelSubdivisionTable == null))
+                                && ((b.FK_SecondLevelSubdivisionTable == second) || (b.FK_SecondLevelSubdivisionTable == null))
+                                && ((b.FK_ThirdLevelSubdivisionTable == third) || (b.FK_ThirdLevelSubdivisionTable == null))                               
                             select a).ToList().Count();
                         match_cnt_sum += match_cnt;
                         rowIndex++;
