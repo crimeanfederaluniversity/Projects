@@ -97,7 +97,7 @@
          </asp:GridView>
      </div>
    
-    <div>
+    <div >
         <asp:Label ID="Label27" runat="server" Text="Базовые показатели"></asp:Label>
         <asp:GridView ID="Gridview3" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="Gridview3_SelectedIndexChanged">
             <Columns>
@@ -107,21 +107,26 @@
                         <asp:Label ID="BasicParametrsName" runat="server" Visible="True" Text='<%# Bind("BasicParametrsName") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
+                
+
                 <asp:TemplateField HeaderText="Редак">
                     <ItemTemplate>
                         <asp:CheckBox ID="BasicParametrsEditCheckBox" runat="server" Checked='<%# Bind("BasicParametrsEditCheckBox") %>'></asp:CheckBox>
                     </ItemTemplate>
                 </asp:TemplateField>
+
                 <asp:TemplateField HeaderText="Просм">
                     <ItemTemplate>
                         <asp:CheckBox ID="BasicParametrsViewCheckBox" runat="server" Checked='<%# Bind("BasicParametrsViewCheckBox") %>'></asp:CheckBox>
                     </ItemTemplate>
                 </asp:TemplateField>
+
                 <asp:TemplateField HeaderText="Подтв">
                     <ItemTemplate>
                         <asp:CheckBox ID="BasicParametrsConfirmCheckBox" runat="server" Checked='<%# Bind("BasicParametrsConfirmCheckBox") %>'></asp:CheckBox>
                     </ItemTemplate>
                 </asp:TemplateField>
+
             </Columns>
         </asp:GridView>
     </div>

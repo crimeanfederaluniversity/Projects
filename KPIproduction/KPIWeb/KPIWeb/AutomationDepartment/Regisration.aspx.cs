@@ -256,6 +256,17 @@ namespace KPIWeb.AutomationDepartment
                 if (DropDownList5.SelectedIndex == 0 || DropDownList5.SelectedIndex == 3)
                 {                  
                 }
+                else if (DropDownList5.SelectedIndex == 5)
+                {
+                    Gridview1.Visible = true;
+                    Label25.Visible = true;
+                    Gridview2.Visible = true;
+                    Label26.Visible = true;
+                    Gridview3.Visible = true;
+                    Label27.Visible = true;
+                    DropDownList4.Visible = true;
+                    Label24.Visible = true;
+                }
                 else if (DropDownList5.SelectedIndex == 1)
                 {                                        
                     if (userTable.AccessLevel == 10)
@@ -351,42 +362,51 @@ namespace KPIWeb.AutomationDepartment
                     for (int k = 1; k <= Gridview3.Rows.Count; k++)
                     {
                         CheckBox canEdit = (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsEditCheckBox");
-                        CheckBox canView = (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsViewCheckBox");
+                      //  CheckBox canView = (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsViewCheckBox");
                         CheckBox canConfirm =
                             (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsConfirmCheckBox");
                         Label label = (Label) Gridview3.Rows[rowIndex].FindControl("BasicParametrsID");
 
                         //BasicParametrsAndUsersMapping BasicAndUsers = new BasicParametrsAndUsersMapping();
 
+                        
+                        int first = 0;
+                        int second = 0;
+                        int third = 0;
+
+                        if ((DropDownList1.SelectedIndex!=null)&&(DropDownList1.SelectedIndex != 0))
+                        {
+                            first = Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value);
+                        }
+
+                        if ((DropDownList2.SelectedIndex!=null)&&(DropDownList2.SelectedIndex != 0))
+                        {
+                            second = Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value);
+                        }
+
+                        if ((DropDownList3.SelectedIndex!=null)&&(DropDownList3.SelectedIndex != 0))
+                        {
+                            third = Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value);
+                        }
+
                         int match_cnt = (from a in kPiDataContext.BasicParametrsAndUsersMapping
                             join b in kPiDataContext.UsersTable
                                 on a.FK_UsersTable equals b.UsersTableID
                             where
-                                ((a.CanConfirm == canConfirm.Checked)||(a.CanEdit == canEdit.Checked))
+                                (((a.CanConfirm ==true)&&(canConfirm.Checked==true))||((a.CanEdit == true)&&(canEdit.Checked==true)))
                                 && a.Active == true
                                 && b.Active == true
                                 && b.FK_ZeroLevelSubdivisionTable == 1
-                                &&
-                                ((b.FK_FirstLevelSubdivisionTable ==
-                                  Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value)) ||
-                                 (DropDownList1.SelectedIndex == 0) || (DropDownList1.SelectedIndex == null))
-                                &&
-                                ((b.FK_FirstLevelSubdivisionTable ==
-                                  Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value)) ||
-                                 (DropDownList2.SelectedIndex == 0) || (DropDownList2.SelectedIndex == null))
-                                &&
-                                ((b.FK_FirstLevelSubdivisionTable ==
-                                  Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value)) ||
-                                 (DropDownList3.SelectedIndex == 0) || (DropDownList3.SelectedIndex == null))
+                                && a.FK_ParametrsTable == Convert.ToInt32(label.Text)
+                                && ((b.FK_FirstLevelSubdivisionTable == first) || (first == 0))
+                                && ((b.FK_SecondLevelSubdivisionTable == second) || (second == 0))                                
+                                && ((b.FK_ThirdLevelSubdivisionTable == third) || (third == 0))                               
                             select a).ToList().Count();
                         match_cnt_sum += match_cnt;
+                        rowIndex++;
                     }
-
                 }
-
-
                 #endregion
-
                 if (match_cnt_sum > 0)
                 {
                     Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
@@ -422,7 +442,7 @@ namespace KPIWeb.AutomationDepartment
 
                     if (DropDownList5.SelectedIndex == 3)
                     {
-                        user.AccessLevel = 10;
+                        user.AccessLevel = 9;
                     }
 
                     user.FK_ZeroLevelSubdivisionTable = 1;

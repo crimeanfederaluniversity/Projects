@@ -303,15 +303,78 @@ namespace KPIWeb.Reports
 
         protected void ButtonSave_Click(object sender, EventArgs e)
         {
-
-            Serialization ReportId = (Serialization) Session["ReportArchiveTableID"];
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-            ReportArchiveTable reportArchiveTable = new ReportArchiveTable();
-
-            #region //запись в базу нового отчета или внесение изменений в старый
-            int reportArchiveTableID = 0;
-            if (ReportId.ReportArchiveID == 0) // создаем новую запись в БД и узнаем ей айди
+            if (TextBoxName.Text.Length < 4)
             {
+             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                           "alert('Введите корректное название отчета');", true);         
+            }
+            else if (!(CalendarStartDateTime.SelectedDate > DateTime.MinValue))
+            {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                           "alert('Введите дату начала отчета');", true);
+            }
+            else if (!(CalendarEndDateTime.SelectedDate > DateTime.MinValue))
+            {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                           "alert('Введите дату конца отчета');", true);
+            }
+            else if (CalendarEndDateTime.SelectedDate < CalendarStartDateTime.SelectedDate)
+            {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                          "alert('Неправильно указаны даты');", true);
+            }
+
+            else
+            {
+
+                Serialization ReportId = (Serialization) Session["ReportArchiveTableID"];
+                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+                ReportArchiveTable reportArchiveTable = new ReportArchiveTable();
+
+                #region //запись в базу нового отчета или внесение изменений в старый
+
+                int reportArchiveTableID = 0;
+                if (ReportId.ReportArchiveID == 0) // создаем новую запись в БД и узнаем ей айди
+                {
+                    reportArchiveTable.Active = CheckBoxActive.Checked;
+                    reportArchiveTable.Calculeted = CheckBoxCalculeted.Checked;
+                    reportArchiveTable.Sent = CheckBoxSent.Checked;
+                    reportArchiveTable.RecipientConfirmed = CheckBoxRecipientConfirmed.Checked;
+                    reportArchiveTable.Name = TextBoxName.Text;
+
+                    if (CalendarStartDateTime.SelectedDate > DateTime.MinValue)
+                        reportArchiveTable.StartDateTime = CalendarStartDateTime.SelectedDate;
+
+                    if (CalendarEndDateTime.SelectedDate > DateTime.MinValue)
+                        reportArchiveTable.EndDateTime = CalendarEndDateTime.SelectedDate;
+
+                    if (CalendarDateToSend.SelectedDate > DateTime.MinValue)
+                        reportArchiveTable.DateToSend = CalendarDateToSend.SelectedDate;
+
+                    if (CalendarSentDateTime.SelectedDate > DateTime.MinValue)
+                        reportArchiveTable.SentDateTime = CalendarSentDateTime.SelectedDate;
+
+                    if (CalendarReportRecived.SelectedDate > DateTime.MinValue)
+                        reportArchiveTable.RecivedDateTime = CalendarReportRecived.SelectedDate;
+
+                    kpiWebDataContext.ReportArchiveTable.InsertOnSubmit(reportArchiveTable);
+                    kpiWebDataContext.SubmitChanges();
+
+                    reportArchiveTableID = reportArchiveTable.ReportArchiveTableID;
+                }
+
+                else //если запись в бд уже есть
+                {
+                    reportArchiveTableID = ReportId.ReportArchiveID;
+                    reportArchiveTable = (from item in kpiWebDataContext.ReportArchiveTable
+                        where item.ReportArchiveTableID == reportArchiveTableID
+                        select item).FirstOrDefault();
+                }
+
+                int rowIndex = 0;
+                if (reportArchiveTable == null)
+                    reportArchiveTable = new ReportArchiveTable();
+
                 reportArchiveTable.Active = CheckBoxActive.Checked;
                 reportArchiveTable.Calculeted = CheckBoxCalculeted.Checked;
                 reportArchiveTable.Sent = CheckBoxSent.Checked;
@@ -333,147 +396,203 @@ namespace KPIWeb.Reports
                 if (CalendarReportRecived.SelectedDate > DateTime.MinValue)
                     reportArchiveTable.RecivedDateTime = CalendarReportRecived.SelectedDate;
 
-                kpiWebDataContext.ReportArchiveTable.InsertOnSubmit(reportArchiveTable);
-                kpiWebDataContext.SubmitChanges();
+                #endregion
 
-                reportArchiveTableID = reportArchiveTable.ReportArchiveTableID;              
-            }
+                #region //связь отчета со структурным подразд 1 уровня создание или изменение
 
-            else //если запись в бд уже есть
-            {
-                reportArchiveTableID = ReportId.ReportArchiveID;
-                reportArchiveTable = (from item in kpiWebDataContext.ReportArchiveTable
-                                      where item.ReportArchiveTableID == reportArchiveTableID
-                                      select item).FirstOrDefault();
-            }
-
-            int rowIndex = 0;           
-            if (reportArchiveTable == null)
-                reportArchiveTable = new ReportArchiveTable();
-
-            reportArchiveTable.Active = CheckBoxActive.Checked;
-            reportArchiveTable.Calculeted = CheckBoxCalculeted.Checked;
-            reportArchiveTable.Sent = CheckBoxSent.Checked;
-            reportArchiveTable.RecipientConfirmed = CheckBoxRecipientConfirmed.Checked;
-            reportArchiveTable.Name = TextBoxName.Text;
-
-            if (CalendarStartDateTime.SelectedDate > DateTime.MinValue)
-                reportArchiveTable.StartDateTime = CalendarStartDateTime.SelectedDate;
-
-            if (CalendarEndDateTime.SelectedDate > DateTime.MinValue)
-                reportArchiveTable.EndDateTime = CalendarEndDateTime.SelectedDate;
-
-            if (CalendarDateToSend.SelectedDate > DateTime.MinValue)
-                reportArchiveTable.DateToSend = CalendarDateToSend.SelectedDate;
-
-            if (CalendarSentDateTime.SelectedDate > DateTime.MinValue)
-                reportArchiveTable.SentDateTime = CalendarSentDateTime.SelectedDate;
-
-            if (CalendarReportRecived.SelectedDate > DateTime.MinValue)
-                reportArchiveTable.RecivedDateTime = CalendarReportRecived.SelectedDate;
-            #endregion
-           
-            #region //связь отчета со структурным подразд 1 уровня создание или изменение
-            foreach (ListItem checkItem in CheckBoxList1.Items)
-            {
-                if (checkItem.Selected)
+                foreach (ListItem checkItem in CheckBoxList1.Items)
                 {
-                    ReportArchiveAndLevelMappingTable repNRole =
-                        (from item in kpiWebDataContext.ReportArchiveAndLevelMappingTable
-                            where item.FK_FirstLevelSubmisionTableId == Convert.ToInt32(checkItem.Value)
-                                  && item.FK_ReportArchiveTableId == reportArchiveTableID
-                            select item).FirstOrDefault();
-                    if (repNRole != null)
+                    if (checkItem.Selected)
                     {
-                        repNRole.Active = true;
-                    }
-                    else
-                    {
-                        repNRole = new ReportArchiveAndLevelMappingTable();
-                        repNRole.Active = true;
-                        repNRole.FK_FirstLevelSubmisionTableId = Convert.ToInt32(checkItem.Value);
-                        repNRole.FK_ReportArchiveTableId = reportArchiveTableID;
-                        kpiWebDataContext.ReportArchiveAndLevelMappingTable.InsertOnSubmit(repNRole);
-                    }
-                }
-                else
-                {
-                    ReportArchiveAndLevelMappingTable repNRole =
-                        (from item in kpiWebDataContext.ReportArchiveAndLevelMappingTable
-                            where item.FK_FirstLevelSubmisionTableId == Convert.ToInt32(checkItem.Value)
-                                  && item.FK_ReportArchiveTableId == reportArchiveTableID
-                            select item).FirstOrDefault();
-                    if (repNRole != null)
-                    {
-                        repNRole.Active = false; /// // / лучше просто удалить эту запись из БД
-                    }
-                }
-            }
-            kpiWebDataContext.SubmitChanges();
-            #endregion
-            ////////////////////////////////////////////////////////пора записать данные в таблицы связей 
-
-            if ((ViewState["BasicDataTable"] != null) && (ViewState["CalculateDataTable"] != null) && (ViewState["IndicatorDataTable"] != null))
-            {
-                DataTable dt_basic = (DataTable)ViewState["BasicDataTable"];
-                DataTable dt_calculate = (DataTable)ViewState["CalculateDataTable"];
-                DataTable dt_indicator = (DataTable)ViewState["IndicatorDataTable"];
-                ////////////////////////////////////////////////////////////////////////////////////////////////////////
-                for (int i = 0; i < dt_basic.Rows.Count; i++)
-                {
-                    CheckBox chekBox = (CheckBox)BasicParametrsTable.Rows[i].FindControl("BasicParametrsCheckBox");
-                    Label label = (Label)BasicParametrsTable.Rows[i].FindControl("BasicParametrsID");
-                    if (chekBox.Checked == true)
-                    {
-                        ReportArchiveAndBasicParametrsMappingTable basicParam =
-                            (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
-                                where a.FK_BasicParametrsTable == Convert.ToInt32(label.Text)
-                                      && a.FK_ReportArchiveTable == reportArchiveTableID
-                                select a).FirstOrDefault();
-                        if (basicParam != null)
+                        ReportArchiveAndLevelMappingTable repNRole =
+                            (from item in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                where item.FK_FirstLevelSubmisionTableId == Convert.ToInt32(checkItem.Value)
+                                      && item.FK_ReportArchiveTableId == reportArchiveTableID
+                                select item).FirstOrDefault();
+                        if (repNRole != null)
                         {
-                            basicParam.Active = true;
+                            repNRole.Active = true;
                         }
                         else
                         {
-                            basicParam = new ReportArchiveAndBasicParametrsMappingTable();
-                            basicParam.Active = true;
-                            basicParam.FK_BasicParametrsTable = Convert.ToInt32(label.Text);
-                            basicParam.FK_ReportArchiveTable = reportArchiveTableID;
-                            kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable.InsertOnSubmit(basicParam);
+                            repNRole = new ReportArchiveAndLevelMappingTable();
+                            repNRole.Active = true;
+                            repNRole.FK_FirstLevelSubmisionTableId = Convert.ToInt32(checkItem.Value);
+                            repNRole.FK_ReportArchiveTableId = reportArchiveTableID;
+                            kpiWebDataContext.ReportArchiveAndLevelMappingTable.InsertOnSubmit(repNRole);
                         }
-                        kpiWebDataContext.SubmitChanges();
                     }
                     else
                     {
-                        ReportArchiveAndBasicParametrsMappingTable basicParam =
-                            (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
-                             where a.FK_BasicParametrsTable == Convert.ToInt32(label.Text)
-                                   && a.FK_ReportArchiveTable == reportArchiveTableID
-                             select a).FirstOrDefault();
-                        if (basicParam != null)
+                        ReportArchiveAndLevelMappingTable repNRole =
+                            (from item in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                where item.FK_FirstLevelSubmisionTableId == Convert.ToInt32(checkItem.Value)
+                                      && item.FK_ReportArchiveTableId == reportArchiveTableID
+                                select item).FirstOrDefault();
+                        if (repNRole != null)
                         {
-                            basicParam.Active = false;
-                            kpiWebDataContext.SubmitChanges();
-                        }                
+                            repNRole.Active = false; /// // / лучше просто удалить эту запись из БД
+                        }
                     }
                 }
-                ////////////////////////////////////////////////////////////////////////////////////////////////
-                List<int> calcId = new List<int>();
+                kpiWebDataContext.SubmitChanges();
 
-                ////////////////////////////////////////////////////////////////////////////////////////////////////
-                for (int i = 0; i < dt_calculate.Rows.Count; i++)
+                #endregion
+
+                ////////////////////////////////////////////////////////пора записать данные в таблицы связей 
+
+                if ((ViewState["BasicDataTable"] != null) && (ViewState["CalculateDataTable"] != null) &&
+                    (ViewState["IndicatorDataTable"] != null))
                 {
-                    CheckBox chekBox = (CheckBox)CalculatedParametrsTable.Rows[i].FindControl("CalculatedParametrsCheckBox");
-                    Label label = (Label)CalculatedParametrsTable.Rows[i].FindControl("CalculatedParametrsID");
-                    if (chekBox.Checked == true)
+                    DataTable dt_basic = (DataTable) ViewState["BasicDataTable"];
+                    DataTable dt_calculate = (DataTable) ViewState["CalculateDataTable"];
+                    DataTable dt_indicator = (DataTable) ViewState["IndicatorDataTable"];
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    for (int i = 0; i < dt_basic.Rows.Count; i++)
                     {
-                        calcId.Add(Convert.ToInt32(label.Text));
+                        CheckBox chekBox = (CheckBox) BasicParametrsTable.Rows[i].FindControl("BasicParametrsCheckBox");
+                        Label label = (Label) BasicParametrsTable.Rows[i].FindControl("BasicParametrsID");
+                        if (chekBox.Checked == true)
+                        {
+                            ReportArchiveAndBasicParametrsMappingTable basicParam =
+                                (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                                    where a.FK_BasicParametrsTable == Convert.ToInt32(label.Text)
+                                          && a.FK_ReportArchiveTable == reportArchiveTableID
+                                    select a).FirstOrDefault();
+                            if (basicParam != null)
+                            {
+                                basicParam.Active = true;
+                            }
+                            else
+                            {
+                                basicParam = new ReportArchiveAndBasicParametrsMappingTable();
+                                basicParam.Active = true;
+                                basicParam.FK_BasicParametrsTable = Convert.ToInt32(label.Text);
+                                basicParam.FK_ReportArchiveTable = reportArchiveTableID;
+                                kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable.InsertOnSubmit(basicParam);
+                            }
+                            kpiWebDataContext.SubmitChanges();
+                        }
+                        else
+                        {
+                            ReportArchiveAndBasicParametrsMappingTable basicParam =
+                                (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                                    where a.FK_BasicParametrsTable == Convert.ToInt32(label.Text)
+                                          && a.FK_ReportArchiveTable == reportArchiveTableID
+                                    select a).FirstOrDefault();
+                            if (basicParam != null)
+                            {
+                                basicParam.Active = false;
+                                kpiWebDataContext.SubmitChanges();
+                            }
+                        }
+                    }
+                    ////////////////////////////////////////////////////////////////////////////////////////////////
+                    List<int> calcId = new List<int>();
+
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
+                    for (int i = 0; i < dt_calculate.Rows.Count; i++)
+                    {
+                        CheckBox chekBox =
+                            (CheckBox) CalculatedParametrsTable.Rows[i].FindControl("CalculatedParametrsCheckBox");
+                        Label label = (Label) CalculatedParametrsTable.Rows[i].FindControl("CalculatedParametrsID");
+                        if (chekBox.Checked == true)
+                        {
+                            calcId.Add(Convert.ToInt32(label.Text));
+                            ReportArchiveAndCalculatedParametrsMappingTable calcParam =
+                                (from a in kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable
+                                    where a.FK_CalculatedParametrsTable == Convert.ToInt32(label.Text)
+                                          && a.FK_ReportArchiveTable == reportArchiveTableID
+                                    select a).FirstOrDefault();
+                            if (calcParam != null)
+                            {
+                                calcParam.Active = true;
+                            }
+                            else
+                            {
+                                calcParam = new ReportArchiveAndCalculatedParametrsMappingTable();
+                                calcParam.Active = true;
+                                calcParam.FK_CalculatedParametrsTable = Convert.ToInt32(label.Text);
+                                calcParam.FK_ReportArchiveTable = reportArchiveTableID;
+                                kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable.InsertOnSubmit(
+                                    calcParam);
+                            }
+                            kpiWebDataContext.SubmitChanges();
+                        }
+                        else
+                        {
+                            ReportArchiveAndCalculatedParametrsMappingTable calcParam =
+                                (from a in kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable
+                                    where a.FK_CalculatedParametrsTable == Convert.ToInt32(label.Text)
+                                          && a.FK_ReportArchiveTable == reportArchiveTableID
+                                    select a).FirstOrDefault();
+                            if (calcParam != null)
+                            {
+                                calcParam.Active = false;
+                                kpiWebDataContext.SubmitChanges();
+                            }
+                        }
+                    }
+                    /////////////////////////////////////////////////////////////////////////////////////////
+                    List<int> indId = new List<int>();
+                    ///////////////////////////////////////////////////////////////////////////////////////////////////
+                    for (int i = 0; i < dt_indicator.Rows.Count; i++)
+                    {
+                        CheckBox chekBox = (CheckBox) IndicatorsTable.Rows[i].FindControl("IndicatorCheckBox");
+                        Label label = (Label) IndicatorsTable.Rows[i].FindControl("IndicatorID");
+                        if (chekBox.Checked == true)
+                        {
+                            indId.Add(Convert.ToInt32(label.Text));
+                            ReportArchiveAndIndicatorsMappingTable indicators =
+                                (from a in kpiWebDataContext.ReportArchiveAndIndicatorsMappingTable
+                                    where a.FK_IndicatorsTable == Convert.ToInt32(label.Text)
+                                          && a.FK_ReportArchiveTable == reportArchiveTableID
+                                    select a).FirstOrDefault();
+                            if (indicators != null)
+                            {
+                                indicators.Active = true;
+                            }
+                            else
+                            {
+                                indicators = new ReportArchiveAndIndicatorsMappingTable();
+                                indicators.Active = true;
+                                indicators.FK_IndicatorsTable = Convert.ToInt32(label.Text);
+                                indicators.FK_ReportArchiveTable = reportArchiveTableID;
+                                kpiWebDataContext.ReportArchiveAndIndicatorsMappingTable.InsertOnSubmit(indicators);
+                            }
+                            kpiWebDataContext.SubmitChanges();
+                        }
+                        else
+                        {
+                            ReportArchiveAndIndicatorsMappingTable indicators =
+                                (from a in kpiWebDataContext.ReportArchiveAndIndicatorsMappingTable
+                                    where a.FK_IndicatorsTable == Convert.ToInt32(label.Text)
+                                          && a.FK_ReportArchiveTable == reportArchiveTableID
+                                    select a).FirstOrDefault();
+                            if (indicators != null)
+                            {
+                                indicators.Active = false;
+                                kpiWebDataContext.SubmitChanges();
+                            }
+                        }
+                    }
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
+                    ///нужнополучить список айдишников нужных базовых показателей
+                    List<int> CalcID = getCalcByIndicator(indId);
+                    foreach (int tmp in CalcID)
+                    {
+                        calcId.Add(tmp);
+                    }
+
+                    #region
+
+                    foreach (int CalcParamID in calcId)
+                    {
                         ReportArchiveAndCalculatedParametrsMappingTable calcParam =
                             (from a in kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable
-                             where a.FK_CalculatedParametrsTable == Convert.ToInt32(label.Text)
-                                   && a.FK_ReportArchiveTable == reportArchiveTableID
-                             select a).FirstOrDefault();
+                                where a.FK_CalculatedParametrsTable == CalcParamID
+                                      && a.FK_ReportArchiveTable == reportArchiveTableID
+                                select a).FirstOrDefault();
                         if (calcParam != null)
                         {
                             calcParam.Active = true;
@@ -482,111 +601,26 @@ namespace KPIWeb.Reports
                         {
                             calcParam = new ReportArchiveAndCalculatedParametrsMappingTable();
                             calcParam.Active = true;
-                            calcParam.FK_CalculatedParametrsTable = Convert.ToInt32(label.Text);
+                            calcParam.FK_CalculatedParametrsTable = CalcParamID;
                             calcParam.FK_ReportArchiveTable = reportArchiveTableID;
                             kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable.InsertOnSubmit(calcParam);
                         }
                         kpiWebDataContext.SubmitChanges();
                     }
-                    else
-                    {
-                        ReportArchiveAndCalculatedParametrsMappingTable calcParam =
-                            (from a in kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable
-                             where a.FK_CalculatedParametrsTable == Convert.ToInt32(label.Text)
-                                   && a.FK_ReportArchiveTable == reportArchiveTableID
-                             select a).FirstOrDefault();
-                        if (calcParam != null)
-                        {
-                            calcParam.Active = false;
-                            kpiWebDataContext.SubmitChanges();
-                        }
-                    }
-                }
-                /////////////////////////////////////////////////////////////////////////////////////////
-                List<int> indId = new List<int>();
-               ///////////////////////////////////////////////////////////////////////////////////////////////////
-                for (int i = 0; i < dt_indicator.Rows.Count; i++)
-                {
-                    CheckBox chekBox = (CheckBox)IndicatorsTable.Rows[i].FindControl("IndicatorCheckBox");
-                    Label label = (Label)IndicatorsTable.Rows[i].FindControl("IndicatorID");
-                    if (chekBox.Checked == true)
-                    {
-                        indId.Add(Convert.ToInt32(label.Text));
-                        ReportArchiveAndIndicatorsMappingTable indicators =
-                            (from a in kpiWebDataContext.ReportArchiveAndIndicatorsMappingTable
-                             where a.FK_IndicatorsTable == Convert.ToInt32(label.Text)
-                                   && a.FK_ReportArchiveTable == reportArchiveTableID
-                             select a).FirstOrDefault();
-                        if (indicators != null)
-                        {
-                            indicators.Active = true;
-                        }
-                        else
-                        {
-                            indicators = new ReportArchiveAndIndicatorsMappingTable();
-                            indicators.Active = true;
-                            indicators.FK_IndicatorsTable = Convert.ToInt32(label.Text);
-                            indicators.FK_ReportArchiveTable = reportArchiveTableID;
-                            kpiWebDataContext.ReportArchiveAndIndicatorsMappingTable.InsertOnSubmit(indicators);
-                        }
-                        kpiWebDataContext.SubmitChanges();
-                    }
-                    else
-                    {
-                        ReportArchiveAndIndicatorsMappingTable indicators =
-                            (from a in kpiWebDataContext.ReportArchiveAndIndicatorsMappingTable
-                             where a.FK_IndicatorsTable == Convert.ToInt32(label.Text)
-                                   && a.FK_ReportArchiveTable == reportArchiveTableID
-                             select a).FirstOrDefault();
-                        if (indicators != null)
-                        {
-                            indicators.Active = false;
-                            kpiWebDataContext.SubmitChanges();
-                        }
-                    }
-                }
-                ////////////////////////////////////////////////////////////////////////////////////////////////////
-                ///нужнополучить список айдишников нужных базовых показателей
-                List<int> CalcID = getCalcByIndicator(indId);
-                foreach (int tmp in CalcID)
-                {
-                    calcId.Add(tmp);
-                }
 
-                #region
-                foreach (int CalcParamID in calcId)
-                {
-                    ReportArchiveAndCalculatedParametrsMappingTable calcParam =
-                        (from a in kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable
-                         where a.FK_CalculatedParametrsTable == CalcParamID
-                         && a.FK_ReportArchiveTable == reportArchiveTableID
-                         select a).FirstOrDefault();
-                    if (calcParam != null)
-                    {
-                        calcParam.Active = true;
-                    }
-                    else
-                    {
-                        calcParam = new ReportArchiveAndCalculatedParametrsMappingTable();
-                        calcParam.Active = true;
-                        calcParam.FK_CalculatedParametrsTable = CalcParamID;
-                        calcParam.FK_ReportArchiveTable = reportArchiveTableID;
-                        kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable.InsertOnSubmit(calcParam);
-                    }
-                    kpiWebDataContext.SubmitChanges();
-                }
-                #endregion
+                    #endregion
 
-                List<int> BaseID = getBasicByCalc(calcId);
+                    List<int> BaseID = getBasicByCalc(calcId);
 
-                #region
-                foreach (int baseID in BaseID)
-                {
+                    #region
+
+                    foreach (int baseID in BaseID)
+                    {
                         ReportArchiveAndBasicParametrsMappingTable basicParam =
                             (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
-                             where a.FK_BasicParametrsTable == baseID
-                             && a.FK_ReportArchiveTable == reportArchiveTableID
-                             select a).FirstOrDefault();
+                                where a.FK_BasicParametrsTable == baseID
+                                      && a.FK_ReportArchiveTable == reportArchiveTableID
+                                select a).FirstOrDefault();
                         if (basicParam != null)
                         {
                             basicParam.Active = true;
@@ -600,11 +634,13 @@ namespace KPIWeb.Reports
                             kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable.InsertOnSubmit(basicParam);
                         }
                         kpiWebDataContext.SubmitChanges();
-                }
-                #endregion
+                    }
 
+                    #endregion
+
+                }
+                Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");
             }
-            Response.Redirect("~/StatisticsDepartment/ReportViewer.aspx");       
         }
 
         protected void CalendarStartDateTime_SelectionChanged(object sender, EventArgs e)
