@@ -5,6 +5,7 @@
             <h2>
                 <asp:Label ID="Label1" runat="server" Text="Ввведите значения в таблицу показателей и нажмите кнопку &quot;Сохранить&quot; внизу формы"></asp:Label>
             </h2>
+            <asp:Label ID="Label2" runat="server" Text="Осталось дней"></asp:Label>
             <br />
             <br />
 
@@ -389,7 +390,10 @@
 
             <br />
             <br />
-            <asp:Button ID="UpnDownButton" runat="server" Height="25px" OnClick="Button3_Click" Text="Вернуть для доработки (коментарий ниже)" Width="400px" />
+            <asp:Button ID="UpnDownButton" runat="server" Height="25px" 
+                OnClick="Button3_Click" 
+                Text="Вернуть для доработки (коментарий ниже)" Width="400px" 
+                />
             <br />
 
             <br />

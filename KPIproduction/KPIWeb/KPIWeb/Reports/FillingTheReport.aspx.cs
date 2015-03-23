@@ -789,6 +789,31 @@ namespace KPIWeb.Reports
                 ViewState["ColumnName"] = columnNames;
                 ViewState["basicNames"] = basicNames;
 
+                int tmpStatCount = 0;
+                foreach (int tmpStat in StatusList)
+                {
+                    if (tmpStat == 2)
+                    {
+                        tmpStatCount++;
+                    }
+                }
+                //определение дней
+                DateTime endDate = (DateTime)(from a in kpiWebDataContext.ReportArchiveTable
+                    where a.ReportArchiveTableID == ReportArchiveID
+                    select a.EndDateTime).FirstOrDefault();
+                if (endDate == null)
+                {
+                    endDate=DateTime.Now.AddDays(2);
+                }
+                DateTime startDate = DateTime.Now;
+                int dateCount = 0;
+                while (startDate < endDate)
+                {
+                    startDate = startDate.AddDays(1);
+                    dateCount++;
+                }
+
+                // определение дней
                 if (mode == 0)
                 {
                     GoBackButton.Visible = true;
@@ -807,15 +832,7 @@ namespace KPIWeb.Reports
                         Label1.Text = "Данные возвращены на доработку. Проверьте корректность введенных данных.";
                     }
                     else
-                    {
-                        int tmpStatCount = 0;
-                        foreach (int tmpStat in StatusList)
-                        {
-                            if (tmpStat == 2)
-                            {
-                                tmpStatCount++;
-                            }
-                        }
+                    {                       
                         if (tmpStatCount == StatusList.Count())
                         {
                             Label1.Text = "Все показатели заполнены. Необходимо отправить отчет на верификацию";
@@ -827,10 +844,13 @@ namespace KPIWeb.Reports
                             UpnDownButton.Enabled = false;
                         }
                     }
-/*
+                    Label2.Text ="Осталось " + dateCount+" дней до закрытия отчета";
+                    UpnDownButton.OnClientClick = "javascript:return confirm('Отправить данные на подтверждение?');";
+                    /*
                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                     "window.onbeforeunload = function(e) " +
-                    "{return 'Все несохраненные данные будут потеряны.';};", true);   */
+                    "{return 'Все несохраненные данные будут потеряны.';};", true);   
+                     */
                 }
                 else if
                     (mode == 1)
@@ -844,7 +864,25 @@ namespace KPIWeb.Reports
 
                     TextBox1.Visible = false;
 
-                    Label1.Text = "Форма просмотра введенных данных.";
+                    if ((StatusList[0] == 0)||(StatusList[0] == 2))
+                    {
+                        Label1.Text = "Заполнено " + tmpStatCount + " показателей из " + StatusList.Count();
+                    }
+                    else if (StatusList[0] == 1)
+                    {
+                        Label1.Text = "Данные возвращены на доработку";
+                    }
+                    else if (StatusList[0] == 3)
+                    {
+                        Label1.Text = "Данные отправлены на верификацию";
+                    }
+                    else if (StatusList[0] == 4)
+                    {
+                        Label1.Text = "Данные верифицированы";
+                    }
+                    Label2.Visible = false;
+                   // OnClientClick="javascript:return confirm('Do you really want to \ndelete the item?');"
+                    
                 }
                 else
                     if (mode == 2)
@@ -861,6 +899,10 @@ namespace KPIWeb.Reports
                         TextBox1.Visible = true;
 
                         Label1.Text = "Форма подтверждения данных.";
+                        Label2.Text ="Осталось " + dateCount + " дней до закрытия отчета";
+
+                        ButtonSave.OnClientClick = "javascript:return confirm('Подтвердить достоверность данных и отправить их на обработку(Режим доступа к данным будет измене на \"только просмотр\")');";
+                        UpnDownButton.OnClientClick = "javascript:return confirm('Вернуть отчет на доработку.');";
                     }
                 GridviewCollectedBasicParameters.DataSource = dataTable;
                 for (int j = 0; j < additionalColumnCount; j++)
@@ -910,6 +952,9 @@ namespace KPIWeb.Reports
                 if (mode == 0) //сохранение данных
                 {
                     #region save data
+
+                    int allCnt=0;
+                    int notNullCnt=0;
                     if (collectedBasicParametersTable.Rows.Count > 0)
                     {
                         int rowIndex = 0;
@@ -923,9 +968,11 @@ namespace KPIWeb.Reports
 
                                 if (textBox != null && label != null)
                                 {
+                                    allCnt++;
                                     double collectedValue = double.NaN;
                                     if (textBox.Text.IsFloat())
                                     {
+                                        notNullCnt++;
                                         collectedValue = Convert.ToInt32(textBox.Text);
                                     }
                                         int collectedBasicParametersTableID = -1;
@@ -969,8 +1016,17 @@ namespace KPIWeb.Reports
                     }
                     //надо рассчитать рассчетные
                     CalcCalculate(ReportArchiveID, user);
-                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                           "alert('Внесенные данные сохранены.');", true);
+                    if (allCnt == notNullCnt)
+                    {
+                        Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                            "alert('Все показатели заполнены. Необходимо отправить отчет на верификацию');", true);
+                    }
+                    else
+                    {
+                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                            "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + allCnt + " для отправки отчета необходимо заполнитеь еще " + (allCnt-notNullCnt) + " показателей.');", true);
+                    }
+
                     #endregion
                 }
                 else if (mode == 1) // просмотр
@@ -1361,6 +1417,7 @@ namespace KPIWeb.Reports
         }
         protected void Button3_Click(object sender, EventArgs e) // отправка на доработку и возвращение с доработки
         {
+
             KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
             Serialization modeSer = (Serialization)Session["mode"];
             if (modeSer == null)
