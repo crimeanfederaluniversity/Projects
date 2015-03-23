@@ -14,6 +14,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Web.UI.HtmlControls;
+using System.Web.WebPages;
 
 namespace KPIWeb.Reports
 {
@@ -442,6 +443,7 @@ namespace KPIWeb.Reports
                 #endregion
                 //создали макет дататейбла
                 int additionalColumnCount = 0;
+                List<int> StatusList = new List<int>();
                 #region
                 if (userLevel != 3)
                 {
@@ -501,8 +503,16 @@ namespace KPIWeb.Reports
                         }
                         dataRow["Value0"] = collectedBasicTmp.CollectedValue.ToString();
                         dataRow["CollectId0"] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
-                        dataRow["NotNull0"] = 1.ToString();
+                        dataRow["NotNull0"] = 1.ToString();                       
                         dataTable.Rows.Add(dataRow);
+                        if (collectedBasicTmp.Status != null)
+                        {
+                            StatusList.Add((int)collectedBasicTmp.Status);
+                        }
+                        else
+                        {
+                            StatusList.Add(0);
+                        }
                     }
                     additionalColumnCount += 1;
                 }
@@ -615,6 +625,14 @@ namespace KPIWeb.Reports
                                     dataRow["CollectId0"] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
                                     dataRow["NotNull0"] = 1.ToString();
                                     dataTable.Rows.Add(dataRow);
+                                    if (collectedBasicTmp.Status != null)
+                                    {
+                                        StatusList.Add((int) collectedBasicTmp.Status);
+                                    }
+                                    else
+                                    {
+                                        StatusList.Add(0);
+                                    }
                                 }
                             }
                             columnNames.Add("Кафедра:\r\n" + (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
@@ -721,6 +739,15 @@ namespace KPIWeb.Reports
                                             dataRow["Value" + i] = collectedBasicTmp.CollectedValue.ToString();
                                             dataRow["CollectId" + i] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
                                             dataRow["NotNull" + i] = 1.ToString();
+
+                                            if (collectedBasicTmp.Status != null)
+                                            {
+                                                StatusList.Add((int)collectedBasicTmp.Status);
+                                            }
+                                            else
+                                            {
+                                                StatusList.Add(0);
+                                            }
                                         }
                                         i++;
                                     }
@@ -776,8 +803,32 @@ namespace KPIWeb.Reports
 
                     TextBox1.Visible = false;
 
-                    Label1.Text = "Ввведите значения в таблицу показателей и нажмите кнопку 'Сохранить внесенные данные.'";
-                    
+                    if (StatusList[0] == 1)
+                    {
+                        Label1.Text = "Данные возвращены на доработку. Проверьте корректность введенных данных.";
+                    }
+                    else
+                    {
+                        int tmpStatCount = 0;
+                        foreach (int tmpStat in StatusList)
+                        {
+                            if (tmpStat == 2)
+                            {
+                                tmpStatCount++;
+                            }
+                        }
+                        if (tmpStatCount == StatusList.Count())
+                        {
+                            Label1.Text = "Все показатели заполнены. Необходимо отправить отчет на верификацию";                            
+                        }
+                        else
+                        {
+                            Label1.Text = "Заполнено " + tmpStatCount + " показателей из " + StatusList.Count();
+                        }
+                    }
+
+                   // Label1.Text = StatusList.Count().ToString();
+
                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                     "window.onbeforeunload = function(e) " +
                     "{return 'Все несохраненные данные будут потеряны.';};", true);   
@@ -873,14 +924,15 @@ namespace KPIWeb.Reports
 
                                 if (textBox != null && label != null)
                                 {
-                                    double collectedValue = -1;
-                                    if (double.TryParse(textBox.Text, out collectedValue) && collectedValue > -1)
+                                    double collectedValue = Double.NaN;
+                                    if (textBox.Text.IsFloat())
                                     {
+                                        collectedValue = Convert.ToInt32(textBox.Text);
+                                    }
                                         int collectedBasicParametersTableID = -1;
                                         if (int.TryParse(label.Text, out collectedBasicParametersTableID) &&
                                             collectedBasicParametersTableID > -1)
                                             tempDictionary.Add(collectedBasicParametersTableID, collectedValue);
-                                    }
                                 }
                             }
                             rowIndex++;
@@ -898,10 +950,18 @@ namespace KPIWeb.Reports
                         string localIP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault() ?? "";
                         foreach (var сollectedBasicParameter in сollectedBasicParametersTable)
                         {
-                            сollectedBasicParameter.CollectedValue =
-                                (from item in tempDictionary
+                            double tmpD = (from item in tempDictionary
                                  where item.Key == сollectedBasicParameter.CollectedBasicParametersTableID
                                  select item.Value).FirstOrDefault();
+                            if (tmpD == Double.NaN)
+                            {
+                                сollectedBasicParameter.CollectedValue = -1;
+                            }
+                            else
+                            {
+                                сollectedBasicParameter.CollectedValue = tmpD;
+                            }
+
                             сollectedBasicParameter.LastChangeDateTime = DateTime.Now;
                             сollectedBasicParameter.UserIP = localIP;
                             сollectedBasicParameter.Status = сollectedBasicParameter.CollectedValue == null ? 0 : 2;

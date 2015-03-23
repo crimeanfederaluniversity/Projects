@@ -122,7 +122,7 @@ namespace KPIWeb.Reports
 
                     string status = "Нет данных";
                     int Statusn = 0;
-                    if (ColTemp == null)
+                    if (ColTemp.Status == null)
                     {
                         Statusn = 0;
                     }
