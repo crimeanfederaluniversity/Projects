@@ -15,7 +15,6 @@ using System.Drawing;
 using System.IO;
 using System.Web.UI.HtmlControls;
 using System.Web.WebPages;
-
 namespace KPIWeb.Reports
 {
     public partial class FillingTheReport : System.Web.UI.Page
@@ -819,19 +818,19 @@ namespace KPIWeb.Reports
                         }
                         if (tmpStatCount == StatusList.Count())
                         {
-                            Label1.Text = "Все показатели заполнены. Необходимо отправить отчет на верификацию";                            
+                            Label1.Text = "Все показатели заполнены. Необходимо отправить отчет на верификацию";
+                            UpnDownButton.Enabled = true;
                         }
                         else
                         {
                             Label1.Text = "Заполнено " + tmpStatCount + " показателей из " + StatusList.Count();
+                            UpnDownButton.Enabled = false;
                         }
                     }
-
-                   // Label1.Text = StatusList.Count().ToString();
-
+/*
                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                     "window.onbeforeunload = function(e) " +
-                    "{return 'Все несохраненные данные будут потеряны.';};", true);   
+                    "{return 'Все несохраненные данные будут потеряны.';};", true);   */
                 }
                 else if
                     (mode == 1)
@@ -924,7 +923,7 @@ namespace KPIWeb.Reports
 
                                 if (textBox != null && label != null)
                                 {
-                                    double collectedValue = Double.NaN;
+                                    double collectedValue = double.NaN;
                                     if (textBox.Text.IsFloat())
                                     {
                                         collectedValue = Convert.ToInt32(textBox.Text);
@@ -953,9 +952,9 @@ namespace KPIWeb.Reports
                             double tmpD = (from item in tempDictionary
                                  where item.Key == сollectedBasicParameter.CollectedBasicParametersTableID
                                  select item.Value).FirstOrDefault();
-                            if (tmpD == Double.NaN)
+                            if (double.IsNaN(tmpD))
                             {
-                                сollectedBasicParameter.CollectedValue = -1;
+                                сollectedBasicParameter.CollectedValue = null;
                             }
                             else
                             {
