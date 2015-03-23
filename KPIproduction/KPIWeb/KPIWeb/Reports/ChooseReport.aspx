@@ -4,7 +4,7 @@
        <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
         <h2>Список активных отчетов</h2><br />
         <asp:GridView ID="GridView1" runat="server" 
-            AutoGenerateColumns="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" 
+            AutoGenerateColumns="False"
             style="margin-top: 0px" OnRowDataBound="GridView1_RowDataBound">
              <Columns>
                  
@@ -30,10 +30,9 @@
                             <asp:Button ID="ButtonConfirmReport" runat="server" CommandName="Select" Text="Просмотреть и утвердить" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonConfirmClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
-                   
+
+                   <asp:BoundField DataField="Status" HeaderText="Статус данных" Visible="True" />
                 </Columns>
         </asp:GridView>
-           <br />
-           <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Форма выбора специальностей и их параметров" Width="903px" />
            <br />
        </asp:Content>

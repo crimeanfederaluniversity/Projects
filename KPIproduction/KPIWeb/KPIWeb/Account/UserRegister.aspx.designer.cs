@@ -7,10 +7,19 @@
 // </автоматически создаваемое>
 //------------------------------------------------------------------------------
 
-namespace KPIWeb.Reports {
+namespace KPIWeb.Account {
     
     
-    public partial class FillingTheReport {
+    public partial class UserRegister {
+        
+        /// <summary>
+        /// form1 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
         /// Label1 элемент управления.
@@ -22,57 +31,48 @@ namespace KPIWeb.Reports {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// GridviewCollectedBasicParameters элемент управления.
+        /// Label3 элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridviewCollectedBasicParameters;
+        protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
-        /// ButtonSave элемент управления.
+        /// PassText элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonSave;
+        protected global::System.Web.UI.WebControls.TextBox PassText;
         
         /// <summary>
-        /// Button1 элемент управления.
+        /// Label2 элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// GoBackButton элемент управления.
+        /// ConfText элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoBackButton;
+        protected global::System.Web.UI.WebControls.TextBox ConfText;
         
         /// <summary>
-        /// UpnDownButton элемент управления.
+        /// SaveButton элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button UpnDownButton;
-        
-        /// <summary>
-        /// TextBox1 элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.Button SaveButton;
     }
 }

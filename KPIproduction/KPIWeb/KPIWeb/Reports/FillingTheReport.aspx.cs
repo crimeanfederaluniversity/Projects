@@ -20,7 +20,6 @@ namespace KPIWeb.Reports
     public partial class FillingTheReport : System.Web.UI.Page
     {
         public int col_ = 0;
-
         protected double pattern1(UsersTable user, int ReportArchiveID, int spectype_, string basicAbb)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
@@ -71,7 +70,6 @@ namespace KPIWeb.Reports
                        && b.Active == true
                        select a.CollectedValue).Sum());
         }
-
         protected double pattern3(UsersTable user, int ReportArchiveID, int SpecType)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
@@ -111,7 +109,6 @@ namespace KPIWeb.Reports
                        && b.Active == true
                  select b).ToList().Count);
         }
-
         protected double pattern5(UsersTable user, int ReportArchiveID, int SpecType)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
@@ -131,7 +128,6 @@ namespace KPIWeb.Reports
                        && b.Active == true
                  select b).ToList().Count);
         }
-
         protected double pattern6(UsersTable user, int ReportArchiveID, int SpecType)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
@@ -151,7 +147,6 @@ namespace KPIWeb.Reports
                        && c.IsModernEducationTechnologies == true
                  select b).ToList().Count);
         }
-
         protected void ConfCalculate(int ReportArchiveID, UsersTable user)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
@@ -187,7 +182,7 @@ namespace KPIWeb.Reports
                      select a).FirstOrDefault();
                 if (collectedBasicTmp != null) // надо создать
                 {
-                    collectedBasicTmp.ConfirmedThirdLevel = true;
+                    collectedBasicTmp.Status = 4;
                     kpiWebDataContext.SubmitChanges();
                 }
             }
@@ -366,7 +361,6 @@ namespace KPIWeb.Reports
             }
 
         }
-
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -376,7 +370,7 @@ namespace KPIWeb.Reports
                 Response.Redirect("~/Default.aspx");
             }
             int userID = UserSer.Id;
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             UsersTable userTable =
                       (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
@@ -768,31 +762,55 @@ namespace KPIWeb.Reports
                 ViewState["ValueColumnCnt"] = additionalColumnCount;
                 ViewState["ColumnName"] = columnNames;
                 ViewState["basicNames"] = basicNames;
+
                 if (mode == 0)
                 {
-                    Button3.Visible = false;
-                    ButtonSave.Text = "Сохранить внесенные данные";
+                    GoBackButton.Visible = true;
+                    GoBackButton.Text = "Вернуться без сохранения.";
+
                     ButtonSave.Visible = true;
-                    Button2.Text = "Вернуться в меню без сохранения";
-                    Label1.Text = "Ввведите значения в таблицу показателей и нажмите кнопку внизу формы для сохранения данных";
+                    ButtonSave.Text = "Сохранить внесенные данные.";
+
+                    UpnDownButton.Visible = true;
+                    UpnDownButton.Text = "Отправить отчет на подтверждение.";
+
+                    TextBox1.Visible = false;
+
+                    Label1.Text = "Ввведите значения в таблицу показателей и нажмите кнопку 'Сохранить внесенные данные.'";
+                    
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                    "window.onbeforeunload = function(e) " +
+                    "{return 'Все несохраненные данные будут потеряны.';};", true);   
                 }
                 else if
                     (mode == 1)
                 {
-                    Button3.Visible = false;
-                    Label1.Text = "Просмотр введенных данных";
-                    ButtonSave.Text = "Вернуться в меню выбора отчета";
+                    GoBackButton.Visible = true;
+                    GoBackButton.Text = "Вернуться в меню.";
 
-                    Button2.Visible = false;
+                    ButtonSave.Visible = false;
+
+                    UpnDownButton.Visible = false;
+
+                    TextBox1.Visible = false;
+
+                    Label1.Text = "Форма просмотра введенных данных.";
                 }
                 else
                     if (mode == 2)
                     {
-                        Button3.Visible = true;
-                        Label1.Text = "Проверьте корректность введенных данных. Если данные верны, нажмите кнопку внизу формы";
+                        GoBackButton.Visible = true;
+                        GoBackButton.Text = "Вернуться в меню без подтверждения.";
+
                         ButtonSave.Visible = true;
-                        Button2.Text = "Вернуться в меню без утверждения данных";
-                        ButtonSave.Text = "Подтвердить правильность введенных данных";
+                        ButtonSave.Text = "Подтвердить данные.";
+
+                        UpnDownButton.Visible = true;
+                        UpnDownButton.Text = "Вернуть отчет на доработку.";
+
+                        TextBox1.Visible = true;
+
+                        Label1.Text = "Форма подтверждения данных.";
                     }
                 GridviewCollectedBasicParameters.DataSource = dataTable;
                 for (int j = 0; j < additionalColumnCount; j++)
@@ -803,8 +821,7 @@ namespace KPIWeb.Reports
                 GridviewCollectedBasicParameters.DataBind();
             }
         }
-
-        protected void ButtonSave_Click(object sender, EventArgs e)
+        protected void ButtonSave_Click(object sender, EventArgs e) //сохранение данных и пожтверждение данных
         {
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
@@ -840,10 +857,9 @@ namespace KPIWeb.Reports
                 }
                 int mode = modeSer.mode;
 
-
-
-                if (mode == 0)
+                if (mode == 0) //сохранение данных
                 {
+                    #region save data
                     if (collectedBasicParametersTable.Rows.Count > 0)
                     {
                         int rowIndex = 0;
@@ -888,22 +904,74 @@ namespace KPIWeb.Reports
                                  select item.Value).FirstOrDefault();
                             сollectedBasicParameter.LastChangeDateTime = DateTime.Now;
                             сollectedBasicParameter.UserIP = localIP;
+                            сollectedBasicParameter.Status = сollectedBasicParameter.CollectedValue == null ? 0 : 2;
                         }
                         KPIWebDataContext.SubmitChanges();
-
-
                     }
                     //надо рассчитать рассчетные
                     CalcCalculate(ReportArchiveID, user);
                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                           "alert('Внесенные данные сохранены');", true);                    
+                           "alert('Внесенные данные сохранены.');", true);
+                    #endregion
                 }
-                else if (mode == 1)
+                else if (mode == 1) // просмотр
                 {
                     Response.Redirect("~/Reports/ChooseReport.aspx");
                 }
-                else if (mode == 2)
+                else if (mode == 2) // подтверждение 
                 {
+                    #region confirm all
+                    if (GridviewCollectedBasicParameters.Rows.Count > 0)
+                    {
+                        for (int k = 0; k < columnCnt; k++) // пройдемся по каждой колонке
+                        {
+                            for (int i = 0; i < GridviewCollectedBasicParameters.Rows.Count; i++)
+                            {                           
+                                Label label =
+                                    (Label)
+                                        GridviewCollectedBasicParameters.Rows[i].FindControl("CollectId" + k.ToString());
+                                if (label != null)
+                                {
+                                    if (label.Text == "")
+                                    {
+                                        //error
+                                    }
+                                    else
+                                    {
+                                        CollectedBasicParametersTable tmpColTable =
+                                            (from a in KPIWebDataContext.CollectedBasicParametersTable
+                                                where a.CollectedBasicParametersTableID == Convert.ToInt32(label.Text)
+                                                select a).FirstOrDefault();
+                                        if (tmpColTable != null)
+                                        {
+                                            if (tmpColTable.Status == 3)
+                                            {
+                                                tmpColTable.Status = 4;
+                                                KPIWebDataContext.SubmitChanges();
+                                            }
+                                            else
+                                            {
+                                                //error
+                                            }
+                                        }
+                                        else
+                                        {
+                                            //error    
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //error
+                    }
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                            "alert('Вы утвердили данные всех базовых показателей. Отчет отправлен и доступен только в режиме 'Просмотр'. ');", true);
+
+                    #region old confirm with checkboxses
+                    /*
                     int dataCount = 0;
                     int dataConfCount = 0;
                     if (collectedBasicParametersTable.Rows.Count > 0)
@@ -912,7 +980,6 @@ namespace KPIWeb.Reports
                         for (int i = 1; i <= collectedBasicParametersTable.Rows.Count; i++) //в каждой строчке
                         {
                             /// //сохраним вложенные данные
-
                             for (int k = 0; k < columnCnt; k++) // пройдемся по каждой колонке
                             {
                                 TextBox textBox = (TextBox)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("Value" + k.ToString());
@@ -963,7 +1030,7 @@ namespace KPIWeb.Reports
 
                         foreach (var сollectedBasicParameter in сollectedBasicParametersTable)
                         {
-                            сollectedBasicParameter.ConfirmedThirdLevel = true;
+                            сollectedBasicParameter.Status = 4;
                         }
                         KPIWebDataContext.SubmitChanges();
                         if (dataConfCount == dataCount)
@@ -976,18 +1043,17 @@ namespace KPIWeb.Reports
                         {
                             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                             "alert('Вами утверждены данные " + dataConfCount.ToString() + " базовых показателей из " + dataCount.ToString() + "');", true);
-                        }
+                        }*/
 
-                        
-                    }
+#endregion
+                    #endregion
                 }
                 else
                 {
-                    //ERROR
+                    //error
                 }                
             }
         }
-
         protected void GridviewCollectedBasicParameters_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             Color color;
@@ -1013,17 +1079,16 @@ namespace KPIWeb.Reports
             }
             int mode = modeSer.mode;
 
+            int columnCnt = (int)ViewState["ValueColumnCnt"];
 
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-            for (int i = 1; i <= GridviewCollectedBasicParameters.Columns.Count; i++)
+            for (int i = 1; i <= columnCnt; i++)
             {
                 {
                     var lblMinutes = e.Row.FindControl("Value" + rowIndex) as TextBox;
                     var NotNullLbl = e.Row.FindControl("NotNull" + rowIndex) as Label;
                     if (NotNullLbl != null)
                     {
-
-
                         if (NotNullLbl.Text.Count() == 0)
                         {
                             lblMinutes.Visible = false;
@@ -1038,19 +1103,20 @@ namespace KPIWeb.Reports
                             Label lbl = e.Row.FindControl("CollectId" + rowIndex) as Label;
                             RangeValidator Validator = e.Row.FindControl("Validate" + rowIndex) as RangeValidator;
 
-                            bool isconf = Convert.ToBoolean((from a in kpiWebDataContext.CollectedBasicParametersTable
+                            int Status = Convert.ToInt32((from a in kpiWebDataContext.CollectedBasicParametersTable
                                                              where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
-                                                             select a.ConfirmedThirdLevel).FirstOrDefault());
+                                                             select a.Status).FirstOrDefault());
 
                             if (mode == 0) // редактировать
                             {
+                                #region edit
                                 int type = Convert.ToInt32((from a in kpiWebDataContext.CollectedBasicParametersTable
                                                             join b in kpiWebDataContext.BasicParametrAdditional
                                                                 on a.FK_BasicParametersTable equals b.BasicParametrAdditionalID
                                                             where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
                                                             select b.DataType).FirstOrDefault());
-                               
-                                if (isconf == true)
+
+                                if (Status == 4) // данные подтверждены первым уровнем
                                 {
                                     lblMinutes.ReadOnly = true;
                                     DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
@@ -1066,7 +1132,7 @@ namespace KPIWeb.Reports
                                     DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
                                     d.BackColor = color;
                                     lblMinutes.BackColor = color;
-
+                                    #region validator choose
                                     if (Validator != null)
                                     {
                                         if (type == 0)
@@ -1091,45 +1157,75 @@ namespace KPIWeb.Reports
                                             Validator.Text = "Только цифры и запятая";
                                         }
                                     }
+                                    #endregion
                                 }
+                                #endregion
                             }
+
                             else if (mode == 1) //смотреть
                             {
-
+                                #region view
                                 lblMinutes.ReadOnly = true;
                                 lblMinutes.BackColor = color;
 
-                                if (isconf == true)
+                                Color tmpColor = Color.Red;
+
+                                if (Status == 0) // не должны сюда попадать
                                 {
-                                    lblMinutes.ReadOnly = true;
-                                    DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
-                                    d.BackColor = confirmedColor;
-                                    lblMinutes.BackColor = confirmedColor;
+                                    tmpColor = Color.Blue;
                                 }
+                                else if (Status == 1) // вернули на доработку
+                                {
+                                    tmpColor = Color.Orange;
+                                }
+                                else if (Status == 2) // данные внесены
+                                {
+                                    tmpColor = Color.Yellow;
+                                }
+                                else if (Status == 3)// данные отпралены на верификацию
+                                {
+                                    tmpColor = Color.GreenYellow;
+                                }
+                                else if (Status == 4) // данные верифицированы
+                                {
+                                    tmpColor = Color.Green;
+                                }
+
+                                DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
+                                d.BackColor = tmpColor;
+                                lblMinutes.BackColor = tmpColor;
+
 
                                 if (Validator != null)
                                 {
                                     Validator.Enabled = false;
                                 }
+                                #endregion
                             }
                             else if (mode == 2) // утверждать
-                            {                               
+                            {
+                                #region confirm
+                                lblMinutes.ReadOnly = true;
+                                Validator.Enabled = false;
+                                lblMinutes.BackColor = color;
+                                /* // страница подтверждения с чексбоксами
                                 var chBox = e.Row.FindControl("Checked" + rowIndex) as CheckBox;
                                 chBox.Visible = true;
+                                                               
                                 lblMinutes.ReadOnly = true;
                                 Validator.MinimumValue = "0";
                                 Validator.MaximumValue = "10000000";
                                 Validator.Type = ValidationDataType.Double;
                                 Validator.Text = "Невозможно утвердить";
-                                if (isconf == true)
-                                {
-                                    lblMinutes.ReadOnly = true;
+                                                                
+                                if (Status == 4) // данные подтверждены
+                                {                                    
                                     DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
                                     d.BackColor = confirmedColor;
                                     lblMinutes.BackColor = confirmedColor;
                                     chBox.Checked = true;
                                     chBox.Enabled = false;
-                                    chBox.BackColor = confirmedColor;
+                                    chBox.BackColor = confirmedColor;                                   
                                 }
                                 else
                                 {
@@ -1137,10 +1233,13 @@ namespace KPIWeb.Reports
                                     DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
                                     d.BackColor = color;
                                     lblMinutes.BackColor = color;
+                                   
                                     chBox.Checked = false;
                                     chBox.Enabled = true;
                                     chBox.BackColor = color;
-                                }
+                                     
+                                }*/
+                                #endregion
                             }
                         }
                     }
@@ -1148,20 +1247,16 @@ namespace KPIWeb.Reports
                 }
             }
         }
-
         protected void GridviewCollectedBasicParameters_SelectedIndexChanged(object sender, EventArgs e)
         {
         }
-
         protected void GridviewCollectedBasicParameters_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
         {
         }
-
         protected void GridviewCollectedBasicParameters_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
         }
-
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void Button1_Click(object sender, EventArgs e) // экспорт в excel
         {
             /*int rowIndex = 0;
             DataTable collectedBasicParametersTable = (DataTable)ViewState["CollectedBasicParametersTable"];
@@ -1201,12 +1296,133 @@ namespace KPIWeb.Reports
             }
             excelApp.Visible = true;*/
         }
-
-        protected void Button2_Click(object sender, EventArgs e)
+        protected void Button2_Click(object sender, EventArgs e) // вернуться в меню 
         {
             Response.Redirect("~/Default.aspx");
         }
+        protected void Button3_Click(object sender, EventArgs e) // отправка на доработку и возвращение с доработки
+        {
+            KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+            Serialization modeSer = (Serialization)Session["mode"];
+            if (modeSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int mode = modeSer.mode;
 
+            int columnCnt = (int)ViewState["ValueColumnCnt"];
+            if (columnCnt != null)
+            {
+                if (GridviewCollectedBasicParameters.Rows.Count > 0)
+                {
+                    if (mode == 0)  //отправляем данные на подтверждение
+                    {
+                        #region send to confirm
+                        for (int k = 0; k < columnCnt; k++) // пройдемся по каждой колонке
+                        {
+                            for (int i = 0; i < GridviewCollectedBasicParameters.Rows.Count; i++)
+                            {                           
+                            Label label =
+                                (Label) GridviewCollectedBasicParameters.Rows[i].FindControl("CollectId" + k.ToString());
+                            if (label != null)
+                            {
+                                if (label.Text == "")
+                                {
+
+                                }
+                                else
+                                {
+                                    CollectedBasicParametersTable tmpColTable =
+                                        (from a in KPIWebDataContext.CollectedBasicParametersTable
+                                            where a.CollectedBasicParametersTableID == Convert.ToInt32(label.Text)
+                                            select a).FirstOrDefault();
+                                    if (tmpColTable != null)
+                                    {
+                                        if ((tmpColTable.Status == 2)||(tmpColTable.Status == 1))
+                                        {
+                                            tmpColTable.Status = 3;
+                                            KPIWebDataContext.SubmitChanges();
+                                        }
+                                        else
+                                        {
+                                            //error
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //error    
+                                    }
+                                }
+                            }
+                            }
+                        }
+                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                    "alert('Отчет отправлен на подтверждение.);", true);
+                        //SENDMAIL ()
+                        #endregion
+                    }
+                    else if (mode == 2) // данные обратно на доработку
+                    {
+                        #region send back to correct
+                        for (int k = 0; k < columnCnt; k++) // 
+                        {
+                            for (int i = 0; i < GridviewCollectedBasicParameters.Rows.Count; i++)
+                            {                           
+                            Label label =
+                                (Label)GridviewCollectedBasicParameters.Rows[i].FindControl("CollectId" + k.ToString());
+
+                                if (label != null)
+                                {
+                                    if (label.Text == "")
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        CollectedBasicParametersTable tmpColTable =
+                                            (from a in KPIWebDataContext.CollectedBasicParametersTable
+                                                where a.CollectedBasicParametersTableID == Convert.ToInt32(label.Text)
+                                                select a).FirstOrDefault();
+                                        if (tmpColTable != null)
+                                        {
+                                            if (tmpColTable.Status == 3)
+                                            {
+                                                tmpColTable.Status = 1;
+                                                KPIWebDataContext.SubmitChanges();
+                                            }
+                                            else
+                                            {
+                                                //error
+                                            }
+                                        }
+                                        else
+                                        {
+                                            //error    
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                    "alert('Отчет отправлен на доработку с коментарием: \r\n\"" + TextBox1.Text + "\"');", true);
+                        //SENDMAIL ()
+                        #endregion
+                    }
+                }
+                else
+                {
+                    //error
+                }
+            }
+            else
+            {
+                //error
+            }
+            
+            
+        }
+
+        /* старая процедура для проставления галочек подтверждения
         protected void Button3_Click(object sender, EventArgs e)////проставить везде галочки
         {
             if (GridviewCollectedBasicParameters.Rows.Count > 0)
@@ -1229,6 +1445,6 @@ namespace KPIWeb.Reports
                     rowIndex++;
                 }
             }
-        }
+        }*/
     }
 }

@@ -20,7 +20,7 @@ namespace KPIWeb.AutomationDepartment
             }
 
             int userID = UserSer.Id;
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext( );
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
@@ -51,7 +51,7 @@ namespace KPIWeb.AutomationDepartment
             DropDownList2.Items.Clear();
             DropDownList3.Items.Clear();
 
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext( );
             int SelectedValue = -1;
             if (int.TryParse(DropDownList1.SelectedValue, out SelectedValue) && SelectedValue != -1)
             {
@@ -78,7 +78,7 @@ namespace KPIWeb.AutomationDepartment
         {
             DropDownList3.Items.Clear();
 
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext( );
 
             int SelectedValue = -1;
 
@@ -112,7 +112,7 @@ namespace KPIWeb.AutomationDepartment
         {
             string s = TextBox1.Text;
             string[] lines = s.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext( );
             foreach (string line in lines)
             {
                 string t1 = line.TrimEnd(' ');
@@ -145,7 +145,7 @@ namespace KPIWeb.AutomationDepartment
                     string s = TextBox2.Text;
                     string[] lines = s.Split(new string[] {"\n"}, StringSplitOptions.RemoveEmptyEntries);
                     KPIWebDataContext kPiDataContext =
-                        new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+                        new KPIWebDataContext( );
                     foreach (string line in lines)
                     {
                         string t1 = line.TrimEnd(' ');
@@ -180,7 +180,7 @@ namespace KPIWeb.AutomationDepartment
                     string s = TextBox3.Text;
                     string[] lines = s.Split(new string[] {"\n"}, StringSplitOptions.RemoveEmptyEntries);
                     KPIWebDataContext kPiDataContext =
-                        new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+                        new KPIWebDataContext( );
                     foreach (string line in lines)
                     {
                         string t1 = line.TrimEnd(' ');
@@ -218,7 +218,7 @@ namespace KPIWeb.AutomationDepartment
             TextBox2.Text = "";
             TextBox3.Text = "";
 
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext( );
             List<FirstLevelSubdivisionTable> First_stageList = (from item in kPiDataContext.FirstLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
             var dictionary = new Dictionary<int, string>();
             dictionary.Add(0, "Выберите значение");

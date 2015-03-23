@@ -74,8 +74,17 @@ namespace KPIWeb.Head
                                                   && b.SubvisionLevel == 2
                                                   && a.FK_ReportArchiveTable == currentReport
                                                   && a.FK_SecondLevelSubdivisionTable == secondLevelItem.SecondLevelSubdivisionTableID
-                                                  && a.ConfirmedThirdLevel == true
+                                                  && a.Status == 4 // данные верифицированы первым уровнем
                                                   select a).ToList().Count();
+
+                        //status=0 данных нет 
+                        //status=1 данные вернули на доработку
+                        //status=2 данные есть
+                        //status=3 данные отправлены на верификацию
+                        //status=4 данные верифицированы первым первым уровнем(кафедрой)
+                        //status=5 
+                        //status=6
+                        
 
                         int allThirdLevel = (from m4 in kPiDataContext.BasicParametersTable
                                               join s4 in kPiDataContext.BasicParametrAdditional
@@ -123,7 +132,7 @@ namespace KPIWeb.Head
                                                      && b.SubvisionLevel == 3
                                                      && a.FK_ReportArchiveTable == currentReport
                                                      && a.FK_ThirdLevelSubdivisionTable == thirdLevelItem.ThirdLevelSubdivisionTableID
-                                                     && a.ConfirmedThirdLevel == true
+                                                     && a.Status == 4 // верифицированы первым уровнем
                                                      select a).ToList().Count();
 
                             int allFourthLevel = (from m4 in kPiDataContext.BasicParametersTable
@@ -185,7 +194,7 @@ namespace KPIWeb.Head
                                                            b.Calculated == false
                                                         && a.FK_ReportArchiveTable == currentReport
                                                         && a.FK_FourthLevelSubdivisionTable == fourthLevelItem.FourthLevelSubdivisionTableID
-                                                        && a.ConfirmedThirdLevel == true
+                                                        && a.Status == 4
                                                         select a).ToList().Count();
 
                                 int allFifthLevel = (from m4 in kPiDataContext.BasicParametersTable

@@ -21,7 +21,7 @@ namespace KPIWeb.StatisticsDepartment
             }
 
             int userID = UserSer.Id;
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
@@ -33,7 +33,7 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));            
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();            
             List<BasicParametersTable> basicTable = (from item in kPiDataContext.BasicParametersTable select item).ToList();
             string tmpStr = "0";
             string str;
@@ -88,7 +88,7 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             BasicParametersTable basicParametr = (from item in kPiDataContext.BasicParametersTable where  item.BasicParametersTableID== Convert.ToInt32(TextBox8.Text) select item).FirstOrDefault();
             if (basicParametr!=null)
             {
@@ -116,7 +116,7 @@ namespace KPIWeb.StatisticsDepartment
         {  
             if (TextBox8.Text!="")
             {
-                KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
                 BasicParametersTable basicParametr = (from item in kPiDataContext.BasicParametersTable
                                                       where item.BasicParametersTableID == Convert.ToInt32(TextBox8.Text)
                                                       select item).FirstOrDefault();
@@ -143,7 +143,7 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void Button4_Click(object sender, EventArgs e)
         {
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
            
             string tmpStr;
             tmpStr = TextBox9.Text;

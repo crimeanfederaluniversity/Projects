@@ -19,7 +19,7 @@ namespace KPIWeb.StatisticsDepartment
             }
 
             int userID = UserSer.Id;
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 

@@ -21,7 +21,7 @@ namespace KPIWeb.StatisticsDepartment
 
             int userID = UserSer.Id;
 
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
@@ -106,7 +106,7 @@ namespace KPIWeb.StatisticsDepartment
         {
             DropDownList2.Items.Clear();
             DropDownList3.Items.Clear();
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             int SelectedValue = -1;
             if (int.TryParse(DropDownList1.SelectedValue, out SelectedValue) && SelectedValue != -1)
             {
@@ -140,7 +140,7 @@ namespace KPIWeb.StatisticsDepartment
         protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
         {
             DropDownList3.Items.Clear();
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             int SelectedValue = -1;
             if (int.TryParse(DropDownList2.SelectedValue, out SelectedValue) && SelectedValue != -1)
             {

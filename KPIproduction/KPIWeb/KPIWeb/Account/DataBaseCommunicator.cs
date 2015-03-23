@@ -17,7 +17,7 @@ namespace WebApplication3
         //{
 
         //    List<Users> returnValue = new List<Users>();
-        //    using (SqlConnection dbConnection = new SqlConnection(ConfigurationManager.AppSettings.Get("ConnectionString")))
+        //    using (SqlConnection dbConnection = new SqlConnection())
 			
         //    using (SqlCommand dbCommand = dbConnection.CreateCommand())
         //    {

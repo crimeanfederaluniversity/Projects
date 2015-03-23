@@ -6,8 +6,6 @@
                 <asp:Label ID="Label1" runat="server" Text="Ввведите значения в таблицу показателей и нажмите кнопку &quot;Сохранить&quot; внизу формы"></asp:Label>
             </h2>
             <br />
-            <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Выделить все" />
-            <br />
             <br />
 
 
@@ -379,7 +377,7 @@
                 </Columns>
             </asp:GridView>
             <br />
-            <asp:Button ID="ButtonSave" Width="400px" runat="server" Text="Сохранить" OnClick="ButtonSave_Click" />
+            <asp:Button ID="ButtonSave" Width="400px" runat="server" Text="Сохранить и выйти" OnClick="ButtonSave_Click" />
 
             <br />
             <br />
@@ -387,9 +385,16 @@
 
             <br />
             <br />
-            <asp:Button ID="Button2" runat="server" Height="25px" OnClick="Button2_Click" Text="Вернутся в меню без сохранения" Width="400px" />
+            <asp:Button ID="GoBackButton" runat="server" Height="25px" OnClick="Button2_Click" Text="Вернутся в меню без сохранения" Width="400px" />
 
             <br />
+            <br />
+            <asp:Button ID="UpnDownButton" runat="server" Height="25px" OnClick="Button3_Click" Text="Вернуть для доработки (коментарий ниже)" Width="400px" />
+            <br />
+
+            <br />
+
+            <asp:TextBox ID="TextBox1" runat="server" Height="200px" TextMode="MultiLine" Width="400px"></asp:TextBox>
 
             <br />
 

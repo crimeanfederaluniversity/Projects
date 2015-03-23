@@ -51,7 +51,7 @@ namespace KPIWeb
                 if (userLevel == 4) tmp = (from f in KPIWebDataContext.FourthLevelSubdivisionTable where f.FourthLevelSubdivisionTableID == user.FK_FourthLevelSubdivisionTable select f.Name).FirstOrDefault();
                 if (userLevel == 5) tmp = (from g in KPIWebDataContext.FifthLevelSubdivisionTable where g.FifthLevelSubdivisionTableID == user.FK_FifthLevelSubdivisionTable select g.Name).FirstOrDefault();
 
-                FormsAuthentication.SetAuthCookie(user.Login+"\n\r"+tmp, true);
+                FormsAuthentication.SetAuthCookie(user.Email+"\n\r"+tmp, true);
                 int accessLevel = (int) user.AccessLevel;
                 if (accessLevel == 10)
                 {

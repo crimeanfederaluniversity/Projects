@@ -156,6 +156,7 @@
     <Content Include="About.aspx" />
     <Content Include="Account\OpenAuthProviders.ascx" />
     <Content Include="Account\UserLogin.aspx" />
+    <Content Include="Account\UserRegister.aspx" />
     <Content Include="AutomationDepartment\AddLevel.aspx" />
     <Content Include="AutomationDepartment\AddRole.aspx" />
     <Content Include="AutomationDepartment\AddSpecialization.aspx" />
@@ -258,6 +259,13 @@
     </Compile>
     <Compile Include="Account\UserLogin.aspx.designer.cs">
       <DependentUpon>UserLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\UserRegister.aspx.cs">
+      <DependentUpon>UserRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\UserRegister.aspx.designer.cs">
+      <DependentUpon>UserRegister.aspx</DependentUpon>
     </Compile>
     <Compile Include="Action.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -506,6 +514,9 @@
     <None Include="KPIWeb.dbml.layout">
       <DependentUpon>KPIWeb.dbml</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

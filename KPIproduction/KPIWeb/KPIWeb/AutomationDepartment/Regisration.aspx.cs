@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -10,7 +12,32 @@ using System.Web.UI.WebControls;
 namespace KPIWeb.AutomationDepartment
 {
     public partial class Regisration : System.Web.UI.Page
+    
     {
+        private string RandomString(int size)
+        {
+            StringBuilder builder = new StringBuilder();
+            Random random = new Random();
+            char ch;
+            for (int i = 0; i < size; i++)
+            {
+                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+                builder.Append(ch);
+            }
+            return builder.ToString();
+        }
+/*
+        protected string getRandomCode()
+        {
+            Random random = new Random();
+            string tmp ="";
+            for (int i = 0; i < 50; i++)
+            {
+                tmp += random.Next(0, 5);
+            }
+            return tmp;
+        }
+*/
         protected void FillGridVIews(int reportID_)
         {
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
@@ -105,7 +132,7 @@ namespace KPIWeb.AutomationDepartment
         {
             DropDownList2.Items.Clear();
             DropDownList3.Items.Clear();
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             int SelectedValue = -1;
             if (int.TryParse(DropDownList1.SelectedValue, out SelectedValue) && SelectedValue != -1)
             {
@@ -137,7 +164,7 @@ namespace KPIWeb.AutomationDepartment
         }    
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
@@ -145,7 +172,7 @@ namespace KPIWeb.AutomationDepartment
             }
 
             int userID = UserSer.Id;
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
@@ -240,7 +267,7 @@ namespace KPIWeb.AutomationDepartment
             }
 
             int userID = UserSer.Id;
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
@@ -446,13 +473,16 @@ namespace KPIWeb.AutomationDepartment
                     }
 
                     user.FK_ZeroLevelSubdivisionTable = 1;
-
+                    string passCode = RandomString(25);
+                    user.PassCode = passCode;
+                    user.Confirmed = false;                
                     kPiDataContext.UsersTable.InsertOnSubmit(user);
                     kPiDataContext.SubmitChanges();
                     //// ПОЛЬЗОВАТЕЛЬ СОЗДАН
-
+                    /// 
+                    //SENDMAIL (email =user.Email  title = "КФУ КПЭ регистрация" body = "Для продолжения регистрации нажмите на ссылку" + "...Account/UserRegister?&id="+passCode )
                     int userID = user.UsersTableID;
-
+                    
                     ///////////////////////////////////////////шаблон//////////////////////////////////
                     rowIndex = 0;
 

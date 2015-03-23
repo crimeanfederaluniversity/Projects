@@ -206,7 +206,7 @@ namespace KPIWeb.Head
                         && (a.FK_ThirdLevelSubdivisionTable == l_3 || l_3 == 0)
                         && (a.FK_FourthLevelSubdivisionTable == l_4 || l_4 == 0)
                         && (a.FK_FifthLevelSubdivisionTable == l_5 || l_5 == 0)
-                        && a.ConfirmedThirdLevel == true
+                        && a.Status == 4
                         && a.FK_ReportArchiveTable == ReportArchiveID
                                        select a).ToList().Count();
                         Confcnt += tmpconf;
@@ -277,9 +277,13 @@ namespace KPIWeb.Head
                     {
                         dataRow["info0"] = "Авто";
                     }
-                    else
+                    else if ((Confcnt > Insertcnt)||(Insertcnt>Allcnt))
                     {
-                      
+                        //SENDMAIL (email =admin  title = "ошибка в расчетных показателях у руководства" body = "Allcnt="+Allcnt+" Confcnt"+Confcnt +Insertcnt+user + report + indicatorID )                   
+                        dataRow["info0"] = "Данные недоступны";
+                    }  
+                    else
+                    {                     
                        // dataRow["info0"] = Allcnt + "/" Insertcnt + "/" + Confcnt;
                         dataRow["info0"] = (((double)Insertcnt / (double)Allcnt) * 100).ToString("0.0") + "%/" + (((double)Confcnt / (double)Insertcnt) * 100).ToString("0.0") + "%";
                     }
@@ -371,7 +375,16 @@ namespace KPIWeb.Head
                     {
                         dataRow["IndicatorResult"] = tmp.ToString("0.000");
                     }
-                    dataRow["info0"] = Confcnt + "  из " + Allcnt;
+                    if (Allcnt < Confcnt) //что то не так
+                    {
+                        dataRow["info0"] = "Данные недоступны";
+                        //SENDMAIL (email =admin  title = "ошибка в индикаторах у руководства" body = "Allcnt="+Allcnt+" Confcnt"+Confcnt +user + report + indicatorID )
+                    
+                    }
+                    else
+                    {
+                        dataRow["info0"] = Confcnt + "  из " + Allcnt;
+                    }
                     dt_indicator.Rows.Add(dataRow);
                     
                     AllcntListI.Add(Allcnt);

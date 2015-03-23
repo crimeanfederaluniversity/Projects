@@ -22,7 +22,7 @@ namespace KPIWeb.Head
             }
 
             int userID = UserSer.Id;
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
@@ -39,7 +39,7 @@ namespace KPIWeb.Head
                 DropDownList1.Visible = false;
                 DropDownList2.Visible = false;
                 DropDownList3.Visible = false;
-                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
                 
                 List<FirstLevelSubdivisionTable> First_stageList = (from item in kPiDataContext.FirstLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
                 var dictionary = new Dictionary<int, string>();
@@ -210,7 +210,7 @@ namespace KPIWeb.Head
             DropDownList2.Items.Clear();
             DropDownList3.Items.Clear();
 
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             int SelectedValue = -1;
             if (int.TryParse(DropDownList1.SelectedValue, out SelectedValue) && SelectedValue != -1)
             {
@@ -237,7 +237,7 @@ namespace KPIWeb.Head
         {
             DropDownList3.Items.Clear();
 
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
 
             int SelectedValue = -1;
 

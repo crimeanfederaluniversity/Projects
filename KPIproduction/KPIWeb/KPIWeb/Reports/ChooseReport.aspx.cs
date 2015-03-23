@@ -75,37 +75,131 @@ namespace KPIWeb.Reports
                     userLevel = l_1 == 0 ? 0 : userLevel;
                     userLevel = l_0 == 0 ? -1 : userLevel;
 
-                    if (userLevel == 3)
-                    {
-                        Button1.Visible = true;
-                    }
-                    else
-                    {
-                        Button1.Visible = false;
-                    }
-                /// 
-                /// ///////////////////////
                 DataTable dataTable = new DataTable();
+                
                 dataTable.Columns.Add(new DataColumn("ReportArchiveID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("ReportName", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("StartDate", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("EndDate", typeof(string)));
-            
+                dataTable.Columns.Add(new DataColumn("Status", typeof(string)));
+
+                List<int> StatenList = new List<int>();
                 foreach (ReportArchiveTable ReportRow in reportsArchiveTablesTable)
                 {
                     DataRow dataRow = dataTable.NewRow();
                                 dataRow["ReportArchiveID"] = ReportRow.ReportArchiveTableID.ToString();
                                 dataRow["ReportName"] = ReportRow.Name;
                                 dataRow["StartDate"] = ReportRow.StartDateTime.ToString().Split(' ')[0];//только дата// время обрезается сплитом
-                                dataRow["EndDate"] = ReportRow.EndDateTime.ToString().Split(' ')[0]; ;
+                                dataRow["EndDate"] = ReportRow.EndDateTime.ToString().Split(' ')[0]; 
+                                
+                                //нужно определить статус данных
+                                //status=0 данных нет 
+                                //status=1 данные вернули на доработку
+                                //status=2 данные есть
+                                //status=3 данные отправлены на верификацию
+                                //status=4 данные верифицированы первым первым уровнем(кафедрой)
+
+                    // возьмем первый попавшийся заполненный показатель
+                    CollectedBasicParametersTable ColTemp =
+                        (from a in kpiWebDataContext.CollectedBasicParametersTable
+                            join b in kpiWebDataContext.UsersTable
+                                on a.FK_UsersTable equals b.UsersTableID
+                            join c in kpiWebDataContext.BasicParametrAdditional
+                                on a.FK_BasicParametersTable equals c.BasicParametrAdditionalID
+                            where
+                                a.FK_ReportArchiveTable == ReportRow.ReportArchiveTableID
+                                && ((b.FK_ZeroLevelSubdivisionTable   == l_0)||(l_0==0))
+                                && ((b.FK_FirstLevelSubdivisionTable  == l_1)||(l_1==0))
+                                && ((b.FK_SecondLevelSubdivisionTable == l_2)||(l_2==0))
+                                && ((b.FK_ThirdLevelSubdivisionTable  == l_3)||(l_3==0))
+                                && ((b.FK_FourthLevelSubdivisionTable == l_4)||(l_4==0))
+                                && ((b.FK_FifthLevelSubdivisionTable  == l_5)||(l_5==0))
+                                && a.Active == true 
+                                && b.Active == true
+                                && c.Calculated == false
+                            select a).FirstOrDefault();
+
+
+                    string status = "Нет данных";
+                    int Statusn = 0;
+                    if (ColTemp == null)
+                    {
+                        Statusn = 0;
+                    }
+                    else
+                    {
+                        Statusn = (int)ColTemp.Status;
+                    }
+
+                    if (Statusn == 4)
+                    {
+                        status = "Данные верифицированы";
+                    }
+                    else if (Statusn == 3)
+                    {
+                        status = "Данные ожидают верификации";
+                    }
+                    else if (Statusn == 2)
+                    {
+                        status = "Данные в процессе заполнения";
+                    }
+                    else if (Statusn == 1)
+                    {
+                        status = "Данные возвращены на доработку";                       
+                    }
+                    else if (Statusn == 0)
+                    {
+                        status = "Данные в процессе заполнения";
+                    }
+                    else
+                    {
+                        //error
+                    }
+                                StatenList.Add(Statusn);                    
+                                dataRow["Status"] = status;               
                                 dataTable.Rows.Add(dataRow); 
                 }           
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
+
+                for (int i = 0; i < GridView1.Rows.Count; i++)
+                {
+                    Button btnEdit = GridView1.Rows[i].FindControl("ButtonEditReport") as Button;
+                    Button btnView = GridView1.Rows[i].FindControl("ButtonViewReport") as Button;
+                    Button btnConfirm = GridView1.Rows[i].FindControl("ButtonConfirmReport") as Button;
+
+                    //status=0 данных нет 
+                    //status=1 данные вернули на доработку
+                    //status=2 данные есть
+                    //status=3 данные отправлены на верификацию
+                    //status=4 данные верифицированы первым первым уровнем(кафедрой)
+
+                    if ((btnEdit != null) && (btnView != null) && (btnConfirm != null))
+                    {
+                        if ((StatenList[i] == 0)||(StatenList[i] == 1)||(StatenList[i] == 2))
+                        {
+                            btnConfirm.Enabled = false;
+                            btnEdit.Enabled = true;
+                            btnView.Enabled = true;
+                        }
+                        else if (StatenList[i] == 3)
+                        {
+                            btnConfirm.Enabled = true;
+                            btnEdit.Enabled = false;
+                            btnView.Enabled = true;
+                        }
+                        else
+                        {
+                            btnConfirm.Enabled = false;
+                            btnEdit.Enabled = false;
+                            btnView.Enabled = true;
+                        }
+
+                    }
+                }
                 ///вывели все отчеты с параметрами в гридвью          
             }
         }
-
         protected void ButtonEditClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -117,7 +211,6 @@ namespace KPIWeb.Reports
                 Response.Redirect("~/Reports/FillingTheReport.aspx");
             }
         }
-
         protected void ButtonViewClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -129,7 +222,6 @@ namespace KPIWeb.Reports
                 Response.Redirect("~/Reports/FillingTheReport.aspx");
             }
         }
-
         protected void ButtonConfirmClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -141,24 +233,10 @@ namespace KPIWeb.Reports
                 Response.Redirect("~/Reports/FillingTheReport.aspx");
             }
         }
-
-        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Reports/SpecializationParametrs.aspx");            
-        }
-
-        protected void Button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
+       
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            /*
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
@@ -195,7 +273,7 @@ namespace KPIWeb.Reports
                     userLevel = l_2 == 0 ? 1 : userLevel;
                     userLevel = l_1 == 0 ? 0 : userLevel;
                     userLevel = l_0 == 0 ? -1 : userLevel;
-
+                    /*
                     if (userLevel == 3)
                     {
                         int ReportArchiveID = Convert.ToInt32(btnEdit.CommandArgument);
@@ -378,8 +456,9 @@ namespace KPIWeb.Reports
                         btnView.Enabled = (view) > 0 ? true : false;
                         btnConfirm.Enabled = (conf) > 0 ? true : false;
                     }
-                }
-            }
+                    */
+           //     }
+          //  }
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="crimeanfeder_9" Class="KPIWebDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=V-PC\DATABASE_1;Initial Catalog=crimeanfeder_9;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="crimeanfeder_9ConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="crimeanfeder_0" Class="KPIWebDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=V-PC\DATABASE_1;Initial Catalog=crimeanfeder_0;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="crimeanfeder_0ConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTable">
     <Type Name="BasicParametersAndRolesMappingTable">
       <Column Name="BasicParametersAndRolesMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -74,9 +74,23 @@
       <Column Name="Measure" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
       <Column Name="Formula" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
       <Column Name="AbbreviationEN" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="CalculatedParametrs_CalculatedParametrsAndRolesMappingTable" Member="CalculatedParametrsAndRolesMappingTable" ThisKey="CalculatedParametrsID" OtherKey="FK_CalculatedParametrs" Type="CalculatedParametrsAndRolesMappingTable" />
       <Association Name="CalculatedParametrs_CalculatedParametrsAndUsersMapping" Member="CalculatedParametrsAndUsersMapping" ThisKey="CalculatedParametrsID" OtherKey="FK_CalculatedParametrsTable" Type="CalculatedParametrsAndUsersMapping" />
       <Association Name="CalculatedParametrs_CollectedCalculatedParametrs" Member="CollectedCalculatedParametrs" ThisKey="CalculatedParametrsID" OtherKey="FK_CalculatedParametrs" Type="CollectedCalculatedParametrs" />
       <Association Name="CalculatedParametrs_ReportArchiveAndCalculatedParametrsMappingTable" Member="ReportArchiveAndCalculatedParametrsMappingTable" ThisKey="CalculatedParametrsID" OtherKey="FK_CalculatedParametrsTable" Type="ReportArchiveAndCalculatedParametrsMappingTable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CalculatedParametrsAndRolesMappingTable" Member="CalculatedParametrsAndRolesMappingTable">
+    <Type Name="CalculatedParametrsAndRolesMappingTable">
+      <Column Name="BasicParametersAndRolesWithLeadersID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FK_RolesTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_CalculatedParametrs" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CanEdit" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CanView" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CanConfirm" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="CalculatedParametrs_CalculatedParametrsAndRolesMappingTable" Member="CalculatedParametrs" ThisKey="FK_CalculatedParametrs" OtherKey="CalculatedParametrsID" Type="CalculatedParametrs" IsForeignKey="true" />
+      <Association Name="RolesTable_CalculatedParametrsAndRolesMappingTable" Member="RolesTable" ThisKey="FK_RolesTable" OtherKey="RolesTableID" Type="RolesTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CalculatedParametrsAndUsersMapping" Member="CalculatedParametrsAndUsersMapping">
@@ -109,8 +123,7 @@
       <Column Name="FK_ThirdLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FK_FourthLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FK_FifthLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ConfirmedThirdLevel" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="ConfirmedHead" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Status" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="BasicParametersTable_CollectedBasicParametersTable" Member="BasicParametersTable" ThisKey="FK_BasicParametersTable" OtherKey="BasicParametersTableID" Type="BasicParametersTable" IsForeignKey="true" />
       <Association Name="ZeroLevelSubdivisionTable_CollectedBasicParametersTable" Member="ZeroLevelSubdivisionTable" ThisKey="FK_ZeroLevelSubdivisionTable" OtherKey="ZeroLevelSubdivisionTableID" Type="ZeroLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="FifthLevelSubdivisionTable_CollectedBasicParametersTable" Member="FifthLevelSubdivisionTable" ThisKey="FK_FifthLevelSubdivisionTable" OtherKey="FifthLevelSubdivisionTableID" Type="FifthLevelSubdivisionTable" IsForeignKey="true" />
@@ -216,6 +229,19 @@
       <Association Name="ThirdLevelSubdivisionTable_FourthLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.IndicatorsAndRolesMappingTable" Member="IndicatorsAndRolesMappingTable">
+    <Type Name="IndicatorsAndRolesMappingTable">
+      <Column Name="CalculatedIndicatorsAndRolesWithLeadersID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_RolesTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_Indicators" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CanEdit" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CanView" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CanConfirm" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="IndicatorsTable_IndicatorsAndRolesMappingTable" Member="IndicatorsTable" ThisKey="FK_Indicators" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
+      <Association Name="RolesTable_IndicatorsAndRolesMappingTable" Member="RolesTable" ThisKey="FK_RolesTable" OtherKey="RolesTableID" Type="RolesTable" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.IndicatorsAndUsersMapping" Member="IndicatorsAndUsersMapping">
     <Type Name="IndicatorsAndUsersMapping">
       <Column Name="IndicatorsAndUsersMappingID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -237,6 +263,7 @@
       <Column Name="Measure" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
       <Column Name="Formula" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
       <Association Name="IndicatorsTable_CollectedIndocators" Member="CollectedIndocators" ThisKey="IndicatorsTableID" OtherKey="FK_Indicators" Type="CollectedIndocators" />
+      <Association Name="IndicatorsTable_IndicatorsAndRolesMappingTable" Member="IndicatorsAndRolesMappingTable" ThisKey="IndicatorsTableID" OtherKey="FK_Indicators" Type="IndicatorsAndRolesMappingTable" />
       <Association Name="IndicatorsTable_IndicatorsAndUsersMapping" Member="IndicatorsAndUsersMapping" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="IndicatorsAndUsersMapping" />
       <Association Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable" Member="ReportArchiveAndIndicatorsMappingTable" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="ReportArchiveAndIndicatorsMappingTable" />
     </Type>
@@ -309,6 +336,8 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="RoleName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
       <Association Name="RolesTable_BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTable" ThisKey="RolesTableID" OtherKey="FK_RolesTable" Type="BasicParametersAndRolesMappingTable" />
+      <Association Name="RolesTable_CalculatedParametrsAndRolesMappingTable" Member="CalculatedParametrsAndRolesMappingTable" ThisKey="RolesTableID" OtherKey="FK_RolesTable" Type="CalculatedParametrsAndRolesMappingTable" />
+      <Association Name="RolesTable_IndicatorsAndRolesMappingTable" Member="IndicatorsAndRolesMappingTable" ThisKey="RolesTableID" OtherKey="FK_RolesTable" Type="IndicatorsAndRolesMappingTable" />
     </Type>
   </Table>
   <Table Name="dbo.SecondLevelSubdivisionTable" Member="SecondLevelSubdivisionTable">
@@ -369,6 +398,8 @@
       <Column Name="FK_FifthLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="AccessLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FK_ZeroLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PassCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Confirmed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="UsersTable_BasicParametrsAndUsersMapping" Member="BasicParametrsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="BasicParametrsAndUsersMapping" />
       <Association Name="UsersTable_CalculatedParametrsAndUsersMapping" Member="CalculatedParametrsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CalculatedParametrsAndUsersMapping" />
       <Association Name="UsersTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedBasicParametersTable" />

@@ -196,7 +196,7 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void Button4_Click(object sender, EventArgs e)
         {
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             List<BasicParametersTable> basicParamsList = (from a in kPiDataContext.BasicParametersTable
                                                           where a.Name.Contains(SearchBox.Text) || a.AbbreviationEN.Contains(SearchBox.Text)
                                                           select a).ToList();
@@ -246,7 +246,7 @@ namespace KPIWeb.StatisticsDepartment
                     LabelAbbError.Visible = false;
                    // DropDownList1.DataSource=""
                     KPIWebDataContext kPiDataContext =
-                        new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+                        new KPIWebDataContext();
                     List<IndicatorsTable> indicatorList = (from item in kPiDataContext.IndicatorsTable select item).ToList();
                     var dictionary = new Dictionary<int, string>();
                     dictionary.Add(0, "Добавить новый индикатор");
@@ -281,7 +281,7 @@ namespace KPIWeb.StatisticsDepartment
                     LabelAbbError.Visible = false;
 
                     KPIWebDataContext kPiDataContext =
-                        new KPIWebDataContext(ConfigurationManager.AppSettings.Get("ConnectionString"));
+                        new KPIWebDataContext();
 
                     List<CalculatedParametrs> calcParamsTable = (from item in kPiDataContext.CalculatedParametrs select item).ToList();
                     var dictionary = new Dictionary<int, string>();
