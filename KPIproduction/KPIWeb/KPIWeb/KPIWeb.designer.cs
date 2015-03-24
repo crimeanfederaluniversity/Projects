@@ -7795,6 +7795,8 @@ namespace KPIWeb
 		
 		private string _RoleName;
 		
+		private System.Nullable<bool> _IsHead;
+		
 		private EntitySet<BasicParametersAndRolesMappingTable> _BasicParametersAndRolesMappingTable;
 		
 		private EntitySet<CalculatedParametrsAndRolesMappingTable> _CalculatedParametrsAndRolesMappingTable;
@@ -7811,6 +7813,8 @@ namespace KPIWeb
     partial void OnActiveChanged();
     partial void OnRoleNameChanging(string value);
     partial void OnRoleNameChanged();
+    partial void OnIsHeadChanging(System.Nullable<bool> value);
+    partial void OnIsHeadChanged();
     #endregion
 		
 		public RolesTable()
@@ -7877,6 +7881,26 @@ namespace KPIWeb
 					this._RoleName = value;
 					this.SendPropertyChanged("RoleName");
 					this.OnRoleNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsHead", DbType="Bit")]
+		public System.Nullable<bool> IsHead
+		{
+			get
+			{
+				return this._IsHead;
+			}
+			set
+			{
+				if ((this._IsHead != value))
+				{
+					this.OnIsHeadChanging(value);
+					this.SendPropertyChanging();
+					this._IsHead = value;
+					this.SendPropertyChanged("IsHead");
+					this.OnIsHeadChanged();
 				}
 			}
 		}

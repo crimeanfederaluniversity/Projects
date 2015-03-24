@@ -9,8 +9,8 @@
         <asp:TextBox ID="TextBox1" runat="server" Width="139px"></asp:TextBox>
 &nbsp;Активна
         <asp:CheckBox ID="CheckBox1" runat="server" />
-&nbsp;&nbsp;
-        <asp:Button ID="Button1" runat="server" Text="Создать" Width="63px" OnClick="Button1_Click" />
+&nbsp;&nbsp;Руководство<asp:CheckBox ID="CheckBox2" runat="server" />
+&nbsp;<asp:Button ID="Button1" runat="server" Text="Создать" Width="63px" OnClick="Button1_Click" />
         <br />
         _________________________________________________________________<br />
         <br />
@@ -25,7 +25,7 @@
         <br />
         <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Сохранить изменения" Width="497px" />
         <br />
-        <br />
+        Базовые показатели<br />
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
             <Columns>
             <asp:TemplateField HeaderText="Название">
@@ -51,4 +51,49 @@
             </asp:TemplateField>
             </Columns>
         </asp:GridView>
+    
+     <br />
+    Рассчетные показатели<asp:GridView ID="CalcGrid" runat="server" AutoGenerateColumns="False">
+            <Columns>
+            <asp:TemplateField HeaderText="Название">
+                                    <ItemTemplate>
+                                        <asp:Label ID="Label3" runat="server" Visible="False" Text='<%# Bind("CalcID") %>'></asp:Label>
+                                        <asp:Label ID="Label4" runat="server" Visible="True" Text='<%# Bind("Name1") %>'></asp:Label>
+                                    </ItemTemplate>
+            </asp:TemplateField>
+                <asp:TemplateField HeaderText="Просм">
+                                    <ItemTemplate>
+                                         <asp:CheckBox ID="CheckBoxCanView1" runat="server" Checked='<%# Bind("ViewChecked1") %>'></asp:CheckBox>                          
+                                    </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Подтв">
+                                    <ItemTemplate>
+                                         <asp:CheckBox ID="CheckBoxVerify1" runat="server"  Checked='<%# Bind("VerifyChecked1") %>'></asp:CheckBox>                        
+                                    </ItemTemplate>
+            </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
+    
+        <br />
+    Индикаторы<asp:GridView ID="IndicatorGrid" runat="server" AutoGenerateColumns="False">
+            <Columns>
+            <asp:TemplateField HeaderText="Название">
+                                    <ItemTemplate>
+                                        <asp:Label ID="Label5" runat="server" Visible="False" Text='<%# Bind("IndID") %>'></asp:Label>
+                                        <asp:Label ID="Label6" runat="server" Visible="True" Text='<%# Bind("Name2") %>'></asp:Label>
+                                    </ItemTemplate>
+            </asp:TemplateField>
+                <asp:TemplateField HeaderText="Просм">
+                                    <ItemTemplate>
+                                         <asp:CheckBox ID="CheckBoxCanView2" runat="server" Checked='<%# Bind("ViewChecked2") %>'></asp:CheckBox>                          
+                                    </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Подтв">
+                                    <ItemTemplate>
+                                         <asp:CheckBox ID="CheckBoxVerify2" runat="server"  Checked='<%# Bind("VerifyChecked2") %>'></asp:CheckBox>                        
+                                    </ItemTemplate>
+            </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
+
 </asp:Content>

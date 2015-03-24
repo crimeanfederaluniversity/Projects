@@ -335,6 +335,7 @@
       <Column Name="RolesTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="RoleName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="IsHead" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="RolesTable_BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTable" ThisKey="RolesTableID" OtherKey="FK_RolesTable" Type="BasicParametersAndRolesMappingTable" />
       <Association Name="RolesTable_CalculatedParametrsAndRolesMappingTable" Member="CalculatedParametrsAndRolesMappingTable" ThisKey="RolesTableID" OtherKey="FK_RolesTable" Type="CalculatedParametrsAndRolesMappingTable" />
       <Association Name="RolesTable_IndicatorsAndRolesMappingTable" Member="IndicatorsAndRolesMappingTable" ThisKey="RolesTableID" OtherKey="FK_RolesTable" Type="IndicatorsAndRolesMappingTable" />

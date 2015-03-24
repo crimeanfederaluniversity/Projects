@@ -53,22 +53,32 @@ namespace KPIWeb.Head
                 DropDownList1.DataSource = dictionary;
                 DropDownList1.DataBind();
                 //дропдаун заполнен
-                List<ReportArchiveTable> reportsArchiveTablesTable = (
-                                                from a in kpiWebDataContext.UsersTable
-                                                join b in kpiWebDataContext.FirstLevelSubdivisionTable
-                                                on a.FK_FirstLevelSubdivisionTable equals b.FirstLevelSubdivisionTableID
-                                                join c in kpiWebDataContext.ReportArchiveAndLevelMappingTable
-                                                on b.FirstLevelSubdivisionTableID equals c.FK_FirstLevelSubmisionTableId
-                                                join d in kpiWebDataContext.ReportArchiveTable
-                                                on c.FK_ReportArchiveTableId equals d.ReportArchiveTableID
-                                                where a.UsersTableID == UserSer.Id
-                                                && a.Active == true
-                                                && b.Active == true
-                                                && c.Active == true
-                                                && d.Active == true
-                                              //  && d.StartDateTime < DateTime.Now
-                                              //  && d.EndDateTime > DateTime.Now
-                                                select d).ToList();
+                List<ReportArchiveTable> reportsArchiveTablesTable = null;
+                if (userTable.FK_FirstLevelSubdivisionTable != null)
+                {
+                    reportsArchiveTablesTable = (
+                        from a in kpiWebDataContext.UsersTable
+                        join b in kpiWebDataContext.FirstLevelSubdivisionTable
+                            on a.FK_FirstLevelSubdivisionTable equals b.FirstLevelSubdivisionTableID
+                        join c in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                            on b.FirstLevelSubdivisionTableID equals c.FK_FirstLevelSubmisionTableId
+                        join d in kpiWebDataContext.ReportArchiveTable
+                            on c.FK_ReportArchiveTableId equals d.ReportArchiveTableID
+                        where a.UsersTableID == UserSer.Id
+
+                              && a.Active == true
+                              && b.Active == true
+                              && c.Active == true
+                              && d.Active == true
+                          //&& d.StartDateTime < DateTime.Now
+                          //&& d.EndDateTime > DateTime.Now
+                        select d).ToList();
+                }
+                else
+                {
+                    reportsArchiveTablesTable = (from a in kpiWebDataContext.ReportArchiveTable
+                        select a).ToList();
+                }
 
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("ReportArchiveID", typeof(string)));
