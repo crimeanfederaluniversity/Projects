@@ -378,6 +378,7 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="FK_SecondLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsBasic" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="ThirdLevelSubdivisionTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="CollectedBasicParametersTable" />
       <Association Name="ThirdLevelSubdivisionTable_FourthLevelSubdivisionTable" Member="FourthLevelSubdivisionTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="FourthLevelSubdivisionTable" />
       <Association Name="ThirdLevelSubdivisionTable_ThirdLevelParametrs" Member="ThirdLevelParametrs" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="ThirdLevelParametrsID" Type="ThirdLevelParametrs" Cardinality="One" />

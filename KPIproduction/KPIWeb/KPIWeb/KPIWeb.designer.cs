@@ -8652,6 +8652,8 @@ namespace KPIWeb
 		
 		private int _FK_SecondLevelSubdivisionTable;
 		
+		private System.Nullable<bool> _IsBasic;
+		
 		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
 		private EntitySet<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
@@ -8674,6 +8676,8 @@ namespace KPIWeb
     partial void OnNameChanged();
     partial void OnFK_SecondLevelSubdivisionTableChanging(int value);
     partial void OnFK_SecondLevelSubdivisionTableChanged();
+    partial void OnIsBasicChanging(System.Nullable<bool> value);
+    partial void OnIsBasicChanged();
     #endregion
 		
 		public ThirdLevelSubdivisionTable()
@@ -8766,6 +8770,26 @@ namespace KPIWeb
 					this._FK_SecondLevelSubdivisionTable = value;
 					this.SendPropertyChanged("FK_SecondLevelSubdivisionTable");
 					this.OnFK_SecondLevelSubdivisionTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsBasic", DbType="Bit")]
+		public System.Nullable<bool> IsBasic
+		{
+			get
+			{
+				return this._IsBasic;
+			}
+			set
+			{
+				if ((this._IsBasic != value))
+				{
+					this.OnIsBasicChanging(value);
+					this.SendPropertyChanging();
+					this._IsBasic = value;
+					this.SendPropertyChanged("IsBasic");
+					this.OnIsBasicChanged();
 				}
 			}
 		}

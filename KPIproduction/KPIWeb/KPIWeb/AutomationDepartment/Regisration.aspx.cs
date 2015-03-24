@@ -616,8 +616,11 @@ namespace KPIWeb.AutomationDepartment
             RolesTable role = (from a in kpiWebDataContext.RolesTable
                                where a.RolesTableID == Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value)
                                select a).FirstOrDefault();
+            ViewState["IsHead"] = role.IsHead;
             if ((bool)role.IsHead)
             {
+
+                //////////////////
                 var calcParam = (from a in kpiWebDataContext.CalculatedParametrs select a);
                 var Indicators = (from c in kpiWebDataContext.IndicatorsTable select c);
 
@@ -687,6 +690,16 @@ namespace KPIWeb.AutomationDepartment
                 // ViewState["IndRoleMapping"] = IndicatorGrid;
                 #endregion
             }      
+        }
+
+        protected void Gridview3_RowDataBound(object sender, GridViewRowEventArgs e)
+        {/*
+            bool IsHead = (bool) ViewState["IsHead"];
+            if (IsHead)
+            {
+                gri
+            }
+            */
         }
     }
 }
