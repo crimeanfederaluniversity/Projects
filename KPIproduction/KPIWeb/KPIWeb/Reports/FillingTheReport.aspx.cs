@@ -828,11 +828,13 @@ namespace KPIWeb.Reports
                     ViewState["AllCnt"] = StatusList.Count();
                     Label2.Text ="Осталось " + dateCount+" дней до закрытия отчета";
                     UpnDownButton.OnClientClick = "javascript:return confirm('Отправить данные на подтверждение?');";
-                    /*
+                    
                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                     "window.onbeforeunload = function(e) " +
-                    "{return 'Все несохраненные данные будут потеряны.';};", true);   
-                     */
+                    "{return 'Все несохраненные данные будут потеряны.';};", true);
+                    ButtonSave.OnClientClick = "window.onbeforeunload = null;";
+                    Button1.OnClientClick = "window.onbeforeunload = null;";
+                    UpnDownButton.OnClientClick = "window.onbeforeunload = null;";
                 }
                 else if
                     (mode == 1)
@@ -1002,13 +1004,15 @@ namespace KPIWeb.Reports
                     if (AllCnt == notNullCnt)
                     {
                         Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
-                            "alert('Все показатели заполнены. Необходимо отправить отчет на верификацию');", true);
+                            "alert('Все показатели заполнены. Необходимо отправить отчет на верификацию');" +
+                            "document.location = '../Reports/FillingTheReport.aspx';", true);
                     }
                     else
                     {
                         
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + AllCnt + " для отправки отчета необходимо заполнитеь еще " + (AllCnt - notNullCnt) + " показателей.');", true);
+                            "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + AllCnt + " для отправки отчета необходимо заполнитеь еще " + (AllCnt - notNullCnt) + " показателей.');" +
+                            "document.location = '../Reports/FillingTheReport.aspx';", true);
                     }
 
                     #endregion
@@ -1061,13 +1065,17 @@ namespace KPIWeb.Reports
                                 }
                             }
                         }
+                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                            "alert('Вы утвердили данные всех базовых показателей. Отчет отправлен и доступен только в режиме 'Просмотр'. ');" +
+                            "document.location = '../Default.aspx';", true);
                     }
                     else
                     {
                         //error
+                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                            "alert('Ошибка');", true);
                     }
-                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Вы утвердили данные всех базовых показателей. Отчет отправлен и доступен только в режиме 'Просмотр'. ');", true);
+                    
 
                     #region old confirm with checkboxses
                     /*
@@ -1415,98 +1423,113 @@ namespace KPIWeb.Reports
             {
                 if (GridviewCollectedBasicParameters.Rows.Count > 0)
                 {
-                    if (mode == 0)  //отправляем данные на подтверждение
+                    if ((mode ==0)||(mode ==2))
                     {
-                        #region send to confirm
-                        for (int k = 0; k < columnCnt; k++) // пройдемся по каждой колонке
+                        if (mode == 0) //отправляем данные на подтверждение
                         {
-                            for (int i = 0; i < GridviewCollectedBasicParameters.Rows.Count; i++)
-                            {                           
-                            Label label =
-                                (Label) GridviewCollectedBasicParameters.Rows[i].FindControl("CollectId" + k.ToString());
-                            if (label != null)
-                            {
-                                if (label.Text == "")
-                                {
+                            #region send to confirm
 
-                                }
-                                else
+                            for (int k = 0; k < columnCnt; k++) // пройдемся по каждой колонке
+                            {
+                                for (int i = 0; i < GridviewCollectedBasicParameters.Rows.Count; i++)
                                 {
-                                    CollectedBasicParametersTable tmpColTable =
-                                        (from a in KPIWebDataContext.CollectedBasicParametersTable
-                                            where a.CollectedBasicParametersTableID == Convert.ToInt32(label.Text)
-                                            select a).FirstOrDefault();
-                                    if (tmpColTable != null)
+                                    Label label =
+                                        (Label)
+                                            GridviewCollectedBasicParameters.Rows[i].FindControl("CollectId" +
+                                                                                                 k.ToString());
+                                    if (label != null)
                                     {
-                                        if ((tmpColTable.Status == 2)||(tmpColTable.Status == 1))
+                                        if (label.Text == "")
                                         {
-                                            tmpColTable.Status = 3;
-                                            KPIWebDataContext.SubmitChanges();
+
                                         }
                                         else
                                         {
-                                            //error
-                                        }
-                                    }
-                                    else
-                                    {
-                                        //error    
-                                    }
-                                }
-                            }
-                            }
-                        }
-                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                    "alert('Отчет отправлен на подтверждение.);", true);
-                        //SENDMAIL ()
-                        #endregion
-                    }
-                    else if (mode == 2) // данные обратно на доработку
-                    {
-                        #region send back to correct
-                        for (int k = 0; k < columnCnt; k++) // 
-                        {
-                            for (int i = 0; i < GridviewCollectedBasicParameters.Rows.Count; i++)
-                            {                           
-                            Label label =
-                                (Label)GridviewCollectedBasicParameters.Rows[i].FindControl("CollectId" + k.ToString());
-
-                                if (label != null)
-                                {
-                                    if (label.Text == "")
-                                    {
-
-                                    }
-                                    else
-                                    {
-                                        CollectedBasicParametersTable tmpColTable =
-                                            (from a in KPIWebDataContext.CollectedBasicParametersTable
-                                                where a.CollectedBasicParametersTableID == Convert.ToInt32(label.Text)
-                                                select a).FirstOrDefault();
-                                        if (tmpColTable != null)
-                                        {
-                                            if (tmpColTable.Status == 3)
+                                            CollectedBasicParametersTable tmpColTable =
+                                                (from a in KPIWebDataContext.CollectedBasicParametersTable
+                                                    where
+                                                        a.CollectedBasicParametersTableID == Convert.ToInt32(label.Text)
+                                                    select a).FirstOrDefault();
+                                            if (tmpColTable != null)
                                             {
-                                                tmpColTable.Status = 1;
-                                                KPIWebDataContext.SubmitChanges();
+                                                if ((tmpColTable.Status == 2) || (tmpColTable.Status == 1))
+                                                {
+                                                    tmpColTable.Status = 3;
+                                                    KPIWebDataContext.SubmitChanges();
+                                                }
+                                                else
+                                                {
+                                                    //error
+                                                }
                                             }
                                             else
                                             {
-                                                //error
+                                                //error    
                                             }
-                                        }
-                                        else
-                                        {
-                                            //error    
                                         }
                                     }
                                 }
                             }
+                            Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                                "alert('Отчет отправлен на подтверждение');" +
+                                "document.location = '../Default.aspx';", true);
+                            //SENDMAIL ()
+
+                            #endregion
                         }
-                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                    "alert('Отчет отправлен на доработку с коментарием: \r\n\"" + TextBox1.Text + "\"');", true);
-                        //SENDMAIL ()
-                        #endregion
+                        else // (mode == 2) // данные обратно на доработку
+                        {
+                            #region send back to correct
+
+                            for (int k = 0; k < columnCnt; k++) // 
+                            {
+                                for (int i = 0; i < GridviewCollectedBasicParameters.Rows.Count; i++)
+                                {
+                                    Label label =
+                                        (Label)
+                                            GridviewCollectedBasicParameters.Rows[i].FindControl("CollectId" +
+                                                                                                 k.ToString());
+
+                                    if (label != null)
+                                    {
+                                        if (label.Text == "")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            CollectedBasicParametersTable tmpColTable =
+                                                (from a in KPIWebDataContext.CollectedBasicParametersTable
+                                                    where
+                                                        a.CollectedBasicParametersTableID == Convert.ToInt32(label.Text)
+                                                    select a).FirstOrDefault();
+                                            if (tmpColTable != null)
+                                            {
+                                                if (tmpColTable.Status == 3)
+                                                {
+                                                    tmpColTable.Status = 1;
+                                                    KPIWebDataContext.SubmitChanges();
+                                                }
+                                                else
+                                                {
+                                                    //error
+                                                }
+                                            }
+                                            else
+                                            {
+                                                //error    
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                                "alert('Отчет отправлен на доработку');" +
+                                "document.location = '../Default.aspx';", true);
+                            //SENDMAIL ()
+
+                            #endregion
+                        }
                     }
                 }
                 else
@@ -1517,34 +1540,7 @@ namespace KPIWeb.Reports
             else
             {
                 //error
-            }
-            
-            
-        }
-
-        /* старая процедура для проставления галочек подтверждения
-        protected void Button3_Click(object sender, EventArgs e)////проставить везде галочки
-        {
-            if (GridviewCollectedBasicParameters.Rows.Count > 0)
-            {
-                int rowIndex = 0;
-                for (int i = 1; i <= GridviewCollectedBasicParameters.Rows.Count; i++) //в каждой строчке
-                {
-                    for (int k = 0; k < 20; k++) // пройдемся по каждой колонке
-                    {
-                        TextBox textBox = (TextBox)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("Value" + k.ToString());
-                        Label label = (Label)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("CollectId" + k.ToString());
-                        CheckBox chBox = (CheckBox)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("Checked" + k.ToString());
-                        Label NotNullLbl = (Label)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("NotNull" + k.ToString());
-                        if (textBox != null && label != null && chBox != null)
-                        {
-                            if (NotNullLbl.Text.Any())
-                                chBox.Checked = true;
-                        }                      
-                    }
-                    rowIndex++;
-                }
-            }
-        }*/
+            }                      
+        }       
     }
 }
