@@ -358,7 +358,11 @@ namespace KPIWeb.StatisticsDepartment
             CheckBox1.Checked = (from a in kPiDataContext.ThirdLevelParametrs
                                  where a.ThirdLevelParametrsID == Convert.ToInt32(DropDownList3.SelectedItem.Value)
                                  select a.CanGraduate).FirstOrDefault();
-         
+
+            CheckBox2.Checked = (from t in kPiDataContext.ThirdLevelParametrs
+                       where t.ThirdLevelParametrsID == Convert.ToInt32(DropDownList3.SelectedItem.Value)
+                        select t.IsBasic).FirstOrDefault().GetValueOrDefault();
+
 
         }
 
@@ -370,7 +374,6 @@ namespace KPIWeb.StatisticsDepartment
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
 
             FillGridView(kPiDataContext);
-
         }
 
         protected void DeleteSpecializationButtonClick(object sender, EventArgs e)
