@@ -184,6 +184,7 @@
     <Content Include="AutomationDepartment\RoleMapping.aspx" />
     <Content Include="AutomationDepartment\IsAvailibleMappingRole.aspx" />
     <Content Include="PersonalInfo.aspx" />
+    <Content Include="Reports\Parametrs.aspx" />
     <Content Include="StatisticsDepartment\AddSpecialization.aspx" />
     <Content Include="StatisticsDepartment\MonitoringMain.aspx" />
     <Content Include="WebForm3.aspx" />
@@ -408,6 +409,12 @@
       <DependentUpon>GenerateReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\GridViewExportUtil.cs" />
+    <Compile Include="Reports\Parametrs.aspx.cs">
+      <DependentUpon>Parametrs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Parametrs.aspx.designer.cs">
+      <DependentUpon>Parametrs.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\SpecializationParametrs.aspx.cs">
       <DependentUpon>SpecializationParametrs.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
