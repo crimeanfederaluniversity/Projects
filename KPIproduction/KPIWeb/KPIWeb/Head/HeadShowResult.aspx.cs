@@ -31,7 +31,7 @@ namespace KPIWeb.Head
             if ((userTable_.AccessLevel == 9)||(userTable_.AccessLevel == 10))
             {
                 userTable_ =
-                    (from a in kPiDataContext.UsersTable where a.UsersTableID == 7104 select a).FirstOrDefault(); // чтобы мониторинг мог зайти
+                    (from a in kPiDataContext.UsersTable where a.UsersTableID == 8130 select a).FirstOrDefault(); // чтобы мониторинг мог зайти
                 userID = userTable_.UsersTableID;//чтобы мониторинг мог зайти
             }
             

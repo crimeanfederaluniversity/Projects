@@ -299,33 +299,14 @@ namespace KPIWeb.Reports
                     if (basicParam.AbbreviationEN == "kol_A_OP") tmp = pattern4(user, ReportArchiveID, 4);
                     if (basicParam.AbbreviationEN == "kol_A_OP_SV") tmp = pattern5(user, ReportArchiveID, 4);
                     if (basicParam.AbbreviationEN == "OOP_A_SOT") tmp = pattern6(user, ReportArchiveID, 4);
-                    /*
-                    if (AnyM)
-                    {
-                        //магистры
-                        
 
-                        
-                    }
-                    else if (AnyS)
-                    {
-                        //специалисты
-                     
+                    if (basicParam.AbbreviationEN == "Kol_Kaf_R") 
+                        tmp = Convert.ToDouble((from a in kpiWebDataContext.ThirdLevelParametrs
+                                                                         where a.ThirdLevelParametrsID == user.FK_ThirdLevelSubdivisionTable
+                                                                         select a.IsBasic).FirstOrDefault()); 
 
-                       
-                    }
-                    else if (AnyB)
-                    {
-                        //бакалавры
-                       
+                    
 
-                        
-                    }
-                    ////     
-                    else if (AnyA)
-                    {
-                      
-                    }*/
                     if (tmp < 1000000000000)
                     {
                         CollectedBasicParametersTable collectedBasicTmp =
@@ -844,6 +825,7 @@ namespace KPIWeb.Reports
                             UpnDownButton.Enabled = false;
                         }
                     }
+                    ViewState["AllCnt"] = StatusList.Count();
                     Label2.Text ="Осталось " + dateCount+" дней до закрытия отчета";
                     UpnDownButton.OnClientClick = "javascript:return confirm('Отправить данные на подтверждение?');";
                     /*
@@ -953,7 +935,7 @@ namespace KPIWeb.Reports
                 {
                     #region save data
 
-                    int allCnt=0;
+                    //int allCnt=0;
                     int notNullCnt=0;
                     if (collectedBasicParametersTable.Rows.Count > 0)
                     {
@@ -968,7 +950,7 @@ namespace KPIWeb.Reports
 
                                 if (textBox != null && label != null)
                                 {
-                                    allCnt++;
+                                    //allCnt++;
                                     double collectedValue = double.NaN;
                                     if (textBox.Text.IsFloat())
                                     {
@@ -1016,15 +998,17 @@ namespace KPIWeb.Reports
                     }
                     //надо рассчитать рассчетные
                     CalcCalculate(ReportArchiveID, user);
-                    if (allCnt == notNullCnt)
+                    int AllCnt = (int)ViewState["AllCnt"];
+                    if (AllCnt == notNullCnt)
                     {
                         Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
                             "alert('Все показатели заполнены. Необходимо отправить отчет на верификацию');", true);
                     }
                     else
                     {
+                        
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + allCnt + " для отправки отчета необходимо заполнитеь еще " + (allCnt-notNullCnt) + " показателей.');", true);
+                            "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + AllCnt + " для отправки отчета необходимо заполнитеь еще " + (AllCnt - notNullCnt) + " показателей.');", true);
                     }
 
                     #endregion
