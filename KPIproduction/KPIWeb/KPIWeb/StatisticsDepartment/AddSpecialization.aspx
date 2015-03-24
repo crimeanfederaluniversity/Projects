@@ -19,7 +19,7 @@
             </asp:DropDownList>
             <br />
             <br />
-            <asp:CheckBox ID="CheckBox1" runat="server" AutoPostBack="True" OnCheckedChanged="CheckBox1_CheckedChanged" Text="Кафедра является выпускающей" Enabled="False" />
+            <asp:CheckBox ID="CheckBox1" runat="server" AutoPostBack="True" OnCheckedChanged="CheckBox1_CheckedChanged" Text="Кафедра является выпускающей" />
             <br />
             <br />
             <asp:CheckBox ID="CheckBox2" runat="server" AutoPostBack="True" OnCheckedChanged="CheckBox2_CheckedChanged" Text="Кафедра является базовой" />

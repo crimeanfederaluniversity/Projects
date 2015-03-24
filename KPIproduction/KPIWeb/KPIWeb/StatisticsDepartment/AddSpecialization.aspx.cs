@@ -172,12 +172,23 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
 
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            KPIWebDataContext kpiWeb = new KPIWebDataContext();
+
+            var CafParam = (from a in kpiWeb.ThirdLevelParametrs
+                              where a.ThirdLevelParametrsID == Convert.ToInt32(DropDownList3.SelectedItem.Value) && a.Active == true
+                              select a).FirstOrDefault();
+
+            CafParam.CanGraduate = CheckBox1.Checked;
+            CafParam.IsBasic = CheckBox2.Checked;
+
+            kpiWeb.SubmitChanges();
+
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Данные успешно сохранены!');", true);
         }
 
