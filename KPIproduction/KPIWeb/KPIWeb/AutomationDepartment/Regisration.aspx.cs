@@ -307,6 +307,10 @@ namespace KPIWeb.AutomationDepartment
                     Gridview3.Visible = true;
                     Label27.Visible = true;
 
+                    Gridview3.Columns[1].Visible = false;
+                    Gridview3.Columns[3].Visible = false;
+
+
                     List<RolesTable> Roles = (from a in kPiDataContext.RolesTable
                                               where a.Active == true
                                               && a.IsHead == true
