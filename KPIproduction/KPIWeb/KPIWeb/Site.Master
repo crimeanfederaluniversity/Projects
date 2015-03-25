@@ -11,12 +11,12 @@
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
-    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
+    <link rel="stylesheet" href="/css/masterpage.css" type="text/css" />
 </head>
 <body>
-    <form runat="server">
+    <form runat="server" class="form_mpg">
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
@@ -58,7 +58,7 @@
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                            <!--    <li><a runat="server" href="~/Account/Register">Регистрация</a></li> -->
+                                <!--    <li><a runat="server" href="~/Account/Register">Регистрация</a></li> -->
                                 <li><a runat="server" href="~/Account/UserLogin">Вход</a></li>
                             </ul>
                         </AnonymousTemplate>
@@ -74,14 +74,26 @@
                 </div>
             </div>
         </div>
-        <div class="container body-content">
+        <div class="container body-content ">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
-            <hr />
+           
+            
+        </div>
+       
+    </form>
+    <div class="bottom_mp">
+                 <hr />
             <footer>
                 <p>&copy; <%: DateTime.Now.Year %>   ИАС «КФУ-мониторинг»</p>
             </footer>
-        </div>
-    </form>
-</body>
+                </div>
+   <asp:Panel id="gears" runat="server" class="Image1" Visible="true">
+       <h2 id="load_style">Загрузка...</h2>
+       <asp:Panel runat="server" id="im1"  ></asp:Panel>
+       <asp:Panel runat="server" id="im2"  ></asp:Panel>
+   </asp:Panel>
+   
+</body>  
+     
 </html>
