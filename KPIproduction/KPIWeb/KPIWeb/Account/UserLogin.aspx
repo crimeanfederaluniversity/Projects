@@ -5,7 +5,7 @@
         <br />
         <br />
         <br />
-        <asp:Label ID="Label3" runat="server" Font-Size="18pt" Text="Пожалуйста,&nbsp;авторизуйтесь&nbsp;для&nbsp;начала&nbsp;работы."></asp:Label>
+        <asp:Label ID="Label3" runat="server" Font-Size="18pt" Text="Пожалуйста,&nbsp;авторизуйтесь&nbsp;для&nbsp;начала&nbsp;работы"></asp:Label>
         <br />
         <br />
         <asp:Label ID="Label1" runat="server" Text="Адрес электронной почты"></asp:Label>

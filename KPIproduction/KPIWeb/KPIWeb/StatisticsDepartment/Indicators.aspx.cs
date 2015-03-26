@@ -148,7 +148,7 @@ namespace KPIWeb.StatisticsDepartment
                             calcParams.AbbreviationEN = TextBoxAbb.Text;
                             calcParams.Measure = IndicatorMeasure.Text;
                             Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
-                                "alert('Расчетный показатель изменен');", true);
+                                "alert('Расчётный показатель изменен');", true);
                         }
                     }
                 }
@@ -181,13 +181,13 @@ namespace KPIWeb.StatisticsDepartment
                             calcParams.Measure = IndicatorMeasure.Text;
                             calcParams.AbbreviationEN = TextBoxAbb.Text;
                             kPiDataContext.CalculatedParametrs.InsertOnSubmit(calcParams);
-                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Расчетный параметр создан');", true);                         
+                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Расчётный параметр создан');", true);                         
                         }                
                     }          
                 }
                 kPiDataContext.SubmitChanges();
             }
-        } //Добавление в БД // внутри разделение на индикаторы и расчетные
+        } //Добавление в БД // внутри разделение на индикаторы и расчётные
 
         protected void Button2_Click(object sender, EventArgs e)
         {
@@ -260,7 +260,7 @@ namespace KPIWeb.StatisticsDepartment
                     MultiView1.ActiveViewIndex = 0;                   
                     break;
                 }
-                case 1://работа с расчетными показателями
+                case 1://работа с расчётными показателями
                 {
                     if (ViewState["state"] != null)
                     if ((int)ViewState["state"] != 1)
@@ -273,9 +273,9 @@ namespace KPIWeb.StatisticsDepartment
                         IndicatorMeasure.Text = "";
                     }
                     ViewState["state"] = 1;
-                    addtitle.Text = "Форма редактирования расчетного показателя";
-                    Label1.Text = "Название расчетного показателя";
-                    Button3.Text = "Сохранить изменения расчетного показателя";
+                    addtitle.Text = "Форма редактирования расчётного показателя";
+                    Label1.Text = "Название расчётного показателя";
+                    Button3.Text = "Сохранить изменения расчётного показателя";
                     TextBoxAbb.Visible = true;
                     LabelAbb.Visible = true;
                     LabelAbbError.Visible = false;
@@ -285,7 +285,7 @@ namespace KPIWeb.StatisticsDepartment
 
                     List<CalculatedParametrs> calcParamsTable = (from item in kPiDataContext.CalculatedParametrs select item).ToList();
                     var dictionary = new Dictionary<int, string>();
-                    dictionary.Add(0, "Добавить новый расчетный показатель");
+                    dictionary.Add(0, "Добавить новый расчётный показатель");
                     foreach (CalculatedParametrs item in calcParamsTable)
                         dictionary.Add(item.CalculatedParametrsID, item.Name);
                     DropDownList1.DataTextField = "Value";

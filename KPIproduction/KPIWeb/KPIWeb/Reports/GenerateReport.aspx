@@ -1,6 +1,6 @@
-﻿<%@ Page Language="C#" Title="Отчет" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="GenerateReport.aspx.cs" Inherits="KPIWeb.Reports.GenerateReport" %>
+﻿<%@ Page Language="C#" Title="Отчёт" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="GenerateReport.aspx.cs" Inherits="KPIWeb.Reports.GenerateReport" %>
 
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">&nbsp;<h2>Отчет</h2>
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">&nbsp;<h2>Отчёт</h2>
     <div>
     <asp:GridView ID="GridviewReport" runat="server" ShowFooter="true" AutoGenerateColumns="false">
                             <Columns>

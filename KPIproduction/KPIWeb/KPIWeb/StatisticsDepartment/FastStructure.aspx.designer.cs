@@ -7,9 +7,18 @@
 // </автоматически создаваемое>
 //------------------------------------------------------------------------------
 
-namespace KPIWeb {
+namespace KPIWeb.StatisticsDepartment {
     
     
-    public partial class About {
+    public partial class FastStructure {
+        
+        /// <summary>
+        /// TextBox1 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBox1;
     }
 }

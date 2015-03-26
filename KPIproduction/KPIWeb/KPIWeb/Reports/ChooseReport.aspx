@@ -1,17 +1,17 @@
-﻿<%@ Page Language="C#" Title="Выбор отчета" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="ChooseReport.aspx.cs" Inherits="KPIWeb.Reports.ChooseReport" %>
+﻿<%@ Page Language="C#" Title="Выбор отчёта" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="ChooseReport.aspx.cs" Inherits="KPIWeb.Reports.ChooseReport" %>
 
 
        <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-        <h2>Список активных отчетов</h2><br />
+        <h2>Список активных отчётов</h2><br />
         <asp:GridView ID="GridView1" runat="server" 
             AutoGenerateColumns="False"
             style="margin-top: 0px" OnRowDataBound="GridView1_RowDataBound">
              <Columns>
                  
                  <asp:BoundField DataField="ReportArchiveID"   HeaderText="Current Report ID" Visible="false" />    
-                 <asp:BoundField DataField="ReportName" HeaderText="Название отчета" Visible="True" />          
-                 <asp:BoundField DataField="StartDate" HeaderText="Начальная дата отчета" Visible="True" />
-                 <asp:BoundField DataField="EndDate" HeaderText="Конечная дата отчета" Visible="True" />
+                 <asp:BoundField DataField="ReportName" HeaderText="Название отчёта" Visible="True" />          
+                 <asp:BoundField DataField="StartDate" HeaderText="Начальная дата отчёта" Visible="True" />
+                 <asp:BoundField DataField="EndDate" HeaderText="Конечная дата отчёта" Visible="True" />
 
                     <asp:TemplateField HeaderText="Ввод данных">
                         <ItemTemplate>

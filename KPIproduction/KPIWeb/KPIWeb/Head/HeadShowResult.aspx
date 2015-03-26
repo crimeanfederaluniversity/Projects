@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="HeadShowResult.aspx.cs" Inherits="KPIWeb.Head.HeadShowResult" %>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div>
-        <span style="font-size: 24pt">Результаты расчета доступных индикаторов и параметров</span><br />
+        <span style="font-size: 24pt">Результаты расчёта доступных индикаторов и параметров</span><br />
         <br />
         <asp:Button ID="Button8" runat="server" Enabled="False" />
 &nbsp;<asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
@@ -37,7 +37,7 @@
             
              <asp:GridView ID="CalculatedParametrsTable" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="1000px" OnRowDataBound="CalculatedParametrsTable_RowDataBound">
                             <Columns>
-                                <asp:BoundField DataField="CalculatedParametrsName" HeaderText="Расчетный параметр" />
+                                <asp:BoundField DataField="CalculatedParametrsName" HeaderText="Расчётный параметр" />
                                 <asp:BoundField DataField="CalculatedParametrsResult" HeaderText="Результат" />   
                                 <asp:TemplateField HeaderText="Подтверждение" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "False" >
                                     <ItemTemplate> 

@@ -227,6 +227,7 @@
     <Content Include="PersonalInfo.aspx" />
     <Content Include="Reports\Parametrs.aspx" />
     <Content Include="StatisticsDepartment\AddSpecialization.aspx" />
+    <Content Include="StatisticsDepartment\FastStructure.aspx" />
     <Content Include="StatisticsDepartment\MonitoringMain.aspx" />
     <Content Include="WebForm3.aspx" />
     <Content Include="css\images\bg_blue_3.psd" />
@@ -496,6 +497,13 @@
     </Compile>
     <Compile Include="StatisticsDepartment\BasicParametrs.aspx.designer.cs">
       <DependentUpon>BasicParametrs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StatisticsDepartment\FastStructure.aspx.cs">
+      <DependentUpon>FastStructure.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StatisticsDepartment\FastStructure.aspx.designer.cs">
+      <DependentUpon>FastStructure.aspx</DependentUpon>
     </Compile>
     <Compile Include="StatisticsDepartment\Indicators.aspx.cs">
       <DependentUpon>Indicators.aspx</DependentUpon>

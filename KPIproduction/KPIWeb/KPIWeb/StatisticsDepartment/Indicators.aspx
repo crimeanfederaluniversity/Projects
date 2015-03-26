@@ -9,7 +9,7 @@
              <Items>
                 <asp:MenuItem Text="Добавление и редактирование индикатора" Value="0">
                 </asp:MenuItem>
-                <asp:MenuItem Text="Добавление и редактирование расчетного показателя" Value="1">            
+                <asp:MenuItem Text="Добавление и редактирование расчётного показателя" Value="1">            
                 </asp:MenuItem>
                 <asp:MenuItem Text="Тестирование формулы с аббревиатурами" Value="2">           
                 </asp:MenuItem>

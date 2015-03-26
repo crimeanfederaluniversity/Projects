@@ -25,7 +25,7 @@
 <asp:Button ID="Button6" runat="server" Height="50px" OnClick="Button6_Click" Text="Редактировать базовые показатели" Width="400px" />
 <br />
 <br />
-<asp:Button ID="Button7" runat="server" Height="50px" OnClick="Button7_Click" Text="Редактировать отчеты" Width="400px" />
+<asp:Button ID="Button7" runat="server" Height="50px" OnClick="Button7_Click" Text="Редактировать отчёты" Width="400px" />
  
        <br />
        <br />

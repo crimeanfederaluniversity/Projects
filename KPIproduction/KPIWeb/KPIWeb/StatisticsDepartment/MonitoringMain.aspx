@@ -15,13 +15,13 @@
         <asp:Button ID="Button2" runat="server" Font-Size="15pt" Height="50px" Text="Управление пользователями" Width="400px" OnClick="Button2_Click" />
         <br />
         <br />
-        <asp:Button ID="Button3" runat="server" Font-Size="15pt" Height="50px" Text="Управление Индикаторами" Width="400px" OnClick="Button3_Click" />
+        <asp:Button ID="Button3" runat="server" Font-Size="15pt" Height="50px" Text="Управление индикаторами" Width="400px" OnClick="Button3_Click" />
         <br />
         <br />
         <asp:Button ID="Button4" runat="server" Font-Size="15pt" Height="50px" Text="Управление базовыми показателями" Width="400px" OnClick="Button4_Click" />
         <br />
         <br />
-        <asp:Button ID="Button5" runat="server" Font-Size="15pt" Height="50px" Text=" Управление отчетами" Width="400px" OnClick="Button5_Click" />
+        <asp:Button ID="Button5" runat="server" Font-Size="15pt" Height="50px" Text=" Управление отчётами" Width="400px" OnClick="Button5_Click" />
     <br />
     <br />
         <asp:Button ID="Button6" runat="server" Font-Size="15pt" Height="50px" Text="Прикрепление спецальностей" Width="400px" OnClick="Button6_Click" />

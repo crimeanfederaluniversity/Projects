@@ -283,7 +283,7 @@ namespace KPIWeb.Head
                     }
                     else if ((Confcnt > Insertcnt)||(Insertcnt>Allcnt))
                     {
-                        //SENDMAIL (email =admin  title = "ошибка в расчетных показателях у руководства" body = "Allcnt="+Allcnt+" Confcnt"+Confcnt +Insertcnt+user + report + indicatorID )                   
+                        //SENDMAIL (email =admin  title = "ошибка в расчётных показателях у руководства" body = "Allcnt="+Allcnt+" Confcnt"+Confcnt +Insertcnt+user + report + indicatorID )                   
                         dataRow["info0"] = "Данные недоступны";
                     }  
                     else

@@ -6,8 +6,8 @@
             <asp:GridView ID="GridviewActiveCampaign" runat="server" ShowFooter="True"  AutoGenerateColumns="False" OnSelectedIndexChanged="GridviewActiveCampaign_SelectedIndexChanged">
                 <Columns>
 
-                    <asp:BoundField Visible="False" DataField="ReportArchiveTableID" HeaderText="ID отчета" />
-                    <asp:BoundField DataField="Name" HeaderText="Наименование отчета" />
+                    <asp:BoundField Visible="False" DataField="ReportArchiveTableID" HeaderText="ID отчёта" />
+                    <asp:BoundField DataField="Name" HeaderText="Наименование отчёта" />
                     <asp:BoundField DataField="Active" HeaderText="Активна" />
                    
                     <asp:BoundField DataField="StartDateTime" HeaderText="Стартовая дата" />
@@ -25,14 +25,14 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                     
-                     <asp:TemplateField HeaderText="Сгенерировать отчет">
+                     <asp:TemplateField HeaderText="Сгенерировать отчёт">
                         <ItemTemplate>
                             <asp:Label ID="LabelReportArchiveTableID2" runat="server" Text='<%# Bind("ReportArchiveTableID") %>' Visible="false"></asp:Label>
                             <asp:Button ID="ButtonEditReport2" runat="server" CommandName="Select" Text="Сгенерировать" Width="150px" CommandArgument='<%# Eval("ReportArchiveTableID") %>' OnClick="ButtonEditReport_Click_2"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                     
-                    <asp:TemplateField HeaderText="Просмотреть отчет">
+                    <asp:TemplateField HeaderText="Просмотреть отчёт">
                         <ItemTemplate>
                             <asp:Button ID="ButtonViewReport" runat="server" CommandName="Select" Text="Просмотреть" Width="150px" CommandArgument='<%# Eval("ReportArchiveTableID") %>' OnClick="ButtonViewReportClick"/>
                         </ItemTemplate>

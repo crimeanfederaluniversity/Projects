@@ -1,12 +1,12 @@
-﻿<%@ Page Language="C#" Title="Редактирование отчета"  MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="EditReport.aspx.cs" Inherits="KPIWeb.Reports.EditReport" %>
+﻿<%@ Page Language="C#" Title="Редактирование отчёта"  MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="EditReport.aspx.cs" Inherits="KPIWeb.Reports.EditReport" %>
 
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <h2>Редактирование отчета</h2>
+    <h2>Редактирование отчёта</h2>
         <div>
             <table>
                   <tr>
-                    <td>Название отчета
+                    <td>Название отчёта
                     </td>
                     <td>
                         <asp:TextBox Width="400 px" runat="server" ID="TextBoxName" />
@@ -14,7 +14,7 @@
                 </tr>
 
                 <tr>
-                    <td>Активный отчет
+                    <td>Активный отчёт
                     </td>
                     <td>
                         <asp:CheckBox runat="server" ID="CheckBoxActive" />
@@ -22,7 +22,7 @@
                 </tr>
 
                 <tr>
-                    <td>Отчет рассчитан
+                    <td>Отчёт рассчитан
                     </td>
                     <td>
                         <asp:CheckBox runat="server" ID="CheckBoxCalculeted" />
@@ -40,7 +40,7 @@
                 </tr>
 
                 <tr>
-                    <td>Отчет отправлен
+                    <td>Отчёт отправлен
                     </td>
                     <td>
                         <asp:CheckBox runat="server" ID="CheckBoxSent" />
@@ -58,7 +58,7 @@
                 </tr>
 
                 <tr>
-                    <td>Отчет принят получателем
+                    <td>Отчёт принят получателем
                     </td>
                     <td>
                         <asp:CheckBox runat="server" ID="CheckBoxRecipientConfirmed" />
@@ -79,10 +79,10 @@
                 
                 <tr>
                     <td>
-                        Стартовая дата отчета
+                        Стартовая дата отчёта
                         </td>
                     <td>
-                        Конечная дата отчета</td>
+                        Конечная дата отчёта</td>
                 </tr>
 
                 <tr>
@@ -109,8 +109,8 @@
             <br />
             <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Выделить все академии" Width="286px" />
             <br />
-            Выберите академии участвующие в отчете<br />
-            <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="16px" Width="325px">
+            Выберите академии, участвующие в отчёте<br />
+            <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="16px" Width="724px">
             </asp:CheckBoxList>
             <br />
             <asp:Button ID="ButtonSave" runat="server" Width="500px" Text="Сохранить" OnClick="ButtonSave_Click" />
@@ -139,7 +139,7 @@
             
              <asp:GridView ID="CalculatedParametrsTable" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="1000px">
                             <Columns>
-                                <asp:BoundField DataField="CalculatedParametrsName" HeaderText="Расчетный параметр" />
+                                <asp:BoundField DataField="CalculatedParametrsName" HeaderText="Расчётный параметр" />
                                 <asp:TemplateField HeaderText="Активен">
                                     <ItemTemplate>
                                         <asp:Label ID="CalculatedParametrsID" runat="server" Visible="false" Text='<%# Bind("CalculatedParametrsID") %>'></asp:Label>

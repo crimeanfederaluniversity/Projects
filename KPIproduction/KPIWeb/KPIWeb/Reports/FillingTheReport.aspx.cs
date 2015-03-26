@@ -160,15 +160,15 @@ namespace KPIWeb.Reports
              join d in kpiWebDataContext.BasicParametrAdditional
              on b.BasicParametersTableID equals d.BasicParametrAdditionalID
              where
-                   a.FK_ReportArchiveTable == ReportArchiveID  //из нужного отчета
+                   a.FK_ReportArchiveTable == ReportArchiveID  //из нужного отчёта
                 && c.FK_UsersTable == user.UsersTableID // свяный с пользователем
                 && (d.SubvisionLevel == 3 || d.SubvisionLevel == 4)//нужный уровень заполняющего
-                && a.Active == true  // запись в таблице связей показателя и отчета активна
+                && a.Active == true  // запись в таблице связей показателя и отчёта активна
                 && c.Active == true  // запись в таблице связей показателя и пользователей активна
                 && d.Calculated == true // этот показатель нужно считать
              select b).ToList();
 
-            //узнали показатели кафедры(отчет,разрешенияПользователя,Уровеньвводяшего,вводящийся показатель)          
+            //узнали показатели кафедры(отчёт,разрешенияПользователя,Уровеньвводяшего,вводящийся показатель)          
             foreach (BasicParametersTable basicParam in calcBasicParams) //пройдемся по показателям
             {
                 CollectedBasicParametersTable collectedBasicTmp =
@@ -199,10 +199,10 @@ namespace KPIWeb.Reports
              join d in kpiWebDataContext.BasicParametrAdditional
              on b.BasicParametersTableID equals d.BasicParametrAdditionalID
              where
-                   a.FK_ReportArchiveTable == ReportArchiveID  //из нужного отчета
+                   a.FK_ReportArchiveTable == ReportArchiveID  //из нужного отчёта
                 && c.FK_UsersTable == user.UsersTableID // свяный с пользователем
                 && (d.SubvisionLevel == 3 || d.SubvisionLevel == 4)//нужный уровень заполняющего
-                && a.Active == true  // запись в таблице связей показателя и отчета активна
+                && a.Active == true  // запись в таблице связей показателя и отчёта активна
                 && c.Active == true  // запись в таблице связей показателя и пользователей активна
                 && d.Calculated == true // этот показатель нужно считать
              select b).ToList();
@@ -245,7 +245,7 @@ namespace KPIWeb.Reports
                              a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
                              && b.SpecType == 4
                              select a).ToList().Count() > 0 ? true : false;
-                //узнали показатели кафедры(отчет,разрешенияПользователя,Уровеньвводяшего,вводящийся показатель)          
+                //узнали показатели кафедры(отчёт,разрешенияПользователя,Уровеньвводяшего,вводящийся показатель)          
                 foreach (BasicParametersTable basicParam in calcBasicParams) //пройдемся по показателям
                 {          
                     double tmp = 1000000000001;
@@ -435,10 +435,10 @@ namespace KPIWeb.Reports
                              on b.BasicParametersTableID equals c.FK_ParametrsTable
                              join d in kpiWebDataContext.BasicParametrAdditional
                              on b.BasicParametersTableID equals d.BasicParametrAdditionalID
-                             where a.FK_ReportArchiveTable == ReportArchiveID  //из нужного отчета
+                             where a.FK_ReportArchiveTable == ReportArchiveID  //из нужного отчёта
                                 && c.FK_UsersTable == UserID // свяный с пользователем
                                 && d.SubvisionLevel == userLevel //нужный уровень заполняющего
-                                && a.Active == true  // запись в таблице связей показателя и отчета активна
+                                && a.Active == true  // запись в таблице связей показателя и отчёта активна
                                 && (((c.CanEdit == true) && mode == 0)
                                 || ((c.CanView == true) && mode == 1)
                                 || ((c.CanConfirm == true) && mode == 2)) // фильтруем по правам пользователя
@@ -538,10 +538,10 @@ namespace KPIWeb.Reports
                              join d in kpiWebDataContext.BasicParametrAdditional
                              on b.BasicParametersTableID equals d.BasicParametrAdditionalID
                              where
-                                   a.FK_ReportArchiveTable == ReportArchiveID  //из нужного отчета
+                                   a.FK_ReportArchiveTable == ReportArchiveID  //из нужного отчёта
                                 && c.FK_UsersTable == UserID // свяный с пользователем
                                 && d.SubvisionLevel == 3 //нужный уровень заполняющего
-                                && a.Active == true  // запись в таблице связей показателя и отчета активна
+                                && a.Active == true  // запись в таблице связей показателя и отчёта активна
 
                                 && (((c.CanEdit == true) && mode == 0)
                                 || ((c.CanView == true) && mode == 1)
@@ -551,7 +551,7 @@ namespace KPIWeb.Reports
                                 && d.Calculated == false // этот показатель нужно вводить а не считать
                              select b).ToList();
 
-                            //узнали показатели кафедры(отчет,разрешенияПользователя,Уровеньвводяшего,вводящийся показатель)          
+                            //узнали показатели кафедры(отчёт,разрешенияПользователя,Уровеньвводяшего,вводящийся показатель)          
                             foreach (BasicParametersTable basicParam in KafBasicParams) //пройдемся по показателям
                             {
                                 //если этото параметр и эта кафедра дружат
@@ -634,7 +634,7 @@ namespace KPIWeb.Reports
                                          on b.BasicParametersTableID equals c.FK_ParametrsTable
                                      join d in kpiWebDataContext.BasicParametrAdditional
                                          on b.BasicParametersTableID equals d.BasicParametrAdditionalID
-                                     where a.FK_ReportArchiveTable == ReportArchiveID //для отчета
+                                     where a.FK_ReportArchiveTable == ReportArchiveID //для отчёта
                                            && d.SubvisionLevel == 4 // для уровня заполняющего
                                            && d.Calculated == false //только вводимые параметры
                                            && c.FK_UsersTable == UserID // связаннаые с пользователем
@@ -646,7 +646,7 @@ namespace KPIWeb.Reports
 
                                            && c.Active == true
                                      select b).ToList();
-                                //Получили показатели разрешенные пользователю в данном отчете
+                                //Получили показатели разрешенные пользователю в данном отчёте
                                 List<FourthLevelSubdivisionTable> Specialzations =
                                     (from a in kpiWebDataContext.FourthLevelSubdivisionTable
                                      where a.FK_ThirdLevelSubdivisionTable == l_3
@@ -804,7 +804,7 @@ namespace KPIWeb.Reports
                     ButtonSave.Text = "Сохранить внесенные данные.";
 
                     UpnDownButton.Visible = true;
-                    UpnDownButton.Text = "Отправить отчет на утверждение.";
+                    UpnDownButton.Text = "Отправить отчёт на утверждение.";
 
                     TextBox1.Visible = false;
 
@@ -816,7 +816,7 @@ namespace KPIWeb.Reports
                     {                       
                         if (tmpStatCount == StatusList.Count())
                         {
-                            Label1.Text = "Все показатели заполнены. Необходимо отправить отчет на утверждение";
+                            Label1.Text = "Все показатели заполнены. Необходимо отправить отчёт на утверждение";
                             UpnDownButton.Enabled = true;
                         }
                         else
@@ -826,7 +826,7 @@ namespace KPIWeb.Reports
                         }
                     }
                     ViewState["AllCnt"] = StatusList.Count();
-                    Label2.Text ="Осталось " + dateCount+" дней до закрытия отчета";
+                    Label2.Text ="Осталось " + dateCount+" дней до закрытия отчёта";
                     UpnDownButton.OnClientClick = "javascript:return confirm('Отправить данные на утверждение?');";
                     
                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
@@ -878,15 +878,15 @@ namespace KPIWeb.Reports
                         ButtonSave.Text = "Утвердить данные.";
 
                         UpnDownButton.Visible = true;
-                        UpnDownButton.Text = "Вернуть отчет на доработку.";
+                        UpnDownButton.Text = "Вернуть отчёт на доработку.";
 
                         TextBox1.Visible = true;
 
                         Label1.Text = "Форма Утверждения данных.";
-                        Label2.Text ="Осталось " + dateCount + " дней до закрытия отчета";
+                        Label2.Text ="Осталось " + dateCount + " дней до закрытия отчёта";
 
                         ButtonSave.OnClientClick = "javascript:return confirm('Подтвердить достоверность данных и отправить их на обработку(Режим доступа к данным будет измене на \"только просмотр\")?');";
-                        UpnDownButton.OnClientClick = "javascript:return confirm('Вернуть отчет на доработку.');";
+                        UpnDownButton.OnClientClick = "javascript:return confirm('Вернуть отчёт на доработку.');";
                     }
                 GridviewCollectedBasicParameters.DataSource = dataTable;
                 for (int j = 0; j < additionalColumnCount; j++)
@@ -970,7 +970,7 @@ namespace KPIWeb.Reports
                     }
                     if (tempDictionary.Count > 0)
                     {
-                        //Список ранее введенных пользователем данных для данной кампании (отчета)
+                        //Список ранее введенных пользователем данных для данной кампании (отчёта)
                         List<CollectedBasicParametersTable> сollectedBasicParametersTable =
                             (from collectedBasicParameters in KPIWebDataContext.CollectedBasicParametersTable
                              where (from item in tempDictionary select item.Key).ToList()
@@ -1004,14 +1004,14 @@ namespace KPIWeb.Reports
                     if (AllCnt == notNullCnt)
                     {
                         Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
-                            "alert('Все показатели заполнены. Необходимо отправить отчет на верификацию');" +
+                            "alert('Все показатели заполнены. Необходимо отправить отчёт на верификацию');" +
                             "document.location = '../Reports/FillingTheReport.aspx';", true);
                     }
                     else
                     {
                         
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + AllCnt + " для отправки отчета необходимо заполнитеь еще " + (AllCnt - notNullCnt) + " показателей.');" +
+                            "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + AllCnt + " для отправки отчёта необходимо заполнитеь еще " + (AllCnt - notNullCnt) + " показателей.');" +
                             "document.location = '../Reports/FillingTheReport.aspx';", true);
                     }
 
@@ -1066,7 +1066,7 @@ namespace KPIWeb.Reports
                             }
                         }
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Вы утвердили данные всех базовых показателей. Отчет отправлен и доступен только в режиме \"Просмотр\".');" +
+                            "alert('Вы утвердили данные всех базовых показателей. отчёт отправлен и доступен только в режиме \"Просмотр\".');" +
                             "document.location = '../Default.aspx';", true);
                     }
                     else
@@ -1393,7 +1393,7 @@ namespace KPIWeb.Reports
                                 }
                             }
                             Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
-                                "alert('Отчет отправлен на утверждение');" +
+                                "alert('отчёт отправлен на утверждение');" +
                                 "document.location = '../Default.aspx';", true);
                             //SENDMAIL ()
 
@@ -1446,7 +1446,7 @@ namespace KPIWeb.Reports
                                 }
                             }
                             Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
-                                "alert('Отчет отправлен на доработку');" +
+                                "alert('Отчёт отправлен на доработку');" +
                                 "document.location = '../Default.aspx';", true);
                             //SENDMAIL ()
                             #endregion

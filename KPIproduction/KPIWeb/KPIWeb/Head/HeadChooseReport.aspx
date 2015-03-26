@@ -1,24 +1,24 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="HeadChooseReport.aspx.cs" Inherits="KPIWeb.Head.ChooseReport" %>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div>
-        <span style="font-size: 30px">Просмотр доступных отчетов</span><br />
+        <span style="font-size: 30px">Просмотр доступных отчётов</span><br />
         <br />
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" style="margin-top: 0px" OnRowDataBound="GridView1_RowDataBound">
              <Columns>
                  
                  <asp:BoundField DataField="ReportArchiveID"   HeaderText="Current Report ID" Visible="false" />    
-                 <asp:BoundField DataField="ReportName" HeaderText="Название отчета" Visible="True" />          
-                 <asp:BoundField DataField="StartDate" HeaderText="Начальная дата отчета" Visible="True" />
-                 <asp:BoundField DataField="EndDate" HeaderText="Конечная дата отчета" Visible="True" />
+                 <asp:BoundField DataField="ReportName" HeaderText="Название отчёта" Visible="True" />          
+                 <asp:BoundField DataField="StartDate" HeaderText="Начальная дата отчёта" Visible="True" />
+                 <asp:BoundField DataField="EndDate" HeaderText="Конечная дата отчёта" Visible="True" />
 
-                    <asp:TemplateField HeaderText="Просмотр результатов отчета">
+                    <asp:TemplateField HeaderText="Просмотр результатов отчёта">
                         <ItemTemplate>
                             <asp:Label ID="LabelReportArchiveTableID2" runat="server" Text='<%# Bind("ReportArchiveID") %>' Visible="false"></asp:Label>
                             <asp:Button ID="ButtonViewReport" runat="server" CommandName="Select" Text="Просмотреть" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonViewClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                 <asp:TemplateField HeaderText="Просмотр и утверждение отчета">
+                 <asp:TemplateField HeaderText="Просмотр и утверждение отчёта">
                         <ItemTemplate>
                             <asp:Label ID="LabelReport" runat="server" Text='<%# Bind("ReportArchiveID") %>' Visible="false"></asp:Label>
                             <asp:Button ID="ButtonConfirmReport" runat="server" CommandName="Select" Text="Просмотреть и утвердить" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonConfirmClick"/>

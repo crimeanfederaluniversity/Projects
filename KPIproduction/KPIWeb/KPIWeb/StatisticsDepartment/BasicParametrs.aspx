@@ -24,7 +24,7 @@
         <table width="600" height="400" cellpadding=0 cellspacing=0>
             <tr valign="top">
                 <td class="TabArea" style="width: 600px">
-                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Отчет по существующим показателям" Width="375px" />
+                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Отчёт по существующим показателям" Width="375px" />
                     <br />
                     <br />
                     <asp:TextBox ID="TextBox1" runat="server" Height="238px" TextMode="MultiLine" Width="368px"></asp:TextBox>
@@ -74,7 +74,7 @@
         <table width="600px" height="400px" cellpadding=0 cellspacing=0>
             <tr valign="top">
                 <td class="TabArea" style="width: 600px">
-                    Вставте в текстовое поле
+                    Вставьте в текстовое поле
                     <br />
                     Название параметра#Аббревиатура англ#Аббревиатура рус#единица измерения#уровень вводящего#только для иностранных<br />
                     <asp:TextBox ID="TextBox9" runat="server" Height="332px" TextMode="MultiLine" Width="595px"></asp:TextBox>

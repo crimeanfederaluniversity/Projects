@@ -279,7 +279,7 @@ namespace KPIWeb.Reports
                     //////////////////////////////////////////////////////////////////////////////////
                     FillGridVIews(reportArchiveTableID);
                 }
-                else //создаем новый отчет
+                else //создаем новый отчёт
                 {
                     KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
                     ButtonSave.Text="Сохранить новую кампанию";
@@ -306,17 +306,17 @@ namespace KPIWeb.Reports
             if (TextBoxName.Text.Length < 4)
             {
              Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                           "alert('Введите корректное название отчета');", true);         
+                           "alert('Введите корректное название отчёта');", true);         
             }
             else if (!(CalendarStartDateTime.SelectedDate > DateTime.MinValue))
             {
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                           "alert('Введите дату начала отчета');", true);
+                           "alert('Введите дату начала отчёта');", true);
             }
             else if (!(CalendarEndDateTime.SelectedDate > DateTime.MinValue))
             {
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                           "alert('Введите дату конца отчета');", true);
+                           "alert('Введите дату конца отчёта');", true);
             }
             else if (CalendarEndDateTime.SelectedDate < CalendarStartDateTime.SelectedDate)
             {
@@ -331,7 +331,7 @@ namespace KPIWeb.Reports
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
                 ReportArchiveTable reportArchiveTable = new ReportArchiveTable();
 
-                #region //запись в базу нового отчета или внесение изменений в старый
+                #region //запись в базу нового отчёта или внесение изменений в старый
 
                 int reportArchiveTableID = 0;
                 if (ReportId.ReportArchiveID == 0) // создаем новую запись в БД и узнаем ей айди
@@ -398,7 +398,7 @@ namespace KPIWeb.Reports
 
                 #endregion
 
-                #region //связь отчета со структурным подразд 1 уровня создание или изменение
+                #region //связь отчёта со структурным подразд 1 уровня создание или изменение
 
                 foreach (ListItem checkItem in CheckBoxList1.Items)
                 {

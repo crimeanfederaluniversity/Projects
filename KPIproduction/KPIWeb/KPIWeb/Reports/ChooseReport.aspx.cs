@@ -51,8 +51,8 @@ namespace KPIWeb.Reports
                                                 select d).ToList();
                 ///тут мы получили список активных отччетов пользователя
                 /// пользователь привязан к таблице первого подразделения
-                /// таблица первого подразделения привязана к таблице отчетов(через таблицу связи)
-                /// на данный момент отчет можно назначать только первому подразделению!!!                
+                /// таблица первого подразделения привязана к таблице отчётов(через таблицу связи)
+                /// на данный момент отчёт можно назначать только первому подразделению!!!                
                 /// 
                 #endregion
 
@@ -225,10 +225,10 @@ namespace KPIWeb.Reports
                                      join d in kpiWebDataContext.BasicParametrAdditional
                                          on b.BasicParametersTableID equals d.BasicParametrAdditionalID
                                      where
-                                         a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчета
+                                         a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчёта
                                          && c.FK_UsersTable == userID // свяный с пользователем
                                          && d.SubvisionLevel == 3 //нужный уровень заполняющего
-                                         && a.Active == true // запись в таблице связей показателя и отчета активна
+                                         && a.Active == true // запись в таблице связей показателя и отчёта активна
                                          && c.CanEdit == true
                                          && c.Active == true // запись в таблице связей показателя и пользователей активна
                                          && d.Calculated == false
@@ -243,10 +243,10 @@ namespace KPIWeb.Reports
                                      join d in kpiWebDataContext.BasicParametrAdditional
                                          on b.BasicParametersTableID equals d.BasicParametrAdditionalID
                                      where
-                                         a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчета
+                                         a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчёта
                                          && c.FK_UsersTable == userID // свяный с пользователем
                                          && d.SubvisionLevel == 3 //нужный уровень заполняющего
-                                         && a.Active == true // запись в таблице связей показателя и отчета активна
+                                         && a.Active == true // запись в таблице связей показателя и отчёта активна
                                          && c.CanView == true
                                          && c.Active == true // запись в таблице связей показателя и пользователей активна
                                          && d.Calculated == false
@@ -261,10 +261,10 @@ namespace KPIWeb.Reports
                                      join d in kpiWebDataContext.BasicParametrAdditional
                                          on b.BasicParametersTableID equals d.BasicParametrAdditionalID
                                      where
-                                         a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчета
+                                         a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчёта
                                          && c.FK_UsersTable == userID // свяный с пользователем
                                          && d.SubvisionLevel == 3 //нужный уровень заполняющего
-                                         && a.Active == true // запись в таблице связей показателя и отчета активна
+                                         && a.Active == true // запись в таблице связей показателя и отчёта активна
                                          && c.CanConfirm == true
                                          && c.Active == true // запись в таблице связей показателя и пользователей активна
                                          && d.Calculated == false
@@ -282,7 +282,7 @@ namespace KPIWeb.Reports
                                          on b.BasicParametersTableID equals c.FK_ParametrsTable
                                      join d in kpiWebDataContext.BasicParametrAdditional
                                          on b.BasicParametersTableID equals d.BasicParametrAdditionalID
-                                     where a.FK_ReportArchiveTable == ReportArchiveID //для отчета
+                                     where a.FK_ReportArchiveTable == ReportArchiveID //для отчёта
                                            && d.SubvisionLevel == 4 // для уровня заполняющего
                                            && d.Calculated == false //только вводимые параметры
                                            && c.FK_UsersTable == userID // связаннаые с пользователем
@@ -298,7 +298,7 @@ namespace KPIWeb.Reports
                                          on b.BasicParametersTableID equals c.FK_ParametrsTable
                                      join d in kpiWebDataContext.BasicParametrAdditional
                                          on b.BasicParametersTableID equals d.BasicParametrAdditionalID
-                                     where a.FK_ReportArchiveTable == ReportArchiveID //для отчета
+                                     where a.FK_ReportArchiveTable == ReportArchiveID //для отчёта
                                            && d.SubvisionLevel == 4 // для уровня заполняющего
                                            && d.Calculated == false //только вводимые параметры
                                            && c.FK_UsersTable == userID // связаннаые с пользователем
@@ -314,7 +314,7 @@ namespace KPIWeb.Reports
                                          on b.BasicParametersTableID equals c.FK_ParametrsTable
                                      join d in kpiWebDataContext.BasicParametrAdditional
                                          on b.BasicParametersTableID equals d.BasicParametrAdditionalID
-                                     where a.FK_ReportArchiveTable == ReportArchiveID //для отчета
+                                     where a.FK_ReportArchiveTable == ReportArchiveID //для отчёта
                                            && d.SubvisionLevel == 4 // для уровня заполняющего
                                            && d.Calculated == false //только вводимые параметры
                                            && c.FK_UsersTable == userID // связаннаые с пользователем
@@ -353,10 +353,10 @@ namespace KPIWeb.Reports
                                         join d in kpiWebDataContext.BasicParametrAdditional
                                             on b.BasicParametersTableID equals d.BasicParametrAdditionalID
                                         where
-                                            a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчета
+                                            a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчёта
                                             && c.FK_UsersTable == userID // свяный с пользователем
                                             && d.SubvisionLevel == userLevel //нужный уровень заполняющего
-                                            && a.Active == true // запись в таблице связей показателя и отчета активна
+                                            && a.Active == true // запись в таблице связей показателя и отчёта активна
                                             && c.CanEdit == true
                                             && c.Active == true // запись в таблице связей показателя и пользователей активна
                                             && d.Calculated == false
@@ -370,10 +370,10 @@ namespace KPIWeb.Reports
                                         join d in kpiWebDataContext.BasicParametrAdditional
                                             on b.BasicParametersTableID equals d.BasicParametrAdditionalID
                                         where
-                                            a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчета
+                                            a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчёта
                                             && c.FK_UsersTable == userID // свяный с пользователем
                                             && d.SubvisionLevel == userLevel //нужный уровень заполняющего
-                                            && a.Active == true // запись в таблице связей показателя и отчета активна
+                                            && a.Active == true // запись в таблице связей показателя и отчёта активна
                                             && c.CanView == true
                                             && c.Active == true // запись в таблице связей показателя и пользователей активна
                                             && d.Calculated == false
@@ -387,10 +387,10 @@ namespace KPIWeb.Reports
                                         join d in kpiWebDataContext.BasicParametrAdditional
                                             on b.BasicParametersTableID equals d.BasicParametrAdditionalID
                                         where
-                                            a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчета
+                                            a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчёта
                                             && c.FK_UsersTable == userID // свяный с пользователем
                                             && d.SubvisionLevel == userLevel //нужный уровень заполняющего
-                                            && a.Active == true // запись в таблице связей показателя и отчета активна
+                                            && a.Active == true // запись в таблице связей показателя и отчёта активна
                                             && c.CanConfirm == true
                                             && c.Active == true // запись в таблице связей показателя и пользователей активна
                                             && d.Calculated == false
@@ -417,7 +417,7 @@ namespace KPIWeb.Reports
                         btnView.Enabled = ViewButton > 0 ? false : true;
                     }
                 }
-                ///вывели все отчеты с параметрами в гридвью          
+                ///вывели все отчёты с параметрами в гридвью          
             }
         }
         protected void ButtonEditClick(object sender, EventArgs e)
@@ -444,7 +444,7 @@ namespace KPIWeb.Reports
                 
 
                 Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
-                Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчета               
+                Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчёта               
                 Serialization modeSer = new Serialization(0,null,null);
                 Session["mode"] = modeSer;
 
@@ -484,7 +484,7 @@ namespace KPIWeb.Reports
             Button button = (Button)sender;
             {
                 Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
-                Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчета               
+                Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчёта               
                 Serialization modeSer = new Serialization(1, null, null);
                 Session["mode"] = modeSer;
                 Response.Redirect("~/Reports/FillingTheReport.aspx");
@@ -495,7 +495,7 @@ namespace KPIWeb.Reports
             Button button = (Button)sender;
             {
                 Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
-                Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчета               
+                Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчёта               
                 Serialization modeSer = new Serialization(2, null, null);
                 Session["mode"] = modeSer;
                 Response.Redirect("~/Reports/FillingTheReport.aspx");
