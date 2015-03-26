@@ -1,7 +1,10 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="UserLogin.aspx.cs" Inherits="KPIWeb.Account.UserLogin" %>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-      <link href="../css/login.css" rel="stylesheet" type="text/css" />
-      <div class="first_div_on_login">
+      <link href="/App_Themes/theme_1/css/login.css" rel="stylesheet" type="text/css" />
+     <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel"></asp:Panel>
+     
+    <div class="first_div_on_login">
+        <div class="login_image_gerb"></div>
         <br />
         <br />
         <br />
