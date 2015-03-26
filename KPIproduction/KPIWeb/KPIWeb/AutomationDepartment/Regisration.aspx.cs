@@ -141,7 +141,7 @@ namespace KPIWeb.AutomationDepartment
                 }
                 else
                 {
-                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Произошла ошибка.');", true);                   
+                    //Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Произошла ошибка.');", true);                   
                 }
             }
             else
@@ -358,7 +358,7 @@ namespace KPIWeb.AutomationDepartment
                 }
                 else
                 {
-                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Произошла ошибка.');", true);
+                    //Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Произошла ошибка.');", true);
                 }
             }
             else
@@ -398,9 +398,7 @@ namespace KPIWeb.AutomationDepartment
                             (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsConfirmCheckBox");
                         Label label = (Label) Gridview3.Rows[rowIndex].FindControl("BasicParametrsID");
 
-                        //BasicParametrsAndUsersMapping BasicAndUsers = new BasicParametrsAndUsersMapping();
-
-                        
+                        //BasicParametrsAndUsersMapping BasicAndUsers = new BasicParametrsAndUsersMapping();                    
                         int first = 0;
                         int second = 0;
                         int third = 0;
@@ -427,6 +425,7 @@ namespace KPIWeb.AutomationDepartment
                                 (((a.CanConfirm ==true)&&(canConfirm.Checked==true))||((a.CanEdit == true)&&(canEdit.Checked==true)))
                                 && a.Active == true
                                 && b.Active == true
+                                
                                 && b.FK_ZeroLevelSubdivisionTable == 1
                                 && a.FK_ParametrsTable == Convert.ToInt32(label.Text)
                                 && ((b.FK_FirstLevelSubdivisionTable == first) || (b.FK_FirstLevelSubdivisionTable == null))
@@ -483,8 +482,8 @@ namespace KPIWeb.AutomationDepartment
                     kPiDataContext.UsersTable.InsertOnSubmit(user);
                     kPiDataContext.SubmitChanges();
                     //// ПОЛЬЗОВАТЕЛЬ СОЗДАН
-                    /// 
-                    //SENDMAIL (email =user.Email  title = "КФУ КПЭ регистрация" body = "Для продолжения регистрации нажмите на ссылку" + "...Account/UserRegister?&id="+passCode )
+                    ///                    
+
                     int userID = user.UsersTableID;
                     
                     ///////////////////////////////////////////шаблон//////////////////////////////////
@@ -571,8 +570,20 @@ namespace KPIWeb.AutomationDepartment
                             }
                         }
                     }
+
+                   // Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                   //     "alert('Пользователь зарегистрирован');", true);
+
+                //SENDMAIL (email =user.Email  title = "КФУ КПЭ регистрация" body = "Для продолжения регистрации нажмите на ссылку" + "...Account/UserRegister?&id="+passCode )                    
+
+                    string trnr = "Отправляется письмо c содержанием:" +
+                                  " адрес: " + user.Email +
+                                  " тема: КФУ КПЭ регистрация" +
+                                  " Вы зарегистрированы на сайте КФУ КПЭ." +
+                                  " Для подтверждения аккаунта перейдите по ссылке." +
+                                  " ...Account/UserRegister?&id=" + passCode;
                     Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
-                        "alert('Пользователь зарегистрирован');", true);
+                      "alert('" + trnr + "');", true);
                 }
             }
         }

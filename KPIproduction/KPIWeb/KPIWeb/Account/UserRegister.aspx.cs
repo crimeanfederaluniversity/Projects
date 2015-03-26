@@ -42,10 +42,8 @@ namespace KPIWeb.Account
                     SaveButton.Visible = true;
                     PassText.Visible = true;
                     ConfText.Visible = true;
-                }
-                
-            }
-               
+                }                
+            }            
         }
 
         protected void SaveButton_Click(object sender, EventArgs e)
@@ -78,11 +76,13 @@ namespace KPIWeb.Account
                         user.Password = PassText.Text;
                         user.Confirmed = true;
                         kPiDataContext.SubmitChanges();
-
                         //LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Пользователь " + user.Login + " вошел в систему ");
                         Serialization UserSerId = new Serialization(user.UsersTableID);
                         Session["UserID"] = UserSerId;
-                        Response.Redirect("~/Default.aspx");  
+                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                            "alert('Поздравляем! Вы успешно зарегистрировались.');" +
+                            "document.location = '../Default.aspx';", true);
+                       // Response.Redirect("~/Default.aspx");  
                     }
                 }
             }                       

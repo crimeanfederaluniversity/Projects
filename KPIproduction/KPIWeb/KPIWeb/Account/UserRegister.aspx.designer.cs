@@ -13,15 +13,6 @@ namespace KPIWeb.Account {
     public partial class UserRegister {
         
         /// <summary>
-        /// form1 элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
-        /// <summary>
         /// Label1 элемент управления.
         /// </summary>
         /// <remarks>
@@ -49,6 +40,15 @@ namespace KPIWeb.Account {
         protected global::System.Web.UI.WebControls.TextBox PassText;
         
         /// <summary>
+        /// errorNoPass элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator errorNoPass;
+        
+        /// <summary>
         /// Label2 элемент управления.
         /// </summary>
         /// <remarks>
@@ -65,6 +65,24 @@ namespace KPIWeb.Account {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox ConfText;
+        
+        /// <summary>
+        /// errorNoConfirm элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator errorNoConfirm;
+        
+        /// <summary>
+        /// ErrorWrongConfirm элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator ErrorWrongConfirm;
         
         /// <summary>
         /// SaveButton элемент управления.

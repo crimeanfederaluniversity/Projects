@@ -804,7 +804,7 @@ namespace KPIWeb.Reports
                     ButtonSave.Text = "Сохранить внесенные данные.";
 
                     UpnDownButton.Visible = true;
-                    UpnDownButton.Text = "Отправить отчет на подтверждение.";
+                    UpnDownButton.Text = "Отправить отчет на утверждение.";
 
                     TextBox1.Visible = false;
 
@@ -816,7 +816,7 @@ namespace KPIWeb.Reports
                     {                       
                         if (tmpStatCount == StatusList.Count())
                         {
-                            Label1.Text = "Все показатели заполнены. Необходимо отправить отчет на верификацию";
+                            Label1.Text = "Все показатели заполнены. Необходимо отправить отчет на утверждение";
                             UpnDownButton.Enabled = true;
                         }
                         else
@@ -827,7 +827,7 @@ namespace KPIWeb.Reports
                     }
                     ViewState["AllCnt"] = StatusList.Count();
                     Label2.Text ="Осталось " + dateCount+" дней до закрытия отчета";
-                    UpnDownButton.OnClientClick = "javascript:return confirm('Отправить данные на подтверждение?');";
+                    UpnDownButton.OnClientClick = "javascript:return confirm('Отправить данные на утверждение?');";
                     
                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                     "window.onbeforeunload = function(e) " +
@@ -858,11 +858,11 @@ namespace KPIWeb.Reports
                     }
                     else if (StatusList[0] == 3)
                     {
-                        Label1.Text = "Данные отправлены на верификацию";
+                        Label1.Text = "Данные отправлены на утверждение";
                     }
                     else if (StatusList[0] == 4)
                     {
-                        Label1.Text = "Данные верифицированы";
+                        Label1.Text = "Данные утверждены";
                     }
                     Label2.Visible = false;
                    // OnClientClick="javascript:return confirm('Do you really want to \ndelete the item?');"
@@ -872,20 +872,20 @@ namespace KPIWeb.Reports
                     if (mode == 2)
                     {
                         GoBackButton.Visible = true;
-                        GoBackButton.Text = "Вернуться в меню без подтверждения.";
+                        GoBackButton.Text = "Вернуться в меню без утверждения.";
 
                         ButtonSave.Visible = true;
-                        ButtonSave.Text = "Подтвердить данные.";
+                        ButtonSave.Text = "Утвердить данные.";
 
                         UpnDownButton.Visible = true;
                         UpnDownButton.Text = "Вернуть отчет на доработку.";
 
                         TextBox1.Visible = true;
 
-                        Label1.Text = "Форма подтверждения данных.";
+                        Label1.Text = "Форма Утверждения данных.";
                         Label2.Text ="Осталось " + dateCount + " дней до закрытия отчета";
 
-                        ButtonSave.OnClientClick = "javascript:return confirm('Подтвердить достоверность данных и отправить их на обработку(Режим доступа к данным будет измене на \"только просмотр\")');";
+                        ButtonSave.OnClientClick = "javascript:return confirm('Подтвердить достоверность данных и отправить их на обработку(Режим доступа к данным будет измене на \"только просмотр\")?');";
                         UpnDownButton.OnClientClick = "javascript:return confirm('Вернуть отчет на доработку.');";
                     }
                 GridviewCollectedBasicParameters.DataSource = dataTable;
@@ -1066,93 +1066,15 @@ namespace KPIWeb.Reports
                             }
                         }
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Вы утвердили данные всех базовых показателей. Отчет отправлен и доступен только в режиме 'Просмотр'. ');" +
+                            "alert('Вы утвердили данные всех базовых показателей. Отчет отправлен и доступен только в режиме \"Просмотр\".');" +
                             "document.location = '../Default.aspx';", true);
                     }
                     else
                     {
                         //error
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Ошибка');", true);
-                    }
-                    
-
-                    #region old confirm with checkboxses
-                    /*
-                    int dataCount = 0;
-                    int dataConfCount = 0;
-                    if (collectedBasicParametersTable.Rows.Count > 0)
-                    {
-                        int rowIndex = 0;
-                        for (int i = 1; i <= collectedBasicParametersTable.Rows.Count; i++) //в каждой строчке
-                        {
-                            /// //сохраним вложенные данные
-                            for (int k = 0; k < columnCnt; k++) // пройдемся по каждой колонке
-                            {
-                                TextBox textBox = (TextBox)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("Value" + k.ToString());
-                                Label label = (Label)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("CollectId" + k.ToString());
-                                CheckBox chBox = (CheckBox)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("Checked" + k.ToString());
-                                Label NotNullLbl = (Label)GridviewCollectedBasicParameters.Rows[rowIndex].FindControl("NotNull" + k.ToString());
-                                if (textBox != null && label != null && chBox != null)
-                                {
-
-                                    if (NotNullLbl.Text.Any())
-                                        dataCount++;
-
-                                    if (chBox.Checked)
-                                    {
-                                        if (!textBox.Text.Any())
-                                        {
-                                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                                            "alert('Нельзя утвердить незаполненные данные');", true);
-                                            return;
-                                        }
-                                        else
-                                        {
-                                            dataConfCount++;
-                                            double collectedValue = -1;
-                                            if (double.TryParse(textBox.Text, out collectedValue) && collectedValue > -1)
-                                            {
-                                                int collectedBasicParametersTableID = -1;
-                                                if (int.TryParse(label.Text, out collectedBasicParametersTableID) &&
-                                                    collectedBasicParametersTableID > -1)
-                                                    tempDictionary.Add(collectedBasicParametersTableID, collectedValue);
-                                            }
-                                        }
-
-                                    }
-                                }
-                            }
-                            rowIndex++;
-                        }
-                    }
-
-                    if (tempDictionary.Count > 0)
-                    {
-                        List<CollectedBasicParametersTable> сollectedBasicParametersTable =
-                            (from collectedBasicParameters in KPIWebDataContext.CollectedBasicParametersTable
-                             where (from item in tempDictionary select item.Key).ToList()
-                             .Contains((int)collectedBasicParameters.CollectedBasicParametersTableID)
-                             select collectedBasicParameters).ToList();
-
-                        foreach (var сollectedBasicParameter in сollectedBasicParametersTable)
-                        {
-                            сollectedBasicParameter.Status = 4;
-                        }
-                        KPIWebDataContext.SubmitChanges();
-                        if (dataConfCount == dataCount)
-                        {
-                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Вами утверждены значения всех базовых показателей. Окончательный отчет отправлен');", true);
-
-                        }
-                        else
-                        {
-                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Вами утверждены данные " + dataConfCount.ToString() + " базовых показателей из " + dataCount.ToString() + "');", true);
-                        }*/
-
-#endregion
+                            "alert('Ошибка'); document.location = '../Default.aspx'; ", true);
+                    }         
                     #endregion
                 }
                 else
@@ -1274,7 +1196,7 @@ namespace KPIWeb.Reports
                                 #region view
                                 lblMinutes.ReadOnly = true;
                                 lblMinutes.BackColor = color;
-
+                                /*
                                 Color tmpColor = Color.Red;
 
                                 if (Status == 0) // не должны сюда попадать
@@ -1301,7 +1223,7 @@ namespace KPIWeb.Reports
                                 DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
                                 d.BackColor = tmpColor;
                                 lblMinutes.BackColor = tmpColor;
-
+                                */
 
                                 if (Validator != null)
                                 {
@@ -1471,7 +1393,7 @@ namespace KPIWeb.Reports
                                 }
                             }
                             Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
-                                "alert('Отчет отправлен на подтверждение');" +
+                                "alert('Отчет отправлен на утверждение');" +
                                 "document.location = '../Default.aspx';", true);
                             //SENDMAIL ()
 
@@ -1527,7 +1449,6 @@ namespace KPIWeb.Reports
                                 "alert('Отчет отправлен на доработку');" +
                                 "document.location = '../Default.aspx';", true);
                             //SENDMAIL ()
-
                             #endregion
                         }
                     }

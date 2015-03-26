@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -31,7 +32,7 @@ namespace KPIWeb.Head
             if ((userTable_.AccessLevel == 9)||(userTable_.AccessLevel == 10))
             {
                 userTable_ =
-                    (from a in kPiDataContext.UsersTable where a.UsersTableID == 8130 select a).FirstOrDefault(); // чтобы мониторинг мог зайти
+                    (from a in kPiDataContext.UsersTable where a.UsersTableID == 8164 select a).FirstOrDefault(); // чтобы мониторинг мог зайти
                 userID = userTable_.UsersTableID;//чтобы мониторинг мог зайти
             }
             
@@ -118,9 +119,12 @@ namespace KPIWeb.Head
                 List<int> AllcntList = new List<int>();
                 List<int> InsertcntList = new List<int>();
                 List<int> ConfcntList = new List<int>();
-
-                foreach (CalculatedParametrs calcPar in list_calcParams)
+                
+                //Parallel.ForEach()
+                foreach(CalculatedParametrs calcPar in list_calcParams)
+               // Parallel.ForEach(list_calcParams, calcPar =>
                 {
+#region
                     CollectedCalculatedParametrs colCalc = (from a in kPiDataContext.CollectedCalculatedParametrs
                                                             where a.FK_ReportArchiveTable == ReportArchiveID
                                                             && a.FK_CalculatedParametrs == calcPar.CalculatedParametrsID
@@ -291,7 +295,8 @@ namespace KPIWeb.Head
                     AllcntList.Add(Allcnt);
                     InsertcntList.Add(Insertcnt);
                     ConfcntList.Add(Confcnt);
-                }
+#endregion
+                }//) ;
 
                 ViewState["AllcntC"] = AllcntList;
                 ViewState["InsertcntC"] = InsertcntList;
@@ -379,7 +384,7 @@ namespace KPIWeb.Head
                     {
                         dataRow["info0"] = "Данные недоступны";
                         //SENDMAIL (email =admin  title = "ошибка в индикаторах у руководства" body = "Allcnt="+Allcnt+" Confcnt"+Confcnt +user + report + indicatorID )
-                    
+             
                     }
                     else
                     {

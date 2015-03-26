@@ -122,13 +122,18 @@ namespace KPIWeb.Reports
 
                     string status = "Нет данных";
                     int Statusn = 0;
-                    if (ColTemp.Status == null)
+                   
+                    if (ColTemp == null)
+                    {
+                        Statusn = 0;
+                    }
+                    else if (ColTemp.Status == null)
                     {
                         Statusn = 0;
                     }
                     else
                     {
-                        Statusn = (int)ColTemp.Status;
+                        Statusn = (int) ColTemp.Status;
                     }
 
                     if (Statusn == 4)
@@ -430,8 +435,13 @@ namespace KPIWeb.Reports
                 UsersTable userTable =
                     (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
                 ThirdLevelParametrs thirdParam = (from a in kpiWebDataContext.ThirdLevelParametrs
-                    where a.ThirdLevelParametrsID == userTable.FK_ThirdLevelSubdivisionTable
+                    where
+                        a.ThirdLevelParametrsID == userTable.FK_ThirdLevelSubdivisionTable
+                        && a.Active == true 
+                
                     select a).FirstOrDefault();
+
+                
 
                 Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
                 Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчета               
@@ -440,13 +450,27 @@ namespace KPIWeb.Reports
 
                 if (thirdParam != null)
                 {
+                    
                     if (thirdParam.CanGraduate)
                     {
-                        Response.Redirect("~/Reports/Parametrs.aspx");
+                        FourthLevelSubdivisionTable fourth =
+                        (from a in kpiWebDataContext.FourthLevelSubdivisionTable
+                         where a.Active == true
+                         && a.FK_ThirdLevelSubdivisionTable == thirdParam.ThirdLevelParametrsID
+                         select a).FirstOrDefault();
+                        if (fourth != null)
+                        {
+                            Response.Redirect("~/Reports/Parametrs.aspx");
+                        }
+                        else
+                        {
+                            Response.Redirect("~/Reports/FillingTheReport.aspx");
+                        }
+
                     }
                     else
                     {
-                        Response.Redirect("~/Reports/FillingTheReport.aspx");
+                       Response.Redirect("~/Reports/FillingTheReport.aspx");
                     }
                 }
                 else
