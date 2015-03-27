@@ -202,19 +202,32 @@ namespace KPIWeb.AutomationDepartment
                                             user.Email = TextBoxEmail.Text;
                                         }
                                         if (TextBoxFirstlvl.Text.Any())
-                                            user.FK_FirstLevelSubdivisionTable = Convert.ToInt32(TextBoxFirstlvl.Text);
+                                            user.FK_FirstLevelSubdivisionTable = (from a in kPiDataContext.UsersTable
+                                                                                  where a.UsersTableID == Convert.ToInt32(TextBoxFourthlvlId.Text)
+                                                                                  select a.FK_FirstLevelSubdivisionTable).FirstOrDefault();
+
                                         if (TextBoxSecondlvl.Text.Any())
-                                            user.FK_SecondLevelSubdivisionTable = Convert.ToInt32(TextBoxSecondlvl.Text);
+                                            user.FK_SecondLevelSubdivisionTable = (from a in kPiDataContext.UsersTable
+                                                                                   where a.UsersTableID == Convert.ToInt32(TextBoxFourthlvlId.Text)
+                                                                                   select a.FK_SecondLevelSubdivisionTable).FirstOrDefault();
                                         if (TextBoxThirdlvl.Text.Any())
-                                            user.FK_ThirdLevelSubdivisionTable = Convert.ToInt32(TextBoxThirdlvl.Text);
+                                            user.FK_ThirdLevelSubdivisionTable = (from a in kPiDataContext.UsersTable
+                                                                                  where a.UsersTableID == Convert.ToInt32(TextBoxFourthlvlId.Text)
+                                                                                  select a.FK_ThirdLevelSubdivisionTable).FirstOrDefault();
                                         if (TextBoxFourthlvl.Text.Any())
-                                            user.FK_FourthLevelSubdivisionTable = Convert.ToInt32(TextBoxFourthlvl.Text);
+                                            user.FK_FourthLevelSubdivisionTable = (from a in kPiDataContext.UsersTable
+                                                                                   where a.UsersTableID == Convert.ToInt32(TextBoxFourthlvlId.Text)
+                                                                                   select a.FK_FourthLevelSubdivisionTable).FirstOrDefault();
                                         if (TextBoxFifthlvl.Text.Any())
-                                            user.FK_FifthLevelSubdivisionTable = Convert.ToInt32(TextBoxFifthlvl.Text);
+                                            user.FK_FifthLevelSubdivisionTable = (from a in kPiDataContext.UsersTable
+                                                                                  where a.UsersTableID == Convert.ToInt32(TextBoxFourthlvlId.Text)
+                                                                                  select a.FK_FifthLevelSubdivisionTable).FirstOrDefault();
                                         if (TextBoxAcceslvl.Text.Any())
                                             user.AccessLevel = Convert.ToInt32(TextBoxAcceslvl.Text);
                                         if (TextBoxZerolvl.Text.Any())
-                                            user.FK_ZeroLevelSubdivisionTable = Convert.ToInt32(TextBoxZerolvl.Text);
+                                            user.FK_ZeroLevelSubdivisionTable = (from a in kPiDataContext.UsersTable
+                                                                                 where a.UsersTableID == Convert.ToInt32(TextBoxFourthlvlId.Text)
+                                                                                 select a.FK_ZeroLevelSubdivisionTable).FirstOrDefault();
                                         kPiDataContext.SubmitChanges();
                                     }
                                 }
