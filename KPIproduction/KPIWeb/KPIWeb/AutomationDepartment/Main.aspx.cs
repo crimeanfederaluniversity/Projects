@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using KPIWeb.Rector;
 
 namespace KPIWeb.AutomationDepartment
 {
@@ -83,6 +84,14 @@ namespace KPIWeb.AutomationDepartment
         protected void Button11_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Account/Register_.aspx");
+        }
+
+        protected void Button11_Click1(object sender, EventArgs e)
+        {
+            Result.Struct mainStruct = new Result.Struct(1,"");
+            RectorSession rectorResultSession = new RectorSession (mainStruct, 1, 0, 0, 4009);
+            Session["rectorResultSession"] = rectorResultSession;
+            Response.Redirect("~/Rector/Result.aspx");
         }
     }
 }
