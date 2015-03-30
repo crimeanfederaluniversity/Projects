@@ -80,6 +80,8 @@ namespace KPIWeb
             Response.Redirect("~/Account/UserLogin.aspx");
             //Context.GetOwinContext().Authentication.SignOut();
         }
+
+    
     }
 
 }

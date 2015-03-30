@@ -1,7 +1,10 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="UserLogin.aspx.cs" Inherits="KPIWeb.Account.UserLogin" %>
+<%@ MasterType  virtualPath="~/Site.Master"%>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
       <link href="/App_Themes/theme_1/css/login.css" rel="stylesheet" type="text/css" />
-     <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel"></asp:Panel>
+     <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Visible="false">
+
+     </asp:Panel>
      
     <div class="first_div_on_login">
         <div class="login_image_gerb"></div>
@@ -34,5 +37,6 @@
         <br />
 
         <asp:Button ID="Button1" CssClass="form-control" runat="server" Text="Войти" Height="40px" OnClick="Button1_Click" Width="300px" />
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Button" />
  </div>
 </asp:Content>

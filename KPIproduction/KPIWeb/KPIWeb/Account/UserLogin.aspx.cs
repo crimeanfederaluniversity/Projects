@@ -54,5 +54,11 @@ namespace KPIWeb.Account
                 }
             
         }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Panel mypanel = (Panel)(Master.FindControl("loading"));
+            if (mypanel != null) mypanel.Visible = true;
+        }
     }
 }

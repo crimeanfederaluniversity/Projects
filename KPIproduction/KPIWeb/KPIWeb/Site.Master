@@ -17,6 +17,7 @@
     
 </head>
 <body>
+    <div id="divbg"></div>
     <form runat="server" class="form_mpg">
         <asp:ScriptManager runat="server">
             <Scripts>
@@ -75,26 +76,29 @@
                 </div>
             </div>
         </div>
-        <div class="container body-content ">
+        <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
            
             
         </div>
        
-    </form>
     <div class="bottom_mp">
                  <hr />
             <footer>
                 <p>&copy; <%: DateTime.Now.Year %>   ИАС «КФУ-мониторинг»</p>
             </footer>
                 </div>
-   <asp:Panel id="gears" runat="server" class="Image1" Visible="false">
+       
+    </form>
+    <asp:Panel id="loading" runat="server" calss="loading_screen" Visible="false" >
+   <asp:Panel id="gears" runat="server" class="Image1">
        <h2 id="load_style">Загрузка...</h2>
        <asp:Panel runat="server" id="im1"  ></asp:Panel>
        <asp:Panel runat="server" id="im2"  ></asp:Panel>
    </asp:Panel>
-   
+   </asp:Panel>
+
 </body>  
      
 </html>

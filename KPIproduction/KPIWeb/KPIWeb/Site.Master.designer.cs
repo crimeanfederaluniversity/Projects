@@ -22,6 +22,15 @@ namespace KPIWeb {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
         
         /// <summary>
+        /// loading элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel loading;
+        
+        /// <summary>
         /// gears элемент управления.
         /// </summary>
         /// <remarks>

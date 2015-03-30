@@ -92,5 +92,26 @@ namespace KPIWeb.Account {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
+        
+        /// <summary>
+        /// Button2 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button2;
+        
+        /// <summary>
+        /// Master свойство.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое свойство.
+        /// </remarks>
+        public new KPIWeb.SiteMaster Master {
+            get {
+                return ((KPIWeb.SiteMaster)(base.Master));
+            }
+        }
     }
 }

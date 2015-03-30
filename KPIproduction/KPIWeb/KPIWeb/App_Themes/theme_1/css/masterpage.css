@@ -1,15 +1,33 @@
 ﻿body {
-    background-image:url("/App_Themes/theme_1/css/images/bg_blue_3.png");
-   /*A background:linear-gradient(to right top, #fefefe, #f0f797 ) ;*/
+   /* background-image:url("/App_Themes/theme_1/css/images/kfu_gerb_2.png");*/
+
+    /*background:linear-gradient(to right top, #fefefe, #f0f797 ) ;*/
     background-repeat:no-repeat;
     
     background-size:cover;
-    background-position:top left;
+    
  
-    background-attachment:fixed;
+
     width:  100%;
     height: 100%;
     position:relative;
+}
+
+
+#divbg {
+    background-image:url("/App_Themes/theme_1/css/images/kfu_gerb.png");
+    background-repeat:no-repeat;
+    
+    background-size:contain;
+    background-position:center;
+    top:20%;
+    left:21%;
+    opacity:0.2;
+    
+    width:  60%;
+    height: 60%;
+    position:fixed;
+    z-index:-6;
 }
 html {
  
@@ -18,15 +36,7 @@ html {
 width:auto;
     }
 
-#load_style {
-    color:#05ff01;
-    border-style:none;
-    position:absolute;
-    top:40px;
-    left:-80px;
-    
 
-}
 
 
 .bottom_mp {
@@ -35,33 +45,11 @@ width:auto;
     left:2%;
     width:100%;
     }
-.bg_im {
-    position:absolute;
-    background-size: contain;
-    position:absolute;
-    width:100%;
-    height:100%;
-    top: 15%;
-    margin-left:55%;
-    opacity: 0.8;
-    }/*
-.bg_im.bg_im_1 {
-       background-image:url('../../../css/images/kfu_gerb.png');
-   width:100%;
-    height:100%;
 
-}
 
-.bg_im.bg_im_2 {
-       background-image:url('../../../css/images/bg_blue_3.png');
-  
-        width:100%;
-    height:100%;
-}*/
-    
 h2 {
 text-align:center;
-position:fixddded;
+
     font-family: "Times New Roman";
     font-size: xx-large;
     font-weight: 700;
@@ -106,102 +94,7 @@ input[type="text"] {
       animation-timing-function:linear;
 }
 
-/*.button_login {
-    font-family: "Arial Unicode MS";
-    font-size: large;
-    font-weight: bold;
-    font-style: normal;
-    font-variant: normal;
-    text-transform: none;
-    color:#000000;
-    background-repeat: no-repeat;
-    background-attachment: scroll;
-    background-size: cover;
-    background-image: url('images/kfu_button_gray_1.png');
-    border-width: 2px;
-    border-color: #6f6c00;
-    border-radius: 4px;
-    width: 100px;
-    
-}
-   
 
-.button_login:hover {
-border-width:2px;
-background-image: url('images/kfu_button_gradient_hover_green_1.png');
-color:#ffffff;
-       } 
-
-.Grid_view_style_border_1 {
-    border-width: 3px;
-    border-color: #000000;
-    font-family: "Times New Roman";
-    font-size: medium;
-    font-weight: bolder;
-    text-align: center;
-    box-shadow:  -15px 15px 5px 0px #0000001;
-    
-}
- 
-.Grid_view_style_border_main {
-    border-width: 3px;
-    border-color: #000000;
-    font-family: "Times New Roman";
-    font-size: medium;
-    font-weight: bolder;
-    text-align: center;
-    box-shadow: -15px 15px 5px 0px rgba(0,0,0,0.6);
-
-
-}
-
-.Grid_view_style_text_1 {
-    font-family: "Times New Roman";
-    font-size: large;
-    font-weight: bold;
-    text-align: center;
-    font-style: normal;
-    font-variant: normal;
-    text-transform: capitalize;
-    color: #000000;
-
-}
-.Grid_view_controls_text_1 {
-    font-family: "Times New Roman";
-    font-size: medium;
-    font-weight: bold;
-    text-align: center;
-    color:#000000;
-    background-image:url("/css/images/kfu_button_gradient_2.png");
-    background-repeat: repeat-x;
-    background-attachment: scroll;
-    background-size: contain;
-    border-width:2px;
-    border-color:#000000;
-    border-style:outset;
-}
-
-/*
-
-    .Grid_view_controls_text_1:disabled {
-        font-size: medium;
-        font-weight: normal;
-        border-color:#a0a0a0;
-        color:#7e7e7e;
-        background-image:url("/css/images/kfu_button_gradient_disabled.png");
-        }
-    .Grid_view_controls_text_1:disabled:hover{
-        color: #7f7f7f;
-        border-color:#e2e2e2;
-        border-bottom-color: #585858 ;
-        border-right-color: #585858 ;
-        background-image:url("/css/images/kfu_button_gradient_disabled.png");
-          }
-    .Grid_view_controls_text_1:hover {
-        color: #000000;
-        background-image: url("/css/images/kfu_button_gradient_hover_green_1.png");
-
-    }*/
 /*GRID_VIEW*//*GRID_VIEW*//*GRID_VIEW*//*GRID_VIEW*//*GRID_VIEW*//*GRID_VIEW*/
 .Grid_view_style {
 
@@ -211,26 +104,29 @@ color:#ffffff;
     text-align: center;
     font-style: normal;
     font-variant: normal;
- 
+   /* background-color:#585858;*/
+
     color: #000000;
     border-color:#000000;border-style:solid;
-      border-width:4px 4px 4px 4px;
+      border-width:3px 3px 3px 3px;
 
-    box-shadow: -15px 15px 5px 0px rgba(0,0,0,0.6);
+   /* box-shadow: -15px 15px 5px 0px rgba(0,0,0,0.6);*/
 }
 .Grid_view_style th {
-    
- background-color:#000000;
-     color:#ffffff;
- text-align:center;
+      border-width:1px 1px 1px 1px;
+      border-top-color:#000000;
+      border-bottom-color:#000000;
+      background-color:#585858;
+      color:#ffffff;
+      text-align:center;
     }
 .Grid_view_style tr, 
-.Grid_view_style td,  
-.Grid_view_style th {
-    
+.Grid_view_style td {
+    table-layout:auto;
     border-width:1px 1px 1px 1px;
     border-color:#000000;
     border-style:groove;
+
     }
 
     .Grid_view_style tr,
@@ -239,10 +135,7 @@ color:#ffffff;
         font-size: small;
         font-weight: normal;
     }
-    .Grid_view_style  {
-        
-         
-    }
+
 
 .Grid_view_style td:hover, 
 .Grid_view_style th:hover {
@@ -251,7 +144,6 @@ color:#ffffff;
 
 /*GRID_VIEW*//*GRID_VIEW*//*GRID_VIEW*//*GRID_VIEW*//*GRID_VIEW*//*GRID_VIEW*/
 .text_style_1 {
-   
     font-family: "Times New Roman";
     font-size: xx-large;
     font-weight: 700;
@@ -259,7 +151,7 @@ color:#ffffff;
     font-variant: normal;
     text-transform: none;
     color: #000000;
-    background-color:#a1e094;
+    background-color:#05ff01;
 /*
   background-image:url("/css/images/bg_5_texts.png");
   background-size:contain; 
@@ -267,7 +159,7 @@ color:#ffffff;
     */
 }
 
-
+/*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*/
 
 input[type="submit"] {
     font-family: "Arial Unicode MS";
@@ -284,10 +176,13 @@ input[type="submit"] {
     border-width: 2px;
     border-color: #000000;
     border-style:solid;
-
     border-radius: 4px;
 
+
+
    }
+
+
     input[type="submit"]:hover {
     border-width:2px;
 background-image: url('/App_Themes/theme_1/css/images/kfu_button_gradient_hover_green_2.png');
@@ -296,6 +191,7 @@ background-image: url('/App_Themes/theme_1/css/images/kfu_button_gradient_hover_
     background-size: contain;
 
     }
+    
 
         input[type="submit"]:disabled{
         color: #585858;
@@ -307,7 +203,7 @@ background-image: url('/App_Themes/theme_1/css/images/kfu_button_gradient_hover_
         input[type="submit"]:disabled:hover{
 
           }
-
+/*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*/
 label {
 font-family:'Times New Roman';
 font-size:initial;
@@ -317,17 +213,8 @@ font:bold;
 
 
 
-.left_button_login_margin {
 
 
-
-}
-
-.left_textbox_login_margin {
-    
-border-color:#ff0000;
-
-}
 
 
 hr {
@@ -335,15 +222,8 @@ border-color:#000000;
 }
 
 
-input[type="checkbox"]{
-  
-}
-.log_page {
-    position:relative;
-    top:10%;
 
 
-}
 .div_login_button {
 position:relative;
 left:7%;
@@ -357,57 +237,88 @@ left:7%;
    left:20%;
   }
 
-.Image1 {
 
-        position:fixed;
+/*ANIMATION_OBJ_DESIGN*//*ANIMATION_OBJ_DESIGN*//*ANIMATION_OBJ_DESIGN*/
 
-        height:200px;
-        left:50%;
-        top:20%;
-        
-        
+
+
+#loading { 
+    
+    top:0;
+    left:0;
+    position:fixed;
+    width:100%;    height:100%;
+   
+
 
 }
+#gears {
+
+    position:fixed;
+
+   
+    width:240px;
+
+   
+    height:170px;
+    left:38%;
+    top:30%;
+
+    animation-name:anim_darkness_1;
+    animation-duration:2s;
+    animation-iteration-count:1;
+    animation-fill-mode:both;
+
+}
+#load_style {/*ЗАГРУЗКА...*/
+    color:#05ff01;
+    border-style:none;
+    position:absolute;
+    top:0px;
+    left:0;
+    }
+
 #im1 {
     position:absolute;
-    top:100px; 
-    left:0px;
-
+    top:60px; 
+    left:79px;
+    opacity:1;
     
-    background-image:url('/App_Themes/theme_1/css/images/gear_big.png');
+    background-image:url('/App_Themes/theme_1/css/images/gear_big_white_2.png');
     background-repeat:no-repeat;
   
     width:102px;
     height:102px;
     animation-name:anim_circle_progress_bar;
-    animation-duration:2s;
+    animation-duration:8s;
     animation-iteration-count:infinite;
     animation-timing-function:linear;
 }
 #im2 {
     position:absolute;
-    top:52px;
-    left:75px;
-    background-image:url('/App_Themes/theme_1/css/images/gear_small.png');
+    top:10px;
+    left:156px;
+    
+    background-image:url('/App_Themes/theme_1/css/images/gear_small_3_2.png');
     background-repeat:no-repeat;
   
     width:87px;
     height:90px;
     animation-name:anim_circle_progress_bar_2;
-    animation-duration:2s;
+    animation-duration:8s;
     animation-iteration-count:infinite;
     animation-timing-function:linear;
     animation-direction:reverse;
 }
-
-/*ANIMATION*/
+/*ANIMATION_OBJ_DESIGN*//*ANIMATION_OBJ_DESIGN*//*ANIMATION_OBJ_DESIGN*/
+/*ANIMATION/*ANIMATION*//*ANIMATION*//*ANIMATION*//*ANIMATION*//*ANIMATION*/
 @keyframes anim_circle_progress_bar {
 
     0% {
-        transform:rotate(20deg);
+        transform:rotate(20.5deg);
     }
     100% {
-        transform:rotate(65.5deg);
+        transform:rotate(290.5deg);
     }
 }
 @keyframes anim_circle_progress_bar_2 {
@@ -416,19 +327,19 @@ left:7%;
         transform:rotate(0deg);
     }
     100% {
-        transform:rotate(60deg);
+        transform:rotate(360deg);
     }
 }
 @keyframes anim_darkness_1 {
 
     0% {
-        border-width:2px;
-      
+     box-shadow:10px 10px 100px 100px rgba(0,0,0,0.1);
+       background: rgba(0,0,0,0.1);
     }
     100% {
-        border-width:10px;
-        
+     box-shadow:10px 10px 1000px 1000px rgba(0,0,0,0.95);
+        background: rgba(0,0,0,0.95);
     }
 }
 
-/*ANIMATION*/
+/*ANIMATION*//*ANIMATION*//*ANIMATION*//*ANIMATION*//*ANIMATION*//*ANIMATION*/
