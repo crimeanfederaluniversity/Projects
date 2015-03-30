@@ -225,8 +225,8 @@
     <Content Include="AutomationDepartment\RoleMapping.aspx" />
     <Content Include="AutomationDepartment\IsAvailibleMappingRole.aspx" />
     <Content Include="PersonalInfo.aspx" />
+    <Content Include="Rector\Result.aspx" />
     <Content Include="Reports\Parametrs.aspx" />
-    <Content Include="Result.aspx" />
     <Content Include="StatisticsDepartment\AddSpecialization.aspx" />
     <Content Include="StatisticsDepartment\FastStructure.aspx" />
     <Content Include="StatisticsDepartment\MonitoringMain.aspx" />
@@ -429,6 +429,12 @@
     <Compile Include="Polish.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectorSession.cs" />
+    <Compile Include="Rector\Result.aspx.cs">
+      <DependentUpon>Result.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\Result.aspx.designer.cs">
+      <DependentUpon>Result.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\ChooseReport.aspx.cs">
       <DependentUpon>ChooseReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -471,12 +477,6 @@
     </Compile>
     <Compile Include="Reports\SpecializationParametrs.aspx.designer.cs">
       <DependentUpon>SpecializationParametrs.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Result.aspx.cs">
-      <DependentUpon>Result.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Result.aspx.designer.cs">
-      <DependentUpon>Result.aspx</DependentUpon>
     </Compile>
     <Compile Include="Serialization.cs" />
     <Compile Include="Site.Master.cs">
