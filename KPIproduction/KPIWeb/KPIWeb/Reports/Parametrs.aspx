@@ -2,21 +2,21 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div>
-        <span style="font-size: 30px">Настройка параметров специальностей<br />
+        <span style="font-size: 30px">Настройка параметров напраления подготовки<br />
         </span><br />
     <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server" OnRowDataBound="GridView1_RowDataBound">           
              <Columns>               
                  <asp:BoundField DataField="SpecializationID"   HeaderText="Current Report ID" Visible="false" />    
-                 <asp:BoundField DataField="SpecializationName" HeaderText="Название специальности" Visible="True" />         
+                 <asp:BoundField DataField="SpecializationName" HeaderText="Название направления подготовки" Visible="True" />         
                
                    
-                 <asp:TemplateField HeaderText="Id специальности" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "False" >
+                 <asp:TemplateField HeaderText="Id направления подготовки" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "False" >
                         <ItemTemplate> 
                             <asp:Label ID="FourthlvlId" runat="server" Text='<%# Bind("FourthlvlId") %>'  Visible="True"></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>   
                  
-                  <asp:TemplateField HeaderText="Номер специальности" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                  <asp:TemplateField HeaderText="Номер направления подготовки" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="SpecNumber" runat="server" Text='<%# Bind("SpecNumber") %>'  Visible="True"></asp:Label>
                         </ItemTemplate>

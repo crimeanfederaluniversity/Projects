@@ -656,7 +656,7 @@ namespace KPIWeb.Reports
 
                                 foreach (FourthLevelSubdivisionTable spec in Specialzations)
                                 {
-                                    columnNames.Add("Специальность:\n\r" +
+                                    columnNames.Add("Направление подготовки:\n\r" +
                                                     (from a in kpiWebDataContext.SpecializationTable
                                                      where a.SpecializationTableID == spec.FK_Specialization
                                                      select a.Name).FirstOrDefault().ToString());

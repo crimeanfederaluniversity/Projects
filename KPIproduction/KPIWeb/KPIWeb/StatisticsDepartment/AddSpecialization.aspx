@@ -1,6 +1,6 @@
-﻿<%@ Page Title="Добавление специальностей к кафедре" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddSpecialization.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.AddSpecialization" %>
+﻿<%@ Page Title="Добавление направления подготовки к кафедре" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddSpecialization.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.AddSpecialization" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">   
-        <h2><span style="font-size: 30px">Добавление специальностей к кафедре, определение параметров</span></h2>
+        <h2><span style="font-size: 30px">Добавление направления подготовки к кафедре, определение параметров</span></h2>
         <div>
   
     <asp:Label ID="Label1" runat="server" Text="Выберите университет" ></asp:Label>
@@ -25,26 +25,26 @@
             <asp:CheckBox ID="CheckBox2" runat="server" AutoPostBack="True" OnCheckedChanged="CheckBox2_CheckedChanged" Text="Кафедра является базовой" />
             <br />
             <br />
-            <asp:Label ID="Label4" runat="server" Text="Список специальностей приклепненных к кафедре"></asp:Label>
+            <asp:Label ID="Label4" runat="server" Text="Список направлений подготовки, приклепненных к кафедре"></asp:Label>
 <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server" >           
              <Columns>               
                  <asp:BoundField DataField="SpecializationID"   HeaderText="Current Report ID" Visible="false" />    
-                 <asp:BoundField DataField="SpecializationName" HeaderText="Название специальности" Visible="True" />         
+                 <asp:BoundField DataField="SpecializationName" HeaderText="Название направления подготовки" Visible="True" />         
                
                    
-                 <asp:TemplateField HeaderText="Id специальности" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "False" >
+                 <asp:TemplateField HeaderText="Id направления подготовки" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "False" >
                         <ItemTemplate> 
                             <asp:Label ID="FourthlvlId" runat="server" Text='<%# Bind("FourthlvlId") %>'  Visible="True"></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>   
                  
-                  <asp:TemplateField HeaderText="Номер специальности" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                  <asp:TemplateField HeaderText="Номер направления подготовки" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="SpecNumber" runat="server" Text='<%# Bind("SpecNumber") %>'  Visible="True"></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>  
                 
-                 <asp:TemplateField HeaderText="Удалить специальность из списка">
+                 <asp:TemplateField HeaderText="Удалить направление подготовки из списка">
                         <ItemTemplate>
                             <asp:Label ID="DeleteSpecializationLabel" runat="server" Text='<%# Bind("DeleteSpecializationLabel") %>' Visible="false"></asp:Label>
                             <asp:Button ID="DeleteSpecializationButton" runat="server" CommandName="Select" Text="Удалить" Width="200px" CommandArgument='<%# Eval("FourthlvlId") %>' OnClick="DeleteSpecializationButtonClick"/>
@@ -59,7 +59,7 @@
         <asp:Button ID="Button1" runat="server" Text="Сохранить" Width="702px" OnClick="Button1_Click" />
             <br />
             <br />
-        <asp:Label ID="Label5" runat="server" Text="Поиск специальности по коду и названию"></asp:Label>
+        <asp:Label ID="Label5" runat="server" Text="Поиск направления подготовки по коду и названию"></asp:Label>
         <br />
         <asp:TextBox ID="TextBox1" runat="server" Width="271px"></asp:TextBox>
         <br />
@@ -69,9 +69,9 @@
     <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False">
              <Columns>           
                  <asp:BoundField DataField="SpecializationID"   HeaderText="Current Report ID" Visible="false" />  
-                 <asp:BoundField DataField="SpecializationNumber" HeaderText="Код специальности" Visible="True" />   
-                 <asp:BoundField DataField="SpecializationName" HeaderText="Название специальности" Visible="True" /> 
-                 <asp:TemplateField HeaderText="Добавление специальности">
+                 <asp:BoundField DataField="SpecializationNumber" HeaderText="Код направления подготовки" Visible="True" />   
+                 <asp:BoundField DataField="SpecializationName" HeaderText="Название направления подготовки" Visible="True" /> 
+                 <asp:TemplateField HeaderText="Добавление направления подготовки">
                         <ItemTemplate>
                             <asp:Label ID="AddSpecializationLabel" runat="server" Text='<%# Bind("AddSpecializationLabel") %>' Visible="false"></asp:Label>
                              <asp:Button ID="AddSpecializationButton" runat="server" CommandName="Select" Text="Добавить" Width="200px" CommandArgument='<%# Eval("SpecializationNumber") %>' OnClick="AddSpecializationButtonClick"/>

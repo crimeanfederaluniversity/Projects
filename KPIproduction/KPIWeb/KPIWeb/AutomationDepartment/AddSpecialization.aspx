@@ -28,11 +28,11 @@
         <br />
         <br />
         <br />
-        Добавление специальностей<br />
-        Актив#Название#НомерСпециальности#КлючикНаОбластьЗнаний<br />
+        Добавление направления подготовки<br />
+        Актив#Название#НомерНаправленияПодготовки#КлючикНаОбластьЗнаний<br />
         <asp:TextBox ID="TextBox2" runat="server" Height="147px" TextMode="MultiLine" Width="264px"></asp:TextBox>
         <br />
-        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Добавить специальности" Width="261px" />
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Добавить направление подготовки" Width="261px" />
         <br />
         <br />
         Добавление базовых показателей<br />
