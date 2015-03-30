@@ -33,13 +33,17 @@
  
        <br />
        <br />
-       <asp:Button ID="Button9" runat="server" Height="50px" OnClick="Button9_Click" Text="Добавление области знаний/индикатора/формулы/направления подготовки" Width="400px" />
+       <asp:Button ID="Button9" runat="server" Height="50px" OnClick="Button9_Click" Text="Добавление области знаний/индикатора/формулы/специальности" Width="400px" />
  
        <br />
        <br />
        <asp:Button ID="Button10" runat="server" Height="50px" OnClick="Button10_Click" Text="База пользователей" Width="400px" />
  
        <br />
+       <br />
+ 
+       <br />
+       <asp:Button ID="Button11" runat="server" OnClick="Button11_Click1" Text="Button" Width="395px" />
        <br />
         
 </asp:Content>
