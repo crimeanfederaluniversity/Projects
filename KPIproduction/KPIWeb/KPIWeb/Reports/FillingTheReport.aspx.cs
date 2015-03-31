@@ -14,7 +14,7 @@ using System.Drawing;
 using System.IO;
 using System.Web.UI.HtmlControls;
 using System.Web.WebPages;
-using Microsoft.Office.Interop.Excel;
+//using Microsoft.Office.Interop.Excel;
 using DataTable = System.Data.DataTable;
 using Label = System.Web.UI.WebControls.Label;
 using Page = System.Web.UI.Page;

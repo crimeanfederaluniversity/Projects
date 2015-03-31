@@ -1,0 +1,67 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true"  MasterPageFile="~/Site.Master" CodeBehind="PlannedIndicator.aspx.cs" Inherits="KPIWeb.PlannedIndicator" %>
+
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+     
+    <div>
+    
+        <br />
+    
+    </div>
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Загрузить" Width="193px" />
+        <br />
+        <br />
+        <asp:GridView ID="GridView1" AutoGenerateColumns="False"  runat="server"  >
+                    <Columns>
+                        <asp:TemplateField HeaderText="Номер планового" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                        <ItemTemplate> 
+                            <asp:Label ID="PlanedIndicatorID" runat="server" Text='<%# Bind("PlanedIndicatorID") %>'  Visible="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                
+                        <asp:TemplateField HeaderText="Значение" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                        <ItemTemplate> 
+                            <asp:Label ID="Value" runat="server" Text='<%# Bind("Value") %>'  Visible="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                   
+                        <asp:TemplateField HeaderText="Дата" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                        <ItemTemplate> 
+                            <asp:Label ID="Date" runat="server" Text='<%# Bind("Date") %>'  Visible="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Номер индикатора" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                        <ItemTemplate> 
+                            <asp:Label ID="FK_IndicatorsTable" runat="server" Text='<%# Bind("FK_IndicatorsTable") %>'  Visible="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                         </Columns>      
+            </asp:GridView>                    
+   
+    <br />
+                 <asp:Label ID="addtitle" runat="server" Font-Size="X-Large" Text="Редактирование "></asp:Label>
+                 <br   />
+                <br   />
+                <asp:Label ID="Label1" runat="server" Text="Выберите индикатор"></asp:Label>
+                <br />
+                <br   />
+                <asp:DropDownList ID="DropDownList1" runat="server" Height="22px" Width="541px" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
+
+    </asp:DropDownList>
+    <br />
+                <br   />
+                <br   />
+                <asp:Label ID="Label3" runat="server" Text="Значение"></asp:Label>
+                &nbsp;&nbsp;&nbsp;
+                <asp:TextBox ID="IndicatorMeasure" runat="server"></asp:TextBox>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <asp:Label ID="Label4" runat="server" Text="Активен"></asp:Label>
+                <asp:CheckBox ID="CheckBox1" runat="server" />
+                 <br />
+    <br />
+    <br />
+    <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Сохранить" />
+                 <br   />
+                    
+</asp:Content>

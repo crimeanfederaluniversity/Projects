@@ -225,8 +225,12 @@
     <Content Include="AutomationDepartment\RoleMapping.aspx" />
     <Content Include="AutomationDepartment\IsAvailibleMappingRole.aspx" />
     <Content Include="PersonalInfo.aspx" />
+<<<<<<< .mine
+    <Content Include="PlannedIndicator.aspx" />
+=======
     <Content Include="Rector\RectorChooseReport.aspx" />
     <Content Include="Rector\RectorMain.aspx" />
+>>>>>>> .r171
     <Content Include="Rector\Result.aspx" />
     <Content Include="Reports\Parametrs.aspx" />
     <Content Include="StatisticsDepartment\AddSpecialization.aspx" />
@@ -427,6 +431,13 @@
     </Compile>
     <Compile Include="PersonalInfo.aspx.designer.cs">
       <DependentUpon>PersonalInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PlannedIndicator.aspx.cs">
+      <DependentUpon>PlannedIndicator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PlannedIndicator.aspx.designer.cs">
+      <DependentUpon>PlannedIndicator.aspx</DependentUpon>
     </Compile>
     <Compile Include="Polish.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
