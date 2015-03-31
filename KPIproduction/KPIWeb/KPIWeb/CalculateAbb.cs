@@ -132,7 +132,6 @@ namespace KPIWeb
             tmpStr = tmpStr.Replace(" ","");      
             return tmpStr;
         }
-
         public static List<int> GetBasicIdList(string input)
         {
             KPIWebDataContext kpiweb = new KPIWebDataContext();
@@ -197,7 +196,6 @@ namespace KPIWeb
             string[] abbArray = tmpStr.Split('/','^','+','-','(',')','*',' ');
             return abbArray;
         }
-
         public static string CheckAbbString(string input)
         {
             string tmpStr;
@@ -238,7 +236,6 @@ namespace KPIWeb
             }
             return tmpStr;
         }
-
         public static double CalculateForLevel(int type,string input, int report, int Lv0, int Lv1, int Lv2, int Lv3, int Lv4, int Lv5, int param1)
         {
             string tmpStr;
