@@ -16,5 +16,5 @@
 </asp:GridView>
 
 
-<asp:CheckBox runat="server" CssClass="CheckBox">
+<asp:CheckBox runat="server" CssClass="checkbox_style">
 </asp:CheckBox>
