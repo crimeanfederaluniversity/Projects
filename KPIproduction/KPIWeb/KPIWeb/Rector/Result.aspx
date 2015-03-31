@@ -5,6 +5,11 @@
      <br />
      <asp:Label ID="PageName" runat="server" Text="PageName"></asp:Label>
      <br />
+     <asp:Label ID="SpecName" runat="server" Text="SpecName" Visible="False"></asp:Label>
+     <br />
+     <asp:Button ID="GoBackButton" runat="server" OnClick="GoBackButton_Click" Text="Назад" Width="150px" />
+&nbsp;<asp:Button ID="GoForwardButton" runat="server" OnClick="GoForwardButton_Click" Text="Вперед" Width="150px" />
+     <br />
      <br />
 <asp:GridView ID="Grid" runat="server" 
             AutoGenerateColumns="False"
@@ -31,7 +36,7 @@
 
                   <asp:TemplateField HeaderText="Функционал 3">
                         <ItemTemplate>
-                            <asp:Button ID="Button3" runat="server" CommandName="Select" Text="Функционал 3" Width="200px" OnClick="Button3Click"/>
+                            <asp:Button ID="Button3" runat="server" CommandName="Select" Text="Функционал 3"  CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="Button3Click"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

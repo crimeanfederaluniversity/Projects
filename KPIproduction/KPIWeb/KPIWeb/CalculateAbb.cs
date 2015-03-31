@@ -281,7 +281,11 @@ namespace KPIWeb
                          && (user.FK_ThirdLevelSubdivisionTable == Lv3 || Lv3 == 0)
                          && (user.FK_FourthLevelSubdivisionTable == Lv4 || Lv4 == 0)
                          && (user.FK_FifthLevelSubdivisionTable == Lv5 || Lv5 == 0)
-                         select collect.CollectedValue).Sum();
+                         select collect.CollectedValue).Sum();          
+            if (a == null)
+            {
+                a = 0;
+            }
             return a;
         }
     }

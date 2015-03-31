@@ -31,6 +31,33 @@ namespace KPIWeb.Rector {
         protected global::System.Web.UI.WebControls.Label PageName;
         
         /// <summary>
+        /// SpecName элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label SpecName;
+        
+        /// <summary>
+        /// GoBackButton элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GoBackButton;
+        
+        /// <summary>
+        /// GoForwardButton элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GoForwardButton;
+        
+        /// <summary>
         /// Grid элемент управления.
         /// </summary>
         /// <remarks>

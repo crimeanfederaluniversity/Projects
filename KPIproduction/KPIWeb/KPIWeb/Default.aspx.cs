@@ -39,7 +39,7 @@ namespace KPIWeb
                 }
                 else if (accessLevel == 5)
                 {
-                    Response.Redirect("~/Head/HeadChooseReport.aspx");
+                    Response.Redirect("~/Rector/RectorMain.aspx");
                 }
                 else if ( accessLevel == 0)
                 {

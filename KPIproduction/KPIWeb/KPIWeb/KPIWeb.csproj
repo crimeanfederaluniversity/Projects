@@ -225,6 +225,8 @@
     <Content Include="AutomationDepartment\RoleMapping.aspx" />
     <Content Include="AutomationDepartment\IsAvailibleMappingRole.aspx" />
     <Content Include="PersonalInfo.aspx" />
+    <Content Include="Rector\RectorChooseReport.aspx" />
+    <Content Include="Rector\RectorMain.aspx" />
     <Content Include="Rector\Result.aspx" />
     <Content Include="Reports\Parametrs.aspx" />
     <Content Include="StatisticsDepartment\AddSpecialization.aspx" />
@@ -429,8 +431,23 @@
     <Compile Include="Polish.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectorSession.cs" />
+    <Compile Include="Rector\RectorChooseReport.aspx.cs">
+      <DependentUpon>RectorChooseReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\RectorChooseReport.aspx.designer.cs">
+      <DependentUpon>RectorChooseReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\RectorMain.aspx.cs">
+      <DependentUpon>RectorMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\RectorMain.aspx.designer.cs">
+      <DependentUpon>RectorMain.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Rector\Result.aspx.cs">
       <DependentUpon>Result.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Rector\Result.aspx.designer.cs">
       <DependentUpon>Result.aspx</DependentUpon>

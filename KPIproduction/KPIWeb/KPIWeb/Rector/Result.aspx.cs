@@ -300,20 +300,58 @@ namespace KPIWeb.Rector
         }  //определяет последнее не нулевое значение в структуре
         protected void Page_Load(object sender, EventArgs e)
         {
+            #region get user data
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userID = UserSer.Id;
+        
+            UsersTable userTable_ =
+                (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+            /*
+
+            if ((userTable_.AccessLevel == 9) || (userTable_.AccessLevel == 10))
+            {
+                userTable_ =
+                    (from a in kPiDataContext.UsersTable where a.UsersTableID == 8164 select a).FirstOrDefault(); // чтобы мониторинг мог зайти
+                userID = userTable_.UsersTableID;//чтобы мониторинг мог зайти
+            }
+            */
+            if (userTable_.AccessLevel != 5)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            #endregion
             if (!IsPostBack)
             {
-                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+                #region session
                 //Принимаемые через сессию параметры
                 RectorSession rectorResultSession = (RectorSession) Session["rectorResultSession"];
+                RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
                 if (rectorResultSession == null)
                 {
                     Response.Redirect("~/Default.aspx");
                 }
+                if (rectorHistory == null)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+
+                if ((rectorHistory.SessionCount-rectorHistory.CurrentSession)<2)
+                {
+                    GoForwardButton.Enabled = false;
+                }
+
                 Struct mainStruct = rectorResultSession.sesStruct;
                 int ViewType = rectorResultSession.sesViewType;
                 int ParamID = rectorResultSession.sesParamID;
                 int ParamType = rectorResultSession.sesParamType;
                 int ReportID = rectorResultSession.sesReportID;
+                int SpecID = rectorResultSession.sesSpecID;
+                #endregion
                 ///////////////////////
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("ID", typeof (string)));
@@ -330,8 +368,17 @@ namespace KPIWeb.Rector
 
                 if (ViewType == 0) // просмотр для структурных подразделений
                 {
-                    #region преднастройка страницы
+                    #region преднастройка страницы                    
                     string title="";
+
+                    if (SpecID != 0)
+                    {
+                        SpecName.Visible = true;
+                        SpecName.Text = "Для специальности " + (from a in kpiWebDataContext.SpecializationTable
+                                                                where a.SpecializationTableID == SpecID 
+                                                                select a.Name).FirstOrDefault();
+                    }
+
                     if (ParamType==0)
                     {
                         PageName.Text = "Значения для индикатора; \"";
@@ -402,17 +449,25 @@ namespace KPIWeb.Rector
 
                     #region fill grid
 
-                    List<Struct> currentStructList = GetChildStructList(mainStruct);
-                    foreach (Struct currentStruct in currentStructList)
+                    if (SpecID == 0) // просто проходимся по структурам
                     {
-                        DataRow dataRow = dataTable.NewRow();
-                        dataRow["ID"] = GetLastID(currentStruct).ToString();
-                        dataRow["Number"] = "num";
-                        dataRow["Name"] = currentStruct.Name;
-                        dataRow["StartDate"] = "nun";
-                        dataRow["EndDate"] = "nun";
-                        dataRow["Value"] =  GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID).ToString();
-                        dataTable.Rows.Add(dataRow);
+                        List<Struct> currentStructList = GetChildStructList(mainStruct);
+                        foreach (Struct currentStruct in currentStructList)
+                        {
+                            DataRow dataRow = dataTable.NewRow();
+                            dataRow["ID"] = GetLastID(currentStruct).ToString();
+                            dataRow["Number"] = "num";
+                            dataRow["Name"] = currentStruct.Name;
+                            dataRow["StartDate"] = "nun";
+                            dataRow["EndDate"] = "nun";
+                            dataRow["Value"] =
+                                GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID).ToString();
+                            dataTable.Rows.Add(dataRow);
+                        }
+                    }
+                    else // проходим по структурам в разрезе специальности
+                    {
+                        
                     }
 
                     #endregion
@@ -429,7 +484,7 @@ namespace KPIWeb.Rector
                     Grid.Columns[3].Visible = false;
                     Grid.Columns[1].Visible = false;
                     Grid.Columns[0].HeaderText = title;
-                    if (StructDeepness(currentStructList[0]) > 3) // дальше углубляться нельзя
+                    if (StructDeepness(mainStruct) > 2) // дальше углубляться нельзя
                     {
                         Grid.Columns[6].Visible = false;
                     }
@@ -470,9 +525,16 @@ namespace KPIWeb.Rector
                     #region main
                     if (ParamType == 0)//считаем индикатор
                     {
-                        List<IndicatorsTable> Indicators = (from a in kpiWebDataContext.IndicatorsTable
-                            where a.Active == true
+                        List<IndicatorsTable> Indicators = (
+                            from a in kpiWebDataContext.IndicatorsTable
+                            join b in kpiWebDataContext.IndicatorsAndUsersMapping
+                            on a.IndicatorsTableID equals b.FK_IndicatorsTable
+                            where 
+                            a.Active == true
+                            && b.CanView == true
+                            && b.FK_UsresTable == userID
                             select a).ToList();
+                        //нашли все индикаторы привязанные к пользователю
                         foreach (IndicatorsTable CurrentIndicator in Indicators)
                         {
                             DataRow dataRow = dataTable.NewRow();
@@ -524,7 +586,6 @@ namespace KPIWeb.Rector
                             dataTable.Rows.Add(dataRow);
                         }
                     }
-
                     #endregion 
 
                     Grid.DataSource = dataTable;
@@ -532,7 +593,7 @@ namespace KPIWeb.Rector
                     Grid.DataBind();
 
                     #region постнастройки страницы
-                    Grid.Columns[8].Visible = false;
+                    //Grid.Columns[8].Visible = false;
                     Grid.Columns[4].Visible = false;
                     Grid.Columns[3].Visible = false;
                     Grid.Columns[1].Visible = false;
@@ -543,13 +604,80 @@ namespace KPIWeb.Rector
                     }
                     #endregion
                 }
+                else if (ViewType == 2)
+                {
+                    #region преднастройка страницы
+                    if (ParamType == 0)
+                    {
+                        PageName.Text = "Значения для индикатора; \"";
+                        PageName.Text += (from a in kpiWebDataContext.IndicatorsTable
+                                          where a.IndicatorsTableID == ParamID
+                                          select a.Name).FirstOrDefault();
+                        PageName.Text += "\";";
+                    }
+                    else if (ParamType == 1)
+                    {
+                        PageName.Text = "Значения для расчетного показателя: \"";
+                        PageName.Text += (from a in kpiWebDataContext.CalculatedParametrs
+                                          where a.CalculatedParametrsID == ParamID
+                                          select a.Name).FirstOrDefault();
+                        PageName.Text += "\";";
+                    }
+                    else if (ParamType == 2)
+                    {
+                        PageName.Text = "Значения для базового показателя: \"";
+                        PageName.Text += (from a in kpiWebDataContext.BasicParametersTable
+                                          where a.BasicParametersTableID == ParamID
+                                          select a.Name).FirstOrDefault();
+                        PageName.Text += "\";";
+                    }
+
+                    string title = "Специальности";
+
+                    #endregion
+
+                    #region fill grid
+                    List<SpecializationTable> SpecTable = (from a in kpiWebDataContext.SpecializationTable
+                        join b in kpiWebDataContext.FourthLevelSubdivisionTable
+                            on a.SpecializationTableID equals b.FK_Specialization
+                        where a.Active == true
+                              && b.Active == true
+                        select a).ToList();
+                    //взяли все специальности которые привязаны к кафедрам
+                    foreach (SpecializationTable currentSpec in SpecTable)
+                    {
+                        DataRow dataRow = dataTable.NewRow();
+                        dataRow["ID"] = currentSpec.SpecializationTableID;//GetLastID(currentStruct).ToString();
+                        dataRow["Number"] = "num";
+                        dataRow["Name"] = currentSpec.Name;//currentStruct.Name;
+                        dataRow["StartDate"] = "nun";
+                        dataRow["EndDate"] = "nun";
+                        dataRow["Value"] = "Сложно";//GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID).ToString();
+                        dataTable.Rows.Add(dataRow);
+                    }
+
+                    #endregion
+
+                    Grid.DataSource = dataTable;
+                    Grid.Columns[2].HeaderText = title;
+                    Grid.DataBind();
+
+                    #region постнастройка страницы
+
+                    Grid.Columns[8].Visible = false;
+                    Grid.Columns[7].Visible = false;
+                    Grid.Columns[4].Visible = false;
+                    Grid.Columns[3].Visible = false;
+                    Grid.Columns[1].Visible = false;
+                    Grid.Columns[0].HeaderText = title;
+
+                    #endregion
+                }
                 else
                 {
                     //error // wrong ViewType
                 }
-
             }
-
         }
         protected void Button1Click(object sender, EventArgs e) //по структуре
         {
@@ -560,11 +688,27 @@ namespace KPIWeb.Rector
                 {
                     Response.Redirect("~/Default.aspx");
                 }
-                //rectorResultSession.sesParamID = Convert.ToInt32(button.CommandArgument);
-                //rectorResultSession.sesViewType = 0;
+                //sesHistoryInit
+                RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
+                if (rectorHistory == null)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+                //sesHistoryInit
                 if (rectorResultSession.sesViewType == 1)
-                {//впервые перешли на разложение по структуре
+                {//впервые перешли на разложение по структуре сразу после показателя
                     rectorResultSession.sesParamID = Convert.ToInt32(button.CommandArgument);
+                    rectorResultSession.sesViewType = 0;
+                    rectorResultSession.sesStruct.Lv_0 = 1;
+                    rectorResultSession.sesStruct.Lv_1 = 0;
+                    rectorResultSession.sesStruct.Lv_2 = 0;
+                    rectorResultSession.sesStruct.Lv_3 = 0;
+                    rectorResultSession.sesStruct.Lv_4 = 0;
+                    rectorResultSession.sesStruct.Lv_5 = 0;
+                }
+                else if (rectorResultSession.sesViewType == 2)
+                {//впервые перешли на разложение по структуре после выбора специальности
+                    rectorResultSession.sesSpecID = Convert.ToInt32(button.CommandArgument);
                     rectorResultSession.sesViewType = 0;
                     rectorResultSession.sesStruct.Lv_0 = 1;
                     rectorResultSession.sesStruct.Lv_1 = 0;
@@ -576,8 +720,13 @@ namespace KPIWeb.Rector
                 else
                 {
                     rectorResultSession.sesStruct = StructDeeper(rectorResultSession.sesStruct, Convert.ToInt32(button.CommandArgument));
-                }                      
-                Session["rectorResultSession"] = rectorResultSession;
+                }       
+                //sesHistoryAdd
+                rectorHistory.CurrentSession++;
+                rectorHistory.SessionCount = rectorHistory.CurrentSession + 1;
+                rectorHistory.RectorSession[rectorHistory.CurrentSession] = rectorResultSession;
+                Session["rectorHistory"] = rectorHistory;
+                //sesHistoryAdd
                 Response.Redirect("~/Rector/Result.aspx");
             }
         }
@@ -590,15 +739,106 @@ namespace KPIWeb.Rector
                 {
                     Response.Redirect("~/Default.aspx");
                 }
-                //rectorResultSession.sesStruct = StructDeeper(rectorResultSession.sesStruct, Convert.ToInt32(button.CommandArgument));
+                //sesHistoryInit
+                RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
+                if (rectorHistory == null)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+                //sesHistoryInit
+
                 rectorResultSession.sesParamID = Convert.ToInt32(button.CommandArgument);
                 rectorResultSession.sesParamType++;
                 Session["rectorResultSession"] = rectorResultSession;
+
+                //sesHistoryAdd          
+                rectorHistory.CurrentSession++;
+                rectorHistory.SessionCount = rectorHistory.CurrentSession + 1;
+                rectorHistory.RectorSession[rectorHistory.CurrentSession] = rectorResultSession;
+                Session["rectorHistory"] = rectorHistory;
+                //sesHistoryAdd
+
                 Response.Redirect("~/Rector/Result.aspx");
             }
         }
         protected void Button3Click(object sender, EventArgs e)
         {
+            Button button = (Button)sender;
+            {
+                RectorSession rectorResultSession = (RectorSession) Session["rectorResultSession"];
+                if (rectorResultSession == null)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+                //sesHistoryInit
+                RectorHistorySession rectorHistory = (RectorHistorySession) Session["rectorHistory"];
+                if (rectorHistory == null)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+                //sesHistoryInit
+
+                rectorResultSession.sesParamID = Convert.ToInt32(button.CommandArgument);
+                rectorResultSession.sesViewType = 2;
+                Session["rectorResultSession"] = rectorResultSession;
+
+                //sesHistoryAdd          
+                rectorHistory.CurrentSession++;
+                rectorHistory.SessionCount = rectorHistory.CurrentSession + 1;
+                rectorHistory.RectorSession[rectorHistory.CurrentSession] = rectorResultSession;
+                Session["rectorHistory"] = rectorHistory;
+                //sesHistoryAdd
+
+                Response.Redirect("~/Rector/Result.aspx");
+            }
+        }
+        protected void GoBackButton_Click(object sender, EventArgs e)
+        {
+            RectorSession rectorResultSession = (RectorSession)Session["rectorResultSession"];
+            if (rectorResultSession == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
+            if (rectorHistory == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            if (rectorHistory.CurrentSession == 0)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+
+            rectorHistory.CurrentSession--;
+            rectorResultSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
+
+            Session["rectorResultSession"] = rectorResultSession;
+            Session["rectorHistory"] = rectorHistory;
+
+            Response.Redirect("~/Rector/Result.aspx");
+        }
+        protected void GoForwardButton_Click(object sender, EventArgs e)
+        {
+            RectorSession rectorResultSession = (RectorSession)Session["rectorResultSession"];
+            if (rectorResultSession == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
+            if (rectorHistory == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            if (rectorHistory.CurrentSession < rectorHistory.SessionCount) // есть куда переходить
+            {
+                rectorHistory.CurrentSession++;
+                rectorResultSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
+
+                Session["rectorResultSession"] = rectorResultSession;
+                Session["rectorHistory"] = rectorHistory;
+
+                Response.Redirect("~/Rector/Result.aspx");
+            }
 
         }
     }

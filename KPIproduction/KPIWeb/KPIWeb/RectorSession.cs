@@ -16,19 +16,18 @@ namespace KPIWeb
         public int sesParamID { get; set; }  // ID параметра
         public int sesParamType { get; set; }// Тип параметра // 0 - индикатор / 1 - расчетный показатель / 2 - базовый показатель
         public int sesReportID { get; set; }
-
         public string sesName { get; set; }
-
-        public RectorSession(Result.Struct _sesStruct, int _sesViewType,int _sesParamID, int _sesParamType, int _sesReportID)
+        public int sesSpecID { get; set; }
+        public RectorSession(Result.Struct _sesStruct, int _sesViewType, int _sesParamID, int _sesParamType, int _sesReportID, int _sesSpecID)
         {
             this.sesStruct = _sesStruct;
             this.sesViewType = _sesViewType;
             this.sesParamID = _sesParamID;
             this.sesParamType = _sesParamType;
             this.sesReportID = _sesReportID;
-
+            this.sesSpecID = _sesSpecID;
         }
-        public RectorSession(Result.Struct _sesStruct, int _sesViewType,int _sesParamID, int _sesParamType, int _sesReportID,string _sesName)
+        public RectorSession(Result.Struct _sesStruct, int _sesViewType,int _sesParamID, int _sesParamType, int _sesReportID,int _sesSpecID,string _sesName)
         {
             this.sesStruct = _sesStruct;
             this.sesViewType = _sesViewType;
@@ -36,6 +35,7 @@ namespace KPIWeb
             this.sesParamType = _sesParamType;
             this.sesReportID = _sesReportID;
             this.sesName = _sesName;
+            this.sesSpecID = _sesSpecID;
         }
     }
 
@@ -43,6 +43,7 @@ namespace KPIWeb
     public class RectorHistorySession
     {
         public RectorSession[] RectorSession = new RectorSession[10];//{ get; set; }
-        public int count { get; set; }
+        public int SessionCount { get; set; }
+        public int CurrentSession { get; set; }
     }
 }

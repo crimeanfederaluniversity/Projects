@@ -30,7 +30,6 @@ namespace KPIWeb.AutomationDepartment
             }
         }
         
-
         protected void Button1_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/AutomationDepartment/AddLevel.aspx");
@@ -89,8 +88,15 @@ namespace KPIWeb.AutomationDepartment
         protected void Button11_Click1(object sender, EventArgs e)
         {
             Result.Struct mainStruct = new Result.Struct(1,"");
-            RectorSession rectorResultSession = new RectorSession (mainStruct, 1, 0, 0, 4009);
-            Session["rectorResultSession"] = rectorResultSession;
+            RectorSession rectorResultSession = new RectorSession (mainStruct, 1, 0, 0, 4009,0);
+           Session["rectorResultSession"] = rectorResultSession;
+
+            RectorHistorySession RectorHistory = new RectorHistorySession();
+            RectorHistory.SessionCount = 1;
+            RectorHistory.CurrentSession = 0;
+            RectorHistory.RectorSession[RectorHistory.CurrentSession] = rectorResultSession;
+            Session["rectorHistory"] = RectorHistory;
+
             Response.Redirect("~/Rector/Result.aspx");
         }
     }
