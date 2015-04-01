@@ -1,11 +1,15 @@
 ﻿<%@ Page Language="C#" Title="Заполение" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="FillingTheReport.aspx.cs" Inherits="KPIWeb.Reports.FillingTheReport" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+      <link href="/App_Themes/theme_1/css/login.css" rel="stylesheet" type="text/css" />
+     <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Visible="true">
+     <asp:Label ID="Label2" runat="server" Text="Осталось дней"></asp:Label>
+     </asp:Panel>
         <div>
             <h2>
                 <asp:Label ID="Label1" runat="server" Text="Ввведите значения в таблицу показателей и нажмите кнопку &quot;Сохранить&quot; внизу формы"></asp:Label>
             </h2>
-            <asp:Label ID="Label2" runat="server" Text="Осталось дней"></asp:Label>
+
             <br />
             <br />
 
