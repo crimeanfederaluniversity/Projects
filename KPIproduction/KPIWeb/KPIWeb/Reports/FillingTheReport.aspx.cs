@@ -925,11 +925,13 @@ namespace KPIWeb.Reports
                             if (tmpStatCount == StatusList.Count())
                             {
                                 Label1.Text = "Все показатели заполнены. Необходимо отправить отчёт на утверждение";
+                                Label3.Text = "Все показатели заполнены. Необходимо отправить отчёт на утверждение";
                                 UpnDownButton.Enabled = true;
                             }
                             else
                             {
                                 Label1.Text = "Заполнено " + tmpStatCount + " показателей из " + StatusList.Count();
+                                Label3.Text = "Заполнено " + tmpStatCount + " показателей из " + StatusList.Count();
                                 UpnDownButton.Enabled = false;
                             }
                         }
@@ -959,18 +961,22 @@ namespace KPIWeb.Reports
                         if ((StatusList[0] == 0) || (StatusList[0] == 2))
                         {
                             Label1.Text = "Заполнено " + tmpStatCount + " показателей из " + StatusList.Count();
+                            Label3.Text = "Заполнено " + tmpStatCount + " показателей из " + StatusList.Count();
                         }
                         else if (StatusList[0] == 1)
                         {
                             Label1.Text = "Данные возвращены на доработку";
+                            Label2.Text = "Данные возвращены на доработку";
                         }
                         else if (StatusList[0] == 3)
                         {
                             Label1.Text = "Данные отправлены на утверждение";
+                            Label2.Text = "Данные отправлены на утверждение";
                         }
                         else if (StatusList[0] == 4)
                         {
                             Label1.Text = "Данные утверждены";
+                            Label2.Text = "Данные утверждены";
                         }
                         Label2.Visible = false;
                         // OnClientClick="javascript:return confirm('Do you really want to \ndelete the item?');"
