@@ -37,6 +37,5 @@
         <br />
 
         <asp:Button ID="Button1" CssClass="form-control" runat="server" Text="Войти" Height="40px" OnClick="Button1_Click" Width="300px" />
-        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Button" />
  </div>
 </asp:Content>
