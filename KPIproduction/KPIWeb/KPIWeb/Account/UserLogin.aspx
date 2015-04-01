@@ -4,7 +4,7 @@
       <link href="/App_Themes/theme_1/css/login.css" rel="stylesheet" type="text/css" />
      <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Visible="false">
 
-     </asp:Panel>
+    </asp:Panel>
      
     <div class="first_div_on_login">
         <div class="login_image_gerb"></div>

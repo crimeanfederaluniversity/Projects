@@ -6,13 +6,21 @@
     
     background-size:cover;
     
- 
-
     width:  100%;
     height: 100%;
     position:relative;
 }
 
+
+.top_panel {
+    position:fixed;
+    left:0;
+    top:3.5em;
+    width:100%;
+    height:60px;
+    background-color:#05ff01;
+    z-index:3;
+}
 
 #divbg {
     background-image:url("/App_Themes/theme_1/css/images/kfu_gerb.png");
@@ -36,8 +44,10 @@ html {
 width:auto;
     }
 
-
-
+.relative_position {
+    position:relative;
+    top:3.5em;
+}
 
 .bottom_mp {
     position:  relative;
@@ -79,7 +89,7 @@ color:#ff0000;
     background-size: contain;
     background-repeat:repeat-x;
 }
-    .button_cl:hover 
+.button_cl:hover 
 {
 border-width:2px;
 background-image: url('../../../css/images/kfu_button_gradient_hover_green_1.png');
@@ -200,33 +210,33 @@ background-image: url('/App_Themes/theme_1/css/images/kfu_button_gradient_hover_
         background-image:url('/App_Themes/theme_1/css/images/kfu_button_gray_1.png');
         opacity:0.5;
           }
-        input[type="submit"]:disabled:hover{
-
-          }
+        input[type="submit"]:disabled:hover{}
 /*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*/
 
 
 /*CHECKBOX_STYLE*//*CHECKBOX_STYLE*//*CHECKBOX_STYLE*//*CHECKBOX_STYLE*/
-/*.checkbox_style, .checkbox_style input[type="checkbox"] {
-    display:block;
-    width:40px;
+.checkbox_style {
+   display:block;
+   width:40px;
 
    height:50px;
    background-color:#05ff01;
    border-width:2px;
    border-style:solid;
+
     }
 
 
-  .checkbox_style input[type="checkbox"] +:after  {
+  .checkbox_style input[type="checkbox"] ::before(5)  {
     display:inline-block;
-    content:url("/App_Themes/theme_1/css/images/chb.png");
-    }
+   background-image:url("/App_Themes/theme_1/css/images/chb.png");    
 
-  .checkbox_style input[type="checkbox"]:checked + :before {
+  }
+
+  .checkbox_style input[type="checkbox"]:checked::before(4)  {
     display:inline-block;
-    content:url("/App_Themes/theme_1/css/images/chb_cheked.png");
-    }   */
+    background-image:url("/App_Themes/theme_1/css/images/chb_cheked.png");
+    }   
  /*CHECKBOX_STYLE*//*CHECKBOX_STYLE*//*CHECKBOX_STYLE*//*CHECKBOX_STYLE*/
 label {
 font-family:'Times New Roman';
@@ -264,8 +274,6 @@ left:7%;
 
 /*ANIMATION_OBJ_DESIGN*//*ANIMATION_OBJ_DESIGN*//*ANIMATION_OBJ_DESIGN*/
 
-
-
 #loading { 
     
     top:0;
@@ -301,7 +309,6 @@ left:7%;
     top:0px;
     left:0;
     }
-
 #im1 {
     position:absolute;
     top:60px; 
