@@ -99,5 +99,10 @@ namespace KPIWeb.AutomationDepartment
 
             Response.Redirect("~/Rector/Result.aspx");
         }
+
+        protected void Button12_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/PlannedIndicator.aspx");
+        }
     }
 }

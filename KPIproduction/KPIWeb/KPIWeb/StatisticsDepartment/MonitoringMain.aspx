@@ -17,6 +17,9 @@
         <br />
         <asp:Button ID="Button3" runat="server" Font-Size="15pt" Height="50px" Text="Управление индикаторами" Width="400px" OnClick="Button3_Click" />
         <br />
+    <br />
+    <asp:Button ID="Button7" runat="server" Height="50px" OnClick="Button7_Click" Text="Управление плановыми значениями" Width="400px" />
+        <br />
         <br />
         <asp:Button ID="Button4" runat="server" Font-Size="15pt" Height="50px" Text="Управление базовыми показателями" Width="400px" OnClick="Button4_Click" />
         <br />

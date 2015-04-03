@@ -29,11 +29,13 @@ namespace KPIWeb
                 DropDownList1.DataBind();
             }
         }
+        
 
         protected void Button1_Click(object sender, EventArgs e)
         {
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
-            List<PlannedIndicator> plannedList = (from item in kPiDataContext.PlannedIndicator select item).ToList();
+            List<PlannedIndicator> plannedList = (from item in kPiDataContext.PlannedIndicator where item.Active == true
+                                                       select item  ).ToList();
             GridView1.DataSource = plannedList;
             GridView1.DataBind();
         }
@@ -59,7 +61,29 @@ namespace KPIWeb
              
         }
 
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
+          protected void  DeleteButtonClick (object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            {
+                using (KPIWebDataContext kPiDataContext = new KPIWebDataContext())
+                {
+                    PlannedIndicator value = (from a in kPiDataContext.PlannedIndicator
+                                              where a.PlanedIndicatorID == Convert.ToInt32(button.CommandArgument)
+                                              select a).FirstOrDefault();
+
+                    value.Active = false;
+                    kPiDataContext.SubmitChanges();
+                }
+                Response.Redirect("~/PlannedIndicator.aspx"); 
+            }
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                "alert('Значение удалено');", true);
+
+        }
 
     }
 }

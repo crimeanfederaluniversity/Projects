@@ -88,28 +88,33 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
-            BasicParametersTable basicParametr = (from item in kPiDataContext.BasicParametersTable where  item.BasicParametersTableID== Convert.ToInt32(TextBox8.Text) select item).FirstOrDefault();
-            if (basicParametr!=null)
+            if (TextBox8.Text == "")
+            { Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert(' Введите ID базового показателя ');", true); }
+            else
             {
-                TextBox2.Text = basicParametr.BasicParametersTableID.ToString();
-                if (basicParametr.Active)
+                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+                BasicParametersTable basicParametr = (from item in kPiDataContext.BasicParametersTable where item.BasicParametersTableID == Convert.ToInt32(TextBox8.Text) select item).FirstOrDefault();
+                if (basicParametr != null)
                 {
-                    CheckBox1.Checked = true;
+                    TextBox2.Text = basicParametr.BasicParametersTableID.ToString();
+                    if (basicParametr.Active)
+                    {
+                        CheckBox1.Checked = true;
+                    }
+                    else
+                    {
+                        CheckBox1.Checked = false;
+                    }
+                    TextBox4.Text = basicParametr.Name;
+                    TextBox5.Text = basicParametr.AbbreviationEN;
+                    TextBox6.Text = basicParametr.AbbreviationRU;
+                    TextBox7.Text = basicParametr.Measure;
                 }
                 else
                 {
-                    CheckBox1.Checked = false;
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Базового показателя с таким ID не существует');", true);
                 }
-                TextBox4.Text = basicParametr.Name;
-                TextBox5.Text = basicParametr.AbbreviationEN;
-                TextBox6.Text = basicParametr.AbbreviationRU;
-                TextBox7.Text = basicParametr.Measure;
             }
-            else
-            {
-                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Базового показателя с таким ID не существует');", true);    
-            }          
         }
 
         protected void Button3_Click(object sender, EventArgs e)

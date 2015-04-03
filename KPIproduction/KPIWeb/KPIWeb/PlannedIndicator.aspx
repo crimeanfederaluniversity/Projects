@@ -10,7 +10,7 @@
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Загрузить" Width="193px" />
         <br />
         <br />
-        <asp:GridView ID="GridView1" AutoGenerateColumns="False"  runat="server"  >
+        <asp:GridView ID="GridView1" AutoGenerateColumns="False"  runat="server" OnSelectedIndexChanged="GridView1_SelectedIndexChanged"  >
                     <Columns>
                         <asp:TemplateField HeaderText="Номер планового" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
@@ -35,6 +35,12 @@
                             <asp:Label ID="FK_IndicatorsTable" runat="server" Text='<%# Bind("FK_IndicatorsTable") %>'  Visible="True"></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
+
+                          <asp:TemplateField HeaderText="Удалить">
+                        <ItemTemplate>
+                            <asp:Button ID="DeleteButton" runat="server" CommandName="Select" Text="Удалить" Width="200px" CommandArgument='<%# Bind("PlanedIndicatorID") %>' OnClick="DeleteButtonClick" />
+                        </ItemTemplate>
+                    </asp:TemplateField>   
 
                          </Columns>      
             </asp:GridView>                    

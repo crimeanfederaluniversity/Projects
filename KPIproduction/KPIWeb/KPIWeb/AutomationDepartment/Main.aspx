@@ -41,6 +41,9 @@
  
        <br />
        <br />
+       <asp:Button ID="Button12" runat="server" Height="50px" OnClick="Button12_Click" Text="Редактировать плановые  значения" Width="400px" />
+ 
+       <br />
  
        <br />
        <asp:Button ID="Button11" runat="server" OnClick="Button11_Click1" Text="Button" Width="395px" />
