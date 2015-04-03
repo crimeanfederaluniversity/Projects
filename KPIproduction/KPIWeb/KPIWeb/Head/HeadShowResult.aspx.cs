@@ -146,7 +146,7 @@ namespace KPIWeb.Head
                     float tmp = 0;
                     if (colCalc.Confirmed != true)
                     {
-                        tmp = (float)CalculateAbb.CalculateForLevel(1, calcPar.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0); ;
+                        tmp = (float)CalculateAbb.CalculateForLevel(1, calcPar.Formula, ReportArchiveID,0, l_0, l_1, l_2, l_3, l_4, l_5, 0); ;
 
                         if ((tmp < -(float)1E+20) || (tmp > (float)1E+20)
                             || (tmp == null) || (float.IsNaN(tmp))
@@ -341,7 +341,7 @@ namespace KPIWeb.Head
                         kPiDataContext.SubmitChanges();
                     }
                     float tmp;
-                    tmp = (float)CalculateAbb.CalculateForLevel(2, indicator.Formula, ReportArchiveID, l_0, l_1, l_2, l_3, l_4, l_5, 0);
+                    tmp = (float)CalculateAbb.CalculateForLevel(2, indicator.Formula, ReportArchiveID, 0, l_0, l_1, l_2, l_3, l_4, l_5, 0);
                     if (colInd.Confirmed != true)
                     {
                         if ((tmp < -(float)1E+20) || (tmp > (float)1E+20)
