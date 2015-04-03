@@ -1,6 +1,9 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Result.aspx.cs" Inherits="KPIWeb.Rector.Result" %>
  <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
      <br />
+     <asp:Label ID="HistoryLable" runat="server" Text="History" Visible="False"></asp:Label>
+     <br />
+     --------------------------------------------------------------------<br />
      <asp:Label ID="ReportTitle" runat="server" Text="ReportTitle"></asp:Label>
      <br />
      <asp:Label ID="PageName" runat="server" Text="PageName"></asp:Label>
@@ -17,6 +20,7 @@
              <Columns>                
                  <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />    
                  <asp:BoundField DataField="Number"   HeaderText="Номер" Visible="true" />
+                 <asp:BoundField DataField="Abb"   HeaderText="Аббревиатура" Visible="True" />
                  <asp:BoundField DataField="Name" HeaderText="" Visible="True" />          
                  <asp:BoundField DataField="StartDate" HeaderText="Начальная дата отчёта" Visible="True" />
                  <asp:BoundField DataField="EndDate" HeaderText="Конечная дата отчёта" Visible="True" />
@@ -41,4 +45,7 @@
                     </asp:TemplateField>
                 </Columns>
         </asp:GridView>
+       <br />
+     <asp:Label ID="FormulaLable" runat="server" Text="FormulaLable" Visible="False"></asp:Label>
+     <br />
        </asp:Content>

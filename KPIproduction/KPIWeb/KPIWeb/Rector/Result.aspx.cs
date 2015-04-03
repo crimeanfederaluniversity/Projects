@@ -185,35 +185,36 @@ namespace KPIWeb.Rector
 
             return tmpStrucList;
         }
-        public float GetCalculatedWithParams(Struct StructToCalcFor, int ParamType, int ParamID,int ReportID) // читает показатель
+        public float GetCalculatedWithParams(Struct StructToCalcFor, int ParamType, int ParamID,int ReportID, int SpecID) // читает показатель
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-            
+          
             float result = 0;
             if (ParamType == 0) // считаем индикатор
             {
                 IndicatorsTable Indicator = (from a in kpiWebDataContext.IndicatorsTable
                     where a.IndicatorsTableID == ParamID
                     select a).FirstOrDefault();
-
-                return (float)CalculateAbb.CalculateForLevel(1, Abbreviature.CalculatedAbbToFormula(Indicator.Formula)
-                    , ReportID, StructToCalcFor.Lv_0
-                    , StructToCalcFor.Lv_1, StructToCalcFor.Lv_2, StructToCalcFor.Lv_3, StructToCalcFor.Lv_4, StructToCalcFor.Lv_5, 0);
-            
-            
+                    return
+                        (float) CalculateAbb.CalculateForLevel(1, Abbreviature.CalculatedAbbToFormula(Indicator.Formula)
+                            , ReportID, SpecID, StructToCalcFor.Lv_0
+                            , StructToCalcFor.Lv_1, StructToCalcFor.Lv_2, StructToCalcFor.Lv_3, StructToCalcFor.Lv_4,
+                            StructToCalcFor.Lv_5, 0);
             }
             else if (ParamType == 1) // считаем рассчетный
             {
                 CalculatedParametrs Calculated = (from a in kpiWebDataContext.CalculatedParametrs
                                              where a.CalculatedParametrsID == ParamID
                                              select a).FirstOrDefault();
-                return (float)CalculateAbb.CalculateForLevel(1, Calculated.Formula, ReportID, StructToCalcFor.Lv_0
-                    , StructToCalcFor.Lv_1, StructToCalcFor.Lv_2, StructToCalcFor.Lv_3, StructToCalcFor.Lv_4, StructToCalcFor.Lv_5, 0);
+                return (float)CalculateAbb.CalculateForLevel(1, Calculated.Formula, ReportID, SpecID , StructToCalcFor.Lv_0
+                        , StructToCalcFor.Lv_1, StructToCalcFor.Lv_2, StructToCalcFor.Lv_3, StructToCalcFor.Lv_4,
+                        StructToCalcFor.Lv_5, 0);
             }
             else if (ParamType == 2) // суммируем базовый
             {
-                return (float)CalculateAbb.SumForLevel(ParamID,ReportID,StructToCalcFor.Lv_0
-                    , StructToCalcFor.Lv_1, StructToCalcFor.Lv_2, StructToCalcFor.Lv_3, StructToCalcFor.Lv_4, StructToCalcFor.Lv_5);
+                    return (float) CalculateAbb.SumForLevel(ParamID, ReportID,SpecID, StructToCalcFor.Lv_0
+                        , StructToCalcFor.Lv_1, StructToCalcFor.Lv_2, StructToCalcFor.Lv_3, StructToCalcFor.Lv_4,
+                        StructToCalcFor.Lv_5);
             }
             else
             {
@@ -234,38 +235,66 @@ namespace KPIWeb.Rector
         }
         public Struct StructDeeper(Struct parentStruct, int nextID)
         {
-            Struct tmp = parentStruct;
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            int lv0 = parentStruct.Lv_0;
+            int lv1 = parentStruct.Lv_1;
+            int lv2 = parentStruct.Lv_2;
+            int lv3 = parentStruct.Lv_3;
+            int lv4 = parentStruct.Lv_4;
+            int lv5 = parentStruct.Lv_5;
+            string name = parentStruct.Name;
+
+            Struct tmp = new Struct(lv0,lv1,lv2,lv3,lv4,lv5,name);
+
             if (tmp.Lv_0 == 0)
             {
-                tmp.Lv_0 = nextID; 
+                tmp.Lv_0 = nextID;
+                tmp.Name = (from a in kpiWebDataContext.ZeroLevelSubdivisionTable
+                    where a.ZeroLevelSubdivisionTableID == nextID
+                    select a.Name).FirstOrDefault();
                 return tmp;
             }
 
             if (tmp.Lv_1 == 0)
             {
                 tmp.Lv_1 = nextID;
+                tmp.Name = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
+                            where a.FirstLevelSubdivisionTableID == nextID
+                            select a.Name).FirstOrDefault();
                 return tmp;
             }
 
             if (tmp.Lv_2 == 0)
             {
                 tmp.Lv_2 = nextID;
+                tmp.Name = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                            where a.SecondLevelSubdivisionTableID == nextID
+                            select a.Name).FirstOrDefault();
                 return tmp;
             }
 
             if (tmp.Lv_3 == 0)
             {
                 tmp.Lv_3 = nextID;
+                tmp.Name = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                            where a.ThirdLevelSubdivisionTableID == nextID
+                            select a.Name).FirstOrDefault();
                 return tmp;
             }
             if (tmp.Lv_4 == 0)
             {
                 tmp.Lv_4 = nextID;
+                tmp.Name = (from a in kpiWebDataContext.FourthLevelSubdivisionTable
+                            where a.FourthLevelSubdivisionTableID == nextID
+                            select a.Name).FirstOrDefault();
                 return tmp;
             }
             if (tmp.Lv_5 == 0)
             {
                 tmp.Lv_5 = nextID;
+                tmp.Name = (from a in kpiWebDataContext.FifthLevelSubdivisionTable
+                            where a.FifthLevelSubdivisionTableID == nextID
+                            select a.Name).FirstOrDefault();
                 return tmp;
             }
             return tmp;
@@ -311,15 +340,6 @@ namespace KPIWeb.Rector
         
             UsersTable userTable_ =
                 (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
-            /*
-
-            if ((userTable_.AccessLevel == 9) || (userTable_.AccessLevel == 10))
-            {
-                userTable_ =
-                    (from a in kPiDataContext.UsersTable where a.UsersTableID == 8164 select a).FirstOrDefault(); // чтобы мониторинг мог зайти
-                userID = userTable_.UsersTableID;//чтобы мониторинг мог зайти
-            }
-            */
             if (userTable_.AccessLevel != 5)
             {
                 Response.Redirect("~/Default.aspx");
@@ -328,49 +348,66 @@ namespace KPIWeb.Rector
             if (!IsPostBack)
             {
                 #region session
-                //Принимаемые через сессию параметры
-                RectorSession rectorResultSession = (RectorSession) Session["rectorResultSession"];
                 RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
-                if (rectorResultSession == null)
-                {
-                    Response.Redirect("~/Default.aspx");
-                }
                 if (rectorHistory == null)
                 {
                     Response.Redirect("~/Default.aspx");
                 }
 
+                #region check for get
+                string val = this.Request.QueryString["HLevel"];//hisoty level сова придумал)
+                if (val != null)
+                {
+                    rectorHistory.CurrentSession = Convert.ToInt32(val);
+                    Session["rectorHistory"] = rectorHistory;
+                }
+                #endregion
+
                 if ((rectorHistory.SessionCount-rectorHistory.CurrentSession)<2)
                 {
                     GoForwardButton.Enabled = false;
                 }
-
-                Struct mainStruct = rectorResultSession.sesStruct;
-                int ViewType = rectorResultSession.sesViewType;
-                int ParamID = rectorResultSession.sesParamID;
-                int ParamType = rectorResultSession.sesParamType;
-                int ReportID = rectorResultSession.sesReportID;
-                int SpecID = rectorResultSession.sesSpecID;
+                RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
+                Struct mainStruct = CurrentRectorSession.sesStruct;
+                int ViewType = CurrentRectorSession.sesViewType;
+                int ParamID = CurrentRectorSession.sesParamID;
+                int ParamType = CurrentRectorSession.sesParamType;
+                int ReportID = CurrentRectorSession.sesReportID;
+                int SpecID = CurrentRectorSession.sesSpecID;             
                 #endregion
-                ///////////////////////
+                #region DataTable init
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("ID", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("Number", typeof (string)));
+                dataTable.Columns.Add(new DataColumn("Abb", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Name", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("StartDate", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("EndDate", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("Value", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("Title", typeof(string)));
-
+                #endregion 
+                #region global page settings
                 ReportTitle.Text = (from a in kpiWebDataContext.ReportArchiveTable
                     where a.ReportArchiveTableID == ReportID
                     select a.Name).FirstOrDefault().ToString();
-
+                #endregion
                 if (ViewType == 0) // просмотр для структурных подразделений
                 {
                     #region преднастройка страницы                    
                     string title="";
-
+                    if (mainStruct.Lv_1 == 0)
+                    {
+                        RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID, "По университетам КФУ");
+                        rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
+                        Session["rectorHistory"] = rectorHistory;
+                    }
+                    else
+                    {
+                        RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID, mainStruct.Name);
+                        rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
+                        Session["rectorHistory"] = rectorHistory;
+                    }                   
+                    //задади имя текущей сессии
                     if (SpecID != 0)
                     {
                         SpecName.Visible = true;
@@ -383,8 +420,8 @@ namespace KPIWeb.Rector
                     {
                         PageName.Text = "Значения для индикатора; \"";
                         PageName.Text += (from a in kpiWebDataContext.IndicatorsTable
-                            where a.IndicatorsTableID == ParamID
-                            select a.Name).FirstOrDefault();
+                                          where a.IndicatorsTableID == ParamID
+                                          select a.Name).FirstOrDefault();
                         PageName.Text += "\";";
                     }
                     else if (ParamType == 1)
@@ -446,11 +483,8 @@ namespace KPIWeb.Rector
                     #endregion
 
                     #endregion
-
                     #region fill grid
 
-                    if (SpecID == 0) // просто проходимся по структурам
-                    {
                         List<Struct> currentStructList = GetChildStructList(mainStruct);
                         foreach (Struct currentStruct in currentStructList)
                         {
@@ -461,67 +495,81 @@ namespace KPIWeb.Rector
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
                             dataRow["Value"] =
-                                GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID).ToString();
+                                GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID,SpecID).ToString();
                             dataTable.Rows.Add(dataRow);
-                        }
-                    }
-                    else // проходим по структурам в разрезе специальности
-                    {
-                        
-                    }
+                        }                                          
 
                     #endregion
-
+                    #region DataGridBind
                     Grid.DataSource = dataTable;
-                    Grid.Columns[2].HeaderText = title;
+                    Grid.Columns[3].HeaderText = title;
                     Grid.DataBind();
-
+                    #endregion
                     #region постнастройка страницы
 
+                    Grid.Columns[9].Visible = false;
                     Grid.Columns[8].Visible = false;
-                    Grid.Columns[7].Visible = false;
+                    Grid.Columns[5].Visible = false;
                     Grid.Columns[4].Visible = false;
-                    Grid.Columns[3].Visible = false;
+                    Grid.Columns[2].Visible = false;
                     Grid.Columns[1].Visible = false;
-                    Grid.Columns[0].HeaderText = title;
                     if (StructDeepness(mainStruct) > 2) // дальше углубляться нельзя
                     {
-                        Grid.Columns[6].Visible = false;
+                        Grid.Columns[7].Visible = false;
                     }
                     #endregion
-
                 }
                 else if (ViewType == 1) // просмотр для показателей (верхние 3 шт)
                 {
                     #region преднастройка страницы
-
                     string title="";
                     if (ParamType==0)
                     {
+                        RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID, "Все индикаторы по КФУ");
+                        rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
+                        Session["rectorHistory"] = rectorHistory;
                         PageName.Text = "Значения индикторов для КФУ";
-                        title = "Индикаторы";
+                        title = "Индикаторы";                      
                     }
                     else if (ParamType == 1)
                     {
+                        string tmp = (from a in kpiWebDataContext.IndicatorsTable
+                                      where a.IndicatorsTableID == ParamID
+                                      select a.Name).FirstOrDefault();
+
+                        RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID, "Расчетные показалели для индикатора: " + tmp);
+                        rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
+                        Session["rectorHistory"] = rectorHistory;
+
                         PageName.Text = "Значения расчетных показателей используемых для расчета индикатора: \"";
-                        PageName.Text += (from a in kpiWebDataContext.IndicatorsTable
-                                                                      where a.IndicatorsTableID == ParamID
-                                                                      select a.Name).FirstOrDefault();
+                        PageName.Text += tmp;
                         PageName.Text += "\" для КФУ";
                         title = "Расчетные показатели";
+                        FormulaLable.Text = (from a in kpiWebDataContext.IndicatorsTable
+                            where a.IndicatorsTableID == ParamID
+                            select a.Formula).FirstOrDefault();
+                        FormulaLable.Visible = true;
                     }
                     else if (ParamType == 2)
                     {
+                        string tmp = (from a in kpiWebDataContext.CalculatedParametrs
+                                      where a.CalculatedParametrsID == ParamID
+                                      select a.Name).FirstOrDefault();
+                        RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID,"Базовые показатели для расчетного: "+ tmp);
+                        rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
+                        Session["rectorHistory"] = rectorHistory;
+
                         PageName.Text = "Значения базовых показателей используемых для расчета расчетного показателя\"";
-                        PageName.Text += (from a in kpiWebDataContext.CalculatedParametrs
-                                          where a.CalculatedParametrsID == ParamID
-                                          select a.Name).FirstOrDefault();
+                        PageName.Text += tmp;
                         PageName.Text += "\" для КФУ";
                         title = "Базовые показатели";
+                        FormulaLable.Text = (from a in kpiWebDataContext.CalculatedParametrs
+                                             where a.CalculatedParametrsID == ParamID
+                                             select a.Formula).FirstOrDefault();
+                        FormulaLable.Visible = true;
                     }
 
                     #endregion
-
                     #region main
                     if (ParamType == 0)//считаем индикатор
                     {
@@ -543,7 +591,7 @@ namespace KPIWeb.Rector
                             dataRow["Name"] = CurrentIndicator.Name;
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
-                            dataRow["Value"] = GetCalculatedWithParams(mainStruct, ParamType, CurrentIndicator.IndicatorsTableID, ReportID).ToString();
+                            dataRow["Value"] = GetCalculatedWithParams(mainStruct, ParamType, CurrentIndicator.IndicatorsTableID, ReportID,SpecID).ToString();
                             dataTable.Rows.Add(dataRow);
                         }
                     }
@@ -562,7 +610,8 @@ namespace KPIWeb.Rector
                             dataRow["Name"] = CurrentCalculated.Name;
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
-                            dataRow["Value"] = GetCalculatedWithParams(mainStruct, ParamType, CurrentCalculated.CalculatedParametrsID, ReportID).ToString();
+                            dataRow["Abb"] = CurrentCalculated.AbbreviationEN;                       
+                            dataRow["Value"] = GetCalculatedWithParams(mainStruct, ParamType, CurrentCalculated.CalculatedParametrsID, ReportID,SpecID).ToString();
                             dataTable.Rows.Add(dataRow);
                         }
                     }
@@ -582,33 +631,45 @@ namespace KPIWeb.Rector
                             dataRow["Name"] = CurrebtBasic.Name;
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
-                            dataRow["Value"] = GetCalculatedWithParams(mainStruct, ParamType, CurrebtBasic.BasicParametersTableID, ReportID).ToString();
+                            dataRow["Abb"] = CurrebtBasic.AbbreviationEN; 
+                            dataRow["Value"] = GetCalculatedWithParams(mainStruct, ParamType, CurrebtBasic.BasicParametersTableID, ReportID,SpecID).ToString();
                             dataTable.Rows.Add(dataRow);
                         }
                     }
                     #endregion 
-
+                    #region DataGridBind
                     Grid.DataSource = dataTable;
-                    Grid.Columns[2].HeaderText = title;
+                    Grid.Columns[3].HeaderText = title;
                     Grid.DataBind();
-
+                    #endregion
                     #region постнастройки страницы
-                    //Grid.Columns[8].Visible = false;
+                    Grid.Columns[5].Visible = false;
                     Grid.Columns[4].Visible = false;
-                    Grid.Columns[3].Visible = false;
                     Grid.Columns[1].Visible = false;
-                    
+
+                    if (ParamType == 0)
+                    {
+                        Grid.Columns[2].Visible = false;
+                    }
+
                     if (ParamType == 2) // дальше углубляться нельзя
                     {
-                        Grid.Columns[7].Visible = false;
+                        Grid.Columns[8].Visible = false;
                     }
                     #endregion
                 }
-                else if (ViewType == 2)
+                else if (ViewType == 2) // просмотр по специальностям
                 {
                     #region преднастройка страницы
+
+
                     if (ParamType == 0)
                     {
+
+                        RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID, "Индикатор для специальностей");
+                        rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
+                        Session["rectorHistory"] = rectorHistory;
+
                         PageName.Text = "Значения для индикатора; \"";
                         PageName.Text += (from a in kpiWebDataContext.IndicatorsTable
                                           where a.IndicatorsTableID == ParamID
@@ -617,6 +678,10 @@ namespace KPIWeb.Rector
                     }
                     else if (ParamType == 1)
                     {
+                        RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID, "Расчетный для специальностей");
+                        rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
+                        Session["rectorHistory"] = rectorHistory;
+
                         PageName.Text = "Значения для расчетного показателя: \"";
                         PageName.Text += (from a in kpiWebDataContext.CalculatedParametrs
                                           where a.CalculatedParametrsID == ParamID
@@ -625,6 +690,10 @@ namespace KPIWeb.Rector
                     }
                     else if (ParamType == 2)
                     {
+                        RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID, "Базовый для специальностей");
+                        rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
+                        Session["rectorHistory"] = rectorHistory;
+
                         PageName.Text = "Значения для базового показателя: \"";
                         PageName.Text += (from a in kpiWebDataContext.BasicParametersTable
                                           where a.BasicParametersTableID == ParamID
@@ -633,172 +702,392 @@ namespace KPIWeb.Rector
                     }
 
                     string title = "Специальности";
-
                     #endregion
-
                     #region fill grid
                     List<SpecializationTable> SpecTable = (from a in kpiWebDataContext.SpecializationTable
                         join b in kpiWebDataContext.FourthLevelSubdivisionTable
                             on a.SpecializationTableID equals b.FK_Specialization
                         where a.Active == true
                               && b.Active == true
-                        select a).ToList();
+                        select a).OrderBy(mc => mc.SpecializationTableID).ToList();
+                    
                     //взяли все специальности которые привязаны к кафедрам
+                    int old = 0;
                     foreach (SpecializationTable currentSpec in SpecTable)
                     {
-                        DataRow dataRow = dataTable.NewRow();
-                        dataRow["ID"] = currentSpec.SpecializationTableID;//GetLastID(currentStruct).ToString();
-                        dataRow["Number"] = "num";
-                        dataRow["Name"] = currentSpec.Name;//currentStruct.Name;
-                        dataRow["StartDate"] = "nun";
-                        dataRow["EndDate"] = "nun";
-                        dataRow["Value"] = "Сложно";//GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID).ToString();
-                        dataTable.Rows.Add(dataRow);
+                        if (currentSpec.SpecializationTableID != old)
+                        {
+                            DataRow dataRow = dataTable.NewRow();
+                            dataRow["ID"] = currentSpec.SpecializationTableID; //GetLastID(currentStruct).ToString();
+                            dataRow["Number"] = "num";
+                            dataRow["Name"] = currentSpec.Name; //currentStruct.Name;
+                            dataRow["StartDate"] = "nun";
+                            dataRow["EndDate"] = "nun";
+                            dataRow["Value"] =
+                                GetCalculatedWithParams(mainStruct, ParamType, ParamID, ReportID,
+                                    currentSpec.SpecializationTableID).ToString();
+                            dataTable.Rows.Add(dataRow);
+                        }
+                        else
+                        {
+                            
+                        }
+                        old = currentSpec.SpecializationTableID;
                     }
 
                     #endregion
-
+                    #region DataGridBind
                     Grid.DataSource = dataTable;
-                    Grid.Columns[2].HeaderText = title;
+                    Grid.Columns[3].HeaderText = title;
                     Grid.DataBind();
-
+                    #endregion
                     #region постнастройка страницы
 
+                    Grid.Columns[9].Visible = false;
                     Grid.Columns[8].Visible = false;
-                    Grid.Columns[7].Visible = false;
+                    Grid.Columns[5].Visible = false;
                     Grid.Columns[4].Visible = false;
-                    Grid.Columns[3].Visible = false;
                     Grid.Columns[1].Visible = false;
-                    Grid.Columns[0].HeaderText = title;
-
                     #endregion
                 }
                 else
                 {
                     //error // wrong ViewType
+                }              
+                #region history 1
+                /*
+                for (int i = 0; i < rectorHistory.SessionCount; i++)
+                {
+                    RectorSession curSesion = rectorHistory.RectorSession[i];
+                    switch (i)
+                    {
+                        case 0:
+                        {
+
+                            if (rectorHistory.CurrentSession != 0)
+                            {
+                                lbl0.Text = "<a href=\"Result?&HLevel=0\">" + curSesion.sesName + "</a>";
+                            }
+                            else
+                            {
+                                lbl0.Text =curSesion.sesName;
+                            }
+
+                            lbl0.Visible = true;
+                                break;
+                            }
+                        case 1:
+                            {
+                                if (rectorHistory.CurrentSession != 1)
+                                {
+                                    lbl1.Text = "<a href=\"Result?&HLevel=1\">" + curSesion.sesName + "</a>";
+                                }
+                                else
+                                {
+                                    lbl1.Text = curSesion.sesName;
+                                }
+                                lbl1.Visible = true;
+                                break;
+                            }
+                        case 2:
+                            {
+                                if (rectorHistory.CurrentSession != 2)
+                                {
+                                    lbl2.Text = "<a href=\"Result?&HLevel=2\">" + curSesion.sesName + "</a>";
+                                }
+                                else
+                                {
+                                    lbl2.Text = curSesion.sesName;
+                                }
+                                lbl2.Visible = true;
+                                break;
+                            }
+                        case 3:
+                            {
+                                if (rectorHistory.CurrentSession != 3)
+                                {
+                                    lbl3.Text = "<a href=\"Result?&HLevel=3\">" + curSesion.sesName + "</a>";
+                                }
+                                else
+                                {
+                                    lbl3.Text = curSesion.sesName;
+                                }
+                                lbl3.Visible = true;
+                                break;
+                            }
+                        case 4:
+                            {
+                                if (rectorHistory.CurrentSession != 4)
+                                {
+                                    lbl4.Text = "<a href=\"Result?&HLevel=4\">" + curSesion.sesName + "</a>";
+                                }
+                                else
+                                {
+                                    lbl4.Text = curSesion.sesName;
+                                }
+                                lbl4.Visible = true;
+                                break;
+                            }
+                        case 5:
+                            {
+                                if (rectorHistory.CurrentSession != 5)
+                                {
+                                    lbl5.Text = "<a href=\"Result?&HLevel=5\">" + curSesion.sesName + "</a>";
+                                }
+                                else
+                                {
+                                    lbl5.Text = curSesion.sesName;
+                                }
+                                lbl5.Visible = true;
+                                break;
+                            }
+                        case 6:
+                            {
+                                if (rectorHistory.CurrentSession != 6)
+                                {
+                                    lbl6.Text = "<a href=\"Result?&HLevel=6\">" + curSesion.sesName + "</a>";
+                                }
+                                else
+                                {
+                                    lbl6.Text = curSesion.sesName;
+                                }
+                                lbl6.Visible = true;
+                                break;
+                            }
+                        default:
+                            {
+                                break;
+                            }
+                    }
                 }
+
+
+                */
+                #endregion
+                #region history 2
+
+                string between = "--->";
+                for (int i = 0; i < rectorHistory.SessionCount; i++)
+                {
+                    RectorSession curSesion = rectorHistory.RectorSession[i];
+                    switch (i)
+                    {
+                        case 0:
+                            {
+
+                                if (rectorHistory.CurrentSession != 0)
+                                {
+                                    HistoryLable.Text = "<a href=\"Result?&HLevel=0\">" + curSesion.sesName + "</a>";
+                                }
+                                else
+                                {
+                                    HistoryLable.Text = curSesion.sesName;
+                                }
+
+                                HistoryLable.Visible = true;
+                                break;
+                            }
+                        case 1:
+                        {
+                            HistoryLable.Text += between;
+                                if (rectorHistory.CurrentSession != 1)
+                                {
+                                    HistoryLable.Text += "<a href=\"Result?&HLevel=1\">" + curSesion.sesName + "</a>";
+                                }
+                                else
+                                {
+                                    HistoryLable.Text += curSesion.sesName;
+                                }
+                                break;
+                            }
+                        case 2:
+                            {
+                                HistoryLable.Text += between;
+                                if (rectorHistory.CurrentSession != 2)
+                                {
+                                    HistoryLable.Text += "<a href=\"Result?&HLevel=2\">" + curSesion.sesName + "</a>";
+                                }
+                                else
+                                {
+                                    HistoryLable.Text += curSesion.sesName;
+                                }
+                                break;
+                            }
+                        case 3:
+                            {
+                                HistoryLable.Text += between;
+                                if (rectorHistory.CurrentSession != 3)
+                                {
+                                    HistoryLable.Text += "<a href=\"Result?&HLevel=3\">" + curSesion.sesName + "</a>";
+                                }
+                                else
+                                {
+                                    HistoryLable.Text += curSesion.sesName;
+                                }                                
+                                break;
+                            }
+                        case 4:
+                            {
+                                HistoryLable.Text += between;
+                                if (rectorHistory.CurrentSession != 4)
+                                {
+                                    HistoryLable.Text += "<a href=\"Result?&HLevel=4\">" + curSesion.sesName + "</a>";
+                                }
+                                else
+                                {
+                                    HistoryLable.Text += curSesion.sesName;
+                                }
+                                break;
+                            }
+                        case 5:
+                            {
+                                HistoryLable.Text += between;
+                                if (rectorHistory.CurrentSession != 5)
+                                {
+                                    HistoryLable.Text += "<a href=\"Result?&HLevel=5\">" + curSesion.sesName + "</a>";
+                                }
+                                else
+                                {
+                                    HistoryLable.Text += curSesion.sesName;
+                                }
+                                break;
+                            }
+                        case 6:
+                            {
+                                HistoryLable.Text += between;
+                                if (rectorHistory.CurrentSession != 6)
+                                {
+                                    HistoryLable.Text += "<a href=\"Result?&HLevel=6\">" + curSesion.sesName + "</a>";
+                                }
+                                else
+                                {
+                                    HistoryLable.Text += curSesion.sesName;
+                                }
+                                break;
+                            }
+                        default:
+                            {
+                                break;
+                            }
+                    }
+                }
+
+
+
+                #endregion
             }
         }
         protected void Button1Click(object sender, EventArgs e) //по структуре
         {
             Button button = (Button)sender;
             {
-                RectorSession rectorResultSession = (RectorSession) Session["rectorResultSession"];
-                if (rectorResultSession == null)
-                {
-                    Response.Redirect("~/Default.aspx");
-                }
-                //sesHistoryInit
                 RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
                 if (rectorHistory == null)
                 {
                     Response.Redirect("~/Default.aspx");
                 }
-                //sesHistoryInit
-                if (rectorResultSession.sesViewType == 1)
+                RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
+                Struct mainStruct = CurrentRectorSession.sesStruct;
+                int ViewType = CurrentRectorSession.sesViewType;
+                int ParamID = CurrentRectorSession.sesParamID;
+                int ParamType = CurrentRectorSession.sesParamType;
+                int ReportID = CurrentRectorSession.sesReportID;
+                int SpecID = CurrentRectorSession.sesSpecID;
+
+                RectorSession currentRectorSession = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID,"");
+
+                if (currentRectorSession.sesViewType == 1)
                 {//впервые перешли на разложение по структуре сразу после показателя
-                    rectorResultSession.sesParamID = Convert.ToInt32(button.CommandArgument);
-                    rectorResultSession.sesViewType = 0;
-                    rectorResultSession.sesStruct.Lv_0 = 1;
-                    rectorResultSession.sesStruct.Lv_1 = 0;
-                    rectorResultSession.sesStruct.Lv_2 = 0;
-                    rectorResultSession.sesStruct.Lv_3 = 0;
-                    rectorResultSession.sesStruct.Lv_4 = 0;
-                    rectorResultSession.sesStruct.Lv_5 = 0;
+                    currentRectorSession.sesParamID = Convert.ToInt32(button.CommandArgument);
+                    currentRectorSession.sesViewType = 0;
+                    currentRectorSession.sesStruct.Lv_0 = 1;
+                    currentRectorSession.sesStruct.Lv_1 = 0;
+                    currentRectorSession.sesStruct.Lv_2 = 0;
+                    currentRectorSession.sesStruct.Lv_3 = 0;
+                    currentRectorSession.sesStruct.Lv_4 = 0;
+                    currentRectorSession.sesStruct.Lv_5 = 0;
                 }
-                else if (rectorResultSession.sesViewType == 2)
+                else if (currentRectorSession.sesViewType == 2)
                 {//впервые перешли на разложение по структуре после выбора специальности
-                    rectorResultSession.sesSpecID = Convert.ToInt32(button.CommandArgument);
-                    rectorResultSession.sesViewType = 0;
-                    rectorResultSession.sesStruct.Lv_0 = 1;
-                    rectorResultSession.sesStruct.Lv_1 = 0;
-                    rectorResultSession.sesStruct.Lv_2 = 0;
-                    rectorResultSession.sesStruct.Lv_3 = 0;
-                    rectorResultSession.sesStruct.Lv_4 = 0;
-                    rectorResultSession.sesStruct.Lv_5 = 0;
+                    currentRectorSession.sesSpecID = Convert.ToInt32(button.CommandArgument);
+                    currentRectorSession.sesViewType = 0;
+                    currentRectorSession.sesStruct.Lv_0 = 1;
+                    currentRectorSession.sesStruct.Lv_1 = 0;
+                    currentRectorSession.sesStruct.Lv_2 = 0;
+                    currentRectorSession.sesStruct.Lv_3 = 0;
+                    currentRectorSession.sesStruct.Lv_4 = 0;
+                    currentRectorSession.sesStruct.Lv_5 = 0;
                 }
                 else
                 {
-                    rectorResultSession.sesStruct = StructDeeper(rectorResultSession.sesStruct, Convert.ToInt32(button.CommandArgument));
+                    currentRectorSession.sesStruct = StructDeeper(currentRectorSession.sesStruct, Convert.ToInt32(button.CommandArgument));               
                 }       
-                //sesHistoryAdd
                 rectorHistory.CurrentSession++;
                 rectorHistory.SessionCount = rectorHistory.CurrentSession + 1;
-                rectorHistory.RectorSession[rectorHistory.CurrentSession] = rectorResultSession;
+                rectorHistory.RectorSession[rectorHistory.CurrentSession] = currentRectorSession;
                 Session["rectorHistory"] = rectorHistory;
-                //sesHistoryAdd
                 Response.Redirect("~/Rector/Result.aspx");
             }
         }
-        protected void Button2Click(object sender, EventArgs e)
+        protected void Button2Click(object sender, EventArgs e) // по составляющим
         {
             Button button = (Button)sender;
             {
-                RectorSession rectorResultSession = (RectorSession)Session["rectorResultSession"];
-                if (rectorResultSession == null)
-                {
-                    Response.Redirect("~/Default.aspx");
-                }
-                //sesHistoryInit
+
+
                 RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
                 if (rectorHistory == null)
                 {
                     Response.Redirect("~/Default.aspx");
                 }
-                //sesHistoryInit
+                RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
+                Struct mainStruct = CurrentRectorSession.sesStruct;
+                int ViewType = CurrentRectorSession.sesViewType;
+                int ParamID = CurrentRectorSession.sesParamID;
+                int ParamType = CurrentRectorSession.sesParamType;
+                int ReportID = CurrentRectorSession.sesReportID;
+                int SpecID = CurrentRectorSession.sesSpecID;
 
-                rectorResultSession.sesParamID = Convert.ToInt32(button.CommandArgument);
-                rectorResultSession.sesParamType++;
-                Session["rectorResultSession"] = rectorResultSession;
-
-                //sesHistoryAdd          
+                RectorSession currentRectorSession = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID,"");
+                //RectorSession currentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
+                currentRectorSession.sesParamID = Convert.ToInt32(button.CommandArgument);
+                currentRectorSession.sesParamType++;       
                 rectorHistory.CurrentSession++;
                 rectorHistory.SessionCount = rectorHistory.CurrentSession + 1;
-                rectorHistory.RectorSession[rectorHistory.CurrentSession] = rectorResultSession;
+                rectorHistory.RectorSession[rectorHistory.CurrentSession] = currentRectorSession;
                 Session["rectorHistory"] = rectorHistory;
-                //sesHistoryAdd
-
                 Response.Redirect("~/Rector/Result.aspx");
             }
         }
-        protected void Button3Click(object sender, EventArgs e)
+        protected void Button3Click(object sender, EventArgs e)//по специальности
         {
             Button button = (Button)sender;
-            {
-                RectorSession rectorResultSession = (RectorSession) Session["rectorResultSession"];
-                if (rectorResultSession == null)
-                {
-                    Response.Redirect("~/Default.aspx");
-                }
-                //sesHistoryInit
+            {              
                 RectorHistorySession rectorHistory = (RectorHistorySession) Session["rectorHistory"];
                 if (rectorHistory == null)
                 {
                     Response.Redirect("~/Default.aspx");
                 }
-                //sesHistoryInit
+                RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
+                Struct mainStruct = CurrentRectorSession.sesStruct;
+                int ViewType = CurrentRectorSession.sesViewType;
+                int ParamID = CurrentRectorSession.sesParamID;
+                int ParamType = CurrentRectorSession.sesParamType;
+                int ReportID = CurrentRectorSession.sesReportID;
+                int SpecID = CurrentRectorSession.sesSpecID;
+                RectorSession currentRectorSession = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID,"");
 
-                rectorResultSession.sesParamID = Convert.ToInt32(button.CommandArgument);
-                rectorResultSession.sesViewType = 2;
-                Session["rectorResultSession"] = rectorResultSession;
-
-                //sesHistoryAdd          
+                currentRectorSession.sesParamID = Convert.ToInt32(button.CommandArgument);
+                currentRectorSession.sesViewType = 2;      
                 rectorHistory.CurrentSession++;
                 rectorHistory.SessionCount = rectorHistory.CurrentSession + 1;
-                rectorHistory.RectorSession[rectorHistory.CurrentSession] = rectorResultSession;
+                rectorHistory.RectorSession[rectorHistory.CurrentSession] = currentRectorSession;
                 Session["rectorHistory"] = rectorHistory;
-                //sesHistoryAdd
-
                 Response.Redirect("~/Rector/Result.aspx");
             }
         }
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
-            RectorSession rectorResultSession = (RectorSession)Session["rectorResultSession"];
-            if (rectorResultSession == null)
-            {
-                Response.Redirect("~/Default.aspx");
-            }
             RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
             if (rectorHistory == null)
             {
@@ -810,20 +1099,11 @@ namespace KPIWeb.Rector
             }
 
             rectorHistory.CurrentSession--;
-            rectorResultSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
-
-            Session["rectorResultSession"] = rectorResultSession;
             Session["rectorHistory"] = rectorHistory;
-
             Response.Redirect("~/Rector/Result.aspx");
         }
         protected void GoForwardButton_Click(object sender, EventArgs e)
         {
-            RectorSession rectorResultSession = (RectorSession)Session["rectorResultSession"];
-            if (rectorResultSession == null)
-            {
-                Response.Redirect("~/Default.aspx");
-            }
             RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
             if (rectorHistory == null)
             {
@@ -832,11 +1112,7 @@ namespace KPIWeb.Rector
             if (rectorHistory.CurrentSession < rectorHistory.SessionCount) // есть куда переходить
             {
                 rectorHistory.CurrentSession++;
-                rectorResultSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
-
-                Session["rectorResultSession"] = rectorResultSession;
                 Session["rectorHistory"] = rectorHistory;
-
                 Response.Redirect("~/Rector/Result.aspx");
             }
 

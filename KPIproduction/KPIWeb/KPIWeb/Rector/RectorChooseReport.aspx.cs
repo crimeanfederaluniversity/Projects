@@ -61,14 +61,11 @@ namespace KPIWeb.Rector
             {
                 Result.Struct mainStruct = new Result.Struct(1, "");
                 RectorSession rectorResultSession = new RectorSession(mainStruct, 1, 0, 0, Convert.ToInt32(button.CommandArgument),0);
-                Session["rectorResultSession"] = rectorResultSession;
-
                 RectorHistorySession RectorHistory = new RectorHistorySession();
                 RectorHistory.SessionCount = 1;
                 RectorHistory.CurrentSession = 0;
                 RectorHistory.RectorSession[RectorHistory.CurrentSession] = rectorResultSession;
                 Session["rectorHistory"] = RectorHistory;
-
                 Response.Redirect("~/Rector/Result.aspx");
             }
         }
