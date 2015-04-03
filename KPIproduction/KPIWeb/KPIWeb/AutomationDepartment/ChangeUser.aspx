@@ -1,29 +1,89 @@
-﻿<%@ Page Language="C#" Title="Добавление роли" CodeBehind="AddRole.aspx.cs" MasterPageFile="~/Site.Master"  Inherits="KPIWeb.AutomationDepartment.AddRole"  AutoEventWireup="true" EnableViewStateMac="false" %>
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ChangeUser.aspx.cs" Inherits="KPIWeb.AutomationDepartment.ChangeUser" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <style type="text/css">
+        .auto-style1 {
+            font-size: 26pt;
+        }
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+  * {
+    color: #000 !important;
+    text-shadow: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 4px 0 0;
+  margin-top: 1px \9;
+  /* IE8-9 */
+
+  line-height: normal;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  padding: 0;
+  box-sizing: border-box;
+}
+
+button,
+input,
+select[multiple],
+textarea {
+  background-image: none;
+}
+
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+button,
+input {
+  line-height: normal;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    }
+
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div class="auto-style1" style="height: 73px; width: 924px">
     
-        <span style="font-size: 30pt">Создание новой роли</span><br />
+        Изменение параметров доступа и заполнения индикаторов пользователями<br />
     
     </div>
-        Название роли
-        <asp:TextBox ID="TextBox1" runat="server" Width="139px"></asp:TextBox>
-&nbsp;Активна
-        <asp:CheckBox ID="CheckBox1" runat="server" />
-&nbsp;&nbsp;Руководство<asp:CheckBox ID="CheckBox2" runat="server" />
-&nbsp;<asp:Button ID="Button1" runat="server" Text="Создать" Width="89px" OnClick="Button1_Click" Height="29px" />
         <br />
-        _________________________________________________________________<br />
+        <asp:Button ID="Button1" runat="server" Text="Сохранить изменения" Width="226px" OnClick="Button1_Click" />
         <br />
-        Изменение роли<br />
-        _________________________________________________________________<br />
-        <br />
-        Привязка показателей к роли<br />
-        <asp:DropDownList ID="DropDownList1" runat="server" Height="28px" Width="328px" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="True">
-        </asp:DropDownList>
-        <asp:Button ID="Button2" runat="server" Text="Загрузить в таблицу" Width="202px" OnClick="Button2_Click" Height="34px" />
-        <br />
-        <br />
-        <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Сохранить изменения" Width="497px" />
         <br />
         Базовые показатели<br />
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
@@ -53,7 +113,7 @@
         </asp:GridView>
     
      <br />
-    Рассчетные показатели<asp:GridView ID="CalcGrid" runat="server" AutoGenerateColumns="False">
+    Рассчетные показатели<asp:GridView ID="CalcGrid" runat="server" AutoGenerateColumns="False" Width="242px">
             <Columns>
             <asp:TemplateField HeaderText="Название">
                                     <ItemTemplate>
@@ -75,7 +135,7 @@
         </asp:GridView>
     
         <br />
-    Индикаторы<asp:GridView ID="IndicatorGrid" runat="server" AutoGenerateColumns="False">
+    Индикаторы<asp:GridView ID="IndicatorGrid" runat="server" AutoGenerateColumns="False" Width="242px">
             <Columns>
             <asp:TemplateField HeaderText="Название">
                                     <ItemTemplate>
@@ -96,4 +156,6 @@
             </Columns>
         </asp:GridView>
 
-</asp:Content>
+    </form>
+</body>
+</html>

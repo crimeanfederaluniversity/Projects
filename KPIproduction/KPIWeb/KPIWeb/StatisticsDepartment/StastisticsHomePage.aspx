@@ -5,7 +5,7 @@
     <div>
     
     </div>
-        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Открыть список активных кампаний" Width="250px" />
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Открыть список активных кампаний" Width="356px" />
         <br />
         <br />
         <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Создание новой" Width="250px" />

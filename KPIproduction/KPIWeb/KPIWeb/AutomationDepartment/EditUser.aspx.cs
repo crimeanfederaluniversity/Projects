@@ -54,6 +54,7 @@ namespace KPIWeb.AutomationDepartment
             dataTable.Columns.Add(new DataColumn("Zerolvl", typeof(string)));
             dataTable.Columns.Add(new DataColumn("DeleteUserButton", typeof(string)));
             dataTable.Columns.Add(new DataColumn("SaveUserButton", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("ChangeUserButton", typeof(string)));
 
             using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
             {
@@ -89,6 +90,8 @@ namespace KPIWeb.AutomationDepartment
                         dataRow["Password"] = "********";
                         dataRow["Email"] = "********";
                     }
+
+                    dataRow["ChangeUserButton"] = user.UsersTableID;
 
                     dataRow["Firstlvl"] = (from a in firstLevelSubdivisionTable
                                            where a.FirstLevelSubdivisionTableID == user.FK_FirstLevelSubdivisionTable
@@ -262,5 +265,21 @@ namespace KPIWeb.AutomationDepartment
         {
             Response.Redirect("~/AutomationDepartment/Regisration.aspx");
         }
+
+        protected void ChangeUserButtonClick (object sender, EventArgs e)
+        { 
+            Button button = (Button)sender;
+            {
+                Serialization ser = new Serialization(Convert.ToInt32(button.CommandArgument));
+                Session["userIdforChange"] = ser;
+                Response.Redirect("~/AutomationDepartment/ChangeUser.aspx");
+            }
+        }
+
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

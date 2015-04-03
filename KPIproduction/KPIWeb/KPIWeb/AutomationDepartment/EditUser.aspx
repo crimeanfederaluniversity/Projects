@@ -23,13 +23,18 @@
         <br />
          
     
-        <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server">           
+    </div>
+         
+    
+        <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">           
              <Columns>               
                            
                  <asp:TemplateField HeaderText="ID пользователя" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="FourthlvlId" runat="server" Text='<%# Bind("FourthlvlId") %>'  Visible="True"></asp:Label>
                         </ItemTemplate>
+
+<HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField>   
                  
                  
@@ -38,60 +43,80 @@
                         <ItemTemplate> 
                            <asp:TextBox ID="Login" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Login") %>'></asp:TextBox>
                         </ItemTemplate>
+
+<HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField>     
 
                      <asp:TemplateField HeaderText="Password"  HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Password" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Password") %>'></asp:TextBox>
                         </ItemTemplate>
+
+<HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField>   
 
                     <asp:TemplateField HeaderText="e-mail" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Email" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Email") %>'></asp:TextBox>
                         </ItemTemplate>
+
+<HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
                      
                   <asp:TemplateField HeaderText="First_LVL" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Firstlvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Firstlvl") %>'></asp:TextBox>
                         </ItemTemplate>
+
+<HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
                  
                   <asp:TemplateField HeaderText="Second_LVL" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Secondlvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Secondlvl") %>'></asp:TextBox>
                         </ItemTemplate>
+
+<HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField>   
                  
                  <asp:TemplateField HeaderText="Third_LVL" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Thirdlvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Thirdlvl") %>'></asp:TextBox>
                         </ItemTemplate>
+
+<HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
                  
                  <asp:TemplateField HeaderText="Fourth_LVL" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Fourthlvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Fourthlvl") %>'></asp:TextBox>
                         </ItemTemplate>
+
+<HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
                  
                      <asp:TemplateField HeaderText="Fifth_LVL" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Fifthlvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Fifthlvl") %>'></asp:TextBox>
                         </ItemTemplate>
+
+<HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
                  
                  <asp:TemplateField HeaderText="Acces_lvl" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Acceslvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Acceslvl") %>'></asp:TextBox>
                         </ItemTemplate>
+
+<HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
 
                  <asp:TemplateField HeaderText="Zero_lvl" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Zerolvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Zerolvl") %>'></asp:TextBox>
                         </ItemTemplate>
+
+<HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
 
                  <asp:TemplateField HeaderText="Удалить пользователя">
@@ -105,10 +130,15 @@
                             <asp:Button ID="SaveUserButton" runat="server" CommandName="Select" Text="Сохранить" Width="200px" CommandArgument='<%# Eval("FourthlvlId") %>' OnClick="SaveUserButtonClick" />
                         </ItemTemplate>
                     </asp:TemplateField>  
+                 
+                 <asp:TemplateField HeaderText="Изменить права пользователя">
+                        <ItemTemplate>
+                            <asp:Button ID="ChangeUserButton" runat="server" CommandName="Select" Text="Изменить" Width="200px" CommandArgument='<%# Eval("ChangeUserButton") %>' OnClick="ChangeUserButtonClick" />
+                        </ItemTemplate>
+                    </asp:TemplateField>  
                                            
        
                 </Columns>
        </asp:GridView>
     
-    </div>
-</asp:Content>
+    </asp:Content>

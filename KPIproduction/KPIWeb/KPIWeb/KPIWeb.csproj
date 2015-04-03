@@ -201,6 +201,7 @@
     <Content Include="AutomationDepartment\AddLevel.aspx" />
     <Content Include="AutomationDepartment\AddRole.aspx" />
     <Content Include="AutomationDepartment\AddSpecialization.aspx" />
+    <Content Include="AutomationDepartment\ChangeUser.aspx" />
     <Content Include="AutomationDepartment\EditUser.aspx" />
     <Content Include="AutomationDepartment\Main.aspx" />
     <Content Include="AutomationDepartment\Regisration.aspx" />
@@ -350,6 +351,13 @@
     </Compile>
     <Compile Include="AutomationDepartment\AddSpecialization.aspx.designer.cs">
       <DependentUpon>AddSpecialization.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AutomationDepartment\ChangeUser.aspx.cs">
+      <DependentUpon>ChangeUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutomationDepartment\ChangeUser.aspx.designer.cs">
+      <DependentUpon>ChangeUser.aspx</DependentUpon>
     </Compile>
     <Compile Include="AutomationDepartment\EditUser.aspx.cs">
       <DependentUpon>EditUser.aspx</DependentUpon>

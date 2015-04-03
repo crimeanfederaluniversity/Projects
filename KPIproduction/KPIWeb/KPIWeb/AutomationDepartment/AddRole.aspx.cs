@@ -33,7 +33,7 @@ namespace KPIWeb.AutomationDepartment
 
             if (userTable.AccessLevel != 10)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect("~/AutomationDepartment.aspx");
             }
             ////////////////////////////////////////////////////////
             /// 
