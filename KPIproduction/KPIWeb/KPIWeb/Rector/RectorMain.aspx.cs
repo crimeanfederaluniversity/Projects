@@ -31,5 +31,10 @@ namespace KPIWeb.Rector
         {
             Response.Redirect("~/Rector/Documents.aspx");
         }
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/Document.aspx");
+        }
     }
 }

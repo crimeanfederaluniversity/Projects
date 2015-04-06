@@ -232,6 +232,7 @@
     <Content Include="Rector\Result.aspx" />
     <Content Include="Reports\Parametrs.aspx" />
     <Content Include="StatisticsDepartment\AddSpecialization.aspx" />
+    <Content Include="StatisticsDepartment\Document.aspx" />
     <Content Include="StatisticsDepartment\FastStructure.aspx" />
     <Content Include="StatisticsDepartment\MonitoringMain.aspx" />
     <Content Include="WebForm3.aspx" />
@@ -541,6 +542,13 @@
     </Compile>
     <Compile Include="StatisticsDepartment\BasicParametrs.aspx.designer.cs">
       <DependentUpon>BasicParametrs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StatisticsDepartment\Document.aspx.cs">
+      <DependentUpon>Document.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StatisticsDepartment\Document.aspx.designer.cs">
+      <DependentUpon>Document.aspx</DependentUpon>
     </Compile>
     <Compile Include="StatisticsDepartment\FastStructure.aspx.cs">
       <DependentUpon>FastStructure.aspx</DependentUpon>

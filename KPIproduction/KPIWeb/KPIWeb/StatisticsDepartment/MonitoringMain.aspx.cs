@@ -58,5 +58,10 @@ namespace KPIWeb.StatisticsDepartment
         {
             Response.Redirect("~/PlannedIndicator.aspx");
         }
+
+        protected void Button8_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/StatisticsDepartment/Document.aspx");
+        }
     }
 }

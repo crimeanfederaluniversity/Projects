@@ -28,4 +28,7 @@
     <br />
     <br />
         <asp:Button ID="Button6" runat="server" Font-Size="15pt" Height="50px" Text="Прикрепление спецальностей" Width="400px" OnClick="Button6_Click" />
+    <br />
+    <br />
+    <asp:Button ID="Button8" runat="server" Height="50px" OnClick="Button8_Click" Text="Управление документами" Width="400px" />
 </asp:Content>

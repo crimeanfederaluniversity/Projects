@@ -123,10 +123,13 @@ namespace KPIWeb
     partial void InsertPlannedIndicator(PlannedIndicator instance);
     partial void UpdatePlannedIndicator(PlannedIndicator instance);
     partial void DeletePlannedIndicator(PlannedIndicator instance);
+    partial void InsertDocumentTable(DocumentTable instance);
+    partial void UpdateDocumentTable(DocumentTable instance);
+    partial void DeleteDocumentTable(DocumentTable instance);
     #endregion
 		
 		public KPIWebDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["crimeanfeder_0ConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["crimeanfeder_0ConnectionString1"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -400,6 +403,14 @@ namespace KPIWeb
 			get
 			{
 				return this.GetTable<PlannedIndicator>();
+			}
+		}
+		
+		public System.Data.Linq.Table<DocumentTable> DocumentTable
+		{
+			get
+			{
+				return this.GetTable<DocumentTable>();
 			}
 		}
 	}
@@ -9954,6 +9965,140 @@ namespace KPIWeb
 						this._FK_IndicatorsTable = default(int);
 					}
 					this.SendPropertyChanged("IndicatorsTable");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DocumentTable")]
+	public partial class DocumentTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _DocumentID;
+		
+		private string _DocumentName;
+		
+		private string _DocumentLink;
+		
+		private System.Nullable<bool> _Active;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnDocumentIDChanging(int value);
+    partial void OnDocumentIDChanged();
+    partial void OnDocumentNameChanging(string value);
+    partial void OnDocumentNameChanged();
+    partial void OnDocumentLinkChanging(string value);
+    partial void OnDocumentLinkChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public DocumentTable()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocumentID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int DocumentID
+		{
+			get
+			{
+				return this._DocumentID;
+			}
+			set
+			{
+				if ((this._DocumentID != value))
+				{
+					this.OnDocumentIDChanging(value);
+					this.SendPropertyChanging();
+					this._DocumentID = value;
+					this.SendPropertyChanged("DocumentID");
+					this.OnDocumentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocumentName", DbType="VarChar(100)")]
+		public string DocumentName
+		{
+			get
+			{
+				return this._DocumentName;
+			}
+			set
+			{
+				if ((this._DocumentName != value))
+				{
+					this.OnDocumentNameChanging(value);
+					this.SendPropertyChanging();
+					this._DocumentName = value;
+					this.SendPropertyChanged("DocumentName");
+					this.OnDocumentNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocumentLink", DbType="VarChar(100)")]
+		public string DocumentLink
+		{
+			get
+			{
+				return this._DocumentLink;
+			}
+			set
+			{
+				if ((this._DocumentLink != value))
+				{
+					this.OnDocumentLinkChanging(value);
+					this.SendPropertyChanging();
+					this._DocumentLink = value;
+					this.SendPropertyChanged("DocumentLink");
+					this.OnDocumentLinkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
 				}
 			}
 		}

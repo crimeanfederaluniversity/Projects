@@ -62,6 +62,7 @@ namespace KPIWeb.AutomationDepartment
             if (int.TryParse(DropDownList1.SelectedValue, out SelectedValue) && SelectedValue != -1)
             {
                 Button6.Enabled = true;
+                CheckBox1.Enabled = true;
                 Button9.Enabled = true;
                 List<SecondLevelSubdivisionTable> second_stageList = (from item in kPiDataContext.SecondLevelSubdivisionTable
                                                                       where item.FK_FirstLevelSubdivisionTable == SelectedValue
@@ -99,6 +100,7 @@ namespace KPIWeb.AutomationDepartment
             if (int.TryParse(DropDownList2.SelectedValue, out SelectedValue) && SelectedValue != -1)
             {
                 Button7.Enabled = true;
+                CheckBox2.Enabled = true;
                 Button10.Enabled = true;
                 List<ThirdLevelSubdivisionTable> third_stage = (from item in kPiDataContext.ThirdLevelSubdivisionTable
                                                                 where item.FK_SecondLevelSubdivisionTable == SelectedValue
@@ -124,6 +126,7 @@ namespace KPIWeb.AutomationDepartment
         protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
         {
             Button8.Enabled = true;
+            CheckBox3.Enabled = true;
             Button11.Enabled = true;
             TextBox6.Text = "";
             CheckBox3.Checked = false;
@@ -318,14 +321,15 @@ namespace KPIWeb.AutomationDepartment
                         }
                     
                 }
-
-               
-                 
                 kPiDataContext.SubmitChanges();
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Изменения внесены');" + "document.location = 'AddLevel.aspx';", true);
+                
             }
-            
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Изменения внесены');", true);
-            clearall();
+            else
+            {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ничего не введено');", true);
+                clearall();
+            }       
         }
 
         protected void Button7_Click(object sender, EventArgs e)
@@ -360,12 +364,12 @@ namespace KPIWeb.AutomationDepartment
 
                 KPIWebDataContext kPiDataContext = new KPIWebDataContext();
                 SecondLevelSubdivisionTable Second_stageList = (from item in kPiDataContext.SecondLevelSubdivisionTable
-                                                              where item.SecondLevelSubdivisionTableID == Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value)
-                                                              select item).FirstOrDefault();
-           
+                                                                where item.SecondLevelSubdivisionTableID == Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value)
+                                                                select item).FirstOrDefault();
+
                 List<ThirdLevelSubdivisionTable> delete_stageList = (from item in kPiDataContext.ThirdLevelSubdivisionTable
-                                                              where item.FK_SecondLevelSubdivisionTable == Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value)
-                                                              select item).ToList();
+                                                                     where item.FK_SecondLevelSubdivisionTable == Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value)
+                                                                     select item).ToList();
 
                 Second_stageList.Name = TextBox5.Text;
                 if (CheckBox2.Checked == true)
@@ -382,12 +386,15 @@ namespace KPIWeb.AutomationDepartment
 
                 }
 
-               
                 kPiDataContext.SubmitChanges();
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Изменения внесены');" + "document.location = 'AddLevel.aspx';", true);
             }
+            else
+            {
 
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Изменения внесены');", true);
-            clearall();
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ничего не введено');", true);
+                clearall();
+            }
         }
 
         protected void Button8_Click(object sender, EventArgs e)
@@ -421,8 +428,8 @@ namespace KPIWeb.AutomationDepartment
                 KPIWebDataContext kPiDataContext = new KPIWebDataContext();
                 ThirdLevelSubdivisionTable Third_stageList = (from item in kPiDataContext.ThirdLevelSubdivisionTable
                                                               where item.ThirdLevelSubdivisionTableID == Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value)
-                                                               select item).FirstOrDefault();
-
+                                                              select item).FirstOrDefault();
+                Third_stageList.Name = TextBox6.Text;
                 if (CheckBox3.Checked == true)
                 {
                     Third_stageList.Active = true;
@@ -432,13 +439,16 @@ namespace KPIWeb.AutomationDepartment
                     Third_stageList.Active = false;
                 }
 
-                Third_stageList.Name = TextBox6.Text;
+
 
                 kPiDataContext.SubmitChanges();
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Изменения внесены');" + "document.location = 'AddLevel.aspx';", true);
             }
-
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Изменения внесены');", true);
-            clearall();
+            else
+            {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ничего не введено');", true);
+                clearall();
+            }
         }
     }
 }

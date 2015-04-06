@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="crimeanfeder_0" Class="KPIWebDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=V-PC\DATABASE_1;Initial Catalog=crimeanfeder_0;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="crimeanfeder_0ConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=V-PC\DATABASE_1;Initial Catalog=crimeanfeder_0;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="crimeanfeder_0ConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTable">
     <Type Name="BasicParametersAndRolesMappingTable">
       <Column Name="BasicParametersAndRolesMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -425,6 +425,14 @@
       <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="FK_IndicatorsTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="IndicatorsTable_PlannedIndicator" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DocumentTable" Member="DocumentTable">
+    <Type Name="DocumentTable">
+      <Column Name="DocumentID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DocumentName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="DocumentLink" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
     </Type>
   </Table>
 </Database>
