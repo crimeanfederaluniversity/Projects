@@ -10,8 +10,8 @@
                                 <asp:TemplateField HeaderText="Ред|Просм">
                                     <ItemTemplate>
                                         <asp:Label ID="LabelRolesTableID" runat="server" Visible="false" Text='<%# Bind("Name") %>'></asp:Label>
-                                        <asp:CheckBox ID="CheckBoxCanEdit" runat="server" Checked='<%# Bind("EditChecked") %>'></asp:CheckBox>
-                                        <asp:CheckBox ID="CheckBoxCanView" runat="server" Checked='<%# Bind("ViewChecked") %>'></asp:CheckBox>
+                                        <asp:Checkbox Text=" " ID="CheckBoxCanEdit" runat="server" Checked='<%# Bind("EditChecked") %>'></asp:CheckBox>
+                                        <asp:Checkbox Text=" " ID="CheckBoxCanView" runat="server" Checked='<%# Bind("ViewChecked") %>'></asp:CheckBox>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 

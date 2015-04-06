@@ -17,7 +17,7 @@
                     <td>Активный отчёт
                     </td>
                     <td>
-                        <asp:CheckBox runat="server" ID="CheckBoxActive" />
+                        <asp:Checkbox    Text=" " runat="server" ID="CheckBoxActive" />
                     </td>
                 </tr>
 
@@ -25,7 +25,7 @@
                     <td>Отчёт рассчитан
                     </td>
                     <td>
-                        <asp:CheckBox runat="server" ID="CheckBoxCalculeted" />
+                        <asp:Checkbox  Text=" " runat="server" ID="CheckBoxCalculeted" />
                     </td>
                 </tr>
                 
@@ -43,7 +43,7 @@
                     <td>Отчёт отправлен
                     </td>
                     <td>
-                        <asp:CheckBox runat="server" ID="CheckBoxSent" />
+                        <asp:Checkbox  Text=" " runat="server" ID="CheckBoxSent" />
                     </td>
                 </tr>
                 
@@ -61,7 +61,7 @@
                     <td>Отчёт принят получателем
                     </td>
                     <td>
-                        <asp:CheckBox runat="server" ID="CheckBoxRecipientConfirmed" />
+                        <asp:Checkbox  Text=" " runat="server" ID="CheckBoxRecipientConfirmed" />
                     </td>
                 </tr>
                 
@@ -110,7 +110,7 @@
             <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Выделить все академии" Width="286px" />
             <br />
             Выберите академии, участвующие в отчёте<br />
-            <asp:CheckBoxList ID="CheckBoxList1" runat="server" Height="16px" Width="724px">
+            <asp:CheckBoxList  ID="CheckBoxList1" runat="server" Height="16px" Width="724px">
             </asp:CheckBoxList>
             <br />
             <asp:Button ID="ButtonSave" runat="server" Width="500px" Text="Сохранить" OnClick="ButtonSave_Click" />
@@ -129,7 +129,7 @@
                                 <asp:TemplateField HeaderText="Активен">
                                     <ItemTemplate>
                                         <asp:Label ID="IndicatorID" runat="server" Visible="false" Text='<%# Bind("IndicatorID") %>'></asp:Label>
-                                        <asp:CheckBox ID="IndicatorCheckBox" runat="server" Checked='<%# Bind("IndicatorCheckBox") %>'></asp:CheckBox>
+                                        <asp:Checkbox  Text=" " ID="IndicatorCheckBox" runat="server" Checked='<%# Bind("IndicatorCheckBox") %>'></asp:CheckBox>
                                     </ItemTemplate>
                                 </asp:TemplateField>                       
                             </Columns>
@@ -143,7 +143,7 @@
                                 <asp:TemplateField HeaderText="Активен">
                                     <ItemTemplate>
                                         <asp:Label ID="CalculatedParametrsID" runat="server" Visible="false" Text='<%# Bind("CalculatedParametrsID") %>'></asp:Label>
-                                        <asp:CheckBox ID="CalculatedParametrsCheckBox" runat="server" Checked='<%# Bind("CalculatedParametrsCheckBox") %>'></asp:CheckBox>
+                                        <asp:Checkbox  Text=" " ID="CalculatedParametrsCheckBox" runat="server" Checked='<%# Bind("CalculatedParametrsCheckBox") %>'></asp:CheckBox>
                                     </ItemTemplate>
                                 </asp:TemplateField>                                
                             </Columns>
@@ -157,7 +157,7 @@
                                 <asp:TemplateField HeaderText="Активен">
                                     <ItemTemplate>
                                         <asp:Label ID="BasicParametrsID" runat="server" Visible="false" Text='<%# Bind("BasicParametrsID") %>'></asp:Label>
-                                        <asp:CheckBox ID="BasicParametrsCheckBox" runat="server" Checked='<%# Bind("BasicParametrsCheckBox") %>'></asp:CheckBox>
+                                        <asp:Checkbox  Text=" " ID="BasicParametrsCheckBox" runat="server" Checked='<%# Bind("BasicParametrsCheckBox") %>'></asp:CheckBox>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

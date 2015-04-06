@@ -30,6 +30,8 @@
  
         <asp:Label ID="Label2" runat="server" Text="Пароль"></asp:Label>
 
+        <asp:Checkbox  Text=" "  ID="CheckBox1" runat="server" />
+
         <br />
 
         <asp:TextBox ID="Password" CssClass="form-control" TextMode="Password" runat="server" Height="40px" Width="300px"></asp:TextBox>
@@ -38,4 +40,5 @@
 
         <asp:Button ID="Button1" CssClass="form-control" runat="server" Text="Войти" Height="40px" OnClick="Button1_Click" Width="300px" />
  </div>
+   
 </asp:Content>

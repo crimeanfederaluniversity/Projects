@@ -25,35 +25,35 @@
                    <asp:TemplateField HeaderText="Используются совеременные образовательные технологии" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="ParamLabel1" runat="server" Text='<%# Bind("Param1Label") %>' Visible="false"></asp:Label>
-                            <asp:CheckBox ID="IsModern" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param1CheckBox") %>' />
+                            <asp:Checkbox  Text=" " ID="IsModern" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param1CheckBox") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>     
 
                      <asp:TemplateField HeaderText="Осуществляется сетевое взаимодействие"  HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:Label ID="ParamLabel2" runat="server" Text='<%# Bind("Param2Label") %>' Visible="false"></asp:Label>
-                            <asp:CheckBox ID="IsNetwork" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param2CheckBox") %>' />
+                            <asp:Checkbox  Text=" " ID="IsNetwork" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param2CheckBox") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>   
 
                     <asp:TemplateField HeaderText="Осуществляется обучение студентов с особыми потребностяим" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:Label ID="ParamLabel3" runat="server" Text='<%# Bind("Param3Label") %>' Visible="false"></asp:Label>
-                            <asp:CheckBox ID="IsInvalid" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param3CheckBox") %>' />
+                            <asp:Checkbox  Text=" " ID="IsInvalid" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param3CheckBox") %>' />
                         </ItemTemplate>
                     </asp:TemplateField> 
                      
                   <asp:TemplateField HeaderText="Предусмотрено обучение иностранных студентов" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:Label ID="ParamLabel4" runat="server" Text='<%# Bind("Param4Label") %>' Visible="false"></asp:Label>
-                            <asp:CheckBox ID="IsForeign" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param4Label") %>' />
+                            <asp:Checkbox  Text=" " ID="IsForeign" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param4Label") %>' />
                         </ItemTemplate>
                     </asp:TemplateField> 
                  
                   <asp:TemplateField HeaderText="Param5" Visible = "False">
                         <ItemTemplate>
                             <asp:Label ID="ParamLabel5" runat="server" Text='<%# Bind("Param5Label") %>' Visible="false"></asp:Label>
-                            <asp:CheckBox ID="ParamCheckBox5" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param5CheckBox") %>' />
+                            <asp:Checkbox  Text=" " ID="ParamCheckBox5" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param5CheckBox") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>      
                     

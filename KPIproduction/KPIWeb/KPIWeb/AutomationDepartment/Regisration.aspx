@@ -53,13 +53,13 @@
 
                             <asp:TemplateField  HeaderText="Просм">
                                 <ItemTemplate>
-                                    <asp:CheckBox ID="IndicatorViewCheckBox" runat="server" Checked='<%# Bind("IndicatorViewCheckBox") %>'></asp:CheckBox>
+                                    <asp:CheckBox Text=" " ID="IndicatorViewCheckBox" runat="server" Checked='<%# Bind("IndicatorViewCheckBox") %>'></asp:CheckBox>
                                 </ItemTemplate>
                             </asp:TemplateField>
 
                             <asp:TemplateField HeaderText="Подтв">
                                 <ItemTemplate>
-                                    <asp:CheckBox ID="IndicatorConfirmCheckBox" runat="server" Checked='<%# Bind("IndicatorConfirmCheckBox") %>'></asp:CheckBox>
+                                    <asp:CheckBox Text=" " ID="IndicatorConfirmCheckBox" runat="server" Checked='<%# Bind("IndicatorConfirmCheckBox") %>'></asp:CheckBox>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -78,12 +78,12 @@
                                  
                          <asp:TemplateField HeaderText="Просм">
                              <ItemTemplate>
-                                 <asp:CheckBox ID="CalculatedParametrsViewCheckBox" runat="server" Checked='<%# Bind("CalculatedParametrsViewCheckBox") %>'></asp:CheckBox>
+                                 <asp:CheckBox Text=" " ID="CalculatedParametrsViewCheckBox" runat="server" Checked='<%# Bind("CalculatedParametrsViewCheckBox") %>'></asp:CheckBox>
                              </ItemTemplate>
                          </asp:TemplateField>
                          <asp:TemplateField HeaderText="Подтв">
                              <ItemTemplate>
-                                 <asp:CheckBox ID="CalculatedParametrsConfirmCheckBox" runat="server" Checked='<%# Bind("CalculatedParametrsConfirmCheckBox") %>'></asp:CheckBox>
+                                 <asp:CheckBox Text=" " ID="CalculatedParametrsConfirmCheckBox" runat="server" Checked='<%# Bind("CalculatedParametrsConfirmCheckBox") %>'></asp:CheckBox>
                              </ItemTemplate>
                          </asp:TemplateField>
                      </Columns>
@@ -104,19 +104,19 @@
 
                         <asp:TemplateField HeaderText="Редак">
                             <ItemTemplate>
-                                <asp:CheckBox ID="BasicParametrsEditCheckBox" runat="server" Checked='<%# Bind("BasicParametrsEditCheckBox") %>'></asp:CheckBox>
+                                <asp:CheckBox Text=" " ID="BasicParametrsEditCheckBox" runat="server" Checked='<%# Bind("BasicParametrsEditCheckBox") %>'></asp:CheckBox>
                             </ItemTemplate>
                         </asp:TemplateField>
 
                         <asp:TemplateField HeaderText="Просм">
                             <ItemTemplate>
-                                <asp:CheckBox ID="BasicParametrsViewCheckBox" runat="server" Checked='<%# Bind("BasicParametrsViewCheckBox") %>'></asp:CheckBox>
+                                <asp:CheckBox Text=" " ID="BasicParametrsViewCheckBox" runat="server" Checked='<%# Bind("BasicParametrsViewCheckBox") %>'></asp:CheckBox>
                             </ItemTemplate>
                         </asp:TemplateField>
 
                         <asp:TemplateField HeaderText="Подтв">
                             <ItemTemplate>
-                                <asp:CheckBox ID="BasicParametrsConfirmCheckBox" runat="server" Checked='<%# Bind("BasicParametrsConfirmCheckBox") %>'></asp:CheckBox>
+                                <asp:CheckBox Text=" " ID="BasicParametrsConfirmCheckBox" runat="server" Checked='<%# Bind("BasicParametrsConfirmCheckBox") %>'></asp:CheckBox>
                             </ItemTemplate>
                         </asp:TemplateField>
 

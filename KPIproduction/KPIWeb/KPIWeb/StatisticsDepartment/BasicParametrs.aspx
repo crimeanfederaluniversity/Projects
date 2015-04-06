@@ -45,8 +45,8 @@
                     <asp:TextBox ID="TextBox2" runat="server" Width="39px" ReadOnly="True"></asp:TextBox>
                     <br />
                     <br />
-                    Актив<br />
-                    <asp:CheckBox ID="CheckBox1" runat="server" />
+                    <br />
+                    <asp:CheckBox Text="Актив" ID="CheckBox1" runat="server" />
                     <br />
                     <br />
                     Название<br />

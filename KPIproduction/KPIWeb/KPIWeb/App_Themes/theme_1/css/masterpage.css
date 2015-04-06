@@ -234,17 +234,30 @@ margin:3px;
 }
 /*EDIT_TEXT*//*EDIT_TEXT*//*EDIT_TEXT*//*EDIT_TEXT*/
 /*CHECKBOX_STYLE*//*CHECKBOX_STYLE*//*CHECKBOX_STYLE*//*CHECKBOX_STYLE*/
-.checkbox_style input[type="checkbox"]{
-   
+
+.checkbox_style input[type="checkbox"] {
+   display:none;
+}
+.checkbox_style  input[type="checkbox"] + label:before   {
+        display:inline-block;
+        content:url("/App_Themes/theme_1/css/images/chb2.png");   
+        border-radius:4px;
         }
-   .checkbox_style input[type="checkbox"]+ .nearlbl:before {
+
+.checkbox_style   input[type="checkbox"]:checked + label:before {
         display:inline-block;
-        content:url("/App_Themes/theme_1/css/images/chb.png");   
-    }
-   .checkbox_style input[type="checkbox"]:checked + .nearlbl:before{
-        display:inline-block;
-        content:url("/App_Themes/theme_1/css/images/chb_cheсked.png");   
-    }
+        content:url("/App_Themes/theme_1/css/images/chb_cheсked2.png");  
+         border-radius:4px; 
+         }
+.checkbox_style  input[type="checkbox"]:hover + label:before   {
+            display:inline-block;
+        content:url("/App_Themes/theme_1/css/images/chb_hov.png");
+        }
+.checkbox_style  input[type="checkbox"]:checked:hover + label:before   {
+            display:inline-block;
+        content:url("/App_Themes/theme_1/css/images/chb_checked_hov.png");
+        }
+
 
  /*CHECKBOX_STYLE*//*CHECKBOX_STYLE*//*CHECKBOX_STYLE*//*CHECKBOX_STYLE*/
 label {

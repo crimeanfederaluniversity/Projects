@@ -7,9 +7,9 @@
     </div>
         Название роли
         <asp:TextBox ID="TextBox1" runat="server" Width="139px"></asp:TextBox>
-&nbsp;Активна
-        <asp:CheckBox ID="CheckBox1" runat="server" />
-&nbsp;&nbsp;Руководство<asp:CheckBox ID="CheckBox2" runat="server" />
+&nbsp;
+        <asp:CheckBox Text="Активна" ID="CheckBox1" runat="server" />
+&nbsp;&nbsp;<asp:CheckBox Text="Руководство" ID="CheckBox2" runat="server" />
 &nbsp;<asp:Button ID="Button1" runat="server" Text="Создать" Width="89px" OnClick="Button1_Click" Height="29px" />
         <br />
         _________________________________________________________________<br />
@@ -36,17 +36,19 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Ред">
                                     <ItemTemplate>
-                                        <asp:CheckBox ID="CheckBoxCanEdit" runat="server" Checked='<%# Bind("EditChecked") %>'></asp:CheckBox>                                                                                                                   
-                                    </ItemTemplate>
+                                        
+                                        <asp:CheckBox Text=" " ID="CheckBoxCanEdit" runat="server"  Checked='<%# Bind("EditChecked") %>'></asp:CheckBox>   
+                                       
+                                        </ItemTemplate>
             </asp:TemplateField>
                 <asp:TemplateField HeaderText="Просм">
                                     <ItemTemplate>
-                                         <asp:CheckBox ID="CheckBoxCanView" runat="server" Checked='<%# Bind("ViewChecked") %>'></asp:CheckBox>                          
+                                         <asp:CheckBox Text=" " ID="CheckBoxCanView" runat="server" Checked='<%# Bind("ViewChecked") %>'></asp:CheckBox>                          
                                     </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Подтв">
                                     <ItemTemplate>
-                                         <asp:CheckBox ID="CheckBoxVerify" runat="server"  Checked='<%# Bind("VerifyChecked") %>'></asp:CheckBox>                        
+                                         <asp:CheckBox Text=" " ID="CheckBoxVerify" runat="server"  Checked='<%# Bind("VerifyChecked") %>'></asp:CheckBox>                        
                                     </ItemTemplate>
             </asp:TemplateField>
             </Columns>
@@ -63,12 +65,14 @@
             </asp:TemplateField>
                 <asp:TemplateField HeaderText="Просм">
                                     <ItemTemplate>
-                                         <asp:CheckBox ID="CheckBoxCanView1" runat="server" Checked='<%# Bind("ViewChecked1") %>'></asp:CheckBox>                          
+                                         <asp:CheckBox Text=" " ID="CheckBoxCanView1" runat="server" Checked='<%# Bind("ViewChecked1") %>'></asp:CheckBox>                          
+                                    
                                     </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Подтв">
                                     <ItemTemplate>
-                                         <asp:CheckBox ID="CheckBoxVerify1" runat="server"  Checked='<%# Bind("VerifyChecked1") %>'></asp:CheckBox>                        
+                                         <asp:CheckBox Text=" " ID="CheckBoxVerify1" runat="server"  Checked='<%# Bind("VerifyChecked1") %>'></asp:CheckBox>   
+                                                             
                                     </ItemTemplate>
             </asp:TemplateField>
             </Columns>
@@ -85,12 +89,12 @@
             </asp:TemplateField>
                 <asp:TemplateField HeaderText="Просм">
                                     <ItemTemplate>
-                                         <asp:CheckBox ID="CheckBoxCanView2" runat="server" Checked='<%# Bind("ViewChecked2") %>'></asp:CheckBox>                          
+                                         <asp:CheckBox Text=" " ID="CheckBoxCanView2" runat="server" Checked='<%# Bind("ViewChecked2") %>'></asp:CheckBox>                          
                                     </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Подтв">
                                     <ItemTemplate>
-                                         <asp:CheckBox ID="CheckBoxVerify2" runat="server"  Checked='<%# Bind("VerifyChecked2") %>'></asp:CheckBox>                        
+                                         <asp:CheckBox Text=" " ID="CheckBoxVerify2" runat="server"  Checked='<%# Bind("VerifyChecked2") %>'></asp:CheckBox>                        
                                     </ItemTemplate>
             </asp:TemplateField>
             </Columns>

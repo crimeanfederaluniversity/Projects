@@ -41,7 +41,7 @@
                                 <asp:BoundField DataField="CalculatedParametrsResult" HeaderText="Результат" />   
                                 <asp:TemplateField HeaderText="Подтверждение" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "False" >
                                     <ItemTemplate> 
-                                        <asp:CheckBox ID="checkBoxCalc" runat="server" Visible="True"></asp:CheckBox>
+                                        <asp:Checkbox  Text=" " ID="checkBoxCalc" runat="server" Visible="True"></asp:CheckBox>
                                         <asp:Label ID="checkBoxCalcId"  runat="server" Visible="false" Text='<%# Bind("checkBoxCalcId") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>  

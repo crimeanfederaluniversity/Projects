@@ -49,7 +49,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
                             SetFocusOnError="True" Text="ERRorr">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked0" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked0" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId0" runat="server" Visible="false" Text='<%# Bind("CollectId0") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>  
@@ -63,7 +63,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
                             SetFocusOnError="True">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked1" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked1" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId1" runat="server" Visible="false" Text='<%# Bind("CollectId1") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>               
@@ -76,7 +76,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
                             SetFocusOnError="True">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked2" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked2" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId2" runat="server" Visible="false" Text='<%# Bind("CollectId2") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
@@ -89,7 +89,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
                             SetFocusOnError="True">
                         </asp:RangeValidator>
-                             <asp:CheckBox ID="Checked3" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                             <asp:Checkbox  Text=" " ID="Checked3" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId3" runat="server" Visible="false" Text='<%# Bind("CollectId3") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>     
@@ -102,7 +102,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
                             SetFocusOnError="True">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked4" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked4" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId4" runat="server" Visible="false" Text='<%# Bind("CollectId4") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
@@ -115,7 +115,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
                             SetFocusOnError="True">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked5" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked5" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId5" runat="server" Visible="false" Text='<%# Bind("CollectId5") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>               
@@ -128,7 +128,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
                             SetFocusOnError="True">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked6" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked6" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId6" runat="server" Visible="false" Text='<%# Bind("CollectId6") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
@@ -141,7 +141,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
                             SetFocusOnError="True">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked7" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked7" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId7" runat="server" Visible="false" Text='<%# Bind("CollectId7") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>     
@@ -154,7 +154,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
                             SetFocusOnError="True">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked8" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked8" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId8" runat="server" Visible="false" Text='<%# Bind("CollectId8") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
@@ -168,7 +168,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"
                             SetFocusOnError="True">
                         </asp:RangeValidator>
-                             <asp:CheckBox ID="Checked9" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                             <asp:Checkbox  Text=" " ID="Checked9" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId9" runat="server" Visible="false" Text='<%# Bind("CollectId9") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>  
@@ -182,7 +182,7 @@
 
                             SetFocusOnError="True">
                         </asp:RangeValidator>
-                              <asp:CheckBox ID="Checked10" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                              <asp:Checkbox  Text=" " ID="Checked10" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId10" runat="server" Visible="false" Text='<%# Bind("CollectId10") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>     
@@ -196,7 +196,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
                             SetFocusOnError="True" Text="ERRorr">
                         </asp:RangeValidator>
-                             <asp:CheckBox ID="Checked11" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                             <asp:Checkbox  Text=" " ID="Checked11" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId11" runat="server" Visible="false" Text='<%# Bind("CollectId11") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>  
@@ -210,7 +210,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
                             SetFocusOnError="True" Text="ERRorr">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked12" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked12" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId12" runat="server" Visible="false" Text='<%# Bind("CollectId12") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>  
@@ -223,7 +223,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
                             SetFocusOnError="True" Text="ERRorr">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked13" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked13" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId13" runat="server" Visible="false" Text='<%# Bind("CollectId13") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>  
@@ -236,7 +236,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
                             SetFocusOnError="True" Text="ERRorr">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked14" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked14" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId14" runat="server" Visible="false" Text='<%# Bind("CollectId14") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField> 
@@ -249,7 +249,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
                             SetFocusOnError="True" Text="ERRorr">
                         </asp:RangeValidator>
-                             <asp:CheckBox ID="Checked15" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                             <asp:Checkbox  Text=" " ID="Checked15" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId15" runat="server" Visible="false" Text='<%# Bind("CollectId15") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField> 
@@ -262,7 +262,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
                             SetFocusOnError="True" Text="ERRorr">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked16" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked16" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId16" runat="server" Visible="false" Text='<%# Bind("CollectId16") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField> 
@@ -275,7 +275,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
                             SetFocusOnError="True" Text="ERRorr">
                         </asp:RangeValidator>
-                              <asp:CheckBox ID="Checked17" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                              <asp:Checkbox  Text=" " ID="Checked17" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId17" runat="server" Visible="false" Text='<%# Bind("CollectId17") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField> 
@@ -288,7 +288,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
                             SetFocusOnError="True" Text="ERRorr">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked18" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked18" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId18" runat="server" Visible="false" Text='<%# Bind("CollectId18") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField> 
@@ -301,7 +301,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
                             SetFocusOnError="True" Text="ERRorr">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked19" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked19" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId19" runat="server" Visible="false" Text='<%# Bind("CollectId19") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField> 
@@ -314,7 +314,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
                             SetFocusOnError="True" Text="ERRorr">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked20" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked20" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId20" runat="server" Visible="false" Text='<%# Bind("CollectId20") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField> 
@@ -327,7 +327,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
                             SetFocusOnError="True" Text="ERRorr">
                         </asp:RangeValidator>
-                             <asp:CheckBox ID="Checked21" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                             <asp:Checkbox  Text=" " ID="Checked21" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId21" runat="server" Visible="false" Text='<%# Bind("CollectId21") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField> 
@@ -340,7 +340,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
                             SetFocusOnError="True" Text="ERRorr">
                         </asp:RangeValidator>
-                             <asp:CheckBox ID="Checked22" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                             <asp:Checkbox  Text=" " ID="Checked22" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId22" runat="server" Visible="false" Text='<%# Bind("CollectId22") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField> 
@@ -353,7 +353,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
                             SetFocusOnError="True" Text="ERRorr">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked23" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked23" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId23" runat="server" Visible="false" Text='<%# Bind("CollectId23") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField> 
@@ -366,7 +366,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
                             SetFocusOnError="True" Text="ERRorr">
                         </asp:RangeValidator>
-                             <asp:CheckBox ID="Checked24" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                             <asp:Checkbox  Text=" " ID="Checked24" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId24" runat="server" Visible="false" Text='<%# Bind("CollectId24") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField> 
@@ -378,7 +378,7 @@
                             ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" MaximumValue="100000" MinimumValue="0"                              
                             SetFocusOnError="True" Text="ERRorr">
                         </asp:RangeValidator>
-                            <asp:CheckBox ID="Checked25" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
+                            <asp:Checkbox  Text=" " ID="Checked25" style="text-align:center" runat="server" Visible="false"></asp:CheckBox>
                             <asp:Label ID="CollectId25" runat="server" Visible="false" Text='<%# Bind("CollectId25") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>                     

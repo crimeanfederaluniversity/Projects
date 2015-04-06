@@ -18,3 +18,5 @@
 
 <asp:CheckBox runat="server" CssClass="checkbox_style">
 </asp:CheckBox>
+<asp:CheckBoxList runat="server" CssClass="checkbox_style">
+</asp:CheckBoxList>

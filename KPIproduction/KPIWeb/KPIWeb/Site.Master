@@ -100,5 +100,5 @@
    </asp:Panel>
 
 </body>  
-      <script> $(".checkbox_style").append("<label class='nearlbl' ></label>"); </script>
+      
 </html>

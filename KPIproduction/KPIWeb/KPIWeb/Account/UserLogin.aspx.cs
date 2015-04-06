@@ -8,9 +8,10 @@ using System.Web.UI.WebControls;
 namespace KPIWeb.Account
 {
     public partial class UserLogin : System.Web.UI.Page
-    {
+    { 
         protected void Page_Load(object sender, EventArgs e)
         {
+
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer != null)
             {

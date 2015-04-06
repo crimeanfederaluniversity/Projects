@@ -40,8 +40,8 @@
                 &nbsp;&nbsp;&nbsp;
                 <asp:TextBox ID="IndicatorMeasure" runat="server"></asp:TextBox>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:Label ID="Label4" runat="server" Text="Активен"></asp:Label>
-                <asp:CheckBox ID="CheckBox1" runat="server" />
+                
+                <asp:CheckBox ID="CheckBox1" runat="server" Text="Активен" />
                  <br />
                  <br />
                  <asp:Label ID="LabelAbb" runat="server" Text="Аббревиатура"></asp:Label>
