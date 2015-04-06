@@ -385,6 +385,10 @@ namespace KPIWeb.Rector
                 dataTable.Columns.Add(new DataColumn("EndDate", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("Value", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("Title", typeof(string)));
+
+                dataTable.Columns.Add(new DataColumn("CanConfirm", typeof(bool)));
+                
+
                 #endregion 
                 #region global page settings
                 ReportTitle.Text = (from a in kpiWebDataContext.ReportArchiveTable
@@ -484,7 +488,6 @@ namespace KPIWeb.Rector
 
                     #endregion
                     #region fill grid
-
                         List<Struct> currentStructList = GetChildStructList(mainStruct);
                         foreach (Struct currentStruct in currentStructList)
                         {
@@ -494,11 +497,9 @@ namespace KPIWeb.Rector
                             dataRow["Name"] = currentStruct.Name;
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
-                            dataRow["Value"] =
-                                GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID,SpecID).ToString();
+                            dataRow["Value"] = GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID,SpecID).ToString();
                             dataTable.Rows.Add(dataRow);
                         }                                          
-
                     #endregion
                     #region DataGridBind
                     Grid.DataSource = dataTable;
@@ -507,15 +508,16 @@ namespace KPIWeb.Rector
                     #endregion
                     #region постнастройка страницы
 
+                    Grid.Columns[10].Visible = false;
                     Grid.Columns[9].Visible = false;
-                    Grid.Columns[8].Visible = false;
+                    Grid.Columns[7].Visible = false;
                     Grid.Columns[5].Visible = false;
                     Grid.Columns[4].Visible = false;
                     Grid.Columns[2].Visible = false;
                     Grid.Columns[1].Visible = false;
                     if (StructDeepness(mainStruct) > 2) // дальше углубляться нельзя
                     {
-                        Grid.Columns[7].Visible = false;
+                        Grid.Columns[8].Visible = false;
                     }
                     #endregion
                 }
@@ -570,7 +572,7 @@ namespace KPIWeb.Rector
                     }
 
                     #endregion
-                    #region main
+                    #region fill grid
                     if (ParamType == 0)//считаем индикатор
                     {
                         List<IndicatorsTable> Indicators = (
@@ -582,6 +584,7 @@ namespace KPIWeb.Rector
                             && b.CanView == true
                             && b.FK_UsresTable == userID
                             select a).ToList();
+                        
                         //нашли все индикаторы привязанные к пользователю
                         foreach (IndicatorsTable CurrentIndicator in Indicators)
                         {
@@ -591,17 +594,61 @@ namespace KPIWeb.Rector
                             dataRow["Name"] = CurrentIndicator.Name;
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
-                            dataRow["Value"] = GetCalculatedWithParams(mainStruct, ParamType, CurrentIndicator.IndicatorsTableID, ReportID,SpecID).ToString();
+                            #region user can edit
+                            #endregion 
+                            #region get calculated if confirmed; calculate if not confirmed
+                            CollectedIndocators collected = (from a in kpiWebDataContext.CollectedIndocators
+                                                                 where a.FK_ReportArchiveTable == ReportID
+                                                                 && a.FK_Indicators == CurrentIndicator.IndicatorsTableID
+                                                                 select a).FirstOrDefault();
+                            if (collected == null)
+                            {
+                                collected = new CollectedIndocators();
+                                collected.FK_Indicators = CurrentIndicator.IndicatorsTableID;
+                                collected.FK_ReportArchiveTable = ReportID;
+                                collected.FK_UsersTable = userID;
+                                collected.Confirmed = false;
+                                collected.LastChangeDateTime = DateTime.Now;
+                                collected.Active = true;
+                                collected.CollectedValue = 12;
+                                kpiWebDataContext.CollectedIndocators.InsertOnSubmit(collected);
+                                kpiWebDataContext.SubmitChanges();
+                            }
+                            if (collected.Confirmed == true)
+                            {
+                                dataRow["CanConfirm"] = false;
+                                dataRow["Value"] = collected.CollectedValue;
+                            }
+                            else
+                            {
+                                dataRow["CanConfirm"] = true;
+                                dataRow["Value"] =GetCalculatedWithParams(mainStruct, ParamType, CurrentIndicator.IndicatorsTableID, ReportID, SpecID).ToString();
+                            }
+                            #endregion
                             dataTable.Rows.Add(dataRow);
                         }
                     }
                     if (ParamType == 1) //показываем рассчетный входящий в ID Индикатора
                     {
                         //ID  - это айди Индиктора
-                        IndicatorsTable Indicator = (from a in kpiWebDataContext.IndicatorsTable
-                            where a.IndicatorsTableID == ParamID
-                            select a).FirstOrDefault();
-                        List<CalculatedParametrs> CalculatedList = Abbreviature.GetCalculatedList(Indicator.Formula);
+                        List<CalculatedParametrs> CalculatedList;
+                        if (ParamID != 0)
+                        {
+                            IndicatorsTable Indicator = (from a in kpiWebDataContext.IndicatorsTable
+                                where a.IndicatorsTableID == ParamID
+                                select a).FirstOrDefault();
+                             CalculatedList = Abbreviature.GetCalculatedList(Indicator.Formula);
+                        }
+                        else
+                        {
+                            CalculatedList = (from a in kpiWebDataContext.CalculatedParametrs
+                                join b in kpiWebDataContext.CalculatedParametrsAndUsersMapping
+                                    on a.CalculatedParametrsID equals b.FK_CalculatedParametrsTable
+                                where a.Active == true
+                                      && b.CanView == true
+                                      && b.FK_UsersTable == userID
+                                select a).ToList();
+                        }
                         foreach (CalculatedParametrs CurrentCalculated in CalculatedList)
                         {
                             DataRow dataRow = dataTable.NewRow();
@@ -610,8 +657,37 @@ namespace KPIWeb.Rector
                             dataRow["Name"] = CurrentCalculated.Name;
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
-                            dataRow["Abb"] = CurrentCalculated.AbbreviationEN;                       
-                            dataRow["Value"] = GetCalculatedWithParams(mainStruct, ParamType, CurrentCalculated.CalculatedParametrsID, ReportID,SpecID).ToString();
+                            dataRow["Abb"] = CurrentCalculated.AbbreviationEN;
+
+                            #region get calculated if confirmed; calculate if not confirmed
+                            CollectedCalculatedParametrs collected = (from a in kpiWebDataContext.CollectedCalculatedParametrs
+                                                             where a.FK_ReportArchiveTable == ReportID
+                                                             && a.FK_CalculatedParametrs == CurrentCalculated.CalculatedParametrsID
+                                                             select a).FirstOrDefault();
+                            if (collected == null)
+                            {
+                                collected = new CollectedCalculatedParametrs();
+                                collected.FK_CalculatedParametrs = CurrentCalculated.CalculatedParametrsID;
+                                collected.FK_ReportArchiveTable = ReportID;
+                                collected.FK_UsersTable = userID;
+                                collected.Confirmed = false;
+                                collected.LastChangeDateTime = DateTime.Now;
+                                collected.Active = true;
+                                collected.CollectedValue = 11;
+                                kpiWebDataContext.CollectedCalculatedParametrs.InsertOnSubmit(collected);
+                                kpiWebDataContext.SubmitChanges();
+                            }
+                            if (collected.Confirmed == true)
+                            {
+                                dataRow["CanConfirm"] = false;
+                                dataRow["Value"] = collected.CollectedValue;
+                            }
+                            else
+                            {
+                                dataRow["CanConfirm"] = true;
+                                dataRow["Value"] = GetCalculatedWithParams(mainStruct, ParamType, CurrentCalculated.CalculatedParametrsID, ReportID, SpecID).ToString();
+                            }
+                            #endregion                            
                             dataTable.Rows.Add(dataRow);
                         }
                     }
@@ -650,11 +726,20 @@ namespace KPIWeb.Rector
                     if (ParamType == 0)
                     {
                         Grid.Columns[2].Visible = false;
+                        Grid.Columns[8].Visible = false;//
+                        Grid.Columns[10].Visible = false;//
+                    }
+
+                    if (ParamType == 1)
+                    {
+                        Grid.Columns[8].Visible = false;//
+                        Grid.Columns[10].Visible = false;//
                     }
 
                     if (ParamType == 2) // дальше углубляться нельзя
                     {
-                        Grid.Columns[8].Visible = false;
+                        Grid.Columns[7].Visible = false;
+                        Grid.Columns[9].Visible = false;
                     }
                     #endregion
                 }
@@ -742,9 +827,9 @@ namespace KPIWeb.Rector
                     Grid.DataBind();
                     #endregion
                     #region постнастройка страницы
-
+                    Grid.Columns[10].Visible = false;
                     Grid.Columns[9].Visible = false;
-                    Grid.Columns[8].Visible = false;
+                    Grid.Columns[7].Visible = false;
                     Grid.Columns[5].Visible = false;
                     Grid.Columns[4].Visible = false;
                     Grid.Columns[1].Visible = false;
@@ -753,117 +838,7 @@ namespace KPIWeb.Rector
                 else
                 {
                     //error // wrong ViewType
-                }              
-                #region history 1
-                /*
-                for (int i = 0; i < rectorHistory.SessionCount; i++)
-                {
-                    RectorSession curSesion = rectorHistory.RectorSession[i];
-                    switch (i)
-                    {
-                        case 0:
-                        {
-
-                            if (rectorHistory.CurrentSession != 0)
-                            {
-                                lbl0.Text = "<a href=\"Result?&HLevel=0\">" + curSesion.sesName + "</a>";
-                            }
-                            else
-                            {
-                                lbl0.Text =curSesion.sesName;
-                            }
-
-                            lbl0.Visible = true;
-                                break;
-                            }
-                        case 1:
-                            {
-                                if (rectorHistory.CurrentSession != 1)
-                                {
-                                    lbl1.Text = "<a href=\"Result?&HLevel=1\">" + curSesion.sesName + "</a>";
-                                }
-                                else
-                                {
-                                    lbl1.Text = curSesion.sesName;
-                                }
-                                lbl1.Visible = true;
-                                break;
-                            }
-                        case 2:
-                            {
-                                if (rectorHistory.CurrentSession != 2)
-                                {
-                                    lbl2.Text = "<a href=\"Result?&HLevel=2\">" + curSesion.sesName + "</a>";
-                                }
-                                else
-                                {
-                                    lbl2.Text = curSesion.sesName;
-                                }
-                                lbl2.Visible = true;
-                                break;
-                            }
-                        case 3:
-                            {
-                                if (rectorHistory.CurrentSession != 3)
-                                {
-                                    lbl3.Text = "<a href=\"Result?&HLevel=3\">" + curSesion.sesName + "</a>";
-                                }
-                                else
-                                {
-                                    lbl3.Text = curSesion.sesName;
-                                }
-                                lbl3.Visible = true;
-                                break;
-                            }
-                        case 4:
-                            {
-                                if (rectorHistory.CurrentSession != 4)
-                                {
-                                    lbl4.Text = "<a href=\"Result?&HLevel=4\">" + curSesion.sesName + "</a>";
-                                }
-                                else
-                                {
-                                    lbl4.Text = curSesion.sesName;
-                                }
-                                lbl4.Visible = true;
-                                break;
-                            }
-                        case 5:
-                            {
-                                if (rectorHistory.CurrentSession != 5)
-                                {
-                                    lbl5.Text = "<a href=\"Result?&HLevel=5\">" + curSesion.sesName + "</a>";
-                                }
-                                else
-                                {
-                                    lbl5.Text = curSesion.sesName;
-                                }
-                                lbl5.Visible = true;
-                                break;
-                            }
-                        case 6:
-                            {
-                                if (rectorHistory.CurrentSession != 6)
-                                {
-                                    lbl6.Text = "<a href=\"Result?&HLevel=6\">" + curSesion.sesName + "</a>";
-                                }
-                                else
-                                {
-                                    lbl6.Text = curSesion.sesName;
-                                }
-                                lbl6.Visible = true;
-                                break;
-                            }
-                        default:
-                            {
-                                break;
-                            }
-                    }
-                }
-
-
-                */
-                #endregion
+                }                    
                 #region history 2
 
                 string between = "--->";
@@ -976,6 +951,11 @@ namespace KPIWeb.Rector
 
                 #endregion
             }
+        }
+
+        protected void ButtonConfirmClick(object sender, EventArgs e)
+        {
+            
         }
         protected void Button1Click(object sender, EventArgs e) //по структуре
         {

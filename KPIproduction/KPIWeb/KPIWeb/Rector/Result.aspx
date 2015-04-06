@@ -25,22 +25,28 @@
                  <asp:BoundField DataField="StartDate" HeaderText="Начальная дата отчёта" Visible="True" />
                  <asp:BoundField DataField="EndDate" HeaderText="Конечная дата отчёта" Visible="True" />
                  <asp:BoundField DataField="Value" HeaderText="Значение" Visible="True" />
-
-                    <asp:TemplateField HeaderText="Функционал 1">
+                 
+                 <asp:TemplateField HeaderText="Подтвердить данные">
                         <ItemTemplate>
-                            <asp:Button ID="Button1" runat="server" CommandName="Select" Text="По структуре" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="Button1Click"/>
+                            <asp:Button ID="ConfirmButton" runat="server" CommandName="Select" Enabled='<%# Bind("CanConfirm") %>' Text="Утвердить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="ButtonConfirmClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                    <asp:TemplateField HeaderText="Функционал 2">
+                    <asp:TemplateField HeaderText="Разложение данных по структуре ">
                         <ItemTemplate>
-                            <asp:Button ID="Button2" runat="server" CommandName="Select" Text="По разложению" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="Button2Click"/>
+                            <asp:Button ID="Button1" runat="server" CommandName="Select" Text="Разложить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="Button1Click"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                  <asp:TemplateField HeaderText="Функционал 3">
+                    <asp:TemplateField HeaderText="Разложение данных по формуле">
                         <ItemTemplate>
-                            <asp:Button ID="Button3" runat="server" CommandName="Select" Text="Функционал 3"  CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="Button3Click"/>
+                            <asp:Button ID="Button2" runat="server" CommandName="Select" Text="Разложить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="Button2Click"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                  <asp:TemplateField HeaderText="Разложение данных по специальностям">
+                        <ItemTemplate>
+                            <asp:Button ID="Button3" runat="server" CommandName="Select" Text="Разложить"  CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="Button3Click"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

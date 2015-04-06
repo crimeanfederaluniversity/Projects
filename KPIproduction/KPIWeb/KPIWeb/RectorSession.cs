@@ -46,4 +46,15 @@ namespace KPIWeb
         public int SessionCount { get; set; }
         public int CurrentSession { get; set; }
     }
+
+    [Serializable]
+    public class ParametrType
+    {
+        public int paramType { set; get; }
+
+        public ParametrType(int _paramType)
+        {
+            this.paramType = _paramType;
+        }
+    }
 }

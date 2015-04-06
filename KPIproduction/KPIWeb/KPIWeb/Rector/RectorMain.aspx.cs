@@ -16,10 +16,14 @@ namespace KPIWeb.Rector
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            ParametrType paramType = new ParametrType(0);
+            Session["paramType"] = paramType;
             Response.Redirect("~/Rector/RectorChooseReport.aspx");
         }
         protected void Button3_Click(object sender, EventArgs e)
         {
+            ParametrType paramType = new ParametrType(1);
+            Session["paramType"] = paramType;
             Response.Redirect("~/Rector/RectorChooseReport.aspx");
         }
 
