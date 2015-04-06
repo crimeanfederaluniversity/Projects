@@ -3,7 +3,7 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">   
     <div>
     
-        <br />
+        <span style="font-size: x-large">Пожалуйста, введите пароль для вашего аккаунта</span><br />
         <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
         <br />
         <asp:Label ID="Label3" runat="server" Text="Пароль" Visible="False"></asp:Label>
