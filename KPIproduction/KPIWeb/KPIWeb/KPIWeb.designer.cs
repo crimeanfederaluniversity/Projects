@@ -87,6 +87,9 @@ namespace KPIWeb
     partial void InsertIndicatorsTable(IndicatorsTable instance);
     partial void UpdateIndicatorsTable(IndicatorsTable instance);
     partial void DeleteIndicatorsTable(IndicatorsTable instance);
+    partial void InsertPlannedIndicator(PlannedIndicator instance);
+    partial void UpdatePlannedIndicator(PlannedIndicator instance);
+    partial void DeletePlannedIndicator(PlannedIndicator instance);
     partial void InsertReportArchiveAndBasicParametrsMappingTable(ReportArchiveAndBasicParametrsMappingTable instance);
     partial void UpdateReportArchiveAndBasicParametrsMappingTable(ReportArchiveAndBasicParametrsMappingTable instance);
     partial void DeleteReportArchiveAndBasicParametrsMappingTable(ReportArchiveAndBasicParametrsMappingTable instance);
@@ -120,9 +123,6 @@ namespace KPIWeb
     partial void InsertUsersTable(UsersTable instance);
     partial void UpdateUsersTable(UsersTable instance);
     partial void DeleteUsersTable(UsersTable instance);
-    partial void InsertPlannedIndicator(PlannedIndicator instance);
-    partial void UpdatePlannedIndicator(PlannedIndicator instance);
-    partial void DeletePlannedIndicator(PlannedIndicator instance);
     partial void InsertDocumentTable(DocumentTable instance);
     partial void UpdateDocumentTable(DocumentTable instance);
     partial void DeleteDocumentTable(DocumentTable instance);
@@ -246,6 +246,14 @@ namespace KPIWeb
 			}
 		}
 		
+		public System.Data.Linq.Table<DocumentTable> DocumentTable
+		{
+			get
+			{
+				return this.GetTable<DocumentTable>();
+			}
+		}
+		
 		public System.Data.Linq.Table<FieldOfExpertise> FieldOfExpertise
 		{
 			get
@@ -307,6 +315,14 @@ namespace KPIWeb
 			get
 			{
 				return this.GetTable<IndicatorsTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PlannedIndicator> PlannedIndicator
+		{
+			get
+			{
+				return this.GetTable<PlannedIndicator>();
 			}
 		}
 		
@@ -395,14 +411,6 @@ namespace KPIWeb
 			get
 			{
 				return this.GetTable<UsersTable>();
-			}
-		}
-		
-		public System.Data.Linq.Table<PlannedIndicator> PlannedIndicator
-		{
-			get
-			{
-				return this.GetTable<PlannedIndicator>();
 			}
 		}
 		
@@ -4310,6 +4318,87 @@ namespace KPIWeb
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DocumentTable")]
+	public partial class DocumentTable
+	{
+		
+		private int _DocumentID;
+		
+		private string _DocumentName;
+		
+		private string _DocumentLink;
+		
+		private System.Nullable<bool> _Active;
+		
+		public DocumentTable()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocumentID", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		public int DocumentID
+		{
+			get
+			{
+				return this._DocumentID;
+			}
+			set
+			{
+				if ((this._DocumentID != value))
+				{
+					this._DocumentID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocumentName", DbType="VarChar(100)")]
+		public string DocumentName
+		{
+			get
+			{
+				return this._DocumentName;
+			}
+			set
+			{
+				if ((this._DocumentName != value))
+				{
+					this._DocumentName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocumentLink", DbType="VarChar(100)")]
+		public string DocumentLink
+		{
+			get
+			{
+				return this._DocumentLink;
+			}
+			set
+			{
+				if ((this._DocumentLink != value))
+				{
+					this._DocumentLink = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this._Active = value;
+				}
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FieldOfExpertise")]
 	public partial class FieldOfExpertise : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -6195,9 +6284,9 @@ namespace KPIWeb
 		
 		private EntitySet<IndicatorsAndUsersMapping> _IndicatorsAndUsersMapping;
 		
-		private EntitySet<ReportArchiveAndIndicatorsMappingTable> _ReportArchiveAndIndicatorsMappingTable;
-		
 		private EntitySet<PlannedIndicator> _PlannedIndicator;
+		
+		private EntitySet<ReportArchiveAndIndicatorsMappingTable> _ReportArchiveAndIndicatorsMappingTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -6220,8 +6309,8 @@ namespace KPIWeb
 			this._CollectedIndocators = new EntitySet<CollectedIndocators>(new Action<CollectedIndocators>(this.attach_CollectedIndocators), new Action<CollectedIndocators>(this.detach_CollectedIndocators));
 			this._IndicatorsAndRolesMappingTable = new EntitySet<IndicatorsAndRolesMappingTable>(new Action<IndicatorsAndRolesMappingTable>(this.attach_IndicatorsAndRolesMappingTable), new Action<IndicatorsAndRolesMappingTable>(this.detach_IndicatorsAndRolesMappingTable));
 			this._IndicatorsAndUsersMapping = new EntitySet<IndicatorsAndUsersMapping>(new Action<IndicatorsAndUsersMapping>(this.attach_IndicatorsAndUsersMapping), new Action<IndicatorsAndUsersMapping>(this.detach_IndicatorsAndUsersMapping));
-			this._ReportArchiveAndIndicatorsMappingTable = new EntitySet<ReportArchiveAndIndicatorsMappingTable>(new Action<ReportArchiveAndIndicatorsMappingTable>(this.attach_ReportArchiveAndIndicatorsMappingTable), new Action<ReportArchiveAndIndicatorsMappingTable>(this.detach_ReportArchiveAndIndicatorsMappingTable));
 			this._PlannedIndicator = new EntitySet<PlannedIndicator>(new Action<PlannedIndicator>(this.attach_PlannedIndicator), new Action<PlannedIndicator>(this.detach_PlannedIndicator));
+			this._ReportArchiveAndIndicatorsMappingTable = new EntitySet<ReportArchiveAndIndicatorsMappingTable>(new Action<ReportArchiveAndIndicatorsMappingTable>(this.attach_ReportArchiveAndIndicatorsMappingTable), new Action<ReportArchiveAndIndicatorsMappingTable>(this.detach_ReportArchiveAndIndicatorsMappingTable));
 			OnCreated();
 		}
 		
@@ -6364,19 +6453,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable", Storage="_ReportArchiveAndIndicatorsMappingTable", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
-		public EntitySet<ReportArchiveAndIndicatorsMappingTable> ReportArchiveAndIndicatorsMappingTable
-		{
-			get
-			{
-				return this._ReportArchiveAndIndicatorsMappingTable;
-			}
-			set
-			{
-				this._ReportArchiveAndIndicatorsMappingTable.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_PlannedIndicator", Storage="_PlannedIndicator", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
 		public EntitySet<PlannedIndicator> PlannedIndicator
 		{
@@ -6387,6 +6463,19 @@ namespace KPIWeb
 			set
 			{
 				this._PlannedIndicator.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable", Storage="_ReportArchiveAndIndicatorsMappingTable", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
+		public EntitySet<ReportArchiveAndIndicatorsMappingTable> ReportArchiveAndIndicatorsMappingTable
+		{
+			get
+			{
+				return this._ReportArchiveAndIndicatorsMappingTable;
+			}
+			set
+			{
+				this._ReportArchiveAndIndicatorsMappingTable.Assign(value);
 			}
 		}
 		
@@ -6446,6 +6535,18 @@ namespace KPIWeb
 			entity.IndicatorsTable = null;
 		}
 		
+		private void attach_PlannedIndicator(PlannedIndicator entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = this;
+		}
+		
+		private void detach_PlannedIndicator(PlannedIndicator entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = null;
+		}
+		
 		private void attach_ReportArchiveAndIndicatorsMappingTable(ReportArchiveAndIndicatorsMappingTable entity)
 		{
 			this.SendPropertyChanging();
@@ -6457,17 +6558,204 @@ namespace KPIWeb
 			this.SendPropertyChanging();
 			entity.IndicatorsTable = null;
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PlannedIndicator")]
+	public partial class PlannedIndicator : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		private void attach_PlannedIndicator(PlannedIndicator entity)
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _PlanedIndicatorID;
+		
+		private bool _Active;
+		
+		private System.Nullable<double> _Value;
+		
+		private System.Nullable<System.DateTime> _Date;
+		
+		private int _FK_IndicatorsTable;
+		
+		private EntityRef<IndicatorsTable> _IndicatorsTable;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnPlanedIndicatorIDChanging(int value);
+    partial void OnPlanedIndicatorIDChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnValueChanging(System.Nullable<double> value);
+    partial void OnValueChanged();
+    partial void OnDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateChanged();
+    partial void OnFK_IndicatorsTableChanging(int value);
+    partial void OnFK_IndicatorsTableChanged();
+    #endregion
+		
+		public PlannedIndicator()
 		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = this;
+			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
+			OnCreated();
 		}
 		
-		private void detach_PlannedIndicator(PlannedIndicator entity)
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlanedIndicatorID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int PlanedIndicatorID
 		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = null;
+			get
+			{
+				return this._PlanedIndicatorID;
+			}
+			set
+			{
+				if ((this._PlanedIndicatorID != value))
+				{
+					this.OnPlanedIndicatorIDChanging(value);
+					this.SendPropertyChanging();
+					this._PlanedIndicatorID = value;
+					this.SendPropertyChanged("PlanedIndicatorID");
+					this.OnPlanedIndicatorIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value", DbType="Float")]
+		public System.Nullable<double> Value
+		{
+			get
+			{
+				return this._Value;
+			}
+			set
+			{
+				if ((this._Value != value))
+				{
+					this.OnValueChanging(value);
+					this.SendPropertyChanging();
+					this._Value = value;
+					this.SendPropertyChanged("Value");
+					this.OnValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this.OnDateChanging(value);
+					this.SendPropertyChanging();
+					this._Date = value;
+					this.SendPropertyChanged("Date");
+					this.OnDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_IndicatorsTable", DbType="Int NOT NULL")]
+		public int FK_IndicatorsTable
+		{
+			get
+			{
+				return this._FK_IndicatorsTable;
+			}
+			set
+			{
+				if ((this._FK_IndicatorsTable != value))
+				{
+					if (this._IndicatorsTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_IndicatorsTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_IndicatorsTable = value;
+					this.SendPropertyChanged("FK_IndicatorsTable");
+					this.OnFK_IndicatorsTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_PlannedIndicator", Storage="_IndicatorsTable", ThisKey="FK_IndicatorsTable", OtherKey="IndicatorsTableID", IsForeignKey=true)]
+		public IndicatorsTable IndicatorsTable
+		{
+			get
+			{
+				return this._IndicatorsTable.Entity;
+			}
+			set
+			{
+				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
+				if (((previousValue != value) 
+							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._IndicatorsTable.Entity = null;
+						previousValue.PlannedIndicator.Remove(this);
+					}
+					this._IndicatorsTable.Entity = value;
+					if ((value != null))
+					{
+						value.PlannedIndicator.Add(this);
+						this._FK_IndicatorsTable = value.IndicatorsTableID;
+					}
+					else
+					{
+						this._FK_IndicatorsTable = default(int);
+					}
+					this.SendPropertyChanged("IndicatorsTable");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -9037,6 +9325,8 @@ namespace KPIWeb
 		
 		private System.Nullable<bool> _Confirmed;
 		
+		private string _Position;
+		
 		private EntitySet<BasicParametrsAndUsersMapping> _BasicParametrsAndUsersMapping;
 		
 		private EntitySet<CalculatedParametrsAndUsersMapping> _CalculatedParametrsAndUsersMapping;
@@ -9093,6 +9383,8 @@ namespace KPIWeb
     partial void OnPassCodeChanged();
     partial void OnConfirmedChanging(System.Nullable<bool> value);
     partial void OnConfirmedChanged();
+    partial void OnPositionChanging(string value);
+    partial void OnPositionChanged();
     #endregion
 		
 		public UsersTable()
@@ -9412,6 +9704,26 @@ namespace KPIWeb
 					this._Confirmed = value;
 					this.SendPropertyChanged("Confirmed");
 					this.OnConfirmedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Position", DbType="VarChar(50)")]
+		public string Position
+		{
+			get
+			{
+				return this._Position;
+			}
+			set
+			{
+				if ((this._Position != value))
+				{
+					this.OnPositionChanging(value);
+					this.SendPropertyChanging();
+					this._Position = value;
+					this.SendPropertyChanged("Position");
+					this.OnPositionChanged();
 				}
 			}
 		}
@@ -9788,205 +10100,6 @@ namespace KPIWeb
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PlannedIndicator")]
-	public partial class PlannedIndicator : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _PlanedIndicatorID;
-		
-		private bool _Active;
-		
-		private System.Nullable<double> _Value;
-		
-		private System.Nullable<System.DateTime> _Date;
-		
-		private int _FK_IndicatorsTable;
-		
-		private EntityRef<IndicatorsTable> _IndicatorsTable;
-		
-    #region Определения метода расширяемости
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnPlanedIndicatorIDChanging(int value);
-    partial void OnPlanedIndicatorIDChanged();
-    partial void OnActiveChanging(bool value);
-    partial void OnActiveChanged();
-    partial void OnValueChanging(System.Nullable<double> value);
-    partial void OnValueChanged();
-    partial void OnDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnDateChanged();
-    partial void OnFK_IndicatorsTableChanging(int value);
-    partial void OnFK_IndicatorsTableChanged();
-    #endregion
-		
-		public PlannedIndicator()
-		{
-			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlanedIndicatorID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int PlanedIndicatorID
-		{
-			get
-			{
-				return this._PlanedIndicatorID;
-			}
-			set
-			{
-				if ((this._PlanedIndicatorID != value))
-				{
-					this.OnPlanedIndicatorIDChanging(value);
-					this.SendPropertyChanging();
-					this._PlanedIndicatorID = value;
-					this.SendPropertyChanged("PlanedIndicatorID");
-					this.OnPlanedIndicatorIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
-		public bool Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value", DbType="Float")]
-		public System.Nullable<double> Value
-		{
-			get
-			{
-				return this._Value;
-			}
-			set
-			{
-				if ((this._Value != value))
-				{
-					this.OnValueChanging(value);
-					this.SendPropertyChanging();
-					this._Value = value;
-					this.SendPropertyChanged("Value");
-					this.OnValueChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime")]
-		public System.Nullable<System.DateTime> Date
-		{
-			get
-			{
-				return this._Date;
-			}
-			set
-			{
-				if ((this._Date != value))
-				{
-					this.OnDateChanging(value);
-					this.SendPropertyChanging();
-					this._Date = value;
-					this.SendPropertyChanged("Date");
-					this.OnDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_IndicatorsTable", DbType="Int NOT NULL")]
-		public int FK_IndicatorsTable
-		{
-			get
-			{
-				return this._FK_IndicatorsTable;
-			}
-			set
-			{
-				if ((this._FK_IndicatorsTable != value))
-				{
-					if (this._IndicatorsTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_IndicatorsTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_IndicatorsTable = value;
-					this.SendPropertyChanged("FK_IndicatorsTable");
-					this.OnFK_IndicatorsTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_PlannedIndicator", Storage="_IndicatorsTable", ThisKey="FK_IndicatorsTable", OtherKey="IndicatorsTableID", IsForeignKey=true)]
-		public IndicatorsTable IndicatorsTable
-		{
-			get
-			{
-				return this._IndicatorsTable.Entity;
-			}
-			set
-			{
-				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
-				if (((previousValue != value) 
-							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._IndicatorsTable.Entity = null;
-						previousValue.PlannedIndicator.Remove(this);
-					}
-					this._IndicatorsTable.Entity = value;
-					if ((value != null))
-					{
-						value.PlannedIndicator.Add(this);
-						this._FK_IndicatorsTable = value.IndicatorsTableID;
-					}
-					else
-					{
-						this._FK_IndicatorsTable = default(int);
-					}
-					this.SendPropertyChanged("IndicatorsTable");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	

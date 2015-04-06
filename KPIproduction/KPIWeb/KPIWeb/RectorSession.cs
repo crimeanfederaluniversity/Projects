@@ -45,6 +45,7 @@ namespace KPIWeb
         public RectorSession[] RectorSession = new RectorSession[10];//{ get; set; }
         public int SessionCount { get; set; }
         public int CurrentSession { get; set; }
+        public bool Visible { get; set; }
     }
 
     [Serializable]

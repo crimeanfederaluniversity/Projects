@@ -55,6 +55,10 @@ namespace KPIWeb.Rector
             }
         }
 
+
+
+
+
         protected void ButtonViewClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -72,6 +76,7 @@ namespace KPIWeb.Rector
                     RectorHistorySession RectorHistory = new RectorHistorySession();
                     RectorHistory.SessionCount = 1;
                     RectorHistory.CurrentSession = 0;
+                    RectorHistory.Visible = false;
                     RectorHistory.RectorSession[RectorHistory.CurrentSession] = rectorResultSession;
                     Session["rectorHistory"] = RectorHistory;
                     Response.Redirect("~/Rector/Result.aspx");
@@ -84,6 +89,7 @@ namespace KPIWeb.Rector
                     RectorHistorySession RectorHistory = new RectorHistorySession();
                     RectorHistory.SessionCount = 1;
                     RectorHistory.CurrentSession = 0;
+                    RectorHistory.Visible = false;
                     RectorHistory.RectorSession[RectorHistory.CurrentSession] = rectorResultSession;
                     Session["rectorHistory"] = RectorHistory;
                     Response.Redirect("~/Rector/Result.aspx");

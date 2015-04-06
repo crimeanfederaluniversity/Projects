@@ -27,7 +27,19 @@ namespace KPIWeb
                                select usersTables).FirstOrDefault();
             if (user != null)
             {
-                FormsAuthentication.SetAuthCookie(user.Email, true);
+                if (user.Position == null)
+                {
+                    FormsAuthentication.SetAuthCookie(user.Email, true);
+                }
+                else if (user.Position.Length > 2)
+                {
+                    FormsAuthentication.SetAuthCookie(user.Position, true);
+                }
+                else
+                {
+                    FormsAuthentication.SetAuthCookie(user.Email, true);
+                }
+
                 int accessLevel = (int) user.AccessLevel;
                 if (accessLevel == 10)
                 {

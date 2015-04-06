@@ -29,7 +29,8 @@ namespace KPIWeb.Rector
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Rector/Documents.aspx");
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+            "document.location = '../Rector/doc/1.pdf';", true);
         }
 
         protected void Button4_Click(object sender, EventArgs e)
