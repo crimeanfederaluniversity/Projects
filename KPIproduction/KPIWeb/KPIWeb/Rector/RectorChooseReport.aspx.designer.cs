@@ -13,6 +13,15 @@ namespace KPIWeb.Rector {
     public partial class RectorChooseReport {
         
         /// <summary>
+        /// PageName элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PageName;
+        
+        /// <summary>
         /// GridView1 элемент управления.
         /// </summary>
         /// <remarks>

@@ -31,6 +31,20 @@ namespace KPIWeb.Rector
             //////////////////////////////////////////////////////////////////////////
             if (!Page.IsPostBack)
             {
+                                ParametrType paramType = (ParametrType) Session["paramType"];
+                if (paramType == null)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+                if (paramType.paramType == 0) //смотрим индикаторы
+                {
+                    PageName.Text = "Выберите отчет для просмотра расчитанных целевых показателей";
+                }
+                else
+                {
+                    PageName.Text = "Выберите отчет для просмотра расчетных показателей";
+                }
+
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();                
                 List<ReportArchiveTable> reportsArchiveTablesTable = null;            
                 reportsArchiveTablesTable = (from a in kpiWebDataContext.ReportArchiveTable

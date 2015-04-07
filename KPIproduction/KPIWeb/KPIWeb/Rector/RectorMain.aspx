@@ -3,6 +3,7 @@
     <div>
     
         <br />
+        Выберите пункт<br />
     
     </div>
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Целевые показатели" Width="350px" />

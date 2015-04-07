@@ -218,11 +218,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
-    <Content Include="KPIWeb.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>KPIWeb.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="AutomationDepartment\RoleMapping.aspx" />
     <Content Include="AutomationDepartment\IsAvailibleMappingRole.aspx" />
     <Content Include="PersonalInfo.aspx" />
@@ -241,6 +236,11 @@
     <Content Include="App_Themes\theme_1\css\images\ps_bg.psd" />
     <Content Include="App_Themes\theme_1\css\images\Thumbs.db" />
     <Content Include="App_Themes\theme_1\Skin1.skin" />
+    <Content Include="KPIWeb.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>KPIWeb.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Reports\ChooseReport.aspx" />
     <Content Include="Reports\EditReport.aspx" />
@@ -630,12 +630,12 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="KPIWeb.dbml.layout">
       <DependentUpon>KPIWeb.dbml</DependentUpon>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

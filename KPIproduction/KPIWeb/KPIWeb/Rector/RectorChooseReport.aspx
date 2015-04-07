@@ -3,6 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">   
     <div>
         <br />
+        <asp:Label ID="PageName" runat="server" Text="PageName"></asp:Label>
         <br />
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" style="margin-top: 0px">
              <Columns>                

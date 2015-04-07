@@ -1071,7 +1071,10 @@ namespace KPIWeb.Rector
         {
             Response.Redirect("~/Rector/RectorMain.aspx");
         }
-
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/ViewDocument.aspx");
+        }
         public class MyObject
         {
             public int Id;
