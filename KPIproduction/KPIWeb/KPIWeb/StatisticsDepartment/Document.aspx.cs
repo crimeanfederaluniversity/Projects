@@ -21,7 +21,7 @@ namespace KPIWeb.StatisticsDepartment
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("DocumentName", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("DocumentLink", typeof(string)));
-                // dataTable.Columns.Add(new DataColumn("DeleteButton", typeof(bool)));
+                 
                 GridView1.DataSource = docs;
                 GridView1.DataBind();
             }

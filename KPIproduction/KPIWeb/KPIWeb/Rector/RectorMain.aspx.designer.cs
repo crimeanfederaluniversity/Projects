@@ -31,12 +31,12 @@ namespace KPIWeb.Rector {
         protected global::System.Web.UI.WebControls.Button Button3;
         
         /// <summary>
-        /// Button2 элемент управления.
+        /// Button4 элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button Button4;
     }
 }
