@@ -230,6 +230,7 @@
     <Content Include="Rector\RectorChooseReport.aspx" />
     <Content Include="Rector\RectorMain.aspx" />
     <Content Include="Rector\Result.aspx" />
+    <Content Include="Rector\ViewDocument.aspx" />
     <Content Include="Reports\Parametrs.aspx" />
     <Content Include="StatisticsDepartment\AddSpecialization.aspx" />
     <Content Include="StatisticsDepartment\Document.aspx" />
@@ -468,6 +469,13 @@
     </Compile>
     <Compile Include="Rector\Result.aspx.designer.cs">
       <DependentUpon>Result.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\ViewDocument.aspx.cs">
+      <DependentUpon>ViewDocument.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\ViewDocument.aspx.designer.cs">
+      <DependentUpon>ViewDocument.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\ChooseReport.aspx.cs">
       <DependentUpon>ChooseReport.aspx</DependentUpon>
