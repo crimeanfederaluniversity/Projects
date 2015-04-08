@@ -1,13 +1,27 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Result.aspx.cs" Inherits="KPIWeb.Rector.Result" %>
  <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
      
+<style type="text/css">
+   .button_right 
+   {
+       float:right
+   }     
+</style>
 
-    <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">        
-      <asp:Button ID="GoBackButton" runat="server" OnClick="GoBackButton_Click" Text="Назад" Width="150px" />
-      <asp:Button ID="GoForwardButton" runat="server" OnClick="GoForwardButton_Click" Text="Вперед" Width="150px" />
-      <asp:Button ID="Button4" runat="server" Text="На главную" OnClick="Button4_Click" />     
-        <asp:Button ID="Button5" runat="server" OnClick="Button4_Click" Text="Нормативные документы" Width="350px" />
-        &nbsp;<asp:Button ID="Button6" runat="server" OnClick="Button6_Click" Text="Button" />
+    <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
+        <div>    
+      <asp:Button ID="GoBackButton" runat="server" OnClick="GoBackButton_Click" Text="Назад" Width="125px" />
+      <asp:Button ID="GoForwardButton" runat="server" OnClick="GoForwardButton_Click" Text="Вперед" Width="125px" />
+        &nbsp; &nbsp; <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="На главную" Width="125px" />
+            &nbsp; &nbsp;
+       
+        
+        <asp:Button ID="Button5" runat="server" CssClass="button_right" OnClick="Button5_Click" Text="Нормативные документы" Width="225px" />
+             &nbsp; &nbsp;
+        <asp:Button ID="Button6" runat="server" CssClass="button_right" OnClick="Button6_Click" Text="Button" Width="150px" />
+             &nbsp; &nbsp;
+        </div>
+
     </asp:Panel>
 
      <br />
@@ -25,7 +39,7 @@
      <br />
 <asp:GridView ID="Grid" runat="server" 
             AutoGenerateColumns="False"
-            style="margin-top: 0px">
+            style="margin-top: 0px" OnSelectedIndexChanged="Grid_SelectedIndexChanged">
              <Columns>                
                  <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />    
                  <asp:BoundField DataField="Number"   HeaderText="Номер" Visible="true" />
@@ -34,10 +48,11 @@
                  <asp:BoundField DataField="StartDate" HeaderText="Начальная дата отчёта" Visible="True" />
                  <asp:BoundField DataField="EndDate" HeaderText="Конечная дата отчёта" Visible="True" />
                  <asp:BoundField DataField="Value" HeaderText="Значение" Visible="True" />
-                 
+                 <asp:BoundField DataField="PlannedValue" HeaderText="Плановое значение" Visible="True" />
                  <asp:TemplateField HeaderText="Подтвердить данные">
                         <ItemTemplate>
-                            <asp:Button ID="ConfirmButton" runat="server" CommandName="Select" Visible='<%# Bind("CanConfirm") %>' Text="Утвердить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="ButtonConfirmClick"/>
+                            <asp:Button ID="ConfirmButton" runat="server" CommandName="Select" Visible='<%# Bind("CanConfirm") %>' Text="Утвердить" CommandArgument='<%# Eval("ID") %>' Width="200px"  
+                                OnClientClick="javascript:return confirm('Подтвердить значение?');" OnClick="ButtonConfirmClick"/>
                             <asp:Label ID="StatusLable"  runat="server" Visible='<%# Bind("ShowLable") %>' Text='<%# Eval("LableText") %>' ></asp:Label>
                              </ItemTemplate>
                     </asp:TemplateField>

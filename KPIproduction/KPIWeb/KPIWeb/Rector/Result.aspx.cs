@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.WebPages;
+using System.Net;
 
 namespace KPIWeb.Rector
 {
@@ -187,6 +189,14 @@ namespace KPIWeb.Rector
 
             return tmpStrucList;
         }
+        public class MyObject
+        {
+            public int Id;
+            public int ParentId;
+            public string Name;
+            public string UrlAddr;
+            public int Active;
+        }
         public float GetCalculatedWithParams(Struct StructToCalcFor, int ParamType, int ParamID,int ReportID, int SpecID) // читает показатель
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
@@ -329,6 +339,19 @@ namespace KPIWeb.Rector
             }
             return 0;
         }  //определяет последнее не нулевое значение в структуре
+        public float CalculatedForDB(float input)
+        {
+            float tmp = (float) input;
+
+            if ((tmp < -(float)1E+20) || (tmp > (float)1E+20)
+                || (tmp == null) || (float.IsNaN(tmp))
+                || (float.IsInfinity(tmp)) || (float.IsNegativeInfinity(tmp))
+                || (float.IsPositiveInfinity(tmp)) || (!tmp.ToString().IsFloat()))
+            {
+                tmp = (float)1E+20;
+            }
+            return tmp;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             #region get user data
@@ -387,6 +410,7 @@ namespace KPIWeb.Rector
                 dataTable.Columns.Add(new DataColumn("EndDate", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("Value", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("Title", typeof(string)));
+                dataTable.Columns.Add(new DataColumn("PlannedValue", typeof(string)));
 
                 dataTable.Columns.Add(new DataColumn("CanConfirm", typeof(bool)));
                 dataTable.Columns.Add(new DataColumn("ShowLable", typeof(bool)));
@@ -403,6 +427,66 @@ namespace KPIWeb.Rector
                 {
                     #region преднастройка страницы                    
                     string title="";
+
+                    if (ParamType == 0)
+                    {
+                        PageFullName.Text = "Значения для индикатора; \"";
+                        PageFullName.Text += (from a in kpiWebDataContext.IndicatorsTable
+                                          where a.IndicatorsTableID == ParamID
+                                          select a.Name).FirstOrDefault();
+                        PageFullName.Text += "\";";
+                    }
+                    else if (ParamType == 1)
+                    {
+                        PageFullName.Text = "Значения для расчетного показателя: \"";
+                        PageFullName.Text += (from a in kpiWebDataContext.CalculatedParametrs
+                                          where a.CalculatedParametrsID == ParamID
+                                          select a.Name).FirstOrDefault();
+                        PageFullName.Text += "\";";
+                    }
+                    else if (ParamType == 2)
+                    {
+                        PageFullName.Text = "Значения для базового показателя: \"";
+                        PageFullName.Text += (from a in kpiWebDataContext.BasicParametersTable
+                                          where a.BasicParametersTableID == ParamID
+                                          select a.Name).FirstOrDefault();
+                        PageFullName.Text += "\"";
+                    }
+
+
+                    
+                    int Deep = StructDeepness (mainStruct);
+                    if (Deep == 1)//
+                    {
+                        PageFullName.Text += "в разрезе академий КФУ ";
+                    }
+                    if (Deep == 2)
+                    {
+                        PageFullName.Text += "в разрезе факультетов ";
+                        PageFullName.Text += (from a in kpiWebDataContext.FirstLevelSubdivisionTable
+                            where a.FirstLevelSubdivisionTableID == mainStruct.Lv_1
+                            select a.Name).FirstOrDefault();
+                        PageFullName.Text += ",КФУ ";
+                    }
+                    if (Deep == 3)
+                    {
+                        PageFullName.Text += "в разрезе кафедр ";
+                        PageFullName.Text += (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                                              where a.SecondLevelSubdivisionTableID == mainStruct.Lv_2
+                                              select a.Name).FirstOrDefault();
+                        PageFullName.Text += ", ";
+                        PageFullName.Text += (from a in kpiWebDataContext.FirstLevelSubdivisionTable
+                                              where a.FirstLevelSubdivisionTableID == mainStruct.Lv_1
+                                              select a.Name).FirstOrDefault();
+                        PageFullName.Text += ",КФУ ";
+                    }
+                    
+                    if (SpecID != 0)
+                    {
+                        PageFullName.Text = "для специальности \"" + (from a in kpiWebDataContext.SpecializationTable
+                                                                where a.SpecializationTableID == SpecID
+                                                                select a.Name).FirstOrDefault()+"\"";
+                    }
                     if (mainStruct.Lv_1 == 0)
                     {
                         RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID, "По университетам КФУ");
@@ -416,79 +500,11 @@ namespace KPIWeb.Rector
                         Session["rectorHistory"] = rectorHistory;
                     }                   
                     //задади имя текущей сессии
-                    if (SpecID != 0)
-                    {
-                        SpecName.Visible = true;
-                        SpecName.Text = "Для специальности " + (from a in kpiWebDataContext.SpecializationTable
-                                                                where a.SpecializationTableID == SpecID 
-                                                                select a.Name).FirstOrDefault();
-                    }
 
-                    if (ParamType==0)
-                    {
-                        PageName.Text = "Значения для индикатора; \"";
-                        PageName.Text += (from a in kpiWebDataContext.IndicatorsTable
-                                          where a.IndicatorsTableID == ParamID
-                                          select a.Name).FirstOrDefault();
-                        PageName.Text += "\";";
-                    }
-                    else if (ParamType == 1)
-                    {
-                        PageName.Text = "Значения для расчетного показателя: \"";
-                        PageName.Text += (from a in kpiWebDataContext.CalculatedParametrs
-                                          where a.CalculatedParametrsID == ParamID
-                                          select a.Name).FirstOrDefault();
-                        PageName.Text += "\";";
-                    }
-                    else if (ParamType == 2)
-                    {
-                        PageName.Text = "Значения для базового показателя: \"";
-                        PageName.Text += (from a in kpiWebDataContext.BasicParametersTable
-                                          where a.BasicParametersTableID == ParamID
-                                          select a.Name).FirstOrDefault();
-                        PageName.Text += "\";";
-                    }
-                    #region useless switch
-                    int tmpLevel = StructDeepness(mainStruct);
-                    switch (tmpLevel)
-                    {
-                        case 0:
-                        {
-                            title = "Подразделения";
-                            break;
-                        }
-                        case 1:
-                        {
-                            title = "Подразделения";
-                            break;
-                        }
-                        case 2:
-                        {
-                            title = "Подразделения";
-                            break;
-                        }
-                        case 3:
-                        {
-                            title = "Подразделения";
-                            break;
-                        }
-                        case 4:
-                        {
-                            title = "Подразделения";
-                            break;
-                        }
-                        case 5:
-                        {
-                            title = "Подразделения";
-                            break;
-                        }
-                        default:
-                        {
-                            title = "Подразделения";
-                            break;
-                        }
-                    }
-                    #endregion
+
+                    title = "Подразделения";
+                 
+               
 
                     #endregion
                     #region fill grid
@@ -519,8 +535,9 @@ namespace KPIWeb.Rector
                     #endregion
                     #region постнастройка страницы
 
+                    Grid.Columns[11].Visible = false;
                     Grid.Columns[10].Visible = false;
-                    Grid.Columns[9].Visible = false;
+                    Grid.Columns[8].Visible = false;
                     Grid.Columns[7].Visible = false;
                     Grid.Columns[5].Visible = false;
                     Grid.Columns[4].Visible = false;
@@ -528,7 +545,7 @@ namespace KPIWeb.Rector
                     Grid.Columns[1].Visible = false;
                     if (StructDeepness(mainStruct) > 2) // дальше углубляться нельзя
                     {
-                        Grid.Columns[8].Visible = false;
+                        Grid.Columns[9].Visible = false;
                     }
                     #endregion
                 }
@@ -547,24 +564,36 @@ namespace KPIWeb.Rector
                     }
                     else if (ParamType == 1)
                     {
-                        string tmp = (from a in kpiWebDataContext.IndicatorsTable
-                                      where a.IndicatorsTableID == ParamID
-                                      select a.Name).FirstOrDefault();
 
-                        RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID, "Расчетные показалели для индикатора: " + tmp);
-                        rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
-                        Session["rectorHistory"] = rectorHistory;
 
-                        PageFullName.Text = "Расчетные показатели индикатора \"" + tmp + "\" для КФУ";
+                        if (ParamID == 0)
+                        {
+                            RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID, "Значения расчетных показателей КФУ");
+                            rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
+                            Session["rectorHistory"] = rectorHistory;
+                            PageFullName.Text = "Значения расчетных показателей КФУ";
+                        }
+                        else
+                        {
+                            string tmp = (from a in kpiWebDataContext.IndicatorsTable
+                                          where a.IndicatorsTableID == ParamID
+                                          select a.Name).FirstOrDefault();
 
+                            RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID, "Расчетные показалели для индикатора: " + tmp);
+                            rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
+                            Session["rectorHistory"] = rectorHistory;
+
+                            PageFullName.Text = "Расчетные показатели индикатора \"" + tmp + "\" для КФУ";
+                            FormulaLable.Text = (from a in kpiWebDataContext.IndicatorsTable
+                                                 where a.IndicatorsTableID == ParamID
+                                                 select a.Formula).FirstOrDefault();
+                            FormulaLable.Visible = true;
+                        }                      
                         //PageName.Text = "Значения расчетных показателей используемых для расчета индикатора: \"";
                         //PageName.Text += tmp;
                         //PageName.Text += "\" для КФУ";
                         title = "Расчетные показатели";
-                        FormulaLable.Text = (from a in kpiWebDataContext.IndicatorsTable
-                            where a.IndicatorsTableID == ParamID
-                            select a.Formula).FirstOrDefault();
-                        FormulaLable.Visible = true;
+
                     }
                     else if (ParamType == 2)
                     {
@@ -591,6 +620,7 @@ namespace KPIWeb.Rector
                     #region fill grid
                     if (ParamType == 0)//считаем индикатор
                     {
+                        #region indicator
                         List<IndicatorsTable> Indicators = (
                             from a in kpiWebDataContext.IndicatorsTable
                             join b in kpiWebDataContext.IndicatorsAndUsersMapping
@@ -611,18 +641,61 @@ namespace KPIWeb.Rector
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
 
-                            #region user can edit
+                            PlannedIndicator plannedValue = (from a in kpiWebDataContext.PlannedIndicator
+                                where a.FK_IndicatorsTable == CurrentIndicator.IndicatorsTableID
+                                      && a.Date > DateTime.Now   //Q1
+                                select a).OrderBy(x => x.Date).FirstOrDefault();
+
+                            if (plannedValue != null)
+                            {
+                                dataRow["PlannedValue"] = plannedValue.Value;
+                            }
+                            else
+                            {
+                                dataRow["PlannedValue"] = "Не определено";
+                            }
+                            #region user can confirm
                             bool canConfirm = (bool)(from a in kpiWebDataContext.IndicatorsAndUsersMapping
                                 where a.FK_IndicatorsTable == CurrentIndicator.IndicatorsTableID
                                       && a.FK_UsresTable == userID
                                 select a.CanConfirm).FirstOrDefault();
 
                             #endregion 
+                            # region are calculated confirmed 
+                            List<CalculatedParametrs> CalculatedList = Abbreviature.GetCalculatedList(CurrentIndicator.Formula);
+
+                            bool CalcAreConfirmed = true;
+                            foreach (CalculatedParametrs CurrentCalculated in CalculatedList)
+                            {
+                                CollectedCalculatedParametrs tmp_ =
+                                    (from a in kpiWebDataContext.CollectedCalculatedParametrs
+                                        where
+                                            a.FK_CalculatedParametrs == CurrentCalculated.CalculatedParametrsID
+                                            && a.FK_ReportArchiveTable == ReportID
+                                        select a).FirstOrDefault();
+                                if (tmp_ == null)
+                                {
+                                    CalcAreConfirmed = false;
+                                }
+                                else
+                                {
+                                    if (tmp_.Confirmed == null)
+                                    {
+                                        CalcAreConfirmed = false;
+                                    }
+                                    else if (tmp_.Confirmed == false)
+                                    {
+                                        CalcAreConfirmed = false;
+                                    }
+                                }
+                            }
+                            #endregion
                             #region get calculated if confirmed; calculate if not confirmed
                             CollectedIndocators collected = (from a in kpiWebDataContext.CollectedIndocators
                                                                  where a.FK_ReportArchiveTable == ReportID
                                                                  && a.FK_Indicators == CurrentIndicator.IndicatorsTableID
                                                                  select a).FirstOrDefault();
+
                             if (collected == null)
                             {
                                 collected = new CollectedIndocators();
@@ -632,42 +705,64 @@ namespace KPIWeb.Rector
                                 collected.Confirmed = false;
                                 collected.LastChangeDateTime = DateTime.Now;
                                 collected.Active = true;
-                                collected.CollectedValue = 12;
+                                collected.CollectedValue = 0;
                                 kpiWebDataContext.CollectedIndocators.InsertOnSubmit(collected);
                                 kpiWebDataContext.SubmitChanges();
                             }
+                            
                             if (collected.Confirmed == true) // данные подтверждены
                             {
                                 dataRow["CanConfirm"] = false;
                                 dataRow["ShowLable"] = true;
                                 dataRow["LableText"] = "Подтверждено";
                                 dataRow["LableColor"] = "#00FF00";
-                                dataRow["Value"] = collected.CollectedValue;
                             }
-                            else
-                            {
-                                if (canConfirm == true)
+                            else // данные уже есть но еще не подтверждены
+                            {                                
+                                if (canConfirm == false)
+                                {
+                                    dataRow["CanConfirm"] = false;
+                                    dataRow["ShowLable"] = true;
+                                    dataRow["LableText"] = "Нет права подтверждать";
+                                    dataRow["LableColor"] = "#101010";
+                                }
+                                else if (!CalcAreConfirmed)
+                                {
+                                    dataRow["CanConfirm"] = false;
+                                    dataRow["ShowLable"] = true;
+                                    dataRow["LableText"] = "Не все расчетные подтверждены";
+                                    dataRow["LableColor"] = "#101010";
+                                }
+                                else
                                 {
                                     dataRow["CanConfirm"] = true;
                                     dataRow["ShowLable"] = false;
                                     dataRow["LableText"] = "";
                                     dataRow["LableColor"] = "#FFFFFF";
                                 }
-                                else
-                                {
-                                    dataRow["CanConfirm"] = false;
-                                    dataRow["ShowLable"] = true;
-                                    dataRow["LableText"] = "Нет права подтверждать";
-                                    dataRow["LableColor"] = "#101010";
-                                }                          
-                                dataRow["Value"] =GetCalculatedWithParams(mainStruct, ParamType, CurrentIndicator.IndicatorsTableID, ReportID, SpecID).ToString();
+
+                                collected.CollectedValue = CalculatedForDB(GetCalculatedWithParams(mainStruct, ParamType, CurrentIndicator.IndicatorsTableID, ReportID, SpecID));//12;                               
+                                kpiWebDataContext.SubmitChanges();
+                                
                             }
+
+                            if (collected.CollectedValue == (float)1E+20)
+                            {
+                                dataRow["Value"] = "Недостаточно данных";
+                            }
+                            else
+                            {
+                                dataRow["Value"] = ((float)collected.CollectedValue).ToString("0.000");
+                            }
+
                             #endregion
                             dataTable.Rows.Add(dataRow);
                         }
+                        #endregion indicator
                     }
                     if (ParamType == 1) //показываем рассчетный входящий в ID Индикатора
                     {
+                        #region calculated
                         //ID  - это айди Индиктора
                         List<CalculatedParametrs> CalculatedList;
                         if (ParamID != 0)
@@ -687,7 +782,6 @@ namespace KPIWeb.Rector
                                       && b.FK_UsersTable == userID
                                 select a).ToList();
                         }
-
                         foreach (CalculatedParametrs CurrentCalculated in CalculatedList)
                         {
                             DataRow dataRow = dataTable.NewRow();
@@ -699,7 +793,6 @@ namespace KPIWeb.Rector
                             dataRow["Abb"] = CurrentCalculated.AbbreviationEN;
 
                             #region get calculated if confirmed; calculate if not confirmed
-
                             #region user can edit
                             bool canConfirm = (bool)(from a in kpiWebDataContext.CalculatedParametrsAndUsersMapping
                                                      where a.FK_CalculatedParametrsTable == CurrentCalculated.CalculatedParametrsID
@@ -707,12 +800,34 @@ namespace KPIWeb.Rector
                                                      select a.CanConfirm).FirstOrDefault();
 
                             #endregion 
+                            #region check if all users confirmed basics
+                            List<BasicParametersTable> BasicList = Abbreviature.GetBasicList(CurrentCalculated.Formula);
+                            bool BasicsAreConfirmed = true;
+                            foreach (BasicParametersTable Basic in BasicList)
+                            {
+                                int UsersCanEditBasicCount = (from a in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                                              join b in kpiWebDataContext.UsersTable 
+                                                              on a.FK_UsersTable equals b.UsersTableID
+                                    where a.CanEdit == true
+                                    && b.Active == true
+                                    && a.FK_ParametrsTable == Basic.BasicParametersTableID
+                                    select a).Count();
 
+                                int ConfirmedBasicsInReport = (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                    where a.FK_ReportArchiveTable == ReportID
+                                    && a.FK_BasicParametersTable == Basic.BasicParametersTableID
+                                    select a).Count();
+                                if (UsersCanEditBasicCount == ConfirmedBasicsInReport)
+                                {
+                                    BasicsAreConfirmed = false;
+                                }
+                            }
+                            #endregion
                             CollectedCalculatedParametrs collected = (from a in kpiWebDataContext.CollectedCalculatedParametrs
                                                              where a.FK_ReportArchiveTable == ReportID
                                                              && a.FK_CalculatedParametrs == CurrentCalculated.CalculatedParametrsID
                                                              select a).FirstOrDefault();
-                            if (collected == null)
+                            if (collected == null) // данных нет
                             {
                                 collected = new CollectedCalculatedParametrs();
                                 collected.FK_CalculatedParametrs = CurrentCalculated.CalculatedParametrsID;
@@ -721,43 +836,66 @@ namespace KPIWeb.Rector
                                 collected.Confirmed = false;
                                 collected.LastChangeDateTime = DateTime.Now;
                                 collected.Active = true;
-                                collected.CollectedValue = 11;
+                                collected.CollectedValue = GetCalculatedWithParams(mainStruct, ParamType, CurrentCalculated.CalculatedParametrsID, ReportID, SpecID);//11;
                                 kpiWebDataContext.CollectedCalculatedParametrs.InsertOnSubmit(collected);
                                 kpiWebDataContext.SubmitChanges();
-                            }
-                            if (collected.Confirmed == true)
+                            } 
+
+                            else  if (collected.Confirmed == true) //данные подтверждены
                             {
                                 dataRow["CanConfirm"] = false;
                                 dataRow["ShowLable"] = true;
                                 dataRow["LableText"] = "Подтверждено";
                                 dataRow["LableColor"] = Color.LawnGreen;
-
-                                dataRow["Value"] = collected.CollectedValue;
+                                //dataRow["Value"] = collected.CollectedValue;
                             }
-                            else
+                            else // данные есть но не подтверждены
                             {
-                                if (canConfirm == true)
+                                
+                                if (canConfirm == false)
+                                {
+                                    dataRow["CanConfirm"] = false;
+                                    dataRow["ShowLable"] = true;
+                                    dataRow["LableText"] = "Нет права подтверждать";
+                                    dataRow["LableColor"] = Color.LightBlue;
+
+                                }
+                                else if (BasicsAreConfirmed == false)
+                                {
+                                    dataRow["CanConfirm"] = false;
+                                    dataRow["ShowLable"] = true;
+                                    dataRow["LableText"] = "Не все базовые показатели подтверждены";
+                                    dataRow["LableColor"] = Color.LightBlue;
+                                }
+                                else
                                 {
                                     dataRow["CanConfirm"] = true;
                                     dataRow["ShowLable"] = false;
                                     dataRow["LableText"] = "";
                                     dataRow["LableColor"] = "#000000";
                                 }
-                                else
-                                {
-                                    dataRow["CanConfirm"] = false;
-                                    dataRow["ShowLable"] = true;
-                                    dataRow["LableText"] = "Нет права подтверждать";
-                                    dataRow["LableColor"] = Color.LightBlue;
-                                }
-                                dataRow["Value"] = GetCalculatedWithParams(mainStruct, ParamType, CurrentCalculated.CalculatedParametrsID, ReportID, SpecID).ToString();
+
+                                collected.CollectedValue =  CalculatedForDB(GetCalculatedWithParams(mainStruct, ParamType, CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
+                                kpiWebDataContext.SubmitChanges();
                             }
+
+                            if (collected.CollectedValue == (float)1E+20)
+                            {
+                                dataRow["Value"] = "Недостаточно данных";
+                            }
+                            else
+                            {
+                                dataRow["Value"] = ((float)collected.CollectedValue).ToString("0.000");
+                            }
+
                             #endregion                            
                             dataTable.Rows.Add(dataRow);
                         }
+                        #endregion
                     }
                     if (ParamType == 2)//
                     {
+                        #region basic
                         //ID - Рассчетного айдишник
                         CalculatedParametrs Calculated = (from a in kpiWebDataContext.CalculatedParametrs
                             where a.CalculatedParametrsID == ParamID
@@ -782,6 +920,7 @@ namespace KPIWeb.Rector
                             dataRow["Value"] = GetCalculatedWithParams(mainStruct, ParamType, CurrebtBasic.BasicParametersTableID, ReportID,SpecID).ToString();
                             dataTable.Rows.Add(dataRow);
                         }
+                        #endregion
                     }
                     #endregion 
                     #region DataGridBind
@@ -797,20 +936,26 @@ namespace KPIWeb.Rector
                     if (ParamType == 0)
                     {
                         Grid.Columns[2].Visible = false;
-                        Grid.Columns[8].Visible = false;//
-                        Grid.Columns[10].Visible = false;//
+                        Grid.Columns[9].Visible = false;//
+                        Grid.Columns[11].Visible = false;//
                     }
 
                     if (ParamType == 1)
                     {
-                        Grid.Columns[8].Visible = false;//
-                        Grid.Columns[10].Visible = false;//
+                        if (ParamID == 0)
+                        {
+                            Grid.Columns[2].Visible = false;
+                        }
+                        Grid.Columns[9].Visible = false;//
+                        Grid.Columns[11].Visible = false;//
+                        Grid.Columns[7].Visible = false;
                     }
 
                     if (ParamType == 2) // дальше углубляться нельзя
                     {
                         Grid.Columns[7].Visible = false;
-                        Grid.Columns[9].Visible = false;
+                        Grid.Columns[8].Visible = false;
+                        Grid.Columns[10].Visible = false;
                     }
                     #endregion
                 }
@@ -906,11 +1051,13 @@ namespace KPIWeb.Rector
                     Grid.DataBind();
                     #endregion
                     #region постнастройка страницы
+                    Grid.Columns[11].Visible = false;
                     Grid.Columns[10].Visible = false;
-                    Grid.Columns[9].Visible = false;
                     Grid.Columns[7].Visible = false;
+                    Grid.Columns[8].Visible = false;
                     Grid.Columns[5].Visible = false;
                     Grid.Columns[4].Visible = false;
+                    Grid.Columns[2].Visible = false;
                     Grid.Columns[1].Visible = false;
                     #endregion
                 }
@@ -918,13 +1065,42 @@ namespace KPIWeb.Rector
                 {
                     //error // wrong ViewType
                 }
-
                 RefreshHistory();
             }
         }
         protected void ButtonConfirmClick(object sender, EventArgs e)
         {
-            
+            Button button = (Button)sender;
+            {
+                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+
+                RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
+                if (rectorHistory == null)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+                RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
+                int ParamType = CurrentRectorSession.sesParamType;
+
+                if (ParamType == 0) // indicator
+                {
+                    CollectedIndocators Indicator = (from a in kpiWebDataContext.CollectedIndocators
+                        where a.FK_Indicators == Convert.ToInt32(button.CommandArgument)
+                        select a).FirstOrDefault();
+                    Indicator.Confirmed = true;
+                    kpiWebDataContext.SubmitChanges();
+                    Response.Redirect("~/Rector/Result.aspx");
+                }
+                else if (ParamType == 1) // calculated
+                {
+                    CollectedCalculatedParametrs Calculated = (from a in kpiWebDataContext.CollectedCalculatedParametrs
+                                                     where a.FK_CalculatedParametrs == Convert.ToInt32(button.CommandArgument)
+                                                     select a).FirstOrDefault();
+                    Calculated.Confirmed = true;
+                    kpiWebDataContext.SubmitChanges();
+                    Response.Redirect("~/Rector/Result.aspx");
+                }
+            }
         }
         protected void Button1Click(object sender, EventArgs e) //по структуре
         {
@@ -1066,24 +1242,14 @@ namespace KPIWeb.Rector
             }
 
         }
-
         protected void Button4_Click(object sender, EventArgs e)
-        {
+        {           
             Response.Redirect("~/Rector/RectorMain.aspx");
         }
         protected void Button5_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Rector/ViewDocument.aspx");
         }
-        public class MyObject
-        {
-            public int Id;
-            public int ParentId;
-            public string Name;
-            public string UrlAddr;
-            public int Active;
-        }
-
         private void BindTree(IEnumerable<MyObject> list, TreeNode parentNode)
         {
             var nodes = list.Where(x => parentNode == null ? x.ParentId == 0 : x.ParentId == int.Parse(parentNode.Value));
@@ -1110,7 +1276,6 @@ namespace KPIWeb.Rector
                 BindTree(list, newNode);
             }
         }
-
         public void RefreshHistory()
         {
             #region history
@@ -1166,7 +1331,9 @@ namespace KPIWeb.Rector
 
             RefreshHistory();
         }
+        protected void Grid_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
-
+        }
     }
 }

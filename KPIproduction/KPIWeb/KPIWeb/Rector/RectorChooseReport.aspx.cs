@@ -31,11 +31,12 @@ namespace KPIWeb.Rector
             //////////////////////////////////////////////////////////////////////////
             if (!Page.IsPostBack)
             {
-                                ParametrType paramType = (ParametrType) Session["paramType"];
+                ParametrType paramType = (ParametrType) Session["paramType"];
                 if (paramType == null)
                 {
                     Response.Redirect("~/Default.aspx");
                 }
+
                 if (paramType.paramType == 0) //смотрим индикаторы
                 {
                     PageName.Text = "Выберите отчет для просмотра расчитанных целевых показателей";
