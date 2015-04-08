@@ -75,6 +75,7 @@ namespace KPIWeb.Account
                     {
                         user.Password = PassText.Text;
                         user.Confirmed = true;
+                        user.PassCode = null;
                         kPiDataContext.SubmitChanges();
                         //LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Пользователь " + user.Login + " вошел в систему ");
                         Serialization UserSerId = new Serialization(user.UsersTableID);

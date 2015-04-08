@@ -22,7 +22,7 @@ namespace KPIWeb.StatisticsDepartment
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            if (userTable.AccessLevel != 9)//только мониторинга отдел
+            if (userTable.AccessLevel != 9 )//только мониторинга отдел 
             {
                 Response.Redirect("~/Default.aspx");
             }
@@ -62,6 +62,11 @@ namespace KPIWeb.StatisticsDepartment
         protected void Button8_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/StatisticsDepartment/Document.aspx");
+        }
+
+        protected void Button9_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/AutomationDepartment/AddLevel.aspx");
         }
     }
 }

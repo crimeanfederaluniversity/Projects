@@ -1,4 +1,4 @@
-﻿ <%@ Page  Title="Форма редактирования базы пользователей" Language="C#" EnableViewStateMac="false" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EditUser.aspx.cs" Inherits="KPIWeb.AutomationDepartment.EditUser" %>
+﻿ <%@ Page  Title="Форма для редактирования базы пользователей" Language="C#" EnableViewStateMac="false" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EditUser.aspx.cs" Inherits="KPIWeb.AutomationDepartment.EditUser" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
         <h2><%: Title %>Просмотр и создание пользователей</h2>
@@ -39,7 +39,7 @@
                  
                  
 
-                   <asp:TemplateField HeaderText="Login" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                   <asp:TemplateField HeaderText="Логин" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                            <asp:TextBox ID="Login" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Login") %>'></asp:TextBox>
                         </ItemTemplate>
@@ -47,7 +47,7 @@
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField>     
 
-                     <asp:TemplateField HeaderText="Password"  HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                     <asp:TemplateField HeaderText="Пароль"  HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Password" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Password") %>'></asp:TextBox>
                         </ItemTemplate>
@@ -55,7 +55,7 @@
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField>   
 
-                    <asp:TemplateField HeaderText="e-mail" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                    <asp:TemplateField HeaderText="Адрес почты" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Email" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Email") %>'></asp:TextBox>
                         </ItemTemplate>
@@ -63,7 +63,7 @@
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
                      
-                  <asp:TemplateField HeaderText="First_LVL" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                  <asp:TemplateField HeaderText="Первый уровень" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Firstlvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Firstlvl") %>'></asp:TextBox>
                         </ItemTemplate>
@@ -71,7 +71,7 @@
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
                  
-                  <asp:TemplateField HeaderText="Second_LVL" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                  <asp:TemplateField HeaderText="Второй уровень" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Secondlvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Secondlvl") %>'></asp:TextBox>
                         </ItemTemplate>
@@ -79,7 +79,7 @@
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField>   
                  
-                 <asp:TemplateField HeaderText="Third_LVL" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                 <asp:TemplateField HeaderText="Третий уровень" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Thirdlvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Thirdlvl") %>'></asp:TextBox>
                         </ItemTemplate>
@@ -87,7 +87,7 @@
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
                  
-                 <asp:TemplateField HeaderText="Fourth_LVL" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                 <asp:TemplateField HeaderText="Четвертый уровень" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Fourthlvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Fourthlvl") %>'></asp:TextBox>
                         </ItemTemplate>
@@ -95,7 +95,7 @@
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
                  
-                     <asp:TemplateField HeaderText="Fifth_LVL" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                     <asp:TemplateField HeaderText="Пятый уровень" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Fifthlvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Fifthlvl") %>'></asp:TextBox>
                         </ItemTemplate>
@@ -103,7 +103,7 @@
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
                  
-                 <asp:TemplateField HeaderText="Acces_lvl" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                 <asp:TemplateField HeaderText="Уровень доступа" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Acceslvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Acceslvl") %>'></asp:TextBox>
                         </ItemTemplate>
@@ -111,9 +111,24 @@
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
 
-                 <asp:TemplateField HeaderText="Zero_lvl" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                 <asp:TemplateField HeaderText="Нулевой уровень" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
                             <asp:TextBox ID="Zerolvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Zerolvl") %>'></asp:TextBox>
+                        </ItemTemplate>
+
+<HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
+                    </asp:TemplateField> 
+
+                 <asp:TemplateField HeaderText="Почта подтверждена" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                        <ItemTemplate>
+                            <asp:TextBox ID="Confirmed" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Confirmed") %>'></asp:TextBox>
+                        </ItemTemplate>
+<HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
+                    </asp:TemplateField> 
+
+                 <asp:TemplateField HeaderText="Должность" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                        <ItemTemplate>
+                            <asp:TextBox ID="Position" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Position") %>'></asp:TextBox>
                         </ItemTemplate>
 
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>

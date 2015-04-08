@@ -52,9 +52,12 @@ namespace KPIWeb.AutomationDepartment
             dataTable.Columns.Add(new DataColumn("Fifthlvl", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Acceslvl", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Zerolvl", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("Confirmed", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("Position", typeof(string)));
             dataTable.Columns.Add(new DataColumn("DeleteUserButton", typeof(string)));
             dataTable.Columns.Add(new DataColumn("SaveUserButton", typeof(string)));
             dataTable.Columns.Add(new DataColumn("ChangeUserButton", typeof(string)));
+
 
             using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
             {
@@ -118,7 +121,8 @@ namespace KPIWeb.AutomationDepartment
                     dataRow["Zerolvl"] = (from a in zeroLevelSubdivisionTable
                                           where a.ZeroLevelSubdivisionTableID == user.FK_ZeroLevelSubdivisionTable
                                           select a.Name).FirstOrDefault();
-
+                    dataRow["Confirmed"] = user.Confirmed;
+                    dataRow["Position"] = user.Position;
                     dataTable.Rows.Add(dataRow);
                 }
 
@@ -189,6 +193,8 @@ namespace KPIWeb.AutomationDepartment
                                     TextBox TextBoxFifthlvl = (TextBox)GridView1.Rows[rowIndex].FindControl("Fifthlvl");
                                     TextBox TextBoxAcceslvl = (TextBox)GridView1.Rows[rowIndex].FindControl("Acceslvl");
                                     TextBox TextBoxZerolvl = (TextBox)GridView1.Rows[rowIndex].FindControl("Zerolvl");
+                                    TextBox TextBoxConfirmed = (TextBox)GridView1.Rows[rowIndex].FindControl("Confirmed");
+                                    TextBox TextBoxPosition = (TextBox)GridView1.Rows[rowIndex].FindControl("Position");
 
                                     using (KPIWebDataContext kPiDataContext = new KPIWebDataContext())
                                     {
@@ -209,6 +215,7 @@ namespace KPIWeb.AutomationDepartment
                                                                                   where a.UsersTableID == Convert.ToInt32(TextBoxFourthlvlId.Text)
                                                                                   select a.FK_FirstLevelSubdivisionTable).FirstOrDefault();
 
+                                       
                                         if (TextBoxSecondlvl.Text.Any())
                                             user.FK_SecondLevelSubdivisionTable = (from a in kPiDataContext.UsersTable
                                                                                    where a.UsersTableID == Convert.ToInt32(TextBoxFourthlvlId.Text)
@@ -231,6 +238,10 @@ namespace KPIWeb.AutomationDepartment
                                             user.FK_ZeroLevelSubdivisionTable = (from a in kPiDataContext.UsersTable
                                                                                  where a.UsersTableID == Convert.ToInt32(TextBoxFourthlvlId.Text)
                                                                                  select a.FK_ZeroLevelSubdivisionTable).FirstOrDefault();
+                                        if (TextBoxPosition.Text.Any())
+                                            user.Position = Convert.ToString(TextBoxPosition.Text);
+                                                                                 
+                                        
                                         kPiDataContext.SubmitChanges();
                                     }
                                 }

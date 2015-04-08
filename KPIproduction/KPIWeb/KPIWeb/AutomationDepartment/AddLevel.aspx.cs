@@ -24,7 +24,7 @@ namespace KPIWeb.AutomationDepartment
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            if (userTable.AccessLevel != 10)
+            if (userTable.AccessLevel != 10 && userTable.AccessLevel != 9)
             {
                 Response.Redirect("~/Default.aspx");
             }
