@@ -99,6 +99,14 @@
    </asp:Panel>
    </asp:Panel>
 
+   <asp:Panel id="Loading_2" runat="server" calss="loading_screen" Visible="false" >
+   <asp:Panel id="Panel2" runat="server" class="Image1">
+       <h2 id="load_style">Загрузка...</h2>
+       <asp:Panel runat="server" id="Panel3"  ></asp:Panel>
+       <asp:Panel runat="server" id="Panel4"  ></asp:Panel>
+   </asp:Panel>
+   </asp:Panel>
+
 </body>  
       
 </html>

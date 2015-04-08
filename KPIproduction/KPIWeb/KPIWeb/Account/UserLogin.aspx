@@ -30,7 +30,7 @@
  
         <asp:Label ID="Label2" runat="server" Text="Пароль"></asp:Label>
 
-        <asp:Checkbox  Text=" "  ID="CheckBox1" runat="server" />
+      
 
         <br />
 
