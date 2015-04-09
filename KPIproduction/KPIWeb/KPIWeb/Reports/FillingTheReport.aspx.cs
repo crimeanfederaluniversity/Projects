@@ -350,8 +350,28 @@ namespace KPIWeb.Reports
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            string script = @"<script>
+            function ConfirmSubmit() {
+                var msg = 'Отправить данные на утверждение?'; 
+                return confirm(msg);
+            }
+            </script>";
 
+            string script2 = @"<script>
+            function ConfirmSubmit() {
+                var msg = 'Подтвердить достоверность данных и отправить их на обработку(Режим доступа к данным будет измене на \'только просмотр\')?'; 
+                return confirm(msg);
+            }
+            </script>";
+            
+            string script3 = @"<script>
+            function ConfirmSubmitOn() {
+                var msg = 'Вернуть отчёт на доработку.'; 
+                return confirm(msg);
+            }
+            </script>";
 
+            
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
@@ -935,7 +955,10 @@ namespace KPIWeb.Reports
                         }
                         ViewState["AllCnt"] = StatusList.Count();
                         Label2.Text = "Осталось " + dateCount + " дней до закрытия отчёта";
-                        UpnDownButton.OnClientClick = "javascript:return confirm('Отправить данные на утверждение?');";
+
+                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(),
+                         "Confirm", script);
+                        UpnDownButton.Attributes.Add("OnClick", "return ConfirmSubmit();");
 
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                             "window.onbeforeunload = function(e) " +
@@ -996,9 +1019,15 @@ namespace KPIWeb.Reports
                         Label1.Text = "Форма Утверждения данных.";
                         Label2.Text = "Осталось " + dateCount + " дней до закрытия отчёта";
 
-                        ButtonSave.OnClientClick =
-                            "javascript:return confirm('Подтвердить достоверность данных и отправить их на обработку(Режим доступа к данным будет измене на \"только просмотр\")?');";
-                        UpnDownButton.OnClientClick = "javascript:return confirm('Вернуть отчёт на доработку.');";
+                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(),
+                        "Confirm", script2);
+
+                        ButtonSave.Attributes.Add("OnClick", "return ConfirmSubmit();");
+
+                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(),
+                        "ConfirmOn", script3);
+
+                        UpnDownButton.Attributes.Add("OnClick", "return ConfirmSubmitOn();");
                     }
                     GridviewCollectedBasicParameters.DataSource = dataTable;
                     for (int j = 0; j < additionalColumnCount; j++)
@@ -1128,16 +1157,16 @@ namespace KPIWeb.Reports
                     int AllCnt = (int)ViewState["AllCnt"];
                     if (AllCnt == notNullCnt)
                     {
-                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Все показатели заполнены. Необходимо отправить отчёт на верификацию');" +
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Все показатели заполнены. Необходимо отправить отчёт на верификацию');" +
                             "document.location = '../Reports/FillingTheReport.aspx';", true);
+
+                       
                     }
                     else
                     {
-
-                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + AllCnt + " для отправки отчёта необходимо заполнитеь еще " + (AllCnt - notNullCnt) + " показателей.');" +
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + AllCnt + " для отправки отчёта необходимо заполнитеь еще " + (AllCnt - notNullCnt) + " показателей.');" +
                             "document.location = '../Reports/FillingTheReport.aspx';", true);
+
                     }
 
                     #endregion
@@ -1190,15 +1219,17 @@ namespace KPIWeb.Reports
                                 }
                             }
                         }
-                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Вы утвердили данные всех базовых показателей. отчёт отправлен и доступен только в режиме \"Просмотр\".');" +
+
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Вы утвердили данные всех базовых показателей. отчёт отправлен и доступен только в режиме \"Просмотр\".');" +
                             "document.location = '../Default.aspx';", true);
+
+                     
                     }
                     else
                     {
                         //error
-                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "alert('Ошибка'); document.location = '../Default.aspx'; ", true);
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Ошибка'); document.location = '../Default.aspx'; ", true);
+              
                     }
                     #endregion
                 }

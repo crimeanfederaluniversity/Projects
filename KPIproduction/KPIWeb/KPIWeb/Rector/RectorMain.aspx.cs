@@ -42,5 +42,25 @@ namespace KPIWeb.Rector
         {
             Response.Redirect("~/Rector/ViewDocument.aspx");
         }
+
+        protected void GoBackButton_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void GoForwardButton_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void Button6_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
