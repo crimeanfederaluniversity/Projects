@@ -91,18 +91,18 @@
                 </div>
        
     </form>
-    <asp:Panel id="loading" runat="server" calss="loading_screen" Visible="false" >
-   <asp:Panel id="gears" runat="server" class="Image1">
+    <asp:Panel id="loading" runat="server" class="loading" Visible="false" >
+   <asp:Panel id="gears" runat="server" >
        <h2 id="load_style">Загрузка...</h2>
        <asp:Panel runat="server" id="im1"  ></asp:Panel>
        <asp:Panel runat="server" id="im2"  ></asp:Panel>
    </asp:Panel>
    </asp:Panel>
 
-   <asp:Panel id="Loading_2" runat="server" calss="loading_screen" Visible="false" >
-   <asp:Panel id="Panel2" runat="server" class="Image1">
+   <asp:Panel id="loading_circle" runat="server" class="loading" Visible="false" >
+   <asp:Panel id="Panel2" runat="server" >
        <h2 id="load_style">Загрузка...</h2>
-       <asp:Panel runat="server" id="Panel3"  ></asp:Panel>
+       <asp:Panel runat="server" id="im3_circle"  ></asp:Panel>
        <asp:Panel runat="server" id="Panel4"  ></asp:Panel>
    </asp:Panel>
    </asp:Panel>

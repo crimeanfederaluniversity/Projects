@@ -58,13 +58,13 @@ namespace KPIWeb {
         protected global::System.Web.UI.WebControls.Panel im2;
         
         /// <summary>
-        /// Loading_2 элемент управления.
+        /// loading_circle элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Loading_2;
+        protected global::System.Web.UI.WebControls.Panel loading_circle;
         
         /// <summary>
         /// Panel2 элемент управления.
@@ -76,13 +76,13 @@ namespace KPIWeb {
         protected global::System.Web.UI.WebControls.Panel Panel2;
         
         /// <summary>
-        /// Panel3 элемент управления.
+        /// im3_circle элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel3;
+        protected global::System.Web.UI.WebControls.Panel im3_circle;
         
         /// <summary>
         /// Panel4 элемент управления.
