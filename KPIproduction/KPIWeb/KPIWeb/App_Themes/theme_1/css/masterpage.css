@@ -167,6 +167,9 @@ background-image: url('../../../css/images/kfu_button_gradient_hover_green_1.png
         font-size: small;
         font-weight: normal;
         padding-left:10px;
+        padding-right:10px;
+        padding-top:5px;
+        padding-bottom:5px;
     }
 
 
@@ -184,7 +187,8 @@ background-image: url('../../../css/images/kfu_button_gradient_hover_green_1.png
     font-variant: normal;
     text-transform: none;
     color: #000000;
-    background-color:#05ff01;
+    background-color: #05ff01;
+}
 /*
   background-image:url("/css/images/bg_5_texts.png");
   background-size:contain; 
@@ -192,7 +196,7 @@ background-image: url('../../../css/images/kfu_button_gradient_hover_green_1.png
    
 
 /*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*/
-input[type="submit"] {
+    input[type="submit"] {
     font-family: "Arial Unicode MS";
     font-size: large;
     font-weight: bold;
@@ -208,11 +212,13 @@ input[type="submit"] {
     border-color: #000000;
     border-style:solid;
     border-radius: 4px;
+    
 
-
-
-   }
-   }
+    padding-right:10px;
+    width:200px;
+    display:inline-block;
+       }
+   
 input[type="submit"]:hover {
     border-width:2px;
 background-image: url('/App_Themes/theme_1/css/images/kfu_button_gradient_hover_green_2.png');
@@ -303,7 +309,7 @@ left:7%;
 
 /*ANIMATION_OBJ_DESIGN*//*ANIMATION_OBJ_DESIGN*//*ANIMATION_OBJ_DESIGN*/
 
-#loading { 
+.loading { 
     
     top:0;
     left:0;
@@ -370,6 +376,24 @@ left:7%;
     animation-timing-function:linear;
     animation-direction:reverse;
 }
+#im3_circle {
+    position:absolute;
+    top:60px; 
+    left:79px;
+  
+    
+    background-image:url('/App_Themes/theme_1/css/images/gear_small_2.png'),url('/App_Themes/theme_1/css/images/Circle_progres_bar.png');
+    opacity:0.1,0.4;
+    background-repeat:no-repeat;
+  
+    width:200px;
+    height:200px;
+    animation-name:anim_circle_progress_rotate;
+    animation-duration:8s;
+    animation-iteration-count:infinite;
+    animation-timing-function:linear;
+    
+}
 /*ANIMATION_OBJ_DESIGN*//*ANIMATION_OBJ_DESIGN*//*ANIMATION_OBJ_DESIGN*/
 
 
@@ -384,6 +408,15 @@ left:7%;
     }
 }
 @keyframes anim_circle_progress_bar_2 {
+
+    0% {
+        transform:rotate(0deg);
+    }
+    100% {
+        transform:rotate(360deg);
+    }
+}
+@keyframes anim_circle_progress_rotate {
 
     0% {
         transform:rotate(0deg);
