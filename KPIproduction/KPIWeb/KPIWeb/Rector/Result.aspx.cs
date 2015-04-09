@@ -378,6 +378,26 @@ namespace KPIWeb.Rector
                 {
                     Response.Redirect("~/Default.aspx");
                 }
+                ShowUnConfirmed unConfirmed = (ShowUnConfirmed)Session["unConfirmed"];                
+                bool ShowUnconfirmed = true;
+                if (unConfirmed == null)
+                {
+                    ShowUnconfirmed = false;
+                }
+                else
+                {
+                    if (unConfirmed.DoShowUnConfirmed == false)
+                    {
+                        ShowUnconfirmed = false;
+                    }
+                    else
+                    {
+                        unConfirmed.DoShowUnConfirmed = false;
+                        Session["unConfirmed"] = unConfirmed;
+                    }
+                }
+
+
 
                 #region check for get
                 string val = this.Request.QueryString["HLevel"];//hisoty level сова придумал)
@@ -398,8 +418,10 @@ namespace KPIWeb.Rector
                 int ParamID = CurrentRectorSession.sesParamID;
                 int ParamType = CurrentRectorSession.sesParamType;
                 int ReportID = CurrentRectorSession.sesReportID;
-                int SpecID = CurrentRectorSession.sesSpecID;             
+                int SpecID = CurrentRectorSession.sesSpecID;   
+
                 #endregion
+
                 #region DataTable init
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("ID", typeof (string)));
@@ -424,8 +446,21 @@ namespace KPIWeb.Rector
                     where a.ReportArchiveTableID == ReportID
                     select a).FirstOrDefault();
 
+                double daysLeft =  ((DateTime) ReportTable.EndDateTime - DateTime.Now).TotalDays;
+                            
                 ReportTitle.Text = ReportTable.Name + " " + ReportTable.StartDateTime.ToString().Split(' ')[0] + " - " + ReportTable.EndDateTime.ToString().Split(' ')[0];
 
+                #endregion
+                #region Show Uncinfirmed Button               
+                if ((daysLeft < ReportTable.DaysBeforeToCalcForRector) &&
+                    (ReportTable.DaysBeforeToCalcForRector != 0))
+                {
+                    Button7.Enabled = true;
+                }
+                else
+                {
+                    Button7.Enabled = false;
+                }
                 #endregion
                 if (ViewType == 0) // просмотр для структурных подразделений
                 {
@@ -695,6 +730,9 @@ namespace KPIWeb.Rector
                             }
                             #endregion
                             #region get calculated if confirmed; calculate if not confirmed
+                            string value_ = "";
+
+
                             CollectedIndocators collected = (from a in kpiWebDataContext.CollectedIndocators
                                                                  where a.FK_ReportArchiveTable == ReportID
                                                                  && a.FK_Indicators == CurrentIndicator.IndicatorsTableID
@@ -718,8 +756,9 @@ namespace KPIWeb.Rector
                             {
                                 dataRow["CanConfirm"] = false;
                                 dataRow["ShowLable"] = true;
-                                dataRow["LableText"] = "Подтверждено";
+                                dataRow["LableText"] = "Утверждено";
                                 dataRow["LableColor"] = "#00FF00";
+                                value_ = ((float)collected.CollectedValue).ToString("0.000");
                             }
                             else // данные уже есть но еще не подтверждены
                             {                                
@@ -727,15 +766,45 @@ namespace KPIWeb.Rector
                                 {
                                     dataRow["CanConfirm"] = false;
                                     dataRow["ShowLable"] = true;
-                                    dataRow["LableText"] = "Нет права подтверждать";
+                                    dataRow["LableText"] = "Нет права утверждать";
                                     dataRow["LableColor"] = "#101010";
+                                    value_ = "Недостаточно данных";
+                                    if (ShowUnconfirmed)
+                                    {
+                                        float tmp =
+                                            CalculatedForDB(GetCalculatedWithParams(mainStruct, ParamType,
+                                                CurrentIndicator.IndicatorsTableID, ReportID, SpecID));
+                                        if (tmp == (float) 1E+20)
+                                        {
+                                            value_ = "Рассчет невозможен";
+                                        }
+                                        else
+                                        {
+                                            value_ = tmp.ToString("0.000");
+                                        }
+                                    }
                                 }
                                 else if (!CalcAreConfirmed)
                                 {
                                     dataRow["CanConfirm"] = false;
                                     dataRow["ShowLable"] = true;
-                                    dataRow["LableText"] = "Не все расчетные подтверждены";
+                                    dataRow["LableText"] = "Не все расчетные утверждены";
                                     dataRow["LableColor"] = "#101010";
+                                    value_ = "Недостаточно данных";
+                                    if (ShowUnconfirmed)
+                                    {
+                                        float tmp =
+                                            CalculatedForDB(GetCalculatedWithParams(mainStruct, ParamType,
+                                                CurrentIndicator.IndicatorsTableID, ReportID, SpecID));
+                                        if (tmp == (float)1E+20)
+                                        {
+                                            value_ = "Рассчет невозможен";
+                                        }
+                                        else
+                                        {
+                                            value_ = tmp.ToString("0.000");
+                                        }
+                                    }
                                 }
                                 else
                                 {
@@ -743,22 +812,12 @@ namespace KPIWeb.Rector
                                     dataRow["ShowLable"] = false;
                                     dataRow["LableText"] = "";
                                     dataRow["LableColor"] = "#FFFFFF";
-                                }
-
-                                collected.CollectedValue = CalculatedForDB(GetCalculatedWithParams(mainStruct, ParamType, CurrentIndicator.IndicatorsTableID, ReportID, SpecID));//12;                               
-                                kpiWebDataContext.SubmitChanges();
-                                
+                                    collected.CollectedValue = CalculatedForDB(GetCalculatedWithParams(mainStruct, ParamType, CurrentIndicator.IndicatorsTableID, ReportID, SpecID));//12;                               
+                                    kpiWebDataContext.SubmitChanges();
+                                    value_ = ((float)collected.CollectedValue).ToString("0.000");
+                                }                                
                             }
-
-                            if (collected.CollectedValue == (float)1E+20)
-                            {
-                                dataRow["Value"] = "Недостаточно данных";
-                            }
-                            else
-                            {
-                                dataRow["Value"] = ((float)collected.CollectedValue).ToString("0.000");
-                            }
-
+                            dataRow["Value"] = value_;
                             #endregion
                             dataTable.Rows.Add(dataRow);
                         }
@@ -819,7 +878,8 @@ namespace KPIWeb.Rector
 
                                 int ConfirmedBasicsInReport = (from a in kpiWebDataContext.CollectedBasicParametersTable
                                     where a.FK_ReportArchiveTable == ReportID
-                                    && a.FK_BasicParametersTable == Basic.BasicParametersTableID
+                                          && a.FK_BasicParametersTable == Basic.BasicParametersTableID
+                                          && a.Status == 4                               
                                     select a).Count();
                                 if (UsersCanEditBasicCount == ConfirmedBasicsInReport)
                                 {
@@ -827,6 +887,9 @@ namespace KPIWeb.Rector
                                 }
                             }
                             #endregion
+
+                            string value_ = "";
+
                             CollectedCalculatedParametrs collected = (from a in kpiWebDataContext.CollectedCalculatedParametrs
                                                              where a.FK_ReportArchiveTable == ReportID
                                                              && a.FK_CalculatedParametrs == CurrentCalculated.CalculatedParametrsID
@@ -849,27 +912,50 @@ namespace KPIWeb.Rector
                             {
                                 dataRow["CanConfirm"] = false;
                                 dataRow["ShowLable"] = true;
-                                dataRow["LableText"] = "Подтверждено";
+                                dataRow["LableText"] = "Утверждено";
                                 dataRow["LableColor"] = Color.LawnGreen;
-                                //dataRow["Value"] = collected.CollectedValue;
+                                value_ = ((float)collected.CollectedValue).ToString("0.000");
                             }
                             else // данные есть но не подтверждены
-                            {
-                                
-                                if (canConfirm == false)
+                            {                                
+                                if (canConfirm == false) //
                                 {
                                     dataRow["CanConfirm"] = false;
                                     dataRow["ShowLable"] = true;
-                                    dataRow["LableText"] = "Нет права подтверждать";
-                                    dataRow["LableColor"] = Color.LightBlue;
-
+                                    dataRow["LableText"] = "Нет права утверждать";
+                                    value_ = "Недостаточно данных";
+                                    if (ShowUnconfirmed)
+                                    {
+                                        float tmp =CalculatedForDB(GetCalculatedWithParams(mainStruct, ParamType, CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
+                                        if (tmp == (float)1E+20)
+                                        {
+                                            value_ = "Рассчет невозможен";
+                                        }
+                                        else
+                                        {
+                                            value_ = tmp.ToString("0.000");
+                                        }
+                                    }
                                 }
                                 else if (BasicsAreConfirmed == false)
                                 {
                                     dataRow["CanConfirm"] = false;
                                     dataRow["ShowLable"] = true;
-                                    dataRow["LableText"] = "Не все базовые показатели подтверждены";
+                                    dataRow["LableText"] = "Не все базовые показатели утверждены";
                                     dataRow["LableColor"] = Color.LightBlue;
+                                    value_ = "Недостаточно данных";
+                                    if (ShowUnconfirmed)
+                                    {
+                                        float tmp = CalculatedForDB(GetCalculatedWithParams(mainStruct, ParamType, CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
+                                        if (tmp == (float)1E+20)
+                                        {
+                                            value_ = "Рассчет невозможен";
+                                        }
+                                        else
+                                        {
+                                            value_ = tmp.ToString("0.000");
+                                        }
+                                    }
                                 }
                                 else
                                 {
@@ -877,21 +963,12 @@ namespace KPIWeb.Rector
                                     dataRow["ShowLable"] = false;
                                     dataRow["LableText"] = "";
                                     dataRow["LableColor"] = "#000000";
+                                    collected.CollectedValue = CalculatedForDB(GetCalculatedWithParams(mainStruct, ParamType, CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
+                                    kpiWebDataContext.SubmitChanges();
+                                    value_ = ((float)collected.CollectedValue).ToString("0.000");
                                 }
-
-                                collected.CollectedValue =  CalculatedForDB(GetCalculatedWithParams(mainStruct, ParamType, CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
-                                kpiWebDataContext.SubmitChanges();
                             }
-
-                            if (collected.CollectedValue == (float)1E+20)
-                            {
-                                dataRow["Value"] = "Недостаточно данных";
-                            }
-                            else
-                            {
-                                dataRow["Value"] = ((float)collected.CollectedValue).ToString("0.000");
-                            }
-
+                            dataRow["Value"] = value_;
                             #endregion                            
                             dataTable.Rows.Add(dataRow);
                         }
@@ -974,24 +1051,12 @@ namespace KPIWeb.Rector
                         RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID, "Индикатор для специальностей");
                         rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
                         Session["rectorHistory"] = rectorHistory;
-
-                        PageName.Text = "Значения для индикатора; \"";
-                        PageName.Text += (from a in kpiWebDataContext.IndicatorsTable
-                                          where a.IndicatorsTableID == ParamID
-                                          select a.Name).FirstOrDefault();
-                        PageName.Text += "\";";
                     }
                     else if (ParamType == 1)
                     {
                         RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID, "Расчетный для специальностей");
                         rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
                         Session["rectorHistory"] = rectorHistory;
-
-                        PageName.Text = "Значения для расчетного показателя: \"";
-                        PageName.Text += (from a in kpiWebDataContext.CalculatedParametrs
-                                          where a.CalculatedParametrsID == ParamID
-                                          select a.Name).FirstOrDefault();
-                        PageName.Text += "\";";
                     }
                     else if (ParamType == 2)
                     {
@@ -1002,10 +1067,6 @@ namespace KPIWeb.Rector
                                           where a.BasicParametersTableID == ParamID
                                           select a.Name).FirstOrDefault();
                         PageFullName.Text = "Значения базового показателя \"" + tmp + "\" по специальностям для КФУ";
-                       
-                        PageName.Text = "Значения для базового показателя: \"";
-                        PageName.Text += tmp;
-                        PageName.Text += "\";";
                     }
 
                     string title = "Специальности";
@@ -1338,6 +1399,12 @@ namespace KPIWeb.Rector
         protected void Grid_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+        protected void Button7_Click(object sender, EventArgs e)
+        {
+            ShowUnConfirmed unConfirmed =new ShowUnConfirmed(true);
+            Session["unConfirmed"] = unConfirmed;
+            Response.Redirect("~/Rector/Result.aspx");
         }
     }
 }

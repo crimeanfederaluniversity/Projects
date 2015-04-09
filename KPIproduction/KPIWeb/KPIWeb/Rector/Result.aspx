@@ -33,8 +33,7 @@
      --------------------------------------------------<br />
      <asp:TreeView ID="TreeView1" runat="server" NodeWrap="True" ShowExpandCollapse="False" ShowLines="True">
      </asp:TreeView>
-     <asp:Label ID="PageName" runat="server" Text="PageName" Visible="False"></asp:Label>
-     &nbsp;<asp:Label ID="SpecName" runat="server" Text="SpecName" Visible="False"></asp:Label>
+     &nbsp;<asp:Button ID="Button7" runat="server" OnClick="Button7_Click" Text="Показать значение показателей по имеющимся данным" Width="558px" />
      <br />
 <asp:GridView ID="Grid" runat="server" 
             AutoGenerateColumns="False"

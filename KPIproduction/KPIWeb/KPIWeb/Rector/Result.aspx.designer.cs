@@ -103,22 +103,13 @@ namespace KPIWeb.Rector {
         protected global::System.Web.UI.WebControls.TreeView TreeView1;
         
         /// <summary>
-        /// PageName элемент управления.
+        /// Button7 элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PageName;
-        
-        /// <summary>
-        /// SpecName элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label SpecName;
+        protected global::System.Web.UI.WebControls.Button Button7;
         
         /// <summary>
         /// Grid элемент управления.

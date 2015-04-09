@@ -277,6 +277,14 @@
       <Association Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable" Member="ReportArchiveAndIndicatorsMappingTable" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="ReportArchiveAndIndicatorsMappingTable" />
     </Type>
   </Table>
+  <Table Name="dbo.ManualTable" Member="ManualTable">
+    <Type Name="ManualTable">
+      <Column Name="ManualID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ManualName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="ManualLink" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.PlannedIndicator" Member="PlannedIndicator">
     <Type Name="PlannedIndicator">
       <Column Name="PlanedIndicatorID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -340,6 +348,8 @@
       <Column Name="DateToSend" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="RecivedDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ConfirmEndDay" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DaysBeforeToCalcForRector" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="ReportArchiveTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="CollectedBasicParametersTable" />
       <Association Name="ReportArchiveTable_CollectedCalculatedParametrs" Member="CollectedCalculatedParametrs" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="CollectedCalculatedParametrs" />
       <Association Name="ReportArchiveTable_CollectedIndocators" Member="CollectedIndocators" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="CollectedIndocators" />
@@ -434,14 +444,6 @@
       <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="ZeroLevelSubdivisionTable_UsersTable" Member="ZeroLevelSubdivisionTable" ThisKey="FK_ZeroLevelSubdivisionTable" OtherKey="ZeroLevelSubdivisionTableID" Type="ZeroLevelSubdivisionTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ManualTable" Member="ManualTable">
-    <Type Name="ManualTable">
-      <Column Name="ManualID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="ManualName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="ManualLink" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

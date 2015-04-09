@@ -58,4 +58,14 @@ namespace KPIWeb
             this.paramType = _paramType;
         }
     }
+
+    [Serializable]
+    public class ShowUnConfirmed
+    {
+        public bool DoShowUnConfirmed { set; get; }
+        public ShowUnConfirmed(bool DoShowUnConfirmed_)
+        {
+            this.DoShowUnConfirmed = DoShowUnConfirmed_;
+        }
+    }
 }
