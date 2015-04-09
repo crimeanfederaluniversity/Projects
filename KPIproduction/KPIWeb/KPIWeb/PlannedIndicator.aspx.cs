@@ -46,9 +46,10 @@ namespace KPIWeb
             PlannedIndicator indicators = new PlannedIndicator();
             if (CheckBox1.Checked) indicators.Active = true;
             else indicators.Active = false;
-            indicators.Date = DateTime.Now;
+            
             indicators.FK_IndicatorsTable = Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value);
             indicators.Value = Convert.ToInt32(IndicatorMeasure.Text);
+            indicators.Date = Calendar1.SelectedDate;
             kPiDataContext.PlannedIndicator.InsertOnSubmit(indicators);
             kPiDataContext.SubmitChanges();
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Индикатор создан');", true);

@@ -1210,7 +1210,7 @@ namespace KPIWeb.Reports
         }
         protected void GridviewCollectedBasicParameters_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            Color color;
+            Color color;    
             Color confirmedColor = System.Drawing.Color.LimeGreen;
             Color disableColor = System.Drawing.Color.LightGray;
             if (col_ == 0)

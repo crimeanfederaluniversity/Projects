@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.IO;
 
 namespace KPIWeb.Rector
 {
@@ -28,10 +29,20 @@ namespace KPIWeb.Rector
         }
         protected void DeleteButtonClick(object sender, EventArgs e)
         {
-             Button button = (Button)sender;
-             string s = button.CommandArgument.ToString(); 
-             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script","document.location = 'docs/"+s+"';", true);
-
+            
+            Button button = (Button)sender;
+            string s = button.CommandArgument.ToString();
+            // var n = Directory.GetCurrentDirectory();
+          // if (n.File.Exists("s") == true)
+           //  {
+            //if (Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "document.location = 'docs/" + s + "';" ))
+           // {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "document.location = 'docs/" + s + "';", true);
+          // }
+          //  else
+          //  {
+          //    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Документ не найден');", true);
+          //  }
                 }
             }
         }

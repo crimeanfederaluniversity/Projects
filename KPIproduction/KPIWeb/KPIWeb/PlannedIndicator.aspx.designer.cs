@@ -85,6 +85,15 @@ namespace KPIWeb {
         protected global::System.Web.UI.WebControls.CheckBox CheckBox1;
         
         /// <summary>
+        /// Calendar1 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar Calendar1;
+        
+        /// <summary>
         /// Button2 элемент управления.
         /// </summary>
         /// <remarks>

@@ -65,6 +65,8 @@
                 
                 <asp:CheckBox ID="CheckBox1" Text="Активен" runat="server" />
                  <br />
+    <asp:Calendar ID="Calendar1" runat="server"></asp:Calendar>
+                 <br />
     <br />
     <br />
     <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Сохранить" />

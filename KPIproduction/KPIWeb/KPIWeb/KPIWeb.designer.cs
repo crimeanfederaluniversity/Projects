@@ -126,6 +126,9 @@ namespace KPIWeb
     partial void InsertUsersTable(UsersTable instance);
     partial void UpdateUsersTable(UsersTable instance);
     partial void DeleteUsersTable(UsersTable instance);
+    partial void InsertManualTable(ManualTable instance);
+    partial void UpdateManualTable(ManualTable instance);
+    partial void DeleteManualTable(ManualTable instance);
     #endregion
 		
 		public KPIWebDataContext() : 
@@ -411,6 +414,14 @@ namespace KPIWeb
 			get
 			{
 				return this.GetTable<UsersTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ManualTable> ManualTable
+		{
+			get
+			{
+				return this.GetTable<ManualTable>();
 			}
 		}
 	}
@@ -10145,6 +10156,140 @@ namespace KPIWeb
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ManualTable")]
+	public partial class ManualTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ManualID;
+		
+		private System.Nullable<bool> _Active;
+		
+		private string _ManualName;
+		
+		private string _ManualLink;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnManualIDChanging(int value);
+    partial void OnManualIDChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnManualNameChanging(string value);
+    partial void OnManualNameChanged();
+    partial void OnManualLinkChanging(string value);
+    partial void OnManualLinkChanged();
+    #endregion
+		
+		public ManualTable()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ManualID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ManualID
+		{
+			get
+			{
+				return this._ManualID;
+			}
+			set
+			{
+				if ((this._ManualID != value))
+				{
+					this.OnManualIDChanging(value);
+					this.SendPropertyChanging();
+					this._ManualID = value;
+					this.SendPropertyChanged("ManualID");
+					this.OnManualIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ManualName", DbType="VarChar(100)")]
+		public string ManualName
+		{
+			get
+			{
+				return this._ManualName;
+			}
+			set
+			{
+				if ((this._ManualName != value))
+				{
+					this.OnManualNameChanging(value);
+					this.SendPropertyChanging();
+					this._ManualName = value;
+					this.SendPropertyChanged("ManualName");
+					this.OnManualNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ManualLink", DbType="VarChar(100)")]
+		public string ManualLink
+		{
+			get
+			{
+				return this._ManualLink;
+			}
+			set
+			{
+				if ((this._ManualLink != value))
+				{
+					this.OnManualLinkChanging(value);
+					this.SendPropertyChanging();
+					this._ManualLink = value;
+					this.SendPropertyChanged("ManualLink");
+					this.OnManualLinkChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }
