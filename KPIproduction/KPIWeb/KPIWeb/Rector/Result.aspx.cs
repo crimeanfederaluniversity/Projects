@@ -419,9 +419,13 @@ namespace KPIWeb.Rector
 
                 #endregion 
                 #region global page settings
-                ReportTitle.Text = (from a in kpiWebDataContext.ReportArchiveTable
+
+                ReportArchiveTable ReportTable = (from a in kpiWebDataContext.ReportArchiveTable
                     where a.ReportArchiveTableID == ReportID
-                    select a.Name).FirstOrDefault().ToString();
+                    select a).FirstOrDefault();
+
+                ReportTitle.Text = ReportTable.Name + " " + ReportTable.StartDateTime.ToString().Split(' ')[0] + " - " + ReportTable.EndDateTime.ToString().Split(' ')[0];
+
                 #endregion
                 if (ViewType == 0) // просмотр для структурных подразделений
                 {
@@ -489,7 +493,7 @@ namespace KPIWeb.Rector
                     }
                     if (mainStruct.Lv_1 == 0)
                     {
-                        RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID, "По университетам КФУ");
+                        RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID, SpecID, "КФУ");
                         rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
                         Session["rectorHistory"] = rectorHistory;
                     }

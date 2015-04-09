@@ -67,6 +67,15 @@ namespace KPIWeb.Rector {
         protected global::System.Web.UI.WebControls.Button Button6;
         
         /// <summary>
+        /// Help элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Help;
+        
+        /// <summary>
         /// ReportTitle элемент управления.
         /// </summary>
         /// <remarks>

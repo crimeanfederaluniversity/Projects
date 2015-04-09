@@ -13,13 +13,12 @@
       <asp:Button ID="GoBackButton" runat="server" OnClick="GoBackButton_Click" Text="Назад" Width="125px" />
       <asp:Button ID="GoForwardButton" runat="server" OnClick="GoForwardButton_Click" Text="Вперед" Width="125px" />
         &nbsp; &nbsp; <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="На главную" Width="125px" />
-            &nbsp; &nbsp;
-       
-        
+        &nbsp; &nbsp;       
         <asp:Button ID="Button5" runat="server" CssClass="button_right" OnClick="Button5_Click" Text="Нормативные документы" Width="225px" />
-             &nbsp; &nbsp;
+        &nbsp; &nbsp;
         <asp:Button ID="Button6" runat="server" CssClass="button_right" OnClick="Button6_Click" Text="Button" Width="150px" />
-             &nbsp; &nbsp;
+        &nbsp; &nbsp;
+        <asp:Button ID="Help" runat="server" CssClass="button_right"  Text="Помощь" Width="150px" />
         </div>
 
     </asp:Panel>

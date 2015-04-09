@@ -39,11 +39,11 @@ namespace KPIWeb.Rector
 
                 if (paramType.paramType == 0) //смотрим индикаторы
                 {
-                    PageName.Text = "Выберите отчет для просмотра расчитанных целевых показателей";
+                    PageName.Text = "Работа с целевыми показателями";
                 }
                 else
                 {
-                    PageName.Text = "Выберите отчет для просмотра расчетных показателей";
+                    PageName.Text = "Работа с расчетными показателями";
                 }
 
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();                
