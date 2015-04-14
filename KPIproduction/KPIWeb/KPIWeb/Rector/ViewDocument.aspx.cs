@@ -32,17 +32,17 @@ namespace KPIWeb.Rector
             
             Button button = (Button)sender;
             string s = button.CommandArgument.ToString();
-            // var n = Directory.GetCurrentDirectory();
-          // if (n.File.Exists("s") == true)
+            string n = Server.MapPath(@"~/Rector/docs/"+ s);
+          if (File.Exists(n))
            //  {
             //if (Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "document.location = 'docs/" + s + "';" ))
            // {
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "document.location = 'docs/" + s + "';", true);
           // }
-          //  else
-          //  {
-          //    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Документ не найден');", true);
-          //  }
+            else
+           {
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Документ не найден');", true);
+          }
                 }
 
         protected void Button2_Click(object sender, EventArgs e)

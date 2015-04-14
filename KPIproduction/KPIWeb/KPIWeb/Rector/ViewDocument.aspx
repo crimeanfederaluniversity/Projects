@@ -33,13 +33,13 @@
     <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server" >           
              <Columns>               
                 
-                 <asp:TemplateField HeaderText="Название файла" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "False" >
+                 <asp:TemplateField HeaderText="Название файла" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="DocumentName" runat="server" Text='<%# Bind("DocumentName") %>'  Visible="True"></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>   
                  
-                  <asp:TemplateField HeaderText="Название документа" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                  <asp:TemplateField HeaderText="Название документа" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "False" >
                         <ItemTemplate> 
                             <asp:Label ID="DocumentLink" runat="server" Text='<%# Bind("DocumentLink") %>'  Visible="True"></asp:Label>
                         </ItemTemplate>
