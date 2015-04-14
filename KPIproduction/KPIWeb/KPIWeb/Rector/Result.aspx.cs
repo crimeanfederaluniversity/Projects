@@ -1796,6 +1796,13 @@ namespace KPIWeb.Rector
             {
                 Response.Redirect("~/Default.aspx");
             }
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userID = UserSer.Id;
+
             RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
             int ParamType = CurrentRectorSession.sesParamType;
 
@@ -1806,6 +1813,17 @@ namespace KPIWeb.Rector
                                                  select a).FirstOrDefault();
                 Indicator.Confirmed = true;
                 kpiWebDataContext.SubmitChanges();
+                #region save params in DB with comment
+                ConfirmationHistory ConfirmParam = new ConfirmationHistory();
+                ConfirmParam.Date = DateTime.Now;
+                ConfirmParam.FK_IndicatorsTable = ParamId;
+                ConfirmParam.FK_ReportTable = CurrentRectorSession.sesReportID;
+                ConfirmParam.FK_UsersTable = userID;
+                ConfirmParam.Name = "Подтверждение индикатора проректором";
+                ConfirmParam.Comment = TextBox1.Text;
+                kpiWebDataContext.ConfirmationHistory.InsertOnSubmit(ConfirmParam);
+                kpiWebDataContext.SubmitChanges();
+                #endregion
                 Response.Redirect("~/Rector/Result.aspx");
             }
             else if (ParamType == 1) // calculated
@@ -1815,6 +1833,17 @@ namespace KPIWeb.Rector
                                                            select a).FirstOrDefault();
                 Calculated.Confirmed = true;
                 kpiWebDataContext.SubmitChanges();
+                #region save params in DB with comment
+                ConfirmationHistory ConfirmParam = new ConfirmationHistory();
+                ConfirmParam.Date = DateTime.Now;
+                ConfirmParam.FK_CalculatedParamTable = ParamId;
+                ConfirmParam.FK_ReportTable = CurrentRectorSession.sesReportID;
+                ConfirmParam.FK_UsersTable = userID;
+                ConfirmParam.Name = "Подтверждение расчетного параметра проректором";
+                ConfirmParam.Comment = TextBox1.Text;
+                kpiWebDataContext.ConfirmationHistory.InsertOnSubmit(ConfirmParam);
+                kpiWebDataContext.SubmitChanges();
+                #endregion
                 Response.Redirect("~/Rector/Result.aspx");
             }
         }

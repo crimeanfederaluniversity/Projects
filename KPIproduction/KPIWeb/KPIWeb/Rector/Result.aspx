@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Result.aspx.cs" Inherits="KPIWeb.Rector.Result" %>
  <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">     
-        <style type="text/css">
+      
+<style type="text/css">
    .button_right 
    {
        float: right;
@@ -55,18 +56,19 @@
        margin-left: 5px;
        
    }
-</style>         
+</style>     
+         
         <script type="text/javascript" language="javascript">
-         function DoPostBack() {
-             __doPostBack('cmd', 'thesearemyarguments');
+            function DoPostBack()
+            {
+                __doPostBack('cmd', 'thesearemyarguments');
+            }
+        </script>
 
-         }
-     </script>
         <script type="text/javascript">
-            var y = 0;
+                 var y = 0;
                  function legendChange()
-                 {
-            
+                 {            
                      if (document.getElementById('sidePanel').style.width == '20px')
                      {
                          document.getElementById('sidePanel').style.width = '200px';
@@ -76,7 +78,6 @@
                          document.getElementById('sidePanel').style.width = '20px';
                      }
                  }
-
                  function closeCommentSection()
                  {
                      document.getElementById('comment_Section').style.visibility = 'hidden';
@@ -102,8 +103,8 @@
         </div>  
         <div id="comment_Section" class='commentSectionStyle'>    
             <asp:TextBox ID="TextBox1" runat="server"  CssClass="commentTextBox" TextMode="MultiLine" ></asp:TextBox>
-            <button type="button" onclick="closeCommentSection()">Отмена</button>
-            <button type="button" onclick="commentSendButtonClick()">Отправить</button>
+            <button type="button"  class="commentLeftButton" onclick="closeCommentSection()">Отмена</button>
+            <button type="button" class="commentRightButton" onclick="commentSendButtonClick()">Отправить</button>
         </div>
         <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
                 <div>    
