@@ -1,7 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Result.aspx.cs" Inherits="KPIWeb.Rector.Result" %>
  <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">     
-      
-<style type="text/css">
+        <style type="text/css">
    .button_right 
    {
        float: right;
@@ -12,12 +11,12 @@
         position:fixed;    
         top:10em;
         width:200px;
-        height:200px;    
+        height:150px;    
         border-color: black;
         border-width: medium;
-        background-color:beige;
+        background-color:azure;
         z-index:3;
-        right: 0;
+        right: 0px;
     }
    .commentSectionStyle
     {
@@ -56,55 +55,69 @@
        margin-left: 5px;
        
    }
-</style>     
-         
+
+   .ColorPanelLegend 
+   {       
+       height: 17px;
+        
+   }
+</style>         
         <script type="text/javascript" language="javascript">
-            function DoPostBack()
-            {
+            function DoPostBack() {
                 __doPostBack('cmd', 'thesearemyarguments');
             }
-        </script>
-
+     </script>
         <script type="text/javascript">
-                 var y = 0;
-                 function legendChange()
-                 {            
-                     if (document.getElementById('sidePanel').style.width == '20px')
-                     {
-                         document.getElementById('sidePanel').style.width = '200px';
-                     }
-                     else
-                     {
-                         document.getElementById('sidePanel').style.width = '20px';
-                     }
-                 }
-                 function closeCommentSection()
-                 {
-                     document.getElementById('comment_Section').style.visibility = 'hidden';
-                 }
-                 function showCommentSection(i)
-                 {
-                     document.getElementById('comment_Section').style.visibility = 'visible';
-                     y = i;
-                     return false;
-                 }
-                 function showAlert()
-                 {
-                     alert(y);
-                 }
-                 function commentSendButtonClick()
-                 {
-                     __doPostBack( 'ButtonClickParam', y );
-                 }
+            var y = 0;
+            function legendChange() {
+
+                if (document.getElementById('sidePanel').style.right == '0px') {
+                    document.getElementById('sidePanel').style.right = '-175px';
+                }
+                else {
+                    document.getElementById('sidePanel').style.right = '0px';
+                }
+            }
+
+            function closeCommentSection() {
+                document.getElementById('comment_Section').style.visibility = 'hidden';
+            }
+            function showCommentSection(i) {
+                document.getElementById('comment_Section').style.visibility = 'visible';
+                y = i;
+                return false;
+            }
+            function showAlert() {
+                alert(y);
+            }
+            function commentSendButtonClick() {
+                __doPostBack('ButtonClickParam', y);
+            }
         </script>
         <div id="sidePanel" class='side_legend' onclick="legendChange()">    
-            <button type="button" onclick="legendChange()">
-            X</button>
+            <!--<button type="button" onclick="legendChange()">
+            O</button>-->
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:Label ID="Label7" runat="server" Text="Легенда" ValidateRequestMode="Enabled"></asp:Label>
+            <br />
+            <br />
+            <asp:Panel ID="Panel5" runat="server" CssClass="ColorPanelLegend">
+                <br />
+            </asp:Panel>
+            <asp:Label ID="Label8" runat="server" Text=". .............Утверждено"></asp:Label>
+            <br />
+            <asp:Panel ID="Panel6" runat="server" Height="17" BackColor="#000099" BorderColor="#000099">
+            </asp:Panel>
+            <asp:Label ID="Label9" runat="server" Text=".............Готов к утверждению"></asp:Label>
+            <br />
+            <asp:Panel ID="Panel7" runat="server" Height="17" BackColor="#CC0000" BorderColor="#CC0000">
+            </asp:Panel>
+            <asp:Label ID="Label10" runat="server" style="text-align: center" Text=".....Неутвержденные данные"></asp:Label>
         </div>  
         <div id="comment_Section" class='commentSectionStyle'>    
             <asp:TextBox ID="TextBox1" runat="server"  CssClass="commentTextBox" TextMode="MultiLine" ></asp:TextBox>
-            <button type="button"  class="commentLeftButton" onclick="closeCommentSection()">Отмена</button>
-            <button type="button" class="commentRightButton" onclick="commentSendButtonClick()">Отправить</button>
+            <button type="button" onclick="closeCommentSection()">Отмена</button>
+            <button type="button" onclick="commentSendButtonClick()">Отправить</button>
         </div>
         <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
                 <div>    

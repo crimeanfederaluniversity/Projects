@@ -524,6 +524,10 @@ namespace KPIWeb.Rector
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            Panel5.Style.Add("background-color", "rgba(0, 255, 0, 0.3)");
+            Panel7.Style.Add("background-color", "rgba(255, 0, 0, 0.3)");
+            Panel6.Style.Add("background-color", "rgba(255, 255, 0, 0.3)");
+
             string parameter = Request["__EVENTARGUMENT"];
             if (parameter != null)
             {

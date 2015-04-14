@@ -363,15 +363,31 @@ namespace KPIWeb.Reports
                 return confirm(msg);
             }
             </script>";
-            
+
             string script3 = @"<script>
             function ConfirmSubmitOn() {
-                var msg = 'Вернуть отчёт на доработку.'; 
+                var msg = 'Вернуть отчёт на доработку?'; 
                 return confirm(msg);
             }
             </script>";
 
-            
+            string script4 = @"<script>
+            function ConfirmSubmitOnТ() {
+                var msg = 'Отправить отчет на утверждение?'; 
+                                document.location = '../Default.aspx';
+                return alert (msg);
+                
+            }
+            </script>";
+
+            string script5 = @"<script>
+            function ConfirmSubmitOnTT() {
+                var msg = 'Отправить отчет на доработку?'; 
+                return confirm(msg);
+            }
+            </script>";
+
+
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
@@ -960,9 +976,11 @@ namespace KPIWeb.Reports
                          "Confirm", script);
                         UpnDownButton.Attributes.Add("OnClick", "return ConfirmSubmit();");
 
+
+
+
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                            "window.onbeforeunload = function(e) " +
-                            "{return 'Все несохраненные данные будут потеряны.';};", true);
+                            "window.onbeforeunload = function() { return 'Date will be lost: are you sure?'; };", true);
                         ButtonSave.OnClientClick = "window.onbeforeunload = null;";
                         Button1.OnClientClick = "window.onbeforeunload = null;";
                         UpnDownButton.OnClientClick = "window.onbeforeunload = null;";
@@ -1018,6 +1036,8 @@ namespace KPIWeb.Reports
 
                         Label1.Text = "Форма Утверждения данных.";
                         Label2.Text = "Осталось " + dateCount + " дней до закрытия отчёта";
+
+
 
                         Page.ClientScript.RegisterClientScriptBlock(this.GetType(),
                         "Confirm", script2);
@@ -1158,13 +1178,17 @@ namespace KPIWeb.Reports
                     if (AllCnt == notNullCnt)
                     {
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Все показатели заполнены. Необходимо отправить отчёт на верификацию');" +
-                            "document.location = '../Reports/FillingTheReport.aspx';", true);                       
+                            "document.location = '../Reports/FillingTheReport.aspx';", true);
+
+
                     }
                     else
                     {
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + AllCnt + " для отправки отчёта необходимо заполнитеь еще " + (AllCnt - notNullCnt) + " показателей.');" +
                             "document.location = '../Reports/FillingTheReport.aspx';", true);
+
                     }
+
                     #endregion
                 }
                 else if (mode == 1) // просмотр
@@ -1216,26 +1240,16 @@ namespace KPIWeb.Reports
                             }
                         }
 
-                        #region save params in DB with comment
-                        ConfirmationHistory ConfirmParam = new ConfirmationHistory();
-                        ConfirmParam.Date = DateTime.Now;
-                        //ConfirmParam.FK_BasicParamTable = tmpColTable.FK_BasicParametersTable;
-                        ConfirmParam.FK_ReportTable = Convert.ToInt32(paramSerialization.ReportStr);
-                        ConfirmParam.FK_UsersTable = UserSer.Id;
-                        ConfirmParam.Name = "Значения базовых показателей утверждены";
-                        ConfirmParam.Comment = TextBox1.Text;
-                        KPIWebDataContext.ConfirmationHistory.InsertOnSubmit(ConfirmParam);
-                        KPIWebDataContext.SubmitChanges();
-                        #endregion
-
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Вы утвердили данные всех базовых показателей. отчёт отправлен и доступен только в режиме \"Просмотр\".');" +
-                            "document.location = '../Default.aspx';", true);                    
+                            "document.location = '../Default.aspx';", true);
+
+
                     }
                     else
                     {
                         //error
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Ошибка'); document.location = '../Default.aspx'; ", true);
-              
+
                     }
                     #endregion
                 }
@@ -1247,7 +1261,7 @@ namespace KPIWeb.Reports
         }
         protected void GridviewCollectedBasicParameters_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            Color color;    
+            Color color;
             Color confirmedColor = System.Drawing.Color.LimeGreen;
             Color disableColor = System.Drawing.Color.LightGray;
             if (col_ == 0)
@@ -1493,19 +1507,8 @@ namespace KPIWeb.Reports
         }
         protected void Button3_Click(object sender, EventArgs e) // отправка на доработку и возвращение с доработки
         {
+
             KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
-            Serialization UserSer = (Serialization)Session["UserID"];
-            if (UserSer == null)
-            {
-                Response.Redirect("~/Default.aspx");
-            }
-
-            Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
-            if (paramSerialization == null)
-            {
-                Response.Redirect("~/Default.aspx");
-            }
-
             Serialization modeSer = (Serialization)Session["mode"];
             if (modeSer == null)
             {
@@ -1550,8 +1553,7 @@ namespace KPIWeb.Reports
                                                 if ((tmpColTable.Status == 2) || (tmpColTable.Status == 1))
                                                 {
                                                     tmpColTable.Status = 3;
-                                                    KPIWebDataContext.SubmitChanges();                                                  
-
+                                                    KPIWebDataContext.SubmitChanges();
                                                 }
                                                 else
                                                 {
@@ -1566,28 +1568,17 @@ namespace KPIWeb.Reports
                                     }
                                 }
                             }
-
-                            #region save params in DB with comment
-                            ConfirmationHistory ConfirmParam = new ConfirmationHistory();
-                            ConfirmParam.Date = DateTime.Now;
-                            //ConfirmParam.FK_BasicParamTable = tmpColTable.FK_BasicParametersTable;
-                            ConfirmParam.FK_ReportTable = Convert.ToInt32(paramSerialization.ReportStr);
-                            ConfirmParam.FK_UsersTable = UserSer.Id;
-                            ConfirmParam.Name = "Базовые показатели отправлены на утверждение";
-                            ConfirmParam.Comment = TextBox1.Text;
-                            KPIWebDataContext.ConfirmationHistory.InsertOnSubmit(ConfirmParam);
-                            KPIWebDataContext.SubmitChanges();
-                            #endregion
-
-                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                                "alert('отчёт отправлен на утверждение');" +
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('отчёт отправлен на утверждение');" +
                                 "document.location = '../Default.aspx';", true);
+
                             //SENDMAIL ()
+
                             #endregion
                         }
                         else // (mode == 2) // данные обратно на доработку
                         {
                             #region send back to correct
+
                             for (int k = 0; k < columnCnt; k++) // 
                             {
                                 for (int i = 0; i < GridviewCollectedBasicParameters.Rows.Count; i++)
@@ -1596,6 +1587,7 @@ namespace KPIWeb.Reports
                                         (Label)
                                             GridviewCollectedBasicParameters.Rows[i].FindControl("CollectId" +
                                                                                                  k.ToString());
+
                                     if (label != null)
                                     {
                                         if (label.Text == "")
@@ -1614,7 +1606,7 @@ namespace KPIWeb.Reports
                                                 if (tmpColTable.Status == 3)
                                                 {
                                                     tmpColTable.Status = 1;
-                                                    KPIWebDataContext.SubmitChanges();                                                 
+                                                    KPIWebDataContext.SubmitChanges();
                                                 }
                                                 else
                                                 {
@@ -1629,38 +1621,22 @@ namespace KPIWeb.Reports
                                     }
                                 }
                             }
-                            #region save params in DB with comment
-                            ConfirmationHistory ConfirmParam = new ConfirmationHistory();
-                            ConfirmParam.Date = DateTime.Now;
-                            //ConfirmParam.FK_BasicParamTable = tmpColTable.FK_BasicParametersTable;
-                            ConfirmParam.FK_ReportTable = Convert.ToInt32(paramSerialization.ReportStr);
-                            ConfirmParam.FK_UsersTable = UserSer.Id;
-                            ConfirmParam.Name = "Базовые показатели отправлены на доработку";
-                            ConfirmParam.Comment = TextBox1.Text;
-                            KPIWebDataContext.ConfirmationHistory.InsertOnSubmit(ConfirmParam);
-                            KPIWebDataContext.SubmitChanges();
-                            #endregion
-
-                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                                "alert('Отчёт отправлен на доработку');" +
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Отчёт отправлен на доработку');" +
                                 "document.location = '../Default.aspx';", true);
                             //SENDMAIL ()
                             #endregion
                         }
                     }
                 }
-               /* else
+                else
                 {
                     //error
-                }*/
+                }
             }
-           /* else
+            else
             {
                 //error
-            }*/
+            }
         }
-
-
-
     }
 }
