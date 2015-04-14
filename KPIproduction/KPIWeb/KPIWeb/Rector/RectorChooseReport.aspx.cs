@@ -28,6 +28,13 @@ namespace KPIWeb.Rector
             {
                 Response.Redirect("~/Default.aspx");
             }
+
+            RectorHistorySession RectorHistory = (RectorHistorySession) Session["rectorHistory"];
+            if (RectorHistory == null)
+            {
+                GoForwardButton.Enabled = false;
+            }
+
             //////////////////////////////////////////////////////////////////////////
             if (!Page.IsPostBack)
             {
@@ -43,7 +50,7 @@ namespace KPIWeb.Rector
                 }
                 else
                 {
-                    PageName.Text = "Работа с расчетными показателями";
+                    PageName.Text = "Работа с первичными данными";
                 }
 
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();                
@@ -114,27 +121,26 @@ namespace KPIWeb.Rector
 
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Response.Redirect("~/Rector/RectorMain.aspx");
         }
 
         protected void GoForwardButton_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Response.Redirect("~/Rector/Result.aspx");
         }
 
         protected void Button4_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Response.Redirect("~/Rector/RectorMain.aspx");
         }
 
         protected void Button5_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Response.Redirect("~/Rector/ViewDocument.aspx");
         }
 
         protected void Button6_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
         }
     }
 }

@@ -173,7 +173,7 @@ namespace KPIWeb.Head
                     }
                     else
                     {
-                        dataRow["CalculatedParametrsResult"] = tmp.ToString("0.000");
+                        dataRow["CalculatedParametrsResult"] = tmp.ToString("0.00");
                     }
 
                     dataRow["checkBoxCalcId"] = colCalc.CollectedCalculatedParametrsID;
@@ -378,7 +378,7 @@ namespace KPIWeb.Head
                     }
                     else
                     {
-                        dataRow["IndicatorResult"] = tmp.ToString("0.000");
+                        dataRow["IndicatorResult"] = tmp.ToString("0.00");
                     }
                     if (Allcnt < Confcnt) //что то не так
                     {

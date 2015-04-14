@@ -150,6 +150,7 @@ background-image: url('../../../css/images/kfu_button_gradient_hover_green_1.png
       background-color:#585858;
       color:#ffffff;
       text-align:center;
+ 
     }
 .Grid_view_style tr, 
 .Grid_view_style td {
@@ -197,6 +198,7 @@ background-image: url('../../../css/images/kfu_button_gradient_hover_green_1.png
 
 /*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*//*BUTTONS*/
     input[type="submit"] {
+    border: 2px solid #000000;
     font-family: "Arial Unicode MS";
     font-size: large;
     font-weight: bold;
@@ -208,14 +210,10 @@ background-image: url('../../../css/images/kfu_button_gradient_hover_green_1.png
     background-attachment: scroll;
     background-size: contain;
     background-image: url('/App_Themes/theme_1/css/images/kfu_button_gray_1.png');
-    border-width: 2px;
-    border-color: #000000;
-    border-style:solid;
     border-radius: 4px;
     
 
     padding-right:10px;
-    width:200px;
     display:inline-block;
        }
    

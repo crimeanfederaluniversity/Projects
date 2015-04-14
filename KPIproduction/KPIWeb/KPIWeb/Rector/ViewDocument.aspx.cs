@@ -44,6 +44,11 @@ namespace KPIWeb.Rector
           //    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Документ не найден');", true);
           //  }
                 }
-            }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/RectorMain.aspx");
         }
+     }
+}
     

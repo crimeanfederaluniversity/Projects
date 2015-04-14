@@ -5,7 +5,8 @@
     <style type="text/css">
    .button_right 
    {
-       float:right
+       float: right;
+       margin-right: 10px;
    }     
 </style>
                 <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
@@ -14,19 +15,20 @@
       <asp:Button ID="GoForwardButton" runat="server" OnClick="GoForwardButton_Click" Text="Вперед" Width="125px" />
         &nbsp; &nbsp; <asp:Button ID="Button2" runat="server" OnClick="Button4_Click" Text="На главную" Width="125px" />
         &nbsp; &nbsp;       
-        <asp:Button ID="Button5" runat="server" CssClass="button_right" OnClick="Button5_Click" Text="Нормативные документы" Width="225px" />
-        &nbsp; &nbsp;
-        <asp:Button ID="Button6" runat="server" CssClass="button_right" OnClick="Button6_Click" Text="Button" Width="150px" Visible="False" />
-        &nbsp; &nbsp;
-        <asp:Button ID="Help" runat="server" CssClass="button_right"  Text="Помощь" Width="150px" />
+        <asp:Button ID="Button5" runat="server" CssClass="button_right" OnClick="Button5_Click" Text="Нормативные документы" Width="250px" />
+            &nbsp; &nbsp; &nbsp; &nbsp;
         </div>
 
     </asp:Panel> 
     <div>
         <br />
+        <br />
 
 
-        <asp:Label ID="PageName" runat="server" Text="PageName"></asp:Label>
+        <br />
+
+
+        <asp:Label ID="PageName" runat="server" Text="PageName" Font-Size="20pt"></asp:Label>
         <br />
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" style="margin-top: 0px">
              <Columns>                

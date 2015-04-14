@@ -13,6 +13,15 @@ namespace KPIWeb.Rector {
     public partial class Result {
         
         /// <summary>
+        /// TextBox1 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        
+        /// <summary>
         /// top_panel2 элемент управления.
         /// </summary>
         /// <remarks>
@@ -65,15 +74,6 @@ namespace KPIWeb.Rector {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button6;
-        
-        /// <summary>
-        /// Help элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Help;
         
         /// <summary>
         /// ReportTitle элемент управления.

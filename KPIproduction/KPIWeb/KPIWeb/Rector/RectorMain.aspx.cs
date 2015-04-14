@@ -11,9 +11,12 @@ namespace KPIWeb.Rector
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            ParametrType paramType = (ParametrType)Session["paramType"];
+            if (paramType == null)
+            {
+                GoForwardButton.Enabled=false;
+            }           
         }
-
         protected void Button1_Click(object sender, EventArgs e)
         {
             ParametrType paramType = new ParametrType(0);
@@ -26,41 +29,24 @@ namespace KPIWeb.Rector
             Session["paramType"] = paramType;
             Response.Redirect("~/Rector/RectorChooseReport.aspx");
         }
-
-        protected void Button2_Click(object sender, EventArgs e)
-        {
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-            "document.location = '../Rector/doc/1.pdf';", true);
-        }
-
         protected void Button4_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Rector/Document.aspx");
+            Response.Redirect("~/Rector/RectorMain.aspx");
         }
-
-        protected void Button4_Click1(object sender, EventArgs e)
+        protected void GoBackButton_Click(object sender, EventArgs e)
+        {
+        }
+        protected void GoForwardButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/RectorChooseReport.aspx");
+        }
+        protected void Button5_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Rector/ViewDocument.aspx");
         }
-
-        protected void GoBackButton_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected void GoForwardButton_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected void Button5_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         protected void Button6_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
     }
 }
