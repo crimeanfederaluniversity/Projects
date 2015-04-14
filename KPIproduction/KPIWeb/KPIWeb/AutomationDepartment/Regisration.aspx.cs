@@ -393,9 +393,7 @@ namespace KPIWeb.AutomationDepartment
                     for (int k = 1; k <= Gridview3.Rows.Count; k++)
                     {
                         CheckBox canEdit = (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsEditCheckBox");
-                      //  CheckBox canView = (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsViewCheckBox");
-                        CheckBox canConfirm =
-                            (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsConfirmCheckBox");
+                        CheckBox canConfirm = (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsConfirmCheckBox");
                         Label label = (Label) Gridview3.Rows[rowIndex].FindControl("BasicParametrsID");
 
                         //BasicParametrsAndUsersMapping BasicAndUsers = new BasicParametrsAndUsersMapping();                    
@@ -424,13 +422,12 @@ namespace KPIWeb.AutomationDepartment
                             where
                                 (((a.CanConfirm ==true)&&(canConfirm.Checked==true))||((a.CanEdit == true)&&(canEdit.Checked==true)))
                                 && a.Active == true
-                                && b.Active == true
-                                
+                                && b.Active == true                               
                                 && b.FK_ZeroLevelSubdivisionTable == 1
                                 && a.FK_ParametrsTable == Convert.ToInt32(label.Text)
-                                && ((b.FK_FirstLevelSubdivisionTable == first) || (b.FK_FirstLevelSubdivisionTable == null))
-                                && ((b.FK_SecondLevelSubdivisionTable == second) || (b.FK_SecondLevelSubdivisionTable == null))
-                                && ((b.FK_ThirdLevelSubdivisionTable == third) || (b.FK_ThirdLevelSubdivisionTable == null))                               
+                                && ((b.FK_FirstLevelSubdivisionTable == first))// || (b.FK_FirstLevelSubdivisionTable == null))
+                                && ((b.FK_SecondLevelSubdivisionTable == second))// || (b.FK_SecondLevelSubdivisionTable == null))
+                                && ((b.FK_ThirdLevelSubdivisionTable == third))// || (b.FK_ThirdLevelSubdivisionTable == null))                               
                             select a).ToList().Count();
                         match_cnt_sum += match_cnt;
                         rowIndex++;

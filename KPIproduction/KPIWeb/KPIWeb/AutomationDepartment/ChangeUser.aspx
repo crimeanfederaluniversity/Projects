@@ -96,17 +96,17 @@ textarea {
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Ред">
                                     <ItemTemplate>
-                                        <asp:CheckBox ID="CheckBoxCanEdit" runat="server" Checked='<%# Bind("EditChecked") %>'></asp:CheckBox>                                                                                                                   
+                                        <asp:CheckBox ID="CheckBoxCanEdit" Text=" " runat="server" Checked='<%# Bind("EditChecked") %>'></asp:CheckBox>                                                                                                                   
                                     </ItemTemplate>
             </asp:TemplateField>
                 <asp:TemplateField HeaderText="Просм">
                                     <ItemTemplate>
-                                         <asp:CheckBox ID="CheckBoxCanView" runat="server" Checked='<%# Bind("ViewChecked") %>'></asp:CheckBox>                          
+                                         <asp:CheckBox ID="CheckBoxCanView" Text=" " runat="server" Checked='<%# Bind("ViewChecked") %>'></asp:CheckBox>                          
                                     </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Подтв">
                                     <ItemTemplate>
-                                         <asp:CheckBox ID="CheckBoxVerify" runat="server"  Checked='<%# Bind("VerifyChecked") %>'></asp:CheckBox>                        
+                                         <asp:CheckBox ID="CheckBoxVerify" Text=" " runat="server"  Checked='<%# Bind("VerifyChecked") %>'></asp:CheckBox>                        
                                     </ItemTemplate>
             </asp:TemplateField>
             </Columns>

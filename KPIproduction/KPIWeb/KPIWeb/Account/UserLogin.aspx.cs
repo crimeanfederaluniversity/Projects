@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System;
+using System.IO;
 
 namespace KPIWeb.Account
 {
@@ -60,6 +62,10 @@ namespace KPIWeb.Account
         {
             Panel mypanel = (Panel)(Master.FindControl("loading"));
             if (mypanel != null) mypanel.Visible = true;
+        }
+
+        protected void Button2_Click1(object sender, EventArgs e)
+        {
         }
     }
 }
