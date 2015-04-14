@@ -759,9 +759,16 @@ namespace KPIWeb.Rector
 
 
                     #endregion
-
                     #region fill grid
 
+                    int BasicParamLevel = 0;
+                    if (ParamType == 2)
+                    {
+                            BasicParamLevel  = (int) (from a in kpiWebDataContext.BasicParametrAdditional
+                            where a.BasicParametrAdditionalID == ParamID
+                            select a.SubvisionLevel).FirstOrDefault();
+
+                    }
                     List<Struct> currentStructList = new List<Struct>();
                     if (SpecID != 0)
                     {
@@ -792,7 +799,6 @@ namespace KPIWeb.Rector
                     }
 
                     #endregion
-
                     #region DataGridBind
 
                     Grid.DataSource = dataTable;
@@ -800,7 +806,6 @@ namespace KPIWeb.Rector
                     Grid.DataBind();
 
                     #endregion
-
                     #region постнастройка страницы
 
                     Grid.Columns[12].Visible = false;
@@ -812,11 +817,10 @@ namespace KPIWeb.Rector
                     Grid.Columns[4].Visible = false;
                     Grid.Columns[2].Visible = false;
                     Grid.Columns[1].Visible = false;
-                    if (StructDeepness(mainStruct) > 3) // дальше углубляться нельзя
+                    if (StructDeepness(mainStruct) > (BasicParamLevel-1)) // дальше углубляться нельзя
                     {
                         Grid.Columns[10].Visible = false;
-                    }
-
+                    }                    
                     #endregion
                 }
                 else if (ViewType == 1) // просмотр для показателей (верхние 3 шт)
@@ -1031,7 +1035,7 @@ namespace KPIWeb.Rector
                                 {
                                     dataRow["CanConfirm"] = false;
                                     dataRow["ShowLable"] = true;
-                                    dataRow["LableText"] = "Нет права утверждать";
+                                    dataRow["LableText"] = " "; // нет права утверждать
                                     dataRow["LableColor"] = "#101010";
                                     value_ = "Недостаточно данных";
                                     if (ShowUnconfirmed)
@@ -1058,9 +1062,14 @@ namespace KPIWeb.Rector
                                 }
                                 else if (!CalcAreConfirmed)
                                 {
-                                    dataRow["CanConfirm"] = false;
+                                    /*dataRow["CanConfirm"] = false;
                                     dataRow["ShowLable"] = true;
                                     dataRow["LableText"] = "Не все расчетные утверждены";
+                                    */
+                                    dataRow["CanConfirm"] = true;
+                                    dataRow["ShowLable"] = false;
+                                    dataRow["LableText"] = "";
+
                                     dataRow["LableColor"] = "#101010";
                                     value_ = "Недостаточно данных";
                                     if (ShowUnconfirmed)
@@ -1216,7 +1225,7 @@ namespace KPIWeb.Rector
                                 {
                                     dataRow["CanConfirm"] = false;
                                     dataRow["ShowLable"] = true;
-                                    dataRow["LableText"] = "Нет права утверждать";
+                                    dataRow["LableText"] = " ";
                                     value_ = "Недостаточно данных";
                                     if (ShowUnconfirmed)
                                     {
@@ -1236,9 +1245,13 @@ namespace KPIWeb.Rector
                                 }
                                 else if (BasicsAreConfirmed == false)
                                 {
+                                    dataRow["CanConfirm"] = true;
+                                    dataRow["ShowLable"] = false;
+                                    dataRow["LableText"] = "";
+                                    /*
                                     dataRow["CanConfirm"] = false;
                                     dataRow["ShowLable"] = true;
-                                    dataRow["LableText"] = "Не все базовые показатели утверждены";
+                                    dataRow["LableText"] = "Не все базовые показатели утверждены";*/
                                     dataRow["LableColor"] = Color.LightBlue;
                                     value_ = "Недостаточно данных";
                                     if (ShowUnconfirmed)
@@ -1746,8 +1759,12 @@ namespace KPIWeb.Rector
         {
             #region
             var ColorLable = e.Row.FindControl("Color") as Label;
+            var PageConfirmButton = e.Row.FindControl("ConfirmButton") as Button;
+            var PageButton2 = e.Row.FindControl("Button2") as Button;
             if (ColorLable != null)
             {
+                PageConfirmButton.Enabled = false;
+                PageButton2.Enabled = false;
                 int ColorNumber = -1;
                 if (int.TryParse(ColorLable.Text, out ColorNumber) && ColorNumber > -1)
                 {
@@ -1755,25 +1772,31 @@ namespace KPIWeb.Rector
                     {
                         case 0:
                         {
+                         
                          break;   
                         }
-                        case 1:
+                        case 1: // утверждено
                         {
                             e.Row.Style.Add("background-color", "rgba(0, 255, 0, 0.3)");
+                            PageButton2.Enabled = true;
                             break;
                         }
-                        case 2:
+                        case 2: // можно утвердить
                         {
                             e.Row.Style.Add("background-color", "rgba(255, 0, 0, 0.3)");
+                            PageButton2.Enabled = true;
                             break;
                         }
-                        case 3:
+                        case 3: // рассчитано на неутвержденных данных
                         {
                             e.Row.Style.Add("background-color", "rgba(255, 255, 0, 0.3)");
+                            PageConfirmButton.Enabled = true;
+                            PageButton2.Enabled = true;
                             break;
                         }
                         default:
                         {
+                            
                             break;
                         }
                     }                    
