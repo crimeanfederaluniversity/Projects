@@ -6,7 +6,7 @@
         <div>
             <table>
                   <tr>
-                    <td>Название отчёта
+                    <td style="width: 272px">Название отчёта
                     </td>
                     <td>
                         <asp:TextBox Width="400 px" runat="server" ID="TextBoxName" />
@@ -14,7 +14,7 @@
                 </tr>
 
                 <tr>
-                    <td>Активный отчёт
+                    <td style="width: 272px">Активный отчёт
                     </td>
                     <td>
                         <asp:Checkbox    Text=" " runat="server" ID="CheckBoxActive" />
@@ -22,7 +22,7 @@
                 </tr>
 
                 <tr>
-                    <td>Отчёт рассчитан
+                    <td style="width: 272px">Отчёт рассчитан
                     </td>
                     <td>
                         <asp:Checkbox  Text=" " runat="server" ID="CheckBoxCalculeted" />
@@ -30,7 +30,7 @@
                 </tr>
                 
                 <tr>
-                    <td>Планируемая дата отправки
+                    <td style="width: 272px">Планируемая дата отправки
                     </td>
                     <td>
                         <asp:Calendar ID="CalendarDateToSend" runat="server" SelectionMode="Day" ShowGridLines="True">
@@ -40,7 +40,7 @@
                 </tr>
 
                 <tr>
-                    <td>Отчёт отправлен
+                    <td style="width: 272px">Отчёт отправлен
                     </td>
                     <td>
                         <asp:Checkbox  Text=" " runat="server" ID="CheckBoxSent" />
@@ -48,7 +48,7 @@
                 </tr>
                 
                 <tr>
-                    <td>Дата отправки
+                    <td style="width: 272px">Дата отправки
                     </td>
                     <td>
                         <asp:Calendar ID="CalendarSentDateTime" runat="server" SelectionMode="Day" ShowGridLines="True" Height="77px">
@@ -58,7 +58,7 @@
                 </tr>
 
                 <tr>
-                    <td>Отчёт принят получателем
+                    <td style="width: 272px">Отчёт принят получателем
                     </td>
                     <td>
                         <asp:Checkbox  Text=" " runat="server" ID="CheckBoxRecipientConfirmed" />
@@ -66,7 +66,7 @@
                 </tr>
                 
                   <tr>
-                    <td>Дата принятия получателем
+                    <td style="width: 272px">Дата принятия получателем
                     </td>
                     <td>
                         <asp:Calendar ID="CalendarReportRecived" runat="server" SelectionMode="Day" ShowGridLines="True" Height="77px">
@@ -78,7 +78,7 @@
               
                 
                 <tr>
-                    <td>
+                    <td style="width: 272px">
                         Стартовая дата отчёта
                         </td>
                     <td>
@@ -86,7 +86,7 @@
                 </tr>
 
                 <tr>
-                    <td>
+                    <td style="width: 272px">
                         <asp:Calendar ID="CalendarStartDateTime" runat="server" SelectionMode="Day" ShowGridLines="True" OnSelectionChanged="CalendarStartDateTime_SelectionChanged">
                             <SelectedDayStyle BackColor="Yellow" ForeColor="Red"></SelectedDayStyle>
                         </asp:Calendar>
@@ -99,12 +99,25 @@
                 </tr>
 
                 <tr>
-                    <td>
+                    <td style="width: 272px">
+                        <asp:Label ID="Label1" runat="server" Text="Дата отправки на окончательное  утверждение кафедрами"></asp:Label>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </td>
                     <td>
-                        &nbsp;</td>
+                        <br />
+                        <asp:Calendar ID="Calendar1" runat="server"></asp:Calendar>
+                    </td>
                 </tr>
 
+                 <tr>
+                    <td style="width: 272px">
+                        <asp:Label ID="Label2" runat="server" Text="Дней до предварительного  расчета для проректоров"></asp:Label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </td>
+                    <td>
+                        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                        <br />
+                        
+                    </td>
+                </tr>
                 </table>
             <br />
             <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Выделить все академии" Width="286px" />

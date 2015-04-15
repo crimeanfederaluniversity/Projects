@@ -6,7 +6,7 @@
     
     </div>
         <br />
-    <br />
+    <asp:Button ID="Button10" runat="server" Height="50px" OnClick="Button10_Click" Text="Информация о подтверждениях" Width="400px" />
     <br />
     <br />
         <asp:Button ID="Button1" runat="server" Font-Bold="False" Font-Size="15pt" Height="50px" Text=" Управление справочниками" Width="400px" OnClick="Button1_Click" />

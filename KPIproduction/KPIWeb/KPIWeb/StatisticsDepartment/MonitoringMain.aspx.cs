@@ -73,5 +73,10 @@ namespace KPIWeb.StatisticsDepartment
         {
             Response.Redirect("~/AutomationDepartment/AddLevel.aspx");
         }
+
+        protected void Button10_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/StatisticsDepartment/Confirm.aspx");
+        }
     }
 }
