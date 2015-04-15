@@ -529,6 +529,7 @@ namespace KPIWeb.Rector
             Panel5.Style.Add("background-color", "rgba(0, 255, 0, 0.3)");
             Panel7.Style.Add("background-color", "rgba(255, 0, 0, 0.3)");
             Panel6.Style.Add("background-color", "rgba(255, 255, 0, 0.3)");
+
             string parameter = Request["__EVENTARGUMENT"];
             if (parameter != null)
             {
@@ -549,15 +550,13 @@ namespace KPIWeb.Rector
         
             UsersTable userTable_ =
                 (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            ViewState["login"] = (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a.Email).FirstOrDefault();
+
             if (userTable_.AccessLevel != 5)
             {
                 Response.Redirect("~/Default.aspx");
             }
-
-
-
-
-
 
             #endregion
             if (!IsPostBack)

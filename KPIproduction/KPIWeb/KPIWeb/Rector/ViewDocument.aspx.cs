@@ -24,7 +24,7 @@ namespace KPIWeb.Rector
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             var login =
                      (from a in kPiDataContext.UsersTable
-                      where a.UsersTableID == (int)ViewState["LocalUserID"]
+                      where a.UsersTableID == userID
                       select a.Email).FirstOrDefault();
             LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + login + " перешел на страницу нормативных документов");
             UsersTable userTable =

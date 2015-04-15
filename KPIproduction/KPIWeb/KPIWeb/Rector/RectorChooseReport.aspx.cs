@@ -20,9 +20,16 @@ namespace KPIWeb.Rector
             }
 
             int userID = UserSer.Id;
+
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            
+            ViewState["login"] =
+                     (from a in kPiDataContext.UsersTable
+                      where a.UsersTableID == userID
+                      select a.Email).FirstOrDefault();
 
             if (userTable.AccessLevel != 5)
             {
@@ -101,6 +108,7 @@ namespace KPIWeb.Rector
                     RectorHistory.Visible = false;
                     RectorHistory.RectorSession[RectorHistory.CurrentSession] = rectorResultSession;
                     Session["rectorHistory"] = RectorHistory;
+                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + (string)ViewState["login"] + " перешел к работе с отчетом, ID = " + button.CommandArgument);
                     Response.Redirect("~/Rector/Result.aspx");
                 }
                 else // смотрим рассчетные
@@ -114,6 +122,7 @@ namespace KPIWeb.Rector
                     RectorHistory.Visible = false;
                     RectorHistory.RectorSession[RectorHistory.CurrentSession] = rectorResultSession;
                     Session["rectorHistory"] = RectorHistory;
+                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + (string)ViewState["login"] + " перешел к работе с отчетом, ID = " + button.CommandArgument);
                     Response.Redirect("~/Rector/Result.aspx");
                 }
 

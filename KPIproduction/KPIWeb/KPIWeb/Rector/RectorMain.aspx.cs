@@ -30,7 +30,7 @@ namespace KPIWeb.Rector
 
             ViewState["login"] = login;
 
-
+            if (!IsPostBack)
             LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + (string)ViewState["login"] + " перешел на главную страницу (RectorMain)");
 
 
