@@ -349,7 +349,6 @@ namespace KPIWeb.Reports
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-
             string script = @"<script>
             function ConfirmSubmit() {
                 var msg = 'Отправить данные на утверждение?'; 

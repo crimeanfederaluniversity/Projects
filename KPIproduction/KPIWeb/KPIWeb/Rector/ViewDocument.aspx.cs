@@ -13,9 +13,29 @@ namespace KPIWeb.Rector
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+
+            int userID = UserSer.Id;
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            if (userTable.AccessLevel != 5)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+
+
             if (!IsPostBack)
             {
-                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+
+
+                //KPIWebDataContext kPiDataContext = new KPIWebDataContext();
                 List<DocumentTable> docs = (from a in kPiDataContext.DocumentTable where a.Active == true select a).ToList();
 
 

@@ -55,7 +55,7 @@
                     <ul class="nav navbar-nav">
                         <!-- <li><a runat="server" href="~/">Стартовая старница</a></li>-->
                         <li><a runat="server" href="~/About">Справка</a></li>
-                        <li><a runat="server" href="~/Contact">Обратная связь</a></li>
+                        <li><a runat="server" href="~/Contact">Контакты</a></li>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
@@ -66,7 +66,7 @@
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/PersonalInfo" title="Manage your account"><%: Context.User.Identity.GetUserName()  %></a></li>
+                                <li><a runat="server" href="~/Account/PersonalInfo" title="Manage your account"><%: Context.User.Identity.GetUserName()  %></a></li>
                                 <li>
                                     <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Выход" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
                                 </li>

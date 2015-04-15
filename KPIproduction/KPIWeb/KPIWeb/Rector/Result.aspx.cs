@@ -537,6 +537,7 @@ namespace KPIWeb.Rector
                     DoConfirm(ParamId);
                 }
             }
+
             #region get user data
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             Serialization UserSer = (Serialization)Session["UserID"];
@@ -552,6 +553,12 @@ namespace KPIWeb.Rector
             {
                 Response.Redirect("~/Default.aspx");
             }
+
+
+
+
+
+
             #endregion
 
             if (!IsPostBack)

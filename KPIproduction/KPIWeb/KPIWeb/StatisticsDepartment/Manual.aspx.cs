@@ -12,9 +12,23 @@ namespace KPIWeb.StatisticsDepartment
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userID = UserSer.Id;
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            if ((userTable.AccessLevel != 10) && (userTable.AccessLevel != 9))
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+
             if (!IsPostBack)
             {
-                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
                 List<ManualTable> manuals = (from a in kPiDataContext.ManualTable where a.Active == true select a).ToList();
 
 

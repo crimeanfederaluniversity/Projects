@@ -21,7 +21,17 @@ namespace KPIWeb.Reports
             {
                 Response.Redirect("~/Account/Login.aspx");
             }
-            				
+
+            int userID = UserSer.Id;
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            UsersTable userTable =
+                      (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            if (userTable.AccessLevel != 9)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+
             if (!Page.IsPostBack)
             {
                 KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
