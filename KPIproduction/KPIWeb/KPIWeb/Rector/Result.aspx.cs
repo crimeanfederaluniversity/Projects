@@ -679,65 +679,76 @@ namespace KPIWeb.Rector
                     #region преднастройка страницы                    
 
                     string title = "";
-
+                    PageFullName.Text = "";
                     if (ParamType == 0)
                     {
-                        PageFullName.Text = "Значения для целевого показателя; \"";
                         PageFullName.Text += (from a in kpiWebDataContext.IndicatorsTable
                             where a.IndicatorsTableID == ParamID
                             select a.Name).FirstOrDefault();
-                        PageFullName.Text += "\";";
+                        PageFullName.Text += "</br>";
                     }
                     else if (ParamType == 1)
                     {
-                        PageFullName.Text = "Значения для расчетного показателя: \"";
                         PageFullName.Text += (from a in kpiWebDataContext.CalculatedParametrs
                             where a.CalculatedParametrsID == ParamID
                             select a.Name).FirstOrDefault();
-                        PageFullName.Text += "\";";
+                        PageFullName.Text += "</br>";
                     }
                     else if (ParamType == 2)
                     {
-                        PageFullName.Text = "Значения для базового показателя: \"";
                         PageFullName.Text += (from a in kpiWebDataContext.BasicParametersTable
                             where a.BasicParametersTableID == ParamID
                             select a.Name).FirstOrDefault();
-                        PageFullName.Text += "\"";
+                        PageFullName.Text += "</br>"; 
                     }
 
-
-
                     int Deep = StructDeepness(mainStruct);
-                    if (Deep == 1) //
+                    if (Deep == 1) 
                     {
-                        PageFullName.Text += "в разрезе академий КФУ ";
                     }
                     if (Deep == 2)
                     {
-                        PageFullName.Text += "в разрезе факультетов ";
                         PageFullName.Text += (from a in kpiWebDataContext.FirstLevelSubdivisionTable
                             where a.FirstLevelSubdivisionTableID == mainStruct.Lv_1
                             select a.Name).FirstOrDefault();
-                        PageFullName.Text += ",КФУ ";
+                        PageFullName.Text += "</br>";
                     }
                     if (Deep == 3)
-                    {
-                        PageFullName.Text += "в разрезе кафедр ";
-                        PageFullName.Text += (from a in kpiWebDataContext.SecondLevelSubdivisionTable
-                            where a.SecondLevelSubdivisionTableID == mainStruct.Lv_2
-                            select a.Name).FirstOrDefault();
-                        PageFullName.Text += ", ";
+                    {           
                         PageFullName.Text += (from a in kpiWebDataContext.FirstLevelSubdivisionTable
                             where a.FirstLevelSubdivisionTableID == mainStruct.Lv_1
                             select a.Name).FirstOrDefault();
-                        PageFullName.Text += ",КФУ ";
+                        PageFullName.Text += "</br>";
+
+                        PageFullName.Text += (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                                              where a.SecondLevelSubdivisionTableID == mainStruct.Lv_2
+                                              select a.Name).FirstOrDefault();
+                        PageFullName.Text += "</br>";
+                    }
+                    if (Deep == 4)
+                    {
+
+                        PageFullName.Text += (from a in kpiWebDataContext.FirstLevelSubdivisionTable
+                                              where a.FirstLevelSubdivisionTableID == mainStruct.Lv_1
+                                              select a.Name).FirstOrDefault();
+                        PageFullName.Text += "</br>";
+
+                        PageFullName.Text += (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                                              where a.SecondLevelSubdivisionTableID == mainStruct.Lv_2
+                                              select a.Name).FirstOrDefault();
+                        PageFullName.Text += "</br>";
+
+                        PageFullName.Text += (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                                              where a.ThirdLevelSubdivisionTableID == mainStruct.Lv_3
+                                              select a.Name).FirstOrDefault();
+                        PageFullName.Text += "</br>";
                     }
 
                     if (SpecID != 0)
                     {
-                        PageFullName.Text = "для специальности \"" + (from a in kpiWebDataContext.SpecializationTable
+                        PageFullName.Text += "Cпециальность \"" + (from a in kpiWebDataContext.SpecializationTable
                             where a.SpecializationTableID == SpecID
-                            select a.Name).FirstOrDefault() + "\"";
+                            select a.Name).FirstOrDefault() + "\" </br>";
                     }
                     if (mainStruct.Lv_1 == 0)
                     {
@@ -819,7 +830,8 @@ namespace KPIWeb.Rector
                     Grid.Columns[4].Visible = false;
                     Grid.Columns[2].Visible = false;
                     Grid.Columns[1].Visible = false;
-                    if (StructDeepness(mainStruct) > (BasicParamLevel-1)) // дальше углубляться нельзя
+                    if ((StructDeepness(mainStruct) > (BasicParamLevel-1))||
+                        (StructDeepness(mainStruct) > 2 )&&(SpecID!=0)) // дальше углубляться нельзя
                     {
                         Grid.Columns[10].Visible = false;
                     }                    
@@ -1688,6 +1700,7 @@ namespace KPIWeb.Rector
         }
         public void RefreshHistory()
         {
+            /*
             #region history
 
             
@@ -1719,16 +1732,15 @@ namespace KPIWeb.Rector
                 TreeView1.DataBind();
             }
             #endregion
+             */
         }
         protected void Button6_Click(object sender, EventArgs e)
         {
-
             RectorHistorySession rectorHistory_ = (RectorHistorySession)Session["rectorHistory"];
             if (rectorHistory_ == null)
             {
                 Response.Redirect("~/Default.aspx");
             }
-
             if (rectorHistory_.Visible == true)
             {
                 rectorHistory_.Visible = false;
@@ -1738,7 +1750,6 @@ namespace KPIWeb.Rector
                 rectorHistory_.Visible = true;
             }
             Session["rectorHistory"] = rectorHistory_;
-
             RefreshHistory();
         }
         protected void Grid_SelectedIndexChanged(object sender, EventArgs e)
