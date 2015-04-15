@@ -41,7 +41,7 @@
       </div> 
          <div>
                 <div>
-                    <asp:Label ID="Label25" runat="server" Text="Индикаторы"></asp:Label>
+                    <asp:Label ID="Label25" runat="server" Text="Целевые показатели"></asp:Label>
                     <asp:GridView ID="Gridview1" runat="server" AutoGenerateColumns="False">
                         <Columns>
                             <asp:TemplateField HeaderText="Название">

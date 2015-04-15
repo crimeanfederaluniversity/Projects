@@ -7,7 +7,7 @@
         <br />
         <asp:Menu ID="Menu1" runat="server"  Width="168px"  Orientation="Horizontal" StaticEnableDefaultPopOutImage="False"   OnMenuItemClick="Menu1_MenuItemClick" >
              <Items>
-                <asp:MenuItem Text="Добавление и редактирование индикатора" Value="0">
+                <asp:MenuItem Text="Добавление и редактирование целевого показателя" Value="0">
                 </asp:MenuItem>
                 <asp:MenuItem Text="Добавление и редактирование расчётного показателя" Value="1">            
                 </asp:MenuItem>
@@ -31,7 +31,7 @@
                 <br />
                 <asp:Label ID="Label5" runat="server" Text="0" Visible="False"></asp:Label>
                 <br />
-                <asp:Label ID="Label1" runat="server" Text="Название индикатора"></asp:Label>
+                <asp:Label ID="Label1" runat="server" Text="Название целевого показателя"></asp:Label>
                 <br />
                 <asp:TextBox ID="IndicatorName" runat="server" Height="70px" TextMode="MultiLine" Width="500px"></asp:TextBox>
                 <br />

@@ -523,11 +523,12 @@ namespace KPIWeb.Rector
             return tmp;
         }
         protected void Page_Load(object sender, EventArgs e)
-        {
+        {          
+            #region get user data
+
             Panel5.Style.Add("background-color", "rgba(0, 255, 0, 0.3)");
             Panel7.Style.Add("background-color", "rgba(255, 0, 0, 0.3)");
             Panel6.Style.Add("background-color", "rgba(255, 255, 0, 0.3)");
-
             string parameter = Request["__EVENTARGUMENT"];
             if (parameter != null)
             {
@@ -538,7 +539,6 @@ namespace KPIWeb.Rector
                 }
             }
 
-            #region get user data
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
@@ -560,7 +560,6 @@ namespace KPIWeb.Rector
 
 
             #endregion
-
             if (!IsPostBack)
             {
                 #region session
@@ -616,7 +615,6 @@ namespace KPIWeb.Rector
                 int SpecID = CurrentRectorSession.sesSpecID;
 
                 #endregion
-
                 #region DataTable init
 
                 DataTable dataTable = new DataTable();
@@ -645,7 +643,6 @@ namespace KPIWeb.Rector
                 dataTable.Columns.Add(new DataColumn("LableColor", typeof (string)));
 
                 #endregion
-
                 #region global page settings
 
                 ReportArchiveTable ReportTable = (from a in kpiWebDataContext.ReportArchiveTable
@@ -658,7 +655,6 @@ namespace KPIWeb.Rector
                                    ReportTable.EndDateTime.ToString().Split(' ')[0];
 
                 #endregion
-
                 #region Show Uncinfirmed Button 
 
                 Button7.Visible = false;
@@ -678,7 +674,6 @@ namespace KPIWeb.Rector
                 }
 
                 #endregion
-
                 if (ViewType == 0) // просмотр для структурных подразделений
                 {
                     #region преднастройка страницы                    
@@ -687,7 +682,7 @@ namespace KPIWeb.Rector
 
                     if (ParamType == 0)
                     {
-                        PageFullName.Text = "Значения для индикатора; \"";
+                        PageFullName.Text = "Значения для целевого показателя; \"";
                         PageFullName.Text += (from a in kpiWebDataContext.IndicatorsTable
                             where a.IndicatorsTableID == ParamID
                             select a.Name).FirstOrDefault();
@@ -912,7 +907,6 @@ namespace KPIWeb.Rector
                     }
 
                     #endregion
-
                     #region fill grid
 
                     if (ParamType == 0) //считаем индикатор
@@ -1335,7 +1329,6 @@ namespace KPIWeb.Rector
                     }
 
                     #endregion
-
                     #region DataGridBind
 
                     Grid.DataSource = dataTable;
@@ -1347,7 +1340,6 @@ namespace KPIWeb.Rector
                     Grid.DataBind();
 
                     #endregion
-
                     #region постнастройки страницы
 
                     Grid.Columns[5].Visible = false;
@@ -1393,7 +1385,7 @@ namespace KPIWeb.Rector
                     {
 
                         RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID,
-                            SpecID, "Индикатор для специальностей");
+                            SpecID, "Целевой показатель для специальностей");
                         rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
                         Session["rectorHistory"] = rectorHistory;
                     }
@@ -1419,7 +1411,6 @@ namespace KPIWeb.Rector
                     string title = "Специальности";
 
                     #endregion
-
                     #region fill grid
 
                     List<SpecializationTable> SpecTable = (from a in kpiWebDataContext.SpecializationTable
@@ -1460,7 +1451,6 @@ namespace KPIWeb.Rector
                     }
 
                     #endregion
-
                     #region DataGridBind
 
                     Grid.DataSource = dataTable;
@@ -1468,7 +1458,6 @@ namespace KPIWeb.Rector
                     Grid.DataBind();
 
                     #endregion
-
                     #region постнастройка страницы
 
                     Grid.Columns[12].Visible = false;
@@ -1853,7 +1842,7 @@ namespace KPIWeb.Rector
                 ConfirmParam.FK_IndicatorsTable = ParamId;
                 ConfirmParam.FK_ReportTable = CurrentRectorSession.sesReportID;
                 ConfirmParam.FK_UsersTable = userID;
-                ConfirmParam.Name = "Подтверждение индикатора проректором";
+                ConfirmParam.Name = "Подтверждение целевого показателя проректором";
                 ConfirmParam.Comment = TextBox1.Text;
                 kpiWebDataContext.ConfirmationHistory.InsertOnSubmit(ConfirmParam);
                 kpiWebDataContext.SubmitChanges();

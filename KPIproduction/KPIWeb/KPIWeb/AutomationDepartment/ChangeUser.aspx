@@ -78,7 +78,7 @@ textarea {
     <form id="form1" runat="server">
     <div class="auto-style1" style="height: 73px; width: 924px">
     
-        Изменение параметров доступа и заполнения индикаторов пользователями<br />
+        Изменение параметров доступа и заполнения целевых показателей пользователями<br />
     
     </div>
         <br />
@@ -135,7 +135,7 @@ textarea {
         </asp:GridView>
     
         <br />
-    Индикаторы<asp:GridView ID="IndicatorGrid" runat="server" AutoGenerateColumns="False" Width="242px">
+    Целевые показатели<asp:GridView ID="IndicatorGrid" runat="server" AutoGenerateColumns="False" Width="242px">
             <Columns>
             <asp:TemplateField HeaderText="Название">
                                     <ItemTemplate>

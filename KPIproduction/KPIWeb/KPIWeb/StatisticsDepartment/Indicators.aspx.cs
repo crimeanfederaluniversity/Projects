@@ -126,7 +126,7 @@ namespace KPIWeb.StatisticsDepartment
                         indicators.Name = IndicatorName.Text;
                         indicators.Formula = IndicatorFormula.Text;
                         indicators.Measure = IndicatorMeasure.Text;
-                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Индикатор изменен');", true);    
+                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Целевой показатель изменен');", true);    
                     }
                     else if ((int)ViewState["state"] == 1)///рассчетные показатели
                     {
@@ -163,7 +163,7 @@ namespace KPIWeb.StatisticsDepartment
                         indicators.Formula = IndicatorFormula.Text;
                         indicators.Measure = IndicatorMeasure.Text;
                         kPiDataContext.IndicatorsTable.InsertOnSubmit(indicators);
-                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Индикатор создан');", true);
+                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Целевой показатель создан');", true);
                     }
                     else if ((int)ViewState["state"] == 1)///рассчетные показатели
                     {
@@ -238,9 +238,9 @@ namespace KPIWeb.StatisticsDepartment
                     }
                     ViewState["state"] = 0;
 
-                    addtitle.Text = "Форма редактирования индикаторов";
-                    Label1.Text = "Название индикатора";
-                    Button3.Text = "Сохранить изменения индикатора";
+                    addtitle.Text = "Форма редактирования целевого показателя";
+                    Label1.Text = "Название целевого показателя";
+                    Button3.Text = "Сохранить изменения целевого показателя";
                     TextBoxAbb.Visible = false;
                     LabelAbb.Visible = false;
                     LabelAbbError.Visible = false;
@@ -249,7 +249,7 @@ namespace KPIWeb.StatisticsDepartment
                         new KPIWebDataContext();
                     List<IndicatorsTable> indicatorList = (from item in kPiDataContext.IndicatorsTable select item).ToList();
                     var dictionary = new Dictionary<int, string>();
-                    dictionary.Add(0, "Добавить новый индикатор");
+                    dictionary.Add(0, "Добавить новый целевой показатель");
                     foreach (IndicatorsTable item in indicatorList)
                         dictionary.Add(item.IndicatorsTableID, item.Name);
                     DropDownList1.DataTextField = "Value";

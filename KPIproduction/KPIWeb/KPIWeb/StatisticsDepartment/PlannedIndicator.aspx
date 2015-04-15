@@ -30,7 +30,7 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                        <asp:TemplateField HeaderText="Номер индикатора" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                        <asp:TemplateField HeaderText="Номер целевого показателя" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="FK_IndicatorsTable" runat="server" Text='<%# Bind("FK_IndicatorsTable") %>'  Visible="True"></asp:Label>
                         </ItemTemplate>
@@ -49,7 +49,7 @@
                  <asp:Label ID="addtitle" runat="server" Font-Size="X-Large" Text="Редактирование "></asp:Label>
                  <br   />
                 <br   />
-                <asp:Label ID="Label1" runat="server" Text="Выберите индикатор"></asp:Label>
+                <asp:Label ID="Label1" runat="server" Text="Выберите целевой показатель"></asp:Label>
                 <br />
                 <br   />
                 <asp:DropDownList ID="DropDownList1" runat="server" Height="22px" Width="541px" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">

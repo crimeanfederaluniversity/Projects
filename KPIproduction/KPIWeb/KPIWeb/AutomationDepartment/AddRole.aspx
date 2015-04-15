@@ -79,7 +79,7 @@
         </asp:GridView>
     
         <br />
-    Индикаторы<asp:GridView ID="IndicatorGrid" runat="server" AutoGenerateColumns="False">
+    Целевые показатели<asp:GridView ID="IndicatorGrid" runat="server" AutoGenerateColumns="False">
             <Columns>
             <asp:TemplateField HeaderText="Название">
                                     <ItemTemplate>

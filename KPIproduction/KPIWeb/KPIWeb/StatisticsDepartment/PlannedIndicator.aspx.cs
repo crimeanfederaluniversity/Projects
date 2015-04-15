@@ -34,7 +34,7 @@ namespace KPIWeb
                                                        where item.Active == true
                                                        select item).ToList();
                 var dictionary = new Dictionary<int, string>();
-                dictionary.Add(0, "Выберите индикатор");
+                dictionary.Add(0, "Выберите целевой показатель");
                 foreach (IndicatorsTable item in indicatorList)
                     dictionary.Add(item.IndicatorsTableID, item.Name);
                 DropDownList1.DataTextField = "Value";
@@ -66,7 +66,7 @@ namespace KPIWeb
             indicators.Date = Calendar1.SelectedDate;
             kPiDataContext.PlannedIndicator.InsertOnSubmit(indicators);
             kPiDataContext.SubmitChanges();
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Индикатор создан');", true);
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Целевого показателя создан');", true);
         }
 
 

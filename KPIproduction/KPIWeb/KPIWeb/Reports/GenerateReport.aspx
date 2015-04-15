@@ -5,8 +5,8 @@
     <asp:GridView ID="GridviewReport" runat="server" ShowFooter="true" AutoGenerateColumns="false">
                             <Columns>
                                 <asp:BoundField DataField="IndicatorsTableID" Visible="false" />
-                                <asp:BoundField DataField="Name" HeaderText="Название индикатора" />
-                                <asp:BoundField DataField="IndicatorsValue" HeaderText="Значение индикатора" />
+                                <asp:BoundField DataField="Name" HeaderText="Название целевого показателя" />
+                                <asp:BoundField DataField="IndicatorsValue" HeaderText="Значение целевого показателя" />
                             </Columns>
                         </asp:GridView>
         <br />

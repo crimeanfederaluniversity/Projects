@@ -19,7 +19,7 @@
  
 <br />
 <br />
-<asp:Button ID="Button5" runat="server" Height="50px" OnClick="Button5_Click" Text="Редактировать индикаторы" Width="400px" />
+<asp:Button ID="Button5" runat="server" Height="50px" OnClick="Button5_Click" Text="Редактировать целевые показатели" Width="400px" />
 <br />
 <br />
 <asp:Button ID="Button6" runat="server" Height="50px" OnClick="Button6_Click" Text="Редактировать базовые показатели" Width="400px" />
@@ -33,7 +33,7 @@
  
        <br />
        <br />
-       <asp:Button ID="Button9" runat="server" Height="50px" OnClick="Button9_Click" Text="Добавление области знаний/индикатора/формулы/специальности" Width="400px" />
+       <asp:Button ID="Button9" runat="server" Height="50px" OnClick="Button9_Click" Text="Добавление области знаний/целевых показателей/формулы/специальности" Width="400px" />
  
        <br />
        <br />

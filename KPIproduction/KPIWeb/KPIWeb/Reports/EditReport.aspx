@@ -138,7 +138,7 @@
 
             <asp:GridView ID="IndicatorsTable" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="1000px">
                             <Columns>
-                                <asp:BoundField DataField="IndicatorName" HeaderText="Индикатор" />
+                                <asp:BoundField DataField="IndicatorName" HeaderText="Целевые показатели" />
                                 <asp:TemplateField HeaderText="Активен">
                                     <ItemTemplate>
                                         <asp:Label ID="IndicatorID" runat="server" Visible="false" Text='<%# Bind("IndicatorID") %>'></asp:Label>
