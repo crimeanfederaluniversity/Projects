@@ -21,6 +21,8 @@ namespace KPIWeb.Reports
             }
 
             int userID = UserSer.Id;
+            ViewState["LocalUserID"] = userID;
+
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             UsersTable userTable =
                 (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
@@ -421,7 +423,7 @@ namespace KPIWeb.Reports
             }
         }
         protected void ButtonEditClick(object sender, EventArgs e)
-        {
+        {            
             Button button = (Button)sender;
             {
                 Serialization UserSer = (Serialization)Session["UserID"];
@@ -432,6 +434,7 @@ namespace KPIWeb.Reports
 
                 int userID = UserSer.Id;
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+
                 UsersTable userTable =
                     (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
                 ThirdLevelParametrs thirdParam = (from a in kpiWebDataContext.ThirdLevelParametrs
@@ -447,6 +450,12 @@ namespace KPIWeb.Reports
                 Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчёта               
                 Serialization modeSer = new Serialization(0,null,null);
                 Session["mode"] = modeSer;
+
+                var login =
+                    (from a in kpiWebDataContext.UsersTable
+                     where a.UsersTableID == (int)ViewState["LocalUserID"]
+                     select a.Email).FirstOrDefault(); 
+                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Пользователь " + login + " зашел на страницу редактирования отчета с ID = " + paramSerialization.ReportStr);
 
                 if (thirdParam != null)
                 {
@@ -487,6 +496,13 @@ namespace KPIWeb.Reports
                 Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчёта               
                 Serialization modeSer = new Serialization(1, null, null);
                 Session["mode"] = modeSer;
+                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+                var login =
+                        (from a in kpiWebDataContext.UsersTable
+                         where a.UsersTableID == (int)ViewState["LocalUserID"]
+                         select a.Email).FirstOrDefault();
+                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Пользователь " + login + " зашел на страницу просмотра отчета с ID = " + paramSerialization.ReportStr);
+
                 Response.Redirect("~/Reports/FillingTheReport.aspx");
             }
         }
@@ -498,6 +514,13 @@ namespace KPIWeb.Reports
                 Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчёта               
                 Serialization modeSer = new Serialization(2, null, null);
                 Session["mode"] = modeSer;
+                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+                var login =
+                        (from a in kpiWebDataContext.UsersTable
+                         where a.UsersTableID == (int)ViewState["LocalUserID"]
+                         select a.Email).FirstOrDefault();
+                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Пользователь " + login + " зашел на страницу просмотра и подтверждения отчета с ID = " + paramSerialization.ReportStr);
+
                 Response.Redirect("~/Reports/FillingTheReport.aspx");
             }
         }

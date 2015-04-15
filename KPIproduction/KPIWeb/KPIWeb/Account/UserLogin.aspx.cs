@@ -52,7 +52,7 @@ namespace KPIWeb.Account
                 }
                 catch(Exception ex)
                 {
-                    LogHandler.LogWriter.WriteError(ex);
+                    //LogHandler.LogWriter.WriteError(ex);
                    
                 }
             

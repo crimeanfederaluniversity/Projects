@@ -18,9 +18,21 @@ namespace KPIWeb.Rector
             }
 
             int userID = UserSer.Id;
+            ViewState["LocalUserID"] = userID;
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            var login =
+                     (from a in kPiDataContext.UsersTable
+                      where a.UsersTableID == (int)ViewState["LocalUserID"]
+                      select a.Email).FirstOrDefault();
+
+            ViewState["login"] = login;
+
+
+            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + (string)ViewState["login"] + " перешел на главную страницу (RectorMain)");
+
 
             if (userTable.AccessLevel != 5)
             {
@@ -37,12 +49,14 @@ namespace KPIWeb.Rector
         {
             ParametrType paramType = new ParametrType(0);
             Session["paramType"] = paramType;
+            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + (string)ViewState["login"] + " выбрал работу с Целевыми Показателями и перешел на страницу выбора отчета");
             Response.Redirect("~/Rector/RectorChooseReport.aspx");
         }
         protected void Button3_Click(object sender, EventArgs e)
         {
             ParametrType paramType = new ParametrType(1);
             Session["paramType"] = paramType;
+            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + (string)ViewState["login"] + " выбрал работу с Первичными данными и перешел на страницу выбора отчета");
             Response.Redirect("~/Rector/RectorChooseReport.aspx");
         }
         protected void Button4_Click(object sender, EventArgs e)

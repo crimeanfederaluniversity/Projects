@@ -116,6 +116,7 @@ namespace KPIWeb.Rector
                     Session["rectorHistory"] = RectorHistory;
                     Response.Redirect("~/Rector/Result.aspx");
                 }
+
             }
         }
 
