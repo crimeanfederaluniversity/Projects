@@ -138,11 +138,11 @@ namespace KPIWeb.Reports
 
                     if (Statusn == 4)
                     {
-                        status = "Данные верифицированы";
+                        status = "Данные утверждены";
                     }
                     else if (Statusn == 3)
                     {
-                        status = "Данные ожидают верификации";
+                        status = "Данные ожидают утверждения";
                     }
                     else if (Statusn == 2)
                     {

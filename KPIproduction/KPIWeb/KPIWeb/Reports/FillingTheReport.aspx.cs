@@ -1176,7 +1176,7 @@ namespace KPIWeb.Reports
                     int AllCnt = (int)ViewState["AllCnt"];
                     if (AllCnt == notNullCnt)
                     {
-                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Все показатели заполнены. Необходимо отправить отчёт на верификацию');" +
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Все показатели заполнены. Необходимо отправить отчёт на утверждение');" +
                             "document.location = '../Reports/FillingTheReport.aspx';", true);
 
 

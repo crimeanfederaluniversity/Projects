@@ -18,7 +18,7 @@
          <div>
             <asp:Label ID="Label3" runat="server" Text="Выберите кафедру"></asp:Label>
              <br />
-            <asp:DropDownList ID="DropDownList3" runat="server" CssClass="form-control" AutoPostBack="True" Height="40px" Width="400px"></asp:DropDownList>
+            <asp:DropDownList ID="DropDownList3" runat="server" CssClass="form-control" AutoPostBack="True" Height="40px" Width="400px" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged"></asp:DropDownList>
              <br />
           </div>   
          <div>

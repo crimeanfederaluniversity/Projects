@@ -28,7 +28,7 @@ namespace KPIWeb.AutomationDepartment
             }
         }
 
-        protected void Button1_Click(object sender, EventArgs e) //пока безо всяких проверок
+        protected void Button1_Click(object sender, EventArgs e) //пока безо всяких проверок //окай
         {
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             string tmpStr;

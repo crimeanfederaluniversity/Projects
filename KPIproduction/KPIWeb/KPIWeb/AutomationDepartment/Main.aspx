@@ -48,5 +48,8 @@
        <br />
        <asp:Button ID="Button11" runat="server" OnClick="Button11_Click1" Text="Button" Width="395px" />
        <br />
+       <br />
+       <asp:Button ID="Button13" runat="server" Height="41px" OnClick="Button13_Click" Text="Просмотреть статус данных" Width="395px" />
+       <br />
         
 </asp:Content>

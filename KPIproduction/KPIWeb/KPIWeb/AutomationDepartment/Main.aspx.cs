@@ -104,5 +104,10 @@ namespace KPIWeb.AutomationDepartment
         {
             Response.Redirect("~/PlannedIndicator.aspx");
         }
+
+        protected void Button13_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/AutomationDepartment/WatchingParamtrsState.aspx");
+        }
     }
 }
