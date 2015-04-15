@@ -24,6 +24,41 @@
     padding-top:5px;
     font-weight:bold;
 }
+#resultpagemaincontent {
+
+}
+.side_legend {
+    position:fixed;
+ 
+    top:6.3em;
+
+    right:0;
+    width:300px;
+    height:300px;
+    border-style:solid;
+    border-width:2px;
+    z-index:3;
+    color:#000000;  
+    padding-top:5px;
+    font-weight:bold;
+}
+.sidebar_button {
+    z-index:2;
+
+    background-image:url('/App_Themes/theme_1/css/images/arrow_side_in.png');
+      
+    background-size:contain;
+   
+    background-repeat:no-repeat;
+    position:absolute;
+    left:-20px;
+    border-radius:10px;
+    height:50px;
+
+   }
+    .sidebar_button:hover {
+  
+    }
 
 .Panel_label1 {
    position:relative;
@@ -150,7 +185,6 @@ background-image: url('../../../css/images/kfu_button_gradient_hover_green_1.png
       background-color:#585858;
       color:#ffffff;
       text-align:center;
- 
     }
 .Grid_view_style tr, 
 .Grid_view_style td {
@@ -214,8 +248,10 @@ background-image: url('../../../css/images/kfu_button_gradient_hover_green_1.png
     
 
     padding-right:10px;
+    width:239px;
     display:inline-block;
-       }
+    top: 11px;
+}
    
 input[type="submit"]:hover {
     border-width:2px;
@@ -320,6 +356,19 @@ left:7%;
     animation-fill-mode:both;
 
 }
+.loading_circle { 
+    
+    top:0;
+    left:0;
+    position:fixed;
+    width:100%;    height:100%;
+    
+    animation-name:anim_darkness_1;
+    animation-duration:1s;
+    animation-iteration-count:1;
+    animation-fill-mode:both;
+
+}
 #gears {
 
     position:fixed;
@@ -376,21 +425,46 @@ left:7%;
 }
 #im3_circle {
     position:absolute;
-    top:60px; 
-    left:79px;
+
   
-    
-    background-image:url('/App_Themes/theme_1/css/images/gear_small_2.png'),url('/App_Themes/theme_1/css/images/Circle_progres_bar.png');
-    opacity:0.1,0.4;
+    z-index:2;
+    background-image:url('/App_Themes/theme_1/css/images/bgcc.png');
+   
     background-repeat:no-repeat;
-  
+
     width:200px;
     height:200px;
+   /*background-color:rgba(20,200,100,0.5);*/
+      
+}
+#im3_bg_circle {
+    background-image:url('/App_Themes/theme_1/css/images/bgc.png');
+    background-size:contain;
+    background-repeat:no-repeat;
+    position:absolute;
+    /*
+    z-index:1;
+    top:2px;
+    left:2px;
+        */
+       
     animation-name:anim_circle_progress_rotate;
-    animation-duration:8s;
+    animation-duration:3s;
     animation-iteration-count:infinite;
     animation-timing-function:linear;
-    
+    width:200px;
+    height:200px;
+    /*clip-path:url("~/Site.Master#cclp");*/
+}
+#bgpanel_of_circlebar {
+    position:fixed;
+    left:38%;
+    top:30%;
+ /*   box-shadow:rgba(42,42,42,0.9) 100px 100px 100px 100px ;*/
+ 
+    width:200px;
+    height:200px;
+
 }
 /*ANIMATION_OBJ_DESIGN*//*ANIMATION_OBJ_DESIGN*//*ANIMATION_OBJ_DESIGN*/
 
@@ -416,7 +490,7 @@ left:7%;
 }
 @keyframes anim_circle_progress_rotate {
 
-    0% {
+    0% {image-orientation:
         transform:rotate(0deg);
     }
     100% {
