@@ -55,12 +55,12 @@
    }
    .commentTextBox 
    {
-       min-height: 300px;
+       min-height: 250px;
        min-width: 385px;
        width: 385px;
-       height: 300px;
+       height: 250px;
        max-width: 385px;
-       max-height: 300px;
+       max-height: 250px;
        margin-top: 5px;
        margin-left: 5px;       
    }
@@ -135,8 +135,7 @@
         </div>  
 <div id="comment_Section" class='commentSectionStyle'> 
             <h4 style="text-align:center"> После утверждения данных их изменение будет невозможно! </h4>  
-    </br>
-            <h4 style="left:5px"> Комментарий к утверждаемому значению:</h4>
+            <h4 style="margin-left:5px"> Комментарий к утверждаемому значению:</h4>
     
             <asp:TextBox ID="TextBox1" runat="server"  CssClass="commentTextBox" TextMode="MultiLine" ></asp:TextBox>
             <button type="button"  class="commentLeftButton" onclick="closeCommentSection()">Отмена</button>
@@ -204,7 +203,7 @@
      <asp:TreeView ID="TreeView1" runat="server" NodeWrap="True" Visible="False" ShowExpandCollapse="False" ShowLines="True">
      </asp:TreeView>
      &nbsp;<asp:Button ID="Button7" runat="server" OnClientClick="showLoadPanel()" OnClick="Button7_Click" 
-         Text="Отобразить значения целевых показателей по неполным данным" Width="762px" />
+         Text="Отобразить значения показателей по неполным данным" Width="762px" />
      <br />
      <br />
         <asp:GridView ID="Grid" runat="server" 
@@ -213,7 +212,7 @@
              <Columns>                
                  <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />    
                  <asp:BoundField DataField="Number"   HeaderText="Номер" Visible="true" />
-                 <asp:BoundField DataField="Abb"   HeaderText="Аббревиатура" Visible="True" />
+                 <asp:BoundField DataField="Abb"   HeaderText="Шифр ПД" Visible="True" />
                  <asp:BoundField DataField="Name" HeaderText="Get" Visible="True" />          
                  <asp:BoundField DataField="StartDate" HeaderText="Начальная дата отчёта" Visible="True" />
                  <asp:BoundField DataField="EndDate" HeaderText="Конечная дата отчёта" Visible="True" />
@@ -224,8 +223,8 @@
                  <asp:TemplateField HeaderText="Прогресс заполнения">
                       <ItemTemplate>
                           <asp:Label ID="ProgressLable"  runat="server"  Text='<%# Eval("Progress") %>' ></asp:Label>
-                          <asp:Button ID="ProgressButton" runat="server" CommandName="Select" Text="Должники" CommandArgument='<%# Eval("ID") %>' Width="200px"  
-                          OnClientClick="showLoadPanel()" />                                                    
+                          <asp:Button ID="ProgressButton" runat="server" CommandName="Select"  Visible='<%# Bind("CanWatchWhoOws") %>' Text="Должники" CommandArgument='<%# Eval("ID") %>' Width="200px"  
+                          OnClientClick="showLoadPanel()" OnClick="ButtonOweClick" />                                                    
 
                        </ItemTemplate>
                  </asp:TemplateField>
