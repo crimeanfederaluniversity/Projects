@@ -112,13 +112,13 @@ namespace KPIWeb.Reports {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// Calendar1 элемент управления.
+        /// CalendarConfirmEndDay элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar Calendar1;
+        protected global::System.Web.UI.WebControls.Calendar CalendarConfirmEndDay;
         
         /// <summary>
         /// Label2 элемент управления.
@@ -130,13 +130,13 @@ namespace KPIWeb.Reports {
         protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// TextBox1 элемент управления.
+        /// DaysBeforeToCalcForRector элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox DaysBeforeToCalcForRector;
         
         /// <summary>
         /// Button3 элемент управления.

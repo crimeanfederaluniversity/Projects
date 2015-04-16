@@ -257,6 +257,12 @@ namespace KPIWeb.Reports
 
                         if (ReportArchiveTable.RecivedDateTime != null)
                             CalendarReportRecived.SelectedDate = (DateTime)ReportArchiveTable.RecivedDateTime;
+
+                        if (ReportArchiveTable.ConfirmEndDay != null)
+                            CalendarConfirmEndDay.SelectedDate = (DateTime)ReportArchiveTable.ConfirmEndDay;
+
+                        if (ReportArchiveTable.DaysBeforeToCalcForRector != null)
+                            DaysBeforeToCalcForRector.Text = ReportArchiveTable.DaysBeforeToCalcForRector.ToString();
                     }
                     ////заполнили поля
                     List<FirstLevelSubdivisionTable> academies =
@@ -356,6 +362,12 @@ namespace KPIWeb.Reports
 
                     if (CalendarReportRecived.SelectedDate > DateTime.MinValue)
                         reportArchiveTable.RecivedDateTime = CalendarReportRecived.SelectedDate;
+                   
+                    if (CalendarConfirmEndDay.SelectedDate > DateTime.MinValue)
+                        reportArchiveTable.ConfirmEndDay = CalendarConfirmEndDay.SelectedDate;
+
+                    if (DaysBeforeToCalcForRector.Text != "")
+                        reportArchiveTable.DaysBeforeToCalcForRector = Convert.ToInt32(DaysBeforeToCalcForRector.Text);
 
                     kpiWebDataContext.ReportArchiveTable.InsertOnSubmit(reportArchiveTable);
                     kpiWebDataContext.SubmitChanges();
@@ -395,6 +407,12 @@ namespace KPIWeb.Reports
 
                 if (CalendarReportRecived.SelectedDate > DateTime.MinValue)
                     reportArchiveTable.RecivedDateTime = CalendarReportRecived.SelectedDate;
+
+                if (CalendarConfirmEndDay.SelectedDate > DateTime.MinValue)
+                    reportArchiveTable.ConfirmEndDay = CalendarConfirmEndDay.SelectedDate;
+
+                if (DaysBeforeToCalcForRector.Text != "")
+                    reportArchiveTable.DaysBeforeToCalcForRector =  Convert.ToInt32(DaysBeforeToCalcForRector.Text);
 
                 #endregion
 
