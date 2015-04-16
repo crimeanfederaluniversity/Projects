@@ -397,6 +397,8 @@ namespace KPIWeb.Reports
             UsersTable userTable =
                       (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
+            ViewState["login"] = (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a.Email).FirstOrDefault();
+
             if (userTable.AccessLevel != 0)
             {
                 Response.Redirect("~/Default.aspx");
@@ -1176,6 +1178,7 @@ namespace KPIWeb.Reports
                     int AllCnt = (int)ViewState["AllCnt"];
                     if (AllCnt == notNullCnt)
                     {
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Пользователь " + (string)ViewState["login"] + " сохранил данные в отчете с ID = " + paramSerialization.ReportStr + "Все показатели заполнены");
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Все показатели заполнены. Необходимо отправить отчёт на утверждение');" +
                             "document.location = '../Reports/FillingTheReport.aspx';", true);
 
@@ -1183,6 +1186,7 @@ namespace KPIWeb.Reports
                     }
                     else
                     {
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Пользователь " + (string)ViewState["login"] + " сохранил данные в отчете с ID = " + paramSerialization.ReportStr + "Заполнено " + notNullCnt + " показателей из " + AllCnt);
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + AllCnt + " для отправки отчёта необходимо заполнитеь еще " + (AllCnt - notNullCnt) + " показателей.');" +
                             "document.location = '../Reports/FillingTheReport.aspx';", true);
 
@@ -1227,18 +1231,18 @@ namespace KPIWeb.Reports
                                             }
                                             else
                                             {
-                                                //error
+                                                LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 9 в отчете с ID = ");
                                             }
                                         }
                                         else
                                         {
-                                            //error    
+                                            LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 10 в отчете с ID = ");   
                                         }
                                     }
                                 }
                             }
                         }
-
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Пользователь " + (string)ViewState["login"] + " утвердил данные в отчете с ID = " + paramSerialization.ReportStr);
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Вы утвердили данные всех базовых показателей. отчёт отправлен и доступен только в режиме \"Просмотр\".');" +
                             "document.location = '../Default.aspx';", true);
 
@@ -1247,6 +1251,7 @@ namespace KPIWeb.Reports
                     else
                     {
                         //error
+                        LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 1 в отчете с ID = " + paramSerialization.ReportStr);
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Ошибка'); document.location = '../Default.aspx'; ", true);
 
                     }
@@ -1254,6 +1259,7 @@ namespace KPIWeb.Reports
                 }
                 else
                 {
+                    LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 2 в отчете с ID = " + paramSerialization.ReportStr);
                     //error
                 }
             }
@@ -1556,12 +1562,12 @@ namespace KPIWeb.Reports
                                                 }
                                                 else
                                                 {
-                                                    //error
+                                                    LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 3 в отчете с ID = " );
                                                 }
                                             }
                                             else
                                             {
-                                                //error    
+                                                LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 4 в отчете с ID = ");   
                                             }
                                         }
                                     }
@@ -1609,12 +1615,12 @@ namespace KPIWeb.Reports
                                                 }
                                                 else
                                                 {
-                                                    //error
+                                                    LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 5 в отчете с ID = ");
                                                 }
                                             }
                                             else
                                             {
-                                                //error    
+                                                LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 6 в отчете с ID = ");   
                                             }
                                         }
                                     }
@@ -1629,12 +1635,12 @@ namespace KPIWeb.Reports
                 }
                 else
                 {
-                    //error
+                    LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 7 в отчете с ID = ");
                 }
             }
             else
             {
-                //error
+                LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 8 в отчете с ID = ");
             }
         }
     }
