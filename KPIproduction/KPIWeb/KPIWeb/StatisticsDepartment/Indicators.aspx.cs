@@ -75,7 +75,7 @@ namespace KPIWeb.StatisticsDepartment
                 {
                     KPIWebDataContext kPiDataContext =
                         new KPIWebDataContext();
-                    if ((int)ViewState["state"] == 0) ///// индикаторы
+                    if ((int)ViewState["state"] == 0) ///// целевой показатель
                     {
                         IndicatorsTable indicator = (from item in kPiDataContext.IndicatorsTable
                                                      where item.IndicatorsTableID == SelectedValue
@@ -116,7 +116,7 @@ namespace KPIWeb.StatisticsDepartment
             {
                 if (SelectedValue > 0)
                 {
-                    if ((int)ViewState["state"] == 0) ///// индикаторы
+                    if ((int)ViewState["state"] == 0) ///// целевой показатель
                     {
                         IndicatorsTable indicators = (from item in kPiDataContext.IndicatorsTable
                             where item.IndicatorsTableID == SelectedValue
@@ -154,7 +154,7 @@ namespace KPIWeb.StatisticsDepartment
                 }
                 else
                 {
-                    if ((int)ViewState["state"] == 0) ///// индикаторы
+                    if ((int)ViewState["state"] == 0) ///// целевой показатель
                     {
                         IndicatorsTable indicators = new IndicatorsTable();
                         if (CheckBox1.Checked) indicators.Active = true;
@@ -187,7 +187,7 @@ namespace KPIWeb.StatisticsDepartment
                 }
                 kPiDataContext.SubmitChanges();
             }
-        } //Добавление в БД // внутри разделение на индикаторы и расчётные
+        } //Добавление в БД // внутри разделение на целевой показатель и расчётные
 
         protected void Button2_Click(object sender, EventArgs e)
         {
@@ -224,7 +224,7 @@ namespace KPIWeb.StatisticsDepartment
             
             switch (viewidx)
             {
-                case 0://работа с индикаторами
+                case 0://работа с целевой показатель
                 {
                     if (ViewState["state"]!=null)
                     if ((int)ViewState["state"] != 0)

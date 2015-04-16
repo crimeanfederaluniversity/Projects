@@ -51,7 +51,7 @@ namespace KPIWeb.Rector
                     Response.Redirect("~/Default.aspx");
                 }
 
-                if (paramType.paramType == 0) //смотрим индикаторы
+                if (paramType.paramType == 0) //смотрим индикацелевой показатель
                 {
                     PageName.Text = "Работа с целевыми показателями";
                 }
@@ -97,7 +97,7 @@ namespace KPIWeb.Rector
                 {
                     Response.Redirect("~/Default.aspx");
                 }
-                if (paramType.paramType == 0) //смотрим индикаторы
+                if (paramType.paramType == 0) //смотрим индцелевой показатель
                 {
                     Result.Struct mainStruct = new Result.Struct(1, "");
                     RectorSession rectorResultSession = new RectorSession(mainStruct, 1, 0, 0,

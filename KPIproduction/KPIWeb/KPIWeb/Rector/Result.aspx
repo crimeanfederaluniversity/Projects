@@ -203,7 +203,7 @@
      <asp:TreeView ID="TreeView1" runat="server" NodeWrap="True" Visible="False" ShowExpandCollapse="False" ShowLines="True">
      </asp:TreeView>
      &nbsp;<asp:Button ID="Button7" runat="server" OnClientClick="showLoadPanel()" OnClick="Button7_Click" 
-         Text="Отобразить значения целевых показателей по неполным данным" Width="558px" />
+         Text="Отобразить значения целевых показателей по неполным данным" Width="762px" />
      <br />
      <br />
         <asp:GridView ID="Grid" runat="server" 

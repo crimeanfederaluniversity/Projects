@@ -14,7 +14,7 @@ namespace KPIWeb
         public int sesViewType { get; set; } // тип просмотра // 0 - просмотр для структурных подразделений // 1 - просмотр 
      //   public int sesLevelID { get; set; }  // ID структуры
         public int sesParamID { get; set; }  // ID параметра
-        public int sesParamType { get; set; }// Тип параметра // 0 - индикатор / 1 - расчетный показатель / 2 - базовый показатель
+        public int sesParamType { get; set; }// Тип параметра // 0 - целевой показатель / 1 - расчетный показатель / 2 - базовый показатель
         public int sesReportID { get; set; }
         public string sesName { get; set; }
         public int sesSpecID { get; set; }

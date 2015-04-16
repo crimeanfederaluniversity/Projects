@@ -372,7 +372,7 @@ namespace KPIWeb.Rector
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
           
             float result = 0;
-            if (ParamType == 0) // считаем индикатор
+            if (ParamType == 0) // считаем целевой показатель
             {
                 IndicatorsTable Indicator = (from a in kpiWebDataContext.IndicatorsTable
                     where a.IndicatorsTableID == ParamID
@@ -852,9 +852,9 @@ namespace KPIWeb.Rector
                             SpecID, "Значения целевых показателей для КФУ");
                         rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
                         Session["rectorHistory"] = rectorHistory;
-                        PageFullName.Text = "Значения целевых показателей для КФУ";
+                        PageFullName.Text = "Значения целевых показателей (ЦП) для КФУ";
                         //PageName.Text = "Значения индикторов для КФУ";
-                        name_text = "Название целевого показателя";
+                        name_text = "Название ЦП показателя";
                         value_text = "Значение ЦП";
                         progress_text = "Степень готовности первичных данных";
                         confirm_text = "Утвердить ЦП";
@@ -919,11 +919,9 @@ namespace KPIWeb.Rector
 
                     #endregion
                     #region fill grid
-
-                    if (ParamType == 0) //считаем индикатор
+                    if (ParamType == 0) //считаем целевой показатель
                     {
                         #region indicator
-
                         List<IndicatorsTable> Indicators = (
                             from a in kpiWebDataContext.IndicatorsTable
                             join b in kpiWebDataContext.IndicatorsAndUsersMapping
@@ -934,7 +932,7 @@ namespace KPIWeb.Rector
                                 && b.FK_UsresTable == userID
                             select a).ToList();
 
-                        //нашли все индикаторы привязанные к пользователю
+                        //нашли все целевой показатель привязанные к пользователю
                         foreach (IndicatorsTable CurrentIndicator in Indicators)
                         {
                             DataRow dataRow = dataTable.NewRow();
@@ -1124,7 +1122,7 @@ namespace KPIWeb.Rector
 
                         #endregion indicator
                     }
-                    if (ParamType == 1) //показываем рассчетный входящий в ID Индикатора
+                    if (ParamType == 1) //показываем рассчетный входящий в ID целевой показатель
                     {
                         #region calculated
 
@@ -1396,7 +1394,7 @@ namespace KPIWeb.Rector
                     {
 
                         RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID,
-                            SpecID, "Целевой показатель для направления подготовки");
+                            SpecID, "Целевой показатель (ЦП) для направления подготовки");
                         rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
                         Session["rectorHistory"] = rectorHistory;
                     }
@@ -1852,7 +1850,7 @@ namespace KPIWeb.Rector
                 ConfirmParam.FK_IndicatorsTable = ParamId;
                 ConfirmParam.FK_ReportTable = CurrentRectorSession.sesReportID;
                 ConfirmParam.FK_UsersTable = userID;
-                ConfirmParam.Name = "Подтверждение целевого показателя проректором";
+                ConfirmParam.Name = "Подтверждение ЦП проректором";
                 ConfirmParam.Comment = TextBox1.Text;
                 kpiWebDataContext.ConfirmationHistory.InsertOnSubmit(ConfirmParam);
                 kpiWebDataContext.SubmitChanges();
