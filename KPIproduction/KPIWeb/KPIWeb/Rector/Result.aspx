@@ -119,18 +119,19 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <asp:Label ID="Label7" runat="server" Text="Легенда" ValidateRequestMode="Enabled"></asp:Label>
             <br />
+            <br />
             <asp:Panel ID="Panel5" runat="server" CssClass="ColorPanelLegend">
+                <asp:Label ID="Label11" runat="server" Text="........Утверждено"></asp:Label>
                 <br />
             </asp:Panel>
-            <asp:Label ID="Label8" runat="server" Text="...Утверждено"></asp:Label>
             <br />
             <asp:Panel ID="Panel6" runat="server" Height="17" BackColor="#000099" BorderColor="#000099">
+                <asp:Label ID="Label12" runat="server" Text=".........Готово к утверждению"></asp:Label>
             </asp:Panel>
-            <asp:Label ID="Label9" runat="server" Text="...Готово к утверждению"></asp:Label>
             <br />
             <asp:Panel ID="Panel7" runat="server" Height="17" BackColor="#CC0000" BorderColor="#CC0000">
+                <asp:Label ID="Label13" runat="server" style="text-align: center" Text="..........Неутвержденные"></asp:Label>
             </asp:Panel>
-            <asp:Label ID="Label10" runat="server" style="text-align: center" Text="...Неутвержденные данные"></asp:Label>
         </div>  
 <div id="comment_Section" class='commentSectionStyle'> 
             <h4 style="text-align:center"> После утверждения данных их изменение будет невозможно! </h4>  
