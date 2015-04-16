@@ -219,6 +219,7 @@
     <Content Include="AutomationDepartment\RoleMapping.aspx" />
     <Content Include="AutomationDepartment\IsAvailibleMappingRole.aspx" />
     <Content Include="Account\PersonalInfo.aspx" />
+    <Content Include="Spinner.css" />
     <Content Include="StatisticsDepartment\PlannedIndicator.aspx" />
     <Content Include="Rector\RectorChooseReport.aspx" />
     <Content Include="Rector\RectorMain.aspx" />

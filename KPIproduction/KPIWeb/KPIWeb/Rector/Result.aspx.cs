@@ -1661,7 +1661,6 @@ namespace KPIWeb.Rector
                 Session["rectorHistory"] = rectorHistory;
                 Response.Redirect("~/Rector/Result.aspx");
             }
-
         }
         protected void Button4_Click(object sender, EventArgs e)
         {           
@@ -1700,9 +1699,7 @@ namespace KPIWeb.Rector
         public void RefreshHistory()
         {
             /*
-            #region history
-
-            
+            #region history            
             RectorHistorySession rectorHistory_ = (RectorHistorySession)Session["rectorHistory"];
             if (rectorHistory_ == null)
             {
@@ -1735,11 +1732,13 @@ namespace KPIWeb.Rector
         }
         protected void Button6_Click(object sender, EventArgs e)
         {
+
             RectorHistorySession rectorHistory_ = (RectorHistorySession)Session["rectorHistory"];
             if (rectorHistory_ == null)
             {
                 Response.Redirect("~/Default.aspx");
             }
+
             if (rectorHistory_.Visible == true)
             {
                 rectorHistory_.Visible = false;
@@ -1749,6 +1748,7 @@ namespace KPIWeb.Rector
                 rectorHistory_.Visible = true;
             }
             Session["rectorHistory"] = rectorHistory_;
+
             RefreshHistory();
         }
         protected void Grid_SelectedIndexChanged(object sender, EventArgs e)
