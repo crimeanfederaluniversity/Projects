@@ -210,7 +210,7 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                  <asp:TemplateField HeaderText="Детализация базового показателя по специальностям">
+                  <asp:TemplateField HeaderText="Детализация базового показателя по направлениям подготовки">
                         <ItemTemplate>
                             <asp:Button ID="Button3" runat="server" CommandName="Select" Text="Детализовать"  CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="Button3Click"/>
                         </ItemTemplate>

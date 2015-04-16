@@ -1396,30 +1396,30 @@ namespace KPIWeb.Rector
                     {
 
                         RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID,
-                            SpecID, "Целевой показатель для специальностей");
+                            SpecID, "Целевой показатель для направления подготовки");
                         rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
                         Session["rectorHistory"] = rectorHistory;
                     }
                     else if (ParamType == 1)
                     {
                         RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID,
-                            SpecID, "Расчетный для специальностей");
+                            SpecID, "Расчетный для направления подготовки");
                         rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
                         Session["rectorHistory"] = rectorHistory;
                     }
                     else if (ParamType == 2)
                     {
                         RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID,
-                            SpecID, "Базовый для специальностей");
+                            SpecID, "Базовый для направления подготовки");
                         rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
                         Session["rectorHistory"] = rectorHistory;
                         string tmp = (from a in kpiWebDataContext.BasicParametersTable
                             where a.BasicParametersTableID == ParamID
                             select a.Name).FirstOrDefault();
-                        PageFullName.Text = "Значения базового показателя \"" + tmp + "\" по специальностям для КФУ";
+                        PageFullName.Text = "Значения базового показателя \"" + tmp + "\" по направлениям подготовки для КФУ";
                     }
 
-                    string title = "Специальности";
+                    string title = "Направления подготовки";
 
                     #endregion
                     #region fill grid

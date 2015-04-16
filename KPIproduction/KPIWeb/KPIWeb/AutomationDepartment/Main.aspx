@@ -33,7 +33,7 @@
  
        <br />
        <br />
-       <asp:Button ID="Button9" runat="server" Height="50px" OnClick="Button9_Click" Text="Добавление области знаний/целевых показателей/формулы/специальности" Width="400px" />
+       <asp:Button ID="Button9" runat="server" Height="50px" OnClick="Button9_Click" Text="Добавление области знаний/целевых показателей/формулы/направления подготовки" Width="400px" />
  
        <br />
        <br />
