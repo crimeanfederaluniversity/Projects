@@ -1163,7 +1163,10 @@ namespace KPIWeb.Rector
                             dataRow["Name"] = CurrentCalculated.Name;
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
-                            dataRow["CanWatchWhoOws"] = "false";
+
+                         //   dataRow["CanWatchWhoOws"] = "false";
+                         //   dataRow["CanConfirm"] = "true";
+                         //   dataRow["ShowLable"] = "false";
                            
                             dataRow["Abb"] = CurrentCalculated.AbbreviationEN;
 
@@ -1185,6 +1188,7 @@ namespace KPIWeb.Rector
                             int AllConfirmedBasics = 0;
                             foreach (BasicParametersTable Basic in BasicList)
                             {
+                                /*
                                 AllBasicsUsersCanEdit += (from a in kpiWebDataContext.BasicParametrsAndUsersMapping
                                     join b in kpiWebDataContext.UsersTable
                                         on a.FK_UsersTable equals b.UsersTableID
@@ -1196,7 +1200,17 @@ namespace KPIWeb.Rector
                                     where a.FK_ReportArchiveTable == ReportID
                                           && a.FK_BasicParametersTable == Basic.BasicParametersTableID
                                           && a.Status == 4
-                                    select a).Count();
+                                    select a).Count();*/
+                                AllBasicsUsersCanEdit += (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                          where a.FK_ReportArchiveTable == ReportID
+                                                                && a.FK_BasicParametersTable == Basic.BasicParametersTableID
+                                                          select a).Count();
+
+                                AllConfirmedBasics += (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                       where a.FK_ReportArchiveTable == ReportID
+                                                             && a.FK_BasicParametersTable == Basic.BasicParametersTableID
+                                                             && a.Status == 4
+                                                       select a).Count();
                             }
                             bool BasicsAreConfirmed = true;
                             if (AllBasicsUsersCanEdit != AllConfirmedBasics)
@@ -1231,7 +1245,7 @@ namespace KPIWeb.Rector
                                 kpiWebDataContext.SubmitChanges();
                             }
 
-                            else if (collected.Confirmed == true) //данные подтверждены
+                            if (collected.Confirmed == true) //данные подтверждены
                             {
                                 dataRow["CanWatchWhoOws"] = false;
                                 dataRow["CanConfirm"] = false;
@@ -1269,7 +1283,7 @@ namespace KPIWeb.Rector
                                 else if (BasicsAreConfirmed == false)
                                 {
                                     dataRow["CanWatchWhoOws"] = true;
-                                    dataRow["CanConfirm"] = true;
+                                    dataRow["CanConfirm"] = false;
                                     dataRow["ShowLable"] = false;
                                     dataRow["LableText"] = "";
                                     /*
@@ -1296,7 +1310,7 @@ namespace KPIWeb.Rector
                                 }
                                 else
                                 {
-                                    dataRow["CanConfirm"] = false;
+                                    dataRow["CanConfirm"] = true;
                                     dataRow["CanWatchWhoOws"] = false;
                                     dataRow["ShowLable"] = false;
                                     dataRow["LableText"] = "";
@@ -1574,8 +1588,10 @@ namespace KPIWeb.Rector
 
                         int AllBasicsUsersCanEdit = 0;
                         int AllConfirmedBasics = 0;
+                        
                         foreach (BasicParametersTable Basic in BasicList)
                         {
+                            /*
                             List<UsersTable> UserTableList = (from a in kpiWebDataContext.UsersTable
                                 join b in kpiWebDataContext.BasicParametrsAndUsersMapping
                                 on a.UsersTableID equals b.FK_UsersTable
@@ -1616,7 +1632,17 @@ namespace KPIWeb.Rector
                                 }
                                 AllBasicsUsersCanEdit += (UserTableList.Count() * SpecCnt);
                             }
-                       
+                       */
+                            AllBasicsUsersCanEdit += (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                   where a.FK_ReportArchiveTable == ReportID
+                                                         && a.FK_BasicParametersTable == Basic.BasicParametersTableID
+                                                         && ((a.FK_ZeroLevelSubdivisionTable == currentStruct.Lv_0) || (currentStruct.Lv_0 == 0))
+                                                            && ((a.FK_FirstLevelSubdivisionTable == currentStruct.Lv_1) || (currentStruct.Lv_1 == 0))
+                                                            && ((a.FK_SecondLevelSubdivisionTable == currentStruct.Lv_2) || (currentStruct.Lv_2 == 0))
+                                                            && ((a.FK_ThirdLevelSubdivisionTable == currentStruct.Lv_3) || (currentStruct.Lv_3 == 0))
+                                                            && ((a.FK_FourthLevelSubdivisionTable == currentStruct.Lv_4) || (currentStruct.Lv_4 == 0))
+                                                   select a).Count();
+
                             AllConfirmedBasics += (from a in kpiWebDataContext.CollectedBasicParametersTable
                                                    where a.FK_ReportArchiveTable == ReportID
                                                          && a.FK_BasicParametersTable == Basic.BasicParametersTableID
@@ -1643,10 +1669,11 @@ namespace KPIWeb.Rector
                         else
                         {
                             dataRow["Progress"] =
-                                ((((float) AllConfirmedBasics)*100)/((float) AllBasicsUsersCanEdit)).ToString("0.0") +
-                                "%";
+                                ((((float) AllConfirmedBasics)*100)/((float) AllBasicsUsersCanEdit)).ToString("0.0") +"%";
                             dataTable.Rows.Add(dataRow);
                         }
+
+
                        // dataTable.Rows.Add(dataRow);
                     }
                     #endregion
@@ -1969,6 +1996,21 @@ namespace KPIWeb.Rector
             var ColorLable = e.Row.FindControl("Color") as Label;
             var PageConfirmButton = e.Row.FindControl("ConfirmButton") as Button;
             var PageButton2 = e.Row.FindControl("Button2") as Button;
+
+            //// костыль 0%
+            var Button1_ = e.Row.FindControl("Button1") as Button;                       
+            var PLable_ = e.Row.FindControl("ProgressLable") as Label;
+            if ((Button1_ != null) && (PLable_ != null))
+            {
+                if (PLable_.Text == "0,0%")
+                {
+                    Button1_.Enabled = false;
+                }
+            }
+            
+
+            //end костыль 0%
+
             if (ColorLable != null)
             {
 
@@ -2136,7 +2178,6 @@ namespace KPIWeb.Rector
                 Session["rectorHistory"] = rectorHistory;
                 Response.Redirect("~/Rector/Result.aspx");
             }
-        }
-        
+        }       
     }
 }
