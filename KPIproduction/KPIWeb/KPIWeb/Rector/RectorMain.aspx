@@ -69,12 +69,12 @@
     
         <br />
         <br />
-        <asp:Label ID="PageName" runat="server" Font-Size="20pt" Text="Выберите тип данных"></asp:Label>
+        <asp:Label ID="PageName" runat="server" Font-Size="20pt" Text="Выберите действие:"></asp:Label>
         <br />
     
     </div>
     
 
-        <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()" OnClick="Button1_Click" Text="Целевые показатели" Width="350px" />
-&nbsp;<asp:Button ID="Button3" runat="server" OnClientClick="showLoadPanel()" OnClick="Button3_Click" Text="Первичные данные" Width="350px" />
+        <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()" OnClick="Button1_Click" Text="Работа с целевыми показателями" Width="350px" />
+&nbsp;<asp:Button ID="Button3" runat="server" OnClientClick="showLoadPanel()" OnClick="Button3_Click" Text="Работа с первичными данными" Width="350px" />
     </asp:Content>

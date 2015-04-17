@@ -79,7 +79,7 @@
                  <asp:BoundField DataField="StartDate" HeaderText="Начальная дата отчёта" Visible="True" />
                  <asp:BoundField DataField="EndDate" HeaderText="Конечная дата отчёта" Visible="True" />
 
-                    <asp:TemplateField HeaderText="Просмотр результатов отчёта">
+                    <asp:TemplateField HeaderText="Просмотр отчёта в текущем состоянии">
                         <ItemTemplate>
                             <asp:Label ID="LabelReportArchiveTableID2" runat="server" Text='<%# Bind("ReportArchiveID") %>' Visible="false"></asp:Label>
                             <asp:Button ID="ButtonViewReport" OnClientClick="showLoadPanel()" runat="server" CommandName="Select" Text="Просмотреть" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonViewClick"/>

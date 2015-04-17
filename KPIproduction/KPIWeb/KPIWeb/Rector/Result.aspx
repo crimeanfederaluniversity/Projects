@@ -132,7 +132,7 @@
             </asp:Panel>
             <br />
             <asp:Panel ID="Panel6" runat="server" Height="17" BackColor="#000099" BorderColor="#000099">
-                <asp:Label ID="Label12" runat="server" Text=".........Готово к утверждению"></asp:Label>
+                <asp:Label ID="Label12" runat="server" Text=".......Требует Вашего утверждения"></asp:Label>
             </asp:Panel>
             <br />
             <asp:Panel ID="Panel7" runat="server" Height="17" BackColor="#CC0000" BorderColor="#CC0000">
