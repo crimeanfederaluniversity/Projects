@@ -166,12 +166,13 @@ background-image: url('../../../css/images/kfu_button_gradient_hover_green_1.png
 
 
 /*GRID_VIEW*//*GRID_VIEW*//*GRID_VIEW*//*GRID_VIEW*//*GRID_VIEW*//*GRID_VIEW*/
+/*
 .Grid_view_style tbody {
     	display: block;
     overflow:auto;
     width:100%;
     height: 300px;
-}
+}*/
 
 
 .Grid_view_style {

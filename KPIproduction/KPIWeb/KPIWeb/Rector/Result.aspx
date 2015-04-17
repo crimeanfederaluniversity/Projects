@@ -212,7 +212,7 @@
          Text="Отобразить значения показателей по неполным данным" Width="762px" />
      <br />
      <br />
-        <asp:GridView ID="Grid" runat="server" CssClass="result_gw"
+        <asp:GridView ID="Grid" runat="server" 
             AutoGenerateColumns="False"
             style="margin-top: 0px" OnSelectedIndexChanged="Grid_SelectedIndexChanged" OnRowDataBound="Grid_RowDataBound">
              <Columns>                

@@ -1163,6 +1163,7 @@ namespace KPIWeb.Rector
                             dataRow["Name"] = CurrentCalculated.Name;
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
+                            dataRow["CanWatchWhoOws"] = "false";
                            
                             dataRow["Abb"] = CurrentCalculated.AbbreviationEN;
 
