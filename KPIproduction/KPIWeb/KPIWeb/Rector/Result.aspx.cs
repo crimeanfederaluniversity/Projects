@@ -748,7 +748,7 @@ namespace KPIWeb.Rector
 
                     if (SpecID != 0)
                     {
-                        PageFullName.Text += "Cпециальность \"" + (from a in kpiWebDataContext.SpecializationTable
+                        PageFullName.Text += "Направление подготовки \"" + (from a in kpiWebDataContext.SpecializationTable
                             where a.SpecializationTableID == SpecID
                             select a.Name).FirstOrDefault() + "\" </br>";
                     }
@@ -770,7 +770,10 @@ namespace KPIWeb.Rector
 
 
                     title = "Подразделения";
-
+                    if (StructDeepness(mainStruct) > 3)
+                    {
+                        title = "Направления подготовки";
+                    }
 
 
                     #endregion
@@ -859,7 +862,7 @@ namespace KPIWeb.Rector
                         Session["rectorHistory"] = rectorHistory;
                         PageFullName.Text = "Значения целевых показателей (ЦП) для КФУ";
                         //PageName.Text = "Значения индикторов для КФУ";
-                        name_text = "Название ЦП показателя";
+                        name_text = "Название ЦП";
                         value_text = "Значение ЦП";
                         progress_text = "Степень готовности первичных данных";
                         confirm_text = "Утвердить ЦП";
@@ -886,7 +889,7 @@ namespace KPIWeb.Rector
                             rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
                             Session["rectorHistory"] = rectorHistory;
 
-                            PageFullName.Text = "Первичные данные целевого показателя <b> \"" + tmp + "\"</b>  для КФУ";
+                            PageFullName.Text = "Первичные данные (ПД) целевого показателя <b> \"" + tmp + "\"</b>  для КФУ";
                             FormulaLable.Text = (from a in kpiWebDataContext.IndicatorsTable
                                 where a.IndicatorsTableID == ParamID
                                 select a.Formula).FirstOrDefault();
@@ -908,7 +911,7 @@ namespace KPIWeb.Rector
                         rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
                         Session["rectorHistory"] = rectorHistory;
 
-                        PageFullName.Text = "Базовые показатели первичного показетеля <b>  \"" + tmp + "\"</b>  для КФУ";
+                        PageFullName.Text = "Базовые показатели первичного показателя <b>  \"" + tmp + "\"</b>  для КФУ";
 
                         name_text = "Названия БП";
                         value_text = "Значение БП";
@@ -1409,20 +1412,20 @@ namespace KPIWeb.Rector
                     else if (ParamType == 1)
                     {
                         RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID,
-                            SpecID, "Первичный показатель для направления подготовки");
+                            SpecID, "Первичные данные (ПД) для направления подготовки");
                         rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
                         Session["rectorHistory"] = rectorHistory;
                     }
                     else if (ParamType == 2)
                     {
                         RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID,
-                            SpecID, "Базовый для направления подготовки");
+                            SpecID, "Базовый показатель (БП) для направления подготовки");
                         rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
                         Session["rectorHistory"] = rectorHistory;
                         string tmp = (from a in kpiWebDataContext.BasicParametersTable
                             where a.BasicParametersTableID == ParamID
                             select a.Name).FirstOrDefault();
-                        PageFullName.Text = "Значения базового показателя <b>  \"" + tmp + "\" </b>  по направлениям подготовки для КФУ";
+                        PageFullName.Text = "Значения базового показателя (БП) <b>  \"" + tmp + "\" </b>  по направлениям подготовки для КФУ";
                     }
 
                     string title = "Направления подготовки";
@@ -1449,7 +1452,7 @@ namespace KPIWeb.Rector
                             dataRow["Name"] = currentSpec.Name; //currentStruct.Name;
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
-
+                            dataRow["CanWatchWhoOws"] = false;
                             dataRow["CanConfirm"] = true;
                             dataRow["ShowLable"] = false;
                             dataRow["LableText"] = "";
@@ -1587,7 +1590,7 @@ namespace KPIWeb.Rector
                                       && ((a.FK_FirstLevelSubdivisionTable == currentStruct.Lv_1) || (currentStruct.Lv_1 == 0))
                                       && ((a.FK_SecondLevelSubdivisionTable == currentStruct.Lv_2) || (currentStruct.Lv_2 == 0))
                                       && ((a.FK_ThirdLevelSubdivisionTable == currentStruct.Lv_3) || (currentStruct.Lv_3 == 0))
-                                      && ((a.FK_FourthLevelSubdivisionTable == currentStruct.Lv_4) || (currentStruct.Lv_4 == 0))
+                                    //  && ((a.FK_FourthLevelSubdivisionTable == currentStruct.Lv_4) || (currentStruct.Lv_4 == 0))
 
                                 select a).ToList();
 
@@ -1641,13 +1644,18 @@ namespace KPIWeb.Rector
                             dataRow["Progress"] =
                                 ((((float) AllConfirmedBasics)*100)/((float) AllBasicsUsersCanEdit)).ToString("0.0") +
                                 "%";
+                            dataTable.Rows.Add(dataRow);
                         }
-                        dataTable.Rows.Add(dataRow);
+                       // dataTable.Rows.Add(dataRow);
                     }
                     #endregion
                     #region DataGridBind
                     Grid.DataSource = dataTable;
                     Grid.Columns[3].HeaderText = "Подразделения";
+                    if (StructDeepness(mainStruct) > 3)
+                    {
+                        Grid.Columns[3].HeaderText = "Направления подготовки";
+                    }
                     Grid.DataBind();
                     #endregion
                     #region постнастройка страницы
@@ -1672,6 +1680,11 @@ namespace KPIWeb.Rector
                     //error // wrong ViewType
                 }
                 RefreshHistory();
+
+                if ((ViewType == 1) && ((ParamType == 0) || (ParamType == 1)))
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "ShowLegend", "ShowLegend()", true);
+                }
             }
         }
         protected void ButtonConfirmClick(object sender, EventArgs e)
@@ -1957,8 +1970,25 @@ namespace KPIWeb.Rector
             var PageButton2 = e.Row.FindControl("Button2") as Button;
             if (ColorLable != null)
             {
+
+                RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
+                if (rectorHistory == null)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+                RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
+                if ((CurrentRectorSession.sesViewType==1)||(CurrentRectorSession.sesParamType==0))
+                {
+
+                    PageButton2.Enabled = true;
+                }
+                else
+                {
+                    PageButton2.Enabled = false;
+                }
+
                 PageConfirmButton.Enabled = false;
-                PageButton2.Enabled = false;
+
                 int ColorNumber = -1;
                 if (int.TryParse(ColorLable.Text, out ColorNumber) && ColorNumber > -1)
                 {
@@ -1994,6 +2024,9 @@ namespace KPIWeb.Rector
                         }
                     }                    
                 }
+
+
+
             }
 #endregion
             var ConfirmButton = e.Row.FindControl("ConfirmButton") as Button;
@@ -2067,7 +2100,6 @@ namespace KPIWeb.Rector
                 Response.Redirect("~/Rector/Result.aspx");
             }
         }
-
         protected void ButtonOweClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;

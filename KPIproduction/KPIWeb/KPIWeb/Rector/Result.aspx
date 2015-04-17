@@ -12,16 +12,17 @@
    {
         position:fixed;    
         top:10em;
-        width:200px;
+        width:250px;
         height:150px;    
         border-color: black;
         border-width: medium;
         background-color:azure;
         z-index:5;
-        right: 0px;
+        right: -225px;
         border-style: solid;
        border-width: 1px;
        border-color: black;
+       visibility: hidden;
     }
    .commentSectionStyle
     {
@@ -80,12 +81,17 @@
             function legendChange() {
 
                 if (document.getElementById('sidePanel').style.right == '0px') {
-                    document.getElementById('sidePanel').style.right = '-175px';
+                    document.getElementById('sidePanel').style.right = '-225px';
                 }
                 else {
                     document.getElementById('sidePanel').style.right = '0px';
                 }
             }
+
+            function ShowLegend() {
+                document.getElementById('sidePanel').style.visibility = 'visible';
+            }
+
            /* function showLoadPanel() {
                 document.getElementById('LoadPanel_').style.visibility = 'visible';
             }*/
@@ -130,7 +136,7 @@
             </asp:Panel>
             <br />
             <asp:Panel ID="Panel7" runat="server" Height="17" BackColor="#CC0000" BorderColor="#CC0000">
-                <asp:Label ID="Label13" runat="server" style="text-align: center" Text="..........Неутвержденные"></asp:Label>
+                <asp:Label ID="Label13" runat="server" style="text-align: center" Text="..........Не утверждено"></asp:Label>
             </asp:Panel>
         </div>  
 <div id="comment_Section" class='commentSectionStyle'> 
@@ -212,7 +218,7 @@
              <Columns>                
                  <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />    
                  <asp:BoundField DataField="Number"   HeaderText="Номер" Visible="true" />
-                 <asp:BoundField DataField="Abb"   HeaderText="Шифр ПД" Visible="True" />
+                 <asp:BoundField DataField="Abb"   HeaderText="Шифр" Visible="True" />
                  <asp:BoundField DataField="Name" HeaderText="Get" Visible="True" />          
                  <asp:BoundField DataField="StartDate" HeaderText="Начальная дата отчёта" Visible="True" />
                  <asp:BoundField DataField="EndDate" HeaderText="Конечная дата отчёта" Visible="True" />
@@ -231,28 +237,32 @@
                  
                  <asp:TemplateField HeaderText="Утвердить данные">
                         <ItemTemplate>
+                            <asp:Label ID="lb00"  runat="server"  Text="  " ></asp:Label>
                             <asp:Button ID="ConfirmButton" runat="server" CommandName="Select" Visible='<%# Bind("CanConfirm") %>' Text="Утвердить" CommandArgument='<%# Eval("ID") %>' Width="200px"  
                               OnClientClick="showLoadPanel()" OnClick="ButtonConfirmClick"/>                                                    
                             <asp:Label ID="StatusLable"  runat="server" Visible='<%# Bind("ShowLable") %>' Text='<%# Eval("LableText") %>' ></asp:Label>
                              </ItemTemplate>
                     </asp:TemplateField>
 
-                    <asp:TemplateField HeaderText="Детализация базового показателя по структурным подразделениям">
+                    <asp:TemplateField HeaderText="Детализация базового показателя">
                         <ItemTemplate>
-                            <asp:Button ID="Button1" runat="server" CommandName="Select" Text="Детализовать" CommandArgument='<%# Eval("ID") %>' Width="200px" 
+                            <asp:Label ID="lb01"  runat="server"  Text="  " ></asp:Label>
+                            <asp:Button ID="Button1" runat="server" CommandName="Select" Text="Детализировать" CommandArgument='<%# Eval("ID") %>' Width="200px" 
                                 OnClick="Button1Click " OnClientClick="showLoadPanel()"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="get">
                         <ItemTemplate>
+                            <asp:Label ID="lb02"  runat="server"  Text="  " ></asp:Label>
                             <asp:Button ID="Button2" runat="server" CommandName="Select" Text="Просмотреть" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="Button2Click" OnClientClick="showLoadPanel()"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 
                   <asp:TemplateField HeaderText="Детализация базового показателя по направлениям подготовки">
                         <ItemTemplate>
-                            <asp:Button ID="Button3" runat="server" CommandName="Select" Text="Детализовать"  CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="Button3Click" OnClientClick="showLoadPanel()"/>
+                            <asp:Label ID="lb03"  runat="server"  Text="  " ></asp:Label>
+                            <asp:Button ID="Button3" runat="server" CommandName="Select" Text="Детализировать"  CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="Button3Click" OnClientClick="showLoadPanel()"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                  

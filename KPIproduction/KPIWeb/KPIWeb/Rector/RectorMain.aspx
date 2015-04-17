@@ -69,7 +69,7 @@
     
         <br />
         <br />
-        <asp:Label ID="PageName" runat="server" Font-Size="20pt" Text="Выберите пункт"></asp:Label>
+        <asp:Label ID="PageName" runat="server" Font-Size="20pt" Text="Выберите тип данных"></asp:Label>
         <br />
     
     </div>
