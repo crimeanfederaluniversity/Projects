@@ -10,7 +10,9 @@
     height: 100%;
     position:relative;
 }
-
+.result_gw tr + tr  td + td  {
+    text-align:center;
+}
 
 
 
@@ -164,6 +166,14 @@ background-image: url('../../../css/images/kfu_button_gradient_hover_green_1.png
 
 
 /*GRID_VIEW*//*GRID_VIEW*//*GRID_VIEW*//*GRID_VIEW*//*GRID_VIEW*//*GRID_VIEW*/
+.Grid_view_style tbody {
+    	display: block;
+    overflow:auto;
+    width:100%;
+    height: 300px;
+}
+
+
 .Grid_view_style {
 
     font-family: "Arial";
@@ -182,12 +192,16 @@ background-image: url('../../../css/images/kfu_button_gradient_hover_green_1.png
    /* box-shadow: -15px 15px 5px 0px rgba(0,0,0,0.6);*/
 }
 .Grid_view_style th {
+    	position: relative;
       border-width:1px 1px 1px 1px;
       border-top-color:#000000;
       border-bottom-color:#000000;
       background-color:#585858;
       color:#ffffff;
       text-align:center;
+   
+     
+      
     }
 .Grid_view_style tr, 
 .Grid_view_style td {
