@@ -2,7 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div>
-        <span style="font-size: 30px">Настройка параметров напраления подготовки<br />
+        <span style="font-size: 30px">Настройка параметров направления подготовки<br />
         </span><br />
     <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server" OnRowDataBound="GridView1_RowDataBound">           
              <Columns>               

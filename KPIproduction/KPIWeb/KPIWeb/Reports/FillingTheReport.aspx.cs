@@ -358,7 +358,7 @@ namespace KPIWeb.Reports
 
             string script2 = @"<script>
             function ConfirmSubmit() {
-                var msg = 'Подтвердить достоверность данных и отправить их на обработку(Режим доступа к данным будет измене на \'только просмотр\')?'; 
+                var msg = 'Подтвердить достоверность данных и отправить их на обработку (Режим доступа к данным будет изменен на \'только просмотр\')?'; 
                 return confirm(msg);
             }
             </script>";
@@ -714,7 +714,7 @@ namespace KPIWeb.Reports
                                         }
                                     }
                                 }
-                                columnNames.Add("Кафедра:\r\n" + (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                                columnNames.Add((from a in kpiWebDataContext.ThirdLevelSubdivisionTable
                                                                   where a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
                                                                   select a.Name).FirstOrDefault());
 
@@ -1246,7 +1246,7 @@ namespace KPIWeb.Reports
                             }
                         }
                         LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Пользователь " + (string)ViewState["login"] + " утвердил данные в отчете с ID = " + paramSerialization.ReportStr);
-                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Вы утвердили данные всех базовых показателей. отчёт отправлен и доступен только в режиме \"Просмотр\".');" +
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Вы утвердили данные всех базовых показателей. Отчёт отправлен и доступен только в режиме \"Просмотр\".');" +
                             "document.location = '../Default.aspx';", true);
 
 
@@ -1576,7 +1576,7 @@ namespace KPIWeb.Reports
                                     }
                                 }
                             }
-                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('отчёт отправлен на утверждение');" +
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Отчёт отправлен на утверждение');" +
                                 "document.location = '../Default.aspx';", true);
 
                             //SENDMAIL ()
