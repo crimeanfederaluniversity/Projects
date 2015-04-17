@@ -761,10 +761,13 @@ namespace KPIWeb.Reports
 
                                     foreach (FourthLevelSubdivisionTable spec in Specialzations)
                                     {
-                                        columnNames.Add("Направления подготовки\r" +
+                                        columnNames.Add("Направление подготовки\r" +
                                                         (from a in kpiWebDataContext.SpecializationTable
                                                          where a.SpecializationTableID == spec.FK_Specialization
-                                                         select a.Name).FirstOrDefault().ToString());
+                                                         select a.Name).FirstOrDefault().ToString() +" : "+ 
+                                                         (from a in kpiWebDataContext.SpecializationTable
+                                                         where a.SpecializationTableID == spec.FK_Specialization
+                                                         select a.SpecializationNumber).FirstOrDefault().ToString());
                                         //запомнили название специальности // оно нам пригодится)
                                     }
 
@@ -1031,11 +1034,11 @@ namespace KPIWeb.Reports
                         ButtonSave.Text = "Утвердить данные.";
 
                         UpnDownButton.Visible = true;
-                        UpnDownButton.Text = "Вернуть отчёт на доработку.";
+                        UpnDownButton.Text = "Вернуть отчёт на доработку";
 
                         TextBox1.Visible = true;
 
-                        Label1.Text = "Форма Утверждения данных.";
+                        Label1.Text = "Утверждение данных";
                         Label2.Text = "Осталось " + dateCount + " дней до закрытия отчёта";
 
 

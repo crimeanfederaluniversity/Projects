@@ -873,10 +873,10 @@ namespace KPIWeb.Rector
                         if (ParamID == 0)
                         {
                             RectorSession tmpses = new RectorSession(mainStruct, ViewType, ParamID, ParamType, ReportID,
-                                SpecID, "Значения первичных данных для КФУ");
+                                SpecID, "Значения первичных данных (ПД) для КФУ");
                             rectorHistory.RectorSession[rectorHistory.CurrentSession] = tmpses;
                             Session["rectorHistory"] = rectorHistory;
-                            PageFullName.Text = "Значения первичных данных для КФУ";
+                            PageFullName.Text = "Значения первичных данных (ПД) для КФУ";
                         }
                         else
                         {
@@ -934,10 +934,13 @@ namespace KPIWeb.Rector
                             from a in kpiWebDataContext.IndicatorsTable
                             join b in kpiWebDataContext.IndicatorsAndUsersMapping
                                 on a.IndicatorsTableID equals b.FK_IndicatorsTable
+                                join c in kpiWebDataContext.ReportArchiveAndIndicatorsMappingTable
+                                on a.IndicatorsTableID equals c.FK_IndicatorsTable
                             where
                                 a.Active == true
                                 && b.CanView == true
                                 && b.FK_UsresTable == userID
+                                && c.FK_ReportArchiveTable == ReportID
                             select a).ToList();
 
                         //нашли все целевой показатель привязанные к пользователю
@@ -1149,9 +1152,12 @@ namespace KPIWeb.Rector
                             CalculatedList = (from a in kpiWebDataContext.CalculatedParametrs
                                 join b in kpiWebDataContext.CalculatedParametrsAndUsersMapping
                                     on a.CalculatedParametrsID equals b.FK_CalculatedParametrsTable
+                                    join c in kpiWebDataContext.ReportArchiveAndCalculatedParametrsMappingTable
+                                    on a.CalculatedParametrsID equals c.FK_CalculatedParametrsTable
                                 where a.Active == true
                                       && b.CanView == true
                                       && b.FK_UsersTable == userID
+                                      && c.FK_ReportArchiveTable == ReportID
                                 select a).ToList();
                         }
                         foreach (CalculatedParametrs CurrentCalculated in CalculatedList)
@@ -1245,12 +1251,36 @@ namespace KPIWeb.Rector
                                 kpiWebDataContext.SubmitChanges();
                             }
 
+                            UsersTable ConfirmUser = (from a in kpiWebDataContext.UsersTable
+                                join b in kpiWebDataContext.CalculatedParametrsAndUsersMapping
+                                    on a.UsersTableID equals b.FK_UsersTable
+                                where a.Active == true
+                                      && b.FK_CalculatedParametrsTable == CurrentCalculated.CalculatedParametrsID
+                                      && b.Active == true
+                                select a).FirstOrDefault();
+                            string UserName = "";
+                            if (ConfirmUser.Position != null)
+                            {
+                                if (ConfirmUser.Position.Length > 2)
+                                {
+                                    UserName = ConfirmUser.Position;
+                                }
+                                else
+                                {
+                                    UserName = ConfirmUser.Email;
+                                }
+                            }
+                            else
+                            {
+                                UserName = ConfirmUser.Email;
+                            }
+
                             if (collected.Confirmed == true) //данные подтверждены
                             {
                                 dataRow["CanWatchWhoOws"] = false;
                                 dataRow["CanConfirm"] = false;
                                 dataRow["ShowLable"] = true;
-                                dataRow["LableText"] = "Утверждено";
+                                dataRow["LableText"] = "Утверждено ";
                                 dataRow["LableColor"] = Color.LawnGreen;
                                 dataRow["Color"] = "1";
                                 value_ = ((float) collected.CollectedValue).ToString("0.00");
@@ -1262,7 +1292,7 @@ namespace KPIWeb.Rector
                                     dataRow["CanWatchWhoOws"] = false;
                                     dataRow["CanConfirm"] = false;
                                     dataRow["ShowLable"] = true;
-                                    dataRow["LableText"] = " ";
+                                    dataRow["LableText"] = "Ответственный: " + UserName;
                                     value_ = "Недостаточно данных";
                                     if (ShowUnconfirmed)
                                     {
@@ -2006,9 +2036,7 @@ namespace KPIWeb.Rector
                 {
                     Button1_.Enabled = false;
                 }
-            }
-            
-
+            }           
             //end костыль 0%
 
             if (ColorLable != null)
@@ -2020,18 +2048,10 @@ namespace KPIWeb.Rector
                     Response.Redirect("~/Default.aspx");
                 }
                 RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
-                if ((CurrentRectorSession.sesViewType==1)||(CurrentRectorSession.sesParamType==0))
-                {
-
-                    PageButton2.Enabled = true;
-                }
-                else
-                {
-                    PageButton2.Enabled = false;
-                }
+                
 
                 PageConfirmButton.Enabled = false;
-
+                PageButton2.Enabled = false;
                 int ColorNumber = -1;
                 if (int.TryParse(ColorLable.Text, out ColorNumber) && ColorNumber > -1)
                 {
@@ -2046,12 +2066,14 @@ namespace KPIWeb.Rector
                         {
                             e.Row.Style.Add("background-color", "rgba(0, 255, 0, 0.3)");
                             PageButton2.Enabled = true;
+
                             break;
                         }
                         case 2: // можно утвердить
                         {
                             e.Row.Style.Add("background-color", "rgba(255, 0, 0, 0.3)");
                             PageButton2.Enabled = true;
+
                             break;
                         }
                         case 3: // рассчитано на неутвержденных данных
@@ -2059,6 +2081,7 @@ namespace KPIWeb.Rector
                             e.Row.Style.Add("background-color", "rgba(255, 255, 0, 0.3)");
                             PageConfirmButton.Enabled = true;
                             PageButton2.Enabled = true;
+
                             break;
                         }
                         default:
@@ -2068,7 +2091,10 @@ namespace KPIWeb.Rector
                     }                    
                 }
 
-
+                if ((CurrentRectorSession.sesViewType == 1) || (CurrentRectorSession.sesParamType == 0))
+                {
+                    PageButton2.Enabled = true;
+                }
 
             }
 #endregion
