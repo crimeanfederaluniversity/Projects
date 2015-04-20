@@ -3,6 +3,7 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
     <div>   
+        <br />
         <asp:Menu ID="Menu1" runat="server"  Width="168px"  Orientation="Horizontal" StaticEnableDefaultPopOutImage="False"   OnMenuItemClick="Menu1_MenuItemClick" >
              <Items>
         <asp:MenuItem Text="Проверка базовых показателей" Value="0">
@@ -65,7 +66,7 @@
                     <asp:TextBox ID="TextBox7" runat="server" Width="200px"></asp:TextBox>
                     <br />
                     <br />
-                    <asp:Button ID="Button3" runat="server" Text="Сохранить изменения" Width="205px" OnClick="Button3_Click" />
+                    <asp:Button ID="Button3" runat="server" Text="Сохранить изменения" Width="223px" OnClick="Button3_Click" />
                 </td>
             </tr>
         </table>

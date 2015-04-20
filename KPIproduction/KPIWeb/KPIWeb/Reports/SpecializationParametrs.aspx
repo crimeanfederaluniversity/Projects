@@ -82,6 +82,7 @@
         <br />
         <asp:Button ID="Button2" runat="server" Text="Поиск" Width="277px" OnClick="Button2_Click" />
         <br />
+        <br />
         <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False">
              <Columns>           
                  <asp:BoundField DataField="SpecializationID"   HeaderText="Current Report ID" Visible="false" />  

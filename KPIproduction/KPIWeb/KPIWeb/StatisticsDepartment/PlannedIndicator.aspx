@@ -57,7 +57,6 @@
     </asp:DropDownList>
     <br />
                 <br   />
-                <br   />
                 <asp:Label ID="Label3" runat="server" Text="Значение"></asp:Label>
                 &nbsp;&nbsp;&nbsp;
                 <asp:TextBox ID="IndicatorMeasure" runat="server"></asp:TextBox>
@@ -65,8 +64,8 @@
                 
                 <asp:CheckBox ID="CheckBox1" Text="Активен" runat="server" />
                  <br />
-    <asp:Calendar ID="Calendar1" runat="server"></asp:Calendar>
                  <br />
+    <asp:Calendar ID="Calendar1" runat="server"></asp:Calendar>
     <br />
     <br />
     <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Сохранить" />

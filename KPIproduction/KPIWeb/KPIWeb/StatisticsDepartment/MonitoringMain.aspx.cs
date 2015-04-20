@@ -56,7 +56,7 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void Button7_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/PlannedIndicator.aspx");
+            Response.Redirect("~/StatisticsDepartment/PlannedIndicator.aspx");
         }
 
         protected void Button8_Click(object sender, EventArgs e)

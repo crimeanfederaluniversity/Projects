@@ -394,13 +394,13 @@
 
             <br />
             <br />
-            <asp:Button ID="GoBackButton" runat="server" Height="25px" OnClick="Button2_Click" Text="Вернутся в меню без сохранения" Width="400px" />
+            <asp:Button ID="GoBackButton" runat="server" Height="30px" OnClick="Button2_Click" Text="Вернутся в меню без сохранения" Width="400px" />
 
             <br />
             <br />
-            <asp:Button ID="UpnDownButton" runat="server" Height="25px" 
+            <asp:Button ID="UpnDownButton" runat="server" Height="30px" 
                 OnClick="Button3_Click" 
-                Text="Вернуть для доработки (коментарий ниже)" Width="400px" 
+                Text="Вернуть на доработку (+коментарий )" Width="400px" 
                 />
             <br />
 
@@ -409,6 +409,9 @@
             <asp:TextBox ID="TextBox1" runat="server" Height="200px" TextMode="MultiLine" Width="400px"></asp:TextBox>
 
             <br />
-
+               <br />
+               <br />
+               <br />   
+            <br />
         </div>
         </asp:Content>

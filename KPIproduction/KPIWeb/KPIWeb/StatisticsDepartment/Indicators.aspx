@@ -87,6 +87,7 @@
                 <br />
                 <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Искать" Width="500px" style="height: 25px" />
                 <br />
+                <br />
                 <asp:GridView ID="GridView1" AutoGenerateColumns="False"  runat="server">
                     <Columns>
                         <asp:BoundField DataField="Name"  />

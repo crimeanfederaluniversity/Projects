@@ -1,12 +1,12 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Confirm.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.Confirm" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-  <h2><span style="font-size: 30px">Просмотр информации о подтверждениях</span></h2>
+    <h2><span style="font-size: 30px">Просмотр информации о подтверждениях</span></h2>
   
     <div>          
         <br />
         <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="По целевым показателям" Width="250px" />
-        <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="По расчетным показателям" Width="250px" />
+        &nbsp;<asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="По расчетным показателям" Width="250px" />
         <br />
         <br />
   

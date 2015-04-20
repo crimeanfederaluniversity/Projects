@@ -65,6 +65,7 @@
         <br />
         <asp:Button ID="Button2" runat="server" Text="Поиск" Width="277px" OnClick="Button2_Click" />
             <br />
+            <br />
             </div>
     <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False">
              <Columns>           
