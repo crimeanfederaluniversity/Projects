@@ -18,11 +18,11 @@
         border-width: medium;
         background-color:azure;
         z-index:5;
-        right: -225px;
+        right: -230px;
         border-style: solid;
-       border-width: 1px;
-       border-color: black;
-       visibility: hidden;
+        border-width: 1px;
+        border-color: black;
+        visibility: hidden;
     }
    .commentSectionStyle
     {
@@ -70,6 +70,20 @@
        height: 17px;
         
    }
+
+    .side_img_legend {
+        top:0;
+    position:absolute;
+    width:20px;
+    height:148px;
+    background-color:azure;
+    background-image:url('/App_Themes/theme_1/css/images/arout.png');
+    background-repeat:no-repeat;
+      }
+    .side_img_legend:hover{
+    background-image:url('/App_Themes/theme_1/css/images/arout2.png');
+    background-repeat:no-repeat;
+    }
 </style>         
 <script type="text/javascript" language="javascript">
             function DoPostBack() {
@@ -81,10 +95,13 @@
             function legendChange() {
 
                 if (document.getElementById('sidePanel').style.right == '0px') {
-                    document.getElementById('sidePanel').style.right = '-225px';
+                    document.getElementById('sidePanel').style.right = '-230px';
+                    document.getElementById('img_of_sp').style.backgroundPosition = '0 0';
                 }
                 else {
                     document.getElementById('sidePanel').style.right = '0px';
+                    document.getElementById('img_of_sp').style.backgroundPosition = '-20px 0';
+                
                 }
             }
 
@@ -119,7 +136,8 @@
                 __doPostBack('ButtonClickParam', y);              
             }
 </script>
-<div id="sidePanel" class='side_legend' onclick="legendChange()">    
+<div id="sidePanel" class='side_legend' onclick="legendChange()"> 
+    <div id="img_of_sp" class="side_img_legend"></div>   
             <!--<button type="button" onclick="legendChange()">
             O</button>-->
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -212,7 +230,7 @@
          Text="Отобразить значения показателей по неполным данным" Width="762px" />
      <br />
      <br />
-        <asp:GridView ID="Grid" runat="server" 
+        <asp:GridView ID="Grid" runat="server" CssClass="result_gw "
             AutoGenerateColumns="False"
             style="margin-top: 0px" OnSelectedIndexChanged="Grid_SelectedIndexChanged" OnRowDataBound="Grid_RowDataBound">
              <Columns>                
