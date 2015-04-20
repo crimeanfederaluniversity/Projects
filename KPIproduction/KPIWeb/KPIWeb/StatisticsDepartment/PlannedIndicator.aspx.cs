@@ -62,7 +62,7 @@ namespace KPIWeb
             else indicators.Active = false;
             
             indicators.FK_IndicatorsTable = Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value);
-            indicators.Value = Convert.ToInt32(IndicatorMeasure.Text);
+            indicators.Value = Convert.ToDouble(IndicatorMeasure.Text);
             indicators.Date = Calendar1.SelectedDate;
             kPiDataContext.PlannedIndicator.InsertOnSubmit(indicators);
             kPiDataContext.SubmitChanges();
