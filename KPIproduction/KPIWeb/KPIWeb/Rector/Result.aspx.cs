@@ -1494,7 +1494,7 @@ namespace KPIWeb.Rector
                             DataRow dataRow = dataTable.NewRow();
                             dataRow["ID"] = currentSpec.SpecializationTableID; //GetLastID(currentStruct).ToString();
                             dataRow["Number"] = "num";
-                            dataRow["Name"] = currentSpec.Name; //currentStruct.Name;
+                            dataRow["Name"] = currentSpec.Name + ": " + (from a in kpiWebDataContext.SpecializationTable where a.SpecializationTableID == currentSpec.SpecializationTableID select a.SpecializationNumber).FirstOrDefault().ToString() +" "+ Action.EncodeToStr((from a in kpiWebDataContext.SpecializationTable where a.SpecializationTableID == currentSpec.SpecializationTableID select a.SpecializationNumber).FirstOrDefault().ToString()); //currentStruct.Name; // Шифр добавить!!
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
                             dataRow["CanWatchWhoOws"] = false;
