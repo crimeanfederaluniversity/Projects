@@ -30,5 +30,31 @@ namespace KPIWeb
 
             return 5;
         }
+
+        public static string EncodeToStr(string code) // расшифровка кода спициальности
+        {
+            string pattern = @"\b(\.+\d+\.)";
+            Regex regex = new Regex(pattern);
+            Match match = regex.Match(code);
+            char[] charsToTrim = { '.', ' ', '\'' };
+            string result = match.Groups[1].Value.Trim(charsToTrim);
+
+
+            switch (result)
+            {
+                case "03":
+                    return "бакалавр";
+                case "04":
+                    return "магистр";
+                case "05":
+                    return "специалист";
+                case "06":
+                    return "аспирант";
+                case "08":
+                    return "аспирант";
+            }
+
+            return "не опр.";
+        }
     }
 }

@@ -782,8 +782,7 @@ namespace KPIWeb.Rector
                     int BasicParamLevel = 0;
                     if (ParamType == 2)
                     {
-                            BasicParamLevel  = (int) (from a in kpiWebDataContext.BasicParametrAdditional
-                            where a.BasicParametrAdditionalID == ParamID
+                        BasicParamLevel = (int)(from a in kpiWebDataContext.BasicParametrAdditional
                             select a.SubvisionLevel).FirstOrDefault();
 
                     }
