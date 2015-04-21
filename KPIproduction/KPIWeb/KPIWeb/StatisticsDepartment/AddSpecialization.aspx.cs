@@ -83,7 +83,7 @@ namespace KPIWeb.StatisticsDepartment
                     dataRow["FourthlvlId"] = (from a in kPiDataContext.FourthLevelSubdivisionTable
                         where
                             a.FK_ThirdLevelSubdivisionTable == Convert.ToInt32(DropDownList3.SelectedItem.Value) &&
-                            a.FK_Specialization == spec.SpecializationTableID
+                            a.FK_Specialization == spec.SpecializationTableID && a.Active==true
                         select a.FourthLevelSubdivisionTableID).FirstOrDefault();
 
                     dataRow["SpecNumber"] = spec.SpecializationNumber;
@@ -112,7 +112,7 @@ namespace KPIWeb.StatisticsDepartment
             {
                 List<SecondLevelSubdivisionTable> second_stageList =
                     (from item in kPiDataContext.SecondLevelSubdivisionTable
-                     where item.FK_FirstLevelSubdivisionTable == SelectedValue
+                     where item.FK_FirstLevelSubdivisionTable == SelectedValue && item.Active == true
                      select item).OrderBy(mc => mc.SecondLevelSubdivisionTableID).ToList();
 
                 if (second_stageList != null && second_stageList.Count() > 0)
@@ -146,6 +146,7 @@ namespace KPIWeb.StatisticsDepartment
             {
                 List<ThirdLevelSubdivisionTable> third_stage = (from item in kPiDataContext.ThirdLevelSubdivisionTable
                                                                 where item.FK_SecondLevelSubdivisionTable == SelectedValue
+                                                                && item.Active == true
                                                                 select item).OrderBy(mc => mc.ThirdLevelSubdivisionTableID).ToList();
 
                 if (third_stage != null && third_stage.Count() > 0)
@@ -198,7 +199,7 @@ namespace KPIWeb.StatisticsDepartment
             List<SpecializationTable> specializationTableData = (from a in kPiDataContext.SpecializationTable
 
                                                                  where a.Name.Contains(TextBox1.Text)
-                                                                 || a.SpecializationNumber.Contains(TextBox1.Text)
+                                                                 || a.SpecializationNumber.Contains(TextBox1.Text) && a.Active == true
                                                                  select a).ToList();
 
             DataTable dataTable = new DataTable();
@@ -237,6 +238,7 @@ namespace KPIWeb.StatisticsDepartment
                 {
                     FourthLevelSubdivisionTable forthlvlsudtab = (from a in kpiWebDataContext.FourthLevelSubdivisionTable
                                                                   where a.FK_Specialization == check.SpecializationTableID && a.FK_ThirdLevelSubdivisionTable == Convert.ToInt32(DropDownList3.SelectedItem.Value)
+                                                                  && a.Active == true
                                                                   select a).FirstOrDefault();
 
                     if (forthlvlsudtab != null)
@@ -260,6 +262,7 @@ namespace KPIWeb.StatisticsDepartment
 
                     FourthLevelParametrs fourthLevelParametrs = (from a in kpiWebDataContext.FourthLevelParametrs
                                                                  where a.FourthLevelParametrsID == forthlvlsudtab.FourthLevelSubdivisionTableID
+                                                                 && a.Active == true
                                                                  select a).FirstOrDefault();
 
                     if (fourthLevelParametrs == null)
@@ -275,7 +278,7 @@ namespace KPIWeb.StatisticsDepartment
                         var code = (from f4 in kpiWebDataContext.FourthLevelSubdivisionTable     // получаем код специальности
                                     join spec in kpiWebDataContext.SpecializationTable
                                     on f4.FK_Specialization equals spec.SpecializationTableID
-                                    where f4.FourthLevelSubdivisionTableID == forthlvlsudtab.FourthLevelSubdivisionTableID
+                                    where f4.FourthLevelSubdivisionTableID == forthlvlsudtab.FourthLevelSubdivisionTableID && f4.Active == true
                                     select spec.SpecializationNumber).FirstOrDefault();
 
                         fourthLevelParametrs.SpecType = Action.Encode(code);
@@ -303,7 +306,7 @@ namespace KPIWeb.StatisticsDepartment
                 select a).ToList();
 
             CheckBox1.Checked = (from a in kPiDataContext.ThirdLevelParametrs
-                where a.ThirdLevelParametrsID == Convert.ToInt32(DropDownList3.SelectedItem.Value)
+                                 where a.ThirdLevelParametrsID == Convert.ToInt32(DropDownList3.SelectedItem.Value) && a.Active == true
                 select a.CanGraduate).FirstOrDefault();
 
             DataTable dataTable = new DataTable();
@@ -325,6 +328,7 @@ namespace KPIWeb.StatisticsDepartment
                     where
                         a.FK_ThirdLevelSubdivisionTable == Convert.ToInt32(DropDownList3.SelectedItem.Value) &&
                         a.FK_Specialization == spec.SpecializationTableID
+                        && a.Active == true
                     select a.FourthLevelSubdivisionTableID).FirstOrDefault();
 
                 dataRow["SpecNumber"] = spec.SpecializationNumber;
@@ -357,10 +361,12 @@ namespace KPIWeb.StatisticsDepartment
 
             CheckBox1.Checked = (from a in kPiDataContext.ThirdLevelParametrs
                                  where a.ThirdLevelParametrsID == Convert.ToInt32(DropDownList3.SelectedItem.Value)
+                                 && a.Active == true
                                  select a.CanGraduate).FirstOrDefault();
 
             CheckBox2.Checked = (from t in kPiDataContext.ThirdLevelParametrs
                        where t.ThirdLevelParametrsID == Convert.ToInt32(DropDownList3.SelectedItem.Value)
+                       && t.Active == true
                         select t.IsBasic).FirstOrDefault().GetValueOrDefault();
 
 
@@ -385,7 +391,7 @@ namespace KPIWeb.StatisticsDepartment
                     var check =
                     (from a in kPiDataContext.FourthLevelSubdivisionTable
                      where
-                         a.FourthLevelSubdivisionTableID == Convert.ToInt32(button.CommandArgument)
+                         a.FourthLevelSubdivisionTableID == Convert.ToInt32(button.CommandArgument) && a.Active == true
                      select a)
                         .FirstOrDefault();
 
