@@ -351,28 +351,28 @@ namespace KPIWeb.Reports
         {
             string script = @"<script>
             function ConfirmSubmit() {
-                var msg = 'Отправить данные на утверждение?'; 
+                var msg = 'Режим доступа к данным будет изменен на \'только просмотр\'.Отправить данные на утверждение?'; 
                 return confirm(msg);
             }
             </script>";
 
             string script2 = @"<script>
             function ConfirmSubmit() {
-                var msg = 'Подтвердить достоверность данных и отправить их на обработку (Режим доступа к данным будет изменен на \'только просмотр\')?'; 
+                var msg = ' Режим доступа к данным будет изменен на \'только просмотр\'.Подтвердить достоверность данных и отправить их на обработку?'; 
                 return confirm(msg);
             }
             </script>";
 
             string script3 = @"<script>
             function ConfirmSubmitOn() {
-                var msg = 'Вернуть отчёт на доработку?'; 
+                var msg = 'Режим доступа к данным будет изменен на \'только просмотр\'.Вернуть отчёт на доработку?'; 
                 return confirm(msg);
             }
             </script>";
 
             string script4 = @"<script>
             function ConfirmSubmitOnТ() {
-                var msg = 'Отправить отчет на утверждение?'; 
+                var msg = 'Режим доступа к данным будет изменен на \'только просмотр\'. Отправить отчет на утверждение?'; 
                                 document.location = '../Default.aspx';
                 return alert (msg);
                 
