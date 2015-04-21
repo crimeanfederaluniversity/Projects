@@ -5,7 +5,7 @@
     background-repeat:no-repeat;
     
     background-size:cover;
-    
+   
     width:  100%;
     height: 100%;
     position:relative;
@@ -361,18 +361,25 @@ left:7%;
 /*ANIMATION_OBJ_DESIGN*//*ANIMATION_OBJ_DESIGN*//*ANIMATION_OBJ_DESIGN*/
 
 .loading { 
-    
+ 
     top:0;
     left:0;
     position:fixed;
     width:100%;    height:100%;
-   
+    -webkit-animation-name:anim_darkness_1;
     animation-name:anim_darkness_1;
+    
+    -webkit-animation-duration:1s;
     animation-duration:1s;
+
+    -webkit-animation-iteration-count:1;
     animation-iteration-count:1;
+
+    -webkit-animation-fill-mode:both;
     animation-fill-mode:both;
 
 }
+
 .loading_circle { 
     
     top:0;
@@ -381,9 +388,16 @@ left:7%;
     width:100%;    height:100%;
     
     animation-name:anim_darkness_1;
+    -webkit-animation-name:anim_darkness_1;
+
     animation-duration:1s;
+    -webkit-animation-duration:1s;
+
     animation-iteration-count:1;
+    -webkit-animation-iteration-count:1;
+
     animation-fill-mode:both;
+    -webkit-animation-fill-mode:both;
 
 }
 #gears {
@@ -419,9 +433,16 @@ left:7%;
   
     width:102px;
     height:102px;
+    -webkit-animation-name:anim_circle_progress_bar;
     animation-name:anim_circle_progress_bar;
+
+    -webkit-animation-duration:8s;
     animation-duration:8s;
+
+    -webkit-animation-iteration-count:infinite;
     animation-iteration-count:infinite;
+
+    -webkit-animation-timing-function:linear;
     animation-timing-function:linear;
 }
 #im2 {
@@ -434,10 +455,19 @@ left:7%;
   
     width:87px;
     height:90px;
+    -webkit-animation-name:anim_circle_progress_bar_2;
     animation-name:anim_circle_progress_bar_2;
+    
     animation-duration:8s;
+    -webkit-animation-duration:8s;
+
     animation-iteration-count:infinite;
+    -webkit-animation-iteration-count:infinite;
+
     animation-timing-function:linear;
+    -webkit-animation-timing-function:linear;
+
+    -webkit-animation-direction:reverse;
     animation-direction:reverse;
 }
 #im3_circle {
@@ -490,18 +520,44 @@ left:7%;
 @keyframes anim_circle_progress_bar {
 
     0% {
+        -webkit-transform:rotate(20.5deg);
         transform:rotate(20.5deg);
     }
     100% {
+        -webkit-transform:rotate(290.5deg);
+        transform:rotate(290.5deg);
+    }
+}
+@-webkit-keyframes anim_circle_progress_bar {
+
+    0% {
+        -webkit-transform:rotate(20.5deg);
+        transform:rotate(20.5deg);
+    }
+    100% {
+        -webkit-transform:rotate(290.5deg);
         transform:rotate(290.5deg);
     }
 }
 @keyframes anim_circle_progress_bar_2 {
 
     0% {
+        -webkit-transform:rotate(0deg);
         transform:rotate(0deg);
     }
     100% {
+        -webkit-transform:rotate(360deg);
+        transform:rotate(360deg);
+    }
+}
+@-webkit-keyframes anim_circle_progress_bar_2 {
+
+    0% {
+        -webkit-transform:rotate(0deg);
+        transform:rotate(0deg);
+    }
+    100% {
+        -webkit-transform:rotate(360deg);
         transform:rotate(360deg);
     }
 }
@@ -517,12 +573,27 @@ left:7%;
 @keyframes anim_darkness_1 {
 
     0% {
-
        background: rgba(0,0,0,0.1);
+      
+       
     }
     100% {
- 
+           
         background: rgba(0,0,0,0.95);
+
+    }
+}
+@-webkit-keyframes anim_darkness_1 {
+
+    0% {
+       background: rgba(0,0,0,0.1);
+      
+       
+    }
+    100% {
+           
+        background: rgba(0,0,0,0.95);
+
     }
 }
 /*ANIMATION*//*ANIMATION*//*ANIMATION*//*ANIMATION*//*ANIMATION*//*ANIMATION*/
