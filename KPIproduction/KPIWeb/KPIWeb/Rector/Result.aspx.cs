@@ -2203,6 +2203,11 @@ namespace KPIWeb.Rector
                 Session["rectorHistory"] = rectorHistory;
                 Response.Redirect("~/Rector/Result.aspx");
             }
+        }
+
+        protected void Button8_Click1(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/RectorChooseReport.aspx");
         }       
     }
 }

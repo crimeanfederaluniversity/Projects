@@ -132,6 +132,7 @@
             }
 
             function commentSendButtonClick() {
+                document.getElementById('comment_Section').style.visibility = 'hidden';
                 showLoadPanel();
                 __doPostBack('ButtonClickParam', y);              
             }
@@ -154,7 +155,7 @@
             </asp:Panel>
             <br />
             <asp:Panel ID="Panel7" runat="server" Height="17" BackColor="#CC0000" BorderColor="#CC0000">
-                <asp:Label ID="Label13" runat="server" style="text-align: center" Text="..........Не утверждено"></asp:Label>
+                <asp:Label ID="Label13" runat="server" style="text-align: center" Text="....Рассчитано по неполным данным"></asp:Label>
             </asp:Panel>
         </div>  
 <div id="comment_Section" class='commentSectionStyle'> 
@@ -170,6 +171,7 @@
               <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" OnClick="GoBackButton_Click" Text="Назад" Width="125px" />
               <asp:Button ID="GoForwardButton" runat="server" OnClientClick="showLoadPanel()" OnClick="GoForwardButton_Click" Text="Вперед" Width="125px" />
                 &nbsp; &nbsp; <asp:Button ID="Button4" runat="server" OnClientClick="showLoadPanel()" OnClick="Button4_Click" Text="На главную" Width="125px" />
+                    <asp:Button ID="Button8" runat="server" OnClick="Button8_Click1" Text="К списку отчетов" />
                 &nbsp; &nbsp;       
                 <asp:Button ID="Button5" runat="server" CssClass="button_right"  OnClick="Button5_Click" Text="Нормативные документы" Width="250px" OnClientClick="showLoadPanel()" />
                     &nbsp; &nbsp; &nbsp; &nbsp;
@@ -184,6 +186,7 @@
          }
     </script>
     <style>  
+
         .LoadPanel 
    {
           position: fixed;
