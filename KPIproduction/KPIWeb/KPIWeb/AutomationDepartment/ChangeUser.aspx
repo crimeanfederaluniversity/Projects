@@ -123,12 +123,12 @@ textarea {
             </asp:TemplateField>
                 <asp:TemplateField HeaderText="Просм">
                                     <ItemTemplate>
-                                         <asp:CheckBox ID="CheckBoxCanView1" runat="server" Checked='<%# Bind("ViewChecked1") %>'></asp:CheckBox>                          
+                                         <asp:CheckBox ID="CheckBoxCanView1" Text=" "  runat="server" Checked='<%# Bind("ViewChecked1") %>'></asp:CheckBox>                          
                                     </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Подтв">
                                     <ItemTemplate>
-                                         <asp:CheckBox ID="CheckBoxVerify1" runat="server"  Checked='<%# Bind("VerifyChecked1") %>'></asp:CheckBox>                        
+                                         <asp:CheckBox ID="CheckBoxVerify1" Text=" "  runat="server"  Checked='<%# Bind("VerifyChecked1") %>'></asp:CheckBox>                        
                                     </ItemTemplate>
             </asp:TemplateField>
             </Columns>
@@ -145,12 +145,12 @@ textarea {
             </asp:TemplateField>
                 <asp:TemplateField HeaderText="Просм">
                                     <ItemTemplate>
-                                         <asp:CheckBox ID="CheckBoxCanView2" runat="server" Checked='<%# Bind("ViewChecked2") %>'></asp:CheckBox>                          
+                                         <asp:CheckBox ID="CheckBoxCanView2" Text=" "  runat="server" Checked='<%# Bind("ViewChecked2") %>'></asp:CheckBox>                          
                                     </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Подтв">
                                     <ItemTemplate>
-                                         <asp:CheckBox ID="CheckBoxVerify2" runat="server"  Checked='<%# Bind("VerifyChecked2") %>'></asp:CheckBox>                        
+                                         <asp:CheckBox ID="CheckBoxVerify2" Text=" "  runat="server"  Checked='<%# Bind("VerifyChecked2") %>'></asp:CheckBox>                        
                                     </ItemTemplate>
             </asp:TemplateField>
             </Columns>
