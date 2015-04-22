@@ -381,7 +381,7 @@ namespace KPIWeb.Reports
 
             string script5 = @"<script>
             function ConfirmSubmitOnTT() {
-                var msg = 'Отправить отчет на доработку?'; 
+                var msg = 'Режим доступа к данным будет изменен на \'только просмотр\'.Отправить отчет на доработку?'; 
                 return confirm(msg);
             }
             </script>";

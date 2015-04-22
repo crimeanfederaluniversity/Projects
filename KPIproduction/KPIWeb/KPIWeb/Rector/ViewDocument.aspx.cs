@@ -52,6 +52,8 @@ namespace KPIWeb.Rector
                 GridView1.DataBind();
             }
         }
+
+      
         protected void DeleteButtonClick(object sender, EventArgs e)
         {
             
@@ -59,16 +61,18 @@ namespace KPIWeb.Rector
             string s = button.CommandArgument.ToString();
             string n = Server.MapPath(@"~/Rector/docs/"+ s);
           if (File.Exists(n))
-           //  {
+             {
             //if (Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "document.location = 'docs/" + s + "';" ))
            // {
-                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "document.location = 'docs/" + s + "';", true);
-          // }
+                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "window.open('docs/" + s + "');", true);
+             //ClientScript.RegisterStartupScript(this.GetType(), "window.open", "window.open('~ViewDocument.aspx')", true);
+           }
             else
            {
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Документ не найден');", true);
           }
-                }
+            
+        }
 
         protected void Button2_Click(object sender, EventArgs e)
         {

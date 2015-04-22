@@ -43,15 +43,15 @@ namespace KPIWeb
             switch (result)
             {
                 case "03":
-                    return "бакалавр";
+                    return "бакалавриат";
                 case "04":
-                    return "магистр";
+                    return "магистратура";
                 case "05":
-                    return "специалист";
+                    return "специалитет";
                 case "06":
-                    return "аспирант";
+                    return "аспирантура";
                 case "08":
-                    return "аспирант";
+                    return "аспирантура";
             }
 
             return "не опр.";

@@ -47,7 +47,7 @@
                 
                  <asp:TemplateField HeaderText="Просмотреть">
                         <ItemTemplate>  
-                           <asp:Button ID="DeleteButton" runat="server" CommandName="Select" Text="Просмотреть" Width="200px" CommandArgument='<%# Eval("DocumentLink") %>' OnClick="DeleteButtonClick"/>
+                           <asp:Button ID="DeleteButton" runat="server" CommandName="Select" Text="Просмотреть" Width="200px"  CommandArgument='<%# Eval("DocumentLink") %>' OnClick="DeleteButtonClick"  />
                         </ItemTemplate>
                     </asp:TemplateField>   
                       
