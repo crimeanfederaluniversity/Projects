@@ -944,19 +944,19 @@ namespace KPIWeb.Reports
                     if (mode == 0)
                     {
                         GoBackButton.Visible = true;
-                        GoBackButton.Text = "Вернуться без сохранения.";
+                        GoBackButton.Text = "Вернуться без сохранения";
 
                         ButtonSave.Visible = true;
-                        ButtonSave.Text = "Сохранить внесенные данные.";
+                        ButtonSave.Text = "Сохранить внесенные данные";
 
                         UpnDownButton.Visible = true;
-                        UpnDownButton.Text = "Отправить отчёт на утверждение.";
+                        UpnDownButton.Text = "Отправить отчёт на утверждение";
 
                         TextBox1.Visible = false;
 
                         if (StatusList[0] == 1)
                         {
-                            Label1.Text = "Данные возвращены на доработку. Проверьте корректность введенных данных.";
+                            Label1.Text = "Данные возвращены на доработку. Проверьте корректность введенных данных";
                         }
                         else
                         {
@@ -993,7 +993,7 @@ namespace KPIWeb.Reports
                         (mode == 1)
                     {
                         GoBackButton.Visible = true;
-                        GoBackButton.Text = "Вернуться в меню.";
+                        GoBackButton.Text = "Вернуться в меню";
 
                         ButtonSave.Visible = false;
 
@@ -1028,10 +1028,10 @@ namespace KPIWeb.Reports
                     else if (mode == 2)
                     {
                         GoBackButton.Visible = true;
-                        GoBackButton.Text = "Вернуться в меню без утверждения.";
+                        GoBackButton.Text = "Вернуться в меню без утверждения";
 
                         ButtonSave.Visible = true;
-                        ButtonSave.Text = "Утвердить данные.";
+                        ButtonSave.Text = "Утвердить данные";
 
                         UpnDownButton.Visible = true;
                         UpnDownButton.Text = "Вернуть отчёт на доработку";
