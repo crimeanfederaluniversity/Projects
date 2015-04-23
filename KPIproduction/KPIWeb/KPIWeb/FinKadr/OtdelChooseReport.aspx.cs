@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace KPIWeb.Rector
+namespace KPIWeb.FinKadr
 {
-    public partial class RectorChooseReport : System.Web.UI.Page
+    public partial class OtdelChooseReport : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -36,8 +33,8 @@ namespace KPIWeb.Rector
                 Response.Redirect("~/Default.aspx");
             }
 
-            RectorHistorySession RectorHistory = (RectorHistorySession) Session["rectorHistory"];
-            if (RectorHistory == null)
+            OtdelHistorySession OtdelHistory = (OtdelHistorySession)Session["OtdelHistory"];
+            if (OtdelHistory == null)
             {
                 GoForwardButton.Enabled = false;
             }
@@ -45,7 +42,7 @@ namespace KPIWeb.Rector
             //////////////////////////////////////////////////////////////////////////
             if (!Page.IsPostBack)
             {
-                ParametrType paramType = new ParametrType(1);;
+                ParametrType paramType = new ParametrType(1);
                 if (paramType == null)
                 {
                     Response.Redirect("~/Default.aspx");
@@ -92,38 +89,38 @@ namespace KPIWeb.Rector
         {
             Button button = (Button)sender;
             {
-                ParametrType paramType = new ParametrType(1);;
+                ParametrType paramType = new ParametrType(1);
                 if (paramType == null)
                 {
                     Response.Redirect("~/Default.aspx");
                 }
                 if (paramType.paramType == 0) //смотрим индцелевой показатель
                 {
-                    Result.Struct mainStruct = new Result.Struct(1, "");
-                    RectorSession rectorResultSession = new RectorSession(mainStruct, 1, 0, 0,
+                    OtdelResult.Struct mainStruct = new OtdelResult.Struct(1, "");
+                    OtdelSession OtdelResultSession = new OtdelSession(mainStruct, 1, 0, 0,
                         Convert.ToInt32(button.CommandArgument), 0);
-                    RectorHistorySession RectorHistory = new RectorHistorySession();
-                    RectorHistory.SessionCount = 1;
-                    RectorHistory.CurrentSession = 0;
-                    RectorHistory.Visible = false;
-                    RectorHistory.RectorSession[RectorHistory.CurrentSession] = rectorResultSession;
-                    Session["rectorHistory"] = RectorHistory;
+                    OtdelHistorySession OtdelHistory = new OtdelHistorySession();
+                    OtdelHistory.SessionCount = 1;
+                    OtdelHistory.CurrentSession = 0;
+                    OtdelHistory.Visible = false;
+                    OtdelHistory.OtdelSession[OtdelHistory.CurrentSession] = OtdelResultSession;
+                    Session["OtdelHistory"] = OtdelHistory;
                     LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + (string)ViewState["login"] + " перешел к работе с отчетом, ID = " + button.CommandArgument);
-                    Response.Redirect("~/Rector/Result.aspx");
+                    Response.Redirect("~/FinKadr/OtdelResult.aspx");
                 }
                 else // смотрим рассчетные
                 {
-                    Result.Struct mainStruct = new Result.Struct(1, "");
-                    RectorSession rectorResultSession = new RectorSession(mainStruct, 1, 0, 1,
+                    OtdelResult.Struct mainStruct = new OtdelResult.Struct(1, "");
+                    OtdelSession OtdelResultSession = new OtdelSession(mainStruct, 1, 0, 1,
                         Convert.ToInt32(button.CommandArgument), 0);
-                    RectorHistorySession RectorHistory = new RectorHistorySession();
-                    RectorHistory.SessionCount = 1;
-                    RectorHistory.CurrentSession = 0;
-                    RectorHistory.Visible = false;
-                    RectorHistory.RectorSession[RectorHistory.CurrentSession] = rectorResultSession;
-                    Session["rectorHistory"] = RectorHistory;
+                    OtdelHistorySession OtdelHistory = new OtdelHistorySession();
+                    OtdelHistory.SessionCount = 1;
+                    OtdelHistory.CurrentSession = 0;
+                    OtdelHistory.Visible = false;
+                    OtdelHistory.OtdelSession[OtdelHistory.CurrentSession] = OtdelResultSession;
+                    Session["OtdelHistory"] = OtdelHistory;
                     LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + (string)ViewState["login"] + " перешел к работе с отчетом, ID = " + button.CommandArgument);
-                    Response.Redirect("~/Rector/Result.aspx");
+                    Response.Redirect("~/FinKadr/OtdelResult.aspx");
                 }
 
             }
@@ -131,22 +128,22 @@ namespace KPIWeb.Rector
 
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Rector/RectorMain.aspx");
+           // Response.Redirect("~/Rector/RectorMain.aspx");
         }
 
         protected void GoForwardButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Rector/Result.aspx");
+            Response.Redirect("~/FinKadr/OtdelResult.aspx");
         }
 
         protected void Button4_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Rector/RectorMain.aspx");
+            //Response.Redirect("~/Rector/RectorMain.aspx");
         }
 
         protected void Button5_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Rector/ViewDocument.aspx");
+            //Response.Redirect("~/Rector/ViewDocument.aspx");
         }
 
         protected void Button6_Click(object sender, EventArgs e)
