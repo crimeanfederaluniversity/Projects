@@ -50,7 +50,7 @@
 .sidebar_button {
     z-index:2;
 
-    background-image:url('/App_Themes/theme_1/css/images/arrow_side_in.png');
+    background-image:url('http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/arrow_side_in.png');
       
     background-size:contain;
    
@@ -88,7 +88,7 @@
 
  /*BackGround*/ /*BackGround*/ /*BackGround*/ /*BackGround*/ /*BackGround*/
 #divbg {
-    background-image:url("/App_Themes/theme_1/css/images/kfu_gerb.png");
+    background-image:url("http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/kfu_gerb.png");
     background-repeat:no-repeat;
     
     background-size:contain;
@@ -150,7 +150,7 @@ color:#ff0000;
     border-width: 2px;
     border-color:#000000;
     border-radius:10px;
-    background-image:url("/css/images/kfu_button_gradient_2.png");
+    background-image:url("http://212.110.152.173/Styles4KPIKFU/css/images/kfu_button_gradient_2.png");
     background-attachment: scroll;
     background-size: contain;
     background-repeat:repeat-x;
@@ -158,7 +158,7 @@ color:#ff0000;
 .button_cl:hover 
 {
 border-width:2px;
-background-image: url('../../../css/images/kfu_button_gradient_hover_green_1.png');
+background-image: url('http://212.110.152.173/Styles4KPIKFU/css/images/kfu_button_gradient_hover_green_1.png');
 
 }
 
@@ -261,7 +261,7 @@ background-image: url('../../../css/images/kfu_button_gradient_hover_green_1.png
     background-repeat: repeat-x;
     background-attachment: scroll;
     background-size: contain;
-    background-image: url('/App_Themes/theme_1/css/images/kfu_button_gray_1.png');
+    background-image: url('http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/kfu_button_gray_1.png');
     border-radius: 4px;
     
 
@@ -272,7 +272,7 @@ background-image: url('../../../css/images/kfu_button_gradient_hover_green_1.png
    
 input[type="submit"]:hover {
     border-width:2px;
-background-image: url('/App_Themes/theme_1/css/images/kfu_button_gradient_hover_green_2.png');
+background-image: url('http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/kfu_button_gradient_hover_green_2.png');
     background-repeat: repeat-x;
     background-attachment: scroll;
     background-size: contain;
@@ -282,7 +282,7 @@ input[type="submit"]:disabled{
         color: #585858;
         border-color:#585858;
        
-        background-image:url('/App_Themes/theme_1/css/images/kfu_button_gray_1.png');
+        background-image:url('http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/kfu_button_gray_1.png');
         opacity:0.5;
           }
 input[type="submit"]:disabled:hover{}
@@ -300,37 +300,37 @@ margin:3px;
 }
 .checkbox_style  input[type="checkbox"] + label:before   {
         display:inline-block;
-        content:url("/App_Themes/theme_1/css/images/chb2.png");   
+        content:url("http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/chb2.png");
         border-radius:4px;
         }
 
 .checkbox_style   input[type="checkbox"]:checked + label:before {
          display:inline-block;
-         content:url("/App_Themes/theme_1/css/images/chb_cheсked_2.png");  
+         content:url("http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/chb_cheсked_2.png");  
          border-radius:4px; 
          }
 
 .checkbox_style  input[type="checkbox"]:hover + label:before   {
         display:inline-block;
-        content:url("/App_Themes/theme_1/css/images/chb_hov.png");
+        content:url("http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/chb_hov.png");
         }
 
 .checkbox_style  input[type="checkbox"]:checked:hover + label:before   {
         display:inline-block;
-        content:url("/App_Themes/theme_1/css/images/chb_checked_hov_2.png");
+        content:url("http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/chb_checked_hov_2.png");
         }
 
 /*Disabled*//*Disabled*//*Disabled*//*Disabled*//*Disabled*//*Disabled*//*Disabled*/
 
 .checkbox_style  input[type="checkbox"]:disabled:checked + label:before   {
         display:inline-block;
-        content:url("/App_Themes/theme_1/css/images/chb_cheсked_2.png");
+        content:url("http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/chb_cheсked_2.png");
         opacity:0.2;
         }
 
 .checkbox_style  input[type="checkbox"]:disabled + label:before   {
         display:inline-block;
-        content:url("/App_Themes/theme_1/css/images/chb2.png");
+        content:url("http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/chb2.png");
         opacity:0.2;
         }
 
@@ -428,7 +428,7 @@ left:7%;
     left:79px;
     opacity:1;
     
-    background-image:url('/App_Themes/theme_1/css/images/gear_big_white_2.png');
+    background-image:url('http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/gear_big_white_2.png');
     background-repeat:no-repeat;
   
     width:102px;
@@ -450,7 +450,7 @@ left:7%;
     top:10px;
     left:156px;
     
-    background-image:url('/App_Themes/theme_1/css/images/gear_small_3_2.png');
+    background-image:url('http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/gear_small_3_2.png');
     background-repeat:no-repeat;
   
     width:87px;
@@ -475,7 +475,7 @@ left:7%;
 
   
     z-index:2;
-    background-image:url('/App_Themes/theme_1/css/images/bgcc.png');
+    background-image:url('http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/bgcc.png');
    
     background-repeat:no-repeat;
 
@@ -485,7 +485,7 @@ left:7%;
       
 }
 #im3_bg_circle {
-    background-image:url('/App_Themes/theme_1/css/images/bgc.png');
+    background-image:url('http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/bgc.png');
     background-size:contain;
     background-repeat:no-repeat;
     position:absolute;

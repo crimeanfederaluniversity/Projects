@@ -12,13 +12,13 @@
    {
         position:fixed;    
         top:10em;
-        width:250px;
+        width:280px;
         height:150px;    
         border-color: black;
         border-width: medium;
         background-color:azure;
         z-index:5;
-        right: -230px;
+        right: -260px;
         border-style: solid;
         border-width: 1px;
         border-color: black;
@@ -77,65 +77,65 @@
     width:20px;
     height:148px;
     background-color:azure;
-    background-image:url('/App_Themes/theme_1/css/images/arout.png');
+    background-image:url('http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/arout.png');
     background-repeat:no-repeat;
       }
     .side_img_legend:hover{
-    background-image:url('/App_Themes/theme_1/css/images/arout2.png');
+    background-image:url('http://212.110.152.173/Styles4KPIKFU//App_Themes/theme_1/css/images/arout2.png');
     background-repeat:no-repeat;
     }
 </style>         
 <script type="text/javascript" language="javascript">
-            function DoPostBack() {
-                __doPostBack('cmd', 'thesearemyarguments');
-            }
+    function DoPostBack() {
+        __doPostBack('cmd', 'thesearemyarguments');
+    }
      </script>
 <script type="text/javascript">
-            var y = 0;  
-            function legendChange() {
+    var y = 0;
+    function legendChange() {
 
-                if (document.getElementById('sidePanel').style.right == '0px') {
-                    document.getElementById('sidePanel').style.right = '-230px';
-                    document.getElementById('img_of_sp').style.backgroundPosition = '0 0';
-                }
-                else {
-                    document.getElementById('sidePanel').style.right = '0px';
-                    document.getElementById('img_of_sp').style.backgroundPosition = '-20px 0';
-                
-                }
-            }
+        if (document.getElementById('sidePanel').style.right == '0px') {
+            document.getElementById('sidePanel').style.right = '-260px';
+            document.getElementById('img_of_sp').style.backgroundPosition = '0 0';
+        }
+        else {
+            document.getElementById('sidePanel').style.right = '0px';
+            document.getElementById('img_of_sp').style.backgroundPosition = '-20px 0';
 
-            function ShowLegend() {
-                document.getElementById('sidePanel').style.visibility = 'visible';
-            }
+        }
+    }
 
-           /* function showLoadPanel() {
-                document.getElementById('LoadPanel_').style.visibility = 'visible';
-            }*/
+    function ShowLegend() {
+        document.getElementById('sidePanel').style.visibility = 'visible';
+    }
 
-            function closeLoadPanel() {
-                document.getElementById('LoadPanel_').style.visibility = 'hidden';
-            }
-            function closeCommentSection() {
-                document.getElementById('comment_Section').style.visibility = 'hidden';
-                closeLoadPanel();
-            }
-            function showCommentSection(i) {
-                
-                document.getElementById('comment_Section').style.visibility = 'visible';
-                showLoadPanel();
-                y = i;
-                return false;
-            }
-            function showAlert() {
-                alert(y);
-            }
+    /* function showLoadPanel() {
+         document.getElementById('LoadPanel_').style.visibility = 'visible';
+     }*/
 
-            function commentSendButtonClick() {
-                document.getElementById('comment_Section').style.visibility = 'hidden';
-                showLoadPanel();
-                __doPostBack('ButtonClickParam', y);              
-            }
+    function closeLoadPanel() {
+        document.getElementById('LoadPanel_').style.visibility = 'hidden';
+    }
+    function closeCommentSection() {
+        document.getElementById('comment_Section').style.visibility = 'hidden';
+        closeLoadPanel();
+    }
+    function showCommentSection(i) {
+
+        document.getElementById('comment_Section').style.visibility = 'visible';
+        showLoadPanel();
+        y = i;
+        return false;
+    }
+    function showAlert() {
+        alert(y);
+    }
+
+    function commentSendButtonClick() {
+        document.getElementById('comment_Section').style.visibility = 'hidden';
+        showLoadPanel();
+        __doPostBack('ButtonClickParam', y);
+    }
 </script>
 <div id="sidePanel" class='side_legend' onclick="legendChange()"> 
     <div id="img_of_sp" class="side_img_legend"></div>   
@@ -146,16 +146,16 @@
             <br />
             <br />
             <asp:Panel ID="Panel5" runat="server" CssClass="ColorPanelLegend">
-                <asp:Label ID="Label11" runat="server" Text="........Утверждено"></asp:Label>
+                <asp:Label ID="Label11" runat="server" Text=".....Утверждено"></asp:Label>
                 <br />
             </asp:Panel>
             <br />
             <asp:Panel ID="Panel6" runat="server" Height="17" BackColor="#000099" BorderColor="#000099">
-                <asp:Label ID="Label12" runat="server" Text=".......Требует Вашего утверждения"></asp:Label>
+                <asp:Label ID="Label12" runat="server" Text=".....Требует Вашего утверждения"></asp:Label>
             </asp:Panel>
             <br />
             <asp:Panel ID="Panel7" runat="server" Height="17" BackColor="#CC0000" BorderColor="#CC0000">
-                <asp:Label ID="Label13" runat="server" style="text-align: center" Text="....Рассчитано по неполным данным"></asp:Label>
+                <asp:Label ID="Label13" runat="server" style="text-align: center" Text=".....Рассчитано по неполным данным"></asp:Label>
             </asp:Panel>
         </div>  
 <div id="comment_Section" class='commentSectionStyle'> 
@@ -181,9 +181,9 @@
  
      
     <script type="text/javascript">
-         function showLoadPanel() {
-             document.getElementById('LoadPanel_').style.visibility = 'visible';
-         }
+        function showLoadPanel() {
+            document.getElementById('LoadPanel_').style.visibility = 'visible';
+        }
     </script>
     <style>  
 
