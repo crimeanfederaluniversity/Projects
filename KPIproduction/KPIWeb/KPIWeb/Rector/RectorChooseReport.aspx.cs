@@ -31,10 +31,12 @@ namespace KPIWeb.Rector
                       where a.UsersTableID == userID
                       select a.Email).FirstOrDefault();
 
-            if (userTable.AccessLevel != 3)
+            /*
+             * if (userTable.AccessLevel != 3)
             {
                 Response.Redirect("~/Default.aspx");
-            }
+            }*/
+
 
             RectorHistorySession RectorHistory = (RectorHistorySession) Session["rectorHistory"];
             if (RectorHistory == null)
