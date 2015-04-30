@@ -5,7 +5,7 @@
      
         <br />
     
-        <br />
+        <asp:Image ID="Image1" runat="server" ImageUrl="https://pp.vk.me/c625524/v625524720/2064f/l9xw4aIkqac.jpg" />
         <br />
         <br />
         <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Courier New" Font-Size="X-Large" Text="Логин: "></asp:Label>
