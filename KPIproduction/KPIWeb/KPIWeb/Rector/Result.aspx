@@ -269,7 +269,7 @@
                         <ItemTemplate>
                             <asp:Label ID="lb01"  runat="server"  Text="  " ></asp:Label>
                             <asp:Button ID="Button1" runat="server" CommandName="Select" Text="Детализировать" CommandArgument='<%# Eval("ID") %>' Width="200px" 
-                                OnClick="Button1Click " OnClientClick="showLoadPanel()"/>
+                                OnClick="Button1Click_" OnClientClick="showLoadPanel()"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 

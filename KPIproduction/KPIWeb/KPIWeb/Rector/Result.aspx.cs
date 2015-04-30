@@ -2208,6 +2208,11 @@ namespace KPIWeb.Rector
         protected void Button8_Click1(object sender, EventArgs e)
         {
             Response.Redirect("~/Rector/RectorChooseReport.aspx");
-        }       
+        }
+
+        protected void Button1Click_(object sender, EventArgs e)
+        {
+           
+        }
     }
 }
