@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="MonitoringMain.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.MonitoringMain" %>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
    
-    <h2>Отдел мониторинга и статистики</h2>
+    <h2>Отдел развитие и статистики</h2>
     <div>
     
     </div>
