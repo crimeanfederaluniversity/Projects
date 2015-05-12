@@ -91,7 +91,7 @@ namespace KPIWeb.Rector
                 Name = name;
             }
         }
-        public List<Struct> GetChildStructList(Struct ParentStruct)
+        public List<Struct> GetChildStructList(Struct ParentStruct, int ReportID)
         {
             List<Struct> tmpStrucList = new List<Struct>();
             int Level = 5;
@@ -125,7 +125,12 @@ namespace KPIWeb.Rector
                 case 0: // возвращаем все универы
                     {
                         tmpStrucList = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
+                                        join b in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                        on a.FirstLevelSubdivisionTableID equals b.FK_FirstLevelSubmisionTableId
+
                                         where a.Active == true
+                                        && b.FK_ReportArchiveTableId == ReportID
+                                        && b.Active == true
                                         && a.FK_ZeroLevelSubvisionTable == ParentStruct.Lv_0
                                         select new Struct(1, "")
                                         {
@@ -222,7 +227,7 @@ namespace KPIWeb.Rector
 
             return tmpStrucList;
         }
-        public List<Struct> GetChildStructList(Struct ParentStruct, int SpecID) 
+        public List<Struct> GetChildStructList(Struct ParentStruct, int ReportID ,int SpecID) 
         {
             List<Struct> tmpStrucList = new List<Struct>();
             int Level = 5;
@@ -255,7 +260,10 @@ namespace KPIWeb.Rector
                 }
                 case 0: // возвращаем все универы
                 {
+                                                            
                     tmpStrucList = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
+                                    join z in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                        on a.FirstLevelSubdivisionTableID equals z.FK_FirstLevelSubmisionTableId
                                     join b in kpiWebDataContext.SecondLevelSubdivisionTable
                                     on a.FirstLevelSubdivisionTableID equals b.FK_FirstLevelSubdivisionTable
                                     join c in kpiWebDataContext.ThirdLevelSubdivisionTable
@@ -264,6 +272,8 @@ namespace KPIWeb.Rector
                                     on c.ThirdLevelSubdivisionTableID equals d.FK_ThirdLevelSubdivisionTable
                                     where a.Active == true
                                     && a.FK_ZeroLevelSubvisionTable == ParentStruct.Lv_0
+                                    && z.FK_ReportArchiveTableId == ReportID
+                                        && z.Active == true
                                     && ((SpecID == 0) || (SpecID == d.FK_Specialization))
                                     select new Struct(1,"")
                                     {
@@ -792,14 +802,16 @@ namespace KPIWeb.Rector
                     List<Struct> currentStructList = new List<Struct>();
                     if (SpecID != 0)
                     {
-                        currentStructList = GetChildStructList(mainStruct, SpecID);
+                        currentStructList = GetChildStructList(mainStruct,ReportID, SpecID);
                     }
                     else
                     {
-                        currentStructList = GetChildStructList(mainStruct);
+                        currentStructList = GetChildStructList(mainStruct, ReportID);
                     }
+
                     foreach (Struct currentStruct in currentStructList)
                     {
+
                         DataRow dataRow = dataTable.NewRow();
 
                         dataRow["ID"] = GetLastID(currentStruct).ToString();
@@ -1707,7 +1719,7 @@ namespace KPIWeb.Rector
 
                     List<BasicParametersTable> BasicList = Abbreviature.GetBasicList(Calculated.Formula);
                     List<Struct> currentStructList = new List<Struct>();
-                    currentStructList = GetChildStructList(mainStruct);
+                    currentStructList = GetChildStructList(mainStruct,ReportID);
 
                     foreach (Struct currentStruct in currentStructList)
                     {
@@ -1854,8 +1866,6 @@ namespace KPIWeb.Rector
                 {
                     //error // wrong ViewType
                 }
-
-                
 
                 RefreshHistory();
 

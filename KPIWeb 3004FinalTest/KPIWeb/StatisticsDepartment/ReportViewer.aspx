@@ -25,20 +25,20 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                     
-                     <asp:TemplateField HeaderText="Сгенерировать отчёт">
+                     <asp:TemplateField Visible="false" HeaderText="Сгенерировать отчёт">
                         <ItemTemplate>
                             <asp:Label ID="LabelReportArchiveTableID2" runat="server" Text='<%# Bind("ReportArchiveTableID") %>' Visible="false"></asp:Label>
                             <asp:Button ID="ButtonEditReport2" runat="server" CommandName="Select" Text="Сгенерировать" Width="150px" CommandArgument='<%# Eval("ReportArchiveTableID") %>' OnClick="ButtonEditReport_Click_2"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                     
-                    <asp:TemplateField HeaderText="Просмотреть отчёт">
+                    <asp:TemplateField Visible="false" HeaderText="Просмотреть отчёт">
                         <ItemTemplate>
                             <asp:Button ID="ButtonViewReport" runat="server" CommandName="Select" Text="Просмотреть" Width="150px" CommandArgument='<%# Eval("ReportArchiveTableID") %>' OnClick="ButtonViewReportClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                    <asp:TemplateField HeaderText="Просмотреть уровень заполненности">
+                    <asp:TemplateField Visible="false" HeaderText="Просмотреть уровень заполненности">
                         <ItemTemplate>
                             <asp:Button ID="ButtonViewStruct" runat="server" CommandName="Select" Text="Просмотреть" Width="150px" CommandArgument='<%# Eval("ReportArchiveTableID") %>' OnClick="ButtonViewStruct"/>
                         </ItemTemplate>
