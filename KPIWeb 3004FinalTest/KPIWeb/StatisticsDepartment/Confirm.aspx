@@ -1,13 +1,9 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Confirm.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.Confirm" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <h2><span style="font-size: 30px">Просмотр информации о подтверждениях</span></h2>
+    <h2><span style="font-size: 30px">Просмотр информации о утверждениях</span></h2>
   
     <div>          
-        <br />
-        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="По целевым показателям" Width="250px" />
-        &nbsp;<asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="По расчетным показателям" Width="250px" />
-        <br />
         <br />
   
     <asp:Label ID="Label1" runat="server" Text="Выберите отчет" ></asp:Label>
@@ -23,25 +19,34 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <br />
         <br />
-        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Загрузить" />
-        <br />
-        <br />
         <asp:GridView ID="GridView1" runat="server"  AutoGenerateColumns="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
           <Columns>               
                 
-                 <asp:TemplateField HeaderText="Тип подтверждения" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                 <asp:TemplateField HeaderText="Название" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="Name" runat="server" Text='<%# Bind("Name") %>'  Visible="True"></asp:Label>
                         </ItemTemplate>
-                    </asp:TemplateField>   
-                 
+                    </asp:TemplateField>  
+               
+                 <asp:TemplateField HeaderText="Название показателя" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                        <ItemTemplate> 
+                            <asp:Label ID="ParamName" runat="server" Text='<%# Bind("ParamName") %>'  Visible="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+              <asp:TemplateField HeaderText="Утвердил" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                        <ItemTemplate> 
+                            <asp:Label ID="ConfirmUser" runat="server" Text='<%# Bind("ConfirmUser") %>'  Visible="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
                   <asp:TemplateField HeaderText="Комментарий" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="Comment" runat="server" Text='<%# Bind("Comment") %>'  Visible="True"></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>  
                 
-              <asp:TemplateField HeaderText="Дата" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+              <asp:TemplateField HeaderText="Дата утверждения" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="Date" runat="server" Text='<%# Bind("Date") %>'  Visible="True"></asp:Label>
                         </ItemTemplate>

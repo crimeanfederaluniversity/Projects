@@ -173,7 +173,10 @@ background-image: url('http://212.110.152.173/Styles4KPIKFU/css/images/kfu_butto
     width:100%;
     height: 300px;
 }*/
+.sova td {
+    position:relative;
 
+}
 
 .Grid_view_style {
 

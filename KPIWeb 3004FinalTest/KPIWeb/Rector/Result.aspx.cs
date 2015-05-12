@@ -641,6 +641,9 @@ namespace KPIWeb.Rector
                 dataTable.Columns.Add(new DataColumn("LableText", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("LableColor", typeof (string)));
 
+                dataTable.Columns.Add(new DataColumn("Comment", typeof(string)));
+                dataTable.Columns.Add(new DataColumn("CommentEnabled", typeof(string)));
+                
                 #endregion
                 #region global page settings
 
@@ -804,7 +807,9 @@ namespace KPIWeb.Rector
                         dataRow["Name"] = currentStruct.Name;
                         dataRow["StartDate"] = "nun";
                         dataRow["EndDate"] = "nun";
-
+                        dataRow["Comment"] = "nun";
+                        dataRow["CommentEnabled"] = "hidden";
+                        
                         dataRow["CanConfirm"] = true;
                         dataRow["ShowLable"] = false;
                         dataRow["CanWatchWhoOws"] = false;
@@ -929,7 +934,7 @@ namespace KPIWeb.Rector
                     if (ParamType == 0) //считаем целевой показатель
                     {
                         #region indicator
-                        List<IndicatorsTable> Indicators = (
+                        List<IndicatorsTable> IndicatorsNotUnique = (
                             from a in kpiWebDataContext.IndicatorsTable
                             join b in kpiWebDataContext.IndicatorsAndUsersMapping
                                 on a.IndicatorsTableID equals b.FK_IndicatorsTable
@@ -940,18 +945,56 @@ namespace KPIWeb.Rector
                                 && b.CanView == true
                                 && b.FK_UsresTable == userID
                                 && c.FK_ReportArchiveTable == ReportID
-                            select a).ToList();
-
+                            select a).OrderBy(mc => mc.IndicatorsTableID).ToList();
+                        ////для уникальнности
+                        int IDForUnique=0;
+                        List<IndicatorsTable> Indicators = new List<IndicatorsTable>() ;
+                        foreach (IndicatorsTable CurrentIndicator in IndicatorsNotUnique)
+                        {
+                            if (CurrentIndicator.IndicatorsTableID != IDForUnique)
+                            {
+                                Indicators.Add(CurrentIndicator);
+                            }
+                            IDForUnique = CurrentIndicator.IndicatorsTableID;
+                        }
+                        // теперь повторяющихся индикаторов нет
                         //нашли все целевой показатель привязанные к пользователю
                         foreach (IndicatorsTable CurrentIndicator in Indicators)
                         {
                             DataRow dataRow = dataTable.NewRow();
                             dataRow["ID"] = CurrentIndicator.IndicatorsTableID; //GetLastID(currentStruct).ToString();
                             dataRow["Number"] = "num";
-                            dataRow["Name"] = CurrentIndicator.Name;
+                            dataRow["Name"] = CurrentIndicator.Name + " ("+ CurrentIndicator.Measure +")";
                             dataRow["CanWatchWhoOws"] = false;
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
+
+                            ConfirmationHistory CommentRow = (from a in kpiWebDataContext.ConfirmationHistory
+                                                                  where a.FK_IndicatorsTable == CurrentIndicator.IndicatorsTableID
+                                                                  && a.FK_ReportTable == ReportID
+                                                              select a).OrderByDescending(mc => mc.Date).FirstOrDefault();
+
+                            
+
+                            if (CommentRow != null)
+                            {
+                                if (CommentRow.Comment.Length > 0)
+                                {
+                                    dataRow["Comment"] = "От: " + CommonCode.GetUserById(Convert.ToInt32(CommentRow.FK_UsersTable)) +"</br>"+ CommentRow.Comment;
+                                    dataRow["CommentEnabled"] = "visible";
+                                }
+                                else
+                                {
+                                    dataRow["Comment"] = "nun";
+                                    dataRow["CommentEnabled"] = "hidden";
+                                }
+                            }
+                            else
+                            {
+                                dataRow["Comment"] = "nun";
+                                dataRow["CommentEnabled"] = "hidden";
+                            }
+
 
                             PlannedIndicator plannedValue = (from a in kpiWebDataContext.PlannedIndicator
                                 where a.FK_IndicatorsTable == CurrentIndicator.IndicatorsTableID
@@ -1159,15 +1202,55 @@ namespace KPIWeb.Rector
                                       && c.FK_ReportArchiveTable == ReportID
                                 select a).ToList();
                         }
-                        foreach (CalculatedParametrs CurrentCalculated in CalculatedList)
+
+                        ////для уникальнности
+                        CalculatedList = CalculatedList.OrderBy(o => o.CalculatedParametrsID).ToList();
+                       // List<CalculatedParametrs> SortedList = CalculatedList.OrderBy(o => o.CalculatedParametrsID).ToList();
+            
+                        int IDForUnique = 0;
+                        List<CalculatedParametrs> CalculatedListUnique = new List<CalculatedParametrs>();
+                        foreach (CalculatedParametrs CurrentCalc in CalculatedList)
+                        {
+                            if (CurrentCalc.CalculatedParametrsID != IDForUnique)
+                            {
+                                CalculatedListUnique.Add(CurrentCalc);
+                            }
+                            IDForUnique = CurrentCalc.CalculatedParametrsID;
+                        }
+                        // теперь повторяющихся  нет
+
+                        foreach (CalculatedParametrs CurrentCalculated in CalculatedListUnique)
                         {
                             DataRow dataRow = dataTable.NewRow();
                             dataRow["ID"] = CurrentCalculated.CalculatedParametrsID;
                                 //GetLastID(currentStruct).ToString();
                             dataRow["Number"] = "num";
-                            dataRow["Name"] = CurrentCalculated.Name;
+                            dataRow["Name"] = CurrentCalculated.Name + " (" + CurrentCalculated.Measure + ")";
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
+
+                            ConfirmationHistory CommentRow = (from a in kpiWebDataContext.ConfirmationHistory
+                                                              where a.FK_CalculatedParamTable == CurrentCalculated.CalculatedParametrsID
+                                                              && a.FK_ReportTable == ReportID
+                                                              select a).OrderByDescending(mc => mc.Date).FirstOrDefault();
+                            if (CommentRow != null)
+                            {
+                                if (CommentRow.Comment.Length > 0)
+                                {
+                                    dataRow["Comment"] = CommentRow.Comment;
+                                    dataRow["CommentEnabled"] = "visible";
+                                }
+                                else
+                                {
+                                    dataRow["Comment"] = "nun";
+                                    dataRow["CommentEnabled"] = "hidden";
+                                }
+                            }
+                            else
+                            {
+                                dataRow["Comment"] = "nun";
+                                dataRow["CommentEnabled"] = "hidden";
+                            }
 
                          //   dataRow["CanWatchWhoOws"] = "false";
                          //   dataRow["CanConfirm"] = "true";
@@ -1377,12 +1460,27 @@ namespace KPIWeb.Rector
                             select a).FirstOrDefault();
                         List<BasicParametersTable> BasicList = Abbreviature.GetBasicList(Calculated.Formula);
 
+                        ////для уникальнности
+                        BasicList =  BasicList.OrderBy(mc => mc.BasicParametersTableID).ToList();
+                        int IDForUnique = 0;
+                        List<BasicParametersTable> BasicListUnique = new List<BasicParametersTable>();
+                       // List<CalculatedParametrs> CalculatedListUnique = new List<CalculatedParametrs>();
                         foreach (BasicParametersTable CurrebtBasic in BasicList)
+                        {
+                            if (CurrebtBasic.BasicParametersTableID != IDForUnique)
+                            {
+                                BasicListUnique.Add(CurrebtBasic);
+                            }
+                            IDForUnique = CurrebtBasic.BasicParametersTableID;
+                        }
+                        // теперь повторяющихся  нет
+
+                        foreach (BasicParametersTable CurrebtBasic in BasicListUnique)
                         {
                             DataRow dataRow = dataTable.NewRow();
                             dataRow["ID"] = CurrebtBasic.BasicParametersTableID; //GetLastID(currentStruct).ToString();
                             dataRow["Number"] = "num";
-                            dataRow["Name"] = CurrebtBasic.Name;
+                            dataRow["Name"] = CurrebtBasic.Name + " (" + CurrebtBasic.Measure + ")"; ;
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
                             dataRow["Abb"] = CurrebtBasic.AbbreviationEN;
@@ -1391,6 +1489,9 @@ namespace KPIWeb.Rector
                             dataRow["ShowLable"] = false;
                             dataRow["LableText"] = "";
                             dataRow["LableColor"] = "#000000";
+
+                            dataRow["Comment"] = "nun";
+                            dataRow["CommentEnabled"] = "hidden";
 
                             dataRow["Value"] =
                                 GetCalculatedWithParams(mainStruct, ParamType, CurrebtBasic.BasicParametersTableID,
@@ -1508,6 +1609,9 @@ namespace KPIWeb.Rector
                             dataRow["LableText"] = "";
                             dataRow["LableColor"] = "#000000";
 
+                            dataRow["Comment"] = "nun";
+                            dataRow["CommentEnabled"] = "hidden";
+
                             dataRow["Value"] =
                                 GetCalculatedWithParams(mainStruct, ParamType, ParamID, ReportID,
                                     currentSpec.SpecializationTableID).ToString();
@@ -1542,7 +1646,7 @@ namespace KPIWeb.Rector
 
                     #endregion
                 }
-                else if (ViewType == 3)
+                else if (ViewType == 3) // Должники
                 {
                     #region
 
@@ -1619,6 +1723,10 @@ namespace KPIWeb.Rector
                         dataRow["LableText"] = "";
                         dataRow["LableColor"] = "#000000";
                         dataRow["Value"] = "nun";
+
+                        dataRow["Comment"] = "nun";
+                        dataRow["CommentEnabled"] = "hidden";
+
                         #region check if all users confirmed basics
 
                         int AllBasicsUsersCanEdit = 0;
@@ -1746,6 +1854,9 @@ namespace KPIWeb.Rector
                 {
                     //error // wrong ViewType
                 }
+
+                
+
                 RefreshHistory();
 
                 if ((ViewType == 1) && ((ParamType == 0) || (ParamType == 1)))
@@ -2214,7 +2325,6 @@ namespace KPIWeb.Rector
                 Response.Redirect("~/Rector/Result.aspx");
             }
         }
-
         protected void Button8_Click1(object sender, EventArgs e)
         {
             Response.Redirect("~/Rector/RectorChooseReport.aspx");

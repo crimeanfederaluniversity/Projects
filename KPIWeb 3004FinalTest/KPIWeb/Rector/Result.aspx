@@ -84,6 +84,45 @@
     background-image:url('http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/arout2.png');
     background-repeat:no-repeat;
     }
+
+.triangle-bottomright {
+            width: 25px;
+            height: 25px;
+            border-bottom: 25px solid red;
+            border-left: 25px solid transparent;
+            right:0;
+            bottom:0;
+            position:absolute;
+            
+        }
+.triangle-bottomright div {
+        visibility:hidden; 
+        position:absolute;
+        left:0;
+        top:0;
+        width:300px;
+        height:auto;
+        z-index :123;    
+        max-width:300px;
+        max-height:300px;       
+        background-color:#b6ff00;
+        overflow:auto;       
+        word-wrap: break-word;
+        border-style:solid;
+        border-width:1px;
+        border-color:black;
+
+        }
+.triangle-bottomright:hover div
+       {
+        visibility:visible;
+       }
+
+
+.td {
+    position: relative;
+}
+
 </style>         
 <script type="text/javascript" language="javascript">
     function DoPostBack() {
@@ -109,7 +148,7 @@
         document.getElementById('sidePanel').style.visibility = 'visible';
     }
 
-    /* function showLoadPanel() {
+    /*function showLoadPanel() {
          document.getElementById('LoadPanel_').style.visibility = 'visible';
      }*/
 
@@ -233,9 +272,9 @@
          Text="Отобразить значения показателей по неполным данным" Width="762px" />
      <br />
      <br />
-        <asp:GridView ID="Grid" runat="server" CssClass="result_gw "
+        <asp:GridView ID="Grid" runat="server" CssClass="result_gw sova"
             AutoGenerateColumns="False"
-            style="margin-top: 0px" OnSelectedIndexChanged="Grid_SelectedIndexChanged" OnRowDataBound="Grid_RowDataBound">
+            style="margin-top: 0px;" OnSelectedIndexChanged="Grid_SelectedIndexChanged" OnRowDataBound="Grid_RowDataBound">
              <Columns>                
                  <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />    
                  <asp:BoundField DataField="Number"   HeaderText="Номер" Visible="true" />
@@ -243,8 +282,24 @@
                  <asp:BoundField DataField="Name" HeaderText="Get" Visible="True" />          
                  <asp:BoundField DataField="StartDate" HeaderText="Начальная дата отчёта" Visible="True" />
                  <asp:BoundField DataField="EndDate" HeaderText="Конечная дата отчёта" Visible="True" />
-                 <asp:BoundField DataField="Value" HeaderText="Значение" Visible="True" />
+
+                 <asp:TemplateField  HeaderText="Значение">
+                      <ItemTemplate>
+
+                          <asp:Label ID="Value"  runat="server"  Text='<%# Eval("Value") %>' ></asp:Label>
+                          <div class="triangle-bottomright" style="visibility:<%# Eval("CommentEnabled") %>" >
+	                       <!---> <p style="position:relative; right:10px;top:5px; font-size:large; color:red;">!</p><!-->
+	                        <div id="CommentID" runat="server">
+		                        <%# Eval("Comment") %>
+	                        </div>
+                            </div> 
+                       </ItemTemplate>
+                 </asp:TemplateField>
+
+
+
                  <asp:BoundField DataField="PlannedValue" HeaderText="Плановое значение ЦП" Visible="True" />
+                 
                  
                  
                  <asp:TemplateField HeaderText="Прогресс заполнения">

@@ -7,7 +7,9 @@
    {
        float: right;
        margin-right: 10px;
-   }      
+   }
+
+       
 </style>
     
     <link rel="stylesheet" type="text/css" href="../Spinner.css">  
@@ -72,17 +74,18 @@
 
         <asp:Label ID="PageName" runat="server" Text="PageName" Font-Size="20pt"></asp:Label>
         <br />
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" style="margin-top: 0px">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" style="margin-top: 0px; position:relative">
              <Columns>                
                  <asp:BoundField DataField="ReportArchiveID"   HeaderText="Current Report ID" Visible="false" />    
                  <asp:BoundField DataField="ReportName" HeaderText="Название отчёта" Visible="True" />          
                  <asp:BoundField DataField="StartDate" HeaderText="Начальная дата отчёта" Visible="True" />
                  <asp:BoundField DataField="EndDate" HeaderText="Конечная дата отчёта" Visible="True" />
 
-                    <asp:TemplateField HeaderText="Просмотр отчёта в текущем состоянии">
-                        <ItemTemplate>
+                    <asp:TemplateField  HeaderText="Просмотр отчёта в текущем состоянии">
+                        <ItemTemplate >
                             <asp:Label ID="LabelReportArchiveTableID2" runat="server" Text='<%# Bind("ReportArchiveID") %>' Visible="false"></asp:Label>
                             <asp:Button ID="ButtonViewReport" OnClientClick="showLoadPanel()" runat="server" CommandName="Select" Text="Просмотреть" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonViewClick"/>
+                        
                         </ItemTemplate>
                     </asp:TemplateField>   
 

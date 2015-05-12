@@ -79,7 +79,6 @@ namespace KPIWeb
             //  LogHandler.LogWriter.WriteLog(LogCategory.ERROR, errorList.ToString());            
             return tmpList;
         }
-
         public static string ReturnCalcFormula(string abb)
         {
            // string abbTmp = abb;
