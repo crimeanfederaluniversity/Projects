@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="crimeanfeder_0" Class="KPIWebDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=V-PC\DATABASE_1;Initial Catalog=crimeanfeder_0;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="crimeanfeder_0ConnectionString1" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ReleaseDB" Class="KPIWebDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=V-ПК;Initial Catalog=ReleaseDB;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="crimeanfeder_0ConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTable">
     <Type Name="BasicParametersAndRolesMappingTable">
       <Column Name="BasicParametersAndRolesMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -467,6 +467,17 @@
       <Association Name="IndicatorsTable_ConfirmationHistory" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
       <Association Name="ReportArchiveTable_ConfirmationHistory" Member="ReportArchiveTable" ThisKey="FK_ReportTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
       <Association Name="UsersTable_ConfirmationHistory" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EmailSendTable" Member="EmailSendTables">
+    <Type Name="EmailSendTable">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="SMTPName" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Port" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="SendOk" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="SendError" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
     </Type>
   </Table>
 </Database>
