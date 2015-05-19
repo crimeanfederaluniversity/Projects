@@ -153,7 +153,7 @@ namespace KPIWeb.StatisticsDepartment
                 {
                    Action.MassMailing(email,"Новая отчетная кампания \"" + 
                        (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.Name).FirstOrDefault() + "\"",
-                       "Здравствуйте. Информируем Вас о начале новой отчетной кампании \""+
+                       "Здравствуйте, " + email.ToString().Substring(0, email.ToString().LastIndexOf('@')) + ". Информируем Вас о начале новой отчетной кампании \"" +
                        (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.Name).FirstOrDefault()
                        + "\", которая пройдет в период с " + 
                        ((from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.StartDateTime).FirstOrDefault()).ToString().Split()[0] +
