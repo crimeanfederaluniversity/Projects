@@ -134,6 +134,34 @@ namespace KPIWeb.StatisticsDepartment
                 Response.Redirect("~/Head/HeadShowStructure.aspx");
             }
         }
-        
+
+        protected void ButtonMailSending_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            {
+                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+
+
+                var emailListTo = (from a in kPiDataContext.ReportArchiveAndLevelMappingTable
+                    where a.FK_ReportArchiveTableId == Convert.ToInt32(button.CommandArgument) && a.Active
+                    join b in kPiDataContext.UsersTable
+                        on a.FK_FirstLevelSubmisionTableId equals b.FK_FirstLevelSubdivisionTable
+                        where b.Active
+                          select b.Email).ToList();
+
+                foreach (var email in emailListTo)
+                {
+                   Action.MassMailing(email,"Новая отчетная кампания \"" + 
+                       (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.Name).FirstOrDefault() + "\"",
+                       "Здравствуйте. Информируем Вас о начале новой отчетной кампании \""+
+                       (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.Name).FirstOrDefault()
+                       + "\", которая пройдет в период с " + 
+                       ((from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.StartDateTime).FirstOrDefault()).ToString().Split()[0] +
+                       " по " + (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.EndDateTime).FirstOrDefault().ToString().Split()[0] + 
+                       ". Для авторизации в системе перейдите по ссылке: "
+                       , null);
+                }
+            }
+        }
     }
 }

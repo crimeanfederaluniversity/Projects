@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 
@@ -14,7 +15,7 @@ namespace KPIWeb
 
         public static int Encode(string code) // расшифровка кода специальности
         {
-            string pattern = @"\b(\.+\d+\.)"; 
+            string pattern = @"\b(\.+\d+\.)";
             Regex regex = new Regex(pattern);
             Match match = regex.Match(code);
             char[] charsToTrim = { '.', ' ', '\'' };
@@ -61,12 +62,12 @@ namespace KPIWeb
 
 
         private static int SendMail(string smtpServer, int port, string from, string password,
-                                               string mailto, string caption, string message, string attachFile)
+                                                string mailto, string caption, string message, string attachFile)
         {
             try
             {
                 MailMessage mail = new MailMessage();
-                mail.From = new MailAddress(from, "ИАС. КФУ-Программа Развития");
+                mail.From = new MailAddress(from, "ИАС. КФУ-Программа развития");
                 mail.To.Add(new MailAddress(mailto));
                 mail.Subject = caption;
                 mail.Body = message;
@@ -97,19 +98,29 @@ namespace KPIWeb
             KPIWebDataContext kpiWeb = new KPIWebDataContext();
 
             var emails = (from a in kpiWeb.EmailSendTables select a).ToList();
+            StringBuilder messageBuilder = new StringBuilder();
+
+            messageBuilder.Append(Environment.NewLine);
+            messageBuilder.Append(Environment.NewLine);
+            messageBuilder.Append(message);
+            messageBuilder.Append(Environment.NewLine);
+            messageBuilder.Append(Environment.NewLine);
+            messageBuilder.Append("Пожайлуста проигнорируйте данное сообщение, если Вы получили его по ошибке.");
+            messageBuilder.Append(Environment.NewLine);
+            messageBuilder.Append(Environment.NewLine);
+            messageBuilder.Append("С уважением администрация \"ИАС.КФУ-Программа развития\"");
+
 
 
             foreach (var ems in emails)
             {
-                if ((SendMail(ems.SMTPName, 587, ems.Email, ems.Password, emailto, caption, message, attachFile)) == 1)
+                if (SendMail(ems.SMTPName, 587, ems.Email, ems.Password, emailto, caption, messageBuilder.ToString(), attachFile) == 1)
                 {
-                    ems.SendOk++;;
+                    ems.SendOk++;
                     break;
                 }
-
                 ems.SendError++;
             }
-
             kpiWeb.SubmitChanges();
 
         }
