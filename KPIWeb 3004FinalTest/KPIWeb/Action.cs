@@ -61,7 +61,7 @@ namespace KPIWeb
 
 
         private static int SendMail(string smtpServer, int port, string from, string password,
-                                                string mailto, string caption, string message, string attachFile)
+                                               string mailto, string caption, string message, string attachFile)
         {
             try
             {

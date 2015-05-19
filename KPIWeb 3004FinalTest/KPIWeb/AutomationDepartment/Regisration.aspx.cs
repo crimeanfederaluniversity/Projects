@@ -567,20 +567,15 @@ namespace KPIWeb.AutomationDepartment
                             }
                         }
                     }
-
-                   // Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
-                   //     "alert('Пользователь зарегистрирован');", true);
-
-                //SENDMAIL (email =user.Email  title = "КФУ КПЭ регистрация" body = "Для продолжения регистрации нажмите на ссылку" + "...Account/UserRegister?&id="+passCode )                    
-
-                    string trnr = "Отправляется письмо c содержанием:" +
-                                  " адрес: " + user.Email +
-                                  " тема: КФУ КПЭ регистрация" +
-                                  " Вы зарегистрированы на сайте КФУ КПЭ." +
-                                  " Для подтверждения аккаунта перейдите по ссылке." +
-                                  " ...Account/UserRegister?&id=" + passCode;
-                    Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
-                      "alert('" + trnr + "');", true);
+                    Action.MassMailing(user.Email,"Ваш почтовый адресс был зарегистрирован в системе ИАС 'КФУ-Программа развития'",
+                        "Здравствуйте!"+Environment.NewLine+ 
+                        "Ваш почтовый адрес был указан при регистрации в системе ИАС 'КФУ-Программа развития!'"+Environment.NewLine+
+                        "Пожалуйста, проигнорируйте это письмо, если оно попало к вам по ошибке." + Environment.NewLine +
+                        "Для продолжения регистрации перейдите по ссылке ниже:" + Environment.NewLine +
+                        "http:"+"//razvitie.cfu-portal.ru/Account/UserRegister?&id=" + passCode + Environment.NewLine +
+                        "Спасибо!"
+                        , null);
+                    
                 }
             }
         }

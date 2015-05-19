@@ -34,7 +34,7 @@ namespace KPIWeb.Reports
         {
             GridToExport.AllowPaging = false;
             // GridToExport.DataBind();
-            BaseFont bf = BaseFont.CreateFont(Environment.GetEnvironmentVariable("windir") + @"\fonts\ARIALUNI.TTF",
+            BaseFont bf = BaseFont.CreateFont(Environment.GetEnvironmentVariable("windir") + @"\fonts\ARIAL.TTF",
                 BaseFont.IDENTITY_H, true);
             iTextSharp.text.pdf.PdfPTable table = new iTextSharp.text.pdf.PdfPTable(ColumnCount + 2);
             int[] widths = new int[ColumnCount + 2];
@@ -53,7 +53,6 @@ namespace KPIWeb.Reports
             iTextSharp.text.pdf.PdfPCell NameCell = new iTextSharp.text.pdf.PdfPCell(new Phrase(12, NameHeaderText, font));
             NameCell.BackgroundColor = new BaseColor(200, 200, 200);
             table.AddCell(NameCell);
-
 
             for (int x = 0; x < ColumnCount; x++)
             {
@@ -107,67 +106,32 @@ namespace KPIWeb.Reports
                     }
                 }
             }
+            string DocPath = "";
             Document pdfDoc = new Document(PageSize.A3, 25f, 25f, 25f, 25f);
-            PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
-            
-            
-           /* string fileName = DateTime.Now.ToString().Replace(":",".")+".pdf"; 
-
-            string FilePath = Server.MapPath("~/PDFArchive/" + fileName);
-
-
-            PdfWriter.GetInstance(pdfDoc, new FileStream(FilePath, FileMode.Create));*/
-            Chunk c1 = new Chunk(Header);
-
-       
-
-
-            pdfDoc.Open();
-            //pdfDoc.AddHeader();
-            pdfDoc.Add(c1);
-            pdfDoc.Add(table);
-            pdfDoc.Close();
-            Response.ContentType = "application/pdf";
-            Response.AddHeader("content-disposition", "attachment;filename=Document.pdf");
-            Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            Response.Write(pdfDoc);
-            Response.End();   
-            return "e";
-        }
-        /*
-        public int  SendMail(string emailAddr,string theme, string bodyContent ,string fileAddr)
-        {
-            SmtpClient client = new SmtpClient();
-            client.Port = 587;
-            client.Host = "smtp.yandex.ru";
-            client.EnableSsl = true;
-            client.Timeout = 10000;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential("kfukpi@yandex.ru", "admin777qwe777");
-            MailMessage mm = new MailMessage("kfukpi@yandex.ru", emailAddr, theme, bodyContent);
-
-            mm.Attachments.Add(new System.Net.Mail.Attachment(fileAddr)); //@"C:\1.pdf"));
-            mm.BodyEncoding = UTF8Encoding.UTF8;
-
-            mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
-
-
-
-
-
-            try
+            using (MemoryStream myMemoryStream = new MemoryStream())
             {
-                client.Send(mm);
-            }
-            catch (Exception)
-            {
-                return 0;
-                throw;
-            }
-            return 1;
+                PdfWriter.GetInstance(pdfDoc, myMemoryStream);
+                Chunk c1 = new Chunk(Header);
+                pdfDoc.Open();
+                //pdfDoc.AddHeader();
+                pdfDoc.Add(c1);
+                pdfDoc.Add(table);
+                pdfDoc.Close();
+                byte[] content = myMemoryStream.ToArray();
+                string DocName = "Document" + DateTime.Now;
+                DocName = DocName.Replace(":", "");
+                DocName = DocName.Replace(".", "");
+                DocName = DocName.Replace(" ", "");
+                DocName += ".pdf";
+                DocPath = Server.MapPath("~/PDFArchive/" + DocName);
+                using (FileStream fs = File.Create(DocPath))
+                {
+                    fs.Write(content, 0, (int)content.Length);
+                }
+            }           
+            return DocPath;           
         }
-*/
+
         protected double pattern1(UsersTable user, int ReportArchiveID, int spectype_, string basicAbb)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
@@ -1389,7 +1353,40 @@ namespace KPIWeb.Reports
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Вы утвердили данные всех базовых показателей. Отчёт отправлен и доступен только в режиме \"Просмотр\".');" +
                             "document.location = '../Default.aspx';", true);
 
+                        #region
+                        UsersTable UserToSend = (from a in KPIWebDataContext.UsersTable
+                                                 where a.UsersTableID == UserID
+                                                 select a).FirstOrDefault();
+                        ReportArchiveTable CurrentReport = (from a in KPIWebDataContext.ReportArchiveTable
+                                                            where a.ReportArchiveTableID == Convert.ToInt32(paramSerialization.ReportStr)
+                                                            select a).FirstOrDefault();
+                        
 
+                        if (UserToSend == null )
+                        {
+
+                        }
+                        else
+                        {
+                            string EmailContent = "Здравствуйте!" + Environment.NewLine;
+                            if (CurrentReport != null)
+                            {
+                                EmailContent += "Вы утвердили данные всех базовых показателей в отчете '"+CurrentReport.Name+"'"+ Environment.NewLine ;
+                            }
+                            else
+                            {
+                                EmailContent += "Вы утвердили данные всех базовых показателей в отчете."+ Environment.NewLine ;
+                            }
+                            
+                                 EmailContent+= 
+                                  "Отчет доступен в режиме просмотра."+ Environment.NewLine +
+                                  "http:" + "//razvitie.cfu-portal.ru" + Environment.NewLine +
+                                  "Спасибо!";
+
+                                 string pdfPath = CreatePdf();
+                                 Action.MassMailing(UserToSend.Email, "ИАС 'КФУ-Программа развития'. Вы утвердили данные.", EmailContent,pdfPath);
+                        }
+                        #endregion
                     }
                     else
                     {
@@ -1609,9 +1606,8 @@ namespace KPIWeb.Reports
         protected void GridviewCollectedBasicParameters_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
         }
-        protected void Button1_Click(object sender, EventArgs e) // экспорт в excel
+        public string CreatePdf()
         {
-
             int[] Widhts = new int[40];
             for (int i = 0; i < 40; i++)
                 Widhts[i] = 0;
@@ -1623,7 +1619,7 @@ namespace KPIWeb.Reports
                 Widhts[i + 4] = 2;
             }
 
-             Serialization UserSer = (Serialization)Session["UserID"];
+            Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
                 Response.Redirect("~/Default.aspx");
@@ -1632,10 +1628,16 @@ namespace KPIWeb.Reports
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             UsersTable userTable =
                       (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
-            
-           string filePath = ExportPDF(GridviewCollectedBasicParameters, Widhts, " " , 3, colcnt);
-         /*  int EmailStatus = SendMail("pvage@mail.r234dsu", "Тема", "Содержимое "+userTable.Email, filePath);
-            */
+
+            string filePath = ExportPDF(GridviewCollectedBasicParameters, Widhts, " ", 3, colcnt);
+            return filePath;
+        }
+        protected void Button1_Click(object sender, EventArgs e) // экспорт в excel
+        {
+             Response.ContentType = "Application/pdf";
+             Response.TransmitFile(CreatePdf());
+             Response.End();   
+
         }
         protected void Button2_Click(object sender, EventArgs e) // вернуться в меню 
         {
@@ -1643,8 +1645,14 @@ namespace KPIWeb.Reports
         }
         protected void Button3_Click(object sender, EventArgs e) // отправка на доработку и возвращение с доработки
         {
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userID = UserSer.Id;
 
-            KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
             Serialization modeSer = (Serialization)Session["mode"];
             if (modeSer == null)
             {
@@ -1680,7 +1688,7 @@ namespace KPIWeb.Reports
                                         else
                                         {
                                             CollectedBasicParametersTable tmpColTable =
-                                                (from a in KPIWebDataContext.CollectedBasicParametersTable
+                                                (from a in kPiDataContext.CollectedBasicParametersTable
                                                  where
                                                      a.CollectedBasicParametersTableID == Convert.ToInt32(label.Text)
                                                  select a).FirstOrDefault();
@@ -1689,7 +1697,7 @@ namespace KPIWeb.Reports
                                                 if ((tmpColTable.Status == 2) || (tmpColTable.Status == 1))
                                                 {
                                                     tmpColTable.Status = 3;
-                                                    KPIWebDataContext.SubmitChanges();
+                                                    kPiDataContext.SubmitChanges();
                                                 }
                                                 else
                                                 {
@@ -1707,8 +1715,40 @@ namespace KPIWeb.Reports
                             ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Отчёт отправлен на утверждение');" +
                                 "document.location = '../Default.aspx';", true);
 
-                            //SENDMAIL ()
+                            #region
+                            BasicParametersTable BasicConnectedToUser = (from a in kPiDataContext.BasicParametersTable
+                                                                             join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                                                                 on a.BasicParametersTableID equals b.FK_ParametrsTable
+                                                                             where b.FK_UsersTable == userID
+                                                                             && b.CanEdit == true
+                                                                             && b.Active == true
+                                                                             && a.Active == true
+                                                                             select a).FirstOrDefault();
 
+                            UsersTable UserToSend = (from a in kPiDataContext.UsersTable
+                                                     join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                                         on a .UsersTableID equals b.FK_UsersTable
+                                                        where b.FK_ParametrsTable ==  BasicConnectedToUser.BasicParametersTableID
+                                                         && b.CanConfirm == true
+                                                         && a.Active == true
+                                                         && b.Active == true
+                                                         select a).FirstOrDefault();
+
+                            if (UserToSend == null)
+                            {
+
+                            }
+                            else
+                            {
+                                Action.MassMailing(UserToSend.Email, "ИАС 'КФУ-Программа развития'. Появились данные готовые к утверждению.",
+                                      "Здравствуйте!" + Environment.NewLine +
+                                      "Появились данные готовые к утверждению."+
+                                      "Для просмотра и утверждения данных зайдите в свой личный кабинет." + Environment.NewLine +
+                                      "http:" + "//razvitie.cfu-portal.ru" + Environment.NewLine +
+                                      "Спасибо!"
+                                      , null);
+                            }
+                            #endregion
                             #endregion
                         }
                         else // (mode == 2) // данные обратно на доработку
@@ -1733,7 +1773,7 @@ namespace KPIWeb.Reports
                                         else
                                         {
                                             CollectedBasicParametersTable tmpColTable =
-                                                (from a in KPIWebDataContext.CollectedBasicParametersTable
+                                                (from a in kPiDataContext.CollectedBasicParametersTable
                                                  where
                                                      a.CollectedBasicParametersTableID == Convert.ToInt32(label.Text)
                                                  select a).FirstOrDefault();
@@ -1742,7 +1782,7 @@ namespace KPIWeb.Reports
                                                 if (tmpColTable.Status == 3)
                                                 {
                                                     tmpColTable.Status = 1;
-                                                    KPIWebDataContext.SubmitChanges();
+                                                    kPiDataContext.SubmitChanges();
                                                 }
                                                 else
                                                 {
@@ -1759,7 +1799,42 @@ namespace KPIWeb.Reports
                             }
                             ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Отчёт отправлен на доработку');" +
                                 "document.location = '../Default.aspx';", true);
+
+                            #region
+                            BasicParametersTable BasicConnectedToUser = (from a in kPiDataContext.BasicParametersTable
+                                                                         join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                                                             on a.BasicParametersTableID equals b.FK_ParametrsTable
+                                                                         where b.FK_UsersTable == userID
+                                                                         && b.CanConfirm == true
+                                                                         && b.Active == true
+                                                                         && a.Active == true
+                                                                         select a).FirstOrDefault();
+
+                            UsersTable UserToSend = (from a in kPiDataContext.UsersTable
+                                                     join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                                         on a.UsersTableID equals b.FK_UsersTable
+                                                     where b.FK_ParametrsTable == BasicConnectedToUser.BasicParametersTableID
+                                                      && b.CanEdit == true
+                                                      && a.Active == true
+                                                      && b.Active == true
+                                                     select a).FirstOrDefault();
+
+                            if (UserToSend == null)
+                            {
+
+                            }
+                            else
+                            {
+                                Action.MassMailing(UserToSend.Email, "ИАС 'КФУ-Программа развития'. Данные возвращены на доработку.",
+                                      "Здравствуйте!" + Environment.NewLine +
+                                      "Данные возвращены на доработку." +
+                                      "Для просмотра и редактирования данных зайдите в свой личный кабинет." + Environment.NewLine +
+                                      "http:" + "//razvitie.cfu-portal.ru" + Environment.NewLine +
+                                      "Спасибо!"
+                                      , null);
+                            }
                             //SENDMAIL ()
+                            #endregion
                             #endregion
                         }
                     }
