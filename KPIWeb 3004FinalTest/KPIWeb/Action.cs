@@ -93,8 +93,6 @@ namespace KPIWeb
 
         public static void MassMailing(string emailto, string caption, string message, string attachFile)
         {
-            int errors = 0;
-            int ok = 0;
 
             KPIWebDataContext kpiWeb = new KPIWebDataContext();
 
@@ -105,13 +103,11 @@ namespace KPIWeb
             {
                 if ((SendMail(ems.SMTPName, 587, ems.Email, ems.Password, emailto, caption, message, attachFile)) == 1)
                 {
-                    ok++;
-                    ems.SendOk = ok;
+                    ems.SendOk++;;
                     break;
                 }
 
-                errors++;
-                ems.SendError = errors;
+                ems.SendError++;
             }
 
             kpiWeb.SubmitChanges();
