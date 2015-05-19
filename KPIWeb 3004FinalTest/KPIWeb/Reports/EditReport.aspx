@@ -21,63 +21,7 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <td style="width: 272px">Отчёт рассчитан
-                    </td>
-                    <td>
-                        <asp:Checkbox  Text=" " runat="server" ID="CheckBoxCalculeted" />
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td style="width: 272px">Планируемая дата отправки
-                    </td>
-                    <td>
-                        <asp:Calendar ID="CalendarDateToSend" runat="server" SelectionMode="Day" ShowGridLines="True">
-                            <SelectedDayStyle BackColor="Yellow" ForeColor="Red"></SelectedDayStyle>
-                        </asp:Calendar>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="width: 272px">Отчёт отправлен
-                    </td>
-                    <td>
-                        <asp:Checkbox  Text=" " runat="server" ID="CheckBoxSent" />
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td style="width: 272px">Дата отправки
-                    </td>
-                    <td>
-                        <asp:Calendar ID="CalendarSentDateTime" runat="server" SelectionMode="Day" ShowGridLines="True" Height="77px">
-                            <SelectedDayStyle BackColor="Yellow" ForeColor="Red"></SelectedDayStyle>
-                        </asp:Calendar>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="width: 272px">Отчёт принят получателем
-                    </td>
-                    <td>
-                        <asp:Checkbox  Text=" " runat="server" ID="CheckBoxRecipientConfirmed" />
-                    </td>
-                </tr>
-                
                   <tr>
-                    <td style="width: 272px">Дата принятия получателем
-                    </td>
-                    <td>
-                        <asp:Calendar ID="CalendarReportRecived" runat="server" SelectionMode="Day" ShowGridLines="True" Height="77px">
-                            <SelectedDayStyle BackColor="Yellow" ForeColor="Red"></SelectedDayStyle>
-                        </asp:Calendar>
-                    </td>
-                </tr>
-
-              
-                
-                <tr>
                     <td style="width: 272px">
                         Стартовая дата отчёта
                         </td>
@@ -98,7 +42,7 @@
                     </td>
                 </tr>
 
-                <tr>
+                     <tr>
                     <td style="width: 272px">
                         <asp:Label ID="Label1" runat="server" Text="Дата отправки на окончательное  утверждение кафедрами"></asp:Label>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </td>
@@ -110,10 +54,62 @@
                     </td>
                 </tr>
 
+                <tr>
+                    <td style="width: 272px">Отчёт рассчитан(да/нет)</td>
+                    <td>
+                        <asp:Checkbox  Text=" " runat="server" ID="CheckBoxCalculeted" />
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="width: 272px">Планируемая дата отправки
+                    </td>
+                    <td>
+                        <asp:Calendar ID="CalendarDateToSend" runat="server" SelectionMode="Day" ShowGridLines="True">
+                            <SelectedDayStyle BackColor="Yellow" ForeColor="Red"></SelectedDayStyle>
+                        </asp:Calendar>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 272px">Отчёт отправлен(да/нет)</td>
+                    <td>
+                        <asp:Checkbox  Text=" " runat="server" ID="CheckBoxSent" />
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="width: 272px">Дата отправки
+                        отчета</td>
+                    <td>
+                        <asp:Calendar ID="CalendarSentDateTime" runat="server" SelectionMode="Day" ShowGridLines="True" Height="77px">
+                            <SelectedDayStyle BackColor="Yellow" ForeColor="Red"></SelectedDayStyle>
+                        </asp:Calendar>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 272px">Отчёт принят получателем(да/нет)
+                    </td>
+                    <td>
+                        <asp:Checkbox  Text=" " runat="server" ID="CheckBoxRecipientConfirmed" />
+                    </td>
+                </tr>
+                
+                  <tr>
+                    <td style="width: 272px">Дата принятия получателем
+                    </td>
+                    <td>
+                        <asp:Calendar ID="CalendarReportRecived" runat="server" SelectionMode="Day" ShowGridLines="True" Height="77px">
+                            <SelectedDayStyle BackColor="Yellow" ForeColor="Red"></SelectedDayStyle>
+                        </asp:Calendar>
+                    </td>
+                </tr> 
+
                  <tr>
                     <td style="width: 272px">
                         <asp:Label ID="Label2" runat="server" Text="Дней до предварительного  расчета для проректоров"></asp:Label>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </td>
+                        (конечная дата минус число дней)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </td>
                     <td>
                         <asp:TextBox ID="DaysBeforeToCalcForRector" runat="server"></asp:TextBox>
                         <br />
@@ -154,7 +150,7 @@
             
              <asp:GridView ID="CalculatedParametrsTable" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="1000px">
                             <Columns>
-                                <asp:BoundField DataField="CalculatedParametrsName" HeaderText="Расчётный параметр" />
+                                <asp:BoundField DataField="CalculatedParametrsName" HeaderText="Первичные данные" />
                                 <asp:TemplateField HeaderText="Активен">
                                     <ItemTemplate>
                                         <asp:Label ID="CalculatedParametrsID" runat="server" Visible="false" Text='<%# Bind("CalculatedParametrsID") %>'></asp:Label>
@@ -168,7 +164,7 @@
 
             <asp:GridView ID="BasicParametrsTable" runat="server" ShowFooter="true" AutoGenerateColumns="false" Width="1000px" OnSelectedIndexChanged="BasicParametrsTable_SelectedIndexChanged">
                             <Columns>
-                                <asp:BoundField DataField="BasicParametrsName" HeaderText="Базовый параметр" />
+                                <asp:BoundField DataField="BasicParametrsName" HeaderText="Базовые показатели" />
                                 <asp:TemplateField HeaderText="Активен">
                                     <ItemTemplate>
                                         <asp:Label ID="BasicParametrsID" runat="server" Visible="false" Text='<%# Bind("BasicParametrsID") %>'></asp:Label>

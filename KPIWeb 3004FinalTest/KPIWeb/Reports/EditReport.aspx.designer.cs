@@ -31,6 +31,42 @@ namespace KPIWeb.Reports {
         protected global::System.Web.UI.WebControls.CheckBox CheckBoxActive;
         
         /// <summary>
+        /// CalendarStartDateTime элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar CalendarStartDateTime;
+        
+        /// <summary>
+        /// CalendarEndDateTime элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar CalendarEndDateTime;
+        
+        /// <summary>
+        /// Label1 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+        
+        /// <summary>
+        /// CalendarConfirmEndDay элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar CalendarConfirmEndDay;
+        
+        /// <summary>
         /// CheckBoxCalculeted элемент управления.
         /// </summary>
         /// <remarks>
@@ -83,42 +119,6 @@ namespace KPIWeb.Reports {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Calendar CalendarReportRecived;
-        
-        /// <summary>
-        /// CalendarStartDateTime элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar CalendarStartDateTime;
-        
-        /// <summary>
-        /// CalendarEndDateTime элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar CalendarEndDateTime;
-        
-        /// <summary>
-        /// Label1 элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-        
-        /// <summary>
-        /// CalendarConfirmEndDay элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar CalendarConfirmEndDay;
         
         /// <summary>
         /// Label2 элемент управления.

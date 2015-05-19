@@ -5,6 +5,9 @@
   
     <div>          
         <br />
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Просмотр документов" Width="237px" />
+        <br />
+        <br />
         <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server" >           
              <Columns>               
                 
@@ -28,7 +31,6 @@
                       
                 </Columns>
        </asp:GridView>
-        <br />
         <br />
         <h3><span style="font-size: 30px">Добавление нового документа</span></h3>
         <br />

@@ -25,7 +25,7 @@
             <asp:CheckBox ID="CheckBox2" runat="server" AutoPostBack="True" OnCheckedChanged="CheckBox2_CheckedChanged" Text="Кафедра является базовой" />
             <br />
             <br />
-            <asp:Label ID="Label4" runat="server" Text="Список направлений подготовки, приклепненных к кафедре"></asp:Label>
+            <asp:Label ID="Label4" runat="server" Text="Список направлений подготовки, прикрепленных к кафедре"></asp:Label>
 <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server" >           
              <Columns>               
                  <asp:BoundField DataField="SpecializationID"   HeaderText="Current Report ID" Visible="false" />    

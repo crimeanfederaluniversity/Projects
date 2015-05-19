@@ -91,7 +91,7 @@
                 <asp:GridView ID="GridView1" AutoGenerateColumns="False"  runat="server">
                     <Columns>
                         <asp:BoundField DataField="Name"  />
-                        <asp:BoundField DataField="AbbreviationEN"  />
+                        <asp:BoundField DataField="AbbreviationRU"  />
                     </Columns>                          
                 </asp:GridView>
             </asp:View>

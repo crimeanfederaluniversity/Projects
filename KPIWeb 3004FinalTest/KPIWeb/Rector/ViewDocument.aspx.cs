@@ -30,11 +30,6 @@ namespace KPIWeb.Rector
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            if (userTable.AccessLevel != 5)
-            {
-                Response.Redirect("~/Default.aspx");
-            }
-
 
             if (!IsPostBack)
             {

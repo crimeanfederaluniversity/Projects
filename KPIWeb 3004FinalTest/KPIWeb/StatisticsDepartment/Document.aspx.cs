@@ -83,5 +83,10 @@ namespace KPIWeb.StatisticsDepartment
                 }
             }
         }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/ViewDocument.aspx");
+        }
     }
 }
