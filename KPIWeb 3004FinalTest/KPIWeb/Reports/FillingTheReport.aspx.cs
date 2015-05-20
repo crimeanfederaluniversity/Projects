@@ -434,6 +434,7 @@ namespace KPIWeb.Reports
                         {
                             collectedBasicTmp = new CollectedBasicParametersTable();
                             collectedBasicTmp.Active = true;
+                            collectedBasicTmp.Status = 0;
                             collectedBasicTmp.FK_UsersTable = user.UsersTableID;
                             collectedBasicTmp.FK_BasicParametersTable = basicParam.BasicParametersTableID;
                             collectedBasicTmp.FK_ReportArchiveTable = ReportArchiveID;
@@ -661,7 +662,7 @@ namespace KPIWeb.Reports
                                 collectedBasicTmp.FK_FirstLevelSubdivisionTable = user.FK_FirstLevelSubdivisionTable;
                                 collectedBasicTmp.FK_SecondLevelSubdivisionTable = user.FK_SecondLevelSubdivisionTable;
                                 collectedBasicTmp.FK_ThirdLevelSubdivisionTable = user.FK_ThirdLevelSubdivisionTable;
-
+                                collectedBasicTmp.Status = 0;
                                 kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
                                 kpiWebDataContext.SubmitChanges();
                             }
@@ -781,6 +782,7 @@ namespace KPIWeb.Reports
                                         {
                                             collectedBasicTmp = new CollectedBasicParametersTable();
                                             collectedBasicTmp.Active = true;
+                                            collectedBasicTmp.Status = 0;
                                             collectedBasicTmp.FK_UsersTable = UserID;
                                             collectedBasicTmp.FK_BasicParametersTable = basicParam.BasicParametersTableID;
                                             collectedBasicTmp.FK_ReportArchiveTable = ReportArchiveID;
@@ -933,6 +935,7 @@ namespace KPIWeb.Reports
                                                 {
                                                     collectedBasicTmp = new CollectedBasicParametersTable();
                                                     collectedBasicTmp.Active = true;
+                                                    collectedBasicTmp.Status = 0;
                                                     collectedBasicTmp.FK_UsersTable = UserID;
                                                     collectedBasicTmp.FK_BasicParametersTable =
                                                         specBasicParam.BasicParametersTableID;
