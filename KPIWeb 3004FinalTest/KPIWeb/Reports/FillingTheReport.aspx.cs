@@ -1827,7 +1827,8 @@ namespace KPIWeb.Reports
                             {
                                 Action.MassMailing(UserToSend.Email, "ИАС 'КФУ-Программа развития'. Данные возвращены на доработку.",
                                       "Здравствуйте!" + Environment.NewLine +
-                                      "Данные возвращены на доработку." +
+                                      "Данные возвращены на доработку." + Environment.NewLine +
+                                      "Комментарий: '" + TextBox1.Text + "'" + Environment.NewLine +
                                       "Для просмотра и редактирования данных зайдите в свой личный кабинет." + Environment.NewLine +
                                       "http:" + "//razvitie.cfu-portal.ru" + Environment.NewLine +
                                       "Спасибо!"

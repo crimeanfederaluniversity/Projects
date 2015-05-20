@@ -157,8 +157,8 @@ namespace KPIWeb.StatisticsDepartment
                        (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.Name).FirstOrDefault()
                        + "\", которая пройдет в период с " + 
                        ((from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.StartDateTime).FirstOrDefault()).ToString().Split()[0] +
-                       " по " + (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.EndDateTime).FirstOrDefault().ToString().Split()[0] + 
-                       ". Для авторизации в системе перейдите по ссылке: "
+                       " по " + (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.EndDateTime).FirstOrDefault().ToString().Split()[0] +
+                       ". Для авторизации в системе перейдите по ссылке: " + "http:" + "//razvitie.cfu-portal.ru"
                        , null);
                 }
             }
