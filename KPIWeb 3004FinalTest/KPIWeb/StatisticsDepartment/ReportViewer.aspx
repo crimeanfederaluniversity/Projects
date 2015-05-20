@@ -48,6 +48,10 @@
 
     <div>
             <h1>Список активных кампаний</h1>
+            <h1>
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Создать новую кампанию" Width="400px" />
+
+            </h1>
             <asp:GridView ID="GridviewActiveCampaign" runat="server" ShowFooter="True"  AutoGenerateColumns="False" OnSelectedIndexChanged="GridviewActiveCampaign_SelectedIndexChanged">
                 <Columns>
 
@@ -73,7 +77,8 @@
                    <asp:TemplateField HeaderText="Рассылка уведомлений">
                         <ItemTemplate>
                             <asp:Label ID="LabelReportArchiveTableID22" runat="server" Text='<%# Bind("ReportArchiveTableID") %>' Visible="false"></asp:Label>
-                            <asp:Button ID="ButtonMailSending" runat="server" OnClientClick="showLoadPanel()" CommandName="Select" Text="Разослать" Width="200px" CommandArgument='<%# Eval("ReportArchiveTableID") %>' OnClick="ButtonMailSending_Click"/>
+                            <asp:Button ID="ButtonMailSending" runat="server" OnClientClick="showLoadPanel()" CommandName="Select" Text="Разослать всем" Width="200px" CommandArgument='<%# Eval("ReportArchiveTableID") %>' OnClick="ButtonMailSending_Click"/>
+                            <asp:Button ID="ButtonMailSending2" runat="server" OnClientClick="showLoadPanel()" CommandName="Select" Text="Только должникам" Width="200px" CommandArgument='<%# Eval("ReportArchiveTableID") %>' OnClick="ButtonMailSending2_Click"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 
@@ -101,8 +106,8 @@
 
         </div>
         <br />
-        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Создать новую кампанию" Width="400px" />
 
+    <br />
     <br />
     <br />
     
