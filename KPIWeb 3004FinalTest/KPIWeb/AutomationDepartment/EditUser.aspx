@@ -6,17 +6,17 @@
        &nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Добавить нового пользователя" Width="594px" />
         <br />
         <br />
-       <asp:Label ID="Label1" runat="server" Text="Пароль доступа"></asp:Label>
+       <asp:Label ID="Label1" runat="server" Visible="False" Text="Пароль доступа"></asp:Label>
 
  &nbsp;
 
- <asp:TextBox runat="server" ID="TextBox1" TextMode="Password"  Width="325px" />
+ <asp:TextBox runat="server" ID="TextBox1" Visible="False" TextMode="Password"  Width="325px" />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <asp:Label ID="Label2" runat="server" Text="Ключевое слово"></asp:Label>
 &nbsp;<asp:TextBox ID="TextBox2" runat="server" Height="21px" Width="251px"></asp:TextBox>
         &nbsp;&nbsp;<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:CheckBox ID="CheckBox1" runat="server" AutoPostBack="True" OnCheckedChanged="CheckBox1_CheckedChanged1" Text="Показать пароли и e-mail пользователей" />
+        <asp:CheckBox ID="CheckBox1" Visible="False" runat="server" AutoPostBack="True" OnCheckedChanged="CheckBox1_CheckedChanged1" Text="Показать пароли и e-mail пользователей" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <asp:Button ID="Button1" runat="server" Text="Поиск" OnClick="Button1_Click" Width="173px" />
         <br />
@@ -65,7 +65,7 @@
                      
                   <asp:TemplateField HeaderText="Первый уровень" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
-                            <asp:TextBox ID="Firstlvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Firstlvl") %>'></asp:TextBox>
+                            <asp:TextBox ID="Firstlvl" Enabled="False" ReadOnly="True" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Firstlvl") %>'></asp:TextBox>
                         </ItemTemplate>
 
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
@@ -73,7 +73,7 @@
                  
                   <asp:TemplateField HeaderText="Второй уровень" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
-                            <asp:TextBox ID="Secondlvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Secondlvl") %>'></asp:TextBox>
+                            <asp:TextBox ID="Secondlvl" Enabled="False" ReadOnly="True" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Secondlvl") %>'></asp:TextBox>
                         </ItemTemplate>
 
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
@@ -81,7 +81,7 @@
                  
                  <asp:TemplateField HeaderText="Третий уровень" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
-                            <asp:TextBox ID="Thirdlvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Thirdlvl") %>'></asp:TextBox>
+                            <asp:TextBox ID="Thirdlvl" Enabled="False" ReadOnly="True" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Thirdlvl") %>'></asp:TextBox>
                         </ItemTemplate>
 
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
@@ -89,7 +89,7 @@
                  
                  <asp:TemplateField HeaderText="Четвертый уровень" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
-                            <asp:TextBox ID="Fourthlvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Fourthlvl") %>'></asp:TextBox>
+                            <asp:TextBox ID="Fourthlvl" Enabled="False" ReadOnly="True" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Fourthlvl") %>'></asp:TextBox>
                         </ItemTemplate>
 
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
@@ -97,7 +97,7 @@
                  
                      <asp:TemplateField HeaderText="Пятый уровень" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
-                            <asp:TextBox ID="Fifthlvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Fifthlvl") %>'></asp:TextBox>
+                            <asp:TextBox ID="Fifthlvl" Enabled="False" ReadOnly="True" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Fifthlvl") %>'></asp:TextBox>
                         </ItemTemplate>
 
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
@@ -105,7 +105,7 @@
                  
                  <asp:TemplateField HeaderText="Уровень доступа" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
-                            <asp:TextBox ID="Acceslvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Acceslvl") %>'></asp:TextBox>
+                            <asp:TextBox ID="Acceslvl" Enabled="False" ReadOnly="True" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Acceslvl") %>'></asp:TextBox>
                         </ItemTemplate>
 
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
@@ -113,7 +113,7 @@
 
                  <asp:TemplateField HeaderText="Нулевой уровень" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
-                            <asp:TextBox ID="Zerolvl" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Zerolvl") %>'></asp:TextBox>
+                            <asp:TextBox ID="Zerolvl" Enabled="False" ReadOnly="True" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Zerolvl") %>'></asp:TextBox>
                         </ItemTemplate>
 
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
@@ -121,7 +121,7 @@
 
                  <asp:TemplateField HeaderText="Почта подтверждена" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
-                            <asp:TextBox ID="Confirmed" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Confirmed") %>'></asp:TextBox>
+                            <asp:TextBox ID="Confirmed" Enabled="False" ReadOnly="True" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Confirmed") %>'></asp:TextBox>
                         </ItemTemplate>
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 

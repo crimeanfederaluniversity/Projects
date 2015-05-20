@@ -64,7 +64,7 @@ namespace KPIWeb.AutomationDepartment
                 List<UsersTable> users;
                 if (TextBox2.Text.Any())
                 {
-                    users = (from a in kpiWebDataContext.UsersTable where a.Active == true && a.Login.Contains(TextBox2.Text) select a).ToList();
+                    users = (from a in kpiWebDataContext.UsersTable where a.Active == true && (a.Login.Contains(TextBox2.Text) || a.Email.Contains(TextBox2.Text) || a.Position.Contains(TextBox2.Text)) select a).ToList();
                 }
                 else
                 {
@@ -83,16 +83,16 @@ namespace KPIWeb.AutomationDepartment
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["FourthlvlId"] = user.UsersTableID;
                     dataRow["Login"] = user.Login;
-                    if (CheckBox1.Checked && TextBox1.Text == ViewState["Password"].ToString())
-                    {
+                   // if (CheckBox1.Checked && TextBox1.Text == ViewState["Password"].ToString())
+                   // {
                         dataRow["Password"] = user.Password;
                         dataRow["Email"] = user.Email;
-                    }
-                    else
-                    {
-                        dataRow["Password"] = "********";
-                        dataRow["Email"] = "********";
-                    }
+                   // }
+                    //else
+                  //  {
+                    //    dataRow["Password"] = "********";
+                    //    dataRow["Email"] = "********";
+                  //  }
 
                     dataRow["ChangeUserButton"] = user.UsersTableID;
 
@@ -139,8 +139,8 @@ namespace KPIWeb.AutomationDepartment
 
         protected void DeleteUserButtonClick(object sender, EventArgs e)
         {
-            if (TextBox1.Text == ViewState["Password"].ToString())
-            {
+           // if (TextBox1.Text == ViewState["Password"].ToString())
+           // {
                 Button button = (Button)sender;
                 {
                     using (KPIWebDataContext kPiDataContext = new KPIWebDataContext())
@@ -156,17 +156,17 @@ namespace KPIWeb.AutomationDepartment
                     RefreshGrid();
 
                 }
-            }
-            else
-                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                    "alert('Введите пароль');", true);
+          //  }
+           // else
+            //    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+              //      "alert('Введите пароль');", true);
 
         }
 
         protected void SaveUserButtonClick(object sender, EventArgs e)
         {
-            if (TextBox1.Text == ViewState["Password"].ToString())
-            {
+            //if (TextBox1.Text == ViewState["Password"].ToString())
+            //{
                 int rowIndex = 0;
                 Button button = (Button)sender;
                 {
@@ -255,9 +255,9 @@ namespace KPIWeb.AutomationDepartment
                         }
                     }
                 }
-            }
-            else Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                    "alert('Введите пароль');", true);
+           // }
+          //  else Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+             //       "alert('Введите пароль');", true);
 
         }
 
