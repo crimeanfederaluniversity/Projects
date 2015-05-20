@@ -78,7 +78,15 @@
                         <ItemTemplate>
                             <asp:Label ID="LabelReportArchiveTableID22" runat="server" Text='<%# Bind("ReportArchiveTableID") %>' Visible="false"></asp:Label>
                             <asp:Button ID="ButtonMailSending" runat="server" OnClientClick="showLoadPanel()" CommandName="Select" Text="Разослать всем" Width="200px" CommandArgument='<%# Eval("ReportArchiveTableID") %>' OnClick="ButtonMailSending_Click"/>
+                            <asp:Label ID="LabelDate1" runat="server" Text="000000" Visible="true"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    
+                    <asp:TemplateField Visible="True" HeaderText="Дата/Количество">
+                        <ItemTemplate>
+                            <asp:Label ID="LabelReportArchiveTableID232" runat="server" Text='<%# Bind("ReportArchiveTableID") %>' Visible="false"></asp:Label>
                             <asp:Button ID="ButtonMailSending2" runat="server" OnClientClick="showLoadPanel()" CommandName="Select" Text="Только должникам" Width="200px" CommandArgument='<%# Eval("ReportArchiveTableID") %>' OnClick="ButtonMailSending2_Click"/>
+                            <asp:Label ID="LabelDate2" runat="server" Text="00" Visible="true"></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
 

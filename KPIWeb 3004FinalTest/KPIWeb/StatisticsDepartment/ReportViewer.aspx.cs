@@ -138,6 +138,7 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void ButtonMailSending_Click(object sender, EventArgs e)
         {
+            int errors = 0;
             Button button = (Button)sender;
             {
                 KPIWebDataContext kPiDataContext = new KPIWebDataContext();
@@ -155,7 +156,7 @@ namespace KPIWeb.StatisticsDepartment
 
                 foreach (var email in emailListTo)
                 {
-                   Action.MassMailing(email,"Новая отчетная кампания \"" + 
+                   errors = Action.MassMailing(email,"Новая отчетная кампания \"" + 
                        (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.Name).FirstOrDefault() + "\"",
                        "Здравствуйте, " + email.ToString().Substring(0, email.ToString().LastIndexOf('@')) + ". Информируем Вас о начале новой отчетной кампании \"" +
                        (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.Name).FirstOrDefault()
@@ -164,6 +165,17 @@ namespace KPIWeb.StatisticsDepartment
                        " по " + (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.EndDateTime).FirstOrDefault().ToString().Split()[0] +
                        ". Для авторизации в системе перейдите по ссылке: " + "http:" + "//razvitie.cfu-portal.ru"
                        , null);
+                }
+
+                int rowIndex = 0;
+                if (GridviewActiveCampaign.Rows.Count > 0)
+                {
+                    for (int i = 1; i <= GridviewActiveCampaign.Rows.Count; i++)
+                    {
+                        Label LabelDate1 = (Label)GridviewActiveCampaign.Rows[rowIndex].FindControl("LabelDate1");
+                        LabelDate1.Text = DateTime.Now.ToLongDateString() + " " + (emailListTo.Count-errors).ToString() + "/" + emailListTo.Count.ToString();
+                        rowIndex++;
+                    }
                 }
             }
         }
@@ -174,14 +186,14 @@ namespace KPIWeb.StatisticsDepartment
             {
                 KPIWebDataContext kPiDataContext = new KPIWebDataContext();
 
-
+                int errors=0;
        
                 var emailListToDebt = (from a in kPiDataContext.ReportArchiveAndLevelMappingTable
                                        where a.FK_ReportArchiveTableId == Convert.ToInt32(button.CommandArgument) && a.Active
                                        join b in kPiDataContext.UsersTable on a.FK_FirstLevelSubmisionTableId equals b.FK_FirstLevelSubdivisionTable
                                        where b.Active
                                        join c in kPiDataContext.CollectedBasicParametersTable on b.UsersTableID equals c.FK_UsersTable
-                                       where (c.Status != 0 || c.Status != null) && c.Active
+                                       where (c.Status == 0 || c.Status == null) && c.Active
                                        select b.Email).ToList();
 
 
@@ -189,16 +201,28 @@ namespace KPIWeb.StatisticsDepartment
 
                 foreach (var email in uniqueMails)
                 {
-                    Action.MassMailing(email, "Заполните данные в отчетной кампании \"" +
+                    errors = Action.MassMailing(email, "Заполните данные в отчетной кампании \"" +
                         (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.Name).FirstOrDefault() + "\"",
-                        "Здравствуйте, " + email.ToString().Substring(0, email.ToString().LastIndexOf('@')) + ". Напоминаем вам о том, что Вы являетесь учатсником отчетной кампании \"" +
+                        "Здравствуйте, " + email.ToString().Substring(0, email.ToString().LastIndexOf('@')) + ". Напоминаем вам о том, что вы являетесь участником отчетной кампании \"" +
                         (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.Name).FirstOrDefault()
                         + "\", которая проходит в период с " +
                         ((from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.StartDateTime).FirstOrDefault()).ToString().Split()[0] +
                         " по " + (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.EndDateTime).FirstOrDefault().ToString().Split()[0] +
-                        ". На данный момент Вы не отправили на утверждение прикрепленные за вами данные. Для авторизации в системе перейдите по ссылке: " + "http:" + "//razvitie.cfu-portal.ru"
+                        ". На данный момент вы не отправили на утверждение прикрепленные за вами данные. Для авторизации в системе перейдите по ссылке: " + "http:" + "//razvitie.cfu-portal.ru"
                         , null);
             }
+
+                int rowIndex = 0;
+                if (GridviewActiveCampaign.Rows.Count > 0)
+                {
+                    for (int i = 1; i <= GridviewActiveCampaign.Rows.Count; i++)
+                    {
+                        Label LabelDate2 = (Label) GridviewActiveCampaign.Rows[rowIndex].FindControl("LabelDate2");
+                        LabelDate2.Text = DateTime.Now.ToLongDateString() + " " + (uniqueMails.Count-errors).ToString() + "/" + uniqueMails.Count.ToString();
+                        rowIndex++;
+                    }
+                }
+
             }
         }
     }
