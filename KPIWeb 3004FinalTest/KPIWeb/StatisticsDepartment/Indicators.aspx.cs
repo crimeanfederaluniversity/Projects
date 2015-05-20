@@ -198,7 +198,7 @@ namespace KPIWeb.StatisticsDepartment
         {
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             List<BasicParametersTable> basicParamsList = (from a in kPiDataContext.BasicParametersTable
-                                                          where a.Name.Contains(SearchBox.Text) || a.AbbreviationRU.Contains(SearchBox.Text)
+                                                          where a.Name.Contains(SearchBox.Text) || a.AbbreviationRU.Contains(SearchBox.Text) || a.AbbreviationEN.Contains(SearchBox.Text)
                                                           select a).ToList();
             GridView1.DataSource = basicParamsList;
             GridView1.DataBind();

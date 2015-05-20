@@ -90,8 +90,24 @@
                 <br />
                 <asp:GridView ID="GridView1" AutoGenerateColumns="False"  runat="server">
                     <Columns>
-                        <asp:BoundField DataField="Name"  />
-                        <asp:BoundField DataField="AbbreviationRU"  />
+                        <asp:TemplateField HeaderText="Название целевого показателя" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                        <ItemTemplate> 
+                            <asp:Label ID="Name" runat="server" Text='<%# Bind("Name") %>'  Visible="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>   
+                 
+                  <asp:TemplateField HeaderText="Аббревиатура ENG" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                        <ItemTemplate> 
+                            <asp:Label ID="AbbreviationEN" runat="server" Text='<%# Bind("AbbreviationEN") %>'  Visible="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>  
+                
+                 <asp:TemplateField HeaderText="Аббревиатура RU" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                       <ItemTemplate> 
+                           <asp:Label ID="AbbreviationRU" runat="server" Text='<%# Bind("AbbreviationRU") %>'  Visible="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>  
+                        
                     </Columns>                          
                 </asp:GridView>
             </asp:View>
