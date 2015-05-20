@@ -33,6 +33,7 @@ namespace KPIWeb
                          && (collect.FK_FourthLevelSubdivisionTable == Lv4 || Lv4 == 0)
                          && (collect.FK_FifthLevelSubdivisionTable == Lv5 || Lv5 == 0)
                          && basic.AbbreviationEN == abbTmp
+                         && collect.FK_ReportArchiveTable == reportId
                      select collect.CollectedValue).Sum();  
             }
             else

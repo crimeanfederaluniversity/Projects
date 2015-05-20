@@ -259,6 +259,7 @@ namespace KPIWeb.Reports
                        && c.IsModernEducationTechnologies == true
                  select b).ToList().Count);
         }
+       
         protected void ConfCalculate(int ReportArchiveID, UsersTable user)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
