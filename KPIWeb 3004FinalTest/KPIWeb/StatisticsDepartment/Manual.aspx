@@ -45,6 +45,8 @@
         <asp:TextBox ID="TextBox2" runat="server" Width="254px"></asp:TextBox>
         <br />
         <br />
+        <asp:FileUpload id="FileUpload1" runat="server"> </asp:FileUpload>
+        <br />
         <asp:Button ID="Button1" runat="server" Text="Сохранить" OnClick="Button1_Click" />
     </div>
 </asp:Content>

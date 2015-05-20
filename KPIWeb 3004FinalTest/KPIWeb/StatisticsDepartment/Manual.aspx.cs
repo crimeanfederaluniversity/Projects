@@ -53,7 +53,18 @@ namespace KPIWeb.StatisticsDepartment
                 man.Active = true;
                 kPiDataContext.ManualTable.InsertOnSubmit(man);
                 kPiDataContext.SubmitChanges();
-                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Справочник сохранен');" + "document.location = 'Manual.aspx';", true);
+                string savepath = Server.MapPath("//manuals//");
+                string fileName = TextBox1.Text;
+                if (FileUpload1.HasFile)
+                {
+                    FileUpload1.PostedFile.SaveAs(Server.MapPath("//manuals//" + fileName));
+                }
+                else
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Документ не прикреплен');" + "document.location = 'Manual.aspx';", true);
+                }
+
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Документ сохранен');" + "document.location = 'Manual.aspx';", true);
             }
 
             else
@@ -61,6 +72,8 @@ namespace KPIWeb.StatisticsDepartment
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Введите точное имя файла');", true);
             }
         }
+              
+            
         protected void DeleteButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
