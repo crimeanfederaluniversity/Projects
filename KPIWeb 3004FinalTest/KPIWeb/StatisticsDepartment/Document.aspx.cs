@@ -35,7 +35,7 @@ namespace KPIWeb.StatisticsDepartment
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("DocumentName", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("DocumentLink", typeof(string)));
-                 
+
                 GridView1.DataSource = docs;
                 GridView1.DataBind();
             }
@@ -43,6 +43,7 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+
             if (TextBox1.Text != "")
             {
                 KPIWebDataContext kPiDataContext = new KPIWebDataContext();
@@ -53,6 +54,18 @@ namespace KPIWeb.StatisticsDepartment
                 doc.Active = true;
                 kPiDataContext.DocumentTable.InsertOnSubmit(doc);
                 kPiDataContext.SubmitChanges();
+
+                string savepath = Server.MapPath("//docs//");
+                string fileName = TextBox1.Text;
+                if (FileUpload1.HasFile)
+                {
+                    FileUpload1.PostedFile.SaveAs(Server.MapPath("//Rector/docs//" + fileName));
+                }
+                else
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Документ не прикреплен');" + "document.location = 'Document.aspx';", true);
+                }
+
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Документ сохранен');" + "document.location = 'Document.aspx';", true);
             }
 
@@ -79,7 +92,7 @@ namespace KPIWeb.StatisticsDepartment
 
                     kPiDataContext.SubmitChanges();
                     Response.Redirect("~/StatisticsDepartment/Document.aspx");
- 
+
                 }
             }
         }

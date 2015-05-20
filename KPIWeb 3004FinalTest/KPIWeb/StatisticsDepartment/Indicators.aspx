@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Indicators.aspx.cs" Inherits="KPIWeb.StatisticsDepartment.Indicators" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-
+    <h2><span style="font-size: 30px">Редактирование целевых показателей</span></h2>
     <div>          
         <br />
         <br />
