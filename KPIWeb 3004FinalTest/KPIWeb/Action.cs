@@ -92,8 +92,9 @@ namespace KPIWeb
         }
 
 
-        public static void MassMailing(string emailto, string caption, string message, string attachFile)
+        public static int MassMailing(string emailto, string caption, string message, string attachFile)
         {
+            int errors=0;
 
             KPIWebDataContext kpiWeb = new KPIWebDataContext();
 
@@ -120,8 +121,11 @@ namespace KPIWeb
                     break;
                 }
                 ems.SendError++;
+                errors++;
             }
             kpiWeb.SubmitChanges();
+
+            return errors;
 
         }
     }
