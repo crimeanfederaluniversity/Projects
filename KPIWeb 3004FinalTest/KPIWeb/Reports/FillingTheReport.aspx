@@ -1,6 +1,48 @@
 ﻿<%@ Page Language="C#" Title="Заполение" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="FillingTheReport.aspx.cs" Inherits="KPIWeb.Reports.FillingTheReport" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent" >
+
+     <link rel="stylesheet" type="text/css" href="../Spinner.css">  
+    <script type="text/javascript">
+        function showLoadPanel() {
+            document.getElementById('LoadPanel_').style.visibility = 'visible';
+        }
+    </script>
+    <style>  
+        .LoadPanel 
+   {
+          position: fixed;
+          z-index: 10;
+          background-color: whitesmoke;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0.9;
+          visibility: hidden;
+   }
+</style>     
+    <div id="LoadPanel_" class='LoadPanel'>               
+            <div id="floatingCirclesG">
+            <div class="f_circleG" id="frotateG_01">
+            </div>
+            <div class="f_circleG" id="frotateG_02">
+            </div>
+            <div class="f_circleG" id="frotateG_03">
+            </div>
+            <div class="f_circleG" id="frotateG_04">
+            </div>
+            <div class="f_circleG" id="frotateG_05">
+            </div>
+            <div class="f_circleG" id="frotateG_06">
+            </div>
+            <div class="f_circleG" id="frotateG_07">
+            </div>
+            <div class="f_circleG" id="frotateG_08">
+            </div>
+            </div>
+        </div>
+
       
            <link href="/App_Themes/theme_1/css/login.css" rel="stylesheet" type="text/css" />
     <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Visible="true">
@@ -386,11 +428,11 @@
                 </Columns>
             </asp:GridView>
             <br />
-            <asp:Button ID="ButtonSave" Width="400px" runat="server" Text="Сохранить и выйти" OnClick="ButtonSave_Click" />
+            <asp:Button ID="ButtonSave" Width="400px" runat="server" Text="Сохранить и выйти" OnClientClick="showLoadPanel()" OnClick="ButtonSave_Click" />
 
             <br />
             <br />
-            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Экспорт в PDF" Width="400px" />
+            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" OnClientClick="showLoadPanel()" Text="Экспорт в PDF" Width="400px" />
 
             <br />
             <br />
@@ -398,7 +440,7 @@
 
             <br />
             <br />
-            <asp:Button ID="UpnDownButton" runat="server" Height="30px" 
+            <asp:Button ID="UpnDownButton" runat="server" Height="30px" OnClientClick="showLoadPanel()"
                 OnClick="Button3_Click" 
                 Text="Вернуть на доработку (+коментарий )" Width="400px" 
                 />
