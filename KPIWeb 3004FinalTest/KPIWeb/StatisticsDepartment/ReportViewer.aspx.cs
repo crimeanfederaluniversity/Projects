@@ -68,6 +68,66 @@ namespace KPIWeb.StatisticsDepartment
                 GridviewActiveCampaign.DataBind();
             
             }
+
+            int rowIndex = 0;
+            
+
+            if (GridviewActiveCampaign.Rows.Count > 0)
+            {
+                for (int i = 1; i <= GridviewActiveCampaign.Rows.Count; i++)
+                {
+                    Label LabelID = (Label)GridviewActiveCampaign.Rows[rowIndex].FindControl("LabelReportArchiveTableID");
+                    Label LabelDate1 = (Label)GridviewActiveCampaign.Rows[rowIndex].FindControl("LabelDate1");
+                    Label LabelDate2 = (Label)GridviewActiveCampaign.Rows[rowIndex].FindControl("LabelDate2");
+                    int id = Convert.ToInt32(LabelID.Text);
+
+                    EmailSendHistory esh0 = (from a in kPiDataContext.EmailSendHistories where a.FK_ReportsArchiveTable == id && a.Count == 0 select a).FirstOrDefault(); ;
+                    EmailSendHistory esh1 = (from a in kPiDataContext.EmailSendHistories where a.FK_ReportsArchiveTable == id && a.Count == 1 select a).FirstOrDefault(); ;
+
+                    if ( esh0 != null )
+                    {
+                        var date =
+                           (from a in kPiDataContext.EmailSendHistories
+                            where a.FK_ReportsArchiveTable == id && a.Count == 0
+                            select a.Date).FirstOrDefault();
+                        LabelDate1.Text = date + " " + (from a in kPiDataContext.EmailSendHistories
+                                                       where a.FK_ReportsArchiveTable == id && a.Count == 0
+                                                       select a.Value).FirstOrDefault();
+                    }
+                    else
+                    {
+                        esh0 = new EmailSendHistory();
+                        esh0.Active = true;
+                        esh0.FK_ReportsArchiveTable = id;
+                        esh0.Value = "0";
+                        esh0.Count = 0;
+                        kPiDataContext.EmailSendHistories.InsertOnSubmit(esh0);
+                    }
+                    if (esh1 != null)
+                    {
+                        var date =
+                          (from a in kPiDataContext.EmailSendHistories
+                           where a.FK_ReportsArchiveTable == id && a.Count == 1
+                           select a.Date).FirstOrDefault();
+
+                        LabelDate2.Text = date + " " + (from a in kPiDataContext.EmailSendHistories
+                                                        where a.FK_ReportsArchiveTable == id && a.Count == 1
+                                                        select a.Value).FirstOrDefault(); ;
+                    }
+                    else
+                    {
+                        esh1 = new EmailSendHistory();
+                        esh1.Active = true;
+                        esh1.FK_ReportsArchiveTable = id;
+                        esh1.Value = "0";
+                        esh1.Count = 1;
+                        kPiDataContext.EmailSendHistories.InsertOnSubmit(esh1);
+                    }
+                    rowIndex++;
+                }
+            }
+
+            kPiDataContext.SubmitChanges();
         }
 
         protected void ButtonEditReport_Click(object sender, EventArgs e)
@@ -152,8 +212,6 @@ namespace KPIWeb.StatisticsDepartment
                           select b.Email).ToList();
 
 
-
-
                 foreach (var email in emailListTo)
                 {
                    errors = Action.MassMailing(email,"Новая отчетная кампания \"" + 
@@ -166,6 +224,17 @@ namespace KPIWeb.StatisticsDepartment
                        ". Для авторизации в системе перейдите по ссылке: " + "http:" + "//razvitie.cfu-portal.ru"
                        , null);
                 }
+                EmailSendHistory esh0 = (from a in kPiDataContext.EmailSendHistories where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 0 select a).FirstOrDefault(); ;
+                //EmailSendHistory esh1 = (from a in kPiDataContext.EmailSendHistories where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 1 select a).FirstOrDefault(); ;
+
+                esh0.Date = DateTime.Now;
+                esh0.Value = " [ " + (emailListTo.Count - errors).ToString() + "/" + emailListTo.Count.ToString() + " ]";
+
+                kPiDataContext.SubmitChanges();
+
+                var date = (from a in kPiDataContext.EmailSendHistories
+                            where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 0
+                            select a.Date).FirstOrDefault();
 
                 int rowIndex = 0;
                 if (GridviewActiveCampaign.Rows.Count > 0)
@@ -173,7 +242,7 @@ namespace KPIWeb.StatisticsDepartment
                     for (int i = 1; i <= GridviewActiveCampaign.Rows.Count; i++)
                     {
                         Label LabelDate1 = (Label)GridviewActiveCampaign.Rows[rowIndex].FindControl("LabelDate1");
-                        LabelDate1.Text = DateTime.Now.ToLongDateString() + " " + (emailListTo.Count-errors).ToString() + "/" + emailListTo.Count.ToString();
+                        LabelDate1.Text = date + " " + " [ "+(emailListTo.Count-errors).ToString() + "/" + emailListTo.Count.ToString()+" ]";
                         rowIndex++;
                     }
                 }
@@ -212,13 +281,25 @@ namespace KPIWeb.StatisticsDepartment
                         , null);
             }
 
+                //EmailSendHistory esh0 = (from a in kPiDataContext.EmailSendHistories where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 0 select a).FirstOrDefault(); ;
+                EmailSendHistory esh1 = (from a in kPiDataContext.EmailSendHistories where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 1 select a).FirstOrDefault(); ;
+
+                esh1.Date = DateTime.Now;
+                esh1.Value = " [ " + (uniqueMails.Count - errors).ToString() + "/" + uniqueMails.Count.ToString() + " ]";
+
+                kPiDataContext.SubmitChanges();
+
+                var date = (from a in kPiDataContext.EmailSendHistories
+                            where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 1
+                            select a.Date).FirstOrDefault();
+
                 int rowIndex = 0;
                 if (GridviewActiveCampaign.Rows.Count > 0)
                 {
                     for (int i = 1; i <= GridviewActiveCampaign.Rows.Count; i++)
                     {
                         Label LabelDate2 = (Label) GridviewActiveCampaign.Rows[rowIndex].FindControl("LabelDate2");
-                        LabelDate2.Text = DateTime.Now.ToLongDateString() + " " + (uniqueMails.Count-errors).ToString() + "/" + uniqueMails.Count.ToString();
+                        LabelDate2.Text = date + " " + " [ "+(uniqueMails.Count-errors).ToString() + "/" + uniqueMails.Count.ToString()+" ]";
                         rowIndex++;
                     }
                 }
