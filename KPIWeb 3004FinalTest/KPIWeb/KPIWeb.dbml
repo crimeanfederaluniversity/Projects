@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ReleaseDB" Class="KPIWebDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=V-ПК;Initial Catalog=ReleaseDB;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="crimeanfeder_0ConnectionString1" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="TestR" Class="KPIWebDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=V-ПК;Initial Catalog=TestR;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="crimeanfeder_0ConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTable">
     <Type Name="BasicParametersAndRolesMappingTable">
       <Column Name="BasicParametersAndRolesMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -361,6 +361,7 @@
       <Association Name="ReportArchiveTable_ReportArchiveAndIndicatorsMappingTable" Member="ReportArchiveAndIndicatorsMappingTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="ReportArchiveAndIndicatorsMappingTable" />
       <Association Name="ReportArchiveTable_ReportArchiveAndLevelMappingTable" Member="ReportArchiveAndLevelMappingTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTableId" Type="ReportArchiveAndLevelMappingTable" />
       <Association Name="ReportArchiveTable_ConfirmationHistory" Member="ConfirmationHistory" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportTable" Type="ConfirmationHistory" />
+      <Association Name="ReportArchiveTable_EmailSendHistory" Member="EmailSendHistories" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportsArchiveTable" Type="EmailSendHistory" />
     </Type>
   </Table>
   <Table Name="dbo.RolesTable" Member="RolesTable">
@@ -478,6 +479,17 @@
       <Column Name="Password" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
       <Column Name="SendOk" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="SendError" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EmailSendHistory" Member="EmailSendHistories">
+    <Type Name="EmailSendHistory">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_ReportsArchiveTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Value" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Count" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="ReportArchiveTable_EmailSendHistory" Member="ReportArchiveTable" ThisKey="FK_ReportsArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
