@@ -10,7 +10,7 @@ namespace KPIWeb.StatisticsDepartment
 {
     public partial class ReportFilling : System.Web.UI.Page
     {
-        public class Struct // класс описываюший структурные подразделения
+        public class UserStruct
         {
             public int ReportID { get; set; }
             public string Lv_1_Name { get; set; }
@@ -18,14 +18,18 @@ namespace KPIWeb.StatisticsDepartment
             public string Lv_3_Name { get; set; }
             public int UserID { get; set; }
 
-            public Struct(int ReportID_, string Lv_1_Name_, string Lv_2_Name_, string Lv_3_Name_, int UserID_)
+            public UserStruct(int ReportID_, string Lv_1_Name_, string Lv_2_Name_, string Lv_3_Name_, int UserID_)
             {
                 this.ReportID = ReportID_;
                 this.Lv_1_Name = Lv_1_Name_;
                 this.Lv_2_Name = Lv_2_Name_;
                 this.Lv_3_Name = Lv_3_Name_;
             }
+            public UserStruct()
+            {
+            }
         }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
@@ -59,36 +63,162 @@ namespace KPIWeb.StatisticsDepartment
             DataTableStatus.Columns.Add(new DataColumn("Status", typeof(string)));            
             DataTableStatus.Columns.Add(new DataColumn("EmailEdit", typeof(string)));
             DataTableStatus.Columns.Add(new DataColumn("EmailConfirm", typeof(string)));
-            /*
-            (from a in kPiDataContext.ReportArchiveAndLevelMappingTable
-             where
-             a.ReportArchiveAndLevelMappingTableId == ReportArchiveID
-             && a.Active == true
-             join b in kPiDataContext.FirstLevelSubdivisionTable
-             on a.FK_FirstLevelSubmisionTableId equals b.FirstLevelSubdivisionTableID
-             where b.Active == true
-             join d in kPiDataContext.SecondLevelSubdivisionTable
-             on b.FirstLevelSubdivisionTableID equals d.FK_FirstLevelSubdivisionTable
-             where d.Active == true
-             join f in kPiDataContext.ThirdLevelSubdivisionTable
-             on d.SecondLevelSubdivisionTableID equals f.FK_SecondLevelSubdivisionTable
-             where f.Active == true
-             join c in kPiDataContext.UsersTable
-             on b.FirstLevelSubdivisionTableID equals c.FK_FirstLevelSubdivisionTable
-             where c.Active == true
-             select new { a.ReportArchiveAndLevelMappingTableId, b.Name, d.Name, f.Name, c.UsersTableID }
-                 ).ToList();
-            */
-            //foreach (IndicatorsTable indicator in indicatorTable)
+
+
+            List<UsersTable> Users = (from a in kPiDataContext.UsersTable
+                                      join b in kPiDataContext.ReportArchiveAndLevelMappingTable
+                                          on a.FK_FirstLevelSubdivisionTable equals b.FK_FirstLevelSubmisionTableId
+                                      where b.FK_ReportArchiveTableId == ReportArchiveID
+                                      && b.Active == true
+                                      && a.AccessLevel == 0
+                                      && a.Active == true
+                                      select a).ToList();
+         
+            foreach (UsersTable currentUser in Users)
             {
-                DataRow dataRow = DataTableStatus.NewRow();
-                dataRow["LV_1"] = "q";
-                dataRow["LV_2"] = "q";
-                dataRow["LV_3"] = "q";
-                dataRow["Status"] = "q";
-                dataRow["EmailEdit"] = "q";
-                dataRow["EmailConfirm"] = "q";
-                DataTableStatus.Rows.Add(dataRow);                
+                BasicParametrsAndUsersMapping UserBasicRight = (from a in kPiDataContext.BasicParametrsAndUsersMapping
+                                                                where a.FK_UsersTable == currentUser.UsersTableID
+                                                                && a.Active == true
+                                                                select a).FirstOrDefault();
+                if (UserBasicRight!=null) // к пользователю прикреплены базовые показатели
+                {
+                    CollectedBasicParametersTable CurrentUserFirstCollected = (from a in kPiDataContext.CollectedBasicParametersTable
+                                                                               where a.FK_UsersTable == currentUser.UsersTableID
+                                                                                   && a.Active == true
+                                                                                   && a.FK_ReportArchiveTable == ReportArchiveID
+                                                                               select a).FirstOrDefault();
+                    string status = "Нет данных";
+                    int Statusn = 0;
+
+                    if (CurrentUserFirstCollected == null)
+                    {
+                        status = "Заполнение не начато!";
+                    }
+                    else if (CurrentUserFirstCollected.Status == null)
+                    {
+                        Statusn = 0;
+                    }
+                    else
+                    {
+                        Statusn = (int)CurrentUserFirstCollected.Status;
+                    }
+
+                    if (Statusn == 4)
+                    {
+                        break;
+                        status = "Данные утверждены";
+                    }
+                    else if (Statusn == 3)
+                    {
+                        status = "Данные ожидают утверждения";
+                    }
+                    else if (Statusn == 2)
+                    {
+                        status = "Данные в процессе заполнения";
+                    }
+                    else if (Statusn == 1)
+                    {
+                        status = "Данные возвращены на доработку";
+                    }
+                    else if (Statusn == 0)
+                    {
+                        status = "Данные в процессе заполнения";
+                    }
+                    else
+                    {
+                        //error
+                    }
+                                    
+                    if(UserBasicRight.CanEdit == true)
+                    {
+                        DataRow dataRow = DataTableStatus.NewRow();
+                        dataRow["LV_1"] = (from a in kPiDataContext.FirstLevelSubdivisionTable
+                                           where a.FirstLevelSubdivisionTableID == currentUser.FK_FirstLevelSubdivisionTable
+                                           select a.Name).FirstOrDefault();
+                        dataRow["LV_2"] = (from a in kPiDataContext.SecondLevelSubdivisionTable
+                                           where a.SecondLevelSubdivisionTableID == currentUser.FK_SecondLevelSubdivisionTable
+                                           select a.Name).FirstOrDefault();
+                        dataRow["LV_3"] = (from a in kPiDataContext.ThirdLevelSubdivisionTable
+                                           where a.ThirdLevelSubdivisionTableID == currentUser.FK_ThirdLevelSubdivisionTable
+                                           select a.Name).FirstOrDefault();
+                        dataRow["Status"] = status;
+                        dataRow["EmailEdit"] = currentUser.Email;                           
+
+                            BasicParametersTable BasicConnectedToUser = (from a in kPiDataContext.BasicParametersTable
+                                                                         join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                                                             on a.BasicParametersTableID equals b.FK_ParametrsTable
+                                                                         where b.FK_UsersTable == currentUser.UsersTableID
+                                                                         && b.CanEdit == true
+                                                                         && b.Active == true
+                                                                         && a.Active == true
+                                                                         select a).FirstOrDefault();
+
+                            UsersTable ConfirmUserEmail = (from a in kPiDataContext.UsersTable
+                                                      join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                                          on a.UsersTableID equals b.FK_UsersTable
+                                                      where b.FK_ParametrsTable == BasicConnectedToUser.BasicParametersTableID
+                                                       && b.CanConfirm == true
+                                                       && a.Active == true
+                                                       && b.Active == true
+                                                       && ((a.FK_FirstLevelSubdivisionTable == currentUser.FK_FirstLevelSubdivisionTable) || currentUser.FK_FirstLevelSubdivisionTable == null)
+                                                       && ((a.FK_SecondLevelSubdivisionTable == currentUser.FK_SecondLevelSubdivisionTable) || currentUser.FK_SecondLevelSubdivisionTable == null)
+                                                       && ((a.FK_ThirdLevelSubdivisionTable == currentUser.FK_ThirdLevelSubdivisionTable) || currentUser.FK_ThirdLevelSubdivisionTable == null)
+                                                       && ((a.FK_FourthLevelSubdivisionTable == currentUser.FK_FourthLevelSubdivisionTable) || currentUser.FK_FourthLevelSubdivisionTable == null)
+                                                       && ((a.FK_FifthLevelSubdivisionTable == currentUser.FK_FifthLevelSubdivisionTable) || currentUser.FK_FifthLevelSubdivisionTable == null)
+                                                      select a).FirstOrDefault();
+                        if (ConfirmUserEmail!=null)
+                        {
+                            dataRow["EmailConfirm"] = ConfirmUserEmail.Email;
+                        }
+                        else
+                        {
+                            dataRow["EmailConfirm"] = "Ошибка: Отсутствует утверждающий пользователь!";
+                        }                            
+                            DataTableStatus.Rows.Add(dataRow);                          
+                    }
+                    else if(UserBasicRight.CanConfirm == true)                  
+                    {
+                        BasicParametersTable BasicConnectedToUser = (from a in kPiDataContext.BasicParametersTable
+                                                                     join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                                                         on a.BasicParametersTableID equals b.FK_ParametrsTable
+                                                                     where b.FK_UsersTable == currentUser.UsersTableID
+                                                                     && b.CanConfirm == true
+                                                                     && b.Active == true
+                                                                     && a.Active == true
+                                                                     select a).FirstOrDefault();
+
+                        UsersTable ConfirmUserEmail = (from a in kPiDataContext.UsersTable
+                                                       join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                                           on a.UsersTableID equals b.FK_UsersTable
+                                                       where b.FK_ParametrsTable == BasicConnectedToUser.BasicParametersTableID
+                                                        && b.CanEdit == true
+                                                        && a.Active == true
+                                                        && b.Active == true
+                                                        && ((a.FK_FirstLevelSubdivisionTable == currentUser.FK_FirstLevelSubdivisionTable) || currentUser.FK_FirstLevelSubdivisionTable == null)
+                                                        && ((a.FK_SecondLevelSubdivisionTable == currentUser.FK_SecondLevelSubdivisionTable) || currentUser.FK_SecondLevelSubdivisionTable == null)
+                                                        && ((a.FK_ThirdLevelSubdivisionTable == currentUser.FK_ThirdLevelSubdivisionTable) || currentUser.FK_ThirdLevelSubdivisionTable == null)
+                                                        && ((a.FK_FourthLevelSubdivisionTable == currentUser.FK_FourthLevelSubdivisionTable) || currentUser.FK_FourthLevelSubdivisionTable == null)
+                                                        && ((a.FK_FifthLevelSubdivisionTable == currentUser.FK_FifthLevelSubdivisionTable) || currentUser.FK_FifthLevelSubdivisionTable == null)
+                                                       select a).FirstOrDefault();
+                        if (ConfirmUserEmail == null)
+                        {
+                            DataRow dataRow = DataTableStatus.NewRow();
+                            dataRow["LV_1"] = (from a in kPiDataContext.FirstLevelSubdivisionTable
+                                               where a.FirstLevelSubdivisionTableID == currentUser.FK_FirstLevelSubdivisionTable
+                                               select a.Name).FirstOrDefault();
+                            dataRow["LV_2"] = (from a in kPiDataContext.SecondLevelSubdivisionTable
+                                               where a.SecondLevelSubdivisionTableID == currentUser.FK_SecondLevelSubdivisionTable
+                                               select a.Name).FirstOrDefault();
+                            dataRow["LV_3"] = (from a in kPiDataContext.ThirdLevelSubdivisionTable
+                                               where a.ThirdLevelSubdivisionTableID == currentUser.FK_ThirdLevelSubdivisionTable
+                                               select a.Name).FirstOrDefault();
+                            dataRow["Status"] = status;
+                            dataRow["EmailConfirm"] = currentUser.Email;
+                            dataRow["EmailEdit"] = "Ошибка: Отсутствует вносяший данные пользователь!";
+                            DataTableStatus.Rows.Add(dataRow);
+                        }
+                    }
+                }
             }
             GridWhoOws.DataSource = DataTableStatus;
             GridWhoOws.DataBind();

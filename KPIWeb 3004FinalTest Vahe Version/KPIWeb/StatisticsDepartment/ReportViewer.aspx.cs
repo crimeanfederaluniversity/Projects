@@ -192,7 +192,7 @@ namespace KPIWeb.StatisticsDepartment
             {
                 Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
                 Session["ReportArchiveID"] = paramSerialization;
-                Response.Redirect("~/StatisticsDepartment/FastStructure.aspx");
+                Response.Redirect("~/StatisticsDepartment/ReportFilling.aspx");
             }
         }
 
@@ -247,7 +247,6 @@ namespace KPIWeb.StatisticsDepartment
                     }
                 }
             }
-            Page_Load(null,null);
         }
 
         protected void ButtonMailSending2_Click(object sender, EventArgs e)
@@ -306,8 +305,6 @@ namespace KPIWeb.StatisticsDepartment
                 }
 
             }
-            Page_Load(null, null);
         }
     }
-
 }

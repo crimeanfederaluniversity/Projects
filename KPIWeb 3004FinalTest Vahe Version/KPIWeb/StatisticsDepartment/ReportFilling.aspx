@@ -2,6 +2,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div>
+        <br />
     <asp:GridView ID="GridWhoOws" runat="server" AutoGenerateColumns="False" style="margin-top: 0px">
              <Columns>          
                  <asp:BoundField DataField="LV_1" HeaderText="Академия" Visible="True" />          
