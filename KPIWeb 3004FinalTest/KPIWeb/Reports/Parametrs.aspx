@@ -4,7 +4,7 @@
     <div>
         <span style="font-size: 30px">Настройка параметров направления подготовки<br />
         </span><br />
-    <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server" OnRowDataBound="GridView1_RowDataBound">           
+    <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server" OnRowDataBound="GridView1_RowDataBound" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">           
              <Columns>               
                  <asp:BoundField DataField="SpecializationID"   HeaderText="Current Report ID" Visible="false" />    
                  <asp:BoundField DataField="SpecializationName" HeaderText="Название направления подготовки" Visible="True" />         
@@ -22,7 +22,7 @@
                         </ItemTemplate>
                     </asp:TemplateField>  
 
-                   <asp:TemplateField HeaderText="Используются совеременные образовательные технологии" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                   <asp:TemplateField HeaderText="Используются современные образовательные технологии" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="ParamLabel1" runat="server" Text='<%# Bind("Param1Label") %>' Visible="false"></asp:Label>
                             <asp:Checkbox  Text=" " ID="IsModern" runat="server" CommandName="Select" CommandArgument='<%# Eval("Param1CheckBox") %>' />
