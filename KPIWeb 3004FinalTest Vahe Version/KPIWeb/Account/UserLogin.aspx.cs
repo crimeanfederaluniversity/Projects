@@ -43,29 +43,23 @@ namespace KPIWeb.Account
                         Response.Redirect("~/Default.aspx");                   
                         }            
                         else
-                        {
-                            LogHandler.LogWriter.WriteLog(LogCategory.INFO,"Неудачная попытка авторизации " + user.Login); 
+                        { 
                             FailureText.Text = "Неверный адрес электронной почты или пароль.";
                             ErrorMessage.Visible = true;
+                           // LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Неудачная попытка авторизации " + user.Login);
                         }
                     }
                 }
                 catch(Exception ex)
                 {
-                    //LogHandler.LogWriter.WriteError(ex);
-                   
+                    LogHandler.LogWriter.WriteError(ex);
                 }
             
-        }
-
-        protected void Button2_Click(object sender, EventArgs e)
-        {
-            Panel mypanel = (Panel)(Master.FindControl("loading"));
-            if (mypanel != null) mypanel.Visible = true;
         }
 
         protected void Button2_Click1(object sender, EventArgs e)
         {
         }
+
     }
 }
