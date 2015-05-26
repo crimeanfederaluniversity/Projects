@@ -14,7 +14,14 @@
     text-align:center;
 }
 
-
+/*DIVHOLD*/
+.hold_div {
+    color:#05ff01;
+    font-size:24px;
+    font-style:normal;
+    font-weight:700;
+}
+/*DIVHOLD*/
 
 /*TOP_PANEL_*//*TOP_PANEL_*//*TOP_PANEL_*//*TOP_PANEL_*//*TOP_PANEL_*/
 .top_panel {

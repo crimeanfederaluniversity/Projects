@@ -13,7 +13,7 @@
    {
           position: fixed;
           z-index: 10;
-          background-color: whitesmoke;
+          background-color: #101010;
           top: 0;
           left: 0;
           width: 100%;
@@ -41,6 +41,23 @@
             <div class="f_circleG" id="frotateG_08">
             </div>
             </div>
+          <div style="  
+   
+    position: fixed; left: 38%; top: 60%;text-align:center;
+    "><font style=" 
+    color:#7fff00;
+    font-size:20px;
+    font-style:normal;
+    font-weight:900;
+    text-shadow: 1px 1px 1px black, 0 0 1em #00ffff;
+    ">Происходит обработка данных</font><br/>
+      <font style=" 
+    color:#ff0000;
+    font-size:20px;
+    font-style:normal;
+    font-weight:900;
+     text-shadow: 1px 1px 1px black, 0 0 1em #ffffff;"
+          >Дождитесь завершения процесса</font></div>
         </div>
 
       
