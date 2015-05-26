@@ -10,25 +10,6 @@ namespace KPIWeb.StatisticsDepartment
 {
     public partial class ReportFilling : System.Web.UI.Page
     {
-        public class UserStruct
-        {
-            public int ReportID { get; set; }
-            public string Lv_1_Name { get; set; }
-            public string Lv_2_Name { get; set; }
-            public string Lv_3_Name { get; set; }
-            public int UserID { get; set; }
-
-            public UserStruct(int ReportID_, string Lv_1_Name_, string Lv_2_Name_, string Lv_3_Name_, int UserID_)
-            {
-                this.ReportID = ReportID_;
-                this.Lv_1_Name = Lv_1_Name_;
-                this.Lv_2_Name = Lv_2_Name_;
-                this.Lv_3_Name = Lv_3_Name_;
-            }
-            public UserStruct()
-            {
-            }
-        }
 
         protected void Page_Load(object sender, EventArgs e)
         {

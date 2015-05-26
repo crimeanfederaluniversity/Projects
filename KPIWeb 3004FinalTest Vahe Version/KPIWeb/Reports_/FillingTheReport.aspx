@@ -436,14 +436,11 @@
 
             <br />
             <br />
-            <asp:Button ID="GoBackButton" runat="server" Height="30px" OnClick="Button2_Click" Text="Вернутся в меню без сохранения" Width="400px" />
+            <asp:Button ID="GoBackButton" runat="server" Height="30px" OnClick="Button2_Click" OnClientClick="showLoadPanel()" Text="Вернутся в меню без сохранения" Width="400px" />
 
             <br />
             <br />
-            <asp:Button ID="UpnDownButton" runat="server" Height="30px" OnClientClick="showLoadPanel()"
-                OnClick="Button3_Click" 
-                Text="Вернуть на доработку (+коментарий )" Width="400px" 
-                />
+            <asp:Button ID="UpnDownButton" runat="server" Height="30px" OnClientClick="showLoadPanel()" OnClick="Button3_Click" Text="Вернуть на доработку (+коментарий )" Width="400px" />
             <br />
 
             <br />
