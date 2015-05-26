@@ -247,6 +247,7 @@ namespace KPIWeb.StatisticsDepartment
                     }
                 }
             }
+            Page_Load(null, null);
         }
 
         protected void ButtonMailSending2_Click(object sender, EventArgs e)
@@ -305,6 +306,7 @@ namespace KPIWeb.StatisticsDepartment
                 }
 
             }
+            Page_Load(null, null);
         }
     }
 }
