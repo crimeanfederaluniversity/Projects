@@ -74,6 +74,9 @@
     <br />
     <br />
     <asp:Button ID="Button8" runat="server" Height="50px" OnClientClick="showLoadPanel()" OnClick="Button8_Click" Text="Управление документами" Width="400px" />
+      <br />
+      <br />
+        <asp:Button ID="Button22" runat="server" Font-Size="15pt" Height="50px" Text="Просмотреть структуру университета" Width="400px" OnClientClick="showLoadPanel()" OnClick="Button22_Click" />
     <br />
     <br />
         <asp:Button ID="Button9" runat="server" Font-Size="15pt" Height="50px" Text="Редактирование структуры КФУ" Width="400px" OnClientClick="showLoadPanel()" OnClick="Button9_Click" />

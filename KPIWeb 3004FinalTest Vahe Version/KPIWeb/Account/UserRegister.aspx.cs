@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Configuration;
 
 namespace KPIWeb.Account
 {
@@ -83,6 +84,16 @@ namespace KPIWeb.Account
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                             "alert('Поздравляем! Вы успешно зарегистрировались.');" +
                             "document.location = '../Default.aspx';", true);
+
+                        EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplates
+                                                     where a.Name == "RegisterIsSuccess"
+                                                     && a.Active == true
+                                                     select a).FirstOrDefault();
+                        if (EmailParams != null)
+                            Action.MassMailing(user.Email, EmailParams.EmailTitle,
+                                EmailParams.EmailContent.Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName"))
+                                , null);
+
                        // Response.Redirect("~/Default.aspx");  
                     }
                 }

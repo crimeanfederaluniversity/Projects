@@ -567,6 +567,13 @@ namespace KPIWeb.AutomationDepartment
                             }
                         }
                     }
+                    EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplates
+                                                 where a.Name == "InviteToRegister"
+                                                 && a.Active == true
+                                                 select a).FirstOrDefault();
+                    Action.MassMailing(user.Email, EmailParams.EmailTitle, 
+                        EmailParams.EmailContent.Replace("#LINK#", ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" + passCode), null);
+                    /*
                     Action.MassMailing(user.Email,"Ваш почтовый адресс был зарегистрирован в системе ИАС 'КФУ-Программа развития'",
                         "Здравствуйте!"+Environment.NewLine+ 
                         "Ваш почтовый адрес был указан при регистрации в системе ИАС 'КФУ-Программа развития!'"+Environment.NewLine+
@@ -575,7 +582,7 @@ namespace KPIWeb.AutomationDepartment
                         ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" + passCode + Environment.NewLine +
                         "Спасибо!"
                         , null);
-                    
+                    */
                 }
             }
         }

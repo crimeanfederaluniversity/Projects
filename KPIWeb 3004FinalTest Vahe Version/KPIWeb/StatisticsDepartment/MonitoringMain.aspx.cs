@@ -78,5 +78,11 @@ namespace KPIWeb.StatisticsDepartment
         {
             Response.Redirect("~/StatisticsDepartment/Confirm.aspx");
         }
+
+        protected void Button22_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/StatisticsDepartment/FastStructure.aspx");
+        }
+        
     }
 }

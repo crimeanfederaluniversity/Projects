@@ -64,9 +64,16 @@ namespace KPIWeb.StatisticsDepartment
                 if (UserBasicRight!=null) // к пользователю прикреплены базовые показатели
                 {
                     CollectedBasicParametersTable CurrentUserFirstCollected = (from a in kPiDataContext.CollectedBasicParametersTable
-                                                                               where a.FK_UsersTable == currentUser.UsersTableID
-                                                                                   && a.Active == true
+                                                                               where 
+                                                                             //  a.FK_UsersTable == currentUser.UsersTableID
+                                                                             //      && 
+                                                                                   a.Active == true
                                                                                    && a.FK_ReportArchiveTable == ReportArchiveID
+                                                                                   && ((a.FK_FirstLevelSubdivisionTable == currentUser.FK_FirstLevelSubdivisionTable) || currentUser.FK_FirstLevelSubdivisionTable == null)
+                                                                                   && ((a.FK_SecondLevelSubdivisionTable == currentUser.FK_SecondLevelSubdivisionTable) || currentUser.FK_SecondLevelSubdivisionTable == null)
+                                                                                   && ((a.FK_ThirdLevelSubdivisionTable == currentUser.FK_ThirdLevelSubdivisionTable) || currentUser.FK_ThirdLevelSubdivisionTable == null)
+                                                                                   && ((a.FK_FourthLevelSubdivisionTable == currentUser.FK_FourthLevelSubdivisionTable) || currentUser.FK_FourthLevelSubdivisionTable == null)
+                                                                                   && ((a.FK_FifthLevelSubdivisionTable == currentUser.FK_FifthLevelSubdivisionTable) || currentUser.FK_FifthLevelSubdivisionTable == null)
                                                                                select a).FirstOrDefault();
                     string status = "Нет данных";
                     int Statusn = 0;
@@ -86,7 +93,7 @@ namespace KPIWeb.StatisticsDepartment
 
                     if (Statusn == 4)
                     {
-                        break;
+                        continue;
                         status = "Данные утверждены";
                     }
                     else if (Statusn == 3)

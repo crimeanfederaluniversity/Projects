@@ -37,6 +37,16 @@ namespace KPIWeb.Account
                     user.Confirmed = false;
                     kPiDataContext.SubmitChanges();
 
+                    EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplates
+                                                 where a.Name == "PasswordRecover"
+                                                 && a.Active == true
+                                                 select a).FirstOrDefault();
+                    if (EmailParams != null)
+                        Action.MassMailing(user.Email, EmailParams.EmailTitle,
+                            EmailParams.EmailContent.Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName")).Replace("#LINK#", ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" + passCode)
+                            , null);
+
+                    /*
                     Action.MassMailing(user.Email, "Восстановление пароля в системе ИАС 'КФУ-Программа развития'",
                         "Здравствуйте!" + Environment.NewLine +
                         "На ваш почтовый адрес был сформирован запрос на восстановление пароля в системе ИАС 'КФУ-Программа развития!'" +
@@ -46,7 +56,7 @@ namespace KPIWeb.Account
                         Environment.NewLine +
                         "Спасибо!"
                         , null);
-
+                    */
                     DisplayAlert("На email " + user.Email +
                                  " было выслано письмо с дальнейшими указаниями по восстановлению пароля");
                 }

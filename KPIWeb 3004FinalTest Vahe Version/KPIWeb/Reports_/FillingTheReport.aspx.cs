@@ -1392,23 +1392,21 @@ namespace KPIWeb.Reports
                         }
                         else
                         {
-                            string EmailContent = "Здравствуйте!" + Environment.NewLine;
+                            string reportName = "-";
                             if (CurrentReport != null)
                             {
-                                EmailContent += "Вы утвердили данные всех базовых показателей в отчете '"+CurrentReport.Name+"'"+ Environment.NewLine ;
+                                reportName = CurrentReport.Name;
                             }
-                            else
-                            {
-                                EmailContent += "Вы утвердили данные всех базовых показателей в отчете."+ Environment.NewLine ;
-                            }
-                            
-                                 EmailContent+= 
-                                  "Отчет доступен в режиме просмотра."+ Environment.NewLine +
-                                  ConfigurationManager.AppSettings.Get("SiteName") + Environment.NewLine +
-                                  "Спасибо!";
-
+                           
                                  string pdfPath = CreatePdf();
-                                 Action.MassMailing(UserToSend.Email, "ИАС 'КФУ-Программа развития'. Вы утвердили данные.", EmailContent,pdfPath);
+                                 EmailTemplate EmailParams = (from a in KPIWebDataContext.EmailTemplates
+                                                              where a.Name == "DataConfirmed"
+                                                              && a.Active == true
+                                                              select a).FirstOrDefault();
+                                 if (EmailParams!=null)
+                                     Action.MassMailing(UserToSend.Email, EmailParams.EmailTitle,
+                                         EmailParams.EmailContent.Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName")).Replace("#ReportName#", reportName), pdfPath);
+                 
                         }
                         #endregion
                     }
@@ -1774,6 +1772,7 @@ namespace KPIWeb.Reports
                     {
                         if (mode == 0) //отправляем данные на подтверждение
                         {
+                            bool wasReturned = false; // данные сейчас на доработке?
                             #region send to confirm
 
                             for (int k = 0; k < columnCnt; k++) // пройдемся по каждой колонке
@@ -1801,6 +1800,10 @@ namespace KPIWeb.Reports
                                             {
                                                 if ((tmpColTable.Status == 2) || (tmpColTable.Status == 1))
                                                 {
+                                                    if ((tmpColTable.Status == 1))
+                                                    {
+                                                        wasReturned = true;
+                                                    }
                                                     tmpColTable.Status = 3;
                                                     kPiDataContext.SubmitChanges();
                                                 }
@@ -1854,14 +1857,25 @@ namespace KPIWeb.Reports
                             }
                             else
                             {
-
-                                Action.MassMailing(UserToSend.Email, "ИАС 'КФУ-Программа развития'. Появились данные готовые к утверждению.",
-                                      "Здравствуйте!" + Environment.NewLine +
-                                      "Появились данные готовые к утверждению."+
-                                      "Для просмотра и утверждения данных зайдите в свой личный кабинет." + Environment.NewLine +
-                                      ConfigurationManager.AppSettings.Get("SiteName") + Environment.NewLine +
-                                      "Спасибо!"
-                                      , null);
+                                EmailTemplate EmailParams;
+                                if (wasReturned)
+                                {
+                                     EmailParams = (from a in kPiDataContext.EmailTemplates
+                                                    where a.Name == "DataSendToConfirmAfterRemake"
+                                                                 && a.Active == true
+                                                                 select a).FirstOrDefault();
+                                }
+                                else
+                                {
+                                     EmailParams = (from a in kPiDataContext.EmailTemplates
+                                                                 where a.Name == "DataSendToConfirm"
+                                                                 && a.Active == true
+                                                                 select a).FirstOrDefault();
+                                }
+                                
+                                if (EmailParams != null)
+                                    Action.MassMailing(UserToSend.Email, EmailParams.EmailTitle,
+                                        EmailParams.EmailContent.Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName")), null);
                             }
                             #endregion
                             #endregion
@@ -1949,16 +1963,16 @@ namespace KPIWeb.Reports
                             }
                             else
                             {
-                                Action.MassMailing(UserToSend.Email, "ИАС 'КФУ-Программа развития'. Данные возвращены на доработку.",
-                                      "Здравствуйте!" + Environment.NewLine +
-                                      "Данные возвращены на доработку." + Environment.NewLine +
-                                      "Комментарий: '" + TextBox1.Text + "'" + Environment.NewLine +
-                                      "Для просмотра и редактирования данных зайдите в свой личный кабинет." + Environment.NewLine +
-                                      ConfigurationManager.AppSettings.Get("SiteName") + Environment.NewLine +
-                                      "Спасибо!"
-                                      , null);
+
+                                EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplates
+                                                             where a.Name == "DataSendToRemake"
+                                                             && a.Active == true
+                                                             select a).FirstOrDefault();
+                                if (EmailParams != null)
+                                    Action.MassMailing(UserToSend.Email, EmailParams.EmailTitle,
+                                        EmailParams.EmailContent.Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName")).Replace("#Comment#", TextBox1.Text), null);
                             }
-                            //SENDMAIL ()
+
                             #endregion
                             #endregion
                         }
