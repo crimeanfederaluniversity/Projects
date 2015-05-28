@@ -40,13 +40,13 @@ namespace KPIWeb.Account {
         protected global::System.Web.UI.WebControls.TextBox PassText;
         
         /// <summary>
-        /// errorNoPass элемент управления.
+        /// PassTextRange элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator errorNoPass;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator PassTextRange;
         
         /// <summary>
         /// Label2 элемент управления.

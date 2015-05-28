@@ -2,13 +2,16 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent" >
 
-     <link rel="stylesheet" type="text/css" href="../Spinner.css">  
+     <link rel="stylesheet" type="text/css" href="../Spinner.css"> 
+     
+
     <script type="text/javascript">
         function showLoadPanel() {
             document.getElementById('LoadPanel_').style.visibility = 'visible';
         }
     </script>
     <style>  
+
         .LoadPanel 
    {
           position: fixed;
@@ -445,11 +448,14 @@
                 </Columns>
             </asp:GridView>
             <br />
+            <asp:ValidationSummary runat="server" ID="Summary" DisplayMode="BulletList"
+            HeaderText="Ошибка ввода данных. Операция невозможна. Для продолжения обновите страницу кнопкой 'F5' " ShowSummary="false" ShowMessageBox="true"/>
+
             <asp:Button ID="ButtonSave" Width="400px" runat="server" Text="Сохранить и выйти" OnClientClick="showLoadPanel()" OnClick="ButtonSave_Click" />
 
             <br />
             <br />
-            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" OnClientClick="showLoadPanel()" Text="Экспорт в PDF" Width="400px" />
+            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" onText="Экспорт в PDF" Width="400px" OnClientClick="showLoadPanel()" Text="Экспорт в PDF" />
 
             <br />
             <br />

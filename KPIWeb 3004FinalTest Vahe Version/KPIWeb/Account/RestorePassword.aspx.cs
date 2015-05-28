@@ -63,7 +63,7 @@ namespace KPIWeb.Account
             }
             else
             {
-                DisplayAlert("Пользователь с таким email адресом в системе не зарегестрирован!");
+                DisplayAlert("Пользователь с таким email адресом в системе не зарегистрирован!");
             }
         }
 

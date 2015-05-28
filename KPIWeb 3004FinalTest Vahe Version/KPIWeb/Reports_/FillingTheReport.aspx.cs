@@ -480,8 +480,17 @@ namespace KPIWeb.Reports
         {
             string script = @"<script>
             function ConfirmSubmit() {
-                var msg = 'Режим доступа к данным будет изменен на \'только просмотр\'.Отправить данные на утверждение?'; 
-                return confirm(msg);
+                var msg = confirm('Режим доступа к данным будет изменен на \'только просмотр\'.Отправить данные на утверждение?'); 
+                    if (msg == true)
+                    {
+                        document.getElementById('LoadPanel_').style.visibility = 'visible'
+                            return true;
+                    }
+                    else
+                    {
+                        document.getElementById('LoadPanel_').style.visibility = 'hidden'
+                            return false;
+                    }
             }
             </script>";
 
@@ -494,8 +503,17 @@ namespace KPIWeb.Reports
 
             string script3 = @"<script>
             function ConfirmSubmitOn() {
-                var msg = 'Режим доступа к данным будет изменен на \'только просмотр\'.Вернуть отчёт на доработку?'; 
-                return confirm(msg);
+                var msg = confirm('Режим доступа к данным будет изменен на \'только просмотр\'.Вернуть отчёт на доработку?'); 
+                    if (msg == true)
+                    {
+                        document.getElementById('LoadPanel_').style.visibility = 'visible'
+                            return true;
+                    }
+                    else
+                    {
+                        document.getElementById('LoadPanel_').style.visibility = 'hidden'
+                            return false;
+                    }
             }
             </script>";
 
@@ -1116,9 +1134,10 @@ namespace KPIWeb.Reports
 
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                             "window.onbeforeunload = function() { return 'Date will be lost: are you sure?'; };", true);
-                        ButtonSave.OnClientClick = "window.onbeforeunload = null;";
-                        Button1.OnClientClick = "window.onbeforeunload = null;";
-                        UpnDownButton.OnClientClick = "window.onbeforeunload = null;";
+                        ButtonSave.OnClientClick = "window.onbeforeunload = null; document.getElementById('LoadPanel_').style.visibility = 'visible'; ";
+                        Button1.OnClientClick = "window.onbeforeunload = null; document.getElementById('LoadPanel_').style.visibility = 'visible'; ";
+                        UpnDownButton.OnClientClick = "window.onbeforeunload = null; document.getElementById('LoadPanel_').style.visibility = 'visible'; ";
+                        GoBackButton.OnClientClick="window.onbeforeunload = null; document.getElementById('LoadPanel_').style.visibility = 'visible'; ";
                     }
                     else if
                         (mode == 1)
@@ -1737,6 +1756,7 @@ namespace KPIWeb.Reports
         }
         protected void Button1_Click(object sender, EventArgs e) // экспорт в excel
         {
+
              Response.ContentType = "Application/pdf";
              Response.TransmitFile(CreatePdf());
              Response.End();   
