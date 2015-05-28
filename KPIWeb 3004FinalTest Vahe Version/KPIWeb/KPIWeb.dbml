@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="V_TEST2" Class="KPIWebDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=V_TEST2;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="crimeanfeder_0ConnectionString1" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="NewRelease" Class="KPIWebDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=NewRelease;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="NewReleaseConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTable">
     <Type Name="BasicParametersAndRolesMappingTable">
       <Column Name="BasicParametersAndRolesMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -35,8 +35,8 @@
       <Association Name="BasicParametersTable_BasicParametrAdditional" Member="BasicParametrAdditional" ThisKey="BasicParametersTableID" OtherKey="BasicParametrAdditionalID" Type="BasicParametrAdditional" Cardinality="One" />
       <Association Name="BasicParametersTable_BasicParametrsAndUsersMapping" Member="BasicParametrsAndUsersMapping" ThisKey="BasicParametersTableID" OtherKey="FK_ParametrsTable" Type="BasicParametrsAndUsersMapping" />
       <Association Name="BasicParametersTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="BasicParametersTableID" OtherKey="FK_BasicParametersTable" Type="CollectedBasicParametersTable" />
-      <Association Name="BasicParametersTable_ReportArchiveAndBasicParametrsMappingTable" Member="ReportArchiveAndBasicParametrsMappingTable" ThisKey="BasicParametersTableID" OtherKey="FK_BasicParametrsTable" Type="ReportArchiveAndBasicParametrsMappingTable" />
       <Association Name="BasicParametersTable_ConfirmationHistory" Member="ConfirmationHistory" ThisKey="BasicParametersTableID" OtherKey="FK_BasicParamTable" Type="ConfirmationHistory" />
+      <Association Name="BasicParametersTable_ReportArchiveAndBasicParametrsMappingTable" Member="ReportArchiveAndBasicParametrsMappingTable" ThisKey="BasicParametersTableID" OtherKey="FK_BasicParametrsTable" Type="ReportArchiveAndBasicParametrsMappingTable" />
     </Type>
   </Table>
   <Table Name="dbo.BasicParametrAdditional" Member="BasicParametrAdditional">
@@ -50,6 +50,7 @@
       <Column Name="Calculated" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="SpecType" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="DataType" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Comment" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="BasicParametersTable_BasicParametrAdditional" Member="BasicParametersTable" ThisKey="BasicParametrAdditionalID" OtherKey="BasicParametersTableID" Type="BasicParametersTable" IsForeignKey="true" />
       <Association Name="FieldOfExpertise_BasicParametrAdditional" Member="FieldOfExpertise" ThisKey="FK_FieldOfExpertise" OtherKey="FieldOfExpertiseID" Type="FieldOfExpertise" IsForeignKey="true" />
     </Type>
@@ -75,11 +76,12 @@
       <Column Name="Measure" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
       <Column Name="Formula" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
       <Column Name="AbbreviationEN" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="AbbreviationRU" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="CalculatedParametrs_CalculatedParametrsAndRolesMappingTable" Member="CalculatedParametrsAndRolesMappingTable" ThisKey="CalculatedParametrsID" OtherKey="FK_CalculatedParametrs" Type="CalculatedParametrsAndRolesMappingTable" />
       <Association Name="CalculatedParametrs_CalculatedParametrsAndUsersMapping" Member="CalculatedParametrsAndUsersMapping" ThisKey="CalculatedParametrsID" OtherKey="FK_CalculatedParametrsTable" Type="CalculatedParametrsAndUsersMapping" />
       <Association Name="CalculatedParametrs_CollectedCalculatedParametrs" Member="CollectedCalculatedParametrs" ThisKey="CalculatedParametrsID" OtherKey="FK_CalculatedParametrs" Type="CollectedCalculatedParametrs" />
-      <Association Name="CalculatedParametrs_ReportArchiveAndCalculatedParametrsMappingTable" Member="ReportArchiveAndCalculatedParametrsMappingTable" ThisKey="CalculatedParametrsID" OtherKey="FK_CalculatedParametrsTable" Type="ReportArchiveAndCalculatedParametrsMappingTable" />
       <Association Name="CalculatedParametrs_ConfirmationHistory" Member="ConfirmationHistory" ThisKey="CalculatedParametrsID" OtherKey="FK_CalculatedParamTable" Type="ConfirmationHistory" />
+      <Association Name="CalculatedParametrs_ReportArchiveAndCalculatedParametrsMappingTable" Member="ReportArchiveAndCalculatedParametrsMappingTable" ThisKey="CalculatedParametrsID" OtherKey="FK_CalculatedParametrsTable" Type="ReportArchiveAndCalculatedParametrsMappingTable" />
     </Type>
   </Table>
   <Table Name="dbo.CalculatedParametrsAndRolesMappingTable" Member="CalculatedParametrsAndRolesMappingTable">
@@ -171,12 +173,63 @@
       <Association Name="UsersTable_CollectedIndocators" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.ConfirmationHistory" Member="ConfirmationHistory">
+    <Type Name="ConfirmationHistory">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FK_IndicatorsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_CalculatedParamTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_BasicParamTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_ReportTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Comment" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="BasicParametersTable_ConfirmationHistory" Member="BasicParametersTable" ThisKey="FK_BasicParamTable" OtherKey="BasicParametersTableID" Type="BasicParametersTable" IsForeignKey="true" />
+      <Association Name="CalculatedParametrs_ConfirmationHistory" Member="CalculatedParametrs" ThisKey="FK_CalculatedParamTable" OtherKey="CalculatedParametrsID" Type="CalculatedParametrs" IsForeignKey="true" />
+      <Association Name="IndicatorsTable_ConfirmationHistory" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
+      <Association Name="ReportArchiveTable_ConfirmationHistory" Member="ReportArchiveTable" ThisKey="FK_ReportTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
+      <Association Name="UsersTable_ConfirmationHistory" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.DocumentTable" Member="DocumentTable">
     <Type Name="DocumentTable">
       <Column Name="DocumentID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="DocumentName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="DocumentLink" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="DocumentName" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="DocumentLink" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EmailSendHistory" Member="EmailSendHistory">
+    <Type Name="EmailSendHistory">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_ReportsArchiveTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="Value" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Count" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="ReportArchiveTable_EmailSendHistory" Member="ReportArchiveTable" ThisKey="FK_ReportsArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EmailSendTable" Member="EmailSendTable">
+    <Type Name="EmailSendTable">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="SMTPName" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Port" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="SendOk" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="SendError" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EmailTemplate" Member="EmailTemplate">
+    <Type Name="EmailTemplate">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="EmailTitle" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="EmailContent" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Comment" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="NameRus" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.FieldOfExpertise" Member="FieldOfExpertise">
@@ -273,19 +326,19 @@
       <Column Name="Measure" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
       <Column Name="Formula" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
       <Association Name="IndicatorsTable_CollectedIndocators" Member="CollectedIndocators" ThisKey="IndicatorsTableID" OtherKey="FK_Indicators" Type="CollectedIndocators" />
+      <Association Name="IndicatorsTable_ConfirmationHistory" Member="ConfirmationHistory" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="ConfirmationHistory" />
       <Association Name="IndicatorsTable_IndicatorsAndRolesMappingTable" Member="IndicatorsAndRolesMappingTable" ThisKey="IndicatorsTableID" OtherKey="FK_Indicators" Type="IndicatorsAndRolesMappingTable" />
       <Association Name="IndicatorsTable_IndicatorsAndUsersMapping" Member="IndicatorsAndUsersMapping" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="IndicatorsAndUsersMapping" />
       <Association Name="IndicatorsTable_PlannedIndicator" Member="PlannedIndicator" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="PlannedIndicator" />
       <Association Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable" Member="ReportArchiveAndIndicatorsMappingTable" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="ReportArchiveAndIndicatorsMappingTable" />
-      <Association Name="IndicatorsTable_ConfirmationHistory" Member="ConfirmationHistory" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="ConfirmationHistory" />
     </Type>
   </Table>
   <Table Name="dbo.ManualTable" Member="ManualTable">
     <Type Name="ManualTable">
       <Column Name="ManualID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="ManualName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="ManualLink" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="ManualName" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ManualLink" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.PlannedIndicator" Member="PlannedIndicator">
@@ -356,12 +409,12 @@
       <Association Name="ReportArchiveTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="CollectedBasicParametersTable" />
       <Association Name="ReportArchiveTable_CollectedCalculatedParametrs" Member="CollectedCalculatedParametrs" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="CollectedCalculatedParametrs" />
       <Association Name="ReportArchiveTable_CollectedIndocators" Member="CollectedIndocators" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="CollectedIndocators" />
+      <Association Name="ReportArchiveTable_ConfirmationHistory" Member="ConfirmationHistory" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportTable" Type="ConfirmationHistory" />
+      <Association Name="ReportArchiveTable_EmailSendHistory" Member="EmailSendHistory" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportsArchiveTable" Type="EmailSendHistory" />
       <Association Name="ReportArchiveTable_ReportArchiveAndBasicParametrsMappingTable" Member="ReportArchiveAndBasicParametrsMappingTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="ReportArchiveAndBasicParametrsMappingTable" />
       <Association Name="ReportArchiveTable_ReportArchiveAndCalculatedParametrsMappingTable" Member="ReportArchiveAndCalculatedParametrsMappingTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="ReportArchiveAndCalculatedParametrsMappingTable" />
       <Association Name="ReportArchiveTable_ReportArchiveAndIndicatorsMappingTable" Member="ReportArchiveAndIndicatorsMappingTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTable" Type="ReportArchiveAndIndicatorsMappingTable" />
       <Association Name="ReportArchiveTable_ReportArchiveAndLevelMappingTable" Member="ReportArchiveAndLevelMappingTable" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportArchiveTableId" Type="ReportArchiveAndLevelMappingTable" />
-      <Association Name="ReportArchiveTable_ConfirmationHistory" Member="ConfirmationHistory" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportTable" Type="ConfirmationHistory" />
-      <Association Name="ReportArchiveTable_EmailSendHistory" Member="EmailSendHistories" ThisKey="ReportArchiveTableID" OtherKey="FK_ReportsArchiveTable" Type="EmailSendHistory" />
     </Type>
   </Table>
   <Table Name="dbo.RolesTable" Member="RolesTable">
@@ -442,65 +495,14 @@
       <Association Name="UsersTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedBasicParametersTable" />
       <Association Name="UsersTable_CollectedCalculatedParametrs" Member="CollectedCalculatedParametrs" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedCalculatedParametrs" />
       <Association Name="UsersTable_CollectedIndocators" Member="CollectedIndocators" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedIndocators" />
-      <Association Name="UsersTable_IndicatorsAndUsersMapping" Member="IndicatorsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsresTable" Type="IndicatorsAndUsersMapping" />
       <Association Name="UsersTable_ConfirmationHistory" Member="ConfirmationHistory" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="ConfirmationHistory" />
+      <Association Name="UsersTable_IndicatorsAndUsersMapping" Member="IndicatorsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsresTable" Type="IndicatorsAndUsersMapping" />
       <Association Name="FifthLevelSubdivisionTable_UsersTable" Member="FifthLevelSubdivisionTable" ThisKey="FK_FifthLevelSubdivisionTable" OtherKey="FifthLevelSubdivisionTableID" Type="FifthLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="FourthLevelSubdivisionTable_UsersTable" Member="FourthLevelSubdivisionTable" ThisKey="FK_FourthLevelSubdivisionTable" OtherKey="FourthLevelSubdivisionTableID" Type="FourthLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="ZeroLevelSubdivisionTable_UsersTable" Member="ZeroLevelSubdivisionTable" ThisKey="FK_ZeroLevelSubdivisionTable" OtherKey="ZeroLevelSubdivisionTableID" Type="ZeroLevelSubdivisionTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ConfirmationHistory" Member="ConfirmationHistory">
-    <Type Name="ConfirmationHistory">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="FK_IndicatorsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_CalculatedParamTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_BasicParamTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_ReportTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Comment" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="BasicParametersTable_ConfirmationHistory" Member="BasicParametersTable" ThisKey="FK_BasicParamTable" OtherKey="BasicParametersTableID" Type="BasicParametersTable" IsForeignKey="true" />
-      <Association Name="CalculatedParametrs_ConfirmationHistory" Member="CalculatedParametrs" ThisKey="FK_CalculatedParamTable" OtherKey="CalculatedParametrsID" Type="CalculatedParametrs" IsForeignKey="true" />
-      <Association Name="IndicatorsTable_ConfirmationHistory" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
-      <Association Name="ReportArchiveTable_ConfirmationHistory" Member="ReportArchiveTable" ThisKey="FK_ReportTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
-      <Association Name="UsersTable_ConfirmationHistory" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.EmailSendTable" Member="EmailSendTables">
-    <Type Name="EmailSendTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Email" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="SMTPName" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="Port" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Password" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="SendOk" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="SendError" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.EmailSendHistory" Member="EmailSendHistories">
-    <Type Name="EmailSendHistory">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_ReportsArchiveTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="Value" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Count" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="ReportArchiveTable_EmailSendHistory" Member="ReportArchiveTable" ThisKey="FK_ReportsArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.EmailTemplate" Member="EmailTemplates">
-    <Type Name="EmailTemplate">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="EmailTitle" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="EmailContent" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Comment" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="NameRus" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

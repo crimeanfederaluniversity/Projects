@@ -98,7 +98,7 @@ namespace KPIWeb
 
             KPIWebDataContext kpiWeb = new KPIWebDataContext();
 
-            var emails = (from a in kpiWeb.EmailSendTables select a).ToList();
+            var emails = (from a in kpiWeb.EmailSendTable select a).ToList();
             StringBuilder messageBuilder = new StringBuilder();
 
             messageBuilder.Append(Environment.NewLine);

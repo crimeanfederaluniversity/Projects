@@ -567,7 +567,7 @@ namespace KPIWeb.AutomationDepartment
                             }
                         }
                     }
-                    EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplates
+                    EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
                                                  where a.Name == "InviteToRegister"
                                                  && a.Active == true
                                                  select a).FirstOrDefault();

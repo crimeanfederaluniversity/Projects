@@ -37,7 +37,7 @@ namespace KPIWeb.Account
                     user.Confirmed = false;
                     kPiDataContext.SubmitChanges();
 
-                    EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplates
+                    EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
                                                  where a.Name == "PasswordRecover"
                                                  && a.Active == true
                                                  select a).FirstOrDefault();

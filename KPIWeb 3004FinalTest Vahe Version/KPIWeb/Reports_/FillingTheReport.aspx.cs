@@ -1399,7 +1399,7 @@ namespace KPIWeb.Reports
                             }
                            
                                  string pdfPath = CreatePdf();
-                                 EmailTemplate EmailParams = (from a in KPIWebDataContext.EmailTemplates
+                                 EmailTemplate EmailParams = (from a in KPIWebDataContext.EmailTemplate
                                                               where a.Name == "DataConfirmed"
                                                               && a.Active == true
                                                               select a).FirstOrDefault();
@@ -1860,14 +1860,14 @@ namespace KPIWeb.Reports
                                 EmailTemplate EmailParams;
                                 if (wasReturned)
                                 {
-                                     EmailParams = (from a in kPiDataContext.EmailTemplates
+                                     EmailParams = (from a in kPiDataContext.EmailTemplate
                                                     where a.Name == "DataSendToConfirmAfterRemake"
                                                                  && a.Active == true
                                                                  select a).FirstOrDefault();
                                 }
                                 else
                                 {
-                                     EmailParams = (from a in kPiDataContext.EmailTemplates
+                                     EmailParams = (from a in kPiDataContext.EmailTemplate
                                                                  where a.Name == "DataSendToConfirm"
                                                                  && a.Active == true
                                                                  select a).FirstOrDefault();
@@ -1964,7 +1964,7 @@ namespace KPIWeb.Reports
                             else
                             {
 
-                                EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplates
+                                EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
                                                              where a.Name == "DataSendToRemake"
                                                              && a.Active == true
                                                              select a).FirstOrDefault();

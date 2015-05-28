@@ -81,16 +81,16 @@ namespace KPIWeb.StatisticsDepartment
                     Label LabelDate2 = (Label)GridviewActiveCampaign.Rows[rowIndex].FindControl("LabelDate2");
                     int id = Convert.ToInt32(LabelID.Text);
 
-                    EmailSendHistory esh0 = (from a in kPiDataContext.EmailSendHistories where a.FK_ReportsArchiveTable == id && a.Count == 0 select a).FirstOrDefault(); ;
-                    EmailSendHistory esh1 = (from a in kPiDataContext.EmailSendHistories where a.FK_ReportsArchiveTable == id && a.Count == 1 select a).FirstOrDefault(); ;
+                    EmailSendHistory esh0 = (from a in kPiDataContext.EmailSendHistory where a.FK_ReportsArchiveTable == id && a.Count == 0 select a).FirstOrDefault(); ;
+                    EmailSendHistory esh1 = (from a in kPiDataContext.EmailSendHistory where a.FK_ReportsArchiveTable == id && a.Count == 1 select a).FirstOrDefault(); ;
 
                     if ( esh0 != null )
                     {
                         var date =
-                           (from a in kPiDataContext.EmailSendHistories
+                           (from a in kPiDataContext.EmailSendHistory
                             where a.FK_ReportsArchiveTable == id && a.Count == 0
                             select a.Date).FirstOrDefault();
-                        LabelDate1.Text = date + " " + (from a in kPiDataContext.EmailSendHistories
+                        LabelDate1.Text = date + " " + (from a in kPiDataContext.EmailSendHistory
                                                        where a.FK_ReportsArchiveTable == id && a.Count == 0
                                                        select a.Value).FirstOrDefault();
                     }
@@ -101,16 +101,16 @@ namespace KPIWeb.StatisticsDepartment
                         esh0.FK_ReportsArchiveTable = id;
                         esh0.Value = "0";
                         esh0.Count = 0;
-                        kPiDataContext.EmailSendHistories.InsertOnSubmit(esh0);
+                        kPiDataContext.EmailSendHistory.InsertOnSubmit(esh0);
                     }
                     if (esh1 != null)
                     {
                         var date =
-                          (from a in kPiDataContext.EmailSendHistories
+                          (from a in kPiDataContext.EmailSendHistory
                            where a.FK_ReportsArchiveTable == id && a.Count == 1
                            select a.Date).FirstOrDefault();
 
-                        LabelDate2.Text = date + " " + (from a in kPiDataContext.EmailSendHistories
+                        LabelDate2.Text = date + " " + (from a in kPiDataContext.EmailSendHistory
                                                         where a.FK_ReportsArchiveTable == id && a.Count == 1
                                                         select a.Value).FirstOrDefault(); ;
                     }
@@ -121,7 +121,7 @@ namespace KPIWeb.StatisticsDepartment
                         esh1.FK_ReportsArchiveTable = id;
                         esh1.Value = "0";
                         esh1.Count = 1;
-                        kPiDataContext.EmailSendHistories.InsertOnSubmit(esh1);
+                        kPiDataContext.EmailSendHistory.InsertOnSubmit(esh1);
                     }
                     rowIndex++;
                 }
@@ -211,7 +211,7 @@ namespace KPIWeb.StatisticsDepartment
                         where b.Active
                           select b.Email).ToList();
 
-                EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplates
+                EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
                                              where a.Name == "NewCampaign"
                                              && a.Active == true
                                              select a).FirstOrDefault();
@@ -238,7 +238,7 @@ namespace KPIWeb.StatisticsDepartment
                        , null);
                     */
                 }
-                EmailSendHistory esh0 = (from a in kPiDataContext.EmailSendHistories where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 0 select a).FirstOrDefault(); ;
+                EmailSendHistory esh0 = (from a in kPiDataContext.EmailSendHistory where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 0 select a).FirstOrDefault(); ;
                 //EmailSendHistory esh1 = (from a in kPiDataContext.EmailSendHistories where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 1 select a).FirstOrDefault(); ;
 
                 esh0.Date = DateTime.Now;
@@ -246,7 +246,7 @@ namespace KPIWeb.StatisticsDepartment
 
                 kPiDataContext.SubmitChanges();
 
-                var date = (from a in kPiDataContext.EmailSendHistories
+                var date = (from a in kPiDataContext.EmailSendHistory
                             where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 0
                             select a.Date).FirstOrDefault();
 
@@ -283,7 +283,7 @@ namespace KPIWeb.StatisticsDepartment
 
                 var uniqueMails = emailListToDebt.Distinct().ToList();
 
-                EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplates
+                EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
                                              where a.Name == "CampaignReminder"
                                              && a.Active == true
                                              select a).FirstOrDefault();
@@ -313,14 +313,14 @@ namespace KPIWeb.StatisticsDepartment
             }
 
                 //EmailSendHistory esh0 = (from a in kPiDataContext.EmailSendHistories where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 0 select a).FirstOrDefault(); ;
-                EmailSendHistory esh1 = (from a in kPiDataContext.EmailSendHistories where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 1 select a).FirstOrDefault(); ;
+                EmailSendHistory esh1 = (from a in kPiDataContext.EmailSendHistory where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 1 select a).FirstOrDefault(); ;
 
                 esh1.Date = DateTime.Now;
                 esh1.Value = " [ " + (uniqueMails.Count - errors).ToString() + "/" + uniqueMails.Count.ToString() + " ]";
 
                 kPiDataContext.SubmitChanges();
 
-                var date = (from a in kPiDataContext.EmailSendHistories
+                var date = (from a in kPiDataContext.EmailSendHistory
                             where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 1
                             select a.Date).FirstOrDefault();
 

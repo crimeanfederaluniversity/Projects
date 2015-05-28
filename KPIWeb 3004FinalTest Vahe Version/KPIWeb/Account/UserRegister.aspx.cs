@@ -85,7 +85,7 @@ namespace KPIWeb.Account
                             "alert('Поздравляем! Вы успешно зарегистрировались.');" +
                             "document.location = '../Default.aspx';", true);
 
-                        EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplates
+                        EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
                                                      where a.Name == "RegisterIsSuccess"
                                                      && a.Active == true
                                                      select a).FirstOrDefault();
