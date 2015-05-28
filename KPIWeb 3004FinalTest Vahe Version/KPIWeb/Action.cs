@@ -105,8 +105,11 @@ namespace KPIWeb
             messageBuilder.Append(Environment.NewLine);
             messageBuilder.Append(message);
             messageBuilder.Append(Environment.NewLine);
+            messageBuilder.Append(Environment.NewLine);            
+            messageBuilder.Append("По вопросам заполнения форм отчетности обращайтесь +7978 823 1432.");
             messageBuilder.Append(Environment.NewLine);
-            messageBuilder.Append("Пожайлуста проигнорируйте данное сообщение, если Вы получили его по ошибке.");
+            messageBuilder.Append(Environment.NewLine);
+            messageBuilder.Append("Техническая поддержка +7981175398.");
             messageBuilder.Append(Environment.NewLine);
             messageBuilder.Append(Environment.NewLine);
             messageBuilder.Append("С уважением администрация \"ИАС.КФУ-Программа развития\"");
