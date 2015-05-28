@@ -106,10 +106,10 @@ namespace KPIWeb
             messageBuilder.Append(message);
             messageBuilder.Append(Environment.NewLine);
             messageBuilder.Append(Environment.NewLine);            
-            messageBuilder.Append("По вопросам заполнения форм отчетности обращайтесь +7978 823 1432.");
+            messageBuilder.Append("По вопросам заполнения форм отчетности обращайтесь +7-978-823-14-32.");
             messageBuilder.Append(Environment.NewLine);
             messageBuilder.Append(Environment.NewLine);
-            messageBuilder.Append("Техническая поддержка +7981175398.");
+            messageBuilder.Append("Техническая поддержка +7-978-117-53-98.");
             messageBuilder.Append(Environment.NewLine);
             messageBuilder.Append(Environment.NewLine);
             messageBuilder.Append("С уважением администрация \"ИАС.КФУ-Программа развития\"");
@@ -121,10 +121,12 @@ namespace KPIWeb
                 if (SendMail(ems.SMTPName, 587, ems.Email, ems.Password, emailto, caption, messageBuilder.ToString(), attachFile) == 1)
                 {
                     ems.SendOk++;
+                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, "С почты " + ems.Email + " отправлено письмо на адрес " + emailto + " c шапкой:\" " + caption + " \"");
                     break;
                 }
                 ems.SendError++;
                 errors++;
+               LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "С почты " + ems.Email + " не удалось отправить письмо на адрес " + emailto + " c шапкой:\" " + caption+" \"");
             }
             kpiWeb.SubmitChanges();
 
