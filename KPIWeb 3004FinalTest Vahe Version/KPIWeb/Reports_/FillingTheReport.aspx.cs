@@ -1422,10 +1422,39 @@ namespace KPIWeb.Reports
                                                               where a.Name == "DataConfirmed"
                                                               && a.Active == true
                                                               select a).FirstOrDefault();
-                                 if (EmailParams!=null)
+                                 if (EmailParams != null)
+                                 {
                                      Action.MassMailing(UserToSend.Email, EmailParams.EmailTitle,
                                          EmailParams.EmailContent.Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName")).Replace("#ReportName#", reportName), pdfPath);
-                 
+
+                                     BasicParametersTable BasicConnectedToUser = (from a in KPIWebDataContext.BasicParametersTable
+                                                                             join b in KPIWebDataContext.BasicParametrsAndUsersMapping
+                                                                                 on a.BasicParametersTableID equals b.FK_ParametrsTable
+                                                                             where b.FK_UsersTable == UserToSend.UsersTableID
+                                                                             && b.CanEdit == true
+                                                                             && b.Active == true
+                                                                             && a.Active == true
+                                                                             select a).FirstOrDefault();
+
+                                     UsersTable UserToSend2 = (from a in KPIWebDataContext.UsersTable
+                                                     join b in KPIWebDataContext.BasicParametrsAndUsersMapping
+                                                         on a .UsersTableID equals b.FK_UsersTable
+                                                        where b.FK_ParametrsTable ==  BasicConnectedToUser.BasicParametersTableID
+                                                         && b.CanConfirm == true
+                                                         && a.Active == true
+                                                         && b.Active == true
+                                                         && (( a.FK_FirstLevelSubdivisionTable == UserToSend.FK_FirstLevelSubdivisionTable )||UserToSend.FK_FirstLevelSubdivisionTable==null)
+                                                         && (( a.FK_SecondLevelSubdivisionTable == UserToSend.FK_SecondLevelSubdivisionTable)||UserToSend.FK_SecondLevelSubdivisionTable==null)
+                                                         && (( a.FK_ThirdLevelSubdivisionTable == UserToSend.FK_ThirdLevelSubdivisionTable)||UserToSend.FK_ThirdLevelSubdivisionTable==null)
+                                                         && (( a.FK_FourthLevelSubdivisionTable == UserToSend.FK_FourthLevelSubdivisionTable)||UserToSend.FK_FourthLevelSubdivisionTable==null)
+                                                         && (( a.FK_FifthLevelSubdivisionTable == UserToSend.FK_FifthLevelSubdivisionTable)||UserToSend.FK_FifthLevelSubdivisionTable==null)
+                                                         select a).FirstOrDefault();
+
+
+                                     if (UserToSend2.Email != UserToSend.Email) // если одно мыло на двоих то не отправляем 2 письмо
+                                     Action.MassMailing(UserToSend2.Email, EmailParams.EmailTitle,
+                                         EmailParams.EmailContent.Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName")).Replace("#ReportName#", reportName), pdfPath);
+                                 }
                         }
                         #endregion
                     }

@@ -26,8 +26,8 @@ namespace KPIWeb.StatisticsDepartment
             if ((userTable.AccessLevel != 10) && (userTable.AccessLevel != 9))
             {
                 Response.Redirect("~/Default.aspx");
-            }             
-       
+            }
+
             Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
             if (paramSerialization == null)
             {
@@ -41,7 +41,7 @@ namespace KPIWeb.StatisticsDepartment
             DataTableStatus.Columns.Add(new DataColumn("LV_1", typeof(string)));
             DataTableStatus.Columns.Add(new DataColumn("LV_2", typeof(string)));
             DataTableStatus.Columns.Add(new DataColumn("LV_3", typeof(string)));
-            DataTableStatus.Columns.Add(new DataColumn("Status", typeof(string)));            
+            DataTableStatus.Columns.Add(new DataColumn("Status", typeof(string)));
             DataTableStatus.Columns.Add(new DataColumn("EmailEdit", typeof(string)));
             DataTableStatus.Columns.Add(new DataColumn("EmailConfirm", typeof(string)));
 
@@ -54,19 +54,19 @@ namespace KPIWeb.StatisticsDepartment
                                       && a.AccessLevel == 0
                                       && a.Active == true
                                       select a).ToList();
-         
+
             foreach (UsersTable currentUser in Users)
             {
                 BasicParametrsAndUsersMapping UserBasicRight = (from a in kPiDataContext.BasicParametrsAndUsersMapping
                                                                 where a.FK_UsersTable == currentUser.UsersTableID
                                                                 && a.Active == true
                                                                 select a).FirstOrDefault();
-                if (UserBasicRight!=null) // к пользователю прикреплены базовые показатели
+                if (UserBasicRight != null) // к пользователю прикреплены базовые показатели
                 {
                     CollectedBasicParametersTable CurrentUserFirstCollected = (from a in kPiDataContext.CollectedBasicParametersTable
-                                                                               where 
-                                                                             //  a.FK_UsersTable == currentUser.UsersTableID
-                                                                             //      && 
+                                                                               where
+                                                                                   //  a.FK_UsersTable == currentUser.UsersTableID
+                                                                                   //      && 
                                                                                    a.Active == true
                                                                                    && a.FK_ReportArchiveTable == ReportArchiveID
                                                                                    && ((a.FK_FirstLevelSubdivisionTable == currentUser.FK_FirstLevelSubdivisionTable) || currentUser.FK_FirstLevelSubdivisionTable == null)
@@ -116,8 +116,8 @@ namespace KPIWeb.StatisticsDepartment
                     {
                         //error
                     }
-                                    
-                    if(UserBasicRight.CanEdit == true)
+
+                    if (UserBasicRight.CanEdit == true)
                     {
                         DataRow dataRow = DataTableStatus.NewRow();
                         dataRow["LV_1"] = (from a in kPiDataContext.FirstLevelSubdivisionTable
@@ -130,41 +130,41 @@ namespace KPIWeb.StatisticsDepartment
                                            where a.ThirdLevelSubdivisionTableID == currentUser.FK_ThirdLevelSubdivisionTable
                                            select a.Name).FirstOrDefault();
                         dataRow["Status"] = status;
-                        dataRow["EmailEdit"] = currentUser.Email;                           
+                        dataRow["EmailEdit"] = currentUser.Email;
 
-                            BasicParametersTable BasicConnectedToUser = (from a in kPiDataContext.BasicParametersTable
-                                                                         join b in kPiDataContext.BasicParametrsAndUsersMapping
-                                                                             on a.BasicParametersTableID equals b.FK_ParametrsTable
-                                                                         where b.FK_UsersTable == currentUser.UsersTableID
-                                                                         && b.CanEdit == true
-                                                                         && b.Active == true
-                                                                         && a.Active == true
-                                                                         select a).FirstOrDefault();
+                        BasicParametersTable BasicConnectedToUser = (from a in kPiDataContext.BasicParametersTable
+                                                                     join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                                                         on a.BasicParametersTableID equals b.FK_ParametrsTable
+                                                                     where b.FK_UsersTable == currentUser.UsersTableID
+                                                                     && b.CanEdit == true
+                                                                     && b.Active == true
+                                                                     && a.Active == true
+                                                                     select a).FirstOrDefault();
 
-                            UsersTable ConfirmUserEmail = (from a in kPiDataContext.UsersTable
-                                                      join b in kPiDataContext.BasicParametrsAndUsersMapping
-                                                          on a.UsersTableID equals b.FK_UsersTable
-                                                      where b.FK_ParametrsTable == BasicConnectedToUser.BasicParametersTableID
-                                                       && b.CanConfirm == true
-                                                       && a.Active == true
-                                                       && b.Active == true
-                                                       && ((a.FK_FirstLevelSubdivisionTable == currentUser.FK_FirstLevelSubdivisionTable) || currentUser.FK_FirstLevelSubdivisionTable == null)
-                                                       && ((a.FK_SecondLevelSubdivisionTable == currentUser.FK_SecondLevelSubdivisionTable) || currentUser.FK_SecondLevelSubdivisionTable == null)
-                                                       && ((a.FK_ThirdLevelSubdivisionTable == currentUser.FK_ThirdLevelSubdivisionTable) || currentUser.FK_ThirdLevelSubdivisionTable == null)
-                                                       && ((a.FK_FourthLevelSubdivisionTable == currentUser.FK_FourthLevelSubdivisionTable) || currentUser.FK_FourthLevelSubdivisionTable == null)
-                                                       && ((a.FK_FifthLevelSubdivisionTable == currentUser.FK_FifthLevelSubdivisionTable) || currentUser.FK_FifthLevelSubdivisionTable == null)
-                                                      select a).FirstOrDefault();
-                        if (ConfirmUserEmail!=null)
+                        UsersTable ConfirmUserEmail = (from a in kPiDataContext.UsersTable
+                                                       join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                                           on a.UsersTableID equals b.FK_UsersTable
+                                                       where b.FK_ParametrsTable == BasicConnectedToUser.BasicParametersTableID
+                                                        && b.CanConfirm == true
+                                                        && a.Active == true
+                                                        && b.Active == true
+                                                        && ((a.FK_FirstLevelSubdivisionTable == currentUser.FK_FirstLevelSubdivisionTable) || currentUser.FK_FirstLevelSubdivisionTable == null)
+                                                        && ((a.FK_SecondLevelSubdivisionTable == currentUser.FK_SecondLevelSubdivisionTable) || currentUser.FK_SecondLevelSubdivisionTable == null)
+                                                        && ((a.FK_ThirdLevelSubdivisionTable == currentUser.FK_ThirdLevelSubdivisionTable) || currentUser.FK_ThirdLevelSubdivisionTable == null)
+                                                        && ((a.FK_FourthLevelSubdivisionTable == currentUser.FK_FourthLevelSubdivisionTable) || currentUser.FK_FourthLevelSubdivisionTable == null)
+                                                        && ((a.FK_FifthLevelSubdivisionTable == currentUser.FK_FifthLevelSubdivisionTable) || currentUser.FK_FifthLevelSubdivisionTable == null)
+                                                       select a).FirstOrDefault();
+                        if (ConfirmUserEmail != null)
                         {
                             dataRow["EmailConfirm"] = ConfirmUserEmail.Email;
                         }
                         else
                         {
                             dataRow["EmailConfirm"] = "Ошибка: Отсутствует утверждающий пользователь!";
-                        }                            
-                            DataTableStatus.Rows.Add(dataRow);                          
+                        }
+                        DataTableStatus.Rows.Add(dataRow);
                     }
-                    else if(UserBasicRight.CanConfirm == true)                  
+                    else if (UserBasicRight.CanConfirm == true)
                     {
                         BasicParametersTable BasicConnectedToUser = (from a in kPiDataContext.BasicParametersTable
                                                                      join b in kPiDataContext.BasicParametrsAndUsersMapping

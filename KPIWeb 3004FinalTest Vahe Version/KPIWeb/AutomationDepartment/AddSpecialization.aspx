@@ -40,6 +40,19 @@
         <br />
         <br />
         <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Добавить базовые показатели с параметрами" />
+        <br />
+        <br />
+        Добавление первичных данных<br />
+        <asp:TextBox ID="TextBox4" runat="server" Height="90px" TextMode="MultiLine" Width="428px"></asp:TextBox>
+        <br />
+        <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Добавить первичных данных" />
+        <br /><br /><br />
+
+          Добавление целевых показателей<br />
+        <asp:TextBox ID="TextBox5" runat="server" Height="90px" TextMode="MultiLine" Width="428px"></asp:TextBox>
+        <br />
+        <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Добавить целевые показателииии" />
+        <br />
     </form>
 </body>
 </html>

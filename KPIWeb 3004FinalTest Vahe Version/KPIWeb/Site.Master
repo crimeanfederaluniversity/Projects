@@ -54,7 +54,7 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <!-- <li><a runat="server" href="~/">Стартовая старница</a></li>-->
-                        <li><a runat="server" href="~/About">Помощь</a></li>
+                        <li><a runat="server" href="~/Contact">Помощь</a></li>
                         <li><a runat="server" href="~/Contact">Контакты</a></li>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
