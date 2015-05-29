@@ -1,6 +1,67 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Regisration.aspx.cs" Inherits="KPIWeb.AutomationDepartment.Regisration" %>
 
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">        
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">  
+    
+    <link rel="stylesheet" type="text/css" href="../Spinner.css"> 
+     
+    <script type="text/javascript">
+        function showLoadPanel() {
+            document.getElementById('LoadPanel_').style.visibility = 'visible';
+        }
+    </script>
+    <style>  
+
+        .LoadPanel 
+   {
+          position: fixed;
+          z-index: 10;
+          background-color: #101010;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0.9;
+          visibility: hidden;
+   }
+</style>     
+    <div id="LoadPanel_" class='LoadPanel'>               
+            <div id="floatingCirclesG">
+            <div class="f_circleG" id="frotateG_01">
+            </div>
+            <div class="f_circleG" id="frotateG_02">
+            </div>
+            <div class="f_circleG" id="frotateG_03">
+            </div>
+            <div class="f_circleG" id="frotateG_04">
+            </div>
+            <div class="f_circleG" id="frotateG_05">
+            </div>
+            <div class="f_circleG" id="frotateG_06">
+            </div>
+            <div class="f_circleG" id="frotateG_07">
+            </div>
+            <div class="f_circleG" id="frotateG_08">
+            </div>
+            </div>
+          <div style="  
+   
+    position: fixed; left: 38%; top: 60%;text-align:center;
+    "><font style=" 
+    color:#7fff00;
+    font-size:20px;
+    font-style:normal;
+    font-weight:900;
+    text-shadow: 1px 1px 1px black, 0 0 1em #00ffff;
+    ">Происходит обработка данных</font><br/>
+      <font style=" 
+    color:#ff0000;
+    font-size:20px;
+    font-style:normal;
+    font-weight:900;
+     text-shadow: 1px 1px 1px black, 0 0 1em #ffffff;"
+          >Дождитесь завершения процесса</font></div>
+        </div>
+          
          <div>
         <span style="font-size: 30px">Регистрация нового пользователя</span><br />
         <br />
@@ -166,7 +227,7 @@
                 CssClass="text-danger" Display="Dynamic" ErrorMessage="Пароли не совпадают." ID="ErrorWrongConfirm" />
              <br />
              <br />
-             <asp:Button ID="Button1" runat="server" CssClass="form-control" Text="Создать пользователя" Height="40px" Width="400px" OnClick="Button1_Click" />
+             <asp:Button ID="Button1" runat="server" CssClass="form-control" OnClientClick="showLoadPanel()" Text="Создать пользователя" Height="40px" Width="400px" OnClick="Button1_Click" />
          <br />
       </div>           
 </asp:Content>
