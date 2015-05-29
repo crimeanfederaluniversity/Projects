@@ -5,13 +5,16 @@
     <h3>Крымский федеральный университет имени В. И. Вернадского</h3>
     <address>
         Департамент управления качеством и проектных решений<br />
-        Отдел автоматизации программы развития<br />
+        Отдел автоматизации программы развития</address>
+    <address>
         <!--<abbr title="Телефон">P:</abbr>
         временно отсутствует -->
-    </address>
+        По вопросам заполнения форм отчетности обращайтесь по телефону: +7-978-823-14-32</address>
+    <address>
+        Техническая поддержка: +7-978-117-53-98</address>
 
     <address>
-        <strong>Поддержка:</strong>   <a href="mailto:otdel-avtomatizatsii-kfu@yandex.ru">otdel-avtomatizatsii-kfu@yandex.ru</a><br />
+        E-mail адрес:   <a href="mailto:otdel-avtomatizatsii-kfu@yandex.ru">otdel-avtomatizatsii-kfu@yandex.ru</a><br />
         
     </address>
 </asp:Content>
