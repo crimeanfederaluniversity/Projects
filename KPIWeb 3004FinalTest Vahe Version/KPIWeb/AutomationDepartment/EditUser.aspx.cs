@@ -266,6 +266,13 @@ namespace KPIWeb.AutomationDepartment
             RefreshGrid();
         }
 
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+
         protected void CheckBox1_CheckedChanged1(object sender, EventArgs e)
         {
             if (!TextBox1.Text.Any()) CheckBox1.Checked = false;

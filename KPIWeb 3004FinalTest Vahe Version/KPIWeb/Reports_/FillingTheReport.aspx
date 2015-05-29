@@ -12,6 +12,46 @@
     </script>
     <style>  
 
+
+        
+.triangle-bottomright {
+            width: 17px;
+            height: 17px;
+            border-bottom: 17px solid green;
+            border-left: 17px solid transparent;
+            right:0;
+            bottom:0;
+            position:absolute;
+            
+        }
+.triangle-bottomright div {
+        visibility:hidden; 
+        position:absolute;
+        left:0;
+        top:0;
+        width:300px;
+        height:auto;
+        z-index :123;    
+        max-width:300px;
+        max-height:300px;       
+        background-color:#b6ff00;
+        overflow:auto;       
+        word-wrap: break-word;
+        border-style:solid;
+        border-width:1px;
+        border-color:black;
+
+        }
+.triangle-bottomright:hover div
+       {
+        visibility:visible;
+       }
+
+
+
+
+
+
         .LoadPanel 
    {
           position: fixed;
@@ -82,7 +122,7 @@
 
             <asp:GridView ID="GridviewCollectedBasicParameters" BorderStyle="Solid" runat="server" ShowFooter="true" AutoGenerateColumns="False" 
                 BorderColor="Black" BorderWidth="1px" CellPadding="0" 
-          
+          CssClass="result_gw sova"
                 OnRowDataBound="GridviewCollectedBasicParameters_RowDataBound" OnSelectedIndexChanged="GridviewCollectedBasicParameters_SelectedIndexChanged" OnSelectedIndexChanging="GridviewCollectedBasicParameters_SelectedIndexChanging" OnPageIndexChanging="GridviewCollectedBasicParameters_PageIndexChanging">
             
                 <Columns>
@@ -99,8 +139,20 @@
                     <asp:TemplateField  HeaderText="Название показателя" >
                         <ItemTemplate>
                             <asp:Label ID="Name"  runat="server" Visible="True" Text='<%# Bind("Name") %>'></asp:Label>
+
+                            <div class="triangle-bottomright" style="visibility:<%# Eval("CommentEnabled") %>" >	  
+	                            <div id="CommentID" runat="server">
+		                            <%# Eval("Comment") %>
+	                            </div>
+                            </div> 
+
                         </ItemTemplate>
                     </asp:TemplateField>
+
+
+
+
+
                              
                      <asp:TemplateField Visible="false"   HeaderText="Значение">
                         <ItemTemplate >

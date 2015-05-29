@@ -6,6 +6,9 @@
        &nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Добавить нового пользователя" Width="594px" />
         <br />
         <br />
+&nbsp;<asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Разослать пользователям приглашение на регистрацию" Width="594px" />
+        <br />
+        <br />
        <asp:Label ID="Label1" runat="server" Visible="False" Text="Пароль доступа"></asp:Label>
 
  &nbsp;

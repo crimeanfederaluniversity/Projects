@@ -627,6 +627,8 @@ namespace KPIWeb.Reports
                     dataTable.Columns.Add(new DataColumn("CollectedBasicParametersTableID", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
 
+                    dataTable.Columns.Add(new DataColumn("Comment", typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("CommentEnabled", typeof(string)));
 
                     for (int k = 0; k <= 25; k++) //создаем кучу полей
                     {
@@ -671,6 +673,33 @@ namespace KPIWeb.Reports
                             dataRow["CurrentReportArchiveID"] = ReportArchiveID;
                             dataRow["BasicParametersTableID"] = basicParam.BasicParametersTableID;
                             dataRow["Name"] = basicParam.Name;
+
+                            string comment_ = (from a in kpiWebDataContext.BasicParametrAdditional
+                                                   where a.BasicParametrAdditionalID == basicParam.BasicParametersTableID
+                                                   && a.Active == true
+                                                   select a.Comment).FirstOrDefault();
+                            if (comment_!=null)
+                            {
+                                if (comment_.Length>3)
+                                {
+                                    dataRow["Comment"] = comment_;
+                                    dataRow["CommentEnabled"] = "visible";
+                                }
+                                else
+                                {
+                                    dataRow["Comment"] = "nun";
+                                    dataRow["CommentEnabled"] = "hidden";
+                                }
+                            }
+                            else
+                            {
+                                dataRow["Comment"] = "nun";
+                                dataRow["CommentEnabled"] = "hidden";
+                            }
+
+                            
+                            
+
                             basicNames.Add(basicParam.Name);
                             CollectedBasicParametersTable collectedBasicTmp =
                                 (from a in kpiWebDataContext.CollectedBasicParametersTable
@@ -803,6 +832,30 @@ namespace KPIWeb.Reports
                                         dataRow["CurrentReportArchiveID"] = ReportArchiveID;
                                         dataRow["BasicParametersTableID"] = basicParam.BasicParametersTableID;
                                         dataRow["Name"] = basicParam.Name;
+
+                                        string comment_ = (from a in kpiWebDataContext.BasicParametrAdditional
+                                                           where a.BasicParametrAdditionalID == basicParam.BasicParametersTableID
+                                                           && a.Active == true
+                                                           select a.Comment).FirstOrDefault();
+                                        if (comment_ != null)
+                                        {
+                                            if (comment_.Length > 3)
+                                            {
+                                                dataRow["Comment"] = comment_;
+                                                dataRow["CommentEnabled"] = "visible";
+                                            }
+                                            else
+                                            {
+                                                dataRow["Comment"] = "nun";
+                                                dataRow["CommentEnabled"] = "hidden";
+                                            }
+                                        }
+                                        else
+                                        {
+                                            dataRow["Comment"] = "nun";
+                                            dataRow["CommentEnabled"] = "hidden";
+                                        }
+
                                         basicNames.Add(basicParam.Name);
                                         CollectedBasicParametersTable collectedBasicTmp =
                                             (from a in kpiWebDataContext.CollectedBasicParametersTable
@@ -1026,6 +1079,30 @@ namespace KPIWeb.Reports
                                             dataRow["Name"] = specBasicParam.Name;
                                             dataRow["CurrentReportArchiveID"] = ReportArchiveID;
                                             dataRow["BasicParametersTableID"] = specBasicParam.BasicParametersTableID;
+
+                                            string comment_ = (from a in kpiWebDataContext.BasicParametrAdditional
+                                                               where a.BasicParametrAdditionalID == specBasicParam.BasicParametersTableID
+                                                               && a.Active == true
+                                                               select a.Comment).FirstOrDefault();
+                                            if (comment_ != null)
+                                            {
+                                                if (comment_.Length > 3)
+                                                {
+                                                    dataRow["Comment"] = comment_;
+                                                    dataRow["CommentEnabled"] = "visible";
+                                                }
+                                                else
+                                                {
+                                                    dataRow["Comment"] = "nun";
+                                                    dataRow["CommentEnabled"] = "hidden";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                dataRow["Comment"] = "nun";
+                                                dataRow["CommentEnabled"] = "hidden";
+                                            }
+
                                             dataTable.Rows.Add(dataRow);
                                         }
                                         ///////////////////////закинули все в дататейбл
