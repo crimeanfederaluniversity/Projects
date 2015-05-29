@@ -266,13 +266,6 @@ namespace KPIWeb.AutomationDepartment
             RefreshGrid();
         }
 
-
-        protected void Button3_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-
         protected void CheckBox1_CheckedChanged1(object sender, EventArgs e)
         {
             if (!TextBox1.Text.Any()) CheckBox1.Checked = false;
@@ -297,6 +290,25 @@ namespace KPIWeb.AutomationDepartment
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+
+            var users = (from a in kPiDataContext.UsersTable where a.Active && a.Confirmed == false select a).ToList();
+
+            EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
+                                         where a.Name == "InviteToRegister"
+                                         && a.Active == true
+                                         select a).FirstOrDefault();
+
+            foreach (var user in users)
+            {
+                Action.MassMailing(user.Email, EmailParams.EmailTitle,
+                EmailParams.EmailContent.Replace("#LINK#", ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" + user.PassCode), null); 
+            }
+           
         }
 
     }

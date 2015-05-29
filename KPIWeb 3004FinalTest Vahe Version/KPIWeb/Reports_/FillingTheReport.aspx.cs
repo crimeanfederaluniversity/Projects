@@ -1414,7 +1414,7 @@ namespace KPIWeb.Reports
                     else
                     {
                         LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Пользователь " + (string)ViewState["login"] + " сохранил данные в отчете с ID = " + paramSerialization.ReportStr + "Заполнено " + notNullCnt + " показателей из " + AllCnt);
-                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + AllCnt + " для отправки отчёта необходимо заполнитеь еще " + (AllCnt - notNullCnt) + " показателя.');" +
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + AllCnt + ", для отправки отчёта необходимо заполнить еще " + (AllCnt - notNullCnt) + " показателя.');" +
                             "document.location = '../Reports_/FillingTheReport.aspx';", true);
 
                     }

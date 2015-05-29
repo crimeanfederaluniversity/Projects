@@ -2,11 +2,71 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
         <h2><%: Title %>Просмотр и создание пользователей</h2>
+    
+         <link rel="stylesheet" type="text/css" href="../Spinner.css"> 
+     
+
+    <script type="text/javascript">
+        function showLoadPanel() {
+            document.getElementById('LoadPanel_').style.visibility = 'visible';
+        }
+    </script>
+    <style>  
+
+        .LoadPanel 
+   {
+          position: fixed;
+          z-index: 10;
+          background-color: #101010;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0.9;
+          visibility: hidden;
+   }
+</style>     
+    <div id="LoadPanel_" class='LoadPanel'>               
+            <div id="floatingCirclesG">
+            <div class="f_circleG" id="frotateG_01">
+            </div>
+            <div class="f_circleG" id="frotateG_02">
+            </div>
+            <div class="f_circleG" id="frotateG_03">
+            </div>
+            <div class="f_circleG" id="frotateG_04">
+            </div>
+            <div class="f_circleG" id="frotateG_05">
+            </div>
+            <div class="f_circleG" id="frotateG_06">
+            </div>
+            <div class="f_circleG" id="frotateG_07">
+            </div>
+            <div class="f_circleG" id="frotateG_08">
+            </div>
+            </div>
+          <div style="  
+   
+    position: fixed; left: 38%; top: 60%;text-align:center;
+    "><font style=" 
+    color:#7fff00;
+    font-size:20px;
+    font-style:normal;
+    font-weight:900;
+    text-shadow: 1px 1px 1px black, 0 0 1em #00ffff;
+    ">Происходит обработка данных</font><br/>
+      <font style=" 
+    color:#ff0000;
+    font-size:20px;
+    font-style:normal;
+    font-weight:900;
+     text-shadow: 1px 1px 1px black, 0 0 1em #ffffff;"
+          >Дождитесь завершения процесса</font></div>
+        </div>
+
     <div>
        &nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Добавить нового пользователя" Width="594px" />
-        <br />
-        <br />
-&nbsp;<asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Разослать пользователям приглашение на регистрацию" Width="594px" />
+        &nbsp;&nbsp;
         <br />
         <br />
        <asp:Label ID="Label1" runat="server" Visible="False" Text="Пароль доступа"></asp:Label>
@@ -17,12 +77,11 @@
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <asp:Label ID="Label2" runat="server" Text="Ключевое слово"></asp:Label>
 &nbsp;<asp:TextBox ID="TextBox2" runat="server" Height="21px" Width="251px"></asp:TextBox>
+        <asp:Button ID="Button1" runat="server" Text="Поиск" OnClick="Button1_Click" Width="173px" />
         &nbsp;&nbsp;<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <asp:CheckBox ID="CheckBox1" Visible="False" runat="server" AutoPostBack="True" OnCheckedChanged="CheckBox1_CheckedChanged1" Text="Показать пароли и e-mail пользователей" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:Button ID="Button1" runat="server" Text="Поиск" OnClick="Button1_Click" Width="173px" />
-        <br />
         <br />
          
     
@@ -159,4 +218,5 @@
                 </Columns>
        </asp:GridView>
     
-    </asp:Content>
+        <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" OnClientClick="showLoadPanel()" Text="Разослать всем незарагистрированным пользователям" Width="597px" />
+        </asp:Content>
