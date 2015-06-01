@@ -25,6 +25,8 @@ namespace KPIWeb.AutomationDepartment
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
+            ViewState["User"] = userTable.Email;
+
             if ((userTable.AccessLevel != 10)&&(userTable.AccessLevel != 9))
             {
                 Response.Redirect("~/Default.aspx");
@@ -141,22 +143,31 @@ namespace KPIWeb.AutomationDepartment
         {
            // if (TextBox1.Text == ViewState["Password"].ToString())
            // {
-                Button button = (Button)sender;
+            if (!CheckBox2.Checked)
+            {
+                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU2: User " + ViewState["User"] + "DELETE user: " );
+                Button button = (Button) sender;
                 {
                     using (KPIWebDataContext kPiDataContext = new KPIWebDataContext())
                     {
                         UsersTable user =
                             (from a in kPiDataContext.UsersTable
-                             where a.UsersTableID == Convert.ToInt32(button.CommandArgument)
-                             select a).FirstOrDefault();
+                                where a.UsersTableID == Convert.ToInt32(button.CommandArgument)
+                                select a).FirstOrDefault();
 
                         user.Active = false;
                         kPiDataContext.SubmitChanges();
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU2: AdminUser " + ViewState["User"] + "DELETE user: "+ user.Email);
                     }
                     RefreshGrid();
 
                 }
-          //  }
+            }
+            else
+            {
+                DisplayAlert("Снимите предохранитель");
+            }
+            //  }
            // else
             //    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
               //      "alert('Введите пароль');", true);
@@ -243,6 +254,7 @@ namespace KPIWeb.AutomationDepartment
                                                                                  
                                         
                                         kPiDataContext.SubmitChanges();
+                                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU3: AdminUser " + ViewState["User"] + " SAVE data of user: " + user.Email);
                                     }
                                 }
                                 rowIndex++;
@@ -274,6 +286,7 @@ namespace KPIWeb.AutomationDepartment
 
         protected void Button2_Click(object sender, EventArgs e)
         {
+            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU1: User " + ViewState["User"] + " moved to page /AutomationDepartment/Regisration.aspx");
             Response.Redirect("~/AutomationDepartment/Regisration.aspx");
         }
 
@@ -283,6 +296,7 @@ namespace KPIWeb.AutomationDepartment
             {
                 Serialization ser = new Serialization(Convert.ToInt32(button.CommandArgument));
                 Session["userIdforChange"] = ser;
+                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU4: AdminUser " + ViewState["User"] + "moved to page /AutomationDepartment/ChangeUser.aspx");
                 Response.Redirect("~/AutomationDepartment/ChangeUser.aspx");
             }
         }
@@ -294,21 +308,41 @@ namespace KPIWeb.AutomationDepartment
 
         protected void Button3_Click(object sender, EventArgs e)
         {
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
-
-            var users = (from a in kPiDataContext.UsersTable where a.Active && a.Confirmed == false select a).ToList();
-
-            EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
-                                         where a.Name == "InviteToRegister"
-                                         && a.Active == true
-                                         select a).FirstOrDefault();
-
-            foreach (var user in users)
+            if (!CheckBox2.Checked)
             {
-                Action.MassMailing(user.Email, EmailParams.EmailTitle,
-                EmailParams.EmailContent.Replace("#LINK#", ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" + user.PassCode), null); 
+                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU0: MassMailing was started by: " + ViewState["User"]);
+                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+
+                var users =
+                    (from a in kPiDataContext.UsersTable where a.Active && a.Confirmed == false select a).ToList();
+
+                EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
+                    where a.Name == "InviteToRegister"
+                          && a.Active == true
+                    select a).FirstOrDefault();
+
+                foreach (var user in users)
+                {
+                    Action.MassMailing(user.Email, EmailParams.EmailTitle,
+                        EmailParams.EmailContent.Replace("#LINK#",
+                            ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" +
+                            user.PassCode), null);
+                }
             }
-           
+            else
+            {
+                DisplayAlert("Снимите предохранитель");
+            }
+
+        }
+        private void DisplayAlert(string message)
+        {
+            ClientScript.RegisterStartupScript(
+              this.GetType(),
+              Guid.NewGuid().ToString(),
+              string.Format("alert('{0}');",
+                message.Replace("'", @"\'").Replace("\n", "\\n").Replace("\r", "\\r")),
+                true);
         }
 
     }

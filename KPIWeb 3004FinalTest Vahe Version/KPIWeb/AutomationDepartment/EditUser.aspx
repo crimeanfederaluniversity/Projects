@@ -219,4 +219,5 @@
        </asp:GridView>
     
         <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" OnClientClick="showLoadPanel()" Text="Разослать всем незарагистрированным пользователям" Width="597px" />
-        </asp:Content>
+        <asp:CheckBox ID="CheckBox2" runat="server" Checked="True" Text="Предохранитель" />
+ </asp:Content>

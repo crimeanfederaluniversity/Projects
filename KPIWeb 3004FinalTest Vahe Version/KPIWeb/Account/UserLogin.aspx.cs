@@ -30,14 +30,14 @@ namespace KPIWeb.Account
                     KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
                     UsersTable user = (from usersTables in KPIWebDataContext.UsersTable
                                        where
-                                       ((usersTables.Login == UserName.Text) || (usersTables.Email == UserName.Text) )
+                                       ( (usersTables.Login == UserName.Text) || (usersTables.Email == UserName.Text) )
                                         &&
                                        usersTables.Password == Password.Text &&
                                        usersTables.Active == true
                                        select usersTables).FirstOrDefault();
-                    if (user != null)
+                    if (user != null )
                     {                     
-                        LogHandler.LogWriter.WriteLog(LogCategory.INFO,"Пользователь " + user.Login + " вошел в систему "); 
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO,"User " + user.Login + " login in "); 
                         Serialization UserSerId = new Serialization(user.UsersTableID);
                         Session["UserID"] = UserSerId;
                         Response.Redirect("~/Default.aspx");                   

@@ -1405,7 +1405,7 @@ namespace KPIWeb.Reports
                     int AllCnt = (int)ViewState["AllCnt"];
                     if (AllCnt == notNullCnt)
                     {
-                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Пользователь " + (string)ViewState["login"] + " сохранил данные в отчете с ID = " + paramSerialization.ReportStr + "Все показатели заполнены");
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT0: User " + (string)ViewState["login"] + " save data in report ID = " + paramSerialization.ReportStr + "All indicators are filled");
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Все показатели заполнены. Необходимо отправить отчёт на утверждение');" +
                             "document.location = '../Reports_/FillingTheReport.aspx';", true);
 
@@ -1413,7 +1413,7 @@ namespace KPIWeb.Reports
                     }
                     else
                     {
-                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Пользователь " + (string)ViewState["login"] + " сохранил данные в отчете с ID = " + paramSerialization.ReportStr + "Заполнено " + notNullCnt + " показателей из " + AllCnt);
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT1: User " + (string)ViewState["login"] + " save data in report ID = " + paramSerialization.ReportStr + "Filled " + notNullCnt + " indicators from " + AllCnt);
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + AllCnt + ", для отправки отчёта необходимо заполнить еще " + (AllCnt - notNullCnt) + " показателя.');" +
                             "document.location = '../Reports_/FillingTheReport.aspx';", true);
 
@@ -1469,7 +1469,7 @@ namespace KPIWeb.Reports
                                 }
                             }
                         }
-                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Пользователь " + (string)ViewState["login"] + " утвердил данные в отчете с ID = " + paramSerialization.ReportStr);
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT3: User " + (string)ViewState["login"] + " confirm data in report ID = " + paramSerialization.ReportStr);
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Вы утвердили данные всех базовых показателей. Отчёт отправлен и доступен только в режиме \"Просмотр\".');" +
                             "document.location = '../Default.aspx';", true);
 
@@ -1538,7 +1538,7 @@ namespace KPIWeb.Reports
                     else
                     {
                         //error
-                        LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 1 в отчете с ID = " + paramSerialization.ReportStr);
+                        LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0RTE1: Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 1 в отчете с ID = " + paramSerialization.ReportStr);
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Ошибка'); document.location = '../Default.aspx'; ", true);
 
                     }
@@ -1546,7 +1546,7 @@ namespace KPIWeb.Reports
                 }
                 else
                 {
-                    LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 2 в отчете с ID = " + paramSerialization.ReportStr);
+                    LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0RTE2 User " + (string)ViewState["login"] + " generate an error 2 in report c ID = " + paramSerialization.ReportStr);
                     //error
                 }
             }

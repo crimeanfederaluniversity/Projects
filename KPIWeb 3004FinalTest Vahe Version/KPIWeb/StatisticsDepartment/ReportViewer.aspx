@@ -52,6 +52,10 @@
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Создать новую кампанию" Width="400px" />
 
             </h1>
+            <p>
+                <asp:CheckBox ID="CheckBox1" runat="server" Checked="True" Text="Предохранитель" />
+
+            </p>
             <asp:GridView ID="GridviewActiveCampaign" runat="server" ShowFooter="True"  AutoGenerateColumns="False" OnSelectedIndexChanged="GridviewActiveCampaign_SelectedIndexChanged">
                 <Columns>
 

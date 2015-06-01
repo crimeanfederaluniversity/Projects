@@ -26,6 +26,8 @@ namespace KPIWeb.StatisticsDepartment
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
+            ViewState["User"] = userTable.Email;
+
             if ((userTable.AccessLevel != 10)&&(userTable.AccessLevel != 9))
             {
                 Response.Redirect("~/Default.aspx");
@@ -138,6 +140,7 @@ namespace KPIWeb.StatisticsDepartment
             {
                 Serialization ReportID = new Serialization((int)reportArchiveTableID, null);
                 Session["ReportArchiveTableID"] = ReportID;
+                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RW2: User " + ViewState["User"] + @" moved to page /Reports_/EditReport.aspx");
                 Response.Redirect("~/Reports_/EditReport.aspx");
             }
         }
@@ -198,35 +201,48 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void ButtonMailSending_Click(object sender, EventArgs e)
         {
-            int errors = 0;
-            Button button = (Button)sender;
+            if (!CheckBox1.Checked)
             {
-                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
-
-
-                var emailListTo = (from a in kPiDataContext.ReportArchiveAndLevelMappingTable
-                    where a.FK_ReportArchiveTableId == Convert.ToInt32(button.CommandArgument) && a.Active
-                    join b in kPiDataContext.UsersTable
-                        on a.FK_FirstLevelSubmisionTableId equals b.FK_FirstLevelSubdivisionTable
-                        where b.Active
-                          select b.Email).ToList();
-
-                EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
-                                             where a.Name == "NewCampaign"
-                                             && a.Active == true
-                                             select a).FirstOrDefault();
-                string RepStartDate =((from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.StartDateTime).FirstOrDefault()).ToString().Split()[0];
-                string RepEndDate = (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.EndDateTime).FirstOrDefault().ToString().Split()[0];
-                string RepName = (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.Name).FirstOrDefault() ;
-                foreach (var email in emailListTo)
+                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RW1: MassMailing was started by: " + ViewState["User"]);
+                int errors = 0;
+                Button button = (Button) sender;
                 {
-                    
-                    if (EmailParams != null)
-                        Action.MassMailing(email, EmailParams.EmailTitle,
-                            EmailParams.EmailContent.Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName")).Replace("#StartDate#",RepStartDate).Replace("#EndDate#",RepEndDate).Replace("#ReportName#",RepName)
-                            , null);
+                    KPIWebDataContext kPiDataContext = new KPIWebDataContext();
 
-                    /*
+
+                    var emailListTo = (from a in kPiDataContext.ReportArchiveAndLevelMappingTable
+                        where a.FK_ReportArchiveTableId == Convert.ToInt32(button.CommandArgument) && a.Active
+                        join b in kPiDataContext.UsersTable
+                            on a.FK_FirstLevelSubmisionTableId equals b.FK_FirstLevelSubdivisionTable
+                        where b.Active
+                        select b.Email).ToList();
+
+                    EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
+                        where a.Name == "NewCampaign"
+                              && a.Active == true
+                        select a).FirstOrDefault();
+                    string RepStartDate = ((from a in kPiDataContext.ReportArchiveTable
+                        where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument)
+                        select a.StartDateTime).FirstOrDefault()).ToString().Split()[0];
+                    string RepEndDate = (from a in kPiDataContext.ReportArchiveTable
+                        where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument)
+                        select a.EndDateTime).FirstOrDefault().ToString().Split()[0];
+                    string RepName = (from a in kPiDataContext.ReportArchiveTable
+                        where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument)
+                        select a.Name).FirstOrDefault();
+                    foreach (var email in emailListTo)
+                    {
+
+                        if (EmailParams != null)
+                            Action.MassMailing(email, EmailParams.EmailTitle,
+                                EmailParams.EmailContent.Replace("#SiteName#",
+                                    ConfigurationManager.AppSettings.Get("SiteName"))
+                                    .Replace("#StartDate#", RepStartDate)
+                                    .Replace("#EndDate#", RepEndDate)
+                                    .Replace("#ReportName#", RepName)
+                                , null);
+
+                        /*
                    errors = Action.MassMailing(email,"Новая отчетная кампания \"" + 
                        (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.Name).FirstOrDefault() + "\"",
                        "Здравствуйте, " + email.ToString().Substring(0, email.ToString().LastIndexOf('@')) + ". Информируем Вас о начале новой отчетной кампании \"" +
@@ -237,69 +253,103 @@ namespace KPIWeb.StatisticsDepartment
                        ". Для авторизации в системе перейдите по ссылке: " + ConfigurationManager.AppSettings.Get("SiteName")
                        , null);
                     */
-                }
-                EmailSendHistory esh0 = (from a in kPiDataContext.EmailSendHistory where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 0 select a).FirstOrDefault(); ;
-                //EmailSendHistory esh1 = (from a in kPiDataContext.EmailSendHistories where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 1 select a).FirstOrDefault(); ;
+                    }
+                    EmailSendHistory esh0 = (from a in kPiDataContext.EmailSendHistory
+                        where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 0
+                        select a).FirstOrDefault();
+                    ;
+                    //EmailSendHistory esh1 = (from a in kPiDataContext.EmailSendHistories where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 1 select a).FirstOrDefault(); ;
 
-                esh0.Date = DateTime.Now;
-                esh0.Value = " [ " + (emailListTo.Count - errors).ToString() + "/" + emailListTo.Count.ToString() + " ]";
+                    esh0.Date = DateTime.Now;
+                    esh0.Value = " [ " + (emailListTo.Count - errors).ToString() + "/" + emailListTo.Count.ToString() +
+                                 " ]";
 
-                kPiDataContext.SubmitChanges();
+                    kPiDataContext.SubmitChanges();
 
-                var date = (from a in kPiDataContext.EmailSendHistory
-                            where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 0
-                            select a.Date).FirstOrDefault();
+                    var date = (from a in kPiDataContext.EmailSendHistory
+                        where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 0
+                        select a.Date).FirstOrDefault();
 
-                int rowIndex = 0;
-                if (GridviewActiveCampaign.Rows.Count > 0)
-                {
-                    for (int i = 1; i <= GridviewActiveCampaign.Rows.Count; i++)
+                    int rowIndex = 0;
+                    if (GridviewActiveCampaign.Rows.Count > 0)
                     {
-                        Label LabelDate1 = (Label)GridviewActiveCampaign.Rows[rowIndex].FindControl("LabelDate1");
-                        LabelDate1.Text = date + " " + " [ "+(emailListTo.Count-errors).ToString() + "/" + emailListTo.Count.ToString()+" ]";
-                        rowIndex++;
+                        for (int i = 1; i <= GridviewActiveCampaign.Rows.Count; i++)
+                        {
+                            Label LabelDate1 = (Label) GridviewActiveCampaign.Rows[rowIndex].FindControl("LabelDate1");
+                            LabelDate1.Text = date + " " + " [ " + (emailListTo.Count - errors).ToString() + "/" +
+                                              emailListTo.Count.ToString() + " ]";
+                            rowIndex++;
+                        }
                     }
                 }
+                Page_Load(null, null);
             }
-            Page_Load(null, null);
+            else
+            {
+                DisplayAlert("Снимите предохранитель!");
+            }
+        }
+
+        private void DisplayAlert(string message)
+        {
+            ClientScript.RegisterStartupScript(
+              this.GetType(),
+              Guid.NewGuid().ToString(),
+              string.Format("alert('{0}');window.location.href = 'ReportViewer.aspx'",
+                message.Replace("'", @"\'").Replace("\n", "\\n").Replace("\r", "\\r")),
+                true);
         }
 
         protected void ButtonMailSending2_Click(object sender, EventArgs e)
         {
-            Button button = (Button)sender;
+            if (!CheckBox1.Checked)
             {
-                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
-
-                int errors=0;
-       
-                var emailListToDebt = (from a in kPiDataContext.ReportArchiveAndLevelMappingTable
-                                       where a.FK_ReportArchiveTableId == Convert.ToInt32(button.CommandArgument) && a.Active
-                                       join b in kPiDataContext.UsersTable on a.FK_FirstLevelSubmisionTableId equals b.FK_FirstLevelSubdivisionTable
-                                       where b.Active
-                                       join c in kPiDataContext.CollectedBasicParametersTable on b.UsersTableID equals c.FK_UsersTable
-                                       where (c.Status == 0 || c.Status == null) && c.Active
-                                       select b.Email).ToList();
-
-
-                var uniqueMails = emailListToDebt.Distinct().ToList();
-
-                EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
-                                             where a.Name == "CampaignReminder"
-                                             && a.Active == true
-                                             select a).FirstOrDefault();
-                string RepStartDate =((from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.StartDateTime).FirstOrDefault()).ToString().Split()[0];
-                string RepEndDate = (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.EndDateTime).FirstOrDefault().ToString().Split()[0];
-                string RepName = (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.Name).FirstOrDefault() ;
-
-                    
-
-                foreach (var email in uniqueMails)
+                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RW0: MassMailing was started by: " + ViewState["User"]);
+                Button button = (Button) sender;
                 {
-                    if (EmailParams != null)
-                        Action.MassMailing(email, EmailParams.EmailTitle,
-                            EmailParams.EmailContent.Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName")).Replace("#StartDate#", RepStartDate).Replace("#EndDate#", RepEndDate).Replace("#ReportName#", RepName)
-                            , null);
-                    /*
+                    KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+
+                    int errors = 0;
+
+                    var emailListToDebt = (from a in kPiDataContext.ReportArchiveAndLevelMappingTable
+                        where a.FK_ReportArchiveTableId == Convert.ToInt32(button.CommandArgument) && a.Active
+                        join b in kPiDataContext.UsersTable on a.FK_FirstLevelSubmisionTableId equals
+                            b.FK_FirstLevelSubdivisionTable
+                        where b.Active
+                        join c in kPiDataContext.CollectedBasicParametersTable on b.UsersTableID equals c.FK_UsersTable
+                        where (c.Status == 0 || c.Status == null) && c.Active
+                        select b.Email).ToList();
+
+
+                    var uniqueMails = emailListToDebt.Distinct().ToList();
+
+                    EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
+                        where a.Name == "CampaignReminder"
+                              && a.Active == true
+                        select a).FirstOrDefault();
+                    string RepStartDate = ((from a in kPiDataContext.ReportArchiveTable
+                        where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument)
+                        select a.StartDateTime).FirstOrDefault()).ToString().Split()[0];
+                    string RepEndDate = (from a in kPiDataContext.ReportArchiveTable
+                        where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument)
+                        select a.EndDateTime).FirstOrDefault().ToString().Split()[0];
+                    string RepName = (from a in kPiDataContext.ReportArchiveTable
+                        where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument)
+                        select a.Name).FirstOrDefault();
+
+
+
+                    foreach (var email in uniqueMails)
+                    {
+                        if (EmailParams != null)
+                            Action.MassMailing(email, EmailParams.EmailTitle,
+                                EmailParams.EmailContent.Replace("#SiteName#",
+                                    ConfigurationManager.AppSettings.Get("SiteName"))
+                                    .Replace("#StartDate#", RepStartDate)
+                                    .Replace("#EndDate#", RepEndDate)
+                                    .Replace("#ReportName#", RepName)
+                                , null);
+                        /*
                     errors = Action.MassMailing(email, "Заполните данные в отчетной кампании \"" +
                         (from a in kPiDataContext.ReportArchiveTable where a.ReportArchiveTableID == Convert.ToInt32(button.CommandArgument) select a.Name).FirstOrDefault() + "\"",
                         "Здравствуйте, " + email.ToString().Substring(0, email.ToString().LastIndexOf('@')) + ". Напоминаем вам о том, что вы являетесь участником отчетной кампании \"" +
@@ -310,33 +360,44 @@ namespace KPIWeb.StatisticsDepartment
                         ". На данный момент вы не отправили на утверждение прикрепленные за вами данные. Для авторизации в системе перейдите по ссылке: " + ConfigurationManager.AppSettings.Get("SiteName")
                         , null);
                      */
-            }
-
-                //EmailSendHistory esh0 = (from a in kPiDataContext.EmailSendHistories where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 0 select a).FirstOrDefault(); ;
-                EmailSendHistory esh1 = (from a in kPiDataContext.EmailSendHistory where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 1 select a).FirstOrDefault(); ;
-
-                esh1.Date = DateTime.Now;
-                esh1.Value = " [ " + (uniqueMails.Count - errors).ToString() + "/" + uniqueMails.Count.ToString() + " ]";
-
-                kPiDataContext.SubmitChanges();
-
-                var date = (from a in kPiDataContext.EmailSendHistory
-                            where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 1
-                            select a.Date).FirstOrDefault();
-
-                int rowIndex = 0;
-                if (GridviewActiveCampaign.Rows.Count > 0)
-                {
-                    for (int i = 1; i <= GridviewActiveCampaign.Rows.Count; i++)
-                    {
-                        Label LabelDate2 = (Label) GridviewActiveCampaign.Rows[rowIndex].FindControl("LabelDate2");
-                        LabelDate2.Text = date + " " + " [ "+(uniqueMails.Count-errors).ToString() + "/" + uniqueMails.Count.ToString()+" ]";
-                        rowIndex++;
                     }
-                }
 
+                    //EmailSendHistory esh0 = (from a in kPiDataContext.EmailSendHistories where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 0 select a).FirstOrDefault(); ;
+                    EmailSendHistory esh1 = (from a in kPiDataContext.EmailSendHistory
+                        where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 1
+                        select a).FirstOrDefault();
+                    ;
+
+                    esh1.Date = DateTime.Now;
+                    esh1.Value = " [ " + (uniqueMails.Count - errors).ToString() + "/" + uniqueMails.Count.ToString() +
+                                 " ]";
+
+                    kPiDataContext.SubmitChanges();
+
+                    var date = (from a in kPiDataContext.EmailSendHistory
+                        where a.FK_ReportsArchiveTable == Convert.ToInt32(button.CommandArgument) && a.Count == 1
+                        select a.Date).FirstOrDefault();
+
+                    int rowIndex = 0;
+                    if (GridviewActiveCampaign.Rows.Count > 0)
+                    {
+                        for (int i = 1; i <= GridviewActiveCampaign.Rows.Count; i++)
+                        {
+                            Label LabelDate2 = (Label) GridviewActiveCampaign.Rows[rowIndex].FindControl("LabelDate2");
+                            LabelDate2.Text = date + " " + " [ " + (uniqueMails.Count - errors).ToString() + "/" +
+                                              uniqueMails.Count.ToString() + " ]";
+                            rowIndex++;
+                        }
+                    }
+
+                }
+                Page_Load(null, null);
             }
-            Page_Load(null, null);
+            else
+            {
+                DisplayAlert("Снимите предохранитель!");
+            }
         }
+
     }
 }

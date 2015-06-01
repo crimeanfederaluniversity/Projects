@@ -124,12 +124,12 @@ namespace KPIWeb
                 if (SendMail(ems.SMTPName, 587, ems.Email, ems.Password, emailto, caption, messageBuilder.ToString(), attachFile) == 1)
                 {
                     ems.SendOk++;
-                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, "С почты " + ems.Email + " отправлено письмо на адрес " + emailto + " c шапкой:\" " + caption + " \"");
+                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0MS0: From mail " + ems.Email + " success send an email to " + emailto + " with caption:\" " + caption + " \"");
                     break;
                 }
                 ems.SendError++;
                 errors++;
-               LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "С почты " + ems.Email + " не удалось отправить письмо на адрес " + emailto + " c шапкой:\" " + caption+" \"");
+                LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0MS1: From mail " + ems.Email + " failed send an email to " + emailto + " with caption:\" " + caption + " \"");
             }
             kpiWeb.SubmitChanges();
 
