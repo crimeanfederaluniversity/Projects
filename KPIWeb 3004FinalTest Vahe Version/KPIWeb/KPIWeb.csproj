@@ -187,6 +187,7 @@
     <Content Include="AutomationDepartment\EditUser.aspx" />
     <Content Include="AutomationDepartment\Main.aspx" />
     <Content Include="AutomationDepartment\Regisration.aspx" />
+    <Content Include="AutomationDepartment\SendInvite.aspx" />
     <Content Include="AutomationDepartment\WatchingParamtrsState.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
@@ -372,6 +373,13 @@
     </Compile>
     <Compile Include="AutomationDepartment\Regisration.aspx.designer.cs">
       <DependentUpon>Regisration.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AutomationDepartment\SendInvite.aspx.cs">
+      <DependentUpon>SendInvite.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutomationDepartment\SendInvite.aspx.designer.cs">
+      <DependentUpon>SendInvite.aspx</DependentUpon>
     </Compile>
     <Compile Include="AutomationDepartment\WatchingParamtrsState.aspx.cs">
       <DependentUpon>WatchingParamtrsState.aspx</DependentUpon>

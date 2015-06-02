@@ -29,7 +29,6 @@ namespace KPIWeb.Reports
     public partial class FillingTheReport : System.Web.UI.Page
     {
         public int col_ = 0;
-
         public string ExportPDF(GridView GridToExport, int[] WidthArray, string Header, int CurrentPageSize, int ColumnCount, string ReportName, string UserPositionName, string UserStructName)
         {
             GridToExport.AllowPaging = false;
@@ -152,7 +151,7 @@ namespace KPIWeb.Reports
             return DocPath;           
         }
         #region patterns
-        protected double pattern1(UsersTable user, int ReportArchiveID, int spectype_, string basicAbb)
+        protected double pattern1(UsersTable user, int ReportArchiveID, int spectype_, string basicAbb,string basicAbb2)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             return Convert.ToDouble(
@@ -172,7 +171,7 @@ namespace KPIWeb.Reports
                          && a.FK_FirstLevelSubdivisionTable == user.FK_FirstLevelSubdivisionTable
                          && a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable
                          && a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
-                         && z.AbbreviationEN == basicAbb
+                         && ((z.AbbreviationEN == basicAbb)||((basicAbb2 != null) && (z.AbbreviationEN == basicAbb2)))
                          && a.FK_ReportArchiveTable == ReportArchiveID
                          && b.SpecType == spectype_
                          && a.Active == true
@@ -383,35 +382,50 @@ namespace KPIWeb.Reports
                 {
                     double tmp = 1000000000001;
 
-                    if (basicParam.AbbreviationEN == "a_Och_M_IZO") tmp = pattern1(user, ReportArchiveID, 3, "a_Och_M");
-                    if (basicParam.AbbreviationEN == "b_OchZ_M_IZO") tmp = pattern1(user, ReportArchiveID, 3, "b_OchZ_M");
-                    if (basicParam.AbbreviationEN == "c_Z_M_IZO") tmp = pattern1(user, ReportArchiveID, 3, "c_Z_M");
-                    if (basicParam.AbbreviationEN == "d_E_M_IZO") tmp = pattern1(user, ReportArchiveID, 3, "d_E_M");
+                    if (basicParam.AbbreviationEN == "a_Och_M_IZO") tmp = pattern1(user, ReportArchiveID, 3, "a_Och_M", "a_Och_M_Kom");
+                    if (basicParam.AbbreviationEN == "b_OchZ_M_IZO") tmp = pattern1(user, ReportArchiveID, 3, "b_OchZ_M", "b_OchZ_M_Kom");
+                    if (basicParam.AbbreviationEN == "c_Z_M_IZO") tmp = pattern1(user, ReportArchiveID, 3, "c_Z_M", "c_Z_M_Kom");
+                    if (basicParam.AbbreviationEN == "d_E_M_IZO") tmp = pattern1(user, ReportArchiveID, 3, "d_E_M", "d_E_M_Kom");
 
                     if (basicParam.AbbreviationEN == "a_Och_M_NoIn") tmp = pattern2(user, ReportArchiveID, "a_Och_M");
                     if (basicParam.AbbreviationEN == "b_OchZ_M_NoIn") tmp = pattern2(user, ReportArchiveID, "b_OchZ_M");
                     if (basicParam.AbbreviationEN == "c_Z_M_NoIn") tmp = pattern2(user, ReportArchiveID, "c_Z_M");
                     if (basicParam.AbbreviationEN == "d_E_M_NoIn") tmp = pattern2(user, ReportArchiveID, "d_E_M");
 
-                    if (basicParam.AbbreviationEN == "a_Och_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "a_Och_S");
-                    if (basicParam.AbbreviationEN == "b_OchZ_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "b_OchZ_S");
-                    if (basicParam.AbbreviationEN == "c_Z_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "c_Z_S");
-                    if (basicParam.AbbreviationEN == "d_E_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "d_E_S");
+                    if (basicParam.AbbreviationEN == "a_Och_M_NoIn_Kom") tmp = pattern2(user, ReportArchiveID, "a_Och_M_Kom");
+                    if (basicParam.AbbreviationEN == "b_OchZ_M_NoIn_Kom") tmp = pattern2(user, ReportArchiveID, "b_OchZ_M_Kom");
+                    if (basicParam.AbbreviationEN == "c_Z_M_NoIn_Kom") tmp = pattern2(user, ReportArchiveID, "c_Z_M_Kom");
+                    if (basicParam.AbbreviationEN == "d_E_M_NoIn_Kom") tmp = pattern2(user, ReportArchiveID, "d_E_M_Kom");
+
+                    if (basicParam.AbbreviationEN == "a_Och_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "a_Och_S", "a_Och_S_Kom");
+                    if (basicParam.AbbreviationEN == "b_OchZ_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "b_OchZ_S", "b_OchZ_S_Kom");
+                    if (basicParam.AbbreviationEN == "c_Z_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "c_Z_S", "c_Z_S_Kom");
+                    if (basicParam.AbbreviationEN == "d_E_S_IZO") tmp = pattern1(user, ReportArchiveID, 2, "d_E_S", "c_Z_S_Kom");
 
                     if (basicParam.AbbreviationEN == "a_Och_S_NoIn") tmp = pattern2(user, ReportArchiveID, "a_Och_S");
                     if (basicParam.AbbreviationEN == "b_OchZ_S_NoIn") tmp = pattern2(user, ReportArchiveID, "b_OchZ_S");
                     if (basicParam.AbbreviationEN == "c_Z_S_NoIn") tmp = pattern2(user, ReportArchiveID, "c_Z_S");
                     if (basicParam.AbbreviationEN == "d_E_S_NoIn") tmp = pattern2(user, ReportArchiveID, "d_E_S");
 
-                    if (basicParam.AbbreviationEN == "a_Och_B_IZO") tmp = pattern1(user, ReportArchiveID, 1, "a_Och_B");
-                    if (basicParam.AbbreviationEN == "b_OchZ_B_IZO") tmp = pattern1(user, ReportArchiveID, 1, "b_OchZ_B");
-                    if (basicParam.AbbreviationEN == "c_Z_B_IZO") tmp = pattern1(user, ReportArchiveID, 1, "c_Z_B");
-                    if (basicParam.AbbreviationEN == "d_E_B_IZO") tmp = pattern1(user, ReportArchiveID, 1, "d_E_B");
+                    if (basicParam.AbbreviationEN == "a_Och_S_NoIn_Kom") tmp = pattern2(user, ReportArchiveID, "a_Och_S_Kom");
+                    if (basicParam.AbbreviationEN == "b_OchZ_S_NoIn_Kom") tmp = pattern2(user, ReportArchiveID, "b_OchZ_S_Kom");
+                    if (basicParam.AbbreviationEN == "c_Z_S_NoIn_Kom") tmp = pattern2(user, ReportArchiveID, "c_Z_S_Kom");
+                    if (basicParam.AbbreviationEN == "d_E_S_NoIn_Kom") tmp = pattern2(user, ReportArchiveID, "d_E_S_Kom");
+
+                    if (basicParam.AbbreviationEN == "a_Och_B_IZO") tmp = pattern1(user, ReportArchiveID, 1, "a_Och_B", "a_Och_B_Kom");
+                    if (basicParam.AbbreviationEN == "b_OchZ_B_IZO") tmp = pattern1(user, ReportArchiveID, 1, "b_OchZ_B", "b_OchZ_B_Kom");
+                    if (basicParam.AbbreviationEN == "c_Z_B_IZO") tmp = pattern1(user, ReportArchiveID, 1, "c_Z_B", "c_Z_B_Kom");
+                    if (basicParam.AbbreviationEN == "d_E_B_IZO") tmp = pattern1(user, ReportArchiveID, 1, "d_E_B", "d_E_B_Kom");
 
                     if (basicParam.AbbreviationEN == "a_Och_B_NoIn") tmp = pattern2(user, ReportArchiveID, "a_Och_B");
                     if (basicParam.AbbreviationEN == "b_OchZ_B_NoIn") tmp = pattern2(user, ReportArchiveID, "b_OchZ_B");
                     if (basicParam.AbbreviationEN == "c_Z_B_NoIn") tmp = pattern2(user, ReportArchiveID, "c_Z_B");
                     if (basicParam.AbbreviationEN == "d_E_B_NoIn") tmp = pattern2(user, ReportArchiveID, "d_E_B");
+
+                    if (basicParam.AbbreviationEN == "a_Och_B_NoIn_Kom") tmp = pattern2(user, ReportArchiveID, "a_Och_B_Kom");
+                    if (basicParam.AbbreviationEN == "b_OchZ_B_NoIn_Kom") tmp = pattern2(user, ReportArchiveID, "b_OchZ_B_Kom");
+                    if (basicParam.AbbreviationEN == "c_Z_B_NoIn_Kom") tmp = pattern2(user, ReportArchiveID, "c_Z_B_Kom");
+                    if (basicParam.AbbreviationEN == "d_E_B_NoIn_Kom") tmp = pattern2(user, ReportArchiveID, "d_E_B_Kom");
 
                     if (basicParam.AbbreviationEN == "OOP_M") tmp = pattern3(user, ReportArchiveID, 3);
                     if (basicParam.AbbreviationEN == "kol_M_OP") tmp = pattern4(user, ReportArchiveID, 3);
@@ -962,6 +976,7 @@ namespace KPIWeb.Reports
 
                                     foreach (FourthLevelSubdivisionTable spec in Specialzations)
                                     {
+                                        /*
                                         columnNames.Add("Направление подготовки\r" +
                                                         (from a in kpiWebDataContext.SpecializationTable
                                                          where a.SpecializationTableID == spec.FK_Specialization
@@ -969,6 +984,12 @@ namespace KPIWeb.Reports
                                                          (from a in kpiWebDataContext.SpecializationTable
                                                          where a.SpecializationTableID == spec.FK_Specialization
                                                          select a.SpecializationNumber).FirstOrDefault().ToString());
+                                       */
+
+                                        columnNames.Add( (from a in kpiWebDataContext.SpecializationTable
+                                                          where a.SpecializationTableID == spec.FK_Specialization
+                                                          select a.SpecializationNumber).FirstOrDefault().ToString());
+
                                         //запомнили название специальности // оно нам пригодится)
                                     }
 
@@ -1566,9 +1587,9 @@ namespace KPIWeb.Reports
                 col_ = 0;
                 color = System.Drawing.Color.GhostWhite;
             }
-            e.Row.BackColor = color;
+            
             int rowIndex = 0;
-
+            e.Row.BackColor = color;
             Serialization modeSer = (Serialization)Session["mode"];
             if (modeSer == null)
             {
@@ -1593,6 +1614,7 @@ namespace KPIWeb.Reports
                             {
                                 DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
                                 d.BackColor = disableColor;
+                                //d.CssClass = "DisableClass";
                             }
                         }
                         else
