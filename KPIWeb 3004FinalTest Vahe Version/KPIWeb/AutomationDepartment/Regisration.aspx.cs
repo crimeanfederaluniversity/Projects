@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Web;
@@ -170,6 +171,7 @@ namespace KPIWeb.AutomationDepartment
             ///////////////////////////////////////////////////проверили на админа
             if (!Page.IsPostBack)
             {
+                ViewState["Login"] = userTable.Email;
                 Gridview1.Visible = false;
                 Label25.Visible = false;
                 Gridview2.Visible = false;
@@ -573,6 +575,7 @@ namespace KPIWeb.AutomationDepartment
                                                  select a).FirstOrDefault();
                     Action.MassMailing(user.Email, EmailParams.EmailTitle, 
                         EmailParams.EmailContent.Replace("#LINK#", ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" + passCode), null);
+                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RN0: Admin(mon) " + (string)ViewState["Login"] + " has registered a new user: " + EmailText.Text + "from ip: " + Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
                     /*
                     Action.MassMailing(user.Email,"Ваш почтовый адресс был зарегистрирован в системе ИАС 'КФУ-Программа развития'",
                         "Здравствуйте!"+Environment.NewLine+ 
