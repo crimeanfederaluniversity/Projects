@@ -31,7 +31,7 @@ namespace KPIWeb.Rector
             ViewState["login"] = login;
 
             if (!IsPostBack)
-            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RM0: Prorectr " + (string)ViewState["login"] + " moved to page (RectorMain)");
+            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RM0: Prorector " + (string)ViewState["login"] + " moved to page (RectorMain)");
 
 
             if (userTable.AccessLevel != 5)
