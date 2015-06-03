@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
@@ -145,7 +146,6 @@ namespace KPIWeb.AutomationDepartment
            // {
             if (!CheckBox2.Checked)
             {
-                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU2: User " + ViewState["User"] + "DELETE user: " );
                 Button button = (Button) sender;
                 {
                     using (KPIWebDataContext kPiDataContext = new KPIWebDataContext())
@@ -157,7 +157,7 @@ namespace KPIWeb.AutomationDepartment
 
                         user.Active = false;
                         kPiDataContext.SubmitChanges();
-                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU2: AdminUser " + ViewState["User"] + "DELETE user: "+ user.Email);
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU2: AdminUser " + ViewState["User"] + "DELETE user: "+ user.Email + " from ip: "+Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
                     }
                     RefreshGrid();
 
@@ -254,7 +254,7 @@ namespace KPIWeb.AutomationDepartment
                                                                                  
                                         
                                         kPiDataContext.SubmitChanges();
-                                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU3: AdminUser " + ViewState["User"] + " SAVE data of user: " + user.Email);
+                                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU3: AdminUser " + ViewState["User"] + " SAVE data of user: " + user.Email + " from ip: " + Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
                                     }
                                 }
                                 rowIndex++;
@@ -296,7 +296,7 @@ namespace KPIWeb.AutomationDepartment
             {
                 Serialization ser = new Serialization(Convert.ToInt32(button.CommandArgument));
                 Session["userIdforChange"] = ser;
-                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU4: AdminUser " + ViewState["User"] + "moved to page /AutomationDepartment/ChangeUser.aspx");
+                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU4: AdminUser " + ViewState["User"] + "moved to page /AutomationDepartment/ChangeUser.aspx" + "from ip: "+ Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
                 Response.Redirect("~/AutomationDepartment/ChangeUser.aspx");
             }
         }

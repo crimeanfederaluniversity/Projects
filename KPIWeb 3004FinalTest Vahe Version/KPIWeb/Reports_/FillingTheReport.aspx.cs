@@ -1426,7 +1426,7 @@ namespace KPIWeb.Reports
                     int AllCnt = (int)ViewState["AllCnt"];
                     if (AllCnt == notNullCnt)
                     {
-                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT0: User " + (string)ViewState["login"] + " save data in report ID = " + paramSerialization.ReportStr + "All indicators are filled");
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT0: User " + (string)ViewState["login"] + " save data in report ID = " + paramSerialization.ReportStr + "All indicators are filled" + " from ip: "+Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Все показатели заполнены. Необходимо отправить отчёт на утверждение');" +
                             "document.location = '../Reports_/FillingTheReport.aspx';", true);
 
@@ -1434,7 +1434,7 @@ namespace KPIWeb.Reports
                     }
                     else
                     {
-                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT1: User " + (string)ViewState["login"] + " save data in report ID = " + paramSerialization.ReportStr + "Filled " + notNullCnt + " indicators from " + AllCnt);
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT1: User " + (string)ViewState["login"] + " save data in report ID = " + paramSerialization.ReportStr + "Filled " + notNullCnt + " indicators from " + AllCnt + " Ip: "+Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + AllCnt + ", для отправки отчёта необходимо заполнить еще " + (AllCnt - notNullCnt) + " показателя.');" +
                             "document.location = '../Reports_/FillingTheReport.aspx';", true);
 
@@ -1490,7 +1490,7 @@ namespace KPIWeb.Reports
                                 }
                             }
                         }
-                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT3: User " + (string)ViewState["login"] + " confirm data in report ID = " + paramSerialization.ReportStr);
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT3: User " + (string)ViewState["login"] + " confirm data in report ID = " + paramSerialization.ReportStr + " from ip: "+Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Вы утвердили данные всех базовых показателей. Отчёт отправлен и доступен только в режиме \"Просмотр\".');" +
                             "document.location = '../Default.aspx';", true);
 

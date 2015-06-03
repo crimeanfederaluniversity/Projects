@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System;
 using System.IO;
+using System.Net;
 
 namespace KPIWeb.Account
 {
@@ -37,7 +38,7 @@ namespace KPIWeb.Account
                                        select usersTables).FirstOrDefault();
                     if (user != null )
                     {                     
-                        LogHandler.LogWriter.WriteLog(LogCategory.INFO,"User " + user.Login + " login in "); 
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO,"0LN0: User " + user.Email + " login in from ip: " + Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault()); 
                         Serialization UserSerId = new Serialization(user.UsersTableID);
                         Session["UserID"] = UserSerId;
                         Response.Redirect("~/Default.aspx");                   

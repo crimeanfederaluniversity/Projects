@@ -2,7 +2,11 @@
 
 
        <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-        <h2>Список активных отчётов</h2><br />
+           <h2>Список активных отчётов</h2>
+           <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="X-Large" Text="Label" Visible="False"></asp:Label>
+           <br />
+           <br />
+           <asp:Label ID="Label2" runat="server" Font-Bold="True" Font-Size="Large" Text="Label" Visible="False"></asp:Label>
         <asp:GridView ID="GridView1" runat="server" 
             AutoGenerateColumns="False"
             style="margin-top: 0px" OnRowDataBound="GridView1_RowDataBound">

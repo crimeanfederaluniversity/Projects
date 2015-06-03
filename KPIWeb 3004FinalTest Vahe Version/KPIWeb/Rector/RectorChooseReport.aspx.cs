@@ -111,7 +111,7 @@ namespace KPIWeb.Rector
                     RectorHistory.Visible = false;
                     RectorHistory.RectorSession[RectorHistory.CurrentSession] = rectorResultSession;
                     Session["rectorHistory"] = RectorHistory;
-                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + (string)ViewState["login"] + " перешел к работе с отчетом, ID = " + button.CommandArgument);
+                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RCR0: Prorector " + (string)ViewState["login"] + " pereshel k rabote s othetom, ID = " + button.CommandArgument);
                     Response.Redirect("~/Rector/Result.aspx");
                 }
                 else // смотрим рассчетные
@@ -125,7 +125,7 @@ namespace KPIWeb.Rector
                     RectorHistory.Visible = false;
                     RectorHistory.RectorSession[RectorHistory.CurrentSession] = rectorResultSession;
                     Session["rectorHistory"] = RectorHistory;
-                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + (string)ViewState["login"] + " перешел к работе с отчетом, ID = " + button.CommandArgument);
+                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RCR1: Prorector " + (string)ViewState["login"] + " pereshel k rabote s othetom, ID = " + button.CommandArgument);
                     Response.Redirect("~/Rector/Result.aspx");
                 }
 

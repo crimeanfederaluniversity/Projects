@@ -26,7 +26,7 @@ namespace KPIWeb.Rector
                      (from a in kPiDataContext.UsersTable
                       where a.UsersTableID == userID
                       select a.Email).FirstOrDefault();
-            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + login + " перешел на страницу нормативных документов");
+            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0VD0: Prorector " + login + " pereshel na stranicy normativnih documentov");
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 

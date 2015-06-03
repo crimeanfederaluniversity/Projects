@@ -31,7 +31,7 @@ namespace KPIWeb.Rector
             ViewState["login"] = login;
 
             if (!IsPostBack)
-            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + (string)ViewState["login"] + " перешел на главную страницу (RectorMain)");
+            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RM0: Prorectr " + (string)ViewState["login"] + " moved to page (RectorMain)");
 
 
             if (userTable.AccessLevel != 5)
@@ -49,14 +49,14 @@ namespace KPIWeb.Rector
         {
             ParametrType paramType = new ParametrType(0);
             Session["paramType"] = paramType;
-            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + (string)ViewState["login"] + " выбрал работу с Целевыми Показателями и перешел на страницу выбора отчета");
+            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RM1: Prorector " + (string)ViewState["login"] + " vibral raboty s Celevimi Pokazatelyami i pereshel na stranicy vibora otcheta");
             Response.Redirect("~/Rector/RectorChooseReport.aspx");
         }
         protected void Button3_Click(object sender, EventArgs e)
         {
             ParametrType paramType = new ParametrType(1);
             Session["paramType"] = paramType;
-            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + (string)ViewState["login"] + " выбрал работу с Первичными данными и перешел на страницу выбора отчета");
+            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RM2: Prorector " + (string)ViewState["login"] + " vibral raboty s Pervichnimi dannimy i pereshel na stranicy vibora otcheta");
             Response.Redirect("~/Rector/RectorChooseReport.aspx");
         }
         protected void Button4_Click(object sender, EventArgs e)
