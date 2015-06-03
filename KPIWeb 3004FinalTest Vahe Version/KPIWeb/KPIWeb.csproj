@@ -204,6 +204,7 @@
     <Content Include="AutomationDepartment\RoleMapping.aspx" />
     <Content Include="AutomationDepartment\IsAvailibleMappingRole.aspx" />
     <Content Include="Account\PersonalInfo.aspx" />
+    <Content Include="RegisterProcessInfo.aspx" />
     <Content Include="Spinner.css" />
     <Content Include="StatisticsDepartment\PlannedIndicator.aspx" />
     <Content Include="Rector\RectorChooseReport.aspx" />
@@ -443,6 +444,13 @@
       <DependentUpon>PersonalInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="OtdelSession.cs" />
+    <Compile Include="RegisterProcessInfo.aspx.cs">
+      <DependentUpon>RegisterProcessInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegisterProcessInfo.aspx.designer.cs">
+      <DependentUpon>RegisterProcessInfo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="StatisticsDepartment\PlannedIndicator.aspx.cs">
       <DependentUpon>PlannedIndicator.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
