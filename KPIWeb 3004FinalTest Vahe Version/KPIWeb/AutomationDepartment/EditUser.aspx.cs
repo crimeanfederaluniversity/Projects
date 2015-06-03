@@ -308,8 +308,9 @@ namespace KPIWeb.AutomationDepartment
 
         protected void Button3_Click(object sender, EventArgs e)
         {
+            
             if (!CheckBox2.Checked)
-            {
+            {/*
                 LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU0: MassMailing was started by: " + ViewState["User"]);
                 KPIWebDataContext kPiDataContext = new KPIWebDataContext();
 
@@ -327,12 +328,14 @@ namespace KPIWeb.AutomationDepartment
                         EmailParams.EmailContent.Replace("#LINK#",
                             ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" +
                             user.PassCode), null);
-                }
+                }*/
+                Response.Redirect("~/AutomationDepartment/SendInvite.aspx");
             }
             else
             {
                 DisplayAlert("Снимите предохранитель");
             }
+            
 
         }
         private void DisplayAlert(string message)

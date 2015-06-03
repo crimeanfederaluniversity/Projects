@@ -39,7 +39,8 @@ namespace KPIWeb.AutomationDepartment
             foreach (var user in users)
             {
                 Action.MassMailing(user.Email, EmailParams.EmailTitle,
-                EmailParams.EmailContent.Replace("#LINK#", ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" + user.PassCode), null);
+                EmailParams.EmailContent.Replace("#LINK#", ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" + user.PassCode).
+                Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName")), null);
             }
         }
 
@@ -62,7 +63,8 @@ namespace KPIWeb.AutomationDepartment
                     foreach (var user in users)
                     {
                         Action.MassMailing(user.Email, EmailParams.EmailTitle,
-                        EmailParams.EmailContent.Replace("#LINK#", ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" + user.PassCode), null);
+                        EmailParams.EmailContent.Replace("#LINK#", ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" + user.PassCode).
+                        Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName")), null);
                     }
                 }
             }          

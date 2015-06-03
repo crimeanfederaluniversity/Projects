@@ -3,7 +3,7 @@
 
      <br /><br />
 
-     <asp:Button ID="Button1" runat="server" Text="Отправить всем незарегистрированным" OnClientClick="return confirm('Вы уверены что хотите отправить email каждому незарегистрированному пользователю?')" OnClick="Button1_Click" />
+     <asp:Button ID="Button1" runat="server" Text="Отправить всем незарегистрированным" OnClientClick="return confirm('Вы уверены что хотите отправить email каждому незарегистрированному пользователю?')" OnClick="Button1_Click" Width="494px" />
 
      <br />
      <br />
