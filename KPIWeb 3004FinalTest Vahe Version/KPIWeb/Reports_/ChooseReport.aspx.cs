@@ -52,21 +52,6 @@ namespace KPIWeb.Reports
                                                 && d.EndDateTime > DateTime.Now
                                                 select d).ToList();
 
-                if (reportsArchiveTablesTable.Count == 0)
-                {
-                    var name =
-                        (from tr in kpiWebDataContext.UsersTable
-                            where tr.UsersTableID == UserSer.Id
-                            select tr.FirstLevelSubdivisionTable.Name).FirstOrDefault();
-                    Label1.Visible = true;
-                    Label2.Visible = true;
-                    if (name != null) Label1.Text = "В данный момент для вашего подразделения (" + name + ") отсутствуют активные отчеты. Мы обязательно уведомим Вас о начале новой отчетной кампании.";
-                    else Label1.Text = "В данный момент для вашего подразделения отсутствуют активные отчеты. Мы обязательно уведомим Вас о начале новой отчетной кампании.";
-
-                    Label2.Text = "С уважением администрация ИАС \"КФУ-Программа развития\"";
-
-
-                }
                 ///тут мы получили список активных отччетов пользователя
                 /// пользователь привязан к таблице первого подразделения
                 /// таблица первого подразделения привязана к таблице отчётов(через таблицу связи)
@@ -141,6 +126,7 @@ namespace KPIWeb.Reports
                                                              && c.Calculated == false
                                                          select a).FirstOrDefault();
 
+                    if (ColTemp == null) continue;
 
                     string status = "Нет данных";
                     int Statusn = 0;
@@ -439,7 +425,21 @@ namespace KPIWeb.Reports
                         btnView.Enabled = ViewButton > 0 ? false : true;
                     }
                 }
-                ///вывели все отчёты с параметрами в гридвью          
+                ///вывели все отчёты с параметрами в гридвью  
+                if (GridView1.Rows.Count == 0)
+                {
+                    var name =
+                        (from tr in kpiWebDataContext.UsersTable
+                         where tr.UsersTableID == UserSer.Id
+                         select tr.FirstLevelSubdivisionTable.Name).FirstOrDefault();
+                    Label1.Visible = true;
+                    Label2.Visible = true;
+                    if (name != null) Label1.Text = "В данный момент для вашего подразделения (" + name + ") отсутствуют активные отчеты. Мы обязательно уведомим Вас о начале новой отчетной кампании.";
+                    else Label1.Text = "В данный момент для вашего подразделения отсутствуют активные отчеты. Мы обязательно уведомим Вас о начале новой отчетной кампании.";
+
+                    Label2.Text = "С уважением администрация ИАС \"КФУ-Программа развития\"";
+                } 
+       
             }
         }
         protected void ButtonEditClick(object sender, EventArgs e)
