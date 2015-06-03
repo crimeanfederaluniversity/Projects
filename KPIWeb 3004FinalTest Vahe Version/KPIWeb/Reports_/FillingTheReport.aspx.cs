@@ -644,7 +644,7 @@ namespace KPIWeb.Reports
                     dataTable.Columns.Add(new DataColumn("Comment", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("CommentEnabled", typeof(string)));
 
-                    for (int k = 0; k <= 25; k++) //создаем кучу полей
+                    for (int k = 0; k <= 40; k++) //создаем кучу полей
                     {
                         dataTable.Columns.Add(new DataColumn("Value" + k.ToString(), typeof(string)));
                         dataTable.Columns.Add(new DataColumn("CollectId" + k.ToString(), typeof(string)));
@@ -1612,7 +1612,9 @@ namespace KPIWeb.Reports
                             lblMinutes.Visible = false;
                             if (e.Row.RowType == DataControlRowType.DataRow)
                             {
+
                                 DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
+                              //  lblMinutes.Attributes.Add("OnChange", "textChanged()");
                                 d.BackColor = disableColor;
                                 //d.CssClass = "DisableClass";
                             }

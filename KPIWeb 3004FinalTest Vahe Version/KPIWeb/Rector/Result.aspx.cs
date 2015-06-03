@@ -1354,9 +1354,12 @@ namespace KPIWeb.Rector
                             UsersTable ConfirmUser = (from a in kpiWebDataContext.UsersTable
                                 join b in kpiWebDataContext.CalculatedParametrsAndUsersMapping
                                     on a.UsersTableID equals b.FK_UsersTable
-                                where a.Active == true
+                                where
+                                         b.CanConfirm == true
+                                      && a.Active == true
                                       && b.FK_CalculatedParametrsTable == CurrentCalculated.CalculatedParametrsID
                                       && b.Active == true
+                                      
                                 select a).FirstOrDefault();
                             string UserName = "";
                             if (ConfirmUser.Position != null)

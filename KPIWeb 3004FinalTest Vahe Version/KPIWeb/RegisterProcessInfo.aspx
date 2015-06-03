@@ -218,8 +218,7 @@ background-color:#FFFFFF}
             }
     </script>
 
-    <br />
-     <span style="color: rgb(0, 0, 0); font-family: tahoma, arial, verdana, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color: rgb(255, 255, 255);">
+      <span style="color: rgb(0, 0, 0); font-family: tahoma, arial, verdana, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color: rgb(255, 255, 255);">
         
 
      <br />
@@ -227,9 +226,9 @@ background-color:#FFFFFF}
      <br />
     <asp:TextBox ID="TextBox1" runat="server" Width="292px"></asp:TextBox>
      <br />
-     <br />
         <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()" Text="Показать" Width="307px" OnClick="Button1_Click" />
 
+    <br />
     <br />
      <asp:Label ID="Label1" runat="server" Visible="false" Text="
 Описание:<br />

@@ -54,6 +54,8 @@ namespace KPIWeb
         {
             if (TextBox1.Text == "sdfnliwd")
             {
+                TreeView1.DataSource=null;
+                TreeView1.DataBind();
                 Label1.Visible = true;
                 KPIWebDataContext kPiDataContext = new KPIWebDataContext();
                 List<MyObject> list = new List<MyObject>();
@@ -89,6 +91,8 @@ namespace KPIWeb
                     UsrCnt = 0;
                     Users = (from a in kPiDataContext.UsersTable
                              where a.Active == true
+                             && a.AccessLevel!=9
+                             && a.AccessLevel!=10
                              && a.FK_ZeroLevelSubdivisionTable == zeroLevelItem.ZeroLevelSubdivisionTableID
                              && a.FK_FirstLevelSubdivisionTable == null
                              select a).ToList();
@@ -97,21 +101,23 @@ namespace KPIWeb
                     {
                         if (curuser.Confirmed == true)
                         {
-                            tmp += "<font style=\"color:#00FF00;\">" + curuser.Email + "</font> ";
+                            tmp += "<font style=\"color:#00a34f;font-weight: bold;\">" + curuser.Email + "</font> ";
                         }
                         else
                         {
-                            tmp += "<font style=\"color:#FF0000;\">" + curuser.Email + "</font> ";
+                            tmp += "<font style=\"color:#990000;font-weight: bold;\">" + curuser.Email + "</font> ";
                         }
                     }
                     UsrCnt = (from a in kPiDataContext.UsersTable
                               where a.Active == true
                               && a.FK_ZeroLevelSubdivisionTable == zeroLevelItem.ZeroLevelSubdivisionTableID
+                              && a.AccessLevel != 9
+                              && a.AccessLevel != 10
                               select a).Count();
                     tmp2 = "";
                     if (UsrCnt > 0)
                     {
-                        tmp2 = "<font style=\"color:#0000FF;\">" + zeroLevelItem.Name + "</font> ";
+                        tmp2 = "<font style=\"color:#0000FF;font-weight: bold;\">" + zeroLevelItem.Name + "</font> ";
                     }
                     else
                     {
@@ -143,11 +149,11 @@ namespace KPIWeb
                         {
                             if (curuser.Confirmed == true)
                             {
-                                tmp += "<font style=\"color:#00FF00;\">" + curuser.Email + "</font> ";
+                                tmp += "<font style=\"color:#00a34f;font-weight: bold;\">" + curuser.Email + "</font> ";
                             }
                             else
                             {
-                                tmp += "<font style=\"color:#FF0000;\">" + curuser.Email + "</font> ";
+                                tmp += "<font style=\"color:#990000;font-weight: bold;\">" + curuser.Email + "</font> ";
                             }
                         }
                         UsrCnt = (from a in kPiDataContext.UsersTable
@@ -158,7 +164,7 @@ namespace KPIWeb
                         tmp2 = "";
                         if (UsrCnt > 0)
                         {
-                            tmp2 = "<font style=\"color:#0000FF;\">" + firstLevelItem.Name + "</font> ";
+                            tmp2 = "<font style=\"color:#0000FF;font-weight: bold;\">" + firstLevelItem.Name + "</font> ";
                         }
                         else
                         {
@@ -188,11 +194,11 @@ namespace KPIWeb
                             {
                                 if (curuser.Confirmed == true)
                                 {
-                                    tmp += "<font style=\"color:#00FF00;\">" + curuser.Email + "</font> ";
+                                    tmp += "<font style=\"color:#00a34f;font-weight: bold;\">" + curuser.Email + "</font> ";
                                 }
                                 else
                                 {
-                                    tmp += "<font style=\"color:#FF0000;\">" + curuser.Email + "</font> ";
+                                    tmp += "<font style=\"color:#990000;font-weight: bold;\">" + curuser.Email + "</font> ";
                                 }
                             }
                             UsrCnt = (from a in kPiDataContext.UsersTable
@@ -203,7 +209,7 @@ namespace KPIWeb
                             tmp2 = "";
                             if (UsrCnt > 0)
                             {
-                                tmp2 = "<font style=\"color:#0000FF;\">" + secondLevelItem.Name + "</font> ";
+                                tmp2 = "<font style=\"color:#0000FF;font-weight: bold;\">" + secondLevelItem.Name + "</font> ";
                             }
                             else
                             {
@@ -237,11 +243,11 @@ namespace KPIWeb
                                 {
                                     if (curuser.Confirmed == true)
                                     {
-                                        tmp += "<font style=\"color:#00FF00;\">" + curuser.Email + "</font> ";
+                                        tmp += "<font style=\"color:#00a34f;font-weight: bold;\">" + curuser.Email + "</font> ";
                                     }
                                     else
                                     {
-                                        tmp += "<font style=\"color:#FF0000;\">" + curuser.Email + "</font> ";
+                                        tmp += "<font style=\"color:#990000;font-weight: bold;\">" + curuser.Email + "</font> ";
                                     }
                                 }
                                 UsrCnt = (from a in kPiDataContext.UsersTable
@@ -252,7 +258,7 @@ namespace KPIWeb
                                 tmp2 = "";
                                 if (UsrCnt > 0)
                                 {
-                                    tmp2 = "<font style=\"color:#0000FF;\">" + thirdLevelItem.Name + "</font> ";
+                                    tmp2 = "<font style=\"color:#0000FF;font-weight: bold;\">" + thirdLevelItem.Name + "</font> ";
                                 }
                                 else
                                 {
