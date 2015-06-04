@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace KPIWeb
                 LinksLable.Text = "";
                 foreach(ManualTable link in man)
                 {
-                    LinksLable.Text += "<a href=\"../manuals/" + link.ManualLink + "\">" + link.ManualName + "</a> </br>";
+                    LinksLable.Text += "<a href=\"" + ConfigurationManager.AppSettings.Get("SiteName") + "/manuals/" + link.ManualLink + "\" target=\"_blank\"  >" + link.ManualName + "</a> </br>";
                 }
 
               

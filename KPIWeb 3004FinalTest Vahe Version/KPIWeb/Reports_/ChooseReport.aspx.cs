@@ -89,6 +89,37 @@ namespace KPIWeb.Reports
                 List<int> StatenList = new List<int>();
                 foreach (ReportArchiveTable ReportRow in reportsArchiveTablesTable)
                 {
+                    #region
+
+
+                    int can_view =
+                                    (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                                     join b in kpiWebDataContext.BasicParametersTable
+                                         on a.FK_BasicParametrsTable equals b.BasicParametersTableID
+                                     join c in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                         on b.BasicParametersTableID equals c.FK_ParametrsTable
+                                   join d in kpiWebDataContext.BasicParametrAdditional
+                                       on b.BasicParametersTableID equals d.BasicParametrAdditionalID
+                                     where
+                                         a.FK_ReportArchiveTable == ReportRow.ReportArchiveTableID //из нужного отчёта
+                                         && c.FK_UsersTable == userID // свяный с пользователем
+                                         //&& d.SubvisionLevel == 3 //нужный уровень заполняющего
+                                         && a.Active == true // запись в таблице связей показателя и отчёта активна
+                                         && c.CanView == true
+                                         && c.Active == true // запись в таблице связей показателя и пользователей активна
+                                         && d.Calculated == false
+                                     // этот показатель нужно вводить а не считать
+                                     select b).ToList().Count;
+                    if (can_view>0)
+                    {
+                        
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+
                     DataRow dataRow = dataTable.NewRow();
                                 dataRow["ReportArchiveID"] = ReportRow.ReportArchiveTableID.ToString();
                                 dataRow["ReportName"] = ReportRow.Name;
@@ -126,7 +157,7 @@ namespace KPIWeb.Reports
                                                              && c.Calculated == false
                                                          select a).FirstOrDefault();
 
-                    if (ColTemp == null) continue;
+                   
 
                     string status = "Нет данных";
                     int Statusn = 0;
@@ -170,8 +201,10 @@ namespace KPIWeb.Reports
                     }
                                 StatenList.Add(Statusn);                    
                                 dataRow["Status"] = status;               
-                                dataTable.Rows.Add(dataRow); 
-                }           
+                                dataTable.Rows.Add(dataRow);
+                    #endregion
+                }   
+        
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
 
@@ -195,29 +228,18 @@ namespace KPIWeb.Reports
                     {
                         if ((StatenList[i] == 0)||(StatenList[i] == 1)||(StatenList[i] == 2))
                         {
-                            //btnConfirm.Enabled = false;
                             ConfButton++;
-                            //btnEdit.Enabled = true;
-                            //btnView.Enabled = true;
                         }
                         else if (StatenList[i] == 3)
                         {
-                            //btnConfirm.Enabled = true;
-                            //btnEdit.Enabled = false;
-                            //btnView.Enabled = true;
                             EditButton++;
                         }
                         else
                         {
                             ConfButton++;
                             EditButton++;
-                            //btnConfirm.Enabled = false;
-                            //btnEdit.Enabled = false;
-                            //btnView.Enabled = true;
                         }
-
-                                            /////////////////////////////////////////////////////////
-                    #region
+                        #region
                         int ReportArchiveID = Convert.ToInt32(btnEdit.CommandArgument);
 
                             if (userLevel == 3)

@@ -225,6 +225,7 @@
       <LastGenOutput>KPIWeb.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Properties\PublishProfiles\home.pubxml" />
     <None Include="Properties\PublishProfiles\V_TEST1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Reports_\ChooseReport.aspx" />

@@ -13,7 +13,7 @@ namespace KPIWeb
         UsersTable user;
 
         protected void Page_Load(object sender, EventArgs e)
-        {     
+        {
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
@@ -40,7 +40,7 @@ namespace KPIWeb
                     FormsAuthentication.SetAuthCookie(user.Email, true);
                 }
 
-                int accessLevel = (int) user.AccessLevel;
+                int accessLevel = (int)user.AccessLevel;
                 if (accessLevel == 10)
                 {
                     Response.Redirect("~/AutomationDepartment/Main.aspx");
@@ -57,7 +57,7 @@ namespace KPIWeb
                 {
                     Response.Redirect("~/FinKadr/OtdelChooseReport.aspx");
                 }
-                else if ( accessLevel == 0)
+                else if (accessLevel == 0)
                 {
                     Response.Redirect("~/Reports_/ChooseReport.aspx");
                 }

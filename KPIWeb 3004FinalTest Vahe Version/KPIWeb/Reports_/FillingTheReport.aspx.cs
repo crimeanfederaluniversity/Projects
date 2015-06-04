@@ -41,14 +41,14 @@ namespace KPIWeb.Reports
             iTextSharp.text.Font font = new iTextSharp.text.Font(bf, 7, iTextSharp.text.Font.NORMAL);
             font.Color = new BaseColor(0, 0, 0);
             ///////
-            widths[0] = WidthArray[1];
-            string IdText = Server.HtmlDecode(GridToExport.HeaderRow.Cells[1].Text);
+            widths[0] = WidthArray[0];
+            string IdText = Server.HtmlDecode(GridToExport.HeaderRow.Cells[0].Text);
             iTextSharp.text.pdf.PdfPCell HeaderIdcell = new iTextSharp.text.pdf.PdfPCell(new Phrase(12, IdText, font));
             HeaderIdcell.BackgroundColor = new BaseColor(200, 200, 200);
             table.AddCell(HeaderIdcell);
             ///////
-            widths[1] = WidthArray[3];
-            string NameHeaderText = Server.HtmlDecode(GridToExport.HeaderRow.Cells[3].Text);
+            widths[1] = WidthArray[2];
+            string NameHeaderText = Server.HtmlDecode(GridToExport.HeaderRow.Cells[2].Text);
             iTextSharp.text.pdf.PdfPCell NameCell = new iTextSharp.text.pdf.PdfPCell(new Phrase(12, NameHeaderText, font));
             NameCell.BackgroundColor = new BaseColor(200, 200, 200);
             table.AddCell(NameCell);
@@ -73,7 +73,7 @@ namespace KPIWeb.Reports
 
                     ///////////// PARAM ID
                     iTextSharp.text.pdf.PdfPCell IDcell =
-                        new iTextSharp.text.pdf.PdfPCell(new Phrase(12, Server.HtmlDecode(GridToExport.Rows[i].Cells[1].Text), font));
+                        new iTextSharp.text.pdf.PdfPCell(new Phrase(12, Server.HtmlDecode(GridToExport.Rows[i].Cells[0].Text), font));
                     if (i % 2 == 0)
                     {
                         IDcell.BackgroundColor = new BaseColor(230, 230, 230);
@@ -1782,8 +1782,8 @@ namespace KPIWeb.Reports
             int[] Widhts = new int[40];
             for (int i = 0; i < 40; i++)
                 Widhts[i] = 0;
-            Widhts[1] = 2;
-            Widhts[3] = 10;
+            Widhts[0] = 2;
+            Widhts[2] = 10;
             int colcnt = (int)ViewState["ValueColumnCnt"];
             for (int i = 0; i < colcnt; i++)
             {
@@ -1886,7 +1886,6 @@ namespace KPIWeb.Reports
         }
         protected void Button1_Click(object sender, EventArgs e) // экспорт в excel
         {
-
              Response.ContentType = "Application/pdf";
              Response.TransmitFile(CreatePdf());
              Response.End();   

@@ -976,7 +976,18 @@ namespace KPIWeb.Rector
                             DataRow dataRow = dataTable.NewRow();
                             dataRow["ID"] = CurrentIndicator.IndicatorsTableID; //GetLastID(currentStruct).ToString();
                             dataRow["Number"] = "num";
-                            dataRow["Name"] = CurrentIndicator.Name + " ("+ CurrentIndicator.Measure +")";
+                            if (CurrentIndicator.Measure!=null)
+                            {
+                                if (CurrentIndicator.Measure.Length>2)
+                                {
+                                    dataRow["Name"] = CurrentIndicator.Name + " (" + CurrentIndicator.Measure + ")";
+                                }
+                            }
+                            else
+                            {
+                                dataRow["Name"] = CurrentIndicator.Name;
+                            }
+                            
                             dataRow["CanWatchWhoOws"] = false;
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
@@ -1237,7 +1248,19 @@ namespace KPIWeb.Rector
                             dataRow["ID"] = CurrentCalculated.CalculatedParametrsID;
                                 //GetLastID(currentStruct).ToString();
                             dataRow["Number"] = "num";
-                            dataRow["Name"] = CurrentCalculated.Name + " (" + CurrentCalculated.Measure + ")";
+                            if (CurrentCalculated.Measure != null)
+                            {
+                                if (CurrentCalculated.Measure.Length > 2)
+                                {
+                                    dataRow["Name"] = CurrentCalculated.Name + " (" + CurrentCalculated.Measure + ")";
+                                }
+                            }
+                            else
+                            {
+                                dataRow["Name"] = CurrentCalculated.Name;
+                            }
+                           // 
+                            //dataRow["Name"] = CurrentCalculated.Name + " (" + CurrentCalculated.Measure + ")";
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
 
@@ -1362,11 +1385,18 @@ namespace KPIWeb.Rector
                                       
                                 select a).FirstOrDefault();
                             string UserName = "";
-                            if (ConfirmUser.Position != null)
+                            if (ConfirmUser != null)
                             {
-                                if (ConfirmUser.Position.Length > 2)
+                                if (ConfirmUser.Position != null)
                                 {
-                                    UserName = ConfirmUser.Position;
+                                    if (ConfirmUser.Position.Length > 2)
+                                    {
+                                        UserName = ConfirmUser.Position;
+                                    }
+                                    else
+                                    {
+                                        UserName = ConfirmUser.Email;
+                                    }
                                 }
                                 else
                                 {
@@ -1375,9 +1405,8 @@ namespace KPIWeb.Rector
                             }
                             else
                             {
-                                UserName = ConfirmUser.Email;
+                                UserName = "не определено";
                             }
-
                             if (collected.Confirmed == true) //данные подтверждены
                             {
                                 dataRow["CanWatchWhoOws"] = false;
@@ -1495,7 +1524,20 @@ namespace KPIWeb.Rector
                             DataRow dataRow = dataTable.NewRow();
                             dataRow["ID"] = CurrebtBasic.BasicParametersTableID; //GetLastID(currentStruct).ToString();
                             dataRow["Number"] = "num";
-                            dataRow["Name"] = CurrebtBasic.Name + " (" + CurrebtBasic.Measure + ")"; ;
+
+                            if (CurrebtBasic.Measure != null)
+                            {
+                                if (CurrebtBasic.Measure.Length > 2)
+                                {
+                                    dataRow["Name"] = CurrebtBasic.Name + " (" + CurrebtBasic.Measure + ")";
+                                }
+                            }
+                            else
+                            {
+                                dataRow["Name"] = CurrebtBasic.Name;
+                            }
+                           // dataRow["Name"] = CurrebtBasic.Name + " (" + CurrebtBasic.Measure + ")";
+
                             dataRow["StartDate"] = "nun";
                             dataRow["EndDate"] = "nun";
                             dataRow["Abb"] = CurrebtBasic.AbbreviationEN;
