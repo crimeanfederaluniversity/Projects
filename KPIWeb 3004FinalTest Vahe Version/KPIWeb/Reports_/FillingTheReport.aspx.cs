@@ -1479,12 +1479,12 @@ namespace KPIWeb.Reports
                                             }
                                             else
                                             {
-                                                LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 9 в отчете с ID = ");
+                                                LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0FRE9: Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 9 в отчете с ID = ");
                                             }
                                         }
                                         else
                                         {
-                                            LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 10 в отчете с ID = ");   
+                                            LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0FRE10:Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 10 в отчете с ID = ");   
                                         }
                                     }
                                 }
@@ -1958,12 +1958,12 @@ namespace KPIWeb.Reports
                                                 }
                                                 else
                                                 {
-                                                    LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 3 в отчете с ID = " );
+                                                    LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0FRE3: Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 3 в отчете с ID = ");
                                                 }
                                             }
                                             else
                                             {
-                                                LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 4 в отчете с ID = ");   
+                                                LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0FRE4: Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 4 в отчете с ID = ");   
                                             }
                                         }
                                     }
@@ -2064,12 +2064,12 @@ namespace KPIWeb.Reports
                                                 }
                                                 else
                                                 {
-                                                    LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 5 в отчете с ID = ");
+                                                    LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0FRE5: Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 5 в отчете с ID = ");
                                                 }
                                             }
                                             else
                                             {
-                                                LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 6 в отчете с ID = ");   
+                                                LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0FRE6: Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 6 в отчете с ID = ");   
                                             }
                                         }
                                     }
@@ -2129,7 +2129,7 @@ namespace KPIWeb.Reports
                 }
                 else
                 {
-                    LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 7 в отчете с ID = ");
+                    LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0FRE7: Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 7 в отчете с ID = ");
                 }
             }
             else

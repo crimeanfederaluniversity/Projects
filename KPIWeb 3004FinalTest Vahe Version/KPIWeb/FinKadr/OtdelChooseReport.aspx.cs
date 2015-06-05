@@ -105,7 +105,7 @@ namespace KPIWeb.FinKadr
                     OtdelHistory.Visible = false;
                     OtdelHistory.OtdelSession[OtdelHistory.CurrentSession] = OtdelResultSession;
                     Session["OtdelHistory"] = OtdelHistory;
-                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + (string)ViewState["login"] + " перешел к работе с отчетом, ID = " + button.CommandArgument);
+                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, "OCR0: Проректор " + (string)ViewState["login"] + " перешел к работе с отчетом, ID = " + button.CommandArgument);
                     Response.Redirect("~/FinKadr/OtdelResult.aspx");
                 }
                 else // смотрим рассчетные
@@ -119,7 +119,7 @@ namespace KPIWeb.FinKadr
                     OtdelHistory.Visible = false;
                     OtdelHistory.OtdelSession[OtdelHistory.CurrentSession] = OtdelResultSession;
                     Session["OtdelHistory"] = OtdelHistory;
-                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Проректор " + (string)ViewState["login"] + " перешел к работе с отчетом, ID = " + button.CommandArgument);
+                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0OCR1: Проректор " + (string)ViewState["login"] + " перешел к работе с отчетом, ID = " + button.CommandArgument);
                     Response.Redirect("~/FinKadr/OtdelResult.aspx");
                 }
 

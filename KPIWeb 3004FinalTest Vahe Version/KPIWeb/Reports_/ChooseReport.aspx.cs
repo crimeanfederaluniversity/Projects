@@ -497,7 +497,7 @@ namespace KPIWeb.Reports
                     (from a in kpiWebDataContext.UsersTable
                      where a.UsersTableID == (int)ViewState["LocalUserID"]
                      select a.Email).FirstOrDefault(); 
-                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Пользователь " + login + " зашел на страницу редактирования отчета с ID = " + paramSerialization.ReportStr);
+                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0CR0: Пользователь " + login + " зашел на страницу редактирования отчета с ID = " + paramSerialization.ReportStr);
 
                 if (thirdParam != null)
                 {
@@ -543,7 +543,7 @@ namespace KPIWeb.Reports
                         (from a in kpiWebDataContext.UsersTable
                          where a.UsersTableID == (int)ViewState["LocalUserID"]
                          select a.Email).FirstOrDefault();
-                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Пользователь " + login + " зашел на страницу просмотра отчета с ID = " + paramSerialization.ReportStr);
+                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0CR1: Пользователь " + login + " зашел на страницу просмотра отчета с ID = " + paramSerialization.ReportStr);
 
                 Response.Redirect("~/Reports_/FillingTheReport.aspx");
             }
@@ -561,7 +561,7 @@ namespace KPIWeb.Reports
                         (from a in kpiWebDataContext.UsersTable
                          where a.UsersTableID == (int)ViewState["LocalUserID"]
                          select a.Email).FirstOrDefault();
-                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Пользователь " + login + " зашел на страницу просмотра и подтверждения отчета с ID = " + paramSerialization.ReportStr);
+                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0CR2: Пользователь " + login + " зашел на страницу просмотра и подтверждения отчета с ID = " + paramSerialization.ReportStr);
 
                 Response.Redirect("~/Reports_/FillingTheReport.aspx");
             }
