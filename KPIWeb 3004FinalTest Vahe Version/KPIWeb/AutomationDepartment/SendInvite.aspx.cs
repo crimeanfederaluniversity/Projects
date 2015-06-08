@@ -69,5 +69,77 @@ namespace KPIWeb.AutomationDepartment
                 }
             }          
         }
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+
+            List<String> emails = new List<string>();
+
+            if (ViewState["Mails"] != null)
+            {
+                emails = (List<String>)ViewState["Mails"];
+            }
+
+            var user =
+                (from a in kPiDataContext.UsersTable where a.Email.Equals(TextBox1.Text) select a).FirstOrDefault();
+
+            if (user != null)
+            {
+                ListBox1.Items.Clear();
+                emails.Add(TextBox1.Text);
+                ListBox1.DataSource = emails;
+                ListBox1.DataBind();
+            }
+            else DisplayAlert("Данный email не зарегистрирован в системе");
+
+            ViewState["Mails"] = emails;
+        }
+
+        private void DisplayAlert(string message)
+        {
+            ClientScript.RegisterStartupScript(
+              this.GetType(),
+              Guid.NewGuid().ToString(),
+              string.Format("alert('{0}');",
+                message.Replace("'", @"\'").Replace("\n", "\\n").Replace("\r", "\\r")),
+                true);
+        }
+
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            List<String> users = new List<string>();
+
+            if (ViewState["Mails"] != null)
+            {
+                users = (List<String>) ViewState["Mails"];
+
+
+
+                var emails = users.Distinct().ToList();
+
+                EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
+                    where a.Name == "InviteToRegister"
+                          && a.Active == true
+                    select a).FirstOrDefault();
+
+
+                foreach (var email in emails)
+                {
+                    Action.MassMailing(email, EmailParams.EmailTitle,
+                        EmailParams.EmailContent.Replace("#LINK#",
+                            ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" +
+                            (from a in kPiDataContext.UsersTable where a.Email.Equals(email) select a.PassCode)
+                                .FirstOrDefault()).
+                            Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName")), null);
+                }
+            }
+            else
+            {
+                DisplayAlert("Пустой список");
+            }
+        }
     }
 }

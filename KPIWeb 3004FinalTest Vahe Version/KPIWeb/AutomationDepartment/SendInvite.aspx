@@ -92,9 +92,27 @@
 
      <br />
      <br />
+     <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" OnClientClick="ConfirmSubmit2()" Text="Отправить по списку" Width="495px" />
+
+     <br />
+     <br />
 
      <asp:CheckBoxList ID="CheckBoxList1" runat="server">
      </asp:CheckBoxList>
 
 
-     </asp:Content>
+     <br />
+     <asp:Label ID="Label2" runat="server" Text="Список"></asp:Label>
+     <br />
+     <asp:ListBox ID="ListBox1" runat="server" Height="234px" Width="290px"></asp:ListBox>
+     <br />
+     <br />
+     <br />
+     <asp:Label ID="Label1" runat="server" Text="Добавить email"></asp:Label>
+&nbsp;<br />
+     <asp:TextBox ID="TextBox1" runat="server" Width="292px"></asp:TextBox>
+     <br />
+     <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Добавить" />
+     <br />
+     <br />
+</asp:Content>
