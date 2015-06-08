@@ -27,6 +27,18 @@
                 return false;
             }
         }
+
+        function ConfirmSubmit3() {
+            var msg = confirm('Вы уверены что хотите отправить email пользователям указаным в списке?');
+            if (msg == true) {
+                document.getElementById('LoadPanel_').style.visibility = 'visible'
+                return true;
+            }
+            else {
+                document.getElementById('LoadPanel_').style.visibility = 'hidden'
+                return false;
+            }
+        }
     </script>
     <style>  
         .LoadPanel 
@@ -88,11 +100,11 @@
      <br />
 
 
-     <asp:Button ID="Button2" runat="server" Text="Отправить всем отмеченным ниже" OnClientClick="ConfirmSubmit2()" OnClick="Button2_Click" />
+     <asp:Button ID="Button2" runat="server" Text="Отправить всем отмеченным ниже" OnClientClick="ConfirmSubmit2()" OnClick="Button2_Click" Width="495px" />
 
      <br />
      <br />
-     <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" OnClientClick="ConfirmSubmit2()" Text="Отправить по списку" Width="495px" />
+     <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" OnClientClick="ConfirmSubmit3()" Text="Отправить по списку" Width="495px" />
 
      <br />
      <br />
