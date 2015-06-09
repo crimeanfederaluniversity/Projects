@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace KPIWeb
 {
-    public partial class RegisterProcessInfo : System.Web.UI.Page
+    public partial class FillingProcessInfo : System.Web.UI.Page
     {
         public class MyObject
         {
@@ -23,15 +23,15 @@ namespace KPIWeb
             foreach (var node in nodes)
             {
                 TreeNode newNode = new TreeNode(node.Name, node.Id.ToString());
-                
+
                 /* if (node.Active == 1)
                 {
                     //newNode.NavigateUrl = node.UrlAddr;
                 }
                 else*/
 
-                newNode.SelectAction = TreeNodeSelectAction.None; 
-          
+                newNode.SelectAction = TreeNodeSelectAction.None;
+
                 if (parentNode == null)
                 {
                     TreeView1.Nodes.Add(newNode);
@@ -46,14 +46,9 @@ namespace KPIWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-        }
-
-        protected void Button1_Click(object sender, EventArgs e)
-        {
             if (TextBox1.Text == "123_")
             {
-                TreeView1.DataSource=null;
+                TreeView1.DataSource = null;
                 TreeView1.DataBind();
                 Label1.Visible = true;
                 KPIWebDataContext kPiDataContext = new KPIWebDataContext();
@@ -90,8 +85,8 @@ namespace KPIWeb
                     UsrCnt = 0;
                     Users = (from a in kPiDataContext.UsersTable
                              where a.Active == true
-                             && a.AccessLevel!=9
-                             && a.AccessLevel!=10
+                             && a.AccessLevel != 9
+                             && a.AccessLevel != 10
                              && a.FK_ZeroLevelSubdivisionTable == zeroLevelItem.ZeroLevelSubdivisionTableID
                              && a.FK_FirstLevelSubdivisionTable == null
                              select a).ToList();

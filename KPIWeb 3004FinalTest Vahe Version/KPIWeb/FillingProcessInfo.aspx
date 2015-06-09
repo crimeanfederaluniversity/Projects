@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="RegisterProcessInfo.aspx.cs" Inherits="KPIWeb.RegisterProcessInfo" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="FillingProcessInfo.aspx.cs" Inherits="KPIWeb.FillingProcessInfo" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
       <style>  

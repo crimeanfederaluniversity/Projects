@@ -193,6 +193,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="FillingProcessInfo.aspx" />
     <Content Include="FinKadr\OtdelChooseReport.aspx" />
     <Content Include="FinKadr\OtdelResult.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -410,6 +411,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FillingProcessInfo.aspx.cs">
+      <DependentUpon>FillingProcessInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FillingProcessInfo.aspx.designer.cs">
+      <DependentUpon>FillingProcessInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="FinKadr\OtdelChooseReport.aspx.cs">
       <DependentUpon>OtdelChooseReport.aspx</DependentUpon>
