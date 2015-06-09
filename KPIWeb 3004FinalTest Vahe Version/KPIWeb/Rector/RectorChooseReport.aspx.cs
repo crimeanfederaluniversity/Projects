@@ -102,7 +102,7 @@ namespace KPIWeb.Rector
                 }
                 if (paramType.paramType == 0) //смотрим индцелевой показатель
                 {
-                    Result.Struct mainStruct = new Result.Struct(1, "");
+                    ForRCalc.Struct mainStruct = new ForRCalc.Struct(1, "");
                     RectorSession rectorResultSession = new RectorSession(mainStruct, 1, 0, 0,
                         Convert.ToInt32(button.CommandArgument), 0);
                     RectorHistorySession RectorHistory = new RectorHistorySession();
@@ -116,7 +116,7 @@ namespace KPIWeb.Rector
                 }
                 else // смотрим рассчетные
                 {
-                    Result.Struct mainStruct = new Result.Struct(1, "");
+                    ForRCalc.Struct mainStruct = new ForRCalc.Struct(1, "");
                     RectorSession rectorResultSession = new RectorSession(mainStruct, 1, 0, 1,
                         Convert.ToInt32(button.CommandArgument), 0);
                     RectorHistorySession RectorHistory = new RectorHistorySession();

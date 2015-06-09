@@ -10,7 +10,14 @@
         }
     </script>
     <style>  
-
+        .Grid_view_V_header_style
+        {
+           -webkit-transform: rotate(-90deg);
+-moz-transform: rotate(-90deg);
+-ms-transform: rotate(-90deg);
+-o-transform: rotate(-90deg);
+transform: rotate(-90deg)
+        }
    
     .Grid_view_V_style tr td + td + td+ td {
       
@@ -20,6 +27,12 @@
         padding-right:1px;
         padding-top:1px;
         padding-bottom:1px;
+    }
+
+
+    .GridHeader th
+    {
+        height:75px;
     }
 
     .NameMin
@@ -77,8 +90,7 @@
      text-shadow: 1px 1px 1px black, 0 0 1em #ffffff;"
           >Дождитесь завершения процесса</font></div>
         </div>
-
-      
+     
            <link href="/App_Themes/theme_1/css/login.css" rel="stylesheet" type="text/css" />
     <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Visible="true">
         
@@ -93,7 +105,7 @@
 
             <br />
 
-            <asp:GridView ID="GridviewCollectedBasicParameters"  BorderStyle="Solid" runat="server" CssClass="Grid_view_V_style Grid_view_style" ShowFooter="true" AutoGenerateColumns="False" 
+            <asp:GridView ID="GridviewCollectedBasicParameters"  BorderStyle="Solid" runat="server" CssClass="Grid_view_V_style Grid_view_style GridHeader" ShowFooter="true" AutoGenerateColumns="False" 
                 BorderColor="Black"  BorderWidth="1px" CellPadding="0" 
 
                 OnRowDataBound="GridviewCollectedBasicParameters_RowDataBound" OnSelectedIndexChanged="GridviewCollectedBasicParameters_SelectedIndexChanged" OnSelectedIndexChanging="GridviewCollectedBasicParameters_SelectedIndexChanging" OnPageIndexChanging="GridviewCollectedBasicParameters_PageIndexChanging">
@@ -115,9 +127,10 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                     <asp:BoundField DataField="Comment" HeaderText="Комментарий" Visible="true" />
-
-
+                     
+                     <asp:BoundField DataField="Comment"  HeaderText="Комментарий" Visible="true" />
+                        
+                    
 
                              
                      <asp:TemplateField Visible="false"   HeaderText="Значение">
@@ -134,7 +147,8 @@
                         </ItemTemplate>
                     </asp:TemplateField>  
 
-                    <asp:TemplateField Visible="false" HeaderText="Значение">
+                    <asp:TemplateField Visible="false"  HeaderText="Значение">
+
                         <ItemTemplate>
                             <asp:Label ID="NotNull1"  runat="server" Visible="false" Text='<%# Bind("NotNull1") %>'></asp:Label>
                             <asp:TextBox ID="Value1" Width="95%" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Value1") %>'></asp:TextBox>

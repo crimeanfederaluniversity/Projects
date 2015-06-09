@@ -204,6 +204,9 @@
     <Content Include="AutomationDepartment\RoleMapping.aspx" />
     <Content Include="AutomationDepartment\IsAvailibleMappingRole.aspx" />
     <Content Include="Account\PersonalInfo.aspx" />
+    <Content Include="Rector\RAnalitics.aspx" />
+    <Content Include="Rector\RMain.aspx" />
+    <Content Include="Rector\RRating.aspx" />
     <Content Include="RegisterProcessInfo.aspx" />
     <Content Include="Spinner.css" />
     <Content Include="StatisticsDepartment\PlannedIndicator.aspx" />
@@ -445,6 +448,29 @@
       <DependentUpon>PersonalInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="OtdelSession.cs" />
+    <Compile Include="Rector\ClassForCharts.cs" />
+    <Compile Include="Rector\ForRCalc.cs" />
+    <Compile Include="Rector\RAnalitics.aspx.cs">
+      <DependentUpon>RAnalitics.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\RAnalitics.aspx.designer.cs">
+      <DependentUpon>RAnalitics.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\RMain.aspx.cs">
+      <DependentUpon>RMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\RMain.aspx.designer.cs">
+      <DependentUpon>RMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\RRating.aspx.cs">
+      <DependentUpon>RRating.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\RRating.aspx.designer.cs">
+      <DependentUpon>RRating.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RegisterProcessInfo.aspx.cs">
       <DependentUpon>RegisterProcessInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -18,357 +18,7 @@ namespace KPIWeb.Rector
 {
     public partial class Result : System.Web.UI.Page
     {
-        [Serializable]
-        public class Struct // класс описываюший структурные подразделения
-        {
-            public int Lv_0 { get; set; }
-            public int Lv_1 { get; set; }
-            public int Lv_2 { get; set; }
-            public int Lv_3 { get; set; }
-            public int Lv_4 { get; set; }
-            public int Lv_5 { get; set; }
-
-            public string Name { get; set; }
-            
-            public Struct(int lv0, int lv1, int lv2, int lv3, int lv4, int lv5, string name)
-            {
-                Lv_0 = lv0;
-                Lv_1 = lv1;
-                Lv_2 = lv2;
-                Lv_3 = lv3;
-                Lv_4 = lv4;
-                Lv_5 = lv5;
-                Name = name;
-            }
-            public Struct(int lv0, int lv1, int lv2, int lv3, int lv4, string name)
-            {
-                Lv_0 = lv0;
-                Lv_1 = lv1;
-                Lv_2 = lv2;
-                Lv_3 = lv3;
-                Lv_4 = lv4;
-                Lv_5 = 0;
-                Name = name;
-            }
-            public Struct(int lv0, int lv1, int lv2, int lv3, string name)
-            {
-                Lv_0 = lv0;
-                Lv_1 = lv1;
-                Lv_2 = lv2;
-                Lv_3 = lv3;
-                Lv_4 = 0;
-                Lv_5 = 0;
-                Name = name;
-            }
-            public Struct(int lv0, int lv1, int lv2, string name)
-            {
-                Lv_0 = lv0;
-                Lv_1 = lv1;
-                Lv_2 = lv2;
-                Lv_3 = 0;
-                Lv_4 = 0;
-                Lv_5 = 0;
-                Name = name;
-            }
-            public Struct(int lv0, int lv1, string name)
-            {
-                Lv_0 = lv0;
-                Lv_1 = lv1;
-                Lv_2 = 0;
-                Lv_3 = 0;
-                Lv_4 = 0;
-                Lv_5 = 0;
-                Name = name;
-            }
-            public Struct(int lv0, string name)
-            {
-                Lv_0 = lv0;
-                Lv_1 = 0;
-                Lv_2 = 0;
-                Lv_3 = 0;
-                Lv_4 = 0;
-                Lv_5 = 0;
-                Name = name;
-            }
-        }
-        public List<Struct> GetChildStructList(Struct ParentStruct, int ReportID)
-        {
-            List<Struct> tmpStrucList = new List<Struct>();
-            int Level = 5;
-            Level = ParentStruct.Lv_5 == 0 ? 4 : Level;
-            Level = ParentStruct.Lv_4 == 0 ? 3 : Level;
-            Level = ParentStruct.Lv_3 == 0 ? 2 : Level;
-            Level = ParentStruct.Lv_2 == 0 ? 1 : Level;
-            Level = ParentStruct.Lv_1 == 0 ? 0 : Level;
-            Level = ParentStruct.Lv_0 == 0 ? -1 : Level;
-
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-
-            switch (Level)
-            {
-                case -1: // возвращаем все нулевого уровня, хотя там должен быть только КФУ
-                    {
-                        tmpStrucList = (from a in kpiWebDataContext.ZeroLevelSubdivisionTable
-                                        where a.Active == true
-                                        select new Struct(1, "")
-                                        {
-                                            Lv_0 = (int)a.ZeroLevelSubdivisionTableID,
-                                            Lv_1 = 0,
-                                            Lv_2 = 0,
-                                            Lv_3 = 0,
-                                            Lv_4 = 0,
-                                            Lv_5 = 0,
-                                            Name = a.Name
-                                        }).ToList();
-                        break;
-                    }
-                case 0: // возвращаем все универы
-                    {
-                        tmpStrucList = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
-                                        join b in kpiWebDataContext.ReportArchiveAndLevelMappingTable
-                                        on a.FirstLevelSubdivisionTableID equals b.FK_FirstLevelSubmisionTableId
-
-                                        where a.Active == true
-                                        && b.FK_ReportArchiveTableId == ReportID
-                                        && b.Active == true
-                                        && a.FK_ZeroLevelSubvisionTable == ParentStruct.Lv_0
-                                        select new Struct(1, "")
-                                        {
-                                            Lv_0 = (int)a.FK_ZeroLevelSubvisionTable,
-                                            Lv_1 = (int)a.FirstLevelSubdivisionTableID,
-                                            Lv_2 = 0,
-                                            Lv_3 = 0,
-                                            Lv_4 = 0,
-                                            Lv_5 = 0,
-                                            Name = a.Name
-                                        }).ToList();
-                        break;
-                    }
-                case 1: // возвращаем все факультеты
-                    {
-                        tmpStrucList = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
-                                        join b in kpiWebDataContext.SecondLevelSubdivisionTable
-                                        on a.FirstLevelSubdivisionTableID equals b.FK_FirstLevelSubdivisionTable
-                                        where a.Active == true
-                                        && b.Active == true
-                                        && a.FK_ZeroLevelSubvisionTable == ParentStruct.Lv_0
-                                        && b.FK_FirstLevelSubdivisionTable == ParentStruct.Lv_1
-                                        select new Struct(1, "")
-                                        {
-                                            Lv_0 = (int)a.FK_ZeroLevelSubvisionTable,
-                                            Lv_1 = (int)a.FirstLevelSubdivisionTableID,
-                                            Lv_2 = (int)b.SecondLevelSubdivisionTableID,
-                                            Lv_3 = 0,
-                                            Lv_4 = 0,
-                                            Lv_5 = 0,
-                                            Name = b.Name
-                                        }).ToList();
-                        break;
-                    }
-                case 2: // возвращаем все кафедры
-                    {
-                        tmpStrucList = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
-                                        join b in kpiWebDataContext.SecondLevelSubdivisionTable
-                                        on a.FirstLevelSubdivisionTableID equals b.FK_FirstLevelSubdivisionTable
-                                        join c in kpiWebDataContext.ThirdLevelSubdivisionTable
-                                        on b.SecondLevelSubdivisionTableID equals c.FK_SecondLevelSubdivisionTable
-                                        where a.Active == true
-                                        && b.Active == true
-                                        && c.Active == true
-                                        && a.FK_ZeroLevelSubvisionTable == ParentStruct.Lv_0
-                                        && b.FK_FirstLevelSubdivisionTable == ParentStruct.Lv_1
-                                        && c.FK_SecondLevelSubdivisionTable == ParentStruct.Lv_2
-                                        select new Struct(1, "")
-                                        {
-                                            Lv_0 = (int)a.FK_ZeroLevelSubvisionTable,
-                                            Lv_1 = (int)a.FirstLevelSubdivisionTableID,
-                                            Lv_2 = (int)b.SecondLevelSubdivisionTableID,
-                                            Lv_3 = (int)c.ThirdLevelSubdivisionTableID,
-                                            Lv_4 = 0,
-                                            Lv_5 = 0,
-                                            Name = c.Name
-                                        }).ToList();
-                        break;
-                    }
-                case 3: // возвращаем все специальности
-                    {
-                        tmpStrucList = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
-                                        join b in kpiWebDataContext.SecondLevelSubdivisionTable
-                                        on a.FirstLevelSubdivisionTableID equals b.FK_FirstLevelSubdivisionTable
-                                        join c in kpiWebDataContext.ThirdLevelSubdivisionTable
-                                        on b.SecondLevelSubdivisionTableID equals c.FK_SecondLevelSubdivisionTable
-                                        join d in kpiWebDataContext.FourthLevelSubdivisionTable
-                                        on c.ThirdLevelSubdivisionTableID equals d.FK_ThirdLevelSubdivisionTable
-                                        where a.Active == true
-                                        && b.Active == true
-                                        && c.Active == true
-                                        && a.FK_ZeroLevelSubvisionTable == ParentStruct.Lv_0
-                                        && b.FK_FirstLevelSubdivisionTable == ParentStruct.Lv_1
-                                        && c.FK_SecondLevelSubdivisionTable == ParentStruct.Lv_2
-                                        && d.FK_ThirdLevelSubdivisionTable == ParentStruct.Lv_3
-                                        select new Struct(1, "")
-                                        {
-                                            Lv_0 = (int)a.FK_ZeroLevelSubvisionTable,
-                                            Lv_1 = (int)a.FirstLevelSubdivisionTableID,
-                                            Lv_2 = (int)b.SecondLevelSubdivisionTableID,
-                                            Lv_3 = (int)c.ThirdLevelSubdivisionTableID,
-                                            Lv_4 = (int)d.FourthLevelSubdivisionTableID,
-                                            Lv_5 = 0,
-                                            Name = d.Name
-                                        }).ToList();
-                        break;
-                    }
-                default:
-                    {
-                        //error не будем раскладывать до специальностей
-                        break;
-                    }
-            }
-
-            return tmpStrucList;
-        }
-        public List<Struct> GetChildStructList(Struct ParentStruct, int ReportID ,int SpecID) 
-        {
-            List<Struct> tmpStrucList = new List<Struct>();
-            int Level = 5;
-            Level = ParentStruct.Lv_5 == 0 ? 4 : Level;
-            Level = ParentStruct.Lv_4 == 0 ? 3 : Level;
-            Level = ParentStruct.Lv_3 == 0 ? 2 : Level;
-            Level = ParentStruct.Lv_2 == 0 ? 1 : Level;
-            Level = ParentStruct.Lv_1 == 0 ? 0 : Level;
-            Level = ParentStruct.Lv_0 == 0 ? -1 : Level;
-
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-
-            switch (Level)
-            {
-                case -1: // возвращаем все нулевого уровня, хотя там должен быть только КФУ
-                {
-                    tmpStrucList = (from a in kpiWebDataContext.ZeroLevelSubdivisionTable
-                                    
-                        where a.Active == true
-                                    select new Struct(1,"") { 
-                                        Lv_0 = (int)a.ZeroLevelSubdivisionTableID,  
-                                        Lv_1 = 0,
-                                        Lv_2 = 0,
-                                        Lv_3 = 0,
-                                        Lv_4 = 0,
-                                        Lv_5 = 0,
-                                        Name = a.Name
-                                    }).OrderBy(x => x.Lv_0).ToList();
-                    break;
-                }
-                case 0: // возвращаем все универы
-                {
-                                                            
-                    tmpStrucList = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
-                                    join z in kpiWebDataContext.ReportArchiveAndLevelMappingTable
-                                        on a.FirstLevelSubdivisionTableID equals z.FK_FirstLevelSubmisionTableId
-                                    join b in kpiWebDataContext.SecondLevelSubdivisionTable
-                                    on a.FirstLevelSubdivisionTableID equals b.FK_FirstLevelSubdivisionTable
-                                    join c in kpiWebDataContext.ThirdLevelSubdivisionTable
-                                    on b.SecondLevelSubdivisionTableID equals c.FK_SecondLevelSubdivisionTable
-                                    join d in kpiWebDataContext.FourthLevelSubdivisionTable
-                                    on c.ThirdLevelSubdivisionTableID equals d.FK_ThirdLevelSubdivisionTable
-                                    where a.Active == true
-                                    && a.FK_ZeroLevelSubvisionTable == ParentStruct.Lv_0
-                                    && z.FK_ReportArchiveTableId == ReportID
-                                        && z.Active == true
-                                    && ((SpecID == 0) || (SpecID == d.FK_Specialization))
-                                    select new Struct(1,"")
-                                    {
-                                        Lv_0 = (int)a.FK_ZeroLevelSubvisionTable,
-                                        Lv_1 = (int)a.FirstLevelSubdivisionTableID,
-                                        Lv_2 = 0,
-                                        Lv_3 = 0,
-                                        Lv_4 = 0,
-                                        Lv_5 = 0,
-                                        Name = a.Name
-                                    }).OrderBy(x => x.Lv_1).ToList();
-                    break;
-                }
-                case 1: // возвращаем все факультеты
-                {
-                    tmpStrucList = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
-                                    join b in kpiWebDataContext.SecondLevelSubdivisionTable
-                                    on a.FirstLevelSubdivisionTableID equals b.FK_FirstLevelSubdivisionTable
-                                    join c in kpiWebDataContext.ThirdLevelSubdivisionTable
-                                    on b.SecondLevelSubdivisionTableID equals c.FK_SecondLevelSubdivisionTable
-                                    join d in kpiWebDataContext.FourthLevelSubdivisionTable
-                                    on c.ThirdLevelSubdivisionTableID equals d.FK_ThirdLevelSubdivisionTable
-                                    where a.Active == true
-                                    && b.Active == true
-                                    && a.FK_ZeroLevelSubvisionTable == ParentStruct.Lv_0
-                                    && b.FK_FirstLevelSubdivisionTable == ParentStruct.Lv_1
-                                   && ((SpecID == 0) || (SpecID == d.FK_Specialization))
-                                    select new Struct(1,"")
-                                    {
-                                        Lv_0 = (int)a.FK_ZeroLevelSubvisionTable,
-                                        Lv_1 = (int)a.FirstLevelSubdivisionTableID,
-                                        Lv_2 = (int)b.SecondLevelSubdivisionTableID,
-                                        Lv_3 = 0,
-                                        Lv_4 = 0,
-                                        Lv_5 = 0,
-                                        Name = b.Name
-                                    }).OrderBy(x => x.Lv_2).ToList();
-                    break;
-                }
-                case 2: // возвращаем все кафедры
-                {
-                    tmpStrucList = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
-                                    join b in kpiWebDataContext.SecondLevelSubdivisionTable
-                                    on a.FirstLevelSubdivisionTableID equals b.FK_FirstLevelSubdivisionTable
-                                    join c in kpiWebDataContext.ThirdLevelSubdivisionTable
-                                    on b.SecondLevelSubdivisionTableID equals c.FK_SecondLevelSubdivisionTable                                  
-                                    join e in kpiWebDataContext.FourthLevelSubdivisionTable
-                                    on c.ThirdLevelSubdivisionTableID equals e.FK_ThirdLevelSubdivisionTable
-                                    where a.Active == true
-                                    && b.Active == true
-                                    && c.Active == true
-                                    && a.FK_ZeroLevelSubvisionTable == ParentStruct.Lv_0
-                                    && b.FK_FirstLevelSubdivisionTable == ParentStruct.Lv_1
-                                    && c.FK_SecondLevelSubdivisionTable == ParentStruct.Lv_2
-                                    && ((SpecID == 0) || (SpecID == e.FK_Specialization))
-                                    select new Struct(1,"")
-                                    {
-                                        Lv_0 = (int)a.FK_ZeroLevelSubvisionTable,
-                                        Lv_1 = (int)a.FirstLevelSubdivisionTableID,
-                                        Lv_2 = (int)b.SecondLevelSubdivisionTableID,
-                                        Lv_3 = (int)c.ThirdLevelSubdivisionTableID,
-                                        Lv_4 = 0,
-                                        Lv_5 = 0,
-                                        Name = c.Name
-                                    }).OrderBy(x => x.Lv_3).ToList();
-                    break;
-                }
-                default:
-                {
-                    //error не будем раскладывать до специальностей
-                    break;
-                }
-            }
-
-            List<Struct> uniqeStruct = new List<Struct>();
-            foreach (Struct curStruct in tmpStrucList)
-            {
-                if (uniqeStruct.Count == 0)
-                {
-                    uniqeStruct.Add(curStruct);
-                }
-                else
-                {
-                    if ((uniqeStruct[uniqeStruct.Count - 1].Lv_0 != curStruct.Lv_0)||
-                    (uniqeStruct[uniqeStruct.Count - 1].Lv_1 != curStruct.Lv_1)||
-                    (uniqeStruct[uniqeStruct.Count - 1].Lv_2 != curStruct.Lv_2)||
-                    (uniqeStruct[uniqeStruct.Count - 1].Lv_3 != curStruct.Lv_3)||
-                    (uniqeStruct[uniqeStruct.Count - 1].Lv_4 != curStruct.Lv_4))
-                    {
-                        uniqeStruct.Add(curStruct);
-                    }
-                }
-            }
-            return uniqeStruct;
-        }
+        
         public class MyObject
         {
             public int Id;
@@ -377,161 +27,7 @@ namespace KPIWeb.Rector
             public string UrlAddr;
             public int Active;
         }
-        public float GetCalculatedWithParams(Struct StructToCalcFor, int ParamType, int ParamID,int ReportID, int SpecID) // читает показатель
-        {
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-          
-            float result = 0;
-            if (ParamType == 0) // считаем целевой показатель
-            {
-                IndicatorsTable Indicator = (from a in kpiWebDataContext.IndicatorsTable
-                    where a.IndicatorsTableID == ParamID
-                    select a).FirstOrDefault();
-                    return
-                        (float) CalculateAbb.CalculateForLevel(1, Abbreviature.CalculatedAbbToFormula(Indicator.Formula)
-                            , ReportID, SpecID, StructToCalcFor.Lv_0
-                            , StructToCalcFor.Lv_1, StructToCalcFor.Lv_2, StructToCalcFor.Lv_3, StructToCalcFor.Lv_4,
-                            StructToCalcFor.Lv_5, 0);
-            }
-            else if (ParamType == 1) // считаем рассчетный
-            {
-                CalculatedParametrs Calculated = (from a in kpiWebDataContext.CalculatedParametrs
-                                             where a.CalculatedParametrsID == ParamID
-                                             select a).FirstOrDefault();
-                return (float)CalculateAbb.CalculateForLevel(1, Calculated.Formula, ReportID, SpecID , StructToCalcFor.Lv_0
-                        , StructToCalcFor.Lv_1, StructToCalcFor.Lv_2, StructToCalcFor.Lv_3, StructToCalcFor.Lv_4,
-                        StructToCalcFor.Lv_5, 0);
-            }
-            else if (ParamType == 2) // суммируем базовый
-            {
-                    return (float) CalculateAbb.SumForLevel(ParamID, ReportID,SpecID, StructToCalcFor.Lv_0
-                        , StructToCalcFor.Lv_1, StructToCalcFor.Lv_2, StructToCalcFor.Lv_3, StructToCalcFor.Lv_4,
-                        StructToCalcFor.Lv_5);
-            }
-            else
-            {
-                //error
-            }
-            return result;
-        }
-        public int StructDeepness(Struct CurrentStruct)
-        {
-            int tmp=0;
-            if (CurrentStruct.Lv_0 != 0) tmp++;
-            if (CurrentStruct.Lv_1 != 0) tmp++;
-            if (CurrentStruct.Lv_2 != 0) tmp++;
-            if (CurrentStruct.Lv_3 != 0) tmp++;
-            if (CurrentStruct.Lv_4 != 0) tmp++;
-            if (CurrentStruct.Lv_5 != 0) tmp++;
-            return tmp;
-        }
-        public Struct StructDeeper(Struct parentStruct, int nextID)
-        {
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-            int lv0 = parentStruct.Lv_0;
-            int lv1 = parentStruct.Lv_1;
-            int lv2 = parentStruct.Lv_2;
-            int lv3 = parentStruct.Lv_3;
-            int lv4 = parentStruct.Lv_4;
-            int lv5 = parentStruct.Lv_5;
-            string name = parentStruct.Name;
-
-            Struct tmp = new Struct(lv0,lv1,lv2,lv3,lv4,lv5,name);
-
-            if (tmp.Lv_0 == 0)
-            {
-                tmp.Lv_0 = nextID;
-                tmp.Name = (from a in kpiWebDataContext.ZeroLevelSubdivisionTable
-                    where a.ZeroLevelSubdivisionTableID == nextID
-                    select a.Name).FirstOrDefault();
-                return tmp;
-            }
-
-            if (tmp.Lv_1 == 0)
-            {
-                tmp.Lv_1 = nextID;
-                tmp.Name = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
-                            where a.FirstLevelSubdivisionTableID == nextID
-                            select a.Name).FirstOrDefault();
-                return tmp;
-            }
-
-            if (tmp.Lv_2 == 0)
-            {
-                tmp.Lv_2 = nextID;
-                tmp.Name = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
-                            where a.SecondLevelSubdivisionTableID == nextID
-                            select a.Name).FirstOrDefault();
-                return tmp;
-            }
-
-            if (tmp.Lv_3 == 0)
-            {
-                tmp.Lv_3 = nextID;
-                tmp.Name = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
-                            where a.ThirdLevelSubdivisionTableID == nextID
-                            select a.Name).FirstOrDefault();
-                return tmp;
-            }
-            if (tmp.Lv_4 == 0)
-            {
-                tmp.Lv_4 = nextID;
-                tmp.Name = (from a in kpiWebDataContext.FourthLevelSubdivisionTable
-                            where a.FourthLevelSubdivisionTableID == nextID
-                            select a.Name).FirstOrDefault();
-                return tmp;
-            }
-            if (tmp.Lv_5 == 0)
-            {
-                tmp.Lv_5 = nextID;
-                tmp.Name = (from a in kpiWebDataContext.FifthLevelSubdivisionTable
-                            where a.FifthLevelSubdivisionTableID == nextID
-                            select a.Name).FirstOrDefault();
-                return tmp;
-            }
-            return tmp;
-        } //добавляет ID к первому в структуре нулю
-        public int GetLastID(Struct currentStruct)
-        {
-            if (currentStruct.Lv_0 == 0)
-            {
-                return 0;
-            }
-
-            if (currentStruct.Lv_1 == 0)
-            {
-                return currentStruct.Lv_0;
-            }
-
-            if (currentStruct.Lv_2 == 0)
-            {
-                return currentStruct.Lv_1;
-            }
-
-            if (currentStruct.Lv_3 == 0)
-            {
-                return currentStruct.Lv_2;
-            }
-
-            if (currentStruct.Lv_4 == 0)
-            {
-                return currentStruct.Lv_3;
-            }
-            return 0;
-        }  //определяет последнее не нулевое значение в структуре
-        public float CalculatedForDB(float input)
-        {
-            float tmp = (float) input;
-
-            if ((tmp < -(float)1E+20) || (tmp > (float)1E+20)
-                || (tmp == null) || (float.IsNaN(tmp))
-                || (float.IsInfinity(tmp)) || (float.IsNegativeInfinity(tmp))
-                || (float.IsPositiveInfinity(tmp)) || (!tmp.ToString().IsFloat()))
-            {
-                tmp = (float)1E+20;
-            }
-            return tmp;
-        }
+       
         protected void Page_Load(object sender, EventArgs e)
         {          
             #region get user data
@@ -616,7 +112,7 @@ namespace KPIWeb.Rector
                     GoForwardButton.Enabled = false;
                 }
                 RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
-                Struct mainStruct = CurrentRectorSession.sesStruct;
+                ForRCalc.Struct mainStruct = CurrentRectorSession.sesStruct;
                 int ViewType = CurrentRectorSession.sesViewType;
                 int ParamID = CurrentRectorSession.sesParamID;
                 int ParamType = CurrentRectorSession.sesParamType;
@@ -717,7 +213,7 @@ namespace KPIWeb.Rector
                         PageFullName.Text += "</b>  </br>"; 
                     }
 
-                    int Deep = StructDeepness(mainStruct);
+                    int Deep = ForRCalc.StructDeepness(mainStruct);
                     if (Deep == 1) 
                     {
                     }
@@ -783,7 +279,7 @@ namespace KPIWeb.Rector
 
 
                     title = "Подразделения";
-                    if (StructDeepness(mainStruct) > 3)
+                    if (ForRCalc.StructDeepness(mainStruct) > 3)
                     {
                         title = "Направления подготовки";
                     }
@@ -799,22 +295,22 @@ namespace KPIWeb.Rector
                             select a.SubvisionLevel).FirstOrDefault();
 
                     }
-                    List<Struct> currentStructList = new List<Struct>();
+                    List<ForRCalc.Struct> currentStructList = new List<ForRCalc.Struct>();
                     if (SpecID != 0)
                     {
-                        currentStructList = GetChildStructList(mainStruct,ReportID, SpecID);
+                        currentStructList = ForRCalc.GetChildStructList(mainStruct, ReportID, SpecID);
                     }
                     else
                     {
-                        currentStructList = GetChildStructList(mainStruct, ReportID);
+                        currentStructList = ForRCalc.GetChildStructList(mainStruct, ReportID);
                     }
 
-                    foreach (Struct currentStruct in currentStructList)
+                    foreach (ForRCalc.Struct currentStruct in currentStructList)
                     {
 
                         DataRow dataRow = dataTable.NewRow();
 
-                        dataRow["ID"] = GetLastID(currentStruct).ToString();
+                        dataRow["ID"] = ForRCalc.GetLastID(currentStruct).ToString();
                         dataRow["Number"] = "num";
                         dataRow["Name"] = currentStruct.Name;
                         dataRow["StartDate"] = "nun";
@@ -830,7 +326,7 @@ namespace KPIWeb.Rector
                         dataRow["LableColor"] = "#000000";
 
                         dataRow["Value"] =
-                            GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID, SpecID).ToString();
+                            ForRCalc.GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID, SpecID).ToString();
                         dataTable.Rows.Add(dataRow);
                     }
 
@@ -853,8 +349,8 @@ namespace KPIWeb.Rector
                     Grid.Columns[4].Visible = false;
                     Grid.Columns[2].Visible = false;
                     Grid.Columns[1].Visible = false;
-                    if ((StructDeepness(mainStruct) > (BasicParamLevel-1))||
-                        (StructDeepness(mainStruct) > 2 )&&(SpecID!=0)) // дальше углубляться нельзя
+                    if ((ForRCalc.StructDeepness(mainStruct) > (BasicParamLevel - 1)) ||
+                        (ForRCalc.StructDeepness(mainStruct) > 2) && (SpecID != 0)) // дальше углубляться нельзя
                     {
                         Grid.Columns[10].Visible = false;
                     }                    
@@ -1134,7 +630,7 @@ namespace KPIWeb.Rector
                                         /// 3 - orange (can confirm)
                                         /// 
                                         float tmp =
-                                            CalculatedForDB(GetCalculatedWithParams(mainStruct, ParamType,
+                                            ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
                                                 CurrentIndicator.IndicatorsTableID, ReportID, SpecID));
 
                                         if (tmp == (float) 1E+20)
@@ -1163,7 +659,7 @@ namespace KPIWeb.Rector
                                     {
                                         dataRow["Color"] = "2";
                                         float tmp =
-                                            CalculatedForDB(GetCalculatedWithParams(mainStruct, ParamType,
+                                            ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
                                                 CurrentIndicator.IndicatorsTableID, ReportID, SpecID));
                                         if (tmp == (float) 1E+20)
                                         {
@@ -1183,7 +679,7 @@ namespace KPIWeb.Rector
                                     dataRow["LableColor"] = "#FFFFFF";
                                     dataRow["Color"] = "3";
                                     collected.CollectedValue =
-                                        CalculatedForDB(GetCalculatedWithParams(mainStruct, ParamType,
+                                        ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
                                             CurrentIndicator.IndicatorsTableID, ReportID, SpecID));
                                         //12;                               
                                     kpiWebDataContext.SubmitChanges();
@@ -1368,7 +864,7 @@ namespace KPIWeb.Rector
                                 collected.Confirmed = false;
                                 collected.LastChangeDateTime = DateTime.Now;
                                 collected.Active = true;
-                                collected.CollectedValue = GetCalculatedWithParams(mainStruct, ParamType,
+                                collected.CollectedValue = ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
                                     CurrentCalculated.CalculatedParametrsID, ReportID, SpecID); //11;
                                 kpiWebDataContext.CollectedCalculatedParametrs.InsertOnSubmit(collected);
                                 kpiWebDataContext.SubmitChanges();
@@ -1430,7 +926,7 @@ namespace KPIWeb.Rector
                                     {
                                         dataRow["Color"] = "2";
                                         float tmp =
-                                            CalculatedForDB(GetCalculatedWithParams(mainStruct, ParamType,
+                                            ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
                                                 CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
                                         if (tmp == (float) 1E+20)
                                         {
@@ -1458,7 +954,7 @@ namespace KPIWeb.Rector
                                     {
                                         dataRow["Color"] = "2";
                                         float tmp =
-                                            CalculatedForDB(GetCalculatedWithParams(mainStruct, ParamType,
+                                            ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
                                                 CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
                                         if (tmp == (float) 1E+20)
                                         {
@@ -1479,7 +975,7 @@ namespace KPIWeb.Rector
                                     dataRow["Color"] = "3";
                                     dataRow["LableColor"] = "#000000";
                                     collected.CollectedValue =
-                                        CalculatedForDB(GetCalculatedWithParams(mainStruct, ParamType,
+                                        ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
                                             CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
                                     kpiWebDataContext.SubmitChanges();
                                     value_ = ((float) collected.CollectedValue).ToString("0.00");
@@ -1551,7 +1047,7 @@ namespace KPIWeb.Rector
                             dataRow["CommentEnabled"] = "hidden";
 
                             dataRow["Value"] =
-                                GetCalculatedWithParams(mainStruct, ParamType, CurrebtBasic.BasicParametersTableID,
+                                ForRCalc.GetCalculatedWithParams(mainStruct, ParamType, CurrebtBasic.BasicParametersTableID,
                                     ReportID, SpecID).ToString();
                             dataTable.Rows.Add(dataRow);
                         }
@@ -1670,7 +1166,7 @@ namespace KPIWeb.Rector
                             dataRow["CommentEnabled"] = "hidden";
 
                             dataRow["Value"] =
-                                GetCalculatedWithParams(mainStruct, ParamType, ParamID, ReportID,
+                                ForRCalc.GetCalculatedWithParams(mainStruct, ParamType, ParamID, ReportID,
                                     currentSpec.SpecializationTableID).ToString();
                             dataTable.Rows.Add(dataRow);
                         }
@@ -1714,7 +1210,7 @@ namespace KPIWeb.Rector
                             select a.Name).FirstOrDefault();
                         PageFullName.Text += "</b>  </br>";
 
-                        int Deep = StructDeepness(mainStruct);
+                        int Deep = ForRCalc.StructDeepness(mainStruct);
                         if (Deep == 1)
                         {
                         }
@@ -1763,13 +1259,13 @@ namespace KPIWeb.Rector
                                                       select a).FirstOrDefault();
 
                     List<BasicParametersTable> BasicList = Abbreviature.GetBasicList(Calculated.Formula);
-                    List<Struct> currentStructList = new List<Struct>();
-                    currentStructList = GetChildStructList(mainStruct,ReportID);
+                    List<ForRCalc.Struct> currentStructList = new List<ForRCalc.Struct>();
+                    currentStructList = ForRCalc.GetChildStructList(mainStruct, ReportID);
 
-                    foreach (Struct currentStruct in currentStructList)
+                    foreach (ForRCalc.Struct currentStruct in currentStructList)
                     {
                         DataRow dataRow = dataTable.NewRow();
-                        dataRow["ID"] = GetLastID(currentStruct).ToString();
+                        dataRow["ID"] = ForRCalc.GetLastID(currentStruct).ToString();
                         dataRow["Number"] = "num";
                         dataRow["Name"] = currentStruct.Name;
                         dataRow["StartDate"] = "nun";
@@ -1884,7 +1380,7 @@ namespace KPIWeb.Rector
                     #region DataGridBind
                     Grid.DataSource = dataTable;
                     Grid.Columns[3].HeaderText = "Подразделения";
-                    if (StructDeepness(mainStruct) > 3)
+                    if (ForRCalc.StructDeepness(mainStruct) > 3)
                     {
                         Grid.Columns[3].HeaderText = "Направления подготовки";
                     }
@@ -1901,7 +1397,7 @@ namespace KPIWeb.Rector
                     Grid.Columns[4].Visible = false;
                     Grid.Columns[2].Visible = false;
                     Grid.Columns[1].Visible = false;
-                    if (StructDeepness(mainStruct) >2) 
+                    if (ForRCalc.StructDeepness(mainStruct) > 2) 
                     {
                         Grid.Columns[10].Visible = false;
                     }
@@ -1963,7 +1459,7 @@ namespace KPIWeb.Rector
                     Response.Redirect("~/Default.aspx");
                 }
                 RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
-                Struct mainStruct = CurrentRectorSession.sesStruct;
+                ForRCalc.Struct mainStruct = CurrentRectorSession.sesStruct;
                 int ViewType = CurrentRectorSession.sesViewType;
                 int ParamID = CurrentRectorSession.sesParamID;
                 int ParamType = CurrentRectorSession.sesParamType;
@@ -1996,11 +1492,11 @@ namespace KPIWeb.Rector
                 }
                 else if (currentRectorSession.sesViewType == 3)
                 {
-                    currentRectorSession.sesStruct = StructDeeper(currentRectorSession.sesStruct, Convert.ToInt32(button.CommandArgument));  
+                    currentRectorSession.sesStruct = ForRCalc.StructDeeper(currentRectorSession.sesStruct, Convert.ToInt32(button.CommandArgument));  
                 }
                 else
                 {
-                    currentRectorSession.sesStruct = StructDeeper(currentRectorSession.sesStruct, Convert.ToInt32(button.CommandArgument));               
+                    currentRectorSession.sesStruct = ForRCalc.StructDeeper(currentRectorSession.sesStruct, Convert.ToInt32(button.CommandArgument));               
                 }       
                 rectorHistory.CurrentSession++;
                 rectorHistory.SessionCount = rectorHistory.CurrentSession + 1;
@@ -2021,7 +1517,7 @@ namespace KPIWeb.Rector
                     Response.Redirect("~/Default.aspx");
                 }
                 RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
-                Struct mainStruct = CurrentRectorSession.sesStruct;
+                ForRCalc.Struct mainStruct = CurrentRectorSession.sesStruct;
                 int ViewType = CurrentRectorSession.sesViewType;
                 int ParamID = CurrentRectorSession.sesParamID;
                 int ParamType = CurrentRectorSession.sesParamType;
@@ -2049,7 +1545,7 @@ namespace KPIWeb.Rector
                     Response.Redirect("~/Default.aspx");
                 }
                 RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
-                Struct mainStruct = CurrentRectorSession.sesStruct;
+                ForRCalc.Struct mainStruct = CurrentRectorSession.sesStruct;
                 int ViewType = CurrentRectorSession.sesViewType;
                 int ParamID = CurrentRectorSession.sesParamID;
                 int ParamType = CurrentRectorSession.sesParamType;
@@ -2359,7 +1855,7 @@ namespace KPIWeb.Rector
                 }
 
                 RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
-                Struct mainStruct = CurrentRectorSession.sesStruct;
+                ForRCalc.Struct mainStruct = CurrentRectorSession.sesStruct;
                 int ViewType = CurrentRectorSession.sesViewType;
                 int ParamID = CurrentRectorSession.sesParamID;
                 int ParamType = CurrentRectorSession.sesParamType;

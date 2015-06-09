@@ -87,7 +87,7 @@ namespace KPIWeb.AutomationDepartment
 
         protected void Button11_Click1(object sender, EventArgs e)
         {
-            Result.Struct mainStruct = new Result.Struct(1,"");
+            ForRCalc.Struct mainStruct = new ForRCalc.Struct(1, "");
             RectorSession rectorResultSession = new RectorSession (mainStruct, 1, 0, 0, 4009,0);
            Session["rectorResultSession"] = rectorResultSession;
 

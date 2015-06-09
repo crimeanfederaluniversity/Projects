@@ -10,7 +10,7 @@ namespace KPIWeb
     [Serializable]
     public class RectorSession
     {
-        public Result.Struct sesStruct { get; set; }
+        public ForRCalc.Struct sesStruct { get; set; }
         public int sesViewType { get; set; } // тип просмотра // 0 - просмотр для структурных подразделений // 1 - просмотр 
      //   public int sesLevelID { get; set; }  // ID структуры
         public int sesParamID { get; set; }  // ID параметра
@@ -18,7 +18,7 @@ namespace KPIWeb
         public int sesReportID { get; set; }
         public string sesName { get; set; }
         public int sesSpecID { get; set; }
-        public RectorSession(Result.Struct _sesStruct, int _sesViewType, int _sesParamID, int _sesParamType, int _sesReportID, int _sesSpecID)
+        public RectorSession(ForRCalc.Struct _sesStruct, int _sesViewType, int _sesParamID, int _sesParamType, int _sesReportID, int _sesSpecID)
         {
             this.sesStruct = _sesStruct;
             this.sesViewType = _sesViewType;
@@ -27,7 +27,7 @@ namespace KPIWeb
             this.sesReportID = _sesReportID;
             this.sesSpecID = _sesSpecID;
         }
-        public RectorSession(Result.Struct _sesStruct, int _sesViewType,int _sesParamID, int _sesParamType, int _sesReportID,int _sesSpecID,string _sesName)
+        public RectorSession(ForRCalc.Struct _sesStruct, int _sesViewType, int _sesParamID, int _sesParamType, int _sesReportID, int _sesSpecID, string _sesName)
         {
             this.sesStruct = _sesStruct;
             this.sesViewType = _sesViewType;

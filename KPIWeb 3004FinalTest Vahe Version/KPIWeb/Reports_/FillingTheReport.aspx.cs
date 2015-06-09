@@ -985,10 +985,13 @@ namespace KPIWeb.Reports
                                                          where a.SpecializationTableID == spec.FK_Specialization
                                                          select a.SpecializationNumber).FirstOrDefault().ToString());
                                        */
+                                        string CurrentColumnName = "<div style=\"transform:rotate(90deg);\">" + (from a in kpiWebDataContext.SpecializationTable
+                                                                                                                  where a.SpecializationTableID == spec.FK_Specialization
+                                                                                                                  select a.SpecializationNumber).FirstOrDefault().ToString() + "</div>";
 
-                                        columnNames.Add( (from a in kpiWebDataContext.SpecializationTable
-                                                          where a.SpecializationTableID == spec.FK_Specialization
-                                                          select a.SpecializationNumber).FirstOrDefault().ToString());
+                                        
+
+                                        columnNames.Add(CurrentColumnName);
 
                                         //запомнили название специальности // оно нам пригодится)
                                     }
@@ -1886,9 +1889,14 @@ namespace KPIWeb.Reports
         }
         protected void Button1_Click(object sender, EventArgs e) // экспорт в excel
         {
+            string pdfFile = CreatePdf();
+            Response.Write("<script>");
+            Response.Write("window.open('" + pdfFile + "','_blank')");
+            Response.Write("</script>");
+            /*
              Response.ContentType = "Application/pdf";
              Response.TransmitFile(CreatePdf());
-             Response.End();   
+             Response.End();   */
 
         }
         protected void Button2_Click(object sender, EventArgs e) // вернуться в меню 

@@ -107,8 +107,15 @@ namespace KPIWeb
             foreach (CalculatedParametrs Calculated in CalculatedList)
             {
                 int idx = BigFormulaString.IndexOf(Calculated.AbbreviationEN);
-                BigFormulaString = BigFormulaString.Remove(idx, Calculated.AbbreviationEN.Length)
-                    .Insert(idx, ReturnCalcFormula(Calculated.AbbreviationEN));
+                if (idx < 0)
+                {
+                    //FORMULA_ERROR
+                }
+                else
+                {
+                    BigFormulaString = BigFormulaString.Remove(idx, Calculated.AbbreviationEN.Length)
+                        .Insert(idx, ReturnCalcFormula(Calculated.AbbreviationEN));                    
+                }
             }
 
            /* DateTime time2 = DateTime.Now; //Точка окончания отсчета времени
