@@ -87,7 +87,7 @@ namespace KPIWeb.Rector
             
         }
 
-        public ChartValueArray AllIndicators(int ReportID)
+        public ChartValueArray AllIndicatorsForAcademys(int ReportID)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
 
@@ -190,11 +190,70 @@ namespace KPIWeb.Rector
             }
             return DataForChart;
         }
+        public ChartValueArray AllIndicatorsForOneAcademy(int AcademyID, int ReportID)
+        {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+
+            List<IndicatorsTable> Indicators = (
+                            from a in kpiWebDataContext.IndicatorsTable
+                            where
+                                a.Active == true
+                            select a).OrderBy(mc => mc.IndicatorsTableID).ToList();
+
+            ChartValueArray DataForChart = new ChartValueArray("График достижения плановых значений целевых показателей для академии");
+            int i = 0;
+            foreach (IndicatorsTable CurrentIndicator in Indicators)
+            {
+                PlannedIndicator plannedValue = (from a in kpiWebDataContext.PlannedIndicator
+                                                 where a.FK_IndicatorsTable == CurrentIndicator.IndicatorsTableID
+                                                       && a.Date > DateTime.Now
+                                                 select a).OrderBy(x => x.Date).FirstOrDefault();
+                string Name_ = "";
+                float Planned_Value = 0;
+                float Value_ = 0;
+
+                if (plannedValue != null)
+                {
+                    Planned_Value = (float)plannedValue.Value;
+                }
+                if (CurrentIndicator.Measure != null)
+                {
+                    if (CurrentIndicator.Measure.Length > 2)
+                    {
+                        Name_ = CurrentIndicator.Name + " (" + CurrentIndicator.Measure + ")";
+                    }
+                    else
+                    {
+                        Name_ = CurrentIndicator.Name;
+                    }
+                }
+                else
+                {
+                    Name_ = CurrentIndicator.Name;
+                }
+                ForRCalc.Struct mainStruct = new ForRCalc.Struct(1, AcademyID, 0, 0, 0, "N");
+                float tmp = ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0, CurrentIndicator.IndicatorsTableID, ReportID, 0));
+
+                if (tmp == (float)1E+20)
+                {
+                    Value_ = 0;
+                }
+                else
+                {
+                    Value_ = tmp;
+                }
+                ChartOneValue DataRowForChart = new ChartOneValue(Name_, Value_, Planned_Value);
+                DataForChart.ChartValues.Add(DataRowForChart);
+                i++;
+            }
+            return DataForChart;
+        }
  
         protected void Button1_Click(object sender, EventArgs e)
         {
             ChartValueArray DataForChart = IndicatorForAllAcademys(1029, 1); // Возвращает список академий со значение целевого показателя с ID 1029
-            ChartValueArray DataForChart2 = AllIndicators(1); // возвращает список целевых показателей со значениями по КФУ
+            ChartValueArray DataForChart2 = AllIndicatorsForAcademys(1); // возвращает список целевых показателей со значениями по КФУ
+            ChartValueArray DataForChart3 = AllIndicatorsForOneAcademy(1016, 1);// возвращает список целевых показателей со значениями по академии с ID 1016
         }
     }
 }
