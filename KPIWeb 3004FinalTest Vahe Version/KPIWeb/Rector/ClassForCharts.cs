@@ -27,14 +27,14 @@ namespace KPIWeb.Rector
     public class ChartValueArray
     {
         public string chartName;
-        public ChartOneValue[] ChartValues;
+        public List<ChartOneValue> ChartValues;
 
-        public ChartValueArray(int size, string chartName_)
+        public ChartValueArray(string chartName_)
         {
             this.chartName = chartName_;
-            ChartValues = new ChartOneValue[size];
+            ChartValues = new List<ChartOneValue>();
         }
-        public ChartValueArray(ChartOneValue[] ChartValues_, string chartName_)
+        public ChartValueArray(List<ChartOneValue> ChartValues_, string chartName_ )
         {
             this.chartName = chartName_;
             this.ChartValues = ChartValues_;

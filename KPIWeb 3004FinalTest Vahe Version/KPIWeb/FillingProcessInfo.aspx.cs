@@ -46,12 +46,77 @@ namespace KPIWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (TextBox1.Text == "123_")
+           
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+             if (TextBox1.Text == "123_")
             {
+                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+                TextBox2.Text = "";
+                TextBox2.Text += "Всего структурных подразделений вносящих данные: " + (from a in kPiDataContext.ThirdLevelParametrs
+                                                                      where a.Active == true
+                                                                      select a).Count().ToString();
+                TextBox2.Text += Environment.NewLine;
+
+                TextBox2.Text += "Структурных подразделений вносящих данные, где есть хоть один пользователь: " + 
+                                                                                    (from a in kPiDataContext.ThirdLevelParametrs
+                                                                                     join b in kPiDataContext.UsersTable
+                                                                                     on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                                                                        where a.Active == true
+                                                                                        && b.Active == true
+                                                                                        && b.AccessLevel == 0
+                                                                                        select a).Distinct().Count().ToString();
+                TextBox2.Text += Environment.NewLine;
+                 
+                TextBox2.Text += "Всего пользователей: " + (from b in kPiDataContext.UsersTable
+                                                             where 
+                                                             b.AccessLevel == 0
+                                                             && b.Active == true
+                                                             select b).Count().ToString();
+                TextBox2.Text += Environment.NewLine;
+
+                TextBox2.Text += "Всего пользователей активировавших аккаунты: " + (from b in kPiDataContext.UsersTable
+                                                           where
+                                                           b.AccessLevel == 0
+                                                           && b.Active == true
+                                                           && b.Confirmed == true
+                                                           select b).Count().ToString();
+
+                TextBox2.Text += Environment.NewLine;
+                TextBox2.Text += Environment.NewLine;
+                TextBox2.Text += "Структурных подразделений утвердивших отчет " + (from a in kPiDataContext.ThirdLevelParametrs
+                                                                                   join b in kPiDataContext.CollectedBasicParametersTable
+                                                                                   on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                                                                   where b.Status == 4
+                                                                                   select a).Distinct().Count().ToString();
+                TextBox2.Text += Environment.NewLine;
+                TextBox2.Text += "Структурных подразделений c отправленным на утверждение отчетом " + (from a in kPiDataContext.ThirdLevelParametrs
+                                                                                   join b in kPiDataContext.CollectedBasicParametersTable
+                                                                                   on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                                                                   where b.Status == 3
+                                                                                   select a).Distinct().Count().ToString();
+                TextBox2.Text += Environment.NewLine;
+                TextBox2.Text += "Структурных подразделений отчетом возвращенным на доработку " + (from a in kPiDataContext.ThirdLevelParametrs
+                                                                                                       join b in kPiDataContext.CollectedBasicParametersTable
+                                                                                                       on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                                                                                       where b.Status == 1
+                                                                                                       select a).Distinct().Count().ToString();
+
+                TextBox2.Text += Environment.NewLine;
+                TextBox2.Text += "Структурных подразделений внесщих 1 и более показателей (не учитываются утвержденные и отправленные на утверждение) " + (from a in kPiDataContext.ThirdLevelParametrs
+                                                                                                   join b in kPiDataContext.CollectedBasicParametersTable
+                                                                                                   on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                                                                                   where b.Status == 0
+                                                                                                   && b.CollectedValue != null
+                                                                                                   select a).Distinct().Count().ToString();
+
+
                 TreeView1.DataSource = null;
                 TreeView1.DataBind();
                 Label1.Visible = true;
-                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+                
                 List<MyObject> list = new List<MyObject>();
 
                 int allZeroLevel = 0;
@@ -64,61 +129,44 @@ namespace KPIWeb
                 string tmp;
                 string tmp2;
                 #region get zero leve list
+
                 List<ZeroLevelSubdivisionTable> zeroLevelList = (from a in kPiDataContext.ZeroLevelSubdivisionTable
                                                                  where a.Active == true
                                                                  select a).ToList();
                 #endregion
+                // колво утвердивших (% ) // % ожидающих утверждения // % начавших заполнение 
                 foreach (ZeroLevelSubdivisionTable zeroLevelItem in zeroLevelList)//по каждому университету
                 {
                     #region get first level list
                     List<FirstLevelSubdivisionTable> firstLevelList = (from b in kPiDataContext.FirstLevelSubdivisionTable
-                                                                       /* join c in kPiDataContext.ReportArchiveAndLevelMappingTable
-                                                                            on b.FirstLevelSubdivisionTableID equals c.FK_FirstLevelSubmisionTableId*/
+                                                                     
                                                                        where b.FK_ZeroLevelSubvisionTable == zeroLevelItem.ZeroLevelSubdivisionTableID
                                                                              && b.Active == true
-                                                                       // && c.Active == true
                                                                        select b).ToList();
                     #endregion
-                    //TextBox1.Text+="__" + zeroLevelItem.Name +"\n";
+                    #region
+                    int all0 = (from a in kPiDataContext.ThirdLevelParametrs where a.Active == true select a).Count();
+                    int conf0 = (from a in kPiDataContext.ThirdLevelParametrs
+                                 join b in kPiDataContext.CollectedBasicParametersTable
+                                         on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                 where b.Status == 4
+                                 select a).Distinct().Count();
+                    int toconf0 = (from a in kPiDataContext.ThirdLevelParametrs
+                                   join b in kPiDataContext.CollectedBasicParametersTable
+                                   on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                   where b.Status == 3
+                                   select a).Distinct().Count();
+                    int started0 = (from a in kPiDataContext.ThirdLevelParametrs
+                                   join b in kPiDataContext.CollectedBasicParametersTable
+                                   on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                   where b.Status == 0
+                                   && b.CollectedValue != null
+                                   select a).Distinct().Count();
+                    #endregion
                     i++;
                     int par0 = i;
-                    UsrCnt = 0;
-                    Users = (from a in kPiDataContext.UsersTable
-                             where a.Active == true
-                             && a.AccessLevel != 9
-                             && a.AccessLevel != 10
-                             && a.FK_ZeroLevelSubdivisionTable == zeroLevelItem.ZeroLevelSubdivisionTableID
-                             && a.FK_FirstLevelSubdivisionTable == null
-                             select a).ToList();
-                    tmp = "";
-                    foreach (UsersTable curuser in Users)
-                    {
-                        if (curuser.Confirmed == true)
-                        {
-                            tmp += "<font style=\"color:#00a34f;font-weight: bold;\">" + curuser.Email + "</font> ";
-                        }
-                        else
-                        {
-                            tmp += "<font style=\"color:#990000;font-weight: bold;\">" + curuser.Email + "</font> ";
-                        }
-                    }
-                    UsrCnt = (from a in kPiDataContext.UsersTable
-                              where a.Active == true
-                              && a.FK_ZeroLevelSubdivisionTable == zeroLevelItem.ZeroLevelSubdivisionTableID
-                              && a.AccessLevel != 9
-                              && a.AccessLevel != 10
-                              select a).Count();
-                    tmp2 = "";
-                    if (UsrCnt > 0)
-                    {
-                        tmp2 = "<font style=\"color:#0000FF;font-weight: bold;\">" + zeroLevelItem.Name + "</font> ";
-                    }
-                    else
-                    {
-                        tmp2 = zeroLevelItem.Name;
-                    }
-                    list.Add(new MyObject() { Id = i, ParentId = 0, Name = tmp2 + " ( " + UsrCnt.ToString() + ") " + tmp });
-
+                    tmp2 = zeroLevelItem.Name;
+                    list.Add(new MyObject() { Id = i, ParentId = 0, Name = tmp2 +" : "+ all0.ToString() +"/"+ conf0.ToString() +"/"+ toconf0.ToString() +"/"+ started0.ToString() });
                     foreach (FirstLevelSubdivisionTable firstLevelItem in firstLevelList)//по каждой академии
                     {
                         #region get second level list
@@ -128,46 +176,42 @@ namespace KPIWeb
                              && d.Active == true
                              select d).ToList();
                         #endregion
-                        // TextBox1.Text +="____" + firstLevelItem.Name+"\n";
+                        #region
+                        all0 = (from a in kPiDataContext.ThirdLevelSubdivisionTable 
+                                    join b in kPiDataContext.SecondLevelSubdivisionTable
+                                    on a.FK_SecondLevelSubdivisionTable equals b.SecondLevelSubdivisionTableID
+                                    where a.Active == true
+                                    && b.FK_FirstLevelSubdivisionTable == firstLevelItem.FirstLevelSubdivisionTableID
+                                    select a).Count();
 
+                        conf0 = (from a in kPiDataContext.ThirdLevelParametrs
+                                     join b in kPiDataContext.CollectedBasicParametersTable
+                                             on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                     where b.Status == 4
+                                     && b.FK_FirstLevelSubdivisionTable == firstLevelItem.FirstLevelSubdivisionTableID
+                                     select a).Distinct().Count();
+
+                        toconf0 = (from a in kPiDataContext.ThirdLevelParametrs
+                                       join b in kPiDataContext.CollectedBasicParametersTable
+                                       on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                       where b.Status == 3
+                                       && b.FK_FirstLevelSubdivisionTable == firstLevelItem.FirstLevelSubdivisionTableID
+                                       select a).Distinct().Count();
+
+                        started0 = (from a in kPiDataContext.ThirdLevelParametrs
+                                        join b in kPiDataContext.CollectedBasicParametersTable
+                                        on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                        where b.Status == 0
+                                        && b.FK_FirstLevelSubdivisionTable == firstLevelItem.FirstLevelSubdivisionTableID
+                                        && b.CollectedValue != null
+                                        select a).Distinct().Count();
+                        #endregion
                         i++;
-                        int par1 = i;
-                        UsrCnt = 0;
-                        Users = (from a in kPiDataContext.UsersTable
-                                 where a.Active == true
-                                 && a.FK_FirstLevelSubdivisionTable == firstLevelItem.FirstLevelSubdivisionTableID
-                                 && a.FK_SecondLevelSubdivisionTable == null
-                                 select a).ToList();
-                        tmp = "";
-                        foreach (UsersTable curuser in Users)
-                        {
-                            if (curuser.Confirmed == true)
-                            {
-                                tmp += "<font style=\"color:#00a34f;font-weight: bold;\">" + curuser.Email + "</font> ";
-                            }
-                            else
-                            {
-                                tmp += "<font style=\"color:#990000;font-weight: bold;\">" + curuser.Email + "</font> ";
-                            }
-                        }
-                        UsrCnt = (from a in kPiDataContext.UsersTable
-                                  where a.Active == true
-                                  && a.FK_FirstLevelSubdivisionTable == firstLevelItem.FirstLevelSubdivisionTableID
-                                  select a).Count();
-
-                        tmp2 = "";
-                        if (UsrCnt > 0)
-                        {
-                            tmp2 = "<font style=\"color:#0000FF;font-weight: bold;\">" + firstLevelItem.Name + "</font> ";
-                        }
-                        else
-                        {
-                            tmp2 = firstLevelItem.Name;
-                        }
-                        list.Add(new MyObject() { Id = i, ParentId = par0, Name = tmp2 + " (" + UsrCnt.ToString() + ") " + tmp });
+                        int par1 = i;                      
+                        tmp2 = firstLevelItem.Name;
+                        list.Add(new MyObject() { Id = i, ParentId = par0, Name = tmp2 + " : " + all0.ToString() + "/" + conf0.ToString() + "/" + toconf0.ToString() + "/" + started0.ToString() });
                         foreach (SecondLevelSubdivisionTable secondLevelItem in secondLevelList)//по каждому факультету
                         {
-                            // TextBox1.Text += "______" + secondLevelItem.Name + "\n";
                             #region get third level list
                             List<ThirdLevelSubdivisionTable> thirdLevelList =
                                 (from f in kPiDataContext.ThirdLevelSubdivisionTable
@@ -175,104 +219,78 @@ namespace KPIWeb
                                  && f.Active == true
                                  select f).ToList();
                             #endregion
+                            #region
+                            all0 = (from a in kPiDataContext.ThirdLevelSubdivisionTable
+                                    where a.Active == true
+                                    && a.FK_SecondLevelSubdivisionTable == secondLevelItem.SecondLevelSubdivisionTableID
+                                    select a).Count();
+
+                            conf0 = (from a in kPiDataContext.ThirdLevelParametrs
+                                     join b in kPiDataContext.CollectedBasicParametersTable
+                                             on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                     where b.Status == 4
+                                     && b.FK_SecondLevelSubdivisionTable == secondLevelItem.SecondLevelSubdivisionTableID
+                                     select a).Distinct().Count();
+
+                            toconf0 = (from a in kPiDataContext.ThirdLevelParametrs
+                                       join b in kPiDataContext.CollectedBasicParametersTable
+                                       on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                       where b.Status == 3
+                                       && b.FK_SecondLevelSubdivisionTable == secondLevelItem.SecondLevelSubdivisionTableID
+                                       select a).Distinct().Count();
+
+                            started0 = (from a in kPiDataContext.ThirdLevelParametrs
+                                        join b in kPiDataContext.CollectedBasicParametersTable
+                                        on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                        where b.Status == 0
+                                        && b.FK_SecondLevelSubdivisionTable == secondLevelItem.SecondLevelSubdivisionTableID
+                                        && b.CollectedValue != null
+                                        select a).Distinct().Count();
+                            #endregion
                             i++;
                             int par2 = i;
-                            UsrCnt = 0;
-                            Users = (from a in kPiDataContext.UsersTable
-                                     where a.Active == true
-                                     && a.FK_SecondLevelSubdivisionTable == secondLevelItem.SecondLevelSubdivisionTableID
-                                     && a.FK_ThirdLevelSubdivisionTable == null
-                                     select a).ToList();
-                            tmp = "";
-                            foreach (UsersTable curuser in Users)
-                            {
-                                if (curuser.Confirmed == true)
-                                {
-                                    tmp += "<font style=\"color:#00a34f;font-weight: bold;\">" + curuser.Email + "</font> ";
-                                }
-                                else
-                                {
-                                    tmp += "<font style=\"color:#990000;font-weight: bold;\">" + curuser.Email + "</font> ";
-                                }
-                            }
-                            UsrCnt = (from a in kPiDataContext.UsersTable
-                                      where a.Active == true
-                                      && a.FK_SecondLevelSubdivisionTable == secondLevelItem.SecondLevelSubdivisionTableID
-                                      select a).Count();
-
-                            tmp2 = "";
-                            if (UsrCnt > 0)
-                            {
-                                tmp2 = "<font style=\"color:#0000FF;font-weight: bold;\">" + secondLevelItem.Name + "</font> ";
-                            }
-                            else
-                            {
-                                tmp2 = secondLevelItem.Name;
-                            }
-
-                            list.Add(new MyObject() { Id = i, ParentId = par1, Name = tmp2 + " (" + UsrCnt.ToString() + ") " + tmp });
+                            tmp2 = secondLevelItem.Name;
+                            list.Add(new MyObject() { Id = i, ParentId = par1, Name = tmp2 + " : " + all0.ToString() + "/" + conf0.ToString() + "/" + toconf0.ToString() + "/" + started0.ToString() });
                             foreach (ThirdLevelSubdivisionTable thirdLevelItem in thirdLevelList)//по кафедре
                             {
-                                //TextBox1.Text += "________" + thirdLevelItem.Name + "\n";
-                                #region get fourth level list
-                                /*
-                            List<FourthLevelSubdivisionTable> fourthLevelList = (from g in kPiDataContext.FourthLevelSubdivisionTable
-                                                   where
-                                                   g.FK_ThirdLevelSubdivisionTable ==
-                                                   thirdLevelItem.ThirdLevelSubdivisionTableID
-                                                   && g.Active == true
-                                                   select g).ToList();
-                            */
+                                #region
+                                all0 = (from a in kPiDataContext.ThirdLevelSubdivisionTable
+                                        where a.Active == true
+                                        && a.ThirdLevelSubdivisionTableID == thirdLevelItem.ThirdLevelSubdivisionTableID
+                                        select a).Count();
+
+                                conf0 = (from a in kPiDataContext.ThirdLevelParametrs
+                                         join b in kPiDataContext.CollectedBasicParametersTable
+                                                 on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                         where b.Status == 4
+                                         && b.FK_ThirdLevelSubdivisionTable == thirdLevelItem.ThirdLevelSubdivisionTableID
+                                         select a).Distinct().Count();
+
+                                toconf0 = (from a in kPiDataContext.ThirdLevelParametrs
+                                           join b in kPiDataContext.CollectedBasicParametersTable
+                                           on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                           where b.Status == 3
+                                           && b.FK_ThirdLevelSubdivisionTable == thirdLevelItem.ThirdLevelSubdivisionTableID
+                                           select a).Distinct().Count();
+
+                                started0 = (from a in kPiDataContext.ThirdLevelParametrs
+                                            join b in kPiDataContext.CollectedBasicParametersTable
+                                            on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                                            where b.Status == 0
+                                            && b.FK_ThirdLevelSubdivisionTable == thirdLevelItem.ThirdLevelSubdivisionTableID
+                                            && b.CollectedValue != null
+                                            select a).Distinct().Count();
                                 #endregion
                                 i++;
                                 int par3 = i;
-                                UsrCnt = 0;
-                                Users = (from a in kPiDataContext.UsersTable
-                                         where a.Active == true
-                                         && a.FK_ThirdLevelSubdivisionTable == thirdLevelItem.ThirdLevelSubdivisionTableID
-                                         && a.FK_FourthLevelSubdivisionTable == null
-                                         select a).ToList();
-                                tmp = "";
-                                foreach (UsersTable curuser in Users)
-                                {
-                                    if (curuser.Confirmed == true)
-                                    {
-                                        tmp += "<font style=\"color:#00a34f;font-weight: bold;\">" + curuser.Email + "</font> ";
-                                    }
-                                    else
-                                    {
-                                        tmp += "<font style=\"color:#990000;font-weight: bold;\">" + curuser.Email + "</font> ";
-                                    }
-                                }
-                                UsrCnt = (from a in kPiDataContext.UsersTable
-                                          where a.Active == true
-                                          && a.FK_ThirdLevelSubdivisionTable == thirdLevelItem.ThirdLevelSubdivisionTableID
-                                          select a).Count();
-
-                                tmp2 = "";
-                                if (UsrCnt > 0)
-                                {
-                                    tmp2 = "<font style=\"color:#0000FF;font-weight: bold;\">" + thirdLevelItem.Name + "</font> ";
-                                }
-                                else
-                                {
-                                    tmp2 = thirdLevelItem.Name;
-                                }
-
-                                list.Add(new MyObject() { Id = i, ParentId = par2, Name = tmp2 + " (" + UsrCnt.ToString() + ") " + tmp });
-                                /*
-                                 foreach (FourthLevelSubdivisionTable fourthLevelItem in fourthLevelList)//по специальности
-                                 {
-                                     TextBox1.Text += "__________" + fourthLevelItem.Name + "\n";
-                                 }
-                                 */
+                                tmp2 = thirdLevelItem.Name;
+                                list.Add(new MyObject() { Id = i, ParentId = par2, Name = tmp2 + " : " + all0.ToString() + "/" + conf0.ToString() + "/" + toconf0.ToString() + "/" + started0.ToString() });                            
                             }
                         }
                     }
                 }
                 BindTree(list, null);
                 TreeView1.CollapseAll();
-                //TreeView1.ExpandAll();
             }
         }
     }
