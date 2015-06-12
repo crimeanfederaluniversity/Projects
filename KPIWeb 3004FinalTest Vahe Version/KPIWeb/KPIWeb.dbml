@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="NewRelease" Class="KPIWebDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=NewRelease;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="NewReleaseConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Release_" Class="KPIWebDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=Release_;Persist Security Info=True;User ID=Potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Release_ConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTable">
     <Type Name="BasicParametersAndRolesMappingTable">
       <Column Name="BasicParametersAndRolesMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -173,6 +173,14 @@
       <Association Name="UsersTable_CollectedIndocators" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.CommetntForBasicInReport" Member="CommetntForBasicInReport">
+    <Type Name="CommetntForBasicInReport">
+      <Column Name="ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_BasickParamets" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_Report" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Comment" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
   <Table Name="dbo.ConfirmationHistory" Member="ConfirmationHistory">
     <Type Name="ConfirmationHistory">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -223,7 +231,7 @@
   </Table>
   <Table Name="dbo.EmailTemplate" Member="EmailTemplate">
     <Type Name="EmailTemplate">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
       <Column Name="EmailTitle" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="EmailContent" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
@@ -292,6 +300,15 @@
       <Association Name="ThirdLevelSubdivisionTable_FourthLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.IndicatorClass" Member="IndicatorClass">
+    <Type Name="IndicatorClass">
+      <Column Name="IndicatorClassID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ClassName" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Association Name="IndicatorClass_IndicatorClass" Member="IndicatorClass2" ThisKey="IndicatorClassID" OtherKey="IndicatorClassID" Type="IndicatorClass" Cardinality="One" />
+      <Association Name="IndicatorClass_IndicatorsTable" Member="IndicatorsTable" ThisKey="IndicatorClassID" OtherKey="FK_IndicatorClass" Type="IndicatorsTable" />
+      <Association Name="IndicatorClass_IndicatorClass" Member="IndicatorClass1" ThisKey="IndicatorClassID" OtherKey="IndicatorClassID" Type="IndicatorClass" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.IndicatorsAndRolesMappingTable" Member="IndicatorsAndRolesMappingTable">
     <Type Name="IndicatorsAndRolesMappingTable">
       <Column Name="CalculatedIndicatorsAndRolesWithLeadersID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -325,12 +342,14 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
       <Column Name="Measure" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
       <Column Name="Formula" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
+      <Column Name="FK_IndicatorClass" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="IndicatorsTable_CollectedIndocators" Member="CollectedIndocators" ThisKey="IndicatorsTableID" OtherKey="FK_Indicators" Type="CollectedIndocators" />
       <Association Name="IndicatorsTable_ConfirmationHistory" Member="ConfirmationHistory" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="ConfirmationHistory" />
       <Association Name="IndicatorsTable_IndicatorsAndRolesMappingTable" Member="IndicatorsAndRolesMappingTable" ThisKey="IndicatorsTableID" OtherKey="FK_Indicators" Type="IndicatorsAndRolesMappingTable" />
       <Association Name="IndicatorsTable_IndicatorsAndUsersMapping" Member="IndicatorsAndUsersMapping" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="IndicatorsAndUsersMapping" />
       <Association Name="IndicatorsTable_PlannedIndicator" Member="PlannedIndicator" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="PlannedIndicator" />
       <Association Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable" Member="ReportArchiveAndIndicatorsMappingTable" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="ReportArchiveAndIndicatorsMappingTable" />
+      <Association Name="IndicatorClass_IndicatorsTable" Member="IndicatorClass" ThisKey="FK_IndicatorClass" OtherKey="IndicatorClassID" Type="IndicatorClass" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ManualTable" Member="ManualTable">
@@ -489,7 +508,7 @@
       <Column Name="FK_ZeroLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="PassCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Confirmed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Position" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Position" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
       <Association Name="UsersTable_BasicParametrsAndUsersMapping" Member="BasicParametrsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="BasicParametrsAndUsersMapping" />
       <Association Name="UsersTable_CalculatedParametrsAndUsersMapping" Member="CalculatedParametrsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CalculatedParametrsAndUsersMapping" />
       <Association Name="UsersTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedBasicParametersTable" />

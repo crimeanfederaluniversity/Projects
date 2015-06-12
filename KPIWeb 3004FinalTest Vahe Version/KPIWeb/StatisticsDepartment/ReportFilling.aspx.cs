@@ -54,7 +54,7 @@ namespace KPIWeb.StatisticsDepartment
                                       && a.AccessLevel == 0
                                       && a.Active == true
                                       select a).ToList();
-
+            int ii = 0;
             foreach (UsersTable currentUser in Users)
             {
                 BasicParametrsAndUsersMapping UserBasicRight = (from a in kPiDataContext.BasicParametrsAndUsersMapping
@@ -92,7 +92,7 @@ namespace KPIWeb.StatisticsDepartment
                     }
 
                     if (Statusn == 4)
-                    {
+                    {                     
                         continue;
                         status = "Данные утверждены";
                     }
@@ -162,6 +162,7 @@ namespace KPIWeb.StatisticsDepartment
                         {
                             dataRow["EmailConfirm"] = "Ошибка: Отсутствует утверждающий пользователь!";
                         }
+                        ii++;
                         DataTableStatus.Rows.Add(dataRow);
                     }
                     else if (UserBasicRight.CanConfirm == true)
@@ -188,6 +189,7 @@ namespace KPIWeb.StatisticsDepartment
                                                         && ((a.FK_FourthLevelSubdivisionTable == currentUser.FK_FourthLevelSubdivisionTable) || currentUser.FK_FourthLevelSubdivisionTable == null)
                                                         && ((a.FK_FifthLevelSubdivisionTable == currentUser.FK_FifthLevelSubdivisionTable) || currentUser.FK_FifthLevelSubdivisionTable == null)
                                                        select a).FirstOrDefault();
+                        ii++;
                         if (ConfirmUserEmail == null)
                         {
                             DataRow dataRow = DataTableStatus.NewRow();
@@ -204,10 +206,11 @@ namespace KPIWeb.StatisticsDepartment
                             dataRow["EmailConfirm"] = currentUser.Email;
                             dataRow["EmailEdit"] = "Ошибка: Отсутствует вносяший данные пользователь!";
                             DataTableStatus.Rows.Add(dataRow);
+                            ii++;
                         }
                     }
                 }
-            }
+            }   
             GridWhoOws.DataSource = DataTableStatus;
             GridWhoOws.DataBind();
         }

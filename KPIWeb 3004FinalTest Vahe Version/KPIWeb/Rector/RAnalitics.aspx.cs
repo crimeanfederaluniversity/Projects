@@ -84,176 +84,152 @@ namespace KPIWeb.Rector
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-        }
-
-        public ChartValueArray AllIndicatorsForAcademys(int ReportID)
-        {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-
-            List<IndicatorsTable> Indicators = (
-                            from a in kpiWebDataContext.IndicatorsTable
-                            where
-                                a.Active == true
-                            select a).OrderBy(mc => mc.IndicatorsTableID).ToList();
-
-            ChartValueArray DataForChart = new ChartValueArray("График достижения плановых значений целевых показателей");
-            int i = 0;
-            foreach (IndicatorsTable CurrentIndicator in Indicators)
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
             {
-                PlannedIndicator plannedValue = (from a in kpiWebDataContext.PlannedIndicator
-                                                 where a.FK_IndicatorsTable == CurrentIndicator.IndicatorsTableID
-                                                       && a.Date > DateTime.Now
-                                                 select a).OrderBy(x => x.Date).FirstOrDefault();
-                string Name_ = "";
-                float Planned_Value = 0;
-                float Value_ = 0;
-
-                if (plannedValue != null)
-                {
-                    Planned_Value = (float)plannedValue.Value;
-                }
-                if (CurrentIndicator.Measure != null)
-                {
-                    if (CurrentIndicator.Measure.Length > 2)
-                    {
-                        Name_ = CurrentIndicator.Name + " (" + CurrentIndicator.Measure + ")";
-                    }
-                    else
-                    {
-                        Name_ = CurrentIndicator.Name;
-                    }
-                }
-                else
-                {
-                    Name_ = CurrentIndicator.Name;
-                }
-                ForRCalc.Struct mainStruct = new ForRCalc.Struct(1, 0, 0, 0, 0, "N");
-                float tmp = ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0, CurrentIndicator.IndicatorsTableID, ReportID, 0));
-
-                if (tmp == (float)1E+20)
-                {
-                    Value_ = 0;
-                }
-                else
-                {
-                    Value_ = tmp;
-                }
-                ChartOneValue DataRowForChart = new ChartOneValue(Name_, Value_, Planned_Value);
-                DataForChart.ChartValues.Add(DataRowForChart);
-                i++;
+                Response.Redirect("~/Default.aspx");
             }
-            return DataForChart;
-        }
-        public ChartValueArray IndicatorForAllAcademys(int IndicatorID, int ReportID)
-        {
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-            IndicatorsTable Indicator = (from a in kpiWebDataContext.IndicatorsTable
-                                         where a.IndicatorsTableID == IndicatorID
-                                         select a).FirstOrDefault();
-            List<FirstLevelSubdivisionTable> AcademyList = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
-                                                            where a.Active == true
-                                                            select a).ToList();
+            int userID = UserSer.Id;
 
-            ChartValueArray DataForChart = new ChartValueArray("Целевой показатель '" + Indicator.Name + "' в разрезе академий КФУ");
+            UsersTable userTable =
+                (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            foreach (FirstLevelSubdivisionTable CurrentAcademy in AcademyList)
+            if (userTable.AccessLevel != 7)
             {
-                PlannedIndicator plannedValue = (from a in kpiWebDataContext.PlannedIndicator
-                                                 where a.FK_IndicatorsTable == IndicatorID
-                                                       && a.Date > DateTime.Now
-                                                 select a).OrderBy(x => x.Date).FirstOrDefault();
-                string Name_ = "";
-                float Planned_Value = 0;
-                float Value_ = 0;
-                ///////////////////////
-                if (plannedValue != null)
-                {
-                    Planned_Value = (float)plannedValue.Value;
-                }
-
-                Name_ = CurrentAcademy.Name;
-
-                ForRCalc.Struct mainStruct = new ForRCalc.Struct(1, CurrentAcademy.FirstLevelSubdivisionTableID, 0, 0, 0, "N");
-                float tmp = ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0, IndicatorID, ReportID, 0));
-
-                if (tmp == (float)1E+20)
-                {
-                    Value_ = 0;
-                }
-                else
-                {
-                    Value_ = tmp;
-                }
-                ChartOneValue DataRowForChart = new ChartOneValue(Name_, Value_, Planned_Value);
-                DataForChart.ChartValues.Add(DataRowForChart);
+                Response.Redirect("~/Default.aspx");
             }
-            return DataForChart;
-        }
-        public ChartValueArray AllIndicatorsForOneAcademy(int AcademyID, int ReportID)
-        {
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
 
-            List<IndicatorsTable> Indicators = (
-                            from a in kpiWebDataContext.IndicatorsTable
-                            where
-                                a.Active == true
-                            select a).OrderBy(mc => mc.IndicatorsTableID).ToList();
-
-            ChartValueArray DataForChart = new ChartValueArray("График достижения плановых значений целевых показателей для академии");
-            int i = 0;
-            foreach (IndicatorsTable CurrentIndicator in Indicators)
+            List<UsersTable> ProrectorList = (from a in kpiWebDataContext.UsersTable
+                                              where a.Active == true
+                                              && a.AccessLevel == 5
+                                              select a).ToList();
+            if (Page.IsPostBack)
             {
-                PlannedIndicator plannedValue = (from a in kpiWebDataContext.PlannedIndicator
-                                                 where a.FK_IndicatorsTable == CurrentIndicator.IndicatorsTableID
-                                                       && a.Date > DateTime.Now
-                                                 select a).OrderBy(x => x.Date).FirstOrDefault();
-                string Name_ = "";
-                float Planned_Value = 0;
-                float Value_ = 0;
 
-                if (plannedValue != null)
-                {
-                    Planned_Value = (float)plannedValue.Value;
-                }
-                if (CurrentIndicator.Measure != null)
-                {
-                    if (CurrentIndicator.Measure.Length > 2)
-                    {
-                        Name_ = CurrentIndicator.Name + " (" + CurrentIndicator.Measure + ")";
-                    }
-                    else
-                    {
-                        Name_ = CurrentIndicator.Name;
-                    }
-                }
-                else
-                {
-                    Name_ = CurrentIndicator.Name;
-                }
-                ForRCalc.Struct mainStruct = new ForRCalc.Struct(1, AcademyID, 0, 0, 0, "N");
-                float tmp = ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0, CurrentIndicator.IndicatorsTableID, ReportID, 0));
-
-                if (tmp == (float)1E+20)
-                {
-                    Value_ = 0;
-                }
-                else
-                {
-                    Value_ = tmp;
-                }
-                ChartOneValue DataRowForChart = new ChartOneValue(Name_, Value_, Planned_Value);
-                DataForChart.ChartValues.Add(DataRowForChart);
-                i++;
             }
-            return DataForChart;
+            else
+            {
+                DataTable dataTable = new DataTable();
+                dataTable.Columns.Add(new DataColumn("ProrectorID", typeof(string)));
+                dataTable.Columns.Add(new DataColumn("ProrectorName", typeof(string)));
+
+                foreach (UsersTable Prorector in ProrectorList)
+                {
+                    DataRow dataRow = dataTable.NewRow();
+                    dataRow["ProrectorID"] = Prorector.UsersTableID;
+                    dataRow["ProrectorName"] = Prorector.Email;
+                    dataTable.Rows.Add(dataRow);
+                }
+                GridView2.DataSource = dataTable;
+                GridView2.DataBind();
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                DataTable dataTable2 = new DataTable();
+                dataTable2.Columns.Add(new DataColumn("IndicatorClassID", typeof(string)));
+                dataTable2.Columns.Add(new DataColumn("IndicatorClassName", typeof(string)));
+                List<IndicatorClass> IndicatorClassList = (from a in kpiWebDataContext.IndicatorClass
+                                                           select a).ToList();
+                foreach (IndicatorClass IndicatorClass in IndicatorClassList)
+                {
+                    DataRow dataRow = dataTable2.NewRow();
+                    dataRow["IndicatorClassID"] = IndicatorClass.IndicatorClassID;
+                    dataRow["IndicatorClassName"] = IndicatorClass.ClassName;
+                    dataTable2.Rows.Add(dataRow);
+                }
+                GridView1.DataSource = dataTable2;
+                GridView1.DataBind();
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                List<IndicatorsTable> IndicatorsTableList = (from a in kpiWebDataContext.IndicatorsTable
+                                                             where a.Active == true
+                                                             select a).ToList();
+                CheckBoxList1.Items.Clear();
+                foreach (IndicatorsTable currentIndicator in IndicatorsTableList)
+                {
+                    ListItem Item1 = new ListItem();
+                    Item1.Text = currentIndicator.Name;
+                    Item1.Value = currentIndicator.IndicatorsTableID.ToString();
+                    CheckBoxList1.Items.Add(Item1);
+                }
+
+            }           
         }
  
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void ButtonClassClick(object sender, EventArgs e) // По типам индикаторов
         {
-            ChartValueArray DataForChart = IndicatorForAllAcademys(1029, 1); // Возвращает список академий со значение целевого показателя с ID 1029
-            ChartValueArray DataForChart2 = AllIndicatorsForAcademys(1); // возвращает список целевых показателей со значениями по КФУ
-            ChartValueArray DataForChart3 = AllIndicatorsForOneAcademy(1016, 1);// возвращает список целевых показателей со значениями по академии с ID 1016
+            Button button = (Button)sender;
+            {
+                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+                List<int> IndicatorList = (from a in kpiWebDataContext.IndicatorsTable
+                                           where a.Active == true
+                                           join b in kpiWebDataContext.IndicatorClass
+                                           on a.FK_IndicatorClass equals b.IndicatorClassID
+                                           where
+                                           b.IndicatorClassID == Convert.ToInt32(button.CommandArgument)
+                                           select a.IndicatorsTableID).Distinct().ToList();
+                if (IndicatorList.Count() > 0)
+                {
+                    RectorChartSession RectorChart = new RectorChartSession();
+                    RectorChart.IndicatorsList = IndicatorList;
+                    Session["RectorChart"] = RectorChart;
+                    Response.Redirect("~/Rector/RShowChart.aspx");
+                }
+            }
         }
+        protected void ButtonProrectorClick(object sender, EventArgs e) //По проректорам
+        {
+            Button button = (Button)sender;
+            {
+                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+                List<int> IndicatorList = (from a in kpiWebDataContext.IndicatorsTable
+                                           where a.Active == true
+                                           join b in kpiWebDataContext.IndicatorsAndUsersMapping
+                                           on a.IndicatorsTableID equals b.FK_IndicatorsTable
+                                           where b.Active == true
+                                           && b.CanConfirm == true
+                                           && b.FK_UsresTable == Convert.ToInt32(button.CommandArgument)
+                                           select a.IndicatorsTableID).Distinct().ToList();
+                if (IndicatorList.Count() > 0)
+                {
+                    RectorChartSession RectorChart = new RectorChartSession();
+                    RectorChart.IndicatorsList = IndicatorList;
+                    Session["RectorChart"] = RectorChart;
+                    Response.Redirect("~/Rector/RShowChart.aspx");
+                }
+            }
+        } 
+
+        protected void Button4_Click(object sender, EventArgs e) // по всем показателям
+        {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            List<int> IndicatorList = (from a in kpiWebDataContext.IndicatorsTable
+                                       where a.Active == true
+                                       select a.IndicatorsTableID).ToList();
+            RectorChartSession RectorChart = new RectorChartSession();
+            RectorChart.IndicatorsList = IndicatorList;
+            Session["RectorChart"] = RectorChart;
+            Response.Redirect("~/Rector/RShowChart.aspx");
+        }
+        protected void Button5_Click(object sender, EventArgs e) // по отмеченным в чекбоксах галочкам
+        {
+            List<int> IndicatorList = new List<int>();
+            foreach (ListItem Item in CheckBoxList1.Items)
+            {
+                if (Item.Selected)
+                {
+                    IndicatorList.Add(Convert.ToInt32(Item.Value));
+                }
+            }
+            if (IndicatorList.Count()>0)
+            {
+                RectorChartSession RectorChart = new RectorChartSession();
+                RectorChart.IndicatorsList = IndicatorList;
+                Session["RectorChart"] = RectorChart;
+                Response.Redirect("~/Rector/RShowChart.aspx");
+            }
+        }
+        protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }       
     }
 }

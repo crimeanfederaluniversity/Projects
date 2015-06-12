@@ -68,4 +68,12 @@ namespace KPIWeb
             this.DoShowUnConfirmed = DoShowUnConfirmed_;
         }
     }
+
+    [Serializable]
+    public class RectorChartSession
+    {
+        string name;
+        string info;
+        public List<int> IndicatorsList;
+    }
 }

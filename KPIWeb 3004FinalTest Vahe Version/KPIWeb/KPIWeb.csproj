@@ -193,6 +193,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Error.html" />
+    <Content Include="filenotfound.htm" />
     <Content Include="FillingProcessInfo.aspx" />
     <Content Include="FinKadr\OtdelChooseReport.aspx" />
     <Content Include="FinKadr\OtdelResult.aspx" />
@@ -208,6 +210,7 @@
     <Content Include="Rector\RAnalitics.aspx" />
     <Content Include="Rector\RMain.aspx" />
     <Content Include="Rector\RRating.aspx" />
+    <Content Include="Rector\RShowChart.aspx" />
     <Content Include="RegisterProcessInfo.aspx" />
     <Content Include="Spinner.css" />
     <Content Include="StatisticsDepartment\PlannedIndicator.aspx" />
@@ -478,6 +481,13 @@
     </Compile>
     <Compile Include="Rector\RRating.aspx.designer.cs">
       <DependentUpon>RRating.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\RShowChart.aspx.cs">
+      <DependentUpon>RShowChart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\RShowChart.aspx.designer.cs">
+      <DependentUpon>RShowChart.aspx</DependentUpon>
     </Compile>
     <Compile Include="RegisterProcessInfo.aspx.cs">
       <DependentUpon>RegisterProcessInfo.aspx</DependentUpon>

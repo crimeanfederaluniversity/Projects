@@ -230,9 +230,20 @@ background-color:#FFFFFF}
 
     <br />
       <br />
+      Общая информация<br />
+      <asp:TextBox ID="TextBox2" runat="server" Height="395px" TextMode="MultiLine" Width="1175px"></asp:TextBox>
       <br />
-      <asp:TextBox ID="TextBox2" runat="server" Height="222px" TextMode="MultiLine" Width="1161px"></asp:TextBox>
       <br />
+      <h2>Список структурных подразделений на которых нет верифицирующего</h2>
+          <br />
+      <br />
+      <asp:GridView ID="GridView1" runat="server">
+      </asp:GridView>
+      <br />
+      <h2>Список структурных подразделений на которых нет вносящего данные</h2>
+    <br />
+      <asp:GridView ID="GridView2" runat="server">
+      </asp:GridView>
     <br />
      <asp:Label ID="Label1" runat="server" Visible="false" Text="
 Описание:<br />

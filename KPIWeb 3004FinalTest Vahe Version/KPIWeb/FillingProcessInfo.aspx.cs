@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -104,15 +105,203 @@ namespace KPIWeb
                                                                                                        where b.Status == 1
                                                                                                        select a).Distinct().Count().ToString();
 
+
                 TextBox2.Text += Environment.NewLine;
-                TextBox2.Text += "Структурных подразделений внесщих 1 и более показателей (не учитываются утвержденные и отправленные на утверждение) " + (from a in kPiDataContext.ThirdLevelParametrs
-                                                                                                   join b in kPiDataContext.CollectedBasicParametersTable
-                                                                                                   on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
-                                                                                                   where b.Status == 0
-                                                                                                   && b.CollectedValue != null
-                                                                                                   select a).Distinct().Count().ToString();
+                TextBox2.Text += "Структурных подразделений внесших 1 и более показателей (учитываются утвержденные и отправленные на утверждение) " + 
+                    (from a in kPiDataContext.ThirdLevelParametrs
+                     join b in kPiDataContext.CollectedBasicParametersTable
+                     on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                     where
+                     b.CollectedValue != null
+                     select a).Distinct().Count().ToString();
+
+                TextBox2.Text += Environment.NewLine;
+                TextBox2.Text += Environment.NewLine;
+                TextBox2.Text += "Кол-во верифицирующих которые должны быть в системе для данной компании: ";
+                TextBox2.Text += (from a in kPiDataContext.ThirdLevelSubdivisionTable
+                                  join b in kPiDataContext.SecondLevelSubdivisionTable
+                                  on a.FK_SecondLevelSubdivisionTable equals b.SecondLevelSubdivisionTableID
+                                  join c  in kPiDataContext.ReportArchiveAndLevelMappingTable
+                                  on b.FK_FirstLevelSubdivisionTable equals c.FK_FirstLevelSubmisionTableId
+                                  where a.Active == true
+                                  && b.Active == true
+                                  && c.Active == true
+                                  && c.FK_ReportArchiveTableId == 1
+                                  select a).Count().ToString();
+                TextBox2.Text += Environment.NewLine;
 
 
+                TextBox2.Text += "Кол-во пользователей с правами утверждающего ";
+                TextBox2.Text += (from a in kPiDataContext.UsersTable
+                                  where
+                                  a.Active == true
+                                  join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                  on a.UsersTableID equals b.FK_UsersTable
+                                  where b.CanConfirm == true
+                                  && b.CanEdit == false
+                                  && b.Active == true
+                                  select a).Distinct().Count().ToString();
+
+                TextBox2.Text += Environment.NewLine;
+
+
+                TextBox2.Text += "Кол-во пользователей с правами заполняющего ";
+                TextBox2.Text += (from a in kPiDataContext.UsersTable
+                                  where
+                                  a.Active == true
+                                  join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                  on a.UsersTableID equals b.FK_UsersTable
+                                  where b.CanConfirm == false
+                                  && b.CanEdit == true
+                                  && b.Active == true
+                                  select a).Distinct().Count().ToString();
+
+                TextBox2.Text += Environment.NewLine;
+
+                TextBox2.Text += "Кол-во пользователей с правами заполняющего и утверждающего ";
+                TextBox2.Text += (from a in kPiDataContext.UsersTable
+                                  where
+                                  a.Active == true
+                                  join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                  on a.UsersTableID equals b.FK_UsersTable
+                                  where b.CanConfirm == true
+                                  && b.CanEdit == true
+                                  && b.Active == true
+                                  select a).Distinct().Count().ToString();
+
+                TextBox2.Text += Environment.NewLine;
+
+
+                TextBox2.Text += "Кол-во верифицирующих с email адресами внесенными в систему: ";
+                TextBox2.Text += (from a in kPiDataContext.UsersTable
+                                  where
+                                  a.Active == true
+                                  join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                  on a.UsersTableID equals b.FK_UsersTable
+                                  where b.CanConfirm == true
+                                  && b.Active == true
+                                  select a).Distinct().Count().ToString();
+                TextBox2.Text += Environment.NewLine;
+                TextBox2.Text += "Кол-во верифицирующих не завершивших регистрацию: ";
+                TextBox2.Text += (from a in kPiDataContext.UsersTable
+                                  where 
+                                  a.Active == true
+                                  && a.Confirmed == false
+                                  join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                  on a.UsersTableID equals b.FK_UsersTable
+                                  where b.CanConfirm == true
+                                  && b.Active == true
+                                  select a).Distinct().Count().ToString();
+                TextBox2.Text += Environment.NewLine;
+                TextBox2.Text += "Кол-во верифицирующих завершивших регистрацию: ";
+                TextBox2.Text += (from a in kPiDataContext.UsersTable
+                                  where
+                                  a.Active == true
+                                  && a.Confirmed == true
+                                  join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                  on a.UsersTableID equals b.FK_UsersTable
+                                  where b.CanConfirm == true
+                                  && b.Active == true
+                                  select a).Distinct().Count().ToString();
+                TextBox2.Text += Environment.NewLine;
+                TextBox2.Text += "Кол-во верифицирующих, которые утвердили данные: ";
+                TextBox2.Text += (from a in kPiDataContext.ThirdLevelParametrs
+                 join b in kPiDataContext.CollectedBasicParametersTable
+                 on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
+                 where b.Status == 4
+                 select a).Distinct().Count().ToString();
+
+                TextBox2.Text += Environment.NewLine;
+                 //////////////////////////////////////////////////////////////////////////////////////////
+                DataTable dataTable = new DataTable();
+                dataTable.Columns.Add(new DataColumn("First", typeof(string)));
+                dataTable.Columns.Add(new DataColumn("Second", typeof(string)));
+                dataTable.Columns.Add(new DataColumn("Third", typeof(string)));
+
+
+                DataTable dataTable1 = new DataTable();
+                dataTable1.Columns.Add(new DataColumn("First", typeof(string)));
+                dataTable1.Columns.Add(new DataColumn("Second", typeof(string)));
+                dataTable1.Columns.Add(new DataColumn("Third", typeof(string)));
+
+                List<ThirdLevelSubdivisionTable> ThirdLevelWithConfirmList = (from a in kPiDataContext.ThirdLevelSubdivisionTable
+                                                                            join b in kPiDataContext.UsersTable
+                                                                                on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
+                                                                            join c in kPiDataContext.BasicParametrsAndUsersMapping
+                                                                             on b.UsersTableID equals c.FK_UsersTable
+                                                                             where a.Active == true
+                                                                             && b.Active == true
+                                                                             && c.Active == true
+                                                                             && c.CanConfirm == true
+                                                                             select a).Distinct().ToList();
+                List<ThirdLevelSubdivisionTable> ThirdLevelAll = (from a in kPiDataContext.ThirdLevelSubdivisionTable
+                                                                  where a.Active == true
+                                                                  select a).ToList();
+
+                foreach (ThirdLevelSubdivisionTable cur in ThirdLevelWithConfirmList)
+                {
+                    ThirdLevelAll.Remove(cur);
+                }
+
+                 foreach (ThirdLevelSubdivisionTable CurrentThirdLevel in ThirdLevelAll )
+                 {
+                     DataRow dataRow = dataTable.NewRow();
+                     dataRow["First"] = (from a in kPiDataContext.SecondLevelSubdivisionTable
+                                         join b in kPiDataContext.FirstLevelSubdivisionTable
+                                         on a.FK_FirstLevelSubdivisionTable equals b.FirstLevelSubdivisionTableID
+                                         where a.SecondLevelSubdivisionTableID == CurrentThirdLevel.FK_SecondLevelSubdivisionTable
+                                         select b.Name).FirstOrDefault();
+                     dataRow["Second"] = (from a in kPiDataContext.SecondLevelSubdivisionTable
+                                          where a.SecondLevelSubdivisionTableID == CurrentThirdLevel.FK_SecondLevelSubdivisionTable
+                                          select a.Name).FirstOrDefault();
+                     dataRow["Third"] = CurrentThirdLevel.Name;
+                     dataTable.Rows.Add(dataRow);                    
+       
+                 }
+                 ///////////////////////////////////////////////////////////////////////////////////
+                 //////////////////////////////////////////////////////////////////////////////////////////
+
+                 List<ThirdLevelSubdivisionTable> ThirdLevelWithEditList = (from a in kPiDataContext.ThirdLevelSubdivisionTable
+                                                                               join b in kPiDataContext.UsersTable
+                                                                                   on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
+                                                                               join c in kPiDataContext.BasicParametrsAndUsersMapping
+                                                                                on b.UsersTableID equals c.FK_UsersTable
+                                                                               where a.Active == true
+                                                                               && b.Active == true
+                                                                               && c.Active == true
+                                                                               && c.CanEdit == true
+                                                                               select a).Distinct().ToList();
+                 List<ThirdLevelSubdivisionTable> ThirdLevelAllForEdit = (from a in kPiDataContext.ThirdLevelSubdivisionTable
+                                                                   where a.Active == true
+                                                                   select a).ToList();
+
+                 foreach (ThirdLevelSubdivisionTable cur in ThirdLevelWithEditList)
+                 {
+                     ThirdLevelAllForEdit.Remove(cur);
+                 }
+
+                 foreach (ThirdLevelSubdivisionTable CurrentThirdLevel in ThirdLevelAllForEdit)
+                 {
+                     DataRow dataRow2 = dataTable1.NewRow();
+                     dataRow2["First"] = (from a in kPiDataContext.SecondLevelSubdivisionTable
+                                          join b in kPiDataContext.FirstLevelSubdivisionTable
+                                          on a.FK_FirstLevelSubdivisionTable equals b.FirstLevelSubdivisionTableID
+                                          where a.SecondLevelSubdivisionTableID == CurrentThirdLevel.FK_SecondLevelSubdivisionTable
+                                          select b.Name).FirstOrDefault();
+                     dataRow2["Second"] = (from a in kPiDataContext.SecondLevelSubdivisionTable
+                                           where a.SecondLevelSubdivisionTableID == CurrentThirdLevel.FK_SecondLevelSubdivisionTable
+                                           select a.Name).FirstOrDefault();
+                     dataRow2["Third"] = CurrentThirdLevel.Name;
+                     dataTable1.Rows.Add(dataRow2);  
+                 }
+
+                 GridView1.DataSource = dataTable;
+                 GridView1.DataBind();
+
+                 GridView2.DataSource = dataTable1;
+                 GridView2.DataBind();
+
+                 ///////////////////////////////////////////////////////////////////////////////////
                 TreeView1.DataSource = null;
                 TreeView1.DataBind();
                 Label1.Visible = true;
@@ -159,8 +348,8 @@ namespace KPIWeb
                     int started0 = (from a in kPiDataContext.ThirdLevelParametrs
                                    join b in kPiDataContext.CollectedBasicParametersTable
                                    on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
-                                   where b.Status == 0
-                                   && b.CollectedValue != null
+                                   where
+                                   b.CollectedValue != null
                                    select a).Distinct().Count();
                     #endregion
                     i++;
@@ -201,8 +390,8 @@ namespace KPIWeb
                         started0 = (from a in kPiDataContext.ThirdLevelParametrs
                                         join b in kPiDataContext.CollectedBasicParametersTable
                                         on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
-                                        where b.Status == 0
-                                        && b.FK_FirstLevelSubdivisionTable == firstLevelItem.FirstLevelSubdivisionTableID
+                                        where
+                                        b.FK_FirstLevelSubdivisionTable == firstLevelItem.FirstLevelSubdivisionTableID
                                         && b.CollectedValue != null
                                         select a).Distinct().Count();
                         #endregion
@@ -242,8 +431,8 @@ namespace KPIWeb
                             started0 = (from a in kPiDataContext.ThirdLevelParametrs
                                         join b in kPiDataContext.CollectedBasicParametersTable
                                         on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
-                                        where b.Status == 0
-                                        && b.FK_SecondLevelSubdivisionTable == secondLevelItem.SecondLevelSubdivisionTableID
+                                        where 
+                                        b.FK_SecondLevelSubdivisionTable == secondLevelItem.SecondLevelSubdivisionTableID
                                         && b.CollectedValue != null
                                         select a).Distinct().Count();
                             #endregion
@@ -276,8 +465,8 @@ namespace KPIWeb
                                 started0 = (from a in kPiDataContext.ThirdLevelParametrs
                                             join b in kPiDataContext.CollectedBasicParametersTable
                                             on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
-                                            where b.Status == 0
-                                            && b.FK_ThirdLevelSubdivisionTable == thirdLevelItem.ThirdLevelSubdivisionTableID
+                                            where 
+                                            b.FK_ThirdLevelSubdivisionTable == thirdLevelItem.ThirdLevelSubdivisionTableID
                                             && b.CollectedValue != null
                                             select a).Distinct().Count();
                                 #endregion

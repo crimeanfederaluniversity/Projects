@@ -474,9 +474,13 @@ namespace KPIWeb.Rector
                             dataRow["Number"] = "num";
                             if (CurrentIndicator.Measure!=null)
                             {
-                                if (CurrentIndicator.Measure.Length>2)
+                                if (CurrentIndicator.Measure.Length>0)
                                 {
                                     dataRow["Name"] = CurrentIndicator.Name + " (" + CurrentIndicator.Measure + ")";
+                                }
+                                else
+                                {
+                                    dataRow["Name"] = CurrentIndicator.Name;
                                 }
                             }
                             else
@@ -746,9 +750,14 @@ namespace KPIWeb.Rector
                             dataRow["Number"] = "num";
                             if (CurrentCalculated.Measure != null)
                             {
-                                if (CurrentCalculated.Measure.Length > 2)
+                                if (CurrentCalculated.Measure.Length > 0)
                                 {
                                     dataRow["Name"] = CurrentCalculated.Name + " (" + CurrentCalculated.Measure + ")";
+                                }
+                                else
+                                {
+                                    dataRow["Name"] = CurrentCalculated.Name;
+
                                 }
                             }
                             else
@@ -1023,9 +1032,13 @@ namespace KPIWeb.Rector
 
                             if (CurrebtBasic.Measure != null)
                             {
-                                if (CurrebtBasic.Measure.Length > 2)
+                                if (CurrebtBasic.Measure.Length > 0)
                                 {
                                     dataRow["Name"] = CurrebtBasic.Name + " (" + CurrebtBasic.Measure + ")";
+                                }
+                                else
+                                {
+                                    dataRow["Name"] = CurrebtBasic.Name;
                                 }
                             }
                             else
