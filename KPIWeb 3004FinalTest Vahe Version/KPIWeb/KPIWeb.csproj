@@ -400,6 +400,7 @@
     </Compile>
     <Compile Include="CalculateAbb.cs" />
     <Compile Include="CalculateIndicator.cs" />
+    <Compile Include="ChartItems.cs" />
     <Compile Include="CommonCode.cs" />
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>

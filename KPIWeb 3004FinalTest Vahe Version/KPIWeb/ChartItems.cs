@@ -9,46 +9,44 @@ namespace KPIWeb
 {
     public class ChartItems
     {
-        private DataTable dataTable;
-        private DataRow dataRow;
+        public class DataItem
+        {
+            public string Name { get; set; }
+            public double Value { get; set; }
+        }
 
+        private List<DataItem> dataItems;
         public ChartItems()
         {
-            dataTable = new DataTable();
-
-            dataTable.Columns.Add(new DataColumn("Name"));
-            dataTable.Columns.Add(new DataColumn("Value"));
+            dataItems = new List<DataItem>();
+        }
+        public List<DataItem> GetDataSource()
+        {
+            return dataItems;
         }
         public void AddChartItem(string name, double value)
         {
-            dataRow = dataTable.NewRow();
-            dataRow["Name"] = name;
-            dataRow["Value"] = value;
-            dataTable.Rows.Add(dataRow);
+            dataItems.Add(new DataItem() { Name = name, Value = Math.Round(value, 3) });
         }
-
-        public DataTable GetDataSource()
-        {
-            return dataTable;
-        }
-
         public List<ChartOneValue> ReturnTopFive(List<ChartOneValue> collection)
         {
-            List<ChartOneValue> newList = new List<ChartOneValue>();
-
             collection.Sort(delegate(ChartOneValue value1, ChartOneValue value2)
             { return value1.value.CompareTo(value2.value); });
+
             collection.Reverse();
+            var sort = collection.Take(1);
 
-            var sort = collection.Take(5);
-
-            foreach (ChartOneValue item in sort)
-            {
-                newList.Add(item);
-            }
-
+            List<ChartOneValue> newList = sort.ToList();
             newList.Reverse();
+
             return newList;
+        }
+        public List<ChartOneValue> Sort(List<ChartOneValue> collection)
+        {
+            collection.Sort(delegate(ChartOneValue value1, ChartOneValue value2)
+            { return value1.value.CompareTo(value2.value); });
+
+            return collection;
         }
 
     }
