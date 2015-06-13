@@ -34,7 +34,7 @@ namespace KPIWeb
             { return value1.value.CompareTo(value2.value); });
 
             collection.Reverse();
-            var sort = collection.Take(1);
+            var sort = collection.Take(5);
 
             List<ChartOneValue> newList = sort.ToList();
             newList.Reverse();

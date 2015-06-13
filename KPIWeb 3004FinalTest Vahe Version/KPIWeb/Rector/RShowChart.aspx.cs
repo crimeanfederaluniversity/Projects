@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.DataVisualization.Charting;
 using System.Web.UI.WebControls;
 
 namespace KPIWeb.Rector
@@ -35,7 +38,36 @@ namespace KPIWeb.Rector
             List<int> IndicatorsList = RectorChart.IndicatorsList;
             foreach (int i in IndicatorsList)
                 TextBox1.Text += i.ToString() + Environment.NewLine;
-            //IndicatorsForCFU(IndicatorsList,1);   // ВОЗВРАЩАЕТ ДАННЫЕ ДЛЯ ЧАРТА         
+            //IndicatorsForCFU(IndicatorsList,1);   // ВОЗВРАЩАЕТ ДАННЫЕ ДЛЯ ЧАРТА
+
+            if (!IsPostBack)
+            {
+                // Формируем GridView
+                DataTable dataTable = new DataTable();
+
+                dataTable.Columns.Add(new DataColumn("IndicatorID", typeof(string)));
+                dataTable.Columns.Add(new DataColumn("IndicatorName", typeof(string)));
+
+                foreach (var item in IndicatorsList)
+                {
+                    string namestr =
+                        (from i in kPiDataContext.IndicatorsTable where i.IndicatorsTableID == item select i.Name)
+                            .FirstOrDefault();
+                    string tmp;
+
+                    if (namestr.Length > 154) tmp = namestr.Substring(0, 155) + "...";
+                    else tmp = namestr;
+
+                    DataRow dataRow = dataTable.NewRow();
+                    dataRow["IndicatorID"] = item;
+                    dataRow["IndicatorName"] = tmp;
+                    dataTable.Rows.Add(dataRow);
+                }
+
+                GridView1.DataSource = dataTable;
+                GridView1.DataBind();
+
+            }
         }
         public ChartOneValue GetCalculatedIndicator (int ReportID,IndicatorsTable Indicator, FirstLevelSubdivisionTable Academy,SecondLevelSubdivisionTable Faculty) // academyID == null && facultyID==null значит для всего КФУ
         {
@@ -212,6 +244,18 @@ namespace KPIWeb.Rector
             }
             return DataForChart;
         }
+        public ChartOneValue IndicatorsForCFUOneIndicator(int curIndicator, int ReportID)
+        {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            IndicatorsTable Indicator = (
+                           from a in kpiWebDataContext.IndicatorsTable
+                           where
+                               a.Active == true
+                               && a.IndicatorsTableID == curIndicator
+                           select a).FirstOrDefault();
+
+            return GetCalculatedIndicator(1, Indicator, null, null);
+        }
         public ChartValueArray IndicatorsForAllFacultys(int IndicatorID, int ReportID)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
@@ -253,6 +297,42 @@ namespace KPIWeb.Rector
         protected void Button4_Click(object sender, EventArgs e)// Значение каждого показателя рассчитанное для академии с ID
         {
             ChartValueArray NewDataForChart = AllIndicatorsForOneAcademy(Convert.ToInt32(TextBox4.Text), 1);
+        }
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                string indID = DataBinder.Eval(e.Row.DataItem, "IndicatorID").ToString();
+                Chart chart = (Chart)e.Row.FindControl("Chart3");
+                if (chart != null)
+                {
+                    ChartOneValue DataForChart = IndicatorsForCFUOneIndicator(Convert.ToInt32(indID), 1); // 1 индикатор в разрезе КФУ взятый по ID
+
+                    // Формирую чарт
+                    chart.Series["ValueSeries"].Color = Color.CornflowerBlue;
+                    chart.ChartAreas["ChartArea1"].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount; // масштабирование разметки
+                    chart.ChartAreas["ChartArea1"].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount; // -==--
+                    chart.Series["TargetSeries"].Color = Color.FromArgb(122, 50, 255, 0);
+
+                    ChartItems chartItems = new ChartItems(); // класс для работы с чартом
+
+                    chartItems.AddChartItem(DataForChart.name, DataForChart.value); // добавляем по оси X value
+
+                    if (DataForChart.planned > 0)
+                        chart.Series["TargetSeries"].Points.AddY(DataForChart.planned); // добавляем по оси Y Target value
+
+                    // Привязываем класс с объектом к диаграмме
+                    chart.DataSource = chartItems.GetDataSource();
+                    //chart.Series["ValueSeries"].XValueMember = "Name";
+                    chart.Series["ValueSeries"].YValueMembers = "Value";
+
+                    chart.Series["ValueSeries"].Label = "#VALY";
+                    chart.Series["ValueSeries"].LegendText = "#AXISLABEL (#PERCENT{P0})";
+                    chart.Series["ValueSeries"].ToolTip = "Целевое: " + DataForChart.planned + ". Достигнуто на: " + Convert.ToInt32(DataForChart.value / DataForChart.planned * 100) + "%";
+                    chart.Series["TargetSeries"].ToolTip = "Целевое: " + DataForChart.planned + ". Достигнуто на: " + Convert.ToInt32(DataForChart.value / DataForChart.planned * 100) + "%";
+                }
+            }
         }
        
 
