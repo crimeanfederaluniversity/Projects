@@ -12,11 +12,11 @@
     <style>  
         .Grid_view_V_header_style
         {
-           -webkit-transform: rotate(-90deg);
--moz-transform: rotate(-90deg);
--ms-transform: rotate(-90deg);
--o-transform: rotate(-90deg);
-transform: rotate(-90deg)
+            -webkit-transform: rotate(-90deg);
+            -moz-transform: rotate(-90deg);
+            -ms-transform: rotate(-90deg);
+            -o-transform: rotate(-90deg);
+            transform: rotate(-90deg)
         }
    
     .Grid_view_V_style tr td + td + td+ td {
@@ -94,7 +94,7 @@ transform: rotate(-90deg)
            <link href="/App_Themes/theme_1/css/login.css" rel="stylesheet" type="text/css" />
     <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Visible="true">
         
-     <span id="span1"><asp:Label ID="Label2" runat="server"  CssClass="Panel_label1"></asp:Label></span>
+     <span style="color:red" id="span1"><asp:Label ID="Label2" runat="server"   CssClass="Panel_label1"></asp:Label></span>
      <span id="span2"><asp:Label ID="Label3" runat="server" CssClass="Panel_label2"></asp:Label></span>
      
          </asp:Panel>

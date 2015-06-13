@@ -59,7 +59,8 @@ namespace KPIWeb.Rector
                 dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Value", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("PlannedValue", typeof(string)));
-
+                dataTable.Columns.Add(new DataColumn("Number", typeof(string)));
+                
                 ReportArchiveTable ReportTable = (from a in kpiWebDataContext.ReportArchiveTable
                                                   where a.ReportArchiveTableID == ReportID
                                                   select a).FirstOrDefault();
@@ -75,9 +76,10 @@ namespace KPIWeb.Rector
                     {
                         DataRow dataRow = dataTable.NewRow();
                         dataRow["ID"] = ForRCalc.GetLastID(currentStruct).ToString();
+                        dataRow["Number"] = "";
                         dataRow["Name"] = currentStruct.Name;
                         dataRow["Value"] =
-                            ForRCalc.GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID, SpecID).ToString();
+                            ForRCalc.GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID, SpecID).ToString("0.000");
                         dataTable.Rows.Add(dataRow);
                     }
 
@@ -85,8 +87,8 @@ namespace KPIWeb.Rector
                     Grid.Columns[4].Visible = false;
                     Grid.Columns[5].Visible = false;
 
-                    Grid.DataSource = dataTable;
-                    Grid.DataBind();
+                  //  Grid.DataSource = dataTable;
+                  //  Grid.DataBind();
                 }
                 else if (ViewType == 1)
                 {
@@ -110,7 +112,7 @@ namespace KPIWeb.Rector
                         {
                             DataRow dataRow = dataTable.NewRow();
                             dataRow["ID"] = CurrentIndicator.IndicatorsTableID; //GetLastID(currentStruct).ToString();
-
+                            dataRow["Number"] = "";
                             if (CurrentIndicator.Measure != null)
                             {
                                 if (CurrentIndicator.Measure.Length > 2)
@@ -151,18 +153,12 @@ namespace KPIWeb.Rector
                             }
                             else
                             {
-                                dataRow["Value"] = tmp.ToString("0.00");
+                                dataRow["Value"] = tmp.ToString("0.000");
                             }
 
                             dataTable.Rows.Add(dataRow);
                         }
-                    }
-                    #region DataGridBind
-
-                    Grid.DataSource = dataTable;
-                    Grid.DataBind();
-
-                    #endregion
+                    }              
                 }
                 else if (ViewType == 5)
                 {
@@ -177,25 +173,36 @@ namespace KPIWeb.Rector
                     {
                         DataRow dataRow = dataTable.NewRow();
                         dataRow["ID"] = ForRCalc.GetLastID(currentStruct).ToString();
+                        dataRow["Number"] = "";
                         dataRow["Name"] = currentStruct.Name +", "+(from a in kpiWebDataContext.FirstLevelSubdivisionTable
                                                                         where a.FirstLevelSubdivisionTableID == currentStruct.Lv_1
                                                                         select a.Name).FirstOrDefault();
                         dataRow["Value"] =
-                            ForRCalc.GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID, SpecID).ToString();
+                            ForRCalc.GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID, SpecID).ToString("0.000");
                         dataTable.Rows.Add(dataRow);
                     }
 
                     Grid.Columns[3].Visible = false;
                     Grid.Columns[4].Visible = false;
                     Grid.Columns[5].Visible = false;
-
-                    Grid.DataSource = dataTable;
-                    Grid.DataBind();
                 }
                 else
                 {
                     //error // wrong ViewType
                 }
+
+                if (ViewType != 1)
+                {
+                    DataView dv = dataTable.DefaultView;
+                    dv.Sort = "Value desc";
+                    dataTable = dv.ToTable();
+                    int Number = 0;
+                    //Number++;
+                    foreach (DataRow row in dataTable.Rows)
+                        row["Number"] = ++Number;
+                }
+                Grid.DataSource = dataTable;
+                Grid.DataBind();
             }
         }
         protected void Button1Click(object sender, EventArgs e)

@@ -1280,7 +1280,8 @@ namespace KPIWeb.Reports
                             Label1.Text = "Данные утверждены";
                             Label2.Text = "Данные утверждены";
                         }
-                        Label2.Visible = false;
+                        Label2.Text = "Осталось " + dateCount + " дней до закрытия отчёта";
+                        //Label2.Visible = false;
                         // OnClientClick="javascript:return confirm('Do you really want to \ndelete the item?');"
 
                     }

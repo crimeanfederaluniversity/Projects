@@ -208,6 +208,7 @@
     <Content Include="AutomationDepartment\IsAvailibleMappingRole.aspx" />
     <Content Include="Account\PersonalInfo.aspx" />
     <Content Include="Rector\RAnalitics.aspx" />
+    <Content Include="Rector\RCalculate.aspx" />
     <Content Include="Rector\RMain.aspx" />
     <Content Include="Rector\RRating.aspx" />
     <Content Include="Rector\RShowChart.aspx" />
@@ -467,6 +468,13 @@
     </Compile>
     <Compile Include="Rector\RAnalitics.aspx.designer.cs">
       <DependentUpon>RAnalitics.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\RCalculate.aspx.cs">
+      <DependentUpon>RCalculate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\RCalculate.aspx.designer.cs">
+      <DependentUpon>RCalculate.aspx</DependentUpon>
     </Compile>
     <Compile Include="Rector\RMain.aspx.cs">
       <DependentUpon>RMain.aspx</DependentUpon>

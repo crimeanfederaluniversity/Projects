@@ -8,11 +8,17 @@
 
          <br />
          <br />
-         <asp:GridView ID="Grid" runat="server" CssClass="result_gw sova"
+        <style>     
+            .my_result_gw tr + tr  td + td  {
+                text-align:left;
+            }
+        </style>
+                
+         <asp:GridView ID="Grid" runat="server" CssClass="my_result_gw sova"
             AutoGenerateColumns="False"
             style="margin-top: 0px;">
              <Columns>                
-                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />    
+                 <asp:BoundField DataField="Number"   HeaderText="Номер" Visible="true" />    
                  <asp:BoundField DataField="Name" HeaderText="Название показателя" Visible="True" />          
                  <asp:BoundField DataField="Value" HeaderText="Значение" Visible="True" />
                  <asp:BoundField DataField="PlannedValue" HeaderText="Плановое значение ЦП" Visible="True" />

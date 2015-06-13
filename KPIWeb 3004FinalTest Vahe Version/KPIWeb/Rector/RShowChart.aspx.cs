@@ -85,20 +85,39 @@ namespace KPIWeb.Rector
 
             #endregion
             #region 
-            ForRCalc.Struct mainStruct = mainStruct = new ForRCalc.Struct(1, 0, 0, 0, 0, "N");
+            //ForRCalc.Struct mainStruct = mainStruct = new ForRCalc.Struct(1, 0, 0, 0, 0, "N");
+            CollectedIndicatorsForR collected = new CollectedIndicatorsForR();
             if ((Academy==null)&&(Faculty==null))
             {
-                mainStruct = new ForRCalc.Struct(1, 0, 0, 0, 0, "N");
+                //mainStruct = new ForRCalc.Struct(1, 0, 0, 0, 0, "N");
+                collected = (from a in kpiWebDataContext.CollectedIndicatorsForR
+                                                     where a.FK_ReportArchiveTable == ReportID
+                                                     && a.FK_IndicatorsTable == Indicator.IndicatorsTableID
+                                                     && a.FK_FirstLevelSubdivisionTable == null
+                                                     && a.FK_SecondLevelSubdivisionTable == null
+                                                     select a).FirstOrDefault();
             }
             else if (Faculty != null)
             {
-                mainStruct = new ForRCalc.Struct(1, Faculty.FK_FirstLevelSubdivisionTable, Faculty.SecondLevelSubdivisionTableID, 0, 0, "N");
+                //mainStruct = new ForRCalc.Struct(1, Faculty.FK_FirstLevelSubdivisionTable, Faculty.SecondLevelSubdivisionTableID, 0, 0, "N");
+                collected = (from a in kpiWebDataContext.CollectedIndicatorsForR
+                             where a.FK_ReportArchiveTable == ReportID
+                             && a.FK_IndicatorsTable == Indicator.IndicatorsTableID
+                             && a.FK_FirstLevelSubdivisionTable == Faculty.FK_FirstLevelSubdivisionTable
+                             && a.FK_SecondLevelSubdivisionTable == Faculty.SecondLevelSubdivisionTableID
+                             select a).FirstOrDefault();
             }  
             else if (Academy!=null)
             {
-                mainStruct = new ForRCalc.Struct(1, Academy.FirstLevelSubdivisionTableID, 0, 0, 0, "N");
+                //mainStruct = new ForRCalc.Struct(1, Academy.FirstLevelSubdivisionTableID, 0, 0, 0, "N");
+                collected = (from a in kpiWebDataContext.CollectedIndicatorsForR
+                             where a.FK_ReportArchiveTable == ReportID
+                             && a.FK_IndicatorsTable == Indicator.IndicatorsTableID
+                             && a.FK_FirstLevelSubdivisionTable == Academy.FirstLevelSubdivisionTableID
+                             && a.FK_SecondLevelSubdivisionTable == null
+                             select a).FirstOrDefault();
             }
-                    
+                /*    
             float tmp = ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0, Indicator.IndicatorsTableID, ReportID, 0));
 
             if (tmp == (float)1E+20)
@@ -109,7 +128,16 @@ namespace KPIWeb.Rector
             {
                 Value_ = tmp;
             }
+            */
             
+            if (collected.Value == null)
+            {
+                Value_ = 0;
+            }
+            else
+            {
+                Value_ = (float)collected.Value;
+            }
             #endregion
             ChartOneValue DataRowForChart = new ChartOneValue(Name_, Value_, Planned_Value);
             return DataRowForChart;
