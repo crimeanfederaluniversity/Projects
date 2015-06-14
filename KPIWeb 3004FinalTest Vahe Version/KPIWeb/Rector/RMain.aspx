@@ -6,8 +6,8 @@
         <br />
     
         <asp:Button ID="Button1" runat="server" Text="Анализ целевых показателей" OnClick="Button1_Click" Height="100px" Width="400px" />
-&nbsp;<asp:Button ID="Button2" runat="server" Text="Рейтинг структурных подразделений" Height="100px" OnClick="Button2_Click" Width="400px" />
+&nbsp;<asp:Button ID="Button2" runat="server" Text="Рейтинг структурных подразделений" Height="100px" OnClick="Button2_Click" Width="400px" CssClass="rector_b_right"/>
     
     </div>
-
+ 
 </asp:Content>

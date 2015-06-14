@@ -3,14 +3,16 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Анализ целевого показателя в разрезе вклада каждой академии КФУ</h1>
     <div>
-   
-        <asp:Chart ID="Chart1" runat="server" Height="621px" Width="1022px">
+      <style>
+       .chart{ opacity: 0.99;}
+   </style>
+        <asp:Chart ID="Chart1" runat="server" Height="700" Width="1167" CssClass="chart">
             <ChartAreas>
                 <asp:ChartArea Name="ChartArea1"></asp:ChartArea>
             </ChartAreas>
         </asp:Chart>
         <br />
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Width="700px" >
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Width="100%" CssClass="Grid_view_style newcentb" >
             <Columns>
                 <asp:BoundField HeaderText="ID индикатора" DataField="IndicatorID" ItemStyle-Width="120px" Visible="False" />
                 <asp:BoundField HeaderText="Название индикатора" DataField="IndicatorName" />
@@ -23,4 +25,6 @@
             </Columns>
         </asp:GridView>
     </div>
+    <!-- setTimeout("document.getElementById('<%=Chart1.ClientID %>').style.width = '100%'", 500); -->
+      
 </asp:Content>

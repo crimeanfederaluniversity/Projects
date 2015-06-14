@@ -14,6 +14,61 @@
     text-align:center;
 }
 
+/*RECTOR_PAGE*//*RECTOR_PAGE*//*RECTOR_PAGE*//*RECTOR_PAGE*//*RECTOR_PAGE*//*RECTOR_PAGE*/
+.rector_b_left {
+background-image:url("http://sosnovskij.ru/wp-content/uploads/2012/05/seo-analysis-sajta.jpg");
+background-repeat:no-repeat;
+background-size:cover;
+
+}
+#gwownerdiv {
+   
+    top:20px; 
+    background-color: #ffffff;
+    opacity: 0.9;
+    border-width: 10px;
+    border-style: solid;
+    position: absolute;
+
+}
+.rrrr th {
+    text-align: center;    
+
+}
+.rrrr tr,.rrrr td  {
+        padding-left:10px;
+        padding-right:10px;
+        padding-top:5px;
+        padding-bottom:5px;
+
+}
+
+.rector_b_right {
+
+}
+#idh1_1 {
+    position: relative;
+    text-align: center;
+    font-size: 36px;
+    top: 2%;
+   
+    width: 100%;
+  
+}
+
+#but4cent {
+    text-align: center;
+    opacity: 0.9;
+
+}
+
+.newcentb td+td,
+.newcentb td+td+td
+{
+    text-align: center;
+    }
+
+/*RECTOR_PAGE*//*RECTOR_PAGE*//*RECTOR_PAGE*//*RECTOR_PAGE*//*RECTOR_PAGE*//*RECTOR_PAGE*/
 /*DIVHOLD*/
 .hold_div {
     color:#05ff01;

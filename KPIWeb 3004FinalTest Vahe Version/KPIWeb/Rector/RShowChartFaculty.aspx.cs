@@ -232,7 +232,7 @@ namespace KPIWeb.Rector
             Chart1.Series[0].Label = "#VALY";
 
             
-            Chart1.Series[0].ToolTip = "#VALX, -- #VALY";
+            Chart1.Series[0].ToolTip = "#VALX, #VALY";
             #endregion
 
             GridView1.DataSource = dataTable;

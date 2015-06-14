@@ -3,13 +3,18 @@
 <%@ Register assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" namespace="System.Web.UI.DataVisualization.Charting" tagprefix="asp" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">  
-    <h1>Анализ целевых показателей</h1>
-    <h2>Анализ целевых показателей</h2>
+    
+
 
 &nbsp;
     <br />
-    <div>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Width="700px" OnRowDataBound="GridView1_RowDataBound">
+    <div style="position: relative" id="owow">
+       
+        <div id="idh1_1">Прогресс достижения целевых показателей КФУ</div>
+       <div id="asdasd" style="position: relative;">
+        <div id="gwownerdiv">
+             
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Width="700px" OnRowDataBound="GridView1_RowDataBound" CssClass="rrrr">
             <Columns>
                 <asp:BoundField HeaderText="ID индикатора" DataField="IndicatorID" ItemStyle-Width="120px" Visible="False" />
                 <asp:BoundField HeaderText="Название индикатора" DataField="IndicatorName" />
@@ -37,6 +42,15 @@
                     </asp:TemplateField>
             </Columns>
         </asp:GridView>
+
+            </div>
+           
+
+       </div>
         <br />
-    </div>
+    
+        </div>
+    <script>
+        document.getElementById("asdasd").style.height = ((document.getElementById("gwownerdiv").getBoundingClientRect().bottom - document.getElementById("gwownerdiv").getBoundingClientRect().top).toString()+"px");
+    </script>
 </asp:Content>

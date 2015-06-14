@@ -296,7 +296,7 @@ namespace KPIWeb.Rector
 
             Chart1.Legends.Add(new Legend("Default") { Docking = Docking.Bottom });
 
-            //Chart1.Legends["Default"].Font = new Font("Utopia", 9);
+            // Chart1.Legends["Default"].Font = new Font("Utopia", 16);
 
             // Привязать источник к диаграмме
             Chart1.DataSource = chartItems.GetDataSource();
