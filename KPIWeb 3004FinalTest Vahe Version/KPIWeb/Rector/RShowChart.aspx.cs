@@ -341,6 +341,7 @@ namespace KPIWeb.Rector
             Button button = (Button)sender;
             {
                 var par = button.CommandArgument.ToString();
+                Session["IndicatorToDetailed"] = par;
                 Response.Redirect("~/Rector/RShowChartDetailed.aspx");
             }
         }

@@ -214,6 +214,7 @@
     <Content Include="Rector\RRating.aspx" />
     <Content Include="Rector\RShowChart.aspx" />
     <Content Include="Rector\RShowChartDetailed.aspx" />
+    <Content Include="Rector\RShowChartFaculty.aspx" />
     <Content Include="RegisterProcessInfo.aspx" />
     <Content Include="Spinner.css" />
     <Content Include="StatisticsDepartment\PlannedIndicator.aspx" />
@@ -506,6 +507,13 @@
     </Compile>
     <Compile Include="Rector\RShowChartDetailed.aspx.designer.cs">
       <DependentUpon>RShowChartDetailed.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\RShowChartFaculty.aspx.cs">
+      <DependentUpon>RShowChartFaculty.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\RShowChartFaculty.aspx.designer.cs">
+      <DependentUpon>RShowChartFaculty.aspx</DependentUpon>
     </Compile>
     <Compile Include="RegisterProcessInfo.aspx.cs">
       <DependentUpon>RegisterProcessInfo.aspx</DependentUpon>

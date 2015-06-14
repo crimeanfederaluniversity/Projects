@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="RShowChartDetailed.aspx.cs" Inherits="KPIWeb.Rector.RShowChartDetailed" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="RShowChartFaculty.aspx.cs" Inherits="KPIWeb.Rector.RShowChartFaculty" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div>
@@ -9,16 +9,12 @@
             </ChartAreas>
         </asp:Chart>
         <br />
+        <br />
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Width="700px" >
             <Columns>
                 <asp:BoundField HeaderText="ID индикатора" DataField="IndicatorID" ItemStyle-Width="120px" Visible="True" />
                 <asp:BoundField HeaderText="Название индикатора" DataField="IndicatorName" />
                 <asp:BoundField HeaderText="Значение" DataField="IndicatorValue" />
-                <asp:TemplateField HeaderText="Подробнее">
-                    <ItemTemplate>
-                        <asp:Button ID="Button7" runat="server" CommandName="Select" Text="Подробнее" CommandArgument='<%# Eval("IndicatorID") %>' OnClick="FacultyButtonClick" />
-                        </ItemTemplate>
-                    </asp:TemplateField>
             </Columns>
         </asp:GridView>
     </div>

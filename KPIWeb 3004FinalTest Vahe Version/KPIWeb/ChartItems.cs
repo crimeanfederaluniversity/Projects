@@ -49,5 +49,15 @@ namespace KPIWeb
             return collection;
         }
 
+        public List<ChartOneValue> SortReverse(List<ChartOneValue> collection)
+        {
+            collection.Sort(delegate(ChartOneValue value1, ChartOneValue value2)
+            { return value1.value.CompareTo(value2.value); });
+
+            collection.Reverse();
+
+            return collection;
+        }
+
     }
 }

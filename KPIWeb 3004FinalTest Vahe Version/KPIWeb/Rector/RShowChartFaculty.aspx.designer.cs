@@ -10,7 +10,7 @@
 namespace KPIWeb.Rector {
     
     
-    public partial class RShowChartDetailed {
+    public partial class RShowChartFaculty {
         
         /// <summary>
         /// Chart1 элемент управления.

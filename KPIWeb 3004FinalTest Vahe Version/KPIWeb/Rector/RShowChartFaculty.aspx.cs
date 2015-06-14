@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace KPIWeb.Rector
 {
-    public partial class RShowChartDetailed : System.Web.UI.Page
+    public partial class RShowChartFaculty : System.Web.UI.Page
     {
         public ChartOneValue GetCalculatedIndicator(int ReportID, IndicatorsTable Indicator, FirstLevelSubdivisionTable Academy, SecondLevelSubdivisionTable Faculty) // academyID == null && facultyID==null значит для всего КФУ
         {
@@ -117,99 +117,20 @@ namespace KPIWeb.Rector
             ChartOneValue DataRowForChart = new ChartOneValue(Name_, Value_, Planned_Value);
             return DataRowForChart;
         }
-        public ChartValueArray AllIndicatorsForAcademys(int ReportID)
+
+        public ChartValueArray IndicatorsForAcademyFacultys(int IndicatorID, int AcademyID,  int ReportID)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
 
-            List<IndicatorsTable> Indicators = (
-                            from a in kpiWebDataContext.IndicatorsTable
-                            where
-                                a.Active == true
-                            select a).OrderBy(mc => mc.IndicatorsTableID).ToList();
-
-            ChartValueArray DataForChart = new ChartValueArray("График достижения плановых значений целевых показателей");
-            foreach (IndicatorsTable CurrentIndicator in Indicators)
-            {
-                DataForChart.ChartValues.Add(GetCalculatedIndicator(1, CurrentIndicator, null, null));
-            }
-            return DataForChart;
-        }
-        public ChartValueArray IndicatorForAllAcademys(int IndicatorID, int ReportID)
-        {
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             IndicatorsTable Indicator = (from a in kpiWebDataContext.IndicatorsTable
                                          where a.IndicatorsTableID == IndicatorID
                                          select a).FirstOrDefault();
-            List<FirstLevelSubdivisionTable> AcademyList = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
-                                                            where a.Active == true
-                                                            select a).ToList();
 
-            ChartValueArray DataForChart = new ChartValueArray("Целевой показатель '" + Indicator.Name + "' в разрезе академий КФУ");
-
-            foreach (FirstLevelSubdivisionTable CurrentAcademy in AcademyList)
-            {
-                DataForChart.ChartValues.Add(GetCalculatedIndicator(1, Indicator, CurrentAcademy, null));
-            }
-            return DataForChart;
-        }
-        public ChartValueArray AllIndicatorsForOneAcademy(int AcademyID, int ReportID)
-        {
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-
-            List<IndicatorsTable> Indicators = (
-                            from a in kpiWebDataContext.IndicatorsTable
-                            where
-                                a.Active == true
-                            select a).OrderBy(mc => mc.IndicatorsTableID).ToList();
-            FirstLevelSubdivisionTable FirstLevelRow = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
-                                                        where a.FirstLevelSubdivisionTableID == AcademyID
-                                                        select a).FirstOrDefault();
-            ChartValueArray DataForChart = new ChartValueArray("График достижения плановых значений целевых показателей для академии " + FirstLevelRow.Name);
-            foreach (IndicatorsTable CurrentIndicator in Indicators)
-            {
-                DataForChart.ChartValues.Add(GetCalculatedIndicator(1, CurrentIndicator, FirstLevelRow, null));
-            }
-            return DataForChart;
-        }
-        public ChartValueArray IndicatorsForCFU(List<int> Indicators, int ReportID)
-        {
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-            ChartValueArray DataForChart = new ChartValueArray("График достижения выбранных плановых значений целевых показателей для КФУ");
-            foreach (int CurrentIndicatorID in Indicators)
-            {
-                IndicatorsTable Indicator = (
-                               from a in kpiWebDataContext.IndicatorsTable
-                               where
-                                   a.Active == true
-                                   && a.IndicatorsTableID == CurrentIndicatorID
-                               select a).FirstOrDefault();
-                DataForChart.ChartValues.Add(GetCalculatedIndicator(1, Indicator, null, null));
-            }
-            return DataForChart;
-        }
-        public ChartOneValue IndicatorsForCFUOneIndicator(int curIndicator, int ReportID)
-        {
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-            IndicatorsTable Indicator = (
-                           from a in kpiWebDataContext.IndicatorsTable
-                           where
-                               a.Active == true
-                               && a.IndicatorsTableID == curIndicator
-                           select a).FirstOrDefault();
-
-            return GetCalculatedIndicator(1, Indicator, null, null);
-        }
-        public ChartValueArray IndicatorsForAllFacultys(int IndicatorID, int ReportID)
-        {
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-            IndicatorsTable Indicator = (from a in kpiWebDataContext.IndicatorsTable
-                                         where a.IndicatorsTableID == IndicatorID
-                                         select a).FirstOrDefault();
             List<SecondLevelSubdivisionTable> FacultyList = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
-                                                             where a.Active == true
+                                                             where a.Active == true && a.FK_FirstLevelSubdivisionTable == AcademyID
                                                              select a).ToList();
 
-            ChartValueArray DataForChart = new ChartValueArray("Целевой показатель '" + Indicator.Name + "' в разрезе факультетов КФУ");
+            ChartValueArray DataForChart = new ChartValueArray("Целевой показатель '" + Indicator.Name + "' в разрезе факультетов "+ (from b in kpiWebDataContext.FirstLevelSubdivisionTable where b.FirstLevelSubdivisionTableID == AcademyID select b.Name).FirstOrDefault());
 
             foreach (SecondLevelSubdivisionTable CurrentFavulty in FacultyList)
             {
@@ -238,12 +159,15 @@ namespace KPIWeb.Rector
                 Response.Redirect("~/Default.aspx");
             }
 
+            String AcademyID = (string)Session["AcademyToDetailed"];
+            int academy = Convert.ToInt32(AcademyID);
+
             String IndicatorID = (string)Session["IndicatorToDetailed"];
             int indicator = Convert.ToInt32(IndicatorID);
 
             ChartItems chartItems = new ChartItems();
 
-            ChartValueArray DataForChart = IndicatorForAllAcademys(indicator, 1);
+            ChartValueArray DataForChart = IndicatorsForAcademyFacultys(indicator,academy, 1);
 
             // Формируем GridView
             DataTable dataTable = new DataTable();
@@ -264,14 +188,14 @@ namespace KPIWeb.Rector
 
             // Форматировать область диаграммы
             Chart1.ChartAreas[0].BackColor = Color.White;
-            
+
             // Добавить и форматировать заголовок
             Chart1.Titles.Add(DataForChart.chartName);
             Chart1.Titles[0].Font = new Font("Utopia", 16);
 
             Chart1.Series.Add(new Series("Default")
             {
-                ChartType = SeriesChartType.Pie,
+                ChartType = SeriesChartType.StackedBar,
                 Color = Color.CornflowerBlue
             });
 
@@ -279,50 +203,41 @@ namespace KPIWeb.Rector
             Chart1.ChartAreas[0].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount;
 
 
-            foreach (ChartOneValue item in chartItems.SortReverse(DataForChart.ChartValues))
+            foreach (ChartOneValue item in chartItems.SortReverse(DataForChart.ChartValues)) // сортировка для gridview FIFO
             {
-                if (item.value == 0) continue; 
-                chartItems.AddChartItem(item.name, item.value);
+                if (item.value == 0) continue;
 
                 DataRow dataRow = dataTable.NewRow();
                 dataRow["IndicatorID"] =
                     (from a in kPiDataContext.FirstLevelSubdivisionTable
-                        where a.Name.Equals(item.name)
-                        select a.FirstLevelSubdivisionTableID).FirstOrDefault();
+                     where a.Name.Equals(item.name)
+                     select a.FirstLevelSubdivisionTableID).FirstOrDefault();
                 dataRow["IndicatorName"] = item.name;
                 dataRow["IndicatorValue"] = item.value;
                 dataTable.Rows.Add(dataRow);
             }
 
-            Chart1.Legends.Add(new Legend("Default") { Docking = Docking.Right });
+            
+            foreach (ChartOneValue item in chartItems.Sort(DataForChart.ChartValues)) // для chart FILO
+            {
+            if (item.value == 0) continue;
+            chartItems.AddChartItem(item.name, item.value);
 
-
+            }
             // Привязать источник к диаграмме
             Chart1.DataSource = chartItems.GetDataSource();
             Chart1.Series[0].XValueMember = "Name";
             Chart1.Series[0].YValueMembers = "Value";
 
-            Chart1.Series[0].Label = "#PERCENT{P0}";
+            Chart1.Series[0].Label = "#VALY";
 
-
-            Chart1.Series[0].LegendText = "#AXISLABEL (#PERCENT{P0})";
-
-            Chart1.Series[0].ToolTip = "#VALX";
+            
+            Chart1.Series[0].ToolTip = "#VALX, -- #VALY";
             #endregion
 
 
             GridView1.DataSource = dataTable;
             GridView1.DataBind();
-        }
-
-        protected void FacultyButtonClick(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            {
-                var par = button.CommandArgument.ToString();
-                Session["AcademyToDetailed"] = par;
-                Response.Redirect("~/Rector/RShowChartFaculty.aspx");
-            }
         }
     }
 }

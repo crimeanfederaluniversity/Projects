@@ -40,7 +40,6 @@
                         <asp:Button ID="Button7" runat="server" CommandName="Select" Text="Подробнее" CommandArgument='<%# Eval("IndicatorID") %>' OnClick="DetailedButtonClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
-
             </Columns>
         </asp:GridView>
         <br />
