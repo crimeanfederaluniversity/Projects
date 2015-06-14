@@ -255,7 +255,7 @@ namespace KPIWeb.Rector
             #region график + чуток gridview
             // Форматировать диаграмму
             Chart1.BackColor = Color.White;
-            Chart1.BackSecondaryColor = Color.WhiteSmoke;
+            Chart1.BackSecondaryColor = Color.White;
             Chart1.BackGradientStyle = GradientStyle.DiagonalRight;
 
             Chart1.BorderlineDashStyle = ChartDashStyle.Solid;
@@ -309,7 +309,7 @@ namespace KPIWeb.Rector
 
             Chart1.Series[0].ToolTip = "#VALX";
             #endregion
-
+            Chart1.ChartAreas[0].Area3DStyle.Enable3D = true;
 
             GridView1.DataSource = dataTable;
             GridView1.DataBind();

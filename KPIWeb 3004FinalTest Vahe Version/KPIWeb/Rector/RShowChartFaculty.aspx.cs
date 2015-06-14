@@ -130,7 +130,7 @@ namespace KPIWeb.Rector
                                                              where a.Active == true && a.FK_FirstLevelSubdivisionTable == AcademyID
                                                              select a).ToList();
 
-            ChartValueArray DataForChart = new ChartValueArray("Целевой показатель '" + Indicator.Name + "' в разрезе факультетов "+ (from b in kpiWebDataContext.FirstLevelSubdivisionTable where b.FirstLevelSubdivisionTableID == AcademyID select b.Name).FirstOrDefault());
+            ChartValueArray DataForChart = new ChartValueArray("Целевой показатель '" + Indicator.Name + "' в разрезе "+ (from b in kpiWebDataContext.FirstLevelSubdivisionTable where b.FirstLevelSubdivisionTableID == AcademyID select b.Name).FirstOrDefault());
 
             foreach (SecondLevelSubdivisionTable CurrentFavulty in FacultyList)
             {
@@ -196,7 +196,7 @@ namespace KPIWeb.Rector
             Chart1.Series.Add(new Series("Default")
             {
                 ChartType = SeriesChartType.StackedBar,
-                Color = Color.CornflowerBlue
+                Color = Color.SteelBlue
             });
 
             Chart1.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
@@ -234,7 +234,6 @@ namespace KPIWeb.Rector
             
             Chart1.Series[0].ToolTip = "#VALX, -- #VALY";
             #endregion
-
 
             GridView1.DataSource = dataTable;
             GridView1.DataBind();
