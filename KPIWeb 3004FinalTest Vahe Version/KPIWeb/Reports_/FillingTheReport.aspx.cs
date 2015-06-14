@@ -447,11 +447,32 @@ namespace KPIWeb.Reports
                     if (basicParam.AbbreviationEN == "kol_A_OP_SV") tmp = pattern5(user, ReportArchiveID, 4);
                     if (basicParam.AbbreviationEN == "OOP_A_SOT") tmp = pattern6(user, ReportArchiveID, 4);
 
+//новые показатели 13.06.2015
+                    if (basicParam.AbbreviationEN == "a_Och_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "a_Och_M_CO", null);
+                    if (basicParam.AbbreviationEN == "b_OchZ_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "b_OchZ_M_CO", null);
+                    if (basicParam.AbbreviationEN == "c_Z_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "c_Z_M_CO", null);
+                    if (basicParam.AbbreviationEN == "d_E_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "d_E_M_CO", null);
+
+                    if (basicParam.AbbreviationEN == "a_Och_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "a_Och_B_CO", null);
+                    if (basicParam.AbbreviationEN == "d_E_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "d_E_B_CO", null);
+                    if (basicParam.AbbreviationEN == "c_Z_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "c_Z_B_CO", null);
+                    if (basicParam.AbbreviationEN == "d_E_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "d_E_B_CO", null);
+
+                    if (basicParam.AbbreviationEN == "a_Och_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "a_Och_S_CO", null);
+                    if (basicParam.AbbreviationEN == "b_OchZ_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "b_OchZ_S_CO", null);
+                    if (basicParam.AbbreviationEN == "c_Z_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "c_Z_S_CO", null);
+                    if (basicParam.AbbreviationEN == "d_E_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "d_E_S_CO", null);
+//новые показатели                 
 
 
-                    //if (basicParam.AbbreviationEN == "a_Och_M_CO") tmp = pattern1(user, ReportArchiveID, 3, "a_Och_M_CO", null);
-                    //if (basicParam.AbbreviationEN == "a_Och_S_CO") tmp = pattern1(user, ReportArchiveID, 2, "a_Och_S_CO", null);
-                    //if (basicParam.AbbreviationEN == "a_Och_B_CO") tmp = pattern1(user, ReportArchiveID, 1, "a_Och_B_CO", null);
+
+
+
+
+
+
+
+
 
 
 
