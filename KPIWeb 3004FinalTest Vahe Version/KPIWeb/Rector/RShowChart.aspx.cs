@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 namespace KPIWeb.Rector
 {
     public partial class RShowChart : System.Web.UI.Page
-    { //123
+    { 
         protected void Page_Load(object sender, EventArgs e)
         {
             Serialization UserSer = (Serialization)Session["UserID"];
@@ -36,8 +36,7 @@ namespace KPIWeb.Rector
                 Response.Redirect("~/Default.aspx");
             }
             List<int> IndicatorsList = RectorChart.IndicatorsList;
-            foreach (int i in IndicatorsList)
-                TextBox1.Text += i.ToString() + Environment.NewLine;
+            
             //IndicatorsForCFU(IndicatorsList,1);   // ВОЗВРАЩАЕТ ДАННЫЕ ДЛЯ ЧАРТА
 
             if (!IsPostBack)
@@ -284,21 +283,7 @@ namespace KPIWeb.Rector
             ChartValueArray NewDataForChart = IndicatorsForCFU(RectorChart.IndicatorsList, 1);
         }
 
-        protected void Button2_Click(object sender, EventArgs e) // Значение показателя с ID для каждой академии
-        {
-            ChartValueArray NewDataForChart = IndicatorForAllAcademys(Convert.ToInt32(TextBox2.Text), 1);
-        }
-
-        protected void Button3_Click(object sender, EventArgs e) // Значение показателя с ID для каждого факультета
-        {
-            ChartValueArray NewDataForChart = IndicatorsForAllFacultys(Convert.ToInt32(TextBox3.Text), 1);
-        }
-
-        protected void Button4_Click(object sender, EventArgs e)// Значение каждого показателя рассчитанное для академии с ID
-        {
-            ChartValueArray NewDataForChart = AllIndicatorsForOneAcademy(Convert.ToInt32(TextBox4.Text), 1);
-        }
-
+        
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)

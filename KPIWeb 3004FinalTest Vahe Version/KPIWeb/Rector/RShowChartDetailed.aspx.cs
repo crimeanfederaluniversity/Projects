@@ -294,8 +294,9 @@ namespace KPIWeb.Rector
                 dataTable.Rows.Add(dataRow);
             }
 
-            Chart1.Legends.Add(new Legend("Default") { Docking = Docking.Right });
+            Chart1.Legends.Add(new Legend("Default") { Docking = Docking.Bottom });
 
+            //Chart1.Legends["Default"].Font = new Font("Utopia", 9);
 
             // Привязать источник к диаграмме
             Chart1.DataSource = chartItems.GetDataSource();
@@ -305,7 +306,7 @@ namespace KPIWeb.Rector
             Chart1.Series[0].Label = "#PERCENT{P0}";
 
 
-            Chart1.Series[0].LegendText = "#AXISLABEL (#PERCENT{P0})";
+            Chart1.Series[0].LegendText = "#AXISLABEL";
 
             Chart1.Series[0].ToolTip = "#VALX";
             #endregion
