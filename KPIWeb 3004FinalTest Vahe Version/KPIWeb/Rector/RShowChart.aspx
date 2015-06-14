@@ -16,8 +16,8 @@
     <div>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Width="700px" OnRowDataBound="GridView1_RowDataBound">
             <Columns>
-                <asp:BoundField HeaderText="ID индикатора" DataField="IndicatorID" ItemStyle-Width="120px" />
-                <asp:BoundField HeaderText="Название индикатора" DataField="IndicatorName" ItemStyle-Width="220px" />
+                <asp:BoundField HeaderText="ID индикатора" DataField="IndicatorID" ItemStyle-Width="120px" Visible="False" />
+                <asp:BoundField HeaderText="Название индикатора" DataField="IndicatorName" />
                 <asp:TemplateField HeaderText="Гистограмма">
                     <ItemTemplate>
                         <div>
@@ -37,7 +37,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Подробнее">
                     <ItemTemplate>
-                        <asp:Button ID="Button7" runat="server" Text="Подробнее" />
+                        <asp:Button ID="Button7" runat="server" CommandName="Select" Text="Подробнее" CommandArgument='<%# Eval("IndicatorID") %>' OnClick="DetailedButtonClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 
