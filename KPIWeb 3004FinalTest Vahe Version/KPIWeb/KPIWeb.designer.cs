@@ -60,6 +60,9 @@ namespace KPIWeb
     partial void InsertCollectedCalculatedParametrs(CollectedCalculatedParametrs instance);
     partial void UpdateCollectedCalculatedParametrs(CollectedCalculatedParametrs instance);
     partial void DeleteCollectedCalculatedParametrs(CollectedCalculatedParametrs instance);
+    partial void InsertCollectedIndicatorsForR(CollectedIndicatorsForR instance);
+    partial void UpdateCollectedIndicatorsForR(CollectedIndicatorsForR instance);
+    partial void DeleteCollectedIndicatorsForR(CollectedIndicatorsForR instance);
     partial void InsertCollectedIndocators(CollectedIndocators instance);
     partial void UpdateCollectedIndocators(CollectedIndocators instance);
     partial void DeleteCollectedIndocators(CollectedIndocators instance);
@@ -108,6 +111,9 @@ namespace KPIWeb
     partial void InsertManualTable(ManualTable instance);
     partial void UpdateManualTable(ManualTable instance);
     partial void DeleteManualTable(ManualTable instance);
+    partial void InsertMultiUser(MultiUser instance);
+    partial void UpdateMultiUser(MultiUser instance);
+    partial void DeleteMultiUser(MultiUser instance);
     partial void InsertPlannedIndicator(PlannedIndicator instance);
     partial void UpdatePlannedIndicator(PlannedIndicator instance);
     partial void DeletePlannedIndicator(PlannedIndicator instance);
@@ -144,9 +150,6 @@ namespace KPIWeb
     partial void InsertUsersTable(UsersTable instance);
     partial void UpdateUsersTable(UsersTable instance);
     partial void DeleteUsersTable(UsersTable instance);
-    partial void InsertCollectedIndicatorsForR(CollectedIndicatorsForR instance);
-    partial void UpdateCollectedIndicatorsForR(CollectedIndicatorsForR instance);
-    partial void DeleteCollectedIndicatorsForR(CollectedIndicatorsForR instance);
     #endregion
 		
 		public KPIWebDataContext() : 
@@ -256,6 +259,14 @@ namespace KPIWeb
 			get
 			{
 				return this.GetTable<CollectedCalculatedParametrs>();
+			}
+		}
+		
+		public System.Data.Linq.Table<CollectedIndicatorsForR> CollectedIndicatorsForR
+		{
+			get
+			{
+				return this.GetTable<CollectedIndicatorsForR>();
 			}
 		}
 		
@@ -395,6 +406,14 @@ namespace KPIWeb
 			}
 		}
 		
+		public System.Data.Linq.Table<MultiUser> MultiUser
+		{
+			get
+			{
+				return this.GetTable<MultiUser>();
+			}
+		}
+		
 		public System.Data.Linq.Table<PlannedIndicator> PlannedIndicator
 		{
 			get
@@ -488,14 +507,6 @@ namespace KPIWeb
 			get
 			{
 				return this.GetTable<UsersTable>();
-			}
-		}
-		
-		public System.Data.Linq.Table<CollectedIndicatorsForR> CollectedIndicatorsForR
-		{
-			get
-			{
-				return this.GetTable<CollectedIndicatorsForR>();
 			}
 		}
 	}
@@ -4098,6 +4109,595 @@ namespace KPIWeb
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CollectedIndicatorsForR")]
+	public partial class CollectedIndicatorsForR : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _CollectedIndicatorsForRID;
+		
+		private System.Nullable<double> _Value;
+		
+		private System.Nullable<bool> _Active;
+		
+		private System.Nullable<int> _FK_IndicatorsTable;
+		
+		private System.Nullable<int> _FK_FirstLevelSubdivisionTable;
+		
+		private System.Nullable<int> _FK_SecondLevelSubdivisionTable;
+		
+		private System.Nullable<int> _FK_ThirdLevelSubdivisionTable;
+		
+		private System.Nullable<int> _FK_FourthLelevlSubdivisionTable;
+		
+		private System.Nullable<int> _FK_FifthLevelSubdivisionTable;
+		
+		private System.Nullable<int> _FK_ReportArchiveTable;
+		
+		private System.Nullable<System.DateTime> _CreatedDateTime;
+		
+		private EntityRef<FifthLevelSubdivisionTable> _FifthLevelSubdivisionTable;
+		
+		private EntityRef<FirstLevelSubdivisionTable> _FirstLevelSubdivisionTable;
+		
+		private EntityRef<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
+		
+		private EntityRef<IndicatorsTable> _IndicatorsTable;
+		
+		private EntityRef<ReportArchiveTable> _ReportArchiveTable;
+		
+		private EntityRef<SecondLevelSubdivisionTable> _SecondLevelSubdivisionTable;
+		
+		private EntityRef<ThirdLevelSubdivisionTable> _ThirdLevelSubdivisionTable;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCollectedIndicatorsForRIDChanging(int value);
+    partial void OnCollectedIndicatorsForRIDChanged();
+    partial void OnValueChanging(System.Nullable<double> value);
+    partial void OnValueChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnFK_IndicatorsTableChanging(System.Nullable<int> value);
+    partial void OnFK_IndicatorsTableChanged();
+    partial void OnFK_FirstLevelSubdivisionTableChanging(System.Nullable<int> value);
+    partial void OnFK_FirstLevelSubdivisionTableChanged();
+    partial void OnFK_SecondLevelSubdivisionTableChanging(System.Nullable<int> value);
+    partial void OnFK_SecondLevelSubdivisionTableChanged();
+    partial void OnFK_ThirdLevelSubdivisionTableChanging(System.Nullable<int> value);
+    partial void OnFK_ThirdLevelSubdivisionTableChanged();
+    partial void OnFK_FourthLelevlSubdivisionTableChanging(System.Nullable<int> value);
+    partial void OnFK_FourthLelevlSubdivisionTableChanged();
+    partial void OnFK_FifthLevelSubdivisionTableChanging(System.Nullable<int> value);
+    partial void OnFK_FifthLevelSubdivisionTableChanged();
+    partial void OnFK_ReportArchiveTableChanging(System.Nullable<int> value);
+    partial void OnFK_ReportArchiveTableChanged();
+    partial void OnCreatedDateTimeChanging(System.Nullable<System.DateTime> value);
+    partial void OnCreatedDateTimeChanged();
+    #endregion
+		
+		public CollectedIndicatorsForR()
+		{
+			this._FifthLevelSubdivisionTable = default(EntityRef<FifthLevelSubdivisionTable>);
+			this._FirstLevelSubdivisionTable = default(EntityRef<FirstLevelSubdivisionTable>);
+			this._FourthLevelSubdivisionTable = default(EntityRef<FourthLevelSubdivisionTable>);
+			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
+			this._ReportArchiveTable = default(EntityRef<ReportArchiveTable>);
+			this._SecondLevelSubdivisionTable = default(EntityRef<SecondLevelSubdivisionTable>);
+			this._ThirdLevelSubdivisionTable = default(EntityRef<ThirdLevelSubdivisionTable>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CollectedIndicatorsForRID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int CollectedIndicatorsForRID
+		{
+			get
+			{
+				return this._CollectedIndicatorsForRID;
+			}
+			set
+			{
+				if ((this._CollectedIndicatorsForRID != value))
+				{
+					this.OnCollectedIndicatorsForRIDChanging(value);
+					this.SendPropertyChanging();
+					this._CollectedIndicatorsForRID = value;
+					this.SendPropertyChanged("CollectedIndicatorsForRID");
+					this.OnCollectedIndicatorsForRIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value", DbType="Float")]
+		public System.Nullable<double> Value
+		{
+			get
+			{
+				return this._Value;
+			}
+			set
+			{
+				if ((this._Value != value))
+				{
+					this.OnValueChanging(value);
+					this.SendPropertyChanging();
+					this._Value = value;
+					this.SendPropertyChanged("Value");
+					this.OnValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_IndicatorsTable", DbType="Int")]
+		public System.Nullable<int> FK_IndicatorsTable
+		{
+			get
+			{
+				return this._FK_IndicatorsTable;
+			}
+			set
+			{
+				if ((this._FK_IndicatorsTable != value))
+				{
+					if (this._IndicatorsTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_IndicatorsTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_IndicatorsTable = value;
+					this.SendPropertyChanged("FK_IndicatorsTable");
+					this.OnFK_IndicatorsTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FirstLevelSubdivisionTable", DbType="Int")]
+		public System.Nullable<int> FK_FirstLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FK_FirstLevelSubdivisionTable;
+			}
+			set
+			{
+				if ((this._FK_FirstLevelSubdivisionTable != value))
+				{
+					if (this._FirstLevelSubdivisionTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_FirstLevelSubdivisionTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_FirstLevelSubdivisionTable = value;
+					this.SendPropertyChanged("FK_FirstLevelSubdivisionTable");
+					this.OnFK_FirstLevelSubdivisionTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_SecondLevelSubdivisionTable", DbType="Int")]
+		public System.Nullable<int> FK_SecondLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FK_SecondLevelSubdivisionTable;
+			}
+			set
+			{
+				if ((this._FK_SecondLevelSubdivisionTable != value))
+				{
+					if (this._SecondLevelSubdivisionTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_SecondLevelSubdivisionTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_SecondLevelSubdivisionTable = value;
+					this.SendPropertyChanged("FK_SecondLevelSubdivisionTable");
+					this.OnFK_SecondLevelSubdivisionTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ThirdLevelSubdivisionTable", DbType="Int")]
+		public System.Nullable<int> FK_ThirdLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FK_ThirdLevelSubdivisionTable;
+			}
+			set
+			{
+				if ((this._FK_ThirdLevelSubdivisionTable != value))
+				{
+					if (this._ThirdLevelSubdivisionTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_ThirdLevelSubdivisionTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_ThirdLevelSubdivisionTable = value;
+					this.SendPropertyChanged("FK_ThirdLevelSubdivisionTable");
+					this.OnFK_ThirdLevelSubdivisionTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FourthLelevlSubdivisionTable", DbType="Int")]
+		public System.Nullable<int> FK_FourthLelevlSubdivisionTable
+		{
+			get
+			{
+				return this._FK_FourthLelevlSubdivisionTable;
+			}
+			set
+			{
+				if ((this._FK_FourthLelevlSubdivisionTable != value))
+				{
+					if (this._FourthLevelSubdivisionTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_FourthLelevlSubdivisionTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_FourthLelevlSubdivisionTable = value;
+					this.SendPropertyChanged("FK_FourthLelevlSubdivisionTable");
+					this.OnFK_FourthLelevlSubdivisionTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FifthLevelSubdivisionTable", DbType="Int")]
+		public System.Nullable<int> FK_FifthLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FK_FifthLevelSubdivisionTable;
+			}
+			set
+			{
+				if ((this._FK_FifthLevelSubdivisionTable != value))
+				{
+					if (this._FifthLevelSubdivisionTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_FifthLevelSubdivisionTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_FifthLevelSubdivisionTable = value;
+					this.SendPropertyChanged("FK_FifthLevelSubdivisionTable");
+					this.OnFK_FifthLevelSubdivisionTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ReportArchiveTable", DbType="Int")]
+		public System.Nullable<int> FK_ReportArchiveTable
+		{
+			get
+			{
+				return this._FK_ReportArchiveTable;
+			}
+			set
+			{
+				if ((this._FK_ReportArchiveTable != value))
+				{
+					if (this._ReportArchiveTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_ReportArchiveTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_ReportArchiveTable = value;
+					this.SendPropertyChanged("FK_ReportArchiveTable");
+					this.OnFK_ReportArchiveTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedDateTime", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreatedDateTime
+		{
+			get
+			{
+				return this._CreatedDateTime;
+			}
+			set
+			{
+				if ((this._CreatedDateTime != value))
+				{
+					this.OnCreatedDateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedDateTime = value;
+					this.SendPropertyChanged("CreatedDateTime");
+					this.OnCreatedDateTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FifthLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_FifthLevelSubdivisionTable", ThisKey="FK_FifthLevelSubdivisionTable", OtherKey="FifthLevelSubdivisionTableID", IsForeignKey=true)]
+		public FifthLevelSubdivisionTable FifthLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FifthLevelSubdivisionTable.Entity;
+			}
+			set
+			{
+				FifthLevelSubdivisionTable previousValue = this._FifthLevelSubdivisionTable.Entity;
+				if (((previousValue != value) 
+							|| (this._FifthLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FifthLevelSubdivisionTable.Entity = null;
+						previousValue.CollectedIndicatorsForR.Remove(this);
+					}
+					this._FifthLevelSubdivisionTable.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedIndicatorsForR.Add(this);
+						this._FK_FifthLevelSubdivisionTable = value.FifthLevelSubdivisionTableID;
+					}
+					else
+					{
+						this._FK_FifthLevelSubdivisionTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("FifthLevelSubdivisionTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_FirstLevelSubdivisionTable", ThisKey="FK_FirstLevelSubdivisionTable", OtherKey="FirstLevelSubdivisionTableID", IsForeignKey=true)]
+		public FirstLevelSubdivisionTable FirstLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FirstLevelSubdivisionTable.Entity;
+			}
+			set
+			{
+				FirstLevelSubdivisionTable previousValue = this._FirstLevelSubdivisionTable.Entity;
+				if (((previousValue != value) 
+							|| (this._FirstLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FirstLevelSubdivisionTable.Entity = null;
+						previousValue.CollectedIndicatorsForR.Remove(this);
+					}
+					this._FirstLevelSubdivisionTable.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedIndicatorsForR.Add(this);
+						this._FK_FirstLevelSubdivisionTable = value.FirstLevelSubdivisionTableID;
+					}
+					else
+					{
+						this._FK_FirstLevelSubdivisionTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("FirstLevelSubdivisionTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_FourthLevelSubdivisionTable", ThisKey="FK_FourthLelevlSubdivisionTable", OtherKey="FourthLevelSubdivisionTableID", IsForeignKey=true)]
+		public FourthLevelSubdivisionTable FourthLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FourthLevelSubdivisionTable.Entity;
+			}
+			set
+			{
+				FourthLevelSubdivisionTable previousValue = this._FourthLevelSubdivisionTable.Entity;
+				if (((previousValue != value) 
+							|| (this._FourthLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FourthLevelSubdivisionTable.Entity = null;
+						previousValue.CollectedIndicatorsForR.Remove(this);
+					}
+					this._FourthLevelSubdivisionTable.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedIndicatorsForR.Add(this);
+						this._FK_FourthLelevlSubdivisionTable = value.FourthLevelSubdivisionTableID;
+					}
+					else
+					{
+						this._FK_FourthLelevlSubdivisionTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("FourthLevelSubdivisionTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndicatorsForR", Storage="_IndicatorsTable", ThisKey="FK_IndicatorsTable", OtherKey="IndicatorsTableID", IsForeignKey=true)]
+		public IndicatorsTable IndicatorsTable
+		{
+			get
+			{
+				return this._IndicatorsTable.Entity;
+			}
+			set
+			{
+				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
+				if (((previousValue != value) 
+							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._IndicatorsTable.Entity = null;
+						previousValue.CollectedIndicatorsForR.Remove(this);
+					}
+					this._IndicatorsTable.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedIndicatorsForR.Add(this);
+						this._FK_IndicatorsTable = value.IndicatorsTableID;
+					}
+					else
+					{
+						this._FK_IndicatorsTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("IndicatorsTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedIndicatorsForR", Storage="_ReportArchiveTable", ThisKey="FK_ReportArchiveTable", OtherKey="ReportArchiveTableID", IsForeignKey=true)]
+		public ReportArchiveTable ReportArchiveTable
+		{
+			get
+			{
+				return this._ReportArchiveTable.Entity;
+			}
+			set
+			{
+				ReportArchiveTable previousValue = this._ReportArchiveTable.Entity;
+				if (((previousValue != value) 
+							|| (this._ReportArchiveTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ReportArchiveTable.Entity = null;
+						previousValue.CollectedIndicatorsForR.Remove(this);
+					}
+					this._ReportArchiveTable.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedIndicatorsForR.Add(this);
+						this._FK_ReportArchiveTable = value.ReportArchiveTableID;
+					}
+					else
+					{
+						this._FK_ReportArchiveTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("ReportArchiveTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_SecondLevelSubdivisionTable", ThisKey="FK_SecondLevelSubdivisionTable", OtherKey="SecondLevelSubdivisionTableID", IsForeignKey=true)]
+		public SecondLevelSubdivisionTable SecondLevelSubdivisionTable
+		{
+			get
+			{
+				return this._SecondLevelSubdivisionTable.Entity;
+			}
+			set
+			{
+				SecondLevelSubdivisionTable previousValue = this._SecondLevelSubdivisionTable.Entity;
+				if (((previousValue != value) 
+							|| (this._SecondLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._SecondLevelSubdivisionTable.Entity = null;
+						previousValue.CollectedIndicatorsForR.Remove(this);
+					}
+					this._SecondLevelSubdivisionTable.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedIndicatorsForR.Add(this);
+						this._FK_SecondLevelSubdivisionTable = value.SecondLevelSubdivisionTableID;
+					}
+					else
+					{
+						this._FK_SecondLevelSubdivisionTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("SecondLevelSubdivisionTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_ThirdLevelSubdivisionTable", ThisKey="FK_ThirdLevelSubdivisionTable", OtherKey="ThirdLevelSubdivisionTableID", IsForeignKey=true)]
+		public ThirdLevelSubdivisionTable ThirdLevelSubdivisionTable
+		{
+			get
+			{
+				return this._ThirdLevelSubdivisionTable.Entity;
+			}
+			set
+			{
+				ThirdLevelSubdivisionTable previousValue = this._ThirdLevelSubdivisionTable.Entity;
+				if (((previousValue != value) 
+							|| (this._ThirdLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ThirdLevelSubdivisionTable.Entity = null;
+						previousValue.CollectedIndicatorsForR.Remove(this);
+					}
+					this._ThirdLevelSubdivisionTable.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedIndicatorsForR.Add(this);
+						this._FK_ThirdLevelSubdivisionTable = value.ThirdLevelSubdivisionTableID;
+					}
+					else
+					{
+						this._FK_ThirdLevelSubdivisionTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("ThirdLevelSubdivisionTable");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CollectedIndocators")]
 	public partial class CollectedIndocators : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -5990,9 +6590,9 @@ namespace KPIWeb
 		
 		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
-		private EntitySet<UsersTable> _UsersTable;
-		
 		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
+		
+		private EntitySet<UsersTable> _UsersTable;
 		
 		private EntityRef<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
 		
@@ -6013,8 +6613,8 @@ namespace KPIWeb
 		public FifthLevelSubdivisionTable()
 		{
 			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
-			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
 			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
+			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
 			this._FourthLevelSubdivisionTable = default(EntityRef<FourthLevelSubdivisionTable>);
 			OnCreated();
 		}
@@ -6116,19 +6716,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FifthLevelSubdivisionTable_UsersTable", Storage="_UsersTable", ThisKey="FifthLevelSubdivisionTableID", OtherKey="FK_FifthLevelSubdivisionTable")]
-		public EntitySet<UsersTable> UsersTable
-		{
-			get
-			{
-				return this._UsersTable;
-			}
-			set
-			{
-				this._UsersTable.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FifthLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="FifthLevelSubdivisionTableID", OtherKey="FK_FifthLevelSubdivisionTable")]
 		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
 		{
@@ -6139,6 +6726,19 @@ namespace KPIWeb
 			set
 			{
 				this._CollectedIndicatorsForR.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FifthLevelSubdivisionTable_UsersTable", Storage="_UsersTable", ThisKey="FifthLevelSubdivisionTableID", OtherKey="FK_FifthLevelSubdivisionTable")]
+		public EntitySet<UsersTable> UsersTable
+		{
+			get
+			{
+				return this._UsersTable;
+			}
+			set
+			{
+				this._UsersTable.Assign(value);
 			}
 		}
 		
@@ -6208,18 +6808,6 @@ namespace KPIWeb
 			entity.FifthLevelSubdivisionTable = null;
 		}
 		
-		private void attach_UsersTable(UsersTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.FifthLevelSubdivisionTable = this;
-		}
-		
-		private void detach_UsersTable(UsersTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.FifthLevelSubdivisionTable = null;
-		}
-		
 		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
@@ -6227,6 +6815,18 @@ namespace KPIWeb
 		}
 		
 		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
+		{
+			this.SendPropertyChanging();
+			entity.FifthLevelSubdivisionTable = null;
+		}
+		
+		private void attach_UsersTable(UsersTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.FifthLevelSubdivisionTable = this;
+		}
+		
+		private void detach_UsersTable(UsersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FifthLevelSubdivisionTable = null;
@@ -6249,13 +6849,13 @@ namespace KPIWeb
 		
 		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
+		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
+		
 		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTable;
 		
 		private EntitySet<SecondLevelSubdivisionTable> _SecondLevelSubdivisionTable;
 		
 		private EntitySet<UsersTable> _UsersTable;
-		
-		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
 		
 		private EntityRef<ZeroLevelSubdivisionTable> _ZeroLevelSubdivisionTable;
 		
@@ -6276,10 +6876,10 @@ namespace KPIWeb
 		public FirstLevelSubdivisionTable()
 		{
 			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
+			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
 			this._ReportArchiveAndLevelMappingTable = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTable), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTable));
 			this._SecondLevelSubdivisionTable = new EntitySet<SecondLevelSubdivisionTable>(new Action<SecondLevelSubdivisionTable>(this.attach_SecondLevelSubdivisionTable), new Action<SecondLevelSubdivisionTable>(this.detach_SecondLevelSubdivisionTable));
 			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
-			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
 			this._ZeroLevelSubdivisionTable = default(EntityRef<ZeroLevelSubdivisionTable>);
 			OnCreated();
 		}
@@ -6381,6 +6981,19 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubdivisionTable")]
+		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
+		{
+			get
+			{
+				return this._CollectedIndicatorsForR;
+			}
+			set
+			{
+				this._CollectedIndicatorsForR.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTable", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubmisionTableId")]
 		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTable
 		{
@@ -6417,19 +7030,6 @@ namespace KPIWeb
 			set
 			{
 				this._UsersTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubdivisionTable")]
-		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
-		{
-			get
-			{
-				return this._CollectedIndicatorsForR;
-			}
-			set
-			{
-				this._CollectedIndicatorsForR.Assign(value);
 			}
 		}
 		
@@ -6499,6 +7099,18 @@ namespace KPIWeb
 			entity.FirstLevelSubdivisionTable = null;
 		}
 		
+		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
+		{
+			this.SendPropertyChanging();
+			entity.FirstLevelSubdivisionTable = this;
+		}
+		
+		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
+		{
+			this.SendPropertyChanging();
+			entity.FirstLevelSubdivisionTable = null;
+		}
+		
 		private void attach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
@@ -6530,18 +7142,6 @@ namespace KPIWeb
 		}
 		
 		private void detach_UsersTable(UsersTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.FirstLevelSubdivisionTable = null;
-		}
-		
-		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
-		{
-			this.SendPropertyChanging();
-			entity.FirstLevelSubdivisionTable = this;
-		}
-		
-		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = null;
@@ -6813,13 +7413,13 @@ namespace KPIWeb
 		
 		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
+		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
+		
 		private EntitySet<FifthLevelSubdivisionTable> _FifthLevelSubdivisionTable;
 		
 		private EntityRef<FourthLevelParametrs> _FourthLevelParametrs;
 		
 		private EntitySet<UsersTable> _UsersTable;
-		
-		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
 		
 		private EntityRef<SpecializationTable> _SpecializationTable;
 		
@@ -6844,10 +7444,10 @@ namespace KPIWeb
 		public FourthLevelSubdivisionTable()
 		{
 			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
+			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
 			this._FifthLevelSubdivisionTable = new EntitySet<FifthLevelSubdivisionTable>(new Action<FifthLevelSubdivisionTable>(this.attach_FifthLevelSubdivisionTable), new Action<FifthLevelSubdivisionTable>(this.detach_FifthLevelSubdivisionTable));
 			this._FourthLevelParametrs = default(EntityRef<FourthLevelParametrs>);
 			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
-			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
 			this._SpecializationTable = default(EntityRef<SpecializationTable>);
 			this._ThirdLevelSubdivisionTable = default(EntityRef<ThirdLevelSubdivisionTable>);
 			OnCreated();
@@ -6974,6 +7574,19 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FK_FourthLelevlSubdivisionTable")]
+		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
+		{
+			get
+			{
+				return this._CollectedIndicatorsForR;
+			}
+			set
+			{
+				this._CollectedIndicatorsForR.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_FifthLevelSubdivisionTable", Storage="_FifthLevelSubdivisionTable", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FK_FourthLevelSubdivisionTable")]
 		public EntitySet<FifthLevelSubdivisionTable> FifthLevelSubdivisionTable
 		{
@@ -7026,19 +7639,6 @@ namespace KPIWeb
 			set
 			{
 				this._UsersTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FK_FourthLelevlSubdivisionTable")]
-		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
-		{
-			get
-			{
-				return this._CollectedIndicatorsForR;
-			}
-			set
-			{
-				this._CollectedIndicatorsForR.Assign(value);
 			}
 		}
 		
@@ -7142,6 +7742,18 @@ namespace KPIWeb
 			entity.FourthLevelSubdivisionTable = null;
 		}
 		
+		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
+		{
+			this.SendPropertyChanging();
+			entity.FourthLevelSubdivisionTable = this;
+		}
+		
+		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
+		{
+			this.SendPropertyChanging();
+			entity.FourthLevelSubdivisionTable = null;
+		}
+		
 		private void attach_FifthLevelSubdivisionTable(FifthLevelSubdivisionTable entity)
 		{
 			this.SendPropertyChanging();
@@ -7161,18 +7773,6 @@ namespace KPIWeb
 		}
 		
 		private void detach_UsersTable(UsersTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.FourthLevelSubdivisionTable = null;
-		}
-		
-		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
-		{
-			this.SendPropertyChanging();
-			entity.FourthLevelSubdivisionTable = this;
-		}
-		
-		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.FourthLevelSubdivisionTable = null;
@@ -7960,6 +8560,8 @@ namespace KPIWeb
 		
 		private System.Nullable<int> _FK_IndicatorClass;
 		
+		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
+		
 		private EntitySet<CollectedIndocators> _CollectedIndocators;
 		
 		private EntitySet<ConfirmationHistory> _ConfirmationHistory;
@@ -7971,8 +8573,6 @@ namespace KPIWeb
 		private EntitySet<PlannedIndicator> _PlannedIndicator;
 		
 		private EntitySet<ReportArchiveAndIndicatorsMappingTable> _ReportArchiveAndIndicatorsMappingTable;
-		
-		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
 		
 		private EntityRef<IndicatorClass> _IndicatorClass;
 		
@@ -7996,13 +8596,13 @@ namespace KPIWeb
 		
 		public IndicatorsTable()
 		{
+			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
 			this._CollectedIndocators = new EntitySet<CollectedIndocators>(new Action<CollectedIndocators>(this.attach_CollectedIndocators), new Action<CollectedIndocators>(this.detach_CollectedIndocators));
 			this._ConfirmationHistory = new EntitySet<ConfirmationHistory>(new Action<ConfirmationHistory>(this.attach_ConfirmationHistory), new Action<ConfirmationHistory>(this.detach_ConfirmationHistory));
 			this._IndicatorsAndRolesMappingTable = new EntitySet<IndicatorsAndRolesMappingTable>(new Action<IndicatorsAndRolesMappingTable>(this.attach_IndicatorsAndRolesMappingTable), new Action<IndicatorsAndRolesMappingTable>(this.detach_IndicatorsAndRolesMappingTable));
 			this._IndicatorsAndUsersMapping = new EntitySet<IndicatorsAndUsersMapping>(new Action<IndicatorsAndUsersMapping>(this.attach_IndicatorsAndUsersMapping), new Action<IndicatorsAndUsersMapping>(this.detach_IndicatorsAndUsersMapping));
 			this._PlannedIndicator = new EntitySet<PlannedIndicator>(new Action<PlannedIndicator>(this.attach_PlannedIndicator), new Action<PlannedIndicator>(this.detach_PlannedIndicator));
 			this._ReportArchiveAndIndicatorsMappingTable = new EntitySet<ReportArchiveAndIndicatorsMappingTable>(new Action<ReportArchiveAndIndicatorsMappingTable>(this.attach_ReportArchiveAndIndicatorsMappingTable), new Action<ReportArchiveAndIndicatorsMappingTable>(this.detach_ReportArchiveAndIndicatorsMappingTable));
-			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
 			this._IndicatorClass = default(EntityRef<IndicatorClass>);
 			OnCreated();
 		}
@@ -8131,6 +8731,19 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
+		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
+		{
+			get
+			{
+				return this._CollectedIndicatorsForR;
+			}
+			set
+			{
+				this._CollectedIndicatorsForR.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndocators", Storage="_CollectedIndocators", ThisKey="IndicatorsTableID", OtherKey="FK_Indicators")]
 		public EntitySet<CollectedIndocators> CollectedIndocators
 		{
@@ -8209,19 +8822,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
-		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
-		{
-			get
-			{
-				return this._CollectedIndicatorsForR;
-			}
-			set
-			{
-				this._CollectedIndicatorsForR.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorClass_IndicatorsTable", Storage="_IndicatorClass", ThisKey="FK_IndicatorClass", OtherKey="IndicatorClassID", IsForeignKey=true)]
 		public IndicatorClass IndicatorClass
 		{
@@ -8274,6 +8874,18 @@ namespace KPIWeb
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = this;
+		}
+		
+		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = null;
 		}
 		
 		private void attach_CollectedIndocators(CollectedIndocators entity)
@@ -8343,18 +8955,6 @@ namespace KPIWeb
 		}
 		
 		private void detach_ReportArchiveAndIndicatorsMappingTable(ReportArchiveAndIndicatorsMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = null;
-		}
-		
-		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
-		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = this;
-		}
-		
-		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorsTable = null;
@@ -8470,6 +9070,222 @@ namespace KPIWeb
 					this._ManualLink = value;
 					this.SendPropertyChanged("ManualLink");
 					this.OnManualLinkChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MultiUser")]
+	public partial class MultiUser : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _MultiUserID;
+		
+		private int _FK_UserCanAccess;
+		
+		private int _FK_UserToAccess;
+		
+		private bool _Active;
+		
+		private EntityRef<UsersTable> _UsersTable;
+		
+		private EntityRef<UsersTable> _UsersTable1;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnMultiUserIDChanging(int value);
+    partial void OnMultiUserIDChanged();
+    partial void OnFK_UserCanAccessChanging(int value);
+    partial void OnFK_UserCanAccessChanged();
+    partial void OnFK_UserToAccessChanging(int value);
+    partial void OnFK_UserToAccessChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public MultiUser()
+		{
+			this._UsersTable = default(EntityRef<UsersTable>);
+			this._UsersTable1 = default(EntityRef<UsersTable>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MultiUserID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int MultiUserID
+		{
+			get
+			{
+				return this._MultiUserID;
+			}
+			set
+			{
+				if ((this._MultiUserID != value))
+				{
+					this.OnMultiUserIDChanging(value);
+					this.SendPropertyChanging();
+					this._MultiUserID = value;
+					this.SendPropertyChanged("MultiUserID");
+					this.OnMultiUserIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_UserCanAccess", DbType="Int NOT NULL")]
+		public int FK_UserCanAccess
+		{
+			get
+			{
+				return this._FK_UserCanAccess;
+			}
+			set
+			{
+				if ((this._FK_UserCanAccess != value))
+				{
+					if (this._UsersTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_UserCanAccessChanging(value);
+					this.SendPropertyChanging();
+					this._FK_UserCanAccess = value;
+					this.SendPropertyChanged("FK_UserCanAccess");
+					this.OnFK_UserCanAccessChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_UserToAccess", DbType="Int NOT NULL")]
+		public int FK_UserToAccess
+		{
+			get
+			{
+				return this._FK_UserToAccess;
+			}
+			set
+			{
+				if ((this._FK_UserToAccess != value))
+				{
+					if (this._UsersTable1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_UserToAccessChanging(value);
+					this.SendPropertyChanging();
+					this._FK_UserToAccess = value;
+					this.SendPropertyChanged("FK_UserToAccess");
+					this.OnFK_UserToAccessChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_MultiUser", Storage="_UsersTable", ThisKey="FK_UserCanAccess", OtherKey="UsersTableID", IsForeignKey=true)]
+		public UsersTable UsersTable
+		{
+			get
+			{
+				return this._UsersTable.Entity;
+			}
+			set
+			{
+				UsersTable previousValue = this._UsersTable.Entity;
+				if (((previousValue != value) 
+							|| (this._UsersTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._UsersTable.Entity = null;
+						previousValue.MultiUser.Remove(this);
+					}
+					this._UsersTable.Entity = value;
+					if ((value != null))
+					{
+						value.MultiUser.Add(this);
+						this._FK_UserCanAccess = value.UsersTableID;
+					}
+					else
+					{
+						this._FK_UserCanAccess = default(int);
+					}
+					this.SendPropertyChanged("UsersTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_MultiUser1", Storage="_UsersTable1", ThisKey="FK_UserToAccess", OtherKey="UsersTableID", IsForeignKey=true)]
+		public UsersTable UsersTable1
+		{
+			get
+			{
+				return this._UsersTable1.Entity;
+			}
+			set
+			{
+				UsersTable previousValue = this._UsersTable1.Entity;
+				if (((previousValue != value) 
+							|| (this._UsersTable1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._UsersTable1.Entity = null;
+						previousValue.MultiUser1.Remove(this);
+					}
+					this._UsersTable1.Entity = value;
+					if ((value != null))
+					{
+						value.MultiUser1.Add(this);
+						this._FK_UserToAccess = value.UsersTableID;
+					}
+					else
+					{
+						this._FK_UserToAccess = default(int);
+					}
+					this.SendPropertyChanged("UsersTable1");
 				}
 			}
 		}
@@ -9594,6 +10410,8 @@ namespace KPIWeb
 		
 		private EntitySet<CollectedCalculatedParametrs> _CollectedCalculatedParametrs;
 		
+		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
+		
 		private EntitySet<CollectedIndocators> _CollectedIndocators;
 		
 		private EntitySet<ConfirmationHistory> _ConfirmationHistory;
@@ -9607,8 +10425,6 @@ namespace KPIWeb
 		private EntitySet<ReportArchiveAndIndicatorsMappingTable> _ReportArchiveAndIndicatorsMappingTable;
 		
 		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTable;
-		
-		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -9646,6 +10462,7 @@ namespace KPIWeb
 		{
 			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
 			this._CollectedCalculatedParametrs = new EntitySet<CollectedCalculatedParametrs>(new Action<CollectedCalculatedParametrs>(this.attach_CollectedCalculatedParametrs), new Action<CollectedCalculatedParametrs>(this.detach_CollectedCalculatedParametrs));
+			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
 			this._CollectedIndocators = new EntitySet<CollectedIndocators>(new Action<CollectedIndocators>(this.attach_CollectedIndocators), new Action<CollectedIndocators>(this.detach_CollectedIndocators));
 			this._ConfirmationHistory = new EntitySet<ConfirmationHistory>(new Action<ConfirmationHistory>(this.attach_ConfirmationHistory), new Action<ConfirmationHistory>(this.detach_ConfirmationHistory));
 			this._EmailSendHistory = new EntitySet<EmailSendHistory>(new Action<EmailSendHistory>(this.attach_EmailSendHistory), new Action<EmailSendHistory>(this.detach_EmailSendHistory));
@@ -9653,7 +10470,6 @@ namespace KPIWeb
 			this._ReportArchiveAndCalculatedParametrsMappingTable = new EntitySet<ReportArchiveAndCalculatedParametrsMappingTable>(new Action<ReportArchiveAndCalculatedParametrsMappingTable>(this.attach_ReportArchiveAndCalculatedParametrsMappingTable), new Action<ReportArchiveAndCalculatedParametrsMappingTable>(this.detach_ReportArchiveAndCalculatedParametrsMappingTable));
 			this._ReportArchiveAndIndicatorsMappingTable = new EntitySet<ReportArchiveAndIndicatorsMappingTable>(new Action<ReportArchiveAndIndicatorsMappingTable>(this.attach_ReportArchiveAndIndicatorsMappingTable), new Action<ReportArchiveAndIndicatorsMappingTable>(this.detach_ReportArchiveAndIndicatorsMappingTable));
 			this._ReportArchiveAndLevelMappingTable = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTable), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTable));
-			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
 			OnCreated();
 		}
 		
@@ -9943,6 +10759,19 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
+		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
+		{
+			get
+			{
+				return this._CollectedIndicatorsForR;
+			}
+			set
+			{
+				this._CollectedIndicatorsForR.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedIndocators", Storage="_CollectedIndocators", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
 		public EntitySet<CollectedIndocators> CollectedIndocators
 		{
@@ -10034,19 +10863,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
-		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
-		{
-			get
-			{
-				return this._CollectedIndicatorsForR;
-			}
-			set
-			{
-				this._CollectedIndicatorsForR.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -10086,6 +10902,18 @@ namespace KPIWeb
 		}
 		
 		private void detach_CollectedCalculatedParametrs(CollectedCalculatedParametrs entity)
+		{
+			this.SendPropertyChanging();
+			entity.ReportArchiveTable = null;
+		}
+		
+		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
+		{
+			this.SendPropertyChanging();
+			entity.ReportArchiveTable = this;
+		}
+		
+		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = null;
@@ -10170,18 +10998,6 @@ namespace KPIWeb
 		}
 		
 		private void detach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.ReportArchiveTable = null;
-		}
-		
-		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
-		{
-			this.SendPropertyChanging();
-			entity.ReportArchiveTable = this;
-		}
-		
-		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = null;
@@ -10422,11 +11238,11 @@ namespace KPIWeb
 		
 		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
+		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
+		
 		private EntitySet<ThirdLevelSubdivisionTable> _ThirdLevelSubdivisionTable;
 		
 		private EntitySet<UsersTable> _UsersTable;
-		
-		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
 		
 		private EntityRef<FirstLevelSubdivisionTable> _FirstLevelSubdivisionTable;
 		
@@ -10447,9 +11263,9 @@ namespace KPIWeb
 		public SecondLevelSubdivisionTable()
 		{
 			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
+			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
 			this._ThirdLevelSubdivisionTable = new EntitySet<ThirdLevelSubdivisionTable>(new Action<ThirdLevelSubdivisionTable>(this.attach_ThirdLevelSubdivisionTable), new Action<ThirdLevelSubdivisionTable>(this.detach_ThirdLevelSubdivisionTable));
 			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
-			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
 			this._FirstLevelSubdivisionTable = default(EntityRef<FirstLevelSubdivisionTable>);
 			OnCreated();
 		}
@@ -10551,6 +11367,19 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevelSubdivisionTable")]
+		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
+		{
+			get
+			{
+				return this._CollectedIndicatorsForR;
+			}
+			set
+			{
+				this._CollectedIndicatorsForR.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable", Storage="_ThirdLevelSubdivisionTable", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevelSubdivisionTable")]
 		public EntitySet<ThirdLevelSubdivisionTable> ThirdLevelSubdivisionTable
 		{
@@ -10574,19 +11403,6 @@ namespace KPIWeb
 			set
 			{
 				this._UsersTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevelSubdivisionTable")]
-		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
-		{
-			get
-			{
-				return this._CollectedIndicatorsForR;
-			}
-			set
-			{
-				this._CollectedIndicatorsForR.Assign(value);
 			}
 		}
 		
@@ -10656,6 +11472,18 @@ namespace KPIWeb
 			entity.SecondLevelSubdivisionTable = null;
 		}
 		
+		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
+		{
+			this.SendPropertyChanging();
+			entity.SecondLevelSubdivisionTable = this;
+		}
+		
+		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
+		{
+			this.SendPropertyChanging();
+			entity.SecondLevelSubdivisionTable = null;
+		}
+		
 		private void attach_ThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable entity)
 		{
 			this.SendPropertyChanging();
@@ -10675,18 +11503,6 @@ namespace KPIWeb
 		}
 		
 		private void detach_UsersTable(UsersTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.SecondLevelSubdivisionTable = null;
-		}
-		
-		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
-		{
-			this.SendPropertyChanging();
-			entity.SecondLevelSubdivisionTable = this;
-		}
-		
-		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = null;
@@ -11111,13 +11927,13 @@ namespace KPIWeb
 		
 		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
+		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
+		
 		private EntitySet<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
 		
 		private EntityRef<ThirdLevelParametrs> _ThirdLevelParametrs;
 		
 		private EntitySet<UsersTable> _UsersTable;
-		
-		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
 		
 		private EntityRef<SecondLevelSubdivisionTable> _SecondLevelSubdivisionTable;
 		
@@ -11138,10 +11954,10 @@ namespace KPIWeb
 		public ThirdLevelSubdivisionTable()
 		{
 			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
+			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
 			this._FourthLevelSubdivisionTable = new EntitySet<FourthLevelSubdivisionTable>(new Action<FourthLevelSubdivisionTable>(this.attach_FourthLevelSubdivisionTable), new Action<FourthLevelSubdivisionTable>(this.detach_FourthLevelSubdivisionTable));
 			this._ThirdLevelParametrs = default(EntityRef<ThirdLevelParametrs>);
 			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
-			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
 			this._SecondLevelSubdivisionTable = default(EntityRef<SecondLevelSubdivisionTable>);
 			OnCreated();
 		}
@@ -11243,6 +12059,19 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevelSubdivisionTable")]
+		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
+		{
+			get
+			{
+				return this._CollectedIndicatorsForR;
+			}
+			set
+			{
+				this._CollectedIndicatorsForR.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_FourthLevelSubdivisionTable", Storage="_FourthLevelSubdivisionTable", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevelSubdivisionTable")]
 		public EntitySet<FourthLevelSubdivisionTable> FourthLevelSubdivisionTable
 		{
@@ -11295,19 +12124,6 @@ namespace KPIWeb
 			set
 			{
 				this._UsersTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevelSubdivisionTable")]
-		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
-		{
-			get
-			{
-				return this._CollectedIndicatorsForR;
-			}
-			set
-			{
-				this._CollectedIndicatorsForR.Assign(value);
 			}
 		}
 		
@@ -11377,6 +12193,18 @@ namespace KPIWeb
 			entity.ThirdLevelSubdivisionTable = null;
 		}
 		
+		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
+		{
+			this.SendPropertyChanging();
+			entity.ThirdLevelSubdivisionTable = this;
+		}
+		
+		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
+		{
+			this.SendPropertyChanging();
+			entity.ThirdLevelSubdivisionTable = null;
+		}
+		
 		private void attach_FourthLevelSubdivisionTable(FourthLevelSubdivisionTable entity)
 		{
 			this.SendPropertyChanging();
@@ -11396,18 +12224,6 @@ namespace KPIWeb
 		}
 		
 		private void detach_UsersTable(UsersTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.ThirdLevelSubdivisionTable = null;
-		}
-		
-		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
-		{
-			this.SendPropertyChanging();
-			entity.ThirdLevelSubdivisionTable = this;
-		}
-		
-		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.ThirdLevelSubdivisionTable = null;
@@ -11463,6 +12279,10 @@ namespace KPIWeb
 		private EntitySet<ConfirmationHistory> _ConfirmationHistory;
 		
 		private EntitySet<IndicatorsAndUsersMapping> _IndicatorsAndUsersMapping;
+		
+		private EntitySet<MultiUser> _MultiUser;
+		
+		private EntitySet<MultiUser> _MultiUser1;
 		
 		private EntityRef<FifthLevelSubdivisionTable> _FifthLevelSubdivisionTable;
 		
@@ -11521,6 +12341,8 @@ namespace KPIWeb
 			this._CollectedIndocators = new EntitySet<CollectedIndocators>(new Action<CollectedIndocators>(this.attach_CollectedIndocators), new Action<CollectedIndocators>(this.detach_CollectedIndocators));
 			this._ConfirmationHistory = new EntitySet<ConfirmationHistory>(new Action<ConfirmationHistory>(this.attach_ConfirmationHistory), new Action<ConfirmationHistory>(this.detach_ConfirmationHistory));
 			this._IndicatorsAndUsersMapping = new EntitySet<IndicatorsAndUsersMapping>(new Action<IndicatorsAndUsersMapping>(this.attach_IndicatorsAndUsersMapping), new Action<IndicatorsAndUsersMapping>(this.detach_IndicatorsAndUsersMapping));
+			this._MultiUser = new EntitySet<MultiUser>(new Action<MultiUser>(this.attach_MultiUser), new Action<MultiUser>(this.detach_MultiUser));
+			this._MultiUser1 = new EntitySet<MultiUser>(new Action<MultiUser>(this.attach_MultiUser1), new Action<MultiUser>(this.detach_MultiUser1));
 			this._FifthLevelSubdivisionTable = default(EntityRef<FifthLevelSubdivisionTable>);
 			this._FirstLevelSubdivisionTable = default(EntityRef<FirstLevelSubdivisionTable>);
 			this._FourthLevelSubdivisionTable = default(EntityRef<FourthLevelSubdivisionTable>);
@@ -11945,6 +12767,32 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_MultiUser", Storage="_MultiUser", ThisKey="UsersTableID", OtherKey="FK_UserCanAccess")]
+		public EntitySet<MultiUser> MultiUser
+		{
+			get
+			{
+				return this._MultiUser;
+			}
+			set
+			{
+				this._MultiUser.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_MultiUser1", Storage="_MultiUser1", ThisKey="UsersTableID", OtherKey="FK_UserToAccess")]
+		public EntitySet<MultiUser> MultiUser1
+		{
+			get
+			{
+				return this._MultiUser1;
+			}
+			set
+			{
+				this._MultiUser1.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FifthLevelSubdivisionTable_UsersTable", Storage="_FifthLevelSubdivisionTable", ThisKey="FK_FifthLevelSubdivisionTable", OtherKey="FifthLevelSubdivisionTableID", IsForeignKey=true)]
 		public FifthLevelSubdivisionTable FifthLevelSubdivisionTable
 		{
@@ -12252,594 +13100,29 @@ namespace KPIWeb
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CollectedIndicatorsForR")]
-	public partial class CollectedIndicatorsForR : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _CollectedIndicatorsForRID;
-		
-		private System.Nullable<double> _Value;
-		
-		private System.Nullable<bool> _Active;
-		
-		private System.Nullable<int> _FK_IndicatorsTable;
-		
-		private System.Nullable<int> _FK_FirstLevelSubdivisionTable;
-		
-		private System.Nullable<int> _FK_SecondLevelSubdivisionTable;
-		
-		private System.Nullable<int> _FK_ThirdLevelSubdivisionTable;
-		
-		private System.Nullable<int> _FK_FourthLelevlSubdivisionTable;
-		
-		private System.Nullable<int> _FK_FifthLevelSubdivisionTable;
-		
-		private System.Nullable<int> _FK_ReportArchiveTable;
-		
-		private System.Nullable<System.DateTime> _CreatedDateTime;
-		
-		private EntityRef<FifthLevelSubdivisionTable> _FifthLevelSubdivisionTable;
-		
-		private EntityRef<FirstLevelSubdivisionTable> _FirstLevelSubdivisionTable;
-		
-		private EntityRef<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
-		
-		private EntityRef<IndicatorsTable> _IndicatorsTable;
-		
-		private EntityRef<ReportArchiveTable> _ReportArchiveTable;
-		
-		private EntityRef<SecondLevelSubdivisionTable> _SecondLevelSubdivisionTable;
-		
-		private EntityRef<ThirdLevelSubdivisionTable> _ThirdLevelSubdivisionTable;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnCollectedIndicatorsForRIDChanging(int value);
-    partial void OnCollectedIndicatorsForRIDChanged();
-    partial void OnValueChanging(System.Nullable<double> value);
-    partial void OnValueChanged();
-    partial void OnActiveChanging(System.Nullable<bool> value);
-    partial void OnActiveChanged();
-    partial void OnFK_IndicatorsTableChanging(System.Nullable<int> value);
-    partial void OnFK_IndicatorsTableChanged();
-    partial void OnFK_FirstLevelSubdivisionTableChanging(System.Nullable<int> value);
-    partial void OnFK_FirstLevelSubdivisionTableChanged();
-    partial void OnFK_SecondLevelSubdivisionTableChanging(System.Nullable<int> value);
-    partial void OnFK_SecondLevelSubdivisionTableChanged();
-    partial void OnFK_ThirdLevelSubdivisionTableChanging(System.Nullable<int> value);
-    partial void OnFK_ThirdLevelSubdivisionTableChanged();
-    partial void OnFK_FourthLelevlSubdivisionTableChanging(System.Nullable<int> value);
-    partial void OnFK_FourthLelevlSubdivisionTableChanged();
-    partial void OnFK_FifthLevelSubdivisionTableChanging(System.Nullable<int> value);
-    partial void OnFK_FifthLevelSubdivisionTableChanged();
-    partial void OnFK_ReportArchiveTableChanging(System.Nullable<int> value);
-    partial void OnFK_ReportArchiveTableChanged();
-    partial void OnCreatedDateTimeChanging(System.Nullable<System.DateTime> value);
-    partial void OnCreatedDateTimeChanged();
-    #endregion
-		
-		public CollectedIndicatorsForR()
+		private void attach_MultiUser(MultiUser entity)
 		{
-			this._FifthLevelSubdivisionTable = default(EntityRef<FifthLevelSubdivisionTable>);
-			this._FirstLevelSubdivisionTable = default(EntityRef<FirstLevelSubdivisionTable>);
-			this._FourthLevelSubdivisionTable = default(EntityRef<FourthLevelSubdivisionTable>);
-			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
-			this._ReportArchiveTable = default(EntityRef<ReportArchiveTable>);
-			this._SecondLevelSubdivisionTable = default(EntityRef<SecondLevelSubdivisionTable>);
-			this._ThirdLevelSubdivisionTable = default(EntityRef<ThirdLevelSubdivisionTable>);
-			OnCreated();
+			this.SendPropertyChanging();
+			entity.UsersTable = this;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CollectedIndicatorsForRID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int CollectedIndicatorsForRID
+		private void detach_MultiUser(MultiUser entity)
 		{
-			get
-			{
-				return this._CollectedIndicatorsForRID;
-			}
-			set
-			{
-				if ((this._CollectedIndicatorsForRID != value))
-				{
-					this.OnCollectedIndicatorsForRIDChanging(value);
-					this.SendPropertyChanging();
-					this._CollectedIndicatorsForRID = value;
-					this.SendPropertyChanged("CollectedIndicatorsForRID");
-					this.OnCollectedIndicatorsForRIDChanged();
-				}
-			}
+			this.SendPropertyChanging();
+			entity.UsersTable = null;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value", DbType="Float")]
-		public System.Nullable<double> Value
+		private void attach_MultiUser1(MultiUser entity)
 		{
-			get
-			{
-				return this._Value;
-			}
-			set
-			{
-				if ((this._Value != value))
-				{
-					this.OnValueChanging(value);
-					this.SendPropertyChanging();
-					this._Value = value;
-					this.SendPropertyChanged("Value");
-					this.OnValueChanged();
-				}
-			}
+			this.SendPropertyChanging();
+			entity.UsersTable1 = this;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
-		public System.Nullable<bool> Active
+		private void detach_MultiUser1(MultiUser entity)
 		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_IndicatorsTable", DbType="Int")]
-		public System.Nullable<int> FK_IndicatorsTable
-		{
-			get
-			{
-				return this._FK_IndicatorsTable;
-			}
-			set
-			{
-				if ((this._FK_IndicatorsTable != value))
-				{
-					if (this._IndicatorsTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_IndicatorsTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_IndicatorsTable = value;
-					this.SendPropertyChanged("FK_IndicatorsTable");
-					this.OnFK_IndicatorsTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FirstLevelSubdivisionTable", DbType="Int")]
-		public System.Nullable<int> FK_FirstLevelSubdivisionTable
-		{
-			get
-			{
-				return this._FK_FirstLevelSubdivisionTable;
-			}
-			set
-			{
-				if ((this._FK_FirstLevelSubdivisionTable != value))
-				{
-					if (this._FirstLevelSubdivisionTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_FirstLevelSubdivisionTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_FirstLevelSubdivisionTable = value;
-					this.SendPropertyChanged("FK_FirstLevelSubdivisionTable");
-					this.OnFK_FirstLevelSubdivisionTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_SecondLevelSubdivisionTable", DbType="Int")]
-		public System.Nullable<int> FK_SecondLevelSubdivisionTable
-		{
-			get
-			{
-				return this._FK_SecondLevelSubdivisionTable;
-			}
-			set
-			{
-				if ((this._FK_SecondLevelSubdivisionTable != value))
-				{
-					if (this._SecondLevelSubdivisionTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_SecondLevelSubdivisionTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_SecondLevelSubdivisionTable = value;
-					this.SendPropertyChanged("FK_SecondLevelSubdivisionTable");
-					this.OnFK_SecondLevelSubdivisionTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ThirdLevelSubdivisionTable", DbType="Int")]
-		public System.Nullable<int> FK_ThirdLevelSubdivisionTable
-		{
-			get
-			{
-				return this._FK_ThirdLevelSubdivisionTable;
-			}
-			set
-			{
-				if ((this._FK_ThirdLevelSubdivisionTable != value))
-				{
-					if (this._ThirdLevelSubdivisionTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_ThirdLevelSubdivisionTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_ThirdLevelSubdivisionTable = value;
-					this.SendPropertyChanged("FK_ThirdLevelSubdivisionTable");
-					this.OnFK_ThirdLevelSubdivisionTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FourthLelevlSubdivisionTable", DbType="Int")]
-		public System.Nullable<int> FK_FourthLelevlSubdivisionTable
-		{
-			get
-			{
-				return this._FK_FourthLelevlSubdivisionTable;
-			}
-			set
-			{
-				if ((this._FK_FourthLelevlSubdivisionTable != value))
-				{
-					if (this._FourthLevelSubdivisionTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_FourthLelevlSubdivisionTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_FourthLelevlSubdivisionTable = value;
-					this.SendPropertyChanged("FK_FourthLelevlSubdivisionTable");
-					this.OnFK_FourthLelevlSubdivisionTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FifthLevelSubdivisionTable", DbType="Int")]
-		public System.Nullable<int> FK_FifthLevelSubdivisionTable
-		{
-			get
-			{
-				return this._FK_FifthLevelSubdivisionTable;
-			}
-			set
-			{
-				if ((this._FK_FifthLevelSubdivisionTable != value))
-				{
-					if (this._FifthLevelSubdivisionTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_FifthLevelSubdivisionTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_FifthLevelSubdivisionTable = value;
-					this.SendPropertyChanged("FK_FifthLevelSubdivisionTable");
-					this.OnFK_FifthLevelSubdivisionTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ReportArchiveTable", DbType="Int")]
-		public System.Nullable<int> FK_ReportArchiveTable
-		{
-			get
-			{
-				return this._FK_ReportArchiveTable;
-			}
-			set
-			{
-				if ((this._FK_ReportArchiveTable != value))
-				{
-					if (this._ReportArchiveTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_ReportArchiveTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_ReportArchiveTable = value;
-					this.SendPropertyChanged("FK_ReportArchiveTable");
-					this.OnFK_ReportArchiveTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedDateTime", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CreatedDateTime
-		{
-			get
-			{
-				return this._CreatedDateTime;
-			}
-			set
-			{
-				if ((this._CreatedDateTime != value))
-				{
-					this.OnCreatedDateTimeChanging(value);
-					this.SendPropertyChanging();
-					this._CreatedDateTime = value;
-					this.SendPropertyChanged("CreatedDateTime");
-					this.OnCreatedDateTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FifthLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_FifthLevelSubdivisionTable", ThisKey="FK_FifthLevelSubdivisionTable", OtherKey="FifthLevelSubdivisionTableID", IsForeignKey=true)]
-		public FifthLevelSubdivisionTable FifthLevelSubdivisionTable
-		{
-			get
-			{
-				return this._FifthLevelSubdivisionTable.Entity;
-			}
-			set
-			{
-				FifthLevelSubdivisionTable previousValue = this._FifthLevelSubdivisionTable.Entity;
-				if (((previousValue != value) 
-							|| (this._FifthLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._FifthLevelSubdivisionTable.Entity = null;
-						previousValue.CollectedIndicatorsForR.Remove(this);
-					}
-					this._FifthLevelSubdivisionTable.Entity = value;
-					if ((value != null))
-					{
-						value.CollectedIndicatorsForR.Add(this);
-						this._FK_FifthLevelSubdivisionTable = value.FifthLevelSubdivisionTableID;
-					}
-					else
-					{
-						this._FK_FifthLevelSubdivisionTable = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("FifthLevelSubdivisionTable");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_FirstLevelSubdivisionTable", ThisKey="FK_FirstLevelSubdivisionTable", OtherKey="FirstLevelSubdivisionTableID", IsForeignKey=true)]
-		public FirstLevelSubdivisionTable FirstLevelSubdivisionTable
-		{
-			get
-			{
-				return this._FirstLevelSubdivisionTable.Entity;
-			}
-			set
-			{
-				FirstLevelSubdivisionTable previousValue = this._FirstLevelSubdivisionTable.Entity;
-				if (((previousValue != value) 
-							|| (this._FirstLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._FirstLevelSubdivisionTable.Entity = null;
-						previousValue.CollectedIndicatorsForR.Remove(this);
-					}
-					this._FirstLevelSubdivisionTable.Entity = value;
-					if ((value != null))
-					{
-						value.CollectedIndicatorsForR.Add(this);
-						this._FK_FirstLevelSubdivisionTable = value.FirstLevelSubdivisionTableID;
-					}
-					else
-					{
-						this._FK_FirstLevelSubdivisionTable = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("FirstLevelSubdivisionTable");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_FourthLevelSubdivisionTable", ThisKey="FK_FourthLelevlSubdivisionTable", OtherKey="FourthLevelSubdivisionTableID", IsForeignKey=true)]
-		public FourthLevelSubdivisionTable FourthLevelSubdivisionTable
-		{
-			get
-			{
-				return this._FourthLevelSubdivisionTable.Entity;
-			}
-			set
-			{
-				FourthLevelSubdivisionTable previousValue = this._FourthLevelSubdivisionTable.Entity;
-				if (((previousValue != value) 
-							|| (this._FourthLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._FourthLevelSubdivisionTable.Entity = null;
-						previousValue.CollectedIndicatorsForR.Remove(this);
-					}
-					this._FourthLevelSubdivisionTable.Entity = value;
-					if ((value != null))
-					{
-						value.CollectedIndicatorsForR.Add(this);
-						this._FK_FourthLelevlSubdivisionTable = value.FourthLevelSubdivisionTableID;
-					}
-					else
-					{
-						this._FK_FourthLelevlSubdivisionTable = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("FourthLevelSubdivisionTable");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndicatorsForR", Storage="_IndicatorsTable", ThisKey="FK_IndicatorsTable", OtherKey="IndicatorsTableID", IsForeignKey=true)]
-		public IndicatorsTable IndicatorsTable
-		{
-			get
-			{
-				return this._IndicatorsTable.Entity;
-			}
-			set
-			{
-				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
-				if (((previousValue != value) 
-							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._IndicatorsTable.Entity = null;
-						previousValue.CollectedIndicatorsForR.Remove(this);
-					}
-					this._IndicatorsTable.Entity = value;
-					if ((value != null))
-					{
-						value.CollectedIndicatorsForR.Add(this);
-						this._FK_IndicatorsTable = value.IndicatorsTableID;
-					}
-					else
-					{
-						this._FK_IndicatorsTable = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("IndicatorsTable");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedIndicatorsForR", Storage="_ReportArchiveTable", ThisKey="FK_ReportArchiveTable", OtherKey="ReportArchiveTableID", IsForeignKey=true)]
-		public ReportArchiveTable ReportArchiveTable
-		{
-			get
-			{
-				return this._ReportArchiveTable.Entity;
-			}
-			set
-			{
-				ReportArchiveTable previousValue = this._ReportArchiveTable.Entity;
-				if (((previousValue != value) 
-							|| (this._ReportArchiveTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._ReportArchiveTable.Entity = null;
-						previousValue.CollectedIndicatorsForR.Remove(this);
-					}
-					this._ReportArchiveTable.Entity = value;
-					if ((value != null))
-					{
-						value.CollectedIndicatorsForR.Add(this);
-						this._FK_ReportArchiveTable = value.ReportArchiveTableID;
-					}
-					else
-					{
-						this._FK_ReportArchiveTable = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("ReportArchiveTable");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_SecondLevelSubdivisionTable", ThisKey="FK_SecondLevelSubdivisionTable", OtherKey="SecondLevelSubdivisionTableID", IsForeignKey=true)]
-		public SecondLevelSubdivisionTable SecondLevelSubdivisionTable
-		{
-			get
-			{
-				return this._SecondLevelSubdivisionTable.Entity;
-			}
-			set
-			{
-				SecondLevelSubdivisionTable previousValue = this._SecondLevelSubdivisionTable.Entity;
-				if (((previousValue != value) 
-							|| (this._SecondLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._SecondLevelSubdivisionTable.Entity = null;
-						previousValue.CollectedIndicatorsForR.Remove(this);
-					}
-					this._SecondLevelSubdivisionTable.Entity = value;
-					if ((value != null))
-					{
-						value.CollectedIndicatorsForR.Add(this);
-						this._FK_SecondLevelSubdivisionTable = value.SecondLevelSubdivisionTableID;
-					}
-					else
-					{
-						this._FK_SecondLevelSubdivisionTable = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("SecondLevelSubdivisionTable");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_ThirdLevelSubdivisionTable", ThisKey="FK_ThirdLevelSubdivisionTable", OtherKey="ThirdLevelSubdivisionTableID", IsForeignKey=true)]
-		public ThirdLevelSubdivisionTable ThirdLevelSubdivisionTable
-		{
-			get
-			{
-				return this._ThirdLevelSubdivisionTable.Entity;
-			}
-			set
-			{
-				ThirdLevelSubdivisionTable previousValue = this._ThirdLevelSubdivisionTable.Entity;
-				if (((previousValue != value) 
-							|| (this._ThirdLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._ThirdLevelSubdivisionTable.Entity = null;
-						previousValue.CollectedIndicatorsForR.Remove(this);
-					}
-					this._ThirdLevelSubdivisionTable.Entity = value;
-					if ((value != null))
-					{
-						value.CollectedIndicatorsForR.Add(this);
-						this._FK_ThirdLevelSubdivisionTable = value.ThirdLevelSubdivisionTableID;
-					}
-					else
-					{
-						this._FK_ThirdLevelSubdivisionTable = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("ThirdLevelSubdivisionTable");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
+			this.SendPropertyChanging();
+			entity.UsersTable1 = null;
 		}
 	}
 }

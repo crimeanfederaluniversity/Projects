@@ -200,6 +200,7 @@
     <Content Include="FinKadr\OtdelChooseReport.aspx" />
     <Content Include="FinKadr\OtdelResult.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="MultiUser.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -462,6 +463,13 @@
     </Compile>
     <Compile Include="Account\PersonalInfo.aspx.designer.cs">
       <DependentUpon>PersonalInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MultiUser.aspx.cs">
+      <DependentUpon>MultiUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MultiUser.aspx.designer.cs">
+      <DependentUpon>MultiUser.aspx</DependentUpon>
     </Compile>
     <Compile Include="OtdelSession.cs" />
     <Compile Include="Rector\ClassForCharts.cs" />
