@@ -464,24 +464,10 @@ namespace KPIWeb.Reports
                     if (basicParam.AbbreviationEN == "d_E_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "d_E_S_CO", null);
 //новые показатели                 
 
-
-
-
-
-
-
-
-
-
-
-
-
                     if (basicParam.AbbreviationEN == "Kol_Kaf_R")
                         tmp = Convert.ToDouble((from a in kpiWebDataContext.ThirdLevelParametrs
                                                 where a.ThirdLevelParametrsID == user.FK_ThirdLevelSubdivisionTable
                                                 select a.IsBasic).FirstOrDefault());
-
-
 
                     if (tmp < 1000000000000)
                     {
@@ -512,6 +498,11 @@ namespace KPIWeb.Reports
                             collectedBasicTmp.FK_ThirdLevelSubdivisionTable = user.FK_ThirdLevelSubdivisionTable;
 
                             kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
+                            kpiWebDataContext.SubmitChanges();
+                        }
+                        else
+                        {
+                            collectedBasicTmp.CollectedValue = tmp;
                             kpiWebDataContext.SubmitChanges();
                         }
                     }

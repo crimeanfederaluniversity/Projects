@@ -201,6 +201,7 @@
     <Content Include="FinKadr\OtdelResult.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="MultiUser.aspx" />
+    <Content Include="OwnersProcessInfo.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -237,8 +238,10 @@
       <LastGenOutput>KPIWeb.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Properties\PublishProfiles\Export.pubxml" />
     <None Include="Properties\PublishProfiles\home.pubxml" />
     <None Include="Properties\PublishProfiles\V_TEST1.pubxml" />
+    <None Include="Properties\PublishProfiles\Web.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Reports_\ChooseReport.aspx" />
     <Content Include="Reports_\EditReport.aspx" />
@@ -472,6 +475,13 @@
       <DependentUpon>MultiUser.aspx</DependentUpon>
     </Compile>
     <Compile Include="OtdelSession.cs" />
+    <Compile Include="OwnersProcessInfo.aspx.cs">
+      <DependentUpon>OwnersProcessInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OwnersProcessInfo.aspx.designer.cs">
+      <DependentUpon>OwnersProcessInfo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Rector\ClassForCharts.cs" />
     <Compile Include="Rector\ForRCalc.cs" />
     <Compile Include="Rector\RAnalitics.aspx.cs">
