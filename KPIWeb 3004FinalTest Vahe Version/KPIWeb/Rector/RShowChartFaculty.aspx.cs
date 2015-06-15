@@ -173,6 +173,7 @@ namespace KPIWeb.Rector
             DataTable dataTable = new DataTable();
 
             dataTable.Columns.Add(new DataColumn("IndicatorID", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("Ratio", typeof(string)));
             dataTable.Columns.Add(new DataColumn("IndicatorName", typeof(string)));
             dataTable.Columns.Add(new DataColumn("IndicatorValue", typeof(string)));
 
@@ -202,7 +203,7 @@ namespace KPIWeb.Rector
             Chart1.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
             Chart1.ChartAreas[0].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount;
 
-
+            int ratio = 1;
             foreach (ChartOneValue item in chartItems.SortReverse(DataForChart.ChartValues)) // сортировка для gridview FIFO
             {
                 if (item.value == 0) continue;
@@ -212,9 +213,12 @@ namespace KPIWeb.Rector
                     (from a in kPiDataContext.FirstLevelSubdivisionTable
                      where a.Name.Equals(item.name)
                      select a.FirstLevelSubdivisionTableID).FirstOrDefault();
+                dataRow["Ratio"] = ratio;
                 dataRow["IndicatorName"] = item.name;
-                dataRow["IndicatorValue"] = item.value;
+                dataRow["IndicatorValue"] = Math.Round(item.value,3);
                 dataTable.Rows.Add(dataRow);
+
+                ratio++;
             }
 
             
@@ -232,7 +236,7 @@ namespace KPIWeb.Rector
             Chart1.Series[0].Label = "#VALY";
 
             
-            Chart1.Series[0].ToolTip = "#VALX, #VALY";
+            Chart1.Series[0].ToolTip = "#VALX #VALY";
             #endregion
 
             GridView1.DataSource = dataTable;

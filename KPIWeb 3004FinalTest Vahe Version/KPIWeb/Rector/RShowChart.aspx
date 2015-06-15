@@ -4,7 +4,47 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">  
     
-
+    
+        <link rel="stylesheet" type="text/css" href="../Spinner.css">  
+    <script type="text/javascript">
+        function showLoadPanel() {
+            document.getElementById('LoadPanel_').style.visibility = 'visible';
+        }
+    </script>
+    <style>  
+        .LoadPanel 
+   {
+          position: fixed;
+          z-index: 10;
+          background-color: whitesmoke;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0.9;
+          visibility: hidden;
+   }
+</style>     
+    <div id="LoadPanel_" class='LoadPanel'>               
+            <div id="floatingCirclesG">
+            <div class="f_circleG" id="frotateG_01">
+            </div>
+            <div class="f_circleG" id="frotateG_02">
+            </div>
+            <div class="f_circleG" id="frotateG_03">
+            </div>
+            <div class="f_circleG" id="frotateG_04">
+            </div>
+            <div class="f_circleG" id="frotateG_05">
+            </div>
+            <div class="f_circleG" id="frotateG_06">
+            </div>
+            <div class="f_circleG" id="frotateG_07">
+            </div>
+            <div class="f_circleG" id="frotateG_08">
+            </div>
+            </div>
+        </div>
 
 &nbsp;
     <br />
@@ -37,7 +77,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Подробнее">
                     <ItemTemplate>
-                        <asp:Button ID="Button7" runat="server" CommandName="Select" Text="Подробнее" CommandArgument='<%# Eval("IndicatorID") %>' OnClick="DetailedButtonClick"/>
+                        <asp:Button ID="Button7" runat="server" OnClientClick="showLoadPanel()" CommandName="Select" Text="Подробнее" CommandArgument='<%# Eval("IndicatorID") %>' OnClick="DetailedButtonClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
             </Columns>

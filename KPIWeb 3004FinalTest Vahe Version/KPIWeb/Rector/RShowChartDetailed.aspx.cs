@@ -249,6 +249,7 @@ namespace KPIWeb.Rector
             DataTable dataTable = new DataTable();
 
             dataTable.Columns.Add(new DataColumn("IndicatorID", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("Ratio", typeof(string)));
             dataTable.Columns.Add(new DataColumn("IndicatorName", typeof(string)));
             dataTable.Columns.Add(new DataColumn("IndicatorValue", typeof(string)));
 
@@ -278,7 +279,7 @@ namespace KPIWeb.Rector
             Chart1.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
             Chart1.ChartAreas[0].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount;
 
-
+            int ratio = 1;
             foreach (ChartOneValue item in chartItems.SortReverse(DataForChart.ChartValues))
             {
                 if (item.value == 0) continue; 
@@ -288,10 +289,13 @@ namespace KPIWeb.Rector
                 dataRow["IndicatorID"] =
                     (from a in kPiDataContext.FirstLevelSubdivisionTable
                         where a.Name.Equals(item.name)
-                        select a.FirstLevelSubdivisionTableID).FirstOrDefault();
+                        select a.FirstLevelSubdivisionTableID).FirstOrDefault(); //Ratio
+                dataRow["Ratio"] = ratio;
                 dataRow["IndicatorName"] = item.name;
-                dataRow["IndicatorValue"] = item.value;
+                dataRow["IndicatorValue"] = Math.Round(item.value,3);
                 dataTable.Rows.Add(dataRow);
+
+                ratio++;
             }
 
             Chart1.Legends.Add(new Legend("Default") { Docking = Docking.Bottom });

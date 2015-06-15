@@ -12,10 +12,10 @@
             </ChartAreas>
         </asp:Chart>
         <br />
-        <br />
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Width="100%" >
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Width="100%" CssClass="Grid_view_style newcentb" >
             <Columns>
                 <asp:BoundField HeaderText="ID индикатора" DataField="IndicatorID" ItemStyle-Width="120px" Visible="False" />
+                <asp:BoundField HeaderText="Рейтинг" DataField="Ratio" ItemStyle-Width="10px" Visible="true" />
                 <asp:BoundField HeaderText="Название индикатора" DataField="IndicatorName" />
                 <asp:BoundField HeaderText="Значение" DataField="IndicatorValue" />
             </Columns>

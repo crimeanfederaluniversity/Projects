@@ -61,8 +61,14 @@ background-size:cover;
     opacity: 0.9;
 
 }
-
-.newcentb td+td,
+.newcentb td
+{
+text-align: center;
+}
+.newcentb td+td
+{
+    text-align: left;
+}
 .newcentb td+td+td
 {
     text-align: center;
