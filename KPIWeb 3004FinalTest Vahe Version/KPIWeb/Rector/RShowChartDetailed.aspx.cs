@@ -245,6 +245,8 @@ namespace KPIWeb.Rector
 
             ChartValueArray DataForChart = IndicatorForAllAcademys(indicator, 1);
 
+            List<int> ExceptItems = new List<int> { 1022, 1023, 1025, 1012, 1026, 1013, 1027, 1020, 1018, 1017, 1034, 1021, 1015, 1028, 1029, 1030, 1019, 1033, 1031, 1032 }; // ID Академий с фейками на уровне кафедр
+
             // Формируем GridView
             DataTable dataTable = new DataTable();
 
@@ -327,6 +329,44 @@ namespace KPIWeb.Rector
                 var par = button.CommandArgument.ToString();
                 Session["AcademyToDetailed"] = par;
                 Response.Redirect("~/Rector/RShowChartFaculty.aspx");
+            }
+        }
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                List<int> ExceptItems = new List<int>
+                {
+                    1022,
+                    1023,
+                    1025,
+                    1012,
+                    1026,
+                    1013,
+                    1027,
+                    1020,
+                    1018,
+                    1017,
+                    1034,
+                    1021,
+                    1015,
+                    1028,
+                    1029,
+                    1030,
+                    1019,
+                    1033,
+                    1031,
+                    1032
+                }; // ID Академий с фейками на уровне кафедр
+
+                string indID = DataBinder.Eval(e.Row.DataItem, "IndicatorID").ToString();
+                if (ExceptItems.Contains(Convert.ToInt32(indID)))
+                {
+                    Button button = (Button) e.Row.FindControl("Button7");
+                    if (button != null)
+                        button.Enabled = false;
+                }
             }
         }
     }
