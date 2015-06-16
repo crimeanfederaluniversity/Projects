@@ -292,7 +292,11 @@ namespace KPIWeb.Rector
                 //// tooltip
                 KPIWebDataContext kPiDataContext = new KPIWebDataContext();
                 List<int> IndicatorsList = (List<int>)ViewState["IndicatorsList"];
-
+                string tooltip = (from ind in kPiDataContext.IndicatorsTable
+                                  where ind.IndicatorsTableID == IndicatorsList[e.Row.RowIndex]
+                                  select ind.Name)
+                        .FirstOrDefault();
+                if ( tooltip.Count() > 124 )
                 e.Row.Cells[1].ToolTip =
                     (from ind in kPiDataContext.IndicatorsTable
                      where ind.IndicatorsTableID == IndicatorsList[e.Row.RowIndex]
