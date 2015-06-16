@@ -36,6 +36,7 @@ namespace KPIWeb.Rector
                 Response.Redirect("~/Default.aspx");
             }
             List<int> IndicatorsList = RectorChart.IndicatorsList;
+            ViewState["IndicatorsList"] = IndicatorsList;
             
             //IndicatorsForCFU(IndicatorsList,1);   // ВОЗВРАЩАЕТ ДАННЫЕ ДЛЯ ЧАРТА
 
@@ -288,6 +289,17 @@ namespace KPIWeb.Rector
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                //// tooltip
+                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+                List<int> IndicatorsList = (List<int>)ViewState["IndicatorsList"];
+
+                e.Row.Cells[1].ToolTip =
+                    (from ind in kPiDataContext.IndicatorsTable
+                     where ind.IndicatorsTableID == IndicatorsList[e.Row.RowIndex]
+                     select ind.Name)
+                        .FirstOrDefault();
+                ///////
+                
                 string indID = DataBinder.Eval(e.Row.DataItem, "IndicatorID").ToString();
                 Chart chart = (Chart)e.Row.FindControl("Chart3");
                 if (chart != null)

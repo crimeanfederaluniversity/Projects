@@ -300,7 +300,7 @@ namespace KPIWeb.Rector
                 ratio++;
             }
 
-            Chart1.Legends.Add(new Legend("Default") { Docking = Docking.Bottom });
+            Chart1.Legends.Add(new Legend("Default") { Docking = Docking.Right });
 
             // Chart1.Legends["Default"].Font = new Font("Utopia", 16);
 
