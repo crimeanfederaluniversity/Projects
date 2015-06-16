@@ -295,7 +295,8 @@ namespace KPIWeb.Rector
                     ChartOneValue DataForChart = IndicatorsForCFUOneIndicator(Convert.ToInt32(indID), 1); // 1 индикатор в разрезе КФУ взятый по ID
 
                     // Формирую чарт
-                    chart.Series["ValueSeries"].Color = Color.CornflowerBlue;
+                    //chart.Series["ValueSeries"].Color = Color.CornflowerBlue;   //Color.FromArgb(255, 100, 149, 0);
+                    chart.Series["ValueSeries"].Color = Color.FromArgb(255, 100, 149, 237);
                     chart.ChartAreas["ChartArea1"].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount; // масштабирование разметки
                     chart.ChartAreas["ChartArea1"].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount; // -==--
                     chart.Series["TargetSeries"].Color = Color.FromArgb(122, 50, 255, 0);
@@ -316,10 +317,85 @@ namespace KPIWeb.Rector
                     chart.Series["ValueSeries"].LegendText = "#AXISLABEL (#PERCENT{P0})";
                     chart.Series["ValueSeries"].ToolTip = "Целевое: " + DataForChart.planned + ". Достигнуто на: " + Convert.ToInt32(DataForChart.value / DataForChart.planned * 100) + "%";
                     chart.Series["TargetSeries"].ToolTip = "Целевое: " + DataForChart.planned + ". Достигнуто на: " + Convert.ToInt32(DataForChart.value / DataForChart.planned * 100) + "%";
+
+
+                    // Линния планового значения
+                    VerticalLineAnnotation verticalLine = new VerticalLineAnnotation();
+                    verticalLine.AxisX = chart.ChartAreas["ChartArea1"].AxisX;
+                    verticalLine.AxisY = chart.ChartAreas["ChartArea1"].AxisY;
+                    verticalLine.Width = 3;
+                    verticalLine.IsInfinitive = true; // либо высоту
+                    verticalLine.LineDashStyle = ChartDashStyle.Solid;
+                    verticalLine.LineColor = Color.Crimson;
+                    verticalLine.LineWidth = 3;
+                    verticalLine.AnchorX = DataForChart.planned;
+                    verticalLine.Name = "myLine"; // !!
+                    verticalLine.AnchorY = 0;
+                    verticalLine.X = DataForChart.planned; ;
+                    verticalLine.Y = 0;
+
+                    //Прямоугольник со значением 
+                    RectangleAnnotation RA = new RectangleAnnotation();
+                    RA.AxisX = chart.ChartAreas["ChartArea1"].AxisX;
+                    RA.IsSizeAlwaysRelative = false;
+
+                    // КОСТЫЛЬ "формула" расчета масiтабируемости прямоугольника
+                    try
+                    {
+                        if (DataForChart.value > DataForChart.planned)
+                        {
+                            int tmp = Math.Round(DataForChart.value, 3).ToString().Count();
+                            if (tmp > 3)
+                                RA.Width = 20*DataForChart.value/(500 - ((tmp - 3)*60));
+                            else
+                            {
+                                RA.Width = 20*DataForChart.value/500;
+                            }
+                        }
+                        else
+                        {
+                            int tmp = Math.Round(DataForChart.planned, 3).ToString().Count();
+                            if (tmp > 3)
+                                RA.Width = 20*DataForChart.planned/(500 - ((tmp - 3)*60));
+                            else
+                            {
+                                RA.Width = 20*DataForChart.planned/500;
+                            }
+                        }
+                    }
+                    catch 
+                    {
+                        RA.Width = 290000000 - 1 ; 
+                    }
+                    // END КОСТЫЛЬ
+                    
+                    RA.Height = 8 * 0.04;       
+                    verticalLine.Name = "myRect"; // !!
+                    RA.LineColor = Color.Red;
+                    RA.BackColor = Color.Red;
+                    RA.AxisY = chart.ChartAreas["ChartArea1"].AxisY;
+                    RA.Y = -RA.Height;
+                    RA.X = verticalLine.X - RA.Width / 2;
+
+                    RA.Text = DataForChart.planned.ToString();
+                    RA.ForeColor = Color.White;
+                    RA.Font = new System.Drawing.Font("Arial", 8f);
+
+
+                    // Consider adding transparency so that the strip lines are lighter
+                   // stripLine1.BackColor = Color.FromArgb(200, 200, 0, 0);
+
+                   // stripLine1.BackSecondaryColor = Color.FromArgb(122, 250, 255, 0);
+                   // stripLine1.BackGradientStyle = GradientStyle.LeftRight;
+
+                    // Add the strip line to the chart
+
+                    chart.Annotations.Add(verticalLine);
+                    chart.Annotations.Add(RA);
                 }
             }
         }
-
+  
 
         protected void DetailedButtonClick(object sender, EventArgs e)
         {
