@@ -5,6 +5,7 @@ using System.Web;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.Ajax.Utilities;
 
 namespace KPIWeb.Rector
 {
@@ -151,7 +152,7 @@ namespace KPIWeb.Rector
                     CheckBoxList1.Items.Add(Item1);
                 }
 
-            }           
+            }
         }
  
         protected void ButtonClassClick(object sender, EventArgs e) // По типам индикаторов
@@ -230,6 +231,11 @@ namespace KPIWeb.Rector
         protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/RectorMain.aspx");
         }       
     }
 }

@@ -248,5 +248,10 @@ namespace KPIWeb.Rector
             GridView1.DataSource = dataTable;
             GridView1.DataBind();
         }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/RectorMain.aspx");
+        }
     }
 }
