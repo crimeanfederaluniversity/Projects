@@ -104,7 +104,7 @@ namespace KPIWeb.Rector
             Value_ = tmp;
         }
         */
-
+            if (collected != null) //  Крашило тут мед академию
             if (collected.Value == null)
             {
                 Value_ = 0;
@@ -112,6 +112,10 @@ namespace KPIWeb.Rector
             else
             {
                 Value_ = (float)collected.Value;
+            }
+            else
+            {
+                // error
             }
             #endregion
             ChartOneValue DataRowForChart = new ChartOneValue(Name_, Value_, Planned_Value);
@@ -215,7 +219,9 @@ namespace KPIWeb.Rector
                      select a.FirstLevelSubdivisionTableID).FirstOrDefault();
                 dataRow["Ratio"] = ratio;
                 dataRow["IndicatorName"] = item.name;
-                dataRow["IndicatorValue"] = Math.Round(item.value,3);
+                dataRow["IndicatorValue"] = Math.Round(item.value, 3) + " " + (from ind in kPiDataContext.IndicatorsTable
+                                                                               where ind.IndicatorsTableID == indicator
+                                                                               select ind.Measure).FirstOrDefault().ToString(); ;
                 dataTable.Rows.Add(dataRow);
 
                 ratio++;

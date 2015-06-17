@@ -292,16 +292,15 @@ namespace KPIWeb.Rector
                 //// tooltip
                 KPIWebDataContext kPiDataContext = new KPIWebDataContext();
                 List<int> IndicatorsList = (List<int>)ViewState["IndicatorsList"];
-                string tooltip = (from ind in kPiDataContext.IndicatorsTable
-                                  where ind.IndicatorsTableID == IndicatorsList[e.Row.RowIndex]
-                                  select ind.Name)
-                        .FirstOrDefault();
-                if ( tooltip.Count() > 124 )
-                e.Row.Cells[1].ToolTip =
-                    (from ind in kPiDataContext.IndicatorsTable
-                     where ind.IndicatorsTableID == IndicatorsList[e.Row.RowIndex]
-                     select ind.Name)
-                        .FirstOrDefault();
+                var indicator = (from ind in kPiDataContext.IndicatorsTable
+                                 where ind.IndicatorsTableID == IndicatorsList[e.Row.RowIndex]
+                                 select ind).FirstOrDefault();
+
+                        // ERROR != null
+
+                string tooltip = indicator.Name;
+                if (tooltip.Count() > 124)
+                    e.Row.Cells[1].ToolTip = tooltip;
                 ///////
                 
                 string indID = DataBinder.Eval(e.Row.DataItem, "IndicatorID").ToString();
@@ -328,8 +327,11 @@ namespace KPIWeb.Rector
                     chart.DataSource = chartItems.GetDataSource();
                     //chart.Series["ValueSeries"].XValueMember = "Name";
                     chart.Series["ValueSeries"].YValueMembers = "Value";
-
-                    chart.Series["ValueSeries"].Label = "#VALY";
+                    if (DataForChart.value != 0)
+                    {
+                        chart.Series["ValueSeries"].Label = "#VALY " + indicator.Measure;
+                        chart.Series["ValueSeries"].Font = new Font("Arial", 10f, FontStyle.Bold);
+                    }
                     chart.Series["ValueSeries"].LegendText = "#AXISLABEL (#PERCENT{P0})";
                     chart.Series["ValueSeries"].ToolTip = "Целевое: " + DataForChart.planned + ". Достигнуто на: " + Convert.ToInt32(DataForChart.value / DataForChart.planned * 100) + "%";
                     chart.Series["TargetSeries"].ToolTip = "Целевое: " + DataForChart.planned + ". Достигнуто на: " + Convert.ToInt32(DataForChart.value / DataForChart.planned * 100) + "%";
@@ -355,7 +357,7 @@ namespace KPIWeb.Rector
                     RA.AxisX = chart.ChartAreas["ChartArea1"].AxisX;
                     RA.IsSizeAlwaysRelative = false;
 
-                    // КОСТЫЛЬ "формула" расчета масiтабируемости прямоугольника
+                    // КОСТЫЛЬ "формула" расчета масштабируемости прямоугольника
                     try
                     {
                         if (DataForChart.value > DataForChart.planned)

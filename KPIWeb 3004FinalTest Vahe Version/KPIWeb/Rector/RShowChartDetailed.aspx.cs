@@ -245,8 +245,6 @@ namespace KPIWeb.Rector
 
             ChartValueArray DataForChart = IndicatorForAllAcademys(indicator, 1);
 
-            List<int> ExceptItems = new List<int> { 1022, 1023, 1025, 1012, 1026, 1013, 1027, 1020, 1018, 1017, 1034, 1021, 1015, 1028, 1029, 1030, 1019, 1033, 1031, 1032 }; // ID Академий с фейками на уровне кафедр
-
             // Формируем GridView
             DataTable dataTable = new DataTable();
 
@@ -256,7 +254,7 @@ namespace KPIWeb.Rector
             dataTable.Columns.Add(new DataColumn("IndicatorValue", typeof(string)));
 
             #region график + чуток gridview
-            // Форматировать диаграмму
+            // Форматируем диаграмму
             Chart1.BackColor = Color.White;
             Chart1.BackSecondaryColor = Color.White;
             Chart1.BackGradientStyle = GradientStyle.DiagonalRight;
@@ -265,10 +263,10 @@ namespace KPIWeb.Rector
             Chart1.BorderlineColor = Color.Black;
             Chart1.BorderSkin.SkinStyle = BorderSkinStyle.Emboss;
 
-            // Форматировать область диаграммы
+            // Форматируем область диаграммы
             Chart1.ChartAreas[0].BackColor = Color.White;
             
-            // Добавить и форматировать заголовок
+            //  заголовок
             Chart1.Titles.Add(DataForChart.chartName);
             Chart1.Titles[0].Font = new Font("Utopia", 16);
 
@@ -288,13 +286,15 @@ namespace KPIWeb.Rector
                 chartItems.AddChartItem(item.name, item.value);
 
                 DataRow dataRow = dataTable.NewRow();
-                dataRow["IndicatorID"] =
-                    (from a in kPiDataContext.FirstLevelSubdivisionTable
-                        where a.Name.Equals(item.name)
-                        select a.FirstLevelSubdivisionTableID).FirstOrDefault(); //Ratio
-                dataRow["Ratio"] = ratio;
+                dataRow["IndicatorID"] = (from a in kPiDataContext.FirstLevelSubdivisionTable
+                                          where a.Name.Equals(item.name)
+                                          select a.FirstLevelSubdivisionTableID).FirstOrDefault(); // Не индикаторID а FirstLevelSubdivisionTableID 
+                dataRow["Ratio"] = ratio; //Ratio
                 dataRow["IndicatorName"] = item.name;
-                dataRow["IndicatorValue"] = Math.Round(item.value,3);
+                dataRow["IndicatorValue"] = Math.Round(item.value, 3) + " " +
+                                            (from ind in kPiDataContext.IndicatorsTable
+                                             where ind.IndicatorsTableID == indicator 
+                                                select ind.Measure).FirstOrDefault().ToString(); 
                 dataTable.Rows.Add(dataRow);
 
                 ratio++;
