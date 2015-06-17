@@ -5,6 +5,7 @@ using System.Web;
 
 namespace KPIWeb.Rector
 {
+    [Serializable]
     public class ChartOneValue
     {
         public string name { get; set; }

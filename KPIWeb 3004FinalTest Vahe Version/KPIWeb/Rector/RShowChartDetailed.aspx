@@ -64,7 +64,7 @@
       <style>
        .chart{ opacity: 0.99;}
    </style>
-        <asp:Chart ID="Chart1" runat="server" Height="700" Width="1167" CssClass="chart">
+        <asp:Chart ID="Chart1" runat="server" Height="700" Width="1167" CssClass="chart" OnClick="Chart1_Click">
             <ChartAreas>
                 <asp:ChartArea Name="ChartArea1"></asp:ChartArea>
             </ChartAreas>

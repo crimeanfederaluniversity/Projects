@@ -280,7 +280,10 @@ namespace KPIWeb.Rector
             Chart1.ChartAreas[0].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount;
 
             int ratio = 1;
-            foreach (ChartOneValue item in chartItems.SortReverse(DataForChart.ChartValues))
+            List<ChartOneValue> sortItems = chartItems.SortReverse(DataForChart.ChartValues);
+            ViewState["Items"] = sortItems;
+
+            foreach (ChartOneValue item in sortItems)
             {
                 if (item.value == 0) continue; 
                 chartItems.AddChartItem(item.name, item.value);
@@ -320,6 +323,7 @@ namespace KPIWeb.Rector
 
             GridView1.DataSource = dataTable;
             GridView1.DataBind();
+            Chart1.Series[0].PostBackValue = "#INDEX";
         }
 
         protected void FacultyButtonClick(object sender, EventArgs e)
@@ -374,5 +378,68 @@ namespace KPIWeb.Rector
         {
             Response.Redirect("~/Rector/RectorMain.aspx");
         }
+
+        protected void Chart1_Click(object sender, ImageMapEventArgs e)
+        {
+            try
+            {
+                List<int> ExceptItems = new List<int>
+                {
+                    1022,
+                    1023,
+                    1025,
+                    1012,
+                    1026,
+                    1013,
+                    1027,
+                    1020,
+                    1018,
+                    1017,
+                    1034,
+                    1021,
+                    1015,
+                    1028,
+                    1029,
+                    1030,
+                    1019,
+                    1033,
+                    1031,
+                    1032
+                }; // ID Академий с фейками на уровне кафедр
+
+                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+                List<ChartOneValue> item = (List<ChartOneValue>) ViewState["Items"];
+
+                int id = (from a in kPiDataContext.FirstLevelSubdivisionTable
+                    where a.Name.Equals(item[Convert.ToInt32(e.PostBackValue)].name)
+                    select a.FirstLevelSubdivisionTableID).FirstOrDefault();
+
+                if (!ExceptItems.Contains(Convert.ToInt32(id)))
+                {
+                    Session["AcademyToDetailed"] = id.ToString();
+                    Response.Redirect("~/Rector/RShowChartFaculty.aspx");
+                }
+                else
+                {
+                    DisplayAlert("Невозможно детализировать");
+                }
+            }
+            catch (Exception)
+            {
+                // error
+            }
+
+        }
+        private void DisplayAlert(string message)
+        {
+            ClientScript.RegisterStartupScript(
+              this.GetType(),
+              Guid.NewGuid().ToString(),
+              string.Format("alert('{0}');",
+                message.Replace("'", @"\'").Replace("\n", "\\n").Replace("\r", "\\r")),
+                true);
+        }
     }
+
+
 }
