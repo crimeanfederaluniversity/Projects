@@ -1,7 +1,11 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="RShowChartFaculty.aspx.cs" Inherits="KPIWeb.Rector.RShowChartFaculty" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    
+    <style>
+        body {
+              top: 60px;
+          }
+    </style>
             <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
         <div>    
       <asp:Button ID="GoBackButton" runat="server" OnClientClick="JavaScript:window.history.back(1); return false;"  Text="Назад" Width="125px" Enabled="True" />

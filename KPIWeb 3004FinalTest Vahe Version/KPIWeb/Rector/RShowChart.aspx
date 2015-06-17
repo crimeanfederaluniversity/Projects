@@ -12,6 +12,9 @@
         }
     </script>
     <style>  
+        body {
+            top: 50px
+    }
         .LoadPanel 
    {
           position: fixed;

@@ -2,7 +2,9 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">  
 
 <style>
-
+    body {
+        top: 50px;
+    }
     input[id$="Button1"] {
         width: 360px;
         height: 250px;
@@ -11,7 +13,8 @@
         top: 0;
         left: 0;
         opacity: 0.3;
-        z-index: 3;   background-color: aliceblue;
+        z-index: 3;   
+        background-color: aliceblue;
     }
     
    input[id$="Button1"]:hover {
@@ -76,23 +79,23 @@
         #insp1,#insp2 {
             z-index: 2;
             position: absolute;
-            width: 354px;
+            width: 360px;
             height: 34px;
             text-align: center;
             padding-bottom: 2px;
             background-color: #ffffff;
-            border-radius: 7px;
+            border-radius: 0px;
             left: 0px;
             opacity: 1;
 
             font-weight: bold;
             font-size: 24px;
         
-            left: 2px;
+            left: 0px;
             color: #000000;
         }
         #insp2 { height: 70px;
-                 width: 356px;
+                 width: 360px;
         }
         #ow {
             left: 0;
