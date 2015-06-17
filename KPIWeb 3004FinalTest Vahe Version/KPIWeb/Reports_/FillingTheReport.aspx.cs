@@ -282,7 +282,6 @@ namespace KPIWeb.Reports
         protected void ConfCalculate(int ReportArchiveID, UsersTable user)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-
             List<BasicParametersTable> calcBasicParams =
             (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
              join b in kpiWebDataContext.BasicParametersTable
@@ -448,20 +447,20 @@ namespace KPIWeb.Reports
                     if (basicParam.AbbreviationEN == "OOP_A_SOT") tmp = pattern6(user, ReportArchiveID, 4);
 
 //новые показатели 13.06.2015
-                    if (basicParam.AbbreviationEN == "a_Och_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "a_Och_M_CO", null);
-                    if (basicParam.AbbreviationEN == "b_OchZ_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "b_OchZ_M_CO", null);
-                    if (basicParam.AbbreviationEN == "c_Z_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "c_Z_M_CO", null);
-                    if (basicParam.AbbreviationEN == "d_E_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "d_E_M_CO", null);
+                    if (basicParam.AbbreviationEN == "a_Och_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "a_Och_M_C", null);
+                    if (basicParam.AbbreviationEN == "b_OchZ_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "b_OchZ_M_C", null);
+                    if (basicParam.AbbreviationEN == "c_Z_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "c_Z_M_C", null);
+                    if (basicParam.AbbreviationEN == "d_E_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "d_E_M_C", null);
 
-                    if (basicParam.AbbreviationEN == "a_Och_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "a_Och_B_CO", null);
-                    if (basicParam.AbbreviationEN == "d_E_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "d_E_B_CO", null);
-                    if (basicParam.AbbreviationEN == "c_Z_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "c_Z_B_CO", null);
-                    if (basicParam.AbbreviationEN == "d_E_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "d_E_B_CO", null);
+                    if (basicParam.AbbreviationEN == "a_Och_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "a_Och_B_C", null);
+                    if (basicParam.AbbreviationEN == "d_E_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "d_E_B_C", null);
+                    if (basicParam.AbbreviationEN == "c_Z_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "c_Z_B_C", null);
+                    if (basicParam.AbbreviationEN == "d_E_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "d_E_B_C", null);
 
-                    if (basicParam.AbbreviationEN == "a_Och_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "a_Och_S_CO", null);
-                    if (basicParam.AbbreviationEN == "b_OchZ_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "b_OchZ_S_CO", null);
-                    if (basicParam.AbbreviationEN == "c_Z_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "c_Z_S_CO", null);
-                    if (basicParam.AbbreviationEN == "d_E_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "d_E_S_CO", null);
+                    if (basicParam.AbbreviationEN == "a_Och_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "a_Och_S_C", null);
+                    if (basicParam.AbbreviationEN == "b_OchZ_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "b_OchZ_S_C", null);
+                    if (basicParam.AbbreviationEN == "c_Z_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "c_Z_S_C", null);
+                    if (basicParam.AbbreviationEN == "d_E_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "d_E_S_C", null);
 //новые показатели                 
 
                     if (basicParam.AbbreviationEN == "Kol_Kaf_R")
@@ -1475,6 +1474,17 @@ namespace KPIWeb.Reports
                     #region confirm all
                     if (GridviewCollectedBasicParameters.Rows.Count > 0)
                     {
+                        List<CollectedBasicParametersTable> CollectedToChange = (from a in KPIWebDataContext.CollectedBasicParametersTable
+                                                                                 where a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
+                                                                                 && a.FK_ReportArchiveTable == ReportArchiveID
+                                                                                 && a.Active == true
+                                                                                 select a).ToList();
+                        foreach (CollectedBasicParametersTable CollectedBasic in CollectedToChange)
+                        {
+                            CollectedBasic.Status = 4;
+                        }
+                        KPIWebDataContext.SubmitChanges();
+                        /*
                         for (int k = 0; k < columnCnt; k++) // пройдемся по каждой колонке
                         {
                             for (int i = 0; i < GridviewCollectedBasicParameters.Rows.Count; i++)
@@ -1513,7 +1523,8 @@ namespace KPIWeb.Reports
                                     }
                                 }
                             }
-                        }
+                        }*/
+
                         LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT3: User " + (string)ViewState["login"] + " confirm data in report ID = " + paramSerialization.ReportStr + " from ip: "+Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Вы утвердили данные всех базовых показателей. Отчёт отправлен и доступен только в режиме \"Просмотр\".');" +
                             "document.location = '../Default.aspx';", true);

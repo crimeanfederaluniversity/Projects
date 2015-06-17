@@ -161,7 +161,11 @@ namespace KPIWeb.Rector
             Value_ = tmp;
         }
         */
-
+            if (collected==null)
+            {
+                Value_ = 0;
+            }
+            else
             if (collected.Value == null)
             {
                 Value_ = 0;

@@ -814,21 +814,26 @@ namespace KPIWeb.Rector
                             List<BasicParametersTable> BasicList = Abbreviature.GetBasicList(CurrentCalculated.Formula);
                             int AllBasicsUsersCanEdit = 0;
                             int AllConfirmedBasics = 0;
+                            int AllConnectedToReportAndUser = 0;
+                            /*
+                            List<UsersTable> UsersWithNoCollected = (from a in kpiWebDataContext.UsersTable
+                                                                         join b in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                                                             on a.UsersTableID equals b.FK_UsersTable
+                                                                         where a.Active == true
+                                                                         && b.Active == true
+                                                                         && b.CanEdit == true
+                                                                         join c in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                                                         on a.FK_FirstLevelSubdivisionTable equals c.FK_FirstLevelSubmisionTableId
+                                                                         where c.Active == true
+                                                                         && c.FK_ReportArchiveTableId == ReportID
+                                                                         join d in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                                                                         on b.FK_ParametrsTable equals d.FK_BasicParametrsTable
+                                                                         where d.Active == true
+                                                                         && d.FK_ReportArchiveTable == ReportID 
+                                                                         select a).Distinct().ToList();*/
                             foreach (BasicParametersTable Basic in BasicList)
                             {
-                                /*
-                                AllBasicsUsersCanEdit += (from a in kpiWebDataContext.BasicParametrsAndUsersMapping
-                                    join b in kpiWebDataContext.UsersTable
-                                        on a.FK_UsersTable equals b.UsersTableID
-                                    where a.CanEdit == true
-                                          && b.Active == true
-                                          && a.FK_ParametrsTable == Basic.BasicParametersTableID
-                                    select a).Count();
-                                AllConfirmedBasics += (from a in kpiWebDataContext.CollectedBasicParametersTable
-                                    where a.FK_ReportArchiveTable == ReportID
-                                          && a.FK_BasicParametersTable == Basic.BasicParametersTableID
-                                          && a.Status == 4
-                                    select a).Count();*/
+                                
                                 AllBasicsUsersCanEdit += (from a in kpiWebDataContext.CollectedBasicParametersTable
                                                           where a.FK_ReportArchiveTable == ReportID
                                                                 && a.FK_BasicParametersTable == Basic.BasicParametersTableID

@@ -9,6 +9,13 @@
      <br />
         <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()" Text="Показать" Width="307px" OnClick="Button1_Click" />
 
+     <br />
+     <br />
+     <br />
+     Список структурных подразделений не начавших внесение данных, с email адресами ответственных за ввод.<br />
+     (На данный момент есть несколько &quot;лишних&quot; структурных подразделений).<asp:GridView ID="GridView1" runat="server">
+     </asp:GridView>
+
     <br />
       <br />
     Описание<br />

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
 
 namespace KPIWeb
 {
@@ -48,11 +49,13 @@ namespace KPIWeb
     {
         if (all == 0)
         {
-            return name;
+            //return name;
+            return null;
         }
         else if (all == conf)
         {
-            return "<font style=\"color:#27a327;font-weight: bold;\">" + name + "</font> ";
+            //return "<font style=\"color:#27a327;font-weight: bold;\">" + name + "</font> ";
+            return null;
         }
         else if(all == notstarted)
         {
@@ -60,11 +63,11 @@ namespace KPIWeb
         }
         else if (all == started)
         {
-            return "<font style=\"color:#753313;font-weight: bold;\">" + name + "</font> ";
+            return "<font style=\"color:#f4a900;font-weight: bold;\">" + name + "</font> ";
         }
         else if (all == toconf)
         {
-            return "<font style=\"color:#0c030d;font-weight: bold;\">" + name + "</font> ";
+            return "<font style=\"color:#27a327;font-weight: bold;\">" + name + "</font> ";
         }
         else
         {
@@ -85,7 +88,65 @@ namespace KPIWeb
                 Label4.Visible = true;
                 Label5.Visible = true;
 
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext();           
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();     
+      
+
+                //////////////////////////////////////////////////////////////////////////
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add(new DataColumn("First", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("Second", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("Third", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("Email", typeof(string)));
+
+            List<ThirdLevelSubdivisionTable> ThirdLevelWithEditList = (from a in kPiDataContext.ThirdLevelSubdivisionTable
+                                                                       join b in kPiDataContext.UsersTable
+                                                                           on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
+                                                                       join c in kPiDataContext.BasicParametrsAndUsersMapping
+                                                                        on b.UsersTableID equals c.FK_UsersTable
+                                                                       where a.Active == true
+                                                                       && b.Active == true
+                                                                       && c.Active == true
+                                                                       && c.CanEdit == true
+                                                                       select a).Distinct().ToList();
+
+            List<ThirdLevelSubdivisionTable> ThirdLevelNotNullValue = (from a in kPiDataContext.ThirdLevelSubdivisionTable
+                                                                     join b in kPiDataContext.CollectedBasicParametersTable
+                                                                     on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
+                                                                     where b.CollectedValue!=null
+                                                                     select a).Distinct().ToList();
+
+            foreach (ThirdLevelSubdivisionTable cur in ThirdLevelNotNullValue)
+            {
+                ThirdLevelWithEditList.Remove(cur);
+            }
+
+            foreach (ThirdLevelSubdivisionTable CurrentThirdLevel in ThirdLevelWithEditList)
+            {
+                DataRow dataRow2 = dataTable.NewRow();
+                dataRow2["First"] = (from a in kPiDataContext.SecondLevelSubdivisionTable
+                                     join b in kPiDataContext.FirstLevelSubdivisionTable
+                                     on a.FK_FirstLevelSubdivisionTable equals b.FirstLevelSubdivisionTableID
+                                     where a.SecondLevelSubdivisionTableID == CurrentThirdLevel.FK_SecondLevelSubdivisionTable
+                                     select b.Name).FirstOrDefault();
+                dataRow2["Second"] = (from a in kPiDataContext.SecondLevelSubdivisionTable
+                                      where a.SecondLevelSubdivisionTableID == CurrentThirdLevel.FK_SecondLevelSubdivisionTable
+                                      select a.Name).FirstOrDefault();
+                dataRow2["Third"] = CurrentThirdLevel.Name;
+                dataRow2["Email"] = (from a in kPiDataContext.UsersTable
+                                     join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                         on a.UsersTableID equals b.FK_UsersTable
+                                     where a.FK_ThirdLevelSubdivisionTable == CurrentThirdLevel.ThirdLevelSubdivisionTableID
+                                     select a.Email).FirstOrDefault();
+                dataTable.Rows.Add(dataRow2);
+            }
+
+            GridView1.DataSource = dataTable;
+            GridView1.DataBind();
+
+
+                ///////////////////////////////////////////////////////////////////////////////
+
+
                 TreeView1.DataSource = null;
                 TreeView1.DataBind();
                 //Label1.Visible = true;
@@ -142,6 +203,7 @@ namespace KPIWeb
                     i++;
                     int par0 = i;
                     tmp2 = getColoredName(all0,conf0,toconf0,started0,notstarted0, zeroLevelItem.Name);
+                    if (tmp2!=null)
                     list.Add(new MyObject() { Id = i, ParentId = 0, Name = tmp2 + " : " + all0.ToString() + "/" + conf0.ToString() + "/" + toconf0.ToString() + "/" + started0.ToString() + "/" + notstarted0.ToString() });
                     foreach (FirstLevelSubdivisionTable firstLevelItem in firstLevelList)//по каждой академии
                     {
@@ -187,7 +249,9 @@ namespace KPIWeb
                         i++;
                         int par1 = i;
                         //tmp2 = firstLevelItem.Name;
+                        
                         tmp2 = getColoredName(all0, conf0, toconf0, started0, notstarted0, firstLevelItem.Name);
+                        if (tmp2 != null)
                         list.Add(new MyObject() { Id = i, ParentId = par0, Name = tmp2 + " : " + all0.ToString() + "/" + conf0.ToString() + "/" + toconf0.ToString() + "/" + started0.ToString() + "/" + notstarted0.ToString() });
                         foreach (SecondLevelSubdivisionTable secondLevelItem in secondLevelList)//по каждому факультету
                         {
@@ -232,7 +296,9 @@ namespace KPIWeb
                             i++;
                             int par2 = i;
                             //tmp2 = secondLevelItem.Name;
+                            
                             tmp2 = getColoredName(all0, conf0, toconf0, started0, notstarted0, secondLevelItem.Name);
+                            if (tmp2 != null)
                             list.Add(new MyObject() { Id = i, ParentId = par1, Name = tmp2 + " : " + all0.ToString() + "/" + conf0.ToString() + "/" + toconf0.ToString() + "/" + started0.ToString() + "/" + notstarted0.ToString() });
                             foreach (ThirdLevelSubdivisionTable thirdLevelItem in thirdLevelList)//по кафедре
                             {
@@ -269,7 +335,9 @@ namespace KPIWeb
                                 i++;
                                 int par3 = i;
                                // tmp2 = thirdLevelItem.Name;
+                                
                                 tmp2 = getColoredName(all0, conf0, toconf0, started0, notstarted0, thirdLevelItem.Name);
+                                if (tmp2 != null)
                                 list.Add(new MyObject() { Id = i, ParentId = par2, Name = tmp2 + " : " + all0.ToString() + "/" + conf0.ToString() + "/" + toconf0.ToString() + "/" + started0.ToString() + "/" + notstarted0.ToString() });
                             }
                         }

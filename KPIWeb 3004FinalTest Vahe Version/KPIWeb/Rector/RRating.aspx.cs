@@ -10,6 +10,115 @@ namespace KPIWeb.Rector
 {
     public partial class RRating : System.Web.UI.Page
     {
+        public ChartOneValue GetCalculatedIndicator(int ReportID, IndicatorsTable Indicator, FirstLevelSubdivisionTable Academy, SecondLevelSubdivisionTable Faculty) // academyID == null && facultyID==null значит для всего КФУ
+        {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            float Planned_Value = 0;
+            string Name_ = "";
+            float Value_ = 0;
+            #region plannedIndicator
+            PlannedIndicator plannedValue = (from a in kpiWebDataContext.PlannedIndicator
+                                             where a.FK_IndicatorsTable == Indicator.IndicatorsTableID
+                                                   && a.Date > DateTime.Now
+                                             select a).OrderBy(x => x.Date).FirstOrDefault();
+            if (plannedValue != null)
+            {
+                Planned_Value = (float)plannedValue.Value;
+            }
+            #endregion
+            #region Name
+            if ((Academy == null) && (Faculty == null))
+            {
+                if (Indicator.Measure != null)
+                {
+                    if (Indicator.Measure.Length > 0)
+                    {
+                        Name_ = Indicator.Name + " (" + Indicator.Measure + ")";
+                    }
+                    else
+                    {
+                        Name_ = Indicator.Name;
+                    }
+                }
+                else
+                {
+                    Name_ = Indicator.Name;
+                }
+            }
+            else if (Faculty != null)
+            {
+                Name_ = Faculty.Name;
+            }
+            else if (Academy != null)
+            {
+                Name_ = Academy.Name;
+            }
+
+
+
+            #endregion
+            #region
+            //ForRCalc.Struct mainStruct = mainStruct = new ForRCalc.Struct(1, 0, 0, 0, 0, "N");
+            CollectedIndicatorsForR collected = new CollectedIndicatorsForR();
+            if ((Academy == null) && (Faculty == null))
+            {
+                //mainStruct = new ForRCalc.Struct(1, 0, 0, 0, 0, "N");
+                collected = (from a in kpiWebDataContext.CollectedIndicatorsForR
+                             where a.FK_ReportArchiveTable == ReportID
+                             && a.FK_IndicatorsTable == Indicator.IndicatorsTableID
+                             && a.FK_FirstLevelSubdivisionTable == null
+                             && a.FK_SecondLevelSubdivisionTable == null
+                             select a).FirstOrDefault();
+            }
+            else if (Faculty != null)
+            {
+                //mainStruct = new ForRCalc.Struct(1, Faculty.FK_FirstLevelSubdivisionTable, Faculty.SecondLevelSubdivisionTableID, 0, 0, "N");
+                collected = (from a in kpiWebDataContext.CollectedIndicatorsForR
+                             where a.FK_ReportArchiveTable == ReportID
+                             && a.FK_IndicatorsTable == Indicator.IndicatorsTableID
+                             && a.FK_FirstLevelSubdivisionTable == Faculty.FK_FirstLevelSubdivisionTable
+                             && a.FK_SecondLevelSubdivisionTable == Faculty.SecondLevelSubdivisionTableID
+                             select a).FirstOrDefault();
+            }
+            else if (Academy != null)
+            {
+                //mainStruct = new ForRCalc.Struct(1, Academy.FirstLevelSubdivisionTableID, 0, 0, 0, "N");
+                collected = (from a in kpiWebDataContext.CollectedIndicatorsForR
+                             where a.FK_ReportArchiveTable == ReportID
+                             && a.FK_IndicatorsTable == Indicator.IndicatorsTableID
+                             && a.FK_FirstLevelSubdivisionTable == Academy.FirstLevelSubdivisionTableID
+                             && a.FK_SecondLevelSubdivisionTable == null
+                             select a).FirstOrDefault();
+            }
+            /*    
+        float tmp = ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0, Indicator.IndicatorsTableID, ReportID, 0));
+
+        if (tmp == (float)1E+20)
+        {
+            Value_ = 0;
+        }
+        else
+        {
+            Value_ = tmp;
+        }
+        */
+            if (collected == null)
+            {
+                Value_ = 0;
+            }
+            else
+                if (collected.Value == null)
+                {
+                    Value_ = 0;
+                }
+                else
+                {
+                    Value_ = (float)collected.Value;
+                }
+            #endregion
+            ChartOneValue DataRowForChart = new ChartOneValue(Name_, Value_, Planned_Value);
+            return DataRowForChart;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             Serialization UserSer = (Serialization)Session["UserID"];

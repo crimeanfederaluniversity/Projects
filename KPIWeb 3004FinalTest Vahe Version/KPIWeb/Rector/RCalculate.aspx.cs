@@ -11,7 +11,21 @@ namespace KPIWeb.Rector
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
 
+            int userID = UserSer.Id;
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            if (userTable.AccessLevel != 10)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -394,20 +408,21 @@ namespace KPIWeb.Rector
                     if (basicParam.AbbreviationEN == "OOP_A_SOT") tmp = pattern6(user, ReportArchiveID, 4);
 
                     //новые показатели 13.06.2015
-                    if (basicParam.AbbreviationEN == "a_Och_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "a_Och_M_CO", null);
-                    if (basicParam.AbbreviationEN == "b_OchZ_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "b_OchZ_M_CO", null);
-                    if (basicParam.AbbreviationEN == "c_Z_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "c_Z_M_CO", null);
-                    if (basicParam.AbbreviationEN == "d_E_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "d_E_M_CO", null);
+                    if (basicParam.AbbreviationEN == "a_Och_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "a_Och_M_C", null);
+                    if (basicParam.AbbreviationEN == "b_OchZ_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "b_OchZ_M_C", null);
+                    if (basicParam.AbbreviationEN == "c_Z_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "c_Z_M_C", null);
+                    if (basicParam.AbbreviationEN == "d_E_M_CO_R") tmp = pattern1(user, ReportArchiveID, 3, "d_E_M_C", null);
 
-                    if (basicParam.AbbreviationEN == "a_Och_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "a_Och_B_CO", null);
-                    if (basicParam.AbbreviationEN == "d_E_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "d_E_B_CO", null);
-                    if (basicParam.AbbreviationEN == "c_Z_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "c_Z_B_CO", null);
-                    if (basicParam.AbbreviationEN == "d_E_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "d_E_B_CO", null);
+                    if (basicParam.AbbreviationEN == "a_Och_B_CO_R") 
+                        tmp = pattern1(user, ReportArchiveID, 1, "a_Och_B_C", null);
+                    if (basicParam.AbbreviationEN == "d_E_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "d_E_B_C", null);
+                    if (basicParam.AbbreviationEN == "c_Z_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "c_Z_B_C", null);
+                    if (basicParam.AbbreviationEN == "d_E_B_CO_R") tmp = pattern1(user, ReportArchiveID, 1, "d_E_B_C", null);
 
-                    if (basicParam.AbbreviationEN == "a_Och_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "a_Och_S_CO", null);
-                    if (basicParam.AbbreviationEN == "b_OchZ_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "b_OchZ_S_CO", null);
-                    if (basicParam.AbbreviationEN == "c_Z_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "c_Z_S_CO", null);
-                    if (basicParam.AbbreviationEN == "d_E_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "d_E_S_CO", null);
+                    if (basicParam.AbbreviationEN == "a_Och_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "a_Och_S_C", null);
+                    if (basicParam.AbbreviationEN == "b_OchZ_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "b_OchZ_S_C", null);
+                    if (basicParam.AbbreviationEN == "c_Z_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "c_Z_S_C", null);
+                    if (basicParam.AbbreviationEN == "d_E_S_CO_R") tmp = pattern1(user, ReportArchiveID, 2, "d_E_S_C", null);
                     //новые показатели                 
 
                     if (basicParam.AbbreviationEN == "Kol_Kaf_R")
@@ -477,6 +492,13 @@ namespace KPIWeb.Rector
                                                                where b.FK_BasicParametersTable == 3637
                                                                && b.FK_ReportArchiveTable == 1
                                                                select a).Distinct().ToList();
+
+/*          UsersTable UUUUUSER = (from a in kPiDataContext.UsersTable
+
+                                   where a.UsersTableID == 12489
+                                           select a).FirstOrDefault();
+            CalcCalculate(1, UUUUUSER);
+*/
             foreach (ThirdLevelSubdivisionTable thirdLevel in ThirdLevelList)
             {
                 UsersTable UsersToCalculate = (from a in kPiDataContext.UsersTable
@@ -486,6 +508,82 @@ namespace KPIWeb.Rector
                                                          && b.CanEdit == true select a).FirstOrDefault();
                 CalcCalculate(1, UsersToCalculate);
             }
+        }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            List<ThirdLevelSubdivisionTable> ThirdLevelList = (from a in kPiDataContext.ThirdLevelSubdivisionTable
+                                                    where a.Active == true
+                                                    select a).ToList();
+            TextBox1.Text = "";
+            foreach (ThirdLevelSubdivisionTable CurrentThird in ThirdLevelList)
+            {
+                int ConfirmedCnt = (from a in kPiDataContext.CollectedBasicParametersTable
+                                    where a.FK_ThirdLevelSubdivisionTable == CurrentThird.ThirdLevelSubdivisionTableID
+                                    && a.Active == true
+                                    && a.Status == 4
+                                    && a.FK_ReportArchiveTable == 1
+                                    select a).Count();
+                CollectedBasicParametersTable FirstCollected = (from a in kPiDataContext.CollectedBasicParametersTable
+                                                                where a.FK_ThirdLevelSubdivisionTable == CurrentThird.ThirdLevelSubdivisionTableID
+                                                                && a.FK_ReportArchiveTable == 1
+                                                                && a.Active == true
+                                                                select a).FirstOrDefault();
+                
+                if ((ConfirmedCnt>10)&&(FirstCollected.Status == 4))
+                {
+                    TextBox1.Text += "утверждено" + ConfirmedCnt.ToString();
+                    TextBox1.Text += " всего" + (from a in kPiDataContext.CollectedBasicParametersTable
+                                                            where a.FK_ThirdLevelSubdivisionTable == CurrentThird.ThirdLevelSubdivisionTableID
+                                                            && a.FK_ReportArchiveTable == 1
+                                                            && a.Active == true
+                                                            select a).Count().ToString();
+                    
+                    List<CollectedBasicParametersTable> CollectedToChange = (from a in kPiDataContext.CollectedBasicParametersTable
+                                                                             where a.FK_ThirdLevelSubdivisionTable == CurrentThird.ThirdLevelSubdivisionTableID
+                                                                             && a.FK_ReportArchiveTable == 1
+                                                                             && a.Active == true
+                                                                             select a).ToList();
+                    foreach (CollectedBasicParametersTable CollectedBasic in CollectedToChange)
+                    {
+                        CollectedBasic.Status = 4;
+                    }
+                    kPiDataContext.SubmitChanges();
+                    TextBox1.Text += " сделано";
+                    TextBox1.Text += Environment.NewLine;
+                }
+                else if (ConfirmedCnt > 0)
+                {
+                    TextBox1.Text += "ОШИБКА утверждено" + ConfirmedCnt.ToString();
+                    TextBox1.Text += " не утверждено" + (from a in kPiDataContext.CollectedBasicParametersTable
+                                                        where a.FK_ThirdLevelSubdivisionTable == CurrentThird.ThirdLevelSubdivisionTableID
+                                                        && a.FK_ReportArchiveTable == 1
+                                                        && a.Active == true
+                                                        select a).Count().ToString();
+
+                    TextBox1.Text += " ID 3-го уровня" + CurrentThird.ThirdLevelSubdivisionTableID.ToString();
+                    TextBox1.Text += Environment.NewLine;
+                }
+                else if ((FirstCollected!=null)&&(FirstCollected.Status == 4))
+                {
+                    TextBox1.Text += "ОШИБКА утверждено" + ConfirmedCnt.ToString();
+                    TextBox1.Text += " не утверждено" + (from a in kPiDataContext.CollectedBasicParametersTable
+                                                        where a.FK_ThirdLevelSubdivisionTable == CurrentThird.ThirdLevelSubdivisionTableID
+                                                        && a.FK_ReportArchiveTable == 1
+                                                        && a.Active == true
+                                                        select a).Count().ToString();
+                    TextBox1.Text += " ID 3-го уровня" + CurrentThird.ThirdLevelSubdivisionTableID.ToString();
+                    TextBox1.Text += Environment.NewLine;
+                }
+                else
+                {
+
+                }
+
+            }
+            
+
         }
         
     }
