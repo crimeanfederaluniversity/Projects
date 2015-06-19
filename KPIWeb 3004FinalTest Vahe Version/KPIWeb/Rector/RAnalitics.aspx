@@ -121,7 +121,7 @@
                     <Columns> 
                     <asp:TemplateField HeaderText="1">
                       <ItemTemplate>
-                          <asp:Button ID="IndicatorClass" runat="server"  OnClientClick="showLoadPanel()" Text='<%# Eval("IndicatorClassName") %>' CommandArgument='<%# Eval("IndicatorClassID") %>' Width="200px"  
+                          <asp:LinkButton ID="LinkButton1" runat="server" OnClientClick="showLoadPanel()" Text='<%# Eval("IndicatorClassName") %>' CommandArgument='<%# Eval("IndicatorClassID") %>' Width="200px"  
                           OnClick="ButtonClassClick" />           
                           <br />                                         
                        </ItemTemplate>                 
@@ -135,9 +135,8 @@
                     <Columns> 
                     <asp:TemplateField HeaderText="2">
                       <ItemTemplate>
-                          <asp:Button ID="Prorector" runat="server" OnClientClick="showLoadPanel()" Text='<%# Eval("ProrectorName") %>' CommandArgument='<%# Eval("ProrectorID") %>' Width="200px"  
-                          OnClick="ButtonProrectorClick" />   
-                          <br />                                                  
+                          <asp:LinkButton ID="LinkButton2" runat="server" OnClientClick="showLoadPanel()" Text='<%# Eval("ProrectorName") %>' CommandArgument='<%# Eval("ProrectorID") %>' Width="200px"  
+                          OnClick="ButtonProrectorClick" />                                                 
                        </ItemTemplate>                     
                  </asp:TemplateField>
                     </Columns> 

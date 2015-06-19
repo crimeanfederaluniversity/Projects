@@ -154,10 +154,9 @@ namespace KPIWeb.Rector
 
             }
         }
- 
         protected void ButtonClassClick(object sender, EventArgs e) // По типам индикаторов
         {
-            Button button = (Button)sender;
+            LinkButton button = (LinkButton)sender;
             {
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
                 List<int> IndicatorList = (from a in kpiWebDataContext.IndicatorsTable
@@ -178,7 +177,7 @@ namespace KPIWeb.Rector
         }
         protected void ButtonProrectorClick(object sender, EventArgs e) //По проректорам
         {
-            Button button = (Button)sender;
+            LinkButton button = (LinkButton)sender;
             {
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
                 List<int> IndicatorList = (from a in kpiWebDataContext.IndicatorsTable
@@ -198,7 +197,6 @@ namespace KPIWeb.Rector
                 }
             }
         } 
-
         protected void Button4_Click(object sender, EventArgs e) // по всем показателям
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();

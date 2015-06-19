@@ -1921,14 +1921,14 @@ namespace KPIWeb.Reports
         }
         protected void Button1_Click(object sender, EventArgs e) // экспорт в excel
         {
-            string pdfFile = CreatePdf();
+            /*string pdfFile = CreatePdf();
             Response.Write("<script>");
             Response.Write("window.open('" + pdfFile + "','_blank')");
-            Response.Write("</script>");
-            /*
+            Response.Write("</script>");*/
+            
              Response.ContentType = "Application/pdf";
              Response.TransmitFile(CreatePdf());
-             Response.End();   */
+             Response.End();   
 
         }
         protected void Button2_Click(object sender, EventArgs e) // вернуться в меню 
