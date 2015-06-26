@@ -119,7 +119,22 @@ namespace KPIWeb.Rector
                 {
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ProrectorID"] = Prorector.UsersTableID;
-                    dataRow["ProrectorName"] = Prorector.Email;
+                    if (Prorector.Position != null)
+                    {
+                        if (Prorector.Position.Length <2)
+                        {
+                            dataRow["ProrectorName"] = Prorector.Email;
+                        }
+                        else
+                        {
+                            dataRow["ProrectorName"] = Prorector.Position;
+                        }
+                    }
+                    else
+                    {
+                        dataRow["ProrectorName"] = Prorector.Email;
+                    }
+                    
                     dataTable.Rows.Add(dataRow);
                 }
                 GridView2.DataSource = dataTable;
@@ -214,16 +229,20 @@ namespace KPIWeb.Rector
             }
             int userID = UserSer.Id;
 
-            List<int> IndicatorList = (from a in kpiWebDataContext.IndicatorsTable
-                                       where a.Active == true
-                                       join b in kpiWebDataContext.IndicatorsAndUsersMapping
-                                       on a.IndicatorsTableID equals b.FK_IndicatorsTable
-                                       where b.CanView == true
-                                       && b.Active == true
-                                       && b.FK_UsresTable == userID
-                                       select a.IndicatorsTableID).ToList();
-
-
+            List<IndicatorsTable> IndicatorList_0 = (from a in kpiWebDataContext.IndicatorsTable
+                                                     where a.Active == true
+                                                     join b in kpiWebDataContext.IndicatorsAndUsersMapping
+                                                     on a.IndicatorsTableID equals b.FK_IndicatorsTable
+                                                     where b.CanView == true
+                                                     && b.Active == true
+                                                     && b.FK_UsresTable == userID
+                                                     select a).OrderBy(c => c.SortID).ToList();
+            List<int> IndicatorList = new List<int>();
+            foreach (IndicatorsTable current in IndicatorList_0)
+            {
+                IndicatorList.Add(current.IndicatorsTableID);
+            }
+           
 
             RectorChartSession RectorChart = new RectorChartSession();
             RectorChart.IndicatorsList = IndicatorList;
