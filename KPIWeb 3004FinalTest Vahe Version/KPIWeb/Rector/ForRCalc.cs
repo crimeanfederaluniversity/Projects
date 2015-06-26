@@ -541,7 +541,6 @@ namespace KPIWeb.Rector
             }
             return tmp;
         }
-
         public static ChartOneValue GetCalculatedIndicator(int ReportID, IndicatorsTable Indicator, FirstLevelSubdivisionTable Academy, SecondLevelSubdivisionTable Faculty) // academyID == null && facultyID==null значит для всего КФУ
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
@@ -652,5 +651,64 @@ namespace KPIWeb.Rector
             return DataRowForChart;
         }
   
+        public static ChartValueWithAllPlanned GetAllPlannedForIndicator(int IndicatorID)
+        {
+            ChartValueWithAllPlanned tmp = new ChartValueWithAllPlanned();
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();   
+            IndicatorsTable CurrentIndicator = (from a in kpiWebDataContext.IndicatorsTable 
+                                                where a.IndicatorsTableID == IndicatorID
+                                                select a).FirstOrDefault();
+            tmp.IndicatorID = CurrentIndicator.IndicatorsTableID;
+            tmp.IndicatorName = CurrentIndicator.Name;
+
+            List<PlannedIndicator> PlannedForIndicatorList = (from a in kpiWebDataContext.PlannedIndicator
+                                                              where a.Active == true
+                                                              && a.FK_IndicatorsTable == CurrentIndicator.IndicatorsTableID
+                                                              select a).OrderBy(c => c.Date).ToList();
+            List<ChartPlannedValue> PlannedValues = new List<ChartPlannedValue>();
+            PlannedIndicator prev = null;
+            foreach (PlannedIndicator currentPlanned in PlannedForIndicatorList)
+            {
+                ChartPlannedValue PlannedTemp = new ChartPlannedValue();
+                PlannedTemp.Date = (DateTime)currentPlanned.Date;
+                PlannedTemp.PlannedValue = (float)currentPlanned.Value;
+                CollectedIndicatorsForR ValuesForIndicatorList = new CollectedIndicatorsForR();
+                float tmp2 =0;
+                if (prev == null)
+                {
+                    CollectedIndicatorsForR collected = (from a in kpiWebDataContext.CollectedIndicatorsForR
+                                                                  where a.Active == true
+                                                                  && a.FK_FirstLevelSubdivisionTable == null
+                                                                  && a.FK_IndicatorsTable == CurrentIndicator.IndicatorsTableID
+                                                                  && a.CreatedDateTime < currentPlanned.Date
+                                                                  select a).FirstOrDefault();
+                    if(collected!=null )
+                    {
+                        tmp2 = (float) collected.Value;
+                    }
+                    
+                }
+                else
+                {
+                    CollectedIndicatorsForR collected = (from a in kpiWebDataContext.CollectedIndicatorsForR
+                                                         where a.Active == true
+                                                         && a.FK_FirstLevelSubdivisionTable == null
+                                                         && a.FK_IndicatorsTable == CurrentIndicator.IndicatorsTableID
+                                                         && a.CreatedDateTime < currentPlanned.Date
+                                                         && a.CreatedDateTime > prev.Date
+                                                         select a).FirstOrDefault();
+                    if (collected != null)
+                    {
+                        tmp2 = (float)collected.Value;
+                    }
+                }
+                PlannedTemp.RealValue = tmp2;
+                PlannedValues.Add(PlannedTemp);
+                prev = currentPlanned;
+            }
+            tmp.PlannedAndRealValuesList = PlannedValues;
+            return tmp;
+        }
+
     }
 }

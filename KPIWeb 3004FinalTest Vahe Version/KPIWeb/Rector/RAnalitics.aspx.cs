@@ -180,13 +180,21 @@ namespace KPIWeb.Rector
             LinkButton button = (LinkButton)sender;
             {
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-                List<int> IndicatorList = (from a in kpiWebDataContext.IndicatorsTable
-                                           where a.Active == true
-                                           join b in kpiWebDataContext.IndicatorClass
-                                           on a.FK_IndicatorClass equals b.IndicatorClassID
-                                           where
-                                           b.IndicatorClassID == Convert.ToInt32(button.CommandArgument)
-                                           select a.IndicatorsTableID).Distinct().ToList();
+
+                List<IndicatorsTable> IndicatorList_0 = (from a in kpiWebDataContext.IndicatorsTable
+                                                         where a.Active == true
+                                                         join b in kpiWebDataContext.IndicatorClass
+                                                         on a.FK_IndicatorClass equals b.IndicatorClassID
+                                                         where
+                                                         b.IndicatorClassID == Convert.ToInt32(button.CommandArgument)
+                                                         select a).Distinct().OrderBy(c => c.SortID).ToList();
+
+                List<int> IndicatorList = new List<int>();
+                foreach (IndicatorsTable current in IndicatorList_0)
+                {
+                    IndicatorList.Add(current.IndicatorsTableID);
+                }
+
                 if (IndicatorList.Count() > 0)
                 {
                     RectorChartSession RectorChart = new RectorChartSession();
@@ -201,14 +209,23 @@ namespace KPIWeb.Rector
             LinkButton button = (LinkButton)sender;
             {
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-                List<int> IndicatorList = (from a in kpiWebDataContext.IndicatorsTable
+
+                List<IndicatorsTable> IndicatorList_0 = (from a in kpiWebDataContext.IndicatorsTable
                                            where a.Active == true
                                            join b in kpiWebDataContext.IndicatorsAndUsersMapping
                                            on a.IndicatorsTableID equals b.FK_IndicatorsTable
                                            where b.Active == true
                                            && b.CanConfirm == true
                                            && b.FK_UsresTable == Convert.ToInt32(button.CommandArgument)
-                                           select a.IndicatorsTableID).Distinct().ToList();
+                                           select a).Distinct().OrderBy(c => c.SortID).ToList();
+
+                List<int> IndicatorList = new List<int>();
+
+                foreach (IndicatorsTable current in IndicatorList_0)
+                {
+                    IndicatorList.Add(current.IndicatorsTableID);
+                }
+              
                 if (IndicatorList.Count() > 0)
                 {
                     RectorChartSession RectorChart = new RectorChartSession();
@@ -237,6 +254,7 @@ namespace KPIWeb.Rector
                                                      && b.Active == true
                                                      && b.FK_UsresTable == userID
                                                      select a).OrderBy(c => c.SortID).ToList();
+
             List<int> IndicatorList = new List<int>();
             foreach (IndicatorsTable current in IndicatorList_0)
             {

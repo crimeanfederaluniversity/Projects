@@ -46,4 +46,17 @@ namespace KPIWeb.Rector
        
 
     }
+
+    public class ChartPlannedValue
+    {
+        public float PlannedValue;
+        public float RealValue;
+        public DateTime Date;
+    }
+    public class ChartValueWithAllPlanned
+    {
+        public int IndicatorID;
+        public string IndicatorName;
+        public List<ChartPlannedValue> PlannedAndRealValuesList;     
+    }
 }

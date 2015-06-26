@@ -373,7 +373,7 @@
     </span>
 
         <span id="div_3">
-        <asp:Button ID="Button3" runat="server" Text=""  OnClick="Button2_Click"  CssClass=""/>
+        <asp:Button ID="Button3" runat="server" Text=""  OnClick="Button3_Click"  CssClass=""/>
             <span id="insp3" >Третья кнопка снизу по центру</span>
     </span>
     </div>
