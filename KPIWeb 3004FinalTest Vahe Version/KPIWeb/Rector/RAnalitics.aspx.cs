@@ -129,6 +129,7 @@ namespace KPIWeb.Rector
                 dataTable2.Columns.Add(new DataColumn("IndicatorClassID", typeof(string)));
                 dataTable2.Columns.Add(new DataColumn("IndicatorClassName", typeof(string)));
                 List<IndicatorClass> IndicatorClassList = (from a in kpiWebDataContext.IndicatorClass
+
                                                            select a).ToList();
                 foreach (IndicatorClass IndicatorClass in IndicatorClassList)
                 {
@@ -142,7 +143,12 @@ namespace KPIWeb.Rector
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 List<IndicatorsTable> IndicatorsTableList = (from a in kpiWebDataContext.IndicatorsTable
                                                              where a.Active == true
-                                                             select a).ToList();
+                                                             join b in kpiWebDataContext.IndicatorsAndUsersMapping
+                                                             on a.IndicatorsTableID equals b.FK_IndicatorsTable
+                                                             where b.CanView == true
+                                                             && b.Active == true
+                                                             && b.FK_UsresTable == userID
+                                                             select a).OrderBy(c => c.SortID).ToList();
                 CheckBoxList1.Items.Clear();
                 foreach (IndicatorsTable currentIndicator in IndicatorsTableList)
                 {
@@ -200,9 +206,25 @@ namespace KPIWeb.Rector
         protected void Button4_Click(object sender, EventArgs e) // по всем показателям
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userID = UserSer.Id;
+
             List<int> IndicatorList = (from a in kpiWebDataContext.IndicatorsTable
                                        where a.Active == true
+                                       join b in kpiWebDataContext.IndicatorsAndUsersMapping
+                                       on a.IndicatorsTableID equals b.FK_IndicatorsTable
+                                       where b.CanView == true
+                                       && b.Active == true
+                                       && b.FK_UsresTable == userID
                                        select a.IndicatorsTableID).ToList();
+
+
+
             RectorChartSession RectorChart = new RectorChartSession();
             RectorChart.IndicatorsList = IndicatorList;
             Session["RectorChart"] = RectorChart;

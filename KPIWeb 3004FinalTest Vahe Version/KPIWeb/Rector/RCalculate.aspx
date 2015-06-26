@@ -9,6 +9,9 @@
 <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Утвердить все недоутвержденные" Width="716px" />
 <br />
     <br />
-    <asp:TextBox ID="TextBox1" runat="server" Height="157px" TextMode="MultiLine" Width="701px"></asp:TextBox>
+    <asp:TextBox ID="TextBox1" runat="server" Height="39px" TextMode="MultiLine" Width="705px"></asp:TextBox>
+    <br />
+    <br />
+    <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Создание связи для новых показателей (не нажимай а то плохо будет)" Width="710px" />
     <br />
 </asp:Content>

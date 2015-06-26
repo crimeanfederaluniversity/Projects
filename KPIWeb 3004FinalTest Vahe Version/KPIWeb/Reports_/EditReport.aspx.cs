@@ -23,7 +23,7 @@ namespace KPIWeb.Reports
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             ///////////////////////////////////////////////////////////////////////////////////////////////////////                
             List<IndicatorsTable> indicatorTable =
-            (from item in kPiDataContext.IndicatorsTable where item.Active == true select item).ToList();
+            (from item in kPiDataContext.IndicatorsTable where item.Active == true select item).OrderBy(c => c.SortID).ToList();
             DataTable dataTableIndicator = new DataTable();
 
             dataTableIndicator.Columns.Add(new DataColumn("IndicatorID", typeof(string)));

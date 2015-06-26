@@ -6,13 +6,47 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 
+
 namespace KPIWeb.Rector
 {
     public partial class RRating : System.Web.UI.Page
     {
+
+        public string FloatToStrFormat(float value,float plannedValue,int DataType)
+        {
+            if (DataType == 1)
+            {
+                string tmpValue = Math.Round(value).ToString();// value.ToString("0");
+                return tmpValue;
+            }
+            else if(DataType == 2)
+            {
+                string tmpValue = value.ToString();
+                string tmpPlanned = plannedValue.ToString();
+                int PlannedNumbersAftepPoint = 2;
+                if (tmpPlanned.IndexOf(',') != -1)
+                {
+                    PlannedNumbersAftepPoint = (tmpPlanned.Length - tmpPlanned.IndexOf(',')+1);
+                }
+                int ValuePointIndex = tmpValue.IndexOf(',');
+                if (ValuePointIndex != -1)
+                {
+                    if ((tmpValue.Length - ValuePointIndex - PlannedNumbersAftepPoint) > 0)
+                    {
+                        tmpValue = tmpValue.Remove(ValuePointIndex + PlannedNumbersAftepPoint, tmpValue.Length - ValuePointIndex - PlannedNumbersAftepPoint);
+                    }
+                }
+                return tmpValue;
+            }
+
+            return "0";
+        }
+   
         public ChartOneValue GetCalculatedIndicator(int ReportID, IndicatorsTable Indicator, FirstLevelSubdivisionTable Academy, SecondLevelSubdivisionTable Faculty) // academyID == null && facultyID==null значит для всего КФУ
         {
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+
+            return ForRCalc.GetCalculatedIndicator(ReportID, Indicator, Academy, Faculty);
+          /*  KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             float Planned_Value = 0;
             string Name_ = "";
             float Value_ = 0;
@@ -90,18 +124,6 @@ namespace KPIWeb.Rector
                              && a.FK_SecondLevelSubdivisionTable == null
                              select a).FirstOrDefault();
             }
-            /*    
-        float tmp = ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0, Indicator.IndicatorsTableID, ReportID, 0));
-
-        if (tmp == (float)1E+20)
-        {
-            Value_ = 0;
-        }
-        else
-        {
-            Value_ = tmp;
-        }
-        */
             if (collected == null)
             {
                 Value_ = 0;
@@ -117,7 +139,7 @@ namespace KPIWeb.Rector
                 }
             #endregion
             ChartOneValue DataRowForChart = new ChartOneValue(Name_, Value_, Planned_Value);
-            return DataRowForChart;
+            return DataRowForChart;*/
         }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -187,10 +209,23 @@ namespace KPIWeb.Rector
                         dataRow["ID"] = ForRCalc.GetLastID(currentStruct).ToString();
                         dataRow["Number"] = "";
                         dataRow["Name"] = currentStruct.Name;
-                        dataRow["Value"] =
-                            ForRCalc.GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID, SpecID).ToString("0.000");
+
+                        FirstLevelSubdivisionTable Academy = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
+                                                              where a.FirstLevelSubdivisionTableID == currentStruct.Lv_1
+                                                              select a).FirstOrDefault();
+
+                        IndicatorsTable CurrentIndicator = (from a in kpiWebDataContext.IndicatorsTable
+                                                            where a.IndicatorsTableID == ParamID
+                                                            select a).FirstOrDefault();
+
+                        ChartOneValue CurrentValue = ForRCalc.GetCalculatedIndicator(ReportID, CurrentIndicator, Academy, null);
+
+                        dataRow["Value"] = FloatToStrFormat(CurrentValue.value, CurrentValue.planned, (Int32)CurrentIndicator.DataType);
+                            
+                           // ForRCalc.GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID, SpecID).ToString("0.000");
                         dataTable.Rows.Add(dataRow);
                     }
+
 
                     Grid.Columns[3].Visible = false;
                     Grid.Columns[4].Visible = false;
@@ -215,7 +250,7 @@ namespace KPIWeb.Rector
                                 && b.CanView == true
                                 && b.FK_UsresTable == userID
                                 && c.FK_ReportArchiveTable == ReportID
-                            select a).OrderBy(mc => mc.IndicatorsTableID).ToList();
+                            select a).OrderBy(mc => mc.SortID).ToList();
 
                         foreach (IndicatorsTable CurrentIndicator in Indicators)
                         {
@@ -253,8 +288,21 @@ namespace KPIWeb.Rector
                                 dataRow["PlannedValue"] = "Не определено";
                             }
 
-                            float tmp = ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
-                                                CurrentIndicator.IndicatorsTableID, ReportID, SpecID));
+                           /* FirstLevelSubdivisionTable Academy = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
+                                                                  where a.FirstLevelSubdivisionTableID == mainStruct.Lv_1
+                                                                  select a).FirstOrDefault();*/
+                          //  SecondLevelSubdivisionTable Faculty = new SecondLevelSubdivisionTable();
+
+                            ChartOneValue CurrentValue = ForRCalc.GetCalculatedIndicator(ReportID, CurrentIndicator, null, null);
+                            
+                            ///плановое тоже надо брать из этого экзамляра а не заново искать
+
+
+
+                            float tmp = CurrentValue.value;
+                                //ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
+                                         //       CurrentIndicator.IndicatorsTableID, ReportID, SpecID));
+                            
 
                             if (tmp == (float)1E+20)
                             {
@@ -262,12 +310,13 @@ namespace KPIWeb.Rector
                             }
                             else
                             {
-                                dataRow["Value"] = tmp.ToString("0.000");
+                                dataRow["Value"] = FloatToStrFormat(tmp, CurrentValue.planned, (Int32)CurrentIndicator.DataType);
                             }
 
                             dataTable.Rows.Add(dataRow);
                         }
-                    }              
+                    }
+                    Grid.Columns[0].Visible = false;
                 }
                 else if (ViewType == 5)
                 {
@@ -286,8 +335,27 @@ namespace KPIWeb.Rector
                         dataRow["Name"] = currentStruct.Name +", "+(from a in kpiWebDataContext.FirstLevelSubdivisionTable
                                                                         where a.FirstLevelSubdivisionTableID == currentStruct.Lv_1
                                                                         select a.Name).FirstOrDefault();
-                        dataRow["Value"] =
-                            ForRCalc.GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID, SpecID).ToString("0.000");
+
+                        FirstLevelSubdivisionTable Academy = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
+                                                              where a.FirstLevelSubdivisionTableID == currentStruct.Lv_1
+                                                              select a).FirstOrDefault();
+
+                        SecondLevelSubdivisionTable Facullty = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                                                                where a.SecondLevelSubdivisionTableID == currentStruct.Lv_2
+                                                                select a).FirstOrDefault();
+
+                        IndicatorsTable CurrentIndicator = (from a in kpiWebDataContext.IndicatorsTable
+                                                            where a.IndicatorsTableID == ParamID
+                                                            select a).FirstOrDefault();
+
+
+
+                        ChartOneValue CurrentValue = ForRCalc.GetCalculatedIndicator(ReportID, CurrentIndicator, Academy, Facullty);
+
+
+                        dataRow["Value"] = FloatToStrFormat(CurrentValue.value, CurrentValue.planned, (Int32)CurrentIndicator.DataType);
+
+                           // ForRCalc.GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID, SpecID).ToString("0.000");
                         dataTable.Rows.Add(dataRow);
                     }
 

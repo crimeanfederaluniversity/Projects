@@ -66,6 +66,9 @@ namespace KPIWeb
     partial void InsertCollectedIndocators(CollectedIndocators instance);
     partial void UpdateCollectedIndocators(CollectedIndocators instance);
     partial void DeleteCollectedIndocators(CollectedIndocators instance);
+    partial void InsertCommetntForBasicInReport(CommetntForBasicInReport instance);
+    partial void UpdateCommetntForBasicInReport(CommetntForBasicInReport instance);
+    partial void DeleteCommetntForBasicInReport(CommetntForBasicInReport instance);
     partial void InsertConfirmationHistory(ConfirmationHistory instance);
     partial void UpdateConfirmationHistory(ConfirmationHistory instance);
     partial void DeleteConfirmationHistory(ConfirmationHistory instance);
@@ -105,9 +108,6 @@ namespace KPIWeb
     partial void InsertIndicatorsAndUsersMapping(IndicatorsAndUsersMapping instance);
     partial void UpdateIndicatorsAndUsersMapping(IndicatorsAndUsersMapping instance);
     partial void DeleteIndicatorsAndUsersMapping(IndicatorsAndUsersMapping instance);
-    partial void InsertIndicatorsTable(IndicatorsTable instance);
-    partial void UpdateIndicatorsTable(IndicatorsTable instance);
-    partial void DeleteIndicatorsTable(IndicatorsTable instance);
     partial void InsertManualTable(ManualTable instance);
     partial void UpdateManualTable(ManualTable instance);
     partial void DeleteManualTable(ManualTable instance);
@@ -150,10 +150,16 @@ namespace KPIWeb
     partial void InsertUsersTable(UsersTable instance);
     partial void UpdateUsersTable(UsersTable instance);
     partial void DeleteUsersTable(UsersTable instance);
+    partial void InsertEducationCostTable(EducationCostTable instance);
+    partial void UpdateEducationCostTable(EducationCostTable instance);
+    partial void DeleteEducationCostTable(EducationCostTable instance);
+    partial void InsertIndicatorsTable(IndicatorsTable instance);
+    partial void UpdateIndicatorsTable(IndicatorsTable instance);
+    partial void DeleteIndicatorsTable(IndicatorsTable instance);
     #endregion
 		
 		public KPIWebDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["Release_ConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["Release_ConnectionString1"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -390,14 +396,6 @@ namespace KPIWeb
 			}
 		}
 		
-		public System.Data.Linq.Table<IndicatorsTable> IndicatorsTable
-		{
-			get
-			{
-				return this.GetTable<IndicatorsTable>();
-			}
-		}
-		
 		public System.Data.Linq.Table<ManualTable> ManualTable
 		{
 			get
@@ -507,6 +505,22 @@ namespace KPIWeb
 			get
 			{
 				return this.GetTable<UsersTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<EducationCostTable> EducationCostTable
+		{
+			get
+			{
+				return this.GetTable<EducationCostTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<IndicatorsTable> IndicatorsTable
+		{
+			get
+			{
+				return this.GetTable<IndicatorsTable>();
 			}
 		}
 	}
@@ -4143,13 +4157,13 @@ namespace KPIWeb
 		
 		private EntityRef<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
 		
-		private EntityRef<IndicatorsTable> _IndicatorsTable;
-		
 		private EntityRef<ReportArchiveTable> _ReportArchiveTable;
 		
 		private EntityRef<SecondLevelSubdivisionTable> _SecondLevelSubdivisionTable;
 		
 		private EntityRef<ThirdLevelSubdivisionTable> _ThirdLevelSubdivisionTable;
+		
+		private EntityRef<IndicatorsTable> _IndicatorsTable;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -4184,10 +4198,10 @@ namespace KPIWeb
 			this._FifthLevelSubdivisionTable = default(EntityRef<FifthLevelSubdivisionTable>);
 			this._FirstLevelSubdivisionTable = default(EntityRef<FirstLevelSubdivisionTable>);
 			this._FourthLevelSubdivisionTable = default(EntityRef<FourthLevelSubdivisionTable>);
-			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
 			this._ReportArchiveTable = default(EntityRef<ReportArchiveTable>);
 			this._SecondLevelSubdivisionTable = default(EntityRef<SecondLevelSubdivisionTable>);
 			this._ThirdLevelSubdivisionTable = default(EntityRef<ThirdLevelSubdivisionTable>);
+			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
 			OnCreated();
 		}
 		
@@ -4541,40 +4555,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndicatorsForR", Storage="_IndicatorsTable", ThisKey="FK_IndicatorsTable", OtherKey="IndicatorsTableID", IsForeignKey=true)]
-		public IndicatorsTable IndicatorsTable
-		{
-			get
-			{
-				return this._IndicatorsTable.Entity;
-			}
-			set
-			{
-				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
-				if (((previousValue != value) 
-							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._IndicatorsTable.Entity = null;
-						previousValue.CollectedIndicatorsForR.Remove(this);
-					}
-					this._IndicatorsTable.Entity = value;
-					if ((value != null))
-					{
-						value.CollectedIndicatorsForR.Add(this);
-						this._FK_IndicatorsTable = value.IndicatorsTableID;
-					}
-					else
-					{
-						this._FK_IndicatorsTable = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("IndicatorsTable");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedIndicatorsForR", Storage="_ReportArchiveTable", ThisKey="FK_ReportArchiveTable", OtherKey="ReportArchiveTableID", IsForeignKey=true)]
 		public ReportArchiveTable ReportArchiveTable
 		{
@@ -4677,6 +4657,40 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndicatorsForR", Storage="_IndicatorsTable", ThisKey="FK_IndicatorsTable", OtherKey="IndicatorsTableID", IsForeignKey=true)]
+		public IndicatorsTable IndicatorsTable
+		{
+			get
+			{
+				return this._IndicatorsTable.Entity;
+			}
+			set
+			{
+				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
+				if (((previousValue != value) 
+							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._IndicatorsTable.Entity = null;
+						previousValue.CollectedIndicatorsForR.Remove(this);
+					}
+					this._IndicatorsTable.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedIndicatorsForR.Add(this);
+						this._FK_IndicatorsTable = value.IndicatorsTableID;
+					}
+					else
+					{
+						this._FK_IndicatorsTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("IndicatorsTable");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -4724,11 +4738,11 @@ namespace KPIWeb
 		
 		private System.Nullable<int> _FK_ReportArchiveTable;
 		
-		private EntityRef<IndicatorsTable> _IndicatorsTable;
-		
 		private EntityRef<ReportArchiveTable> _ReportArchiveTable;
 		
 		private EntityRef<UsersTable> _UsersTable;
+		
+		private EntityRef<IndicatorsTable> _IndicatorsTable;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -4758,9 +4772,9 @@ namespace KPIWeb
 		
 		public CollectedIndocators()
 		{
-			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
 			this._ReportArchiveTable = default(EntityRef<ReportArchiveTable>);
 			this._UsersTable = default(EntityRef<UsersTable>);
+			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
 			OnCreated();
 		}
 		
@@ -4976,40 +4990,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndocators", Storage="_IndicatorsTable", ThisKey="FK_Indicators", OtherKey="IndicatorsTableID", IsForeignKey=true)]
-		public IndicatorsTable IndicatorsTable
-		{
-			get
-			{
-				return this._IndicatorsTable.Entity;
-			}
-			set
-			{
-				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
-				if (((previousValue != value) 
-							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._IndicatorsTable.Entity = null;
-						previousValue.CollectedIndocators.Remove(this);
-					}
-					this._IndicatorsTable.Entity = value;
-					if ((value != null))
-					{
-						value.CollectedIndocators.Add(this);
-						this._FK_Indicators = value.IndicatorsTableID;
-					}
-					else
-					{
-						this._FK_Indicators = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("IndicatorsTable");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedIndocators", Storage="_ReportArchiveTable", ThisKey="FK_ReportArchiveTable", OtherKey="ReportArchiveTableID", IsForeignKey=true)]
 		public ReportArchiveTable ReportArchiveTable
 		{
@@ -5078,6 +5058,40 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndocators", Storage="_IndicatorsTable", ThisKey="FK_Indicators", OtherKey="IndicatorsTableID", IsForeignKey=true)]
+		public IndicatorsTable IndicatorsTable
+		{
+			get
+			{
+				return this._IndicatorsTable.Entity;
+			}
+			set
+			{
+				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
+				if (((previousValue != value) 
+							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._IndicatorsTable.Entity = null;
+						previousValue.CollectedIndocators.Remove(this);
+					}
+					this._IndicatorsTable.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedIndocators.Add(this);
+						this._FK_Indicators = value.IndicatorsTableID;
+					}
+					else
+					{
+						this._FK_Indicators = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("IndicatorsTable");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -5100,10 +5114,12 @@ namespace KPIWeb
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CommetntForBasicInReport")]
-	public partial class CommetntForBasicInReport
+	public partial class CommetntForBasicInReport : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
-		private System.Nullable<int> _ID;
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
 		
 		private System.Nullable<int> _FK_BasickParamets;
 		
@@ -5111,12 +5127,27 @@ namespace KPIWeb
 		
 		private string _Comment;
 		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnFK_BasickParametsChanging(System.Nullable<int> value);
+    partial void OnFK_BasickParametsChanged();
+    partial void OnFK_ReportChanging(System.Nullable<int> value);
+    partial void OnFK_ReportChanged();
+    partial void OnCommentChanging(string value);
+    partial void OnCommentChanged();
+    #endregion
+		
 		public CommetntForBasicInReport()
 		{
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int")]
-		public System.Nullable<int> ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int ID
 		{
 			get
 			{
@@ -5126,7 +5157,11 @@ namespace KPIWeb
 			{
 				if ((this._ID != value))
 				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
 					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
 				}
 			}
 		}
@@ -5142,7 +5177,11 @@ namespace KPIWeb
 			{
 				if ((this._FK_BasickParamets != value))
 				{
+					this.OnFK_BasickParametsChanging(value);
+					this.SendPropertyChanging();
 					this._FK_BasickParamets = value;
+					this.SendPropertyChanged("FK_BasickParamets");
+					this.OnFK_BasickParametsChanged();
 				}
 			}
 		}
@@ -5158,7 +5197,11 @@ namespace KPIWeb
 			{
 				if ((this._FK_Report != value))
 				{
+					this.OnFK_ReportChanging(value);
+					this.SendPropertyChanging();
 					this._FK_Report = value;
+					this.SendPropertyChanged("FK_Report");
+					this.OnFK_ReportChanged();
 				}
 			}
 		}
@@ -5174,8 +5217,32 @@ namespace KPIWeb
 			{
 				if ((this._Comment != value))
 				{
+					this.OnCommentChanging(value);
+					this.SendPropertyChanging();
 					this._Comment = value;
+					this.SendPropertyChanged("Comment");
+					this.OnCommentChanged();
 				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -5208,11 +5275,11 @@ namespace KPIWeb
 		
 		private EntityRef<CalculatedParametrs> _CalculatedParametrs;
 		
-		private EntityRef<IndicatorsTable> _IndicatorsTable;
-		
 		private EntityRef<ReportArchiveTable> _ReportArchiveTable;
 		
 		private EntityRef<UsersTable> _UsersTable;
+		
+		private EntityRef<IndicatorsTable> _IndicatorsTable;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -5242,9 +5309,9 @@ namespace KPIWeb
 		{
 			this._BasicParametersTable = default(EntityRef<BasicParametersTable>);
 			this._CalculatedParametrs = default(EntityRef<CalculatedParametrs>);
-			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
 			this._ReportArchiveTable = default(EntityRef<ReportArchiveTable>);
 			this._UsersTable = default(EntityRef<UsersTable>);
+			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
 			OnCreated();
 		}
 		
@@ -5516,40 +5583,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_ConfirmationHistory", Storage="_IndicatorsTable", ThisKey="FK_IndicatorsTable", OtherKey="IndicatorsTableID", IsForeignKey=true)]
-		public IndicatorsTable IndicatorsTable
-		{
-			get
-			{
-				return this._IndicatorsTable.Entity;
-			}
-			set
-			{
-				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
-				if (((previousValue != value) 
-							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._IndicatorsTable.Entity = null;
-						previousValue.ConfirmationHistory.Remove(this);
-					}
-					this._IndicatorsTable.Entity = value;
-					if ((value != null))
-					{
-						value.ConfirmationHistory.Add(this);
-						this._FK_IndicatorsTable = value.IndicatorsTableID;
-					}
-					else
-					{
-						this._FK_IndicatorsTable = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("IndicatorsTable");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ConfirmationHistory", Storage="_ReportArchiveTable", ThisKey="FK_ReportTable", OtherKey="ReportArchiveTableID", IsForeignKey=true)]
 		public ReportArchiveTable ReportArchiveTable
 		{
@@ -5614,6 +5647,40 @@ namespace KPIWeb
 						this._FK_UsersTable = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("UsersTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_ConfirmationHistory", Storage="_IndicatorsTable", ThisKey="FK_IndicatorsTable", OtherKey="IndicatorsTableID", IsForeignKey=true)]
+		public IndicatorsTable IndicatorsTable
+		{
+			get
+			{
+				return this._IndicatorsTable.Entity;
+			}
+			set
+			{
+				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
+				if (((previousValue != value) 
+							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._IndicatorsTable.Entity = null;
+						previousValue.ConfirmationHistory.Remove(this);
+					}
+					this._IndicatorsTable.Entity = value;
+					if ((value != null))
+					{
+						value.ConfirmationHistory.Add(this);
+						this._FK_IndicatorsTable = value.IndicatorsTableID;
+					}
+					else
+					{
+						this._FK_IndicatorsTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("IndicatorsTable");
 				}
 			}
 		}
@@ -7986,9 +8053,9 @@ namespace KPIWeb
 		
 		private System.Nullable<bool> _CanConfirm;
 		
-		private EntityRef<IndicatorsTable> _IndicatorsTable;
-		
 		private EntityRef<RolesTable> _RolesTable;
+		
+		private EntityRef<IndicatorsTable> _IndicatorsTable;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -8012,8 +8079,8 @@ namespace KPIWeb
 		
 		public IndicatorsAndRolesMappingTable()
 		{
-			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
 			this._RolesTable = default(EntityRef<RolesTable>);
+			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
 			OnCreated();
 		}
 		
@@ -8165,40 +8232,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_IndicatorsAndRolesMappingTable", Storage="_IndicatorsTable", ThisKey="FK_Indicators", OtherKey="IndicatorsTableID", IsForeignKey=true)]
-		public IndicatorsTable IndicatorsTable
-		{
-			get
-			{
-				return this._IndicatorsTable.Entity;
-			}
-			set
-			{
-				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
-				if (((previousValue != value) 
-							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._IndicatorsTable.Entity = null;
-						previousValue.IndicatorsAndRolesMappingTable.Remove(this);
-					}
-					this._IndicatorsTable.Entity = value;
-					if ((value != null))
-					{
-						value.IndicatorsAndRolesMappingTable.Add(this);
-						this._FK_Indicators = value.IndicatorsTableID;
-					}
-					else
-					{
-						this._FK_Indicators = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("IndicatorsTable");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_IndicatorsAndRolesMappingTable", Storage="_RolesTable", ThisKey="FK_RolesTable", OtherKey="RolesTableID", IsForeignKey=true)]
 		public RolesTable RolesTable
 		{
@@ -8229,6 +8262,40 @@ namespace KPIWeb
 						this._FK_RolesTable = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("RolesTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_IndicatorsAndRolesMappingTable", Storage="_IndicatorsTable", ThisKey="FK_Indicators", OtherKey="IndicatorsTableID", IsForeignKey=true)]
+		public IndicatorsTable IndicatorsTable
+		{
+			get
+			{
+				return this._IndicatorsTable.Entity;
+			}
+			set
+			{
+				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
+				if (((previousValue != value) 
+							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._IndicatorsTable.Entity = null;
+						previousValue.IndicatorsAndRolesMappingTable.Remove(this);
+					}
+					this._IndicatorsTable.Entity = value;
+					if ((value != null))
+					{
+						value.IndicatorsAndRolesMappingTable.Add(this);
+						this._FK_Indicators = value.IndicatorsTableID;
+					}
+					else
+					{
+						this._FK_Indicators = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("IndicatorsTable");
 				}
 			}
 		}
@@ -8274,9 +8341,9 @@ namespace KPIWeb
 		
 		private System.Nullable<int> _FK_IndicatorsTable;
 		
-		private EntityRef<IndicatorsTable> _IndicatorsTable;
-		
 		private EntityRef<UsersTable> _UsersTable;
+		
+		private EntityRef<IndicatorsTable> _IndicatorsTable;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -8300,8 +8367,8 @@ namespace KPIWeb
 		
 		public IndicatorsAndUsersMapping()
 		{
-			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
 			this._UsersTable = default(EntityRef<UsersTable>);
+			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
 			OnCreated();
 		}
 		
@@ -8453,40 +8520,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_IndicatorsAndUsersMapping", Storage="_IndicatorsTable", ThisKey="FK_IndicatorsTable", OtherKey="IndicatorsTableID", IsForeignKey=true)]
-		public IndicatorsTable IndicatorsTable
-		{
-			get
-			{
-				return this._IndicatorsTable.Entity;
-			}
-			set
-			{
-				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
-				if (((previousValue != value) 
-							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._IndicatorsTable.Entity = null;
-						previousValue.IndicatorsAndUsersMapping.Remove(this);
-					}
-					this._IndicatorsTable.Entity = value;
-					if ((value != null))
-					{
-						value.IndicatorsAndUsersMapping.Add(this);
-						this._FK_IndicatorsTable = value.IndicatorsTableID;
-					}
-					else
-					{
-						this._FK_IndicatorsTable = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("IndicatorsTable");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_IndicatorsAndUsersMapping", Storage="_UsersTable", ThisKey="FK_UsresTable", OtherKey="UsersTableID", IsForeignKey=true)]
 		public UsersTable UsersTable
 		{
@@ -8521,337 +8554,36 @@ namespace KPIWeb
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IndicatorsTable")]
-	public partial class IndicatorsTable : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IndicatorsTableID;
-		
-		private System.Nullable<bool> _Active;
-		
-		private string _Name;
-		
-		private string _Measure;
-		
-		private string _Formula;
-		
-		private System.Nullable<int> _FK_IndicatorClass;
-		
-		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
-		
-		private EntitySet<CollectedIndocators> _CollectedIndocators;
-		
-		private EntitySet<ConfirmationHistory> _ConfirmationHistory;
-		
-		private EntitySet<IndicatorsAndRolesMappingTable> _IndicatorsAndRolesMappingTable;
-		
-		private EntitySet<IndicatorsAndUsersMapping> _IndicatorsAndUsersMapping;
-		
-		private EntitySet<PlannedIndicator> _PlannedIndicator;
-		
-		private EntitySet<ReportArchiveAndIndicatorsMappingTable> _ReportArchiveAndIndicatorsMappingTable;
-		
-		private EntityRef<IndicatorClass> _IndicatorClass;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIndicatorsTableIDChanging(int value);
-    partial void OnIndicatorsTableIDChanged();
-    partial void OnActiveChanging(System.Nullable<bool> value);
-    partial void OnActiveChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnMeasureChanging(string value);
-    partial void OnMeasureChanged();
-    partial void OnFormulaChanging(string value);
-    partial void OnFormulaChanged();
-    partial void OnFK_IndicatorClassChanging(System.Nullable<int> value);
-    partial void OnFK_IndicatorClassChanged();
-    #endregion
-		
-		public IndicatorsTable()
-		{
-			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
-			this._CollectedIndocators = new EntitySet<CollectedIndocators>(new Action<CollectedIndocators>(this.attach_CollectedIndocators), new Action<CollectedIndocators>(this.detach_CollectedIndocators));
-			this._ConfirmationHistory = new EntitySet<ConfirmationHistory>(new Action<ConfirmationHistory>(this.attach_ConfirmationHistory), new Action<ConfirmationHistory>(this.detach_ConfirmationHistory));
-			this._IndicatorsAndRolesMappingTable = new EntitySet<IndicatorsAndRolesMappingTable>(new Action<IndicatorsAndRolesMappingTable>(this.attach_IndicatorsAndRolesMappingTable), new Action<IndicatorsAndRolesMappingTable>(this.detach_IndicatorsAndRolesMappingTable));
-			this._IndicatorsAndUsersMapping = new EntitySet<IndicatorsAndUsersMapping>(new Action<IndicatorsAndUsersMapping>(this.attach_IndicatorsAndUsersMapping), new Action<IndicatorsAndUsersMapping>(this.detach_IndicatorsAndUsersMapping));
-			this._PlannedIndicator = new EntitySet<PlannedIndicator>(new Action<PlannedIndicator>(this.attach_PlannedIndicator), new Action<PlannedIndicator>(this.detach_PlannedIndicator));
-			this._ReportArchiveAndIndicatorsMappingTable = new EntitySet<ReportArchiveAndIndicatorsMappingTable>(new Action<ReportArchiveAndIndicatorsMappingTable>(this.attach_ReportArchiveAndIndicatorsMappingTable), new Action<ReportArchiveAndIndicatorsMappingTable>(this.detach_ReportArchiveAndIndicatorsMappingTable));
-			this._IndicatorClass = default(EntityRef<IndicatorClass>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IndicatorsTableID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IndicatorsTableID
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_IndicatorsAndUsersMapping", Storage="_IndicatorsTable", ThisKey="FK_IndicatorsTable", OtherKey="IndicatorsTableID", IsForeignKey=true)]
+		public IndicatorsTable IndicatorsTable
 		{
 			get
 			{
-				return this._IndicatorsTableID;
+				return this._IndicatorsTable.Entity;
 			}
 			set
 			{
-				if ((this._IndicatorsTableID != value))
-				{
-					this.OnIndicatorsTableIDChanging(value);
-					this.SendPropertyChanging();
-					this._IndicatorsTableID = value;
-					this.SendPropertyChanged("IndicatorsTableID");
-					this.OnIndicatorsTableIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
-		public System.Nullable<bool> Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(1000) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Measure", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
-		public string Measure
-		{
-			get
-			{
-				return this._Measure;
-			}
-			set
-			{
-				if ((this._Measure != value))
-				{
-					this.OnMeasureChanging(value);
-					this.SendPropertyChanging();
-					this._Measure = value;
-					this.SendPropertyChanged("Measure");
-					this.OnMeasureChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Formula", DbType="VarChar(5000)")]
-		public string Formula
-		{
-			get
-			{
-				return this._Formula;
-			}
-			set
-			{
-				if ((this._Formula != value))
-				{
-					this.OnFormulaChanging(value);
-					this.SendPropertyChanging();
-					this._Formula = value;
-					this.SendPropertyChanged("Formula");
-					this.OnFormulaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_IndicatorClass", DbType="Int")]
-		public System.Nullable<int> FK_IndicatorClass
-		{
-			get
-			{
-				return this._FK_IndicatorClass;
-			}
-			set
-			{
-				if ((this._FK_IndicatorClass != value))
-				{
-					if (this._IndicatorClass.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_IndicatorClassChanging(value);
-					this.SendPropertyChanging();
-					this._FK_IndicatorClass = value;
-					this.SendPropertyChanged("FK_IndicatorClass");
-					this.OnFK_IndicatorClassChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
-		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
-		{
-			get
-			{
-				return this._CollectedIndicatorsForR;
-			}
-			set
-			{
-				this._CollectedIndicatorsForR.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndocators", Storage="_CollectedIndocators", ThisKey="IndicatorsTableID", OtherKey="FK_Indicators")]
-		public EntitySet<CollectedIndocators> CollectedIndocators
-		{
-			get
-			{
-				return this._CollectedIndocators;
-			}
-			set
-			{
-				this._CollectedIndocators.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_ConfirmationHistory", Storage="_ConfirmationHistory", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
-		public EntitySet<ConfirmationHistory> ConfirmationHistory
-		{
-			get
-			{
-				return this._ConfirmationHistory;
-			}
-			set
-			{
-				this._ConfirmationHistory.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_IndicatorsAndRolesMappingTable", Storage="_IndicatorsAndRolesMappingTable", ThisKey="IndicatorsTableID", OtherKey="FK_Indicators")]
-		public EntitySet<IndicatorsAndRolesMappingTable> IndicatorsAndRolesMappingTable
-		{
-			get
-			{
-				return this._IndicatorsAndRolesMappingTable;
-			}
-			set
-			{
-				this._IndicatorsAndRolesMappingTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_IndicatorsAndUsersMapping", Storage="_IndicatorsAndUsersMapping", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
-		public EntitySet<IndicatorsAndUsersMapping> IndicatorsAndUsersMapping
-		{
-			get
-			{
-				return this._IndicatorsAndUsersMapping;
-			}
-			set
-			{
-				this._IndicatorsAndUsersMapping.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_PlannedIndicator", Storage="_PlannedIndicator", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
-		public EntitySet<PlannedIndicator> PlannedIndicator
-		{
-			get
-			{
-				return this._PlannedIndicator;
-			}
-			set
-			{
-				this._PlannedIndicator.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable", Storage="_ReportArchiveAndIndicatorsMappingTable", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
-		public EntitySet<ReportArchiveAndIndicatorsMappingTable> ReportArchiveAndIndicatorsMappingTable
-		{
-			get
-			{
-				return this._ReportArchiveAndIndicatorsMappingTable;
-			}
-			set
-			{
-				this._ReportArchiveAndIndicatorsMappingTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorClass_IndicatorsTable", Storage="_IndicatorClass", ThisKey="FK_IndicatorClass", OtherKey="IndicatorClassID", IsForeignKey=true)]
-		public IndicatorClass IndicatorClass
-		{
-			get
-			{
-				return this._IndicatorClass.Entity;
-			}
-			set
-			{
-				IndicatorClass previousValue = this._IndicatorClass.Entity;
+				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
 				if (((previousValue != value) 
-							|| (this._IndicatorClass.HasLoadedOrAssignedValue == false)))
+							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._IndicatorClass.Entity = null;
-						previousValue.IndicatorsTable.Remove(this);
+						this._IndicatorsTable.Entity = null;
+						previousValue.IndicatorsAndUsersMapping.Remove(this);
 					}
-					this._IndicatorClass.Entity = value;
+					this._IndicatorsTable.Entity = value;
 					if ((value != null))
 					{
-						value.IndicatorsTable.Add(this);
-						this._FK_IndicatorClass = value.IndicatorClassID;
+						value.IndicatorsAndUsersMapping.Add(this);
+						this._FK_IndicatorsTable = value.IndicatorsTableID;
 					}
 					else
 					{
-						this._FK_IndicatorClass = default(Nullable<int>);
+						this._FK_IndicatorsTable = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("IndicatorClass");
+					this.SendPropertyChanged("IndicatorsTable");
 				}
 			}
 		}
@@ -8874,90 +8606,6 @@ namespace KPIWeb
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
-		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = this;
-		}
-		
-		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
-		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = null;
-		}
-		
-		private void attach_CollectedIndocators(CollectedIndocators entity)
-		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = this;
-		}
-		
-		private void detach_CollectedIndocators(CollectedIndocators entity)
-		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = null;
-		}
-		
-		private void attach_ConfirmationHistory(ConfirmationHistory entity)
-		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = this;
-		}
-		
-		private void detach_ConfirmationHistory(ConfirmationHistory entity)
-		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = null;
-		}
-		
-		private void attach_IndicatorsAndRolesMappingTable(IndicatorsAndRolesMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = this;
-		}
-		
-		private void detach_IndicatorsAndRolesMappingTable(IndicatorsAndRolesMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = null;
-		}
-		
-		private void attach_IndicatorsAndUsersMapping(IndicatorsAndUsersMapping entity)
-		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = this;
-		}
-		
-		private void detach_IndicatorsAndUsersMapping(IndicatorsAndUsersMapping entity)
-		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = null;
-		}
-		
-		private void attach_PlannedIndicator(PlannedIndicator entity)
-		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = this;
-		}
-		
-		private void detach_PlannedIndicator(PlannedIndicator entity)
-		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = null;
-		}
-		
-		private void attach_ReportArchiveAndIndicatorsMappingTable(ReportArchiveAndIndicatorsMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = this;
-		}
-		
-		private void detach_ReportArchiveAndIndicatorsMappingTable(ReportArchiveAndIndicatorsMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.IndicatorsTable = null;
 		}
 	}
 	
@@ -9956,9 +9604,9 @@ namespace KPIWeb
 		
 		private int _FK_IndicatorsTable;
 		
-		private EntityRef<IndicatorsTable> _IndicatorsTable;
-		
 		private EntityRef<ReportArchiveTable> _ReportArchiveTable;
+		
+		private EntityRef<IndicatorsTable> _IndicatorsTable;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -9976,8 +9624,8 @@ namespace KPIWeb
 		
 		public ReportArchiveAndIndicatorsMappingTable()
 		{
-			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
 			this._ReportArchiveTable = default(EntityRef<ReportArchiveTable>);
+			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
 			OnCreated();
 		}
 		
@@ -10069,40 +9717,6 @@ namespace KPIWeb
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable", Storage="_IndicatorsTable", ThisKey="FK_IndicatorsTable", OtherKey="IndicatorsTableID", IsForeignKey=true)]
-		public IndicatorsTable IndicatorsTable
-		{
-			get
-			{
-				return this._IndicatorsTable.Entity;
-			}
-			set
-			{
-				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
-				if (((previousValue != value) 
-							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._IndicatorsTable.Entity = null;
-						previousValue.ReportArchiveAndIndicatorsMappingTable.Remove(this);
-					}
-					this._IndicatorsTable.Entity = value;
-					if ((value != null))
-					{
-						value.ReportArchiveAndIndicatorsMappingTable.Add(this);
-						this._FK_IndicatorsTable = value.IndicatorsTableID;
-					}
-					else
-					{
-						this._FK_IndicatorsTable = default(int);
-					}
-					this.SendPropertyChanged("IndicatorsTable");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ReportArchiveAndIndicatorsMappingTable", Storage="_ReportArchiveTable", ThisKey="FK_ReportArchiveTable", OtherKey="ReportArchiveTableID", IsForeignKey=true)]
 		public ReportArchiveTable ReportArchiveTable
 		{
@@ -10133,6 +9747,40 @@ namespace KPIWeb
 						this._FK_ReportArchiveTable = default(int);
 					}
 					this.SendPropertyChanged("ReportArchiveTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable", Storage="_IndicatorsTable", ThisKey="FK_IndicatorsTable", OtherKey="IndicatorsTableID", IsForeignKey=true)]
+		public IndicatorsTable IndicatorsTable
+		{
+			get
+			{
+				return this._IndicatorsTable.Entity;
+			}
+			set
+			{
+				IndicatorsTable previousValue = this._IndicatorsTable.Entity;
+				if (((previousValue != value) 
+							|| (this._IndicatorsTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._IndicatorsTable.Entity = null;
+						previousValue.ReportArchiveAndIndicatorsMappingTable.Remove(this);
+					}
+					this._IndicatorsTable.Entity = value;
+					if ((value != null))
+					{
+						value.ReportArchiveAndIndicatorsMappingTable.Add(this);
+						this._FK_IndicatorsTable = value.IndicatorsTableID;
+					}
+					else
+					{
+						this._FK_IndicatorsTable = default(int);
+					}
+					this.SendPropertyChanged("IndicatorsTable");
 				}
 			}
 		}
@@ -11527,6 +11175,8 @@ namespace KPIWeb
 		
 		private EntitySet<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
 		
+		private EntitySet<EducationCostTable> _EducationCostTable;
+		
 		private EntityRef<FieldOfExpertise> _FieldOfExpertise;
 		
     #region Extensibility Method Definitions
@@ -11548,6 +11198,7 @@ namespace KPIWeb
 		public SpecializationTable()
 		{
 			this._FourthLevelSubdivisionTable = new EntitySet<FourthLevelSubdivisionTable>(new Action<FourthLevelSubdivisionTable>(this.attach_FourthLevelSubdivisionTable), new Action<FourthLevelSubdivisionTable>(this.detach_FourthLevelSubdivisionTable));
+			this._EducationCostTable = new EntitySet<EducationCostTable>(new Action<EducationCostTable>(this.attach_EducationCostTable), new Action<EducationCostTable>(this.detach_EducationCostTable));
 			this._FieldOfExpertise = default(EntityRef<FieldOfExpertise>);
 			OnCreated();
 		}
@@ -11669,6 +11320,19 @@ namespace KPIWeb
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SpecializationTable_EducationCostTable", Storage="_EducationCostTable", ThisKey="SpecializationTableID", OtherKey="FK_Specialization")]
+		public EntitySet<EducationCostTable> EducationCostTable
+		{
+			get
+			{
+				return this._EducationCostTable;
+			}
+			set
+			{
+				this._EducationCostTable.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldOfExpertise_SpecializationTable", Storage="_FieldOfExpertise", ThisKey="FK_FieldOfExpertise", OtherKey="FieldOfExpertiseID", IsForeignKey=true)]
 		public FieldOfExpertise FieldOfExpertise
 		{
@@ -11730,6 +11394,18 @@ namespace KPIWeb
 		}
 		
 		private void detach_FourthLevelSubdivisionTable(FourthLevelSubdivisionTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.SpecializationTable = null;
+		}
+		
+		private void attach_EducationCostTable(EducationCostTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.SpecializationTable = this;
+		}
+		
+		private void detach_EducationCostTable(EducationCostTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SpecializationTable = null;
@@ -13123,6 +12799,744 @@ namespace KPIWeb
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable1 = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EducationCostTable")]
+	public partial class EducationCostTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _EducationCostTableID;
+		
+		private System.Nullable<bool> _Active;
+		
+		private System.Nullable<System.DateTime> _Date;
+		
+		private System.Nullable<int> _FK_Specialization;
+		
+		private System.Nullable<double> _CostOfCommercOch;
+		
+		private System.Nullable<double> _CostOfCommercOchIn;
+		
+		private System.Nullable<double> _CostOfCommercZaoch;
+		
+		private System.Nullable<double> _CostOfCommercEvening;
+		
+		private EntityRef<SpecializationTable> _SpecializationTable;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnEducationCostTableIDChanging(int value);
+    partial void OnEducationCostTableIDChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateChanged();
+    partial void OnFK_SpecializationChanging(System.Nullable<int> value);
+    partial void OnFK_SpecializationChanged();
+    partial void OnCostOfCommercOchChanging(System.Nullable<double> value);
+    partial void OnCostOfCommercOchChanged();
+    partial void OnCostOfCommercOchInChanging(System.Nullable<double> value);
+    partial void OnCostOfCommercOchInChanged();
+    partial void OnCostOfCommercZaochChanging(System.Nullable<double> value);
+    partial void OnCostOfCommercZaochChanged();
+    partial void OnCostOfCommercEveningChanging(System.Nullable<double> value);
+    partial void OnCostOfCommercEveningChanged();
+    #endregion
+		
+		public EducationCostTable()
+		{
+			this._SpecializationTable = default(EntityRef<SpecializationTable>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EducationCostTableID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int EducationCostTableID
+		{
+			get
+			{
+				return this._EducationCostTableID;
+			}
+			set
+			{
+				if ((this._EducationCostTableID != value))
+				{
+					this.OnEducationCostTableIDChanging(value);
+					this.SendPropertyChanging();
+					this._EducationCostTableID = value;
+					this.SendPropertyChanged("EducationCostTableID");
+					this.OnEducationCostTableIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this.OnDateChanging(value);
+					this.SendPropertyChanging();
+					this._Date = value;
+					this.SendPropertyChanged("Date");
+					this.OnDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Specialization", DbType="Int")]
+		public System.Nullable<int> FK_Specialization
+		{
+			get
+			{
+				return this._FK_Specialization;
+			}
+			set
+			{
+				if ((this._FK_Specialization != value))
+				{
+					if (this._SpecializationTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_SpecializationChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Specialization = value;
+					this.SendPropertyChanged("FK_Specialization");
+					this.OnFK_SpecializationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CostOfCommercOch", DbType="Float")]
+		public System.Nullable<double> CostOfCommercOch
+		{
+			get
+			{
+				return this._CostOfCommercOch;
+			}
+			set
+			{
+				if ((this._CostOfCommercOch != value))
+				{
+					this.OnCostOfCommercOchChanging(value);
+					this.SendPropertyChanging();
+					this._CostOfCommercOch = value;
+					this.SendPropertyChanged("CostOfCommercOch");
+					this.OnCostOfCommercOchChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CostOfCommercOchIn", DbType="Float")]
+		public System.Nullable<double> CostOfCommercOchIn
+		{
+			get
+			{
+				return this._CostOfCommercOchIn;
+			}
+			set
+			{
+				if ((this._CostOfCommercOchIn != value))
+				{
+					this.OnCostOfCommercOchInChanging(value);
+					this.SendPropertyChanging();
+					this._CostOfCommercOchIn = value;
+					this.SendPropertyChanged("CostOfCommercOchIn");
+					this.OnCostOfCommercOchInChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CostOfCommercZaoch", DbType="Float")]
+		public System.Nullable<double> CostOfCommercZaoch
+		{
+			get
+			{
+				return this._CostOfCommercZaoch;
+			}
+			set
+			{
+				if ((this._CostOfCommercZaoch != value))
+				{
+					this.OnCostOfCommercZaochChanging(value);
+					this.SendPropertyChanging();
+					this._CostOfCommercZaoch = value;
+					this.SendPropertyChanged("CostOfCommercZaoch");
+					this.OnCostOfCommercZaochChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CostOfCommercEvening", DbType="Float")]
+		public System.Nullable<double> CostOfCommercEvening
+		{
+			get
+			{
+				return this._CostOfCommercEvening;
+			}
+			set
+			{
+				if ((this._CostOfCommercEvening != value))
+				{
+					this.OnCostOfCommercEveningChanging(value);
+					this.SendPropertyChanging();
+					this._CostOfCommercEvening = value;
+					this.SendPropertyChanged("CostOfCommercEvening");
+					this.OnCostOfCommercEveningChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SpecializationTable_EducationCostTable", Storage="_SpecializationTable", ThisKey="FK_Specialization", OtherKey="SpecializationTableID", IsForeignKey=true)]
+		public SpecializationTable SpecializationTable
+		{
+			get
+			{
+				return this._SpecializationTable.Entity;
+			}
+			set
+			{
+				SpecializationTable previousValue = this._SpecializationTable.Entity;
+				if (((previousValue != value) 
+							|| (this._SpecializationTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._SpecializationTable.Entity = null;
+						previousValue.EducationCostTable.Remove(this);
+					}
+					this._SpecializationTable.Entity = value;
+					if ((value != null))
+					{
+						value.EducationCostTable.Add(this);
+						this._FK_Specialization = value.SpecializationTableID;
+					}
+					else
+					{
+						this._FK_Specialization = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("SpecializationTable");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IndicatorsTable")]
+	public partial class IndicatorsTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IndicatorsTableID;
+		
+		private System.Nullable<bool> _Active;
+		
+		private string _Name;
+		
+		private string _Measure;
+		
+		private string _Formula;
+		
+		private System.Nullable<int> _FK_IndicatorClass;
+		
+		private System.Nullable<int> _DataType;
+		
+		private System.Nullable<int> _SortID;
+		
+		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
+		
+		private EntitySet<CollectedIndocators> _CollectedIndocators;
+		
+		private EntitySet<ConfirmationHistory> _ConfirmationHistory;
+		
+		private EntitySet<IndicatorsAndRolesMappingTable> _IndicatorsAndRolesMappingTable;
+		
+		private EntitySet<IndicatorsAndUsersMapping> _IndicatorsAndUsersMapping;
+		
+		private EntitySet<PlannedIndicator> _PlannedIndicator;
+		
+		private EntitySet<ReportArchiveAndIndicatorsMappingTable> _ReportArchiveAndIndicatorsMappingTable;
+		
+		private EntityRef<IndicatorClass> _IndicatorClass;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIndicatorsTableIDChanging(int value);
+    partial void OnIndicatorsTableIDChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnMeasureChanging(string value);
+    partial void OnMeasureChanged();
+    partial void OnFormulaChanging(string value);
+    partial void OnFormulaChanged();
+    partial void OnFK_IndicatorClassChanging(System.Nullable<int> value);
+    partial void OnFK_IndicatorClassChanged();
+    partial void OnDataTypeChanging(System.Nullable<int> value);
+    partial void OnDataTypeChanged();
+    partial void OnSortIDChanging(System.Nullable<int> value);
+    partial void OnSortIDChanged();
+    #endregion
+		
+		public IndicatorsTable()
+		{
+			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
+			this._CollectedIndocators = new EntitySet<CollectedIndocators>(new Action<CollectedIndocators>(this.attach_CollectedIndocators), new Action<CollectedIndocators>(this.detach_CollectedIndocators));
+			this._ConfirmationHistory = new EntitySet<ConfirmationHistory>(new Action<ConfirmationHistory>(this.attach_ConfirmationHistory), new Action<ConfirmationHistory>(this.detach_ConfirmationHistory));
+			this._IndicatorsAndRolesMappingTable = new EntitySet<IndicatorsAndRolesMappingTable>(new Action<IndicatorsAndRolesMappingTable>(this.attach_IndicatorsAndRolesMappingTable), new Action<IndicatorsAndRolesMappingTable>(this.detach_IndicatorsAndRolesMappingTable));
+			this._IndicatorsAndUsersMapping = new EntitySet<IndicatorsAndUsersMapping>(new Action<IndicatorsAndUsersMapping>(this.attach_IndicatorsAndUsersMapping), new Action<IndicatorsAndUsersMapping>(this.detach_IndicatorsAndUsersMapping));
+			this._PlannedIndicator = new EntitySet<PlannedIndicator>(new Action<PlannedIndicator>(this.attach_PlannedIndicator), new Action<PlannedIndicator>(this.detach_PlannedIndicator));
+			this._ReportArchiveAndIndicatorsMappingTable = new EntitySet<ReportArchiveAndIndicatorsMappingTable>(new Action<ReportArchiveAndIndicatorsMappingTable>(this.attach_ReportArchiveAndIndicatorsMappingTable), new Action<ReportArchiveAndIndicatorsMappingTable>(this.detach_ReportArchiveAndIndicatorsMappingTable));
+			this._IndicatorClass = default(EntityRef<IndicatorClass>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IndicatorsTableID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IndicatorsTableID
+		{
+			get
+			{
+				return this._IndicatorsTableID;
+			}
+			set
+			{
+				if ((this._IndicatorsTableID != value))
+				{
+					this.OnIndicatorsTableIDChanging(value);
+					this.SendPropertyChanging();
+					this._IndicatorsTableID = value;
+					this.SendPropertyChanged("IndicatorsTableID");
+					this.OnIndicatorsTableIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(1000) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Measure", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		public string Measure
+		{
+			get
+			{
+				return this._Measure;
+			}
+			set
+			{
+				if ((this._Measure != value))
+				{
+					this.OnMeasureChanging(value);
+					this.SendPropertyChanging();
+					this._Measure = value;
+					this.SendPropertyChanged("Measure");
+					this.OnMeasureChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Formula", DbType="VarChar(5000)")]
+		public string Formula
+		{
+			get
+			{
+				return this._Formula;
+			}
+			set
+			{
+				if ((this._Formula != value))
+				{
+					this.OnFormulaChanging(value);
+					this.SendPropertyChanging();
+					this._Formula = value;
+					this.SendPropertyChanged("Formula");
+					this.OnFormulaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_IndicatorClass", DbType="Int")]
+		public System.Nullable<int> FK_IndicatorClass
+		{
+			get
+			{
+				return this._FK_IndicatorClass;
+			}
+			set
+			{
+				if ((this._FK_IndicatorClass != value))
+				{
+					if (this._IndicatorClass.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_IndicatorClassChanging(value);
+					this.SendPropertyChanging();
+					this._FK_IndicatorClass = value;
+					this.SendPropertyChanged("FK_IndicatorClass");
+					this.OnFK_IndicatorClassChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DataType", DbType="Int")]
+		public System.Nullable<int> DataType
+		{
+			get
+			{
+				return this._DataType;
+			}
+			set
+			{
+				if ((this._DataType != value))
+				{
+					this.OnDataTypeChanging(value);
+					this.SendPropertyChanging();
+					this._DataType = value;
+					this.SendPropertyChanged("DataType");
+					this.OnDataTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SortID", DbType="Int")]
+		public System.Nullable<int> SortID
+		{
+			get
+			{
+				return this._SortID;
+			}
+			set
+			{
+				if ((this._SortID != value))
+				{
+					this.OnSortIDChanging(value);
+					this.SendPropertyChanging();
+					this._SortID = value;
+					this.SendPropertyChanged("SortID");
+					this.OnSortIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
+		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
+		{
+			get
+			{
+				return this._CollectedIndicatorsForR;
+			}
+			set
+			{
+				this._CollectedIndicatorsForR.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndocators", Storage="_CollectedIndocators", ThisKey="IndicatorsTableID", OtherKey="FK_Indicators")]
+		public EntitySet<CollectedIndocators> CollectedIndocators
+		{
+			get
+			{
+				return this._CollectedIndocators;
+			}
+			set
+			{
+				this._CollectedIndocators.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_ConfirmationHistory", Storage="_ConfirmationHistory", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
+		public EntitySet<ConfirmationHistory> ConfirmationHistory
+		{
+			get
+			{
+				return this._ConfirmationHistory;
+			}
+			set
+			{
+				this._ConfirmationHistory.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_IndicatorsAndRolesMappingTable", Storage="_IndicatorsAndRolesMappingTable", ThisKey="IndicatorsTableID", OtherKey="FK_Indicators")]
+		public EntitySet<IndicatorsAndRolesMappingTable> IndicatorsAndRolesMappingTable
+		{
+			get
+			{
+				return this._IndicatorsAndRolesMappingTable;
+			}
+			set
+			{
+				this._IndicatorsAndRolesMappingTable.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_IndicatorsAndUsersMapping", Storage="_IndicatorsAndUsersMapping", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
+		public EntitySet<IndicatorsAndUsersMapping> IndicatorsAndUsersMapping
+		{
+			get
+			{
+				return this._IndicatorsAndUsersMapping;
+			}
+			set
+			{
+				this._IndicatorsAndUsersMapping.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_PlannedIndicator", Storage="_PlannedIndicator", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
+		public EntitySet<PlannedIndicator> PlannedIndicator
+		{
+			get
+			{
+				return this._PlannedIndicator;
+			}
+			set
+			{
+				this._PlannedIndicator.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable", Storage="_ReportArchiveAndIndicatorsMappingTable", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
+		public EntitySet<ReportArchiveAndIndicatorsMappingTable> ReportArchiveAndIndicatorsMappingTable
+		{
+			get
+			{
+				return this._ReportArchiveAndIndicatorsMappingTable;
+			}
+			set
+			{
+				this._ReportArchiveAndIndicatorsMappingTable.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorClass_IndicatorsTable", Storage="_IndicatorClass", ThisKey="FK_IndicatorClass", OtherKey="IndicatorClassID", IsForeignKey=true)]
+		public IndicatorClass IndicatorClass
+		{
+			get
+			{
+				return this._IndicatorClass.Entity;
+			}
+			set
+			{
+				IndicatorClass previousValue = this._IndicatorClass.Entity;
+				if (((previousValue != value) 
+							|| (this._IndicatorClass.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._IndicatorClass.Entity = null;
+						previousValue.IndicatorsTable.Remove(this);
+					}
+					this._IndicatorClass.Entity = value;
+					if ((value != null))
+					{
+						value.IndicatorsTable.Add(this);
+						this._FK_IndicatorClass = value.IndicatorClassID;
+					}
+					else
+					{
+						this._FK_IndicatorClass = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("IndicatorClass");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = this;
+		}
+		
+		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = null;
+		}
+		
+		private void attach_CollectedIndocators(CollectedIndocators entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = this;
+		}
+		
+		private void detach_CollectedIndocators(CollectedIndocators entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = null;
+		}
+		
+		private void attach_ConfirmationHistory(ConfirmationHistory entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = this;
+		}
+		
+		private void detach_ConfirmationHistory(ConfirmationHistory entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = null;
+		}
+		
+		private void attach_IndicatorsAndRolesMappingTable(IndicatorsAndRolesMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = this;
+		}
+		
+		private void detach_IndicatorsAndRolesMappingTable(IndicatorsAndRolesMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = null;
+		}
+		
+		private void attach_IndicatorsAndUsersMapping(IndicatorsAndUsersMapping entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = this;
+		}
+		
+		private void detach_IndicatorsAndUsersMapping(IndicatorsAndUsersMapping entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = null;
+		}
+		
+		private void attach_PlannedIndicator(PlannedIndicator entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = this;
+		}
+		
+		private void detach_PlannedIndicator(PlannedIndicator entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = null;
+		}
+		
+		private void attach_ReportArchiveAndIndicatorsMappingTable(ReportArchiveAndIndicatorsMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = this;
+		}
+		
+		private void detach_ReportArchiveAndIndicatorsMappingTable(ReportArchiveAndIndicatorsMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.IndicatorsTable = null;
 		}
 	}
 }

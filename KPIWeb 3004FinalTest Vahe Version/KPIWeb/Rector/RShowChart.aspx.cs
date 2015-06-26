@@ -11,7 +11,36 @@ using System.Web.UI.WebControls;
 namespace KPIWeb.Rector
 {
     public partial class RShowChart : System.Web.UI.Page
-    { 
+    {
+        public string FloatToStrFormat(float value, float plannedValue, int DataType)
+        {
+            if (DataType == 1)
+            {
+                string tmpValue = Math.Round(value).ToString();// value.ToString("0");
+                return tmpValue;
+            }
+            else if (DataType == 2)
+            {
+                string tmpValue = value.ToString();
+                string tmpPlanned = plannedValue.ToString();
+                int PlannedNumbersAftepPoint = 2;
+                if (tmpPlanned.IndexOf(',') != -1)
+                {
+                    PlannedNumbersAftepPoint = (tmpPlanned.Length - tmpPlanned.IndexOf(',') + 1);
+                }
+                int ValuePointIndex = tmpValue.IndexOf(',');
+                if (ValuePointIndex != -1)
+                {
+                    if ((tmpValue.Length - ValuePointIndex - PlannedNumbersAftepPoint) > 0)
+                    {
+                        tmpValue = tmpValue.Remove(ValuePointIndex + PlannedNumbersAftepPoint, tmpValue.Length - ValuePointIndex - PlannedNumbersAftepPoint);
+                    }
+                }
+                return tmpValue;
+            }
+
+            return "0";
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             Serialization UserSer = (Serialization)Session["UserID"];
@@ -69,115 +98,6 @@ namespace KPIWeb.Rector
 
             }
         }
-        public ChartOneValue GetCalculatedIndicator(int ReportID, IndicatorsTable Indicator, FirstLevelSubdivisionTable Academy, SecondLevelSubdivisionTable Faculty) // academyID == null && facultyID==null значит для всего КФУ
-        {
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-            float Planned_Value = 0;
-            string Name_ = "";
-            float Value_ = 0;
-            #region plannedIndicator
-            PlannedIndicator plannedValue = (from a in kpiWebDataContext.PlannedIndicator
-                                             where a.FK_IndicatorsTable == Indicator.IndicatorsTableID
-                                                   && a.Date > DateTime.Now
-                                             select a).OrderBy(x => x.Date).FirstOrDefault();
-            if (plannedValue != null)
-            {
-                Planned_Value = (float)plannedValue.Value;
-            }
-            #endregion
-            #region Name
-            if ((Academy == null) && (Faculty == null))
-            {
-                if (Indicator.Measure != null)
-                {
-                    if (Indicator.Measure.Length > 0)
-                    {
-                        Name_ = Indicator.Name + " (" + Indicator.Measure + ")";
-                    }
-                    else
-                    {
-                        Name_ = Indicator.Name;
-                    }
-                }
-                else
-                {
-                    Name_ = Indicator.Name;
-                }
-            }
-            else if (Faculty != null)
-            {
-                Name_ = Faculty.Name;
-            }
-            else if (Academy != null)
-            {
-                Name_ = Academy.Name;
-            }
-
-
-
-            #endregion
-            #region
-            //ForRCalc.Struct mainStruct = mainStruct = new ForRCalc.Struct(1, 0, 0, 0, 0, "N");
-            CollectedIndicatorsForR collected = new CollectedIndicatorsForR();
-            if ((Academy == null) && (Faculty == null))
-            {
-                //mainStruct = new ForRCalc.Struct(1, 0, 0, 0, 0, "N");
-                collected = (from a in kpiWebDataContext.CollectedIndicatorsForR
-                             where a.FK_ReportArchiveTable == ReportID
-                             && a.FK_IndicatorsTable == Indicator.IndicatorsTableID
-                             && a.FK_FirstLevelSubdivisionTable == null
-                             && a.FK_SecondLevelSubdivisionTable == null
-                             select a).FirstOrDefault();
-            }
-            else if (Faculty != null)
-            {
-                //mainStruct = new ForRCalc.Struct(1, Faculty.FK_FirstLevelSubdivisionTable, Faculty.SecondLevelSubdivisionTableID, 0, 0, "N");
-                collected = (from a in kpiWebDataContext.CollectedIndicatorsForR
-                             where a.FK_ReportArchiveTable == ReportID
-                             && a.FK_IndicatorsTable == Indicator.IndicatorsTableID
-                             && a.FK_FirstLevelSubdivisionTable == Faculty.FK_FirstLevelSubdivisionTable
-                             && a.FK_SecondLevelSubdivisionTable == Faculty.SecondLevelSubdivisionTableID
-                             select a).FirstOrDefault();
-            }
-            else if (Academy != null)
-            {
-                //mainStruct = new ForRCalc.Struct(1, Academy.FirstLevelSubdivisionTableID, 0, 0, 0, "N");
-                collected = (from a in kpiWebDataContext.CollectedIndicatorsForR
-                             where a.FK_ReportArchiveTable == ReportID
-                             && a.FK_IndicatorsTable == Indicator.IndicatorsTableID
-                             && a.FK_FirstLevelSubdivisionTable == Academy.FirstLevelSubdivisionTableID
-                             && a.FK_SecondLevelSubdivisionTable == null
-                             select a).FirstOrDefault();
-            }
-            /*    
-        float tmp = ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0, Indicator.IndicatorsTableID, ReportID, 0));
-
-        if (tmp == (float)1E+20)
-        {
-            Value_ = 0;
-        }
-        else
-        {
-            Value_ = tmp;
-        }
-        */
-            if (collected==null)
-            {
-                Value_ = 0;
-            }
-            else
-            if (collected.Value == null)
-            {
-                Value_ = 0;
-            }
-            else
-            {
-                Value_ = (float)collected.Value;
-            }
-            #endregion
-            ChartOneValue DataRowForChart = new ChartOneValue(Name_, Value_, Planned_Value);
-            return DataRowForChart;
-        }
         public ChartValueArray AllIndicatorsForAcademys(int ReportID)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
@@ -186,12 +106,12 @@ namespace KPIWeb.Rector
                             from a in kpiWebDataContext.IndicatorsTable
                             where
                                 a.Active == true
-                            select a).OrderBy(mc => mc.IndicatorsTableID).ToList();
+                            select a).OrderBy(mc => mc.SortID).ToList();
 
             ChartValueArray DataForChart = new ChartValueArray("График достижения плановых значений целевых показателей");
             foreach (IndicatorsTable CurrentIndicator in Indicators)
             {
-                DataForChart.ChartValues.Add(GetCalculatedIndicator(1, CurrentIndicator, null, null));
+                DataForChart.ChartValues.Add(ForRCalc.GetCalculatedIndicator(1, CurrentIndicator, null, null));
             }
             return DataForChart;
         }
@@ -209,7 +129,7 @@ namespace KPIWeb.Rector
 
             foreach (FirstLevelSubdivisionTable CurrentAcademy in AcademyList)
             {
-                DataForChart.ChartValues.Add(GetCalculatedIndicator(1, Indicator, CurrentAcademy, null));
+                DataForChart.ChartValues.Add(ForRCalc.GetCalculatedIndicator(1, Indicator, CurrentAcademy, null));
             }
             return DataForChart;
         }
@@ -221,14 +141,14 @@ namespace KPIWeb.Rector
                             from a in kpiWebDataContext.IndicatorsTable
                             where
                                 a.Active == true
-                            select a).OrderBy(mc => mc.IndicatorsTableID).ToList();
+                            select a).OrderBy(mc => mc.SortID).ToList();
             FirstLevelSubdivisionTable FirstLevelRow = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
                                                         where a.FirstLevelSubdivisionTableID == AcademyID
                                                         select a).FirstOrDefault();
             ChartValueArray DataForChart = new ChartValueArray("График достижения плановых значений целевых показателей для академии " + FirstLevelRow.Name);
             foreach (IndicatorsTable CurrentIndicator in Indicators)
             {
-                DataForChart.ChartValues.Add(GetCalculatedIndicator(1, CurrentIndicator, FirstLevelRow, null));
+                DataForChart.ChartValues.Add(ForRCalc.GetCalculatedIndicator(1, CurrentIndicator, FirstLevelRow, null));
             }
             return DataForChart;
         }
@@ -244,7 +164,7 @@ namespace KPIWeb.Rector
                                    a.Active == true
                                    && a.IndicatorsTableID == CurrentIndicatorID
                                select a).FirstOrDefault();
-                DataForChart.ChartValues.Add(GetCalculatedIndicator(1, Indicator, null, null));
+                DataForChart.ChartValues.Add(ForRCalc.GetCalculatedIndicator(1, Indicator, null, null));
             }
             return DataForChart;
         }
@@ -258,7 +178,7 @@ namespace KPIWeb.Rector
                                && a.IndicatorsTableID == curIndicator
                            select a).FirstOrDefault();
 
-            return GetCalculatedIndicator(1, Indicator, null, null);
+            return ForRCalc.GetCalculatedIndicator(1, Indicator, null, null);
         }
         public ChartValueArray IndicatorsForAllFacultys(int IndicatorID, int ReportID)
         {
@@ -277,18 +197,15 @@ namespace KPIWeb.Rector
                 FirstLevelSubdivisionTable Academy = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
                                                       where a.FirstLevelSubdivisionTableID == CurrentFavulty.FK_FirstLevelSubdivisionTable
                                                       select a).FirstOrDefault();
-                DataForChart.ChartValues.Add(GetCalculatedIndicator(1, Indicator, Academy, CurrentFavulty));
+                DataForChart.ChartValues.Add(ForRCalc.GetCalculatedIndicator(1, Indicator, Academy, CurrentFavulty));
             }
             return DataForChart;
         }
-
         protected void Button1_Click(object sender, EventArgs e) //Значение каждого отмеченного показателя рассчитанное по КФУ
         {
             RectorChartSession RectorChart = (RectorChartSession)Session["RectorChart"]; //вытаскиваем из сессии список айдишников показателей
             ChartValueArray NewDataForChart = IndicatorsForCFU(RectorChart.IndicatorsList, 1);
-        }
-
-        
+        }      
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -309,16 +226,19 @@ namespace KPIWeb.Rector
                 
                 string indID = DataBinder.Eval(e.Row.DataItem, "IndicatorID").ToString();
                 Chart chart = (Chart)e.Row.FindControl("Chart3");
+                //chart.TempDirectory = "/app/tmp"; 
                 if (chart != null)
                 {
                     ChartOneValue DataForChart = IndicatorsForCFUOneIndicator(Convert.ToInt32(indID), 1); // 1 индикатор в разрезе КФУ взятый по ID
 
                     // Формирую чарт
                     //chart.Series["ValueSeries"].Color = Color.CornflowerBlue;   //Color.FromArgb(255, 100, 149, 0);
+                    //chart.Series["ValueSeries"].Color = Color.FromArgb(255, 100, 149, 237);
                     chart.Series["ValueSeries"].Color = Color.FromArgb(255, 100, 149, 237);
                     chart.ChartAreas["ChartArea1"].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount; // масштабирование разметки
                     chart.ChartAreas["ChartArea1"].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount; // -==--
-                    chart.Series["TargetSeries"].Color = Color.FromArgb(122, 50, 255, 0);
+                    //chart.Series["TargetSeries"].Color = Color.FromArgb(122, 50, 255, 0);
+                    chart.Series["TargetSeries"].Color = Color.FromArgb(75, 20, 30, 0);
 
                     ChartItems chartItems = new ChartItems(); // класс для работы с чартом
 
@@ -337,9 +257,16 @@ namespace KPIWeb.Rector
                         chart.Series["ValueSeries"].Font = new Font("Arial", 10f, FontStyle.Bold);
                     }
                     chart.Series["ValueSeries"].LegendText = "#AXISLABEL (#PERCENT{P0})";
-                    chart.Series["ValueSeries"].ToolTip = "Целевое: " + DataForChart.planned + ". Достигнуто на: " + Convert.ToInt32(DataForChart.value / DataForChart.planned * 100) + "%";
-                    chart.Series["TargetSeries"].ToolTip = "Целевое: " + DataForChart.planned + ". Достигнуто на: " + Convert.ToInt32(DataForChart.value / DataForChart.planned * 100) + "%";
-
+                    if (DataForChart.planned != 0)
+                    {
+                        chart.Series["ValueSeries"].ToolTip = "Целевое: " + DataForChart.planned + ". Достигнуто на: " + Convert.ToInt32(DataForChart.value / DataForChart.planned * 100) + "%";
+                        chart.Series["TargetSeries"].ToolTip = "Целевое: " + DataForChart.planned + ". Достигнуто на: " + Convert.ToInt32(DataForChart.value / DataForChart.planned * 100) + "%";
+                    }
+                    else
+                    {
+                        chart.Series["ValueSeries"].ToolTip = "Целевое: " + DataForChart.planned ;
+                        chart.Series["TargetSeries"].ToolTip = "Целевое: " + DataForChart.planned;
+                    }
 
                     // Линния планового значения
                     VerticalLineAnnotation verticalLine = new VerticalLineAnnotation();
@@ -417,8 +344,6 @@ namespace KPIWeb.Rector
                 }
             }
         }
-  
-
         protected void DetailedButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -428,7 +353,6 @@ namespace KPIWeb.Rector
                 Response.Redirect("~/Rector/RShowChartDetailed.aspx");
             }
         }
-
         protected void Button2_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Rector/RectorMain.aspx");

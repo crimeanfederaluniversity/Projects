@@ -125,7 +125,7 @@ namespace KPIWeb.Rector
                             from a in kpiWebDataContext.IndicatorsTable
                             where
                                 a.Active == true
-                            select a).OrderBy(mc => mc.IndicatorsTableID).ToList();
+                            select a).OrderBy(mc => mc.SortID).ToList();
 
             ChartValueArray DataForChart = new ChartValueArray("График достижения плановых значений целевых показателей");
             foreach (IndicatorsTable CurrentIndicator in Indicators)
@@ -160,7 +160,7 @@ namespace KPIWeb.Rector
                             from a in kpiWebDataContext.IndicatorsTable
                             where
                                 a.Active == true
-                            select a).OrderBy(mc => mc.IndicatorsTableID).ToList();
+                            select a).OrderBy(mc => mc.SortID).ToList();
             FirstLevelSubdivisionTable FirstLevelRow = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
                                                         where a.FirstLevelSubdivisionTableID == AcademyID
                                                         select a).FirstOrDefault();

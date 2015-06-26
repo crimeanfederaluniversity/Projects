@@ -919,7 +919,7 @@ namespace KPIWeb.FinKadr
                                 && b.CanView == true
                                 && b.FK_UsresTable == userID
                                 && c.FK_ReportArchiveTable == ReportID
-                            select a).ToList();
+                            select a).OrderBy(c => c.SortID).ToList();
 
                         //нашли все целевой показатель привязанные к пользователю
                         foreach (IndicatorsTable CurrentIndicator in Indicators)

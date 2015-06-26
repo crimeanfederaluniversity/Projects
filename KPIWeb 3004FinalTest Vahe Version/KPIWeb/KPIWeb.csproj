@@ -194,7 +194,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="Error.html" />
+    <Content Include="Error.htm" />
     <Content Include="filenotfound.htm" />
     <Content Include="FillingProcessInfo.aspx" />
     <Content Include="FinKadr\OtdelChooseReport.aspx" />
@@ -498,6 +498,7 @@
     <Compile Include="Rector\RCalculate.aspx.designer.cs">
       <DependentUpon>RCalculate.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Rector\RGetCalculated.cs" />
     <Compile Include="Rector\RMain.aspx.cs">
       <DependentUpon>RMain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

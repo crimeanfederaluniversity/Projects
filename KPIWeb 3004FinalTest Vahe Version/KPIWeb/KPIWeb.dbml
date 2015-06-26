@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Release_" Class="KPIWebDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=Release_;Persist Security Info=True;User ID=Potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Release_ConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=Release_;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Release_ConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTable">
     <Type Name="BasicParametersAndRolesMappingTable">
       <Column Name="BasicParametersAndRolesMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -172,10 +172,10 @@
       <Association Name="FifthLevelSubdivisionTable_CollectedIndicatorsForR" Member="FifthLevelSubdivisionTable" ThisKey="FK_FifthLevelSubdivisionTable" OtherKey="FifthLevelSubdivisionTableID" Type="FifthLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="FirstLevelSubdivisionTable_CollectedIndicatorsForR" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="FourthLevelSubdivisionTable_CollectedIndicatorsForR" Member="FourthLevelSubdivisionTable" ThisKey="FK_FourthLelevlSubdivisionTable" OtherKey="FourthLevelSubdivisionTableID" Type="FourthLevelSubdivisionTable" IsForeignKey="true" />
-      <Association Name="IndicatorsTable_CollectedIndicatorsForR" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
       <Association Name="ReportArchiveTable_CollectedIndicatorsForR" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
       <Association Name="SecondLevelSubdivisionTable_CollectedIndicatorsForR" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="ThirdLevelSubdivisionTable_CollectedIndicatorsForR" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="IndicatorsTable_CollectedIndicatorsForR" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CollectedIndocators" Member="CollectedIndocators">
@@ -190,14 +190,14 @@
       <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Confirmed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="FK_ReportArchiveTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="IndicatorsTable_CollectedIndocators" Member="IndicatorsTable" ThisKey="FK_Indicators" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
       <Association Name="ReportArchiveTable_CollectedIndocators" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
       <Association Name="UsersTable_CollectedIndocators" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
+      <Association Name="IndicatorsTable_CollectedIndocators" Member="IndicatorsTable" ThisKey="FK_Indicators" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CommetntForBasicInReport" Member="CommetntForBasicInReport">
     <Type Name="CommetntForBasicInReport">
-      <Column Name="ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="FK_BasickParamets" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FK_Report" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Comment" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
@@ -216,9 +216,9 @@
       <Column Name="Comment" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="BasicParametersTable_ConfirmationHistory" Member="BasicParametersTable" ThisKey="FK_BasicParamTable" OtherKey="BasicParametersTableID" Type="BasicParametersTable" IsForeignKey="true" />
       <Association Name="CalculatedParametrs_ConfirmationHistory" Member="CalculatedParametrs" ThisKey="FK_CalculatedParamTable" OtherKey="CalculatedParametrsID" Type="CalculatedParametrs" IsForeignKey="true" />
-      <Association Name="IndicatorsTable_ConfirmationHistory" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
       <Association Name="ReportArchiveTable_ConfirmationHistory" Member="ReportArchiveTable" ThisKey="FK_ReportTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
       <Association Name="UsersTable_ConfirmationHistory" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
+      <Association Name="IndicatorsTable_ConfirmationHistory" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.DocumentTable" Member="DocumentTable">
@@ -343,8 +343,8 @@
       <Column Name="CanEdit" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="CanView" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="CanConfirm" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="IndicatorsTable_IndicatorsAndRolesMappingTable" Member="IndicatorsTable" ThisKey="FK_Indicators" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
       <Association Name="RolesTable_IndicatorsAndRolesMappingTable" Member="RolesTable" ThisKey="FK_RolesTable" OtherKey="RolesTableID" Type="RolesTable" IsForeignKey="true" />
+      <Association Name="IndicatorsTable_IndicatorsAndRolesMappingTable" Member="IndicatorsTable" ThisKey="FK_Indicators" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.IndicatorsAndUsersMapping" Member="IndicatorsAndUsersMapping">
@@ -356,26 +356,8 @@
       <Column Name="CanConfirm" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="FK_UsresTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FK_IndicatorsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="IndicatorsTable_IndicatorsAndUsersMapping" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
       <Association Name="UsersTable_IndicatorsAndUsersMapping" Member="UsersTable" ThisKey="FK_UsresTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.IndicatorsTable" Member="IndicatorsTable">
-    <Type Name="IndicatorsTable">
-      <Column Name="IndicatorsTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
-      <Column Name="Measure" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="Formula" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
-      <Column Name="FK_IndicatorClass" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="IndicatorsTable_CollectedIndicatorsForR" Member="CollectedIndicatorsForR" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="CollectedIndicatorsForR" />
-      <Association Name="IndicatorsTable_CollectedIndocators" Member="CollectedIndocators" ThisKey="IndicatorsTableID" OtherKey="FK_Indicators" Type="CollectedIndocators" />
-      <Association Name="IndicatorsTable_ConfirmationHistory" Member="ConfirmationHistory" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="ConfirmationHistory" />
-      <Association Name="IndicatorsTable_IndicatorsAndRolesMappingTable" Member="IndicatorsAndRolesMappingTable" ThisKey="IndicatorsTableID" OtherKey="FK_Indicators" Type="IndicatorsAndRolesMappingTable" />
-      <Association Name="IndicatorsTable_IndicatorsAndUsersMapping" Member="IndicatorsAndUsersMapping" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="IndicatorsAndUsersMapping" />
-      <Association Name="IndicatorsTable_PlannedIndicator" Member="PlannedIndicator" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="PlannedIndicator" />
-      <Association Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable" Member="ReportArchiveAndIndicatorsMappingTable" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="ReportArchiveAndIndicatorsMappingTable" />
-      <Association Name="IndicatorClass_IndicatorsTable" Member="IndicatorClass" ThisKey="FK_IndicatorClass" OtherKey="IndicatorClassID" Type="IndicatorClass" IsForeignKey="true" />
+      <Association Name="IndicatorsTable_IndicatorsAndUsersMapping" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ManualTable" Member="ManualTable">
@@ -432,8 +414,8 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="FK_ReportArchiveTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="FK_IndicatorsTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
       <Association Name="ReportArchiveTable_ReportArchiveAndIndicatorsMappingTable" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
+      <Association Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ReportArchiveAndLevelMappingTable" Member="ReportArchiveAndLevelMappingTable">
@@ -505,6 +487,7 @@
       <Column Name="SpecializationNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="FK_FieldOfExpertise" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="SpecializationTable_FourthLevelSubdivisionTable" Member="FourthLevelSubdivisionTable" ThisKey="SpecializationTableID" OtherKey="FK_Specialization" Type="FourthLevelSubdivisionTable" />
+      <Association Name="SpecializationTable_EducationCostTable" Member="EducationCostTable" ThisKey="SpecializationTableID" OtherKey="FK_Specialization" Type="EducationCostTable" />
       <Association Name="FieldOfExpertise_SpecializationTable" Member="FieldOfExpertise" ThisKey="FK_FieldOfExpertise" OtherKey="FieldOfExpertiseID" Type="FieldOfExpertise" IsForeignKey="true" />
     </Type>
   </Table>
@@ -563,6 +546,39 @@
       <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="ZeroLevelSubdivisionTable_UsersTable" Member="ZeroLevelSubdivisionTable" ThisKey="FK_ZeroLevelSubdivisionTable" OtherKey="ZeroLevelSubdivisionTableID" Type="ZeroLevelSubdivisionTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EducationCostTable" Member="EducationCostTable">
+    <Type Name="EducationCostTable">
+      <Column Name="EducationCostTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FK_Specialization" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CostOfCommercOch" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CostOfCommercOchIn" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CostOfCommercZaoch" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CostOfCommercEvening" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="SpecializationTable_EducationCostTable" Member="SpecializationTable" ThisKey="FK_Specialization" OtherKey="SpecializationTableID" Type="SpecializationTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IndicatorsTable" Member="IndicatorsTable">
+    <Type Name="IndicatorsTable">
+      <Column Name="IndicatorsTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="Measure" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Formula" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
+      <Column Name="FK_IndicatorClass" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DataType" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SortID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="IndicatorsTable_CollectedIndicatorsForR" Member="CollectedIndicatorsForR" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="CollectedIndicatorsForR" />
+      <Association Name="IndicatorsTable_CollectedIndocators" Member="CollectedIndocators" ThisKey="IndicatorsTableID" OtherKey="FK_Indicators" Type="CollectedIndocators" />
+      <Association Name="IndicatorsTable_ConfirmationHistory" Member="ConfirmationHistory" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="ConfirmationHistory" />
+      <Association Name="IndicatorsTable_IndicatorsAndRolesMappingTable" Member="IndicatorsAndRolesMappingTable" ThisKey="IndicatorsTableID" OtherKey="FK_Indicators" Type="IndicatorsAndRolesMappingTable" />
+      <Association Name="IndicatorsTable_IndicatorsAndUsersMapping" Member="IndicatorsAndUsersMapping" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="IndicatorsAndUsersMapping" />
+      <Association Name="IndicatorsTable_PlannedIndicator" Member="PlannedIndicator" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="PlannedIndicator" />
+      <Association Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable" Member="ReportArchiveAndIndicatorsMappingTable" ThisKey="IndicatorsTableID" OtherKey="FK_IndicatorsTable" Type="ReportArchiveAndIndicatorsMappingTable" />
+      <Association Name="IndicatorClass_IndicatorsTable" Member="IndicatorClass" ThisKey="FK_IndicatorClass" OtherKey="IndicatorClassID" Type="IndicatorClass" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

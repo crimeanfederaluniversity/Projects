@@ -453,7 +453,7 @@ namespace KPIWeb.Rector
                                 && b.CanView == true
                                 && b.FK_UsresTable == userID
                                 && c.FK_ReportArchiveTable == ReportID
-                            select a).OrderBy(mc => mc.IndicatorsTableID).ToList();
+                            select a).OrderBy(mc => mc.SortID).ToList();
                         ////для уникальнности
                         int IDForUnique=0;
                         List<IndicatorsTable> Indicators = new List<IndicatorsTable>() ;
@@ -801,12 +801,19 @@ namespace KPIWeb.Rector
                             #region get calculated if confirmed; calculate if not confirmed
 
                             #region user can edit
-
-                            bool canConfirm = (bool) (from a in kpiWebDataContext.CalculatedParametrsAndUsersMapping
-                                where a.FK_CalculatedParametrsTable == CurrentCalculated.CalculatedParametrsID
-                                      && a.FK_UsersTable == userID
-                                select a.CanConfirm).FirstOrDefault();
-
+                            CalculatedParametrsAndUsersMapping Calc = (from a in kpiWebDataContext.CalculatedParametrsAndUsersMapping
+                                                                       where a.FK_CalculatedParametrsTable == CurrentCalculated.CalculatedParametrsID
+                                                                             && a.FK_UsersTable == userID
+                                                                       select a).FirstOrDefault();
+                            bool canConfirm;
+                            if (Calc != null)
+                            {
+                                 canConfirm = (bool)Calc.CanConfirm;
+                            }
+                            else
+                            {
+                                 canConfirm = false;
+                            }
                             #endregion
 
                             #region check if all users confirmed basics

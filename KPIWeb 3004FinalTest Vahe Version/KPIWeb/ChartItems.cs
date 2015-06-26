@@ -26,7 +26,12 @@ namespace KPIWeb
         }
         public void AddChartItem(string name, double value)
         {
-            dataItems.Add(new DataItem() { Name = name, Value = Math.Round(value, 3) });
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            IndicatorsTable Indicator = (from a in kPiDataContext.IndicatorsTable
+                                         where a.Name == name
+                                         select a).FirstOrDefault();
+            dataItems.Add(new DataItem() { Name = name, Value = Math.Round(value, 1) });
+            
         }
         public List<ChartOneValue> ReturnTopFive(List<ChartOneValue> collection)
         {

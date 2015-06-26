@@ -47,7 +47,7 @@ namespace KPIWeb.Reports
                     int reportArchiveTableID = ReportId.ReportArchiveID;    
               
                     List<IndicatorsTable> indicatorsTable = (from item in KPIWebDataContext.IndicatorsTable
-                                                             select item).ToList();
+                                                             select item).OrderBy(c => c.SortID).ToList();
                     DataTable dataTable = new DataTable();
                     dataTable.Columns.Add(new DataColumn("IndicatorsTableID", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
