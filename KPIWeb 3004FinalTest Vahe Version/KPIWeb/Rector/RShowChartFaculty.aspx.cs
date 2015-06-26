@@ -208,6 +208,10 @@ namespace KPIWeb.Rector
             Chart1.ChartAreas[0].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount;
 
             int ratio = 1;
+            var measure  = (from ind in kPiDataContext.IndicatorsTable
+             where ind.IndicatorsTableID == indicator
+             select ind.Measure).FirstOrDefault().ToString();
+
             foreach (ChartOneValue item in chartItems.SortReverse(DataForChart.ChartValues)) // сортировка для gridview FIFO
             {
                 if (item.value == 0) continue;
@@ -219,9 +223,7 @@ namespace KPIWeb.Rector
                      select a.FirstLevelSubdivisionTableID).FirstOrDefault();
                 dataRow["Ratio"] = ratio;
                 dataRow["IndicatorName"] = item.name;
-                dataRow["IndicatorValue"] = Math.Round(item.value, 3) + " " + (from ind in kPiDataContext.IndicatorsTable
-                                                                               where ind.IndicatorsTableID == indicator
-                                                                               select ind.Measure).FirstOrDefault().ToString(); ;
+                dataRow["IndicatorValue"] = Math.Round(item.value, 3) + " " + measure ;
                 dataTable.Rows.Add(dataRow);
 
                 ratio++;
@@ -239,10 +241,10 @@ namespace KPIWeb.Rector
             Chart1.Series[0].XValueMember = "Name";
             Chart1.Series[0].YValueMembers = "Value";
 
-            Chart1.Series[0].Label = "#VALY";
+            Chart1.Series[0].Label = "#VALY" + " " + measure;
 
             
-            Chart1.Series[0].ToolTip = "#VALX #VALY";
+            Chart1.Series[0].ToolTip = "#VALX #VALY"+ " " + measure;
             #endregion
 
             GridView1.DataSource = dataTable;

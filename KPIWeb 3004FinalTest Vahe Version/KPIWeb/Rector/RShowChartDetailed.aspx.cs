@@ -283,6 +283,10 @@ namespace KPIWeb.Rector
             List<ChartOneValue> sortItems = chartItems.SortReverse(DataForChart.ChartValues);
             ViewState["Items"] = sortItems;
 
+            var measure = (from ind in kPiDataContext.IndicatorsTable
+                           where ind.IndicatorsTableID == indicator
+                           select ind.Measure).FirstOrDefault().ToString(); 
+
             foreach (ChartOneValue item in sortItems)
             {
                 if (item.value == 0) continue; 
@@ -294,16 +298,13 @@ namespace KPIWeb.Rector
                                           select a.FirstLevelSubdivisionTableID).FirstOrDefault(); // Не индикаторID а FirstLevelSubdivisionTableID 
                 dataRow["Ratio"] = ratio; //Ratio
                 dataRow["IndicatorName"] = item.name;
-                dataRow["IndicatorValue"] = Math.Round(item.value, 3) + " " +
-                                            (from ind in kPiDataContext.IndicatorsTable
-                                             where ind.IndicatorsTableID == indicator 
-                                                select ind.Measure).FirstOrDefault().ToString(); 
+                dataRow["IndicatorValue"] = Math.Round(item.value, 3) + " " + measure;
                 dataTable.Rows.Add(dataRow);
 
                 ratio++;
             }
 
-            Chart1.Legends.Add(new Legend("Default") { Docking = Docking.Right });
+            Chart1.Legends.Add(new Legend("Default") { Docking = Docking.Right, Font = new Font("Arial", 11) });
 
             // Chart1.Legends["Default"].Font = new Font("Utopia", 16);
 
