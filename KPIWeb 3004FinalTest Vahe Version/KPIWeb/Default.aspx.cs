@@ -44,6 +44,10 @@ namespace KPIWeb
             {
                 Response.Redirect("~/FinKadr/OtdelChooseReport.aspx");
             }
+            else if (accessLevel == 4)
+            {
+                Response.Redirect("~/Director/DMain.aspx");
+            }
             else if (accessLevel == 7)
             {
                 Response.Redirect("~/Rector/RMain.aspx");

@@ -565,8 +565,7 @@ namespace KPIWeb.Reports
 
                 Response.Redirect("~/Reports_/FillingTheReport.aspx");
             }
-        }
-       
+        }      
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             

@@ -194,6 +194,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Director\DMain.aspx" />
+    <Content Include="Director\DReportView.aspx" />
+    <Content Include="Director\DViewThird.aspx" />
+    <Content Include="Director\ViewBasicParams.aspx" />
     <Content Include="Error.htm" />
     <Content Include="filenotfound.htm" />
     <Content Include="FillingProcessInfo.aspx" />
@@ -423,6 +427,34 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Director\DMain.aspx.cs">
+      <DependentUpon>DMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Director\DMain.aspx.designer.cs">
+      <DependentUpon>DMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Director\DReportView.aspx.cs">
+      <DependentUpon>DReportView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Director\DReportView.aspx.designer.cs">
+      <DependentUpon>DReportView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Director\DViewThird.aspx.cs">
+      <DependentUpon>DViewThird.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Director\DViewThird.aspx.designer.cs">
+      <DependentUpon>DViewThird.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Director\ViewBasicParams.aspx.cs">
+      <DependentUpon>ViewBasicParams.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Director\ViewBasicParams.aspx.designer.cs">
+      <DependentUpon>ViewBasicParams.aspx</DependentUpon>
     </Compile>
     <Compile Include="FillingProcessInfo.aspx.cs">
       <DependentUpon>FillingProcessInfo.aspx</DependentUpon>

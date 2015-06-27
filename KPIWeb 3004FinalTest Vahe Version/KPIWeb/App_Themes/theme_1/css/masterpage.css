@@ -338,6 +338,7 @@ background-image: url('http://212.110.152.173/Styles4KPIKFU/css/images/kfu_butto
     padding-right:10px;
     display:inline-block;
     top: 11px;
+    margin-top: 1px;
 }
    
 input[type="submit"]:hover {
