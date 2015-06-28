@@ -217,6 +217,7 @@
     <Content Include="Rector\RAnalitics.aspx" />
     <Content Include="Rector\RCalculate.aspx" />
     <Content Include="Rector\RMain.aspx" />
+    <Content Include="Rector\RPlannedDynamics.aspx" />
     <Content Include="Rector\RRating.aspx" />
     <Content Include="Rector\RShowChart.aspx" />
     <Content Include="Rector\RShowChartDetailed.aspx" />
@@ -537,6 +538,13 @@
     </Compile>
     <Compile Include="Rector\RMain.aspx.designer.cs">
       <DependentUpon>RMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\RPlannedDynamics.aspx.cs">
+      <DependentUpon>RPlannedDynamics.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\RPlannedDynamics.aspx.designer.cs">
+      <DependentUpon>RPlannedDynamics.aspx</DependentUpon>
     </Compile>
     <Compile Include="Rector\RRating.aspx.cs">
       <DependentUpon>RRating.aspx</DependentUpon>
