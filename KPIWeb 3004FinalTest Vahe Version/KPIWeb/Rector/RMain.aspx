@@ -95,7 +95,7 @@
               width: 700px;
         height: 100px;
        
-        background-image: url('http://www.wallsbox.ru/images/original/temnyj-les-%5B3266062%5D.jpg');
+        background-image: url('http://2013download.com/images/2013/01/Forex-Trading-Volume.jpg');
         background-repeat:repeat-x;
       
         background-size: 700px 100px;
@@ -374,7 +374,7 @@
 
         <span id="div_3">
         <asp:Button ID="Button3" runat="server" Text=""  OnClick="Button3_Click"  CssClass=""/>
-            <span id="insp3" >Третья кнопка снизу по центру</span>
+            <span id="insp3" >Плановая динамика Целевых показателей</span>
     </span>
     </div>
  <script>

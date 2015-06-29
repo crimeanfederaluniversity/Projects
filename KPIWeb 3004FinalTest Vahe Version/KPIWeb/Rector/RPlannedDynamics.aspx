@@ -2,12 +2,25 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div>
-    
-        <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" Width="484px">
+    <h2> Плановая динамика Целевых показателей </h2>
+        <asp:DropDownList ID="DropDownList1" runat="server" Width="1160" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
         </asp:DropDownList>
         <br />
-    
-        <asp:Chart ID="Chart1" runat="server" Height="463px" Width="1036px">
+       <style>
+       .chart{ opacity: 0.9;}
+   </style>
+                    <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
+        <div>    
+      <asp:Button ID="GoBackButton" runat="server" OnClick="Button2_Click"  Text="Назад" Width="125px" Enabled="True" />
+      <asp:Button ID="GoForwardButton" runat="server" OnClientClick="JavaScript:window.history.forward(1); return false;"  Enabled = "False" Text="Вперед" Width="125px" />
+        &nbsp; &nbsp; <asp:Button ID="Button2" runat="server"  Text="На главную" Width="125px" Enabled="True" OnClick="Button2_Click" />
+        &nbsp; &nbsp;       
+        <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right"  Text="Выбор отчета" Enabled="False" Width="225px" />
+            &nbsp; &nbsp; &nbsp; &nbsp;
+        </div>
+
+    </asp:Panel>
+        <asp:Chart ID="Chart1" runat="server" Height="600" Width="1167" CssClass="chart">
             <Series>
                 <asp:Series Name="ValueSeries" ChartType="StackedColumn">
                 </asp:Series>

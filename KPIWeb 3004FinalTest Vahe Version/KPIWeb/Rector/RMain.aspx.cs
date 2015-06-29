@@ -49,11 +49,12 @@ namespace KPIWeb.Rector
 
         protected void Button3_Click(object sender, EventArgs e)
         {
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            /*KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             IndicatorsTable Indicator = (from a in kpiWebDataContext.IndicatorsTable
                                          where a.Active == true
                                          select a).FirstOrDefault();
-         ChartValueWithAllPlanned NewChartValue = ForRCalc.GetAllPlannedForIndicator(Indicator.IndicatorsTableID);
+         ChartValueWithAllPlanned NewChartValue = ForRCalc.GetAllPlannedForIndicator(Indicator.IndicatorsTableID);*/
+            Response.Redirect("~/Rector/RPlannedDynamics.aspx");
         }
 
     }
