@@ -462,5 +462,10 @@ namespace KPIWeb.Rector
                 Response.Redirect("~/Rector/RRating.aspx");
             }
         }
+
+        protected void Button22_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/RectorMain.aspx");
+        }
     }
 }

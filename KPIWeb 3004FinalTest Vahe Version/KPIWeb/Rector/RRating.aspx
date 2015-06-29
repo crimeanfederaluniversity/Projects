@@ -1,6 +1,18 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RRating.aspx.cs" Inherits="KPIWeb.Rector.RRating" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">  
+    
+                <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
+        <div>    
+      <asp:Button ID="GoBackButton" runat="server" OnClientClick="JavaScript:window.history.back(1); return false; showLoadPanel();"  Text="Назад" Width="125px" Enabled="True" />
+      <asp:Button ID="GoForwardButton" runat="server" OnClientClick="JavaScript:window.history.forward(1); return false; showLoadPanel();"  Text="Вперед" Width="125px" />
+        &nbsp; &nbsp; <asp:Button ID="Button22" OnClientClick="showLoadPanel()" runat="server"  Text="На главную" Width="125px" Enabled="True" OnClick="Button22_Click" />
+        &nbsp; &nbsp;       
+        <asp:Button ID="Button11" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right"  Text="Выбор отчета" Enabled="False" Width="225px" />
+            &nbsp; &nbsp; &nbsp; &nbsp;
+        </div>
 
+    </asp:Panel>
+    
     <div>   
          <br />
 
