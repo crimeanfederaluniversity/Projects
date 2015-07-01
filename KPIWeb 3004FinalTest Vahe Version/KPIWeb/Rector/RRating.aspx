@@ -21,12 +21,25 @@
          <br />
          <br />
          <style>     
-            .my_result_gw tr + tr  td + td  {
-                text-align:center;
-            }
+
              body {
              top:35px;
              }
+             .numba {
+              text-align:center;
+             
+             }
+             .namepokazat {
+              text-align:left;
+              padding:5px 10px;
+             }
+             .Valuev {
+               text-align:center;
+             }
+             .planvalCP {
+                 text-align:center;
+             }
+
                        table {
 
               
@@ -38,19 +51,17 @@
                 text-align: center;
             }
               
-               table td + td {
-                text-align: center;
-            }
+               
         </style>
                 
-         <asp:GridView ID="Grid" runat="server" CssClass="my_result_gw sova"
+         <asp:GridView ID="Grid" runat="server" CssClass="sova"
             AutoGenerateColumns="False"
             >
              <Columns>                
-                 <asp:BoundField DataField="Number"   HeaderText="Номер" Visible="true" />    
-                 <asp:BoundField DataField="Name" HeaderText="Название показателя" Visible="True" />          
-                 <asp:BoundField DataField="Value" HeaderText="Значение" Visible="True" />
-                 <asp:BoundField DataField="PlannedValue" HeaderText="Плановое значение ЦП" Visible="True" />
+                 <asp:BoundField DataField="Number" ItemStyle-CssClass="numba"  HeaderText="Номер" Visible="true" />    
+                 <asp:BoundField DataField="Name"  ItemStyle-CssClass="namepokazat" HeaderText="Название показателя" Visible="True" />          
+                 <asp:BoundField DataField="Value" ItemStyle-CssClass="Valuev" HeaderText="Значение" Visible="True" />
+                 <asp:BoundField DataField="PlannedValue" ItemStyle-CssClass="planvalCP" HeaderText="Плановое значение ЦП" Visible="True" />
                  
                     <asp:TemplateField HeaderText="Детализация показателя по академиям">
                         <ItemTemplate>
