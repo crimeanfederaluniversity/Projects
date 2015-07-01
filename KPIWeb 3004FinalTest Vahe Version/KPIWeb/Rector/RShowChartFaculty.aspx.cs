@@ -241,7 +241,7 @@ namespace KPIWeb.Rector
             Chart1.Series[0].XValueMember = "Name";
             Chart1.Series[0].YValueMembers = "Value";
 
-            Chart1.Series[0].Label = "#VALY" + " " + measure;
+            Chart1.Series[0].Label = "#VALY" + " " + measure.Substring(0, 3);
 
             
             Chart1.Series[0].ToolTip = "#VALX #VALY"+ " " + measure;
