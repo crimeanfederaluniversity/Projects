@@ -69,6 +69,7 @@
 &nbsp;&nbsp;&nbsp;   
         <br />
         <style>
+
             .NoSkin
             { 
                 display:inline;
@@ -89,16 +90,14 @@
             }
 
          
-           .table {
-
-              
+              .table {
                border-width:15px;
                background-color: #ffffff;
                opacity: 0.9;
                }
-              .table th {
-                text-align: center;
-            }
+                .table th {
+                    text-align: center;
+                }
             </style>
          
         <table width="100%" border="1" class="table">

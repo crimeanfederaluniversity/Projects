@@ -20,15 +20,32 @@
 
          <br />
          <br />
-        <style>     
+         <style>     
             .my_result_gw tr + tr  td + td  {
-                text-align:left;
+                text-align:center;
+            }
+             body {
+             top:35px;
+             }
+                       table {
+
+              
+               border-width:15px;
+               background-color: #ffffff;
+               opacity: 0.9;
+               }
+              table th {
+                text-align: center;
+            }
+              
+               table td + td {
+                text-align: center;
             }
         </style>
                 
          <asp:GridView ID="Grid" runat="server" CssClass="my_result_gw sova"
             AutoGenerateColumns="False"
-            style="margin-top: 0px;">
+            >
              <Columns>                
                  <asp:BoundField DataField="Number"   HeaderText="Номер" Visible="true" />    
                  <asp:BoundField DataField="Name" HeaderText="Название показателя" Visible="True" />          

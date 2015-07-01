@@ -7,6 +7,9 @@
         </asp:DropDownList>
         <br />
        <style>
+              body {
+             top:35px;
+             }
        .chart{ opacity: 0.9;}
    </style>
                     <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
