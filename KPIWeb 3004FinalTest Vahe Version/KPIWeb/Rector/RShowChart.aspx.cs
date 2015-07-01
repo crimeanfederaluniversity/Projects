@@ -329,7 +329,7 @@ namespace KPIWeb.Rector
 
                     RA.Text = DataForChart.planned.ToString();
                     RA.ForeColor = Color.White;
-                    RA.Font = new System.Drawing.Font("Arial", 8f);
+                    RA.Font = new System.Drawing.Font("Arial", 8f, FontStyle.Bold);
 
 
                     // Consider adding transparency so that the strip lines are lighter
