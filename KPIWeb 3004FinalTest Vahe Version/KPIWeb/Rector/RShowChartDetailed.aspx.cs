@@ -240,6 +240,7 @@ namespace KPIWeb.Rector
 
             String IndicatorID = (string)Session["IndicatorToDetailed"];
             int indicator = Convert.ToInt32(IndicatorID);
+            List<int> Columnindicators = new List<int> {1016,1017,1024,1035};
 
             ChartItems chartItems = new ChartItems();
 
@@ -270,61 +271,219 @@ namespace KPIWeb.Rector
             Chart1.Titles.Add(DataForChart.chartName);
             Chart1.Titles[0].Font = new Font("Utopia", 16);
 
-            Chart1.Series.Add(new Series("Default")
+            if (Columnindicators.Contains(indicator)) // Column для нескольки показателей из ColumnIndicators
             {
-                ChartType = SeriesChartType.Pie,
-                Color = Color.CornflowerBlue
-            });
+                Chart1.Series.Add(new Series("Value")
+                {
+                    ChartType = SeriesChartType.Column,
+                    Color = Color.SeaGreen
+                });
 
-            Chart1.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
-            Chart1.ChartAreas[0].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount;
+                Chart1.Series.Add(new Series("Planned")
+                {
+                    ChartType = SeriesChartType.FastLine,
+                    Color = Color.Red,
+                    BorderWidth = 4,
+                });
 
-            int ratio = 1;
-            List<ChartOneValue> sortItems = chartItems.SortReverse(DataForChart.ChartValues);
-            ViewState["Items"] = sortItems;
 
-            var measure = (from ind in kPiDataContext.IndicatorsTable
-                           where ind.IndicatorsTableID == indicator
-                           select ind.Measure).FirstOrDefault().ToString(); 
+                Chart1.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
+                Chart1.ChartAreas[0].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount;
 
-            foreach (ChartOneValue item in sortItems)
-            {
-                if (item.value == 0) continue; 
-                chartItems.AddChartItem(item.name, item.value);
+                int ratio = 1;
+                List<ChartOneValue> sortItems = chartItems.SortReverse(DataForChart.ChartValues);
+                ViewState["Items"] = sortItems;
 
-                DataRow dataRow = dataTable.NewRow();
-                dataRow["IndicatorID"] = (from a in kPiDataContext.FirstLevelSubdivisionTable
-                                          where a.Name.Equals(item.name)
-                                          select a.FirstLevelSubdivisionTableID).FirstOrDefault(); // Не индикаторID а FirstLevelSubdivisionTableID 
-                dataRow["Ratio"] = ratio; //Ratio
-                dataRow["IndicatorName"] = item.name;
-                dataRow["IndicatorValue"] = Math.Round(item.value, 3) + " " + measure;
-                dataTable.Rows.Add(dataRow);
+                var measure = (from ind in kPiDataContext.IndicatorsTable
+                    where ind.IndicatorsTableID == indicator
+                    select ind.Measure).FirstOrDefault().ToString();
 
-                ratio++;
+         
+               // chartItems.AddChartItem("", 0);
+                ChartOneValue DataForChartKFUvalue = IndicatorsForCFUOneIndicator(indicator, 1);
+                foreach (ChartOneValue item in sortItems)
+                {
+                    if (item.value == 0) continue;
+                    chartItems.AddChartItem(item.name, item.value);
+                    Chart1.Series["Planned"].Points.AddY(DataForChartKFUvalue.value);
+
+                    DataRow dataRow = dataTable.NewRow();
+                    dataRow["IndicatorID"] = (from a in kPiDataContext.FirstLevelSubdivisionTable
+                        where a.Name.Equals(item.name)
+                        select a.FirstLevelSubdivisionTableID).FirstOrDefault();
+                        // Не индикаторID а FirstLevelSubdivisionTableID 
+                    dataRow["Ratio"] = ratio; //Ratio
+                    dataRow["IndicatorName"] = item.name;
+                    dataRow["IndicatorValue"] = Math.Round(item.value, 3) + " " + measure;
+                    dataTable.Rows.Add(dataRow);
+
+                    ratio++;
+                }
+                Chart1.Legends.Add(new Legend("Default") {Docking = Docking.Right, Font = new Font("Arial", 11)});
+
+                // Chart1.Legends["Default"].Font = new Font("Utopia", 16);
+
+                // Привязать источник к диаграмме
+                Chart1.DataSource = chartItems.GetDataSource();
+                Chart1.Series["Value"].XValueMember = "Name";
+                Chart1.Series["Value"].YValueMembers = "Value";
+
+               // Random random = new Random();
+                //foreach (var item in Chart1.Series[0].Points)
+                //{
+                  //  Color c = Color.FromArgb(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255));
+                    //item.Color = c;
+                //}
+
+                Chart1.Series["Value"].Label = "#VALY" + " %";
+                Chart1.Series["Value"].LegendText = "Значение по каждой академии";
+                Chart1.Series["Planned"].LegendText = "Плановое значение по КФУ";
+
+                Chart1.ChartAreas["ChartArea1"].AxisX = new Axis
+                {
+                    LabelStyle = new LabelStyle() {Font = new Font("Verdana", 6.5f)}
+                };
+
+                Chart1.ChartAreas["ChartArea1"].AxisX.LabelAutoFitMinFontSize = 5;
+                //Chart1.ChartAreas["ChartArea1"].AxisX.LabelStyle.Angle = 30;
+                Chart1.ChartAreas["ChartArea1"].AxisX.LabelAutoFitStyle = LabelAutoFitStyles.None;
+                Chart1.Series["Value"].ToolTip = "#VALX" + ", \n значение = "+ "#VALY" +" "+ measure;
+                Chart1.Series["Value"].Font = new Font("Arial", 9f, FontStyle.Bold);
+                
+
+             
+
+                GridView1.DataSource = dataTable;
+                GridView1.DataBind();
+                Chart1.Series["Value"].PostBackValue = "#INDEX";
+
             }
 
-            Chart1.Legends.Add(new Legend("Default") { Docking = Docking.Right, Font = new Font("Arial", 11) });
+            else if (indicator == 1036) // Костыль для V.20
+            {
+                Chart1.Series.Add(new Series("Default")
+                {
+                    ChartType = SeriesChartType.Pie,
+                    Color = Color.CornflowerBlue
+                });
 
-            // Chart1.Legends["Default"].Font = new Font("Utopia", 16);
+                Chart1.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
+                Chart1.ChartAreas[0].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount;
 
-            // Привязать источник к диаграмме
-            Chart1.DataSource = chartItems.GetDataSource();
-            Chart1.Series[0].XValueMember = "Name";
-            Chart1.Series[0].YValueMembers = "Value";
+                int ratio = 1;
+                List<ChartOneValue> sortItems = chartItems.SortReverse(DataForChart.ChartValues);
+                ViewState["Items"] = sortItems;
 
-            Chart1.Series[0].Label = "#PERCENT{P0}";
+                var measure = (from ind in kPiDataContext.IndicatorsTable
+                               where ind.IndicatorsTableID == indicator
+                               select ind.Measure).FirstOrDefault().ToString();
+
+                foreach (ChartOneValue item in sortItems)
+                {
+                    if (item.value == 0) continue;
+                    chartItems.AddChartItem(item.name, item.value);
+
+                    DataRow dataRow = dataTable.NewRow();
+                    dataRow["IndicatorID"] = (from a in kPiDataContext.FirstLevelSubdivisionTable
+                                              where a.Name.Equals(item.name)
+                                              select a.FirstLevelSubdivisionTableID).FirstOrDefault();
+                    // Не индикаторID а FirstLevelSubdivisionTableID 
+                    dataRow["Ratio"] = ratio; //Ratio
+                    dataRow["IndicatorName"] = item.name;
+                    dataRow["IndicatorValue"] = Math.Round(item.value, 3) + " " + measure;
+                    dataTable.Rows.Add(dataRow);
+
+                    ratio++;
+                }
+
+                Chart1.Legends.Add(new Legend("Default") { Docking = Docking.Right, Font = new Font("Arial", 11) });
+
+                // Chart1.Legends["Default"].Font = new Font("Utopia", 16);
+
+                // Привязать источник к диаграмме
+                Chart1.DataSource = chartItems.GetDataSource();
+                Chart1.Series[0].XValueMember = "Name";
+                Chart1.Series[0].YValueMembers = "Value";
+
+                Chart1.Series[0].Label = "#VALY" + " %";
 
 
-            Chart1.Series[0].LegendText = "#AXISLABEL";
+                Chart1.Series[0].LegendText = "#AXISLABEL";
 
-            Chart1.Series[0].ToolTip = "#VALX";
+                Chart1.Series[0].ToolTip = "#VALX";
+
+
+
+                Chart1.ChartAreas[0].Area3DStyle.Enable3D = true;
+
+                GridView1.DataSource = dataTable;
+                GridView1.DataBind();
+                Chart1.Series[0].PostBackValue = "#INDEX";
+            }
+
+            else // Pie для остальных
+            {
+
+                Chart1.Series.Add(new Series("Default")
+                {
+                    ChartType = SeriesChartType.Pie,
+                    Color = Color.CornflowerBlue
+                });
+
+                Chart1.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
+                Chart1.ChartAreas[0].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount;
+
+                int ratio = 1;
+                List<ChartOneValue> sortItems = chartItems.SortReverse(DataForChart.ChartValues);
+                ViewState["Items"] = sortItems;
+
+                var measure = (from ind in kPiDataContext.IndicatorsTable
+                    where ind.IndicatorsTableID == indicator
+                    select ind.Measure).FirstOrDefault().ToString();
+
+                foreach (ChartOneValue item in sortItems)
+                {
+                    if (item.value == 0) continue;
+                    chartItems.AddChartItem(item.name, item.value);
+
+                    DataRow dataRow = dataTable.NewRow();
+                    dataRow["IndicatorID"] = (from a in kPiDataContext.FirstLevelSubdivisionTable
+                        where a.Name.Equals(item.name)
+                        select a.FirstLevelSubdivisionTableID).FirstOrDefault();
+                        // Не индикаторID а FirstLevelSubdivisionTableID 
+                    dataRow["Ratio"] = ratio; //Ratio
+                    dataRow["IndicatorName"] = item.name;
+                    dataRow["IndicatorValue"] = Math.Round(item.value, 3) + " " + measure;
+                    dataTable.Rows.Add(dataRow);
+
+                    ratio++;
+                }
+
+                Chart1.Legends.Add(new Legend("Default") {Docking = Docking.Right, Font = new Font("Arial", 11)});
+
+                // Chart1.Legends["Default"].Font = new Font("Utopia", 16);
+
+                // Привязать источник к диаграмме
+                Chart1.DataSource = chartItems.GetDataSource();
+                Chart1.Series[0].XValueMember = "Name";
+                Chart1.Series[0].YValueMembers = "Value";
+
+                Chart1.Series[0].Label = "#PERCENT{P0}";
+
+
+                Chart1.Series[0].LegendText = "#AXISLABEL";
+
+                Chart1.Series[0].ToolTip = "#VALX";
+
+             
+
+                Chart1.ChartAreas[0].Area3DStyle.Enable3D = true;
+
+                GridView1.DataSource = dataTable;
+                GridView1.DataBind();
+                Chart1.Series[0].PostBackValue = "#INDEX";
+            }
             #endregion
-            Chart1.ChartAreas[0].Area3DStyle.Enable3D = true;
-
-            GridView1.DataSource = dataTable;
-            GridView1.DataBind();
-            Chart1.Series[0].PostBackValue = "#INDEX";
         }
 
         protected void FacultyButtonClick(object sender, EventArgs e)

@@ -73,7 +73,7 @@
              
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Width="700px" OnRowDataBound="GridView1_RowDataBound" CssClass="rrrr">
             <Columns>
-                <asp:BoundField HeaderText="ID индикатора" DataField="IndicatorID" ItemStyle-Width="120px" Visible="True" />
+                <asp:BoundField HeaderText="ID индикатора" DataField="IndicatorID" ItemStyle-Width="120px" Visible="False" />
                 <asp:BoundField HeaderText="Название индикатора" DataField="IndicatorName" />
                 <asp:TemplateField HeaderText="Гистограмма">
                     <ItemTemplate>

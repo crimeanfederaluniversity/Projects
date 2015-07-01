@@ -76,10 +76,10 @@ namespace KPIWeb.Rector
 
             // формат заголовока
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-
-            Chart1.Titles.Add((from a in kpiWebDataContext.IndicatorsTable
-                              where a.Active == true && a.IndicatorsTableID == IndicatorID
-                              select a.Name).FirstOrDefault());
+            var namemeasure = (from a in kpiWebDataContext.IndicatorsTable
+                where a.Active == true && a.IndicatorsTableID == IndicatorID
+                select a).FirstOrDefault();
+            Chart1.Titles.Add(namemeasure.Name + " (" + namemeasure.Measure+")");
 
             Chart1.Titles[0].Font = new Font("Utopia", 16);
 
