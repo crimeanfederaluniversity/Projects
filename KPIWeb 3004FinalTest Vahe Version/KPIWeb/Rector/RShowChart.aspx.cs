@@ -226,6 +226,7 @@ namespace KPIWeb.Rector
                 
                 string indID = DataBinder.Eval(e.Row.DataItem, "IndicatorID").ToString();
                 Chart chart = (Chart)e.Row.FindControl("Chart3");
+                Button button = (Button)e.Row.FindControl("Button7");
                 //chart.TempDirectory = "/app/tmp"; 
                 if (chart != null)
                 {
@@ -341,6 +342,11 @@ namespace KPIWeb.Rector
 
                     chart.Annotations.Add(verticalLine);
                     chart.Annotations.Add(RA);
+
+                    if (Convert.ToInt32(indID) == 1026 || DataForChart.value == 0)
+                    {
+                        button.Enabled = false;
+                    }
                 }
             }
         }
