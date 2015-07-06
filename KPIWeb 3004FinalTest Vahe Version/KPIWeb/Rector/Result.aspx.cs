@@ -27,6 +27,25 @@ namespace KPIWeb.Rector
             public string UrlAddr;
             public int Active;
         }
+
+        public class ObjectToSort
+        {
+            public int ID  { get; set; }
+            public string Number { get; set; }
+            public string Name { get; set; }
+            public string StartDate { get; set; }
+            public string EndDate { get; set; }
+            public string Comment { get; set; }
+            public string CommentEnabled { get; set; }
+
+            public bool CanConfirm { get; set; }
+            public bool ShowLable { get; set; }
+            public bool CanWatchWhoOws { get; set; }
+
+            public string LableText { get; set; }
+            public string LableColor { get; set; }
+            public double Value { get; set; }
+        }
        
         protected void Page_Load(object sender, EventArgs e)
         {          
@@ -305,30 +324,60 @@ namespace KPIWeb.Rector
                         currentStructList = ForRCalc.GetChildStructList(mainStruct, ReportID);
                     }
 
+                    List<ObjectToSort> sorted = new List<ObjectToSort>();
+
                     foreach (ForRCalc.Struct currentStruct in currentStructList)
+                    {
+
+                        ObjectToSort OtS = new ObjectToSort();
+
+                        OtS.ID = ForRCalc.GetLastID(currentStruct);
+                        OtS.Number = "num";
+                        OtS.Name = currentStruct.Name;
+                        OtS.StartDate = "nun";
+                        OtS.EndDate = "nun";
+                        OtS.Comment = "nun";
+                        OtS.CommentEnabled = "hidden";
+
+                        OtS.CanConfirm = true;
+                        OtS.ShowLable = false;
+                        OtS.CanWatchWhoOws = false;
+
+                        OtS.LableText = "";
+                        OtS.LableColor = "#000000";
+
+                        OtS.Value =
+                            ForRCalc.GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID, SpecID);
+                        sorted.Add(OtS);
+                    }
+
+                    sorted.Sort((value1, value2) => value1.Value.CompareTo(value2.Value));
+                    sorted.Reverse();
+
+                    foreach (var currentStruct in sorted)
                     {
 
                         DataRow dataRow = dataTable.NewRow();
 
-                        dataRow["ID"] = ForRCalc.GetLastID(currentStruct).ToString();
-                        dataRow["Number"] = "num";
+                        dataRow["ID"] = currentStruct.ID.ToString();
+                        dataRow["Number"] = currentStruct.Number;
                         dataRow["Name"] = currentStruct.Name;
-                        dataRow["StartDate"] = "nun";
-                        dataRow["EndDate"] = "nun";
-                        dataRow["Comment"] = "nun";
-                        dataRow["CommentEnabled"] = "hidden";
-                        
-                        dataRow["CanConfirm"] = true;
-                        dataRow["ShowLable"] = false;
-                        dataRow["CanWatchWhoOws"] = false;
-                        
-                        dataRow["LableText"] = "";
-                        dataRow["LableColor"] = "#000000";
+                        dataRow["StartDate"] = currentStruct.StartDate;
+                        dataRow["EndDate"] = currentStruct.EndDate;
+                        dataRow["Comment"] = currentStruct.Comment;
+                        dataRow["CommentEnabled"] = currentStruct.CommentEnabled;
 
-                        dataRow["Value"] =
-                            ForRCalc.GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID, SpecID).ToString();
+                        dataRow["CanConfirm"] = currentStruct.CanConfirm;
+                        dataRow["ShowLable"] = currentStruct.ShowLable;
+                        dataRow["CanWatchWhoOws"] = currentStruct.CanWatchWhoOws;
+
+                        dataRow["LableText"] = currentStruct.LableText;
+                        dataRow["LableColor"] = currentStruct.LableColor;
+
+                        dataRow["Value"] = currentStruct.Value.ToString();
                         dataTable.Rows.Add(dataRow);
                     }
+
 
                     #endregion
                     #region DataGridBind
@@ -1171,29 +1220,41 @@ namespace KPIWeb.Rector
 
                     //взяли все специальности которые привязаны к кафедрам
                     int old = 0;
+                    List<ObjectToSort> sorted = new List<ObjectToSort>();
                     foreach (SpecializationTable currentSpec in SpecTable)
                     {
                         if (currentSpec.SpecializationTableID != old)
                         {
-                            DataRow dataRow = dataTable.NewRow();
-                            dataRow["ID"] = currentSpec.SpecializationTableID; //GetLastID(currentStruct).ToString();
-                            dataRow["Number"] = "num";
-                            dataRow["Name"] = currentSpec.Name + ": " + (from a in kpiWebDataContext.SpecializationTable where a.SpecializationTableID == currentSpec.SpecializationTableID select a.SpecializationNumber).FirstOrDefault().ToString() +" "+ Action.EncodeToStr((from a in kpiWebDataContext.SpecializationTable where a.SpecializationTableID == currentSpec.SpecializationTableID select a.SpecializationNumber).FirstOrDefault().ToString()); //currentStruct.Name; // Шифр добавить!!
-                            dataRow["StartDate"] = "nun";
-                            dataRow["EndDate"] = "nun";
-                            dataRow["CanWatchWhoOws"] = false;
-                            dataRow["CanConfirm"] = true;
-                            dataRow["ShowLable"] = false;
-                            dataRow["LableText"] = "";
-                            dataRow["LableColor"] = "#000000";
 
-                            dataRow["Comment"] = "nun";
-                            dataRow["CommentEnabled"] = "hidden";
+                            ObjectToSort OtS = new ObjectToSort();
 
-                            dataRow["Value"] =
+                            OtS.ID = currentSpec.SpecializationTableID; //GetLastID(currentStruct).ToString();
+                            OtS.Number = "num";
+                            OtS.Name = currentSpec.Name + ": " + (from a in kpiWebDataContext.SpecializationTable
+                                where a.SpecializationTableID == currentSpec.SpecializationTableID
+                                select a.SpecializationNumber).FirstOrDefault().ToString() + " " +
+                                       Action.EncodeToStr((from a in kpiWebDataContext.SpecializationTable
+                                           where a.SpecializationTableID == currentSpec.SpecializationTableID
+                                           select a.SpecializationNumber).FirstOrDefault().ToString());
+                                //currentStruct.Name; // Шифр добавить!!
+                            OtS.StartDate = "nun";
+                            OtS.EndDate = "nun";
+                            OtS.Comment = "nun";
+                            OtS.CommentEnabled = "hidden";
+
+                            OtS.CanConfirm = true;
+                            OtS.ShowLable = false;
+                            OtS.CanWatchWhoOws = false;
+
+                            OtS.LableText = "";
+                            OtS.LableColor = "#000000";
+
+                            OtS.Value =
                                 ForRCalc.GetCalculatedWithParams(mainStruct, ParamType, ParamID, ReportID,
-                                    currentSpec.SpecializationTableID).ToString();
-                            dataTable.Rows.Add(dataRow);
+                                    currentSpec.SpecializationTableID);
+
+                            sorted.Add(OtS);
+
                         }
                         else
                         {
@@ -1201,6 +1262,35 @@ namespace KPIWeb.Rector
                         }
                         old = currentSpec.SpecializationTableID;
                     }
+
+
+                    sorted.Sort((value1, value2) => value1.Value.CompareTo(value2.Value));
+                    sorted.Reverse();
+
+                    foreach (var currentSpec in sorted)
+                    {
+                            DataRow dataRow = dataTable.NewRow();
+                        dataRow["ID"] = currentSpec.ID.ToString();
+                        dataRow["Number"] = currentSpec.Number;
+                        dataRow["Name"] = currentSpec.Name;
+                        dataRow["StartDate"] = currentSpec.StartDate;
+                        dataRow["EndDate"] = currentSpec.EndDate;
+                        dataRow["Comment"] = currentSpec.Comment;
+                        dataRow["CommentEnabled"] = currentSpec.CommentEnabled;
+
+                        dataRow["CanConfirm"] = currentSpec.CanConfirm;
+                        dataRow["ShowLable"] = currentSpec.ShowLable;
+                        dataRow["CanWatchWhoOws"] = currentSpec.CanWatchWhoOws;
+
+                        dataRow["LableText"] = currentSpec.LableText;
+                        dataRow["LableColor"] = currentSpec.LableColor;
+
+                        dataRow["Value"] = currentSpec.Value.ToString();
+                            dataTable.Rows.Add(dataRow);
+                      }
+                
+
+                    
 
                     #endregion
                     #region DataGridBind
