@@ -745,7 +745,7 @@ namespace KPIWeb.Reports
             </script>";
 
             string script2 = @"<script>
-            function ConfirmSubmit() { 
+            function ConfirmSubmitA() { 
                 var msg = confirm('Режим доступа к данным будет изменен на \'только просмотр\'.Подтвердить достоверность данных и отправить их на обработку?'); 
                     if (msg == true)
                     {
@@ -1547,7 +1547,7 @@ namespace KPIWeb.Reports
                         Page.ClientScript.RegisterClientScriptBlock(this.GetType(),
                         "ConfirmOn", script3);
 
-                        ButtonSave.Attributes.Add("OnClick", "return ConfirmSubmit();");
+                        ButtonSave.Attributes.Add("OnClick", "return ConfirmSubmitA();");
                         UpnDownButton.Attributes.Add("OnClick", "return ConfirmSubmitOn();");
                     }
                     GridviewCollectedBasicParameters.DataSource = dataTable;
