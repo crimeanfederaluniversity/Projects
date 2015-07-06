@@ -745,9 +745,19 @@ namespace KPIWeb.Reports
             </script>";
 
             string script2 = @"<script>
-            function ConfirmSubmit() {
-                var msg = ' Режим доступа к данным будет изменен на \'только просмотр\'.Подтвердить достоверность данных и отправить их на обработку?'; 
-                return confirm(msg);
+            function ConfirmSubmit() { 
+                var msg = confirm('Режим доступа к данным будет изменен на \'только просмотр\'.Подтвердить достоверность данных и отправить их на обработку?'); 
+                    if (msg == true)
+                    {
+                        document.getElementById('LoadPanel_').style.visibility = 'visible'
+                            return true;
+                    }
+                    else
+                    {
+                        document.getElementById('LoadPanel_').style.visibility = 'hidden'
+                            return false;
+                    }
+
             }
             </script>";
 
@@ -1534,11 +1544,10 @@ namespace KPIWeb.Reports
                         Page.ClientScript.RegisterClientScriptBlock(this.GetType(),
                         "Confirm", script2);
 
-                        ButtonSave.Attributes.Add("OnClick", "return ConfirmSubmit();");
-
                         Page.ClientScript.RegisterClientScriptBlock(this.GetType(),
                         "ConfirmOn", script3);
 
+                        ButtonSave.Attributes.Add("OnClick", "return ConfirmSubmit();");
                         UpnDownButton.Attributes.Add("OnClick", "return ConfirmSubmitOn();");
                     }
                     GridviewCollectedBasicParameters.DataSource = dataTable;
