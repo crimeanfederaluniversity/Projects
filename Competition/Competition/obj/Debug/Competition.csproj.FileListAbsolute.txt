@@ -10,3 +10,9 @@ C:\Users\Рема\Desktop\rep\trunk\Competition\Competition\bin\Competition.dll.
 C:\Users\Рема\Desktop\rep\trunk\Competition\Competition\bin\Competition.dll
 C:\Users\Рема\Desktop\rep\trunk\Competition\Competition\bin\Competition.pdb
 C:\Users\Рема\Desktop\rep\trunk\Competition\Competition\obj\Debug\Competition.pdb
+C:\Users\Рема\Desktop\репозиторий\trunk\Competition\Competition\obj\Debug\Competition.csprojResolveAssemblyReference.cache
+C:\Users\Рема\Desktop\репозиторий\trunk\Competition\Competition\obj\Debug\Competition.dll
+C:\Users\Рема\Desktop\репозиторий\trunk\Competition\Competition\bin\Competition.dll.config
+C:\Users\Рема\Desktop\репозиторий\trunk\Competition\Competition\bin\Competition.dll
+C:\Users\Рема\Desktop\репозиторий\trunk\Competition\Competition\bin\Competition.pdb
+C:\Users\Рема\Desktop\репозиторий\trunk\Competition\Competition\obj\Debug\Competition.pdb

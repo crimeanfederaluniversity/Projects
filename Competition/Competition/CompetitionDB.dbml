@@ -1,153 +1,89 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Competitions" Class="CompetitionDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=РЕМА-ПК\REMAIDEMBUHAT;Initial Catalog=Competitions;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="CompetitionsConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.Answers" Member="Answers">
-    <Type Name="Answers">
-      <Column Name="ID_Answer" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Konkursy" Class="CompetitionDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=РЕМА-ПК\REMAIDEMBUHAT;Initial Catalog=Konkursy;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="KonkursyConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.AutoFilling" Member="AutoFilling">
+    <Type Name="AutoFilling">
+      <Column Name="ID_Doc" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FK_Konkurs" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Page" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_Bid" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Text" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Answers_Question_AnswerMapinngTable" Member="Question_AnswerMapinngTable" ThisKey="ID_Answer" OtherKey="FK_Answer" Type="Question_AnswerMapinngTable" />
-      <Association Name="Bids_Answers" Member="Bids" ThisKey="FK_Bid" OtherKey="ID_Bid" Type="Bids" IsForeignKey="true" />
+      <Association Name="Konkursy_AutoFilling" Member="Konkursy" ThisKey="FK_Konkurs" OtherKey="ID_Konkurs" Type="Konkursy" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Bids" Member="Bids">
     <Type Name="Bids">
       <Column Name="ID_Bid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FK_User" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Competition" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Expert" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_Konkurs" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Status" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Comment" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Bids_Answers" Member="Answers" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="Answers" />
-      <Association Name="Bids_Values" Member="Values" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="Values" />
-      <Association Name="Competitions_Bids" Member="Competitions" ThisKey="FK_Competition" OtherKey="ID_Competition" Type="Competitions" IsForeignKey="true" />
-      <Association Name="Users_Bids" Member="Users" ThisKey="FK_User" OtherKey="ID_User" Type="Users" IsForeignKey="true" />
-      <Association Name="Users_Bids1" Member="Users1" ThisKey="FK_Expert" OtherKey="ID_User" Type="Users" IsForeignKey="true" />
+      <Column Name="Coment" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="Bids_SmetaValue" Member="SmetaValue" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="SmetaValue" />
+      <Association Name="Bids_User_BidMapingTable" Member="User_BidMapingTable" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="User_BidMapingTable" />
+      <Association Name="Konkursy_Bids" Member="Konkursy" ThisKey="FK_Konkurs" OtherKey="ID_Konkurs" Type="Konkursy" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Competitions" Member="Competitions">
-    <Type Name="Competitions">
-      <Column Name="ID_Competition" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.Konkursy" Member="Konkursy">
+    <Type Name="Konkursy">
+      <Column Name="ID_Konkurs" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Number" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="StartDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="EndDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="Curator" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="FK_Curator" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="Competitions_Bids" Member="Bids" ThisKey="ID_Competition" OtherKey="FK_Competition" Type="Bids" />
-      <Association Name="Competitions_Fields" Member="Fields" ThisKey="ID_Competition" OtherKey="FK_Competition" Type="Fields" />
-      <Association Name="Competitions_Form_CompetitionMapingTable" Member="Form_CompetitionMapingTable" ThisKey="ID_Competition" OtherKey="FK_Competition" Type="Form_CompetitionMapingTable" />
+      <Association Name="Konkursy_AutoFilling" Member="AutoFilling" ThisKey="ID_Konkurs" OtherKey="FK_Konkurs" Type="AutoFilling" />
+      <Association Name="Konkursy_Bids" Member="Bids" ThisKey="ID_Konkurs" OtherKey="FK_Konkurs" Type="Bids" />
+      <Association Name="Konkursy_Smeta" Member="Smeta" ThisKey="ID_Konkurs" OtherKey="FK_Konkurs" Type="Smeta" />
+      <Association Name="Users_Konkursy" Member="Users" ThisKey="FK_Curator" OtherKey="ID_User" Type="Users" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Fields" Member="Fields">
-    <Type Name="Fields">
-      <Column Name="ID_Field" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FK_Competition" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Table" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Text" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+  <Table Name="dbo.Smeta" Member="Smeta">
+    <Type Name="Smeta">
+      <Column Name="ID_State" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name_state" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Type_state" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="Uniqvalue" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="Fields_Field_ValueMapingTable" Member="Field_ValueMapingTable" ThisKey="ID_Field" OtherKey="FK_Field" Type="Field_ValueMapingTable" />
-      <Association Name="Competitions_Fields" Member="Competitions" ThisKey="FK_Competition" OtherKey="ID_Competition" Type="Competitions" IsForeignKey="true" />
-      <Association Name="Tables_Fields" Member="Tables" ThisKey="FK_Table" OtherKey="ID_Table" Type="Tables" IsForeignKey="true" />
+      <Column Name="FK_Konkurs" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Smeta_SmetaValue" Member="SmetaValue" ThisKey="ID_State" OtherKey="FK_State" Type="SmetaValue" />
+      <Association Name="Konkursy_Smeta" Member="Konkursy" ThisKey="FK_Konkurs" OtherKey="ID_Konkurs" Type="Konkursy" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.[Field-ValueMapingTable]" Member="Field_ValueMapingTable">
-    <Type Name="Field_ValueMapingTable">
-      <Column Name="[ID_Field-Value]" Member="ID_Field_Value" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.SmetaValue" Member="SmetaValue">
+    <Type Name="SmetaValue">
+      <Column Name="ID_Value" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_Field" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Value" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Fields_Field_ValueMapingTable" Member="Fields" ThisKey="FK_Field" OtherKey="ID_Field" Type="Fields" IsForeignKey="true" />
-      <Association Name="Values_Field_ValueMapingTable" Member="Values" ThisKey="FK_Value" OtherKey="ID_Value" Type="Values" IsForeignKey="true" />
+      <Column Name="FK_Bid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_State" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Value" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Bids_SmetaValue" Member="Bids" ThisKey="FK_Bid" OtherKey="ID_Bid" Type="Bids" IsForeignKey="true" />
+      <Association Name="Smeta_SmetaValue" Member="Smeta" ThisKey="FK_State" OtherKey="ID_State" Type="Smeta" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.[Form-CompetitionMapingTable]" Member="Form_CompetitionMapingTable">
-    <Type Name="Form_CompetitionMapingTable">
-      <Column Name="[ID_Table-Field]" Member="ID_Table_Field" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FK_Form" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Competition" Type="System.Int32" DbType="Int" CanBeNull="true" />
+  <Table Name="dbo.[User-BidMapingTable]" Member="User_BidMapingTable">
+    <Type Name="User_BidMapingTable">
+      <Column Name="[ID_User-Bid]" Member="ID_User_Bid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FK_User" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_Bid" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="Competitions_Form_CompetitionMapingTable" Member="Competitions" ThisKey="FK_Competition" OtherKey="ID_Competition" Type="Competitions" IsForeignKey="true" />
-      <Association Name="Forms_Form_CompetitionMapingTable" Member="Forms" ThisKey="FK_Form" OtherKey="ID_Form" Type="Forms" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.[Form-QuestionMapingTable]" Member="Form_QuestionMapingTable">
-    <Type Name="Form_QuestionMapingTable">
-      <Column Name="[ID_Form-Question]" Member="ID_Form_Question" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FK_Form" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Question" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="Forms_Form_QuestionMapingTable" Member="Forms" ThisKey="FK_Form" OtherKey="ID_Form" Type="Forms" IsForeignKey="true" />
-      <Association Name="Questions_Form_QuestionMapingTable" Member="Questions" ThisKey="FK_Question" OtherKey="ID_Question" Type="Questions" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Forms" Member="Forms">
-    <Type Name="Forms">
-      <Column Name="ID_Form" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="Forms_Form_CompetitionMapingTable" Member="Form_CompetitionMapingTable" ThisKey="ID_Form" OtherKey="FK_Form" Type="Form_CompetitionMapingTable" />
-      <Association Name="Forms_Form_QuestionMapingTable" Member="Form_QuestionMapingTable" ThisKey="ID_Form" OtherKey="FK_Form" Type="Form_QuestionMapingTable" />
-      <Association Name="Forms_Tables" Member="Tables" ThisKey="ID_Form" OtherKey="FK_Form" Type="Tables" />
-    </Type>
-  </Table>
-  <Table Name="dbo.[Question-AnswerMapinngTable]" Member="Question_AnswerMapinngTable">
-    <Type Name="Question_AnswerMapinngTable">
-      <Column Name="[ID_Question-Answer]" Member="ID_Question_Answer" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FK_Answer" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Question" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="Answers_Question_AnswerMapinngTable" Member="Answers" ThisKey="FK_Answer" OtherKey="ID_Answer" Type="Answers" IsForeignKey="true" />
-      <Association Name="Questions_Question_AnswerMapinngTable" Member="Questions" ThisKey="FK_Question" OtherKey="ID_Question" Type="Questions" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Questions" Member="Questions">
-    <Type Name="Questions">
-      <Column Name="ID_Question" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FK_Form" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Text" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="Uniqvalue" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="Questions_Form_QuestionMapingTable" Member="Form_QuestionMapingTable" ThisKey="ID_Question" OtherKey="FK_Question" Type="Form_QuestionMapingTable" />
-      <Association Name="Questions_Question_AnswerMapinngTable" Member="Question_AnswerMapinngTable" ThisKey="ID_Question" OtherKey="FK_Question" Type="Question_AnswerMapinngTable" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Tables" Member="Tables">
-    <Type Name="Tables">
-      <Column Name="ID_Table" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FK_Form" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Column1Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Column2Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Column3Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Column4Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="Tables_Fields" Member="Fields" ThisKey="ID_Table" OtherKey="FK_Table" Type="Fields" />
-      <Association Name="Forms_Tables" Member="Forms" ThisKey="FK_Form" OtherKey="ID_Form" Type="Forms" IsForeignKey="true" />
+      <Association Name="Bids_User_BidMapingTable" Member="Bids" ThisKey="FK_Bid" OtherKey="ID_Bid" Type="Bids" IsForeignKey="true" />
+      <Association Name="Users_User_BidMapingTable" Member="Users" ThisKey="FK_User" OtherKey="ID_User" Type="Users" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Users" Member="Users">
     <Type Name="Users">
       <Column Name="ID_User" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Role" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Post" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="PlaceofWork" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="[E-mail]" Member="E_mail" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="Pass" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Role" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Association Name="Users_Bids" Member="Bids" ThisKey="ID_User" OtherKey="FK_User" Type="Bids" />
-      <Association Name="Users_Bids1" Member="Bids1" ThisKey="ID_User" OtherKey="FK_Expert" Type="Bids" />
-    </Type>
-  </Table>
-  <Table Name="dbo.[Values]" Member="Values">
-    <Type Name="Values">
-      <Column Name="ID_Value" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FK_Bid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="[Function]" Member="Function" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="PayPerHour" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Value" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Values_Field_ValueMapingTable" Member="Field_ValueMapingTable" ThisKey="ID_Value" OtherKey="FK_Value" Type="Field_ValueMapingTable" />
-      <Association Name="Bids_Values" Member="Bids" ThisKey="FK_Bid" OtherKey="ID_Bid" Type="Bids" IsForeignKey="true" />
+      <Association Name="Users_Konkursy" Member="Konkursy" ThisKey="ID_User" OtherKey="FK_Curator" Type="Konkursy" />
+      <Association Name="Users_User_BidMapingTable" Member="User_BidMapingTable" ThisKey="ID_User" OtherKey="FK_User" Type="User_BidMapingTable" />
     </Type>
   </Table>
 </Database>

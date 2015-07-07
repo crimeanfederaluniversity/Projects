@@ -43,11 +43,7 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                  <asp:TemplateField HeaderText="Куратор" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
-                        <ItemTemplate> 
-                            <asp:Label ID="Curator" runat="server" Text='<%# Bind("Curator") %>'  Visible="True"></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
+                  
                   </Columns>
         </asp:GridView>
         <br />

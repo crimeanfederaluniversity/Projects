@@ -15,12 +15,12 @@ namespace Competition
             if (!(Page.IsPostBack))
             {
                 CompetitionDBDataContext newCompetition = new CompetitionDBDataContext();
-                List<Competitions> comp = (from a in newCompetition.Competitions where a.Active == true select a).ToList();
+                List<Konkursy> comp = (from a in newCompetition.Konkursy where a.Active == true select a).ToList();
                 var dictionary = new Dictionary<int, string>();
                 dictionary.Add(0, "Выберите конкурс");
-                foreach (Competitions n in comp)
+                foreach (Konkursy n in comp)
                 {
-                dictionary.Add(n.ID_Competition, n.Name);
+                    dictionary.Add(n.ID_Konkurs, n.Name);
                 DropDownList1.DataTextField = "Value";
                 DropDownList1.DataValueField = "Key";
                 DropDownList1.DataSource = dictionary;
@@ -39,7 +39,7 @@ namespace Competition
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            GridView1.Visible = true;
+           /* GridView1.Visible = true;
             CompetitionDBDataContext newField = new CompetitionDBDataContext();
             CompetitionDBDataContext newValue = new CompetitionDBDataContext();
             List<Fields> table = (from a in newField.Fields where a.Active == true select a).ToList();
@@ -56,7 +56,7 @@ namespace Competition
                 dataTable.Rows.Add(dataRow);
             }
              GridView1.DataSource = dataTable;
-             GridView1.DataBind();
+             GridView1.DataBind();*/
             }
 
 

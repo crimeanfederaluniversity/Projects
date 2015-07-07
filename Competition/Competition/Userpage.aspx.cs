@@ -12,7 +12,7 @@ namespace Competition
         protected void Page_Load(object sender, EventArgs e)
         {
             CompetitionDBDataContext newCompetition = new CompetitionDBDataContext();
-            List<Competitions> comp = (from a in newCompetition.Competitions where a.Active == true select a).ToList();
+            List<Konkursy> comp = (from a in newCompetition.Konkursy where a.Active == true select a).ToList();
             GridView1.DataSource =  comp;
             GridView1.DataBind();
         }

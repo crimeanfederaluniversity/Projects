@@ -73,9 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Userpage.aspx" />
-    <Content Include="Vvod form.aspx" />
-    <Content Include="Vvod table.aspx" />
-    <Content Include="Vvod.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -91,27 +88,6 @@
     </Compile>
     <Compile Include="Userpage.aspx.designer.cs">
       <DependentUpon>Userpage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Vvod form.aspx.cs">
-      <DependentUpon>Vvod form.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Vvod form.aspx.designer.cs">
-      <DependentUpon>Vvod form.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Vvod table.aspx.cs">
-      <DependentUpon>Vvod table.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Vvod table.aspx.designer.cs">
-      <DependentUpon>Vvod table.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Vvod.aspx.cs">
-      <DependentUpon>Vvod.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Vvod.aspx.designer.cs">
-      <DependentUpon>Vvod.aspx</DependentUpon>
     </Compile>
     <Compile Include="ZapolnenieForm.aspx.cs">
       <DependentUpon>ZapolnenieForm.aspx</DependentUpon>
