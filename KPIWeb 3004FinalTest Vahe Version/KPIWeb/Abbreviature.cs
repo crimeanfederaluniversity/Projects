@@ -37,11 +37,22 @@ namespace KPIWeb
                 {
                     if (!str.IsFloat())
                     {
+                        string strtmp = str;
+                        bool isforall = false;
+                        if (str.Substring(0,4) == "CFU_" )
+                        {
+                            isforall = true;
+                            strtmp = (str.Remove(0,4));
+                        }
                         CalculatedParametrs result = (from a in kpiweb.CalculatedParametrs
-                                      where a.AbbreviationEN == str
+                                      where a.AbbreviationEN == strtmp
                                       select a).FirstOrDefault();
                         if (result != null)
                         {
+                            if (isforall)
+                            {
+                                result.AbbreviationRU = "CFU_";
+                            }
                             tmpList.Add(result);
                         }
                     }
@@ -79,6 +90,40 @@ namespace KPIWeb
             //  LogHandler.LogWriter.WriteLog(LogCategory.ERROR, errorList.ToString());            
             return tmpList;
         }
+
+        public static string AddCfuToFormula(string formula)
+        {
+            KPIWebDataContext kpiweb = new KPIWebDataContext();
+            string tmpStr;
+            string strtoreturn = formula;
+            tmpStr = formula;
+            deleteSpaces(tmpStr);
+            tmpStr = tmpStr.Replace("\r", "");
+            tmpStr = tmpStr.Replace("\n", "");
+            string[] abbArray = splitString(tmpStr);
+            foreach (string str in abbArray)
+            {
+                if ((str != null) && (str != " ") && (!str.IsEmpty()))
+                {
+                    if (!str.IsFloat())
+                    {
+                        BasicParametersTable result = (from a in kpiweb.BasicParametersTable
+                                                       where a.AbbreviationEN == str
+                                                       select a).FirstOrDefault();
+                        if (result != null)
+                        {
+                            string tmpStr2 = "CFU_" + str;
+                           // int i = strtoreturn.IndexOf(str);
+                           strtoreturn = strtoreturn.Replace(str,tmpStr2);
+                            //tmpList.Add(result);
+                        }
+                    }
+                }
+            }
+            //  LogHandler.LogWriter.WriteLog(LogCategory.ERROR, errorList.ToString());            
+            return strtoreturn;
+        }
+
         public static string ReturnCalcFormula(string abb)
         {
            // string abbTmp = abb;
@@ -106,6 +151,12 @@ namespace KPIWeb
             List<CalculatedParametrs> CalculatedList = GetCalculatedList(IndicatorFormulaString);
             foreach (CalculatedParametrs Calculated in CalculatedList)
             {
+                if (Calculated.AbbreviationRU == "CFU_")
+                {
+                    Calculated.Formula = AddCfuToFormula(Calculated.Formula);
+                    Calculated.AbbreviationEN = "CFU_" + Calculated.AbbreviationEN;
+                }
+
                 int idx = BigFormulaString.IndexOf(Calculated.AbbreviationEN);
                 if (idx < 0)
                 {
@@ -113,8 +164,9 @@ namespace KPIWeb
                 }
                 else
                 {
-                    BigFormulaString = BigFormulaString.Remove(idx, Calculated.AbbreviationEN.Length)
-                        .Insert(idx, ReturnCalcFormula(Calculated.AbbreviationEN));                    
+                    
+                    //BigFormulaString = BigFormulaString.Replace(Calculated.AbbreviationEN, "(" + Calculated.Formula + ")"); //проверок нет
+                    BigFormulaString = BigFormulaString.Remove(idx, Calculated.AbbreviationEN.Length).Insert(idx, "(" + Calculated.Formula + ")");                    
                 }
             }
 

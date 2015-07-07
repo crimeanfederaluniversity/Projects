@@ -11,12 +11,11 @@ namespace KPIWeb.Rector
 {
     public partial class RRating : System.Web.UI.Page
     {
-
         public string FloatToStrFormat(float value,float plannedValue,int DataType)
         {
             if (DataType == 1)
             {
-                string tmpValue = Math.Round(value).ToString();// value.ToString("0");
+                string tmpValue = Math.Ceiling(value).ToString();// value.ToString("0");
                 return tmpValue;
             }
             else if(DataType == 2)
@@ -40,8 +39,7 @@ namespace KPIWeb.Rector
             }
 
             return "0";
-        }
-   
+        } 
         public ChartOneValue GetCalculatedIndicator(int ReportID, IndicatorsTable Indicator, FirstLevelSubdivisionTable Academy, SecondLevelSubdivisionTable Faculty) // academyID == null && facultyID==null значит для всего КФУ
         {
 
@@ -141,6 +139,17 @@ namespace KPIWeb.Rector
             ChartOneValue DataRowForChart = new ChartOneValue(Name_, Value_, Planned_Value);
             return DataRowForChart;*/
         }
+       
+        public class ClassForGV 
+        {
+           public int ID {get;set;}
+           public string Name {get;set;}
+           public float ValueForSort { get; set; }
+           public string Value {get;set;}
+           public float Planned {get;set;}
+           public int Number {get; set;}
+        }
+                    
         protected void Page_Load(object sender, EventArgs e)
         {
             Serialization UserSer = (Serialization)Session["UserID"];
@@ -184,6 +193,12 @@ namespace KPIWeb.Rector
                 int ReportID = CurrentRectorSession.sesReportID;
                 int SpecID = CurrentRectorSession.sesSpecID;
 
+
+                if ((rectorHistory.SessionCount - rectorHistory.CurrentSession) < 2)
+                {
+                    GoForwardButton.Enabled = false;
+                }
+
                 #endregion
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
@@ -196,20 +211,23 @@ namespace KPIWeb.Rector
                                                   where a.ReportArchiveTableID == ReportID
                                                   select a).FirstOrDefault();
 
+
+                List<ClassForGV> GridViewClassList = new List<ClassForGV>();
+
                 if (ViewType == 0) // просмотр для структурных подразделений
                 {
                     Title.Text = (from a in kpiWebDataContext.IndicatorsTable
                                   where a.IndicatorsTableID == ParamID
-                                  select a.Name).FirstOrDefault();
+                                  select a.Name).FirstOrDefault() + " (" + (from a in kpiWebDataContext.IndicatorsTable
+                                                                            where a.IndicatorsTableID == ParamID
+                                                                            select a.Measure).FirstOrDefault() + ")";
                     List<ForRCalc.Struct> currentStructList = new List<ForRCalc.Struct>();
                     currentStructList = ForRCalc.GetChildStructList(mainStruct, ReportID);
                     foreach (ForRCalc.Struct currentStruct in currentStructList)
                     {
-                        DataRow dataRow = dataTable.NewRow();
-                        dataRow["ID"] = ForRCalc.GetLastID(currentStruct).ToString();
-                        dataRow["Number"] = "";
-                        dataRow["Name"] = currentStruct.Name;
-
+                        ClassForGV curGVRow = new ClassForGV();
+                        curGVRow.ID = ForRCalc.GetLastID(currentStruct);
+                        curGVRow.Name =  currentStruct.Name;
                         FirstLevelSubdivisionTable Academy = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
                                                               where a.FirstLevelSubdivisionTableID == currentStruct.Lv_1
                                                               select a).FirstOrDefault();
@@ -219,10 +237,21 @@ namespace KPIWeb.Rector
                                                             select a).FirstOrDefault();
 
                         ChartOneValue CurrentValue = ForRCalc.GetCalculatedIndicator(ReportID, CurrentIndicator, Academy, null);
+                        curGVRow.ValueForSort = CurrentValue.value;
+                        curGVRow.Value = FloatToStrFormat(CurrentValue.value, CurrentValue.planned, (Int32)CurrentIndicator.DataType);
+                        GridViewClassList.Add(curGVRow);                      
+                    }
+                     
+                    //GridViewClassList.Sort()
+                        List<ClassForGV> SortedList = GridViewClassList.OrderByDescending(o=>o.ValueForSort).ToList();
 
-                        dataRow["Value"] = FloatToStrFormat(CurrentValue.value, CurrentValue.planned, (Int32)CurrentIndicator.DataType);
-                            
-                           // ForRCalc.GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID, SpecID).ToString("0.000");
+                        foreach (ClassForGV curGVRow in SortedList)
+                    {
+                        DataRow dataRow = dataTable.NewRow();
+                        dataRow["ID"] = curGVRow.ID.ToString();
+                        dataRow["Number"] = "";
+                        dataRow["Name"] = curGVRow.Name;
+                        dataRow["Value"] = curGVRow.Value;
                         dataTable.Rows.Add(dataRow);
                     }
 
@@ -259,7 +288,7 @@ namespace KPIWeb.Rector
                             dataRow["Number"] = "";
                             if (CurrentIndicator.Measure != null)
                             {
-                                if (CurrentIndicator.Measure.Length > 2)
+                                if (CurrentIndicator.Measure.Length > 0)
                                 {
                                     dataRow["Name"] = CurrentIndicator.Name + " (" + CurrentIndicator.Measure + ")";
                                 }
@@ -322,17 +351,24 @@ namespace KPIWeb.Rector
                 {
                     Title.Text = (from a in kpiWebDataContext.IndicatorsTable
                                   where a.IndicatorsTableID == ParamID
-                                  select a.Name).FirstOrDefault();
+                                  select a.Name).FirstOrDefault() + " (" + (from a in kpiWebDataContext.IndicatorsTable
+                                                                            where a.IndicatorsTableID == ParamID
+                                                                            select a.Measure).FirstOrDefault() + ")";
 
                     List<ForRCalc.Struct> currentStructList = new List<ForRCalc.Struct>();
                     currentStructList = ForRCalc.GetAllSecondLevel();
 
+
+
+
+
+
                     foreach (ForRCalc.Struct currentStruct in currentStructList)
                     {
-                        DataRow dataRow = dataTable.NewRow();
-                        dataRow["ID"] = ForRCalc.GetLastID(currentStruct).ToString();
-                        dataRow["Number"] = "";
-                        dataRow["Name"] = currentStruct.Name +", "+(from a in kpiWebDataContext.FirstLevelSubdivisionTable
+
+                        ClassForGV curGVRow = new ClassForGV();
+                        curGVRow.ID = ForRCalc.GetLastID(currentStruct);
+                        curGVRow.Name = currentStruct.Name +", "+(from a in kpiWebDataContext.FirstLevelSubdivisionTable
                                                                         where a.FirstLevelSubdivisionTableID == currentStruct.Lv_1
                                                                         select a.Name).FirstOrDefault();
 
@@ -340,22 +376,29 @@ namespace KPIWeb.Rector
                                                               where a.FirstLevelSubdivisionTableID == currentStruct.Lv_1
                                                               select a).FirstOrDefault();
 
-                        SecondLevelSubdivisionTable Facullty = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
-                                                                where a.SecondLevelSubdivisionTableID == currentStruct.Lv_2
-                                                                select a).FirstOrDefault();
-
                         IndicatorsTable CurrentIndicator = (from a in kpiWebDataContext.IndicatorsTable
                                                             where a.IndicatorsTableID == ParamID
                                                             select a).FirstOrDefault();
 
-
+                        SecondLevelSubdivisionTable Facullty = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                                                                where a.SecondLevelSubdivisionTableID == currentStruct.Lv_2
+                                                                select a).FirstOrDefault();
 
                         ChartOneValue CurrentValue = ForRCalc.GetCalculatedIndicator(ReportID, CurrentIndicator, Academy, Facullty);
+                        curGVRow.ValueForSort = CurrentValue.value;
+                        curGVRow.Value = FloatToStrFormat(CurrentValue.value, CurrentValue.planned, (Int32)CurrentIndicator.DataType);
+                        GridViewClassList.Add(curGVRow);
+                    }
 
+                    List<ClassForGV> SortedList = GridViewClassList.OrderByDescending(o => o.ValueForSort).ToList();
 
-                        dataRow["Value"] = FloatToStrFormat(CurrentValue.value, CurrentValue.planned, (Int32)CurrentIndicator.DataType);
-
-                           // ForRCalc.GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID, SpecID).ToString("0.000");
+                    foreach (ClassForGV curGVRow in SortedList)
+                    {
+                        DataRow dataRow = dataTable.NewRow();
+                        dataRow["ID"] = curGVRow.ID.ToString();
+                        dataRow["Number"] = "";
+                        dataRow["Name"] = curGVRow.Name;
+                        dataRow["Value"] = curGVRow.Value;
                         dataTable.Rows.Add(dataRow);
                     }
 
@@ -367,7 +410,7 @@ namespace KPIWeb.Rector
                 {
                     //error // wrong ViewType
                 }
-
+                /*
                 if (ViewType != 1)
                 {
                     DataView dv = dataTable.DefaultView;
@@ -377,7 +420,10 @@ namespace KPIWeb.Rector
                     //Number++;
                     foreach (DataRow row in dataTable.Rows)
                         row["Number"] = ++Number;
-                }
+                }*/
+                int Number = 0;
+                foreach (DataRow row in dataTable.Rows)
+                    row["Number"] = ++Number;
                 Grid.DataSource = dataTable;
                 Grid.DataBind();
             }
@@ -462,10 +508,45 @@ namespace KPIWeb.Rector
                 Response.Redirect("~/Rector/RRating.aspx");
             }
         }
-
         protected void Button22_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Rector/RectorMain.aspx");
         }
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/ViewDocument.aspx");
+        }
+
+        protected void GoBackButton_Click(object sender, EventArgs e)
+        {
+             RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
+            if (rectorHistory == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            if (rectorHistory.CurrentSession == 0)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+
+            rectorHistory.CurrentSession--;
+            Session["rectorHistory"] = rectorHistory;
+            Response.Redirect("~/Rector/RRating.aspx");
+        }
+
+        protected void GoForwardButton_Click(object sender, EventArgs e)
+        {
+            RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
+            if (rectorHistory == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            if (rectorHistory.CurrentSession < rectorHistory.SessionCount) // есть куда переходить
+            {
+                rectorHistory.CurrentSession++;
+                Session["rectorHistory"] = rectorHistory;
+                Response.Redirect("~/Rector/RRating.aspx");
+            }
+        }       
     }
 }

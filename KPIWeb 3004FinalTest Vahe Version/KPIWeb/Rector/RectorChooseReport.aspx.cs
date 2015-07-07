@@ -66,6 +66,7 @@ namespace KPIWeb.Rector
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();                
                 List<ReportArchiveTable> reportsArchiveTablesTable = null;            
                 reportsArchiveTablesTable = (from a in kpiWebDataContext.ReportArchiveTable
+                                             where a.Active == true
                 select a).ToList();
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("ReportArchiveID", typeof(string)));

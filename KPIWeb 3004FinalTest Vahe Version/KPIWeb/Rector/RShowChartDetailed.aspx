@@ -24,7 +24,18 @@
           opacity: 0.9;
           visibility: hidden;
    }
-</style>     
+
+</style>
+    
+    
+        <style type="text/css">
+   .button_right 
+   {
+       float:right
+   }     
+</style> 
+
+         
     <div id="LoadPanel_" class='LoadPanel'>               
             <div id="floatingCirclesG">
             <div class="f_circleG" id="frotateG_01">
@@ -51,15 +62,17 @@
       <asp:Button ID="GoForwardButton" runat="server" OnClientClick="JavaScript:window.history.forward(1); return false; showLoadPanel();"  Text="Вперед" Width="125px" />
         &nbsp; &nbsp; <asp:Button ID="Button2" OnClientClick="showLoadPanel()" runat="server"  Text="На главную" Width="125px" Enabled="True" OnClick="Button2_Click" />
         &nbsp; &nbsp;       
-        <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right"  Text="Выбор отчета" Enabled="False" Width="225px" />
+        <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()"  Text="Выбор отчета" Enabled="False" Width="225px" />
         &nbsp; &nbsp;
-        <asp:Button ID="Button6" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right"  Text="Button" Width="150px" Visible="False" />
+        <asp:Button ID="Button6" runat="server" OnClientClick="showLoadPanel()" Text="Button" Width="150px" Visible="False" />
+        <asp:Button ID="Button5" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right" OnClick="Button5_Click" Text="Нормативные документы" Width="300px" />
+    
         &nbsp; &nbsp;
         </div>
 
     </asp:Panel>
 
-    <h1>Анализ целевого показателя в разрезе вклада каждой академии КФУ</h1>
+    <h1>Вклад структурных подразделений в достижение значения целевого показателя</h1>
     <div>
       <style>
        .chart{ opacity: 0.99;}

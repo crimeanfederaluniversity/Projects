@@ -12,6 +12,35 @@ namespace KPIWeb.Rector
 {
     public partial class RShowChartDetailed : System.Web.UI.Page
     {
+        public string FloatToStrFormat(float value, float plannedValue, int DataType)
+        {
+            if (DataType == 1)
+            {
+                string tmpValue = Math.Ceiling(value).ToString();// value.ToString("0");
+                return tmpValue;
+            }
+            else if (DataType == 2)
+            {
+                string tmpValue = value.ToString();
+                string tmpPlanned = plannedValue.ToString();
+                int PlannedNumbersAftepPoint = 2;
+                if (tmpPlanned.IndexOf(',') != -1)
+                {
+                    PlannedNumbersAftepPoint = (tmpPlanned.Length - tmpPlanned.IndexOf(',') + 1);
+                }
+                int ValuePointIndex = tmpValue.IndexOf(',');
+                if (ValuePointIndex != -1)
+                {
+                    if ((tmpValue.Length - ValuePointIndex - PlannedNumbersAftepPoint) > 0)
+                    {
+                        tmpValue = tmpValue.Remove(ValuePointIndex + PlannedNumbersAftepPoint, tmpValue.Length - ValuePointIndex - PlannedNumbersAftepPoint);
+                    }
+                }
+                return tmpValue;
+            }
+
+            return "0";
+        }
         public ChartOneValue GetCalculatedIndicator(int ReportID, IndicatorsTable Indicator, FirstLevelSubdivisionTable Academy, SecondLevelSubdivisionTable Faculty) // academyID == null && facultyID==null значит для всего КФУ
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
@@ -381,7 +410,15 @@ namespace KPIWeb.Rector
                 foreach (ChartOneValue item in sortItems)
                 {
                     if (item.value == 0) continue;
-                    chartItems.AddChartItem(item.name, item.value);
+
+                    IndicatorsTable CurrentIndicator = (from a in kPiDataContext.IndicatorsTable
+                                                        where a.IndicatorsTableID == indicator
+                                                        select a).FirstOrDefault();
+                    float value = item.value;
+                    if (CurrentIndicator.DataType == 1)
+                        value = (float)Math.Ceiling(value);
+
+                    chartItems.AddChartItem(item.name, value);
 
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["IndicatorID"] = (from a in kPiDataContext.FirstLevelSubdivisionTable
@@ -390,7 +427,7 @@ namespace KPIWeb.Rector
                     // Не индикаторID а FirstLevelSubdivisionTableID 
                     dataRow["Ratio"] = ratio; //Ratio
                     dataRow["IndicatorName"] = item.name;
-                    dataRow["IndicatorValue"] = Math.Round(item.value, 3) + " " + measure;
+                    dataRow["IndicatorValue"] = FloatToStrFormat(item.value, item.planned, (Int32)CurrentIndicator.DataType) + " " + measure; 
                     dataTable.Rows.Add(dataRow);
 
                     ratio++;
@@ -444,7 +481,14 @@ namespace KPIWeb.Rector
                 foreach (ChartOneValue item in sortItems)
                 {
                     if (item.value == 0) continue;
-                    chartItems.AddChartItem(item.name, item.value);
+                    IndicatorsTable CurrentIndicator = (from a in kPiDataContext.IndicatorsTable
+                                                        where a.IndicatorsTableID == indicator
+                                                        select a).FirstOrDefault();
+                    float value = item.value;
+                    if (CurrentIndicator.DataType == 1)
+                        value = (float)Math.Ceiling(value);
+
+                    chartItems.AddChartItem(item.name, value);
 
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["IndicatorID"] = (from a in kPiDataContext.FirstLevelSubdivisionTable
@@ -453,7 +497,7 @@ namespace KPIWeb.Rector
                         // Не индикаторID а FirstLevelSubdivisionTableID 
                     dataRow["Ratio"] = ratio; //Ratio
                     dataRow["IndicatorName"] = item.name;
-                    dataRow["IndicatorValue"] = Math.Round(item.value, 3) + " " + measure;
+                    dataRow["IndicatorValue"] = FloatToStrFormat(item.value, item.planned, (Int32)CurrentIndicator.DataType) + " " + measure; 
                     dataTable.Rows.Add(dataRow);
 
                     ratio++;
@@ -598,6 +642,11 @@ namespace KPIWeb.Rector
               string.Format("alert('{0}');",
                 message.Replace("'", @"\'").Replace("\n", "\\n").Replace("\r", "\\r")),
                 true);
+        }
+
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/ViewDocument.aspx");
         }
     }
 

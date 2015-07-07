@@ -1,6 +1,24 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="RMain.aspx.cs" Inherits="KPIWeb.Rector.RMain" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">  
 
+
+    
+        <style type="text/css">
+   .button_right 
+   {
+       float:right
+   }     
+</style> 
+
+                    <br />
+     <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
+        <div>          
+            <asp:Button ID="Button5" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right" OnClick="Button5_Click" Text="Нормативные документы" Width="300px" />
+        </div>
+
+    </asp:Panel>
+
+
 <style>
     body {
         top: 50px;
@@ -270,9 +288,8 @@
                         100% { background-color: #ffffff;opacity: 0;}
                           0%{ background-color: #000000;opacity: 0.8;}
                           }
-   
-
-        
+    
+                 
     @keyframes anim_pad_text_ofbuttons {
         0% {
             margin-top: 0px;
@@ -369,7 +386,7 @@
        
         <span id="div_2">
         <asp:Button ID="Button2" runat="server" Text=""  OnClick="Button2_Click"  CssClass=""/>
-            <span id="insp2" >Вклады структурных подразделений в достигнутые целевые показатели</span>
+            <span id="insp2" >Вклад структурных подразделений в достигнутые целевые показатели</span>
     </span>
 
         <span id="div_3">

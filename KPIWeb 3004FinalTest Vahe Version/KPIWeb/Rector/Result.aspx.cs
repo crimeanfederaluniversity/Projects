@@ -487,6 +487,7 @@ namespace KPIWeb.Rector
                     }
 
                     #endregion
+                    ///////////
                     #region fill grid
                     if (ParamType == 0) //считаем целевой показатель
                     {
@@ -516,6 +517,7 @@ namespace KPIWeb.Rector
                         }
                         // теперь повторяющихся индикаторов нет
                         //нашли все целевой показатель привязанные к пользователю
+                        int calcConfCnt = 0; 
                         foreach (IndicatorsTable CurrentIndicator in Indicators)
                         {
                             DataRow dataRow = dataTable.NewRow();
@@ -659,6 +661,7 @@ namespace KPIWeb.Rector
 
                             if (collected.Confirmed == true) // данные подтверждены
                             {
+                                calcConfCnt++;
                                 dataRow["CanConfirm"] = false;
                                 dataRow["ShowLable"] = true;
                                 dataRow["LableText"] = "Утверждено";
@@ -702,6 +705,7 @@ namespace KPIWeb.Rector
                                     dataRow["ShowLable"] = true;
                                     dataRow["LableText"] = "Не все расчетные утверждены";
                                     */
+                                    calcConfCnt++;
                                     dataRow["CanConfirm"] = true;
                                     dataRow["ShowLable"] = false;
                                     dataRow["LableText"] = "";
@@ -726,6 +730,7 @@ namespace KPIWeb.Rector
                                 }
                                 else
                                 {
+                                    calcConfCnt++;
                                     dataRow["CanConfirm"] = true;
                                     dataRow["ShowLable"] = false;
                                     dataRow["LableText"] = "";
@@ -744,6 +749,11 @@ namespace KPIWeb.Rector
                             #endregion
 
                             dataTable.Rows.Add(dataRow);
+                        }
+
+                        if (calcConfCnt == Indicators.Count)
+                        {
+                         //   Button7.Enabled = false;
                         }
 
                         #endregion indicator
@@ -790,7 +800,7 @@ namespace KPIWeb.Rector
                             IDForUnique = CurrentCalc.CalculatedParametrsID;
                         }
                         // теперь повторяющихся  нет
-
+                        int calcConfCnt = 0;
                         foreach (CalculatedParametrs CurrentCalculated in CalculatedListUnique)
                         {
                             DataRow dataRow = dataTable.NewRow();
@@ -871,6 +881,7 @@ namespace KPIWeb.Rector
                             int AllBasicsUsersCanEdit = 0;
                             int AllConfirmedBasics = 0;
                             int AllConnectedToReportAndUser = 0;
+                            int AllConfirmedBasics2 = 0;
                             /*
                             List<UsersTable> UsersWithNoCollected = (from a in kpiWebDataContext.UsersTable
                                                                          join b in kpiWebDataContext.BasicParametrsAndUsersMapping
@@ -900,19 +911,40 @@ namespace KPIWeb.Rector
                                                              && a.FK_BasicParametersTable == Basic.BasicParametersTableID
                                                              && a.Status == 4
                                                        select a).Count();
+                                AllConfirmedBasics2 += (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                        where a.FK_ReportArchiveTable == ReportID
+                                                              && a.FK_BasicParametersTable == Basic.BasicParametersTableID
+                                                              && a.Status == 5
+                                                        select a).Count();
                             }
                             bool BasicsAreConfirmed = true;
+                            bool CanConfirmBas = false;
+                            if (AllBasicsUsersCanEdit == AllConfirmedBasics2)
+                            {
+                                CanConfirmBas = true;
+                            }
                             if (AllBasicsUsersCanEdit != AllConfirmedBasics)
                             {
                                 BasicsAreConfirmed = false;
                             }
-
+                            
                             #endregion
 
-                            dataRow["Progress"] =
-                                ((((float) AllConfirmedBasics)*100)/((float) AllBasicsUsersCanEdit)).ToString("0.0") +
+                           
+                                string tmp2 = ((((float) AllConfirmedBasics)*100)/((float) AllBasicsUsersCanEdit)).ToString("0.0") +
                                 "%";
-
+                            if (tmp2 == "0,0%")
+                            {
+                                if (CanConfirmBas)
+                                {
+                                    dataRow["Progress"] = "100,0%";
+                                }
+                                else
+                                {
+                                    dataRow["Progress"] = "0,0%";
+                                }
+                            }
+                             
                             if (float.IsNaN((((float)AllConfirmedBasics) * 100) / ((float)AllBasicsUsersCanEdit)))
                             {
                                 dataRow["Progress"] = "100,0%";
@@ -975,6 +1007,8 @@ namespace KPIWeb.Rector
                             }
                             if (collected.Confirmed == true) //данные подтверждены
                             {
+                                calcConfCnt++;
+
                                 dataRow["CanWatchWhoOws"] = false;
                                 dataRow["CanConfirm"] = false;
                                 dataRow["ShowLable"] = true;
@@ -1010,45 +1044,66 @@ namespace KPIWeb.Rector
                                 }
                                 else if (BasicsAreConfirmed == false)
                                 {
-                                    dataRow["CanWatchWhoOws"] = true;
-                                    dataRow["CanConfirm"] = false;
-                                    dataRow["ShowLable"] = false;
-                                    dataRow["LableText"] = "";
-                                    /*
-                                    dataRow["CanConfirm"] = false;
-                                    dataRow["ShowLable"] = true;
-                                    dataRow["LableText"] = "Не все базовые показатели утверждены";*/
-                                    dataRow["LableColor"] = Color.LightBlue;
-                                    value_ = "Недостаточно данных";
-                                    if (ShowUnconfirmed)
+                                    if (CanConfirmBas == true)
                                     {
-                                        dataRow["Color"] = "2";
-                                        float tmp =
+                                        calcConfCnt++;
+                                        dataRow["CanConfirm"] = true;
+                                        dataRow["CanWatchWhoOws"] = false;
+                                        dataRow["ShowLable"] = false;
+                                        dataRow["LableText"] = "";
+                                        dataRow["Color"] = "3";
+                                        dataRow["LableColor"] = "#000000";
+                                        collected.CollectedValue =
                                             ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
                                                 CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
-                                        if (tmp == (float) 1E+20)
+                                        kpiWebDataContext.SubmitChanges();
+                                        value_ = ((float)collected.CollectedValue).ToString("0.00");
+                                    }
+                                    else
+                                    {
+
+                                        dataRow["CanWatchWhoOws"] = true;
+                                        dataRow["CanConfirm"] = false;
+                                        dataRow["ShowLable"] = false;
+                                        dataRow["LableText"] = "";
+                                        /*
+                                        dataRow["CanConfirm"] = false;
+                                        dataRow["ShowLable"] = true;
+                                        dataRow["LableText"] = "Не все базовые показатели утверждены";*/
+                                        dataRow["LableColor"] = Color.LightBlue;
+                                        value_ = "Недостаточно данных";
+                                        if (ShowUnconfirmed)
                                         {
-                                            value_ = "Рассчет невозможен";
-                                        }
-                                        else
-                                        {
-                                            value_ = tmp.ToString("0.00");
+                                            dataRow["Color"] = "2";
+                                            float tmp =
+                                                ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
+                                                    CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
+                                            if (tmp == (float)1E+20)
+                                            {
+                                                value_ = "Рассчет невозможен";
+                                            }
+                                            else
+                                            {
+                                                value_ = tmp.ToString("0.00");
+                                            }
                                         }
                                     }
                                 }
-                                else
+                              
+                                else //тута
                                 {
-                                    dataRow["CanConfirm"] = true;
-                                    dataRow["CanWatchWhoOws"] = false;
-                                    dataRow["ShowLable"] = false;
-                                    dataRow["LableText"] = "";
+                                    calcConfCnt++;
+                                    dataRow["CanConfirm"] = false;
+                                    dataRow["CanWatchWhoOws"] = true;
+                                    dataRow["ShowLable"] = true;
+                                    dataRow["LableText"] = "Не утверждено директорами академий";
                                     dataRow["Color"] = "3";
                                     dataRow["LableColor"] = "#000000";
                                     collected.CollectedValue =
                                         ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
                                             CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
                                     kpiWebDataContext.SubmitChanges();
-                                    value_ = ((float) collected.CollectedValue).ToString("0.00");
+                                    value_ = ((float)collected.CollectedValue).ToString("0.00");
                                 }
                             }
                             dataRow["Value"] = value_;
@@ -1056,6 +1111,10 @@ namespace KPIWeb.Rector
                             #endregion
 
                             dataTable.Rows.Add(dataRow);
+                        }
+                        if (calcConfCnt == CalculatedListUnique.Count)
+                        {
+                            Button7.Enabled = false;
                         }
 
                         #endregion
@@ -1129,7 +1188,7 @@ namespace KPIWeb.Rector
                         #endregion
                     }
 
-                    #endregion
+                    #endregion  //////////////////////
                     #region DataGridBind
 
                     Grid.DataSource = dataTable;
@@ -1143,6 +1202,7 @@ namespace KPIWeb.Rector
                     #endregion
                     #region постнастройки страницы
 
+                    
                     Grid.Columns[5].Visible = false;
                     Grid.Columns[4].Visible = false;
                     Grid.Columns[1].Visible = false;
@@ -1152,6 +1212,7 @@ namespace KPIWeb.Rector
                         Grid.Columns[2].Visible = false;
                         Grid.Columns[10].Visible = false; //
                         Grid.Columns[12].Visible = false; //
+                        Label12.Text = ".....Требует Вашего утверждения";
                         Button7.Visible = true;
                     }
 
@@ -1368,6 +1429,15 @@ namespace KPIWeb.Rector
                         }
 
                     #endregion
+
+                        Label11.Text = "..... Данные готовы к утверждению";
+                        Panel5.BackColor = Color.FromArgb(100,0,255, 0);
+                        Panel5.Visible = false;
+                        Label12.Text = "..... Не утверждено директором";
+                        Panel6.BackColor = Color.FromArgb(100,255, 255, 0);
+                        Label13.Text = "..... В процессе заполнения";
+                        Panel7.BackColor = Color.FromArgb(100, 255, 0, 0);
+
                     #region fill grid
                     CalculatedParametrs Calculated = (from a in kpiWebDataContext.CalculatedParametrs
                                                       where a.CalculatedParametrsID == ParamID
@@ -1395,11 +1465,14 @@ namespace KPIWeb.Rector
                         dataRow["Comment"] = "nun";
                         dataRow["CommentEnabled"] = "hidden";
 
+
+                       
+
                         #region check if all users confirmed basics
 
                         int AllBasicsUsersCanEdit = 0;
                         int AllConfirmedBasics = 0;
-                        
+                        int AllConfirmedBasics2 = 0;
                         foreach (BasicParametersTable Basic in BasicList)
                         {
                             /*
@@ -1464,11 +1537,29 @@ namespace KPIWeb.Rector
                                                             && ((a.FK_ThirdLevelSubdivisionTable == currentStruct.Lv_3) || (currentStruct.Lv_3 == 0))
                                                             && ((a.FK_FourthLevelSubdivisionTable == currentStruct.Lv_4) || (currentStruct.Lv_4 == 0))
                                                    select a).Count();
+
+                            AllConfirmedBasics2 += (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                   where a.FK_ReportArchiveTable == ReportID
+                                                         && a.FK_BasicParametersTable == Basic.BasicParametersTableID
+                                                         && a.Status == 5
+                                                         && ((a.FK_ZeroLevelSubdivisionTable == currentStruct.Lv_0) || (currentStruct.Lv_0 == 0))
+                                                            && ((a.FK_FirstLevelSubdivisionTable == currentStruct.Lv_1) || (currentStruct.Lv_1 == 0))
+                                                            && ((a.FK_SecondLevelSubdivisionTable == currentStruct.Lv_2) || (currentStruct.Lv_2 == 0))
+                                                            && ((a.FK_ThirdLevelSubdivisionTable == currentStruct.Lv_3) || (currentStruct.Lv_3 == 0))
+                                                            && ((a.FK_FourthLevelSubdivisionTable == currentStruct.Lv_4) || (currentStruct.Lv_4 == 0))
+                                                   select a).Count();
                         }
                         bool BasicsAreConfirmed = true;
+                        bool BasicsCanConf2 = false;
+
                         if (AllBasicsUsersCanEdit != AllConfirmedBasics)
                         {
                             BasicsAreConfirmed = false;
+                        }
+
+                        if (AllBasicsUsersCanEdit == AllConfirmedBasics2)
+                        {
+                            BasicsCanConf2 = true;
                         }
 
                         #endregion
@@ -1479,12 +1570,43 @@ namespace KPIWeb.Rector
                         }
                         else
                         {
-                            dataRow["Progress"] =
+                            string tmp2 = 
+                            
                                 ((((float) AllConfirmedBasics)*100)/((float) AllBasicsUsersCanEdit)).ToString("0.0") +"%";
+                            
+                               
+                                 if (tmp2 == "100,0%")
+                                {
+                                    dataRow["Progress"] = "100,0% (не утверждено директором академии)";
+                                      dataRow["Color"] = 3;
+                                }
+                                 else if (BasicsCanConf2)
+                                 {
+                                     dataRow["Progress"] = "100,0%";
+                                     dataRow["Color"] = 1;
+                                 }
+                                 else
+
+                                {
+                                    dataRow["Progress"] = tmp2;
+                                    dataRow["Color"] = 2;
+                                }
+
+
                             if (float.IsNaN((((float)AllConfirmedBasics) * 100) / ((float)AllBasicsUsersCanEdit)))
                             {
-                                dataRow["Progress"] = "100,0%";
+                                if (BasicsCanConf2 == false)
+                                {
+                                    dataRow["Progress"] = "100,0% (не утверждено директором академии)";
+                                    dataRow["Color"] = 3;
+                                }else 
+                                {
+                                    dataRow["Progress"] = "100,0%";
+                                    dataRow["Color"] = 1;
+                                }
+                               
                             }
+
                             dataTable.Rows.Add(dataRow);
                         }
 
@@ -1525,7 +1647,7 @@ namespace KPIWeb.Rector
 
                 RefreshHistory();
 
-                if ((ViewType == 1) && ((ParamType == 0) || (ParamType == 1)))
+                if (((ViewType == 1) && ((ParamType == 0) || (ParamType == 1))) || (ViewType == 3))
                 {
                     ClientScript.RegisterStartupScript(this.GetType(), "ShowLegend", "ShowLegend()", true);
                 }
@@ -1819,6 +1941,14 @@ namespace KPIWeb.Rector
             if ((Button1_ != null) && (PLable_ != null))
             {
                 if (PLable_.Text == "0,0%")
+                {
+                    Button1_.Enabled = false;
+                }
+                if (PLable_.Text == "100,0% (не утверждено директором академии)")
+                {
+                    Button1_.Enabled = false;
+                }
+                if (PLable_.Text == "100,0%")
                 {
                     Button1_.Enabled = false;
                 }

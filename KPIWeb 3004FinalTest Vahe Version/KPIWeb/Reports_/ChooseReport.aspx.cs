@@ -49,8 +49,9 @@ namespace KPIWeb.Reports
                                                 && c.Active == true
                                                 && d.Active == true
                                                 && d.StartDateTime < DateTime.Now 
-                                                && d.EndDateTime > DateTime.Now
+                                     //           && d.EndDateTime > DateTime.Now
                                                 select d).ToList();
+
 
                 ///тут мы получили список активных отччетов пользователя
                 /// пользователь привязан к таблице первого подразделения
@@ -89,8 +90,9 @@ namespace KPIWeb.Reports
                 List<int> StatenList = new List<int>();
                 foreach (ReportArchiveTable ReportRow in reportsArchiveTablesTable)
                 {
+                    
                     #region
-
+                  
 
                     int can_view =
                                     (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
@@ -161,7 +163,12 @@ namespace KPIWeb.Reports
 
                     string status = "Нет данных";
                     int Statusn = 0;
-                   
+
+                    
+                    if (ReportRow.EndDateTime > DateTime.Now)
+                        Statusn = 100;
+
+
                     if (ColTemp == null)
                     {
                         Statusn = 0;
@@ -195,10 +202,15 @@ namespace KPIWeb.Reports
                     {
                         status = "Данные в процессе заполнения";
                     }
+                    else if (Statusn == 100)
+                    {
+                        status = "Отчет завершен";
+                    }
                     else
                     {
                         //error
                     }
+                    
                                 StatenList.Add(Statusn);                    
                                 dataRow["Status"] = status;               
                                 dataTable.Rows.Add(dataRow);
@@ -210,6 +222,7 @@ namespace KPIWeb.Reports
 
                 for (int i = 0; i < GridView1.Rows.Count; i++)
                 {
+                    
                     Button btnEdit = GridView1.Rows[i].FindControl("ButtonEditReport") as Button;
                     Button btnView = GridView1.Rows[i].FindControl("ButtonViewReport") as Button;
                     Button btnConfirm = GridView1.Rows[i].FindControl("ButtonConfirmReport") as Button;
@@ -441,6 +454,12 @@ namespace KPIWeb.Reports
                                 }               
                         }                    
                     #endregion
+
+                            if (StatenList[i]==100)
+                            {
+                                ConfButton = 0;
+                                EditButton = 0;
+                            }
                     /////////////////////////////////////////////////////////
                         btnConfirm.Enabled = ConfButton>0?false:true;
                         btnEdit.Enabled = EditButton>0?false:true;
@@ -535,8 +554,31 @@ namespace KPIWeb.Reports
             Button button = (Button)sender;
             {
                 Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
-                Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчёта               
-                Serialization modeSer = new Serialization(1, null, null);
+                Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчёта        
+                Serialization modeSer = modeSer = new Serialization(1, null, null);
+                /////костыль для демонстрации
+                 Serialization UserSer = (Serialization)Session["UserID"];
+                 if (UserSer == null)
+                    {
+                        Response.Redirect("~/Default.aspx");
+                    }
+
+            int userID = UserSer.Id;
+            if (userID == 12762)
+               {
+                    modeSer = new Serialization(0, null, null);
+               }
+               else if (userID == 12634)
+               {
+                    modeSer = new Serialization(2, null, null);
+               }
+               else
+               {
+                    modeSer = new Serialization(1, null, null);
+               }
+                /////костыль для демонстрации
+
+                
                 Session["mode"] = modeSer;
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
                 var login =

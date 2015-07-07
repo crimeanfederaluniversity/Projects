@@ -41,7 +41,7 @@ namespace KPIWeb.Rector
                                          on a.IndicatorsTableID equals b.FK_IndicatorsTable
                                          where b.FK_ReportArchiveTable == ReportID
                                          && b.Active == true
-                                         select a).OrderBy(c => c.SortID).ToList();
+                                         select a).Distinct().OrderBy(c => c.SortID).ToList();
 
             List<FirstLevelSubdivisionTable> FirstLevelToCalculate = (from a in kPiDataContext.FirstLevelSubdivisionTable
                                                                       join b in kPiDataContext.ReportArchiveAndLevelMappingTable
@@ -62,7 +62,10 @@ namespace KPIWeb.Rector
             //поехали:)
             #endregion
             foreach (IndicatorsTable CurrentIndicator in IndicatorsToCalculateList) //считаем каждый показатель для каждого факультета, каждой академии и всего КФУ
-            {               
+            {
+                if (CurrentIndicator.IndicatorsTableID != 1027)
+                    continue;
+       
                 #region calcForCFU
                 {
                     //считай для КФУ
@@ -89,6 +92,7 @@ namespace KPIWeb.Rector
                     kPiDataContext.CollectedIndicatorsForR.InsertOnSubmit(newCollected);
                 }               
                 #endregion
+                kPiDataContext.SubmitChanges();  
                 #region calcForAcademys
                 foreach (FirstLevelSubdivisionTable CurrentFirstLevel in FirstLevelToCalculate)
                 {
@@ -116,6 +120,7 @@ namespace KPIWeb.Rector
                     kPiDataContext.CollectedIndicatorsForR.InsertOnSubmit(newCollected);
                 }
                 #endregion
+                kPiDataContext.SubmitChanges();  
                 #region CalcForFaculys
                 foreach (SecondLevelSubdivisionTable CurrentSecondLevel in SecondLevelToCalculate)
                 {
@@ -143,8 +148,9 @@ namespace KPIWeb.Rector
                     kPiDataContext.CollectedIndicatorsForR.InsertOnSubmit(newCollected);
                 }
                 #endregion
+                kPiDataContext.SubmitChanges();  
             }
-            kPiDataContext.SubmitChanges();           
+                     
         }
 
         #region patterns
@@ -366,7 +372,53 @@ namespace KPIWeb.Rector
             }
             return 0;
         }
+        protected double pattern8(int SpecID, int typeOfCost, int ReportID, FourthLevelSubdivisionTable Fourth, int SpecType) // type 0 очное // 1 заочное
+        {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            if (typeOfCost == 0)
+            {
+                return Convert.ToDouble((from a in kpiWebDataContext.EducationCostTable
+                                         where a.Active == true
+                                         && a.FK_Specialization == SpecID
+                                         select a.CostOfBudjetOch).FirstOrDefault()
+                             *
+                    (from a in kpiWebDataContext.CollectedBasicParametersTable
+                     where a.FK_ReportArchiveTable == ReportID
+                     && a.FK_FourthLevelSubdivisionTable == Fourth.FourthLevelSubdivisionTableID
+                     join c in kpiWebDataContext.BasicParametersTable
+                     on a.FK_BasicParametersTable equals c.BasicParametersTableID
+                     where
 
+                     ((c.AbbreviationEN == "a_Och_M" && SpecType == 3)
+                     || (c.AbbreviationEN == "a_Och_B" && SpecType == 1)
+                     || (c.AbbreviationEN == "a_Och_S" && SpecType == 2)
+                     || (c.AbbreviationEN == "a_Och_A" && SpecType == 4))
+
+                     select a.CollectedValue).Sum());
+            }
+            else if (typeOfCost == 1)
+            {
+                return Convert.ToDouble((from a in kpiWebDataContext.EducationCostTable
+                                         where a.Active == true
+                                         && a.FK_Specialization == SpecID
+                                         select a.CostOfBudjetZaoch).FirstOrDefault()
+
+                                          *
+
+                                 (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                  where a.FK_ReportArchiveTable == ReportID
+                                  && a.FK_FourthLevelSubdivisionTable == Fourth.FourthLevelSubdivisionTableID
+                                  join c in kpiWebDataContext.BasicParametersTable
+                                  on a.FK_BasicParametersTable equals c.BasicParametersTableID
+                                  where
+                                  ((c.AbbreviationEN == "c_Z_A" && SpecType == 4)
+                                  || (c.AbbreviationEN == "c_Z_B" && SpecType == 1)
+                                  || (c.AbbreviationEN == "c_Z_S" && SpecType == 2)
+                                  || (c.AbbreviationEN == "c_Z_M" && SpecType == 3))
+                                  select a.CollectedValue).Sum());
+            }
+            return 0;
+        }
 
         public void patternSwitch(int ReportArchiveID, BasicParametersTable basicParam, FourthLevelSubdivisionTable FourthLevel, int fourthCnt, UsersTable user)
         {
@@ -510,6 +562,30 @@ namespace KPIWeb.Rector
                         pattern7(FourthLevel.FK_Specialization, 2, ReportArchiveID, FourthLevel, 4);
                     if (basicParam.AbbreviationEN == "a_IN_A_Kom_money") tmp = 
                         pattern7(FourthLevel.FK_Specialization, 1, ReportArchiveID, FourthLevel, 4);
+
+
+                    // 01.07.2015
+                    if (basicParam.AbbreviationEN == "a_Och_A_money") tmp =
+                        pattern8(FourthLevel.FK_Specialization, 0, ReportArchiveID, FourthLevel, 4);
+                    if (basicParam.AbbreviationEN == "a_Z_A_money") tmp =
+                        pattern8(FourthLevel.FK_Specialization, 1, ReportArchiveID, FourthLevel, 4);
+
+                    if (basicParam.AbbreviationEN == "a_Och_M_money") tmp =
+                        pattern8(FourthLevel.FK_Specialization, 0, ReportArchiveID, FourthLevel, 3);
+                    if (basicParam.AbbreviationEN == "a_Z_M_money") tmp =
+                        pattern8(FourthLevel.FK_Specialization, 1, ReportArchiveID, FourthLevel, 3);
+
+                    if (basicParam.AbbreviationEN == "a_Och_S_money") tmp =
+                        pattern8(FourthLevel.FK_Specialization, 0, ReportArchiveID, FourthLevel, 2);
+                    if (basicParam.AbbreviationEN == "a_Z_S_money") tmp =
+                        pattern8(FourthLevel.FK_Specialization, 1, ReportArchiveID, FourthLevel, 2);
+
+                    if (basicParam.AbbreviationEN == "a_Och_B_money") tmp =
+                        pattern8(FourthLevel.FK_Specialization, 0, ReportArchiveID, FourthLevel, 1);
+                    if (basicParam.AbbreviationEN == "a_Z_B_money") tmp =
+                        pattern8(FourthLevel.FK_Specialization, 1, ReportArchiveID, FourthLevel, 1);
+                    //01.07.2015
+
                 }
                 //новейшие показатели
             }
@@ -701,6 +777,8 @@ namespace KPIWeb.Rector
 
             foreach (BasicParametersTable basicParam in calcBasicParams) //пройдемся по показателям
             {
+                if (basicParam.BasicParametersTableID != 3912)
+                    continue;
                 int ii = (int)(from a in kpiWebDataContext.BasicParametrAdditional
                                where a.BasicParametrAdditionalID == basicParam.BasicParametersTableID
                                select a.SubvisionLevel).FirstOrDefault();
@@ -890,7 +968,6 @@ namespace KPIWeb.Rector
             kPiDataContext.SubmitChanges();
             //////////////////////////////////////////////////////////////////////////////////////////////////////////
         }
-
         public void gogo3(int ParamID, int UserID)
         {
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
@@ -917,7 +994,6 @@ namespace KPIWeb.Rector
             kPiDataContext.SubmitChanges();
             //////////////////////////////////////////////////////////////////////////////////////////////////////////
         }
-
         protected void Button4_Click(object sender, EventArgs e)
         {
              KPIWebDataContext kPiDataContext = new KPIWebDataContext();
@@ -931,22 +1007,14 @@ namespace KPIWeb.Rector
                                            select a).Distinct().ToList();
             foreach (UsersTable currentUser in UsersList)
             {
-                gogo(3895, currentUser.UsersTableID);
-                gogo(3896, currentUser.UsersTableID);
-                gogo(3897, currentUser.UsersTableID);
-                gogo(3898, currentUser.UsersTableID);
-                gogo(3899, currentUser.UsersTableID);
-                gogo(3900, currentUser.UsersTableID);
-                gogo(3901, currentUser.UsersTableID);
-                gogo(3902, currentUser.UsersTableID);
-                gogo(3903, currentUser.UsersTableID);
-                gogo(3904, currentUser.UsersTableID);
-                gogo(3905, currentUser.UsersTableID);
-                gogo(3906, currentUser.UsersTableID);
-                gogo(3907, currentUser.UsersTableID);
-                gogo(3908, currentUser.UsersTableID);
-                gogo(3909, currentUser.UsersTableID);
-                gogo(3910, currentUser.UsersTableID);
+                gogo(3912, currentUser.UsersTableID);
+                gogo(3914, currentUser.UsersTableID);
+                gogo(3916, currentUser.UsersTableID);
+                gogo(3918, currentUser.UsersTableID);
+                gogo(3920, currentUser.UsersTableID);
+                gogo(3922, currentUser.UsersTableID);
+                gogo(3924, currentUser.UsersTableID);
+                gogo(3926, currentUser.UsersTableID);
             }
             List<UsersTable> UsersList2 = (from a in kPiDataContext.UsersTable
                                           join b in kPiDataContext.BasicParametrsAndUsersMapping
@@ -958,22 +1026,15 @@ namespace KPIWeb.Rector
                                           select a).Distinct().ToList();
             foreach (UsersTable currentUser in UsersList2)
             {
-                gogo2(3895, currentUser.UsersTableID);
-                gogo2(3896, currentUser.UsersTableID);
-                gogo2(3897, currentUser.UsersTableID);
-                gogo2(3898, currentUser.UsersTableID);
-                gogo2(3899, currentUser.UsersTableID);
-                gogo2(3900, currentUser.UsersTableID);
-                gogo2(3901, currentUser.UsersTableID);
-                gogo2(3902, currentUser.UsersTableID);
-                gogo2(3903, currentUser.UsersTableID);
-                gogo2(3904, currentUser.UsersTableID);
-                gogo2(3905, currentUser.UsersTableID);
-                gogo2(3906, currentUser.UsersTableID);
-                gogo2(3907, currentUser.UsersTableID);
-                gogo2(3908, currentUser.UsersTableID);
-                gogo2(3909, currentUser.UsersTableID);
-                gogo2(3910, currentUser.UsersTableID);
+                gogo2(3912, currentUser.UsersTableID);
+                gogo2(3914, currentUser.UsersTableID);
+                gogo2(3916, currentUser.UsersTableID);
+                gogo2(3918, currentUser.UsersTableID);
+                gogo2(3920, currentUser.UsersTableID);
+                gogo2(3922, currentUser.UsersTableID);
+                gogo2(3924, currentUser.UsersTableID);
+                gogo2(3926, currentUser.UsersTableID);
+                
             }
             List<UsersTable> UsersList3 = (from a in kPiDataContext.UsersTable
                                            join b in kPiDataContext.BasicParametrsAndUsersMapping
@@ -985,25 +1046,80 @@ namespace KPIWeb.Rector
                                            select a).Distinct().ToList();
             foreach (UsersTable currentUser in UsersList3)
             {
-                gogo3(3895, currentUser.UsersTableID);
-                gogo3(3896, currentUser.UsersTableID);
-                gogo3(3897, currentUser.UsersTableID);
-                gogo3(3898, currentUser.UsersTableID);
-                gogo3(3899, currentUser.UsersTableID);
-                gogo3(3900, currentUser.UsersTableID);
-                gogo3(3901, currentUser.UsersTableID);
-                gogo3(3902, currentUser.UsersTableID);
-                gogo3(3903, currentUser.UsersTableID);
-                gogo3(3904, currentUser.UsersTableID);
-                gogo3(3905, currentUser.UsersTableID);
-                gogo3(3906, currentUser.UsersTableID);
-                gogo3(3907, currentUser.UsersTableID);
-                gogo3(3908, currentUser.UsersTableID);
-                gogo3(3909, currentUser.UsersTableID);
-                gogo3(3910, currentUser.UsersTableID);
+                gogo3(3912, currentUser.UsersTableID);
+                gogo3(3914, currentUser.UsersTableID);
+                gogo3(3916, currentUser.UsersTableID);
+                gogo3(3918, currentUser.UsersTableID);
+                gogo3(3920, currentUser.UsersTableID);
+                gogo3(3922, currentUser.UsersTableID);
+                gogo3(3924, currentUser.UsersTableID);
+                gogo3(3926, currentUser.UsersTableID);              
             }
         }
+
+        public  class
+            newclass
+        {
+            public string nameofacadmy { get; set; }
+            public string nameofIndicator { get; set; }
+            public float value { get; set; }
+            public float planned { get; set; }
+            public string measure { get; set; }
+            }
+
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            List<FirstLevelSubdivisionTable> firstList = (from a in kPiDataContext.FirstLevelSubdivisionTable
+                                                          where a.Active == true
+                                                          select a).Distinct().ToList();
+            List<IndicatorsTable> IndicatorsList = (from a in kPiDataContext.IndicatorsTable 
+                                                        where a.Active == true
+                                                        select a).ToList();
+            List < newclass > classlist= new List<newclass>();
+            foreach (FirstLevelSubdivisionTable currentFirst in firstList)
+            {
+                foreach (IndicatorsTable CurrentIndicator in IndicatorsList)
+                {
+                    if ((CurrentIndicator.IndicatorsTableID!=1026)&&(CurrentIndicator.IndicatorsTableID!=1027)&&(CurrentIndicator.IndicatorsTableID!=1028))
+                    {
+                        continue;
+                    }
+                    CollectedIndicatorsForR curcollected = (from a in kPiDataContext.CollectedIndicatorsForR
+                                                            where a.Active == true
+                                                            && a.FK_FirstLevelSubdivisionTable == currentFirst.FirstLevelSubdivisionTableID
+                                                            && a.FK_SecondLevelSubdivisionTable == null
+                                                            && a.FK_ReportArchiveTable == 1
+                                                            && a.FK_IndicatorsTable == CurrentIndicator.IndicatorsTableID
+                                                            select a).OrderByDescending(mc => mc.CreatedDateTime).FirstOrDefault();
+                    newclass newone_ = new newclass();
+                    newone_.nameofacadmy = currentFirst.Name;
+                    newone_.nameofIndicator = CurrentIndicator.Name;
+                    newone_.measure = CurrentIndicator.Measure;
+                    PlannedIndicator planned = (from a in kPiDataContext.PlannedIndicator
+                                       where a.Active == true
+                                       && a.FK_IndicatorsTable == CurrentIndicator.IndicatorsTableID
+
+                                       select a).OrderBy(mc => mc.Date).FirstOrDefault();
+                    if (planned != null)
+                        newone_.planned = (float) planned.Value;
+
+                    if (curcollected !=null)
+                    {
+                        if (curcollected.Value!=null)
+                        {
+                            newone_.value = (float) curcollected.Value;
+                            classlist.Add(newone_);
+                        }
+                    }
+                }
+            }
+
+            GridView1.DataSource = classlist;
+            GridView1.DataBind();
+        }
         
+
     }
 }
 

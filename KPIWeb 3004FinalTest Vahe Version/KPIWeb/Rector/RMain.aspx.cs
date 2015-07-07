@@ -57,5 +57,9 @@ namespace KPIWeb.Rector
             Response.Redirect("~/Rector/RPlannedDynamics.aspx");
         }
 
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/ViewDocument.aspx");
+        }
     }
 }

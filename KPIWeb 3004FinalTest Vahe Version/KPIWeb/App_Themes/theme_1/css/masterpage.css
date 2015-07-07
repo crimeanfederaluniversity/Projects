@@ -92,7 +92,7 @@ text-align: center;
     width:100%;
     height:30px;
     background-color:#222222;
-    z-index:3;
+    z-index:10;
     color:#05ff01;  
     padding-top:5px;
     font-weight:bold;

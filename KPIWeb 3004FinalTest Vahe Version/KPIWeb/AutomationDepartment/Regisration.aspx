@@ -86,10 +86,12 @@
         <asp:Label ID="Label4" runat="server" Text="Выберите статус пользователя"></asp:Label>
          <br />
                 <asp:DropDownList ID="DropDownList5" runat="server" CssClass="form-control" OnSelectedIndexChanged="DropDownList5_SelectedIndexChanged" AutoPostBack="True" Height="40px" Width="400px">
-                    <asp:ListItem Value="-1">Выберите статус</asp:ListItem>
-                    <asp:ListItem Value="0">Исполнитель</asp:ListItem>
-                    <asp:ListItem Value="5">Руководство</asp:ListItem>
-                    <asp:ListItem Value="9">Администратор</asp:ListItem>                    
+                    <asp:ListItem Value="-1">Выберите статус</asp:ListItem>   
+                    <asp:ListItem Value="0">Исполнитель</asp:ListItem>              
+                    <asp:ListItem Value="5">Проректор</asp:ListItem>          
+                     <asp:ListItem Value="2">Деканат</asp:ListItem>
+                    <asp:ListItem Value="4">Директор академии</asp:ListItem>  
+                    <asp:ListItem Value="9">Администратор</asp:ListItem>               
                 </asp:DropDownList>
          <br />
       </div>    
@@ -183,6 +185,8 @@
 
                     </Columns>
                 </asp:GridView>
+                <br />
+                Должность<asp:TextBox ID="PositionText" CssClass="form-control" runat="server" Height="40px" Width="400px"></asp:TextBox>
             </div>
             </div>   
          <div>
@@ -225,6 +229,9 @@
                 CssClass="text-danger" Display="Dynamic" ErrorMessage="Введите подтверждение пароля." ID="errorNoConfirm" />
             <asp:CompareValidator runat="server" ControlToCompare="PasswordText" ControlToValidate="ConfirmPasswordText"
                 CssClass="text-danger" Display="Dynamic" ErrorMessage="Пароли не совпадают." ID="ErrorWrongConfirm" />
+             <br />
+             <br />
+             <asp:CheckBox ID="CheckBox1" runat="server" Checked="True" OnCheckedChanged="CheckBox1_CheckedChanged1" Text="Отправить email?" />
              <br />
              <br />
              <asp:Button ID="Button1" runat="server" CssClass="form-control" OnClientClick="showLoadPanel()" Text="Создать пользователя" Height="40px" Width="400px" OnClick="Button1_Click" />

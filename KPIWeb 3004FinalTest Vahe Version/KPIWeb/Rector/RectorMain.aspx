@@ -3,7 +3,8 @@
     <style type="text/css">
    .button_right 
    {
-       float:right
+       width:300px;
+       float:right;
    }     
 </style>  
      
@@ -55,7 +56,7 @@
       <asp:Button ID="GoForwardButton" runat="server" OnClientClick="showLoadPanel()" OnClick="GoForwardButton_Click" Text="Вперед" Width="125px" />
         &nbsp; &nbsp; <asp:Button ID="Button2" OnClientClick="showLoadPanel()" runat="server" OnClick="Button4_Click" Text="На главную" Width="125px" Enabled="False" />
         &nbsp; &nbsp;       
-        <asp:Button ID="Button5" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right" OnClick="Button5_Click" Text="Нормативные документы" Width="225px" />
+        <asp:Button ID="Button5" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right" OnClick="Button5_Click" Text="Нормативные документы" Width="300px" />
         &nbsp; &nbsp;
         <asp:Button ID="Button6" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right" OnClick="Button6_Click" Text="Button" Width="150px" Visible="False" />
         &nbsp; &nbsp;

@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace KPIWeb.AutomationDepartment
 {
-    public partial class Regisration : System.Web.UI.Page   
+    public partial class Regisration : System.Web.UI.Page
     {
         private string RandomString(int size)
         {
@@ -114,7 +114,7 @@ namespace KPIWeb.AutomationDepartment
             ///////////////////////////////////////////////////////////////////////////////////////////////////
             ViewState["BasicDataTable"] = dataTableBasic;
             ViewState["CalculateDataTable"] = dataTableCalc;
-            ViewState["IndicatorDataTable"] = dataTableIndicator;            
+            ViewState["IndicatorDataTable"] = dataTableIndicator;
         }
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -126,8 +126,8 @@ namespace KPIWeb.AutomationDepartment
             {
                 List<SecondLevelSubdivisionTable> second_stageList =
                     (from item in kPiDataContext.SecondLevelSubdivisionTable
-                        where item.FK_FirstLevelSubdivisionTable == SelectedValue
-                        select item).OrderBy(mc => mc.SecondLevelSubdivisionTableID).ToList();
+                     where item.FK_FirstLevelSubdivisionTable == SelectedValue
+                     select item).OrderBy(mc => mc.SecondLevelSubdivisionTableID).ToList();
 
                 if (second_stageList != null && second_stageList.Count() > 0)
                 {
@@ -149,10 +149,10 @@ namespace KPIWeb.AutomationDepartment
             {
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Произошла ошибка.');", true);
             }
-        }    
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
@@ -181,10 +181,10 @@ namespace KPIWeb.AutomationDepartment
                 DropDownList4.Visible = false;
                 Label24.Visible = false;
 
-               
+
                 List<FirstLevelSubdivisionTable> First_stageList =
                     (from item in kPiDataContext.FirstLevelSubdivisionTable
-                        select item).OrderBy(mc => mc.Name).ToList();
+                     select item).OrderBy(mc => mc.Name).ToList();
 
                 var dictionary = new Dictionary<int, string>();
                 dictionary.Add(0, "Выберите значение");
@@ -197,10 +197,10 @@ namespace KPIWeb.AutomationDepartment
                 DropDownList1.DataTextField = "Value";
                 DropDownList1.DataValueField = "Key";
                 DropDownList1.DataSource = dictionary;
-                DropDownList1.DataBind();           
-            /// записали академии в дроп даун
-            /// 
-            /// в зависимости от того кто вошел изменяем интерфейс
+                DropDownList1.DataBind();
+                /// записали академии в дроп даун
+                /// 
+                /// в зависимости от того кто вошел изменяем интерфейс
                 if (userTable.AccessLevel == 9)
                 {
                     UserNameText.Enabled = false;
@@ -224,17 +224,17 @@ namespace KPIWeb.AutomationDepartment
                     ConfirmPasswordText.Visible = false;
                     ConfPassLabel.Visible = false;
                     errorNoConfirm.Visible = false;
-                    ErrorWrongConfirm.Visible = false;                                                      
+                    ErrorWrongConfirm.Visible = false;
                 }
             }
         }
         protected void DropDownList4_SelectedIndexChanged(object sender, EventArgs e)
         {
-          
+
         }
         protected void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
-           // if 
+            // if 
         }
         protected void DropDownList5_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -249,89 +249,78 @@ namespace KPIWeb.AutomationDepartment
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-                Gridview1.Visible = false;
-                Label25.Visible = false;
-                Gridview2.Visible = false;
-                Label26.Visible = false;
-                Gridview3.Visible = false;
-                Label27.Visible = false;
-                DropDownList4.Visible = false;
-                Label24.Visible = false;
+            Gridview1.Visible = false;
+            Label25.Visible = false;
+            Gridview2.Visible = false;
+            Label26.Visible = false;
+            Gridview3.Visible = false;
+            Label27.Visible = false;
+            DropDownList4.Visible = false;
+            Label24.Visible = false;
 
-                if (DropDownList5.SelectedIndex == 0 || DropDownList5.SelectedIndex == 3)
-                {                  
-                }
-                else if (DropDownList5.SelectedIndex == 5)
+            if (DropDownList5.SelectedIndex == 0 || DropDownList5.SelectedIndex == 5)
+            {
+
+            }
+            else if (DropDownList5.SelectedIndex == 1)
+            {
+                List<RolesTable> Roles = (from a in kPiDataContext.RolesTable
+                                          where a.Active == true
+                                          && a.IsHead == false
+                                          select a).ToList();
+                int i = 1;
+                DropDownList4.Items.Clear();
+                DropDownList4.Items.Add("Выберите шаблон");
+                foreach (RolesTable role in Roles)
                 {
-                  /*  Gridview1.Visible = true;
-                    Label25.Visible = true;
-                    Gridview2.Visible = true;
-                    Label26.Visible = true;
-                    Gridview3.Visible = true;
-                    Label27.Visible = true;
-                    DropDownList4.Visible = true;
-                    Label24.Visible = true;*/
+                    DropDownList4.Items.Add(role.RoleName);
+                    DropDownList4.Items[i].Value = role.RolesTableID.ToString();
+                    i++;
                 }
-                else if (DropDownList5.SelectedIndex == 1)
+                DropDownList4.Visible = true;
+                Label24.Visible = true;
+                //////
+                if (userTable.AccessLevel == 10)
                 {
-                    List<RolesTable> Roles = (from a in kPiDataContext.RolesTable
-                                              where a.Active == true
-                                              && a.IsHead == false
-                                              select a).ToList();
-                    int i = 1;
-                    DropDownList4.Items.Clear();
-                    DropDownList4.Items.Add("Выберите шаблон");
-                    foreach (RolesTable role in Roles)
-                    {
-                        DropDownList4.Items.Add(role.RoleName);
-                        DropDownList4.Items[i].Value = role.RolesTableID.ToString();
-                        i++;
-                    }
-                    DropDownList4.Visible = true;
-                    Label24.Visible = true;
-                    //////
-                    if (userTable.AccessLevel == 10)
-                     {
-                        Gridview3.Visible = true;
-                        Label27.Visible = true;
-                        
-                     }
-                     else if (userTable.AccessLevel == 9)
-                     {            
-                     }             
-                }
-                else if (DropDownList5.SelectedIndex == 2)
-                {
-                    Gridview1.Visible = true;
-                    Label25.Visible = true;
-                    Gridview2.Visible = true;
-                    Label26.Visible = true;
                     Gridview3.Visible = true;
                     Label27.Visible = true;
 
-                    Gridview3.Columns[1].Visible = false;
-                    Gridview3.Columns[3].Visible = false;
-
-
-                    List<RolesTable> Roles = (from a in kPiDataContext.RolesTable
-                                              where a.Active == true
-                                              && a.IsHead == true
-                                              select a).ToList();
-                    int i = 1;
-                    DropDownList4.Items.Clear();
-                    DropDownList4.Items.Add("Выберите шаблон");
-                    foreach (RolesTable role in Roles)
-                    {
-                        DropDownList4.Items.Add(role.RoleName);
-                        DropDownList4.Items[i].Value = role.RolesTableID.ToString();
-                        i++;
-                    }
-                    DropDownList4.Visible = true;
-                    Label24.Visible = true;
-                    ////записали роли в дроп даун
                 }
-        
-            }    
+                else if (userTable.AccessLevel == 9)
+                {
+                }
+            }
+            else if ((DropDownList5.SelectedIndex == 2) || (DropDownList5.SelectedIndex == 3) || (DropDownList5.SelectedIndex == 4))
+            {
+                Gridview1.Visible = true;
+                Label25.Visible = true;
+                Gridview2.Visible = true;
+                Label26.Visible = true;
+                Gridview3.Visible = true;
+                Label27.Visible = true;
+
+                Gridview3.Columns[1].Visible = false;
+                //Gridview3.Columns[3].Visible = false;
+
+
+                List<RolesTable> Roles = (from a in kPiDataContext.RolesTable
+                                          where a.Active == true
+                                          && a.IsHead == true
+                                          select a).ToList();
+                int i = 1;
+                DropDownList4.Items.Clear();
+                DropDownList4.Items.Add("Выберите шаблон");
+                foreach (RolesTable role in Roles)
+                {
+                    DropDownList4.Items.Add(role.RoleName);
+                    DropDownList4.Items[i].Value = role.RolesTableID.ToString();
+                    i++;
+                }
+                DropDownList4.Visible = true;
+                Label24.Visible = true;
+                ////записали роли в дроп даун
+            }
+        }
         protected void Gridview3_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -372,15 +361,15 @@ namespace KPIWeb.AutomationDepartment
         {
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
 
-            
-            if (((from a in kPiDataContext.UsersTable where a.Login == UserNameText.Text select a).ToList().Count > 0)&&(UserNameText.Text.Length>2))
+
+            if (((from a in kPiDataContext.UsersTable where a.Login == UserNameText.Text select a).ToList().Count > 0) && (UserNameText.Text.Length > 2))
             {
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Пользователь с таким логином уже существует, выберите другой логин!');", true);
             }
 
             else if ((from a in kPiDataContext.UsersTable where a.Email == EmailText.Text select a).ToList().Count > 0)
             {
-                Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                     "alert('Введенный адрес электронной почты уже зарегестрирован, введите другой');", true);
             }
             else
@@ -394,43 +383,43 @@ namespace KPIWeb.AutomationDepartment
 
                     for (int k = 1; k <= Gridview3.Rows.Count; k++)
                     {
-                        CheckBox canEdit = (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsEditCheckBox");
-                        CheckBox canConfirm = (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsConfirmCheckBox");
-                        Label label = (Label) Gridview3.Rows[rowIndex].FindControl("BasicParametrsID");
+                        CheckBox canEdit = (CheckBox)Gridview3.Rows[rowIndex].FindControl("BasicParametrsEditCheckBox");
+                        CheckBox canConfirm = (CheckBox)Gridview3.Rows[rowIndex].FindControl("BasicParametrsConfirmCheckBox");
+                        Label label = (Label)Gridview3.Rows[rowIndex].FindControl("BasicParametrsID");
 
                         //BasicParametrsAndUsersMapping BasicAndUsers = new BasicParametrsAndUsersMapping();                    
                         int first = 0;
                         int second = 0;
                         int third = 0;
 
-                        if ((DropDownList1.SelectedIndex!=null)&&(DropDownList1.SelectedIndex > 0))
+                        if ((DropDownList1.SelectedIndex != null) && (DropDownList1.SelectedIndex > 0))
                         {
                             first = Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value);
                         }
 
-                        if ((DropDownList2.SelectedIndex!=null)&&(DropDownList2.SelectedIndex > 0))
+                        if ((DropDownList2.SelectedIndex != null) && (DropDownList2.SelectedIndex > 0))
                         {
                             second = Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value);
                         }
 
-                        if ((DropDownList3.SelectedIndex!=null)&&(DropDownList3.SelectedIndex > 0))
+                        if ((DropDownList3.SelectedIndex != null) && (DropDownList3.SelectedIndex > 0))
                         {
                             third = Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value);
                         }
 
                         int match_cnt = (from a in kPiDataContext.BasicParametrsAndUsersMapping
-                            join b in kPiDataContext.UsersTable
-                                on a.FK_UsersTable equals b.UsersTableID
-                            where
-                                (((a.CanConfirm ==true)&&(canConfirm.Checked==true))||((a.CanEdit == true)&&(canEdit.Checked==true)))
-                                && a.Active == true
-                                && b.Active == true                               
-                                && b.FK_ZeroLevelSubdivisionTable == 1
-                                && a.FK_ParametrsTable == Convert.ToInt32(label.Text)
-                                && ((b.FK_FirstLevelSubdivisionTable == first))// || (b.FK_FirstLevelSubdivisionTable == null))
-                                && ((b.FK_SecondLevelSubdivisionTable == second))// || (b.FK_SecondLevelSubdivisionTable == null))
-                                && ((b.FK_ThirdLevelSubdivisionTable == third))// || (b.FK_ThirdLevelSubdivisionTable == null))                               
-                            select a).ToList().Count();
+                                         join b in kPiDataContext.UsersTable
+                                             on a.FK_UsersTable equals b.UsersTableID
+                                         where
+                                             (((a.CanConfirm == true) && (canConfirm.Checked == true)) || ((a.CanEdit == true) && (canEdit.Checked == true)))
+                                             && a.Active == true
+                                             && b.Active == true
+                                             && b.FK_ZeroLevelSubdivisionTable == 1
+                                             && a.FK_ParametrsTable == Convert.ToInt32(label.Text)
+                                             && ((b.FK_FirstLevelSubdivisionTable == first))// || (b.FK_FirstLevelSubdivisionTable == null))
+                                             && ((b.FK_SecondLevelSubdivisionTable == second))// || (b.FK_SecondLevelSubdivisionTable == null))
+                                             && ((b.FK_ThirdLevelSubdivisionTable == third))// || (b.FK_ThirdLevelSubdivisionTable == null))                               
+                                         select a).ToList().Count();
                         match_cnt_sum += match_cnt;
                         rowIndex++;
                     }
@@ -438,7 +427,7 @@ namespace KPIWeb.AutomationDepartment
                 #endregion
                 if (match_cnt_sum > 0)
                 {
-                    Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                         "alert('Пользователь для заданного подразделения с " + match_cnt_sum +
                         " совпадениями возможностей редактирования поджтвержения существует');", true);
                 }
@@ -449,6 +438,7 @@ namespace KPIWeb.AutomationDepartment
                     user.Login = UserNameText.Text;
                     user.Password = PasswordText.Text;
                     user.Email = EmailText.Text;
+                    user.Position = PositionText.Text;
 
                     int selectedValue = -1;
                     if (int.TryParse(DropDownList1.SelectedValue, out selectedValue) && selectedValue > 0)
@@ -463,28 +453,32 @@ namespace KPIWeb.AutomationDepartment
                         user.FK_ThirdLevelSubdivisionTable = selectedValue;
 
                     user.AccessLevel = 0; ///////НАДО ПРОДУМАТЬ
-
+                    user.AccessLevel = Convert.ToInt32(DropDownList5.Items[DropDownList5.SelectedIndex].Value);
+/*
                     if (DropDownList5.SelectedIndex == 2)
                     {
                         user.AccessLevel = 5;
                     }
-
+                    if (DropDownList5.SelectedIndex == 3)
+                    {
+                        user.AccessLevel = 5;
+                    }
                     if (DropDownList5.SelectedIndex == 3)
                     {
                         user.AccessLevel = 9;
                     }
-
+                    */
                     user.FK_ZeroLevelSubdivisionTable = 1;
                     string passCode = RandomString(25);
                     user.PassCode = passCode;
-                    user.Confirmed = false;                
+                    user.Confirmed = false;
                     kPiDataContext.UsersTable.InsertOnSubmit(user);
                     kPiDataContext.SubmitChanges();
                     //// ПОЛЬЗОВАТЕЛЬ СОЗДАН
                     ///                    
 
                     int userID = user.UsersTableID;
-                    
+
                     ///////////////////////////////////////////шаблон//////////////////////////////////
                     rowIndex = 0;
 
@@ -493,12 +487,12 @@ namespace KPIWeb.AutomationDepartment
                         for (int k = 1; k <= Gridview3.Rows.Count; k++)
                         {
                             CheckBox canEdit =
-                                (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsEditCheckBox");
+                                (CheckBox)Gridview3.Rows[rowIndex].FindControl("BasicParametrsEditCheckBox");
                             CheckBox canView =
-                                (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsViewCheckBox");
+                                (CheckBox)Gridview3.Rows[rowIndex].FindControl("BasicParametrsViewCheckBox");
                             CheckBox canConfirm =
-                                (CheckBox) Gridview3.Rows[rowIndex].FindControl("BasicParametrsConfirmCheckBox");
-                            Label label = (Label) Gridview3.Rows[rowIndex].FindControl("BasicParametrsID");
+                                (CheckBox)Gridview3.Rows[rowIndex].FindControl("BasicParametrsConfirmCheckBox");
+                            Label label = (Label)Gridview3.Rows[rowIndex].FindControl("BasicParametrsID");
 
                             BasicParametrsAndUsersMapping BasicAndUsers = new BasicParametrsAndUsersMapping();
                             BasicAndUsers.Active = true;
@@ -521,10 +515,10 @@ namespace KPIWeb.AutomationDepartment
                                     /*CheckBox canEdit =
                                         (CheckBox) Gridview1.Rows[rowIndex].FindControl("IndicatorEditCheckBox");*/
                                     CheckBox canView =
-                                        (CheckBox) Gridview1.Rows[rowIndex].FindControl("IndicatorViewCheckBox");
+                                        (CheckBox)Gridview1.Rows[rowIndex].FindControl("IndicatorViewCheckBox");
                                     CheckBox canConfirm =
-                                        (CheckBox) Gridview1.Rows[rowIndex].FindControl("IndicatorConfirmCheckBox");
-                                    Label label = (Label) Gridview1.Rows[rowIndex].FindControl("IndicatorID");
+                                        (CheckBox)Gridview1.Rows[rowIndex].FindControl("IndicatorConfirmCheckBox");
+                                    Label label = (Label)Gridview1.Rows[rowIndex].FindControl("IndicatorID");
 
                                     IndicatorsAndUsersMapping indAndUser = new IndicatorsAndUsersMapping();
                                     indAndUser.Active = true;
@@ -552,14 +546,14 @@ namespace KPIWeb.AutomationDepartment
                                     CheckBox canConfirm =
                                         (CheckBox)
                                             Gridview2.Rows[rowIndex].FindControl("CalculatedParametrsConfirmCheckBox");
-                                    Label label = (Label) Gridview2.Rows[rowIndex].FindControl("CalculatedParametrsID");
+                                    Label label = (Label)Gridview2.Rows[rowIndex].FindControl("CalculatedParametrsID");
 
                                     CalculatedParametrsAndUsersMapping calcAndUser =
                                         new CalculatedParametrsAndUsersMapping();
                                     calcAndUser.Active = true;
                                     calcAndUser.FK_CalculatedParametrsTable = Convert.ToInt32(label.Text);
                                     calcAndUser.CanConfirm = canConfirm.Checked;
-                                 //   calcAndUser.CanEdit = canEdit.Checked;
+                                    //   calcAndUser.CanEdit = canEdit.Checked;
                                     calcAndUser.CanView = canView.Checked;
                                     calcAndUser.FK_UsersTable = userID;
                                     kPiDataContext.CalculatedParametrsAndUsersMapping.InsertOnSubmit(calcAndUser);
@@ -569,23 +563,17 @@ namespace KPIWeb.AutomationDepartment
                             }
                         }
                     }
-                    EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
-                                                 where a.Name == "InviteToRegister"
-                                                 && a.Active == true
-                                                 select a).FirstOrDefault();
-                    Action.MassMailing(user.Email, EmailParams.EmailTitle, 
-                        EmailParams.EmailContent.Replace("#LINK#", ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" + passCode), null);
-                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RN0: Admin(mon) " + (string)ViewState["Login"] + " has registered a new user: " + EmailText.Text + "from ip: " + Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
-                    /*
-                    Action.MassMailing(user.Email,"Ваш почтовый адресс был зарегистрирован в системе ИАС 'КФУ-Программа развития'",
-                        "Здравствуйте!"+Environment.NewLine+ 
-                        "Ваш почтовый адрес был указан при регистрации в системе ИАС 'КФУ-Программа развития!'"+Environment.NewLine+
-                        "Пожалуйста, проигнорируйте это письмо, если оно попало к вам по ошибке." + Environment.NewLine +
-                        "Для продолжения регистрации перейдите по ссылке ниже:" + Environment.NewLine +
-                        ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" + passCode + Environment.NewLine +
-                        "Спасибо!"
-                        , null);
-                    */
+                    if (CheckBox1.Checked)
+                    {
+                        EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
+                                                     where a.Name == "InviteToRegister"
+                                                     && a.Active == true
+                                                     select a).FirstOrDefault();
+                        Action.MassMailing(user.Email, EmailParams.EmailTitle,
+                            EmailParams.EmailContent.Replace("#LINK#", ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" + passCode), null);
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RN0: Admin(mon) " + (string)ViewState["Login"] + " has registered a new user (With emailSend): " + EmailText.Text + "from ip: " + Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
+                    }
+                    LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RN0: Admin(mon) " + (string)ViewState["Login"] + " has registered a new user(Without emailSend): " + EmailText.Text + "from ip: " + Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
                 }
             }
         }
@@ -706,7 +694,7 @@ namespace KPIWeb.AutomationDepartment
                 Gridview1.DataBind();
                 // ViewState["IndRoleMapping"] = IndicatorGrid;
                 #endregion
-            }      
+            }
         }
 
         protected void Gridview3_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -720,6 +708,11 @@ namespace KPIWeb.AutomationDepartment
         }
 
         protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void CheckBox1_CheckedChanged1(object sender, EventArgs e)
         {
 
         }

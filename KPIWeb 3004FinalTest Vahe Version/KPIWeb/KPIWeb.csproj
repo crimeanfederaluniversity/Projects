@@ -185,6 +185,7 @@
     <Content Include="AutomationDepartment\AddRole.aspx" />
     <Content Include="AutomationDepartment\AddSpecialization.aspx" />
     <Content Include="AutomationDepartment\ChangeUser.aspx" />
+    <Content Include="AutomationDepartment\ConnectUsers.aspx" />
     <Content Include="AutomationDepartment\EditUser.aspx" />
     <Content Include="AutomationDepartment\Main.aspx" />
     <Content Include="AutomationDepartment\Regisration.aspx" />
@@ -194,6 +195,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Decan\DecMain.aspx" />
+    <Content Include="Decan\DecViewBasicParams.aspx" />
+    <Content Include="Decan\DecViewReport.aspx" />
+    <Content Include="Director\DAllInOne.aspx" />
     <Content Include="Director\DMain.aspx" />
     <Content Include="Director\DReportView.aspx" />
     <Content Include="Director\DViewThird.aspx" />
@@ -204,6 +209,8 @@
     <Content Include="FinKadr\OtdelChooseReport.aspx" />
     <Content Include="FinKadr\OtdelResult.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Head\HeadMain.aspx" />
+    <Content Include="Head\HeadWatchResult.aspx" />
     <Content Include="MultiUser.aspx" />
     <Content Include="OwnersProcessInfo.aspx" />
     <Content Include="packages.config" />
@@ -375,6 +382,13 @@
     <Compile Include="AutomationDepartment\ChangeUser.aspx.designer.cs">
       <DependentUpon>ChangeUser.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AutomationDepartment\ConnectUsers.aspx.cs">
+      <DependentUpon>ConnectUsers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutomationDepartment\ConnectUsers.aspx.designer.cs">
+      <DependentUpon>ConnectUsers.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AutomationDepartment\EditUser.aspx.cs">
       <DependentUpon>EditUser.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -422,12 +436,40 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="Account\DataBaseCommunicator.cs" />
+    <Compile Include="Decan\DecMain.aspx.cs">
+      <DependentUpon>DecMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Decan\DecMain.aspx.designer.cs">
+      <DependentUpon>DecMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Decan\DecViewBasicParams.aspx.cs">
+      <DependentUpon>DecViewBasicParams.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Decan\DecViewBasicParams.aspx.designer.cs">
+      <DependentUpon>DecViewBasicParams.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Decan\DecViewReport.aspx.cs">
+      <DependentUpon>DecViewReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Decan\DecViewReport.aspx.designer.cs">
+      <DependentUpon>DecViewReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Director\DAllInOne.aspx.cs">
+      <DependentUpon>DAllInOne.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Director\DAllInOne.aspx.designer.cs">
+      <DependentUpon>DAllInOne.aspx</DependentUpon>
     </Compile>
     <Compile Include="Director\DMain.aspx.cs">
       <DependentUpon>DMain.aspx</DependentUpon>
@@ -481,6 +523,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Head\HeadMain.aspx.cs">
+      <DependentUpon>HeadMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Head\HeadMain.aspx.designer.cs">
+      <DependentUpon>HeadMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Head\HeadWatchResult.aspx.cs">
+      <DependentUpon>HeadWatchResult.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Head\HeadWatchResult.aspx.designer.cs">
+      <DependentUpon>HeadWatchResult.aspx</DependentUpon>
+    </Compile>
     <Compile Include="KPIWeb.cs">
       <DependentUpon>KPIWeb.dbml</DependentUpon>
     </Compile>
@@ -515,6 +571,7 @@
     <Compile Include="OwnersProcessInfo.aspx.designer.cs">
       <DependentUpon>OwnersProcessInfo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PDFCreate.cs" />
     <Compile Include="Rector\ClassForCharts.cs" />
     <Compile Include="Rector\ForRCalc.cs" />
     <Compile Include="Rector\RAnalitics.aspx.cs">

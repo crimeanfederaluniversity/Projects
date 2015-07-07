@@ -10,6 +10,7 @@
         }
     </script>
     <style>  
+
         .Grid_view_V_header_style
         {
             -webkit-transform: rotate(-90deg);
@@ -689,4 +690,147 @@
                <br />   
             <br />
         </div>
+
+
+
+
+
+    <script type="text/javascript" >
+        var counter = 0;
+        var masoftables = [];
+        function parseGW() {
+            // document.body.style.backgroundColor = gw_name;
+            windowheighter = window.screen.availWidth;
+            $(window).load(function () {
+
+                var texts = "def";
+                var i = 0;
+                var ownerdiv = [];
+                var cthead = "ControlHead";
+
+                var gridHeader;
+                var s;
+                for (i = 0; i < document.all.length; i++) {
+                    if (((document.all[i].tagName.toString()).toLowerCase()) == 'table') {
+                        masoftables[counter] = document.all[i].getAttribute("id").toString();
+                        counter++;
+                    }
+                }
+                $('#cdf').text(masoftables[1]);
+                for (i = 0; i < counter; i++) {
+
+                    ownerdiv[i] = "diva"; cthead = "ControlHead";
+                    ownerdiv[i] += '_' + i.toString();
+                    cthead += '_' + i.toString();
+                    $('#' + masoftables[i]).wrap(("<div id='" + ownerdiv[i] + "' style='position:absolute;'></div>"));
+                    $(('#' + ownerdiv[i])).prepend(("<div id='" + cthead + "'></div>"));
+
+                    $('#' + ownerdiv[i]).wrap(("<div id='" + "pre_" + ownerdiv[i] + "' style='position:absolute;'></div>"));
+                    $("#pre_" + ownerdiv[i]).css('position', 'relative');
+                    $("#pre_" + ownerdiv[i]).css('height', (document.getElementById("diva_" + (i).toString()).getBoundingClientRect().bottom - document.getElementById("diva_" + (i).toString()).getBoundingClientRect().top).toString() + "px");
+
+                    // if (i == 0) { $('#' + ownerdiv).before("<div id ='SHEET' style='position:relative;'>"); }
+                    // if ((i + 1) == counter) { $('#' + ownerdiv).after("</div>"); }
+                    //  if (i > 0) { $(("#" + ownerdiv[i])).css('top', (document.getElementById(ownerdiv[i - 1]).getBoundingClientRect().bottom + window.pageYOffset + (window.pageYOffset - document.getElementById(ownerdiv[i - 1]).getBoundingClientRect().top)).toString() + "px"); }
+
+
+                    gridHeader = $('#' + masoftables[i]).clone(true);
+                    // document.getElementById(masoftables[i]).id = "FF_" + i.toString();
+                    $(gridHeader).find("tr:gt(0)").remove();
+                    // $(gridHeader).id = "FFF";
+
+                    $('#' + masoftables[i] + ' tr th').each(function (s) {
+
+                        $("th:nth-child(" + (s + 1) + ")", gridHeader).css('width', ($(this).width() + 1).toString() + "px");
+                    });
+
+
+                    $(("#" + cthead)).append(gridHeader);
+                    document.getElementById(masoftables[i]).id = "ffg" + i.toString();
+                    $(("#" + cthead)).css('position', 'absolute');
+
+                    $(("#" + cthead)).css('z-index', '222');
+                  //  $(("#" + cthead + " tr")).css('left', ($('#' + 'ffg' + i.toString()).offset().left + 1).toString() + "px");
+
+
+
+                    // $('#cdf').text(i.toString());
+                }
+                //$('#cdf').text((((document.getElementById("diva_" + (0).toString()).getBoundingClientRect().bottom - document.getElementById("diva_" + (0).toString()).getBoundingClientRect().top).toString() + "px")));
+                //$('#cdf').text(gridHeader.id.toString());
+                $("#aroundgwsdivALL").css('position', 'relative');
+
+
+            });
+
+        }
+
+        parseGW();
+        mtb();
+        function rth() {
+            var cthead = "ControlHead";
+
+
+            for (i = 0; i < counter; i++) {
+                cthead += '_' + i.toString();
+                $('#' + masoftables[i] + ' tr th').each(function (f) {
+                    cthead = "ControlHead";
+                    cthead += '_' + i.toString();
+                    //$("th:nth-child(" + (s + 1) + ")", $("#" + cthead)).css('width', ($(this).width() + 3).toString() + "px");
+                    // $("th:nth-child(" + (s + 1) + ")", $("#" + cthead)).css('color', "#ff0000");
+                    if (($('#' + masoftables[i] + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width()) != ($('#' + cthead + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width()))
+                    { $("#" + cthead + " tr th:nth-child(" + ((f + 1).toString()) + ")").css('width', (($('#' + masoftables[i] + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width() + 3).toString()) + "px"); }
+                    //$('#cdf').text("ws= "+window.screen.availWidth.toString() + "\nwh= " + windowheighter.toString());
+
+                });
+                // if (i == 0) break;
+            }
+            //document.body.style.backgroundColor = "#80ff00";
+            //  windowheighter = window.screen.availWidth;
+            $('#cdf').text(($('#' + masoftables[0] + ' tr th:nth-child(' + ((2).toString()) + ')').width().toString()));
+
+
+
+        }
+
+        var windowheighter;
+        function mtb() {
+            window.setTimeout("mtb()", 50);
+
+            // if (window.screen.availWidth != windowheighter) rth();
+            rth();
+
+            //$('#cdf').text("WW " + window.screen.availWidth + "\n\n"+"SW " + screen.width);
+            //$('#cdf').text(((document.getElementById("diva_0").getBoundingClientRect().right - document.getElementById("diva_0").getBoundingClientRect().left).toString()));
+            for (i = 0; i < counter; i++) {
+                ownerdiv = "diva"; cthead = "ControlHead";
+                ownerdiv += '_' + i.toString();
+                cthead += '_' + i.toString();
+
+                if ((document.getElementById(ownerdiv).getBoundingClientRect().top) < 80) {
+
+
+                    if ((document.getElementById(ownerdiv).getBoundingClientRect().bottom) < 130) {
+                        $('#' + cthead).css('position', 'absolute');
+                    }
+                    else {
+                        $('#' + cthead).css('position', 'fixed');
+                        $('#' + cthead).css('width', (((document.getElementById(ownerdiv).getBoundingClientRect().right - document.getElementById(ownerdiv).getBoundingClientRect().left).toString()) + "px"));
+                        $('#' + cthead).css('top', '78px');
+                        $('#' + cthead).css('left', ((document.getElementById(ownerdiv).getBoundingClientRect().left + 1).toString()) + "px");
+                    }
+                }
+                else {
+                    $('#' + cthead).css('position', 'absolute');
+                    $('#' + cthead).css('width', (((document.getElementById(ownerdiv).getBoundingClientRect().right - document.getElementById(ownerdiv).getBoundingClientRect().left).toString()) + "px"));
+                    $('#' + cthead).css('left', ((0).toString()) + "px");
+                    $('#' + cthead).css('top', '0');
+                }
+
+
+            }
+        }
+
+       </script>
+
         </asp:Content>

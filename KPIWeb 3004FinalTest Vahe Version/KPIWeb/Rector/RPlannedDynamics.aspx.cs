@@ -35,7 +35,7 @@ namespace KPIWeb.Rector
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
                 List<IndicatorsTable> Indicators = (from a in kpiWebDataContext.IndicatorsTable
                     where a.Active == true
-                    select a).ToList();
+                                                    select a).OrderBy(mc => mc.SortID).ToList();
                 //!=null
                 /////////////
 
@@ -107,6 +107,10 @@ namespace KPIWeb.Rector
         protected void Button2_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Rector/RectorMain.aspx");
+        }
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/ViewDocument.aspx");
         }
     }
 }

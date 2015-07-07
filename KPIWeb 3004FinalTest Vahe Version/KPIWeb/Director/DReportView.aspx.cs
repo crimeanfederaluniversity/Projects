@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.Drawing;
 
 namespace KPIWeb.Director
 {
@@ -36,7 +37,10 @@ namespace KPIWeb.Director
                 Response.Redirect("~/Default.aspx");
             }
             int ReportID = Convert.ToInt32(paramSerialization.ReportStr);
-
+            ReportArchiveTable Report = (from a in kpiWebDataContext.ReportArchiveTable
+                                         where a.ReportArchiveTableID == ReportID
+                                         select a).FirstOrDefault();
+            Label1.Text = Report.Name;
             if (!Page.IsPostBack)
             {
                 //мы берем факультеты
@@ -45,6 +49,7 @@ namespace KPIWeb.Director
                 dataTable.Columns.Add(new DataColumn("StructName", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("StructID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Status", typeof(string)));
+                dataTable.Columns.Add(new DataColumn("Color", typeof(string)));
 
                 List<SecondLevelSubdivisionTable> Faculties = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
                                                          where a.FK_FirstLevelSubdivisionTable == userTable.FK_FirstLevelSubdivisionTable
@@ -57,8 +62,7 @@ namespace KPIWeb.Director
                                                          where c.Active == true
                                                          && c.CanView == true
                                                          select a).Distinct().ToList();
-                
-
+                bool canconfirm = true;
 
                 foreach (SecondLevelSubdivisionTable CurrentSecond in Faculties)
                 {
@@ -78,9 +82,40 @@ namespace KPIWeb.Director
                                             && b.Active == true
                                             && b.FK_ReportArchiveTable == ReportID
                                         select a).Distinct().Count();
-                    dataRow["Status"] = "Утвердили "+AllConfirmed.ToString() +" из "+ All.ToString();                
+                    int AllConfirmed2 = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                                        where a.Active == true
+                                        && a.FK_SecondLevelSubdivisionTable == CurrentSecond.SecondLevelSubdivisionTableID
+                                        join b in kpiWebDataContext.CollectedBasicParametersTable
+                                            on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
+                                            where b.Status == 5
+                                            && b.Active == true
+                                            && b.FK_ReportArchiveTable == ReportID
+                                        select a).Distinct().Count();
+
+
+                    if (All != AllConfirmed)
+                        canconfirm = false;
+
+                    if (AllConfirmed2 > 0)
+                    {
+                        dataRow["Status"] = "Утверждено";
+                        dataRow["Color"] = 3; // зеленый
+                    }
+                    else
+                    {
+                        if (AllConfirmed == All)
+                        {
+                            dataRow["Color"] = 2; // желтый
+                        }
+                        else
+                        {
+                            dataRow["Color"] = 1; // красный
+                        }
+                        dataRow["Status"] = "Утвердили " + AllConfirmed.ToString() + " из " + All.ToString();
+                    }
                     dataTable.Rows.Add(dataRow);
                 }
+                Button1.Enabled = canconfirm;
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
             }
@@ -96,6 +131,75 @@ namespace KPIWeb.Director
                 Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии второй уровень
                 Response.Redirect("~/Director/DViewThird.aspx");
             }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userID = UserSer.Id;
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            UsersTable userTable =
+                (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            if (userTable.AccessLevel != 4)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+
+            Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
+            if (paramSerialization == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int ReportID = Convert.ToInt32(paramSerialization.ReportStr);
+            List<CollectedBasicParametersTable> ColToConf = (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                       where a.FK_ReportArchiveTable == ReportID
+                                                       && a.Active == true
+                                                       && a.FK_FirstLevelSubdivisionTable == userTable.FK_FirstLevelSubdivisionTable
+                                                       select a).Distinct().ToList();
+            foreach (CollectedBasicParametersTable curcol in ColToConf)
+                curcol.Status = 5;
+            kpiWebDataContext.SubmitChanges();
+
+            Response.Redirect("~/Director/DMain.aspx");
+        }
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/ViewDocument.aspx");
+        }
+
+        protected void Button22_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Default.aspx");
+        }
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            var lblColor = e.Row.FindControl("Color") as Label;
+            if (lblColor != null)
+            {
+                if (lblColor.Text == "1") // красный 
+                {
+                    e.Row.Style.Add("background-color", "rgba(255, 0, 0, 0.3)");
+                }
+                if (lblColor.Text == "2") // желтый
+                {
+                    e.Row.Style.Add("background-color", "rgba(255, 255, 0, 0.3)");
+                }
+                if (lblColor.Text == "3") // зеленый
+                {
+                    e.Row.Style.Add("background-color", "rgba(0, 255, 0, 0.3)");
+                }
+            }
+        }
+
+        protected void Button23_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Director/DAllInOne.aspx");
         }
     }
 }

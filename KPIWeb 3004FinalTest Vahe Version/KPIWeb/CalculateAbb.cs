@@ -187,10 +187,27 @@ namespace KPIWeb
                 {
                     if (!str.IsFloat())
                     {
+
                         int idx = tmpStr.IndexOf(str);
                         if (idx != -1)
-
-                            tmpStr = tmpStr.Remove(idx, str.Length).Insert(idx, replaseAbbWithValueForLevel(type, str, report, spec, Lv0, Lv1, Lv2, Lv3, Lv4, Lv5));                                                               
+                        {
+                            string strtmp = str;
+                            bool isforall = false;
+                            if (str.Substring(0, 4) == "CFU_")
+                            {
+                                isforall = true;
+                                strtmp = (str.Remove(0, 4));
+                            }
+                            if (isforall)
+                            {
+                                tmpStr = tmpStr.Remove(idx, str.Length).Insert(idx, replaseAbbWithValueForLevel(type, strtmp, report, spec, Lv0, 0, 0, 0, 0, 0));
+                            }
+                            else
+                            {
+                                tmpStr = tmpStr.Remove(idx, str.Length).Insert(idx, replaseAbbWithValueForLevel(type, str, report, spec, Lv0, Lv1, Lv2, Lv3, Lv4, Lv5));
+                            }
+                        }
+                                 
                     }
                 }
             }

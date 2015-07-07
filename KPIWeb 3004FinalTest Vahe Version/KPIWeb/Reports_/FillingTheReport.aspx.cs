@@ -29,127 +29,7 @@ namespace KPIWeb.Reports
     public partial class FillingTheReport : System.Web.UI.Page
     {
         public int col_ = 0;
-        public string ExportPDF(GridView GridToExport, int[] WidthArray, string Header, int CurrentPageSize, int ColumnCount, string ReportName, string UserPositionName, string UserStructName)
-        {
-            GridToExport.AllowPaging = false;
-            // GridToExport.DataBind();
-            BaseFont bf = BaseFont.CreateFont(Environment.GetEnvironmentVariable("windir") + @"\fonts\Arial.TTF",
-                BaseFont.IDENTITY_H, true);
-            iTextSharp.text.pdf.PdfPTable table = new iTextSharp.text.pdf.PdfPTable(ColumnCount + 2);
-            int[] widths = new int[ColumnCount + 2];
-
-            iTextSharp.text.Font font = new iTextSharp.text.Font(bf, 7, iTextSharp.text.Font.NORMAL);
-            font.Color = new BaseColor(0, 0, 0);
-            ///////
-            widths[0] = WidthArray[0];
-            string IdText = Server.HtmlDecode(GridToExport.HeaderRow.Cells[0].Text);
-            iTextSharp.text.pdf.PdfPCell HeaderIdcell = new iTextSharp.text.pdf.PdfPCell(new Phrase(12, IdText, font));
-            HeaderIdcell.BackgroundColor = new BaseColor(200, 200, 200);
-            table.AddCell(HeaderIdcell);
-            ///////
-            widths[1] = WidthArray[2];
-            string NameHeaderText = Server.HtmlDecode(GridToExport.HeaderRow.Cells[2].Text);
-            iTextSharp.text.pdf.PdfPCell NameCell = new iTextSharp.text.pdf.PdfPCell(new Phrase(12, NameHeaderText, font));
-            NameCell.BackgroundColor = new BaseColor(200, 200, 200);
-            table.AddCell(NameCell);
-
-            for (int x = 0; x < ColumnCount; x++)
-            {
-                widths[x + 2] = WidthArray[x + 4];
-                string cellText = Server.HtmlDecode(GridToExport.HeaderRow.Cells[x + 4].Text);
-                // iTextSharp.text.Font font = new iTextSharp.text.Font(bf, 10, iTextSharp.text.Font.NORMAL);
-                font.Color = new BaseColor(0, 0, 0);
-                iTextSharp.text.pdf.PdfPCell cell = new iTextSharp.text.pdf.PdfPCell(new Phrase(12, cellText, font));
-                cell.BackgroundColor = new BaseColor(200, 200, 200);
-                table.AddCell(cell);
-            }
-            table.SetWidths(widths);
-            for (int i = 0; i < GridToExport.Rows.Count; i++)
-            {
-                if (GridToExport.Rows[i].RowType == DataControlRowType.DataRow)
-                {
-                    //iTextSharp.text.Font font = new iTextSharp.text.Font(bf, 10, iTextSharp.text.Font.NORMAL);
-                    //font.Color = new BaseColor(0, 0, 0);
-
-                    ///////////// PARAM ID
-                    iTextSharp.text.pdf.PdfPCell IDcell =
-                        new iTextSharp.text.pdf.PdfPCell(new Phrase(12, Server.HtmlDecode(GridToExport.Rows[i].Cells[0].Text), font));
-                    if (i % 2 == 0)
-                    {
-                        IDcell.BackgroundColor = new BaseColor(230, 230, 230);
-                    }
-                    table.AddCell(IDcell);
-                    /////////////
-                    ///////////// PARAM NAME
-                    Label NameTextBox = (Label)GridToExport.Rows[i].FindControl("Name");
-                    iTextSharp.text.pdf.PdfPCell Namecell =
-                        new iTextSharp.text.pdf.PdfPCell(new Phrase(12, Server.HtmlDecode(NameTextBox.Text), font));
-                    if (i % 2 == 0)
-                    {
-                        Namecell.BackgroundColor = new BaseColor(230, 230, 230);
-                    }
-                    table.AddCell(Namecell);
-                    /////////////
-
-                    for (int j = 0; j < ColumnCount; j++)
-                    {
-                        TextBox textBox = (TextBox)GridToExport.Rows[i].FindControl("Value" + j.ToString());
-                        string cellText = Server.HtmlDecode(textBox.Text);
-                        iTextSharp.text.pdf.PdfPCell cell =
-                            new iTextSharp.text.pdf.PdfPCell(new Phrase(12, cellText, font));
-                        if (i % 2 == 0)
-                        {
-                            cell.BackgroundColor = new BaseColor(230, 230, 230);
-                        }
-                        table.AddCell(cell);
-                    }
-                }
-            }
-            string DocPath = "";
-            Document pdfDoc = new Document(PageSize.A4, 20f, 20f, 20f, 20f);
-            using (MemoryStream myMemoryStream = new MemoryStream())
-            {
-                PdfWriter.GetInstance(pdfDoc, myMemoryStream);
-                Chunk c1 = new Chunk(Header);
-                pdfDoc.Open();
-
-                //////////////////////////////////////////
-
-                iTextSharp.text.Font TitleFont = new iTextSharp.text.Font(bf, 12, iTextSharp.text.Font.NORMAL);
-
-                Paragraph para = new Paragraph(ReportName, TitleFont);//название отчета
-                para.Alignment = Element.ALIGN_CENTER;
-                pdfDoc.Add(para);
-
-                para = new Paragraph(UserPositionName, TitleFont);//должность
-                para.Alignment = Element.ALIGN_LEFT;
-                pdfDoc.Add(para);
-
-                para = new Paragraph(UserStructName, TitleFont);//кафедра
-                para.Alignment = Element.ALIGN_LEFT;
-                pdfDoc.Add(para);
-
-                para = new Paragraph(" ");
-                pdfDoc.Add(para);
-
-                /////////////////////////////////////////
-                table.WidthPercentage = 100;
-                pdfDoc.Add(table);
-                pdfDoc.Close();
-                byte[] content = myMemoryStream.ToArray();
-                string DocName = "Document" + DateTime.Now;
-                DocName = DocName.Replace(":", "");
-                DocName = DocName.Replace(".", "");
-                DocName = DocName.Replace(" ", "");
-                DocName += ".pdf";
-                DocPath = Server.MapPath("~/PDFArchive/" + DocName);
-                using (FileStream fs = File.Create(DocPath))
-                {
-                    fs.Write(content, 0, (int)content.Length);
-                }
-            }           
-            return DocPath;           
-        }
+        
         #region patterns
         protected double pattern1(UsersTable user, int ReportArchiveID, int spectype_, string basicAbb, string basicAbb2) // по областям знаний
         {
@@ -340,10 +220,10 @@ namespace KPIWeb.Reports
                                   join c in kpiWebDataContext.BasicParametersTable
                                   on a.FK_BasicParametersTable equals c.BasicParametersTableID
                                   where
-                                  ((c.AbbreviationEN == "c_Z_A_Kom" && SpecType == 3)
+                                  ((c.AbbreviationEN == "c_Z_A_Kom" && SpecType == 4)
                                   || (c.AbbreviationEN == "c_Z_B_Kom" && SpecType == 1)
                                   || (c.AbbreviationEN == "c_Z_S_Kom" && SpecType == 2)
-                                  || (c.AbbreviationEN == "c_Z_M_Kom" && SpecType == 4))
+                                  || (c.AbbreviationEN == "c_Z_M_Kom" && SpecType == 3))
                                   select a.CollectedValue).Sum());
             }
             else if (typeOfCost == 3)
@@ -361,12 +241,59 @@ namespace KPIWeb.Reports
                                   join c in kpiWebDataContext.BasicParametersTable
                                   on a.FK_BasicParametersTable equals c.BasicParametersTableID
                                   where
-                                  ((c.AbbreviationEN == "b_OchZ_S_Kom" && SpecType == 3)
-                                  || (c.AbbreviationEN == "b_OchZ_M_Kom" && SpecType == 1)
-                                  || (c.AbbreviationEN == "b_OchZ_A_Kom" && SpecType == 2)
-                                  || (c.AbbreviationEN == "b_OchZ_B_Kom" && SpecType == 4))
+                                  ((c.AbbreviationEN == "b_OchZ_S_Kom" && SpecType == 2)
+                                  || (c.AbbreviationEN == "b_OchZ_M_Kom" && SpecType == 3)
+                                  || (c.AbbreviationEN == "b_OchZ_A_Kom" && SpecType == 4)
+                                  || (c.AbbreviationEN == "b_OchZ_B_Kom" && SpecType == 1))
                                   select a.CollectedValue).Sum());
             }
+            return 0;
+        }
+        protected double pattern8(int SpecID, int typeOfCost, int ReportID, FourthLevelSubdivisionTable Fourth, int SpecType) // type 0 очное // 1 заочное
+        {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            if (typeOfCost == 0)
+            {
+                return Convert.ToDouble((from a in kpiWebDataContext.EducationCostTable
+                                         where a.Active == true
+                                         && a.FK_Specialization == SpecID
+                                         select a.CostOfBudjetOch).FirstOrDefault()
+                             *
+                    (from a in kpiWebDataContext.CollectedBasicParametersTable
+                     where a.FK_ReportArchiveTable == ReportID
+                     && a.FK_FourthLevelSubdivisionTable == Fourth.FourthLevelSubdivisionTableID
+                     join c in kpiWebDataContext.BasicParametersTable
+                     on a.FK_BasicParametersTable equals c.BasicParametersTableID
+                     where
+
+                     ((c.AbbreviationEN == "a_Och_M" && SpecType == 3)
+                     || (c.AbbreviationEN == "a_Och_B" && SpecType == 1)
+                     || (c.AbbreviationEN == "a_Och_S" && SpecType == 2)
+                     || (c.AbbreviationEN == "a_Och_A" && SpecType == 4))
+
+                     select a.CollectedValue).Sum());
+            }         
+            else if (typeOfCost == 1)
+            {
+                return Convert.ToDouble((from a in kpiWebDataContext.EducationCostTable
+                                         where a.Active == true
+                                         && a.FK_Specialization == SpecID
+                                         select a.CostOfBudjetZaoch).FirstOrDefault()
+
+                                          *
+
+                                 (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                  where a.FK_ReportArchiveTable == ReportID
+                                  && a.FK_FourthLevelSubdivisionTable == Fourth.FourthLevelSubdivisionTableID
+                                  join c in kpiWebDataContext.BasicParametersTable
+                                  on a.FK_BasicParametersTable equals c.BasicParametersTableID
+                                  where
+                                  ((c.AbbreviationEN == "c_Z_A" && SpecType == 4)
+                                  || (c.AbbreviationEN == "c_Z_B" && SpecType == 1)
+                                  || (c.AbbreviationEN == "c_Z_S" && SpecType == 2)
+                                  || (c.AbbreviationEN == "c_Z_M" && SpecType == 3))
+                                  select a.CollectedValue).Sum());
+            }           
             return 0;
         }
         public void patternSwitch(int ReportArchiveID, BasicParametersTable basicParam, FourthLevelSubdivisionTable FourthLevel, int fourthCnt, UsersTable user)
@@ -511,6 +438,28 @@ namespace KPIWeb.Reports
                         pattern7(FourthLevel.FK_Specialization, 2, ReportArchiveID, FourthLevel, 4);
                     if (basicParam.AbbreviationEN == "a_IN_A_Kom_money") tmp =
                         pattern7(FourthLevel.FK_Specialization, 1, ReportArchiveID, FourthLevel, 4);
+
+                    // 01.07.2015
+                    if (basicParam.AbbreviationEN == "a_Och_A_money") tmp =
+                        pattern8(FourthLevel.FK_Specialization, 0, ReportArchiveID, FourthLevel, 4);
+                    if (basicParam.AbbreviationEN == "a_Z_A_money") tmp =
+                        pattern8(FourthLevel.FK_Specialization, 1, ReportArchiveID, FourthLevel, 4);
+
+                    if (basicParam.AbbreviationEN == "a_Och_M_money") tmp =
+                        pattern8(FourthLevel.FK_Specialization, 0, ReportArchiveID, FourthLevel, 3);
+                    if (basicParam.AbbreviationEN == "a_Z_M_money") tmp =
+                        pattern8(FourthLevel.FK_Specialization, 1, ReportArchiveID, FourthLevel, 3);
+
+                    if (basicParam.AbbreviationEN == "a_Och_S_money") tmp =
+                        pattern8(FourthLevel.FK_Specialization, 0, ReportArchiveID, FourthLevel, 2);
+                    if (basicParam.AbbreviationEN == "a_Z_S_money") tmp =
+                        pattern8(FourthLevel.FK_Specialization, 1, ReportArchiveID, FourthLevel, 2);
+
+                    if (basicParam.AbbreviationEN == "a_Och_B_money") tmp =
+                        pattern8(FourthLevel.FK_Specialization, 0, ReportArchiveID, FourthLevel, 1);
+                    if (basicParam.AbbreviationEN == "a_Z_B_money") tmp =
+                        pattern8(FourthLevel.FK_Specialization, 1, ReportArchiveID, FourthLevel, 1);
+                    //01.07.2015
                 }
                 //новейшие показатели
             }
@@ -1230,12 +1179,16 @@ namespace KPIWeb.Reports
                                                          (from a in kpiWebDataContext.SpecializationTable
                                                          where a.SpecializationTableID == spec.FK_Specialization
                                                          select a.SpecializationNumber).FirstOrDefault().ToString());
-                                       */
-                                        string CurrentColumnName = "<div style=\"transform:rotate(90deg);\">" + (from a in kpiWebDataContext.SpecializationTable
+                                         *  string CurrentColumnName = "<div style=\"transform:rotate(90deg);\">" + (from a in kpiWebDataContext.SpecializationTable
                                                                                                                   where a.SpecializationTableID == spec.FK_Specialization
                                                                                                                   select a.SpecializationNumber).FirstOrDefault().ToString() + "</div>";
 
-                                        
+                                       */
+
+                                        string CurrentColumnName = (from a in kpiWebDataContext.SpecializationTable
+                                                                                                                 where a.SpecializationTableID == spec.FK_Specialization
+                                                                                                                 select a.SpecializationNumber).FirstOrDefault().ToString();
+
 
                                         columnNames.Add(CurrentColumnName);
 
@@ -1415,7 +1368,7 @@ namespace KPIWeb.Reports
                     int tmpStatCount = 0;
                     foreach (int tmpStat in StatusList)
                     {
-                        if (tmpStat == 2)
+                        if ((tmpStat == 2) || (tmpStat == 4)) // уберешь 4 это только для демонстрации
                         {
                             tmpStatCount++;
                         }
@@ -1435,7 +1388,7 @@ namespace KPIWeb.Reports
                         startDate = startDate.AddDays(1);
                         dateCount++;
                     }
-
+                   
                     // определение дней
                     if (mode == 0)
                     {
@@ -1470,8 +1423,13 @@ namespace KPIWeb.Reports
                             }
                         }
                         ViewState["AllCnt"] = StatusList.Count();
-                        Label2.Text = "Осталось " + dateCount + " дней до закрытия отчёта";
 
+                        Label2.Text = "Осталось " + dateCount + " дней до закрытия отчёта";
+                        if ((DateTime.Now > endDate))
+                        {
+                            
+                            Label2.Text = "";
+                        }
                         Page.ClientScript.RegisterClientScriptBlock(this.GetType(),
                          "Confirm", script);
                         UpnDownButton.Attributes.Add("OnClick", "return ConfirmSubmit();");
@@ -1519,6 +1477,10 @@ namespace KPIWeb.Reports
                             Label2.Text = "Данные утверждены";
                         }
                         Label2.Text = "Осталось " + dateCount + " дней до закрытия отчёта";
+                        if ((DateTime.Now > endDate))
+                        {
+                            Label2.Text = "";
+                        }
                         //Label2.Visible = false;
                         // OnClientClick="javascript:return confirm('Do you really want to \ndelete the item?');"
 
@@ -1538,7 +1500,10 @@ namespace KPIWeb.Reports
 
                         Label1.Text = "Утверждение данных";
                         Label2.Text = "Осталось " + dateCount + " дней до закрытия отчёта";
-
+                        if ((DateTime.Now > endDate))
+                        {
+                            Label2.Text = "";
+                        }
 
 
                         Page.ClientScript.RegisterClientScriptBlock(this.GetType(),
@@ -1897,7 +1862,7 @@ namespace KPIWeb.Reports
                                                                 on a.FK_BasicParametersTable equals b.BasicParametrAdditionalID
                                                             where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
                                                             select b.DataType).FirstOrDefault());
-
+                                /*
                                 if (Status == 4) // данные подтверждены первым уровнем
                                 {
                                     lblMinutes.ReadOnly = true;
@@ -1909,7 +1874,8 @@ namespace KPIWeb.Reports
                                         Validator.Enabled = false;
                                     }
                                 }
-                                else
+                                else*/   
+                                ////верни, это только для демонстрации отключено
                                 {
                                     DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
                                     d.BackColor = color;
@@ -2067,84 +2033,10 @@ namespace KPIWeb.Reports
             }
             ReportArchiveTable CurrentReport  = (from a in kPiDataContext.ReportArchiveTable 
                                                      where a.ReportArchiveTableID == Convert.ToInt32(paramSerialization.ReportStr) select a).FirstOrDefault();
-            string filePath = ExportPDF(GridviewCollectedBasicParameters, Widhts, " ", 3, colcnt, "Название отчета: " + CurrentReport.Name, "Ваш email адрес: " + userTable.Email, StructLastName(userTable.UsersTableID));
+            string filePath = PDFCreate.ExportPDF(GridviewCollectedBasicParameters, Widhts, " ", 3, colcnt, "Название отчета: " + CurrentReport.Name, "Ваш email адрес: " + userTable.Email, PDFCreate.StructLastName(userTable.UsersTableID));
             return filePath;
         }
-        public string StructLastName(int UserID)
-        {
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
-            UsersTable userTable =
-                      (from a in kPiDataContext.UsersTable where a.UsersTableID == UserID select a).FirstOrDefault();
-            int deepness =5;
-            if (userTable.FK_FifthLevelSubdivisionTable == null)
-            {
-                deepness = 4;
-            }
-            if (userTable.FK_FourthLevelSubdivisionTable == null)
-            {
-                deepness = 3;
-            }
-            if (userTable.FK_ThirdLevelSubdivisionTable == null)
-            {
-                deepness = 2;
-            }
-            if (userTable.FK_SecondLevelSubdivisionTable == null)
-            {
-                deepness = 1;
-            }
-            if (userTable.FK_FirstLevelSubdivisionTable == null)
-            {
-                deepness = 0;
-            }
-            switch(deepness)
-            {
-                case 0:
-                    {
-                        return (from a in kPiDataContext.ZeroLevelSubdivisionTable
-                                where
-                                    a.ZeroLevelSubdivisionTableID == userTable.FK_ZeroLevelSubdivisionTable
-                                select a.Name).FirstOrDefault();
-                        break;
-                    }
-                case 1:
-                    {
-                        return (from a in kPiDataContext.FirstLevelSubdivisionTable
-                                where
-                                    a.FirstLevelSubdivisionTableID == userTable.FK_FirstLevelSubdivisionTable
-                                select a.Name).FirstOrDefault();
-                        break;
-                    }
-                case 2:
-                    {
-                        return (from a in kPiDataContext.SecondLevelSubdivisionTable
-                                where
-                                    a.SecondLevelSubdivisionTableID == userTable.FK_SecondLevelSubdivisionTable
-                                select a.Name).FirstOrDefault();
-                        break;
-                    }
-                case 3:
-                    {
-                        return (from a in kPiDataContext.ThirdLevelSubdivisionTable
-                                where
-                                    a.ThirdLevelSubdivisionTableID == userTable.FK_ThirdLevelSubdivisionTable
-                                select a.Name).FirstOrDefault();
-                        break;
-                    }
-                case 4:
-                    {
-                        return (from a in kPiDataContext.FourthLevelSubdivisionTable
-                                where
-                                    a.FourthLevelSubdivisionTableID == userTable.FK_FourthLevelSubdivisionTable
-                                select a.Name).FirstOrDefault();
-                        break;
-                    }
-                default:
-                    {
-                        return "";
-                        break;
-                    }
-            }
-        }
+                
         protected void Button1_Click(object sender, EventArgs e) // экспорт в excel
         {
             /*string pdfFile = CreatePdf();

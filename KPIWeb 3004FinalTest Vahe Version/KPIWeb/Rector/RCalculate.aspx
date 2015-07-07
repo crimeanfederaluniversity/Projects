@@ -14,4 +14,10 @@
     <br />
     <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Создание связи для новых показателей (не нажимай а то плохо будет)" Width="710px" />
     <br />
+    <br />
+    <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Button" />
+    <br />
+    <asp:GridView ID="GridView1" runat="server">
+    </asp:GridView>
+    <br />
 </asp:Content>

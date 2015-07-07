@@ -46,7 +46,6 @@ namespace KPIWeb.Director
                                                 && c.Active == true
                                                 && d.Active == true
                                                 && d.StartDateTime < DateTime.Now
-                                                && d.EndDateTime > DateTime.Now
                                                 select d).ToList();
                 ///тут мы получили список активных отччетов пользователя
                 /// пользователь привязан к таблице первого подразделения
@@ -111,21 +110,132 @@ namespace KPIWeb.Director
                         continue;
                     }
 
-
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ReportArchiveID"] = ReportRow.ReportArchiveTableID.ToString();
                     dataRow["ReportName"] = ReportRow.Name;
                     dataRow["StartDate"] = ReportRow.StartDateTime.ToString().Split(' ')[0];//только дата// время обрезается сплитом
                     dataRow["EndDate"] = ReportRow.EndDateTime.ToString().Split(' ')[0];
 
+                    List<SecondLevelSubdivisionTable> Faculties = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                                                                   where a.FK_FirstLevelSubdivisionTable == userTable.FK_FirstLevelSubdivisionTable
+                                                                   && a.Active == true
+                                                                   join b in kpiWebDataContext.UsersTable
+                                                                   on a.SecondLevelSubdivisionTableID equals b.FK_SecondLevelSubdivisionTable
+                                                                   where b.Active == true
+                                                                   join c in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                                                   on b.UsersTableID equals c.FK_UsersTable
+                                                                   where c.Active == true
+                                                                   && c.CanView == true
+                                                                   select a).Distinct().ToList();
+
+                   
+
+                    int All=0;
+                    int AllConfirmed = 0;
+
+                    All += (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                            where a.Active == true
+                            && a.FK_FirstLevelSubdivisionTable == userTable.FK_FirstLevelSubdivisionTable
+                            join b in kpiWebDataContext.UsersTable
+                            on a.SecondLevelSubdivisionTableID equals b.FK_SecondLevelSubdivisionTable
+                            where a.Active == true
+                            join c in kpiWebDataContext.BasicParametrsAndUsersMapping
+                            on b.UsersTableID equals c.FK_UsersTable
+                            where c.Active == true
+                            && c.CanView == true
+                            select a).Distinct().Count();
+
+                    AllConfirmed += (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                                     where a.Active == true
+                                     && a.FK_FirstLevelSubdivisionTable == userTable.FK_FirstLevelSubdivisionTable
+                                     join b in kpiWebDataContext.CollectedBasicParametersTable
+                                         on a.SecondLevelSubdivisionTableID equals b.FK_SecondLevelSubdivisionTable
+                                     where (b.Status == 5 || b.Status == 4)
+                                     && b.Active == true
+                                     && b.FK_ReportArchiveTable == ReportRow.ReportArchiveTableID
+                                     select a).Distinct().Count();
+                    /*
+                    foreach (SecondLevelSubdivisionTable CurrentSecond in Faculties)
+                    {                      
+                        All += (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                                   where a.Active == true
+                                   && a.FK_SecondLevelSubdivisionTable == CurrentSecond.SecondLevelSubdivisionTableID
+                                   select a).Count();
+                        
+                        AllConfirmed += (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                                            where a.Active == true
+                                            && a.FK_SecondLevelSubdivisionTable == CurrentSecond.SecondLevelSubdivisionTableID
+                                            join b in kpiWebDataContext.CollectedBasicParametersTable
+                                                on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
+                                            where (b.Status == 4 || b.Status == 5)
+                                            && b.Active == true
+                                            && b.FK_ReportArchiveTable == ReportRow.ReportArchiveTableID 
+                                            select a).Distinct().Count();
+                        
+                       
+                    }*/
+                    string status="";
+
+                    if (AllConfirmed == All)
+                    {
+                        int allconf2 = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                                        where a.Active == true
+                                        && a.FK_FirstLevelSubdivisionTable == userTable.FK_FirstLevelSubdivisionTable
+                                        join b in kpiWebDataContext.CollectedBasicParametersTable
+                                            on a.SecondLevelSubdivisionTableID equals b.FK_SecondLevelSubdivisionTable
+                                        where b.Status == 5
+                                        && b.Active == true
+                                        && b.FK_ReportArchiveTable == ReportRow.ReportArchiveTableID
+                                        select a).Distinct().Count();
+
+                        if (allconf2 > (AllConfirmed / 2))
+                        {
+                            status = "Данные согласованы";
+                        }
+                        else
+                        {
+                            status = "Данные ожидают согласования";
+                        }                       
+                    }
+                    else if (AllConfirmed < All)
+                    {
+                        if (AllConfirmed == 0)
+                        {
+                            status = "Готовы на 0%";
+                        }
+                        else
+                        {
+                            status = "Готовы на "+(AllConfirmed*100/All).ToString("0.0")+"%";
+                        }
+                    }
+                    else
+                    {
+                        
+                    }
                     //нужно определить статус данных                                     
-                    dataRow["Status"] = "В разработке";
+                    dataRow["Status"] = status;
                     dataTable.Rows.Add(dataRow);
 
                     #endregion
                 }
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
+
+                if (GridView1.Rows.Count == 0)
+                {
+                    var name =
+                        (from tr in kpiWebDataContext.UsersTable
+                         where tr.UsersTableID == UserSer.Id
+                         select tr.FirstLevelSubdivisionTable.Name).FirstOrDefault();
+                    Label1.Visible = true;
+                    
+                    if (name != null) Label1.Text = "В данный момент для вашего подразделения (" + name + ") отсутствуют активные отчеты. Мы обязательно уведомим Вас о начале новой отчетной кампании.";
+                    else Label1.Text = "В данный момент для вашего подразделения отсутствуют активные отчеты. Мы обязательно уведомим Вас о начале новой отчетной кампании.";
+
+                   // Label2.Text = "С уважением администрация ИАС \"КФУ-Программа развития\"";
+                } 
+
+
                 #endregion
             }
 
@@ -147,6 +257,13 @@ namespace KPIWeb.Director
                 Response.Redirect("~/Director/DReportView.aspx");
             }
         }
-        
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/ViewDocument.aspx");
+        }
+        protected void Button22_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Default.aspx");
+        }
     }
 }

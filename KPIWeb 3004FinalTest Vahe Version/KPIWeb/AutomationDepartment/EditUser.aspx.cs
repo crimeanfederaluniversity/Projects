@@ -290,6 +290,12 @@ namespace KPIWeb.AutomationDepartment
             Response.Redirect("~/AutomationDepartment/Regisration.aspx");
         }
 
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU1: User " + ViewState["User"] + " moved to page /AutomationDepartment/ConnectUsers.aspx");
+            Response.Redirect("~/AutomationDepartment/ConnectUsers.aspx");
+        }
+
         protected void ChangeUserButtonClick (object sender, EventArgs e)
         { 
             Button button = (Button)sender;

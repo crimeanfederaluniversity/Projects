@@ -285,6 +285,12 @@ namespace KPIWeb.Rector
                 Response.Redirect("~/Rector/RShowChart.aspx");
             }
         }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/ViewDocument.aspx");
+        }
+
         protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
         {
 

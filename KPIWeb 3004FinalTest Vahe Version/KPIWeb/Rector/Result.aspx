@@ -70,7 +70,6 @@
        height: 17px;
         
    }
-
     .side_img_legend {
         top:0;
     position:absolute;
@@ -84,7 +83,6 @@
     background-image:url('http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/arout2.png');
     background-repeat:no-repeat;
     }
-
 .triangle-bottomright {
             width: 25px;
             height: 25px;
@@ -117,8 +115,6 @@
        {
         visibility:visible;
        }
-
-
 .td {
     position: relative;
 }
@@ -143,15 +139,9 @@
 
         }
     }
-
     function ShowLegend() {
         document.getElementById('sidePanel').style.visibility = 'visible';
     }
-
-    /*function showLoadPanel() {
-         document.getElementById('LoadPanel_').style.visibility = 'visible';
-     }*/
-
     function closeLoadPanel() {
         document.getElementById('LoadPanel_').style.visibility = 'hidden';
     }
@@ -169,7 +159,6 @@
     function showAlert() {
         alert(y);
     }
-
     function commentSendButtonClick() {
         document.getElementById('comment_Section').style.visibility = 'hidden';
         showLoadPanel();
@@ -190,7 +179,7 @@
             </asp:Panel>
             <br />
             <asp:Panel ID="Panel6" runat="server" Height="17" BackColor="#000099" BorderColor="#000099">
-                <asp:Label ID="Label12" runat="server" Text=".....Требует Вашего утверждения"></asp:Label>
+                <asp:Label ID="Label12" runat="server" Text=".....Данные полностью внесены"></asp:Label>
             </asp:Panel>
             <br />
             <asp:Panel ID="Panel7" runat="server" Height="17" BackColor="#CC0000" BorderColor="#CC0000">
