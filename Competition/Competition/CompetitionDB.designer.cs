@@ -36,9 +36,6 @@ namespace Competition
     partial void InsertBids(Bids instance);
     partial void UpdateBids(Bids instance);
     partial void DeleteBids(Bids instance);
-    partial void InsertCompetition_FormMapingTable(Competition_FormMapingTable instance);
-    partial void UpdateCompetition_FormMapingTable(Competition_FormMapingTable instance);
-    partial void DeleteCompetition_FormMapingTable(Competition_FormMapingTable instance);
     partial void InsertCompetitions(Competitions instance);
     partial void UpdateCompetitions(Competitions instance);
     partial void DeleteCompetitions(Competitions instance);
@@ -48,24 +45,21 @@ namespace Competition
     partial void InsertField_ValueMapingTable(Field_ValueMapingTable instance);
     partial void UpdateField_ValueMapingTable(Field_ValueMapingTable instance);
     partial void DeleteField_ValueMapingTable(Field_ValueMapingTable instance);
+    partial void InsertForm_CompetitionMapingTable(Form_CompetitionMapingTable instance);
+    partial void UpdateForm_CompetitionMapingTable(Form_CompetitionMapingTable instance);
+    partial void DeleteForm_CompetitionMapingTable(Form_CompetitionMapingTable instance);
     partial void InsertForm_QuestionMapingTable(Form_QuestionMapingTable instance);
     partial void UpdateForm_QuestionMapingTable(Form_QuestionMapingTable instance);
     partial void DeleteForm_QuestionMapingTable(Form_QuestionMapingTable instance);
     partial void InsertForms(Forms instance);
     partial void UpdateForms(Forms instance);
     partial void DeleteForms(Forms instance);
-    partial void InsertForm_TableMapingTable(Form_TableMapingTable instance);
-    partial void UpdateForm_TableMapingTable(Form_TableMapingTable instance);
-    partial void DeleteForm_TableMapingTable(Form_TableMapingTable instance);
     partial void InsertQuestion_AnswerMapinngTable(Question_AnswerMapinngTable instance);
     partial void UpdateQuestion_AnswerMapinngTable(Question_AnswerMapinngTable instance);
     partial void DeleteQuestion_AnswerMapinngTable(Question_AnswerMapinngTable instance);
     partial void InsertQuestions(Questions instance);
     partial void UpdateQuestions(Questions instance);
     partial void DeleteQuestions(Questions instance);
-    partial void InsertTable_FieldMapingTable(Table_FieldMapingTable instance);
-    partial void UpdateTable_FieldMapingTable(Table_FieldMapingTable instance);
-    partial void DeleteTable_FieldMapingTable(Table_FieldMapingTable instance);
     partial void InsertTables(Tables instance);
     partial void UpdateTables(Tables instance);
     partial void DeleteTables(Tables instance);
@@ -123,14 +117,6 @@ namespace Competition
 			}
 		}
 		
-		public System.Data.Linq.Table<Competition_FormMapingTable> Competition_FormMapingTable
-		{
-			get
-			{
-				return this.GetTable<Competition_FormMapingTable>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Competitions> Competitions
 		{
 			get
@@ -155,6 +141,14 @@ namespace Competition
 			}
 		}
 		
+		public System.Data.Linq.Table<Form_CompetitionMapingTable> Form_CompetitionMapingTable
+		{
+			get
+			{
+				return this.GetTable<Form_CompetitionMapingTable>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Form_QuestionMapingTable> Form_QuestionMapingTable
 		{
 			get
@@ -171,14 +165,6 @@ namespace Competition
 			}
 		}
 		
-		public System.Data.Linq.Table<Form_TableMapingTable> Form_TableMapingTable
-		{
-			get
-			{
-				return this.GetTable<Form_TableMapingTable>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Question_AnswerMapinngTable> Question_AnswerMapinngTable
 		{
 			get
@@ -192,14 +178,6 @@ namespace Competition
 			get
 			{
 				return this.GetTable<Questions>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Table_FieldMapingTable> Table_FieldMapingTable
-		{
-			get
-			{
-				return this.GetTable<Table_FieldMapingTable>();
 			}
 		}
 		
@@ -236,9 +214,15 @@ namespace Competition
 		
 		private int _ID_Answer;
 		
+		private System.Nullable<bool> _Active;
+		
+		private System.Nullable<int> _FK_Bid;
+		
 		private string _Text;
 		
 		private EntitySet<Question_AnswerMapinngTable> _Question_AnswerMapinngTable;
+		
+		private EntityRef<Bids> _Bids;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -246,6 +230,10 @@ namespace Competition
     partial void OnCreated();
     partial void OnID_AnswerChanging(int value);
     partial void OnID_AnswerChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnFK_BidChanging(System.Nullable<int> value);
+    partial void OnFK_BidChanged();
     partial void OnTextChanging(string value);
     partial void OnTextChanged();
     #endregion
@@ -253,6 +241,7 @@ namespace Competition
 		public Answers()
 		{
 			this._Question_AnswerMapinngTable = new EntitySet<Question_AnswerMapinngTable>(new Action<Question_AnswerMapinngTable>(this.attach_Question_AnswerMapinngTable), new Action<Question_AnswerMapinngTable>(this.detach_Question_AnswerMapinngTable));
+			this._Bids = default(EntityRef<Bids>);
 			OnCreated();
 		}
 		
@@ -272,6 +261,50 @@ namespace Competition
 					this._ID_Answer = value;
 					this.SendPropertyChanged("ID_Answer");
 					this.OnID_AnswerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Bid", DbType="Int")]
+		public System.Nullable<int> FK_Bid
+		{
+			get
+			{
+				return this._FK_Bid;
+			}
+			set
+			{
+				if ((this._FK_Bid != value))
+				{
+					if (this._Bids.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_BidChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Bid = value;
+					this.SendPropertyChanged("FK_Bid");
+					this.OnFK_BidChanged();
 				}
 			}
 		}
@@ -306,6 +339,40 @@ namespace Competition
 			set
 			{
 				this._Question_AnswerMapinngTable.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Answers", Storage="_Bids", ThisKey="FK_Bid", OtherKey="ID_Bid", IsForeignKey=true)]
+		public Bids Bids
+		{
+			get
+			{
+				return this._Bids.Entity;
+			}
+			set
+			{
+				Bids previousValue = this._Bids.Entity;
+				if (((previousValue != value) 
+							|| (this._Bids.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bids.Entity = null;
+						previousValue.Answers.Remove(this);
+					}
+					this._Bids.Entity = value;
+					if ((value != null))
+					{
+						value.Answers.Add(this);
+						this._FK_Bid = value.ID_Bid;
+					}
+					else
+					{
+						this._FK_Bid = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Bids");
+				}
 			}
 		}
 		
@@ -362,6 +429,10 @@ namespace Competition
 		
 		private string _Comment;
 		
+		private EntitySet<Answers> _Answers;
+		
+		private EntitySet<Values> _Values;
+		
 		private EntityRef<Competitions> _Competitions;
 		
 		private EntityRef<Users> _Users;
@@ -390,6 +461,8 @@ namespace Competition
 		
 		public Bids()
 		{
+			this._Answers = new EntitySet<Answers>(new Action<Answers>(this.attach_Answers), new Action<Answers>(this.detach_Answers));
+			this._Values = new EntitySet<Values>(new Action<Values>(this.attach_Values), new Action<Values>(this.detach_Values));
 			this._Competitions = default(EntityRef<Competitions>);
 			this._Users = default(EntityRef<Users>);
 			this._Users1 = default(EntityRef<Users>);
@@ -508,7 +581,7 @@ namespace Competition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NChar(10)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(MAX)")]
 		public string Status
 		{
 			get
@@ -545,6 +618,32 @@ namespace Competition
 					this.SendPropertyChanged("Comment");
 					this.OnCommentChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Answers", Storage="_Answers", ThisKey="ID_Bid", OtherKey="FK_Bid")]
+		public EntitySet<Answers> Answers
+		{
+			get
+			{
+				return this._Answers;
+			}
+			set
+			{
+				this._Answers.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Values", Storage="_Values", ThisKey="ID_Bid", OtherKey="FK_Bid")]
+		public EntitySet<Values> Values
+		{
+			get
+			{
+				return this._Values;
+			}
+			set
+			{
+				this._Values.Assign(value);
 			}
 		}
 		
@@ -669,221 +768,29 @@ namespace Competition
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[Competition-FormMapingTable]")]
-	public partial class Competition_FormMapingTable : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID_Competition_Form;
-		
-		private System.Nullable<int> _FK_Competition;
-		
-		private System.Nullable<int> _FK_Form;
-		
-		private System.Nullable<bool> _Active;
-		
-		private EntityRef<Competitions> _Competitions;
-		
-		private EntityRef<Forms> _Forms;
-		
-    #region Определения метода расширяемости
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnID_Competition_FormChanging(int value);
-    partial void OnID_Competition_FormChanged();
-    partial void OnFK_CompetitionChanging(System.Nullable<int> value);
-    partial void OnFK_CompetitionChanged();
-    partial void OnFK_FormChanging(System.Nullable<int> value);
-    partial void OnFK_FormChanged();
-    partial void OnActiveChanging(System.Nullable<bool> value);
-    partial void OnActiveChanged();
-    #endregion
-		
-		public Competition_FormMapingTable()
+		private void attach_Answers(Answers entity)
 		{
-			this._Competitions = default(EntityRef<Competitions>);
-			this._Forms = default(EntityRef<Forms>);
-			OnCreated();
+			this.SendPropertyChanging();
+			entity.Bids = this;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[ID_Competition-Form]", Storage="_ID_Competition_Form", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID_Competition_Form
+		private void detach_Answers(Answers entity)
 		{
-			get
-			{
-				return this._ID_Competition_Form;
-			}
-			set
-			{
-				if ((this._ID_Competition_Form != value))
-				{
-					this.OnID_Competition_FormChanging(value);
-					this.SendPropertyChanging();
-					this._ID_Competition_Form = value;
-					this.SendPropertyChanged("ID_Competition_Form");
-					this.OnID_Competition_FormChanged();
-				}
-			}
+			this.SendPropertyChanging();
+			entity.Bids = null;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Competition", DbType="Int")]
-		public System.Nullable<int> FK_Competition
+		private void attach_Values(Values entity)
 		{
-			get
-			{
-				return this._FK_Competition;
-			}
-			set
-			{
-				if ((this._FK_Competition != value))
-				{
-					if (this._Competitions.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_CompetitionChanging(value);
-					this.SendPropertyChanging();
-					this._FK_Competition = value;
-					this.SendPropertyChanged("FK_Competition");
-					this.OnFK_CompetitionChanged();
-				}
-			}
+			this.SendPropertyChanging();
+			entity.Bids = this;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Form", DbType="Int")]
-		public System.Nullable<int> FK_Form
+		private void detach_Values(Values entity)
 		{
-			get
-			{
-				return this._FK_Form;
-			}
-			set
-			{
-				if ((this._FK_Form != value))
-				{
-					if (this._Forms.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_FormChanging(value);
-					this.SendPropertyChanging();
-					this._FK_Form = value;
-					this.SendPropertyChanged("FK_Form");
-					this.OnFK_FormChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
-		public System.Nullable<bool> Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Competitions_Competition_FormMapingTable", Storage="_Competitions", ThisKey="FK_Competition", OtherKey="ID_Competition", IsForeignKey=true)]
-		public Competitions Competitions
-		{
-			get
-			{
-				return this._Competitions.Entity;
-			}
-			set
-			{
-				Competitions previousValue = this._Competitions.Entity;
-				if (((previousValue != value) 
-							|| (this._Competitions.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Competitions.Entity = null;
-						previousValue.Competition_FormMapingTable.Remove(this);
-					}
-					this._Competitions.Entity = value;
-					if ((value != null))
-					{
-						value.Competition_FormMapingTable.Add(this);
-						this._FK_Competition = value.ID_Competition;
-					}
-					else
-					{
-						this._FK_Competition = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Competitions");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Forms_Competition_FormMapingTable", Storage="_Forms", ThisKey="FK_Form", OtherKey="ID_Form", IsForeignKey=true)]
-		public Forms Forms
-		{
-			get
-			{
-				return this._Forms.Entity;
-			}
-			set
-			{
-				Forms previousValue = this._Forms.Entity;
-				if (((previousValue != value) 
-							|| (this._Forms.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Forms.Entity = null;
-						previousValue.Competition_FormMapingTable.Remove(this);
-					}
-					this._Forms.Entity = value;
-					if ((value != null))
-					{
-						value.Competition_FormMapingTable.Add(this);
-						this._FK_Form = value.ID_Form;
-					}
-					else
-					{
-						this._FK_Form = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Forms");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
+			this.SendPropertyChanging();
+			entity.Bids = null;
 		}
 	}
 	
@@ -909,7 +816,9 @@ namespace Competition
 		
 		private EntitySet<Bids> _Bids;
 		
-		private EntitySet<Competition_FormMapingTable> _Competition_FormMapingTable;
+		private EntitySet<Fields> _Fields;
+		
+		private EntitySet<Form_CompetitionMapingTable> _Form_CompetitionMapingTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -934,7 +843,8 @@ namespace Competition
 		public Competitions()
 		{
 			this._Bids = new EntitySet<Bids>(new Action<Bids>(this.attach_Bids), new Action<Bids>(this.detach_Bids));
-			this._Competition_FormMapingTable = new EntitySet<Competition_FormMapingTable>(new Action<Competition_FormMapingTable>(this.attach_Competition_FormMapingTable), new Action<Competition_FormMapingTable>(this.detach_Competition_FormMapingTable));
+			this._Fields = new EntitySet<Fields>(new Action<Fields>(this.attach_Fields), new Action<Fields>(this.detach_Fields));
+			this._Form_CompetitionMapingTable = new EntitySet<Form_CompetitionMapingTable>(new Action<Form_CompetitionMapingTable>(this.attach_Form_CompetitionMapingTable), new Action<Form_CompetitionMapingTable>(this.detach_Form_CompetitionMapingTable));
 			OnCreated();
 		}
 		
@@ -1091,16 +1001,29 @@ namespace Competition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Competitions_Competition_FormMapingTable", Storage="_Competition_FormMapingTable", ThisKey="ID_Competition", OtherKey="FK_Competition")]
-		public EntitySet<Competition_FormMapingTable> Competition_FormMapingTable
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Competitions_Fields", Storage="_Fields", ThisKey="ID_Competition", OtherKey="FK_Competition")]
+		public EntitySet<Fields> Fields
 		{
 			get
 			{
-				return this._Competition_FormMapingTable;
+				return this._Fields;
 			}
 			set
 			{
-				this._Competition_FormMapingTable.Assign(value);
+				this._Fields.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Competitions_Form_CompetitionMapingTable", Storage="_Form_CompetitionMapingTable", ThisKey="ID_Competition", OtherKey="FK_Competition")]
+		public EntitySet<Form_CompetitionMapingTable> Form_CompetitionMapingTable
+		{
+			get
+			{
+				return this._Form_CompetitionMapingTable;
+			}
+			set
+			{
+				this._Form_CompetitionMapingTable.Assign(value);
 			}
 		}
 		
@@ -1136,13 +1059,25 @@ namespace Competition
 			entity.Competitions = null;
 		}
 		
-		private void attach_Competition_FormMapingTable(Competition_FormMapingTable entity)
+		private void attach_Fields(Fields entity)
 		{
 			this.SendPropertyChanging();
 			entity.Competitions = this;
 		}
 		
-		private void detach_Competition_FormMapingTable(Competition_FormMapingTable entity)
+		private void detach_Fields(Fields entity)
+		{
+			this.SendPropertyChanging();
+			entity.Competitions = null;
+		}
+		
+		private void attach_Form_CompetitionMapingTable(Form_CompetitionMapingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Competitions = this;
+		}
+		
+		private void detach_Form_CompetitionMapingTable(Form_CompetitionMapingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.Competitions = null;
@@ -1157,15 +1092,21 @@ namespace Competition
 		
 		private int _ID_Field;
 		
+		private System.Nullable<int> _FK_Competition;
+		
 		private System.Nullable<int> _FK_Table;
 		
-		private string _Type;
+		private string _Text;
 		
 		private string _Uniqvalue;
 		
+		private System.Nullable<bool> _Active;
+		
 		private EntitySet<Field_ValueMapingTable> _Field_ValueMapingTable;
 		
-		private EntitySet<Table_FieldMapingTable> _Table_FieldMapingTable;
+		private EntityRef<Competitions> _Competitions;
+		
+		private EntityRef<Tables> _Tables;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -1173,18 +1114,23 @@ namespace Competition
     partial void OnCreated();
     partial void OnID_FieldChanging(int value);
     partial void OnID_FieldChanged();
+    partial void OnFK_CompetitionChanging(System.Nullable<int> value);
+    partial void OnFK_CompetitionChanged();
     partial void OnFK_TableChanging(System.Nullable<int> value);
     partial void OnFK_TableChanged();
-    partial void OnTypeChanging(string value);
-    partial void OnTypeChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
     partial void OnUniqvalueChanging(string value);
     partial void OnUniqvalueChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
     #endregion
 		
 		public Fields()
 		{
 			this._Field_ValueMapingTable = new EntitySet<Field_ValueMapingTable>(new Action<Field_ValueMapingTable>(this.attach_Field_ValueMapingTable), new Action<Field_ValueMapingTable>(this.detach_Field_ValueMapingTable));
-			this._Table_FieldMapingTable = new EntitySet<Table_FieldMapingTable>(new Action<Table_FieldMapingTable>(this.attach_Table_FieldMapingTable), new Action<Table_FieldMapingTable>(this.detach_Table_FieldMapingTable));
+			this._Competitions = default(EntityRef<Competitions>);
+			this._Tables = default(EntityRef<Tables>);
 			OnCreated();
 		}
 		
@@ -1208,6 +1154,30 @@ namespace Competition
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Competition", DbType="Int")]
+		public System.Nullable<int> FK_Competition
+		{
+			get
+			{
+				return this._FK_Competition;
+			}
+			set
+			{
+				if ((this._FK_Competition != value))
+				{
+					if (this._Competitions.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_CompetitionChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Competition = value;
+					this.SendPropertyChanged("FK_Competition");
+					this.OnFK_CompetitionChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Table", DbType="Int")]
 		public System.Nullable<int> FK_Table
 		{
@@ -1219,6 +1189,10 @@ namespace Competition
 			{
 				if ((this._FK_Table != value))
 				{
+					if (this._Tables.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnFK_TableChanging(value);
 					this.SendPropertyChanging();
 					this._FK_Table = value;
@@ -1228,27 +1202,27 @@ namespace Competition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="NChar(10)")]
-		public string Type
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="VarChar(MAX)")]
+		public string Text
 		{
 			get
 			{
-				return this._Type;
+				return this._Text;
 			}
 			set
 			{
-				if ((this._Type != value))
+				if ((this._Text != value))
 				{
-					this.OnTypeChanging(value);
+					this.OnTextChanging(value);
 					this.SendPropertyChanging();
-					this._Type = value;
-					this.SendPropertyChanged("Type");
-					this.OnTypeChanged();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Uniqvalue", DbType="NChar(10)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Uniqvalue", DbType="VarChar(MAX)")]
 		public string Uniqvalue
 		{
 			get
@@ -1268,6 +1242,26 @@ namespace Competition
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fields_Field_ValueMapingTable", Storage="_Field_ValueMapingTable", ThisKey="ID_Field", OtherKey="FK_Field")]
 		public EntitySet<Field_ValueMapingTable> Field_ValueMapingTable
 		{
@@ -1281,16 +1275,71 @@ namespace Competition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fields_Table_FieldMapingTable", Storage="_Table_FieldMapingTable", ThisKey="ID_Field", OtherKey="Fk_Field")]
-		public EntitySet<Table_FieldMapingTable> Table_FieldMapingTable
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Competitions_Fields", Storage="_Competitions", ThisKey="FK_Competition", OtherKey="ID_Competition", IsForeignKey=true)]
+		public Competitions Competitions
 		{
 			get
 			{
-				return this._Table_FieldMapingTable;
+				return this._Competitions.Entity;
 			}
 			set
 			{
-				this._Table_FieldMapingTable.Assign(value);
+				Competitions previousValue = this._Competitions.Entity;
+				if (((previousValue != value) 
+							|| (this._Competitions.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Competitions.Entity = null;
+						previousValue.Fields.Remove(this);
+					}
+					this._Competitions.Entity = value;
+					if ((value != null))
+					{
+						value.Fields.Add(this);
+						this._FK_Competition = value.ID_Competition;
+					}
+					else
+					{
+						this._FK_Competition = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Competitions");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tables_Fields", Storage="_Tables", ThisKey="FK_Table", OtherKey="ID_Table", IsForeignKey=true)]
+		public Tables Tables
+		{
+			get
+			{
+				return this._Tables.Entity;
+			}
+			set
+			{
+				Tables previousValue = this._Tables.Entity;
+				if (((previousValue != value) 
+							|| (this._Tables.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Tables.Entity = null;
+						previousValue.Fields.Remove(this);
+					}
+					this._Tables.Entity = value;
+					if ((value != null))
+					{
+						value.Fields.Add(this);
+						this._FK_Table = value.ID_Table;
+					}
+					else
+					{
+						this._FK_Table = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Tables");
+				}
 			}
 		}
 		
@@ -1321,18 +1370,6 @@ namespace Competition
 		}
 		
 		private void detach_Field_ValueMapingTable(Field_ValueMapingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.Fields = null;
-		}
-		
-		private void attach_Table_FieldMapingTable(Table_FieldMapingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.Fields = this;
-		}
-		
-		private void detach_Table_FieldMapingTable(Table_FieldMapingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.Fields = null;
@@ -1530,6 +1567,222 @@ namespace Competition
 						this._FK_Value = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("Values");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[Form-CompetitionMapingTable]")]
+	public partial class Form_CompetitionMapingTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_Table_Field;
+		
+		private System.Nullable<int> _FK_Form;
+		
+		private System.Nullable<int> _FK_Competition;
+		
+		private System.Nullable<bool> _Active;
+		
+		private EntityRef<Competitions> _Competitions;
+		
+		private EntityRef<Forms> _Forms;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_Table_FieldChanging(int value);
+    partial void OnID_Table_FieldChanged();
+    partial void OnFK_FormChanging(System.Nullable<int> value);
+    partial void OnFK_FormChanged();
+    partial void OnFK_CompetitionChanging(System.Nullable<int> value);
+    partial void OnFK_CompetitionChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public Form_CompetitionMapingTable()
+		{
+			this._Competitions = default(EntityRef<Competitions>);
+			this._Forms = default(EntityRef<Forms>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[ID_Table-Field]", Storage="_ID_Table_Field", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_Table_Field
+		{
+			get
+			{
+				return this._ID_Table_Field;
+			}
+			set
+			{
+				if ((this._ID_Table_Field != value))
+				{
+					this.OnID_Table_FieldChanging(value);
+					this.SendPropertyChanging();
+					this._ID_Table_Field = value;
+					this.SendPropertyChanged("ID_Table_Field");
+					this.OnID_Table_FieldChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Form", DbType="Int")]
+		public System.Nullable<int> FK_Form
+		{
+			get
+			{
+				return this._FK_Form;
+			}
+			set
+			{
+				if ((this._FK_Form != value))
+				{
+					if (this._Forms.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_FormChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Form = value;
+					this.SendPropertyChanged("FK_Form");
+					this.OnFK_FormChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Competition", DbType="Int")]
+		public System.Nullable<int> FK_Competition
+		{
+			get
+			{
+				return this._FK_Competition;
+			}
+			set
+			{
+				if ((this._FK_Competition != value))
+				{
+					if (this._Competitions.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_CompetitionChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Competition = value;
+					this.SendPropertyChanged("FK_Competition");
+					this.OnFK_CompetitionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Competitions_Form_CompetitionMapingTable", Storage="_Competitions", ThisKey="FK_Competition", OtherKey="ID_Competition", IsForeignKey=true)]
+		public Competitions Competitions
+		{
+			get
+			{
+				return this._Competitions.Entity;
+			}
+			set
+			{
+				Competitions previousValue = this._Competitions.Entity;
+				if (((previousValue != value) 
+							|| (this._Competitions.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Competitions.Entity = null;
+						previousValue.Form_CompetitionMapingTable.Remove(this);
+					}
+					this._Competitions.Entity = value;
+					if ((value != null))
+					{
+						value.Form_CompetitionMapingTable.Add(this);
+						this._FK_Competition = value.ID_Competition;
+					}
+					else
+					{
+						this._FK_Competition = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Competitions");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Forms_Form_CompetitionMapingTable", Storage="_Forms", ThisKey="FK_Form", OtherKey="ID_Form", IsForeignKey=true)]
+		public Forms Forms
+		{
+			get
+			{
+				return this._Forms.Entity;
+			}
+			set
+			{
+				Forms previousValue = this._Forms.Entity;
+				if (((previousValue != value) 
+							|| (this._Forms.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Forms.Entity = null;
+						previousValue.Form_CompetitionMapingTable.Remove(this);
+					}
+					this._Forms.Entity = value;
+					if ((value != null))
+					{
+						value.Form_CompetitionMapingTable.Add(this);
+						this._FK_Form = value.ID_Form;
+					}
+					else
+					{
+						this._FK_Form = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Forms");
 				}
 			}
 		}
@@ -1781,11 +2034,13 @@ namespace Competition
 		
 		private string _Name;
 		
-		private EntitySet<Competition_FormMapingTable> _Competition_FormMapingTable;
+		private System.Nullable<bool> _Active;
+		
+		private EntitySet<Form_CompetitionMapingTable> _Form_CompetitionMapingTable;
 		
 		private EntitySet<Form_QuestionMapingTable> _Form_QuestionMapingTable;
 		
-		private EntitySet<Form_TableMapingTable> _Form_TableMapingTable;
+		private EntitySet<Tables> _Tables;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -1795,13 +2050,15 @@ namespace Competition
     partial void OnID_FormChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
     #endregion
 		
 		public Forms()
 		{
-			this._Competition_FormMapingTable = new EntitySet<Competition_FormMapingTable>(new Action<Competition_FormMapingTable>(this.attach_Competition_FormMapingTable), new Action<Competition_FormMapingTable>(this.detach_Competition_FormMapingTable));
+			this._Form_CompetitionMapingTable = new EntitySet<Form_CompetitionMapingTable>(new Action<Form_CompetitionMapingTable>(this.attach_Form_CompetitionMapingTable), new Action<Form_CompetitionMapingTable>(this.detach_Form_CompetitionMapingTable));
 			this._Form_QuestionMapingTable = new EntitySet<Form_QuestionMapingTable>(new Action<Form_QuestionMapingTable>(this.attach_Form_QuestionMapingTable), new Action<Form_QuestionMapingTable>(this.detach_Form_QuestionMapingTable));
-			this._Form_TableMapingTable = new EntitySet<Form_TableMapingTable>(new Action<Form_TableMapingTable>(this.attach_Form_TableMapingTable), new Action<Form_TableMapingTable>(this.detach_Form_TableMapingTable));
+			this._Tables = new EntitySet<Tables>(new Action<Tables>(this.attach_Tables), new Action<Tables>(this.detach_Tables));
 			OnCreated();
 		}
 		
@@ -1845,209 +2102,6 @@ namespace Competition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Forms_Competition_FormMapingTable", Storage="_Competition_FormMapingTable", ThisKey="ID_Form", OtherKey="FK_Form")]
-		public EntitySet<Competition_FormMapingTable> Competition_FormMapingTable
-		{
-			get
-			{
-				return this._Competition_FormMapingTable;
-			}
-			set
-			{
-				this._Competition_FormMapingTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Forms_Form_QuestionMapingTable", Storage="_Form_QuestionMapingTable", ThisKey="ID_Form", OtherKey="FK_Form")]
-		public EntitySet<Form_QuestionMapingTable> Form_QuestionMapingTable
-		{
-			get
-			{
-				return this._Form_QuestionMapingTable;
-			}
-			set
-			{
-				this._Form_QuestionMapingTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Forms_Form_TableMapingTable", Storage="_Form_TableMapingTable", ThisKey="ID_Form", OtherKey="FK_Form")]
-		public EntitySet<Form_TableMapingTable> Form_TableMapingTable
-		{
-			get
-			{
-				return this._Form_TableMapingTable;
-			}
-			set
-			{
-				this._Form_TableMapingTable.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Competition_FormMapingTable(Competition_FormMapingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.Forms = this;
-		}
-		
-		private void detach_Competition_FormMapingTable(Competition_FormMapingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.Forms = null;
-		}
-		
-		private void attach_Form_QuestionMapingTable(Form_QuestionMapingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.Forms = this;
-		}
-		
-		private void detach_Form_QuestionMapingTable(Form_QuestionMapingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.Forms = null;
-		}
-		
-		private void attach_Form_TableMapingTable(Form_TableMapingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.Forms = this;
-		}
-		
-		private void detach_Form_TableMapingTable(Form_TableMapingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.Forms = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[Form-TableMapingTable]")]
-	public partial class Form_TableMapingTable : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID_Form_Table;
-		
-		private System.Nullable<int> _FK_Form;
-		
-		private System.Nullable<int> _FK_Table;
-		
-		private System.Nullable<bool> _Active;
-		
-		private EntityRef<Forms> _Forms;
-		
-		private EntityRef<Tables> _Tables;
-		
-    #region Определения метода расширяемости
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnID_Form_TableChanging(int value);
-    partial void OnID_Form_TableChanged();
-    partial void OnFK_FormChanging(System.Nullable<int> value);
-    partial void OnFK_FormChanged();
-    partial void OnFK_TableChanging(System.Nullable<int> value);
-    partial void OnFK_TableChanged();
-    partial void OnActiveChanging(System.Nullable<bool> value);
-    partial void OnActiveChanged();
-    #endregion
-		
-		public Form_TableMapingTable()
-		{
-			this._Forms = default(EntityRef<Forms>);
-			this._Tables = default(EntityRef<Tables>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[ID_Form-Table]", Storage="_ID_Form_Table", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID_Form_Table
-		{
-			get
-			{
-				return this._ID_Form_Table;
-			}
-			set
-			{
-				if ((this._ID_Form_Table != value))
-				{
-					this.OnID_Form_TableChanging(value);
-					this.SendPropertyChanging();
-					this._ID_Form_Table = value;
-					this.SendPropertyChanged("ID_Form_Table");
-					this.OnID_Form_TableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Form", DbType="Int")]
-		public System.Nullable<int> FK_Form
-		{
-			get
-			{
-				return this._FK_Form;
-			}
-			set
-			{
-				if ((this._FK_Form != value))
-				{
-					if (this._Forms.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_FormChanging(value);
-					this.SendPropertyChanging();
-					this._FK_Form = value;
-					this.SendPropertyChanged("FK_Form");
-					this.OnFK_FormChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Table", DbType="Int")]
-		public System.Nullable<int> FK_Table
-		{
-			get
-			{
-				return this._FK_Table;
-			}
-			set
-			{
-				if ((this._FK_Table != value))
-				{
-					if (this._Tables.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_TableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_Table = value;
-					this.SendPropertyChanged("FK_Table");
-					this.OnFK_TableChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
 		public System.Nullable<bool> Active
 		{
@@ -2068,71 +2122,42 @@ namespace Competition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Forms_Form_TableMapingTable", Storage="_Forms", ThisKey="FK_Form", OtherKey="ID_Form", IsForeignKey=true)]
-		public Forms Forms
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Forms_Form_CompetitionMapingTable", Storage="_Form_CompetitionMapingTable", ThisKey="ID_Form", OtherKey="FK_Form")]
+		public EntitySet<Form_CompetitionMapingTable> Form_CompetitionMapingTable
 		{
 			get
 			{
-				return this._Forms.Entity;
+				return this._Form_CompetitionMapingTable;
 			}
 			set
 			{
-				Forms previousValue = this._Forms.Entity;
-				if (((previousValue != value) 
-							|| (this._Forms.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Forms.Entity = null;
-						previousValue.Form_TableMapingTable.Remove(this);
-					}
-					this._Forms.Entity = value;
-					if ((value != null))
-					{
-						value.Form_TableMapingTable.Add(this);
-						this._FK_Form = value.ID_Form;
-					}
-					else
-					{
-						this._FK_Form = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Forms");
-				}
+				this._Form_CompetitionMapingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tables_Form_TableMapingTable", Storage="_Tables", ThisKey="FK_Table", OtherKey="ID_Table", IsForeignKey=true)]
-		public Tables Tables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Forms_Form_QuestionMapingTable", Storage="_Form_QuestionMapingTable", ThisKey="ID_Form", OtherKey="FK_Form")]
+		public EntitySet<Form_QuestionMapingTable> Form_QuestionMapingTable
 		{
 			get
 			{
-				return this._Tables.Entity;
+				return this._Form_QuestionMapingTable;
 			}
 			set
 			{
-				Tables previousValue = this._Tables.Entity;
-				if (((previousValue != value) 
-							|| (this._Tables.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Tables.Entity = null;
-						previousValue.Form_TableMapingTable.Remove(this);
-					}
-					this._Tables.Entity = value;
-					if ((value != null))
-					{
-						value.Form_TableMapingTable.Add(this);
-						this._FK_Table = value.ID_Table;
-					}
-					else
-					{
-						this._FK_Table = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Tables");
-				}
+				this._Form_QuestionMapingTable.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Forms_Tables", Storage="_Tables", ThisKey="ID_Form", OtherKey="FK_Form")]
+		public EntitySet<Tables> Tables
+		{
+			get
+			{
+				return this._Tables;
+			}
+			set
+			{
+				this._Tables.Assign(value);
 			}
 		}
 		
@@ -2154,6 +2179,42 @@ namespace Competition
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Form_CompetitionMapingTable(Form_CompetitionMapingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Forms = this;
+		}
+		
+		private void detach_Form_CompetitionMapingTable(Form_CompetitionMapingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Forms = null;
+		}
+		
+		private void attach_Form_QuestionMapingTable(Form_QuestionMapingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Forms = this;
+		}
+		
+		private void detach_Form_QuestionMapingTable(Form_QuestionMapingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Forms = null;
+		}
+		
+		private void attach_Tables(Tables entity)
+		{
+			this.SendPropertyChanging();
+			entity.Forms = this;
+		}
+		
+		private void detach_Tables(Tables entity)
+		{
+			this.SendPropertyChanging();
+			entity.Forms = null;
 		}
 	}
 	
@@ -2381,9 +2442,13 @@ namespace Competition
 		
 		private int _ID_Question;
 		
+		private System.Nullable<int> _FK_Form;
+		
 		private string _Text;
 		
 		private string _Uniqvalue;
+		
+		private System.Nullable<bool> _Active;
 		
 		private EntitySet<Form_QuestionMapingTable> _Form_QuestionMapingTable;
 		
@@ -2395,10 +2460,14 @@ namespace Competition
     partial void OnCreated();
     partial void OnID_QuestionChanging(int value);
     partial void OnID_QuestionChanged();
+    partial void OnFK_FormChanging(System.Nullable<int> value);
+    partial void OnFK_FormChanged();
     partial void OnTextChanging(string value);
     partial void OnTextChanged();
     partial void OnUniqvalueChanging(string value);
     partial void OnUniqvalueChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
     #endregion
 		
 		public Questions()
@@ -2428,6 +2497,26 @@ namespace Competition
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Form", DbType="Int")]
+		public System.Nullable<int> FK_Form
+		{
+			get
+			{
+				return this._FK_Form;
+			}
+			set
+			{
+				if ((this._FK_Form != value))
+				{
+					this.OnFK_FormChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Form = value;
+					this.SendPropertyChanged("FK_Form");
+					this.OnFK_FormChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="Text", UpdateCheck=UpdateCheck.Never)]
 		public string Text
 		{
@@ -2448,7 +2537,7 @@ namespace Competition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Uniqvalue", DbType="NChar(10)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Uniqvalue", DbType="VarChar(MAX)")]
 		public string Uniqvalue
 		{
 			get
@@ -2464,6 +2553,26 @@ namespace Competition
 					this._Uniqvalue = value;
 					this.SendPropertyChanged("Uniqvalue");
 					this.OnUniqvalueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
 				}
 			}
 		}
@@ -2539,109 +2648,201 @@ namespace Competition
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[Table-FieldMapingTable]")]
-	public partial class Table_FieldMapingTable : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Tables")]
+	public partial class Tables : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _ID_Table_Field;
+		private int _ID_Table;
 		
-		private System.Nullable<int> _FK_Table;
+		private System.Nullable<int> _FK_Form;
 		
-		private System.Nullable<int> _Fk_Field;
+		private string _Name;
+		
+		private string _Column1Name;
+		
+		private string _Column2Name;
+		
+		private string _Column3Name;
+		
+		private string _Column4Name;
 		
 		private System.Nullable<bool> _Active;
 		
-		private EntityRef<Fields> _Fields;
+		private EntitySet<Fields> _Fields;
 		
-		private EntityRef<Tables> _Tables;
+		private EntityRef<Forms> _Forms;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnID_Table_FieldChanging(int value);
-    partial void OnID_Table_FieldChanged();
-    partial void OnFK_TableChanging(System.Nullable<int> value);
-    partial void OnFK_TableChanged();
-    partial void OnFk_FieldChanging(System.Nullable<int> value);
-    partial void OnFk_FieldChanged();
+    partial void OnID_TableChanging(int value);
+    partial void OnID_TableChanged();
+    partial void OnFK_FormChanging(System.Nullable<int> value);
+    partial void OnFK_FormChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnColumn1NameChanging(string value);
+    partial void OnColumn1NameChanged();
+    partial void OnColumn2NameChanging(string value);
+    partial void OnColumn2NameChanged();
+    partial void OnColumn3NameChanging(string value);
+    partial void OnColumn3NameChanged();
+    partial void OnColumn4NameChanging(string value);
+    partial void OnColumn4NameChanged();
     partial void OnActiveChanging(System.Nullable<bool> value);
     partial void OnActiveChanged();
     #endregion
 		
-		public Table_FieldMapingTable()
+		public Tables()
 		{
-			this._Fields = default(EntityRef<Fields>);
-			this._Tables = default(EntityRef<Tables>);
+			this._Fields = new EntitySet<Fields>(new Action<Fields>(this.attach_Fields), new Action<Fields>(this.detach_Fields));
+			this._Forms = default(EntityRef<Forms>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[ID_Table-Field]", Storage="_ID_Table_Field", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID_Table_Field
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Table", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_Table
 		{
 			get
 			{
-				return this._ID_Table_Field;
+				return this._ID_Table;
 			}
 			set
 			{
-				if ((this._ID_Table_Field != value))
+				if ((this._ID_Table != value))
 				{
-					this.OnID_Table_FieldChanging(value);
+					this.OnID_TableChanging(value);
 					this.SendPropertyChanging();
-					this._ID_Table_Field = value;
-					this.SendPropertyChanged("ID_Table_Field");
-					this.OnID_Table_FieldChanged();
+					this._ID_Table = value;
+					this.SendPropertyChanged("ID_Table");
+					this.OnID_TableChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Table", DbType="Int")]
-		public System.Nullable<int> FK_Table
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Form", DbType="Int")]
+		public System.Nullable<int> FK_Form
 		{
 			get
 			{
-				return this._FK_Table;
+				return this._FK_Form;
 			}
 			set
 			{
-				if ((this._FK_Table != value))
+				if ((this._FK_Form != value))
 				{
-					if (this._Tables.HasLoadedOrAssignedValue)
+					if (this._Forms.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnFK_TableChanging(value);
+					this.OnFK_FormChanging(value);
 					this.SendPropertyChanging();
-					this._FK_Table = value;
-					this.SendPropertyChanged("FK_Table");
-					this.OnFK_TableChanged();
+					this._FK_Form = value;
+					this.SendPropertyChanged("FK_Form");
+					this.OnFK_FormChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fk_Field", DbType="Int")]
-		public System.Nullable<int> Fk_Field
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(MAX)")]
+		public string Name
 		{
 			get
 			{
-				return this._Fk_Field;
+				return this._Name;
 			}
 			set
 			{
-				if ((this._Fk_Field != value))
+				if ((this._Name != value))
 				{
-					if (this._Fields.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFk_FieldChanging(value);
+					this.OnNameChanging(value);
 					this.SendPropertyChanging();
-					this._Fk_Field = value;
-					this.SendPropertyChanged("Fk_Field");
-					this.OnFk_FieldChanged();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Column1Name", DbType="VarChar(MAX)")]
+		public string Column1Name
+		{
+			get
+			{
+				return this._Column1Name;
+			}
+			set
+			{
+				if ((this._Column1Name != value))
+				{
+					this.OnColumn1NameChanging(value);
+					this.SendPropertyChanging();
+					this._Column1Name = value;
+					this.SendPropertyChanged("Column1Name");
+					this.OnColumn1NameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Column2Name", DbType="VarChar(MAX)")]
+		public string Column2Name
+		{
+			get
+			{
+				return this._Column2Name;
+			}
+			set
+			{
+				if ((this._Column2Name != value))
+				{
+					this.OnColumn2NameChanging(value);
+					this.SendPropertyChanging();
+					this._Column2Name = value;
+					this.SendPropertyChanged("Column2Name");
+					this.OnColumn2NameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Column3Name", DbType="VarChar(MAX)")]
+		public string Column3Name
+		{
+			get
+			{
+				return this._Column3Name;
+			}
+			set
+			{
+				if ((this._Column3Name != value))
+				{
+					this.OnColumn3NameChanging(value);
+					this.SendPropertyChanging();
+					this._Column3Name = value;
+					this.SendPropertyChanged("Column3Name");
+					this.OnColumn3NameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Column4Name", DbType="VarChar(MAX)")]
+		public string Column4Name
+		{
+			get
+			{
+				return this._Column4Name;
+			}
+			set
+			{
+				if ((this._Column4Name != value))
+				{
+					this.OnColumn4NameChanging(value);
+					this.SendPropertyChanging();
+					this._Column4Name = value;
+					this.SendPropertyChanged("Column4Name");
+					this.OnColumn4NameChanged();
 				}
 			}
 		}
@@ -2666,70 +2867,49 @@ namespace Competition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fields_Table_FieldMapingTable", Storage="_Fields", ThisKey="Fk_Field", OtherKey="ID_Field", IsForeignKey=true)]
-		public Fields Fields
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tables_Fields", Storage="_Fields", ThisKey="ID_Table", OtherKey="FK_Table")]
+		public EntitySet<Fields> Fields
 		{
 			get
 			{
-				return this._Fields.Entity;
+				return this._Fields;
 			}
 			set
 			{
-				Fields previousValue = this._Fields.Entity;
-				if (((previousValue != value) 
-							|| (this._Fields.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Fields.Entity = null;
-						previousValue.Table_FieldMapingTable.Remove(this);
-					}
-					this._Fields.Entity = value;
-					if ((value != null))
-					{
-						value.Table_FieldMapingTable.Add(this);
-						this._Fk_Field = value.ID_Field;
-					}
-					else
-					{
-						this._Fk_Field = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Fields");
-				}
+				this._Fields.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tables_Table_FieldMapingTable", Storage="_Tables", ThisKey="FK_Table", OtherKey="ID_Table", IsForeignKey=true)]
-		public Tables Tables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Forms_Tables", Storage="_Forms", ThisKey="FK_Form", OtherKey="ID_Form", IsForeignKey=true)]
+		public Forms Forms
 		{
 			get
 			{
-				return this._Tables.Entity;
+				return this._Forms.Entity;
 			}
 			set
 			{
-				Tables previousValue = this._Tables.Entity;
+				Forms previousValue = this._Forms.Entity;
 				if (((previousValue != value) 
-							|| (this._Tables.HasLoadedOrAssignedValue == false)))
+							|| (this._Forms.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Tables.Entity = null;
-						previousValue.Table_FieldMapingTable.Remove(this);
+						this._Forms.Entity = null;
+						previousValue.Tables.Remove(this);
 					}
-					this._Tables.Entity = value;
+					this._Forms.Entity = value;
 					if ((value != null))
 					{
-						value.Table_FieldMapingTable.Add(this);
-						this._FK_Table = value.ID_Table;
+						value.Tables.Add(this);
+						this._FK_Form = value.ID_Form;
 					}
 					else
 					{
-						this._FK_Table = default(Nullable<int>);
+						this._FK_Form = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Tables");
+					this.SendPropertyChanged("Forms");
 				}
 			}
 		}
@@ -2753,168 +2933,14 @@ namespace Competition
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Tables")]
-	public partial class Tables : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID_Table;
-		
-		private string _Name;
-		
-		private System.Nullable<int> _Columns;
-		
-		private EntitySet<Form_TableMapingTable> _Form_TableMapingTable;
-		
-		private EntitySet<Table_FieldMapingTable> _Table_FieldMapingTable;
-		
-    #region Определения метода расширяемости
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnID_TableChanging(int value);
-    partial void OnID_TableChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnColumnsChanging(System.Nullable<int> value);
-    partial void OnColumnsChanged();
-    #endregion
-		
-		public Tables()
-		{
-			this._Form_TableMapingTable = new EntitySet<Form_TableMapingTable>(new Action<Form_TableMapingTable>(this.attach_Form_TableMapingTable), new Action<Form_TableMapingTable>(this.detach_Form_TableMapingTable));
-			this._Table_FieldMapingTable = new EntitySet<Table_FieldMapingTable>(new Action<Table_FieldMapingTable>(this.attach_Table_FieldMapingTable), new Action<Table_FieldMapingTable>(this.detach_Table_FieldMapingTable));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Table", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID_Table
-		{
-			get
-			{
-				return this._ID_Table;
-			}
-			set
-			{
-				if ((this._ID_Table != value))
-				{
-					this.OnID_TableChanging(value);
-					this.SendPropertyChanging();
-					this._ID_Table = value;
-					this.SendPropertyChanged("ID_Table");
-					this.OnID_TableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NChar(10)")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Columns", DbType="Int")]
-		public System.Nullable<int> Columns
-		{
-			get
-			{
-				return this._Columns;
-			}
-			set
-			{
-				if ((this._Columns != value))
-				{
-					this.OnColumnsChanging(value);
-					this.SendPropertyChanging();
-					this._Columns = value;
-					this.SendPropertyChanged("Columns");
-					this.OnColumnsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tables_Form_TableMapingTable", Storage="_Form_TableMapingTable", ThisKey="ID_Table", OtherKey="FK_Table")]
-		public EntitySet<Form_TableMapingTable> Form_TableMapingTable
-		{
-			get
-			{
-				return this._Form_TableMapingTable;
-			}
-			set
-			{
-				this._Form_TableMapingTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tables_Table_FieldMapingTable", Storage="_Table_FieldMapingTable", ThisKey="ID_Table", OtherKey="FK_Table")]
-		public EntitySet<Table_FieldMapingTable> Table_FieldMapingTable
-		{
-			get
-			{
-				return this._Table_FieldMapingTable;
-			}
-			set
-			{
-				this._Table_FieldMapingTable.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Form_TableMapingTable(Form_TableMapingTable entity)
+		private void attach_Fields(Fields entity)
 		{
 			this.SendPropertyChanging();
 			entity.Tables = this;
 		}
 		
-		private void detach_Form_TableMapingTable(Form_TableMapingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.Tables = null;
-		}
-		
-		private void attach_Table_FieldMapingTable(Table_FieldMapingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.Tables = this;
-		}
-		
-		private void detach_Table_FieldMapingTable(Table_FieldMapingTable entity)
+		private void detach_Fields(Fields entity)
 		{
 			this.SendPropertyChanging();
 			entity.Tables = null;
@@ -3008,7 +3034,7 @@ namespace Competition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NChar(10)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(MAX)")]
 		public string Name
 		{
 			get
@@ -3028,7 +3054,7 @@ namespace Competition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[E-mail]", Storage="_E_mail", DbType="NChar(10)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[E-mail]", Storage="_E_mail", DbType="VarChar(MAX)")]
 		public string E_mail
 		{
 			get
@@ -3048,7 +3074,7 @@ namespace Competition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pass", DbType="NChar(10)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pass", DbType="VarChar(MAX)")]
 		public string Pass
 		{
 			get
@@ -3068,7 +3094,7 @@ namespace Competition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Role", DbType="NChar(10)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Role", DbType="VarChar(MAX)")]
 		public string Role
 		{
 			get
@@ -3167,11 +3193,15 @@ namespace Competition
 		
 		private int _ID_Value;
 		
+		private System.Nullable<int> _FK_Bid;
+		
 		private System.Nullable<bool> _Active;
 		
 		private string _Value;
 		
 		private EntitySet<Field_ValueMapingTable> _Field_ValueMapingTable;
+		
+		private EntityRef<Bids> _Bids;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -3179,6 +3209,8 @@ namespace Competition
     partial void OnCreated();
     partial void OnID_ValueChanging(int value);
     partial void OnID_ValueChanged();
+    partial void OnFK_BidChanging(System.Nullable<int> value);
+    partial void OnFK_BidChanged();
     partial void OnActiveChanging(System.Nullable<bool> value);
     partial void OnActiveChanged();
     partial void OnValueChanging(string value);
@@ -3188,6 +3220,7 @@ namespace Competition
 		public Values()
 		{
 			this._Field_ValueMapingTable = new EntitySet<Field_ValueMapingTable>(new Action<Field_ValueMapingTable>(this.attach_Field_ValueMapingTable), new Action<Field_ValueMapingTable>(this.detach_Field_ValueMapingTable));
+			this._Bids = default(EntityRef<Bids>);
 			OnCreated();
 		}
 		
@@ -3207,6 +3240,30 @@ namespace Competition
 					this._ID_Value = value;
 					this.SendPropertyChanged("ID_Value");
 					this.OnID_ValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Bid", DbType="Int")]
+		public System.Nullable<int> FK_Bid
+		{
+			get
+			{
+				return this._FK_Bid;
+			}
+			set
+			{
+				if ((this._FK_Bid != value))
+				{
+					if (this._Bids.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_BidChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Bid = value;
+					this.SendPropertyChanged("FK_Bid");
+					this.OnFK_BidChanged();
 				}
 			}
 		}
@@ -3261,6 +3318,40 @@ namespace Competition
 			set
 			{
 				this._Field_ValueMapingTable.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Values", Storage="_Bids", ThisKey="FK_Bid", OtherKey="ID_Bid", IsForeignKey=true)]
+		public Bids Bids
+		{
+			get
+			{
+				return this._Bids.Entity;
+			}
+			set
+			{
+				Bids previousValue = this._Bids.Entity;
+				if (((previousValue != value) 
+							|| (this._Bids.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bids.Entity = null;
+						previousValue.Values.Remove(this);
+					}
+					this._Bids.Entity = value;
+					if ((value != null))
+					{
+						value.Values.Add(this);
+						this._FK_Bid = value.ID_Bid;
+					}
+					else
+					{
+						this._FK_Bid = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Bids");
+				}
 			}
 		}
 		
