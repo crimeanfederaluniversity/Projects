@@ -26,6 +26,9 @@ namespace KPIWeb.Director
             UsersTable userTable =
                 (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
+            if (userTable != null)
+            ViewState["login"] = userTable.Email;
+
             if (userTable.AccessLevel != 4)
             {
                 Response.Redirect("~/Default.aspx");
@@ -165,6 +168,7 @@ namespace KPIWeb.Director
                 curcol.Status = 5;
             kpiWebDataContext.SubmitChanges();
 
+            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0DRV0: User " + (string)ViewState["login"] + " save data in report ID = " + ReportID);
             Response.Redirect("~/Director/DMain.aspx");
         }
         protected void Button5_Click(object sender, EventArgs e)
