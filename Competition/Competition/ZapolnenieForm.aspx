@@ -12,21 +12,38 @@
     <form id="form1" runat="server">
     <div>
     
-        <asp:DropDownList ID="DropDownList1" runat="server" Height="25px" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" Width="400px">
-        </asp:DropDownList>
-    
         <br />
         <br />
-        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Загрузить" />
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Загрузить формы" />
     
         <br />
     
     </div>
         <br />
-        <asp:GridView ID="GridView1"   runat="server" 
-             Visible="False">
+        <asp:GridView ID="GridView1" AutoGenerateColumns="False" OnRowDataBound="Questions_RowDataBound" runat="server">
+             <Columns>
+
+                    <asp:BoundField DataField="ID_Question" HeaderText="Код вопроса" Visible="false" />
+                    <asp:BoundField DataField="Question" HeaderText="Вопрос" Visible="true" />
+
+                   
+                  <asp:TemplateField Visible="true"   HeaderText="Ответ">
+                        <ItemTemplate >
+                         <asp:TextBox ID="Answer" style="text-align:center" BorderWidth="0" Height="95%" runat="server" Text='<%# Bind("Answer") %>'></asp:TextBox>
+                        </ItemTemplate>
+                    </asp:TemplateField>  
              
-                 </asp:GridView>
+                
+<asp:TemplateField Visible="false" HeaderText="Id" >
+<ItemTemplate>
+<asp:label ID="Id" runat="server" Visible="false" Text='<%# Bind("Id") %>'></asp:label>
+</ItemTemplate>
+</asp:TemplateField>
+
+                 </Columns>
+        </asp:GridView>
+        <br />
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Сохранить" />
         <br />
     </form>
 </body>

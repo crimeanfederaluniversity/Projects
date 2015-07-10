@@ -30,21 +30,69 @@ namespace Competition
 		
     #region Определения метода расширяемости
     partial void OnCreated();
+    partial void InsertActivity(Activity instance);
+    partial void UpdateActivity(Activity instance);
+    partial void DeleteActivity(Activity instance);
+    partial void InsertAnswers(Answers instance);
+    partial void UpdateAnswers(Answers instance);
+    partial void DeleteAnswers(Answers instance);
     partial void InsertAutoFilling(AutoFilling instance);
     partial void UpdateAutoFilling(AutoFilling instance);
     partial void DeleteAutoFilling(AutoFilling instance);
     partial void InsertBids(Bids instance);
     partial void UpdateBids(Bids instance);
     partial void DeleteBids(Bids instance);
+    partial void InsertCalendarPlan(CalendarPlan instance);
+    partial void UpdateCalendarPlan(CalendarPlan instance);
+    partial void DeleteCalendarPlan(CalendarPlan instance);
+    partial void InsertIndicators(Indicators instance);
+    partial void UpdateIndicators(Indicators instance);
+    partial void DeleteIndicators(Indicators instance);
+    partial void InsertKonkurs_QuestionMapingTable(Konkurs_QuestionMapingTable instance);
+    partial void UpdateKonkurs_QuestionMapingTable(Konkurs_QuestionMapingTable instance);
+    partial void DeleteKonkurs_QuestionMapingTable(Konkurs_QuestionMapingTable instance);
     partial void InsertKonkursy(Konkursy instance);
     partial void UpdateKonkursy(Konkursy instance);
     partial void DeleteKonkursy(Konkursy instance);
+    partial void InsertPurchasePlan(PurchasePlan instance);
+    partial void UpdatePurchasePlan(PurchasePlan instance);
+    partial void DeletePurchasePlan(PurchasePlan instance);
+    partial void InsertQuestion_AnswerMapingTable(Question_AnswerMapingTable instance);
+    partial void UpdateQuestion_AnswerMapingTable(Question_AnswerMapingTable instance);
+    partial void DeleteQuestion_AnswerMapingTable(Question_AnswerMapingTable instance);
+    partial void InsertQuestions(Questions instance);
+    partial void UpdateQuestions(Questions instance);
+    partial void DeleteQuestions(Questions instance);
+    partial void InsertReports(Reports instance);
+    partial void UpdateReports(Reports instance);
+    partial void DeleteReports(Reports instance);
+    partial void InsertResult(Result instance);
+    partial void UpdateResult(Result instance);
+    partial void DeleteResult(Result instance);
+    partial void InsertRisks(Risks instance);
+    partial void UpdateRisks(Risks instance);
+    partial void DeleteRisks(Risks instance);
     partial void InsertSmeta(Smeta instance);
     partial void UpdateSmeta(Smeta instance);
     partial void DeleteSmeta(Smeta instance);
     partial void InsertSmetaValue(SmetaValue instance);
     partial void UpdateSmetaValue(SmetaValue instance);
     partial void DeleteSmetaValue(SmetaValue instance);
+    partial void InsertSpecialPart(SpecialPart instance);
+    partial void UpdateSpecialPart(SpecialPart instance);
+    partial void DeleteSpecialPart(SpecialPart instance);
+    partial void InsertTargetIndicators(TargetIndicators instance);
+    partial void UpdateTargetIndicators(TargetIndicators instance);
+    partial void DeleteTargetIndicators(TargetIndicators instance);
+    partial void InsertTargetIndicatorValue(TargetIndicatorValue instance);
+    partial void UpdateTargetIndicatorValue(TargetIndicatorValue instance);
+    partial void DeleteTargetIndicatorValue(TargetIndicatorValue instance);
+    partial void InsertTaskResult(TaskResult instance);
+    partial void UpdateTaskResult(TaskResult instance);
+    partial void DeleteTaskResult(TaskResult instance);
+    partial void InsertTitleInfo(TitleInfo instance);
+    partial void UpdateTitleInfo(TitleInfo instance);
+    partial void DeleteTitleInfo(TitleInfo instance);
     partial void InsertUser_BidMapingTable(User_BidMapingTable instance);
     partial void UpdateUser_BidMapingTable(User_BidMapingTable instance);
     partial void DeleteUser_BidMapingTable(User_BidMapingTable instance);
@@ -83,6 +131,22 @@ namespace Competition
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<Activity> Activity
+		{
+			get
+			{
+				return this.GetTable<Activity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Answers> Answers
+		{
+			get
+			{
+				return this.GetTable<Answers>();
+			}
+		}
+		
 		public System.Data.Linq.Table<AutoFilling> AutoFilling
 		{
 			get
@@ -99,11 +163,91 @@ namespace Competition
 			}
 		}
 		
+		public System.Data.Linq.Table<CalendarPlan> CalendarPlan
+		{
+			get
+			{
+				return this.GetTable<CalendarPlan>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Indicators> Indicators
+		{
+			get
+			{
+				return this.GetTable<Indicators>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Konkurs_QuestionMapingTable> Konkurs_QuestionMapingTable
+		{
+			get
+			{
+				return this.GetTable<Konkurs_QuestionMapingTable>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Konkursy> Konkursy
 		{
 			get
 			{
 				return this.GetTable<Konkursy>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PurchasePlan> PurchasePlan
+		{
+			get
+			{
+				return this.GetTable<PurchasePlan>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Question_AnswerMapingTable> Question_AnswerMapingTable
+		{
+			get
+			{
+				return this.GetTable<Question_AnswerMapingTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Questions> Questions
+		{
+			get
+			{
+				return this.GetTable<Questions>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Reports> Reports
+		{
+			get
+			{
+				return this.GetTable<Reports>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Result> Result
+		{
+			get
+			{
+				return this.GetTable<Result>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ResultComent> ResultComent
+		{
+			get
+			{
+				return this.GetTable<ResultComent>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Risks> Risks
+		{
+			get
+			{
+				return this.GetTable<Risks>();
 			}
 		}
 		
@@ -123,6 +267,46 @@ namespace Competition
 			}
 		}
 		
+		public System.Data.Linq.Table<SpecialPart> SpecialPart
+		{
+			get
+			{
+				return this.GetTable<SpecialPart>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TargetIndicators> TargetIndicators
+		{
+			get
+			{
+				return this.GetTable<TargetIndicators>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TargetIndicatorValue> TargetIndicatorValue
+		{
+			get
+			{
+				return this.GetTable<TargetIndicatorValue>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TaskResult> TaskResult
+		{
+			get
+			{
+				return this.GetTable<TaskResult>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TitleInfo> TitleInfo
+		{
+			get
+			{
+				return this.GetTable<TitleInfo>();
+			}
+		}
+		
 		public System.Data.Linq.Table<User_BidMapingTable> User_BidMapingTable
 		{
 			get
@@ -137,6 +321,408 @@ namespace Competition
 			{
 				return this.GetTable<Users>();
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Activity")]
+	public partial class Activity : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_Activity;
+		
+		private string _Activity1;
+		
+		private System.Nullable<System.DateTime> _PlanDateNull;
+		
+		private System.Nullable<bool> _Active;
+		
+		private System.Nullable<int> _FK_Bid;
+		
+		private EntityRef<Bids> _Bids;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_ActivityChanging(int value);
+    partial void OnID_ActivityChanged();
+    partial void OnActivity1Changing(string value);
+    partial void OnActivity1Changed();
+    partial void OnPlanDateNullChanging(System.Nullable<System.DateTime> value);
+    partial void OnPlanDateNullChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnFK_BidChanging(System.Nullable<int> value);
+    partial void OnFK_BidChanged();
+    #endregion
+		
+		public Activity()
+		{
+			this._Bids = default(EntityRef<Bids>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Activity", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_Activity
+		{
+			get
+			{
+				return this._ID_Activity;
+			}
+			set
+			{
+				if ((this._ID_Activity != value))
+				{
+					this.OnID_ActivityChanging(value);
+					this.SendPropertyChanging();
+					this._ID_Activity = value;
+					this.SendPropertyChanged("ID_Activity");
+					this.OnID_ActivityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="Activity", Storage="_Activity1", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string Activity1
+		{
+			get
+			{
+				return this._Activity1;
+			}
+			set
+			{
+				if ((this._Activity1 != value))
+				{
+					this.OnActivity1Changing(value);
+					this.SendPropertyChanging();
+					this._Activity1 = value;
+					this.SendPropertyChanged("Activity1");
+					this.OnActivity1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlanDateNull", DbType="Date")]
+		public System.Nullable<System.DateTime> PlanDateNull
+		{
+			get
+			{
+				return this._PlanDateNull;
+			}
+			set
+			{
+				if ((this._PlanDateNull != value))
+				{
+					this.OnPlanDateNullChanging(value);
+					this.SendPropertyChanging();
+					this._PlanDateNull = value;
+					this.SendPropertyChanged("PlanDateNull");
+					this.OnPlanDateNullChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Bid", DbType="Int")]
+		public System.Nullable<int> FK_Bid
+		{
+			get
+			{
+				return this._FK_Bid;
+			}
+			set
+			{
+				if ((this._FK_Bid != value))
+				{
+					if (this._Bids.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_BidChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Bid = value;
+					this.SendPropertyChanged("FK_Bid");
+					this.OnFK_BidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Activity", Storage="_Bids", ThisKey="FK_Bid", OtherKey="ID_Bid", IsForeignKey=true)]
+		public Bids Bids
+		{
+			get
+			{
+				return this._Bids.Entity;
+			}
+			set
+			{
+				Bids previousValue = this._Bids.Entity;
+				if (((previousValue != value) 
+							|| (this._Bids.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bids.Entity = null;
+						previousValue.Activity.Remove(this);
+					}
+					this._Bids.Entity = value;
+					if ((value != null))
+					{
+						value.Activity.Add(this);
+						this._FK_Bid = value.ID_Bid;
+					}
+					else
+					{
+						this._FK_Bid = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Bids");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Answers")]
+	public partial class Answers : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_Answer;
+		
+		private string _Answer;
+		
+		private System.Nullable<bool> _Active;
+		
+		private System.Nullable<int> _FK_Bid;
+		
+		private EntitySet<Question_AnswerMapingTable> _Question_AnswerMapingTable;
+		
+		private EntityRef<Bids> _Bids;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_AnswerChanging(int value);
+    partial void OnID_AnswerChanged();
+    partial void OnAnswerChanging(string value);
+    partial void OnAnswerChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnFK_BidChanging(System.Nullable<int> value);
+    partial void OnFK_BidChanged();
+    #endregion
+		
+		public Answers()
+		{
+			this._Question_AnswerMapingTable = new EntitySet<Question_AnswerMapingTable>(new Action<Question_AnswerMapingTable>(this.attach_Question_AnswerMapingTable), new Action<Question_AnswerMapingTable>(this.detach_Question_AnswerMapingTable));
+			this._Bids = default(EntityRef<Bids>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Answer", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_Answer
+		{
+			get
+			{
+				return this._ID_Answer;
+			}
+			set
+			{
+				if ((this._ID_Answer != value))
+				{
+					this.OnID_AnswerChanging(value);
+					this.SendPropertyChanging();
+					this._ID_Answer = value;
+					this.SendPropertyChanged("ID_Answer");
+					this.OnID_AnswerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Answer", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string Answer
+		{
+			get
+			{
+				return this._Answer;
+			}
+			set
+			{
+				if ((this._Answer != value))
+				{
+					this.OnAnswerChanging(value);
+					this.SendPropertyChanging();
+					this._Answer = value;
+					this.SendPropertyChanged("Answer");
+					this.OnAnswerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Bid", DbType="Int")]
+		public System.Nullable<int> FK_Bid
+		{
+			get
+			{
+				return this._FK_Bid;
+			}
+			set
+			{
+				if ((this._FK_Bid != value))
+				{
+					if (this._Bids.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_BidChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Bid = value;
+					this.SendPropertyChanged("FK_Bid");
+					this.OnFK_BidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Answers_Question_AnswerMapingTable", Storage="_Question_AnswerMapingTable", ThisKey="ID_Answer", OtherKey="FK_Answer")]
+		public EntitySet<Question_AnswerMapingTable> Question_AnswerMapingTable
+		{
+			get
+			{
+				return this._Question_AnswerMapingTable;
+			}
+			set
+			{
+				this._Question_AnswerMapingTable.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Answers", Storage="_Bids", ThisKey="FK_Bid", OtherKey="ID_Bid", IsForeignKey=true)]
+		public Bids Bids
+		{
+			get
+			{
+				return this._Bids.Entity;
+			}
+			set
+			{
+				Bids previousValue = this._Bids.Entity;
+				if (((previousValue != value) 
+							|| (this._Bids.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bids.Entity = null;
+						previousValue.Answers.Remove(this);
+					}
+					this._Bids.Entity = value;
+					if ((value != null))
+					{
+						value.Answers.Add(this);
+						this._FK_Bid = value.ID_Bid;
+					}
+					else
+					{
+						this._FK_Bid = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Bids");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Question_AnswerMapingTable(Question_AnswerMapingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Answers = this;
+		}
+		
+		private void detach_Question_AnswerMapingTable(Question_AnswerMapingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Answers = null;
 		}
 	}
 	
@@ -349,13 +935,39 @@ namespace Competition
 		
 		private System.Nullable<bool> _Active;
 		
+		private string _BidName;
+		
+		private System.Nullable<System.DateTime> _Date;
+		
 		private System.Nullable<int> _FK_Konkurs;
 		
 		private string _Status;
 		
 		private string _Coment;
 		
+		private EntitySet<Activity> _Activity;
+		
+		private EntitySet<Answers> _Answers;
+		
+		private EntitySet<CalendarPlan> _CalendarPlan;
+		
+		private EntitySet<Indicators> _Indicators;
+		
+		private EntitySet<PurchasePlan> _PurchasePlan;
+		
+		private EntitySet<Reports> _Reports;
+		
+		private EntitySet<Result> _Result;
+		
+		private EntitySet<Risks> _Risks;
+		
 		private EntitySet<SmetaValue> _SmetaValue;
+		
+		private EntitySet<TargetIndicatorValue> _TargetIndicatorValue;
+		
+		private EntitySet<TaskResult> _TaskResult;
+		
+		private EntitySet<TitleInfo> _TitleInfo;
 		
 		private EntitySet<User_BidMapingTable> _User_BidMapingTable;
 		
@@ -369,6 +981,10 @@ namespace Competition
     partial void OnID_BidChanged();
     partial void OnActiveChanging(System.Nullable<bool> value);
     partial void OnActiveChanged();
+    partial void OnBidNameChanging(string value);
+    partial void OnBidNameChanged();
+    partial void OnDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateChanged();
     partial void OnFK_KonkursChanging(System.Nullable<int> value);
     partial void OnFK_KonkursChanged();
     partial void OnStatusChanging(string value);
@@ -379,7 +995,18 @@ namespace Competition
 		
 		public Bids()
 		{
+			this._Activity = new EntitySet<Activity>(new Action<Activity>(this.attach_Activity), new Action<Activity>(this.detach_Activity));
+			this._Answers = new EntitySet<Answers>(new Action<Answers>(this.attach_Answers), new Action<Answers>(this.detach_Answers));
+			this._CalendarPlan = new EntitySet<CalendarPlan>(new Action<CalendarPlan>(this.attach_CalendarPlan), new Action<CalendarPlan>(this.detach_CalendarPlan));
+			this._Indicators = new EntitySet<Indicators>(new Action<Indicators>(this.attach_Indicators), new Action<Indicators>(this.detach_Indicators));
+			this._PurchasePlan = new EntitySet<PurchasePlan>(new Action<PurchasePlan>(this.attach_PurchasePlan), new Action<PurchasePlan>(this.detach_PurchasePlan));
+			this._Reports = new EntitySet<Reports>(new Action<Reports>(this.attach_Reports), new Action<Reports>(this.detach_Reports));
+			this._Result = new EntitySet<Result>(new Action<Result>(this.attach_Result), new Action<Result>(this.detach_Result));
+			this._Risks = new EntitySet<Risks>(new Action<Risks>(this.attach_Risks), new Action<Risks>(this.detach_Risks));
 			this._SmetaValue = new EntitySet<SmetaValue>(new Action<SmetaValue>(this.attach_SmetaValue), new Action<SmetaValue>(this.detach_SmetaValue));
+			this._TargetIndicatorValue = new EntitySet<TargetIndicatorValue>(new Action<TargetIndicatorValue>(this.attach_TargetIndicatorValue), new Action<TargetIndicatorValue>(this.detach_TargetIndicatorValue));
+			this._TaskResult = new EntitySet<TaskResult>(new Action<TaskResult>(this.attach_TaskResult), new Action<TaskResult>(this.detach_TaskResult));
+			this._TitleInfo = new EntitySet<TitleInfo>(new Action<TitleInfo>(this.attach_TitleInfo), new Action<TitleInfo>(this.detach_TitleInfo));
 			this._User_BidMapingTable = new EntitySet<User_BidMapingTable>(new Action<User_BidMapingTable>(this.attach_User_BidMapingTable), new Action<User_BidMapingTable>(this.detach_User_BidMapingTable));
 			this._Konkursy = default(EntityRef<Konkursy>);
 			OnCreated();
@@ -421,6 +1048,46 @@ namespace Competition
 					this._Active = value;
 					this.SendPropertyChanged("Active");
 					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BidName", DbType="VarChar(MAX)")]
+		public string BidName
+		{
+			get
+			{
+				return this._BidName;
+			}
+			set
+			{
+				if ((this._BidName != value))
+				{
+					this.OnBidNameChanging(value);
+					this.SendPropertyChanging();
+					this._BidName = value;
+					this.SendPropertyChanged("BidName");
+					this.OnBidNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="Date")]
+		public System.Nullable<System.DateTime> Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this.OnDateChanging(value);
+					this.SendPropertyChanging();
+					this._Date = value;
+					this.SendPropertyChanged("Date");
+					this.OnDateChanged();
 				}
 			}
 		}
@@ -489,6 +1156,110 @@ namespace Competition
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Activity", Storage="_Activity", ThisKey="ID_Bid", OtherKey="FK_Bid")]
+		public EntitySet<Activity> Activity
+		{
+			get
+			{
+				return this._Activity;
+			}
+			set
+			{
+				this._Activity.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Answers", Storage="_Answers", ThisKey="ID_Bid", OtherKey="FK_Bid")]
+		public EntitySet<Answers> Answers
+		{
+			get
+			{
+				return this._Answers;
+			}
+			set
+			{
+				this._Answers.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_CalendarPlan", Storage="_CalendarPlan", ThisKey="ID_Bid", OtherKey="FK_Bid")]
+		public EntitySet<CalendarPlan> CalendarPlan
+		{
+			get
+			{
+				return this._CalendarPlan;
+			}
+			set
+			{
+				this._CalendarPlan.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Indicators", Storage="_Indicators", ThisKey="ID_Bid", OtherKey="FK_Bid")]
+		public EntitySet<Indicators> Indicators
+		{
+			get
+			{
+				return this._Indicators;
+			}
+			set
+			{
+				this._Indicators.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_PurchasePlan", Storage="_PurchasePlan", ThisKey="ID_Bid", OtherKey="FK_Bid")]
+		public EntitySet<PurchasePlan> PurchasePlan
+		{
+			get
+			{
+				return this._PurchasePlan;
+			}
+			set
+			{
+				this._PurchasePlan.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Reports", Storage="_Reports", ThisKey="ID_Bid", OtherKey="FK_Bid")]
+		public EntitySet<Reports> Reports
+		{
+			get
+			{
+				return this._Reports;
+			}
+			set
+			{
+				this._Reports.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Result", Storage="_Result", ThisKey="ID_Bid", OtherKey="FK_Bid")]
+		public EntitySet<Result> Result
+		{
+			get
+			{
+				return this._Result;
+			}
+			set
+			{
+				this._Result.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Risks", Storage="_Risks", ThisKey="ID_Bid", OtherKey="FK_Bid")]
+		public EntitySet<Risks> Risks
+		{
+			get
+			{
+				return this._Risks;
+			}
+			set
+			{
+				this._Risks.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_SmetaValue", Storage="_SmetaValue", ThisKey="ID_Bid", OtherKey="FK_Bid")]
 		public EntitySet<SmetaValue> SmetaValue
 		{
@@ -499,6 +1270,45 @@ namespace Competition
 			set
 			{
 				this._SmetaValue.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_TargetIndicatorValue", Storage="_TargetIndicatorValue", ThisKey="ID_Bid", OtherKey="FK_Bid")]
+		public EntitySet<TargetIndicatorValue> TargetIndicatorValue
+		{
+			get
+			{
+				return this._TargetIndicatorValue;
+			}
+			set
+			{
+				this._TargetIndicatorValue.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_TaskResult", Storage="_TaskResult", ThisKey="ID_Bid", OtherKey="FK_Bid")]
+		public EntitySet<TaskResult> TaskResult
+		{
+			get
+			{
+				return this._TaskResult;
+			}
+			set
+			{
+				this._TaskResult.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_TitleInfo", Storage="_TitleInfo", ThisKey="ID_Bid", OtherKey="FK_Bid")]
+		public EntitySet<TitleInfo> TitleInfo
+		{
+			get
+			{
+				return this._TitleInfo;
+			}
+			set
+			{
+				this._TitleInfo.Assign(value);
 			}
 		}
 		
@@ -569,6 +1379,102 @@ namespace Competition
 			}
 		}
 		
+		private void attach_Activity(Activity entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = this;
+		}
+		
+		private void detach_Activity(Activity entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = null;
+		}
+		
+		private void attach_Answers(Answers entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = this;
+		}
+		
+		private void detach_Answers(Answers entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = null;
+		}
+		
+		private void attach_CalendarPlan(CalendarPlan entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = this;
+		}
+		
+		private void detach_CalendarPlan(CalendarPlan entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = null;
+		}
+		
+		private void attach_Indicators(Indicators entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = this;
+		}
+		
+		private void detach_Indicators(Indicators entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = null;
+		}
+		
+		private void attach_PurchasePlan(PurchasePlan entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = this;
+		}
+		
+		private void detach_PurchasePlan(PurchasePlan entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = null;
+		}
+		
+		private void attach_Reports(Reports entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = this;
+		}
+		
+		private void detach_Reports(Reports entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = null;
+		}
+		
+		private void attach_Result(Result entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = this;
+		}
+		
+		private void detach_Result(Result entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = null;
+		}
+		
+		private void attach_Risks(Risks entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = this;
+		}
+		
+		private void detach_Risks(Risks entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = null;
+		}
+		
 		private void attach_SmetaValue(SmetaValue entity)
 		{
 			this.SendPropertyChanging();
@@ -576,6 +1482,42 @@ namespace Competition
 		}
 		
 		private void detach_SmetaValue(SmetaValue entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = null;
+		}
+		
+		private void attach_TargetIndicatorValue(TargetIndicatorValue entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = this;
+		}
+		
+		private void detach_TargetIndicatorValue(TargetIndicatorValue entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = null;
+		}
+		
+		private void attach_TaskResult(TaskResult entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = this;
+		}
+		
+		private void detach_TaskResult(TaskResult entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = null;
+		}
+		
+		private void attach_TitleInfo(TitleInfo entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = this;
+		}
+		
+		private void detach_TitleInfo(TitleInfo entity)
 		{
 			this.SendPropertyChanging();
 			entity.Bids = null;
@@ -591,6 +1533,788 @@ namespace Competition
 		{
 			this.SendPropertyChanging();
 			entity.Bids = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CalendarPlan")]
+	public partial class CalendarPlan : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_Event;
+		
+		private string _Event;
+		
+		private System.Nullable<int> _FK_Bid;
+		
+		private System.Nullable<int> _Period;
+		
+		private System.Nullable<System.DateTime> _StartDate;
+		
+		private System.Nullable<System.DateTime> _EndDate;
+		
+		private System.Nullable<bool> _Active;
+		
+		private System.Nullable<double> _Cost1000;
+		
+		private string _SourceNull;
+		
+		private string _TimeNull;
+		
+		private EntityRef<Bids> _Bids;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_EventChanging(int value);
+    partial void OnID_EventChanged();
+    partial void OnEventChanging(string value);
+    partial void OnEventChanged();
+    partial void OnFK_BidChanging(System.Nullable<int> value);
+    partial void OnFK_BidChanged();
+    partial void OnPeriodChanging(System.Nullable<int> value);
+    partial void OnPeriodChanged();
+    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnStartDateChanged();
+    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnEndDateChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnCost1000Changing(System.Nullable<double> value);
+    partial void OnCost1000Changed();
+    partial void OnSourceNullChanging(string value);
+    partial void OnSourceNullChanged();
+    partial void OnTimeNullChanging(string value);
+    partial void OnTimeNullChanged();
+    #endregion
+		
+		public CalendarPlan()
+		{
+			this._Bids = default(EntityRef<Bids>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Event", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_Event
+		{
+			get
+			{
+				return this._ID_Event;
+			}
+			set
+			{
+				if ((this._ID_Event != value))
+				{
+					this.OnID_EventChanging(value);
+					this.SendPropertyChanging();
+					this._ID_Event = value;
+					this.SendPropertyChanged("ID_Event");
+					this.OnID_EventChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Event", DbType="VarChar(MAX)")]
+		public string Event
+		{
+			get
+			{
+				return this._Event;
+			}
+			set
+			{
+				if ((this._Event != value))
+				{
+					this.OnEventChanging(value);
+					this.SendPropertyChanging();
+					this._Event = value;
+					this.SendPropertyChanged("Event");
+					this.OnEventChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Bid", DbType="Int")]
+		public System.Nullable<int> FK_Bid
+		{
+			get
+			{
+				return this._FK_Bid;
+			}
+			set
+			{
+				if ((this._FK_Bid != value))
+				{
+					if (this._Bids.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_BidChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Bid = value;
+					this.SendPropertyChanged("FK_Bid");
+					this.OnFK_BidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Period", DbType="Int")]
+		public System.Nullable<int> Period
+		{
+			get
+			{
+				return this._Period;
+			}
+			set
+			{
+				if ((this._Period != value))
+				{
+					this.OnPeriodChanging(value);
+					this.SendPropertyChanging();
+					this._Period = value;
+					this.SendPropertyChanged("Period");
+					this.OnPeriodChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="Date")]
+		public System.Nullable<System.DateTime> StartDate
+		{
+			get
+			{
+				return this._StartDate;
+			}
+			set
+			{
+				if ((this._StartDate != value))
+				{
+					this.OnStartDateChanging(value);
+					this.SendPropertyChanging();
+					this._StartDate = value;
+					this.SendPropertyChanged("StartDate");
+					this.OnStartDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="Date")]
+		public System.Nullable<System.DateTime> EndDate
+		{
+			get
+			{
+				return this._EndDate;
+			}
+			set
+			{
+				if ((this._EndDate != value))
+				{
+					this.OnEndDateChanging(value);
+					this.SendPropertyChanging();
+					this._EndDate = value;
+					this.SendPropertyChanged("EndDate");
+					this.OnEndDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cost1000", DbType="Float")]
+		public System.Nullable<double> Cost1000
+		{
+			get
+			{
+				return this._Cost1000;
+			}
+			set
+			{
+				if ((this._Cost1000 != value))
+				{
+					this.OnCost1000Changing(value);
+					this.SendPropertyChanging();
+					this._Cost1000 = value;
+					this.SendPropertyChanged("Cost1000");
+					this.OnCost1000Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SourceNull", DbType="VarChar(50)")]
+		public string SourceNull
+		{
+			get
+			{
+				return this._SourceNull;
+			}
+			set
+			{
+				if ((this._SourceNull != value))
+				{
+					this.OnSourceNullChanging(value);
+					this.SendPropertyChanging();
+					this._SourceNull = value;
+					this.SendPropertyChanged("SourceNull");
+					this.OnSourceNullChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimeNull", DbType="VarChar(50)")]
+		public string TimeNull
+		{
+			get
+			{
+				return this._TimeNull;
+			}
+			set
+			{
+				if ((this._TimeNull != value))
+				{
+					this.OnTimeNullChanging(value);
+					this.SendPropertyChanging();
+					this._TimeNull = value;
+					this.SendPropertyChanged("TimeNull");
+					this.OnTimeNullChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_CalendarPlan", Storage="_Bids", ThisKey="FK_Bid", OtherKey="ID_Bid", IsForeignKey=true)]
+		public Bids Bids
+		{
+			get
+			{
+				return this._Bids.Entity;
+			}
+			set
+			{
+				Bids previousValue = this._Bids.Entity;
+				if (((previousValue != value) 
+							|| (this._Bids.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bids.Entity = null;
+						previousValue.CalendarPlan.Remove(this);
+					}
+					this._Bids.Entity = value;
+					if ((value != null))
+					{
+						value.CalendarPlan.Add(this);
+						this._FK_Bid = value.ID_Bid;
+					}
+					else
+					{
+						this._FK_Bid = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Bids");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Indicators")]
+	public partial class Indicators : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_Indicator;
+		
+		private System.Nullable<int> _FK_Bid;
+		
+		private string _Indicator;
+		
+		private System.Nullable<System.DateTime> _PlanDate;
+		
+		private string _Unit;
+		
+		private System.Nullable<double> _Value;
+		
+		private System.Nullable<bool> _Active;
+		
+		private EntityRef<Bids> _Bids;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_IndicatorChanging(int value);
+    partial void OnID_IndicatorChanged();
+    partial void OnFK_BidChanging(System.Nullable<int> value);
+    partial void OnFK_BidChanged();
+    partial void OnIndicatorChanging(string value);
+    partial void OnIndicatorChanged();
+    partial void OnPlanDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnPlanDateChanged();
+    partial void OnUnitChanging(string value);
+    partial void OnUnitChanged();
+    partial void OnValueChanging(System.Nullable<double> value);
+    partial void OnValueChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public Indicators()
+		{
+			this._Bids = default(EntityRef<Bids>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Indicator", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_Indicator
+		{
+			get
+			{
+				return this._ID_Indicator;
+			}
+			set
+			{
+				if ((this._ID_Indicator != value))
+				{
+					this.OnID_IndicatorChanging(value);
+					this.SendPropertyChanging();
+					this._ID_Indicator = value;
+					this.SendPropertyChanged("ID_Indicator");
+					this.OnID_IndicatorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Bid", DbType="Int")]
+		public System.Nullable<int> FK_Bid
+		{
+			get
+			{
+				return this._FK_Bid;
+			}
+			set
+			{
+				if ((this._FK_Bid != value))
+				{
+					if (this._Bids.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_BidChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Bid = value;
+					this.SendPropertyChanged("FK_Bid");
+					this.OnFK_BidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indicator", DbType="VarChar(MAX)")]
+		public string Indicator
+		{
+			get
+			{
+				return this._Indicator;
+			}
+			set
+			{
+				if ((this._Indicator != value))
+				{
+					this.OnIndicatorChanging(value);
+					this.SendPropertyChanging();
+					this._Indicator = value;
+					this.SendPropertyChanged("Indicator");
+					this.OnIndicatorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlanDate", DbType="Date")]
+		public System.Nullable<System.DateTime> PlanDate
+		{
+			get
+			{
+				return this._PlanDate;
+			}
+			set
+			{
+				if ((this._PlanDate != value))
+				{
+					this.OnPlanDateChanging(value);
+					this.SendPropertyChanging();
+					this._PlanDate = value;
+					this.SendPropertyChanged("PlanDate");
+					this.OnPlanDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="VarChar(50)")]
+		public string Unit
+		{
+			get
+			{
+				return this._Unit;
+			}
+			set
+			{
+				if ((this._Unit != value))
+				{
+					this.OnUnitChanging(value);
+					this.SendPropertyChanging();
+					this._Unit = value;
+					this.SendPropertyChanged("Unit");
+					this.OnUnitChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value", DbType="Float")]
+		public System.Nullable<double> Value
+		{
+			get
+			{
+				return this._Value;
+			}
+			set
+			{
+				if ((this._Value != value))
+				{
+					this.OnValueChanging(value);
+					this.SendPropertyChanging();
+					this._Value = value;
+					this.SendPropertyChanged("Value");
+					this.OnValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Indicators", Storage="_Bids", ThisKey="FK_Bid", OtherKey="ID_Bid", IsForeignKey=true)]
+		public Bids Bids
+		{
+			get
+			{
+				return this._Bids.Entity;
+			}
+			set
+			{
+				Bids previousValue = this._Bids.Entity;
+				if (((previousValue != value) 
+							|| (this._Bids.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bids.Entity = null;
+						previousValue.Indicators.Remove(this);
+					}
+					this._Bids.Entity = value;
+					if ((value != null))
+					{
+						value.Indicators.Add(this);
+						this._FK_Bid = value.ID_Bid;
+					}
+					else
+					{
+						this._FK_Bid = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Bids");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[Konkurs-QuestionMapingTable]")]
+	public partial class Konkurs_QuestionMapingTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_KonkursQuestion;
+		
+		private System.Nullable<int> _FK_Konkurs;
+		
+		private System.Nullable<int> _FK_Question;
+		
+		private System.Nullable<bool> _Active;
+		
+		private EntityRef<Konkursy> _Konkursy;
+		
+		private EntityRef<Questions> _Questions;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_KonkursQuestionChanging(int value);
+    partial void OnID_KonkursQuestionChanged();
+    partial void OnFK_KonkursChanging(System.Nullable<int> value);
+    partial void OnFK_KonkursChanged();
+    partial void OnFK_QuestionChanging(System.Nullable<int> value);
+    partial void OnFK_QuestionChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public Konkurs_QuestionMapingTable()
+		{
+			this._Konkursy = default(EntityRef<Konkursy>);
+			this._Questions = default(EntityRef<Questions>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_KonkursQuestion", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_KonkursQuestion
+		{
+			get
+			{
+				return this._ID_KonkursQuestion;
+			}
+			set
+			{
+				if ((this._ID_KonkursQuestion != value))
+				{
+					this.OnID_KonkursQuestionChanging(value);
+					this.SendPropertyChanging();
+					this._ID_KonkursQuestion = value;
+					this.SendPropertyChanged("ID_KonkursQuestion");
+					this.OnID_KonkursQuestionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Konkurs", DbType="Int")]
+		public System.Nullable<int> FK_Konkurs
+		{
+			get
+			{
+				return this._FK_Konkurs;
+			}
+			set
+			{
+				if ((this._FK_Konkurs != value))
+				{
+					if (this._Konkursy.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_KonkursChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Konkurs = value;
+					this.SendPropertyChanged("FK_Konkurs");
+					this.OnFK_KonkursChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Question", DbType="Int")]
+		public System.Nullable<int> FK_Question
+		{
+			get
+			{
+				return this._FK_Question;
+			}
+			set
+			{
+				if ((this._FK_Question != value))
+				{
+					if (this._Questions.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_QuestionChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Question = value;
+					this.SendPropertyChanged("FK_Question");
+					this.OnFK_QuestionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Konkursy_Konkurs_QuestionMapingTable", Storage="_Konkursy", ThisKey="FK_Konkurs", OtherKey="ID_Konkurs", IsForeignKey=true)]
+		public Konkursy Konkursy
+		{
+			get
+			{
+				return this._Konkursy.Entity;
+			}
+			set
+			{
+				Konkursy previousValue = this._Konkursy.Entity;
+				if (((previousValue != value) 
+							|| (this._Konkursy.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Konkursy.Entity = null;
+						previousValue.Konkurs_QuestionMapingTable.Remove(this);
+					}
+					this._Konkursy.Entity = value;
+					if ((value != null))
+					{
+						value.Konkurs_QuestionMapingTable.Add(this);
+						this._FK_Konkurs = value.ID_Konkurs;
+					}
+					else
+					{
+						this._FK_Konkurs = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Konkursy");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Questions_Konkurs_QuestionMapingTable", Storage="_Questions", ThisKey="FK_Question", OtherKey="ID_Question", IsForeignKey=true)]
+		public Questions Questions
+		{
+			get
+			{
+				return this._Questions.Entity;
+			}
+			set
+			{
+				Questions previousValue = this._Questions.Entity;
+				if (((previousValue != value) 
+							|| (this._Questions.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Questions.Entity = null;
+						previousValue.Konkurs_QuestionMapingTable.Remove(this);
+					}
+					this._Questions.Entity = value;
+					if ((value != null))
+					{
+						value.Konkurs_QuestionMapingTable.Add(this);
+						this._FK_Question = value.ID_Question;
+					}
+					else
+					{
+						this._FK_Question = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Questions");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -617,6 +2341,8 @@ namespace Competition
 		private EntitySet<AutoFilling> _AutoFilling;
 		
 		private EntitySet<Bids> _Bids;
+		
+		private EntitySet<Konkurs_QuestionMapingTable> _Konkurs_QuestionMapingTable;
 		
 		private EntitySet<Smeta> _Smeta;
 		
@@ -646,6 +2372,7 @@ namespace Competition
 		{
 			this._AutoFilling = new EntitySet<AutoFilling>(new Action<AutoFilling>(this.attach_AutoFilling), new Action<AutoFilling>(this.detach_AutoFilling));
 			this._Bids = new EntitySet<Bids>(new Action<Bids>(this.attach_Bids), new Action<Bids>(this.detach_Bids));
+			this._Konkurs_QuestionMapingTable = new EntitySet<Konkurs_QuestionMapingTable>(new Action<Konkurs_QuestionMapingTable>(this.attach_Konkurs_QuestionMapingTable), new Action<Konkurs_QuestionMapingTable>(this.detach_Konkurs_QuestionMapingTable));
 			this._Smeta = new EntitySet<Smeta>(new Action<Smeta>(this.attach_Smeta), new Action<Smeta>(this.detach_Smeta));
 			this._Users = default(EntityRef<Users>);
 			OnCreated();
@@ -821,6 +2548,19 @@ namespace Competition
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Konkursy_Konkurs_QuestionMapingTable", Storage="_Konkurs_QuestionMapingTable", ThisKey="ID_Konkurs", OtherKey="FK_Konkurs")]
+		public EntitySet<Konkurs_QuestionMapingTable> Konkurs_QuestionMapingTable
+		{
+			get
+			{
+				return this._Konkurs_QuestionMapingTable;
+			}
+			set
+			{
+				this._Konkurs_QuestionMapingTable.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Konkursy_Smeta", Storage="_Smeta", ThisKey="ID_Konkurs", OtherKey="FK_Konkurs")]
 		public EntitySet<Smeta> Smeta
 		{
@@ -912,6 +2652,18 @@ namespace Competition
 			entity.Konkursy = null;
 		}
 		
+		private void attach_Konkurs_QuestionMapingTable(Konkurs_QuestionMapingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Konkursy = this;
+		}
+		
+		private void detach_Konkurs_QuestionMapingTable(Konkurs_QuestionMapingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Konkursy = null;
+		}
+		
 		private void attach_Smeta(Smeta entity)
 		{
 			this.SendPropertyChanging();
@@ -922,6 +2674,1674 @@ namespace Competition
 		{
 			this.SendPropertyChanging();
 			entity.Konkursy = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PurchasePlan")]
+	public partial class PurchasePlan : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_Purchase;
+		
+		private System.Nullable<int> _FK_Bid;
+		
+		private string _Purchase;
+		
+		private string _Unit;
+		
+		private System.Nullable<int> _Amount;
+		
+		private System.Nullable<double> _Price;
+		
+		private System.Nullable<double> _Sum;
+		
+		private System.Nullable<bool> _Active;
+		
+		private EntitySet<SpecialPart> _SpecialPart;
+		
+		private EntitySet<TargetIndicatorValue> _TargetIndicatorValue;
+		
+		private EntityRef<Bids> _Bids;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_PurchaseChanging(int value);
+    partial void OnID_PurchaseChanged();
+    partial void OnFK_BidChanging(System.Nullable<int> value);
+    partial void OnFK_BidChanged();
+    partial void OnPurchaseChanging(string value);
+    partial void OnPurchaseChanged();
+    partial void OnUnitChanging(string value);
+    partial void OnUnitChanged();
+    partial void OnAmountChanging(System.Nullable<int> value);
+    partial void OnAmountChanged();
+    partial void OnPriceChanging(System.Nullable<double> value);
+    partial void OnPriceChanged();
+    partial void OnSumChanging(System.Nullable<double> value);
+    partial void OnSumChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public PurchasePlan()
+		{
+			this._SpecialPart = new EntitySet<SpecialPart>(new Action<SpecialPart>(this.attach_SpecialPart), new Action<SpecialPart>(this.detach_SpecialPart));
+			this._TargetIndicatorValue = new EntitySet<TargetIndicatorValue>(new Action<TargetIndicatorValue>(this.attach_TargetIndicatorValue), new Action<TargetIndicatorValue>(this.detach_TargetIndicatorValue));
+			this._Bids = default(EntityRef<Bids>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Purchase", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_Purchase
+		{
+			get
+			{
+				return this._ID_Purchase;
+			}
+			set
+			{
+				if ((this._ID_Purchase != value))
+				{
+					this.OnID_PurchaseChanging(value);
+					this.SendPropertyChanging();
+					this._ID_Purchase = value;
+					this.SendPropertyChanged("ID_Purchase");
+					this.OnID_PurchaseChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Bid", DbType="Int")]
+		public System.Nullable<int> FK_Bid
+		{
+			get
+			{
+				return this._FK_Bid;
+			}
+			set
+			{
+				if ((this._FK_Bid != value))
+				{
+					if (this._Bids.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_BidChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Bid = value;
+					this.SendPropertyChanged("FK_Bid");
+					this.OnFK_BidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Purchase", DbType="VarChar(MAX)")]
+		public string Purchase
+		{
+			get
+			{
+				return this._Purchase;
+			}
+			set
+			{
+				if ((this._Purchase != value))
+				{
+					this.OnPurchaseChanging(value);
+					this.SendPropertyChanging();
+					this._Purchase = value;
+					this.SendPropertyChanged("Purchase");
+					this.OnPurchaseChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="VarChar(50)")]
+		public string Unit
+		{
+			get
+			{
+				return this._Unit;
+			}
+			set
+			{
+				if ((this._Unit != value))
+				{
+					this.OnUnitChanging(value);
+					this.SendPropertyChanging();
+					this._Unit = value;
+					this.SendPropertyChanged("Unit");
+					this.OnUnitChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Int")]
+		public System.Nullable<int> Amount
+		{
+			get
+			{
+				return this._Amount;
+			}
+			set
+			{
+				if ((this._Amount != value))
+				{
+					this.OnAmountChanging(value);
+					this.SendPropertyChanging();
+					this._Amount = value;
+					this.SendPropertyChanged("Amount");
+					this.OnAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Price", DbType="Float")]
+		public System.Nullable<double> Price
+		{
+			get
+			{
+				return this._Price;
+			}
+			set
+			{
+				if ((this._Price != value))
+				{
+					this.OnPriceChanging(value);
+					this.SendPropertyChanging();
+					this._Price = value;
+					this.SendPropertyChanged("Price");
+					this.OnPriceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Sum", DbType="Float")]
+		public System.Nullable<double> Sum
+		{
+			get
+			{
+				return this._Sum;
+			}
+			set
+			{
+				if ((this._Sum != value))
+				{
+					this.OnSumChanging(value);
+					this.SendPropertyChanging();
+					this._Sum = value;
+					this.SendPropertyChanged("Sum");
+					this.OnSumChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PurchasePlan_SpecialPart", Storage="_SpecialPart", ThisKey="ID_Purchase", OtherKey="FK_Purchase")]
+		public EntitySet<SpecialPart> SpecialPart
+		{
+			get
+			{
+				return this._SpecialPart;
+			}
+			set
+			{
+				this._SpecialPart.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PurchasePlan_TargetIndicatorValue", Storage="_TargetIndicatorValue", ThisKey="ID_Purchase", OtherKey="FK_Purchase")]
+		public EntitySet<TargetIndicatorValue> TargetIndicatorValue
+		{
+			get
+			{
+				return this._TargetIndicatorValue;
+			}
+			set
+			{
+				this._TargetIndicatorValue.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_PurchasePlan", Storage="_Bids", ThisKey="FK_Bid", OtherKey="ID_Bid", IsForeignKey=true)]
+		public Bids Bids
+		{
+			get
+			{
+				return this._Bids.Entity;
+			}
+			set
+			{
+				Bids previousValue = this._Bids.Entity;
+				if (((previousValue != value) 
+							|| (this._Bids.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bids.Entity = null;
+						previousValue.PurchasePlan.Remove(this);
+					}
+					this._Bids.Entity = value;
+					if ((value != null))
+					{
+						value.PurchasePlan.Add(this);
+						this._FK_Bid = value.ID_Bid;
+					}
+					else
+					{
+						this._FK_Bid = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Bids");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_SpecialPart(SpecialPart entity)
+		{
+			this.SendPropertyChanging();
+			entity.PurchasePlan = this;
+		}
+		
+		private void detach_SpecialPart(SpecialPart entity)
+		{
+			this.SendPropertyChanging();
+			entity.PurchasePlan = null;
+		}
+		
+		private void attach_TargetIndicatorValue(TargetIndicatorValue entity)
+		{
+			this.SendPropertyChanging();
+			entity.PurchasePlan = this;
+		}
+		
+		private void detach_TargetIndicatorValue(TargetIndicatorValue entity)
+		{
+			this.SendPropertyChanging();
+			entity.PurchasePlan = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[Question-AnswerMapingTable]")]
+	public partial class Question_AnswerMapingTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_QuestionAnswer;
+		
+		private System.Nullable<int> _FK_Question;
+		
+		private System.Nullable<int> _FK_Answer;
+		
+		private System.Nullable<bool> _Active;
+		
+		private EntityRef<Answers> _Answers;
+		
+		private EntityRef<Questions> _Questions;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_QuestionAnswerChanging(int value);
+    partial void OnID_QuestionAnswerChanged();
+    partial void OnFK_QuestionChanging(System.Nullable<int> value);
+    partial void OnFK_QuestionChanged();
+    partial void OnFK_AnswerChanging(System.Nullable<int> value);
+    partial void OnFK_AnswerChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public Question_AnswerMapingTable()
+		{
+			this._Answers = default(EntityRef<Answers>);
+			this._Questions = default(EntityRef<Questions>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_QuestionAnswer", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_QuestionAnswer
+		{
+			get
+			{
+				return this._ID_QuestionAnswer;
+			}
+			set
+			{
+				if ((this._ID_QuestionAnswer != value))
+				{
+					this.OnID_QuestionAnswerChanging(value);
+					this.SendPropertyChanging();
+					this._ID_QuestionAnswer = value;
+					this.SendPropertyChanged("ID_QuestionAnswer");
+					this.OnID_QuestionAnswerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Question", DbType="Int")]
+		public System.Nullable<int> FK_Question
+		{
+			get
+			{
+				return this._FK_Question;
+			}
+			set
+			{
+				if ((this._FK_Question != value))
+				{
+					if (this._Questions.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_QuestionChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Question = value;
+					this.SendPropertyChanged("FK_Question");
+					this.OnFK_QuestionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Answer", DbType="Int")]
+		public System.Nullable<int> FK_Answer
+		{
+			get
+			{
+				return this._FK_Answer;
+			}
+			set
+			{
+				if ((this._FK_Answer != value))
+				{
+					if (this._Answers.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_AnswerChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Answer = value;
+					this.SendPropertyChanged("FK_Answer");
+					this.OnFK_AnswerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Answers_Question_AnswerMapingTable", Storage="_Answers", ThisKey="FK_Answer", OtherKey="ID_Answer", IsForeignKey=true)]
+		public Answers Answers
+		{
+			get
+			{
+				return this._Answers.Entity;
+			}
+			set
+			{
+				Answers previousValue = this._Answers.Entity;
+				if (((previousValue != value) 
+							|| (this._Answers.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Answers.Entity = null;
+						previousValue.Question_AnswerMapingTable.Remove(this);
+					}
+					this._Answers.Entity = value;
+					if ((value != null))
+					{
+						value.Question_AnswerMapingTable.Add(this);
+						this._FK_Answer = value.ID_Answer;
+					}
+					else
+					{
+						this._FK_Answer = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Answers");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Questions_Question_AnswerMapingTable", Storage="_Questions", ThisKey="FK_Question", OtherKey="ID_Question", IsForeignKey=true)]
+		public Questions Questions
+		{
+			get
+			{
+				return this._Questions.Entity;
+			}
+			set
+			{
+				Questions previousValue = this._Questions.Entity;
+				if (((previousValue != value) 
+							|| (this._Questions.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Questions.Entity = null;
+						previousValue.Question_AnswerMapingTable.Remove(this);
+					}
+					this._Questions.Entity = value;
+					if ((value != null))
+					{
+						value.Question_AnswerMapingTable.Add(this);
+						this._FK_Question = value.ID_Question;
+					}
+					else
+					{
+						this._FK_Question = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Questions");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Questions")]
+	public partial class Questions : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_Question;
+		
+		private string _Question;
+		
+		private System.Nullable<bool> _Active;
+		
+		private string _Uniqvalue;
+		
+		private EntitySet<Konkurs_QuestionMapingTable> _Konkurs_QuestionMapingTable;
+		
+		private EntitySet<Question_AnswerMapingTable> _Question_AnswerMapingTable;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_QuestionChanging(int value);
+    partial void OnID_QuestionChanged();
+    partial void OnQuestionChanging(string value);
+    partial void OnQuestionChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnUniqvalueChanging(string value);
+    partial void OnUniqvalueChanged();
+    #endregion
+		
+		public Questions()
+		{
+			this._Konkurs_QuestionMapingTable = new EntitySet<Konkurs_QuestionMapingTable>(new Action<Konkurs_QuestionMapingTable>(this.attach_Konkurs_QuestionMapingTable), new Action<Konkurs_QuestionMapingTable>(this.detach_Konkurs_QuestionMapingTable));
+			this._Question_AnswerMapingTable = new EntitySet<Question_AnswerMapingTable>(new Action<Question_AnswerMapingTable>(this.attach_Question_AnswerMapingTable), new Action<Question_AnswerMapingTable>(this.detach_Question_AnswerMapingTable));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Question", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_Question
+		{
+			get
+			{
+				return this._ID_Question;
+			}
+			set
+			{
+				if ((this._ID_Question != value))
+				{
+					this.OnID_QuestionChanging(value);
+					this.SendPropertyChanging();
+					this._ID_Question = value;
+					this.SendPropertyChanged("ID_Question");
+					this.OnID_QuestionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Question", DbType="VarChar(MAX)")]
+		public string Question
+		{
+			get
+			{
+				return this._Question;
+			}
+			set
+			{
+				if ((this._Question != value))
+				{
+					this.OnQuestionChanging(value);
+					this.SendPropertyChanging();
+					this._Question = value;
+					this.SendPropertyChanged("Question");
+					this.OnQuestionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Uniqvalue", DbType="NVarChar(50)")]
+		public string Uniqvalue
+		{
+			get
+			{
+				return this._Uniqvalue;
+			}
+			set
+			{
+				if ((this._Uniqvalue != value))
+				{
+					this.OnUniqvalueChanging(value);
+					this.SendPropertyChanging();
+					this._Uniqvalue = value;
+					this.SendPropertyChanged("Uniqvalue");
+					this.OnUniqvalueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Questions_Konkurs_QuestionMapingTable", Storage="_Konkurs_QuestionMapingTable", ThisKey="ID_Question", OtherKey="FK_Question")]
+		public EntitySet<Konkurs_QuestionMapingTable> Konkurs_QuestionMapingTable
+		{
+			get
+			{
+				return this._Konkurs_QuestionMapingTable;
+			}
+			set
+			{
+				this._Konkurs_QuestionMapingTable.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Questions_Question_AnswerMapingTable", Storage="_Question_AnswerMapingTable", ThisKey="ID_Question", OtherKey="FK_Question")]
+		public EntitySet<Question_AnswerMapingTable> Question_AnswerMapingTable
+		{
+			get
+			{
+				return this._Question_AnswerMapingTable;
+			}
+			set
+			{
+				this._Question_AnswerMapingTable.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Konkurs_QuestionMapingTable(Konkurs_QuestionMapingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Questions = this;
+		}
+		
+		private void detach_Konkurs_QuestionMapingTable(Konkurs_QuestionMapingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Questions = null;
+		}
+		
+		private void attach_Question_AnswerMapingTable(Question_AnswerMapingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Questions = this;
+		}
+		
+		private void detach_Question_AnswerMapingTable(Question_AnswerMapingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Questions = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Reports")]
+	public partial class Reports : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_Report;
+		
+		private string _Report;
+		
+		private System.Nullable<bool> _Active;
+		
+		private System.Nullable<int> _FK_Bid;
+		
+		private string _DateOSPRNull;
+		
+		private System.Nullable<System.DateTime> _StartDateNull;
+		
+		private System.Nullable<System.DateTime> _EndDateNull;
+		
+		private EntityRef<Bids> _Bids;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_ReportChanging(int value);
+    partial void OnID_ReportChanged();
+    partial void OnReportChanging(string value);
+    partial void OnReportChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnFK_BidChanging(System.Nullable<int> value);
+    partial void OnFK_BidChanged();
+    partial void OnDateOSPRNullChanging(string value);
+    partial void OnDateOSPRNullChanged();
+    partial void OnStartDateNullChanging(System.Nullable<System.DateTime> value);
+    partial void OnStartDateNullChanged();
+    partial void OnEndDateNullChanging(System.Nullable<System.DateTime> value);
+    partial void OnEndDateNullChanged();
+    #endregion
+		
+		public Reports()
+		{
+			this._Bids = default(EntityRef<Bids>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Report", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_Report
+		{
+			get
+			{
+				return this._ID_Report;
+			}
+			set
+			{
+				if ((this._ID_Report != value))
+				{
+					this.OnID_ReportChanging(value);
+					this.SendPropertyChanging();
+					this._ID_Report = value;
+					this.SendPropertyChanged("ID_Report");
+					this.OnID_ReportChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Report", DbType="VarChar(MAX)")]
+		public string Report
+		{
+			get
+			{
+				return this._Report;
+			}
+			set
+			{
+				if ((this._Report != value))
+				{
+					this.OnReportChanging(value);
+					this.SendPropertyChanging();
+					this._Report = value;
+					this.SendPropertyChanged("Report");
+					this.OnReportChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Bid", DbType="Int")]
+		public System.Nullable<int> FK_Bid
+		{
+			get
+			{
+				return this._FK_Bid;
+			}
+			set
+			{
+				if ((this._FK_Bid != value))
+				{
+					if (this._Bids.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_BidChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Bid = value;
+					this.SendPropertyChanged("FK_Bid");
+					this.OnFK_BidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateOSPRNull", DbType="VarChar(50)")]
+		public string DateOSPRNull
+		{
+			get
+			{
+				return this._DateOSPRNull;
+			}
+			set
+			{
+				if ((this._DateOSPRNull != value))
+				{
+					this.OnDateOSPRNullChanging(value);
+					this.SendPropertyChanging();
+					this._DateOSPRNull = value;
+					this.SendPropertyChanged("DateOSPRNull");
+					this.OnDateOSPRNullChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDateNull", DbType="Date")]
+		public System.Nullable<System.DateTime> StartDateNull
+		{
+			get
+			{
+				return this._StartDateNull;
+			}
+			set
+			{
+				if ((this._StartDateNull != value))
+				{
+					this.OnStartDateNullChanging(value);
+					this.SendPropertyChanging();
+					this._StartDateNull = value;
+					this.SendPropertyChanged("StartDateNull");
+					this.OnStartDateNullChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDateNull", DbType="Date")]
+		public System.Nullable<System.DateTime> EndDateNull
+		{
+			get
+			{
+				return this._EndDateNull;
+			}
+			set
+			{
+				if ((this._EndDateNull != value))
+				{
+					this.OnEndDateNullChanging(value);
+					this.SendPropertyChanging();
+					this._EndDateNull = value;
+					this.SendPropertyChanged("EndDateNull");
+					this.OnEndDateNullChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Reports", Storage="_Bids", ThisKey="FK_Bid", OtherKey="ID_Bid", IsForeignKey=true)]
+		public Bids Bids
+		{
+			get
+			{
+				return this._Bids.Entity;
+			}
+			set
+			{
+				Bids previousValue = this._Bids.Entity;
+				if (((previousValue != value) 
+							|| (this._Bids.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bids.Entity = null;
+						previousValue.Reports.Remove(this);
+					}
+					this._Bids.Entity = value;
+					if ((value != null))
+					{
+						value.Reports.Add(this);
+						this._FK_Bid = value.ID_Bid;
+					}
+					else
+					{
+						this._FK_Bid = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Bids");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Result")]
+	public partial class Result : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_Result;
+		
+		private System.Nullable<int> _FK_Bid;
+		
+		private System.Nullable<int> _FK_Task;
+		
+		private string _ResultName;
+		
+		private string _ResultType;
+		
+		private string _Claim;
+		
+		private string _Criteria;
+		
+		private string _Method;
+		
+		private string _Responsible;
+		
+		private System.Nullable<bool> _Active;
+		
+		private EntityRef<Bids> _Bids;
+		
+		private EntityRef<TaskResult> _TaskResult;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_ResultChanging(int value);
+    partial void OnID_ResultChanged();
+    partial void OnFK_BidChanging(System.Nullable<int> value);
+    partial void OnFK_BidChanged();
+    partial void OnFK_TaskChanging(System.Nullable<int> value);
+    partial void OnFK_TaskChanged();
+    partial void OnResultNameChanging(string value);
+    partial void OnResultNameChanged();
+    partial void OnResultTypeChanging(string value);
+    partial void OnResultTypeChanged();
+    partial void OnClaimChanging(string value);
+    partial void OnClaimChanged();
+    partial void OnCriteriaChanging(string value);
+    partial void OnCriteriaChanged();
+    partial void OnMethodChanging(string value);
+    partial void OnMethodChanged();
+    partial void OnResponsibleChanging(string value);
+    partial void OnResponsibleChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public Result()
+		{
+			this._Bids = default(EntityRef<Bids>);
+			this._TaskResult = default(EntityRef<TaskResult>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Result", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_Result
+		{
+			get
+			{
+				return this._ID_Result;
+			}
+			set
+			{
+				if ((this._ID_Result != value))
+				{
+					this.OnID_ResultChanging(value);
+					this.SendPropertyChanging();
+					this._ID_Result = value;
+					this.SendPropertyChanged("ID_Result");
+					this.OnID_ResultChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Bid", DbType="Int")]
+		public System.Nullable<int> FK_Bid
+		{
+			get
+			{
+				return this._FK_Bid;
+			}
+			set
+			{
+				if ((this._FK_Bid != value))
+				{
+					if (this._Bids.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_BidChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Bid = value;
+					this.SendPropertyChanged("FK_Bid");
+					this.OnFK_BidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Task", DbType="Int")]
+		public System.Nullable<int> FK_Task
+		{
+			get
+			{
+				return this._FK_Task;
+			}
+			set
+			{
+				if ((this._FK_Task != value))
+				{
+					if (this._TaskResult.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_TaskChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Task = value;
+					this.SendPropertyChanged("FK_Task");
+					this.OnFK_TaskChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ResultName", DbType="VarChar(MAX)")]
+		public string ResultName
+		{
+			get
+			{
+				return this._ResultName;
+			}
+			set
+			{
+				if ((this._ResultName != value))
+				{
+					this.OnResultNameChanging(value);
+					this.SendPropertyChanging();
+					this._ResultName = value;
+					this.SendPropertyChanged("ResultName");
+					this.OnResultNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ResultType", DbType="VarChar(MAX)")]
+		public string ResultType
+		{
+			get
+			{
+				return this._ResultType;
+			}
+			set
+			{
+				if ((this._ResultType != value))
+				{
+					this.OnResultTypeChanging(value);
+					this.SendPropertyChanging();
+					this._ResultType = value;
+					this.SendPropertyChanged("ResultType");
+					this.OnResultTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Claim", DbType="VarChar(MAX)")]
+		public string Claim
+		{
+			get
+			{
+				return this._Claim;
+			}
+			set
+			{
+				if ((this._Claim != value))
+				{
+					this.OnClaimChanging(value);
+					this.SendPropertyChanging();
+					this._Claim = value;
+					this.SendPropertyChanged("Claim");
+					this.OnClaimChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Criteria", DbType="VarChar(MAX)")]
+		public string Criteria
+		{
+			get
+			{
+				return this._Criteria;
+			}
+			set
+			{
+				if ((this._Criteria != value))
+				{
+					this.OnCriteriaChanging(value);
+					this.SendPropertyChanging();
+					this._Criteria = value;
+					this.SendPropertyChanged("Criteria");
+					this.OnCriteriaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Method", DbType="VarChar(MAX)")]
+		public string Method
+		{
+			get
+			{
+				return this._Method;
+			}
+			set
+			{
+				if ((this._Method != value))
+				{
+					this.OnMethodChanging(value);
+					this.SendPropertyChanging();
+					this._Method = value;
+					this.SendPropertyChanged("Method");
+					this.OnMethodChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Responsible", DbType="VarChar(MAX)")]
+		public string Responsible
+		{
+			get
+			{
+				return this._Responsible;
+			}
+			set
+			{
+				if ((this._Responsible != value))
+				{
+					this.OnResponsibleChanging(value);
+					this.SendPropertyChanging();
+					this._Responsible = value;
+					this.SendPropertyChanged("Responsible");
+					this.OnResponsibleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Result", Storage="_Bids", ThisKey="FK_Bid", OtherKey="ID_Bid", IsForeignKey=true)]
+		public Bids Bids
+		{
+			get
+			{
+				return this._Bids.Entity;
+			}
+			set
+			{
+				Bids previousValue = this._Bids.Entity;
+				if (((previousValue != value) 
+							|| (this._Bids.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bids.Entity = null;
+						previousValue.Result.Remove(this);
+					}
+					this._Bids.Entity = value;
+					if ((value != null))
+					{
+						value.Result.Add(this);
+						this._FK_Bid = value.ID_Bid;
+					}
+					else
+					{
+						this._FK_Bid = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Bids");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TaskResult_Result", Storage="_TaskResult", ThisKey="FK_Task", OtherKey="ID_Task", IsForeignKey=true)]
+		public TaskResult TaskResult
+		{
+			get
+			{
+				return this._TaskResult.Entity;
+			}
+			set
+			{
+				TaskResult previousValue = this._TaskResult.Entity;
+				if (((previousValue != value) 
+							|| (this._TaskResult.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TaskResult.Entity = null;
+						previousValue.Result1.Remove(this);
+					}
+					this._TaskResult.Entity = value;
+					if ((value != null))
+					{
+						value.Result1.Add(this);
+						this._FK_Task = value.ID_Task;
+					}
+					else
+					{
+						this._FK_Task = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("TaskResult");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ResultComent")]
+	public partial class ResultComent
+	{
+		
+		private System.Nullable<int> _ID_Coment;
+		
+		private System.Nullable<int> _FK_Result;
+		
+		private System.Nullable<bool> _Active;
+		
+		private string _ComentText;
+		
+		public ResultComent()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Coment", DbType="Int")]
+		public System.Nullable<int> ID_Coment
+		{
+			get
+			{
+				return this._ID_Coment;
+			}
+			set
+			{
+				if ((this._ID_Coment != value))
+				{
+					this._ID_Coment = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Result", DbType="Int")]
+		public System.Nullable<int> FK_Result
+		{
+			get
+			{
+				return this._FK_Result;
+			}
+			set
+			{
+				if ((this._FK_Result != value))
+				{
+					this._FK_Result = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this._Active = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ComentText", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string ComentText
+		{
+			get
+			{
+				return this._ComentText;
+			}
+			set
+			{
+				if ((this._ComentText != value))
+				{
+					this._ComentText = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Risks")]
+	public partial class Risks : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_Risk;
+		
+		private System.Nullable<int> _FK_Bid;
+		
+		private string _RiskName;
+		
+		private string _Effect;
+		
+		private string _Method;
+		
+		private string _Reaction;
+		
+		private System.Nullable<bool> _Active;
+		
+		private EntityRef<Bids> _Bids;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_RiskChanging(int value);
+    partial void OnID_RiskChanged();
+    partial void OnFK_BidChanging(System.Nullable<int> value);
+    partial void OnFK_BidChanged();
+    partial void OnRiskNameChanging(string value);
+    partial void OnRiskNameChanged();
+    partial void OnEffectChanging(string value);
+    partial void OnEffectChanged();
+    partial void OnMethodChanging(string value);
+    partial void OnMethodChanged();
+    partial void OnReactionChanging(string value);
+    partial void OnReactionChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public Risks()
+		{
+			this._Bids = default(EntityRef<Bids>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Risk", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_Risk
+		{
+			get
+			{
+				return this._ID_Risk;
+			}
+			set
+			{
+				if ((this._ID_Risk != value))
+				{
+					this.OnID_RiskChanging(value);
+					this.SendPropertyChanging();
+					this._ID_Risk = value;
+					this.SendPropertyChanged("ID_Risk");
+					this.OnID_RiskChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Bid", DbType="Int")]
+		public System.Nullable<int> FK_Bid
+		{
+			get
+			{
+				return this._FK_Bid;
+			}
+			set
+			{
+				if ((this._FK_Bid != value))
+				{
+					if (this._Bids.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_BidChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Bid = value;
+					this.SendPropertyChanged("FK_Bid");
+					this.OnFK_BidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RiskName", DbType="VarChar(MAX)")]
+		public string RiskName
+		{
+			get
+			{
+				return this._RiskName;
+			}
+			set
+			{
+				if ((this._RiskName != value))
+				{
+					this.OnRiskNameChanging(value);
+					this.SendPropertyChanging();
+					this._RiskName = value;
+					this.SendPropertyChanged("RiskName");
+					this.OnRiskNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Effect", DbType="VarChar(MAX)")]
+		public string Effect
+		{
+			get
+			{
+				return this._Effect;
+			}
+			set
+			{
+				if ((this._Effect != value))
+				{
+					this.OnEffectChanging(value);
+					this.SendPropertyChanging();
+					this._Effect = value;
+					this.SendPropertyChanged("Effect");
+					this.OnEffectChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Method", DbType="VarChar(MAX)")]
+		public string Method
+		{
+			get
+			{
+				return this._Method;
+			}
+			set
+			{
+				if ((this._Method != value))
+				{
+					this.OnMethodChanging(value);
+					this.SendPropertyChanging();
+					this._Method = value;
+					this.SendPropertyChanged("Method");
+					this.OnMethodChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Reaction", DbType="VarChar(MAX)")]
+		public string Reaction
+		{
+			get
+			{
+				return this._Reaction;
+			}
+			set
+			{
+				if ((this._Reaction != value))
+				{
+					this.OnReactionChanging(value);
+					this.SendPropertyChanging();
+					this._Reaction = value;
+					this.SendPropertyChanged("Reaction");
+					this.OnReactionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Risks", Storage="_Bids", ThisKey="FK_Bid", OtherKey="ID_Bid", IsForeignKey=true)]
+		public Bids Bids
+		{
+			get
+			{
+				return this._Bids.Entity;
+			}
+			set
+			{
+				Bids previousValue = this._Bids.Entity;
+				if (((previousValue != value) 
+							|| (this._Bids.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bids.Entity = null;
+						previousValue.Risks.Remove(this);
+					}
+					this._Bids.Entity = value;
+					if ((value != null))
+					{
+						value.Risks.Add(this);
+						this._FK_Bid = value.ID_Bid;
+					}
+					else
+					{
+						this._FK_Bid = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Bids");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -1416,17 +4836,1423 @@ namespace Competition
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SpecialPart")]
+	public partial class SpecialPart : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_Equipment;
+		
+		private System.Nullable<int> _FK_Purchase;
+		
+		private string _Equipment;
+		
+		private System.Nullable<int> _PercentInProject;
+		
+		private System.Nullable<int> _PercentNotInProject;
+		
+		private System.Nullable<double> _Cost;
+		
+		private System.Nullable<double> _Total;
+		
+		private System.Nullable<bool> _Active;
+		
+		private EntityRef<PurchasePlan> _PurchasePlan;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_EquipmentChanging(int value);
+    partial void OnID_EquipmentChanged();
+    partial void OnFK_PurchaseChanging(System.Nullable<int> value);
+    partial void OnFK_PurchaseChanged();
+    partial void OnEquipmentChanging(string value);
+    partial void OnEquipmentChanged();
+    partial void OnPercentInProjectChanging(System.Nullable<int> value);
+    partial void OnPercentInProjectChanged();
+    partial void OnPercentNotInProjectChanging(System.Nullable<int> value);
+    partial void OnPercentNotInProjectChanged();
+    partial void OnCostChanging(System.Nullable<double> value);
+    partial void OnCostChanged();
+    partial void OnTotalChanging(System.Nullable<double> value);
+    partial void OnTotalChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public SpecialPart()
+		{
+			this._PurchasePlan = default(EntityRef<PurchasePlan>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Equipment", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_Equipment
+		{
+			get
+			{
+				return this._ID_Equipment;
+			}
+			set
+			{
+				if ((this._ID_Equipment != value))
+				{
+					this.OnID_EquipmentChanging(value);
+					this.SendPropertyChanging();
+					this._ID_Equipment = value;
+					this.SendPropertyChanged("ID_Equipment");
+					this.OnID_EquipmentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Purchase", DbType="Int")]
+		public System.Nullable<int> FK_Purchase
+		{
+			get
+			{
+				return this._FK_Purchase;
+			}
+			set
+			{
+				if ((this._FK_Purchase != value))
+				{
+					if (this._PurchasePlan.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_PurchaseChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Purchase = value;
+					this.SendPropertyChanged("FK_Purchase");
+					this.OnFK_PurchaseChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Equipment", DbType="VarChar(MAX)")]
+		public string Equipment
+		{
+			get
+			{
+				return this._Equipment;
+			}
+			set
+			{
+				if ((this._Equipment != value))
+				{
+					this.OnEquipmentChanging(value);
+					this.SendPropertyChanging();
+					this._Equipment = value;
+					this.SendPropertyChanged("Equipment");
+					this.OnEquipmentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PercentInProject", DbType="Int")]
+		public System.Nullable<int> PercentInProject
+		{
+			get
+			{
+				return this._PercentInProject;
+			}
+			set
+			{
+				if ((this._PercentInProject != value))
+				{
+					this.OnPercentInProjectChanging(value);
+					this.SendPropertyChanging();
+					this._PercentInProject = value;
+					this.SendPropertyChanged("PercentInProject");
+					this.OnPercentInProjectChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PercentNotInProject", DbType="Int")]
+		public System.Nullable<int> PercentNotInProject
+		{
+			get
+			{
+				return this._PercentNotInProject;
+			}
+			set
+			{
+				if ((this._PercentNotInProject != value))
+				{
+					this.OnPercentNotInProjectChanging(value);
+					this.SendPropertyChanging();
+					this._PercentNotInProject = value;
+					this.SendPropertyChanged("PercentNotInProject");
+					this.OnPercentNotInProjectChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cost", DbType="Float")]
+		public System.Nullable<double> Cost
+		{
+			get
+			{
+				return this._Cost;
+			}
+			set
+			{
+				if ((this._Cost != value))
+				{
+					this.OnCostChanging(value);
+					this.SendPropertyChanging();
+					this._Cost = value;
+					this.SendPropertyChanged("Cost");
+					this.OnCostChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total", DbType="Float")]
+		public System.Nullable<double> Total
+		{
+			get
+			{
+				return this._Total;
+			}
+			set
+			{
+				if ((this._Total != value))
+				{
+					this.OnTotalChanging(value);
+					this.SendPropertyChanging();
+					this._Total = value;
+					this.SendPropertyChanged("Total");
+					this.OnTotalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PurchasePlan_SpecialPart", Storage="_PurchasePlan", ThisKey="FK_Purchase", OtherKey="ID_Purchase", IsForeignKey=true)]
+		public PurchasePlan PurchasePlan
+		{
+			get
+			{
+				return this._PurchasePlan.Entity;
+			}
+			set
+			{
+				PurchasePlan previousValue = this._PurchasePlan.Entity;
+				if (((previousValue != value) 
+							|| (this._PurchasePlan.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PurchasePlan.Entity = null;
+						previousValue.SpecialPart.Remove(this);
+					}
+					this._PurchasePlan.Entity = value;
+					if ((value != null))
+					{
+						value.SpecialPart.Add(this);
+						this._FK_Purchase = value.ID_Purchase;
+					}
+					else
+					{
+						this._FK_Purchase = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("PurchasePlan");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TargetIndicators")]
+	public partial class TargetIndicators : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_TargetIndicator;
+		
+		private string _TargetIndicator;
+		
+		private System.Nullable<bool> _Active;
+		
+		private string _Abb;
+		
+		private string _Uniqvalue;
+		
+		private EntitySet<TargetIndicatorValue> _TargetIndicatorValue;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_TargetIndicatorChanging(int value);
+    partial void OnID_TargetIndicatorChanged();
+    partial void OnTargetIndicatorChanging(string value);
+    partial void OnTargetIndicatorChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnAbbChanging(string value);
+    partial void OnAbbChanged();
+    partial void OnUniqvalueChanging(string value);
+    partial void OnUniqvalueChanged();
+    #endregion
+		
+		public TargetIndicators()
+		{
+			this._TargetIndicatorValue = new EntitySet<TargetIndicatorValue>(new Action<TargetIndicatorValue>(this.attach_TargetIndicatorValue), new Action<TargetIndicatorValue>(this.detach_TargetIndicatorValue));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_TargetIndicator", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_TargetIndicator
+		{
+			get
+			{
+				return this._ID_TargetIndicator;
+			}
+			set
+			{
+				if ((this._ID_TargetIndicator != value))
+				{
+					this.OnID_TargetIndicatorChanging(value);
+					this.SendPropertyChanging();
+					this._ID_TargetIndicator = value;
+					this.SendPropertyChanged("ID_TargetIndicator");
+					this.OnID_TargetIndicatorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TargetIndicator", DbType="VarChar(MAX)")]
+		public string TargetIndicator
+		{
+			get
+			{
+				return this._TargetIndicator;
+			}
+			set
+			{
+				if ((this._TargetIndicator != value))
+				{
+					this.OnTargetIndicatorChanging(value);
+					this.SendPropertyChanging();
+					this._TargetIndicator = value;
+					this.SendPropertyChanged("TargetIndicator");
+					this.OnTargetIndicatorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Abb", DbType="VarChar(50)")]
+		public string Abb
+		{
+			get
+			{
+				return this._Abb;
+			}
+			set
+			{
+				if ((this._Abb != value))
+				{
+					this.OnAbbChanging(value);
+					this.SendPropertyChanging();
+					this._Abb = value;
+					this.SendPropertyChanged("Abb");
+					this.OnAbbChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Uniqvalue", DbType="NVarChar(50)")]
+		public string Uniqvalue
+		{
+			get
+			{
+				return this._Uniqvalue;
+			}
+			set
+			{
+				if ((this._Uniqvalue != value))
+				{
+					this.OnUniqvalueChanging(value);
+					this.SendPropertyChanging();
+					this._Uniqvalue = value;
+					this.SendPropertyChanged("Uniqvalue");
+					this.OnUniqvalueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TargetIndicators_TargetIndicatorValue", Storage="_TargetIndicatorValue", ThisKey="ID_TargetIndicator", OtherKey="FK_TargetIndicator")]
+		public EntitySet<TargetIndicatorValue> TargetIndicatorValue
+		{
+			get
+			{
+				return this._TargetIndicatorValue;
+			}
+			set
+			{
+				this._TargetIndicatorValue.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_TargetIndicatorValue(TargetIndicatorValue entity)
+		{
+			this.SendPropertyChanging();
+			entity.TargetIndicators = this;
+		}
+		
+		private void detach_TargetIndicatorValue(TargetIndicatorValue entity)
+		{
+			this.SendPropertyChanging();
+			entity.TargetIndicators = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TargetIndicatorValue")]
+	public partial class TargetIndicatorValue : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_TargetIndicatorValue;
+		
+		private System.Nullable<int> _FK_TargetIndicator;
+		
+		private System.Nullable<int> _FK_Bid;
+		
+		private System.Nullable<double> _PurchaseValue;
+		
+		private System.Nullable<int> _FK_Purchase;
+		
+		private System.Nullable<double> _StartValue2015;
+		
+		private System.Nullable<double> _EndValue2015;
+		
+		private string _Value2020;
+		
+		private System.Nullable<bool> _Active;
+		
+		private EntityRef<Bids> _Bids;
+		
+		private EntityRef<PurchasePlan> _PurchasePlan;
+		
+		private EntityRef<TargetIndicators> _TargetIndicators;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_TargetIndicatorValueChanging(int value);
+    partial void OnID_TargetIndicatorValueChanged();
+    partial void OnFK_TargetIndicatorChanging(System.Nullable<int> value);
+    partial void OnFK_TargetIndicatorChanged();
+    partial void OnFK_BidChanging(System.Nullable<int> value);
+    partial void OnFK_BidChanged();
+    partial void OnPurchaseValueChanging(System.Nullable<double> value);
+    partial void OnPurchaseValueChanged();
+    partial void OnFK_PurchaseChanging(System.Nullable<int> value);
+    partial void OnFK_PurchaseChanged();
+    partial void OnStartValue2015Changing(System.Nullable<double> value);
+    partial void OnStartValue2015Changed();
+    partial void OnEndValue2015Changing(System.Nullable<double> value);
+    partial void OnEndValue2015Changed();
+    partial void OnValue2020Changing(string value);
+    partial void OnValue2020Changed();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public TargetIndicatorValue()
+		{
+			this._Bids = default(EntityRef<Bids>);
+			this._PurchasePlan = default(EntityRef<PurchasePlan>);
+			this._TargetIndicators = default(EntityRef<TargetIndicators>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_TargetIndicatorValue", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_TargetIndicatorValue
+		{
+			get
+			{
+				return this._ID_TargetIndicatorValue;
+			}
+			set
+			{
+				if ((this._ID_TargetIndicatorValue != value))
+				{
+					this.OnID_TargetIndicatorValueChanging(value);
+					this.SendPropertyChanging();
+					this._ID_TargetIndicatorValue = value;
+					this.SendPropertyChanged("ID_TargetIndicatorValue");
+					this.OnID_TargetIndicatorValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_TargetIndicator", DbType="Int")]
+		public System.Nullable<int> FK_TargetIndicator
+		{
+			get
+			{
+				return this._FK_TargetIndicator;
+			}
+			set
+			{
+				if ((this._FK_TargetIndicator != value))
+				{
+					if (this._TargetIndicators.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_TargetIndicatorChanging(value);
+					this.SendPropertyChanging();
+					this._FK_TargetIndicator = value;
+					this.SendPropertyChanged("FK_TargetIndicator");
+					this.OnFK_TargetIndicatorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Bid", DbType="Int")]
+		public System.Nullable<int> FK_Bid
+		{
+			get
+			{
+				return this._FK_Bid;
+			}
+			set
+			{
+				if ((this._FK_Bid != value))
+				{
+					if (this._Bids.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_BidChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Bid = value;
+					this.SendPropertyChanged("FK_Bid");
+					this.OnFK_BidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseValue", DbType="Float")]
+		public System.Nullable<double> PurchaseValue
+		{
+			get
+			{
+				return this._PurchaseValue;
+			}
+			set
+			{
+				if ((this._PurchaseValue != value))
+				{
+					this.OnPurchaseValueChanging(value);
+					this.SendPropertyChanging();
+					this._PurchaseValue = value;
+					this.SendPropertyChanged("PurchaseValue");
+					this.OnPurchaseValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Purchase", DbType="Int")]
+		public System.Nullable<int> FK_Purchase
+		{
+			get
+			{
+				return this._FK_Purchase;
+			}
+			set
+			{
+				if ((this._FK_Purchase != value))
+				{
+					if (this._PurchasePlan.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_PurchaseChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Purchase = value;
+					this.SendPropertyChanged("FK_Purchase");
+					this.OnFK_PurchaseChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartValue2015", DbType="Float")]
+		public System.Nullable<double> StartValue2015
+		{
+			get
+			{
+				return this._StartValue2015;
+			}
+			set
+			{
+				if ((this._StartValue2015 != value))
+				{
+					this.OnStartValue2015Changing(value);
+					this.SendPropertyChanging();
+					this._StartValue2015 = value;
+					this.SendPropertyChanged("StartValue2015");
+					this.OnStartValue2015Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndValue2015", DbType="Float")]
+		public System.Nullable<double> EndValue2015
+		{
+			get
+			{
+				return this._EndValue2015;
+			}
+			set
+			{
+				if ((this._EndValue2015 != value))
+				{
+					this.OnEndValue2015Changing(value);
+					this.SendPropertyChanging();
+					this._EndValue2015 = value;
+					this.SendPropertyChanged("EndValue2015");
+					this.OnEndValue2015Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value2020", DbType="VarChar(MAX)")]
+		public string Value2020
+		{
+			get
+			{
+				return this._Value2020;
+			}
+			set
+			{
+				if ((this._Value2020 != value))
+				{
+					this.OnValue2020Changing(value);
+					this.SendPropertyChanging();
+					this._Value2020 = value;
+					this.SendPropertyChanged("Value2020");
+					this.OnValue2020Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_TargetIndicatorValue", Storage="_Bids", ThisKey="FK_Bid", OtherKey="ID_Bid", IsForeignKey=true)]
+		public Bids Bids
+		{
+			get
+			{
+				return this._Bids.Entity;
+			}
+			set
+			{
+				Bids previousValue = this._Bids.Entity;
+				if (((previousValue != value) 
+							|| (this._Bids.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bids.Entity = null;
+						previousValue.TargetIndicatorValue.Remove(this);
+					}
+					this._Bids.Entity = value;
+					if ((value != null))
+					{
+						value.TargetIndicatorValue.Add(this);
+						this._FK_Bid = value.ID_Bid;
+					}
+					else
+					{
+						this._FK_Bid = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Bids");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PurchasePlan_TargetIndicatorValue", Storage="_PurchasePlan", ThisKey="FK_Purchase", OtherKey="ID_Purchase", IsForeignKey=true)]
+		public PurchasePlan PurchasePlan
+		{
+			get
+			{
+				return this._PurchasePlan.Entity;
+			}
+			set
+			{
+				PurchasePlan previousValue = this._PurchasePlan.Entity;
+				if (((previousValue != value) 
+							|| (this._PurchasePlan.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PurchasePlan.Entity = null;
+						previousValue.TargetIndicatorValue.Remove(this);
+					}
+					this._PurchasePlan.Entity = value;
+					if ((value != null))
+					{
+						value.TargetIndicatorValue.Add(this);
+						this._FK_Purchase = value.ID_Purchase;
+					}
+					else
+					{
+						this._FK_Purchase = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("PurchasePlan");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TargetIndicators_TargetIndicatorValue", Storage="_TargetIndicators", ThisKey="FK_TargetIndicator", OtherKey="ID_TargetIndicator", IsForeignKey=true)]
+		public TargetIndicators TargetIndicators
+		{
+			get
+			{
+				return this._TargetIndicators.Entity;
+			}
+			set
+			{
+				TargetIndicators previousValue = this._TargetIndicators.Entity;
+				if (((previousValue != value) 
+							|| (this._TargetIndicators.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TargetIndicators.Entity = null;
+						previousValue.TargetIndicatorValue.Remove(this);
+					}
+					this._TargetIndicators.Entity = value;
+					if ((value != null))
+					{
+						value.TargetIndicatorValue.Add(this);
+						this._FK_TargetIndicator = value.ID_TargetIndicator;
+					}
+					else
+					{
+						this._FK_TargetIndicator = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("TargetIndicators");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TaskResult")]
+	public partial class TaskResult : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_Task;
+		
+		private string _Task;
+		
+		private string _Result;
+		
+		private System.Nullable<int> _FK_Bid;
+		
+		private System.Nullable<bool> _Active;
+		
+		private EntitySet<Result> _Result1;
+		
+		private EntityRef<Bids> _Bids;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_TaskChanging(int value);
+    partial void OnID_TaskChanged();
+    partial void OnTaskChanging(string value);
+    partial void OnTaskChanged();
+    partial void OnResultChanging(string value);
+    partial void OnResultChanged();
+    partial void OnFK_BidChanging(System.Nullable<int> value);
+    partial void OnFK_BidChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public TaskResult()
+		{
+			this._Result1 = new EntitySet<Result>(new Action<Result>(this.attach_Result1), new Action<Result>(this.detach_Result1));
+			this._Bids = default(EntityRef<Bids>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Task", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_Task
+		{
+			get
+			{
+				return this._ID_Task;
+			}
+			set
+			{
+				if ((this._ID_Task != value))
+				{
+					this.OnID_TaskChanging(value);
+					this.SendPropertyChanging();
+					this._ID_Task = value;
+					this.SendPropertyChanged("ID_Task");
+					this.OnID_TaskChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Task", DbType="VarChar(MAX)")]
+		public string Task
+		{
+			get
+			{
+				return this._Task;
+			}
+			set
+			{
+				if ((this._Task != value))
+				{
+					this.OnTaskChanging(value);
+					this.SendPropertyChanging();
+					this._Task = value;
+					this.SendPropertyChanged("Task");
+					this.OnTaskChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Result", DbType="VarChar(MAX)")]
+		public string Result
+		{
+			get
+			{
+				return this._Result;
+			}
+			set
+			{
+				if ((this._Result != value))
+				{
+					this.OnResultChanging(value);
+					this.SendPropertyChanging();
+					this._Result = value;
+					this.SendPropertyChanged("Result");
+					this.OnResultChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Bid", DbType="Int")]
+		public System.Nullable<int> FK_Bid
+		{
+			get
+			{
+				return this._FK_Bid;
+			}
+			set
+			{
+				if ((this._FK_Bid != value))
+				{
+					if (this._Bids.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_BidChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Bid = value;
+					this.SendPropertyChanged("FK_Bid");
+					this.OnFK_BidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TaskResult_Result", Storage="_Result1", ThisKey="ID_Task", OtherKey="FK_Task")]
+		public EntitySet<Result> Result1
+		{
+			get
+			{
+				return this._Result1;
+			}
+			set
+			{
+				this._Result1.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_TaskResult", Storage="_Bids", ThisKey="FK_Bid", OtherKey="ID_Bid", IsForeignKey=true)]
+		public Bids Bids
+		{
+			get
+			{
+				return this._Bids.Entity;
+			}
+			set
+			{
+				Bids previousValue = this._Bids.Entity;
+				if (((previousValue != value) 
+							|| (this._Bids.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bids.Entity = null;
+						previousValue.TaskResult.Remove(this);
+					}
+					this._Bids.Entity = value;
+					if ((value != null))
+					{
+						value.TaskResult.Add(this);
+						this._FK_Bid = value.ID_Bid;
+					}
+					else
+					{
+						this._FK_Bid = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Bids");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Result1(Result entity)
+		{
+			this.SendPropertyChanging();
+			entity.TaskResult = this;
+		}
+		
+		private void detach_Result1(Result entity)
+		{
+			this.SendPropertyChanging();
+			entity.TaskResult = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TitleInfo")]
+	public partial class TitleInfo : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_Information;
+		
+		private System.Nullable<int> _FK_Bid;
+		
+		private string _ProjectName;
+		
+		private System.Nullable<System.DateTime> _PlanStartDate;
+		
+		private System.Nullable<System.DateTime> _PlanEndDate;
+		
+		private System.Nullable<double> _TotalBudget;
+		
+		private System.Nullable<double> _GrantBudget;
+		
+		private string _Curator;
+		
+		private string _IndividualCommand;
+		
+		private System.Nullable<System.DateTime> _Date;
+		
+		private System.Nullable<bool> _Active;
+		
+		private EntityRef<Bids> _Bids;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_InformationChanging(int value);
+    partial void OnID_InformationChanged();
+    partial void OnFK_BidChanging(System.Nullable<int> value);
+    partial void OnFK_BidChanged();
+    partial void OnProjectNameChanging(string value);
+    partial void OnProjectNameChanged();
+    partial void OnPlanStartDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnPlanStartDateChanged();
+    partial void OnPlanEndDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnPlanEndDateChanged();
+    partial void OnTotalBudgetChanging(System.Nullable<double> value);
+    partial void OnTotalBudgetChanged();
+    partial void OnGrantBudgetChanging(System.Nullable<double> value);
+    partial void OnGrantBudgetChanged();
+    partial void OnCuratorChanging(string value);
+    partial void OnCuratorChanged();
+    partial void OnIndividualCommandChanging(string value);
+    partial void OnIndividualCommandChanged();
+    partial void OnDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public TitleInfo()
+		{
+			this._Bids = default(EntityRef<Bids>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Information", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_Information
+		{
+			get
+			{
+				return this._ID_Information;
+			}
+			set
+			{
+				if ((this._ID_Information != value))
+				{
+					this.OnID_InformationChanging(value);
+					this.SendPropertyChanging();
+					this._ID_Information = value;
+					this.SendPropertyChanged("ID_Information");
+					this.OnID_InformationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Bid", DbType="Int")]
+		public System.Nullable<int> FK_Bid
+		{
+			get
+			{
+				return this._FK_Bid;
+			}
+			set
+			{
+				if ((this._FK_Bid != value))
+				{
+					if (this._Bids.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_BidChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Bid = value;
+					this.SendPropertyChanged("FK_Bid");
+					this.OnFK_BidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProjectName", DbType="VarChar(MAX)")]
+		public string ProjectName
+		{
+			get
+			{
+				return this._ProjectName;
+			}
+			set
+			{
+				if ((this._ProjectName != value))
+				{
+					this.OnProjectNameChanging(value);
+					this.SendPropertyChanging();
+					this._ProjectName = value;
+					this.SendPropertyChanged("ProjectName");
+					this.OnProjectNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlanStartDate", DbType="Date")]
+		public System.Nullable<System.DateTime> PlanStartDate
+		{
+			get
+			{
+				return this._PlanStartDate;
+			}
+			set
+			{
+				if ((this._PlanStartDate != value))
+				{
+					this.OnPlanStartDateChanging(value);
+					this.SendPropertyChanging();
+					this._PlanStartDate = value;
+					this.SendPropertyChanged("PlanStartDate");
+					this.OnPlanStartDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlanEndDate", DbType="Date")]
+		public System.Nullable<System.DateTime> PlanEndDate
+		{
+			get
+			{
+				return this._PlanEndDate;
+			}
+			set
+			{
+				if ((this._PlanEndDate != value))
+				{
+					this.OnPlanEndDateChanging(value);
+					this.SendPropertyChanging();
+					this._PlanEndDate = value;
+					this.SendPropertyChanged("PlanEndDate");
+					this.OnPlanEndDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalBudget", DbType="Float")]
+		public System.Nullable<double> TotalBudget
+		{
+			get
+			{
+				return this._TotalBudget;
+			}
+			set
+			{
+				if ((this._TotalBudget != value))
+				{
+					this.OnTotalBudgetChanging(value);
+					this.SendPropertyChanging();
+					this._TotalBudget = value;
+					this.SendPropertyChanged("TotalBudget");
+					this.OnTotalBudgetChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GrantBudget", DbType="Float")]
+		public System.Nullable<double> GrantBudget
+		{
+			get
+			{
+				return this._GrantBudget;
+			}
+			set
+			{
+				if ((this._GrantBudget != value))
+				{
+					this.OnGrantBudgetChanging(value);
+					this.SendPropertyChanging();
+					this._GrantBudget = value;
+					this.SendPropertyChanged("GrantBudget");
+					this.OnGrantBudgetChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Curator", DbType="VarChar(MAX)")]
+		public string Curator
+		{
+			get
+			{
+				return this._Curator;
+			}
+			set
+			{
+				if ((this._Curator != value))
+				{
+					this.OnCuratorChanging(value);
+					this.SendPropertyChanging();
+					this._Curator = value;
+					this.SendPropertyChanged("Curator");
+					this.OnCuratorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IndividualCommand", DbType="VarChar(MAX)")]
+		public string IndividualCommand
+		{
+			get
+			{
+				return this._IndividualCommand;
+			}
+			set
+			{
+				if ((this._IndividualCommand != value))
+				{
+					this.OnIndividualCommandChanging(value);
+					this.SendPropertyChanging();
+					this._IndividualCommand = value;
+					this.SendPropertyChanged("IndividualCommand");
+					this.OnIndividualCommandChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="Date")]
+		public System.Nullable<System.DateTime> Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this.OnDateChanging(value);
+					this.SendPropertyChanging();
+					this._Date = value;
+					this.SendPropertyChanged("Date");
+					this.OnDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_TitleInfo", Storage="_Bids", ThisKey="FK_Bid", OtherKey="ID_Bid", IsForeignKey=true)]
+		public Bids Bids
+		{
+			get
+			{
+				return this._Bids.Entity;
+			}
+			set
+			{
+				Bids previousValue = this._Bids.Entity;
+				if (((previousValue != value) 
+							|| (this._Bids.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bids.Entity = null;
+						previousValue.TitleInfo.Remove(this);
+					}
+					this._Bids.Entity = value;
+					if ((value != null))
+					{
+						value.TitleInfo.Add(this);
+						this._FK_Bid = value.ID_Bid;
+					}
+					else
+					{
+						this._FK_Bid = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Bids");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[User-BidMapingTable]")]
 	public partial class User_BidMapingTable : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _ID_User_Bid;
+		private int _ID_UserBid;
 		
 		private System.Nullable<int> _FK_User;
 		
 		private System.Nullable<int> _FK_Bid;
+		
+		private System.Nullable<bool> _Access;
 		
 		private System.Nullable<bool> _Active;
 		
@@ -1438,12 +6264,14 @@ namespace Competition
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnID_User_BidChanging(int value);
-    partial void OnID_User_BidChanged();
+    partial void OnID_UserBidChanging(int value);
+    partial void OnID_UserBidChanged();
     partial void OnFK_UserChanging(System.Nullable<int> value);
     partial void OnFK_UserChanged();
     partial void OnFK_BidChanging(System.Nullable<int> value);
     partial void OnFK_BidChanged();
+    partial void OnAccessChanging(System.Nullable<bool> value);
+    partial void OnAccessChanged();
     partial void OnActiveChanging(System.Nullable<bool> value);
     partial void OnActiveChanged();
     #endregion
@@ -1455,22 +6283,22 @@ namespace Competition
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[ID_User-Bid]", Storage="_ID_User_Bid", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID_User_Bid
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_UserBid", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_UserBid
 		{
 			get
 			{
-				return this._ID_User_Bid;
+				return this._ID_UserBid;
 			}
 			set
 			{
-				if ((this._ID_User_Bid != value))
+				if ((this._ID_UserBid != value))
 				{
-					this.OnID_User_BidChanging(value);
+					this.OnID_UserBidChanging(value);
 					this.SendPropertyChanging();
-					this._ID_User_Bid = value;
-					this.SendPropertyChanged("ID_User_Bid");
-					this.OnID_User_BidChanged();
+					this._ID_UserBid = value;
+					this.SendPropertyChanged("ID_UserBid");
+					this.OnID_UserBidChanged();
 				}
 			}
 		}
@@ -1519,6 +6347,26 @@ namespace Competition
 					this._FK_Bid = value;
 					this.SendPropertyChanged("FK_Bid");
 					this.OnFK_BidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Access", DbType="Bit")]
+		public System.Nullable<bool> Access
+		{
+			get
+			{
+				return this._Access;
+			}
+			set
+			{
+				if ((this._Access != value))
+				{
+					this.OnAccessChanging(value);
+					this.SendPropertyChanging();
+					this._Access = value;
+					this.SendPropertyChanged("Access");
+					this.OnAccessChanged();
 				}
 			}
 		}
