@@ -91,7 +91,7 @@
     </div>
          
     
-        <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">           
+        <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">           
              <Columns>               
                            
                  <asp:TemplateField HeaderText="ID пользователя" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >

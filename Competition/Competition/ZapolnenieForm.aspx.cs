@@ -18,6 +18,26 @@ namespace Competition
         }
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
+<<<<<<< .mine
+            if (!(Page.IsPostBack))
+            {
+                CompetitionDBDataContext newCompetition = new CompetitionDBDataContext();
+                List<Konkursy> comp = (from a in newCompetition.Konkursies where a.Active == true select a).ToList();
+                var dictionary = new Dictionary<int, string>();
+                dictionary.Add(0, "Выберите конкурс");
+                foreach (Konkursy n in comp)
+                {
+                    dictionary.Add(n.ID_Konkurs, n.Name);
+                DropDownList1.DataTextField = "Value";
+                DropDownList1.DataValueField = "Key";
+                DropDownList1.DataSource = dictionary;
+                DropDownList1.DataBind();
+              
+                }
+                
+            }
+=======
+>>>>>>> .r382
 
         }
 
@@ -27,10 +47,23 @@ namespace Competition
         }
         protected void Button1_Click(object sender, EventArgs e)
         {
+<<<<<<< .mine
+            if (DropDownList1.SelectedIndex==1)
+            {
+            Response.Redirect("~/Competitions_Pages/FormSmeta.aspx");
+            }
+            else
+                Response.Redirect("~/ZapolnenieForm.aspx");
+           /* GridView1.Visible = true;
+            CompetitionDBDataContext newField = new CompetitionDBDataContext();
+            CompetitionDBDataContext newValue = new CompetitionDBDataContext();
+            List<Fields> table = (from a in newField.Fields where a.Active == true select a).ToList();
+=======
             CompetitionDBDataContext questionTable = new CompetitionDBDataContext();
            
             int idbid = (int)Session["ID_Bid"];
             int idkon = (int)Session["ID_Konkurs"];
+>>>>>>> .r382
 
             List<Questions> questionslist = (from a in questionTable.Questions
                                              join b in questionTable.Konkurs_QuestionMapingTable

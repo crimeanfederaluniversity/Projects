@@ -16,3 +16,9 @@ C:\Users\Рема\Desktop\репозиторий\trunk\Competition\Competition\b
 C:\Users\Рема\Desktop\репозиторий\trunk\Competition\Competition\bin\Competition.dll
 C:\Users\Рема\Desktop\репозиторий\trunk\Competition\Competition\bin\Competition.pdb
 C:\Users\Рема\Desktop\репозиторий\trunk\Competition\Competition\obj\Debug\Competition.pdb
+C:\Users\Кирилл\Desktop\Репа\trunk\Competition\Competition\obj\Debug\Competition.csprojResolveAssemblyReference.cache
+C:\Users\Кирилл\Desktop\Репа\trunk\Competition\Competition\obj\Debug\Competition.dll
+C:\Users\Кирилл\Desktop\Репа\trunk\Competition\Competition\bin\Competition.dll.config
+C:\Users\Кирилл\Desktop\Репа\trunk\Competition\Competition\bin\Competition.dll
+C:\Users\Кирилл\Desktop\Репа\trunk\Competition\Competition\bin\Competition.pdb
+C:\Users\Кирилл\Desktop\Репа\trunk\Competition\Competition\obj\Debug\Competition.pdb
