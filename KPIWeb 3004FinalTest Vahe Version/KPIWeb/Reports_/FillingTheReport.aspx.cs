@@ -1215,7 +1215,7 @@ namespace KPIWeb.Reports
                                                  where a.FourthLevelParametrsID == spec.FourthLevelSubdivisionTableID
                                                  select a).FirstOrDefault();
                                             // узнали параметры специальности
-                                            //если этото параметр и эта специальность дружат  
+                                            // если этото параметр и эта специальность дружат  
                                             if (((fourthParametrs.IsForeignStudentsAccept == true) ||
                                                  (basicParametrs.ForForeignStudents == false)) //это для иностранцев
                                                 &&
@@ -1640,7 +1640,15 @@ namespace KPIWeb.Reports
                     int AllCnt = (int)ViewState["AllCnt"];
                     if (AllCnt == notNullCnt)
                     {
-                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT0: User " + (string)ViewState["login"] + " save data in report ID = " + paramSerialization.ReportStr + "All indicators are filled" + " from ip: "+Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
+                        string tmpStr = "";
+                        IsMaster newMaster = (IsMaster)Session["IsMaster"];
+                        if (newMaster !=null)
+                        {
+                            tmpStr = " With MasterKey=" + newMaster.MPassword +" ";
+                        }
+
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT0: User " + (string)ViewState["login"] +tmpStr+ " save data in report ID = " + paramSerialization.ReportStr + "All indicators are filled" + " from ip: "+Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
+                       
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Все показатели заполнены. Необходимо отправить отчёт на утверждение');" +
                             "document.location = '../Reports_/FillingTheReport.aspx';", true);
 
@@ -1648,7 +1656,15 @@ namespace KPIWeb.Reports
                     }
                     else
                     {
-                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT1: User " + (string)ViewState["login"] + " save data in report ID = " + paramSerialization.ReportStr + "Filled " + notNullCnt + " indicators from " + AllCnt + " Ip: "+Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
+                        string tmpStr = "";
+                        IsMaster newMaster = (IsMaster)Session["IsMaster"];
+                        if (newMaster != null)
+                        {
+                            tmpStr = " With MasterKey=" + newMaster.MPassword + " ";
+                        }
+
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT1: User " + (string)ViewState["login"] +tmpStr+ " save data in report ID = " + paramSerialization.ReportStr + "Filled " + notNullCnt + " indicators from " + AllCnt + " Ip: "+Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
+                   
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + AllCnt + ", для отправки отчёта необходимо заполнить еще " + (AllCnt - notNullCnt) + " показателя.');" +
                             "document.location = '../Reports_/FillingTheReport.aspx';", true);
 
@@ -1675,48 +1691,15 @@ namespace KPIWeb.Reports
                             CollectedBasic.Status = 4;
                         }
                         KPIWebDataContext.SubmitChanges();
-                        /*
-                        for (int k = 0; k < columnCnt; k++) // пройдемся по каждой колонке
-                        {
-                            for (int i = 0; i < GridviewCollectedBasicParameters.Rows.Count; i++)
-                            {
-                                Label label =
-                                    (Label)
-                                        GridviewCollectedBasicParameters.Rows[i].FindControl("CollectId" + k.ToString());
-                                if (label != null)
-                                {
-                                    if (label.Text == "")
-                                    {
-                                        //error
-                                    }
-                                    else
-                                    {
-                                        CollectedBasicParametersTable tmpColTable =
-                                            (from a in KPIWebDataContext.CollectedBasicParametersTable
-                                             where a.CollectedBasicParametersTableID == Convert.ToInt32(label.Text)
-                                             select a).FirstOrDefault();
-                                        if (tmpColTable != null)
-                                        {
-                                            if (tmpColTable.Status == 3)
-                                            {
-                                                tmpColTable.Status = 4;
-                                                KPIWebDataContext.SubmitChanges();
-                                            }
-                                            else
-                                            {
-                                                LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0FRE9: Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 9 в отчете с ID = ");
-                                            }
-                                        }
-                                        else
-                                        {
-                                            LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0FRE10:Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 10 в отчете с ID = ");   
-                                        }
-                                    }
-                                }
-                            }
-                        }*/
 
-                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT3: User " + (string)ViewState["login"] + " confirm data in report ID = " + paramSerialization.ReportStr + " from ip: "+Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
+                        string tmpStr = "";
+                        IsMaster newMaster = (IsMaster)Session["IsMaster"];
+                        if (newMaster != null)
+                        {
+                            tmpStr = " With MasterKey=" + newMaster.MPassword + " ";
+                        }
+
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT3: User " + (string)ViewState["login"] +tmpStr+ " confirm data in report ID = " + paramSerialization.ReportStr + " from ip: "+Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Вы утвердили данные всех базовых показателей. Отчёт отправлен и доступен только в режиме \"Просмотр\".');" +
                             "document.location = '../Default.aspx';", true);
 
@@ -1784,8 +1767,15 @@ namespace KPIWeb.Reports
                     }
                     else
                     {
+                        string tmpStr = "";
+                        IsMaster newMaster = (IsMaster)Session["IsMaster"];
+                        if (newMaster != null)
+                        {
+                            tmpStr = " With MasterKey=" + newMaster.MPassword + " ";
+                        }
+
                         //error
-                        LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0RTE1: Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 1 в отчете с ID = " + paramSerialization.ReportStr);
+                        LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0RTE1: Пользователь " + (string)ViewState["login"] +tmpStr+ " сгенерировал ошибку 1 в отчете с ID = " + paramSerialization.ReportStr);
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Ошибка'); document.location = '../Default.aspx'; ", true);
 
                     }
@@ -1793,7 +1783,14 @@ namespace KPIWeb.Reports
                 }
                 else
                 {
-                    LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0RTE2 User " + (string)ViewState["login"] + " generate an error 2 in report c ID = " + paramSerialization.ReportStr);
+                    string tmpStr = "";
+                    IsMaster newMaster = (IsMaster)Session["IsMaster"];
+                    if (newMaster != null)
+                    {
+                        tmpStr = " With MasterKey=" + newMaster.MPassword + " ";
+                    }
+
+                    LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0RTE2 User " + (string)ViewState["login"] + tmpStr + " generate an error 2 in report c ID = " + paramSerialization.ReportStr);
                     //error
                 }
             }

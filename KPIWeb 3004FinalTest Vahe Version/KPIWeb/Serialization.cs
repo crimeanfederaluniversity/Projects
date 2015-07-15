@@ -48,4 +48,9 @@ namespace KPIWeb
         }
     }
 
+    [Serializable]
+    public class IsMaster
+    {
+        public string MPassword { get; set; }
+    }
 }
