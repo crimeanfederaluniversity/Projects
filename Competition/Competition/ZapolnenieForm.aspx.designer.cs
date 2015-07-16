@@ -13,15 +13,6 @@ namespace Competition {
     public partial class ZapolnenieForm {
         
         /// <summary>
-        /// form1 элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
-        /// <summary>
         /// Button1 элемент управления.
         /// </summary>
         /// <remarks>
@@ -40,6 +31,15 @@ namespace Competition {
         protected global::System.Web.UI.WebControls.GridView GridView1;
         
         /// <summary>
+        /// GridView2 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView2;
+        
+        /// <summary>
         /// Button2 элемент управления.
         /// </summary>
         /// <remarks>
@@ -47,5 +47,14 @@ namespace Competition {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button2;
+        
+        /// <summary>
+        /// Button3 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button3;
     }
 }

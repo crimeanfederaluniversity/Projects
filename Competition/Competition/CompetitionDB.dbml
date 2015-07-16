@@ -1,8 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Konkursy" Class="CompetitionDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-<<<<<<< .mine
-  <Connection Mode="WebSettings" ConnectionString="Data Source=РЕМА-ПК\REMAIDEMBUHAT;Initial Catalog=Konkursy;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="KonkursyConnectionString1" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.AutoFilling" Member="AutoFillings">
-=======
   <Connection Mode="WebSettings" ConnectionString="Data Source=РЕМА-ПК\REMAIDEMBUHAT;Initial Catalog=Konkursy;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="KonkursyConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Activity" Member="Activity">
     <Type Name="Activity">
@@ -25,7 +21,6 @@
     </Type>
   </Table>
   <Table Name="dbo.AutoFilling" Member="AutoFilling">
->>>>>>> .r382
     <Type Name="AutoFilling">
       <Column Name="ID_Doc" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="FK_Konkurs" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -35,24 +30,8 @@
       <Association Name="Konkursy_AutoFilling" Member="Konkursy" ThisKey="FK_Konkurs" OtherKey="ID_Konkurs" Type="Konkursy" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Users" Member="Users">
-    <Type Name="User">
-      <Column Name="ID_User" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Role" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Post" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="PlaceofWork" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="[E-mail]" Member="E_mail" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Pass" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="[Function]" Member="Function" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="PayPerHour" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="User_Konkursy" Member="Konkursies" ThisKey="ID_User" OtherKey="FK_Curator" Type="Konkursy" />
-      <Association Name="User_User_BidMapingTable" Member="User_BidMapingTables" ThisKey="ID_User" OtherKey="FK_User" Type="User_BidMapingTable" />
-    </Type>
-  </Table>
   <Table Name="dbo.Bids" Member="Bids">
-    <Type Name="Bid">
+    <Type Name="Bids">
       <Column Name="ID_Bid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="BidName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
@@ -60,11 +39,6 @@
       <Column Name="FK_Konkurs" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Status" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="Coment" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-<<<<<<< .mine
-      <Association Name="Bid_SmetaValue" Member="SmetaValues" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="SmetaValue" />
-      <Association Name="Bid_User_BidMapingTable" Member="User_BidMapingTables" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="User_BidMapingTable" />
-      <Association Name="Konkursy_Bid" Member="Konkursy" ThisKey="FK_Konkurs" OtherKey="ID_Konkurs" Type="Konkursy" IsForeignKey="true" />
-=======
       <Association Name="Bids_Activity" Member="Activity" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="Activity" />
       <Association Name="Bids_Answers" Member="Answers" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="Answers" />
       <Association Name="Bids_CalendarPlan" Member="CalendarPlan" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="CalendarPlan" />
@@ -79,12 +53,8 @@
       <Association Name="Bids_TitleInfo" Member="TitleInfo" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="TitleInfo" />
       <Association Name="Bids_User_BidMapingTable" Member="User_BidMapingTable" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="User_BidMapingTable" />
       <Association Name="Konkursy_Bids" Member="Konkursy" ThisKey="FK_Konkurs" OtherKey="ID_Konkurs" Type="Konkursy" IsForeignKey="true" />
->>>>>>> .r382
     </Type>
   </Table>
-<<<<<<< .mine
-  <Table Name="dbo.Konkursy" Member="Konkursies">
-=======
   <Table Name="dbo.CalendarPlan" Member="CalendarPlan">
     <Type Name="CalendarPlan">
       <Column Name="ID_Event" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -122,8 +92,17 @@
       <Association Name="Questions_Konkurs_QuestionMapingTable" Member="Questions" ThisKey="FK_Question" OtherKey="ID_Question" Type="Questions" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.[Konkurs-TargetMapingTable]" Member="Konkurs_TargetMapingTable">
+    <Type Name="Konkurs_TargetMapingTable">
+      <Column Name="ID_KonkursTarget" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FK_Konkurs" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_Target" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Konkursy_Konkurs_TargetMapingTable" Member="Konkursy" ThisKey="FK_Konkurs" OtherKey="ID_Konkurs" Type="Konkursy" IsForeignKey="true" />
+      <Association Name="TargetIndicators_Konkurs_TargetMapingTable" Member="TargetIndicators" ThisKey="FK_Target" OtherKey="ID_TargetIndicator" Type="TargetIndicators" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.Konkursy" Member="Konkursy">
->>>>>>> .r382
     <Type Name="Konkursy">
       <Column Name="ID_Konkurs" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Number" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
@@ -132,23 +111,14 @@
       <Column Name="EndDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="FK_Curator" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-<<<<<<< .mine
-      <Association Name="Konkursy_AutoFilling" Member="AutoFillings" ThisKey="ID_Konkurs" OtherKey="FK_Konkurs" Type="AutoFilling" />
-      <Association Name="Konkursy_Bid" Member="Bids" ThisKey="ID_Konkurs" OtherKey="FK_Konkurs" Type="Bid" />
-      <Association Name="Konkursy_Smeta" Member="Smetas" ThisKey="ID_Konkurs" OtherKey="FK_Konkurs" Type="Smeta" />
-      <Association Name="User_Konkursy" Member="User" ThisKey="FK_Curator" OtherKey="ID_User" Type="User" IsForeignKey="true" />
-=======
       <Association Name="Konkursy_AutoFilling" Member="AutoFilling" ThisKey="ID_Konkurs" OtherKey="FK_Konkurs" Type="AutoFilling" />
       <Association Name="Konkursy_Bids" Member="Bids" ThisKey="ID_Konkurs" OtherKey="FK_Konkurs" Type="Bids" />
       <Association Name="Konkursy_Konkurs_QuestionMapingTable" Member="Konkurs_QuestionMapingTable" ThisKey="ID_Konkurs" OtherKey="FK_Konkurs" Type="Konkurs_QuestionMapingTable" />
+      <Association Name="Konkursy_Konkurs_TargetMapingTable" Member="Konkurs_TargetMapingTable" ThisKey="ID_Konkurs" OtherKey="FK_Konkurs" Type="Konkurs_TargetMapingTable" />
       <Association Name="Konkursy_Smeta" Member="Smeta" ThisKey="ID_Konkurs" OtherKey="FK_Konkurs" Type="Smeta" />
       <Association Name="Users_Konkursy" Member="Users" ThisKey="FK_Curator" OtherKey="ID_User" Type="Users" IsForeignKey="true" />
->>>>>>> .r382
     </Type>
   </Table>
-<<<<<<< .mine
-  <Table Name="dbo.Smeta" Member="Smetas">
-=======
   <Table Name="dbo.PurchasePlan" Member="PurchasePlan">
     <Type Name="PurchasePlan">
       <Column Name="ID_Purchase" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -235,7 +205,6 @@
     </Type>
   </Table>
   <Table Name="dbo.Smeta" Member="Smeta">
->>>>>>> .r382
     <Type Name="Smeta">
       <Column Name="ID_State" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name_state" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
@@ -243,24 +212,21 @@
       <Column Name="Uniqvalue" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="FK_Konkurs" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="Smeta_SmetaValue" Member="SmetaValues" ThisKey="ID_State" OtherKey="FK_State" Type="SmetaValue" />
+      <Association Name="Smeta_SmetaValue" Member="SmetaValue" ThisKey="ID_State" OtherKey="FK_State" Type="SmetaValue" />
       <Association Name="Konkursy_Smeta" Member="Konkursy" ThisKey="FK_Konkurs" OtherKey="ID_Konkurs" Type="Konkursy" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.SmetaValue" Member="SmetaValues">
+  <Table Name="dbo.SmetaValue" Member="SmetaValue">
     <Type Name="SmetaValue">
       <Column Name="ID_Value" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="FK_Bid" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FK_State" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Value" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Association Name="Bid_SmetaValue" Member="Bid" ThisKey="FK_Bid" OtherKey="ID_Bid" Type="Bid" IsForeignKey="true" />
+      <Association Name="Bids_SmetaValue" Member="Bids" ThisKey="FK_Bid" OtherKey="ID_Bid" Type="Bids" IsForeignKey="true" />
       <Association Name="Smeta_SmetaValue" Member="Smeta" ThisKey="FK_State" OtherKey="ID_State" Type="Smeta" IsForeignKey="true" />
     </Type>
   </Table>
-<<<<<<< .mine
-  <Table Name="dbo.[User-BidMapingTable]" Member="User_BidMapingTables">
-=======
   <Table Name="dbo.SpecialPart" Member="SpecialPart">
     <Type Name="SpecialPart">
       <Column Name="ID_Equipment" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -281,6 +247,7 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="Abb" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Uniqvalue" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="TargetIndicators_Konkurs_TargetMapingTable" Member="Konkurs_TargetMapingTable" ThisKey="ID_TargetIndicator" OtherKey="FK_Target" Type="Konkurs_TargetMapingTable" />
       <Association Name="TargetIndicators_TargetIndicatorValue" Member="TargetIndicatorValue" ThisKey="ID_TargetIndicator" OtherKey="FK_TargetIndicator" Type="TargetIndicatorValue" />
     </Type>
   </Table>
@@ -328,15 +295,30 @@
     </Type>
   </Table>
   <Table Name="dbo.[User-BidMapingTable]" Member="User_BidMapingTable">
->>>>>>> .r382
     <Type Name="User_BidMapingTable">
       <Column Name="ID_UserBid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="FK_User" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FK_Bid" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Access" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="Bid_User_BidMapingTable" Member="Bid" ThisKey="FK_Bid" OtherKey="ID_Bid" Type="Bid" IsForeignKey="true" />
-      <Association Name="User_User_BidMapingTable" Member="User" ThisKey="FK_User" OtherKey="ID_User" Type="User" IsForeignKey="true" />
+      <Association Name="Bids_User_BidMapingTable" Member="Bids" ThisKey="FK_Bid" OtherKey="ID_Bid" Type="Bids" IsForeignKey="true" />
+      <Association Name="Users_User_BidMapingTable" Member="Users" ThisKey="FK_User" OtherKey="ID_User" Type="Users" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="Users">
+      <Column Name="ID_User" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Role" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Post" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="PlaceofWork" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="[E-mail]" Member="E_mail" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Pass" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="[Function]" Member="Function" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="PayPerHour" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Users_Konkursy" Member="Konkursy" ThisKey="ID_User" OtherKey="FK_Curator" Type="Konkursy" />
+      <Association Name="Users_User_BidMapingTable" Member="User_BidMapingTable" ThisKey="ID_User" OtherKey="FK_User" Type="User_BidMapingTable" />
     </Type>
   </Table>
 </Database>

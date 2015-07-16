@@ -1,16 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Userpage.aspx.cs" EnableEventValidation="false" Inherits="Competition.Userpage" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Userpage.aspx.cs" EnableEventValidation="false" MasterPageFile="~/masterpage.Master" Inherits="Competition.Userpage" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-</head>
-<body>
-     <h2><span style="font-size: 30px">Страница пользователя</span></h2>
-    <form id="form1" runat="server">
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolder1" >
     <div>
+    
+        
+        <br />
     
         
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Мои заявки" />
@@ -54,8 +48,7 @@
                     </asp:TemplateField>
 
                          <asp:TemplateField HeaderText="Подать заявку">
-                        <ItemTemplate>      
-                             
+                        <ItemTemplate>                           
                             <asp:Button ID="Bid" runat="server" CommandName="Select" Text="Подать заявку" Width="200px" CommandArgument='<%# Eval("ID_Konkurs") %>' OnClick="Bid_Click"/>
                         </ItemTemplate>
                     </asp:TemplateField>
@@ -64,6 +57,4 @@
         </asp:GridView>
         <br />
         <br />
-    </form>
-</body>
-</html>
+ </asp:Content>

@@ -12,12 +12,6 @@ namespace Competition
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-<<<<<<< .mine
-            CompetitionDBDataContext newCompetition = new CompetitionDBDataContext();
-            List<Konkursy> comp = (from a in newCompetition.Konkursies where a.Active == true select a).ToList();
-            GridView1.DataSource =  comp;
-            GridView1.DataBind();
-=======
                 
                 CompetitionDBDataContext newCompetition = new CompetitionDBDataContext();
                 DataTable dataTableBid = new DataTable();
@@ -44,7 +38,6 @@ namespace Competition
                     GridView1.DataSource = konkurs;
                     GridView1.DataBind();
                     //Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Конкурсы');", true);         
->>>>>>> .r382
         }
 
         protected void Bid_Click(object sender, EventArgs e)

@@ -64,15 +64,13 @@
       <LastGenOutput>CompetitionDB.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-<<<<<<< .mine
-    <Content Include="Competitions_Pages\FormSmeta.aspx" />
-=======
     <Content Include="Questions.aspx" />
     <Content Include="Registration.aspx" />
+    <Content Include="TargetIndicator.aspx" />
     <Content Include="UserBid.aspx" />
     <Content Include="UserLogin.aspx" />
->>>>>>> .r382
     <Content Include="ZapolnenieForm.aspx" />
+    <Content Include="masterpage.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -97,12 +95,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CompetitionDB.dbml</DependentUpon>
     </Compile>
-    <Compile Include="Competitions_Pages\FormSmeta.aspx.cs">
-      <DependentUpon>FormSmeta.aspx</DependentUpon>
+    <Compile Include="masterpage.Master.cs">
+      <DependentUpon>masterpage.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Competitions_Pages\FormSmeta.aspx.designer.cs">
-      <DependentUpon>FormSmeta.aspx</DependentUpon>
+    <Compile Include="masterpage.Master.designer.cs">
+      <DependentUpon>masterpage.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Questions.aspx.cs">
@@ -118,6 +116,13 @@
     </Compile>
     <Compile Include="Registration.aspx.designer.cs">
       <DependentUpon>Registration.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TargetIndicator.aspx.cs">
+      <DependentUpon>TargetIndicator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TargetIndicator.aspx.designer.cs">
+      <DependentUpon>TargetIndicator.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserBid.aspx.cs">
       <DependentUpon>UserBid.aspx</DependentUpon>

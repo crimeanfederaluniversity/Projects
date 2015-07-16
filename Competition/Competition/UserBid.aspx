@@ -1,19 +1,14 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UserBid.aspx.cs" Inherits="Competition.UserBid" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UserBid.aspx.cs" EnableEventValidation="false" MasterPageFile="~/masterpage.Master" Inherits="Competition.UserBid" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-</head>
-<body>
-     <h2><span style="font-size: 30px">Заявки пользователя</span></h2>
-    <form id="form1" runat="server">
+ 
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolder1" >
+ 
+<h2><span style="font-size: 30px">Заявки пользователя</span></h2>
+     
     <div>
     
     </div>
-        <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server">
+        <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
             <Columns>  
            
                  <asp:TemplateField HeaderText="ID" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "False" >                                      
@@ -46,8 +41,15 @@
                         </ItemTemplate>                          
                    </asp:TemplateField>
 
+                 <asp:TemplateField HeaderText="Заполнить">
+                        <ItemTemplate>  
+                                  
+                            <asp:Button ID="Bid" runat="server" CommandName="Select" Text="Заполнить" Width="200px" CommandArgument='<%# Eval("ID_Bid") %>' OnClick="BidFill_Click"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
                 </Columns>
         </asp:GridView>
-    </form>
-</body>
-</html>
+ 
+ </form>
+</asp:Content>    

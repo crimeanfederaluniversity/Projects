@@ -12,8 +12,14 @@ namespace Competition
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            int idbid = 1;//(int)Session["ID_Bid"];
-            
+            CompetitionDBDataContext newCompetition = new CompetitionDBDataContext();      
+            int iduser = (int)Session["ID_User"];
+            List<Bids> userbid = (from a in newCompetition.Bids
+                                  join b in newCompetition.User_BidMapingTable
+                                      on  iduser equals  b.FK_User
+                                  where a.ID_Bid == b.FK_Bid && a.Active == true
+                                  select a).ToList();
+
             DataTable dataTableBid = new DataTable();
 
             dataTableBid.Columns.Add(new DataColumn("ID_Bid", typeof(int)));
@@ -22,15 +28,9 @@ namespace Competition
             dataTableBid.Columns.Add(new DataColumn("Date", typeof(string)));
             dataTableBid.Columns.Add(new DataColumn("Status", typeof(string)));
 
-            CompetitionDBDataContext newCompetition = new CompetitionDBDataContext();
-            Konkursy konname = (from c in newCompetition.Bids
-                                join b in newCompetition.Konkursy
-                                    on c.FK_Konkurs equals b.ID_Konkurs
-                                where b.Active == true
-                                select b).FirstOrDefault();
-            List<Bids> mybid = (from a in newCompetition.Bids  where a.ID_Bid == idbid select a).ToList();
         
-                foreach (Bids n in mybid)
+        
+                foreach (Bids n in userbid)
                 {
                    
                     DataRow dataRow = dataTableBid.NewRow();
@@ -42,8 +42,29 @@ namespace Competition
                     dataRow["Status"] = n.Status;
                 }
                 
-            GridView1.DataSource = mybid;
+            GridView1.DataSource = userbid;
             GridView1.DataBind();
         }
+
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+        protected void BidFill_Click(object sender, EventArgs e)
+        { 
+            Button button = (Button)sender;
+            {
+                Session["ID_Bid"] = Convert.ToInt32(button.CommandArgument);
+                using (CompetitionDBDataContext sessionid = new CompetitionDBDataContext())
+                {
+                    Bids id = (from a in sessionid.Bids
+                               where a.ID_Bid == Convert.ToInt32(button.CommandArgument)
+                               select a).FirstOrDefault();
+
+                    Session["ID_Konkurs"] = Convert.ToInt32(id.FK_Konkurs);
+                }
+                Response.Redirect("~/ZapolnenieForm.aspx");
+            }
+        }
     }
-}
+} 

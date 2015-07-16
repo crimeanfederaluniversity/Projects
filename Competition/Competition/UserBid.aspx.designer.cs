@@ -13,15 +13,6 @@ namespace Competition {
     public partial class UserBid {
         
         /// <summary>
-        /// form1 элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
-        /// <summary>
         /// GridView1 элемент управления.
         /// </summary>
         /// <remarks>
