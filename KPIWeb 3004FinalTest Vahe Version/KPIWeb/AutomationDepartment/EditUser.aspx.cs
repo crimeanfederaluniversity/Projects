@@ -354,5 +354,10 @@ namespace KPIWeb.AutomationDepartment
                 true);
         }
 
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/AutomationDepartment/ReturnReportForUser.aspx");
+        }
+
     }
 }

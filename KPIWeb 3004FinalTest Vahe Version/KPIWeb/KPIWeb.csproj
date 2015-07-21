@@ -189,6 +189,7 @@
     <Content Include="AutomationDepartment\EditUser.aspx" />
     <Content Include="AutomationDepartment\Main.aspx" />
     <Content Include="AutomationDepartment\Regisration.aspx" />
+    <Content Include="AutomationDepartment\ReturnReportForUser.aspx" />
     <Content Include="AutomationDepartment\SendInvite.aspx" />
     <Content Include="AutomationDepartment\WatchingParamtrsState.aspx" />
     <Content Include="Contact.aspx" />
@@ -409,6 +410,13 @@
     </Compile>
     <Compile Include="AutomationDepartment\Regisration.aspx.designer.cs">
       <DependentUpon>Regisration.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AutomationDepartment\ReturnReportForUser.aspx.cs">
+      <DependentUpon>ReturnReportForUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutomationDepartment\ReturnReportForUser.aspx.designer.cs">
+      <DependentUpon>ReturnReportForUser.aspx</DependentUpon>
     </Compile>
     <Compile Include="AutomationDepartment\SendInvite.aspx.cs">
       <DependentUpon>SendInvite.aspx</DependentUpon>
