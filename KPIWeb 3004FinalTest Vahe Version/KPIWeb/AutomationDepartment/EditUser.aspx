@@ -72,7 +72,7 @@
         <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Объединить пользователей" Width="594px" />
         <br />
         <br />
-        <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Вернуть пользователю права на доработку / утвердить данные[BETA]" Width="832px" />
+        <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Вернуть пользователю права на доработку / утвердить данные [BETA]" Width="832px" />
         <br />
         <br />
        <asp:Label ID="Label1" runat="server" Visible="False" Text="Пароль доступа"></asp:Label>

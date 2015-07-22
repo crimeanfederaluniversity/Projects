@@ -11,7 +11,24 @@ namespace KPIWeb.AutomationDepartment
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+
+            int userID = UserSer.Id;
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            ViewState["User"] = userTable.Email;
+
+            if ((userTable.AccessLevel != 10) && (userTable.AccessLevel != 9))
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            ////////////////////////////////////////////////////////
 
             var reports = (from a in kPiDataContext.ReportArchiveTable where a.Active select a);
 
@@ -35,6 +52,8 @@ namespace KPIWeb.AutomationDepartment
             DropDownList2.DataValueField = "Key";
             DropDownList2.DataSource = dictionary2;
             DropDownList2.DataBind();
+
+            DropDownList2.SelectedIndex = 1;
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -43,7 +62,7 @@ namespace KPIWeb.AutomationDepartment
             var user =
                 (from a in kPiDataContext.UsersTable where a.Email.Equals(TextBox1.Text) && a.Active select a).FirstOrDefault();
 
-            if (user != null)
+            if (user != null && (user.FK_ThirdLevelSubdivisionTable != null || user.FK_ThirdLevelSubdivisionTable != 0))
             {
                 var lvl = (from a in kPiDataContext.ReportArchiveAndLevelMappingTable
                     where a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
@@ -65,8 +84,9 @@ namespace KPIWeb.AutomationDepartment
 
                     DisplayAlert("Операция: \" " + DropDownList2.Items[DropDownList2.SelectedIndex].Value.ToString()+" \" успешно выполнена для пользователя: "+user.Email.ToString()+ " в отчете \"" + DropDownList1.Items[DropDownList1.SelectedIndex].Value.ToList() + "\"");
                 }
+                else DisplayAlert("Данный email не относится к выбранному отчету");
             }
-            else DisplayAlert("Данный email не зарегистрирован в системе либо не относится к выбранному отчету");
+            else DisplayAlert("Данный email не зарегистрирован в системе");
         }
 
         private void DisplayAlert(string message)
