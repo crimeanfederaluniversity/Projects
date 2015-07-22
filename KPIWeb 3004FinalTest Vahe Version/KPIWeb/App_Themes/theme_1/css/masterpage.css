@@ -10,6 +10,14 @@
     height: 100%;
     position:relative;
 }
+#cdf {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    left: 100px;
+    top: 100px;
+    background-color: #00ff0f;
+}
 .result_gw tr + tr  td + td  {
     text-align:center;
 }
@@ -246,7 +254,7 @@ background-image: url('http://212.110.152.173/Styles4KPIKFU/css/images/kfu_butto
 
 }
 
-.Grid_view_style {
+.Grid_view_style ,.Grid_view_style_bh {
 
     font-family: "Arial";
     font-size: large;
@@ -263,19 +271,55 @@ background-image: url('http://212.110.152.173/Styles4KPIKFU/css/images/kfu_butto
 
    /* box-shadow: -15px 15px 5px 0px rgba(0,0,0,0.6);*/
 }
-.Grid_view_style th {
-    	position: relative;
-      border-width:1px 1px 1px 1px;
-      border-top-color:#000000;
-      border-bottom-color:#000000;
-      background-color:#585858;
-      color:#ffffff;
-      text-align:center;
-      
+.Grid_view_style_bh tr    {
+
+      background-color:#535353;
+
       
     }
+.Grid_view_style_bh tr th    {
+    	position: relative;
+      border-width:1px 1px 1px 1px;
+      border-top-color:#ffffff;
+      border-bottom-color:#ffffff;
+
+      color:#ffffff;
+      text-align:center;
+          border-left-color: #ffffff;
+    border-right-color: #ffffff;
+            padding-left:10px;
+        padding-right:10px;
+        padding-top:5px;
+        padding-bottom:5px;
+      
+    }
+.Grid_view_style_bh tr + tr   {
+    background-color: transparent;
+    }
+
+.Grid_view_style tr th    {
+    	position: relative;
+      border-width:1px 1px 1px 1px;
+      border-top-color:#000;
+      border-bottom-color:#000;
+
+      color:#000;
+      text-align:center;
+          border-left-color: #000;
+    border-right-color: #000;
+            padding-left:10px;
+        padding-right:10px;
+        padding-top:5px;
+        padding-bottom:5px;
+      
+    }
+.Grid_view_style tr + tr   {
+    background-color: transparent;
+    }
 .Grid_view_style tr, 
-.Grid_view_style td {
+.Grid_view_style td,
+.Grid_view_style_bh tr,
+.Grid_view_style_bh td {
     table-layout:auto;
     border-width:1px 1px 1px 1px;
     border-color:#000000;
@@ -285,7 +329,9 @@ background-image: url('http://212.110.152.173/Styles4KPIKFU/css/images/kfu_butto
     }
 
     .Grid_view_style tr,
-    .Grid_view_style td{
+    .Grid_view_style td,
+   .Grid_view_style_bh tr,
+    .Grid_view_style_bh td {
       
         font-size: small;
         font-weight: normal;
