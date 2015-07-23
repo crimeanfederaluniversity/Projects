@@ -30,35 +30,39 @@ namespace KPIWeb.AutomationDepartment
             }
             ////////////////////////////////////////////////////////
 
-            var reports = (from a in kPiDataContext.ReportArchiveTable where a.Active select a);
-
-            var dictionary = new Dictionary<int, string>();
-            dictionary.Add(-1, "Выберите значение");
-            foreach (var obj in reports)
+            if (!IsPostBack)
             {
-                dictionary.Add(obj.ReportArchiveTableID, obj.Name);
+                var reports = (from a in kPiDataContext.ReportArchiveTable where a.Active select a);
+
+                var dictionary = new Dictionary<int, string>();
+                dictionary.Add(-1, "Выберите значение");
+                foreach (var obj in reports)
+                {
+                    dictionary.Add(obj.ReportArchiveTableID, obj.Name);
+                }
+
+                DropDownList1.DataTextField = "Value";
+                DropDownList1.DataValueField = "Key";
+                DropDownList1.DataSource = dictionary;
+                DropDownList1.DataBind();
+
+                var dictionary2 = new Dictionary<int, string>();
+                dictionary2.Add(1, "Утвердить данные");
+                dictionary2.Add(0, "Разутвердить данные");
+
+                DropDownList2.DataTextField = "Value";
+                DropDownList2.DataValueField = "Key";
+                DropDownList2.DataSource = dictionary2;
+                DropDownList2.DataBind();
             }
 
-            DropDownList1.DataTextField = "Value";
-            DropDownList1.DataValueField = "Key";
-            DropDownList1.DataSource = dictionary;
-            DropDownList1.DataBind();
-
-            var dictionary2 = new Dictionary<int, string>();
-            dictionary2.Add(1, "Утвердить данные");
-            dictionary2.Add(0, "Разутвердить данные");
-
-            DropDownList2.DataTextField = "Value";
-            DropDownList2.DataValueField = "Key";
-            DropDownList2.DataSource = dictionary2;
-            DropDownList2.DataBind();
-
-            DropDownList2.SelectedIndex = 1;
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+
+
             var user =
                 (from a in kPiDataContext.UsersTable where a.Email.Equals(TextBox1.Text) && a.Active select a).FirstOrDefault();
 
@@ -70,19 +74,19 @@ namespace KPIWeb.AutomationDepartment
                 if (lvl != null)
                 {
                     var collected4user = (from a in kPiDataContext.CollectedBasicParametersTable
-                        where a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable && a.FK_ReportArchiveTable == DropDownList1.SelectedIndex
+                        where a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable && a.FK_ReportArchiveTable == Convert.ToInt32(DropDownList1.SelectedItem.Value)
                         select a).ToList();
 
                     foreach (var item in collected4user)
                     {
-                        if ( DropDownList2.SelectedIndex == 0 )
+                        if (Convert.ToInt32(DropDownList2.SelectedItem.Value) == 0)
                             item.Status = 0;
-                        if ( DropDownList2.SelectedIndex == 1 )
+                        if (Convert.ToInt32(DropDownList2.SelectedItem.Value) == 1)
                             item.Status = 4;
                     }
                     kPiDataContext.SubmitChanges();
 
-                    DisplayAlert("Операция: \" " + DropDownList2.Items[DropDownList2.SelectedIndex].Value.ToString()+" \" успешно выполнена для пользователя: "+user.Email.ToString()+ " в отчете \"" + DropDownList1.Items[DropDownList1.SelectedIndex].Value.ToList() + "\"");
+                    DisplayAlert("Операция: \" " + DropDownList2.SelectedItem.Value + " \" успешно выполнена для пользователя: " + user.Email.ToString() + " в отчете \"" + DropDownList1.SelectedItem.Value + "\"");
                 }
                 else DisplayAlert("Данный email не относится к выбранному отчету");
             }
