@@ -86,7 +86,14 @@ namespace KPIWeb.AutomationDepartment
                     }
                     kPiDataContext.SubmitChanges();
 
-                    DisplayAlert("Операция: \" " + DropDownList2.SelectedItem.Value + " \" успешно выполнена для пользователя: " + user.Email.ToString() + " в отчете \"" + DropDownList1.SelectedItem.Value + "\"");
+                    DisplayAlert("Операция: \" " + DropDownList2.SelectedItem.Text + " \" успешно выполнена для пользователя: " + user.Email.ToString() + " в отчете \"" + DropDownList1.SelectedItem.Text + "\"");
+                   
+                    if( (Convert.ToInt32(DropDownList2.SelectedItem.Value) ) == 0 )
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO,
+                            "RRFU0: AdminUser " + ViewState["User"] + " Operation: \" RAZUTVERDIT' \" succes for user " + user.Email.ToString());
+                    else
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO,
+                            "RRFU1: AdminUser " + ViewState["User"] + " Operation: \" UTVERDIT'' \" succes for user " + user.Email.ToString());
                 }
                 else DisplayAlert("Данный email не относится к выбранному отчету");
             }
