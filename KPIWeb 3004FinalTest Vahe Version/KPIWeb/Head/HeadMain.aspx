@@ -1,14 +1,21 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="HeadMain.aspx.cs" Inherits="KPIWeb.Head.HeadMain" %>
-
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">  
-    
     <br />
     <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" OnClientClick="showLoadPanel()"  Text="Просмотреть значения целевых показателей по академиям" Width="753px" />
     <br />
     <br />
+    <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Пользователи, зарегистрированные в системе" Width="600px" />
     <br />
+    <br />
+    <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Информаци о должниках" Width="600px" />
+    <br />
+    <br />
+    <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Общие сведения по отчетам" Enabled="false" Width="600px" />
+    <br />
+
       <script type="text/javascript">
-          function showLoadPanel() {
+          function showLoadPanel()
+          {
               document.getElementById('LoadPanel_').style.visibility = 'visible';
           }
     </script>

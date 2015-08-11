@@ -281,7 +281,7 @@
 
                         $('#' + masoftables[i] + ' tr th').each(function (s) {
 
-                            $("th:nth-child(" + (s + 1) + ")", gridHeader).css('width', ($(this).width() + 1).toString() + "px");
+                            $("th:nth-child(" + (s + 1) + ")", gridHeader).css('width', ($(this).width() +21).toString() + "px");
                         });
 
 
@@ -319,7 +319,7 @@
                         //$("th:nth-child(" + (s + 1) + ")", $("#" + cthead)).css('width', ($(this).width() + 3).toString() + "px");
                         // $("th:nth-child(" + (s + 1) + ")", $("#" + cthead)).css('color', "#ff0000");
                         if (($('#' + masoftables[i] + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width()) != ($('#' + cthead + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width()))
-                        { $("#" + cthead + " tr th:nth-child(" + ((f + 1).toString()) + ")").css('width', (($('#' + masoftables[i] + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width() + 3).toString()) + "px"); }
+                        { $("#" + cthead + " tr th:nth-child(" + ((f + 1).toString()) + ")").css('width', (($('#' + masoftables[i] + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width() + 21).toString()) + "px"); }
                         //$('#cdf').text("ws= "+window.screen.availWidth.toString() + "\nwh= " + windowheighter.toString());
 
                     });

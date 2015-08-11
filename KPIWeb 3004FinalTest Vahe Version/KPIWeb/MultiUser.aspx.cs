@@ -56,6 +56,10 @@ namespace KPIWeb
                         dataRow["UserID"] = User.UsersTableID;
                         dataTable.Rows.Add(dataRow);
                     }
+                    DataView dv = dataTable.DefaultView;
+                    dv.Sort = "UserID desc";
+                    DataTable sortedDT = dv.ToTable();
+
                     GridView1.DataSource = dataTable;
                     GridView1.DataBind();
                 }

@@ -81,11 +81,8 @@ namespace KPIWeb.StatisticsDepartment
             {
                 #region get first level list
                 List<FirstLevelSubdivisionTable> firstLevelList = (from b in kPiDataContext.FirstLevelSubdivisionTable
-                                                                  /* join c in kPiDataContext.ReportArchiveAndLevelMappingTable
-                                                                       on b.FirstLevelSubdivisionTableID equals c.FK_FirstLevelSubmisionTableId*/
                                                                    where b.FK_ZeroLevelSubvisionTable == zeroLevelItem.ZeroLevelSubdivisionTableID
                                                                          && b.Active == true
-                                                                        // && c.Active == true
                                                                    select b).ToList();
                 #endregion
                 //TextBox1.Text+="__" + zeroLevelItem.Name +"\n";

@@ -53,7 +53,7 @@ namespace KPIWeb.StatisticsDepartment
                                       && b.Active == true
                                       && a.AccessLevel == 0
                                       && a.Active == true
-                                      select a).ToList();
+                                      select a).Distinct().ToList();
             int ii = 0;
             foreach (UsersTable currentUser in Users)
             {

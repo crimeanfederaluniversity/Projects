@@ -40,12 +40,13 @@ namespace KPIWeb.Decan
                                                 join d in kpiWebDataContext.ReportArchiveTable
                                                 on c.FK_ReportArchiveTableId equals d.ReportArchiveTableID
                                                 where a.UsersTableID == UserSer.Id
+                                                && a.FK_SecondLevelSubdivisionTable == c.FK_SecondLevelSubdivisionTable
                                                 && a.Active == true
                                                 && b.Active == true
                                                 && c.Active == true
                                                 && d.Active == true
                                                 && d.StartDateTime < DateTime.Now
-                                                select d).ToList();
+                                                select d).Distinct().ToList();
                 ///тут мы получили список активных отччетов пользователя
                 /// пользователь привязан к таблице первого подразделения
                 /// таблица первого подразделения привязана к таблице отчётов(через таблицу связи)
@@ -82,6 +83,7 @@ namespace KPIWeb.Decan
                 foreach (ReportArchiveTable ReportRow in reportsArchiveTablesTable)
                 {
                     #region
+                    /*
                     int can_view =
                                     (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
                                      join b in kpiWebDataContext.BasicParametersTable
@@ -108,13 +110,14 @@ namespace KPIWeb.Decan
                     {
                         continue;
                     }
-
+                    */
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ReportArchiveID"] = ReportRow.ReportArchiveTableID.ToString();
                     dataRow["ReportName"] = ReportRow.Name;
                     dataRow["StartDate"] = ReportRow.StartDateTime.ToString().Split(' ')[0];//только дата// время обрезается сплитом
                     dataRow["EndDate"] = ReportRow.EndDateTime.ToString().Split(' ')[0];
 
+                    /*
                     List<ThirdLevelSubdivisionTable> kafedras = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
                                                               where a.Active == true
                                                               && a.FK_SecondLevelSubdivisionTable == userTable.FK_SecondLevelSubdivisionTable
@@ -126,7 +129,7 @@ namespace KPIWeb.Decan
                                                               where c.Active == true
                                                               && c.CanView == true
                                                               select a).Distinct().ToList();
-
+                    */
 
                     /*
                     List<SecondLevelSubdivisionTable> Faculties = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
@@ -147,6 +150,14 @@ namespace KPIWeb.Decan
                     int AllConfirmed = 0;
 
                     All += (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                            where a.FK_SecondLevelSubdivisionTable == userTable.FK_SecondLevelSubdivisionTable
+                            join b in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                            on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
+                            where a.Active == true
+                            && b.Active == true
+                            select a).Distinct().ToList().Count();
+                        
+                        /*(from a in kpiWebDataContext.ThirdLevelSubdivisionTable
                             where a.Active == true
                             && a.FK_SecondLevelSubdivisionTable == userTable.FK_SecondLevelSubdivisionTable
                             join b in kpiWebDataContext.UsersTable
@@ -156,9 +167,9 @@ namespace KPIWeb.Decan
                             on b.UsersTableID equals c.FK_UsersTable
                             where c.Active == true
                             && c.CanView == true
-                            select a).Distinct().Count();
+                            select a).Distinct().Count();*/
 
-                    AllConfirmed += (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                    AllConfirmed += /*(from a in kpiWebDataContext.ThirdLevelSubdivisionTable
                                      where a.Active == true
                                     && a.FK_SecondLevelSubdivisionTable == userTable.FK_SecondLevelSubdivisionTable
                                      join b in kpiWebDataContext.CollectedBasicParametersTable
@@ -166,13 +177,25 @@ namespace KPIWeb.Decan
                                      where (b.Status == 5 || b.Status == 4)
                                      && b.Active == true
                                      && b.FK_ReportArchiveTable == ReportRow.ReportArchiveTableID
-                                     select a).Distinct().Count();
+                                     select a).Distinct().Count();*/
+                        (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                            where a.FK_SecondLevelSubdivisionTable == userTable.FK_SecondLevelSubdivisionTable
+                            join b in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                            on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
+                         where a.Active == true
+                         && b.Active == true
+                         join c in kpiWebDataContext.CollectedBasicParametersTable
+                         on a.ThirdLevelSubdivisionTableID equals c.FK_ThirdLevelSubdivisionTable
+                         where (c.Status == 5 || c.Status == 4)
+                         && c.Active == true
+                         && c.FK_ReportArchiveTable == ReportRow.ReportArchiveTableID
+                         select a).Distinct().ToList().Count();
 
                     string status="";
 
                     if (AllConfirmed == All)
                     {
-                        int allconf2 = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                        int allconf2 = /*(from a in kpiWebDataContext.ThirdLevelSubdivisionTable
                                         where a.Active == true
                                         && a.FK_SecondLevelSubdivisionTable == userTable.FK_SecondLevelSubdivisionTable
                                         join b in kpiWebDataContext.CollectedBasicParametersTable
@@ -180,7 +203,19 @@ namespace KPIWeb.Decan
                                         where b.Status == 5
                                         && b.Active == true
                                         && b.FK_ReportArchiveTable == ReportRow.ReportArchiveTableID
-                                        select a).Distinct().Count();
+                                        select a).Distinct().Count();*/
+                            (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                             where a.FK_SecondLevelSubdivisionTable == userTable.FK_SecondLevelSubdivisionTable
+                             join b in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                             on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
+                             where a.Active == true
+                             && b.Active == true
+                             join c in kpiWebDataContext.CollectedBasicParametersTable
+                             on a.ThirdLevelSubdivisionTableID equals c.FK_ThirdLevelSubdivisionTable
+                             where c.Status == 5 
+                             && c.Active == true
+                             && c.FK_ReportArchiveTable == ReportRow.ReportArchiveTableID
+                             select a).Distinct().ToList().Count();
 
                         if (allconf2 > (AllConfirmed / 2))
                         {

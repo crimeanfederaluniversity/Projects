@@ -59,7 +59,22 @@ namespace KPIWeb.Director
                 dataTable.Columns.Add(new DataColumn("Status", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Color", typeof(string)));
 
-                List<ThirdLevelSubdivisionTable> OnlyKafedras = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                List<ThirdLevelSubdivisionTable> OnlyKafedras = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable                                                                                                                                
+                                                                 join b in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                                                 on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
+                                                                 join c in kpiWebDataContext.UsersTable 
+                                                                 on a.ThirdLevelSubdivisionTableID equals c.FK_ThirdLevelSubdivisionTable
+                                                                 join d in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                                                 on c.UsersTableID equals  d.FK_UsersTable
+                                                                 where d.CanView == true
+                                                                 && d.FK_ParametrsTable == 3828
+                                                                 && b.FK_ReportArchiveTableId == ReportID
+                                                                 && a.FK_SecondLevelSubdivisionTable == SecondLevel
+                                                                 && a.Active == true
+                                                                 && b.Active == true
+                                                                 && c.Active == true
+                                                                 select a).Distinct().ToList();
+                                                             /*    from a in kpiWebDataContext.ThirdLevelSubdivisionTable
                                                                  join b in kpiWebDataContext.UsersTable
                                                                      on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
                                                                  join c in kpiWebDataContext.BasicParametrsAndUsersMapping
@@ -72,11 +87,28 @@ namespace KPIWeb.Director
                                                                  && c.CanView == true
                                                                  && b.FK_SecondLevelSubdivisionTable == SecondLevel
                                                                  select a).Distinct().ToList();
+                                                             */
 
 
+                List<ThirdLevelSubdivisionTable> KafedrasnFaculties = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                                                                       join b in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                                                       on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
+                                                                       where
+                                                                         b.FK_ReportArchiveTableId == ReportID
+                                                                        && a.FK_SecondLevelSubdivisionTable == SecondLevel
+                                                                        && a.Active == true
+                                                                        && b.Active == true
+                                                                        select a).Distinct().ToList();
+                                                                      // join c in kpiWebDataContext.UsersTable
+                                                                      // on a.ThirdLevelSubdivisionTableID equals c.FK_ThirdLevelSubdivisionTable
+                                                                      // join d in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                                                      //on c.UsersTableID equals d.FK_UsersTable
+                                                                      // where d.CanView == true
+                                                                      // && d.FK_ParametrsTable == 3828
 
-                List<ThirdLevelSubdivisionTable> KafedrasnFaculties =
-                                                               (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                                                                       //&& c.Active == true
+                                                                      
+                                                               /*(from a in kpiWebDataContext.ThirdLevelSubdivisionTable
                                                                 join b in kpiWebDataContext.UsersTable
                                                                     on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
                                                                 join c in kpiWebDataContext.BasicParametrsAndUsersMapping
@@ -87,7 +119,7 @@ namespace KPIWeb.Director
                                                                 && c.Active == true
                                                                 && c.CanView == true
                                                                 && b.FK_SecondLevelSubdivisionTable == SecondLevel
-                                                                select a).Distinct().ToList();
+                                                                select a).Distinct().ToList();*/
 
                 List<ThirdLevelSubdivisionTable> NoKafedra = KafedrasnFaculties;
                 int confirmedCafedras = 0;
@@ -124,11 +156,22 @@ namespace KPIWeb.Director
                     dataRow["StructName"] = CurrentThird.Name;
                     dataRow["StructID"] = CurrentThird.ThirdLevelSubdivisionTableID;
 
-                    int Statusn = (int) (from a in kpiWebDataContext.CollectedBasicParametersTable
-                                                                    where a.FK_ReportArchiveTable == ReportID
-                                                                    && a.Active == true
-                                                                    && a.FK_ThirdLevelSubdivisionTable == CurrentThird.ThirdLevelSubdivisionTableID
-                                                                    select a.Status).FirstOrDefault();
+
+                    CollectedBasicParametersTable tmp = (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                  where a.FK_ReportArchiveTable == ReportID
+                                                  && a.Active == true
+                                                  && a.FK_ThirdLevelSubdivisionTable == CurrentThird.ThirdLevelSubdivisionTableID
+                                                  select a).FirstOrDefault();
+                    int Statusn=0;
+                    if (tmp ==null)
+                    {
+                        Statusn = 0;
+                    }
+                    else
+                    {
+                        Statusn = (int) tmp.Status;
+                    }
+                     
                     string status = "Нет данных";
                     if (Statusn == 4)
                     {
@@ -180,18 +223,21 @@ namespace KPIWeb.Director
                     if (confirmedCafedras == OnlyKafedras.Count)
                     {
                         dataRow["Color"] = 2;
+                        dataRow["Status"] = "Утверждено " + confirmedCafedras.ToString() + " из " + OnlyKafedras.Count.ToString();
                     }
                     else if (soglasovano)
                     {
                          dataRow["Color"] = 3;
+                         dataRow["Status"] = "Данные согласованы";
                     }
                     else
                     {
                          dataRow["Color"] = 1;
+                         dataRow["Status"] = "Утверждено " + confirmedCafedras.ToString() + " из " + OnlyKafedras.Count.ToString();
                     }
                    
 
-                    dataRow["Status"] = "Утверждено " + confirmedCafedras.ToString()+ " из "+ OnlyKafedras.Count.ToString();
+                    
                     dataTable.Rows.Add(dataRow);
                 }
                 GridView1.DataSource = dataTable;

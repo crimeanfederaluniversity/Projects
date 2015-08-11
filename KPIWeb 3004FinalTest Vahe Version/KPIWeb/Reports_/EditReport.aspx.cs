@@ -16,7 +16,90 @@ namespace KPIWeb.Reports
     public partial class EditReport : System.Web.UI.Page
     {
         UsersTable user;
+        [Serializable]
+        public class Struct // класс описываюший структурные подразделения
+        {
+            public int Lv_0 { get; set; }
+            public int Lv_1 { get; set; }
+            public int Lv_2 { get; set; }
+            public int Lv_3 { get; set; }
+            public int Lv_4 { get; set; }
+            public int Lv_5 { get; set; }
+            public Struct(int lv0, int lv1, int lv2, int lv3, int lv4, int lv5)
+            {
+                Lv_0 = lv0;
+                Lv_1 = lv1;
+                Lv_2 = lv2;
+                Lv_3 = lv3;
+                Lv_4 = lv4;
+                Lv_5 = lv5;
+            }
+        }
 
+        private void CheckAllChildNodes(TreeNode treeNode, bool nodeChecked) // Рекурсивно проставляем галочки
+        {
+            foreach (TreeNode node in treeNode.ChildNodes)
+            {
+                node.Checked = nodeChecked;
+                if (node.ChildNodes.Count > 0)
+                {
+                    this.CheckAllChildNodes(node, nodeChecked);
+                }
+            }
+        }
+
+
+        public class MyObject
+        {
+            public int Id;
+            public int ParentId;
+            public string Name;
+            public bool Checked;
+        }
+
+        private void BindTree(IEnumerable<MyObject> list, TreeNode parentNode)
+        {
+            var nodes = list.Where(x => parentNode == null ? x.ParentId == 0 : x.ParentId == int.Parse(parentNode.Value));
+
+            foreach (var node in nodes)
+            {
+                TreeNode newNode = new TreeNode(node.Name, node.Id.ToString());
+                newNode.Checked = node.Checked;
+                newNode.SelectAction = TreeNodeSelectAction.None;
+                if (parentNode == null)
+                {
+                    TreeView1.Nodes.Add(newNode);
+                }
+                else
+                {
+                    parentNode.ChildNodes.Add(newNode);
+                }
+                BindTree(list, newNode);
+            }
+        }
+
+        public bool CheckIfChecked(int lv0, int Lv_1, int Lv_2, int Lv_3, int Lv_4, int Lv_5, int ReportID)
+        {
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            ReportArchiveAndLevelMappingTable CurrentConnection
+           = (from a in kPiDataContext.ReportArchiveAndLevelMappingTable
+              where a.FK_ReportArchiveTableId == ReportID
+                 && (a.FK_FirstLevelSubmisionTableId == Lv_1 || (Lv_1 == 0 && a.FK_FirstLevelSubmisionTableId == null))
+                 && (a.FK_SecondLevelSubdivisionTable == Lv_2 || (Lv_2 == 0 && a.FK_SecondLevelSubdivisionTable == null))
+                 && (a.FK_ThirdLevelSubdivisionTable == Lv_3 || (Lv_3 == 0 && a.FK_ThirdLevelSubdivisionTable == null))
+                 && (a.FK_FourthLevelSubdivisionTable == Lv_4 || (Lv_4 == 0 && a.FK_FourthLevelSubdivisionTable == null))
+                 && (a.FK_FifthLevelSubdivisionTable == Lv_5 || (Lv_5 == 0 && a.FK_FifthLevelSubdivisionTable == null))
+              select a).FirstOrDefault();
+            if (CurrentConnection == null)
+            {
+                return false;
+            }
+            if (CurrentConnection.Active == false)
+            {
+                return false;
+            }
+            return true;
+        }
 
         protected void FillGridVIews(int reportID)
         {   
@@ -226,11 +309,12 @@ namespace KPIWeb.Reports
 
             if (!Page.IsPostBack)
             {
+                KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+                  int reportArchiveTableID = 0;
                 if (ReportId.ReportArchiveID != 0)
                 {
-                    int reportArchiveTableID = ReportId.ReportArchiveID;
+                    reportArchiveTableID  = ReportId.ReportArchiveID;
 
-                    KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
                     ReportArchiveTable ReportArchiveTable = (from item in KPIWebDataContext.ReportArchiveTable
                                                              where item.ReportArchiveTableID == reportArchiveTableID
                                                              select item).FirstOrDefault();
@@ -240,7 +324,7 @@ namespace KPIWeb.Reports
                         CheckBoxCalculeted.Checked = ReportArchiveTable.Calculeted;
                         CheckBoxSent.Checked = ReportArchiveTable.Sent;
                         CheckBoxRecipientConfirmed.Checked = ReportArchiveTable.RecipientConfirmed;
-                        
+
                         TextBoxName.Text = ReportArchiveTable.Name;
 
                         if (ReportArchiveTable.StartDateTime != null)
@@ -264,46 +348,114 @@ namespace KPIWeb.Reports
                         if (ReportArchiveTable.DaysBeforeToCalcForRector != null)
                             DaysBeforeToCalcForRector.Text = ReportArchiveTable.DaysBeforeToCalcForRector.ToString();
                     }
+
+                    
+                    
                     ////заполнили поля
                     List<FirstLevelSubdivisionTable> academies =
                         (from item in KPIWebDataContext.FirstLevelSubdivisionTable
-                         where item.Active==true
-                            select item).ToList();
-                    int i = 0;
+                         where item.Active == true
+                         select item).ToList();
+                   // int i = 0;
 
-                    foreach (FirstLevelSubdivisionTable academy in academies)
-                    {
-                        CheckBoxList1.Items.Add(academy.Name);
-                        int tmp = (from item in KPIWebDataContext.ReportArchiveAndLevelMappingTable
-                            where item.FK_FirstLevelSubmisionTableId == academy.FirstLevelSubdivisionTableID
-                                  && item.FK_ReportArchiveTableId == reportArchiveTableID
-                            select item).Count();
-                        CheckBoxList1.Items[i].Selected = tmp > 0 ? true : false; 
-                        CheckBoxList1.Items[i].Value = academy.FirstLevelSubdivisionTableID.ToString();
-                        i++;
-                    }            
-                    //////////////////////////////////////////////////////////////////////////////////
                     FillGridVIews(reportArchiveTableID);
                 }
                 else //создаем новый отчёт
                 {
-                    KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+                    
                     ButtonSave.Text="Сохранить новую кампанию";
 
                     List<FirstLevelSubdivisionTable> academies =
                         (from item in KPIWebDataContext.FirstLevelSubdivisionTable
                          where item.Active == true
                          select item).ToList();
-                    int i = 0;
-
-                    foreach (FirstLevelSubdivisionTable academy in academies)
-                    {
-                        CheckBoxList1.Items.Add(academy.Name);
-                        CheckBoxList1.Items[i].Value = academy.FirstLevelSubdivisionTableID.ToString();
-                        i++;
-                    }        
+                  //  int i = 0;            
                     FillGridVIews(0);
                 }
+
+                {
+                    TreeView1.Attributes.Add("onclick", "postBackByObject()");
+                    TreeView1.DataSource = null;
+                    TreeView1.DataBind();
+                    List<MyObject> list = new List<MyObject>();
+                    Dictionary<int, Struct> CollectedStruct = new Dictionary<int, Struct>();
+                    int i = 1;
+                    string tmp2;
+                    #region get zero leve list
+
+                    List<ZeroLevelSubdivisionTable> zeroLevelList = (from a in kPiDataContext.ZeroLevelSubdivisionTable
+                                                                     where a.Active == true
+                                                                     select a).ToList();
+                    #endregion
+                    foreach (ZeroLevelSubdivisionTable zeroLevelItem in zeroLevelList)//по каждому университету
+                    {
+                        #region get first level list
+                        List<FirstLevelSubdivisionTable> firstLevelList = (from b in kPiDataContext.FirstLevelSubdivisionTable
+
+                                                                           where b.FK_ZeroLevelSubvisionTable == zeroLevelItem.ZeroLevelSubdivisionTableID
+                                                                                 && b.Active == true
+                                                                           select b).ToList();
+                        #endregion
+                        i++;
+                        //  CollectedStruct.Add(i, new Struct(zeroLevelItem.ZeroLevelSubdivisionTableID, 0, 0, 0, 0, 0));
+
+                        int par0 = i;
+                        tmp2 = zeroLevelItem.Name;
+                        if (tmp2 != null)
+                            list.Add(new MyObject() { Id = i, ParentId = 0, Name = tmp2, Checked = false });
+                        foreach (FirstLevelSubdivisionTable firstLevelItem in firstLevelList)//по каждой академии
+                        {
+                            #region get second level list
+                            List<SecondLevelSubdivisionTable> secondLevelList =
+                                (from d in kPiDataContext.SecondLevelSubdivisionTable
+                                 where d.FK_FirstLevelSubdivisionTable == firstLevelItem.FirstLevelSubdivisionTableID
+                                 && d.Active == true
+                                 select d).ToList();
+                            #endregion
+                            i++;
+                            CollectedStruct.Add(i, new Struct(zeroLevelItem.ZeroLevelSubdivisionTableID,
+                                firstLevelItem.FirstLevelSubdivisionTableID, 0, 0, 0, 0));
+
+                            int par1 = i;
+                            tmp2 = firstLevelItem.Name;
+                            if (tmp2 != null)
+                                list.Add(new MyObject() { Id = i, ParentId = par0, Name = tmp2, Checked = CheckIfChecked(zeroLevelItem.ZeroLevelSubdivisionTableID, firstLevelItem.FirstLevelSubdivisionTableID, 0, 0, 0, 0, reportArchiveTableID) });
+                            foreach (SecondLevelSubdivisionTable secondLevelItem in secondLevelList)//по каждому факультету
+                            {
+                                #region get third level list
+                                List<ThirdLevelSubdivisionTable> thirdLevelList =
+                                    (from f in kPiDataContext.ThirdLevelSubdivisionTable
+                                     where f.FK_SecondLevelSubdivisionTable == secondLevelItem.SecondLevelSubdivisionTableID
+                                     && f.Active == true
+                                     select f).ToList();
+                                #endregion
+                                i++;
+                                CollectedStruct.Add(i, new Struct(zeroLevelItem.ZeroLevelSubdivisionTableID,
+                                    firstLevelItem.FirstLevelSubdivisionTableID, secondLevelItem.SecondLevelSubdivisionTableID, 0, 0, 0));
+
+                                int par2 = i;
+                                tmp2 = secondLevelItem.Name;
+                                if (tmp2 != null)
+                                    list.Add(new MyObject() { Id = i, ParentId = par1, Name = tmp2, Checked = CheckIfChecked(zeroLevelItem.ZeroLevelSubdivisionTableID, firstLevelItem.FirstLevelSubdivisionTableID, secondLevelItem.SecondLevelSubdivisionTableID, 0, 0, 0, reportArchiveTableID) });
+                                foreach (ThirdLevelSubdivisionTable thirdLevelItem in thirdLevelList)//по кафедре
+                                {
+                                    i++;
+                                    CollectedStruct.Add(i, new Struct(zeroLevelItem.ZeroLevelSubdivisionTableID,
+                                        firstLevelItem.FirstLevelSubdivisionTableID, secondLevelItem.SecondLevelSubdivisionTableID,
+                                        thirdLevelItem.ThirdLevelSubdivisionTableID, 0, 0));
+                                    int par3 = i;
+                                    tmp2 = thirdLevelItem.Name;
+                                    if (tmp2 != null)
+                                        list.Add(new MyObject() { Id = i, ParentId = par2, Name = tmp2, Checked = CheckIfChecked(zeroLevelItem.ZeroLevelSubdivisionTableID, firstLevelItem.FirstLevelSubdivisionTableID, secondLevelItem.SecondLevelSubdivisionTableID, thirdLevelItem.ThirdLevelSubdivisionTableID, 0, 0, reportArchiveTableID) });
+                                }
+                            }
+                        }
+                    }
+                    BindTree(list, null);
+                    TreeView1.CollapseAll();
+                    ViewState["CollectedStruct"] = CollectedStruct;
+                }
+                ////заполнили дерево
             }
         }
 
@@ -335,13 +487,14 @@ namespace KPIWeb.Reports
 
                 Serialization ReportId = (Serialization) Session["ReportArchiveTableID"];
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-                ReportArchiveTable reportArchiveTable = new ReportArchiveTable();
+                
 
                 #region //запись в базу нового отчёта или внесение изменений в старый
-
+                ReportArchiveTable reportArchiveTable;
                 int reportArchiveTableID = 0;
                 if (ReportId.ReportArchiveID == 0) // создаем новую запись в БД и узнаем ей айди
                 {
+                    reportArchiveTable = new ReportArchiveTable();
                     reportArchiveTable.Active = CheckBoxActive.Checked;
                     reportArchiveTable.Calculeted = CheckBoxCalculeted.Checked;
                     reportArchiveTable.Sent = CheckBoxSent.Checked;
@@ -416,6 +569,60 @@ namespace KPIWeb.Reports
 
                 #endregion
 
+                //соединяем отчет и струтуру
+                List<ReportArchiveAndLevelMappingTable> ExistingList = (from a in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                                                        where a.FK_ReportArchiveTableId == reportArchiveTableID
+                                                                        select a).ToList();
+                foreach (ReportArchiveAndLevelMappingTable currentConnect in ExistingList)
+                {
+                    currentConnect.Active = false;
+                }
+                kpiWebDataContext.SubmitChanges();
+
+                Dictionary<int, Struct> CollectedStruct = (Dictionary<int, Struct>)ViewState["CollectedStruct"];
+
+                foreach (TreeNode Node in TreeView1.CheckedNodes)
+                {
+                    Struct CurrentStruct;
+                    if (CollectedStruct.TryGetValue(Convert.ToInt32(Node.Value), out CurrentStruct))
+                    {
+                        ReportArchiveAndLevelMappingTable CurrentConnection
+                       = (from a in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                          where a.FK_ReportArchiveTableId == reportArchiveTableID
+                             && (a.FK_FirstLevelSubmisionTableId == CurrentStruct.Lv_1 || (CurrentStruct.Lv_1 == 0 && a.FK_FirstLevelSubmisionTableId == null))
+                             && (a.FK_SecondLevelSubdivisionTable == CurrentStruct.Lv_2 || (CurrentStruct.Lv_2 == 0 && a.FK_SecondLevelSubdivisionTable == null))
+                             && (a.FK_ThirdLevelSubdivisionTable == CurrentStruct.Lv_3 || (CurrentStruct.Lv_3 == 0 && a.FK_ThirdLevelSubdivisionTable == null))
+                             && (a.FK_FourthLevelSubdivisionTable == CurrentStruct.Lv_4 || (CurrentStruct.Lv_4 == 0 && a.FK_FourthLevelSubdivisionTable == null))
+                             && (a.FK_FifthLevelSubdivisionTable == CurrentStruct.Lv_5 || (CurrentStruct.Lv_5 == 0 && a.FK_FifthLevelSubdivisionTable == null))
+                          select a).FirstOrDefault();
+                        if (CurrentConnection == null)
+                        {
+                            CurrentConnection = new ReportArchiveAndLevelMappingTable();
+                            CurrentConnection.FK_ReportArchiveTableId = reportArchiveTableID;
+                            CurrentConnection.Active = true;
+                            if (CurrentStruct.Lv_1 != 0)
+                                CurrentConnection.FK_FirstLevelSubmisionTableId = CurrentStruct.Lv_1;
+                            if (CurrentStruct.Lv_2 != 0)
+                                CurrentConnection.FK_SecondLevelSubdivisionTable = CurrentStruct.Lv_2;
+                            if (CurrentStruct.Lv_3 != 0)
+                                CurrentConnection.FK_ThirdLevelSubdivisionTable = CurrentStruct.Lv_3;
+                            if (CurrentStruct.Lv_4 != 0)
+                                CurrentConnection.FK_FourthLevelSubdivisionTable = CurrentStruct.Lv_4;
+                            if (CurrentStruct.Lv_5 != 0)
+                                CurrentConnection.FK_FifthLevelSubdivisionTable = CurrentStruct.Lv_5;
+                            kpiWebDataContext.ReportArchiveAndLevelMappingTable.InsertOnSubmit(CurrentConnection);
+                            kpiWebDataContext.SubmitChanges();
+                        }
+                        else
+                        {
+                            CurrentConnection.Active = true;
+                            kpiWebDataContext.SubmitChanges();
+                        }
+                    }
+                }
+                //соединяем отчет и струтуру
+
+                /*
                 #region //связь отчёта со структурным подразд 1 уровня создание или изменение
 
                 foreach (ListItem checkItem in CheckBoxList1.Items)
@@ -456,7 +663,7 @@ namespace KPIWeb.Reports
                 kpiWebDataContext.SubmitChanges();
 
                 #endregion
-
+                */
                 ////////////////////////////////////////////////////////пора записать данные в таблицы связей 
 
                 if ((ViewState["BasicDataTable"] != null) && (ViewState["CalculateDataTable"] != null) &&
@@ -718,12 +925,50 @@ namespace KPIWeb.Reports
             }
         }
 
-        protected void Button3_Click(object sender, EventArgs e)
+        protected void TreeView1_TreeNodeCheckChanged(object sender, TreeNodeEventArgs e)
         {
-            for (int i = 0; i < CheckBoxList1.Items.Count; i++)
+            if (e.Node.ChildNodes.Count > 0)
             {
-                CheckBoxList1.Items[i].Selected = true;
+                this.CheckAllChildNodes(e.Node, e.Node.Checked);
             }
         }
+
+        protected void TreeView1_SelectedNodeChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        public int nodeChecked(string Value, TreeNode treeNode)
+        {
+            foreach (TreeNode node in treeNode.ChildNodes)
+            {
+                if (node.Value == Value)
+                {
+                    if (node.Checked)
+                    {
+                        return 2;
+                    }
+                    else
+                    {
+                        return 1;
+                    }
+                }
+                else
+                {
+                    if (node.ChildNodes.Count > 0)
+                    {
+                        int i = nodeChecked(Value, node);
+                        if (i != 0)
+                        {
+                            return i;
+                        }
+                    }
+                    return 0;
+                }
+
+            }
+            return 0;
+        }
+
     }
 }

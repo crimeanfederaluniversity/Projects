@@ -65,9 +65,29 @@ namespace KPIWeb.Rector
 
                 KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();                
                 List<ReportArchiveTable> reportsArchiveTablesTable = null;            
+               /* reportsArchiveTablesTable = (from a in kpiWebDataContext.UsersTable
+                                             where a.Active == true 
+                                             && a.UsersTableID == userID
+                                             join b in kpiWebDataContext.IndicatorsAndUsersMapping
+                                             on a.UsersTableID equals b.FK_UsresTable
+                                             where b.Active == true
+                                             && b.CanView == true
+
+                                             where c.Active == true select c).ToList();
+                */
+
                 reportsArchiveTablesTable = (from a in kpiWebDataContext.ReportArchiveTable
+                                             join b in kpiWebDataContext.ReportArchiveAndIndicatorsMappingTable
+                                             on a.ReportArchiveTableID equals b.FK_ReportArchiveTable
                                              where a.Active == true
-                select a).ToList();
+                                             && b.Active == true
+                                             join c in kpiWebDataContext.IndicatorsAndUsersMapping
+                                             on b.FK_IndicatorsTable equals c.FK_IndicatorsTable
+                                             where c.Active == true
+                                             && c.CanView == true
+                                             && c.FK_UsresTable == userID
+                                             select a).Distinct().ToList();
+
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("ReportArchiveID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("ReportName", typeof(string)));

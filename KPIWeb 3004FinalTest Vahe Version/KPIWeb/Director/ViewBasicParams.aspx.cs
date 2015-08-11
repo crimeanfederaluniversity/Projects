@@ -86,14 +86,12 @@ namespace KPIWeb.Director
                                          select a).FirstOrDefault();
             Label2.Text = Report.Name;
 
-            //если ThirdLevel равен 0  то покажем по всем кафедрам
             if (!Page.IsPostBack)
             {
                 #region
 
                 List<string> columnNames = new List<string>(); // сюда сохраняем названия колонок
-//                List<string> basicNames = new List<string>(); // сюда названия параметров для excel
-                /////создаем дататейбл
+
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("BasicParametersTableID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
@@ -104,9 +102,22 @@ namespace KPIWeb.Director
                     dataTable.Columns.Add(new DataColumn("Value" + k.ToString(), typeof(string)));
                 }
                 #endregion
+
+
+                DataTable dataTableToEdit = new DataTable();
+                dataTableToEdit.Columns.Add(new DataColumn("ID", typeof(string)));
+                dataTableToEdit.Columns.Add(new DataColumn("LevelName", typeof(string)));
+
+
+
                 int additionalColumnCount = 0;
                 if (ThirdLevel != 0)
                 {
+                    //тут только деканат
+
+
+
+                    #region
                     #region
                     List<BasicParametersTable> KafBasicParams = (from a in kpiWebDataContext.BasicParametersTable
                                                                  where a.Active == true
@@ -181,8 +192,8 @@ namespace KPIWeb.Director
                         }
                     }
                     string str0 = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
-                                     where a.ThirdLevelSubdivisionTableID == ThirdLevel
-                                     select a.Name).FirstOrDefault();
+                                   where a.ThirdLevelSubdivisionTableID == ThirdLevel
+                                   select a.Name).FirstOrDefault();
                     if (str0 == "Деканат")
                     {
                         columnNames.Add("Факультет");
@@ -226,15 +237,6 @@ namespace KPIWeb.Director
                         //Получили список специальностей для кафедры под пользователем 
                         foreach (FourthLevelSubdivisionTable spec in Specialzations)
                         {
-                            /*
-                            columnNames.Add("Направление подготовки\r" +
-                                            (from a in kpiWebDataContext.SpecializationTable
-                                             where a.SpecializationTableID == spec.FK_Specialization
-                                             select a.Name).FirstOrDefault().ToString() +" : "+ 
-                                             (from a in kpiWebDataContext.SpecializationTable
-                                             where a.SpecializationTableID == spec.FK_Specialization
-                                             select a.SpecializationNumber).FirstOrDefault().ToString());
-                           */
                             string CurrentColumnName = (from a in kpiWebDataContext.SpecializationTable
                                                         where a.SpecializationTableID == spec.FK_Specialization
                                                         select a.SpecializationNumber).FirstOrDefault().ToString();
@@ -285,13 +287,16 @@ namespace KPIWeb.Director
                                              (a.FK_FourthLevelSubdivisionTable ==
                                               spec.FourthLevelSubdivisionTableID)
                                          select a).FirstOrDefault();
+                                    if (collectedBasicTmp == null)
+                                    {
+                                        continue;
+                                    }
                                     dataRow["Value" + i] = collectedBasicTmp.CollectedValue.ToString();
                                 }
                                 i++;
                             }
                             if (j > 0)
                             {
-                                //  basicNames.Add(specBasicParam.Name);
                                 dataRow["Name"] = specBasicParam.Name;
                                 dataRow["BasicParametersTableID"] = specBasicParam.BasicParametersTableID;
                                 string comment_ = (from a in kpiWebDataContext.BasicParametrAdditional
@@ -321,9 +326,31 @@ namespace KPIWeb.Director
                         additionalColumnCount += Specialzations.Count;
                     }
                     #endregion
+                    #endregion
+                    if ((DateTime)Report.EndDateTime < DateTime.Now)
+                    {
+                        GridView1.Visible = false;
+                    }
+                    else
+                    {
+                        ThirdLevelSubdivisionTable ThirdLevelTable = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                                                                      where
+                                                                          a.ThirdLevelSubdivisionTableID == ThirdLevel
+                                                                      select a).FirstOrDefault();
+
+                        DataRow dataRowEdit = dataTableToEdit.NewRow();
+                        dataRowEdit["ID"] = ThirdLevel;
+                        dataRowEdit["LevelName"] = ThirdLevelTable.Name;
+                        dataTableToEdit.Rows.Add(dataRowEdit);
+                        GridView1.DataSource = dataTableToEdit;
+                        GridView1.DataBind();
+                    }
+
                 }
                 else
                 {
+                    // тут несколько кафедр
+                    #region
                     List<ThirdLevelSubdivisionTable> OnlyKafedras = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
                                                                      join b in kpiWebDataContext.UsersTable
                                                                          on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
@@ -339,7 +366,7 @@ namespace KPIWeb.Director
                                                                      select a).Distinct().ToList();
                     if (OnlyKafedras.Count() > 0)
                     {
-                        foreach (ThirdLevelSubdivisionTable  curThird in OnlyKafedras)
+                        foreach (ThirdLevelSubdivisionTable curThird in OnlyKafedras)
                         {
                             columnNames.Add(curThird.Name);
                             additionalColumnCount++;
@@ -359,10 +386,13 @@ namespace KPIWeb.Director
                                                                      select a).Distinct().ToList();
                         foreach (BasicParametersTable currentBasic in KafBasicParams)
                         {
+
+
+
                             DataRow dataRow = dataTable.NewRow();
                             dataRow["Name"] = currentBasic.Name;
                             dataRow["BasicParametersTableID"] = currentBasic.BasicParametersTableID;
-                            int i=0;
+                            int i = 0;
 
                             string comment_ = (from a in kpiWebDataContext.BasicParametrAdditional
                                                where a.BasicParametrAdditionalID == currentBasic.BasicParametersTableID
@@ -386,20 +416,21 @@ namespace KPIWeb.Director
 
                             foreach (ThirdLevelSubdivisionTable currentThird in OnlyKafedras)
                             {
+
                                 CollectedBasicParametersTable curcollect = (from a in kpiWebDataContext.CollectedBasicParametersTable
-                                                                                where a.FK_BasicParametersTable == currentBasic.BasicParametersTableID
-                                                                                && a.FK_ThirdLevelSubdivisionTable  == currentThird.ThirdLevelSubdivisionTableID
-                                                                                && a.FK_ReportArchiveTable == ReportID
+                                                                            where a.FK_BasicParametersTable == currentBasic.BasicParametersTableID
+                                                                            && a.FK_ThirdLevelSubdivisionTable == currentThird.ThirdLevelSubdivisionTableID
+                                                                            && a.FK_ReportArchiveTable == ReportID
                                                                             select a).FirstOrDefault();
-                                if (curcollect == null )
+                                if (curcollect == null)
                                 {
-                                    dataRow["Value" + i] ="";
+                                    dataRow["Value" + i] = "";
                                 }
                                 else
                                 {
                                     if (curcollect.CollectedValue == null)
                                     {
-                                        dataRow["Value" + i] ="";
+                                        dataRow["Value" + i] = "";
                                     }
                                     else
                                     {
@@ -407,15 +438,35 @@ namespace KPIWeb.Director
                                     }
                                 }
 
-                                
+
 
                                 i++;
-                                
+
                             }
                             dataTable.Rows.Add(dataRow);
                         }
 
                     }
+
+
+                    if ((DateTime)Report.EndDateTime < DateTime.Now)
+                    {
+                        GridView1.Visible = false;
+                    }
+                    else
+                    {
+                        foreach (ThirdLevelSubdivisionTable currentThird in OnlyKafedras)
+                        {
+                            DataRow dataRowEdit = dataTableToEdit.NewRow();
+                            dataRowEdit["ID"] = currentThird.ThirdLevelSubdivisionTableID;
+                            dataRowEdit["LevelName"] = currentThird.Name;
+                            dataTableToEdit.Rows.Add(dataRowEdit);
+                        }
+                        GridView1.DataSource = dataTableToEdit;
+                        GridView1.DataBind();
+                    }
+
+                    #endregion
                 }
 
                 GridviewCollectedBasicParameters.DataSource = dataTable;
@@ -481,8 +532,62 @@ namespace KPIWeb.Director
         {
             Response.ContentType = "Application/pdf";
             Response.TransmitFile(CreatePdf());
-            Response.End();   
+            Response.End();
+        }
+
+        protected void Button1Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            {
+                //го создавать сессии
+                Serialization UserSer = (Serialization)Session["UserID"];
+                if (UserSer == null)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+                int userID = UserSer.Id;
+                //сессия пользователя жива здорова
+                Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
+                if (paramSerialization == null)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+                //Номер отчета уже в сессии            
+                Serialization modeSer = new Serialization(4, null, null);
+                Session["mode"] = modeSer;
+                // Mode для FillingReport  = 4 значит входит директор
+
+                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+
+                UsersTable userTable =
+                    (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+                ThirdLevelSubdivisionTable thirdLevel = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                                                         where a.ThirdLevelSubdivisionTableID == Convert.ToInt32(button.CommandArgument)
+                                                         select a).FirstOrDefault();
+                var login =
+                    (from a in kpiWebDataContext.UsersTable
+                     where a.UsersTableID == (int)ViewState["LocalUserID"]
+                     select a.Email).FirstOrDefault();
+                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0CR0: Пользователь " + login + " зашел на страницу редактирования отчета для подразделения " + thirdLevel.Name +
+                    " ID 3rd level =" + thirdLevel.ThirdLevelSubdivisionTableID.ToString() + " с ID отчета = " + paramSerialization.ReportStr);
+
+                bool IsDecanat = (from a in kpiWebDataContext.FourthLevelSubdivisionTable
+                                  where a.FK_ThirdLevelSubdivisionTable == thirdLevel.ThirdLevelSubdivisionTableID
+                                      && a.Active == true
+                                  select a).Distinct().Count() > 0 ? true : false;
+
+                if (IsDecanat)
+                {
+                    Response.Redirect("~/Reports_/Parametrs.aspx");
+                }
+                else
+                {
+                    paramSerialization.l3 = Convert.ToInt32(button.CommandArgument.ToString());
+                    Session["ReportArchiveID"] = paramSerialization;
+                    Response.Redirect("~/Reports_/FillingTheReport.aspx");
+                }
+            }
         }
     }
-
 }

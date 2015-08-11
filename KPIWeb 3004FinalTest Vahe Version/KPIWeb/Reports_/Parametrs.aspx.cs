@@ -12,22 +12,46 @@ namespace KPIWeb.Reports
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
                 Response.Redirect("~/Default.aspx");
             }
             int userID = UserSer.Id;
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
-            UsersTable userTable =
-                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            ViewState["UserTable"] = userTable.FK_ThirdLevelSubdivisionTable;
-            if (userTable.AccessLevel != 0)
+            Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
+            if (paramSerialization == null)
             {
                 Response.Redirect("~/Default.aspx");
             }
+            int ReportID = Convert.ToInt32(paramSerialization.ReportStr);
+            int SecondLevel = paramSerialization.l2;
+            int ThirdLevel = paramSerialization.l3;
+
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();    
+            if ((userTable.AccessLevel != 0)&&(userTable.AccessLevel != 4))
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            if (userTable.AccessLevel == 4)
+            {
+                userTable = (from a in kPiDataContext.UsersTable
+                             where a.Active == true
+                             && a.FK_ThirdLevelSubdivisionTable == ThirdLevel
+                             join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                 on a.UsersTableID equals b.FK_UsersTable
+                                 where b.Active == true
+                                 && b.CanEdit == true
+                             select a).FirstOrDefault();
+            }
+            ViewState["UserTable"] = userTable.FK_ThirdLevelSubdivisionTable;
             ////////////////////////////////////////////////////
+
+            
 
             if (!Page.IsPostBack)
             {

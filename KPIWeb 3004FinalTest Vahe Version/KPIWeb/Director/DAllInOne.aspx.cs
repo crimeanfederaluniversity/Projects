@@ -12,12 +12,11 @@ namespace KPIWeb.Director
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-                        Serialization UserSer = (Serialization)Session["UserID"];
+            Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
                 Response.Redirect("~/Default.aspx");
             }
-
             int userID = UserSer.Id;
             ViewState["LocalUserID"] = userID;
 
@@ -53,14 +52,36 @@ namespace KPIWeb.Director
 
                // int additionalColumnCount = 0;
                 {
-                    List<SecondLevelSubdivisionTable> SecondLevelList = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                    List<SecondLevelSubdivisionTable> SecondLevelList = /*(from a in kpiWebDataContext.SecondLevelSubdivisionTable
                                                                          where a.Active == true
                                                                          && a.FK_FirstLevelSubdivisionTable == userTable.FK_FirstLevelSubdivisionTable
-                                                                         select a).ToList();
+                                                                         join b in kpiWebDataContext.UsersTable
+                                                                         on a.SecondLevelSubdivisionTableID equals b.FK_SecondLevelSubdivisionTable
+                                                                         join c in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                                                         on b.UsersTableID equals c.FK_UsersTable
+                                                                         where
+                                                                         b.Active == true
+                                                                         && c.Active == true
+                                                                         && c.CanView == true
+                                                                         select a).Distinct().ToList();*/
+                                                                         (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                                                                           where a.FK_FirstLevelSubdivisionTable == userTable.FK_FirstLevelSubdivisionTable
+                                                                           join b in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                                                           on a.SecondLevelSubdivisionTableID equals b.FK_SecondLevelSubdivisionTable
+                                                                           where a.Active == true
+                                                                           && b.Active == true
+                                                                           && b.FK_ReportArchiveTableId == ReportID
+                                                                           select a).Distinct().ToList();
+
+
                     List<BasicParametersTable> BasicParametrsList = (from a in kpiWebDataContext.BasicParametersTable
                                                                  join b in kpiWebDataContext.BasicParametrAdditional
                                                                      on a.BasicParametersTableID equals b.BasicParametrAdditionalID
                                                                      where b.Calculated == false
+                                                                     join c in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable 
+                                                                     on a.BasicParametersTableID equals c.FK_BasicParametrsTable
+                                                                     where c.FK_ReportArchiveTable == ReportID
+                                                                     && c.Active == true
                                                                  select a).ToList();
                     int additionalColumnCount = SecondLevelList.Count+1;
 

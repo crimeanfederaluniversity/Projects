@@ -44,13 +44,15 @@ namespace KPIWeb.Reports
                                                 join d in kpiWebDataContext.ReportArchiveTable
                                                 on c.FK_ReportArchiveTableId equals d.ReportArchiveTableID
                                                 where a.UsersTableID == UserSer.Id 
+                                                && a.FK_SecondLevelSubdivisionTable == c.FK_SecondLevelSubdivisionTable
+                                                && a.FK_ThirdLevelSubdivisionTable == c.FK_ThirdLevelSubdivisionTable
                                                 && a.Active == true
                                                 && b.Active == true
                                                 && c.Active == true
                                                 && d.Active == true
                                                 && d.StartDateTime < DateTime.Now 
                                      //           && d.EndDateTime > DateTime.Now
-                                                select d).ToList();
+                                                select d).Distinct().ToList();
 
 
                 ///тут мы получили список активных отччетов пользователя

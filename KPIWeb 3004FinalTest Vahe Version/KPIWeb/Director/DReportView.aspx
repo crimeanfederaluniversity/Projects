@@ -10,7 +10,7 @@
 </style> 
     <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
 	<div>    
-		  <asp:Button ID="GoBackButton" runat="server" OnClientClick="JavaScript:window.history.back(1); return false; showLoadPanel();"  Text="Назад" Width="125px" Enabled="True" />
+		  <asp:Button ID="GoBackButton" runat="server" OnClientClick="JavaScript:window.location.href='../Director/DMain'; return false; showLoadPanel();"  Text="Назад" Width="125px" Enabled="True" />
 		  <asp:Button ID="GoForwardButton" runat="server" OnClientClick="JavaScript:window.history.forward(1); return false; showLoadPanel();"  Text="Вперед" Width="125px" />
 		  <asp:Button ID="Button22" OnClientClick="showLoadPanel()" runat="server"  Text="На главную" Width="125px" Enabled="True" OnClick="Button22_Click" />
 		  <asp:Button ID="Button5" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right" OnClick="Button5_Click" Text="Нормативные документы" Width="300px" />
@@ -362,5 +362,9 @@ background-color:#FFFFFF}
 <br />
            <br />
            <asp:Button ID="Button1" runat="server" Enabled="false" OnClientClick="return askandShow();" Text="Согласовать" Width="517px" OnClick="Button1_Click" />
+           <br />
+    <br />
+           <asp:Button ID="Button24" runat="server" Enabled="true"  Text="Должники" Width="517px" OnClick="Button24_Click" />
+           <br />
            <br />
        </asp:Content>

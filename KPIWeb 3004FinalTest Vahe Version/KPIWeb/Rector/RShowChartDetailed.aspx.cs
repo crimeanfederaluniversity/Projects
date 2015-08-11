@@ -133,14 +133,20 @@ namespace KPIWeb.Rector
             Value_ = tmp;
         }
         */
-
-            if (collected.Value == null)
+            if (collected == null)
             {
                 Value_ = 0;
             }
             else
             {
-                Value_ = (float)collected.Value;
+                if (collected.Value == null)
+                {
+                    Value_ = 0;
+                }
+                else
+                {
+                    Value_ = (float)collected.Value;
+                }
             }
             #endregion
             ChartOneValue DataRowForChart = new ChartOneValue(Name_, Value_, Planned_Value);

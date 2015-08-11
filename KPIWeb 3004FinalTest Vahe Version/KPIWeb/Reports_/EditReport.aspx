@@ -118,11 +118,22 @@
                 </tr>
                 </table>
             <br />
-            <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Выделить все академии" Width="286px" />
+
+         <script type="text/javascript">
+
+             function postBackByObject() {
+                 var o = window.event.srcElement;
+                 if (o.tagName == "INPUT" && o.type == "checkbox") {
+                     __doPostBack("", "");
+                 }
+             }
+   </script>
+    <br />
+    <asp:TreeView ID="TreeView1" runat="server"  ShowCheckBoxes="All" OnSelectedNodeChanged="TreeView1_SelectedNodeChanged" OnTreeNodeCheckChanged="TreeView1_TreeNodeCheckChanged"></asp:TreeView>
+
+
+
             <br />
-            Выберите академии, участвующие в отчёте<br />
-            <asp:CheckBoxList  ID="CheckBoxList1" runat="server" Height="16px" Width="724px">
-            </asp:CheckBoxList>
             <br />
             <asp:Button ID="ButtonSave" runat="server" Width="500px" Text="Сохранить" OnClick="ButtonSave_Click" />
             <br />

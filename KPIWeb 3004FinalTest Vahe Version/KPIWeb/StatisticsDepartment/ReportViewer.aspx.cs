@@ -215,6 +215,8 @@ namespace KPIWeb.StatisticsDepartment
                         join b in kPiDataContext.UsersTable
                             on a.FK_FirstLevelSubmisionTableId equals b.FK_FirstLevelSubdivisionTable
                         where b.Active
+                        && a.FK_SecondLevelSubdivisionTable == b.FK_SecondLevelSubdivisionTable
+                        && a.FK_ThirdLevelSubdivisionTable == b.FK_ThirdLevelSubdivisionTable
                         select b.Email).ToList();
 
                     EmailTemplate EmailParams = (from a in kPiDataContext.EmailTemplate
@@ -318,6 +320,8 @@ namespace KPIWeb.StatisticsDepartment
                         where b.Active
                         join c in kPiDataContext.CollectedBasicParametersTable on b.UsersTableID equals c.FK_UsersTable
                         where (c.Status == 0 || c.Status == null) && c.Active
+                        && a.FK_SecondLevelSubdivisionTable == b.FK_SecondLevelSubdivisionTable
+                        && a.FK_ThirdLevelSubdivisionTable == b.FK_ThirdLevelSubdivisionTable
                         select b.Email).ToList();
 
 

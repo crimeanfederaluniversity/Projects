@@ -104,7 +104,13 @@ namespace KPIWeb.Rector
             List<UsersTable> ProrectorList = (from a in kpiWebDataContext.UsersTable
                                               where a.Active == true
                                               && a.AccessLevel == 5
-                                              select a).ToList();
+                                              join b in kpiWebDataContext.IndicatorsAndUsersMapping
+                                              on a.UsersTableID equals b.FK_UsresTable
+                                              where b.Active == true
+                                              && b.CanConfirm == true
+                                              && a.UsersTableID != 12769
+                                              && a.UsersTableID != 12803
+                                              select a).Distinct().ToList();
             if (Page.IsPostBack)
             {
 

@@ -29,7 +29,6 @@ namespace KPIWeb.Reports
     public partial class FillingTheReport : System.Web.UI.Page
     {
         public int col_ = 0;
-        
         #region patterns
         protected double pattern1(UsersTable user, int ReportArchiveID, int spectype_, string basicAbb, string basicAbb2) // по областям знаний
         {
@@ -272,7 +271,7 @@ namespace KPIWeb.Reports
                      || (c.AbbreviationEN == "a_Och_A" && SpecType == 4))
 
                      select a.CollectedValue).Sum());
-            }         
+            }
             else if (typeOfCost == 1)
             {
                 return Convert.ToDouble((from a in kpiWebDataContext.EducationCostTable
@@ -293,7 +292,7 @@ namespace KPIWeb.Reports
                                   || (c.AbbreviationEN == "c_Z_S" && SpecType == 2)
                                   || (c.AbbreviationEN == "c_Z_M" && SpecType == 3))
                                   select a.CollectedValue).Sum());
-            }           
+            }
             return 0;
         }
         public void patternSwitch(int ReportArchiveID, BasicParametersTable basicParam, FourthLevelSubdivisionTable FourthLevel, int fourthCnt, UsersTable user)
@@ -677,6 +676,7 @@ namespace KPIWeb.Reports
         #endregion
         protected void Page_Load(object sender, EventArgs e)
         {
+            #region JavaScriptFunctions
             string script = @"<script>
             function ConfirmSubmit() {
                 var msg = confirm('Режим доступа к данным будет изменен на \'только просмотр\'.Отправить данные на утверждение?'); 
@@ -742,6 +742,18 @@ namespace KPIWeb.Reports
             }
             </script>";
 
+            #endregion
+            #region Initialization n Sessions
+            Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
+            if (paramSerialization == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+
+            int ReportArchiveID = Convert.ToInt32(paramSerialization.ReportStr);
+            int SecondLevel = paramSerialization.l2;
+            int ThirdLevel = paramSerialization.l3;
+
 
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
@@ -752,63 +764,67 @@ namespace KPIWeb.Reports
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             UsersTable userTable =
                       (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
-
+            
             ViewState["login"] = (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a.Email).FirstOrDefault();
 
-            if (userTable.AccessLevel != 0)
+            if ((userTable.AccessLevel != 0)&&(userTable.AccessLevel != 4))
             {
                 Response.Redirect("~/Default.aspx");
             }
-
-            Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
-            if (paramSerialization == null)
+            if (userTable.AccessLevel == 4)
             {
-                Response.Redirect("~/Default.aspx");
+                userTable = (from a in kPiDataContext.UsersTable
+                             where a.Active == true
+                             && a.FK_ThirdLevelSubdivisionTable == ThirdLevel
+                             join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                 on a.UsersTableID equals b.FK_UsersTable
+                             where b.Active == true
+                             && b.CanEdit == true
+                             select a).FirstOrDefault();
             }
+            ViewState["userTableID"] = (int)userTable.UsersTableID;
+            #endregion
             /////////////////////////////////////////////////////////////////////////
-            /// 
             if (!Page.IsPostBack)
             {
-                Panel mypanel = (Panel)(Master.FindControl("loading"));
+              /*  Panel mypanel = (Panel)(Master.FindControl("loading"));
                 mypanel.Visible = true;
                 ViewState["IsPostBack"] = true;
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                     "window.onload = function() {__doPostBack(\"\", \"\");};", true);
-
-                //Response.Redirect("~/Reports/FillingTheReport.aspx");
             }
             else
-            {
-                //if (ViewState["IsPostBack"] == null)
-                if ((bool)ViewState["IsPostBack"] == true)
-                {
-                    #region
+            {*/
+               // if ((bool)ViewState["IsPostBack"] == true)
+               // {
+                    #region GetUserInfo
 
                     Serialization modeSer = (Serialization)Session["mode"];
                     if (modeSer == null)
                     {
                         Response.Redirect("~/Default.aspx");
                     }
-                    int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и утверждаем
+                    int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и утверждаем //4 зашел директор
                     ////////////////
+                    /*
                     int UserID = UserSer.Id;
                     int ReportArchiveID;
                     ReportArchiveID = Convert.ToInt32(paramSerialization.ReportStr);
-                    KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-                    UsersTable user = (from a in kpiWebDataContext.UsersTable
+                    KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+                    UsersTable user = (from a in kPiDataContext.UsersTable
                                        where a.UsersTableID == UserID
                                        select a).FirstOrDefault();
-
-                    int l_0 = user.FK_ZeroLevelSubdivisionTable == null ? 0 : (int)user.FK_ZeroLevelSubdivisionTable;
-                    int l_1 = user.FK_FirstLevelSubdivisionTable == null ? 0 : (int)user.FK_FirstLevelSubdivisionTable;
-                    int l_2 = user.FK_SecondLevelSubdivisionTable == null
+                    */
+                    int l_0 = userTable.FK_ZeroLevelSubdivisionTable == null ? 0 : (int)userTable.FK_ZeroLevelSubdivisionTable;
+                    int l_1 = userTable.FK_FirstLevelSubdivisionTable == null ? 0 : (int)userTable.FK_FirstLevelSubdivisionTable;
+                    int l_2 = userTable.FK_SecondLevelSubdivisionTable == null
                         ? 0
-                        : (int)user.FK_SecondLevelSubdivisionTable;
-                    int l_3 = user.FK_ThirdLevelSubdivisionTable == null ? 0 : (int)user.FK_ThirdLevelSubdivisionTable;
-                    int l_4 = user.FK_FourthLevelSubdivisionTable == null
+                        : (int)userTable.FK_SecondLevelSubdivisionTable;
+                    int l_3 = userTable.FK_ThirdLevelSubdivisionTable == null ? 0 : (int)userTable.FK_ThirdLevelSubdivisionTable;
+                    int l_4 = userTable.FK_FourthLevelSubdivisionTable == null
                         ? 0
-                        : (int)user.FK_FourthLevelSubdivisionTable;
-                    int l_5 = user.FK_FifthLevelSubdivisionTable == null ? 0 : (int)user.FK_FifthLevelSubdivisionTable;
+                        : (int)userTable.FK_FourthLevelSubdivisionTable;
+                    int l_5 = userTable.FK_FifthLevelSubdivisionTable == null ? 0 : (int)userTable.FK_FifthLevelSubdivisionTable;
                     int userLevel = 5;
 
                     userLevel = l_5 == 0 ? 4 : userLevel;
@@ -822,10 +838,7 @@ namespace KPIWeb.Reports
                     /// -1 никто ниоткуда/// 0 с Кфу /// 1 с Академии/// 2 с Факультета/// 3 с кафедры/// 4 с специализация/// 5 с под специализацией,пока нет
 
                     #endregion
-
-                    ///узнали все о пользователе
-
-                    #region
+                    #region DataTableCreate
 
                     List<string> columnNames = new List<string>(); // сюда сохраняем названия колонок
                     List<string> basicNames = new List<string>(); // сюда названия параметров для excel
@@ -847,25 +860,22 @@ namespace KPIWeb.Reports
                     }
 
                     #endregion
-
-                    //создали макет дататейбла
                     int additionalColumnCount = 0;
                     List<int> StatusList = new List<int>();
-
                     #region
 
                     if (userLevel != 3)
                     {
                         List<BasicParametersTable> BasicParams =
-                            (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
-                             join b in kpiWebDataContext.BasicParametersTable
+                            (from a in kPiDataContext.ReportArchiveAndBasicParametrsMappingTable
+                             join b in kPiDataContext.BasicParametersTable
                                  on a.FK_BasicParametrsTable equals b.BasicParametersTableID
-                             join c in kpiWebDataContext.BasicParametrsAndUsersMapping
+                             join c in kPiDataContext.BasicParametrsAndUsersMapping
                                  on b.BasicParametersTableID equals c.FK_ParametrsTable
-                             join d in kpiWebDataContext.BasicParametrAdditional
+                             join d in kPiDataContext.BasicParametrAdditional
                                  on b.BasicParametersTableID equals d.BasicParametrAdditionalID
                              where a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчёта
-                                   && c.FK_UsersTable == UserID // свяный с пользователем
+                                   && c.FK_UsersTable == userTable.UsersTableID // свяный с пользователем
                                    && d.SubvisionLevel == userLevel //нужный уровень заполняющего
                                    && a.Active == true // запись в таблице связей показателя и отчёта активна
                                    && (((c.CanEdit == true) && mode == 0)
@@ -883,13 +893,13 @@ namespace KPIWeb.Reports
                             dataRow["BasicParametersTableID"] = basicParam.BasicParametersTableID;
                             dataRow["Name"] = basicParam.Name;
 
-                            string comment_ = (from a in kpiWebDataContext.BasicParametrAdditional
-                                                   where a.BasicParametrAdditionalID == basicParam.BasicParametersTableID
-                                                   && a.Active == true
-                                                   select a.Comment).FirstOrDefault();
-                            if (comment_!=null)
+                            string comment_ = (from a in kPiDataContext.BasicParametrAdditional
+                                               where a.BasicParametrAdditionalID == basicParam.BasicParametersTableID
+                                               && a.Active == true
+                                               select a.Comment).FirstOrDefault();
+                            if (comment_ != null)
                             {
-                                if (comment_.Length>3)
+                                if (comment_.Length > 3)
                                 {
                                     dataRow["Comment"] = comment_;
                                     dataRow["CommentEnabled"] = "visible";
@@ -906,12 +916,12 @@ namespace KPIWeb.Reports
                                 dataRow["CommentEnabled"] = "hidden";
                             }
 
-                            
-                            
+
+
 
                             basicNames.Add(basicParam.Name);
                             CollectedBasicParametersTable collectedBasicTmp =
-                                (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                (from a in kPiDataContext.CollectedBasicParametersTable
                                  where ((a.FK_ZeroLevelSubdivisionTable == l_0) || l_0 == 0)
                                        && ((a.FK_FirstLevelSubdivisionTable == l_1) || l_1 == 0)
                                        && ((a.FK_SecondLevelSubdivisionTable == l_2) || l_2 == 0)
@@ -923,7 +933,7 @@ namespace KPIWeb.Reports
                             {
                                 collectedBasicTmp = new CollectedBasicParametersTable();
                                 collectedBasicTmp.Active = true;
-                                collectedBasicTmp.FK_UsersTable = UserID;
+                                collectedBasicTmp.FK_UsersTable = userTable.UsersTableID;
                                 collectedBasicTmp.FK_BasicParametersTable = basicParam.BasicParametersTableID;
                                 collectedBasicTmp.FK_ReportArchiveTable = ReportArchiveID;
                                 collectedBasicTmp.CollectedValue = null;
@@ -935,13 +945,13 @@ namespace KPIWeb.Reports
                                         .FirstOrDefault() ?? "";
                                 collectedBasicTmp.LastChangeDateTime = DateTime.Now;
                                 collectedBasicTmp.SavedDateTime = DateTime.Now;
-                                collectedBasicTmp.FK_ZeroLevelSubdivisionTable = user.FK_ZeroLevelSubdivisionTable;
-                                collectedBasicTmp.FK_FirstLevelSubdivisionTable = user.FK_FirstLevelSubdivisionTable;
-                                collectedBasicTmp.FK_SecondLevelSubdivisionTable = user.FK_SecondLevelSubdivisionTable;
-                                collectedBasicTmp.FK_ThirdLevelSubdivisionTable = user.FK_ThirdLevelSubdivisionTable;
+                                collectedBasicTmp.FK_ZeroLevelSubdivisionTable = userTable.FK_ZeroLevelSubdivisionTable;
+                                collectedBasicTmp.FK_FirstLevelSubdivisionTable = userTable.FK_FirstLevelSubdivisionTable;
+                                collectedBasicTmp.FK_SecondLevelSubdivisionTable = userTable.FK_SecondLevelSubdivisionTable;
+                                collectedBasicTmp.FK_ThirdLevelSubdivisionTable = userTable.FK_ThirdLevelSubdivisionTable;
                                 collectedBasicTmp.Status = 0;
-                                kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
-                                kpiWebDataContext.SubmitChanges();
+                                kPiDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
+                                kPiDataContext.SubmitChanges();
                             }
                             dataRow["Value0"] = collectedBasicTmp.CollectedValue.ToString();
                             dataRow["CollectId0"] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
@@ -958,18 +968,19 @@ namespace KPIWeb.Reports
                         }
                         additionalColumnCount += 1;
                     }
-                    /* columnNames.Add("Кафедра:\r\n" + (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                    /* columnNames.Add("Кафедра:\r\n" + (from a in kPiDataContext.ThirdLevelSubdivisionTable
                                                    where a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
                                                    select a.Name).FirstOrDefault());
                  * */
 
                     #endregion
-
+#region toDel
+                    /*
                     switch (userLevel) // это штука пока будет работать только для пользователя кафедры
                     {
                         case 0: //я КФУ
                             {
-                                columnNames.Add((from a in kpiWebDataContext.ZeroLevelSubdivisionTable
+                                columnNames.Add((from a in kPiDataContext.ZeroLevelSubdivisionTable
                                                  where a.ZeroLevelSubdivisionTableID == user.FK_ZeroLevelSubdivisionTable
                                                  select a.Name).FirstOrDefault());
                                 break;
@@ -977,7 +988,7 @@ namespace KPIWeb.Reports
                         case 1: //Я Акакдемия
                             {
                                 //"Академия:\r\n" + 
-                                columnNames.Add((from a in kpiWebDataContext.FirstLevelSubdivisionTable
+                                columnNames.Add((from a in kPiDataContext.FirstLevelSubdivisionTable
                                                  where a.FirstLevelSubdivisionTableID == user.FK_FirstLevelSubdivisionTable
                                                  select a.Name).FirstOrDefault());
                                 break;
@@ -985,32 +996,34 @@ namespace KPIWeb.Reports
                         case 2: //я Факультет
                             {
                                 //"Факультет:\r\n" + 
-                                columnNames.Add((from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                                columnNames.Add((from a in kPiDataContext.SecondLevelSubdivisionTable
                                                  where a.SecondLevelSubdivisionTableID == user.FK_SecondLevelSubdivisionTable
                                                  select a.Name).FirstOrDefault());
                                 break;
                             }
                         case 3: //я кафедра
                             {
+                     */
                                 #region
 
                                 List<BasicParametersTable> KafBasicParams =
-                                    (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
-                                     join b in kpiWebDataContext.BasicParametersTable
+                                    (from a in kPiDataContext.ReportArchiveAndBasicParametrsMappingTable
+                                     join b in kPiDataContext.BasicParametersTable
                                          on a.FK_BasicParametrsTable equals b.BasicParametersTableID
-                                     join c in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                     join c in kPiDataContext.BasicParametrsAndUsersMapping
                                          on b.BasicParametersTableID equals c.FK_ParametrsTable
-                                     join d in kpiWebDataContext.BasicParametrAdditional
+                                     join d in kPiDataContext.BasicParametrAdditional
                                          on b.BasicParametersTableID equals d.BasicParametrAdditionalID
                                      where
                                          a.FK_ReportArchiveTable == ReportArchiveID //из нужного отчёта
-                                         && c.FK_UsersTable == UserID // свяный с пользователем
+                                         && c.FK_UsersTable == userTable.UsersTableID // свяный с пользователем
                                          && d.SubvisionLevel == 3 //нужный уровень заполняющего
                                          && a.Active == true // запись в таблице связей показателя и отчёта активна
 
                                          && (((c.CanEdit == true) && mode == 0)
                                              || ((c.CanView == true) && mode == 1)
-                                             || ((c.CanConfirm == true) && mode == 2))
+                                             || ((c.CanConfirm == true) && mode == 2)
+                                             || ((c.CanEdit == true) && mode == 4))
                                          // фильтруем по правам пользователя
 
                                          && c.Active == true
@@ -1024,12 +1037,12 @@ namespace KPIWeb.Reports
                                 {
                                     //если этото параметр и эта кафедра дружат
                                     ThirdLevelParametrs thirdParametrs =
-                                        (from a in kpiWebDataContext.ThirdLevelParametrs
+                                        (from a in kPiDataContext.ThirdLevelParametrs
                                          where a.ThirdLevelParametrsID == l_3
                                          select a).FirstOrDefault();
                                     // узнали параметры специальности
                                     BasicParametrAdditional basicParametrs =
-                                        (from a in kpiWebDataContext.BasicParametrAdditional
+                                        (from a in kPiDataContext.BasicParametrAdditional
                                          where
                                              a.BasicParametrAdditionalID == basicParam.BasicParametersTableID
                                          select a).FirstOrDefault();
@@ -1042,7 +1055,7 @@ namespace KPIWeb.Reports
                                         dataRow["BasicParametersTableID"] = basicParam.BasicParametersTableID;
                                         dataRow["Name"] = basicParam.Name;
 
-                                        string comment_ = (from a in kpiWebDataContext.BasicParametrAdditional
+                                        string comment_ = (from a in kPiDataContext.BasicParametrAdditional
                                                            where a.BasicParametrAdditionalID == basicParam.BasicParametersTableID
                                                            && a.Active == true
                                                            select a.Comment).FirstOrDefault();
@@ -1067,15 +1080,15 @@ namespace KPIWeb.Reports
 
                                         basicNames.Add(basicParam.Name);
                                         CollectedBasicParametersTable collectedBasicTmp =
-                                            (from a in kpiWebDataContext.CollectedBasicParametersTable
-                                             where a.FK_ZeroLevelSubdivisionTable == user.FK_ZeroLevelSubdivisionTable
+                                            (from a in kPiDataContext.CollectedBasicParametersTable
+                                             where a.FK_ZeroLevelSubdivisionTable == userTable.FK_ZeroLevelSubdivisionTable
                                                    &&
-                                                   a.FK_FirstLevelSubdivisionTable == user.FK_FirstLevelSubdivisionTable
+                                                   a.FK_FirstLevelSubdivisionTable == userTable.FK_FirstLevelSubdivisionTable
                                                    &&
                                                    a.FK_SecondLevelSubdivisionTable ==
-                                                   user.FK_SecondLevelSubdivisionTable
+                                                   userTable.FK_SecondLevelSubdivisionTable
                                                    &&
-                                                   a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
+                                                   a.FK_ThirdLevelSubdivisionTable == userTable.FK_ThirdLevelSubdivisionTable
                                                    && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
                                                    && a.FK_ReportArchiveTable == ReportArchiveID
                                              select a).FirstOrDefault();
@@ -1084,7 +1097,7 @@ namespace KPIWeb.Reports
                                             collectedBasicTmp = new CollectedBasicParametersTable();
                                             collectedBasicTmp.Active = true;
                                             collectedBasicTmp.Status = 0;
-                                            collectedBasicTmp.FK_UsersTable = UserID;
+                                            collectedBasicTmp.FK_UsersTable = userTable.UsersTableID;
                                             collectedBasicTmp.FK_BasicParametersTable = basicParam.BasicParametersTableID;
                                             collectedBasicTmp.FK_ReportArchiveTable = ReportArchiveID;
                                             collectedBasicTmp.CollectedValue = null;
@@ -1099,16 +1112,16 @@ namespace KPIWeb.Reports
                                             collectedBasicTmp.LastChangeDateTime = DateTime.Now;
                                             collectedBasicTmp.SavedDateTime = DateTime.Now;
                                             collectedBasicTmp.FK_ZeroLevelSubdivisionTable =
-                                                user.FK_ZeroLevelSubdivisionTable;
+                                                userTable.FK_ZeroLevelSubdivisionTable;
                                             collectedBasicTmp.FK_FirstLevelSubdivisionTable =
-                                                user.FK_FirstLevelSubdivisionTable;
+                                                userTable.FK_FirstLevelSubdivisionTable;
                                             collectedBasicTmp.FK_SecondLevelSubdivisionTable =
-                                                user.FK_SecondLevelSubdivisionTable;
+                                                userTable.FK_SecondLevelSubdivisionTable;
                                             collectedBasicTmp.FK_ThirdLevelSubdivisionTable =
-                                                user.FK_ThirdLevelSubdivisionTable;
+                                                userTable.FK_ThirdLevelSubdivisionTable;
 
-                                            kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
-                                            kpiWebDataContext.SubmitChanges();
+                                            kPiDataContext.CollectedBasicParametersTable.InsertOnSubmit(collectedBasicTmp);
+                                            kPiDataContext.SubmitChanges();
                                         }
                                         dataRow["Value0"] = collectedBasicTmp.CollectedValue.ToString();
                                         dataRow["CollectId0"] = collectedBasicTmp.CollectedBasicParametersTableID.ToString();
@@ -1124,46 +1137,47 @@ namespace KPIWeb.Reports
                                         }
                                     }
                                 }
-                                columnNames.Add((from a in kpiWebDataContext.ThirdLevelSubdivisionTable
-                                                                  where a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
-                                                                  select a.Name).FirstOrDefault());
+                                columnNames.Add((from a in kPiDataContext.ThirdLevelSubdivisionTable
+                                                 where a.ThirdLevelSubdivisionTableID == userTable.FK_ThirdLevelSubdivisionTable
+                                                 select a.Name).FirstOrDefault());
 
                                 #endregion
 
                                 //Кафедра готова
                                 additionalColumnCount += 1;
+                    #endregion
+                    #region
 
-                                #region
-
-                                if ((from zz in kpiWebDataContext.ThirdLevelParametrs
+                                if ((from zz in kPiDataContext.ThirdLevelParametrs
                                      where zz.ThirdLevelParametrsID == l_3
                                      select zz.CanGraduate).FirstOrDefault() == true)
                                 // кафедра выпускающая значит специальности есть
                                 {
                                     List<BasicParametersTable> SpecBasicParams =
-                                        (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
-                                         join b in kpiWebDataContext.BasicParametersTable
+                                        (from a in kPiDataContext.ReportArchiveAndBasicParametrsMappingTable
+                                         join b in kPiDataContext.BasicParametersTable
                                              on a.FK_BasicParametrsTable equals b.BasicParametersTableID
-                                         join c in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                         join c in kPiDataContext.BasicParametrsAndUsersMapping
                                              on b.BasicParametersTableID equals c.FK_ParametrsTable
-                                         join d in kpiWebDataContext.BasicParametrAdditional
+                                         join d in kPiDataContext.BasicParametrAdditional
                                              on b.BasicParametersTableID equals d.BasicParametrAdditionalID
                                          where a.FK_ReportArchiveTable == ReportArchiveID //для отчёта
                                                && d.SubvisionLevel == 4 // для уровня заполняющего
                                                && d.Calculated == false //только вводимые параметры
-                                               && c.FK_UsersTable == UserID // связаннаые с пользователем
+                                               && c.FK_UsersTable == userTable.UsersTableID // связаннаые с пользователем
                                                && a.Active == true
 
                                                && (((c.CanEdit == true) && mode == 0)
                                                    || ((c.CanView == true) && mode == 1)
-                                                   || ((c.CanConfirm == true) && mode == 2))
+                                                   || ((c.CanConfirm == true) && mode == 2)
+                                                   || ((c.CanEdit == true) && mode == 4))
                                              // фильтруем по правам пользователя
 
                                                && c.Active == true
                                          select b).ToList();
                                     //Получили показатели разрешенные пользователю в данном отчёте
                                     List<FourthLevelSubdivisionTable> Specialzations =
-                                        (from a in kpiWebDataContext.FourthLevelSubdivisionTable
+                                        (from a in kPiDataContext.FourthLevelSubdivisionTable
                                          where a.FK_ThirdLevelSubdivisionTable == l_3
                                                && a.Active == true
                                          select a).ToList();
@@ -1173,21 +1187,21 @@ namespace KPIWeb.Reports
                                     {
                                         /*
                                         columnNames.Add("Направление подготовки\r" +
-                                                        (from a in kpiWebDataContext.SpecializationTable
+                                                        (from a in kPiDataContext.SpecializationTable
                                                          where a.SpecializationTableID == spec.FK_Specialization
                                                          select a.Name).FirstOrDefault().ToString() +" : "+ 
-                                                         (from a in kpiWebDataContext.SpecializationTable
+                                                         (from a in kPiDataContext.SpecializationTable
                                                          where a.SpecializationTableID == spec.FK_Specialization
                                                          select a.SpecializationNumber).FirstOrDefault().ToString());
-                                         *  string CurrentColumnName = "<div style=\"transform:rotate(90deg);\">" + (from a in kpiWebDataContext.SpecializationTable
+                                         *  string CurrentColumnName = "<div style=\"transform:rotate(90deg);\">" + (from a in kPiDataContext.SpecializationTable
                                                                                                                   where a.SpecializationTableID == spec.FK_Specialization
                                                                                                                   select a.SpecializationNumber).FirstOrDefault().ToString() + "</div>";
 
                                        */
 
-                                        string CurrentColumnName = (from a in kpiWebDataContext.SpecializationTable
-                                                                                                                 where a.SpecializationTableID == spec.FK_Specialization
-                                                                                                                 select a.SpecializationNumber).FirstOrDefault().ToString();
+                                        string CurrentColumnName = (from a in kPiDataContext.SpecializationTable
+                                                                    where a.SpecializationTableID == spec.FK_Specialization
+                                                                    select a.SpecializationNumber).FirstOrDefault().ToString();
 
 
                                         columnNames.Add(CurrentColumnName);
@@ -1200,7 +1214,7 @@ namespace KPIWeb.Reports
                                         int i = additionalColumnCount;
                                         DataRow dataRow = dataTable.NewRow();
                                         BasicParametrAdditional basicParametrs =
-                                            (from a in kpiWebDataContext.BasicParametrAdditional
+                                            (from a in kPiDataContext.BasicParametrAdditional
                                              where
                                                  a.BasicParametrAdditionalID == specBasicParam.BasicParametersTableID
                                              select a).FirstOrDefault();
@@ -1211,7 +1225,7 @@ namespace KPIWeb.Reports
                                         {
 
                                             FourthLevelParametrs fourthParametrs =
-                                                (from a in kpiWebDataContext.FourthLevelParametrs
+                                                (from a in kPiDataContext.FourthLevelParametrs
                                                  where a.FourthLevelParametrsID == spec.FourthLevelSubdivisionTableID
                                                  select a).FirstOrDefault();
                                             // узнали параметры специальности
@@ -1225,23 +1239,23 @@ namespace KPIWeb.Reports
                                             {
                                                 j++; //потом проверка и следовательно БП нуно выводить
                                                 CollectedBasicParametersTable collectedBasicTmp =
-                                                    (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                    (from a in kPiDataContext.CollectedBasicParametersTable
                                                      where
                                                          a.FK_BasicParametersTable ==
                                                          specBasicParam.BasicParametersTableID
                                                          && a.FK_ReportArchiveTable == ReportArchiveID
                                                          &&
                                                          (a.FK_ZeroLevelSubdivisionTable ==
-                                                          user.FK_ZeroLevelSubdivisionTable)
+                                                          userTable.FK_ZeroLevelSubdivisionTable)
                                                          &&
                                                          (a.FK_FirstLevelSubdivisionTable ==
-                                                          user.FK_FirstLevelSubdivisionTable)
+                                                          userTable.FK_FirstLevelSubdivisionTable)
                                                          &&
                                                          (a.FK_SecondLevelSubdivisionTable ==
-                                                          user.FK_SecondLevelSubdivisionTable)
+                                                          userTable.FK_SecondLevelSubdivisionTable)
                                                          &&
                                                          (a.FK_ThirdLevelSubdivisionTable ==
-                                                          user.FK_ThirdLevelSubdivisionTable)
+                                                          userTable.FK_ThirdLevelSubdivisionTable)
                                                          &&
                                                          (a.FK_FourthLevelSubdivisionTable ==
                                                           spec.FourthLevelSubdivisionTableID)
@@ -1251,7 +1265,7 @@ namespace KPIWeb.Reports
                                                     collectedBasicTmp = new CollectedBasicParametersTable();
                                                     collectedBasicTmp.Active = true;
                                                     collectedBasicTmp.Status = 0;
-                                                    collectedBasicTmp.FK_UsersTable = UserID;
+                                                    collectedBasicTmp.FK_UsersTable = userTable.UsersTableID;
                                                     collectedBasicTmp.FK_BasicParametersTable =
                                                         specBasicParam.BasicParametersTableID;
                                                     collectedBasicTmp.FK_ReportArchiveTable = ReportArchiveID;
@@ -1267,18 +1281,18 @@ namespace KPIWeb.Reports
                                                     collectedBasicTmp.LastChangeDateTime = DateTime.Now;
                                                     collectedBasicTmp.SavedDateTime = DateTime.Now;
                                                     collectedBasicTmp.FK_ZeroLevelSubdivisionTable =
-                                                        user.FK_ZeroLevelSubdivisionTable;
+                                                        userTable.FK_ZeroLevelSubdivisionTable;
                                                     collectedBasicTmp.FK_FirstLevelSubdivisionTable =
-                                                        user.FK_FirstLevelSubdivisionTable;
+                                                        userTable.FK_FirstLevelSubdivisionTable;
                                                     collectedBasicTmp.FK_SecondLevelSubdivisionTable =
-                                                        user.FK_SecondLevelSubdivisionTable;
+                                                        userTable.FK_SecondLevelSubdivisionTable;
                                                     collectedBasicTmp.FK_ThirdLevelSubdivisionTable =
                                                         spec.FK_ThirdLevelSubdivisionTable;
                                                     collectedBasicTmp.FK_FourthLevelSubdivisionTable =
                                                         spec.FourthLevelSubdivisionTableID;
-                                                    kpiWebDataContext.CollectedBasicParametersTable.InsertOnSubmit(
+                                                    kPiDataContext.CollectedBasicParametersTable.InsertOnSubmit(
                                                         collectedBasicTmp);
-                                                    kpiWebDataContext.SubmitChanges();
+                                                    kPiDataContext.SubmitChanges();
                                                 }
                                                 dataRow["Value" + i] = collectedBasicTmp.CollectedValue.ToString();
                                                 dataRow["CollectId" + i] =
@@ -1303,7 +1317,7 @@ namespace KPIWeb.Reports
                                             dataRow["CurrentReportArchiveID"] = ReportArchiveID;
                                             dataRow["BasicParametersTableID"] = specBasicParam.BasicParametersTableID;
 
-                                            string comment_ = (from a in kpiWebDataContext.BasicParametrAdditional
+                                            string comment_ = (from a in kPiDataContext.BasicParametrAdditional
                                                                where a.BasicParametrAdditionalID == specBasicParam.BasicParametersTableID
                                                                && a.Active == true
                                                                select a.Comment).FirstOrDefault();
@@ -1334,7 +1348,8 @@ namespace KPIWeb.Reports
                                 }
 
                                 #endregion
-
+#region toDel
+/*
                                 // специальности готовы
                                 break;
                             }
@@ -1358,7 +1373,8 @@ namespace KPIWeb.Reports
 
                         //неиспользуемая часть свича
                     }
-
+*/
+#endregion
                     ViewState["CollectedBasicParametersTable"] = dataTable;
                     ViewState["CurrentReportArchiveID"] = ReportArchiveID;
                     ViewState["ValueColumnCnt"] = additionalColumnCount;
@@ -1368,13 +1384,13 @@ namespace KPIWeb.Reports
                     int tmpStatCount = 0;
                     foreach (int tmpStat in StatusList)
                     {
-                        if ((tmpStat == 2) || (tmpStat == 4)) // уберешь 4 это только для демонстрации
+                        if (tmpStat == 2)
                         {
                             tmpStatCount++;
                         }
                     }
                     //определение дней
-                    DateTime endDate = (DateTime)(from a in kpiWebDataContext.ReportArchiveTable
+                    DateTime endDate = (DateTime)(from a in kPiDataContext.ReportArchiveTable
                                                   where a.ReportArchiveTableID == ReportArchiveID
                                                   select a.EndDateTime).FirstOrDefault();
                     if (endDate == null)
@@ -1388,10 +1404,11 @@ namespace KPIWeb.Reports
                         startDate = startDate.AddDays(1);
                         dateCount++;
                     }
-                   
+
                     // определение дней
                     if (mode == 0)
                     {
+                        #region
                         GoBackButton.Visible = true;
                         GoBackButton.Text = "Вернуться без сохранения";
 
@@ -1427,7 +1444,7 @@ namespace KPIWeb.Reports
                         Label2.Text = "Осталось " + dateCount + " дней до закрытия отчёта";
                         if ((DateTime.Now > endDate))
                         {
-                            
+
                             Label2.Text = "";
                         }
                         Page.ClientScript.RegisterClientScriptBlock(this.GetType(),
@@ -1442,11 +1459,12 @@ namespace KPIWeb.Reports
                         ButtonSave.OnClientClick = "window.onbeforeunload = null; document.getElementById('LoadPanel_').style.visibility = 'visible'; ";
                         Button1.OnClientClick = "window.onbeforeunload = null; document.getElementById('LoadPanel_').style.visibility = 'visible'; ";
                         UpnDownButton.OnClientClick = "window.onbeforeunload = null; document.getElementById('LoadPanel_').style.visibility = 'visible'; ";
-                        GoBackButton.OnClientClick="window.onbeforeunload = null; document.getElementById('LoadPanel_').style.visibility = 'visible'; ";
+                        GoBackButton.OnClientClick = "window.onbeforeunload = null; document.getElementById('LoadPanel_').style.visibility = 'visible'; ";
+                        #endregion
                     }
-                    else if
-                        (mode == 1)
+                    else if (mode == 1)
                     {
+                        #region
                         GoBackButton.Visible = true;
                         GoBackButton.Text = "Вернуться в меню";
 
@@ -1481,12 +1499,11 @@ namespace KPIWeb.Reports
                         {
                             Label2.Text = "";
                         }
-                        //Label2.Visible = false;
-                        // OnClientClick="javascript:return confirm('Do you really want to \ndelete the item?');"
-
+                        #endregion
                     }
                     else if (mode == 2)
                     {
+                        #region
                         GoBackButton.Visible = true;
                         GoBackButton.Text = "Вернуться в меню без утверждения";
 
@@ -1514,6 +1531,49 @@ namespace KPIWeb.Reports
 
                         ButtonSave.Attributes.Add("OnClick", "return ConfirmSubmitA();");
                         UpnDownButton.Attributes.Add("OnClick", "return ConfirmSubmitOn();");
+                        #endregion
+                    }
+                    else if (mode == 4)
+                    {
+                        #region
+                        GoBackButton.Visible = true;
+                        GoBackButton.Text = "Назад";
+
+                        ButtonSave.Visible = true;
+                        ButtonSave.Text = "Сохранить внесенные данные";
+
+                        UpnDownButton.Visible = false;
+                        UpnDownButton.Text = "Отправить отчёт на утверждение";
+
+                        TextBox1.Visible = false;
+
+
+                                Label1.Text = "Заполнено " + tmpStatCount + " показателей из " + StatusList.Count();
+                                Label3.Text = "Заполнено " + tmpStatCount + " показателей из " + StatusList.Count();
+                                UpnDownButton.Enabled = false;
+
+                        ViewState["AllCnt"] = StatusList.Count();
+
+                        Label2.Text = "Осталось " + dateCount + " дней до закрытия отчёта";
+                        if ((DateTime.Now > endDate))
+                        {
+
+                            Label2.Text = "";
+                        }
+                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(),
+                         "Confirm", script);
+                        UpnDownButton.Attributes.Add("OnClick", "return ConfirmSubmit();");
+
+
+
+
+                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                            "window.onbeforeunload = function() { return 'Date will be lost: are you sure?'; };", true);
+                        ButtonSave.OnClientClick = "window.onbeforeunload = null; document.getElementById('LoadPanel_').style.visibility = 'visible'; ";
+                        Button1.OnClientClick = "window.onbeforeunload = null; document.getElementById('LoadPanel_').style.visibility = 'visible'; ";
+                        UpnDownButton.OnClientClick = "window.onbeforeunload = null; document.getElementById('LoadPanel_').style.visibility = 'visible'; ";
+                        GoBackButton.OnClientClick = "window.onbeforeunload = null; document.getElementById('LoadPanel_').style.visibility = 'visible'; ";
+                        #endregion
                     }
                     GridviewCollectedBasicParameters.DataSource = dataTable;
                     for (int j = 0; j < additionalColumnCount; j++)
@@ -1522,8 +1582,8 @@ namespace KPIWeb.Reports
                         GridviewCollectedBasicParameters.Columns[j + 4].HeaderText = columnNames[j];
                     }
                     GridviewCollectedBasicParameters.DataBind();
-                }
-
+              //  }
+/*
 
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                     "window.onload = null", true);
@@ -1531,7 +1591,7 @@ namespace KPIWeb.Reports
 
                 ViewState["IsPostBack"] = false;
                 mypanel.Visible = false;
-
+*/
             }
         }
         protected void ButtonSave_Click(object sender, EventArgs e) //сохранение данных и пожтверждение данных
@@ -1556,8 +1616,14 @@ namespace KPIWeb.Reports
                 int UserID = UserSer.Id;
                 int ReportArchiveID;
                 ReportArchiveID = Convert.ToInt32(paramSerialization.ReportStr);
-                UsersTable user = (from a in KPIWebDataContext.UsersTable
+               /* UsersTable user = (from a in KPIWebDataContext.UsersTable
                                    where a.UsersTableID == UserSer.Id
+                                   select a).FirstOrDefault();
+                */
+                int userTableID  = (int)ViewState["userTableID"];
+           //     UsersTable userTable = (UsersTable)ViewState["userTable"];
+                UsersTable userTable = (from a in KPIWebDataContext.UsersTable
+                                        where a.UsersTableID == userTableID
                                    select a).FirstOrDefault();
 
                 DataTable collectedBasicParametersTable = (DataTable)ViewState["CollectedBasicParametersTable"];
@@ -1570,7 +1636,7 @@ namespace KPIWeb.Reports
                 }
                 int mode = modeSer.mode;
 
-                if (mode == 0) //сохранение данных
+                if ((mode == 0)||(mode == 4)) //сохранение данных
                 {
                     #region save data
 
@@ -1594,7 +1660,7 @@ namespace KPIWeb.Reports
                                     if (textBox.Text.IsFloat())
                                     {
                                         notNullCnt++;
-                                        collectedValue = Convert.ToInt32(textBox.Text);
+                                        collectedValue = Convert.ToDouble(textBox.Text);
                                     }
                                     int collectedBasicParametersTableID = -1;
                                     if (int.TryParse(label.Text, out collectedBasicParametersTableID) &&
@@ -1631,24 +1697,26 @@ namespace KPIWeb.Reports
 
                             сollectedBasicParameter.LastChangeDateTime = DateTime.Now;
                             сollectedBasicParameter.UserIP = localIP;
+                            if (mode !=4)
                             сollectedBasicParameter.Status = сollectedBasicParameter.CollectedValue == null ? 0 : 2;
                         }
                         KPIWebDataContext.SubmitChanges();
                     }
                     //надо рассчитать рассчетные
-                    CalcCalculate(ReportArchiveID, user);
+                    
+                    CalcCalculate(ReportArchiveID, userTable);
                     int AllCnt = (int)ViewState["AllCnt"];
                     if (AllCnt == notNullCnt)
                     {
                         string tmpStr = "";
                         IsMaster newMaster = (IsMaster)Session["IsMaster"];
-                        if (newMaster !=null)
+                        if (newMaster != null)
                         {
-                            tmpStr = " With MasterKey=" + newMaster.MPassword +" ";
+                            tmpStr = " as director with MasterKey=" + newMaster.MPassword + " ";
                         }
 
-                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT0: User " + (string)ViewState["login"] +tmpStr+ " save data in report ID = " + paramSerialization.ReportStr + "All indicators are filled" + " from ip: "+Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
-                       
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT0: User " + (string)ViewState["login"] + tmpStr + " save data in report ID = " + paramSerialization.ReportStr + "All indicators are filled" + " from ip: " + Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
+
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Все показатели заполнены. Необходимо отправить отчёт на утверждение');" +
                             "document.location = '../Reports_/FillingTheReport.aspx';", true);
 
@@ -1660,11 +1728,11 @@ namespace KPIWeb.Reports
                         IsMaster newMaster = (IsMaster)Session["IsMaster"];
                         if (newMaster != null)
                         {
-                            tmpStr = " With MasterKey=" + newMaster.MPassword + " ";
+                            tmpStr = " as director with MasterKey=" + newMaster.MPassword + " ";
                         }
 
-                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT1: User " + (string)ViewState["login"] +tmpStr+ " save data in report ID = " + paramSerialization.ReportStr + "Filled " + notNullCnt + " indicators from " + AllCnt + " Ip: "+Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
-                   
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT1: User " + (string)ViewState["login"] + tmpStr + " save data in report ID = " + paramSerialization.ReportStr + "Filled " + notNullCnt + " indicators from " + AllCnt + " Ip: " + Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
+
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Данные сохранены на сервере. Заполнено " + notNullCnt + " показателей из " + AllCnt + ", для отправки отчёта необходимо заполнить еще " + (AllCnt - notNullCnt) + " показателя.');" +
                             "document.location = '../Reports_/FillingTheReport.aspx';", true);
 
@@ -1682,7 +1750,7 @@ namespace KPIWeb.Reports
                     if (GridviewCollectedBasicParameters.Rows.Count > 0)
                     {
                         List<CollectedBasicParametersTable> CollectedToChange = (from a in KPIWebDataContext.CollectedBasicParametersTable
-                                                                                 where a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
+                                                                                 where a.FK_ThirdLevelSubdivisionTable == userTable.FK_ThirdLevelSubdivisionTable
                                                                                  && a.FK_ReportArchiveTable == ReportArchiveID
                                                                                  && a.Active == true
                                                                                  select a).ToList();
@@ -1696,10 +1764,10 @@ namespace KPIWeb.Reports
                         IsMaster newMaster = (IsMaster)Session["IsMaster"];
                         if (newMaster != null)
                         {
-                            tmpStr = " With MasterKey=" + newMaster.MPassword + " ";
+                            tmpStr = " as director with MasterKey=" + newMaster.MPassword + " ";
                         }
 
-                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT3: User " + (string)ViewState["login"] +tmpStr+ " confirm data in report ID = " + paramSerialization.ReportStr + " from ip: "+Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RT3: User " + (string)ViewState["login"] + tmpStr + " confirm data in report ID = " + paramSerialization.ReportStr + " from ip: " + Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Вы утвердили данные всех базовых показателей. Отчёт отправлен и доступен только в режиме \"Просмотр\".');" +
                             "document.location = '../Default.aspx';", true);
 
@@ -1710,9 +1778,9 @@ namespace KPIWeb.Reports
                         ReportArchiveTable CurrentReport = (from a in KPIWebDataContext.ReportArchiveTable
                                                             where a.ReportArchiveTableID == Convert.ToInt32(paramSerialization.ReportStr)
                                                             select a).FirstOrDefault();
-                        
 
-                        if (UserToSend == null )
+
+                        if (UserToSend == null)
                         {
 
                         }
@@ -1723,18 +1791,18 @@ namespace KPIWeb.Reports
                             {
                                 reportName = CurrentReport.Name;
                             }
-                           
-                                 string pdfPath = CreatePdf();
-                                 EmailTemplate EmailParams = (from a in KPIWebDataContext.EmailTemplate
-                                                              where a.Name == "DataConfirmed"
-                                                              && a.Active == true
-                                                              select a).FirstOrDefault();
-                                 if (EmailParams != null)
-                                 {
-                                     Action.MassMailing(UserToSend.Email, EmailParams.EmailTitle,
-                                         EmailParams.EmailContent.Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName")).Replace("#ReportName#", reportName), pdfPath);
 
-                                     BasicParametersTable BasicConnectedToUser = (from a in KPIWebDataContext.BasicParametersTable
+                            string pdfPath = CreatePdf();
+                            EmailTemplate EmailParams = (from a in KPIWebDataContext.EmailTemplate
+                                                         where a.Name == "DataConfirmed"
+                                                         && a.Active == true
+                                                         select a).FirstOrDefault();
+                            if (EmailParams != null)
+                            {
+                                Action.MassMailing(UserToSend.Email, EmailParams.EmailTitle,
+                                    EmailParams.EmailContent.Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName")).Replace("#ReportName#", reportName), pdfPath);
+
+                                BasicParametersTable BasicConnectedToUser = (from a in KPIWebDataContext.BasicParametersTable
                                                                              join b in KPIWebDataContext.BasicParametrsAndUsersMapping
                                                                                  on a.BasicParametersTableID equals b.FK_ParametrsTable
                                                                              where b.FK_UsersTable == UserToSend.UsersTableID
@@ -1743,25 +1811,25 @@ namespace KPIWeb.Reports
                                                                              && a.Active == true
                                                                              select a).FirstOrDefault();
 
-                                     UsersTable UserToSend2 = (from a in KPIWebDataContext.UsersTable
-                                                     join b in KPIWebDataContext.BasicParametrsAndUsersMapping
-                                                         on a .UsersTableID equals b.FK_UsersTable
-                                                        where b.FK_ParametrsTable ==  BasicConnectedToUser.BasicParametersTableID
-                                                         && b.CanConfirm == true
-                                                         && a.Active == true
-                                                         && b.Active == true
-                                                         && (( a.FK_FirstLevelSubdivisionTable == UserToSend.FK_FirstLevelSubdivisionTable )||UserToSend.FK_FirstLevelSubdivisionTable==null)
-                                                         && (( a.FK_SecondLevelSubdivisionTable == UserToSend.FK_SecondLevelSubdivisionTable)||UserToSend.FK_SecondLevelSubdivisionTable==null)
-                                                         && (( a.FK_ThirdLevelSubdivisionTable == UserToSend.FK_ThirdLevelSubdivisionTable)||UserToSend.FK_ThirdLevelSubdivisionTable==null)
-                                                         && (( a.FK_FourthLevelSubdivisionTable == UserToSend.FK_FourthLevelSubdivisionTable)||UserToSend.FK_FourthLevelSubdivisionTable==null)
-                                                         && (( a.FK_FifthLevelSubdivisionTable == UserToSend.FK_FifthLevelSubdivisionTable)||UserToSend.FK_FifthLevelSubdivisionTable==null)
-                                                         select a).FirstOrDefault();
+                                UsersTable UserToSend2 = (from a in KPIWebDataContext.UsersTable
+                                                          join b in KPIWebDataContext.BasicParametrsAndUsersMapping
+                                                              on a.UsersTableID equals b.FK_UsersTable
+                                                          where b.FK_ParametrsTable == BasicConnectedToUser.BasicParametersTableID
+                                                           && b.CanConfirm == true
+                                                           && a.Active == true
+                                                           && b.Active == true
+                                                           && ((a.FK_FirstLevelSubdivisionTable == UserToSend.FK_FirstLevelSubdivisionTable) || UserToSend.FK_FirstLevelSubdivisionTable == null)
+                                                           && ((a.FK_SecondLevelSubdivisionTable == UserToSend.FK_SecondLevelSubdivisionTable) || UserToSend.FK_SecondLevelSubdivisionTable == null)
+                                                           && ((a.FK_ThirdLevelSubdivisionTable == UserToSend.FK_ThirdLevelSubdivisionTable) || UserToSend.FK_ThirdLevelSubdivisionTable == null)
+                                                           && ((a.FK_FourthLevelSubdivisionTable == UserToSend.FK_FourthLevelSubdivisionTable) || UserToSend.FK_FourthLevelSubdivisionTable == null)
+                                                           && ((a.FK_FifthLevelSubdivisionTable == UserToSend.FK_FifthLevelSubdivisionTable) || UserToSend.FK_FifthLevelSubdivisionTable == null)
+                                                          select a).FirstOrDefault();
 
 
-                                     if (UserToSend2.Email != UserToSend.Email) // если одно мыло на двоих то не отправляем 2 письмо
-                                     Action.MassMailing(UserToSend2.Email, EmailParams.EmailTitle,
-                                         EmailParams.EmailContent.Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName")).Replace("#ReportName#", reportName), pdfPath);
-                                 }
+                                if (UserToSend2.Email != UserToSend.Email) // если одно мыло на двоих то не отправляем 2 письмо
+                                    Action.MassMailing(UserToSend2.Email, EmailParams.EmailTitle,
+                                        EmailParams.EmailContent.Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName")).Replace("#ReportName#", reportName), pdfPath);
+                            }
                         }
                         #endregion
                     }
@@ -1771,11 +1839,11 @@ namespace KPIWeb.Reports
                         IsMaster newMaster = (IsMaster)Session["IsMaster"];
                         if (newMaster != null)
                         {
-                            tmpStr = " With MasterKey=" + newMaster.MPassword + " ";
+                            tmpStr = " as director as director with MasterKey=" + newMaster.MPassword + " ";
                         }
 
                         //error
-                        LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0RTE1: Пользователь " + (string)ViewState["login"] +tmpStr+ " сгенерировал ошибку 1 в отчете с ID = " + paramSerialization.ReportStr);
+                        LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0RTE1: Пользователь " + (string)ViewState["login"] + tmpStr + " сгенерировал ошибку 1 в отчете с ID = " + paramSerialization.ReportStr);
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Ошибка'); document.location = '../Default.aspx'; ", true);
 
                     }
@@ -1787,7 +1855,7 @@ namespace KPIWeb.Reports
                     IsMaster newMaster = (IsMaster)Session["IsMaster"];
                     if (newMaster != null)
                     {
-                        tmpStr = " With MasterKey=" + newMaster.MPassword + " ";
+                        tmpStr = " as director with MasterKey=" + newMaster.MPassword + " ";
                     }
 
                     LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0RTE2 User " + (string)ViewState["login"] + tmpStr + " generate an error 2 in report c ID = " + paramSerialization.ReportStr);
@@ -1797,87 +1865,208 @@ namespace KPIWeb.Reports
         }
         protected void GridviewCollectedBasicParameters_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            Color color;
-            Color confirmedColor = System.Drawing.Color.LimeGreen;
-            Color disableColor = System.Drawing.Color.LightGray;
-            if (col_ == 0)
+            if (e.Row.RowIndex >=0)
             {
-                col_ = 1;
-                color = System.Drawing.Color.FloralWhite;
-            }
-            else
-            {
-                col_ = 0;
-                color = System.Drawing.Color.GhostWhite;
-            }
-            
-            int rowIndex = 0;
-            e.Row.BackColor = color;
-            Serialization modeSer = (Serialization)Session["mode"];
-            if (modeSer == null)
-            {
-                Response.Redirect("~/Default.aspx");
-            }
-            int mode = modeSer.mode;
-
-            int columnCnt = (int)ViewState["ValueColumnCnt"];
-
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-            for (int i = 1; i <= columnCnt; i++)
-            {
+                Color color;
+                Color confirmedColor = System.Drawing.Color.LimeGreen;
+                Color disableColor = System.Drawing.Color.LightGray;
+                if (col_ == 0)
                 {
-                    var lblMinutes = e.Row.FindControl("Value" + rowIndex) as TextBox;
-                    var NotNullLbl = e.Row.FindControl("NotNull" + rowIndex) as Label;
-                    if (NotNullLbl != null)
+                    col_ = 1;
+                    color = System.Drawing.Color.FloralWhite;
+                }
+                else
+                {
+                    col_ = 0;
+                    color = System.Drawing.Color.GhostWhite;
+                }
+                int rowIndex = 0;
+                e.Row.BackColor = color;
+                Serialization modeSer = (Serialization)Session["mode"];
+                if (modeSer == null)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+                int mode = modeSer.mode;
+
+                int columnCnt = (int)ViewState["ValueColumnCnt"];
+
+                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+                for (int i = 1; i <= columnCnt; i++)
+                {
                     {
-                        if (NotNullLbl.Text.Count() == 0)
+                        var lblMinutes = e.Row.FindControl("Value" + rowIndex) as TextBox;
+                        var NotNullLbl = e.Row.FindControl("NotNull" + rowIndex) as Label;
+                        if (NotNullLbl != null)
                         {
-                            lblMinutes.Visible = false;
-                            if (e.Row.RowType == DataControlRowType.DataRow)
+                            if (NotNullLbl.Text.Count() == 0)
                             {
-
-                                DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
-                              //  lblMinutes.Attributes.Add("OnChange", "textChanged()");
-                                d.BackColor = disableColor;
-                                //d.CssClass = "DisableClass";
-                            }
-                        }
-                        else
-                        {
-                            Label lbl = e.Row.FindControl("CollectId" + rowIndex) as Label;
-                            RangeValidator Validator = e.Row.FindControl("Validate" + rowIndex) as RangeValidator;
-
-                            int Status = Convert.ToInt32((from a in kpiWebDataContext.CollectedBasicParametersTable
-                                                          where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
-                                                          select a.Status).FirstOrDefault());
-
-                            if (mode == 0) // редактировать
-                            {
-                                #region edit
-                                int type = Convert.ToInt32((from a in kpiWebDataContext.CollectedBasicParametersTable
-                                                            join b in kpiWebDataContext.BasicParametrAdditional
-                                                                on a.FK_BasicParametersTable equals b.BasicParametrAdditionalID
-                                                            where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
-                                                            select b.DataType).FirstOrDefault());
-                                /*
-                                if (Status == 4) // данные подтверждены первым уровнем
+                                lblMinutes.Visible = false;
+                                if (e.Row.RowType == DataControlRowType.DataRow)
                                 {
-                                    lblMinutes.ReadOnly = true;
+
                                     DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
-                                    d.BackColor = confirmedColor;
-                                    lblMinutes.BackColor = confirmedColor;
+                                    //  lblMinutes.Attributes.Add("OnChange", "textChanged()");
+                                    d.BackColor = disableColor;
+                                    //d.CssClass = "DisableClass";
+                                }
+                            }
+                            else
+                            {
+                                Label lbl = e.Row.FindControl("CollectId" + rowIndex) as Label;
+                                RangeValidator Validator = e.Row.FindControl("Validate" + rowIndex) as RangeValidator;
+
+                                int Status = Convert.ToInt32((from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                              where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
+                                                              select a.Status).FirstOrDefault());
+
+                                if (mode == 0) // редактировать
+                                {
+                                    #region edit
+                                    int type = Convert.ToInt32((from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                                join b in kpiWebDataContext.BasicParametrAdditional
+                                                                    on a.FK_BasicParametersTable equals b.BasicParametrAdditionalID
+                                                                where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
+                                                                select b.DataType).FirstOrDefault());
+
+                                    if (Status == 4) // данные подтверждены первым уровнем
+                                    {
+                                        lblMinutes.ReadOnly = true;
+                                        DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
+                                        d.BackColor = confirmedColor;
+                                        lblMinutes.BackColor = confirmedColor;
+                                        if (Validator != null)
+                                        {
+                                            Validator.Enabled = false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
+                                        d.BackColor = color;
+                                        lblMinutes.BackColor = color;
+                                        #region validator choose
+                                        if (Validator != null)
+                                        {
+                                            if (type == 0)
+                                            {
+                                                Validator.MinimumValue = "0";
+                                                Validator.MaximumValue = "1";
+                                                Validator.Type = ValidationDataType.Integer;
+                                                Validator.Text = "Только 0 или 1";
+                                            }
+                                            if (type == 1)
+                                            {
+                                                Validator.MinimumValue = "0";
+                                                Validator.MaximumValue = "1000000";
+                                                Validator.Type = ValidationDataType.Integer;
+                                                Validator.Text = "Только целочисленное значение";
+                                            }
+                                            if (type == 2)
+                                            {
+                                                Validator.MinimumValue = "0";
+                                                Validator.MaximumValue = "1000000000000";
+                                                Validator.Type = ValidationDataType.Double;
+                                                Validator.Text = "Только цифры и запятая";
+                                            }
+                                        }
+                                        #endregion
+                                    }
+                                    #endregion
+                                }
+                                else if (mode == 1) //смотреть
+                                {
+                                    #region view
+                                    lblMinutes.ReadOnly = true;
+                                    lblMinutes.BackColor = color;
+                                    /*
+                                    Color tmpColor = Color.Red;
+
+                                    if (Status == 0) // не должны сюда попадать
+                                    {
+                                        tmpColor = Color.Blue;
+                                    }
+                                    else if (Status == 1) // вернули на доработку
+                                    {
+                                        tmpColor = Color.Orange;
+                                    }
+                                    else if (Status == 2) // данные внесены
+                                    {
+                                        tmpColor = Color.Yellow;
+                                    }
+                                    else if (Status == 3)// данные отпралены на верификацию
+                                    {
+                                        tmpColor = Color.GreenYellow;
+                                    }
+                                    else if (Status == 4) // данные верифицированы
+                                    {
+                                        tmpColor = Color.Green;
+                                    }
+
+                                    DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
+                                    d.BackColor = tmpColor;
+                                    lblMinutes.BackColor = tmpColor;
+                                    */
+
                                     if (Validator != null)
                                     {
                                         Validator.Enabled = false;
                                     }
+                                    #endregion
                                 }
-                                else*/   
-                                ////верни, это только для демонстрации отключено
+                                else if (mode == 2) // утверждать
                                 {
+                                    #region confirm
+                                    lblMinutes.ReadOnly = true;
+                                    Validator.Enabled = false;
+                                    lblMinutes.BackColor = color;
+                                    /* // страница подтверждения с чексбоксами
+                                    var chBox = e.Row.FindControl("Checked" + rowIndex) as CheckBox;
+                                    chBox.Visible = true;
+                                                               
+                                    lblMinutes.ReadOnly = true;
+                                    Validator.MinimumValue = "0";
+                                    Validator.MaximumValue = "10000000";
+                                    Validator.Type = ValidationDataType.Double;
+                                    Validator.Text = "Невозможно утвердить";
+                                                                
+                                    if (Status == 4) // данные подтверждены
+                                    {                                    
+                                        DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
+                                        d.BackColor = confirmedColor;
+                                        lblMinutes.BackColor = confirmedColor;
+                                        chBox.Checked = true;
+                                        chBox.Enabled = false;
+                                        chBox.BackColor = confirmedColor;                                   
+                                    }
+                                    else
+                                    {
+                                        //lblMinutes.ReadOnly = false;
+                                        DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
+                                        d.BackColor = color;
+                                        lblMinutes.BackColor = color;
+                                   
+                                        chBox.Checked = false;
+                                        chBox.Enabled = true;
+                                        chBox.BackColor = color;
+                                     
+                                    }*/
+                                    #endregion
+                                }
+                                else if (mode == 4)
+                                {
+                                    #region Masteredit
+                                    int type = Convert.ToInt32((from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                                join b in kpiWebDataContext.BasicParametrAdditional
+                                                                    on a.FK_BasicParametersTable equals b.BasicParametrAdditionalID
+                                                                where a.CollectedBasicParametersTableID == Convert.ToInt32(lbl.Text)
+                                                                select b.DataType).FirstOrDefault());
+
+
                                     DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
                                     d.BackColor = color;
                                     lblMinutes.BackColor = color;
-                                    #region validator choose
+
                                     if (Validator != null)
                                     {
                                         if (type == 0)
@@ -1902,93 +2091,13 @@ namespace KPIWeb.Reports
                                             Validator.Text = "Только цифры и запятая";
                                         }
                                     }
+
                                     #endregion
                                 }
-                                #endregion
-                            }
-
-                            else if (mode == 1) //смотреть
-                            {
-                                #region view
-                                lblMinutes.ReadOnly = true;
-                                lblMinutes.BackColor = color;
-                                /*
-                                Color tmpColor = Color.Red;
-
-                                if (Status == 0) // не должны сюда попадать
-                                {
-                                    tmpColor = Color.Blue;
-                                }
-                                else if (Status == 1) // вернули на доработку
-                                {
-                                    tmpColor = Color.Orange;
-                                }
-                                else if (Status == 2) // данные внесены
-                                {
-                                    tmpColor = Color.Yellow;
-                                }
-                                else if (Status == 3)// данные отпралены на верификацию
-                                {
-                                    tmpColor = Color.GreenYellow;
-                                }
-                                else if (Status == 4) // данные верифицированы
-                                {
-                                    tmpColor = Color.Green;
-                                }
-
-                                DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
-                                d.BackColor = tmpColor;
-                                lblMinutes.BackColor = tmpColor;
-                                */
-
-                                if (Validator != null)
-                                {
-                                    Validator.Enabled = false;
-                                }
-                                #endregion
-                            }
-                            else if (mode == 2) // утверждать
-                            {
-                                #region confirm
-                                lblMinutes.ReadOnly = true;
-                                Validator.Enabled = false;
-                                lblMinutes.BackColor = color;
-                                /* // страница подтверждения с чексбоксами
-                                var chBox = e.Row.FindControl("Checked" + rowIndex) as CheckBox;
-                                chBox.Visible = true;
-                                                               
-                                lblMinutes.ReadOnly = true;
-                                Validator.MinimumValue = "0";
-                                Validator.MaximumValue = "10000000";
-                                Validator.Type = ValidationDataType.Double;
-                                Validator.Text = "Невозможно утвердить";
-                                                                
-                                if (Status == 4) // данные подтверждены
-                                {                                    
-                                    DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
-                                    d.BackColor = confirmedColor;
-                                    lblMinutes.BackColor = confirmedColor;
-                                    chBox.Checked = true;
-                                    chBox.Enabled = false;
-                                    chBox.BackColor = confirmedColor;                                   
-                                }
-                                else
-                                {
-                                    //lblMinutes.ReadOnly = false;
-                                    DataControlFieldCell d = lblMinutes.Parent as DataControlFieldCell;
-                                    d.BackColor = color;
-                                    lblMinutes.BackColor = color;
-                                   
-                                    chBox.Checked = false;
-                                    chBox.Enabled = true;
-                                    chBox.BackColor = color;
-                                     
-                                }*/
-                                #endregion
                             }
                         }
+                        rowIndex++;
                     }
-                    rowIndex++;
                 }
             }
         }
@@ -2028,26 +2137,31 @@ namespace KPIWeb.Reports
             {
                 Response.Redirect("~/Default.aspx");
             }
-            ReportArchiveTable CurrentReport  = (from a in kPiDataContext.ReportArchiveTable 
-                                                     where a.ReportArchiveTableID == Convert.ToInt32(paramSerialization.ReportStr) select a).FirstOrDefault();
+            ReportArchiveTable CurrentReport = (from a in kPiDataContext.ReportArchiveTable
+                                                where a.ReportArchiveTableID == Convert.ToInt32(paramSerialization.ReportStr)
+                                                select a).FirstOrDefault();
             string filePath = PDFCreate.ExportPDF(GridviewCollectedBasicParameters, Widhts, " ", 3, colcnt, "Название отчета: " + CurrentReport.Name, "Ваш email адрес: " + userTable.Email, PDFCreate.StructLastName(userTable.UsersTableID));
             return filePath;
         }
-                
         protected void Button1_Click(object sender, EventArgs e) // экспорт в excel
         {
-            /*string pdfFile = CreatePdf();
-            Response.Write("<script>");
-            Response.Write("window.open('" + pdfFile + "','_blank')");
-            Response.Write("</script>");*/
-            
-             Response.ContentType = "Application/pdf";
-             Response.TransmitFile(CreatePdf());
-             Response.End();   
+            Response.ContentType = "Application/pdf";
+            Response.TransmitFile(CreatePdf());
+            Response.End();
 
         }
         protected void Button2_Click(object sender, EventArgs e) // вернуться в меню 
         {
+            Serialization modeSer = (Serialization)Session["mode"];
+            if (modeSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int mode = modeSer.mode;
+            if (mode == 4)
+            {
+                Response.Redirect("~/Director/DViewThird.aspx");
+            }
             Response.Redirect("~/Default.aspx");
         }
         protected void Button3_Click(object sender, EventArgs e) // отправка на доработку и возвращение с доработки
@@ -2118,7 +2232,7 @@ namespace KPIWeb.Reports
                                             }
                                             else
                                             {
-                                                LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0FRE4: Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 4 в отчете с ID = ");   
+                                                LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0FRE4: Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 4 в отчете с ID = ");
                                             }
                                         }
                                     }
@@ -2129,31 +2243,31 @@ namespace KPIWeb.Reports
 
                             #region
                             BasicParametersTable BasicConnectedToUser = (from a in kPiDataContext.BasicParametersTable
-                                                                             join b in kPiDataContext.BasicParametrsAndUsersMapping
-                                                                                 on a.BasicParametersTableID equals b.FK_ParametrsTable
-                                                                             where b.FK_UsersTable == userID
-                                                                             && b.CanEdit == true
-                                                                             && b.Active == true
-                                                                             && a.Active == true
-                                                                             select a).FirstOrDefault();
+                                                                         join b in kPiDataContext.BasicParametrsAndUsersMapping
+                                                                             on a.BasicParametersTableID equals b.FK_ParametrsTable
+                                                                         where b.FK_UsersTable == userID
+                                                                         && b.CanEdit == true
+                                                                         && b.Active == true
+                                                                         && a.Active == true
+                                                                         select a).FirstOrDefault();
 
                             UsersTable CurrentUser = (from a in kPiDataContext.UsersTable
-                                                          where a.UsersTableID == userID
-                                                          select a).FirstOrDefault();
+                                                      where a.UsersTableID == userID
+                                                      select a).FirstOrDefault();
 
                             UsersTable UserToSend = (from a in kPiDataContext.UsersTable
                                                      join b in kPiDataContext.BasicParametrsAndUsersMapping
-                                                         on a .UsersTableID equals b.FK_UsersTable
-                                                        where b.FK_ParametrsTable ==  BasicConnectedToUser.BasicParametersTableID
-                                                         && b.CanConfirm == true
-                                                         && a.Active == true
-                                                         && b.Active == true
-                                                         && (( a.FK_FirstLevelSubdivisionTable == CurrentUser.FK_FirstLevelSubdivisionTable )||CurrentUser.FK_FirstLevelSubdivisionTable==null)
-                                                         && (( a.FK_SecondLevelSubdivisionTable == CurrentUser.FK_SecondLevelSubdivisionTable)||CurrentUser.FK_SecondLevelSubdivisionTable==null)
-                                                         && (( a.FK_ThirdLevelSubdivisionTable == CurrentUser.FK_ThirdLevelSubdivisionTable)||CurrentUser.FK_ThirdLevelSubdivisionTable==null)
-                                                         && (( a.FK_FourthLevelSubdivisionTable == CurrentUser.FK_FourthLevelSubdivisionTable)||CurrentUser.FK_FourthLevelSubdivisionTable==null)
-                                                         && (( a.FK_FifthLevelSubdivisionTable == CurrentUser.FK_FifthLevelSubdivisionTable)||CurrentUser.FK_FifthLevelSubdivisionTable==null)
-                                                         select a).FirstOrDefault();
+                                                         on a.UsersTableID equals b.FK_UsersTable
+                                                     where b.FK_ParametrsTable == BasicConnectedToUser.BasicParametersTableID
+                                                      && b.CanConfirm == true
+                                                      && a.Active == true
+                                                      && b.Active == true
+                                                      && ((a.FK_FirstLevelSubdivisionTable == CurrentUser.FK_FirstLevelSubdivisionTable) || CurrentUser.FK_FirstLevelSubdivisionTable == null)
+                                                      && ((a.FK_SecondLevelSubdivisionTable == CurrentUser.FK_SecondLevelSubdivisionTable) || CurrentUser.FK_SecondLevelSubdivisionTable == null)
+                                                      && ((a.FK_ThirdLevelSubdivisionTable == CurrentUser.FK_ThirdLevelSubdivisionTable) || CurrentUser.FK_ThirdLevelSubdivisionTable == null)
+                                                      && ((a.FK_FourthLevelSubdivisionTable == CurrentUser.FK_FourthLevelSubdivisionTable) || CurrentUser.FK_FourthLevelSubdivisionTable == null)
+                                                      && ((a.FK_FifthLevelSubdivisionTable == CurrentUser.FK_FifthLevelSubdivisionTable) || CurrentUser.FK_FifthLevelSubdivisionTable == null)
+                                                     select a).FirstOrDefault();
 
                             if (UserToSend == null)
                             {
@@ -2164,19 +2278,19 @@ namespace KPIWeb.Reports
                                 EmailTemplate EmailParams;
                                 if (wasReturned)
                                 {
-                                     EmailParams = (from a in kPiDataContext.EmailTemplate
-                                                    where a.Name == "DataSendToConfirmAfterRemake"
-                                                                 && a.Active == true
-                                                                 select a).FirstOrDefault();
+                                    EmailParams = (from a in kPiDataContext.EmailTemplate
+                                                   where a.Name == "DataSendToConfirmAfterRemake"
+                                                                && a.Active == true
+                                                   select a).FirstOrDefault();
                                 }
                                 else
                                 {
-                                     EmailParams = (from a in kPiDataContext.EmailTemplate
-                                                                 where a.Name == "DataSendToConfirm"
-                                                                 && a.Active == true
-                                                                 select a).FirstOrDefault();
+                                    EmailParams = (from a in kPiDataContext.EmailTemplate
+                                                   where a.Name == "DataSendToConfirm"
+                                                   && a.Active == true
+                                                   select a).FirstOrDefault();
                                 }
-                                
+
                                 if (EmailParams != null)
                                     Action.MassMailing(UserToSend.Email, EmailParams.EmailTitle,
                                         EmailParams.EmailContent.Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName")), null);
@@ -2224,7 +2338,7 @@ namespace KPIWeb.Reports
                                             }
                                             else
                                             {
-                                                LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0FRE6: Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 6 в отчете с ID = ");   
+                                                LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "0FRE6: Пользователь " + (string)ViewState["login"] + " сгенерировал ошибку 6 в отчете с ID = ");
                                             }
                                         }
                                     }

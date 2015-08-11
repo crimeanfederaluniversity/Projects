@@ -253,6 +253,9 @@ background-color:#FFFFFF}
          }
     </style>
 
+    <br />
+<br />
+
     <asp:GridView ID="GridView1" runat="server" 
             AutoGenerateColumns="False"
             style="margin-top: 0px" >
@@ -270,6 +273,11 @@ background-color:#FFFFFF}
                    <asp:BoundField DataField="Status" HeaderText="Статус данных" Visible="True" />
                 </Columns>
         </asp:GridView>
+
+
+    <br />
+<asp:Button ID="Button23" runat="server" OnClick="Button23_Click" Text="Параметры направлений подготовки" Width="748px" />
+    <br />
 
 
 </asp:Content>

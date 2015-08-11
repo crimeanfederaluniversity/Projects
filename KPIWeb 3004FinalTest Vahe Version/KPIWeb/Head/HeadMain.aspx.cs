@@ -30,5 +30,22 @@ namespace KPIWeb.Head
         {
             Response.Redirect("~/Head/HeadWatchResult.aspx");
         }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Info_Pages/FillingProcessInfo.aspx");
+        }
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Info_Pages/RegisterProcessInfo.aspx");
+        }
+
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Info_Pages/OwnersProcessInfo.aspx");
+        }
+
+
     }
 }

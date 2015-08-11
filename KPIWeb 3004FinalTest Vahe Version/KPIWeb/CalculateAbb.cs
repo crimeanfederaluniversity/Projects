@@ -228,6 +228,7 @@ namespace KPIWeb
                         && (collect.FK_ThirdLevelSubdivisionTable == Lv3 || Lv3 == 0)
                         && (collect.FK_FourthLevelSubdivisionTable == Lv4 || Lv4 == 0)
                         && (collect.FK_FifthLevelSubdivisionTable == Lv5 || Lv5 == 0)
+                        && (collect.FK_ReportArchiveTable == report)
                         && collect.FK_BasicParametersTable == BasicId
                     select collect.CollectedValue).Sum();
             }
@@ -244,6 +245,7 @@ namespace KPIWeb
                         && (collect.FK_ThirdLevelSubdivisionTable == Lv3 || Lv3 == 0)
                         && (collect.FK_FourthLevelSubdivisionTable == Lv4 || Lv4 == 0)
                         && (collect.FK_FifthLevelSubdivisionTable == Lv5 || Lv5 == 0)
+                        && (collect.FK_ReportArchiveTable == report)
                         && collect.FK_BasicParametersTable == BasicId
                     select collect.CollectedValue).Sum();
             }

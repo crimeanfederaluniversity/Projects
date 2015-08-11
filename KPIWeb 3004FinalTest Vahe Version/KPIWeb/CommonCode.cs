@@ -10,8 +10,8 @@ namespace KPIWeb
         public static String GetUserById(int UserID)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-            if (UserID == null)
-                return "0";
+           // if (UserID == null)
+           //     return "0";
             UsersTable User = (from a in kpiWebDataContext.UsersTable
                                where a.UsersTableID == UserID
                                select a).FirstOrDefault();

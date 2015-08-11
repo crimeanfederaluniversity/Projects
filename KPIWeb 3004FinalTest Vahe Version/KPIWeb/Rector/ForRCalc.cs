@@ -157,15 +157,21 @@ namespace KPIWeb.Rector
                                             Lv_4 = 0,
                                             Lv_5 = 0,
                                             Name = a.Name
-                                        }).ToList();
+                                        }).Distinct().ToList();
                         break;
                     }
                 case 1: // возвращаем все факультеты
                     {
                         tmpStrucList = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
                                         join b in kpiWebDataContext.SecondLevelSubdivisionTable
+
                                         on a.FirstLevelSubdivisionTableID equals b.FK_FirstLevelSubdivisionTable
+
+                                        join c in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                       on a.FirstLevelSubdivisionTableID equals c.FK_FirstLevelSubmisionTableId
+
                                         where a.Active == true
+                                        && b.SecondLevelSubdivisionTableID == c.FK_SecondLevelSubdivisionTable
                                         && b.Active == true
                                         && a.FK_ZeroLevelSubvisionTable == ParentStruct.Lv_0
                                         && b.FK_FirstLevelSubdivisionTable == ParentStruct.Lv_1
@@ -178,7 +184,7 @@ namespace KPIWeb.Rector
                                             Lv_4 = 0,
                                             Lv_5 = 0,
                                             Name = b.Name
-                                        }).ToList();
+                                        }).Distinct().ToList();
                         break;
                     }
                 case 2: // возвращаем все кафедры
@@ -188,6 +194,13 @@ namespace KPIWeb.Rector
                                         on a.FirstLevelSubdivisionTableID equals b.FK_FirstLevelSubdivisionTable
                                         join c in kpiWebDataContext.ThirdLevelSubdivisionTable
                                         on b.SecondLevelSubdivisionTableID equals c.FK_SecondLevelSubdivisionTable
+
+                                        join d in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                       on a.FirstLevelSubdivisionTableID equals d.FK_FirstLevelSubmisionTableId
+
+                                        where a.Active == true
+                                        && b.SecondLevelSubdivisionTableID == c.FK_SecondLevelSubdivisionTable
+                                        && c.ThirdLevelSubdivisionTableID == d.FK_ThirdLevelSubdivisionTable
                                         where a.Active == true
                                         && b.Active == true
                                         && c.Active == true
@@ -203,7 +216,7 @@ namespace KPIWeb.Rector
                                             Lv_4 = 0,
                                             Lv_5 = 0,
                                             Name = c.Name
-                                        }).ToList();
+                                        }).Distinct().ToList();
                         break;
                     }
                 case 3: // возвращаем все специальности
@@ -301,7 +314,7 @@ namespace KPIWeb.Rector
                                             Lv_4 = 0,
                                             Lv_5 = 0,
                                             Name = a.Name
-                                        }).OrderBy(x => x.Lv_1).ToList();
+                                        }).Distinct().OrderBy(x => x.Lv_1).ToList();
                         break;
                     }
                 case 1: // возвращаем все факультеты
@@ -318,6 +331,10 @@ namespace KPIWeb.Rector
                                         && a.FK_ZeroLevelSubvisionTable == ParentStruct.Lv_0
                                         && b.FK_FirstLevelSubdivisionTable == ParentStruct.Lv_1
                                        && ((SpecID == 0) || (SpecID == d.FK_Specialization))
+                                        join f in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                       on a.FirstLevelSubdivisionTableID equals f.FK_FirstLevelSubmisionTableId
+                                       where b.SecondLevelSubdivisionTableID ==  f.FK_SecondLevelSubdivisionTable
+
                                         select new Struct(1, "")
                                         {
                                             Lv_0 = (int)a.FK_ZeroLevelSubvisionTable,
@@ -327,7 +344,7 @@ namespace KPIWeb.Rector
                                             Lv_4 = 0,
                                             Lv_5 = 0,
                                             Name = b.Name
-                                        }).OrderBy(x => x.Lv_2).ToList();
+                                        }).Distinct().OrderBy(x => x.Lv_2).ToList();
                         break;
                     }
                 case 2: // возвращаем все кафедры
@@ -346,6 +363,10 @@ namespace KPIWeb.Rector
                                         && b.FK_FirstLevelSubdivisionTable == ParentStruct.Lv_1
                                         && c.FK_SecondLevelSubdivisionTable == ParentStruct.Lv_2
                                         && ((SpecID == 0) || (SpecID == e.FK_Specialization))
+                                        join f in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                      on a.FirstLevelSubdivisionTableID equals f.FK_FirstLevelSubmisionTableId
+                                        where b.SecondLevelSubdivisionTableID == f.FK_SecondLevelSubdivisionTable
+                                        && c.ThirdLevelSubdivisionTableID == f.FK_ThirdLevelSubdivisionTable
                                         select new Struct(1, "")
                                         {
                                             Lv_0 = (int)a.FK_ZeroLevelSubvisionTable,
@@ -355,7 +376,7 @@ namespace KPIWeb.Rector
                                             Lv_4 = 0,
                                             Lv_5 = 0,
                                             Name = c.Name
-                                        }).OrderBy(x => x.Lv_3).ToList();
+                                        }).Distinct().OrderBy(x => x.Lv_3).ToList();
                         break;
                     }
                 default:
@@ -386,18 +407,18 @@ namespace KPIWeb.Rector
             }
             return uniqeStruct;
         }
-        public static float GetCalculatedWithParams(Struct StructToCalcFor, int ParamType, int ParamID, int ReportID, int SpecID) // читает показатель
+        public static double GetCalculatedWithParams(Struct StructToCalcFor, int ParamType, int ParamID, int ReportID, int SpecID) // читает показатель
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
 
-            float result = 0;
+            double result = 0;
             if (ParamType == 0) // считаем целевой показатель
             {
                 IndicatorsTable Indicator = (from a in kpiWebDataContext.IndicatorsTable
                                              where a.IndicatorsTableID == ParamID
                                              select a).FirstOrDefault();
                 return
-                    (float)CalculateAbb.CalculateForLevel(1, Abbreviature.CalculatedAbbToFormula(Indicator.Formula)
+                    (double)CalculateAbb.CalculateForLevel(1, Abbreviature.CalculatedAbbToFormula(Indicator.Formula)
                         , ReportID, SpecID, StructToCalcFor.Lv_0
                         , StructToCalcFor.Lv_1, StructToCalcFor.Lv_2, StructToCalcFor.Lv_3, StructToCalcFor.Lv_4,
                         StructToCalcFor.Lv_5, 0);
@@ -407,13 +428,13 @@ namespace KPIWeb.Rector
                 CalculatedParametrs Calculated = (from a in kpiWebDataContext.CalculatedParametrs
                                                   where a.CalculatedParametrsID == ParamID
                                                   select a).FirstOrDefault();
-                return (float)CalculateAbb.CalculateForLevel(1, Calculated.Formula, ReportID, SpecID, StructToCalcFor.Lv_0
+                return (double)CalculateAbb.CalculateForLevel(1, Calculated.Formula, ReportID, SpecID, StructToCalcFor.Lv_0
                         , StructToCalcFor.Lv_1, StructToCalcFor.Lv_2, StructToCalcFor.Lv_3, StructToCalcFor.Lv_4,
                         StructToCalcFor.Lv_5, 0);
             }
             else if (ParamType == 2) // суммируем базовый
             {
-                return (float)CalculateAbb.SumForLevel(ParamID, ReportID, SpecID, StructToCalcFor.Lv_0
+                return (double)CalculateAbb.SumForLevel(ParamID, ReportID, SpecID, StructToCalcFor.Lv_0
                     , StructToCalcFor.Lv_1, StructToCalcFor.Lv_2, StructToCalcFor.Lv_3, StructToCalcFor.Lv_4,
                     StructToCalcFor.Lv_5);
             }
@@ -528,16 +549,16 @@ namespace KPIWeb.Rector
             }
             return 0;
         }  //определяет последнее не нулевое значение в структуре
-        public static float CalculatedForDB(float input)
+        public static double CalculatedForDB(double input)
         {
-            float tmp = (float)input;
+            double tmp = (double)input;
 
-            if ((tmp < -(float)1E+20) || (tmp > (float)1E+20)
-                || (tmp == null) || (float.IsNaN(tmp))
-                || (float.IsInfinity(tmp)) || (float.IsNegativeInfinity(tmp))
-                || (float.IsPositiveInfinity(tmp)) || (!tmp.ToString().IsFloat()))
+            if ((tmp < -(double)1E+20) || (tmp > (double)1E+20)
+                || (tmp == null) || (double.IsNaN(tmp))
+                || (double.IsInfinity(tmp)) || (double.IsNegativeInfinity(tmp))
+                || (double.IsPositiveInfinity(tmp)) || (!tmp.ToString().IsFloat()))
             {
-                tmp = (float)1E+20;
+                tmp = (double)1E+20;
             }
             return tmp;
         }

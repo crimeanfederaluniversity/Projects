@@ -199,21 +199,24 @@
     <Content Include="Decan\DecMain.aspx" />
     <Content Include="Decan\DecViewBasicParams.aspx" />
     <Content Include="Decan\DecViewReport.aspx" />
+    <Content Include="Director\Checked.png" />
     <Content Include="Director\DAllInOne.aspx" />
+    <Content Include="Director\DCheckedInfo.aspx" />
     <Content Include="Director\DMain.aspx" />
     <Content Include="Director\DReportView.aspx" />
     <Content Include="Director\DViewThird.aspx" />
+    <Content Include="Director\NotReady.aspx" />
     <Content Include="Director\ViewBasicParams.aspx" />
     <Content Include="Error.htm" />
     <Content Include="filenotfound.htm" />
-    <Content Include="FillingProcessInfo.aspx" />
+    <Content Include="Info_Pages\FillingProcessInfo.aspx" />
     <Content Include="FinKadr\OtdelChooseReport.aspx" />
     <Content Include="FinKadr\OtdelResult.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Head\HeadMain.aspx" />
     <Content Include="Head\HeadWatchResult.aspx" />
     <Content Include="MultiUser.aspx" />
-    <Content Include="OwnersProcessInfo.aspx" />
+    <Content Include="Info_Pages\OwnersProcessInfo.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -230,7 +233,7 @@
     <Content Include="Rector\RShowChart.aspx" />
     <Content Include="Rector\RShowChartDetailed.aspx" />
     <Content Include="Rector\RShowChartFaculty.aspx" />
-    <Content Include="RegisterProcessInfo.aspx" />
+    <Content Include="Info_Pages\RegisterProcessInfo.aspx" />
     <Content Include="Spinner.css" />
     <Content Include="StatisticsDepartment\PlannedIndicator.aspx" />
     <Content Include="Rector\RectorChooseReport.aspx" />
@@ -309,9 +312,11 @@
     <Content Include="Site.Mobile.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -479,6 +484,13 @@
     <Compile Include="Director\DAllInOne.aspx.designer.cs">
       <DependentUpon>DAllInOne.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Director\DCheckedInfo.aspx.cs">
+      <DependentUpon>DCheckedInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Director\DCheckedInfo.aspx.designer.cs">
+      <DependentUpon>DCheckedInfo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Director\DMain.aspx.cs">
       <DependentUpon>DMain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -500,6 +512,13 @@
     <Compile Include="Director\DViewThird.aspx.designer.cs">
       <DependentUpon>DViewThird.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Director\NotReady.aspx.cs">
+      <DependentUpon>NotReady.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Director\NotReady.aspx.designer.cs">
+      <DependentUpon>NotReady.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Director\ViewBasicParams.aspx.cs">
       <DependentUpon>ViewBasicParams.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -507,11 +526,11 @@
     <Compile Include="Director\ViewBasicParams.aspx.designer.cs">
       <DependentUpon>ViewBasicParams.aspx</DependentUpon>
     </Compile>
-    <Compile Include="FillingProcessInfo.aspx.cs">
+    <Compile Include="Info_Pages\FillingProcessInfo.aspx.cs">
       <DependentUpon>FillingProcessInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="FillingProcessInfo.aspx.designer.cs">
+    <Compile Include="Info_Pages\FillingProcessInfo.aspx.designer.cs">
       <DependentUpon>FillingProcessInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="FinKadr\OtdelChooseReport.aspx.cs">
@@ -572,11 +591,11 @@
       <DependentUpon>MultiUser.aspx</DependentUpon>
     </Compile>
     <Compile Include="OtdelSession.cs" />
-    <Compile Include="OwnersProcessInfo.aspx.cs">
+    <Compile Include="Info_Pages\OwnersProcessInfo.aspx.cs">
       <DependentUpon>OwnersProcessInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="OwnersProcessInfo.aspx.designer.cs">
+    <Compile Include="Info_Pages\OwnersProcessInfo.aspx.designer.cs">
       <DependentUpon>OwnersProcessInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="PDFCreate.cs" />
@@ -639,11 +658,11 @@
     <Compile Include="Rector\RShowChartFaculty.aspx.designer.cs">
       <DependentUpon>RShowChartFaculty.aspx</DependentUpon>
     </Compile>
-    <Compile Include="RegisterProcessInfo.aspx.cs">
+    <Compile Include="Info_Pages\RegisterProcessInfo.aspx.cs">
       <DependentUpon>RegisterProcessInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="RegisterProcessInfo.aspx.designer.cs">
+    <Compile Include="Info_Pages\RegisterProcessInfo.aspx.designer.cs">
       <DependentUpon>RegisterProcessInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="StatisticsDepartment\PlannedIndicator.aspx.cs">

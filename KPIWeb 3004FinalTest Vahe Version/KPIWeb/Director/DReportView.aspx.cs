@@ -53,7 +53,7 @@ namespace KPIWeb.Director
                 dataTable.Columns.Add(new DataColumn("StructID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Status", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Color", typeof(string)));
-
+                /*
                 List<SecondLevelSubdivisionTable> Faculties = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
                                                          where a.FK_FirstLevelSubdivisionTable == userTable.FK_FirstLevelSubdivisionTable
                                                          && a.Active == true
@@ -64,7 +64,16 @@ namespace KPIWeb.Director
                                                          on b.UsersTableID equals c.FK_UsersTable
                                                          where c.Active == true
                                                          && c.CanView == true
-                                                         select a).Distinct().ToList();
+                                                         select a).Distinct().ToList();*/
+                List<SecondLevelSubdivisionTable> Faculties = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                 where a.FK_FirstLevelSubdivisionTable == userTable.FK_FirstLevelSubdivisionTable
+                 join b in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                 on a.SecondLevelSubdivisionTableID equals b.FK_SecondLevelSubdivisionTable
+                 where a.Active == true
+                 && b.Active == true
+                 && b.FK_ReportArchiveTableId == ReportID
+                 select a).Distinct().ToList();
+
                 bool canconfirm = true;
 
                 foreach (SecondLevelSubdivisionTable CurrentSecond in Faculties)
@@ -75,8 +84,13 @@ namespace KPIWeb.Director
                     int All = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
                                where a.Active == true
                                && a.FK_SecondLevelSubdivisionTable == CurrentSecond.SecondLevelSubdivisionTableID
-                               select a).Count();
-                    int AllConfirmed = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                               join b in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                               on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
+                               where a.Active == true
+                               && b.FK_ReportArchiveTableId == ReportID
+                               select a).Distinct().Count();
+
+                    /*int AllConfirmed = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
                                         where a.Active == true
                                         && a.FK_SecondLevelSubdivisionTable == CurrentSecond.SecondLevelSubdivisionTableID
                                         join b in kpiWebDataContext.CollectedBasicParametersTable
@@ -84,8 +98,21 @@ namespace KPIWeb.Director
                                             where b.Status == 4
                                             && b.Active == true
                                             && b.FK_ReportArchiveTable == ReportID
+                                        select a).Distinct().Count();*/
+
+                    int AllConfirmed = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                                        where a.Active == true
+                                        && a.FK_SecondLevelSubdivisionTable == CurrentSecond.SecondLevelSubdivisionTableID
+                                        join b in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                        on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
+                                        where a.Active == true 
+                                        join c in kpiWebDataContext.CollectedBasicParametersTable
+                                        on a.ThirdLevelSubdivisionTableID equals c.FK_ThirdLevelSubdivisionTable
+                                        where c.FK_ReportArchiveTable == ReportID
+                                        && c.Status == 4
                                         select a).Distinct().Count();
-                    int AllConfirmed2 = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+
+                    /*int AllConfirmed2 = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
                                         where a.Active == true
                                         && a.FK_SecondLevelSubdivisionTable == CurrentSecond.SecondLevelSubdivisionTableID
                                         join b in kpiWebDataContext.CollectedBasicParametersTable
@@ -94,31 +121,49 @@ namespace KPIWeb.Director
                                             && b.Active == true
                                             && b.FK_ReportArchiveTable == ReportID
                                         select a).Distinct().Count();
-
+                    */
+                    int AllConfirmed2 = (from a in kpiWebDataContext.ThirdLevelSubdivisionTable
+                                         where a.Active == true
+                                         && a.FK_SecondLevelSubdivisionTable == CurrentSecond.SecondLevelSubdivisionTableID
+                                         join b in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                         on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
+                                         where a.Active == true
+                                         join c in kpiWebDataContext.CollectedBasicParametersTable
+                                         on a.ThirdLevelSubdivisionTableID equals c.FK_ThirdLevelSubdivisionTable
+                                         where c.FK_ReportArchiveTable == ReportID
+                                         && c.Status == 5
+                                         select a).Distinct().Count();
 
                     if (All != AllConfirmed)
+                    {
                         canconfirm = false;
+                        Button24.Enabled = !canconfirm;
+                    }
 
                     if (AllConfirmed2 > 0)
                     {
                         dataRow["Status"] = "Утверждено";
                         dataRow["Color"] = 3; // зеленый
+                        Button24.Enabled = false;
                     }
                     else
                     {
                         if (AllConfirmed == All)
                         {
                             dataRow["Color"] = 2; // желтый
+                            Button24.Enabled = false;
                         }
                         else
                         {
                             dataRow["Color"] = 1; // красный
+                            Button24.Enabled = true;
                         }
                         dataRow["Status"] = "Утвердили " + AllConfirmed.ToString() + " из " + All.ToString();
                     }
                     dataTable.Rows.Add(dataRow);
                 }
                 Button1.Enabled = canconfirm;
+                
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
             }
@@ -205,5 +250,13 @@ namespace KPIWeb.Director
         {
             Response.Redirect("~/Director/DAllInOne.aspx");
         }
+
+        protected void Button24_Click(object sender, EventArgs e)
+        {
+
+
+            Response.Redirect("~/Director/NotReady.aspx");
+        }
+
     }
 }

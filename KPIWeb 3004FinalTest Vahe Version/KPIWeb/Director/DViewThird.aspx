@@ -1,11 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="DViewThird.aspx.cs" Inherits="KPIWeb.Director.DViewThird" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master"  CodeBehind="DViewThird.aspx.cs" Inherits="KPIWeb.Director.DViewThird" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     
    
 <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
 	<div>    
-		  <asp:Button ID="GoBackButton" runat="server" OnClientClick="JavaScript:window.history.back(1); return false; showLoadPanel();"  Text="Назад" Width="125px" Enabled="True" />
+		  <asp:Button ID="GoBackButton" runat="server" OnClientClick="JavaScript:window.location.href='../Director/DReportView'; return false; showLoadPanel();"  Text="Назад" Width="125px" Enabled="True" />
 		  <asp:Button ID="GoForwardButton" runat="server" OnClientClick="JavaScript:window.history.forward(1); return false; showLoadPanel();"  Text="Вперед" Width="125px" />
 		  <asp:Button ID="Button22" OnClientClick="showLoadPanel()" runat="server"  Text="На главную" Width="125px" Enabled="True" OnClick="Button22_Click" />
 		  <asp:Button ID="Button5" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right" OnClick="Button5_Click" Text="Нормативные документы" Width="300px" />
@@ -228,17 +228,15 @@ background-color:#FFFFFF}
             </div>
             </div>
         </div>
-
-
     <style type="text/css">
+
    .button_right 
    {
        float: right;
        margin-right: 10px;
    }     
  </style>  
-
-          
+         
    <h2>
                <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
           
@@ -257,7 +255,7 @@ background-color:#FFFFFF}
 
                   <asp:TemplateField HeaderText="Подробнее">
                         <ItemTemplate>
-                            <asp:Button ID="ButtonViewReport" runat="server" CommandName="Select" Text="Просмотреть" Width="200px" CommandArgument='<%# Eval("StructID") %>' OnClick="ButtonDetailClick"/>
+                            <asp:Button ID="ButtonViewReport" runat="server" OnClientClick="showLoadPanel()" CommandName="Select" Text="Просмотреть" Width="200px" CommandArgument='<%# Eval("StructID") %>' OnClick="ButtonDetailClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 

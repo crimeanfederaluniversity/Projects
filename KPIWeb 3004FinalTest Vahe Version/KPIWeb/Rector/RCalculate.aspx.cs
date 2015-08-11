@@ -47,14 +47,13 @@ namespace KPIWeb.Rector
                                                                       join b in kPiDataContext.ReportArchiveAndLevelMappingTable
                                                                           on a.FirstLevelSubdivisionTableID equals b.FK_FirstLevelSubmisionTableId
                                                                       where b.FK_ReportArchiveTableId == ReportID
-                                                                      select a).ToList();
+                                                                      select a).Distinct().ToList();
+
             List<SecondLevelSubdivisionTable> SecondLevelToCalculate = (from a in kPiDataContext.SecondLevelSubdivisionTable
-                                                                        join b in kPiDataContext.FirstLevelSubdivisionTable
-                                                                            on a.FK_FirstLevelSubdivisionTable equals b.FirstLevelSubdivisionTableID
-                                                                        join c in kPiDataContext.ReportArchiveAndLevelMappingTable
-                                                                            on b.FirstLevelSubdivisionTableID equals c.FK_FirstLevelSubmisionTableId
-                                                                        where c.FK_ReportArchiveTableId == ReportID
-                                                                        select a).ToList();
+                                                                        join b in kPiDataContext.ReportArchiveAndLevelMappingTable
+                                                                        on a.SecondLevelSubdivisionTableID equals b.FK_SecondLevelSubdivisionTable
+                                                                        where b.FK_ReportArchiveTableId == ReportID
+                                                                        select a).Distinct().ToList();
             //теперь пройдемся поочереди по каждому показателю
             //первым делом посчитаем показатель для КФУ
             //потом посчитаем показатель для каждого структурного 1-го уровня
@@ -63,14 +62,13 @@ namespace KPIWeb.Rector
             #endregion
             foreach (IndicatorsTable CurrentIndicator in IndicatorsToCalculateList) //считаем каждый показатель для каждого факультета, каждой академии и всего КФУ
             {
-                if (CurrentIndicator.IndicatorsTableID != 1027)
-                    continue;
+               
        
                 #region calcForCFU
                 {
                     //считай для КФУ
                     ForRCalc.Struct mainStruct = mainStruct = new ForRCalc.Struct(1, 0, 0, 0, 0, "N");
-                    float tmp = ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0, CurrentIndicator.IndicatorsTableID, ReportID, 0));
+                    double tmp = ForRCalc.CalculatedForDB((float)ForRCalc.GetCalculatedWithParams(mainStruct, 0, CurrentIndicator.IndicatorsTableID, ReportID, 0));
                     CollectedIndicatorsForR newCollected = new CollectedIndicatorsForR();
                     newCollected.Active = true;
                     newCollected.CreatedDateTime = DateTime.Now;
@@ -98,7 +96,7 @@ namespace KPIWeb.Rector
                 {
                     //считай для академий
                     ForRCalc.Struct mainStruct = mainStruct = new ForRCalc.Struct(1, CurrentFirstLevel.FirstLevelSubdivisionTableID, 0, 0, 0, "N");
-                    float tmp = ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0, CurrentIndicator.IndicatorsTableID, ReportID, 0));
+                    double tmp = ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0, CurrentIndicator.IndicatorsTableID, ReportID, 0));
                     CollectedIndicatorsForR newCollected = new CollectedIndicatorsForR();
                     newCollected.Active = true;
                     newCollected.CreatedDateTime = DateTime.Now;
@@ -126,7 +124,7 @@ namespace KPIWeb.Rector
                 {
                     // считай для кафедр
                     ForRCalc.Struct mainStruct = mainStruct = new ForRCalc.Struct(1, CurrentSecondLevel.FK_FirstLevelSubdivisionTable, CurrentSecondLevel.SecondLevelSubdivisionTableID, 0, 0, "N");
-                    float tmp = ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0, CurrentIndicator.IndicatorsTableID, ReportID, 0));
+                    double tmp = ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0, CurrentIndicator.IndicatorsTableID, ReportID, 0));
                     CollectedIndicatorsForR newCollected = new CollectedIndicatorsForR();
                     newCollected.Active = true;
                     newCollected.CreatedDateTime = DateTime.Now;
@@ -660,47 +658,7 @@ namespace KPIWeb.Rector
                 }
             }
         }
-        /*
-        protected void ConfCalculate(int ReportArchiveID, UsersTable user)
-        {
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-            List<BasicParametersTable> calcBasicParams =
-            (from a in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
-             join b in kpiWebDataContext.BasicParametersTable
-             on a.FK_BasicParametrsTable equals b.BasicParametersTableID
-             join c in kpiWebDataContext.BasicParametrsAndUsersMapping
-             on b.BasicParametersTableID equals c.FK_ParametrsTable
-             join d in kpiWebDataContext.BasicParametrAdditional
-             on b.BasicParametersTableID equals d.BasicParametrAdditionalID
-             where
-                   a.FK_ReportArchiveTable == ReportArchiveID  //из нужного отчёта
-                && c.FK_UsersTable == user.UsersTableID // свяный с пользователем
-                && (d.SubvisionLevel == 3 || d.SubvisionLevel == 4)//нужный уровень заполняющего
-                && a.Active == true  // запись в таблице связей показателя и отчёта активна
-                && c.Active == true  // запись в таблице связей показателя и пользователей активна
-                && d.Calculated == true // этот показатель нужно считать
-             select b).ToList();
 
-            //узнали показатели кафедры(отчёт,разрешенияПользователя,Уровеньвводяшего,вводящийся показатель)          
-            foreach (BasicParametersTable basicParam in calcBasicParams) //пройдемся по показателям
-            {
-                CollectedBasicParametersTable collectedBasicTmp =
-                    (from a in kpiWebDataContext.CollectedBasicParametersTable
-                     where a.FK_ZeroLevelSubdivisionTable == user.FK_ZeroLevelSubdivisionTable
-                           && a.FK_FirstLevelSubdivisionTable == user.FK_FirstLevelSubdivisionTable
-                           && a.FK_SecondLevelSubdivisionTable == user.FK_SecondLevelSubdivisionTable
-                           && a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
-                           && a.FK_BasicParametersTable == basicParam.BasicParametersTableID
-                           && a.FK_ReportArchiveTable == ReportArchiveID
-                     select a).FirstOrDefault();
-                if (collectedBasicTmp != null) // надо создать
-                {
-                    collectedBasicTmp.Status = 4;
-                    kpiWebDataContext.SubmitChanges();
-                }
-            }
-        }
-        */
         protected void CalcCalculate(int ReportArchiveID, UsersTable user)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
@@ -721,50 +679,6 @@ namespace KPIWeb.Rector
                 && d.Calculated == true // этот показатель нужно считать
              select b).ToList();
 
-            #region toDelete
-            /*
-            ThirdLevelParametrs Cangrad = (from a in kpiWebDataContext.ThirdLevelParametrs
-                                           where a.CanGraduate == true
-                                           && a.ThirdLevelParametrsID == user.FK_ThirdLevelSubdivisionTable
-                                           select a).FirstOrDefault();
-            if (Cangrad != null) // кафедра выпускает
-            {
-                //определим какого типа специальности есть на данной кафедре             
-                bool AnyB = (from a in kpiWebDataContext.FourthLevelSubdivisionTable
-                             join b in kpiWebDataContext.FourthLevelParametrs
-                             on a.FourthLevelSubdivisionTableID equals b.FourthLevelParametrsID
-                             where
-                             a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
-                             && b.SpecType == 1
-                             select a).ToList().Count() > 0 ? true : false;
-
-                bool AnyS = (from a in kpiWebDataContext.FourthLevelSubdivisionTable
-                             join b in kpiWebDataContext.FourthLevelParametrs
-                             on a.FourthLevelSubdivisionTableID equals b.FourthLevelParametrsID
-                             where
-                             a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
-                             && b.SpecType == 2
-                             select a).ToList().Count() > 0 ? true : false;
-
-                bool AnyM = (from a in kpiWebDataContext.FourthLevelSubdivisionTable
-                             join b in kpiWebDataContext.FourthLevelParametrs
-                             on a.FourthLevelSubdivisionTableID equals b.FourthLevelParametrsID
-                             where
-                             a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
-                             && b.SpecType == 3
-                             select a).ToList().Count() > 0 ? true : false;
-
-                bool AnyA = (from a in kpiWebDataContext.FourthLevelSubdivisionTable
-                             join b in kpiWebDataContext.FourthLevelParametrs
-                             on a.FourthLevelSubdivisionTableID equals b.FourthLevelParametrsID
-                             where
-                             a.FK_ThirdLevelSubdivisionTable == user.FK_ThirdLevelSubdivisionTable
-                             && b.SpecType == 4
-                             select a).ToList().Count() > 0 ? true : false;
-                //узнали показатели кафедры(отчёт,разрешенияПользователя,Уровеньвводяшего,вводящийся показатель)     
-             */
-            #endregion
-
             List<FourthLevelSubdivisionTable> FourtLevels = new List<FourthLevelSubdivisionTable>();
 
             if (user.FK_ThirdLevelSubdivisionTable != null)
@@ -777,8 +691,7 @@ namespace KPIWeb.Rector
 
             foreach (BasicParametersTable basicParam in calcBasicParams) //пройдемся по показателям
             {
-                if (basicParam.BasicParametersTableID != 3912)
-                    continue;
+
                 int ii = (int)(from a in kpiWebDataContext.BasicParametrAdditional
                                where a.BasicParametrAdditionalID == basicParam.BasicParametersTableID
                                select a.SubvisionLevel).FirstOrDefault();
@@ -797,10 +710,7 @@ namespace KPIWeb.Rector
                 {
                     patternSwitch(ReportArchiveID, basicParam, null, FourtLevels.Count(), user);
                 }
-
             }
-            // }
-
         }
         #endregion
 
@@ -816,22 +726,11 @@ namespace KPIWeb.Rector
                                                                b.FK_ReportArchiveTable == 1
                                                                select a).Distinct().ToList();
 
-/*          UsersTable UUUUUSER = (from a in kPiDataContext.UsersTable
-
-                                   where a.UsersTableID == 12489
-                                           select a).FirstOrDefault();
-            CalcCalculate(1, UUUUUSER);
-*/
-            
-             //   ThirdLevelList.Clear();
-              //      ThirdLevelList.Add((from a in kPiDataContext.ThirdLevelSubdivisionTable where a.ThirdLevelSubdivisionTableID == 4684 select a).FirstOrDefault());
             foreach (ThirdLevelSubdivisionTable thirdLevel in ThirdLevelList)
             {
                 UsersTable UsersToCalculate = (from a in kPiDataContext.UsersTable
                                                  join b in kPiDataContext.BasicParametrsAndUsersMapping
                                                      on a.UsersTableID equals b.FK_UsersTable
-                                                     //join c in kPiDataContext.CollectedBasicParametersTable 
-                                                    // on b.FK_ParametrsTable equals c.FK_BasicParametersTable
                                                  where a.FK_ThirdLevelSubdivisionTable == thirdLevel.ThirdLevelSubdivisionTableID
                                                          && b.CanEdit == true select a).FirstOrDefault();
                 if (UsersToCalculate != null)
@@ -1118,8 +1017,84 @@ namespace KPIWeb.Rector
             GridView1.DataSource = classlist;
             GridView1.DataBind();
         }
-        
 
+        public class tmpcla 
+        {
+            public string Email {get;set;}
+            public string Password { get; set; }
+            public string name1 {get;set;}
+            public string name2 { get; set; }
+            public string name3 { get; set; }
+            public tmpcla( string Email_,string Password_,string name1_,string name2_,string name3_)
+            {
+                this.Email = Email_;
+                this.Password = Password_;
+                this.name1 = name1_;
+                this.name2 = name2_;
+                this.name3 = name3_;
+            }
+             public tmpcla()
+            { }
+        }
+
+        protected void Button6_Click(object sender, EventArgs e)
+        {
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+
+
+
+            List<UsersTable> sc2 = (from a in kPiDataContext.UsersTable
+                               join b in kPiDataContext.BasicParametrsAndUsersMapping
+                               on a.UsersTableID equals b.FK_UsersTable
+                               join c in kPiDataContext.FirstLevelSubdivisionTable
+                               on a.FK_FirstLevelSubdivisionTable equals c.FirstLevelSubdivisionTableID
+                               join d in kPiDataContext.SecondLevelSubdivisionTable
+                               on a.FK_SecondLevelSubdivisionTable equals d.SecondLevelSubdivisionTableID
+                               join ff in kPiDataContext.ThirdLevelSubdivisionTable
+                               on a.FK_ThirdLevelSubdivisionTable equals ff.ThirdLevelSubdivisionTableID
+                               where a.AccessLevel == 0
+                               && ( b.CanConfirm == true
+                               || b.CanEdit == true)
+                               select a).Distinct().ToList();
+
+            List<UsersTable> sc = (from a in kPiDataContext.UsersTable
+                               join b in kPiDataContext.BasicParametrsAndUsersMapping
+                               on a.UsersTableID equals b.FK_UsersTable
+                               join c in kPiDataContext.FirstLevelSubdivisionTable
+                               on a.FK_FirstLevelSubdivisionTable equals c.FirstLevelSubdivisionTableID
+                               join d in kPiDataContext.SecondLevelSubdivisionTable
+                               on a.FK_SecondLevelSubdivisionTable equals d.SecondLevelSubdivisionTableID
+                               join ff in kPiDataContext.ThirdLevelSubdivisionTable
+                               on a.FK_ThirdLevelSubdivisionTable equals ff.ThirdLevelSubdivisionTableID
+                               where a.AccessLevel == 0
+                               select a).Distinct().ToList();
+           // List<tmpcla> sc3 = sc.Distinct(sc2);
+            foreach (UsersTable tmp in sc2)
+            {
+                sc.Remove(tmp);
+            }
+
+            List<tmpcla> tmptmp = new List<tmpcla>();
+            foreach (UsersTable tmp in sc)
+            {
+                tmptmp.Add(new tmpcla { Email = tmp.Email, Password = tmp.Password, name1=(from a in kPiDataContext.FirstLevelSubdivisionTable
+                                                                                               where a.FirstLevelSubdivisionTableID == tmp.FK_FirstLevelSubdivisionTable
+                                                                                               select a.Name).FirstOrDefault(),
+                name2 = (from a in kPiDataContext.SecondLevelSubdivisionTable where a.SecondLevelSubdivisionTableID == tmp.FK_SecondLevelSubdivisionTable select a.Name).FirstOrDefault(),
+                name3 = (from a in kPiDataContext.ThirdLevelSubdivisionTable where a.ThirdLevelSubdivisionTableID == tmp.FK_ThirdLevelSubdivisionTable select a.Name).FirstOrDefault()});
+            }
+
+            GridView1.DataSource = tmptmp;
+            GridView1.DataBind();
+        }
+
+
+
+
+        protected void Button7_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

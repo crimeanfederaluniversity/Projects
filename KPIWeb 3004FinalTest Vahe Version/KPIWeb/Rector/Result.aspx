@@ -265,7 +265,14 @@
             AutoGenerateColumns="False"
             style="margin-top: 0px;" OnSelectedIndexChanged="Grid_SelectedIndexChanged" OnRowDataBound="Grid_RowDataBound">
              <Columns>                
-                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />    
+   
+                 <asp:TemplateField HeaderText="ID" Visible="False">
+                        <ItemTemplate>
+                            <asp:Label ID="IDs"  runat="server" Visible="false" Text='<%# Bind("ID") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+
                  <asp:BoundField DataField="Number"   HeaderText="Номер" Visible="true" />
                  <asp:BoundField DataField="Abb"   HeaderText="Шифр" Visible="True" />
                  <asp:BoundField DataField="Name" HeaderText="Get" Visible="True" />          

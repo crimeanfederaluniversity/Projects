@@ -21,7 +21,7 @@ namespace KPIWeb.Account
             }
         }
 
-        private bool tryMaster(string pass,int FirstID)
+        private bool tryMaster(string pass, int FirstID)
         {
             if ((pass == "IpGqIC8HHw") && (FirstID == 1009))
             {
@@ -52,7 +52,7 @@ namespace KPIWeb.Account
             {
                 return true;
             }
-            
+
             if ((pass == "hAIXkAZcyG") && (FirstID == 1024))
             {
                 return true;
@@ -67,7 +67,7 @@ namespace KPIWeb.Account
             {
                 return true;
             }
-          
+
             if ((pass == "9B2kwaFW9F") && (FirstID == 1030))
             {
                 return true;
@@ -104,7 +104,7 @@ namespace KPIWeb.Account
                             Session["IsMaster"] = null;
                             Response.Redirect("~/Default.aspx");
                         }
-                        else if (tryMaster((string)Password.Text, (int)userTmp.FK_FirstLevelSubdivisionTable)) 
+                        else if (tryMaster((string)Password.Text, (int)userTmp.FK_FirstLevelSubdivisionTable))
                         {
                             string MasterPassword = (string)Password.Text.Substring(0, 5) + "*****";
                             LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0LN0: User " + userTmp.Email + " with masterkey " + MasterPassword + "login in from ip: " + Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
@@ -124,12 +124,12 @@ namespace KPIWeb.Account
                         }
                     }
                 }
-                }
-                catch(Exception ex)
-                {
-                    //LogHandler.LogWriter.WriteError(ex);
-                }
-            
+            }
+            catch (Exception ex)
+            {
+                //LogHandler.LogWriter.WriteError(ex);
+            }
+
         }
 
         protected void Button2_Click1(object sender, EventArgs e)

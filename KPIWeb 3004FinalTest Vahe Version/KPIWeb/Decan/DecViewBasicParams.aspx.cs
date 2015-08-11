@@ -295,8 +295,12 @@ namespace KPIWeb.Decan
                                                                          on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
                                                                      join c in kpiWebDataContext.BasicParametrsAndUsersMapping
                                                                      on b.UsersTableID equals c.FK_UsersTable
+                                                                     join d in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                                                     on a.ThirdLevelSubdivisionTableID equals d.FK_ThirdLevelSubdivisionTable
                                                                      where
-                                                                     a.Active == true
+                                                                     d.FK_ReportArchiveTableId == ReportID
+                                                                     && d.Active == true
+                                                                     && a.Active == true
                                                                      && b.Active == true
                                                                      && c.Active == true
                                                                      && c.FK_ParametrsTable == 3828

@@ -10,7 +10,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="About.aspx">
-      <publishTime>06/14/2015 11:11:54</publishTime>
+      <publishTime>07/23/2015 11:01:17</publishTime>
     </File>
     <File Include="Account/OpenAuthProviders.ascx">
       <publishTime>06/14/2015 11:11:54</publishTime>
@@ -88,10 +88,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/14/2015 11:12:06</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/masterpage.css">
-      <publishTime>06/26/2015 23:26:12</publishTime>
+      <publishTime>07/23/2015 12:14:48</publishTime>
     </File>
     <File Include="App_Themes/theme_1/Skin1.skin">
-      <publishTime>06/14/2015 11:12:06</publishTime>
+      <publishTime>07/23/2015 12:12:10</publishTime>
     </File>
     <File Include="AutomationDepartment/AddLevel.aspx">
       <publishTime>06/14/2015 11:12:06</publishTime>
@@ -105,8 +105,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="AutomationDepartment/ChangeUser.aspx">
       <publishTime>06/14/2015 11:12:06</publishTime>
     </File>
+    <File Include="AutomationDepartment/ConnectUsers.aspx">
+      <publishTime>07/03/2015 14:50:58</publishTime>
+    </File>
     <File Include="AutomationDepartment/EditUser.aspx">
-      <publishTime>06/14/2015 11:12:06</publishTime>
+      <publishTime>07/23/2015 11:01:17</publishTime>
     </File>
     <File Include="AutomationDepartment/IsAvailibleMappingRole.aspx">
       <publishTime>06/14/2015 11:12:06</publishTime>
@@ -115,7 +118,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/14/2015 11:12:06</publishTime>
     </File>
     <File Include="AutomationDepartment/Regisration.aspx">
-      <publishTime>06/14/2015 11:12:06</publishTime>
+      <publishTime>07/03/2015 12:20:44</publishTime>
+    </File>
+    <File Include="AutomationDepartment/ReturnReportForUser.aspx">
+      <publishTime>07/23/2015 11:01:17</publishTime>
     </File>
     <File Include="AutomationDepartment/RoleMapping.aspx">
       <publishTime>06/14/2015 11:12:06</publishTime>
@@ -145,7 +151,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/15/2015 14:50:58</publishTime>
     </File>
     <File Include="bin/KPIWeb.dll">
-      <publishTime>06/27/2015 00:26:17</publishTime>
+      <publishTime>08/07/2015 16:58:47</publishTime>
     </File>
     <File Include="bin/log4net.dll">
       <publishTime>06/14/2015 11:13:13</publishTime>
@@ -220,7 +226,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/14/2015 11:12:07</publishTime>
     </File>
     <File Include="Contact.aspx">
-      <publishTime>06/14/2015 11:12:07</publishTime>
+      <publishTime>07/01/2015 15:05:10</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
       <publishTime>06/14/2015 11:12:07</publishTime>
@@ -231,20 +237,41 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/Site.css">
       <publishTime>06/14/2015 11:12:07</publishTime>
     </File>
+    <File Include="Decan/DecMain.aspx">
+      <publishTime>07/02/2015 12:17:36</publishTime>
+    </File>
+    <File Include="Decan/DecViewBasicParams.aspx">
+      <publishTime>07/23/2015 11:11:17</publishTime>
+    </File>
+    <File Include="Decan/DecViewReport.aspx">
+      <publishTime>07/02/2015 12:22:21</publishTime>
+    </File>
     <File Include="Default.aspx">
       <publishTime>06/14/2015 11:12:07</publishTime>
     </File>
+    <File Include="Director/Checked.png">
+      <publishTime>07/13/2015 12:48:33</publishTime>
+    </File>
+    <File Include="Director/DAllInOne.aspx">
+      <publishTime>07/23/2015 11:11:17</publishTime>
+    </File>
+    <File Include="Director/DCheckedInfo.aspx">
+      <publishTime>07/20/2015 11:18:06</publishTime>
+    </File>
     <File Include="Director/DMain.aspx">
-      <publishTime>06/26/2015 16:22:55</publishTime>
+      <publishTime>07/13/2015 13:07:16</publishTime>
     </File>
     <File Include="Director/DReportView.aspx">
-      <publishTime>06/27/2015 00:22:54</publishTime>
+      <publishTime>07/23/2015 09:06:53</publishTime>
     </File>
     <File Include="Director/DViewThird.aspx">
-      <publishTime>06/26/2015 20:54:47</publishTime>
+      <publishTime>07/23/2015 09:37:55</publishTime>
+    </File>
+    <File Include="Director/NotReady.aspx">
+      <publishTime>07/23/2015 09:09:24</publishTime>
     </File>
     <File Include="Director/ViewBasicParams.aspx">
-      <publishTime>06/27/2015 00:00:59</publishTime>
+      <publishTime>07/23/2015 11:11:17</publishTime>
     </File>
     <File Include="Error.htm">
       <publishTime>06/14/2015 11:12:07</publishTime>
@@ -282,8 +309,23 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Global.asax">
       <publishTime>06/14/2015 11:12:07</publishTime>
     </File>
+    <File Include="Head/HeadMain.aspx">
+      <publishTime>07/23/2015 16:09:14</publishTime>
+    </File>
+    <File Include="Head/HeadWatchResult.aspx">
+      <publishTime>07/23/2015 11:11:17</publishTime>
+    </File>
+    <File Include="Info_Pages/FillingProcessInfo.aspx">
+      <publishTime>07/23/2015 16:07:27</publishTime>
+    </File>
+    <File Include="Info_Pages/OwnersProcessInfo.aspx">
+      <publishTime>07/23/2015 16:09:19</publishTime>
+    </File>
+    <File Include="Info_Pages/RegisterProcessInfo.aspx">
+      <publishTime>06/14/2015 11:13:03</publishTime>
+    </File>
     <File Include="KPIWeb.dbml">
-      <publishTime>06/26/2015 08:50:38</publishTime>
+      <publishTime>07/23/2015 11:02:11</publishTime>
     </File>
     <File Include="MultiUser.aspx">
       <publishTime>06/14/2015 17:07:41</publishTime>
@@ -295,31 +337,34 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/14/2015 11:14:24</publishTime>
     </File>
     <File Include="Rector/RAnalitics.aspx">
-      <publishTime>06/18/2015 14:34:46</publishTime>
+      <publishTime>07/01/2015 15:11:59</publishTime>
     </File>
     <File Include="Rector/RCalculate.aspx">
-      <publishTime>06/19/2015 14:31:26</publishTime>
+      <publishTime>07/17/2015 09:34:29</publishTime>
     </File>
     <File Include="Rector/RectorChooseReport.aspx">
       <publishTime>06/14/2015 11:12:15</publishTime>
     </File>
     <File Include="Rector/RectorMain.aspx">
-      <publishTime>06/14/2015 11:12:15</publishTime>
+      <publishTime>07/01/2015 15:10:11</publishTime>
     </File>
     <File Include="Rector/Result.aspx">
-      <publishTime>06/14/2015 11:12:15</publishTime>
+      <publishTime>07/08/2015 23:14:42</publishTime>
     </File>
     <File Include="Rector/RMain.aspx">
-      <publishTime>06/26/2015 15:01:25</publishTime>
+      <publishTime>07/01/2015 15:11:59</publishTime>
+    </File>
+    <File Include="Rector/RPlannedDynamics.aspx">
+      <publishTime>07/01/2015 15:11:59</publishTime>
     </File>
     <File Include="Rector/RRating.aspx">
-      <publishTime>06/14/2015 11:12:15</publishTime>
+      <publishTime>07/01/2015 22:15:35</publishTime>
     </File>
     <File Include="Rector/RShowChart.aspx">
-      <publishTime>06/17/2015 20:27:46</publishTime>
+      <publishTime>07/07/2015 15:58:29</publishTime>
     </File>
     <File Include="Rector/RShowChartDetailed.aspx">
-      <publishTime>06/17/2015 23:51:19</publishTime>
+      <publishTime>07/01/2015 15:12:01</publishTime>
     </File>
     <File Include="Rector/RShowChartFaculty.aspx">
       <publishTime>06/17/2015 20:27:46</publishTime>
@@ -331,19 +376,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/14/2015 11:13:03</publishTime>
     </File>
     <File Include="Reports_/ChooseReport.aspx">
-      <publishTime>06/14/2015 12:11:53</publishTime>
+      <publishTime>07/23/2015 10:21:14</publishTime>
     </File>
     <File Include="Reports_/EditReport.aspx">
-      <publishTime>06/14/2015 11:13:03</publishTime>
+      <publishTime>07/09/2015 15:32:42</publishTime>
     </File>
     <File Include="Reports_/FillingTheReport.aspx">
-      <publishTime>06/14/2015 11:13:03</publishTime>
+      <publishTime>07/23/2015 16:44:46</publishTime>
     </File>
     <File Include="Reports_/GenerateReport.aspx">
       <publishTime>06/14/2015 11:13:03</publishTime>
     </File>
     <File Include="Reports_/Parametrs.aspx">
-      <publishTime>06/14/2015 11:13:03</publishTime>
+      <publishTime>07/23/2015 09:45:45</publishTime>
     </File>
     <File Include="Reports_/SpecializationParametrs.aspx">
       <publishTime>06/14/2015 11:13:03</publishTime>
@@ -483,11 +528,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="StatisticsDepartment/StastisticsHomePage.aspx">
       <publishTime>06/14/2015 11:13:12</publishTime>
     </File>
+    <File Include="Test.aspx">
+      <publishTime>07/08/2015 16:37:49</publishTime>
+    </File>
     <File Include="ViewSwitcher.ascx">
       <publishTime>06/14/2015 11:13:44</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>06/27/2015 00:26:18</publishTime>
+      <publishTime>07/24/2015 09:30:01</publishTime>
     </File>
   </ItemGroup>
 </Project>

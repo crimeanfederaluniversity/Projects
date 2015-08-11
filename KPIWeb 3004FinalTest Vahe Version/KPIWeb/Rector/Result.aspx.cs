@@ -311,6 +311,7 @@ namespace KPIWeb.Rector
                     if (ParamType == 2)
                     {
                         BasicParamLevel = (int)(from a in kpiWebDataContext.BasicParametrAdditional
+                                                where a.BasicParametrAdditionalID == ParamID
                             select a.SubvisionLevel).FirstOrDefault();
 
                     }
@@ -374,7 +375,7 @@ namespace KPIWeb.Rector
                         dataRow["LableText"] = currentStruct.LableText;
                         dataRow["LableColor"] = currentStruct.LableColor;
 
-                        dataRow["Value"] = currentStruct.Value.ToString();
+                        dataRow["Value"] = currentStruct.Value.ToString("0.##");
                         dataTable.Rows.Add(dataRow);
                     }
 
@@ -398,7 +399,7 @@ namespace KPIWeb.Rector
                     Grid.Columns[4].Visible = false;
                     Grid.Columns[2].Visible = false;
                     Grid.Columns[1].Visible = false;
-                    if ((ForRCalc.StructDeepness(mainStruct) > (BasicParamLevel - 1)) ||
+                    if ((ForRCalc.StructDeepness(mainStruct) > (BasicParamLevel-1)) ||
                         (ForRCalc.StructDeepness(mainStruct) > 2) && (SpecID != 0)) // дальше углубляться нельзя
                     {
                         Grid.Columns[10].Visible = false;
@@ -666,7 +667,7 @@ namespace KPIWeb.Rector
                                 dataRow["ShowLable"] = true;
                                 dataRow["LableText"] = "Утверждено";
                                 dataRow["Color"] = "1"; // confirmed
-                                value_ = ((float) collected.CollectedValue).ToString("0.00");
+                                value_ = ((float) collected.CollectedValue).ToString("0.##");
                             }
                             else // данные уже есть но еще не подтверждены
                             {
@@ -685,7 +686,7 @@ namespace KPIWeb.Rector
                                         /// 2 - red (unconfirmed but calculated)
                                         /// 3 - orange (can confirm)
                                         /// 
-                                        float tmp =
+                                        double tmp =
                                             ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
                                                 CurrentIndicator.IndicatorsTableID, ReportID, SpecID));
 
@@ -695,7 +696,7 @@ namespace KPIWeb.Rector
                                         }
                                         else
                                         {
-                                            value_ = tmp.ToString("0.00");
+                                            value_ = tmp.ToString("0.##");
                                         }
                                     }
                                 }
@@ -715,8 +716,8 @@ namespace KPIWeb.Rector
                                     if (ShowUnconfirmed)
                                     {
                                         dataRow["Color"] = "2";
-                                        float tmp =
-                                            ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
+                                        double tmp =
+                                            ForRCalc.CalculatedForDB((float)ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
                                                 CurrentIndicator.IndicatorsTableID, ReportID, SpecID));
                                         if (tmp == (float) 1E+20)
                                         {
@@ -724,7 +725,7 @@ namespace KPIWeb.Rector
                                         }
                                         else
                                         {
-                                            value_ = tmp.ToString("0.00");
+                                            value_ = tmp.ToString("0.##");
                                         }
                                     }
                                 }
@@ -741,7 +742,7 @@ namespace KPIWeb.Rector
                                             CurrentIndicator.IndicatorsTableID, ReportID, SpecID));
                                         //12;                               
                                     kpiWebDataContext.SubmitChanges();
-                                    value_ = ((float) collected.CollectedValue).ToString("0.00");
+                                    value_ = ((float)collected.CollectedValue).ToString("0.##");
                                 }
                             }
                             dataRow["Value"] = value_;
@@ -882,22 +883,7 @@ namespace KPIWeb.Rector
                             int AllConfirmedBasics = 0;
                             int AllConnectedToReportAndUser = 0;
                             int AllConfirmedBasics2 = 0;
-                            /*
-                            List<UsersTable> UsersWithNoCollected = (from a in kpiWebDataContext.UsersTable
-                                                                         join b in kpiWebDataContext.BasicParametrsAndUsersMapping
-                                                                             on a.UsersTableID equals b.FK_UsersTable
-                                                                         where a.Active == true
-                                                                         && b.Active == true
-                                                                         && b.CanEdit == true
-                                                                         join c in kpiWebDataContext.ReportArchiveAndLevelMappingTable
-                                                                         on a.FK_FirstLevelSubdivisionTable equals c.FK_FirstLevelSubmisionTableId
-                                                                         where c.Active == true
-                                                                         && c.FK_ReportArchiveTableId == ReportID
-                                                                         join d in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
-                                                                         on b.FK_ParametrsTable equals d.FK_BasicParametrsTable
-                                                                         where d.Active == true
-                                                                         && d.FK_ReportArchiveTable == ReportID 
-                                                                         select a).Distinct().ToList();*/
+
                             foreach (BasicParametersTable Basic in BasicList)
                             {
                                 
@@ -930,8 +916,8 @@ namespace KPIWeb.Rector
                             
                             #endregion
 
-                           
-                                string tmp2 = ((((float) AllConfirmedBasics)*100)/((float) AllBasicsUsersCanEdit)).ToString("0.0") +
+
+                            string tmp2 = ((((float)AllConfirmedBasics) * 100) / ((float)AllBasicsUsersCanEdit)).ToString("####################.0") +
                                 "%";
                             if (tmp2 == "0,0%")
                             {
@@ -1015,7 +1001,7 @@ namespace KPIWeb.Rector
                                 dataRow["LableText"] = "Утверждено ";
                                 dataRow["LableColor"] = Color.LawnGreen;
                                 dataRow["Color"] = "1";
-                                value_ = ((float) collected.CollectedValue).ToString("0.00");
+                                value_ = ((float)collected.CollectedValue).ToString("0.##");
                             }
                             else // данные есть но не подтверждены
                             {
@@ -1029,7 +1015,7 @@ namespace KPIWeb.Rector
                                     if (ShowUnconfirmed)
                                     {
                                         dataRow["Color"] = "2";
-                                        float tmp =
+                                        double tmp =
                                             ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
                                                 CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
                                         if (tmp == (float) 1E+20)
@@ -1038,7 +1024,7 @@ namespace KPIWeb.Rector
                                         }
                                         else
                                         {
-                                            value_ = tmp.ToString("0.00");
+                                            value_ = tmp.ToString("0.##");
                                         }
                                     }
                                 }
@@ -1057,7 +1043,7 @@ namespace KPIWeb.Rector
                                             ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
                                                 CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
                                         kpiWebDataContext.SubmitChanges();
-                                        value_ = ((float)collected.CollectedValue).ToString("0.00");
+                                        value_ = ((float)collected.CollectedValue).ToString("0.##");
                                     }
                                     else
                                     {
@@ -1075,7 +1061,7 @@ namespace KPIWeb.Rector
                                         if (ShowUnconfirmed)
                                         {
                                             dataRow["Color"] = "2";
-                                            float tmp =
+                                            double tmp =
                                                 ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
                                                     CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
                                             if (tmp == (float)1E+20)
@@ -1084,7 +1070,7 @@ namespace KPIWeb.Rector
                                             }
                                             else
                                             {
-                                                value_ = tmp.ToString("0.00");
+                                                value_ = tmp.ToString("0.##");
                                             }
                                         }
                                     }
@@ -1103,7 +1089,7 @@ namespace KPIWeb.Rector
                                         ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
                                             CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
                                     kpiWebDataContext.SubmitChanges();
-                                    value_ = ((float)collected.CollectedValue).ToString("0.00");
+                                    value_ = ((float)collected.CollectedValue).ToString("0.##");
                                 }
                             }
                             dataRow["Value"] = value_;
@@ -1179,12 +1165,12 @@ namespace KPIWeb.Rector
                             dataRow["Comment"] = "nun";
                             dataRow["CommentEnabled"] = "hidden";
 
-                            dataRow["Value"] =
-                                ForRCalc.GetCalculatedWithParams(mainStruct, ParamType, CurrebtBasic.BasicParametersTableID,
-                                    ReportID, SpecID).ToString();
+                           
+                                double tmpdd = ForRCalc.GetCalculatedWithParams(mainStruct, ParamType, CurrebtBasic.BasicParametersTableID,
+                                    ReportID, SpecID);
+                                dataRow["Value"] = tmpdd.ToString("0.##");
                             dataTable.Rows.Add(dataRow);
                         }
-
                         #endregion
                     }
 
@@ -1346,7 +1332,7 @@ namespace KPIWeb.Rector
                         dataRow["LableText"] = currentSpec.LableText;
                         dataRow["LableColor"] = currentSpec.LableColor;
 
-                        dataRow["Value"] = currentSpec.Value.ToString();
+                        dataRow["Value"] = currentSpec.Value.ToString("0.##");
                             dataTable.Rows.Add(dataRow);
                       }
                 
@@ -1934,6 +1920,11 @@ namespace KPIWeb.Rector
             var ColorLable = e.Row.FindControl("Color") as Label;
             var PageConfirmButton = e.Row.FindControl("ConfirmButton") as Button;
             var PageButton2 = e.Row.FindControl("Button2") as Button;
+            var ValueLable = e.Row.FindControl("Value") as Label;
+
+            var IDLable = e.Row.FindControl("IDs") as Label;
+
+            
 
             //// костыль 0%
             var Button1_ = e.Row.FindControl("Button1") as Button;                       
@@ -1952,7 +1943,60 @@ namespace KPIWeb.Rector
                 {
                     Button1_.Enabled = false;
                 }
-            }           
+            }
+
+            if ((Button1_ != null) &&(ValueLable != null))
+            {
+                if (ValueLable.Text == "0")
+                {
+                    Button1_.Enabled = false;
+                    var Button2_ = e.Row.FindControl("Button3") as Button;    
+                     if ((Button1_ != null)!=null)
+                     {
+                         Button2_.Enabled = false;
+                     }
+                }
+            }
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+         /*   if (Button1_ != null )
+            {
+                if (Button1_.Enabled !=false)
+                {
+                    RectorHistorySession rectorHistory = (RectorHistorySession) Session["rectorHistory"];
+                    if (rectorHistory == null)
+                    {
+                        Response.Redirect("~/Default.aspx");
+                    }
+                    RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];                        
+                    int ReportID = CurrentRectorSession.sesReportID;
+                    int tmpjj = (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                 where a.FK_BasicParametersTable == Convert.ToInt32(Button1_.CommandArgument)
+                                     && a.Active == true && a.FK_ReportArchiveTable == ReportID
+                                 select a).Count();
+                    if (tmpjj < 2) Button1_.Enabled = false;
+                }
+            }
+            */
+            if (IDLable != null)
+            {
+                if (IDLable.Text.IsInt())
+                {
+                    
+                    BasicParametrAdditional tmp = (from a in kpiWebDataContext.BasicParametrAdditional
+                                                where a.BasicParametrAdditionalID == Convert.ToInt32(IDLable.Text)
+                                                select a).FirstOrDefault();
+
+                    int BasicParamLevel = 0;
+                    if (tmp != null)
+                        BasicParamLevel = (int)tmp.SubvisionLevel;
+
+                    var Button2_ = e.Row.FindControl("Button3") as Button;
+                    if ((Button1_ != null) && (BasicParamLevel != 4))
+                    {
+                        Button2_.Enabled = false;
+                    }
+                }
+            }
             //end костыль 0%
 
             if (ColorLable != null)

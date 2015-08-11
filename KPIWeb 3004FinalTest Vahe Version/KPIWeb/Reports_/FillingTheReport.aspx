@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="Заполение" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableViewStateMac="false" CodeBehind="FillingTheReport.aspx.cs" Inherits="KPIWeb.Reports.FillingTheReport" %>
+﻿<%@ Page Language="C#" Title="Заполение" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableEventValidation="true" EnableViewStateMac="false" CodeBehind="FillingTheReport.aspx.cs" Inherits="KPIWeb.Reports.FillingTheReport" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent" >
 
@@ -11,40 +11,10 @@
     </script>
     <style>  
 
-        .Grid_view_V_header_style
-        {
-            -webkit-transform: rotate(-90deg);
-            -moz-transform: rotate(-90deg);
-            -ms-transform: rotate(-90deg);
-            -o-transform: rotate(-90deg);
-            transform: rotate(-90deg)
-        }
-   
-    .Grid_view_V_style tr td + td + td+ td {
-      
-        font-size: small;
-        font-weight: normal;
-        padding-left:1px;
-        padding-right:1px;
-        padding-top:1px;
-        padding-bottom:1px;
-    }
-
-
-    .GridHeader th
-    {
-        height:75px;
-    }
-
-    .NameMin
-    {
-        min-width:3000px;
-    }
-
         .LoadPanel 
    {
           position: fixed;
-          z-index: 10;
+          z-index: 250;
           background-color: #101010;
           top: 0;
           left: 0;
@@ -92,7 +62,7 @@
           >Дождитесь завершения процесса</font></div>
         </div>
      
-           <link href="/App_Themes/theme_1/css/login.css" rel="stylesheet" type="text/css" />
+   
     <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Visible="true">
         
      <span style="color:red" id="span1"><asp:Label ID="Label2" runat="server"   CssClass="Panel_label1"></asp:Label></span>
@@ -106,13 +76,10 @@
 
             <br />
 
-            <asp:GridView ID="GridviewCollectedBasicParameters"  BorderStyle="Solid" runat="server" CssClass="Grid_view_V_style Grid_view_style GridHeader" ShowFooter="true" AutoGenerateColumns="False" 
+            <asp:GridView ID="GridviewCollectedBasicParameters"  BorderStyle="Solid" runat="server"  ShowFooter="true" AutoGenerateColumns="False" 
                 BorderColor="Black"  BorderWidth="1px" CellPadding="0" 
-
                 OnRowDataBound="GridviewCollectedBasicParameters_RowDataBound" OnSelectedIndexChanged="GridviewCollectedBasicParameters_SelectedIndexChanged" OnSelectedIndexChanging="GridviewCollectedBasicParameters_SelectedIndexChanging" OnPageIndexChanging="GridviewCollectedBasicParameters_PageIndexChanging">
-            
-                <Columns>
-                    
+               <Columns>                
                     <asp:BoundField DataField="BasicParametersTableID" HeaderText="Код показателя" Visible="true" />
                     
                     <asp:TemplateField Visible="false"  InsertVisible="False">
@@ -130,10 +97,7 @@
 
                      
                      <asp:BoundField DataField="Comment"  HeaderText="Комментарий" Visible="true" />
-                        
-                    
-
-                             
+                            
                      <asp:TemplateField Visible="false"   HeaderText="Значение">
                         <ItemTemplate >
                             <asp:Label ID="NotNull0"  runat="server" Visible="false" Text='<%# Bind("NotNull0") %>'></asp:Label>
@@ -690,147 +654,143 @@
                <br />   
             <br />
         </div>
+            <script type="text/javascript" >
+                var counter = 0;
+                var masoftables = [];
+                function parseGW() {
+                    // document.body.style.backgroundColor = gw_name;
+                    windowheighter = window.screen.availWidth;
+                    $(window).load(function () {
+
+                        var texts = "def";
+                        var i = 0;
+                        var ownerdiv = [];
+                        var cthead = "ControlHead";
+
+                        var gridHeader;
+                        var s;
+                        for (i = 0; i < document.all.length; i++) {
+                            if (((document.all[i].tagName.toString()).toLowerCase()) == 'table') {
+                                masoftables[counter] = document.all[i].getAttribute("id").toString();
+                                counter++;
+                            }
+                        }
+                        $('#cdf').text(masoftables[1]);
+                        for (i = 0; i < counter; i++) {
+
+                            ownerdiv[i] = "diva"; cthead = "ControlHead";
+                            ownerdiv[i] += '_' + i.toString();
+                            cthead += '_' + i.toString();
+                            $('#' + masoftables[i]).wrap(("<div id='" + ownerdiv[i] + "' style='position:absolute;'></div>"));
+                            $(('#' + ownerdiv[i])).prepend(("<div id='" + cthead + "'></div>"));
+
+                            $('#' + ownerdiv[i]).wrap(("<div id='" + "pre_" + ownerdiv[i] + "' style='position:absolute;'></div>"));
+                            $("#pre_" + ownerdiv[i]).css('position', 'relative');
+                            $("#pre_" + ownerdiv[i]).css('height', (document.getElementById("diva_" + (i).toString()).getBoundingClientRect().bottom - document.getElementById("diva_" + (i).toString()).getBoundingClientRect().top).toString() + "px");
+
+                            // if (i == 0) { $('#' + ownerdiv).before("<div id ='SHEET' style='position:relative;'>"); }
+                            // if ((i + 1) == counter) { $('#' + ownerdiv).after("</div>"); }
+                            //  if (i > 0) { $(("#" + ownerdiv[i])).css('top', (document.getElementById(ownerdiv[i - 1]).getBoundingClientRect().bottom + window.pageYOffset + (window.pageYOffset - document.getElementById(ownerdiv[i - 1]).getBoundingClientRect().top)).toString() + "px"); }
+
+
+                            gridHeader = $('#' + masoftables[i]).clone(true);
+                            // document.getElementById(masoftables[i]).id = "FF_" + i.toString();
+                            $(gridHeader).find("tr:gt(0)").remove();
+                            // $(gridHeader).id = "FFF";
+
+                            $('#' + masoftables[i] + ' tr th').each(function (s) {
+
+                                $("th:nth-child(" + (s + 1) + ")", gridHeader).css('width', ($(this).width() + 21).toString() + "px");
+                            });
+
+
+                            $(("#" + cthead)).append(gridHeader);
+                            document.getElementById(masoftables[i]).id = "ffg" + i.toString();
+                            $(("#" + cthead)).css('position', 'absolute');
+
+                            $(("#" + cthead)).css('z-index', '222');
+                            //  $(("#" + cthead + " tr")).css('left', ($('#' + 'ffg' + i.toString()).offset().left + 1).toString() + "px");
 
 
 
+                            // $('#cdf').text(i.toString());
+                        }
+                        //$('#cdf').text((((document.getElementById("diva_" + (0).toString()).getBoundingClientRect().bottom - document.getElementById("diva_" + (0).toString()).getBoundingClientRect().top).toString() + "px")));
+                        //$('#cdf').text(gridHeader.id.toString());
+                        $("#aroundgwsdivALL").css('position', 'relative');
 
 
-    <script type="text/javascript" >
-        var counter = 0;
-        var masoftables = [];
-        function parseGW() {
-            // document.body.style.backgroundColor = gw_name;
-            windowheighter = window.screen.availWidth;
-            $(window).load(function () {
-
-                var texts = "def";
-                var i = 0;
-                var ownerdiv = [];
-                var cthead = "ControlHead";
-
-                var gridHeader;
-                var s;
-                for (i = 0; i < document.all.length; i++) {
-                    if (((document.all[i].tagName.toString()).toLowerCase()) == 'table') {
-                        masoftables[counter] = document.all[i].getAttribute("id").toString();
-                        counter++;
-                    }
-                }
-                $('#cdf').text(masoftables[1]);
-                for (i = 0; i < counter; i++) {
-
-                    ownerdiv[i] = "diva"; cthead = "ControlHead";
-                    ownerdiv[i] += '_' + i.toString();
-                    cthead += '_' + i.toString();
-                    $('#' + masoftables[i]).wrap(("<div id='" + ownerdiv[i] + "' style='position:absolute;'></div>"));
-                    $(('#' + ownerdiv[i])).prepend(("<div id='" + cthead + "'></div>"));
-
-                    $('#' + ownerdiv[i]).wrap(("<div id='" + "pre_" + ownerdiv[i] + "' style='position:absolute;'></div>"));
-                    $("#pre_" + ownerdiv[i]).css('position', 'relative');
-                    $("#pre_" + ownerdiv[i]).css('height', (document.getElementById("diva_" + (i).toString()).getBoundingClientRect().bottom - document.getElementById("diva_" + (i).toString()).getBoundingClientRect().top).toString() + "px");
-
-                    // if (i == 0) { $('#' + ownerdiv).before("<div id ='SHEET' style='position:relative;'>"); }
-                    // if ((i + 1) == counter) { $('#' + ownerdiv).after("</div>"); }
-                    //  if (i > 0) { $(("#" + ownerdiv[i])).css('top', (document.getElementById(ownerdiv[i - 1]).getBoundingClientRect().bottom + window.pageYOffset + (window.pageYOffset - document.getElementById(ownerdiv[i - 1]).getBoundingClientRect().top)).toString() + "px"); }
-
-
-                    gridHeader = $('#' + masoftables[i]).clone(true);
-                    // document.getElementById(masoftables[i]).id = "FF_" + i.toString();
-                    $(gridHeader).find("tr:gt(0)").remove();
-                    // $(gridHeader).id = "FFF";
-
-                    $('#' + masoftables[i] + ' tr th').each(function (s) {
-
-                        $("th:nth-child(" + (s + 1) + ")", gridHeader).css('width', ($(this).width() + 1).toString() + "px");
                     });
 
-
-                    $(("#" + cthead)).append(gridHeader);
-                    document.getElementById(masoftables[i]).id = "ffg" + i.toString();
-                    $(("#" + cthead)).css('position', 'absolute');
-
-                    $(("#" + cthead)).css('z-index', '222');
-                  //  $(("#" + cthead + " tr")).css('left', ($('#' + 'ffg' + i.toString()).offset().left + 1).toString() + "px");
-
-
-
-                    // $('#cdf').text(i.toString());
                 }
-                //$('#cdf').text((((document.getElementById("diva_" + (0).toString()).getBoundingClientRect().bottom - document.getElementById("diva_" + (0).toString()).getBoundingClientRect().top).toString() + "px")));
-                //$('#cdf').text(gridHeader.id.toString());
-                $("#aroundgwsdivALL").css('position', 'relative');
+
+                parseGW();
+                mtb();
+                function rth() {
+                    var cthead = "ControlHead";
 
 
-            });
+                    for (i = 0; i < counter; i++) {
+                        cthead += '_' + i.toString();
+                        $('#' + masoftables[i] + ' tr th').each(function (f) {
+                            cthead = "ControlHead";
+                            cthead += '_' + i.toString();
+                            //$("th:nth-child(" + (s + 1) + ")", $("#" + cthead)).css('width', ($(this).width() + 3).toString() + "px");
+                            // $("th:nth-child(" + (s + 1) + ")", $("#" + cthead)).css('color', "#ff0000");
+                            if (($('#' + masoftables[i] + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width()) != ($('#' + cthead + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width()))
+                            { $("#" + cthead + " tr th:nth-child(" + ((f + 1).toString()) + ")").css('width', (($('#' + masoftables[i] + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width() + 21).toString()) + "px"); }
+                            //$('#cdf').text("ws= "+window.screen.availWidth.toString() + "\nwh= " + windowheighter.toString());
 
-        }
-
-        parseGW();
-        mtb();
-        function rth() {
-            var cthead = "ControlHead";
-
-
-            for (i = 0; i < counter; i++) {
-                cthead += '_' + i.toString();
-                $('#' + masoftables[i] + ' tr th').each(function (f) {
-                    cthead = "ControlHead";
-                    cthead += '_' + i.toString();
-                    //$("th:nth-child(" + (s + 1) + ")", $("#" + cthead)).css('width', ($(this).width() + 3).toString() + "px");
-                    // $("th:nth-child(" + (s + 1) + ")", $("#" + cthead)).css('color', "#ff0000");
-                    if (($('#' + masoftables[i] + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width()) != ($('#' + cthead + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width()))
-                    { $("#" + cthead + " tr th:nth-child(" + ((f + 1).toString()) + ")").css('width', (($('#' + masoftables[i] + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width() + 3).toString()) + "px"); }
-                    //$('#cdf').text("ws= "+window.screen.availWidth.toString() + "\nwh= " + windowheighter.toString());
-
-                });
-                // if (i == 0) break;
-            }
-            //document.body.style.backgroundColor = "#80ff00";
-            //  windowheighter = window.screen.availWidth;
-            $('#cdf').text(($('#' + masoftables[0] + ' tr th:nth-child(' + ((2).toString()) + ')').width().toString()));
-
-
-
-        }
-
-        var windowheighter;
-        function mtb() {
-            window.setTimeout("mtb()", 50);
-
-            // if (window.screen.availWidth != windowheighter) rth();
-            rth();
-
-            //$('#cdf').text("WW " + window.screen.availWidth + "\n\n"+"SW " + screen.width);
-            //$('#cdf').text(((document.getElementById("diva_0").getBoundingClientRect().right - document.getElementById("diva_0").getBoundingClientRect().left).toString()));
-            for (i = 0; i < counter; i++) {
-                ownerdiv = "diva"; cthead = "ControlHead";
-                ownerdiv += '_' + i.toString();
-                cthead += '_' + i.toString();
-
-                if ((document.getElementById(ownerdiv).getBoundingClientRect().top) < 80) {
-
-
-                    if ((document.getElementById(ownerdiv).getBoundingClientRect().bottom) < 130) {
-                        $('#' + cthead).css('position', 'absolute');
+                        });
+                        // if (i == 0) break;
                     }
-                    else {
-                        $('#' + cthead).css('position', 'fixed');
-                        $('#' + cthead).css('width', (((document.getElementById(ownerdiv).getBoundingClientRect().right - document.getElementById(ownerdiv).getBoundingClientRect().left).toString()) + "px"));
-                        $('#' + cthead).css('top', '78px');
-                        $('#' + cthead).css('left', ((document.getElementById(ownerdiv).getBoundingClientRect().left + 1).toString()) + "px");
+                    //document.body.style.backgroundColor = "#80ff00";
+                    //  windowheighter = window.screen.availWidth;
+                    $('#cdf').text(($('#' + masoftables[0] + ' tr th:nth-child(' + ((2).toString()) + ')').width().toString()));
+
+
+
+                }
+
+                var windowheighter;
+                function mtb() {
+                    window.setTimeout("mtb()", 50);
+
+                    // if (window.screen.availWidth != windowheighter) rth();
+                    rth();
+
+                    //$('#cdf').text("WW " + window.screen.availWidth + "\n\n"+"SW " + screen.width);
+                    //$('#cdf').text(((document.getElementById("diva_0").getBoundingClientRect().right - document.getElementById("diva_0").getBoundingClientRect().left).toString()));
+                    for (i = 0; i < counter; i++) {
+                        ownerdiv = "diva"; cthead = "ControlHead";
+                        ownerdiv += '_' + i.toString();
+                        cthead += '_' + i.toString();
+
+                        if ((document.getElementById(ownerdiv).getBoundingClientRect().top) < 90) {
+
+
+                            if ((document.getElementById(ownerdiv).getBoundingClientRect().bottom) < 140) {
+                                $('#' + cthead).css('position', 'absolute');
+                            }
+                            else {
+                                $('#' + cthead).css('position', 'fixed');
+                                $('#' + cthead).css('width', (((document.getElementById(ownerdiv).getBoundingClientRect().right - document.getElementById(ownerdiv).getBoundingClientRect().left).toString()) + "px"));
+                                $('#' + cthead).css('top', '88px');
+                                $('#' + cthead).css('left', ((document.getElementById(ownerdiv).getBoundingClientRect().left + 1).toString()) + "px");
+                            }
+                        }
+                        else {
+                            $('#' + cthead).css('position', 'absolute');
+                            $('#' + cthead).css('width', (((document.getElementById(ownerdiv).getBoundingClientRect().right - document.getElementById(ownerdiv).getBoundingClientRect().left).toString()) + "px"));
+                            $('#' + cthead).css('left', ((0).toString()) + "px");
+                            $('#' + cthead).css('top', '0');
+                        }
+
+
                     }
                 }
-                else {
-                    $('#' + cthead).css('position', 'absolute');
-                    $('#' + cthead).css('width', (((document.getElementById(ownerdiv).getBoundingClientRect().right - document.getElementById(ownerdiv).getBoundingClientRect().left).toString()) + "px"));
-                    $('#' + cthead).css('left', ((0).toString()) + "px");
-                    $('#' + cthead).css('top', '0');
-                }
-
-
-            }
-        }
 
        </script>
+
 
         </asp:Content>

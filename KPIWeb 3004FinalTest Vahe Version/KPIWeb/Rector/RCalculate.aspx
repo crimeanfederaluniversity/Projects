@@ -17,6 +17,14 @@
     <br />
     <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Button" />
     <br />
+    <br />
+    <br />
+    <asp:Button ID="Button6" runat="server" OnClick="Button6_Click" Text="Button" />
+    <br />
+    <br />
+    <asp:Button ID="Button7" runat="server" OnClick="Button7_Click" Text="Button" />
+    <br />
+    <br />
     <asp:GridView ID="GridView1" runat="server">
     </asp:GridView>
     <br />
