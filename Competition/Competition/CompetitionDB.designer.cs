@@ -6535,7 +6535,7 @@ namespace Competition
 		
 		private System.Nullable<int> _FK_Bid;
 		
-		private System.Nullable<bool> _Access;
+		private System.Nullable<int> _Access;
 		
 		private System.Nullable<bool> _Active;
 		
@@ -6553,7 +6553,7 @@ namespace Competition
     partial void OnFK_UserChanged();
     partial void OnFK_BidChanging(System.Nullable<int> value);
     partial void OnFK_BidChanged();
-    partial void OnAccessChanging(System.Nullable<bool> value);
+    partial void OnAccessChanging(System.Nullable<int> value);
     partial void OnAccessChanged();
     partial void OnActiveChanging(System.Nullable<bool> value);
     partial void OnActiveChanged();
@@ -6634,8 +6634,8 @@ namespace Competition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Access", DbType="Bit")]
-		public System.Nullable<bool> Access
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Access", DbType="Int")]
+		public System.Nullable<int> Access
 		{
 			get
 			{

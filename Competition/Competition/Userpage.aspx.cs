@@ -60,12 +60,14 @@ namespace Competition
 
                     newBid.Bids.InsertOnSubmit(newbid);
                     newBid.SubmitChanges();
+                    
 
                     Session["ID_Bid"] = newbid.ID_Bid;
                     int iduser = (int)Session["ID_User"];
                     
                     User_BidMapingTable newlink = new User_BidMapingTable();
                     newlink.Active = true;
+                    newlink.Access = 1;
                     newlink.FK_Bid = newbid.ID_Bid;
                     newlink.FK_User = iduser;
 

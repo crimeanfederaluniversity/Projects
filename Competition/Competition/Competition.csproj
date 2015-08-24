@@ -58,7 +58,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BidAnswers.aspx" />
     <Content Include="CompetitionDB.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>CompetitionDB.designer.cs</LastGenOutput>
@@ -66,7 +65,9 @@
     </Content>
     <Content Include="Questions.aspx" />
     <Content Include="Registration.aspx" />
+    <Content Include="SmetaForm.aspx" />
     <Content Include="TargetIndicator.aspx" />
+    <Content Include="TeamUsers.aspx" />
     <Content Include="UserBid.aspx" />
     <Content Include="UserLogin.aspx" />
     <Content Include="ZapolnenieForm.aspx" />
@@ -83,13 +84,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BidAnswers.aspx.cs">
-      <DependentUpon>BidAnswers.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="BidAnswers.aspx.designer.cs">
-      <DependentUpon>BidAnswers.aspx</DependentUpon>
-    </Compile>
     <Compile Include="CompetitionDB.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -117,12 +111,26 @@
     <Compile Include="Registration.aspx.designer.cs">
       <DependentUpon>Registration.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SmetaForm.aspx.cs">
+      <DependentUpon>SmetaForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SmetaForm.aspx.designer.cs">
+      <DependentUpon>SmetaForm.aspx</DependentUpon>
+    </Compile>
     <Compile Include="TargetIndicator.aspx.cs">
       <DependentUpon>TargetIndicator.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="TargetIndicator.aspx.designer.cs">
       <DependentUpon>TargetIndicator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TeamUsers.aspx.cs">
+      <DependentUpon>TeamUsers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TeamUsers.aspx.designer.cs">
+      <DependentUpon>TeamUsers.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserBid.aspx.cs">
       <DependentUpon>UserBid.aspx</DependentUpon>

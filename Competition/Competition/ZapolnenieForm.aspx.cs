@@ -11,8 +11,11 @@ namespace Competition
     public partial class ZapolnenieForm : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {        
-           
+        {
+            if (!IsPostBack)
+            {
+                GridviewApdate();
+            }
         }
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -23,7 +26,7 @@ namespace Competition
         {
 
         }
-        protected void Button1_Click(object sender, EventArgs e)
+        private void GridviewApdate() //Обновление гридвью
         {
             CompetitionDBDataContext questionTable = new CompetitionDBDataContext();
             int idbid = (int)Session["ID_Bid"];
@@ -80,6 +83,7 @@ namespace Competition
 
                 GridView1.DataSource = dataTableQuestions;
                 GridView1.DataBind();
+              
                 CompetitionDBDataContext NewValue = new CompetitionDBDataContext();
                 DataTable dataTableTarget = new DataTable();
                 dataTableTarget.Columns.Add(new DataColumn("ID_TargetIndicator", typeof(int)));
@@ -118,42 +122,15 @@ namespace Competition
                     dataRow["Id_Value"] = purchasevalue.ID_TargetIndicatorValue;
                     dataTableTarget.Rows.Add(dataRow);
                 }
-                GridView2.DataSource = dataTableTarget;
-                GridView2.DataBind();
+       
             }
 
-         /*  if (idkon != null)
-            {
-
-                Konkursy ID = (from a in questionTable.Konkursy
-                               join b in questionTable.Bids
-                                   on idbid equals b.ID_Bid
-                               where b.FK_Konkurs == a.ID_Konkurs
-                               select a).FirstOrDefault();
-
-                Session["ID_Konkurs"] = ID.ID_Konkurs;
-                idkon = Convert.ToInt32(Session["ID_Konkurs"]);
-
-            }   */
- 
+        
                    
         protected void Button2_Click(object sender, EventArgs e)
         {
-            CompetitionDBDataContext Newtarget = new CompetitionDBDataContext();
-            for (int i = 0; i < GridView2.Rows.Count; i++)
-            {
-                TextBox targetvalue = (TextBox)GridView2.Rows[i].FindControl("TargetIndicatorValue");
-                Label Id_stat = (Label)GridView2.Rows[i].FindControl("Id_Value");
-                if ((targetvalue != null) && (Id_stat != null))
-                {
-                    TargetIndicatorValue current = (from a in Newtarget.TargetIndicatorValue
-                                                    where a.Active == true && a.ID_TargetIndicatorValue == Convert.ToInt32(Id_stat.Text)
-                                                    select a).FirstOrDefault();
-
-                    current.PurchaseValue = Convert.ToInt32(targetvalue.Text);
-                    Newtarget.SubmitChanges();
-                }
-            }
+           
+       
             CompetitionDBDataContext Newanswer = new CompetitionDBDataContext();
             for (int i = 0; i < GridView1.Rows.Count; i++)
             {
@@ -176,6 +153,11 @@ namespace Competition
         protected void Button3_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/TargetIndicator.aspx");
+        }
+
+        protected void GridView2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

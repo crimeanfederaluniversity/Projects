@@ -30,22 +30,20 @@ namespace Competition
         protected void Button1_Click(object sender, EventArgs e)
         {
             CompetitionDBDataContext newQuestion = new CompetitionDBDataContext();
-            Questions newquestion = new Questions();
-            newquestion.Active = true;
-            newquestion.Question = TextBox1.Text;
-            newQuestion.Questions.InsertOnSubmit(newquestion);
-            newQuestion.SubmitChanges();
-
-            foreach (ListItem n in CheckBoxList1.Items )
+            foreach (ListItem n in CheckBoxList1.Items)
             {
                 if (n.Selected == true)
                 {
-                Konkurs_QuestionMapingTable newlink = new Konkurs_QuestionMapingTable();
-                newlink.Active = true;
-                newlink.FK_Konkurs = Convert.ToInt32(n.Value);
-                newlink.FK_Question = newquestion.ID_Question;
-                newQuestion.Konkurs_QuestionMapingTable.InsertOnSubmit(newlink);
-                newQuestion.SubmitChanges();
+
+            Smeta newquestion = new Smeta();
+            newquestion.Active = true;
+            newquestion.Name_state = TextBox1.Text;
+            newquestion.Uniqvalue = TextBox2.Text;
+            newquestion.Type_state = false;
+            newquestion.FK_Konkurs = Convert.ToInt32(n.Value);
+            
+            newQuestion.Smeta.InsertOnSubmit(newquestion);
+            newQuestion.SubmitChanges();
                 }              
             }            
             

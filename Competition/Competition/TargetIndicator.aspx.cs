@@ -12,10 +12,13 @@ namespace Competition
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                GridviewApdate();
+            }
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        private void GridviewApdate() //Обновление гридвью
         {
             int idbid = (int)Session["ID_Bid"];
             int idkon = (int)Session["ID_Konkurs"];
@@ -67,7 +70,7 @@ namespace Competition
             CompetitionDBDataContext Newtarget = new CompetitionDBDataContext();
             for (int i = 0; i < GridView2.Rows.Count; i++)
             {
-                TextBox targetvalue = (TextBox)GridView2.Rows[i].FindControl("TargetIndicatorValue");
+                TextBox targetvalue = (TextBox)GridView2.Rows[i].FindControl("PurchaseValue");
                 Label Id_stat = (Label)GridView2.Rows[i].FindControl("Id_Value");
                 if ((targetvalue != null) && (Id_stat != null))
                 {
@@ -79,6 +82,12 @@ namespace Competition
                     Newtarget.SubmitChanges();
                 }
             }
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Данные успешно сохранены!');", true);
+        }
+
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/SmetaForm.aspx");
         }
     }
 }

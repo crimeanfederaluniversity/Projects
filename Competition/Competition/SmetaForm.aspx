@@ -1,14 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SmetaForm.aspx.cs" Inherits="Competition.SmetaForm" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        Форма заполнения сметы<br />
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SmetaForm.aspx.cs" MasterPageFile="~/masterpage.Master" Inherits="Competition.SmetaForm" %>
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolder1" >
+ 
+    <h2><span style="font-size: 30px">Смета</span></h2>
+ 
         <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server">
              <Columns>
                    <asp:TemplateField HeaderText="Номер" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-VerticalAlign="Middle" Visible = "true" >
@@ -32,6 +26,6 @@
         <asp:Button ID="Button1" runat="server" Text="Сохранить" Width="101px" OnClick="Button1_Click" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <asp:Button ID="Button2" runat="server" Text="Добавить строку" Width="128px" OnClick="Button2_Click" />
-    </form>
-</body>
-</html>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <asp:Button ID="Button6" runat="server" OnClick="Button6_Click" Text="Далее" />
+  </asp:Content>    

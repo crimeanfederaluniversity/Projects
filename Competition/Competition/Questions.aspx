@@ -17,6 +17,7 @@
     </div>
         <asp:TextBox ID="TextBox1" runat="server" Width="1011px"></asp:TextBox>
         <br />
+        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
         <br />
         <br />
         <asp:CheckBoxList ID="CheckBoxList1" runat="server">
