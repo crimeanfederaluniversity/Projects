@@ -1,0 +1,33 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="masterpage.master.cs" Inherits="Competition.masterpage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div style="background-color:#0000ff;text-align:center;">
+       
+        <br />
+       
+        <asp:Button ID="Button6" runat="server" OnClick="Button6_Click" Text="Admin" />
+&nbsp;<asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="На главную" />
+       
+        &nbsp;
+        <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Регистрация" />
+        <br />
+       
+    </div>
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

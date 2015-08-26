@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 20.75, 47.75" name="CompetitionDB">
+  <DataContextMoniker Name="/CompetitionDBDataContext" />
+  <nestedChildShapes>
+    <classShape Id="fb09274a-a5e7-4854-aaa9-4ccd09018364" absoluteBounds="12, 16.125, 2, 1.7708968098958309">
+      <DataClassMoniker Name="/CompetitionDBDataContext/Activity" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7b969863-4121-488f-8518-2b05237cd187" absoluteBounds="12.015, 16.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="829f87e2-41e8-4203-b233-c3037012db82" absoluteBounds="12, 13.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/CompetitionDBDataContext/Answers" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a1d7c35d-dfc8-4d2c-9526-f51bee1c1e59" absoluteBounds="12.015, 14.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="23b40e94-dcc8-4d92-add0-3172f5308ca0" absoluteBounds="6.25, 28.875, 2, 1.7708968098958309">
+      <DataClassMoniker Name="/CompetitionDBDataContext/AutoFilling" />
+      <nestedChildShapes>
+        <elementListCompartment Id="60e24368-cdb9-4fd1-81ee-77e25691c15a" absoluteBounds="6.265, 29.335, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" absoluteBounds="9.25, 25.25, 2, 2.3478011067708309">
+      <DataClassMoniker Name="/CompetitionDBDataContext/Bids" />
+      <nestedChildShapes>
+        <elementListCompartment Id="33cf793b-2438-4611-8cd6-06796f828be2" absoluteBounds="9.265, 25.71, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6af17797-1cd1-4479-a1be-21c62e6e320b" absoluteBounds="12, 37.625, 2, 2.7324039713541595">
+      <DataClassMoniker Name="/CompetitionDBDataContext/CalendarPlan" />
+      <nestedChildShapes>
+        <elementListCompartment Id="61f859c0-b86b-4775-abf8-1159bfd72cc1" absoluteBounds="12.015, 38.085, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="155ca46e-857e-431b-8b1a-70168109ad07" absoluteBounds="12, 28.875, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/CompetitionDBDataContext/Indicators" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e296fb9d-508c-44b7-ab7f-18ed1d9828d4" absoluteBounds="12.015, 29.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1a443fd4-7db6-43f8-9ef5-1abb97dd1ec2" absoluteBounds="6.25, 25.625, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/CompetitionDBDataContext/Konkurs_QuestionMapingTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="62e431d3-98df-4c74-82cf-28583f7e3314" absoluteBounds="6.265, 26.085, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="41fe6591-ecf5-44a6-81d6-55b582b408b9" absoluteBounds="6.25, 22.625, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/CompetitionDBDataContext/Konkurs_TargetMapingTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2cb7b416-785a-4893-85bc-20803cc06b98" absoluteBounds="6.265, 23.085, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9f55be8b-1307-40ae-a01c-f4e61dd9247b" absoluteBounds="3.5, 25.375, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/CompetitionDBDataContext/Konkursy" />
+      <nestedChildShapes>
+        <elementListCompartment Id="77767712-85d0-42d8-9a91-b9b1e667b166" absoluteBounds="3.515, 25.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b88a6693-67ad-466d-bb67-0a9cb81cd7a4" absoluteBounds="12, 26.25, 2, 1.9631982421875023">
+      <DataClassMoniker Name="/CompetitionDBDataContext/Partners" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b7c6d17b-4f0f-40bd-875c-ba9fc63fa8ae" absoluteBounds="12.015, 26.71, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ccc577c0-5624-4df7-bd48-d6031a7483ab" absoluteBounds="14.75, 31.5, 2, 2.5401025390625023">
+      <DataClassMoniker Name="/CompetitionDBDataContext/PurchasePlan" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c88e376e-0ce5-4e7d-b9a9-276bd882ee53" absoluteBounds="14.765, 31.96, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8bbfa7c5-5d6b-4943-b62c-c53883fde86a" absoluteBounds="14.75, 13.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/CompetitionDBDataContext/Question_AnswerMapingTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="15f87ac2-3711-4d75-8b92-25ca0d146c95" absoluteBounds="14.765, 14.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ea91717b-11e4-46eb-b64f-f1b4b06e9020" absoluteBounds="12, 10.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/CompetitionDBDataContext/Questions" />
+      <nestedChildShapes>
+        <elementListCompartment Id="38657306-7ba2-4ce3-99a4-389d4bb05ae5" absoluteBounds="12.015, 11.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ad787db2-3892-44a5-b6a9-95ecae840348" absoluteBounds="12, 31.875, 2, 2.155499674479163">
+      <DataClassMoniker Name="/CompetitionDBDataContext/Reports" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d41f3017-2bd2-4bf2-a3eb-6a8ee0dfc23b" absoluteBounds="12.015, 32.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0850dd89-2505-4f6f-952b-5a2b6741288d" absoluteBounds="14.75, 22, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/CompetitionDBDataContext/Result" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7f98487d-2e5a-4eb1-ade4-1a11d04e8125" absoluteBounds="14.765, 22.46, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="bd62e5f1-3fcd-45a6-b413-81b2b61ab072" absoluteBounds="17.5, 22.625, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/CompetitionDBDataContext/ResultComent" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6ec0bc44-3d23-4e3c-adf5-83aada0c23a3" absoluteBounds="17.515, 23.085, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7d0d6065-4980-45b4-8d29-4b84937d5954" absoluteBounds="12, 34.75, 2, 2.1554996744791595">
+      <DataClassMoniker Name="/CompetitionDBDataContext/Risks" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f7072395-76a2-4c90-887f-74c157281132" absoluteBounds="12.015, 35.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="53c70d93-313f-4030-b9e3-641840f6d326" absoluteBounds="6.25, 31.375, 2, 1.9631982421875023">
+      <DataClassMoniker Name="/CompetitionDBDataContext/Smeta" />
+      <nestedChildShapes>
+        <elementListCompartment Id="87d844ce-44f5-470f-8589-56fc23cb8aad" absoluteBounds="6.265, 31.835, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="795ad616-129a-45d3-a915-a5064d84d819" absoluteBounds="15, 28.375, 2, 1.7708968098958309">
+      <DataClassMoniker Name="/CompetitionDBDataContext/SmetaValue" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e3acb63c-5d92-4784-ad57-1d50a5cef9fa" absoluteBounds="15.015, 28.835, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="cc9a5d48-7d98-4077-b408-b165d111ee85" absoluteBounds="17.5, 31.625, 2, 2.3478011067708309">
+      <DataClassMoniker Name="/CompetitionDBDataContext/SpecialPart" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ff0ca281-09a7-4344-9b1c-77bd2c7f1891" absoluteBounds="17.515, 32.085, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8f8bc819-9b0b-4ab3-9d0d-3b29bd00fe61" absoluteBounds="15.75, 35.75, 2, 1.7708968098958309">
+      <DataClassMoniker Name="/CompetitionDBDataContext/TargetIndicators" />
+      <nestedChildShapes>
+        <elementListCompartment Id="94959659-fadf-4967-8368-85e0a2d7d8ee" absoluteBounds="15.765, 36.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="58bcb7a0-9261-48c2-a7d3-3ab6d9639da5" absoluteBounds="18.5, 27.375, 2, 2.5401025390625023">
+      <DataClassMoniker Name="/CompetitionDBDataContext/TargetIndicatorValue" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9eccd32b-a7d9-4776-92f1-7ced3dc86b1a" absoluteBounds="18.515, 27.835, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="dd3a360c-62f4-4064-9e90-3dfbabb849f0" absoluteBounds="12, 21.125, 2, 1.7708968098958309">
+      <DataClassMoniker Name="/CompetitionDBDataContext/TaskResult" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e88a6df1-8418-4982-9231-3f84b2b97aec" absoluteBounds="12.015, 21.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e0a2360c-2920-45a1-8692-789dfe8e8b83" absoluteBounds="12, 44.625, 2, 2.9247054036458309">
+      <DataClassMoniker Name="/CompetitionDBDataContext/TitleInfo" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ed0d91c5-e2cb-4525-9e99-ca441444cd91" absoluteBounds="12.015, 45.085, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f4868b60-26fb-4613-8cdf-7af65ef1668f" absoluteBounds="15, 25.5, 2, 1.7708968098958309">
+      <DataClassMoniker Name="/CompetitionDBDataContext/User_BidMapingTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="57527887-0434-4c43-bce3-3a43473739b4" absoluteBounds="15.015, 25.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8437d8a8-c79b-4dd0-9fa8-dab5afb4d1fd" absoluteBounds="0.75, 25.375, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/CompetitionDBDataContext/Users" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bc0cad21-acdd-4291-a742-55b4a7cf4754" absoluteBounds="0.765, 25.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(10.25 : 25.25); (10.25 : 17.0104484049479); (10.6979191666667 : 17.0104484049479 : JumpStart); (10.8645858333333 : 17.0104484049479 : JumpEnd); (12 : 17.0104484049479)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Bids/Bids_Activity" />
+      <nodes>
+        <classShapeMoniker Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" />
+        <classShapeMoniker Id="fb09274a-a5e7-4854-aaa9-4ccd09018364" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(10.7812525 : 25.25); (10.7812525 : 14.5392976888021); (12 : 14.5392976888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Bids/Bids_Answers" />
+      <nodes>
+        <classShapeMoniker Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" />
+        <classShapeMoniker Id="829f87e2-41e8-4203-b233-c3037012db82" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(10.25 : 27.5978011067708); (10.25 : 38.9912019856771); (12 : 38.9912019856771)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Bids/Bids_CalendarPlan" />
+      <nodes>
+        <classShapeMoniker Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" />
+        <classShapeMoniker Id="6af17797-1cd1-4479-a1be-21c62e6e320b" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(10.7812525 : 27.5978011067708); (10.7812525 : 29.9527498372396); (10.9635454166667 : 29.9527498372396 : JumpStart); (11.1302120833333 : 29.9527498372396 : JumpEnd); (12 : 29.9527498372396)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Bids/Bids_Indicators" />
+      <nodes>
+        <classShapeMoniker Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" />
+        <classShapeMoniker Id="155ca46e-857e-431b-8b1a-70168109ad07" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.5 : 27.5304996744792); (4.5 : 29.7604484049479); (4.94791916666667 : 29.7604484049479 : JumpStart); (5.11458583333333 : 29.7604484049479 : JumpEnd); (6.25 : 29.7604484049479)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Konkursy/Konkursy_AutoFilling" />
+      <nodes>
+        <classShapeMoniker Id="9f55be8b-1307-40ae-a01c-f4e61dd9247b" />
+        <classShapeMoniker Id="23b40e94-dcc8-4d92-add0-3172f5308ca0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 27.3982975260417); (9.25 : 27.3982975260417)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Konkursy/Konkursy_Bids" />
+      <nodes>
+        <classShapeMoniker Id="9f55be8b-1307-40ae-a01c-f4e61dd9247b" />
+        <classShapeMoniker Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 26.4142976888021); (6.25 : 26.4142976888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Konkursy/Konkursy_Konkurs_QuestionMapingTable" />
+      <nodes>
+        <classShapeMoniker Id="9f55be8b-1307-40ae-a01c-f4e61dd9247b" />
+        <classShapeMoniker Id="1a443fd4-7db6-43f8-9ef5-1abb97dd1ec2" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.5 : 25.375); (4.5 : 23.4142976888021); (6.25 : 23.4142976888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Konkursy/Konkursy_Konkurs_TargetMapingTable" />
+      <nodes>
+        <classShapeMoniker Id="9f55be8b-1307-40ae-a01c-f4e61dd9247b" />
+        <classShapeMoniker Id="41fe6591-ecf5-44a6-81d6-55b582b408b9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.25 : 26.9239005533854); (12 : 26.9239005533854)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Bids/Bids_Partners" />
+      <nodes>
+        <classShapeMoniker Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" />
+        <classShapeMoniker Id="b88a6693-67ad-466d-bb67-0a9cb81cd7a4" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(9.7187475 : 27.5978011067708); (9.7187475 : 31.65625); (10.1666666666667 : 31.65625 : JumpStart); (10.3333333333333 : 31.65625 : JumpEnd); (10.4322929166667 : 31.65625 : JumpStart); (10.5989595833333 : 31.65625 : JumpEnd); (10.9635454166667 : 31.65625 : JumpStart); (11.1302120833333 : 31.65625 : JumpEnd); (14.4166666666667 : 31.65625 : JumpStart); (14.5833333333333 : 31.65625 : JumpEnd); (14.75 : 31.65625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Bids/Bids_PurchasePlan" />
+      <nodes>
+        <classShapeMoniker Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" />
+        <classShapeMoniker Id="ccc577c0-5624-4df7-bd48-d6031a7483ab" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14 : 38.9912019856771); (15.21875 : 38.9912019856771); (15.21875 : 34.0401025390625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/CalendarPlan/CalendarPlan_PurchasePlan" />
+      <nodes>
+        <classShapeMoniker Id="6af17797-1cd1-4479-a1be-21c62e6e320b" />
+        <classShapeMoniker Id="ccc577c0-5624-4df7-bd48-d6031a7483ab" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14 : 14.5392976888021); (14.75 : 14.5392976888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Answers/Answers_Question_AnswerMapingTable" />
+      <nodes>
+        <classShapeMoniker Id="829f87e2-41e8-4203-b233-c3037012db82" />
+        <classShapeMoniker Id="8bbfa7c5-5d6b-4943-b62c-c53883fde86a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(12 : 12.3285953776042); (11.625 : 12.7035953776042); (8.625 : 12.7035953776042); (8.625 : 25.25); (8.25 : 25.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Questions/Questions_Konkurs_QuestionMapingTable" />
+      <nodes>
+        <classShapeMoniker Id="ea91717b-11e4-46eb-b64f-f1b4b06e9020" />
+        <classShapeMoniker Id="1a443fd4-7db6-43f8-9ef5-1abb97dd1ec2" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14 : 11.5392976888021); (15.75 : 11.5392976888021); (15.75 : 13.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Questions/Questions_Question_AnswerMapingTable" />
+      <nodes>
+        <classShapeMoniker Id="ea91717b-11e4-46eb-b64f-f1b4b06e9020" />
+        <classShapeMoniker Id="8bbfa7c5-5d6b-4943-b62c-c53883fde86a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.04687875 : 27.5978011067708); (11.04687875 : 32.9527498372396); (12 : 32.9527498372396)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Bids/Bids_Reports" />
+      <nodes>
+        <classShapeMoniker Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" />
+        <classShapeMoniker Id="ad787db2-3892-44a5-b6a9-95ecae840348" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.25 : 25.34375); (14.4166666666667 : 25.34375 : JumpStart); (14.7083333333333 : 25.34375 : JumpEnd); (14.84375 : 25.34375); (14.84375 : 24.7324039713542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Bids/Bids_Result" />
+      <nodes>
+        <classShapeMoniker Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" />
+        <classShapeMoniker Id="0850dd89-2505-4f6f-952b-5a2b6741288d" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(16.75 : 23.4142976888021); (17.5 : 23.4142976888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Result/Result_ResultComent" />
+      <nodes>
+        <classShapeMoniker Id="0850dd89-2505-4f6f-952b-5a2b6741288d" />
+        <classShapeMoniker Id="bd62e5f1-3fcd-45a6-b413-81b2b61ab072" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(10.51562625 : 27.5978011067708); (10.51562625 : 35.8277498372396); (12 : 35.8277498372396)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Bids/Bids_Risks" />
+      <nodes>
+        <classShapeMoniker Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" />
+        <classShapeMoniker Id="7d0d6065-4980-45b4-8d29-4b84937d5954" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.0312525 : 27.5304996744792); (5.0312525 : 32.3565991210938); (6.25 : 32.3565991210938)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Konkursy/Konkursy_Smeta" />
+      <nodes>
+        <classShapeMoniker Id="9f55be8b-1307-40ae-a01c-f4e61dd9247b" />
+        <classShapeMoniker Id="53c70d93-313f-4030-b9e3-641840f6d326" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(9.98437375 : 27.5978011067708); (9.98437375 : 28.59375); (10.1666666666667 : 28.59375 : JumpStart); (10.3333333333333 : 28.59375 : JumpEnd); (10.4322929166667 : 28.59375 : JumpStart); (10.5989595833333 : 28.59375 : JumpEnd); (10.6979191666667 : 28.59375 : JumpStart); (10.8645858333333 : 28.59375 : JumpEnd); (10.9635454166667 : 28.59375 : JumpStart); (11.1302120833333 : 28.59375 : JumpEnd); (14.4166666666667 : 28.59375 : JumpStart); (14.5833333333333 : 28.59375 : JumpEnd); (14.7604166666667 : 28.59375 : JumpStart); (14.9270833333333 : 28.59375 : JumpEnd); (15 : 28.59375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Bids/Bids_SmetaValue" />
+      <nodes>
+        <classShapeMoniker Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" />
+        <classShapeMoniker Id="795ad616-129a-45d3-a915-a5064d84d819" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 31.40625); (9.36978791666666 : 31.40625 : JumpStart); (9.53645458333333 : 31.40625 : JumpEnd); (9.63541416666667 : 31.40625 : JumpStart); (9.80208083333333 : 31.40625 : JumpEnd); (10.1666666666667 : 31.40625 : JumpStart); (10.3333333333333 : 31.40625 : JumpEnd); (10.4322929166667 : 31.40625 : JumpStart); (10.5989595833333 : 31.40625 : JumpEnd); (10.9635454166667 : 31.40625 : JumpStart); (11.1302120833333 : 31.40625 : JumpEnd); (14.4166666666667 : 31.40625 : JumpStart); (14.5833333333333 : 31.40625 : JumpEnd); (14.7604166666667 : 31.40625 : JumpStart); (14.9270833333333 : 31.40625 : JumpEnd); (16.90625 : 31.40625); (16.90625 : 30.1458968098958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Smeta/Smeta_SmetaValue" />
+      <nodes>
+        <classShapeMoniker Id="53c70d93-313f-4030-b9e3-641840f6d326" />
+        <classShapeMoniker Id="795ad616-129a-45d3-a915-a5064d84d819" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(16.75 : 32.7989005533854); (17.1666666666667 : 32.7989005533854 : JumpStart); (17.3333333333333 : 32.7989005533854 : JumpEnd); (17.5 : 32.7989005533854)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/PurchasePlan/PurchasePlan_SpecialPart" />
+      <nodes>
+        <classShapeMoniker Id="ccc577c0-5624-4df7-bd48-d6031a7483ab" />
+        <classShapeMoniker Id="cc9a5d48-7d98-4077-b408-b165d111ee85" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(16.75 : 35.75); (16.75 : 34.2901025390625); (15.3020833333333 : 34.2901025390625 : JumpStart); (15.1354166666667 : 34.2901025390625 : JumpEnd); (14.5 : 34.2901025390625); (14.5 : 23.58099559375); (10.8645858333333 : 23.58099559375 : JumpStart); (10.6979191666667 : 23.58099559375 : JumpEnd); (10.3333333333333 : 23.58099559375 : JumpStart); (10.1666666666667 : 23.58099559375 : JumpEnd); (9.80208083333333 : 23.58099559375 : JumpStart); (9.63541416666667 : 23.58099559375 : JumpEnd); (8.70833333333333 : 23.58099559375 : JumpStart); (8.54166666666667 : 23.58099559375 : JumpEnd); (8.25 : 23.58099559375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/TargetIndicators/TargetIndicators_Konkurs_TargetMapingTable" />
+      <nodes>
+        <classShapeMoniker Id="8f8bc819-9b0b-4ab3-9d0d-3b29bd00fe61" />
+        <classShapeMoniker Id="41fe6591-ecf5-44a6-81d6-55b582b408b9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.25 : 25.3750025); (14.4166666666667 : 25.3750025 : JumpStart); (14.7083333333333 : 25.3750025 : JumpEnd); (19.5 : 25.3750025); (19.5 : 27.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Bids/Bids_TargetIndicatorValue" />
+      <nodes>
+        <classShapeMoniker Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" />
+        <classShapeMoniker Id="58bcb7a0-9261-48c2-a7d3-3ab6d9639da5" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14.84375 : 31.5); (14.84375 : 27.84375); (18.5 : 27.84375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/PurchasePlan/PurchasePlan_TargetIndicatorValue" />
+      <nodes>
+        <classShapeMoniker Id="ccc577c0-5624-4df7-bd48-d6031a7483ab" />
+        <classShapeMoniker Id="58bcb7a0-9261-48c2-a7d3-3ab6d9639da5" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(17.25 : 35.75); (17.25 : 28.1093775); (18.5 : 28.1093775)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/TargetIndicators/TargetIndicators_TargetIndicatorValue" />
+      <nodes>
+        <classShapeMoniker Id="8f8bc819-9b0b-4ab3-9d0d-3b29bd00fe61" />
+        <classShapeMoniker Id="58bcb7a0-9261-48c2-a7d3-3ab6d9639da5" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14 : 22.4479484049479); (14.75 : 22.4479484049479)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/TaskResult/TaskResult_Result" />
+      <nodes>
+        <classShapeMoniker Id="dd3a360c-62f4-4064-9e90-3dfbabb849f0" />
+        <classShapeMoniker Id="0850dd89-2505-4f6f-952b-5a2b6741288d" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(9.7187475 : 25.25); (9.7187475 : 22.0104484049479); (10.1666666666667 : 22.0104484049479 : JumpStart); (10.3333333333333 : 22.0104484049479 : JumpEnd); (10.6979191666667 : 22.0104484049479 : JumpStart); (10.8645858333333 : 22.0104484049479 : JumpEnd); (12 : 22.0104484049479)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Bids/Bids_TaskResult" />
+      <nodes>
+        <classShapeMoniker Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" />
+        <classShapeMoniker Id="dd3a360c-62f4-4064-9e90-3dfbabb849f0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(9.45312125 : 27.5978011067708); (9.45312125 : 46.0873527018229); (12 : 46.0873527018229)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Bids/Bids_TitleInfo" />
+      <nodes>
+        <classShapeMoniker Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" />
+        <classShapeMoniker Id="e0a2360c-2920-45a1-8692-789dfe8e8b83" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.25 : 25.84375); (14.4166666666667 : 25.84375 : JumpStart); (14.7083333333333 : 25.84375 : JumpEnd); (15 : 25.84375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Bids/Bids_User_BidMapingTable" />
+      <nodes>
+        <classShapeMoniker Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" />
+        <classShapeMoniker Id="f4868b60-26fb-4613-8cdf-7af65ef1668f" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 27.5289602129407); (3.125 : 27.9039602129407); (3.125 : 27.9728011067708); (4.41666666666667 : 27.9728011067708 : JumpStart); (4.58333333333333 : 27.9728011067708 : JumpEnd); (4.94791916666667 : 27.9728011067708 : JumpStart); (5.11458583333333 : 27.9728011067708 : JumpEnd); (8.875 : 27.9728011067708); (9.25 : 27.5978011067708)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Users/Users_Bids" />
+      <nodes>
+        <classShapeMoniker Id="8437d8a8-c79b-4dd0-9fa8-dab5afb4d1fd" />
+        <classShapeMoniker Id="a315e131-ded0-470d-99ec-f28a55b7f0d6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 26.4207276064704); (3.5 : 26.4207276064704)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Users/Users_Konkursy" />
+      <nodes>
+        <classShapeMoniker Id="8437d8a8-c79b-4dd0-9fa8-dab5afb4d1fd" />
+        <classShapeMoniker Id="9f55be8b-1307-40ae-a01c-f4e61dd9247b" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.75 : 25.375); (1.75 : 25); (4.41666666666667 : 25 : JumpStart); (4.58333333333333 : 25 : JumpEnd); (8.54166666666667 : 25 : JumpStart); (8.70833333333333 : 25 : JumpEnd); (9.63541416666667 : 25 : JumpStart); (9.80208083333333 : 25 : JumpEnd); (10.1666666666667 : 25 : JumpStart); (10.3333333333333 : 25 : JumpEnd); (10.6979191666667 : 25 : JumpStart); (10.8645858333333 : 25 : JumpEnd); (14.4166666666667 : 25 : JumpStart); (14.5833333333333 : 25 : JumpEnd); (14.625 : 25); (14.625 : 26.5885754049479); (15 : 26.5885754049479)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDBDataContext/Users/Users_User_BidMapingTable" />
+      <nodes>
+        <classShapeMoniker Id="8437d8a8-c79b-4dd0-9fa8-dab5afb4d1fd" />
+        <classShapeMoniker Id="f4868b60-26fb-4613-8cdf-7af65ef1668f" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
