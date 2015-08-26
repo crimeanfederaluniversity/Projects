@@ -19,10 +19,10 @@ namespace Competition
             CompetitionDBDataContext newuser = new CompetitionDBDataContext();
             Users userreg = new Users();
             userreg.Active = true;
-            userreg.Role = 0;
+            userreg.Role = Convert.ToInt32(TextBox6.Text);
             userreg.Name = TextBox1.Text;
             userreg.Post = TextBox2.Text;
-            userreg.PlaceofWork = TextBox3.Text;
+            //userreg.PlaceofWork = TextBox3.Text;
             userreg.E_mail = TextBox4.Text;
             userreg.Pass = TextBox5.Text;
 
@@ -30,7 +30,11 @@ namespace Competition
             newuser.SubmitChanges();
             Session["ID_User"] = userreg.ID_User;
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Вы успешно зарегистрированы!');", true);
-            Response.Redirect("~/Userpage.aspx");
+            if (userreg.Role == 0)
+            { Response.Redirect("~/Userpage.aspx"); }
+            else
+            { Response.Redirect("~/ExpertPage.aspx"); }
+            
                 
         }
     }

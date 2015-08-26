@@ -21,20 +21,18 @@ namespace Competition
             int idbid = (int)Session["ID_Bid"];
             CompetitionDBDataContext newUser = new CompetitionDBDataContext();
             DataTable teamuser = new DataTable();
-            teamuser.Columns.Add(new DataColumn("Name", typeof(string)));
-            teamuser.Columns.Add(new DataColumn("Function", typeof(string)));
-            teamuser.Columns.Add(new DataColumn("PayPerHour", typeof(string)));
-            List<Users> users = (from a in newUser.Users
-                                 join b in newUser.User_BidMapingTable 
-                                 on idbid equals b.FK_Bid
-                                 where a.ID_User == b.FK_User && a.Active == true select a).ToList();
-            
-            foreach (Users n in users)
+            teamuser.Columns.Add(new DataColumn("PartnerName", typeof(string)));
+            teamuser.Columns.Add(new DataColumn("Functions", typeof(string)));
+            teamuser.Columns.Add(new DataColumn("PayPerHour", typeof(int)));
+            List<Partners> users = (from a in newUser.Partners where a.FK_Bid == idbid
+                                  && a.Active == true select a).ToList();
+
+            foreach (Partners n in users)
             {
                 
                 DataRow dataRow = teamuser.NewRow();
-                dataRow["Name"] = n.Name;
-                dataRow["Function"] = n.Function;
+                dataRow["PartnerName"] = n.PartnerName;
+                dataRow["Functions"] = n.Functions;
                 dataRow["PayPerHour"] = n.PayPerHour;
                 teamuser.Rows.Add(dataRow);              
             }
@@ -44,22 +42,25 @@ namespace Competition
 
         protected void Button1_Click(object sender, EventArgs e) // сохранение данных из гридвью в базу
         {
+            int idbid = (int)Session["ID_Bid"];
             CompetitionDBDataContext newUser = new CompetitionDBDataContext();
-            Users param = new Users();
+            Partners param = new Partners();
             DataTable pay = (DataTable)ViewState["PayPerHour"];
-            DataTable fun = (DataTable)ViewState["Function"];
+            DataTable fun = (DataTable)ViewState["Functions"];
             for (int i = 0; i < GridView1.Rows.Count; i++)
             {
-                TextBox name = (TextBox)GridView1.Rows[i].FindControl("Name");
-                TextBox function = (TextBox)GridView1.Rows[i].FindControl("Function");
+                TextBox name = (TextBox)GridView1.Rows[i].FindControl("PartnerName");
+                TextBox function = (TextBox)GridView1.Rows[i].FindControl("Functions");
                 TextBox payperhour = (TextBox)GridView1.Rows[i].FindControl("PayPerHour");
-                Label Name = (Label)GridView1.Rows[i].FindControl("Name");
-                Users Newfunpay = (from a in newUser.Users where a.Name ==  Name.Text && a.Active == true
-                                      select a).FirstOrDefault();
-
-                Newfunpay.Name  = name.Text;
-                Newfunpay.Function = function.Text;
-                Newfunpay.PayPerHour = payperhour.Text;
+                //Label Name = (Label)GridView1.Rows[i].FindControl("PartnerName");
+               // Partners Newfunpay = (from a in newUser.Partners
+               //                       where a.PartnerName == name.Text && a.Active == true
+               //                       select a).FirstOrDefault();
+                Partners Newfunpay = new Partners();
+                Newfunpay.PartnerName  = name.Text;
+                Newfunpay.Functions = function.Text;
+                Newfunpay.PayPerHour = Convert.ToInt32(payperhour.Text);
+                Newfunpay.FK_Bid = idbid;
                 newUser.SubmitChanges();                
             }
         }
@@ -68,22 +69,24 @@ namespace Competition
             int idkon = (int)Session["ID_Konkurs"];
             int idbid = (int)Session["ID_Bid"];
             CompetitionDBDataContext newUser = new CompetitionDBDataContext();
-            Users newuser = new Users();
-            User_BidMapingTable newlink = new User_BidMapingTable();
+            Partners newuser = new Partners();
+            
             newuser.Active = true;
-            newuser.Name = null;
-            newuser.Function = null;
+            newuser.PartnerName = null;
+            newuser.Functions = null;
             newuser.PayPerHour = null;
+            newuser.FK_Bid = idbid;
              
-            newUser.Users.InsertOnSubmit(newuser);
+            newUser.Partners.InsertOnSubmit(newuser);
             newUser.SubmitChanges();
-
-            newlink.Active = true;
-            newlink.Access = 0;
-            newlink.FK_Bid = idbid;
-            newlink.FK_User = newuser.ID_User;
+ 
             GridviewApdate();
       
+        }
+
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/CalendarPlan.aspx");
         }
         
     }

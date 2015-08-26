@@ -34,6 +34,7 @@
     <Type Name="Bids">
       <Column Name="ID_Bid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_Expert" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="BidName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="Date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="FK_Konkurs" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -43,6 +44,7 @@
       <Association Name="Bids_Answers" Member="Answers" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="Answers" />
       <Association Name="Bids_CalendarPlan" Member="CalendarPlan" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="CalendarPlan" />
       <Association Name="Bids_Indicators" Member="Indicators" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="Indicators" />
+      <Association Name="Bids_Partners" Member="Partners" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="Partners" />
       <Association Name="Bids_PurchasePlan" Member="PurchasePlan" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="PurchasePlan" />
       <Association Name="Bids_Reports" Member="Reports" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="Reports" />
       <Association Name="Bids_Result" Member="Result" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="Result" />
@@ -53,6 +55,7 @@
       <Association Name="Bids_TitleInfo" Member="TitleInfo" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="TitleInfo" />
       <Association Name="Bids_User_BidMapingTable" Member="User_BidMapingTable" ThisKey="ID_Bid" OtherKey="FK_Bid" Type="User_BidMapingTable" />
       <Association Name="Konkursy_Bids" Member="Konkursy" ThisKey="FK_Konkurs" OtherKey="ID_Konkurs" Type="Konkursy" IsForeignKey="true" />
+      <Association Name="Users_Bids" Member="Users" ThisKey="FK_Expert" OtherKey="ID_User" Type="Users" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CalendarPlan" Member="CalendarPlan">
@@ -67,6 +70,7 @@
       <Column Name="Cost1000" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="SourceNull" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="TimeNull" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="CalendarPlan_PurchasePlan" Member="PurchasePlan" ThisKey="ID_Event" OtherKey="FK_Event" Type="PurchasePlan" />
       <Association Name="Bids_CalendarPlan" Member="Bids" ThisKey="FK_Bid" OtherKey="ID_Bid" Type="Bids" IsForeignKey="true" />
     </Type>
   </Table>
@@ -119,10 +123,22 @@
       <Association Name="Users_Konkursy" Member="Users" ThisKey="FK_Curator" OtherKey="ID_User" Type="Users" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Partners" Member="Partners">
+    <Type Name="Partners">
+      <Column Name="ID_Partner" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PartnerName" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="FK_Bid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Functions" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PayPerHour" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Bids_Partners" Member="Bids" ThisKey="FK_Bid" OtherKey="ID_Bid" Type="Bids" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.PurchasePlan" Member="PurchasePlan">
     <Type Name="PurchasePlan">
       <Column Name="ID_Purchase" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="FK_Bid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_Event" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Purchase" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="Unit" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Amount" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -132,6 +148,7 @@
       <Association Name="PurchasePlan_SpecialPart" Member="SpecialPart" ThisKey="ID_Purchase" OtherKey="FK_Purchase" Type="SpecialPart" />
       <Association Name="PurchasePlan_TargetIndicatorValue" Member="TargetIndicatorValue" ThisKey="ID_Purchase" OtherKey="FK_Purchase" Type="TargetIndicatorValue" />
       <Association Name="Bids_PurchasePlan" Member="Bids" ThisKey="FK_Bid" OtherKey="ID_Bid" Type="Bids" IsForeignKey="true" />
+      <Association Name="CalendarPlan_PurchasePlan" Member="CalendarPlan" ThisKey="FK_Event" OtherKey="ID_Event" Type="CalendarPlan" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.[Question-AnswerMapingTable]" Member="Question_AnswerMapingTable">
@@ -311,12 +328,10 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="Role" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Post" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="PlaceofWork" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="[E-mail]" Member="E_mail" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="Pass" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="[Function]" Member="Function" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="PayPerHour" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Users_Bids" Member="Bids" ThisKey="ID_User" OtherKey="FK_Expert" Type="Bids" />
       <Association Name="Users_Konkursy" Member="Konkursy" ThisKey="ID_User" OtherKey="FK_Curator" Type="Konkursy" />
       <Association Name="Users_User_BidMapingTable" Member="User_BidMapingTable" ThisKey="ID_User" OtherKey="FK_User" Type="User_BidMapingTable" />
     </Type>

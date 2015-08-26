@@ -7,14 +7,15 @@
  
         <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server">
              <Columns>
-                   <asp:TemplateField HeaderText="ФИО" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-VerticalAlign="Middle" Visible = "true" >
+                  
+                  <asp:TemplateField HeaderText="ФИО" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-VerticalAlign="Middle" Visible = "true" >
                         <ItemTemplate> 
-                            <asp:Label ID="Name" runat="server" Text='<%# Bind("Name") %>'  Visible="True"></asp:Label>
+                            <asp:TextBox ID="PartnerName" runat="server" Text='<%# Bind("PartnerName") %>'  Visible="True"></asp:TextBox>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Функция в проекте" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-VerticalAlign="Middle" Visible = "true" >
                         <ItemTemplate> 
-                            <asp:TextBox ID="Function" runat="server" Text='<%# Bind("Function") %>'  Visible="True"></asp:TextBox>
+                            <asp:TextBox ID="Functions" runat="server" Text='<%# Bind("Functions") %>'  Visible="True"></asp:TextBox>
                         </ItemTemplate>
                     </asp:TemplateField>
                  <asp:TemplateField HeaderText="Трудозатраты в час" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-VerticalAlign="Middle" Visible = "true" >
@@ -28,6 +29,9 @@
         <asp:Button ID="Button1" runat="server" Text="Сохранить" Width="101px" OnClick="Button1_Click" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <asp:Button ID="Button2" runat="server" Text="Добавить строку" Width="128px" OnClick="Button2_Click" />
+    
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Далее" />
     
     </div>
   </asp:Content>    

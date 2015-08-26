@@ -58,11 +58,15 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdminPage.aspx" />
+    <Content Include="CalendarPlan.aspx" />
     <Content Include="CompetitionDB.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>CompetitionDB.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="ExpertPage.aspx" />
+    <Content Include="PurchasePlan.aspx" />
     <Content Include="Questions.aspx" />
     <Content Include="Registration.aspx" />
     <Content Include="SmetaForm.aspx" />
@@ -84,10 +88,31 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminPage.aspx.cs">
+      <DependentUpon>AdminPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPage.aspx.designer.cs">
+      <DependentUpon>AdminPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CalendarPlan.aspx.cs">
+      <DependentUpon>CalendarPlan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CalendarPlan.aspx.designer.cs">
+      <DependentUpon>CalendarPlan.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CompetitionDB.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CompetitionDB.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="ExpertPage.aspx.cs">
+      <DependentUpon>ExpertPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExpertPage.aspx.designer.cs">
+      <DependentUpon>ExpertPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="masterpage.Master.cs">
       <DependentUpon>masterpage.Master</DependentUpon>
@@ -97,6 +122,13 @@
       <DependentUpon>masterpage.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchasePlan.aspx.cs">
+      <DependentUpon>PurchasePlan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PurchasePlan.aspx.designer.cs">
+      <DependentUpon>PurchasePlan.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Questions.aspx.cs">
       <DependentUpon>Questions.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

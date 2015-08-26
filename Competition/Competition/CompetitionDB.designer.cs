@@ -57,6 +57,9 @@ namespace Competition
     partial void InsertKonkursy(Konkursy instance);
     partial void UpdateKonkursy(Konkursy instance);
     partial void DeleteKonkursy(Konkursy instance);
+    partial void InsertPartners(Partners instance);
+    partial void UpdatePartners(Partners instance);
+    partial void DeletePartners(Partners instance);
     partial void InsertPurchasePlan(PurchasePlan instance);
     partial void UpdatePurchasePlan(PurchasePlan instance);
     partial void DeletePurchasePlan(PurchasePlan instance);
@@ -203,6 +206,14 @@ namespace Competition
 			get
 			{
 				return this.GetTable<Konkursy>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Partners> Partners
+		{
+			get
+			{
+				return this.GetTable<Partners>();
 			}
 		}
 		
@@ -946,6 +957,8 @@ namespace Competition
 		
 		private System.Nullable<bool> _Active;
 		
+		private System.Nullable<int> _FK_Expert;
+		
 		private string _BidName;
 		
 		private System.Nullable<System.DateTime> _Date;
@@ -963,6 +976,8 @@ namespace Competition
 		private EntitySet<CalendarPlan> _CalendarPlan;
 		
 		private EntitySet<Indicators> _Indicators;
+		
+		private EntitySet<Partners> _Partners;
 		
 		private EntitySet<PurchasePlan> _PurchasePlan;
 		
@@ -984,6 +999,8 @@ namespace Competition
 		
 		private EntityRef<Konkursy> _Konkursy;
 		
+		private EntityRef<Users> _Users;
+		
     #region Определения метода расширяемости
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -992,6 +1009,8 @@ namespace Competition
     partial void OnID_BidChanged();
     partial void OnActiveChanging(System.Nullable<bool> value);
     partial void OnActiveChanged();
+    partial void OnFK_ExpertChanging(System.Nullable<int> value);
+    partial void OnFK_ExpertChanged();
     partial void OnBidNameChanging(string value);
     partial void OnBidNameChanged();
     partial void OnDateChanging(System.Nullable<System.DateTime> value);
@@ -1010,6 +1029,7 @@ namespace Competition
 			this._Answers = new EntitySet<Answers>(new Action<Answers>(this.attach_Answers), new Action<Answers>(this.detach_Answers));
 			this._CalendarPlan = new EntitySet<CalendarPlan>(new Action<CalendarPlan>(this.attach_CalendarPlan), new Action<CalendarPlan>(this.detach_CalendarPlan));
 			this._Indicators = new EntitySet<Indicators>(new Action<Indicators>(this.attach_Indicators), new Action<Indicators>(this.detach_Indicators));
+			this._Partners = new EntitySet<Partners>(new Action<Partners>(this.attach_Partners), new Action<Partners>(this.detach_Partners));
 			this._PurchasePlan = new EntitySet<PurchasePlan>(new Action<PurchasePlan>(this.attach_PurchasePlan), new Action<PurchasePlan>(this.detach_PurchasePlan));
 			this._Reports = new EntitySet<Reports>(new Action<Reports>(this.attach_Reports), new Action<Reports>(this.detach_Reports));
 			this._Result = new EntitySet<Result>(new Action<Result>(this.attach_Result), new Action<Result>(this.detach_Result));
@@ -1020,6 +1040,7 @@ namespace Competition
 			this._TitleInfo = new EntitySet<TitleInfo>(new Action<TitleInfo>(this.attach_TitleInfo), new Action<TitleInfo>(this.detach_TitleInfo));
 			this._User_BidMapingTable = new EntitySet<User_BidMapingTable>(new Action<User_BidMapingTable>(this.attach_User_BidMapingTable), new Action<User_BidMapingTable>(this.detach_User_BidMapingTable));
 			this._Konkursy = default(EntityRef<Konkursy>);
+			this._Users = default(EntityRef<Users>);
 			OnCreated();
 		}
 		
@@ -1059,6 +1080,30 @@ namespace Competition
 					this._Active = value;
 					this.SendPropertyChanged("Active");
 					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Expert", DbType="Int")]
+		public System.Nullable<int> FK_Expert
+		{
+			get
+			{
+				return this._FK_Expert;
+			}
+			set
+			{
+				if ((this._FK_Expert != value))
+				{
+					if (this._Users.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_ExpertChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Expert = value;
+					this.SendPropertyChanged("FK_Expert");
+					this.OnFK_ExpertChanged();
 				}
 			}
 		}
@@ -1219,6 +1264,19 @@ namespace Competition
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Partners", Storage="_Partners", ThisKey="ID_Bid", OtherKey="FK_Bid")]
+		public EntitySet<Partners> Partners
+		{
+			get
+			{
+				return this._Partners;
+			}
+			set
+			{
+				this._Partners.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_PurchasePlan", Storage="_PurchasePlan", ThisKey="ID_Bid", OtherKey="FK_Bid")]
 		public EntitySet<PurchasePlan> PurchasePlan
 		{
@@ -1370,6 +1428,40 @@ namespace Competition
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Bids", Storage="_Users", ThisKey="FK_Expert", OtherKey="ID_User", IsForeignKey=true)]
+		public Users Users
+		{
+			get
+			{
+				return this._Users.Entity;
+			}
+			set
+			{
+				Users previousValue = this._Users.Entity;
+				if (((previousValue != value) 
+							|| (this._Users.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Users.Entity = null;
+						previousValue.Bids.Remove(this);
+					}
+					this._Users.Entity = value;
+					if ((value != null))
+					{
+						value.Bids.Add(this);
+						this._FK_Expert = value.ID_User;
+					}
+					else
+					{
+						this._FK_Expert = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Users");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1433,6 +1525,18 @@ namespace Competition
 		}
 		
 		private void detach_Indicators(Indicators entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = null;
+		}
+		
+		private void attach_Partners(Partners entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bids = this;
+		}
+		
+		private void detach_Partners(Partners entity)
 		{
 			this.SendPropertyChanging();
 			entity.Bids = null;
@@ -1573,6 +1677,8 @@ namespace Competition
 		
 		private string _TimeNull;
 		
+		private EntitySet<PurchasePlan> _PurchasePlan;
+		
 		private EntityRef<Bids> _Bids;
 		
     #region Определения метода расширяемости
@@ -1603,6 +1709,7 @@ namespace Competition
 		
 		public CalendarPlan()
 		{
+			this._PurchasePlan = new EntitySet<PurchasePlan>(new Action<PurchasePlan>(this.attach_PurchasePlan), new Action<PurchasePlan>(this.detach_PurchasePlan));
 			this._Bids = default(EntityRef<Bids>);
 			OnCreated();
 		}
@@ -1811,6 +1918,19 @@ namespace Competition
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalendarPlan_PurchasePlan", Storage="_PurchasePlan", ThisKey="ID_Event", OtherKey="FK_Event")]
+		public EntitySet<PurchasePlan> PurchasePlan
+		{
+			get
+			{
+				return this._PurchasePlan;
+			}
+			set
+			{
+				this._PurchasePlan.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_CalendarPlan", Storage="_Bids", ThisKey="FK_Bid", OtherKey="ID_Bid", IsForeignKey=true)]
 		public Bids Bids
 		{
@@ -1863,6 +1983,18 @@ namespace Competition
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_PurchasePlan(PurchasePlan entity)
+		{
+			this.SendPropertyChanging();
+			entity.CalendarPlan = this;
+		}
+		
+		private void detach_PurchasePlan(PurchasePlan entity)
+		{
+			this.SendPropertyChanging();
+			entity.CalendarPlan = null;
 		}
 	}
 	
@@ -2932,6 +3064,229 @@ namespace Competition
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Partners")]
+	public partial class Partners : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID_Partner;
+		
+		private string _PartnerName;
+		
+		private System.Nullable<int> _FK_Bid;
+		
+		private string _Functions;
+		
+		private System.Nullable<int> _PayPerHour;
+		
+		private System.Nullable<bool> _Active;
+		
+		private EntityRef<Bids> _Bids;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_PartnerChanging(int value);
+    partial void OnID_PartnerChanged();
+    partial void OnPartnerNameChanging(string value);
+    partial void OnPartnerNameChanged();
+    partial void OnFK_BidChanging(System.Nullable<int> value);
+    partial void OnFK_BidChanged();
+    partial void OnFunctionsChanging(string value);
+    partial void OnFunctionsChanged();
+    partial void OnPayPerHourChanging(System.Nullable<int> value);
+    partial void OnPayPerHourChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public Partners()
+		{
+			this._Bids = default(EntityRef<Bids>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Partner", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID_Partner
+		{
+			get
+			{
+				return this._ID_Partner;
+			}
+			set
+			{
+				if ((this._ID_Partner != value))
+				{
+					this.OnID_PartnerChanging(value);
+					this.SendPropertyChanging();
+					this._ID_Partner = value;
+					this.SendPropertyChanged("ID_Partner");
+					this.OnID_PartnerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PartnerName", DbType="NVarChar(MAX)")]
+		public string PartnerName
+		{
+			get
+			{
+				return this._PartnerName;
+			}
+			set
+			{
+				if ((this._PartnerName != value))
+				{
+					this.OnPartnerNameChanging(value);
+					this.SendPropertyChanging();
+					this._PartnerName = value;
+					this.SendPropertyChanged("PartnerName");
+					this.OnPartnerNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Bid", DbType="Int")]
+		public System.Nullable<int> FK_Bid
+		{
+			get
+			{
+				return this._FK_Bid;
+			}
+			set
+			{
+				if ((this._FK_Bid != value))
+				{
+					if (this._Bids.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_BidChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Bid = value;
+					this.SendPropertyChanged("FK_Bid");
+					this.OnFK_BidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Functions", DbType="NVarChar(MAX)")]
+		public string Functions
+		{
+			get
+			{
+				return this._Functions;
+			}
+			set
+			{
+				if ((this._Functions != value))
+				{
+					this.OnFunctionsChanging(value);
+					this.SendPropertyChanging();
+					this._Functions = value;
+					this.SendPropertyChanged("Functions");
+					this.OnFunctionsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PayPerHour", DbType="Int")]
+		public System.Nullable<int> PayPerHour
+		{
+			get
+			{
+				return this._PayPerHour;
+			}
+			set
+			{
+				if ((this._PayPerHour != value))
+				{
+					this.OnPayPerHourChanging(value);
+					this.SendPropertyChanging();
+					this._PayPerHour = value;
+					this.SendPropertyChanged("PayPerHour");
+					this.OnPayPerHourChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bids_Partners", Storage="_Bids", ThisKey="FK_Bid", OtherKey="ID_Bid", IsForeignKey=true)]
+		public Bids Bids
+		{
+			get
+			{
+				return this._Bids.Entity;
+			}
+			set
+			{
+				Bids previousValue = this._Bids.Entity;
+				if (((previousValue != value) 
+							|| (this._Bids.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bids.Entity = null;
+						previousValue.Partners.Remove(this);
+					}
+					this._Bids.Entity = value;
+					if ((value != null))
+					{
+						value.Partners.Add(this);
+						this._FK_Bid = value.ID_Bid;
+					}
+					else
+					{
+						this._FK_Bid = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Bids");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PurchasePlan")]
 	public partial class PurchasePlan : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2941,6 +3296,8 @@ namespace Competition
 		private int _ID_Purchase;
 		
 		private System.Nullable<int> _FK_Bid;
+		
+		private System.Nullable<int> _FK_Event;
 		
 		private string _Purchase;
 		
@@ -2960,6 +3317,8 @@ namespace Competition
 		
 		private EntityRef<Bids> _Bids;
 		
+		private EntityRef<CalendarPlan> _CalendarPlan;
+		
     #region Определения метода расширяемости
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2968,6 +3327,8 @@ namespace Competition
     partial void OnID_PurchaseChanged();
     partial void OnFK_BidChanging(System.Nullable<int> value);
     partial void OnFK_BidChanged();
+    partial void OnFK_EventChanging(System.Nullable<int> value);
+    partial void OnFK_EventChanged();
     partial void OnPurchaseChanging(string value);
     partial void OnPurchaseChanged();
     partial void OnUnitChanging(string value);
@@ -2987,6 +3348,7 @@ namespace Competition
 			this._SpecialPart = new EntitySet<SpecialPart>(new Action<SpecialPart>(this.attach_SpecialPart), new Action<SpecialPart>(this.detach_SpecialPart));
 			this._TargetIndicatorValue = new EntitySet<TargetIndicatorValue>(new Action<TargetIndicatorValue>(this.attach_TargetIndicatorValue), new Action<TargetIndicatorValue>(this.detach_TargetIndicatorValue));
 			this._Bids = default(EntityRef<Bids>);
+			this._CalendarPlan = default(EntityRef<CalendarPlan>);
 			OnCreated();
 		}
 		
@@ -3030,6 +3392,30 @@ namespace Competition
 					this._FK_Bid = value;
 					this.SendPropertyChanged("FK_Bid");
 					this.OnFK_BidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Event", DbType="Int")]
+		public System.Nullable<int> FK_Event
+		{
+			get
+			{
+				return this._FK_Event;
+			}
+			set
+			{
+				if ((this._FK_Event != value))
+				{
+					if (this._CalendarPlan.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_EventChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Event = value;
+					this.SendPropertyChanged("FK_Event");
+					this.OnFK_EventChanged();
 				}
 			}
 		}
@@ -3210,6 +3596,40 @@ namespace Competition
 						this._FK_Bid = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("Bids");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalendarPlan_PurchasePlan", Storage="_CalendarPlan", ThisKey="FK_Event", OtherKey="ID_Event", IsForeignKey=true)]
+		public CalendarPlan CalendarPlan
+		{
+			get
+			{
+				return this._CalendarPlan.Entity;
+			}
+			set
+			{
+				CalendarPlan previousValue = this._CalendarPlan.Entity;
+				if (((previousValue != value) 
+							|| (this._CalendarPlan.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CalendarPlan.Entity = null;
+						previousValue.PurchasePlan.Remove(this);
+					}
+					this._CalendarPlan.Entity = value;
+					if ((value != null))
+					{
+						value.PurchasePlan.Add(this);
+						this._FK_Event = value.ID_Event;
+					}
+					else
+					{
+						this._FK_Event = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("CalendarPlan");
 				}
 			}
 		}
@@ -6777,17 +7197,13 @@ namespace Competition
 		
 		private string _Post;
 		
-		private string _PlaceofWork;
-		
 		private string _E_mail;
 		
 		private string _Pass;
 		
-		private string _Function;
-		
-		private string _PayPerHour;
-		
 		private System.Nullable<bool> _Active;
+		
+		private EntitySet<Bids> _Bids;
 		
 		private EntitySet<Konkursy> _Konkursy;
 		
@@ -6805,22 +7221,17 @@ namespace Competition
     partial void OnRoleChanged();
     partial void OnPostChanging(string value);
     partial void OnPostChanged();
-    partial void OnPlaceofWorkChanging(string value);
-    partial void OnPlaceofWorkChanged();
     partial void OnE_mailChanging(string value);
     partial void OnE_mailChanged();
     partial void OnPassChanging(string value);
     partial void OnPassChanged();
-    partial void OnFunctionChanging(string value);
-    partial void OnFunctionChanged();
-    partial void OnPayPerHourChanging(string value);
-    partial void OnPayPerHourChanged();
     partial void OnActiveChanging(System.Nullable<bool> value);
     partial void OnActiveChanged();
     #endregion
 		
 		public Users()
 		{
+			this._Bids = new EntitySet<Bids>(new Action<Bids>(this.attach_Bids), new Action<Bids>(this.detach_Bids));
 			this._Konkursy = new EntitySet<Konkursy>(new Action<Konkursy>(this.attach_Konkursy), new Action<Konkursy>(this.detach_Konkursy));
 			this._User_BidMapingTable = new EntitySet<User_BidMapingTable>(new Action<User_BidMapingTable>(this.attach_User_BidMapingTable), new Action<User_BidMapingTable>(this.detach_User_BidMapingTable));
 			OnCreated();
@@ -6906,26 +7317,6 @@ namespace Competition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlaceofWork", DbType="VarChar(MAX)")]
-		public string PlaceofWork
-		{
-			get
-			{
-				return this._PlaceofWork;
-			}
-			set
-			{
-				if ((this._PlaceofWork != value))
-				{
-					this.OnPlaceofWorkChanging(value);
-					this.SendPropertyChanging();
-					this._PlaceofWork = value;
-					this.SendPropertyChanged("PlaceofWork");
-					this.OnPlaceofWorkChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[E-mail]", Storage="_E_mail", DbType="VarChar(MAX)")]
 		public string E_mail
 		{
@@ -6966,46 +7357,6 @@ namespace Competition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Function]", Storage="_Function", DbType="VarChar(MAX)")]
-		public string Function
-		{
-			get
-			{
-				return this._Function;
-			}
-			set
-			{
-				if ((this._Function != value))
-				{
-					this.OnFunctionChanging(value);
-					this.SendPropertyChanging();
-					this._Function = value;
-					this.SendPropertyChanged("Function");
-					this.OnFunctionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PayPerHour", DbType="VarChar(MAX)")]
-		public string PayPerHour
-		{
-			get
-			{
-				return this._PayPerHour;
-			}
-			set
-			{
-				if ((this._PayPerHour != value))
-				{
-					this.OnPayPerHourChanging(value);
-					this.SendPropertyChanging();
-					this._PayPerHour = value;
-					this.SendPropertyChanged("PayPerHour");
-					this.OnPayPerHourChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
 		public System.Nullable<bool> Active
 		{
@@ -7023,6 +7374,19 @@ namespace Competition
 					this.SendPropertyChanged("Active");
 					this.OnActiveChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Bids", Storage="_Bids", ThisKey="ID_User", OtherKey="FK_Expert")]
+		public EntitySet<Bids> Bids
+		{
+			get
+			{
+				return this._Bids;
+			}
+			set
+			{
+				this._Bids.Assign(value);
 			}
 		}
 		
@@ -7070,6 +7434,18 @@ namespace Competition
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Bids(Bids entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = this;
+		}
+		
+		private void detach_Bids(Bids entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = null;
 		}
 		
 		private void attach_Konkursy(Konkursy entity)

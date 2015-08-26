@@ -26,8 +26,21 @@ namespace Competition
                                        select a).FirstOrDefault();
                     if (user != null)
                     {
-                        Session["ID_User"] = user.ID_User;
-                        Response.Redirect("~/Userpage.aspx");
+                        if (user.Role == 0)
+                        {
+                            Session["ID_User"] = user.ID_User;
+                            Response.Redirect("~/Userpage.aspx");
+                        }
+                        if(user.Role == 1)
+                        {
+                            Session["ID_User"] = user.ID_User;
+                            Response.Redirect("~/ExpertPage.aspx");
+                        }
+                        if(user.Role == 2)
+                        {
+                            Session["ID_User"] = user.ID_User;
+                            Response.Redirect("~/AdminPage.aspx");
+                        }
                     }
                     else
                     {

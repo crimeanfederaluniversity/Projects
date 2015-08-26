@@ -58,22 +58,22 @@ namespace Competition {
         protected global::System.Web.UI.WebControls.TextBox TextBox2;
         
         /// <summary>
-        /// Label3 элемент управления.
+        /// Label6 элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label Label6;
         
         /// <summary>
-        /// TextBox3 элемент управления.
+        /// TextBox6 элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox3;
+        protected global::System.Web.UI.WebControls.TextBox TextBox6;
         
         /// <summary>
         /// Label4 элемент управления.

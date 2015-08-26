@@ -23,9 +23,9 @@
         <asp:TextBox ID="TextBox2" runat="server" Width="300px"></asp:TextBox>
         <br />
         <br />
-        <asp:Label ID="Label3" runat="server" Text="Место работы"></asp:Label>
+        <asp:Label ID="Label6" runat="server" Text="Роль"></asp:Label>
         <br />
-        <asp:TextBox ID="TextBox3" runat="server" Width="300px"></asp:TextBox>
+        <asp:TextBox ID="TextBox6" runat="server" Width="97px"></asp:TextBox>
         <br />
         <br />
         <asp:Label ID="Label4" runat="server" Text="E-mail"></asp:Label>
