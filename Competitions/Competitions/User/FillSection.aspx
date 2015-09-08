@@ -5,14 +5,9 @@
         .dropdown {
             max-width: 200px;
         }
-
     </style>
-    
-    
-
         <br />
         <br />
-    
     
 
     <asp:GridView ID="FillingGV"  BorderStyle="Solid" runat="server" AutoGenerateColumns="False" 

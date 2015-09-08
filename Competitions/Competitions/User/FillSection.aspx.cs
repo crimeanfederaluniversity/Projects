@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.DynamicData;
 using System.Web.UI;
@@ -98,36 +99,76 @@ namespace Competitions.User
             return false;
         }
 
-        public bool DeleteRowsWithDisabledConstant(int constantListId, int applicationId, int sectionId, int columnId)
+        public bool DeleteRow(int rowId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-            List<zCollectedDataTable> existingCollectedDataTableList = (from a in competitionDataBase.zCollectedDataTable
+            zCollectedRowsTable rowToDelete = (from a in competitionDataBase.zCollectedRowsTable
+                                               where a.ID == rowId
+                                               select a).FirstOrDefault();
+            if (rowToDelete != null)
+            {
+                rowToDelete.Active = false;
+                competitionDataBase.SubmitChanges();
+            }
+            else
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool DeleteRowWithBadFk(int applicationId, int sectionId, int columnId , bool isDataConstant)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            List<zCollectedDataTable> existingCollectedDataTableList = (
+                from a in competitionDataBase.zCollectedDataTable
                 join b in competitionDataBase.zCollectedRowsTable
-                    on a.FK_CollectedRowsTable equals b.ID
+                on a.FK_CollectedRowsTable equals b.ID
                 where b.Active == true
                       && a.Active == true
                       && b.FK_ApplicationTable == applicationId
                       && b.FK_SectionTable == sectionId
+                      && a.FK_ColumnTable == columnId
                 select a).ToList();
-
-            foreach (zCollectedDataTable currentExistingData in existingCollectedDataTableList)
+            foreach (zCollectedDataTable currentCollectedData in existingCollectedDataTableList)
             {
-                zCollectedDataTable constantData = (from a in competitionDataBase.zCollectedDataTable
-                    where a.Active == true
-                          && a.FK_ConstantListTable == constantListId
-                          && a.ID == currentExistingData.ValueFK_CollectedDataTable
+                zCollectedDataTable fkOfCurrent = (from a in competitionDataBase.zCollectedDataTable
+                    where a.ID == currentCollectedData.ValueFK_CollectedDataTable
                     select a).FirstOrDefault();
-                if (constantData == null)
+                if (fkOfCurrent==null)
                 {
-                    currentExistingData.Active = false;
-                    zCollectedRowsTable rowToDelete = (from a in competitionDataBase.zCollectedRowsTable
-                        where a.ID == currentExistingData.FK_CollectedRowsTable
-                        select a).FirstOrDefault();
-                    rowToDelete.Active = false;
-                    competitionDataBase.SubmitChanges();
+                    DeleteRow((int)currentCollectedData.FK_CollectedRowsTable);
                 }
+                else if (fkOfCurrent.Active == false)
+                {
+                    DeleteRow((int)currentCollectedData.FK_CollectedRowsTable);
+                }
+                else if (!isDataConstant) // у констант нет ссылки на Row
+                {
+                    if (fkOfCurrent.FK_CollectedRowsTable == null)
+                    {
+                        DeleteRow((int) currentCollectedData.FK_CollectedRowsTable);
+                    }
+                    else 
+                    {
+                        zCollectedRowsTable rowOfFkOfCurrent =
+                        (from a in competitionDataBase.zCollectedRowsTable
+                         where a.ID == fkOfCurrent.FK_CollectedRowsTable
+                         select a).FirstOrDefault();
+                        if (rowOfFkOfCurrent == null)
+                        {
+                            DeleteRow((int) currentCollectedData.FK_CollectedRowsTable);
+                        }
+                        else
+                        {
+                            if (rowOfFkOfCurrent.Active == false)
+                            {
+                                DeleteRow((int)currentCollectedData.FK_CollectedRowsTable);
+                            }
+                        }
+                    }
+                }                              
             }
-          
             return true;
         }
         protected void Page_Load(object sender, EventArgs e)
@@ -197,8 +238,7 @@ namespace Competitions.User
                         permitDeleteRow = false;
 
 
-                       // DeleteRowsWithDisabledConstant((int)currentColumn.FK_ConstantListsTable, applicationId, sectionId,
-                       //     currentColumn.ID);
+                        DeleteRowWithBadFk(applicationId, sectionId, currentColumn.ID,true);
                         AddRowWithConstant((int) currentColumn.FK_ConstantListsTable, applicationId, sectionId,
                             currentColumn.ID);
                     }
@@ -210,9 +250,11 @@ namespace Competitions.User
 
                         // DeleteRowsWithDisabledConstant((int)currentColumn.FK_ConstantListsTable, applicationId, sectionId,
                         //     currentColumn.ID);
+                        DeleteRowWithBadFk(applicationId, sectionId,currentColumn.ID,false);
                         AddRowWithNecwssairlyLines ((int)currentColumn.FK_ColumnTable, applicationId, sectionId,
                             currentColumn.ID);
                     }
+
                 }
 
                 #endregion
@@ -421,6 +463,18 @@ namespace Competitions.User
                                 newDataRow["ReadOnlyLablelValue" + i.ToString()] = getCollectedData.ValueText;
                             }
                            
+                            #endregion
+                            #region CollectedNecessarily
+                            if (dataType.IsDataTypeNecessarilyShow(currentColumn.DataType))
+                            {
+                                newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
+                                zCollectedDataTable getCollectedData =
+                                    (from a in competitionDataBase.zCollectedDataTable
+                                     where a.ID == currentCollectedData.ValueFK_CollectedDataTable
+                                     select a).FirstOrDefault();
+                                newDataRow["ReadOnlyLablelValue" + i.ToString()] = getCollectedData.ValueText;
+                            }
+
                             #endregion
                         }
                         #endregion

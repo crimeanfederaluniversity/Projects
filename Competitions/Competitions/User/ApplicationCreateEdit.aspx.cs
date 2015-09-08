@@ -15,19 +15,23 @@ namespace Competitions.User
             if (!Page.IsPostBack)
             {
                 var sessionParam = Session["ApplicationID"];
-                var konkursid = Session["ID"];
-
-                if (sessionParam == null && konkursid == null)
+                var konkursid = Session["ID_Konkurs"];
+                int iD = 0;
+                if (sessionParam != null)
                 {
-                    //error
-                    Response.Redirect("ChooseApplication.aspx");
+                     iD = (int)sessionParam;
                 }
-                else
+
+                int idkon = 0;
+                if (konkursid != null)
                 {
+                      idkon = (int)konkursid;
+                }
+               
                     CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                    int iD = (int)sessionParam;
-                    int idkon = (int)konkursid;
-                    if (iD > 0 && idkon > 0)
+                    
+                    
+                    if (iD > 0)
                     {                      
                         zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTables
                             where a.Active == true
@@ -48,7 +52,7 @@ namespace Competitions.User
                     }
                     else
                     {
-                        List<zCompetitionsTable> competitionList = (from a in competitionDataBase.zCompetitionsTable
+                        /*List<zCompetitionsTable> competitionList = (from a in competitionDataBase.zCompetitionsTable
                             where a.Active == true
                             && a.OpenForApplications == true
                             select a).ToList();
@@ -58,8 +62,8 @@ namespace Competitions.User
                             newListItem.Text = currentCompetition.Name;
                             newListItem.Value = currentCompetition.ID.ToString();
                             
-                        }
-                    }
+                        }*/
+                    
                 }
             }
             
@@ -74,54 +78,59 @@ namespace Competitions.User
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
             var sessionParam = Session["ApplicationID"];
+            var konkursid = Session["ID_Konkurs"];
             var userIdParam = Session["UserID"];
-            if (sessionParam == null)
+
+            int iD = 0;
+            if (sessionParam != null)
             {
-                //error
-                Response.Redirect("ChooseApplication.aspx");
+                iD = (int) sessionParam;
             }
-            else
+
+            int idkon = 0;
+            if (konkursid != null)
             {
-                int iD = (int)sessionParam;
-                int userId = (int)userIdParam;
-                if (iD > 0)
+                idkon = (int) konkursid;
+            }
+
+
+            int userId = (int) userIdParam;
+            if (iD > 0)
+            {
+                if (ApplicationNameTextBox.Text.Length > 0)
                 {
-                    if (ApplicationNameTextBox.Text.Length > 0)
+                    zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTables
+                        where a.Active == true
+                              && a.ID == iD
+                        select a).FirstOrDefault();
+                    if (currentApplication == null)
                     {
-                        zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTables
-                                                                 where a.Active == true
-                                                                       && a.ID == iD
-                                                                 select a).FirstOrDefault();
-                        if (currentApplication == null)
-                        {
-                            //error
-                            Response.Redirect("ChooseApplication.aspx");
-                        }
-                        else
-                        {
-                            currentApplication.Name = ApplicationNameTextBox.Text;
-                            competitionDataBase.SubmitChanges();
-                        }
+                        //error
+                        Response.Redirect("ChooseApplication.aspx");
                     }
-                }
-                else
-                {
-                    if (ApplicationNameTextBox.Text.Length > 0)
+                    else
                     {
-                        var konkursid = Session["ID"];
-                        int idkon = (int)konkursid;
-                        zApplicationTable newApplication = new zApplicationTable();
-                        newApplication.Name = ApplicationNameTextBox.Text;
-                        newApplication.FK_CompetitionTable = idkon;
-                        newApplication.Active = true;
-                        newApplication.FK_UsersTable = userId;
-                        newApplication.CretaDateTime = DateTime.Now;
-                        newApplication.Sended = false;
-                        competitionDataBase.zApplicationTables.InsertOnSubmit(newApplication);
+                        currentApplication.Name = ApplicationNameTextBox.Text;
                         competitionDataBase.SubmitChanges();
                     }
                 }
             }
+            else
+            {
+                if (ApplicationNameTextBox.Text.Length > 0)
+                {
+                    zApplicationTable newApplication = new zApplicationTable();
+                    newApplication.Name = ApplicationNameTextBox.Text;
+                    newApplication.FK_CompetitionTable = idkon;
+                    newApplication.Active = true;
+                    newApplication.FK_UsersTable = userId;
+                    newApplication.CretaDateTime = DateTime.Now;
+                    newApplication.Sended = false;
+                    competitionDataBase.zApplicationTables.InsertOnSubmit(newApplication);
+                    competitionDataBase.SubmitChanges();
+                }
+            }
+
             Response.Redirect("ChooseApplication.aspx");
         }
     }

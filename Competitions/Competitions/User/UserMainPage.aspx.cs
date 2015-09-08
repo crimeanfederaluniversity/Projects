@@ -50,11 +50,11 @@ namespace Competitions.User
             {
                 using (CompetitionDataContext newBid = new CompetitionDataContext())
                 {
-                    zCompetitionsTable id = (from a in newBid.zCompetitionsTable
+                    /*zCompetitionsTable id = (from a in newBid.zCompetitionsTable
                                    where a.ID == Convert.ToInt32(button.CommandArgument)
                                    select a).FirstOrDefault();
-
-                    Session["ID_Konkurs"] = id.ID;
+                    */
+                    Session["ID_Konkurs"] = Convert.ToInt32(button.CommandArgument);
                     Response.Redirect("~/User/ApplicationCreateEdit.aspx");
                 }
             }

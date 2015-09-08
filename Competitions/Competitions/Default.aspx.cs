@@ -47,8 +47,10 @@ namespace Competitions
             UsersTable user = (from usersTables in competitionDataBase.UsersTable
                                where usersTables.ID == (int)userId
                                select usersTables).FirstOrDefault();
+            
             if (user != null)
             {
+                Session["UserID"] = user.ID;
                 Directions(user);
             }
             else
