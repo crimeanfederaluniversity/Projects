@@ -166,8 +166,7 @@ namespace Competitions.User
                 }                              
             }
             return true;
-        }
-     
+        }   
         protected void Page_Load(object sender, EventArgs e)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();

@@ -236,6 +236,7 @@
     <Content Include="Site.Master" />
     <Content Include="User\ApplicationCreateEdit.aspx" />
     <Content Include="User\ChooseApplication.aspx" />
+    <Content Include="User\ChooseApplicationAction.aspx" />
     <Content Include="User\ChooseSection.aspx" />
     <Content Include="User\FillSection.aspx" />
     <Content Include="User\Main.aspx" />
@@ -529,6 +530,13 @@
     </Compile>
     <Compile Include="User\ChooseApplication.aspx.designer.cs">
       <DependentUpon>ChooseApplication.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="User\ChooseApplicationAction.aspx.cs">
+      <DependentUpon>ChooseApplicationAction.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="User\ChooseApplicationAction.aspx.designer.cs">
+      <DependentUpon>ChooseApplicationAction.aspx</DependentUpon>
     </Compile>
     <Compile Include="User\ChooseSection.aspx.cs">
       <DependentUpon>ChooseSection.aspx</DependentUpon>

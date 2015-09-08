@@ -60,7 +60,7 @@ namespace Competitions.User
         }
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ChooseApplication.aspx");
+            Response.Redirect("ChooseApplicationAction.aspx");
         }
         protected void FillButtonClick(object sender, EventArgs e)
         {

@@ -61,32 +61,20 @@ namespace Competitions.User
                 ApplicationGV.DataBind();
             }
         }
-
         protected void NewApplication_Click(object sender, EventArgs e)
         {
             Session["ApplicationID"] = 0;
             Response.Redirect("ApplicationCreateEdit.aspx");
         }
-
         protected void FillButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
             {
                 int iD = Convert.ToInt32(button.CommandArgument);
                 Session["ApplicationID"] = iD;
-                Response.Redirect("ChooseSection.aspx");
+                Response.Redirect("ChooseApplicationAction.aspx");
             }
         }
-      /*  protected void ChangeButtonClick(object sender, EventArgs e)
-        {
-             Button button = (Button)sender;
-            {
-                int iD = Convert.ToInt32(button.CommandArgument);
-                Session["ApplicationID"] = iD;
-                Response.Redirect("ApplicationCreateEdit.aspx");
-            }
-        }*/
-
         protected void SendButtonClick(object sender, EventArgs e)
         {
              Button button = (Button)sender;
@@ -105,7 +93,6 @@ namespace Competitions.User
             }
             Response.Redirect("ChooseApplication.aspx");
         }
-
         protected void GetDocButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -126,44 +113,6 @@ namespace Competitions.User
                 //XmlNameTable 
 
                 document.Save(@"c:\\1\\3.xml");
-            }
-        }
-       /* protected void DeleteApplicationButtonClick(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            {
-                int iD = Convert.ToInt32(button.CommandArgument);
-                CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTables
-                                                        where a.Active == true
-                                                              && a.ID == iD
-                                                        select a).FirstOrDefault();
-                if (currentApplication != null)
-                {
-                    currentApplication.Active = false;
-                    
-                    competitionDataBase.SubmitChanges();
-                }
-            }
-            Response.Redirect("ChooseApplication.aspx");
-        }*/
-
-        public static string ObjectToXML<T>(T obj)
-        {
-            using (StringWriter stringWriter = new StringWriter(new StringBuilder()))
-            {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-                xmlSerializer.Serialize(stringWriter, obj);
-                return stringWriter.ToString();
-            }
-        }
-
-        public static T ObjectFromXML<T>(string xml)
-        {
-            using (StringReader stringReader = new StringReader(xml))
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(T));
-                return (T)serializer.Deserialize(stringReader);
             }
         }
     }
