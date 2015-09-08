@@ -23,7 +23,7 @@ namespace Competitions.Admin
             {
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
 
-                CompetitionNameLabel.Text = (from a in competitionDataBase.zCompetitionsTables
+                CompetitionNameLabel.Text = (from a in competitionDataBase.zCompetitionsTable
                     where a.ID == competitionId
                     select a.Name).FirstOrDefault();
 

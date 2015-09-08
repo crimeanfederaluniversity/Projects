@@ -15,7 +15,9 @@ namespace Competitions.User
             if (!Page.IsPostBack)
             {
                 var sessionParam = Session["ApplicationID"];
-                if (sessionParam == null)
+                var konkursid = Session["ID"];
+
+                if (sessionParam == null && konkursid == null)
                 {
                     //error
                     Response.Redirect("ChooseApplication.aspx");
@@ -24,12 +26,12 @@ namespace Competitions.User
                 {
                     CompetitionDataContext competitionDataBase = new CompetitionDataContext();
                     int iD = (int)sessionParam;
-                    if (iD > 0)
-                    {
-                       
+                    int idkon = (int)konkursid;
+                    if (iD > 0 && idkon > 0)
+                    {                      
                         zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTables
                             where a.Active == true
-                                  && a.ID == iD
+                                  && a.ID == iD && a.FK_CompetitionTable == idkon
                             select a).FirstOrDefault();
                         if (currentApplication == null)
                         {
@@ -39,16 +41,14 @@ namespace Competitions.User
                         else
                         {
                             ApplicationNameTextBox.Text = currentApplication.Name;
-                            string currenCompetitionName = (from a in competitionDataBase.zCompetitionsTables
+                            string currenCompetitionName = (from a in competitionDataBase.zCompetitionsTable
                                 where a.ID == currentApplication.FK_CompetitionTable
-                                select a.Name).FirstOrDefault();
-                            ChooseCompetitionDropDownList.Items.Add(currenCompetitionName);
-                            ChooseCompetitionDropDownList.Enabled = false;
+                                select a.Name).FirstOrDefault();                          
                         }
                     }
                     else
                     {
-                        List<zCompetitionsTable> competitionList = (from a in competitionDataBase.zCompetitionsTables
+                        List<zCompetitionsTable> competitionList = (from a in competitionDataBase.zCompetitionsTable
                             where a.Active == true
                             && a.OpenForApplications == true
                             select a).ToList();
@@ -57,7 +57,7 @@ namespace Competitions.User
                             ListItem newListItem = new ListItem();
                             newListItem.Text = currentCompetition.Name;
                             newListItem.Value = currentCompetition.ID.ToString();
-                            ChooseCompetitionDropDownList.Items.Add(newListItem);
+                            
                         }
                     }
                 }
@@ -108,9 +108,11 @@ namespace Competitions.User
                 {
                     if (ApplicationNameTextBox.Text.Length > 0)
                     {
+                        var konkursid = Session["ID"];
+                        int idkon = (int)konkursid;
                         zApplicationTable newApplication = new zApplicationTable();
                         newApplication.Name = ApplicationNameTextBox.Text;
-                        newApplication.FK_CompetitionTable = Convert.ToInt32(ChooseCompetitionDropDownList.SelectedValue);
+                        newApplication.FK_CompetitionTable = idkon;
                         newApplication.Active = true;
                         newApplication.FK_UsersTable = userId;
                         newApplication.CretaDateTime = DateTime.Now;

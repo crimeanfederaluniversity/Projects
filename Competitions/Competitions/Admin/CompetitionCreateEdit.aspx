@@ -11,7 +11,7 @@
         <asp:TextBox ID="NameTextBox" runat="server"></asp:TextBox>
         <br />
         <br />
-        Описание<br />
+        Шифр конкурса<br />
         <asp:TextBox ID="DescriptionTextBox" runat="server" style="margin-bottom: 0px"></asp:TextBox>
         <br />
         <br />

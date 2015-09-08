@@ -25,7 +25,7 @@ namespace Competitions.Admin
                     if (iD > 0)
                     {
                         CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                        zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTables
+                        zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
                             where a.Active == true
                                   && a.ID == iD
                             select a).FirstOrDefault();
@@ -37,7 +37,7 @@ namespace Competitions.Admin
                         else
                         {
                             NameTextBox.Text = currentCompetition.Name;
-                            DescriptionTextBox.Text = currentCompetition.Description;
+                            DescriptionTextBox.Text = currentCompetition.Number;
                         }
                     }
                 }
@@ -59,7 +59,7 @@ namespace Competitions.Admin
                 {
                     if ((NameTextBox.Text.Length > 0) && (DescriptionTextBox.Text.Length > 0))
                     {
-                        zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTables
+                        zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
                             where a.Active == true
                                   && a.ID == iD
                             select a).FirstOrDefault();
@@ -71,7 +71,7 @@ namespace Competitions.Admin
                         else
                         {
                             currentCompetition.Name = NameTextBox.Text;
-                            currentCompetition.Description = DescriptionTextBox.Text;
+                            currentCompetition.Number = DescriptionTextBox.Text;
                             competitionDataBase.SubmitChanges();
                         }
                     }
@@ -82,10 +82,10 @@ namespace Competitions.Admin
                     {
                         zCompetitionsTable newCompetition = new zCompetitionsTable();
                         newCompetition.Name = NameTextBox.Text;
-                        newCompetition.Description = DescriptionTextBox.Text;
+                        newCompetition.Number = DescriptionTextBox.Text;
                         newCompetition.Active = true;
                         newCompetition.OpenForApplications = false;
-                        competitionDataBase.zCompetitionsTables.InsertOnSubmit(newCompetition);
+                        competitionDataBase.zCompetitionsTable.InsertOnSubmit(newCompetition);
                         competitionDataBase.SubmitChanges();
                     }
                 }

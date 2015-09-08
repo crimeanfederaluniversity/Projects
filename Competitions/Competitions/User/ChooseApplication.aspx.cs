@@ -37,7 +37,7 @@ namespace Competitions.User
                List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTables
                     where a.FK_UsersTable == userId
                           && a.Active == true
-                          join b in competitionDataBase.zCompetitionsTables
+                          join b in competitionDataBase.zCompetitionsTable
                           on a.FK_CompetitionTable equals b.ID
                           where b.Active == true
                           && b.OpenForApplications == true
@@ -48,7 +48,7 @@ namespace Competitions.User
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = currentApplication.ID;
                     dataRow["Name"] = currentApplication.Name;
-                    dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTables
+                    dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTable
                         where a.ID == (Convert.ToInt32(currentApplication.FK_CompetitionTable))
                         select a.Name).FirstOrDefault();
                     dataTable.Rows.Add(dataRow);
@@ -77,7 +77,7 @@ namespace Competitions.User
                 Response.Redirect("ChooseSection.aspx");
             }
         }
-        protected void ChangeButtonClick(object sender, EventArgs e)
+      /*  protected void ChangeButtonClick(object sender, EventArgs e)
         {
              Button button = (Button)sender;
             {
@@ -85,7 +85,7 @@ namespace Competitions.User
                 Session["ApplicationID"] = iD;
                 Response.Redirect("ApplicationCreateEdit.aspx");
             }
-        }
+        }*/
 
         protected void SendButtonClick(object sender, EventArgs e)
         {
@@ -128,7 +128,7 @@ namespace Competitions.User
                 document.Save(@"c:\\1\\3.xml");
             }
         }
-        protected void DeleteApplicationButtonClick(object sender, EventArgs e)
+       /* protected void DeleteApplicationButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
             {
@@ -146,7 +146,7 @@ namespace Competitions.User
                 }
             }
             Response.Redirect("ChooseApplication.aspx");
-        }
+        }*/
 
         public static string ObjectToXML<T>(T obj)
         {

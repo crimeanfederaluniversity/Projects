@@ -17,7 +17,7 @@ namespace Competitions
             int accessLevel = (int)user.AccessLevel;
             if (accessLevel == 0)
             {
-                Response.Redirect("~/User/ChooseApplication.aspx");
+                Response.Redirect("~/User/UserMainPage.aspx");
             }
             else if (accessLevel == 10)
             {

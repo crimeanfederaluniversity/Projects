@@ -4,14 +4,11 @@
     
         <asp:Button ID="GoBackButton" runat="server" OnClick="GoBackButton_Click" Text="Назад" />
         <br />
+                <h2><span style="font-size: 30px">Создание новой заявки  </span></h2>
         <br />
-        Название заявки<br />
-        <asp:TextBox ID="ApplicationNameTextBox" runat="server"></asp:TextBox>
+        Название Вашего проекта <br />
+        <asp:TextBox ID="ApplicationNameTextBox" runat="server" Height="38px" Width="484px"></asp:TextBox>
         <br />
-        <br />
-        Конкурс<br />
-        <asp:DropDownList ID="ChooseCompetitionDropDownList" runat="server">
-        </asp:DropDownList>
         <br />
         <br />
         <asp:Button ID="CreateEditButton" runat="server" OnClick="CreateEditButton_Click" Text="Сохранить" />

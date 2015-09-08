@@ -10,15 +10,24 @@
 namespace Competitions.User {
     
     
-    public partial class ChooseApplication {
+    public partial class UserMainPage {
         
         /// <summary>
-        /// ApplicationGV элемент управления.
+        /// MyApplication элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView ApplicationGV;
+        protected global::System.Web.UI.WebControls.Button MyApplication;
+        
+        /// <summary>
+        /// MainGV элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView MainGV;
     }
 }

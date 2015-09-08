@@ -6,7 +6,7 @@
             <Columns>
                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
                 <asp:BoundField DataField="Name"   HeaderText="Название" Visible="true" />
-                <asp:BoundField DataField="Description"   HeaderText="Описание" Visible="true" />
+                <asp:BoundField DataField="Number"   HeaderText="Описание" Visible="true" />
                 <asp:BoundField DataField="Status"   HeaderText="Статус" Visible="true" />
                  <asp:TemplateField HeaderText="Открыть">
                         <ItemTemplate>

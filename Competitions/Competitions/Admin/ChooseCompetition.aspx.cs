@@ -19,10 +19,10 @@ namespace Competitions.Admin
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("ID", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("Name", typeof (string)));
-                dataTable.Columns.Add(new DataColumn("Description", typeof (string)));
+                dataTable.Columns.Add(new DataColumn("Number", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("Status", typeof(string)));
 
-                List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTables
+                List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTable
                     where a.Active == true
                     select a).ToList();
 
@@ -31,7 +31,7 @@ namespace Competitions.Admin
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = currentCompetition.ID;
                     dataRow["Name"] = currentCompetition.Name;
-                    dataRow["Description"] = currentCompetition.Description;
+                    dataRow["Number"] = currentCompetition.Number;
                     if ((bool)currentCompetition.OpenForApplications)
                     {
                         dataRow["Status"] = "Открыт";
@@ -71,7 +71,7 @@ namespace Competitions.Admin
             {
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                zCompetitionsTable competitionToDelete = (from a in competitionDataBase.zCompetitionsTables
+                zCompetitionsTable competitionToDelete = (from a in competitionDataBase.zCompetitionsTable
                     where a.ID == iD
                     select a).FirstOrDefault();
                 if (competitionToDelete!=null)
@@ -96,7 +96,7 @@ namespace Competitions.Admin
             {
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                zCompetitionsTable competitionToChangeStatus = (from a in competitionDataBase.zCompetitionsTables
+                zCompetitionsTable competitionToChangeStatus = (from a in competitionDataBase.zCompetitionsTable
                                                           where a.ID == iD
                                                           select a).FirstOrDefault();
                 if (competitionToChangeStatus != null)
