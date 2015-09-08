@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Перенаправление</title>
+</head>
+<body>
+
+    <script language="JavaScript" type="text/javascript">
+
+        function goTo() {
+            document.location.href = "default.aspx";
+        }
+        window.onload = function () {
+            setTimeout(function () { goTo(); }, 0);
+        }
+    </script>
+
+    <h1>Перенаправление</h1>
+    <a href="default.aspx">Главное меню</a>
+</body>
+</html>

@@ -1,0 +1,789 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 31.25, 27.125" name="KPIWeb">
+  <DataContextMoniker Name="/KPIWebDataContext" />
+  <nestedChildShapes>
+    <classShape Id="efaf711d-700b-4726-b360-307f739c1703" absoluteBounds="26, 8.625, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/KPIWebDataContext/BasicParametersAndRolesMappingTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7925243f-218b-4cf8-96c8-5a21a94943ef" absoluteBounds="26.015, 9.085, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="53cf56da-eccd-45ae-b8bf-91ce992543d0" absoluteBounds="0.75, 20.125, 2, 1.3862939453125023">
+      <DataClassMoniker Name="/KPIWebDataContext/ZeroLevelSubdivisionTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ad7be56a-c2de-4257-9ae2-3e03622bb073" absoluteBounds="0.765, 20.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1a77a556-9698-42f9-8d49-f5629630b672" absoluteBounds="23.25, 13, 2, 1.9631982421874987">
+      <DataClassMoniker Name="/KPIWebDataContext/BasicParametersTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1ba39c2e-f9b8-48e3-b1b8-f1329027991a" absoluteBounds="23.265, 13.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="12e9bd2d-7af4-4a6b-bc87-c92d4b6c60c0" absoluteBounds="29, 15.625, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/KPIWebDataContext/BasicParametrAdditional" />
+      <nestedChildShapes>
+        <elementListCompartment Id="71f8479a-259c-435f-b571-d930a7dfacf3" absoluteBounds="29.015, 16.085, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="037c7090-f456-4f21-b96f-b40ae63f3fb1" absoluteBounds="23, 16.375, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/KPIWebDataContext/BasicParametrsAndUsersMapping" />
+      <nestedChildShapes>
+        <elementListCompartment Id="aa8d8a79-3f89-4395-9e62-32c252fa4499" absoluteBounds="23.015, 16.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="37abdc0d-472c-42ed-93b0-657cc7930e9c" absoluteBounds="23.25, 9.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/KPIWebDataContext/CalculatedParametrs" />
+      <nestedChildShapes>
+        <elementListCompartment Id="334e7199-e162-41aa-82fa-ef89365b200a" absoluteBounds="23.265, 10.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e8262717-7b57-4892-a31c-fc07ff2bbc0e" absoluteBounds="26, 5.125, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/KPIWebDataContext/CalculatedParametrsAndRolesMappingTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9831d995-9545-4bf5-8c05-0ec3e0fb9418" absoluteBounds="26.015, 5.585, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9b363869-1bad-4e8b-b072-02c74e9dc02c" absoluteBounds="23, 22.375, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/KPIWebDataContext/CalculatedParametrsAndUsersMapping" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b5946a8f-036d-4b01-9931-9f3e1e8a159f" absoluteBounds="23.015, 22.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b38e11c4-a53b-46ed-8777-642f499e5973" absoluteBounds="17.5, 19.75, 2, 3.8862125651041666">
+      <DataClassMoniker Name="/KPIWebDataContext/CollectedBasicParametersTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="63257017-1150-4ad2-84b6-5fb5cd86a57e" absoluteBounds="17.515, 20.21, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d737fd75-4e88-4319-bdcc-04943f372df4" absoluteBounds="26, 23.125, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/KPIWebDataContext/CollectedCalculatedParametrs" />
+      <nestedChildShapes>
+        <elementListCompartment Id="29c28386-3278-40ee-ba20-5f36c5b3d36b" absoluteBounds="26.015, 23.585, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="32d2a23e-39ca-4789-9922-89d690fc6e17" absoluteBounds="14.5, 20.125, 2, 2.9247054036458309">
+      <DataClassMoniker Name="/KPIWebDataContext/CollectedIndicatorsForR" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c0d12b73-7145-438b-b9fa-c3fea3cb377f" absoluteBounds="14.515, 20.585, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="84506617-35c1-4db5-ba2a-0ea7012067b3" absoluteBounds="29, 19.125, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/KPIWebDataContext/CollectedIndocators" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7978a939-4979-44ea-9de3-2d9252c46e11" absoluteBounds="29.015, 19.585, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="28734f2d-8f1e-43cc-8d46-63f69ad39f88" absoluteBounds="0.75, 0.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/KPIWebDataContext/CommetntForBasicInReport" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f008dc5d-6268-4ff0-8fe9-98b337224403" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e63968c1-a357-4ef0-8b46-4d043b48cacb" absoluteBounds="26, 15.25, 2, 2.5401025390625005">
+      <DataClassMoniker Name="/KPIWebDataContext/ConfirmationHistory" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1a62f4d8-c297-4e89-bfc9-0760cb58b295" absoluteBounds="26.015, 15.71, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e987b8e9-b909-43d2-810e-210b006dd77b" absoluteBounds="3.75, 0.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/KPIWebDataContext/DocumentTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1e95e17c-a22e-4c6e-b099-f317a3b0eb29" absoluteBounds="3.765, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="fa69a51c-c1c7-4504-9645-66ed8c1e6086" absoluteBounds="6.25, 24.875, 2, 1.9631982421875023">
+      <DataClassMoniker Name="/KPIWebDataContext/EmailSendHistory" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cbb464e2-b0f1-486e-8b98-7282936a5c21" absoluteBounds="6.265, 25.335, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3701acda-fecf-4af1-8f4b-e20a3986c577" absoluteBounds="3.75, 3.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/KPIWebDataContext/EmailSendTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="798200fd-8c10-47a1-8565-0d72b7daa27b" absoluteBounds="3.765, 4.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="df99f268-74d8-4686-a718-aee705f59bde" absoluteBounds="6.75, 0.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/KPIWebDataContext/EmailTemplate" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2622bdb9-ff8c-42d4-9b9b-44ba0387f73f" absoluteBounds="6.765, 1.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9dedf816-6fc5-4d29-8da8-176e4943083d" absoluteBounds="6.25, 13.5, 2, 1.3862939453124987">
+      <DataClassMoniker Name="/KPIWebDataContext/FieldOfExpertise" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c2146524-0b38-4063-88b9-5b0f29fc92fb" absoluteBounds="6.265, 13.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6d13a354-98ef-4d79-9067-f99fdccae043" absoluteBounds="14.5, 17, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/KPIWebDataContext/FifthLevelSubdivisionTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5e55c571-b258-465a-a671-c7bd939d3e32" absoluteBounds="14.515, 17.46, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c8c4bd85-ced3-4c50-8d55-e52ebf3d6105" absoluteBounds="14.5, 24.25, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/KPIWebDataContext/FourthLevelParametrs" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b737b764-02a5-4a35-9cc6-1e75645d99f2" absoluteBounds="14.515, 24.71, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3b42f482-d41d-4d37-8775-17bfc881f666" absoluteBounds="11.75, 19.25, 2, 1.7708968098958309">
+      <DataClassMoniker Name="/KPIWebDataContext/FourthLevelSubdivisionTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="75e93fd4-0a81-41cf-bdab-e85b30528f7a" absoluteBounds="11.765, 19.71, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4f58a6da-f4e2-4633-8ab2-8e821326e218" absoluteBounds="9, 16.75, 2, 1.1939925130208309">
+      <DataClassMoniker Name="/KPIWebDataContext/IndicatorClass" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d5b90692-a857-418a-ab2e-ddca6ad831a9" absoluteBounds="9.015, 17.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b3b243b3-8220-4887-b4a1-907994ed3942" absoluteBounds="14.5, 10.25, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/KPIWebDataContext/IndicatorsAndRolesMappingTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="867d7975-2149-4e2c-bc1e-77d74545d5ef" absoluteBounds="14.515, 10.71, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="05cb0e0b-1587-4668-b483-93a817905199" absoluteBounds="26, 19.375, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/KPIWebDataContext/IndicatorsAndUsersMapping" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9f26ff03-d88e-4d57-b650-3fab5e0fbf25" absoluteBounds="26.015, 19.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f4623c58-3d15-44cd-a1ad-9741eb5368ec" absoluteBounds="0.75, 6.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/KPIWebDataContext/ManualTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0f393071-72d3-4945-9001-dc62b5e7a2cf" absoluteBounds="0.765, 7.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f4a4256a-d776-40eb-a220-3bc7e0d47b95" absoluteBounds="23, 19.625, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/KPIWebDataContext/MultiUser" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9cbb1ea7-f969-44a4-ab3e-01558126652f" absoluteBounds="23.015, 20.085, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="49d2de8b-82bf-4ca9-ac31-6cdb245f2b70" absoluteBounds="14.5, 7.5, 2, 1.7708968098958335">
+      <DataClassMoniker Name="/KPIWebDataContext/PlannedIndicator" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6dff2af2-d30a-4efe-b359-ffaacfd5f64c" absoluteBounds="14.515, 7.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a813a37a-4ded-475c-9555-58d825e29f08" absoluteBounds="26, 12, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/KPIWebDataContext/ReportArchiveAndBasicParametrsMappingTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7f131b7b-0029-4825-8294-4d4f38df910f" absoluteBounds="26.015, 12.46, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="67d56e49-2f77-4a2d-a16e-d79705f16bc6" absoluteBounds="29, 13.375, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/KPIWebDataContext/ReportArchiveAndCalculatedParametrsMappingTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f7f84fc4-8d29-4f44-9379-224abf207ea7" absoluteBounds="29.015, 13.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ce5b2292-078e-414a-b3a6-5e3d3117fbbe" absoluteBounds="14.5, 14.125, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/KPIWebDataContext/ReportArchiveAndIndicatorsMappingTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b60986b3-0f33-4c62-b96b-a6639328e792" absoluteBounds="14.515, 14.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="112b7483-8ab0-463e-80a8-e2d2f2708559" absoluteBounds="3.5, 15.25, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/KPIWebDataContext/ReportArchiveTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f6e34887-dd04-49ee-833b-bd3223caf54c" absoluteBounds="3.515, 15.71, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4d1bfb58-b677-4d5e-b711-8a6ffae72fd7" absoluteBounds="0.75, 4.375, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/KPIWebDataContext/RolesTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="944ad130-7912-4d65-a49b-0254507d18c6" absoluteBounds="0.765, 4.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="49dd3328-4f29-4315-9367-e9b2481458e4" absoluteBounds="6.25, 22.375, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/KPIWebDataContext/SecondLevelSubdivisionTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0a14090b-d881-45ab-a87e-c9bc14d7628e" absoluteBounds="6.265, 22.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="14b224e0-acbe-47ac-b5b9-384d737b6862" absoluteBounds="9, 13.25, 2, 1.7708968098958344">
+      <DataClassMoniker Name="/KPIWebDataContext/SpecializationTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="aaeafd15-06ae-48b9-b5a6-c9683df1cd56" absoluteBounds="9.015, 13.71, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7e0229a0-91a1-4e25-8868-218874cdc8ec" absoluteBounds="11.75, 22.375, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/KPIWebDataContext/ThirdLevelParametrs" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d14b3b2d-5619-4ea0-9a76-b3b525c2b124" absoluteBounds="11.765, 22.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1975695f-4a3e-4d2e-9fb7-29787eb449b2" absoluteBounds="9, 22.375, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/KPIWebDataContext/ThirdLevelSubdivisionTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="670db862-da05-45ea-99ff-dc44299cd8c3" absoluteBounds="9.015, 22.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3f6f7900-6126-4872-976b-98f1c3636d48" absoluteBounds="20.25, 18.625, 2, 3.6939111328125023">
+      <DataClassMoniker Name="/KPIWebDataContext/UsersTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d50f38d3-666b-4301-8e68-1988cb78add6" absoluteBounds="20.265, 19.085, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(25.25 : 13); (25.625 : 12.625); (25.625 : 9.70274983723958); (26 : 9.70274983723958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/BasicParametersTable/BasicParametersTable_BasicParametersAndRolesMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="1a77a556-9698-42f9-8d49-f5629630b672" />
+        <classShapeMoniker Id="efaf711d-700b-4726-b360-307f739c1703" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(25.25 : 14.3021463098958); (28.5 : 14.3021463098958); (28.5 : 15.2035953776042); (30 : 15.2035953776042); (30 : 15.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/BasicParametersTable/BasicParametersTable_BasicParametrAdditional" />
+      <nodes>
+        <classShapeMoniker Id="1a77a556-9698-42f9-8d49-f5629630b672" />
+        <classShapeMoniker Id="12e9bd2d-7af4-4a6b-bc87-c92d4b6c60c0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(24.125 : 14.9631982421875); (24.125 : 16.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/BasicParametersTable/BasicParametersTable_BasicParametrsAndUsersMapping" />
+      <nodes>
+        <classShapeMoniker Id="1a77a556-9698-42f9-8d49-f5629630b672" />
+        <classShapeMoniker Id="037c7090-f456-4f21-b96f-b40ae63f3fb1" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(24.25 : 9.75); (24.25 : 5.72679818880208); (26 : 5.72679818880208)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+      <AssociationMoniker Name="/KPIWebDataContext/CalculatedParametrs/CalculatedParametrs_CalculatedParametrsAndRolesMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="37abdc0d-472c-42ed-93b0-657cc7930e9c" />
+        <classShapeMoniker Id="e8262717-7b57-4892-a31c-fc07ff2bbc0e" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(25.2007692307692 : 11.9054996744792); (25.5660744349011 : 12.2708048786111 : JumpStart); (25.6839255650989 : 12.3886560088088 : JumpEnd); (25.8125 : 12.5172304437099); (25.8125 : 22); (25.375 : 22); (25 : 22.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/CalculatedParametrs/CalculatedParametrs_CalculatedParametrsAndUsersMapping" />
+      <nodes>
+        <classShapeMoniker Id="37abdc0d-472c-42ed-93b0-657cc7930e9c" />
+        <classShapeMoniker Id="9b363869-1bad-4e8b-b072-02c74e9dc02c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(23.25 : 13.9815991210937); (18.5 : 13.9815991210937); (18.5 : 19.75)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/BasicParametersTable/BasicParametersTable_CollectedBasicParametersTable" />
+      <nodes>
+        <classShapeMoniker Id="1a77a556-9698-42f9-8d49-f5629630b672" />
+        <classShapeMoniker Id="b38e11c4-a53b-46ed-8777-642f499e5973" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.75 : 21.5112939453125); (1.75 : 24.2035953776042); (14.375 : 24.2035953776042); (14.375 : 23.8862125651042); (18.5 : 23.8862125651042); (18.5 : 23.6362125651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ZeroLevelSubdivisionTable/ZeroLevelSubdivisionTable_CollectedBasicParametersTable" />
+      <nodes>
+        <classShapeMoniker Id="53cf56da-eccd-45ae-b8bf-91ce992543d0" />
+        <classShapeMoniker Id="b38e11c4-a53b-46ed-8777-642f499e5973" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(25.25 : 11.9054996744792); (25.5660744349011 : 12.2215741093803 : JumpStart); (25.6839255650989 : 12.3394252395781 : JumpEnd); (25.6875 : 12.3429996744792); (25.6875 : 24.4912019856771); (26 : 24.4912019856771)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/CalculatedParametrs/CalculatedParametrs_CollectedCalculatedParametrs" />
+      <nodes>
+        <classShapeMoniker Id="37abdc0d-472c-42ed-93b0-657cc7930e9c" />
+        <classShapeMoniker Id="d737fd75-4e88-4319-bdcc-04943f372df4" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(25.15625 : 14.9631982421875); (25.15625 : 17.1863289042969); (26 : 17.1863289042969)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/BasicParametersTable/BasicParametersTable_ConfirmationHistory" />
+      <nodes>
+        <classShapeMoniker Id="1a77a556-9698-42f9-8d49-f5629630b672" />
+        <classShapeMoniker Id="e63968c1-a357-4ef0-8b46-4d043b48cacb" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(25.25 : 11.8254986744792); (25.5660744349011 : 12.1415731093803 : JumpStart); (25.6839255650989 : 12.2594242395781 : JumpEnd); (25.90625 : 12.4817486744792); (25.90625 : 16.5200512695313); (26 : 16.5200512695313)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/CalculatedParametrs/CalculatedParametrs_ConfirmationHistory" />
+      <nodes>
+        <classShapeMoniker Id="37abdc0d-472c-42ed-93b0-657cc7930e9c" />
+        <classShapeMoniker Id="e63968c1-a357-4ef0-8b46-4d043b48cacb" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 14.1931469726562); (8.75 : 14.1931469726562); (8.75 : 15.8285953776042); (11.2916666666667 : 15.8285953776042 : JumpStart); (11.4583333333333 : 15.8285953776042 : JumpEnd); (13.8385391666667 : 15.8285953776042 : JumpStart); (14.0052058333333 : 15.8285953776042 : JumpEnd); (14.0104166666667 : 15.8285953776042 : JumpStart); (14.1770833333333 : 15.8285953776042 : JumpEnd); (25.0729166666667 : 15.8285953776042 : JumpStart); (25.2395833333333 : 15.8285953776042 : JumpEnd); (25.5 : 15.8285953776042); (25.5 : 15); (25.7291666666667 : 15 : JumpStart); (25.8958333333333 : 15 : JumpEnd); (28.4166666666667 : 15 : JumpStart); (28.5833333333333 : 15 : JumpEnd); (28.75 : 15); (28.75 : 15.3285953776042); (30 : 15.3285953776042); (30 : 15.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FieldOfExpertise/FieldOfExpertise_BasicParametrAdditional" />
+      <nodes>
+        <classShapeMoniker Id="9dedf816-6fc5-4d29-8da8-176e4943083d" />
+        <classShapeMoniker Id="12e9bd2d-7af4-4a6b-bc87-c92d4b6c60c0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(16.5 : 17.7892976888021); (17.8854141666667 : 17.7892976888021 : JumpStart); (18.0520808333333 : 17.7892976888021 : JumpEnd); (18.4166666666667 : 17.7892976888021 : JumpStart); (18.5833333333333 : 17.7892976888021 : JumpEnd); (19.0312525 : 17.7892976888021); (19.0312525 : 19.75)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FifthLevelSubdivisionTable/FifthLevelSubdivisionTable_CollectedBasicParametersTable" />
+      <nodes>
+        <classShapeMoniker Id="6d13a354-98ef-4d79-9067-f99fdccae043" />
+        <classShapeMoniker Id="b38e11c4-a53b-46ed-8777-642f499e5973" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(15.78125 : 18.5785953776042); (15.78125 : 20.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FifthLevelSubdivisionTable/FifthLevelSubdivisionTable_CollectedIndicatorsForR" />
+      <nodes>
+        <classShapeMoniker Id="6d13a354-98ef-4d79-9067-f99fdccae043" />
+        <classShapeMoniker Id="32d2a23e-39ca-4789-9922-89d690fc6e17" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(12.9375005 : 21.0208968098958); (12.9375005 : 21.6931062825521); (14.375 : 21.6931062825521); (14.375 : 23.2997054036458); (15.4166666666667 : 23.2997054036458 : JumpStart); (15.5833333333333 : 23.2997054036458 : JumpEnd); (17.125 : 23.2997054036458); (17.125 : 21.6931062825521); (17.5 : 21.6931062825521)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FourthLevelSubdivisionTable/FourthLevelSubdivisionTable_CollectedBasicParametersTable" />
+      <nodes>
+        <classShapeMoniker Id="3b42f482-d41d-4d37-8775-17bfc881f666" />
+        <classShapeMoniker Id="b38e11c4-a53b-46ed-8777-642f499e5973" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(13.75 : 20.5040240944011); (14.5 : 20.5040240944011)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FourthLevelSubdivisionTable/FourthLevelSubdivisionTable_CollectedIndicatorsForR" />
+      <nodes>
+        <classShapeMoniker Id="3b42f482-d41d-4d37-8775-17bfc881f666" />
+        <classShapeMoniker Id="32d2a23e-39ca-4789-9922-89d690fc6e17" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(12.03125 : 19.25); (12.03125 : 17.28125); (14.5 : 17.28125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FourthLevelSubdivisionTable/FourthLevelSubdivisionTable_FifthLevelSubdivisionTable" />
+      <nodes>
+        <classShapeMoniker Id="3b42f482-d41d-4d37-8775-17bfc881f666" />
+        <classShapeMoniker Id="6d13a354-98ef-4d79-9067-f99fdccae043" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(13.75 : 20.9595955357071); (14.1875 : 21.3970955357071); (14.1875 : 25.4295470260417); (14.5 : 25.4295470260417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FourthLevelSubdivisionTable/FourthLevelSubdivisionTable_FourthLevelParametrs" />
+      <nodes>
+        <classShapeMoniker Id="3b42f482-d41d-4d37-8775-17bfc881f666" />
+        <classShapeMoniker Id="c8c4bd85-ced3-4c50-8d55-e52ebf3d6105" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(9.69621064828726 : 17.9439925130208); (9.69621064828726 : 18.1939925130208); (10.3182555113181 : 18.1939925130208); (10.3182555113181 : 17.9439925130208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/IndicatorClass/IndicatorClass_IndicatorClass" />
+      <nodes>
+        <classShapeMoniker Id="4f58a6da-f4e2-4633-8ab2-8e821326e218" />
+        <classShapeMoniker Id="4f58a6da-f4e2-4633-8ab2-8e821326e218" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(25.25 : 13.3205501888021); (25.6041666666667 : 13.3205501888021 : JumpStart); (25.9895833333333 : 13.3205501888021 : JumpEnd); (26 : 13.3205501888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/BasicParametersTable/BasicParametersTable_ReportArchiveAndBasicParametrsMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="1a77a556-9698-42f9-8d49-f5629630b672" />
+        <classShapeMoniker Id="a813a37a-4ded-475c-9555-58d825e29f08" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(25.25 : 11.3029966744792); (25.5416666666667 : 11.3029966744792 : JumpStart); (25.7083333333333 : 11.3029966744792 : JumpEnd); (30 : 11.3029966744792); (30 : 13.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/CalculatedParametrs/CalculatedParametrs_ReportArchiveAndCalculatedParametrsMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="37abdc0d-472c-42ed-93b0-657cc7930e9c" />
+        <classShapeMoniker Id="67d56e49-2f77-4a2d-a16e-d79705f16bc6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 16.3980400335286); (11.2916666666667 : 16.3980400335286 : JumpStart); (11.4583333333333 : 16.3980400335286 : JumpEnd); (13.2916666666667 : 16.3980400335286 : JumpStart); (13.4583333333333 : 16.3980400335286 : JumpEnd); (13.8385391666667 : 16.3980400335286 : JumpStart); (14.0052058333333 : 16.3980400335286 : JumpEnd); (14.0104166666667 : 16.3980400335286 : JumpStart); (14.1770833333333 : 16.3980400335286 : JumpEnd); (17.9687475 : 16.3980400335286); (17.9687475 : 19.75)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ReportArchiveTable/ReportArchiveTable_CollectedBasicParametersTable" />
+      <nodes>
+        <classShapeMoniker Id="112b7483-8ab0-463e-80a8-e2d2f2708559" />
+        <classShapeMoniker Id="b38e11c4-a53b-46ed-8777-642f499e5973" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.031252 : 18.5593082682292); (5.031252 : 24.6162019856771); (9.91666666666667 : 24.6162019856771 : JumpStart); (10.0833333333333 : 24.6162019856771 : JumpEnd); (13.875 : 24.6162019856771); (13.875 : 24.03125); (14.0416666666667 : 24.03125 : JumpStart); (14.2708333333333 : 24.03125 : JumpEnd); (14.2916666666667 : 24.03125 : JumpStart); (14.4583333333333 : 24.03125 : JumpEnd); (17.8854146666667 : 24.03125 : JumpStart); (18.0520813333333 : 24.03125 : JumpEnd); (22.75 : 24.03125); (22.75 : 24.7804996744792); (25.25 : 24.7804996744792); (25.25 : 24.4912019856771); (26 : 24.4912019856771)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ReportArchiveTable/ReportArchiveTable_CollectedCalculatedParametrs" />
+      <nodes>
+        <classShapeMoniker Id="112b7483-8ab0-463e-80a8-e2d2f2708559" />
+        <classShapeMoniker Id="d737fd75-4e88-4319-bdcc-04943f372df4" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.968748 : 18.5593082682292); (3.968748 : 24.4535953776042); (14.125 : 24.4535953776042); (14.125 : 23.4247054036458); (15.5 : 23.4247054036458); (15.5 : 23.0497054036458)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ReportArchiveTable/ReportArchiveTable_CollectedIndicatorsForR" />
+      <nodes>
+        <classShapeMoniker Id="112b7483-8ab0-463e-80a8-e2d2f2708559" />
+        <classShapeMoniker Id="32d2a23e-39ca-4789-9922-89d690fc6e17" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.5 : 15.25); (4.5 : 14.875); (6 : 14.875); (6 : 15.7660953776042); (11.2916666666667 : 15.7660953776042 : JumpStart); (11.4583333333333 : 15.7660953776042 : JumpEnd); (13.8385391666667 : 15.7660953776042 : JumpStart); (14.0052058333333 : 15.7660953776042 : JumpEnd); (14.0104166666667 : 15.7660953776042 : JumpStart); (14.1770833333333 : 15.7660953776042 : JumpEnd); (25.0729166666667 : 15.7660953776042 : JumpStart); (25.2395833333333 : 15.7660953776042 : JumpEnd); (25.625 : 15.7660953776042); (25.625 : 18.8574039713542); (25.7291666666667 : 18.8574039713542 : JumpStart); (25.8958333333333 : 18.8574039713542 : JumpEnd); (26.9166666666667 : 18.8574039713542 : JumpStart); (27.0833333333333 : 18.8574039713542 : JumpEnd); (29.468748 : 18.8574039713542); (29.468748 : 19.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ReportArchiveTable/ReportArchiveTable_CollectedIndocators" />
+      <nodes>
+        <classShapeMoniker Id="112b7483-8ab0-463e-80a8-e2d2f2708559" />
+        <classShapeMoniker Id="84506617-35c1-4db5-ba2a-0ea7012067b3" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 16.171875); (11.2916666666667 : 16.171875 : JumpStart); (11.4583333333333 : 16.171875 : JumpEnd); (13.2916666666667 : 16.171875 : JumpStart); (13.4583333333333 : 16.171875 : JumpEnd); (13.8385391666667 : 16.171875 : JumpStart); (14.0052058333333 : 16.171875 : JumpEnd); (14.0104166666667 : 16.171875 : JumpStart); (14.1770833333333 : 16.171875 : JumpEnd); (14.1822941666667 : 16.171875 : JumpStart); (14.3489608333333 : 16.171875 : JumpEnd); (21.9635446666667 : 16.171875 : JumpStart); (22.1302113333333 : 16.171875 : JumpEnd); (25.0729166666667 : 16.171875 : JumpStart); (25.2395833333333 : 16.171875 : JumpEnd); (25.5416666666667 : 16.171875 : JumpStart); (25.7083333333333 : 16.171875 : JumpEnd); (25.7291666666667 : 16.171875 : JumpStart); (25.8958333333333 : 16.171875 : JumpEnd); (26 : 16.171875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ReportArchiveTable/ReportArchiveTable_ConfirmationHistory" />
+      <nodes>
+        <classShapeMoniker Id="112b7483-8ab0-463e-80a8-e2d2f2708559" />
+        <classShapeMoniker Id="e63968c1-a357-4ef0-8b46-4d043b48cacb" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.5 : 18.5593082682292); (4.5 : 25.8565991210938); (6.25 : 25.8565991210938)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ReportArchiveTable/ReportArchiveTable_EmailSendHistory" />
+      <nodes>
+        <classShapeMoniker Id="112b7483-8ab0-463e-80a8-e2d2f2708559" />
+        <classShapeMoniker Id="fa69a51c-c1c7-4504-9645-66ed8c1e6086" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 16.0460750670573); (8.5 : 16.0460750670573); (8.5 : 16); (11.2916666666667 : 16 : JumpStart); (11.4583333333333 : 16 : JumpEnd); (13.2916666666667 : 16 : JumpStart); (13.4583333333333 : 16 : JumpEnd); (13.8385391666667 : 16 : JumpStart); (14.0052058333333 : 16 : JumpEnd); (14.0104166666667 : 16 : JumpStart); (14.1770833333333 : 16 : JumpEnd); (14.1822941666667 : 16 : JumpStart); (14.3489608333333 : 16 : JumpEnd); (21.9635446666667 : 16 : JumpStart); (22.1302113333333 : 16 : JumpEnd); (25.0729166666667 : 16 : JumpStart); (25.2395833333333 : 16 : JumpEnd); (25.375 : 16); (25.375 : 14.75); (25.7291666666667 : 14.75 : JumpStart); (25.8958333333333 : 14.75 : JumpEnd); (27 : 14.75); (27 : 13.5785953776042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ReportArchiveTable/ReportArchiveTable_ReportArchiveAndBasicParametrsMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="112b7483-8ab0-463e-80a8-e2d2f2708559" />
+        <classShapeMoniker Id="a813a37a-4ded-475c-9555-58d825e29f08" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 17.7632332011719); (8.875 : 17.7632332011719); (8.875 : 16.0625); (11.2916666666667 : 16.0625 : JumpStart); (11.4583333333333 : 16.0625 : JumpEnd); (13.2916666666667 : 16.0625 : JumpStart); (13.4583333333333 : 16.0625 : JumpEnd); (13.8385391666667 : 16.0625 : JumpStart); (14.0052058333333 : 16.0625 : JumpEnd); (14.0104166666667 : 16.0625 : JumpStart); (14.1770833333333 : 16.0625 : JumpEnd); (14.1822941666667 : 16.0625 : JumpStart); (14.3489608333333 : 16.0625 : JumpEnd); (21.9635446666667 : 16.0625 : JumpStart); (22.1302113333333 : 16.0625 : JumpEnd); (24.0416666666667 : 16.0625 : JumpStart); (24.2083333333333 : 16.0625 : JumpEnd); (25.0729166666667 : 16.0625 : JumpStart); (25.2395833333333 : 16.0625 : JumpEnd); (25.5416666666667 : 16.0625 : JumpStart); (25.7083333333333 : 16.0625 : JumpEnd); (25.75 : 16.0625); (25.75 : 14.875); (28.4166666666667 : 14.875 : JumpStart); (28.5833333333333 : 14.875 : JumpEnd); (28.875 : 14.875); (28.875 : 15.4535953776042); (30 : 15.4535953776042); (30 : 14.9535953776042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ReportArchiveTable/ReportArchiveTable_ReportArchiveAndCalculatedParametrsMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="112b7483-8ab0-463e-80a8-e2d2f2708559" />
+        <classShapeMoniker Id="67d56e49-2f77-4a2d-a16e-d79705f16bc6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 15.4767976888021); (5.91666666666667 : 15.4767976888021 : JumpStart); (6.08333333333333 : 15.4767976888021 : JumpEnd); (13.8385391666667 : 15.4767976888021 : JumpStart); (14.0052058333333 : 15.4767976888021 : JumpEnd); (14.0104166666667 : 15.4767976888021 : JumpStart); (14.1770833333333 : 15.4767976888021 : JumpEnd); (14.5 : 15.4767976888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ReportArchiveTable/ReportArchiveTable_ReportArchiveAndIndicatorsMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="112b7483-8ab0-463e-80a8-e2d2f2708559" />
+        <classShapeMoniker Id="ce5b2292-078e-414a-b3a6-5e3d3117fbbe" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 5.16429768880208); (2.83240508036437 : 5.16429768880208 : JumpStart); (2.99907174703103 : 5.16429768880208 : JumpEnd); (3.5 : 5.16429768880208); (3.5 : 6.6651025390625); (3.85416666666667 : 6.6651025390625 : JumpStart); (4.02083333333333 : 6.6651025390625 : JumpEnd); (6.29166666666667 : 6.6651025390625 : JumpStart); (6.45833333333333 : 6.6651025390625 : JumpEnd); (24.1666666666667 : 6.6651025390625 : JumpStart); (24.3333333333333 : 6.6651025390625 : JumpEnd); (25.2916666666667 : 6.6651025390625 : JumpStart); (25.4583333333333 : 6.6651025390625 : JumpEnd); (25.75 : 6.6651025390625); (25.75 : 7.53049967447917); (27 : 7.53049967447917); (27 : 8.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/KPIWebDataContext/RolesTable/RolesTable_BasicParametersAndRolesMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="4d1bfb58-b677-4d5e-b711-8a6ffae72fd7" />
+        <classShapeMoniker Id="efaf711d-700b-4726-b360-307f739c1703" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.75 : 5.95359537760417); (1.75 : 6.20274983723958); (3.41666666666667 : 6.20274983723958 : JumpStart); (3.74900116168498 : 6.20274983723958 : JumpEnd); (6.375 : 6.20274983723958); (6.375 : 6.9151025390625); (24.1666666666667 : 6.9151025390625 : JumpStart); (24.3333333333333 : 6.9151025390625 : JumpEnd); (25.375 : 6.9151025390625); (25.375 : 6.22720286393229); (26 : 6.22720286393229)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/KPIWebDataContext/RolesTable/RolesTable_CalculatedParametrsAndRolesMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="4d1bfb58-b677-4d5e-b711-8a6ffae72fd7" />
+        <classShapeMoniker Id="e8262717-7b57-4892-a31c-fc07ff2bbc0e" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 4.93479420698117); (3.4512118485107 : 5.90578552478644 : JumpStart); (3.5487881514893 : 6.04090266979331 : JumpEnd); (3.9375 : 6.57916486663662); (3.9375 : 9.875); (14.125 : 9.875); (14.2067019349011 : 9.95670193490112 : JumpStart); (14.3245530650989 : 10.0745530650989 : JumpEnd); (14.5 : 10.25)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/RolesTable/RolesTable_IndicatorsAndRolesMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="4d1bfb58-b677-4d5e-b711-8a6ffae72fd7" />
+        <classShapeMoniker Id="b3b243b3-8220-4887-b4a1-907994ed3942" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 23.1642976888021); (8.29166666666667 : 23.1642976888021 : JumpStart); (8.45833333333333 : 23.1642976888021 : JumpEnd); (8.75 : 23.1642976888021); (8.75 : 24.3285953776042); (9.91666666666667 : 24.3285953776042 : JumpStart); (10.0833333333333 : 24.3285953776042 : JumpEnd); (13.7916666666667 : 24.3285953776042 : JumpStart); (14.0208333333333 : 24.3285953776042 : JumpEnd); (14.0416666666667 : 24.3285953776042 : JumpStart); (14.2083333333333 : 24.3285953776042 : JumpEnd); (14.25 : 24.3285953776042); (14.25 : 23.8125); (17.703122 : 23.8125); (17.703122 : 23.6362125651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/SecondLevelSubdivisionTable/SecondLevelSubdivisionTable_CollectedBasicParametersTable" />
+      <nodes>
+        <classShapeMoniker Id="49dd3328-4f29-4315-9367-e9b2481458e4" />
+        <classShapeMoniker Id="b38e11c4-a53b-46ed-8777-642f499e5973" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 22.738396844401); (8.29166666666667 : 22.738396844401 : JumpStart); (8.45833333333333 : 22.738396844401 : JumpEnd); (8.5 : 22.738396844401); (8.5 : 24.3910953776042); (9.91666666666667 : 24.3910953776042 : JumpStart); (10.0833333333333 : 24.3910953776042 : JumpEnd); (13.7916666666667 : 24.3910953776042 : JumpStart); (14.0208333333333 : 24.3910953776042 : JumpEnd); (14.0625 : 24.3910953776042); (14.0625 : 23.625); (14.1041666666667 : 23.625 : JumpStart); (14.2708333333333 : 23.625 : JumpEnd); (14.968748 : 23.625); (14.968748 : 23.0497054036458)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/SecondLevelSubdivisionTable/SecondLevelSubdivisionTable_CollectedIndicatorsForR" />
+      <nodes>
+        <classShapeMoniker Id="49dd3328-4f29-4315-9367-e9b2481458e4" />
+        <classShapeMoniker Id="32d2a23e-39ca-4789-9922-89d690fc6e17" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11 : 15.0208968098958); (11.375 : 15.3958968098958); (11.375 : 20.1354484049479); (11.75 : 20.1354484049479)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/SpecializationTable/SpecializationTable_FourthLevelSubdivisionTable" />
+      <nodes>
+        <classShapeMoniker Id="14b224e0-acbe-47ac-b5b9-384d737b6862" />
+        <classShapeMoniker Id="3b42f482-d41d-4d37-8775-17bfc881f666" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 13.7840734863281); (9 : 13.7840734863281)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FieldOfExpertise/FieldOfExpertise_SpecializationTable" />
+      <nodes>
+        <classShapeMoniker Id="9dedf816-6fc5-4d29-8da8-176e4943083d" />
+        <classShapeMoniker Id="14b224e0-acbe-47ac-b5b9-384d737b6862" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11 : 23.0270793213642); (11.25 : 23.0270793213642); (11.25 : 24.1410953776042); (14.0416666666667 : 24.1410953776042 : JumpStart); (14.2708333333333 : 24.1410953776042 : JumpEnd); (14.3125 : 24.1410953776042); (14.3125 : 24.125); (17.968748 : 24.125); (17.968748 : 23.6362125651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ThirdLevelSubdivisionTable/ThirdLevelSubdivisionTable_CollectedBasicParametersTable" />
+      <nodes>
+        <classShapeMoniker Id="1975695f-4a3e-4d2e-9fb7-29787eb449b2" />
+        <classShapeMoniker Id="b38e11c4-a53b-46ed-8777-642f499e5973" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11 : 23.0270793213642); (11.375 : 23.0270793213642); (11.375 : 22.002803141276); (14.1041666666667 : 22.002803141276 : JumpStart); (14.2708333333333 : 22.002803141276 : JumpEnd); (14.2916666666667 : 22.002803141276 : JumpStart); (14.4583333333333 : 22.002803141276 : JumpEnd); (14.5 : 22.002803141276)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ThirdLevelSubdivisionTable/ThirdLevelSubdivisionTable_CollectedIndicatorsForR" />
+      <nodes>
+        <classShapeMoniker Id="1975695f-4a3e-4d2e-9fb7-29787eb449b2" />
+        <classShapeMoniker Id="32d2a23e-39ca-4789-9922-89d690fc6e17" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(10.96875 : 22.375); (10.96875 : 19.65625); (11.2916666666667 : 19.65625 : JumpStart); (11.4583333333333 : 19.65625 : JumpEnd); (11.75 : 19.65625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ThirdLevelSubdivisionTable/ThirdLevelSubdivisionTable_FourthLevelSubdivisionTable" />
+      <nodes>
+        <classShapeMoniker Id="1975695f-4a3e-4d2e-9fb7-29787eb449b2" />
+        <classShapeMoniker Id="3b42f482-d41d-4d37-8775-17bfc881f666" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11 : 23.7416626427284); (11.1666666666667 : 23.7416626427284 : JumpStart); (11.3333333333333 : 23.7416626427284 : JumpEnd); (11.75 : 23.7416626427284)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ThirdLevelSubdivisionTable/ThirdLevelSubdivisionTable_ThirdLevelParametrs" />
+      <nodes>
+        <classShapeMoniker Id="1975695f-4a3e-4d2e-9fb7-29787eb449b2" />
+        <classShapeMoniker Id="7e0229a0-91a1-4e25-8868-218874cdc8ec" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 23.6214465332031); (9 : 23.6214465332031)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/SecondLevelSubdivisionTable/SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" />
+      <nodes>
+        <classShapeMoniker Id="49dd3328-4f29-4315-9367-e9b2481458e4" />
+        <classShapeMoniker Id="1975695f-4a3e-4d2e-9fb7-29787eb449b2" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(21.515626 : 18.625); (21.515626 : 17.25); (21.9635446666667 : 17.25 : JumpStart); (22.1302113333333 : 17.25 : JumpEnd); (23 : 17.25)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/UsersTable/UsersTable_BasicParametrsAndUsersMapping" />
+      <nodes>
+        <classShapeMoniker Id="3f6f7900-6126-4872-976b-98f1c3636d48" />
+        <classShapeMoniker Id="037c7090-f456-4f21-b96f-b40ae63f3fb1" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(22.046878 : 22.3189111328125); (22.046878 : 23.5497054036458); (23 : 23.5497054036458)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/UsersTable/UsersTable_CalculatedParametrsAndUsersMapping" />
+      <nodes>
+        <classShapeMoniker Id="3f6f7900-6126-4872-976b-98f1c3636d48" />
+        <classShapeMoniker Id="9b363869-1bad-4e8b-b072-02c74e9dc02c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(20.25 : 21.0344555664063); (19.5 : 21.0344555664063)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/UsersTable/UsersTable_CollectedBasicParametersTable" />
+      <nodes>
+        <classShapeMoniker Id="3f6f7900-6126-4872-976b-98f1c3636d48" />
+        <classShapeMoniker Id="b38e11c4-a53b-46ed-8777-642f499e5973" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(21.781252 : 22.3189111328125); (21.781252 : 25.2252013229167); (26 : 25.2252013229167)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/UsersTable/UsersTable_CollectedCalculatedParametrs" />
+      <nodes>
+        <classShapeMoniker Id="3f6f7900-6126-4872-976b-98f1c3636d48" />
+        <classShapeMoniker Id="d737fd75-4e88-4319-bdcc-04943f372df4" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(22.25 : 21.7252018229167); (25.7291666666667 : 21.7252018229167 : JumpStart); (25.8958333333333 : 21.7252018229167 : JumpEnd); (29 : 21.7252018229167)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/UsersTable/UsersTable_CollectedIndocators" />
+      <nodes>
+        <classShapeMoniker Id="3f6f7900-6126-4872-976b-98f1c3636d48" />
+        <classShapeMoniker Id="84506617-35c1-4db5-ba2a-0ea7012067b3" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(22.046878 : 18.625); (22.046878 : 15.5392981888021); (25.0729166666667 : 15.5392981888021 : JumpStart); (25.2395833333333 : 15.5392981888021 : JumpEnd); (25.4166666666667 : 15.5392981888021 : JumpStart); (25.5833333333333 : 15.5392981888021 : JumpEnd); (25.7291666666667 : 15.5392981888021 : JumpStart); (25.8958333333333 : 15.5392981888021 : JumpEnd); (26 : 15.5392981888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/UsersTable/UsersTable_ConfirmationHistory" />
+      <nodes>
+        <classShapeMoniker Id="3f6f7900-6126-4872-976b-98f1c3636d48" />
+        <classShapeMoniker Id="e63968c1-a357-4ef0-8b46-4d043b48cacb" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(22.25 : 21.3982975260417); (25.7291666666667 : 21.3982975260417 : JumpStart); (25.8958333333333 : 21.3982975260417 : JumpEnd); (26 : 21.3982975260417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/UsersTable/UsersTable_IndicatorsAndUsersMapping" />
+      <nodes>
+        <classShapeMoniker Id="3f6f7900-6126-4872-976b-98f1c3636d48" />
+        <classShapeMoniker Id="05cb0e0b-1587-4668-b483-93a817905199" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(22.25 : 20.4142976888021); (23 : 20.4142976888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/UsersTable/UsersTable_MultiUser" />
+      <nodes>
+        <classShapeMoniker Id="3f6f7900-6126-4872-976b-98f1c3636d48" />
+        <classShapeMoniker Id="f4a4256a-d776-40eb-a220-3bc7e0d47b95" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(22.25 : 19.957148844401); (23 : 19.957148844401)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/UsersTable/UsersTable_MultiUser1" />
+      <nodes>
+        <classShapeMoniker Id="3f6f7900-6126-4872-976b-98f1c3636d48" />
+        <classShapeMoniker Id="f4a4256a-d776-40eb-a220-3bc7e0d47b95" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(16.5 : 17.488396344401); (17.8854141666667 : 17.488396344401 : JumpStart); (18.0520808333333 : 17.488396344401 : JumpEnd); (21.781252 : 17.488396344401); (21.781252 : 18.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FifthLevelSubdivisionTable/FifthLevelSubdivisionTable_UsersTable" />
+      <nodes>
+        <classShapeMoniker Id="6d13a354-98ef-4d79-9067-f99fdccae043" />
+        <classShapeMoniker Id="3f6f7900-6126-4872-976b-98f1c3636d48" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(13.75 : 20.2384101005859); (14.46875 : 20.2384101005859); (14.46875 : 19.6875); (15.4166666666667 : 19.6875 : JumpStart); (15.5833333333333 : 19.6875 : JumpEnd); (15.6979166666667 : 19.6875 : JumpStart); (15.8645833333333 : 19.6875 : JumpEnd); (19.875 : 19.6875); (19.875 : 18.125); (20.718748 : 18.125); (20.718748 : 18.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FourthLevelSubdivisionTable/FourthLevelSubdivisionTable_UsersTable" />
+      <nodes>
+        <classShapeMoniker Id="3b42f482-d41d-4d37-8775-17bfc881f666" />
+        <classShapeMoniker Id="3f6f7900-6126-4872-976b-98f1c3636d48" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.25 : 23.9535953776042); (7.25 : 24.5160953776042); (9.91666666666667 : 24.5160953776042 : JumpStart); (10.0833333333333 : 24.5160953776042 : JumpEnd); (13.7916666666667 : 24.5160953776042 : JumpStart); (14.0208333333333 : 24.5160953776042 : JumpEnd); (14.1041666666667 : 24.5160953776042 : JumpStart); (14.2708333333333 : 24.5160953776042 : JumpEnd); (14.4375 : 24.5160953776042); (14.4375 : 24); (17.8854146666667 : 24 : JumpStart); (18.0520813333333 : 24 : JumpEnd); (20.984374 : 24); (20.984374 : 22.3189111328125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/SecondLevelSubdivisionTable/SecondLevelSubdivisionTable_UsersTable" />
+      <nodes>
+        <classShapeMoniker Id="49dd3328-4f29-4315-9367-e9b2481458e4" />
+        <classShapeMoniker Id="3f6f7900-6126-4872-976b-98f1c3636d48" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(10 : 23.9535953776042); (10 : 24.7035953776042); (13.9375 : 24.7035953776042); (13.9375 : 24.0625); (14.0416666666667 : 24.0625 : JumpStart); (14.2708333333333 : 24.0625 : JumpEnd); (14.2916666666667 : 24.0625 : JumpStart); (14.4583333333333 : 24.0625 : JumpEnd); (20.585935 : 24.0625); (20.585935 : 22.3189111328125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ThirdLevelSubdivisionTable/ThirdLevelSubdivisionTable_UsersTable" />
+      <nodes>
+        <classShapeMoniker Id="1975695f-4a3e-4d2e-9fb7-29787eb449b2" />
+        <classShapeMoniker Id="3f6f7900-6126-4872-976b-98f1c3636d48" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 20.976711109375); (5.8125 : 20.976711109375); (5.8125 : 19.1875); (12.3125 : 19.1875); (12.3125 : 17.5625); (14.4375 : 17.5625); (14.4375 : 18.6410953776042); (20.125 : 18.6410953776042); (20.125 : 18.3125); (21.25 : 18.3125); (21.25 : 18.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ZeroLevelSubdivisionTable/ZeroLevelSubdivisionTable_UsersTable" />
+      <nodes>
+        <classShapeMoniker Id="53cf56da-eccd-45ae-b8bf-91ce992543d0" />
+        <classShapeMoniker Id="3f6f7900-6126-4872-976b-98f1c3636d48" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="83b8ede0-8fd7-48d5-b73b-57de79ef675c" absoluteBounds="11.75, 12.125, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/KPIWebDataContext/EducationCostTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c22f1c75-885b-4f15-9725-dce482c4a4e6" absoluteBounds="11.765, 12.585, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(11 : 14.0537019856771); (11.75 : 14.0537019856771)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/SpecializationTable/SpecializationTable_EducationCostTable" />
+      <nodes>
+        <classShapeMoniker Id="14b224e0-acbe-47ac-b5b9-384d737b6862" />
+        <classShapeMoniker Id="83b8ede0-8fd7-48d5-b73b-57de79ef675c" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="836e3e95-2e5f-4b7b-b8c2-ee98b9a3e351" absoluteBounds="12.375, 17.625, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/KPIWebDataContext/IndicatorsTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d11ae28b-271d-4187-a4a3-aebf75def1fc" absoluteBounds="12.39, 18.085, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(14.375 : 19.9728011067708); (14.5 : 20.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/IndicatorsTable/IndicatorsTable_CollectedIndicatorsForR" />
+      <nodes>
+        <classShapeMoniker Id="836e3e95-2e5f-4b7b-b8c2-ee98b9a3e351" />
+        <classShapeMoniker Id="32d2a23e-39ca-4789-9922-89d690fc6e17" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14.375 : 19.1642976888021); (15.4166666666667 : 19.1642976888021 : JumpStart); (15.5833333333333 : 19.1642976888021 : JumpEnd); (17.8854141666667 : 19.1642976888021 : JumpStart); (18.0520808333333 : 19.1642976888021 : JumpEnd); (18.4166666666667 : 19.1642976888021 : JumpStart); (18.5833333333333 : 19.1642976888021 : JumpEnd); (18.9479191666667 : 19.1642976888021 : JumpStart); (19.1145858333333 : 19.1642976888021 : JumpEnd); (19.9791666666667 : 19.1642976888021 : JumpStart); (20.1458333333333 : 19.1642976888021 : JumpEnd); (20.1875 : 19.1642976888021); (20.1875 : 18.5929996744792); (25.5416666666667 : 18.5929996744792 : JumpStart); (25.8958333333333 : 18.5929996744792 : JumpEnd); (30 : 18.5929996744792); (30 : 19.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/IndicatorsTable/IndicatorsTable_CollectedIndocators" />
+      <nodes>
+        <classShapeMoniker Id="836e3e95-2e5f-4b7b-b8c2-ee98b9a3e351" />
+        <classShapeMoniker Id="84506617-35c1-4db5-ba2a-0ea7012067b3" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(13.375 : 17.625); (13.375 : 15.9142976888021); (25.0729166666667 : 15.9142976888021 : JumpStart); (25.2395833333333 : 15.9142976888021 : JumpEnd); (25.7291666666667 : 15.9142976888021 : JumpStart); (25.8958333333333 : 15.9142976888021 : JumpEnd); (26 : 15.9142976888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/IndicatorsTable/IndicatorsTable_ConfirmationHistory" />
+      <nodes>
+        <classShapeMoniker Id="836e3e95-2e5f-4b7b-b8c2-ee98b9a3e351" />
+        <classShapeMoniker Id="e63968c1-a357-4ef0-8b46-4d043b48cacb" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14.09375 : 17.625); (14.09375 : 11.1875025); (14.5 : 11.1875025)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/IndicatorsTable/IndicatorsTable_IndicatorsAndRolesMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="836e3e95-2e5f-4b7b-b8c2-ee98b9a3e351" />
+        <classShapeMoniker Id="b3b243b3-8220-4887-b4a1-907994ed3942" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14.375 : 19.457151344401); (20.0625 : 19.457151344401); (20.0625 : 18.6086246744792); (27 : 18.6086246744792); (27 : 19.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/IndicatorsTable/IndicatorsTable_IndicatorsAndUsersMapping" />
+      <nodes>
+        <classShapeMoniker Id="836e3e95-2e5f-4b7b-b8c2-ee98b9a3e351" />
+        <classShapeMoniker Id="05cb0e0b-1587-4668-b483-93a817905199" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14.2656275 : 17.625); (14.2656275 : 8.38544840494792); (14.5 : 8.38544840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/IndicatorsTable/IndicatorsTable_PlannedIndicator" />
+      <nodes>
+        <classShapeMoniker Id="836e3e95-2e5f-4b7b-b8c2-ee98b9a3e351" />
+        <classShapeMoniker Id="49d2de8b-82bf-4ca9-ac31-6cdb245f2b70" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(13.9218725 : 17.625); (13.9218725 : 15.1670983300781); (14.5 : 15.1670983300781)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/IndicatorsTable/IndicatorsTable_ReportArchiveAndIndicatorsMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="836e3e95-2e5f-4b7b-b8c2-ee98b9a3e351" />
+        <classShapeMoniker Id="ce5b2292-078e-414a-b3a6-5e3d3117fbbe" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11 : 17.015625); (11.2916666666667 : 17.015625 : JumpStart); (11.4583333333333 : 17.015625 : JumpEnd); (12.8437475 : 17.015625); (12.8437475 : 17.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/IndicatorClass/IndicatorClass_IndicatorsTable" />
+      <nodes>
+        <classShapeMoniker Id="4f58a6da-f4e2-4633-8ab2-8e821326e218" />
+        <classShapeMoniker Id="836e3e95-2e5f-4b7b-b8c2-ee98b9a3e351" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="cdf1288b-e6a9-4393-822d-56358dd87a0d" absoluteBounds="5.875, 19.375, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/KPIWebDataContext/FirstLevelSubdivisionTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="324a199e-529d-4337-af88-ef230997f5d4" absoluteBounds="5.89, 19.835, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.875 : 19.375); (6.875 : 19); (5.5 : 19); (5.5 : 24.2348453776042); (7.16666666666667 : 24.2348453776042 : JumpStart); (7.33333333333333 : 24.2348453776042 : JumpEnd); (8.66666666666667 : 24.2348453776042 : JumpStart); (8.83333333333333 : 24.2348453776042 : JumpEnd); (9.91666666666667 : 24.2348453776042 : JumpStart); (10.0833333333333 : 24.2348453776042 : JumpEnd); (13.8125 : 24.2348453776042); (13.8125 : 23.9799625651042); (14.0416666666667 : 23.9799625651042 : JumpStart); (14.4583333333333 : 23.9799625651042 : JumpEnd); (17.8854146666667 : 23.9799625651042 : JumpStart); (18.0520813333333 : 23.9799625651042 : JumpEnd); (19.031252 : 23.9799625651042); (19.031252 : 23.6362125651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FirstLevelSubdivisionTable/FirstLevelSubdivisionTable_CollectedBasicParametersTable" />
+      <nodes>
+        <classShapeMoniker Id="cdf1288b-e6a9-4393-822d-56358dd87a0d" />
+        <classShapeMoniker Id="b38e11c4-a53b-46ed-8777-642f499e5973" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.875 : 20.2604484049479); (8.625 : 20.2604484049479); (8.625 : 24.1723453776042); (8.66666666666667 : 24.1723453776042 : JumpStart); (8.83333333333333 : 24.1723453776042 : JumpEnd); (9.91666666666667 : 24.1723453776042 : JumpStart); (10.0833333333333 : 24.1723453776042 : JumpEnd); (13.7916666666667 : 24.1723453776042 : JumpStart); (13.9583333333333 : 24.1723453776042 : JumpEnd); (14 : 24.1723453776042); (14 : 23.75); (14.0416666666667 : 23.75 : JumpStart); (14.2708333333333 : 23.75 : JumpEnd); (16.031252 : 23.75); (16.031252 : 23.0497054036458)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FirstLevelSubdivisionTable/FirstLevelSubdivisionTable_CollectedIndicatorsForR" />
+      <nodes>
+        <classShapeMoniker Id="cdf1288b-e6a9-4393-822d-56358dd87a0d" />
+        <classShapeMoniker Id="32d2a23e-39ca-4789-9922-89d690fc6e17" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6.484374 : 21.1458968098958); (6.484374 : 22.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FirstLevelSubdivisionTable/FirstLevelSubdivisionTable_SecondLevelSubdivisionTable" />
+      <nodes>
+        <classShapeMoniker Id="cdf1288b-e6a9-4393-822d-56358dd87a0d" />
+        <classShapeMoniker Id="49dd3328-4f29-4315-9367-e9b2481458e4" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.875 : 19.786472202474); (8.8125 : 19.786472202474); (8.8125 : 19.1875); (12.3125 : 19.1875); (12.3125 : 17.5625); (14.46875 : 17.5625); (14.46875 : 18.6410953776042); (20 : 18.6410953776042); (20 : 18.5); (20.453122 : 18.5); (20.453122 : 18.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FirstLevelSubdivisionTable/FirstLevelSubdivisionTable_UsersTable" />
+      <nodes>
+        <classShapeMoniker Id="cdf1288b-e6a9-4393-822d-56358dd87a0d" />
+        <classShapeMoniker Id="3f6f7900-6126-4872-976b-98f1c3636d48" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 20.3796242734375); (5.875 : 20.3796242734375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ZeroLevelSubdivisionTable/ZeroLevelSubdivisionTable_FirstLevelSubdivisionTable" />
+      <nodes>
+        <classShapeMoniker Id="53cf56da-eccd-45ae-b8bf-91ce992543d0" />
+        <classShapeMoniker Id="cdf1288b-e6a9-4393-822d-56358dd87a0d" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="ab6208d6-f65e-4352-8954-0cc95d21e1a0" absoluteBounds="8.875, 20.125, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/KPIWebDataContext/ReportArchiveAndLevelMappingTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9f3fe126-4331-44f0-b219-999c3327ed42" absoluteBounds="8.89, 20.585, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(15.5 : 18.5785953776042); (15.5 : 20.0625); (14.4375 : 20.0625); (14.4375 : 21.388251546224); (10.875 : 21.388251546224)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FifthLevelSubdivisionTable/FifthLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="6d13a354-98ef-4d79-9067-f99fdccae043" />
+        <classShapeMoniker Id="ab6208d6-f65e-4352-8954-0cc95d21e1a0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.875 : 20.7656726074219); (8.875 : 20.7656726074219)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FirstLevelSubdivisionTable/FirstLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="cdf1288b-e6a9-4393-822d-56358dd87a0d" />
+        <classShapeMoniker Id="ab6208d6-f65e-4352-8954-0cc95d21e1a0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.75 : 20.6406726074219); (11.0520833333333 : 20.6406726074219 : JumpStart); (10.8854166666667 : 20.6406726074219 : JumpEnd); (10.875 : 20.6406726074219)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/FourthLevelSubdivisionTable/FourthLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="3b42f482-d41d-4d37-8775-17bfc881f666" />
+        <classShapeMoniker Id="ab6208d6-f65e-4352-8954-0cc95d21e1a0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.2968785 : 18.5593082682292); (5.2968785 : 21.7604484049479); (6.40104066666667 : 21.7604484049479 : JumpStart); (6.56770733333333 : 21.7604484049479 : JumpEnd); (8.29166666666667 : 21.7604484049479 : JumpStart); (8.45833333333333 : 21.7604484049479 : JumpEnd); (8.875 : 21.7604484049479)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ReportArchiveTable/ReportArchiveTable_ReportArchiveAndLevelMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="112b7483-8ab0-463e-80a8-e2d2f2708559" />
+        <classShapeMoniker Id="ab6208d6-f65e-4352-8954-0cc95d21e1a0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 23.5901985332031); (8.375 : 23.5901985332031); (8.375 : 21.2630605061849); (8.875 : 21.2630605061849)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/SecondLevelSubdivisionTable/SecondLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="49dd3328-4f29-4315-9367-e9b2481458e4" />
+        <classShapeMoniker Id="ab6208d6-f65e-4352-8954-0cc95d21e1a0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11 : 22.6697876606821); (11.2916666666667 : 22.6697876606821 : JumpStart); (11.4583333333333 : 22.6697876606821 : JumpEnd); (11.5 : 22.6697876606821); (11.5 : 21.0144620768229); (11.0520833333333 : 21.0144620768229 : JumpStart); (10.8854166666667 : 21.0144620768229 : JumpEnd); (10.875 : 21.0144620768229)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/KPIWebDataContext/ThirdLevelSubdivisionTable/ThirdLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="1975695f-4a3e-4d2e-9fb7-29787eb449b2" />
+        <classShapeMoniker Id="ab6208d6-f65e-4352-8954-0cc95d21e1a0" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="1f81a8c6-7178-461d-84f9-7fd4dfe1408a" absoluteBounds="6.625, 3.875, 2, 2.5401025390625">
+      <DataClassMoniker Name="/KPIWebDataContext/EmailCopy" />
+      <nestedChildShapes>
+        <elementListCompartment Id="beb5c327-d72e-4548-a571-8c76ac91ad99" absoluteBounds="6.64, 4.335, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
