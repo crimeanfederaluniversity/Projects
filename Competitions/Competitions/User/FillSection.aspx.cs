@@ -40,7 +40,6 @@ namespace Competitions.User
             competitionDataBase.SubmitChanges();
             return newData;
         }
-
         public bool CreateRowsForConstantAndNecessary(List<zCollectedDataTable> listOfCollectedData, int applicationId, int sectionId, int columnId)
         {
             foreach (zCollectedDataTable currentMustBeData in listOfCollectedData)
@@ -82,7 +81,6 @@ namespace Competitions.User
 
             return true;
         }
-
         public bool AddRowWithNecwssairlyLines (int columnTableId,int applicationId,int sectionId,int columnId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
@@ -98,7 +96,6 @@ namespace Competitions.User
             CreateRowsForConstantAndNecessary(mustBeDataList, applicationId, sectionId, columnId);
             return false;
         }
-
         public bool DeleteRow(int rowId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
@@ -116,7 +113,6 @@ namespace Competitions.User
             }
             return true;
         }
-
         public bool DeleteRowWithBadFk(int applicationId, int sectionId, int columnId , bool isDataConstant)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
@@ -171,6 +167,7 @@ namespace Competitions.User
             }
             return true;
         }
+     
         protected void Page_Load(object sender, EventArgs e)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
@@ -463,6 +460,114 @@ namespace Competitions.User
                                 newDataRow["ReadOnlyLablelValue" + i.ToString()] = getCollectedData.ValueText;
                             }
                            
+                            #endregion
+                            #region MaxValue
+                            if (dataType.IsDataTypeMaxValue(currentColumn.DataType))
+                            {
+                                zColumnTable columnToFind = (from a in competitionDataBase.zColumnTable
+                                                            where a.ID == currentColumn.FK_ColumnTable
+                                                            select a).FirstOrDefault();
+                                newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
+
+                                if (dataType.IsDataTypeInteger(columnToFind.DataType))
+                                {
+                                    newDataRow["ReadOnlyLablelValue" + i.ToString()] =
+                                        (from a in competitionDataBase.zCollectedDataTable
+                                            where a.FK_ColumnTable == columnToFind.ID
+                                                  && a.Active == true
+                                            join b in competitionDataBase.zCollectedRowsTable
+                                                on a.FK_CollectedRowsTable equals b.ID
+                                            where b.Active == true
+                                                  && b.FK_ApplicationTable == applicationId
+                                            select a.ValueInt).Distinct()
+                                            .OrderByDescending(param => param)
+                                            .FirstOrDefault();
+                                }
+                                if (dataType.IsDataTypeFloat(columnToFind.DataType))
+                                {
+                                    newDataRow["ReadOnlyLablelValue" + i.ToString()] =
+                                        (from a in competitionDataBase.zCollectedDataTable
+                                         where a.FK_ColumnTable == columnToFind.ID
+                                               && a.Active == true
+                                         join b in competitionDataBase.zCollectedRowsTable
+                                             on a.FK_CollectedRowsTable equals b.ID
+                                         where b.Active == true
+                                               && b.FK_ApplicationTable == applicationId
+                                         select a.ValueDouble).Distinct()
+                                            .OrderByDescending(param => param)
+                                            .FirstOrDefault();
+                                }
+                                
+                                if (dataType.IsDataTypeDate(columnToFind.DataType))
+                                {
+                                    newDataRow["ReadOnlyLablelValue" + i.ToString()] =
+                                        (from a in competitionDataBase.zCollectedDataTable
+                                         where a.FK_ColumnTable == columnToFind.ID
+                                               && a.Active == true
+                                         join b in competitionDataBase.zCollectedRowsTable
+                                             on a.FK_CollectedRowsTable equals b.ID
+                                         where b.Active == true
+                                               && b.FK_ApplicationTable == applicationId                                             
+                                         select a.ValueDataTime).Distinct()
+                                            .OrderByDescending(param => param)
+                                            .FirstOrDefault().ToString().Split(' ')[0];
+                                }
+
+                            }
+                            #endregion
+                            #region MinValue
+                            if (dataType.IsDataTypeMinValue(currentColumn.DataType))
+                            {
+                                zColumnTable columnToFind = (from a in competitionDataBase.zColumnTable
+                                                             where a.ID == currentColumn.FK_ColumnTable
+                                                             select a).FirstOrDefault();
+                                newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
+
+                                if (dataType.IsDataTypeInteger(columnToFind.DataType))
+                                {
+                                    newDataRow["ReadOnlyLablelValue" + i.ToString()] =
+                                        (from a in competitionDataBase.zCollectedDataTable
+                                         where a.FK_ColumnTable == columnToFind.ID
+                                               && a.Active == true
+                                         join b in competitionDataBase.zCollectedRowsTable
+                                             on a.FK_CollectedRowsTable equals b.ID
+                                         where b.Active == true
+                                               && b.FK_ApplicationTable == applicationId
+                                         select a.ValueInt).Distinct()
+                                            .OrderBy(param => param)
+                                            .FirstOrDefault();
+                                }
+                                if (dataType.IsDataTypeFloat(columnToFind.DataType))
+                                {
+                                    newDataRow["ReadOnlyLablelValue" + i.ToString()] =
+                                        (from a in competitionDataBase.zCollectedDataTable
+                                         where a.FK_ColumnTable == columnToFind.ID
+                                               && a.Active == true
+                                         join b in competitionDataBase.zCollectedRowsTable
+                                             on a.FK_CollectedRowsTable equals b.ID
+                                         where b.Active == true
+                                               && b.FK_ApplicationTable == applicationId
+                                         select a.ValueDouble).Distinct()
+                                            .OrderBy(param => param)
+                                            .FirstOrDefault();
+                                }
+
+                                if (dataType.IsDataTypeDate(columnToFind.DataType))
+                                {
+                                    newDataRow["ReadOnlyLablelValue" + i.ToString()] =
+                                        (from a in competitionDataBase.zCollectedDataTable
+                                         where a.FK_ColumnTable == columnToFind.ID
+                                               && a.Active == true
+                                         join b in competitionDataBase.zCollectedRowsTable
+                                             on a.FK_CollectedRowsTable equals b.ID
+                                         where b.Active == true
+                                               && b.FK_ApplicationTable == applicationId
+                                         select a.ValueDataTime).Distinct()
+                                            .OrderBy(param => param)
+                                            .FirstOrDefault().ToString().Split(' ')[0];
+                                }
+
+                            }
                             #endregion
                             #region CollectedNecessarily
                             if (dataType.IsDataTypeNecessarilyShow(currentColumn.DataType))

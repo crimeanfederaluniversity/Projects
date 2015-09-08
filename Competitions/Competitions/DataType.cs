@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.UI.WebControls;
 
@@ -8,7 +9,7 @@ namespace Competitions
 {
     public class DataType
     {
-        private int dataTypeCount = 11;
+        private int dataTypeCount = 13;
         public string GetDataTypeName(int dataType)
         {
             switch (dataType)
@@ -39,7 +40,7 @@ namespace Competitions
                 }
                 case 6:
                 {
-                    return "По существующим таблицам (Все обязательно) (нет)";
+                    return "По существующим таблицам (Все обязательно)";
                 }
                 case 7:
                 {
@@ -57,11 +58,18 @@ namespace Competitions
                 {                  
                     return "Константы(Все обязательно)";
                 }
+                case 11:
+                {
+                    return "Минимальное значение";
+                }
+                case 12:
+                {
+                    return "Максимальное значение";
+                }
                 default :
                 {
                     return "error";
                 }
-
             }
         }
         private ListItem GetDataTypeListItem(int dataType)
@@ -79,6 +87,34 @@ namespace Competitions
                 newListItemAray[i] =GetDataTypeListItem(i);
             }
             return newListItemAray;
+        }
+
+        public bool DataTypeWithConnectionToCollected(int dataType)
+        {
+            if (IsDataTypeDropDown(dataType)
+                || IsDataTypeSum(dataType)
+                || IsDataTypeNecessarilyShow(dataType)
+                || IsDataTypeMaxValue(dataType)
+                || IsDataTypeMinValue(dataType))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool DataTypeWithConnectionToConstant(int dataType)
+        {
+            if (IsDataTypeConstantDropDown(dataType)
+                || IsDataTypeConstantNecessarilyShow(dataType))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public bool IsDataTypeDropDown(int dataType)
         {
@@ -193,6 +229,28 @@ namespace Competitions
         public bool IsDataTypeConstantNecessarilyShow(int dataType)
         {
             if (dataType == 10)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsDataTypeMinValue(int dataType)
+        {
+            if (dataType == 11)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsDataTypeMaxValue(int dataType)
+        {
+            if (dataType == 12)
             {
                 return true;
             }

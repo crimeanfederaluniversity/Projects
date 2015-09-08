@@ -80,12 +80,12 @@ namespace Competitions.Admin
                             NameTextBox.Text = currentColum.Name;
                             DescriptionTextBox.Text = currentColum.Description;
                             DataTypeDropDownList.SelectedIndex = currentColum.DataType;
-                            if (currentColum.FK_ColumnTable != null)
+                            if (dataType.DataTypeWithConnectionToCollected(currentColum.DataType))
                             {
                                 FkToColumnDropDown.Items.FindByValue(currentColum.FK_ColumnTable.ToString()).Selected=true;
                                 ChooseColumnForDropDownDiv.Visible = true;
                             }
-                            if (currentColum.FK_ConstantListsTable != null)
+                            if (dataType.DataTypeWithConnectionToConstant(currentColum.DataType))
                             {
                                 FkToConstantDropDown.Items.FindByValue(currentColum.FK_ConstantListsTable.ToString())
                                     .Selected = true;
@@ -100,25 +100,8 @@ namespace Competitions.Admin
         {
             DataType dataType = new DataType();
             int chosenValue = Convert.ToInt32(DataTypeDropDownList.SelectedValue);
-
-            if (dataType.IsDataTypeDropDown(chosenValue) || dataType.IsDataTypeSum(chosenValue) || dataType.IsDataTypeNecessarilyShow(chosenValue))
-            {
-                ChooseColumnForDropDownDiv.Visible = true;
-            }
-            else
-            {
-                ChooseColumnForDropDownDiv.Visible = false;
-            }
-
-            if (dataType.IsDataTypeConstantDropDown(chosenValue) ||
-                dataType.IsDataTypeConstantNecessarilyShow(chosenValue))
-            {
-                ChooseConstantForDropDownDiv.Visible =true;
-            }
-            else
-            {
-                ChooseConstantForDropDownDiv.Visible = false;
-            }           
+                ChooseColumnForDropDownDiv.Visible = dataType.DataTypeWithConnectionToCollected(chosenValue);
+                ChooseConstantForDropDownDiv.Visible = dataType.DataTypeWithConnectionToConstant(chosenValue);    
         }
         protected void CreateSaveButton_Click(object sender, EventArgs e)
         {
@@ -158,15 +141,15 @@ namespace Competitions.Admin
                             currentColumn.Description = DescriptionTextBox.Text;
                             currentColumn.DataType =
                                 Convert.ToInt32(DataTypeDropDownList.SelectedValue);
-                            if (dataType.IsDataTypeDropDown(dataTypeSelectedValue) || dataType.IsDataTypeSum(dataTypeSelectedValue) || dataType.IsDataTypeNecessarilyShow(dataTypeSelectedValue))
+
+                            if (dataType.DataTypeWithConnectionToCollected(dataTypeSelectedValue))
                             {
-                                currentColumn.FK_ColumnTable =Convert.ToInt32(FkToColumnDropDown.SelectedValue);
+                                currentColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
                             }
-                            if (dataType.IsDataTypeConstantDropDown(dataTypeSelectedValue) || dataType.IsDataTypeConstantNecessarilyShow(dataTypeSelectedValue))
+                            if (dataType.DataTypeWithConnectionToConstant(dataTypeSelectedValue))
                             {
                                 currentColumn.FK_ConstantListsTable = Convert.ToInt32(FkToConstantDropDown.SelectedValue);
-                            }
-
+                            }                        
                             competitionDataBase.SubmitChanges();
                         }
                     }
@@ -182,13 +165,11 @@ namespace Competitions.Admin
                         newColumn.Active = true;
                         newColumn.FK_SectionTable = sectionId;
                         newColumn.DataType = dataTypeSelectedValue;
-
-                        if (dataType.IsDataTypeDropDown(dataTypeSelectedValue) || dataType.IsDataTypeSum(dataTypeSelectedValue) || dataType.IsDataTypeNecessarilyShow(dataTypeSelectedValue))
+                        if (dataType.DataTypeWithConnectionToCollected(dataTypeSelectedValue))
                         {
                             newColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
                         }
-
-                        if (dataType.IsDataTypeConstantDropDown(dataTypeSelectedValue) || dataType.IsDataTypeConstantNecessarilyShow(dataTypeSelectedValue))
+                        if (dataType.DataTypeWithConnectionToConstant(dataTypeSelectedValue))
                         {
                             newColumn.FK_ConstantListsTable = Convert.ToInt32(FkToConstantDropDown.SelectedValue);
                         }
