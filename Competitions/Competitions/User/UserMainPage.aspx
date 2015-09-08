@@ -13,7 +13,7 @@
                 <asp:BoundField DataField="Name"   HeaderText="Конкурс" Visible="true" />
                 <asp:TemplateField HeaderText="Подать заявку">
                         <ItemTemplate>
-                           <asp:Button ID="NewApplication" runat="server" Text="Подать заявку" CommandArgument='<%# Eval("ID") %>' OnClick="NewApplication_Click" />
+                           <asp:Button ID="NewApplication" runat="server" OnClientClick="return confirm('Вы уверены, что хотите подать заявку?');" Text="Подать заявку" CommandArgument='<%# Eval("ID") %>' OnClick="NewApplication_Click" />
                         </ItemTemplate>
                 </asp:TemplateField>
               

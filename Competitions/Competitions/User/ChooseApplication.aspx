@@ -17,7 +17,7 @@
                 
                 <asp:TemplateField HeaderText="Отправить на рассмотрение">
                         <ItemTemplate>
-                            <asp:Button ID="SendButton" runat="server" CommandName="Select" OnClientClick="return confirm('are you shure?');" Text="Отправить" CommandArgument='<%# Eval("ID") %>' Enabled='<%# Eval("FillNSendEnabled") %>' Width="200px" OnClick="SendButtonClick"/>
+                            <asp:Button ID="SendButton" runat="server" CommandName="Select" OnClientClick="return confirm('Вы уверены, что хотите отправить заявку на рассмотрение?');" Text="Отправить" CommandArgument='<%# Eval("ID") %>' Enabled='<%# Eval("FillNSendEnabled") %>' Width="200px" OnClick="SendButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
 
