@@ -39,43 +39,65 @@ namespace Competitions.User
             competitionDataBase.SubmitChanges();
             return newData;
         }
-        public bool AddRowWithConstant(int constantListId,int applicationId,int sectionId,int columnId)
+
+        public bool CreateRowsForConstantAndNecessary(List<zCollectedDataTable> listOfCollectedData, int applicationId, int sectionId, int columnId)
         {
-            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-            //берем список того что у нас должно быть
-            //проходимся по нему
-            //если такой есть то не трогаем
-            //если такого нет то создаем
-            List<zCollectedDataTable> mustBeDataList = (from a in competitionDataBase.zCollectedDataTable
-                                                        where a.Active == true
-                                                              && a.FK_ConstantListTable == constantListId
-                                                        select a).ToList();
-            foreach (zCollectedDataTable currentMustBeData in mustBeDataList)
+            foreach (zCollectedDataTable currentMustBeData in listOfCollectedData)
             {
+                CompetitionDataContext competitionDataBase = new CompetitionDataContext();
                 zCollectedDataTable currentCollectedDataTable = (from a in competitionDataBase.zCollectedDataTable
-                    join b in competitionDataBase.zCollectedRowsTable
-                        on a.FK_CollectedRowsTable equals b.ID
-                    where b.Active == true
-                          && a.Active == true
-                          && b.FK_ApplicationTable == applicationId
-                          && b.FK_SectionTable == sectionId
-                          && a.ValueFK_CollectedDataTable == currentMustBeData.ID
-                    select a).FirstOrDefault();
+                                                                 join b in competitionDataBase.zCollectedRowsTable
+                                                                     on a.FK_CollectedRowsTable equals b.ID
+                                                                 where b.Active == true
+                                                                       && a.Active == true
+                                                                       && b.FK_ApplicationTable == applicationId
+                                                                       && b.FK_SectionTable == sectionId
+                                                                       && a.ValueFK_CollectedDataTable == currentMustBeData.ID
+                                                                 select a).FirstOrDefault();
                 if (currentCollectedDataTable == null)
                 {
                     //noDataNoRow
                     //создадим строку
                     zCollectedRowsTable newRow = CreateNewRow(applicationId, sectionId);
-                    zCollectedDataTable newData = CreateNewData(newRow.ID, columnId);                   
+                    zCollectedDataTable newData = CreateNewData(newRow.ID, columnId);
                     zCollectedDataTable newDataChange = (from a in competitionDataBase.zCollectedDataTable
-                        where a.ID == newData.ID
-                        select a).FirstOrDefault();
+                                                         where a.ID == newData.ID
+                                                         select a).FirstOrDefault();
                     newDataChange.ValueFK_CollectedDataTable = currentMustBeData.ID;
                     competitionDataBase.SubmitChanges();
                 }
             }
             return true;
         }
+        public bool AddRowWithConstant(int constantListId,int applicationId,int sectionId,int columnId)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            List<zCollectedDataTable> mustBeDataList = (from a in competitionDataBase.zCollectedDataTable
+                                                        where a.Active == true
+                                                              && a.FK_ConstantListTable == constantListId
+                                                        select a).ToList();
+
+            CreateRowsForConstantAndNecessary(mustBeDataList, applicationId, sectionId, columnId);
+
+            return true;
+        }
+
+        public bool AddRowWithNecwssairlyLines (int columnTableId,int applicationId,int sectionId,int columnId)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            List<zCollectedDataTable> mustBeDataList = (from a in competitionDataBase.zCollectedDataTable
+                                                        where a.Active == true
+                                                              && a.FK_ColumnTable == columnTableId
+                                                              join b in competitionDataBase.zCollectedRowsTable
+                                                              on a.FK_CollectedRowsTable equals b.ID
+                                                              where b.Active == true
+                                                              && b.FK_ApplicationTable == applicationId
+                                                        select a).ToList();
+
+            CreateRowsForConstantAndNecessary(mustBeDataList, applicationId, sectionId, columnId);
+            return false;
+        }
+
         public bool DeleteRowsWithDisabledConstant(int constantListId, int applicationId, int sectionId, int columnId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
@@ -178,6 +200,17 @@ namespace Competitions.User
                        // DeleteRowsWithDisabledConstant((int)currentColumn.FK_ConstantListsTable, applicationId, sectionId,
                        //     currentColumn.ID);
                         AddRowWithConstant((int) currentColumn.FK_ConstantListsTable, applicationId, sectionId,
+                            currentColumn.ID);
+                    }
+                    if (dataType.IsDataTypeNecessarilyShow(currentColumn.DataType))
+                    {
+                        permitAddRow = false;
+                        permitDeleteRow = false;
+
+
+                        // DeleteRowsWithDisabledConstant((int)currentColumn.FK_ConstantListsTable, applicationId, sectionId,
+                        //     currentColumn.ID);
+                        AddRowWithNecwssairlyLines ((int)currentColumn.FK_ColumnTable, applicationId, sectionId,
                             currentColumn.ID);
                     }
                 }
