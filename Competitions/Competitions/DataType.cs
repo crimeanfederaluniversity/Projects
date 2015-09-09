@@ -9,7 +9,7 @@ namespace Competitions
 {
     public class DataType
     {
-        private int dataTypeCount = 13;
+        private int dataTypeCount = 15;
         public string GetDataTypeName(int dataType)
         {
             switch (dataType)
@@ -66,6 +66,14 @@ namespace Competitions
                 {
                     return "Максимальное значение";
                 }
+                case 13:
+                {
+                    return  "Суммирование по критерию";
+                }
+                case 14:
+                {
+                    return "Суммирование по двум столбцам";
+                }
                 default :
                 {
                     return "error";
@@ -88,7 +96,6 @@ namespace Competitions
             }
             return newListItemAray;
         }
-
         public bool DataTypeWithConnectionToCollected(int dataType)
         {
             if (IsDataTypeDropDown(dataType)
@@ -108,6 +115,18 @@ namespace Competitions
         {
             if (IsDataTypeConstantDropDown(dataType)
                 || IsDataTypeConstantNecessarilyShow(dataType))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool DataTypeWithConnectionToCollectedAndColumn(int dataType)
+        {
+            if (IsDataTypeSymWithParam(dataType)
+                || IsDataTypeSymByTwoColumns(dataType))
             {
                 return true;
             }
@@ -251,6 +270,28 @@ namespace Competitions
         public bool IsDataTypeMaxValue(int dataType)
         {
             if (dataType == 12)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsDataTypeSymWithParam(int dataType)
+        {
+            if (dataType == 13)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            } 
+        }
+        public bool IsDataTypeSymByTwoColumns(int dataType)
+        {
+            if (dataType == 14)
             {
                 return true;
             }
