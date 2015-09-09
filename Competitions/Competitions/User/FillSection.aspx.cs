@@ -657,7 +657,7 @@ namespace Competitions.User
                             if (dataType.IsDataTypeNameOfApplication(currentColumn.DataType))
                             {
                                 newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
-                                newDataRow["ReadOnlyLablelValue" + i.ToString()] = (from a in competitionDataBase.zApplicationTables
+                                newDataRow["ReadOnlyLablelValue" + i.ToString()] = (from a in competitionDataBase.zApplicationTable
                                                                                         where a.ID ==applicationId
                                                                                         select a.Name).FirstOrDefault();
                             }
