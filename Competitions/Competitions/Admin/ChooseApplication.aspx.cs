@@ -16,8 +16,8 @@ namespace Competitions.Admin
             if (!Page.IsPostBack)
             {
              CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
-                List<zApplicationTable> applicationsList = (from a in CompetitionsDataBase.zApplicationTables
-                    where a.Active == true
+                List<zApplicationTable> applicationsList = (from a in CompetitionsDataBase.zApplicationTable
+                    where a.Active == true && a.Accept == false
                     select a).ToList();
                 DataTable dataTable = new  DataTable();
 
@@ -27,6 +27,8 @@ namespace Competitions.Admin
                 dataTable.Columns.Add("Autor", typeof(string));
                 dataTable.Columns.Add("Competition", typeof(string));
                 dataTable.Columns.Add("Experts", typeof(string));
+                dataTable.Columns.Add("SendedDataTime", typeof(string));
+                
 
                 
                 foreach (zApplicationTable currentApplication in applicationsList)
@@ -35,6 +37,7 @@ namespace Competitions.Admin
                     dataRow["ID"] = currentApplication.ID;
                     dataRow["Name"] = currentApplication.Name;
                     dataRow["Description"] = "";
+                    dataRow["SendedDataTime"] = currentApplication.SendedDataTime;
                     dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTable
                                                   where a.ID == currentApplication.FK_CompetitionTable
                                                   select  a.Name).FirstOrDefault();
@@ -72,6 +75,29 @@ namespace Competitions.Admin
                 Session["ApplicationID"] = button.CommandArgument;
                 Response.Redirect("ApllicationExpertEdit.aspx");
             }
+        }
+
+        protected void AcceptButtonClick(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            if (button != null)
+            {
+                int iD = Convert.ToInt32(button.CommandArgument);
+                CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+                zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
+                                                        where a.Active == true && a.Accept == false
+                                                              && a.ID == iD
+                                                        select a).FirstOrDefault();
+                if (currentApplication != null)
+                {
+                    currentApplication.Accept = true;
+                   
+                    competitionDataBase.SubmitChanges();
+                }
+            }
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка привязана к выбранным экспертам и перемещена в раздел готовых заявок!');", true);
+            Response.Redirect("ChooseApplication.aspx");
+
         }
     }
 }

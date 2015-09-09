@@ -33,7 +33,7 @@ namespace Competitions.User
                     
                     if (iD > 0)
                     {                      
-                        zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTables
+                        zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
                             where a.Active == true
                                   && a.ID == iD && a.FK_CompetitionTable == idkon
                             select a).FirstOrDefault();
@@ -99,7 +99,7 @@ namespace Competitions.User
             {
                 if (ApplicationNameTextBox.Text.Length > 0)
                 {
-                    zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTables
+                    zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
                         where a.Active == true
                               && a.ID == iD
                         select a).FirstOrDefault();
@@ -126,7 +126,7 @@ namespace Competitions.User
                     newApplication.FK_UsersTable = userId;
                     newApplication.CretaDateTime = DateTime.Now;
                     newApplication.Sended = false;
-                    competitionDataBase.zApplicationTables.InsertOnSubmit(newApplication);
+                    competitionDataBase.zApplicationTable.InsertOnSubmit(newApplication);
                     competitionDataBase.SubmitChanges();
                 }
             }

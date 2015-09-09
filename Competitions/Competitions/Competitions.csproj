@@ -180,7 +180,9 @@
     <Content Include="Admin\ColumnCreateEdit.aspx" />
     <Content Include="Admin\CompetitionCreateEdit.aspx" />
     <Content Include="Admin\ConstantListCreate.aspx" />
+    <Content Include="Admin\ExpertPointPage.aspx" />
     <Content Include="Admin\Main.aspx" />
+    <Content Include="Admin\ReadyApplications.aspx" />
     <Content Include="Admin\SectionCreateEdit.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
@@ -424,12 +426,26 @@
     <Compile Include="Admin\ConstantListCreate.aspx.designer.cs">
       <DependentUpon>ConstantListCreate.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\ExpertPointPage.aspx.cs">
+      <DependentUpon>ExpertPointPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ExpertPointPage.aspx.designer.cs">
+      <DependentUpon>ExpertPointPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Main.aspx.cs">
       <DependentUpon>Main.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\Main.aspx.designer.cs">
       <DependentUpon>Main.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ReadyApplications.aspx.cs">
+      <DependentUpon>ReadyApplications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ReadyApplications.aspx.designer.cs">
+      <DependentUpon>ReadyApplications.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\SectionCreateEdit.aspx.cs">
       <DependentUpon>SectionCreateEdit.aspx</DependentUpon>

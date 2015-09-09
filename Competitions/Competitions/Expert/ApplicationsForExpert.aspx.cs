@@ -26,8 +26,9 @@ namespace Competitions.Expert
                 dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("CompetitionName", typeof(string)));
+                 
 
-                List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTables
+                List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTable
                                                            where 
                                                            a.Active == true
                                                            && a.Sended == true
@@ -39,6 +40,7 @@ namespace Competitions.Expert
                                                            where c.Active == true
                                                            && c.FK_UsersTable == userId 
                                                            select a).Distinct().ToList();
+                 
 
                 foreach (zApplicationTable currentApplication in applicationList)
                 {
@@ -48,7 +50,9 @@ namespace Competitions.Expert
                     dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTable
                                                   where a.ID == (Convert.ToInt32(currentApplication.FK_CompetitionTable))
                                                   select a.Name).FirstOrDefault();
+                    
                     dataTable.Rows.Add(dataRow);
+                     
                 }
 
                 ApplicationGV.DataSource = dataTable;
@@ -67,7 +71,7 @@ namespace Competitions.Expert
                 Response.Redirect("EvaluateApplication.aspx");
             }
         }
-
+     
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("Main.aspx");

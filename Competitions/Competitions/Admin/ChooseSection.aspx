@@ -3,9 +3,15 @@
     <div>
             <br />
             <asp:Button ID="GoBackButton" runat="server"  Text="Назад" Width="131px" style="height: 26px" OnClick="GoBackButton_Click" />
-        <br />
-        <br />
-        <asp:Label ID="CompetitionNameLabel" runat="server" Text=""></asp:Label>
+        <br />   
+        <h2><span style="font-size: 20px">Формы для конкурса: </span></h2>
+        <asp:Label ID="CompetitionNameLabel" style="font-size: 20px"  runat="server" Text=""> </asp:Label>
+            <br />
+            <br />
+        <asp:Button ID="NewSection" runat="server" Text="Создать новый пункт" OnClick="NewSection_Click" />
+    &nbsp;&nbsp;
+            <asp:Button ID="GoToConstListManagmentButton" runat="server" OnClick="GoToConstListManagmentButton_Click" Text="Списки констант" />
+            <br />
         <br />
         <asp:GridView ID="SectionGV" runat="server" AutoGenerateColumns="False">
             <Columns>
@@ -30,8 +36,6 @@
             </Columns>
         </asp:GridView>
             <br />
-        <asp:Button ID="NewSection" runat="server" Text="Создать новый пункт" OnClick="NewSection_Click" />
     &nbsp;
-            <asp:Button ID="GoToConstListManagmentButton" runat="server" OnClick="GoToConstListManagmentButton_Click" Text="Списки констант" />
-    </div>
+            </div>
 </asp:Content>

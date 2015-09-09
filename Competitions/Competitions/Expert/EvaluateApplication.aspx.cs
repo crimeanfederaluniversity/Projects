@@ -36,7 +36,7 @@ namespace Competitions.Expert
 
                 foreach (zExpertPoint currentExpertPoint in expertPointsList)
                 {
-                    zExpertPointsValue currentExpertPointValue = (from a in CompetitionsDataBase.zExpertPointsValues
+                    zExpertPointsValue currentExpertPointValue = (from a in CompetitionsDataBase.zExpertPointsValue
                         where a.FK_ApplicationTable == applicationId
                               && a.FK_ExpertsTable == userId
                               && a.FK_ExpertPoints == currentExpertPoint.ID
@@ -48,7 +48,8 @@ namespace Competitions.Expert
                         currentExpertPointValue.FK_ExpertsTable = userId;
                         currentExpertPointValue.LastChangeDataTime = DateTime.Now;
                         currentExpertPointValue.FK_ExpertPoints = currentExpertPoint.ID;
-                        CompetitionsDataBase.zExpertPointsValues.InsertOnSubmit(currentExpertPointValue);
+                        currentExpertPointValue.Sended = false;
+                        CompetitionsDataBase.zExpertPointsValue.InsertOnSubmit(currentExpertPointValue);
                         CompetitionsDataBase.SubmitChanges();
                     }
                     DataRow dataRow = dataTable.NewRow();
@@ -63,12 +64,13 @@ namespace Competitions.Expert
                         dataRow["Text"] = "";
                     }
                     dataTable.Rows.Add(dataRow);
+               
                 }
                 EvaluateGV.DataSource = dataTable;
                 EvaluateGV.DataBind();
 
                 #region doComment
-                zExpertPointsValue commentExpertPointValue = (from a in CompetitionsDataBase.zExpertPointsValues
+                zExpertPointsValue commentExpertPointValue = (from a in CompetitionsDataBase.zExpertPointsValue
                                                               where a.FK_ApplicationTable == applicationId
                                                                     && a.FK_ExpertsTable == userId
                                                                     && a.FK_ExpertPoints == 6
@@ -80,7 +82,9 @@ namespace Competitions.Expert
                     commentExpertPointValue.FK_ExpertsTable = userId;
                     commentExpertPointValue.LastChangeDataTime = DateTime.Now;
                     commentExpertPointValue.FK_ExpertPoints = 6;
-                    CompetitionsDataBase.zExpertPointsValues.InsertOnSubmit(commentExpertPointValue);
+                    commentExpertPointValue.Sended = false;
+
+                    CompetitionsDataBase.zExpertPointsValue.InsertOnSubmit(commentExpertPointValue);
                     CompetitionsDataBase.SubmitChanges();
 
                 }
@@ -116,7 +120,7 @@ namespace Competitions.Expert
                 TextBox valueTextBox = (TextBox)dataRow.FindControl("ValueTextBox");
                 if (labelID != null)
                 {
-                    zExpertPointsValue currentExpertPointValue = (from a in CompetitionsDataBase.zExpertPointsValues
+                    zExpertPointsValue currentExpertPointValue = (from a in CompetitionsDataBase.zExpertPointsValue
                                                                   where a.ID == Convert.ToInt32(labelID.Text)
                                                                   select a).FirstOrDefault();
                     if (currentExpertPointValue != null)
@@ -134,7 +138,7 @@ namespace Competitions.Expert
             if (commentIdTemp != null)
             {
                 int commentId = (int) commentIdTemp;
-                zExpertPointsValue commentExpertPointValue = (from a in CompetitionsDataBase.zExpertPointsValues
+                zExpertPointsValue commentExpertPointValue = (from a in CompetitionsDataBase.zExpertPointsValue
                                                               where a.ID == commentId
                     select a).FirstOrDefault();
                 if (commentExpertPointValue != null)
@@ -153,5 +157,36 @@ namespace Competitions.Expert
         {
             Response.Redirect("ApplicationsForExpert.aspx");
         }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+ 
+
+            var sessionParam1 = Session["ApplicationID"];
+                 var sessionParam2 = Session["UserID"];
+                if ((sessionParam1 == null)||(sessionParam2==null))
+                {
+                    //error
+                    Response.Redirect("~/Default.aspx");
+                }
+                int applicationId = Convert.ToInt32(sessionParam1);
+                int userId = Convert.ToInt32(sessionParam2);
+
+                CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+                List<zExpertPointsValue> currentApplication = (from a in competitionDataBase.zExpertPointsValue
+                                                         where a.Active == true
+                                                               && a.FK_ApplicationTable == applicationId && a.FK_ExpertsTable == userId
+                                                         select a).ToList();
+                 
+                    foreach (zExpertPointsValue current in currentApplication)
+                    {
+                        current.Sended = true;
+                        current.SendedDataTime = DateTime.Now;
+                        competitionDataBase.SubmitChanges();
+                    }
+                    
+            }
+        
+        
     }
 }

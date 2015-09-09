@@ -26,7 +26,7 @@ namespace Competitions.User
                 int applicationId = Convert.ToInt32(sessionParam1);
                 
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTables
+                zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
                     where a.ID == applicationId
                     select a).FirstOrDefault();
                 Label1.Text = currentApplication.Name;

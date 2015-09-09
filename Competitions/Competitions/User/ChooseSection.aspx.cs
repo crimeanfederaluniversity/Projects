@@ -30,7 +30,7 @@ namespace Competitions.User
 
                     CompetitionDataContext competitionDataBase = new CompetitionDataContext();
 
-                    zApplicationTable currenApplication = (from a in competitionDataBase.zApplicationTables
+                    zApplicationTable currenApplication = (from a in competitionDataBase.zApplicationTable
                         where a.ID == iD
                         select a).FirstOrDefault();
 

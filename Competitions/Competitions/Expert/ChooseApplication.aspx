@@ -6,9 +6,9 @@
     <br />
     Список заявок<asp:GridView ID="ApplicationGV" runat="server" AutoGenerateColumns="False">
             <Columns>
-                <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
+                <asp:BoundField DataField="ID"   HeaderText="Код заявки" Visible="true" />
                 <asp:BoundField DataField="Name"   HeaderText="Название" Visible="true" />
-                <asp:BoundField DataField="Description"   HeaderText="Описание" Visible="true" />
+                <asp:BoundField DataField="Description"   HeaderText="Описание" Visible="false" />
                 <asp:BoundField DataField="Competition"   HeaderText="Конкурс" Visible="true" />
                 <asp:BoundField DataField="Autor"   HeaderText="Автор" Visible="true" />                
             </Columns>

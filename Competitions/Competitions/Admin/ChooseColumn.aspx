@@ -4,10 +4,9 @@
             <br />
             <asp:Button ID="GoBackButton" runat="server"  Text="Назад" Width="131px" style="height: 26px" OnClick="GoBackButton_Click" />
         <br />
+        <asp:Label ID="CompetitionNameLabel" style="font-size: 20px" runat="server"></asp:Label>
         <br />
-        <asp:Label ID="CompetitionNameLabel" runat="server"></asp:Label>
-        <br />
-        <asp:Label ID="SectionNameLeabel" runat="server"></asp:Label>
+        <asp:Label ID="SectionNameLeabel" style="font-size: 20px" runat="server"></asp:Label>
         <br />
     <asp:GridView ID="ColumnGV" runat="server" AutoGenerateColumns="False" >
             <Columns>

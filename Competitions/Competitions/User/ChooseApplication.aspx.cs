@@ -34,7 +34,7 @@ namespace Competitions.User
                 dataTable.Columns.Add(new DataColumn("CompetitionName", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("FillNSendEnabled", typeof(bool)));
 
-               List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTables
+               List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTable
                     where a.FK_UsersTable == userId
                           && a.Active == true
                           join b in competitionDataBase.zCompetitionsTable
@@ -81,13 +81,14 @@ namespace Competitions.User
             {
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTables
+                zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
                     where a.Active == true
                           && a.ID == iD
                     select a).FirstOrDefault();
                 if (currentApplication != null)
                 {
                     currentApplication.Sended = true;
+                    currentApplication.SendedDataTime = DateTime.Now;
                     competitionDataBase.SubmitChanges();
                 }
             }

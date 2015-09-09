@@ -16,7 +16,7 @@ namespace Competitions.Expert
             if (!Page.IsPostBack)
             {
              CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
-                List<zApplicationTable> applicationsList = (from a in CompetitionsDataBase.zApplicationTables
+                List<zApplicationTable> applicationsList = (from a in CompetitionsDataBase.zApplicationTable
                     where a.Active == true
                     join b in CompetitionsDataBase.zExpertsAndApplicationMappingTables
                     on a.ID equals b.ID
