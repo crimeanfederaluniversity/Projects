@@ -26,14 +26,26 @@
             <br />
             
         </div>
+        
+        
+        
+
+
         <br />
         <div id="ChooseConstantForDropDownDiv" runat="server" Visible="False">
-            <asp:DropDownList ID="FkToConstantDropDown" runat="server" Height="19px" Width="122px" AutoPostBack="True">
-            </asp:DropDownList>
+                    <asp:DropDownList ID="FkToConstantDropDown" runat="server"  Height="16px" Width="121px">
+        </asp:DropDownList>
               <br />
             
         </div>
-        <br />
+        <asp:Panel ID="Panel1" runat="server" Visible="False">
+            По какой колонке привязваем&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; К какой колонке привязываем<br /> (колонка в этой секции)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (колонка на секцию где хранятся сами данные)<br />
+            <asp:DropDownList ID="Fk_ColumnConnectFromDropDown" runat="server" AutoPostBack="True" Height="19px" Width="122px">
+            </asp:DropDownList>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:DropDownList ID="Fk_ColumnConnectToDropDown" runat="server" AutoPostBack="True" Height="19px" Width="122px">
+            </asp:DropDownList>
+        </asp:Panel>
         <br />
         <asp:Button ID="CreateSaveButton"  runat="server" Text="Сохранить" OnClick="CreateSaveButton_Click" />
     </div>

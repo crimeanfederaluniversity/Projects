@@ -42,9 +42,6 @@ namespace Competitions
     partial void InsertzCollectedRowsTable(zCollectedRowsTable instance);
     partial void UpdatezCollectedRowsTable(zCollectedRowsTable instance);
     partial void DeletezCollectedRowsTable(zCollectedRowsTable instance);
-    partial void InsertzColumnTable(zColumnTable instance);
-    partial void UpdatezColumnTable(zColumnTable instance);
-    partial void DeletezColumnTable(zColumnTable instance);
     partial void InsertzConstantListTable(zConstantListTable instance);
     partial void UpdatezConstantListTable(zConstantListTable instance);
     partial void DeletezConstantListTable(zConstantListTable instance);
@@ -66,6 +63,9 @@ namespace Competitions
     partial void InsertzDocumentsTable(zDocumentsTable instance);
     partial void UpdatezDocumentsTable(zDocumentsTable instance);
     partial void DeletezDocumentsTable(zDocumentsTable instance);
+    partial void InsertzColumnTable(zColumnTable instance);
+    partial void UpdatezColumnTable(zColumnTable instance);
+    partial void DeletezColumnTable(zColumnTable instance);
     #endregion
 		
 		public CompetitionDataContext() : 
@@ -130,14 +130,6 @@ namespace Competitions
 			}
 		}
 		
-		public System.Data.Linq.Table<zColumnTable> zColumnTable
-		{
-			get
-			{
-				return this.GetTable<zColumnTable>();
-			}
-		}
-		
 		public System.Data.Linq.Table<zConstantListTable> zConstantListTable
 		{
 			get
@@ -191,6 +183,14 @@ namespace Competitions
 			get
 			{
 				return this.GetTable<zDocumentsTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<zColumnTable> zColumnTables
+		{
+			get
+			{
+				return this.GetTable<zColumnTable>();
 			}
 		}
 	}
@@ -457,7 +457,7 @@ namespace Competitions
 		
 		private EntitySet<zCollectedRowsTable> _zCollectedRowsTable;
 		
-		private EntitySet<zColumnTable> _zColumnTable;
+		private EntitySet<zColumnTable> _zColumnTables;
 		
 		private EntityRef<zCompetitionsTable> _zCompetitionsTable;
 		
@@ -482,7 +482,7 @@ namespace Competitions
 		public zSectionTable()
 		{
 			this._zCollectedRowsTable = new EntitySet<zCollectedRowsTable>(new Action<zCollectedRowsTable>(this.attach_zCollectedRowsTable), new Action<zCollectedRowsTable>(this.detach_zCollectedRowsTable));
-			this._zColumnTable = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTable), new Action<zColumnTable>(this.detach_zColumnTable));
+			this._zColumnTables = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTables), new Action<zColumnTable>(this.detach_zColumnTables));
 			this._zCompetitionsTable = default(EntityRef<zCompetitionsTable>);
 			OnCreated();
 		}
@@ -624,16 +624,16 @@ namespace Competitions
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zSectionTable_zColumnTable", Storage="_zColumnTable", ThisKey="ID", OtherKey="FK_SectionTable")]
-		public EntitySet<zColumnTable> zColumnTable
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zSectionTable_zColumnTable", Storage="_zColumnTables", ThisKey="ID", OtherKey="FK_SectionTable")]
+		public EntitySet<zColumnTable> zColumnTables
 		{
 			get
 			{
-				return this._zColumnTable;
+				return this._zColumnTables;
 			}
 			set
 			{
-				this._zColumnTable.Assign(value);
+				this._zColumnTables.Assign(value);
 			}
 		}
 		
@@ -703,13 +703,13 @@ namespace Competitions
 			entity.zSectionTable = null;
 		}
 		
-		private void attach_zColumnTable(zColumnTable entity)
+		private void attach_zColumnTables(zColumnTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zSectionTable = this;
 		}
 		
-		private void detach_zColumnTable(zColumnTable entity)
+		private void detach_zColumnTables(zColumnTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zSectionTable = null;
@@ -754,9 +754,9 @@ namespace Competitions
 		
 		private EntityRef<zCollectedRowsTable> _zCollectedRowsTable;
 		
-		private EntityRef<zColumnTable> _zColumnTable;
-		
 		private EntityRef<zConstantListTable> _zConstantListTable;
+		
+		private EntityRef<zColumnTable> _zColumnTable;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -795,8 +795,8 @@ namespace Competitions
 			this._zCollectedDataTable2 = new EntitySet<zCollectedDataTable>(new Action<zCollectedDataTable>(this.attach_zCollectedDataTable2), new Action<zCollectedDataTable>(this.detach_zCollectedDataTable2));
 			this._zCollectedDataTable1 = default(EntityRef<zCollectedDataTable>);
 			this._zCollectedRowsTable = default(EntityRef<zCollectedRowsTable>);
-			this._zColumnTable = default(EntityRef<zColumnTable>);
 			this._zConstantListTable = default(EntityRef<zConstantListTable>);
+			this._zColumnTable = default(EntityRef<zColumnTable>);
 			OnCreated();
 		}
 		
@@ -1157,40 +1157,6 @@ namespace Competitions
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zCollectedDataTable", Storage="_zColumnTable", ThisKey="FK_ColumnTable", OtherKey="ID", IsForeignKey=true)]
-		public zColumnTable zColumnTable
-		{
-			get
-			{
-				return this._zColumnTable.Entity;
-			}
-			set
-			{
-				zColumnTable previousValue = this._zColumnTable.Entity;
-				if (((previousValue != value) 
-							|| (this._zColumnTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._zColumnTable.Entity = null;
-						previousValue.zCollectedDataTable.Remove(this);
-					}
-					this._zColumnTable.Entity = value;
-					if ((value != null))
-					{
-						value.zCollectedDataTable.Add(this);
-						this._FK_ColumnTable = value.ID;
-					}
-					else
-					{
-						this._FK_ColumnTable = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("zColumnTable");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zConstantListTable_zCollectedDataTable", Storage="_zConstantListTable", ThisKey="FK_ConstantListTable", OtherKey="ID", IsForeignKey=true)]
 		public zConstantListTable zConstantListTable
 		{
@@ -1221,6 +1187,40 @@ namespace Competitions
 						this._FK_ConstantListTable = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("zConstantListTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zCollectedDataTable", Storage="_zColumnTable", ThisKey="FK_ColumnTable", OtherKey="ID", IsForeignKey=true)]
+		public zColumnTable zColumnTable
+		{
+			get
+			{
+				return this._zColumnTable.Entity;
+			}
+			set
+			{
+				zColumnTable previousValue = this._zColumnTable.Entity;
+				if (((previousValue != value) 
+							|| (this._zColumnTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._zColumnTable.Entity = null;
+						previousValue.zCollectedDataTables.Remove(this);
+					}
+					this._zColumnTable.Entity = value;
+					if ((value != null))
+					{
+						value.zCollectedDataTables.Add(this);
+						this._FK_ColumnTable = value.ID;
+					}
+					else
+					{
+						this._FK_ColumnTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("zColumnTable");
 				}
 			}
 		}
@@ -1502,415 +1502,6 @@ namespace Competitions
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.zColumnTable")]
-	public partial class zColumnTable : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private bool _Active;
-		
-		private string _Name;
-		
-		private string _Description;
-		
-		private int _FK_SectionTable;
-		
-		private int _DataType;
-		
-		private System.Nullable<int> _FK_ColumnTable;
-		
-		private System.Nullable<int> _FK_ConstantListsTable;
-		
-		private EntitySet<zCollectedDataTable> _zCollectedDataTable;
-		
-		private EntitySet<zColumnTable> _zColumnTable2;
-		
-		private EntityRef<zColumnTable> _zColumnTable1;
-		
-		private EntityRef<zSectionTable> _zSectionTable;
-		
-		private EntityRef<zConstantListTable> _zConstantListTable;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnActiveChanging(bool value);
-    partial void OnActiveChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    partial void OnFK_SectionTableChanging(int value);
-    partial void OnFK_SectionTableChanged();
-    partial void OnDataTypeChanging(int value);
-    partial void OnDataTypeChanged();
-    partial void OnFK_ColumnTableChanging(System.Nullable<int> value);
-    partial void OnFK_ColumnTableChanged();
-    partial void OnFK_ConstantListsTableChanging(System.Nullable<int> value);
-    partial void OnFK_ConstantListsTableChanged();
-    #endregion
-		
-		public zColumnTable()
-		{
-			this._zCollectedDataTable = new EntitySet<zCollectedDataTable>(new Action<zCollectedDataTable>(this.attach_zCollectedDataTable), new Action<zCollectedDataTable>(this.detach_zCollectedDataTable));
-			this._zColumnTable2 = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTable2), new Action<zColumnTable>(this.detach_zColumnTable2));
-			this._zColumnTable1 = default(EntityRef<zColumnTable>);
-			this._zSectionTable = default(EntityRef<zSectionTable>);
-			this._zConstantListTable = default(EntityRef<zConstantListTable>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
-		public bool Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_SectionTable", DbType="Int NOT NULL")]
-		public int FK_SectionTable
-		{
-			get
-			{
-				return this._FK_SectionTable;
-			}
-			set
-			{
-				if ((this._FK_SectionTable != value))
-				{
-					if (this._zSectionTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_SectionTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_SectionTable = value;
-					this.SendPropertyChanged("FK_SectionTable");
-					this.OnFK_SectionTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DataType", DbType="Int NOT NULL")]
-		public int DataType
-		{
-			get
-			{
-				return this._DataType;
-			}
-			set
-			{
-				if ((this._DataType != value))
-				{
-					this.OnDataTypeChanging(value);
-					this.SendPropertyChanging();
-					this._DataType = value;
-					this.SendPropertyChanged("DataType");
-					this.OnDataTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ColumnTable", DbType="Int")]
-		public System.Nullable<int> FK_ColumnTable
-		{
-			get
-			{
-				return this._FK_ColumnTable;
-			}
-			set
-			{
-				if ((this._FK_ColumnTable != value))
-				{
-					if (this._zColumnTable1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_ColumnTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_ColumnTable = value;
-					this.SendPropertyChanged("FK_ColumnTable");
-					this.OnFK_ColumnTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ConstantListsTable", DbType="Int")]
-		public System.Nullable<int> FK_ConstantListsTable
-		{
-			get
-			{
-				return this._FK_ConstantListsTable;
-			}
-			set
-			{
-				if ((this._FK_ConstantListsTable != value))
-				{
-					if (this._zConstantListTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_ConstantListsTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_ConstantListsTable = value;
-					this.SendPropertyChanged("FK_ConstantListsTable");
-					this.OnFK_ConstantListsTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zCollectedDataTable", Storage="_zCollectedDataTable", ThisKey="ID", OtherKey="FK_ColumnTable")]
-		public EntitySet<zCollectedDataTable> zCollectedDataTable
-		{
-			get
-			{
-				return this._zCollectedDataTable;
-			}
-			set
-			{
-				this._zCollectedDataTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable", Storage="_zColumnTable2", ThisKey="ID", OtherKey="FK_ColumnTable")]
-		public EntitySet<zColumnTable> zColumnTable2
-		{
-			get
-			{
-				return this._zColumnTable2;
-			}
-			set
-			{
-				this._zColumnTable2.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable", Storage="_zColumnTable1", ThisKey="FK_ColumnTable", OtherKey="ID", IsForeignKey=true)]
-		public zColumnTable zColumnTable1
-		{
-			get
-			{
-				return this._zColumnTable1.Entity;
-			}
-			set
-			{
-				zColumnTable previousValue = this._zColumnTable1.Entity;
-				if (((previousValue != value) 
-							|| (this._zColumnTable1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._zColumnTable1.Entity = null;
-						previousValue.zColumnTable2.Remove(this);
-					}
-					this._zColumnTable1.Entity = value;
-					if ((value != null))
-					{
-						value.zColumnTable2.Add(this);
-						this._FK_ColumnTable = value.ID;
-					}
-					else
-					{
-						this._FK_ColumnTable = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("zColumnTable1");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zSectionTable_zColumnTable", Storage="_zSectionTable", ThisKey="FK_SectionTable", OtherKey="ID", IsForeignKey=true)]
-		public zSectionTable zSectionTable
-		{
-			get
-			{
-				return this._zSectionTable.Entity;
-			}
-			set
-			{
-				zSectionTable previousValue = this._zSectionTable.Entity;
-				if (((previousValue != value) 
-							|| (this._zSectionTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._zSectionTable.Entity = null;
-						previousValue.zColumnTable.Remove(this);
-					}
-					this._zSectionTable.Entity = value;
-					if ((value != null))
-					{
-						value.zColumnTable.Add(this);
-						this._FK_SectionTable = value.ID;
-					}
-					else
-					{
-						this._FK_SectionTable = default(int);
-					}
-					this.SendPropertyChanged("zSectionTable");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zConstantListTable_zColumnTable", Storage="_zConstantListTable", ThisKey="FK_ConstantListsTable", OtherKey="ID", IsForeignKey=true)]
-		public zConstantListTable zConstantListTable
-		{
-			get
-			{
-				return this._zConstantListTable.Entity;
-			}
-			set
-			{
-				zConstantListTable previousValue = this._zConstantListTable.Entity;
-				if (((previousValue != value) 
-							|| (this._zConstantListTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._zConstantListTable.Entity = null;
-						previousValue.zColumnTable.Remove(this);
-					}
-					this._zConstantListTable.Entity = value;
-					if ((value != null))
-					{
-						value.zColumnTable.Add(this);
-						this._FK_ConstantListsTable = value.ID;
-					}
-					else
-					{
-						this._FK_ConstantListsTable = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("zConstantListTable");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_zCollectedDataTable(zCollectedDataTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.zColumnTable = this;
-		}
-		
-		private void detach_zCollectedDataTable(zCollectedDataTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.zColumnTable = null;
-		}
-		
-		private void attach_zColumnTable2(zColumnTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.zColumnTable1 = this;
-		}
-		
-		private void detach_zColumnTable2(zColumnTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.zColumnTable1 = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.zConstantListTable")]
 	public partial class zConstantListTable : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1927,7 +1518,7 @@ namespace Competitions
 		
 		private EntitySet<zCollectedDataTable> _zCollectedDataTable;
 		
-		private EntitySet<zColumnTable> _zColumnTable;
+		private EntitySet<zColumnTable> _zColumnTables;
 		
 		private EntityRef<zCompetitionsTable> _zCompetitionsTable;
 		
@@ -1948,7 +1539,7 @@ namespace Competitions
 		public zConstantListTable()
 		{
 			this._zCollectedDataTable = new EntitySet<zCollectedDataTable>(new Action<zCollectedDataTable>(this.attach_zCollectedDataTable), new Action<zCollectedDataTable>(this.detach_zCollectedDataTable));
-			this._zColumnTable = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTable), new Action<zColumnTable>(this.detach_zColumnTable));
+			this._zColumnTables = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTables), new Action<zColumnTable>(this.detach_zColumnTables));
 			this._zCompetitionsTable = default(EntityRef<zCompetitionsTable>);
 			OnCreated();
 		}
@@ -2050,16 +1641,16 @@ namespace Competitions
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zConstantListTable_zColumnTable", Storage="_zColumnTable", ThisKey="ID", OtherKey="FK_ConstantListsTable")]
-		public EntitySet<zColumnTable> zColumnTable
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zConstantListTable_zColumnTable", Storage="_zColumnTables", ThisKey="ID", OtherKey="FK_ConstantListsTable")]
+		public EntitySet<zColumnTable> zColumnTables
 		{
 			get
 			{
-				return this._zColumnTable;
+				return this._zColumnTables;
 			}
 			set
 			{
-				this._zColumnTable.Assign(value);
+				this._zColumnTables.Assign(value);
 			}
 		}
 		
@@ -2129,13 +1720,13 @@ namespace Competitions
 			entity.zConstantListTable = null;
 		}
 		
-		private void attach_zColumnTable(zColumnTable entity)
+		private void attach_zColumnTables(zColumnTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zConstantListTable = this;
 		}
 		
-		private void detach_zColumnTable(zColumnTable entity)
+		private void detach_zColumnTables(zColumnTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zConstantListTable = null;
@@ -3707,6 +3298,601 @@ namespace Competitions
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.zColumnTable")]
+	public partial class zColumnTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private bool _Active;
+		
+		private string _Name;
+		
+		private string _Description;
+		
+		private int _FK_SectionTable;
+		
+		private int _DataType;
+		
+		private System.Nullable<int> _FK_ColumnTable;
+		
+		private System.Nullable<int> _FK_ConstantListsTable;
+		
+		private System.Nullable<int> _FK_ColumnConnectFromTable;
+		
+		private System.Nullable<int> _FK_ColumnConnectToTable;
+		
+		private EntitySet<zCollectedDataTable> _zCollectedDataTables;
+		
+		private EntitySet<zColumnTable> _zColumnTables;
+		
+		private EntitySet<zColumnTable> _zColumnTables1;
+		
+		private EntitySet<zColumnTable> _zColumnTables2;
+		
+		private EntityRef<zColumnTable> _zColumnTable1;
+		
+		private EntityRef<zSectionTable> _zSectionTable;
+		
+		private EntityRef<zColumnTable> _zColumnTable2;
+		
+		private EntityRef<zColumnTable> _zColumnTable3;
+		
+		private EntityRef<zConstantListTable> _zConstantListTable;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnFK_SectionTableChanging(int value);
+    partial void OnFK_SectionTableChanged();
+    partial void OnDataTypeChanging(int value);
+    partial void OnDataTypeChanged();
+    partial void OnFK_ColumnTableChanging(System.Nullable<int> value);
+    partial void OnFK_ColumnTableChanged();
+    partial void OnFK_ConstantListsTableChanging(System.Nullable<int> value);
+    partial void OnFK_ConstantListsTableChanged();
+    partial void OnFK_ColumnConnectFromTableChanging(System.Nullable<int> value);
+    partial void OnFK_ColumnConnectFromTableChanged();
+    partial void OnFK_ColumnConnectToTableChanging(System.Nullable<int> value);
+    partial void OnFK_ColumnConnectToTableChanged();
+    #endregion
+		
+		public zColumnTable()
+		{
+			this._zCollectedDataTables = new EntitySet<zCollectedDataTable>(new Action<zCollectedDataTable>(this.attach_zCollectedDataTables), new Action<zCollectedDataTable>(this.detach_zCollectedDataTables));
+			this._zColumnTables = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTables), new Action<zColumnTable>(this.detach_zColumnTables));
+			this._zColumnTables1 = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTables1), new Action<zColumnTable>(this.detach_zColumnTables1));
+			this._zColumnTables2 = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTables2), new Action<zColumnTable>(this.detach_zColumnTables2));
+			this._zColumnTable1 = default(EntityRef<zColumnTable>);
+			this._zSectionTable = default(EntityRef<zSectionTable>);
+			this._zColumnTable2 = default(EntityRef<zColumnTable>);
+			this._zColumnTable3 = default(EntityRef<zColumnTable>);
+			this._zConstantListTable = default(EntityRef<zConstantListTable>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_SectionTable", DbType="Int NOT NULL")]
+		public int FK_SectionTable
+		{
+			get
+			{
+				return this._FK_SectionTable;
+			}
+			set
+			{
+				if ((this._FK_SectionTable != value))
+				{
+					if (this._zSectionTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_SectionTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_SectionTable = value;
+					this.SendPropertyChanged("FK_SectionTable");
+					this.OnFK_SectionTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DataType", DbType="Int NOT NULL")]
+		public int DataType
+		{
+			get
+			{
+				return this._DataType;
+			}
+			set
+			{
+				if ((this._DataType != value))
+				{
+					this.OnDataTypeChanging(value);
+					this.SendPropertyChanging();
+					this._DataType = value;
+					this.SendPropertyChanged("DataType");
+					this.OnDataTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ColumnTable", DbType="Int")]
+		public System.Nullable<int> FK_ColumnTable
+		{
+			get
+			{
+				return this._FK_ColumnTable;
+			}
+			set
+			{
+				if ((this._FK_ColumnTable != value))
+				{
+					if (this._zColumnTable1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_ColumnTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_ColumnTable = value;
+					this.SendPropertyChanged("FK_ColumnTable");
+					this.OnFK_ColumnTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ConstantListsTable", DbType="Int")]
+		public System.Nullable<int> FK_ConstantListsTable
+		{
+			get
+			{
+				return this._FK_ConstantListsTable;
+			}
+			set
+			{
+				if ((this._FK_ConstantListsTable != value))
+				{
+					if (this._zConstantListTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_ConstantListsTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_ConstantListsTable = value;
+					this.SendPropertyChanged("FK_ConstantListsTable");
+					this.OnFK_ConstantListsTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ColumnConnectFromTable", DbType="Int")]
+		public System.Nullable<int> FK_ColumnConnectFromTable
+		{
+			get
+			{
+				return this._FK_ColumnConnectFromTable;
+			}
+			set
+			{
+				if ((this._FK_ColumnConnectFromTable != value))
+				{
+					if (this._zColumnTable3.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_ColumnConnectFromTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_ColumnConnectFromTable = value;
+					this.SendPropertyChanged("FK_ColumnConnectFromTable");
+					this.OnFK_ColumnConnectFromTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ColumnConnectToTable", DbType="Int")]
+		public System.Nullable<int> FK_ColumnConnectToTable
+		{
+			get
+			{
+				return this._FK_ColumnConnectToTable;
+			}
+			set
+			{
+				if ((this._FK_ColumnConnectToTable != value))
+				{
+					if (this._zColumnTable2.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_ColumnConnectToTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_ColumnConnectToTable = value;
+					this.SendPropertyChanged("FK_ColumnConnectToTable");
+					this.OnFK_ColumnConnectToTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zCollectedDataTable", Storage="_zCollectedDataTables", ThisKey="ID", OtherKey="FK_ColumnTable")]
+		public EntitySet<zCollectedDataTable> zCollectedDataTables
+		{
+			get
+			{
+				return this._zCollectedDataTables;
+			}
+			set
+			{
+				this._zCollectedDataTables.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable", Storage="_zColumnTables", ThisKey="ID", OtherKey="FK_ColumnTable")]
+		public EntitySet<zColumnTable> zColumnTables
+		{
+			get
+			{
+				return this._zColumnTables;
+			}
+			set
+			{
+				this._zColumnTables.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable1", Storage="_zColumnTables1", ThisKey="ID", OtherKey="FK_ColumnConnectToTable")]
+		public EntitySet<zColumnTable> zColumnTables1
+		{
+			get
+			{
+				return this._zColumnTables1;
+			}
+			set
+			{
+				this._zColumnTables1.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable2", Storage="_zColumnTables2", ThisKey="ID", OtherKey="FK_ColumnConnectFromTable")]
+		public EntitySet<zColumnTable> zColumnTables2
+		{
+			get
+			{
+				return this._zColumnTables2;
+			}
+			set
+			{
+				this._zColumnTables2.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable", Storage="_zColumnTable1", ThisKey="FK_ColumnTable", OtherKey="ID", IsForeignKey=true)]
+		public zColumnTable zColumnTable1
+		{
+			get
+			{
+				return this._zColumnTable1.Entity;
+			}
+			set
+			{
+				zColumnTable previousValue = this._zColumnTable1.Entity;
+				if (((previousValue != value) 
+							|| (this._zColumnTable1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._zColumnTable1.Entity = null;
+						previousValue.zColumnTables.Remove(this);
+					}
+					this._zColumnTable1.Entity = value;
+					if ((value != null))
+					{
+						value.zColumnTables.Add(this);
+						this._FK_ColumnTable = value.ID;
+					}
+					else
+					{
+						this._FK_ColumnTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("zColumnTable1");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zSectionTable_zColumnTable", Storage="_zSectionTable", ThisKey="FK_SectionTable", OtherKey="ID", IsForeignKey=true)]
+		public zSectionTable zSectionTable
+		{
+			get
+			{
+				return this._zSectionTable.Entity;
+			}
+			set
+			{
+				zSectionTable previousValue = this._zSectionTable.Entity;
+				if (((previousValue != value) 
+							|| (this._zSectionTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._zSectionTable.Entity = null;
+						previousValue.zColumnTables.Remove(this);
+					}
+					this._zSectionTable.Entity = value;
+					if ((value != null))
+					{
+						value.zColumnTables.Add(this);
+						this._FK_SectionTable = value.ID;
+					}
+					else
+					{
+						this._FK_SectionTable = default(int);
+					}
+					this.SendPropertyChanged("zSectionTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable1", Storage="_zColumnTable2", ThisKey="FK_ColumnConnectToTable", OtherKey="ID", IsForeignKey=true)]
+		public zColumnTable zColumnTable2
+		{
+			get
+			{
+				return this._zColumnTable2.Entity;
+			}
+			set
+			{
+				zColumnTable previousValue = this._zColumnTable2.Entity;
+				if (((previousValue != value) 
+							|| (this._zColumnTable2.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._zColumnTable2.Entity = null;
+						previousValue.zColumnTables1.Remove(this);
+					}
+					this._zColumnTable2.Entity = value;
+					if ((value != null))
+					{
+						value.zColumnTables1.Add(this);
+						this._FK_ColumnConnectToTable = value.ID;
+					}
+					else
+					{
+						this._FK_ColumnConnectToTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("zColumnTable2");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable2", Storage="_zColumnTable3", ThisKey="FK_ColumnConnectFromTable", OtherKey="ID", IsForeignKey=true)]
+		public zColumnTable zColumnTable3
+		{
+			get
+			{
+				return this._zColumnTable3.Entity;
+			}
+			set
+			{
+				zColumnTable previousValue = this._zColumnTable3.Entity;
+				if (((previousValue != value) 
+							|| (this._zColumnTable3.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._zColumnTable3.Entity = null;
+						previousValue.zColumnTables2.Remove(this);
+					}
+					this._zColumnTable3.Entity = value;
+					if ((value != null))
+					{
+						value.zColumnTables2.Add(this);
+						this._FK_ColumnConnectFromTable = value.ID;
+					}
+					else
+					{
+						this._FK_ColumnConnectFromTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("zColumnTable3");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zConstantListTable_zColumnTable", Storage="_zConstantListTable", ThisKey="FK_ConstantListsTable", OtherKey="ID", IsForeignKey=true)]
+		public zConstantListTable zConstantListTable
+		{
+			get
+			{
+				return this._zConstantListTable.Entity;
+			}
+			set
+			{
+				zConstantListTable previousValue = this._zConstantListTable.Entity;
+				if (((previousValue != value) 
+							|| (this._zConstantListTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._zConstantListTable.Entity = null;
+						previousValue.zColumnTables.Remove(this);
+					}
+					this._zConstantListTable.Entity = value;
+					if ((value != null))
+					{
+						value.zColumnTables.Add(this);
+						this._FK_ConstantListsTable = value.ID;
+					}
+					else
+					{
+						this._FK_ConstantListsTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("zConstantListTable");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_zCollectedDataTables(zCollectedDataTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.zColumnTable = this;
+		}
+		
+		private void detach_zCollectedDataTables(zCollectedDataTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.zColumnTable = null;
+		}
+		
+		private void attach_zColumnTables(zColumnTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.zColumnTable1 = this;
+		}
+		
+		private void detach_zColumnTables(zColumnTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.zColumnTable1 = null;
+		}
+		
+		private void attach_zColumnTables1(zColumnTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.zColumnTable2 = this;
+		}
+		
+		private void detach_zColumnTables1(zColumnTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.zColumnTable2 = null;
+		}
+		
+		private void attach_zColumnTables2(zColumnTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.zColumnTable3 = this;
+		}
+		
+		private void detach_zColumnTables2(zColumnTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.zColumnTable3 = null;
 		}
 	}
 }

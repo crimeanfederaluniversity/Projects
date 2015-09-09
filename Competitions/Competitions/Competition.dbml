@@ -21,7 +21,7 @@
       <Column Name="FK_CompetitionsTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="ColumnMaxCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="zSectionTable_zCollectedRowsTable" Member="zCollectedRowsTable" ThisKey="ID" OtherKey="FK_SectionTable" Type="zCollectedRowsTable" />
-      <Association Name="zSectionTable_zColumnTable" Member="zColumnTable" ThisKey="ID" OtherKey="FK_SectionTable" Type="zColumnTable" />
+      <Association Name="zSectionTable_zColumnTable" Member="zColumnTables" ThisKey="ID" OtherKey="FK_SectionTable" Type="zColumnTable" />
       <Association Name="zCompetitionsTable_zSectionTable" Member="zCompetitionsTable" ThisKey="FK_CompetitionsTable" OtherKey="ID" Type="zCompetitionsTable" IsForeignKey="true" />
     </Type>
   </Table>
@@ -43,8 +43,8 @@
       <Association Name="zCollectedDataTable_zCollectedDataTable" Member="zCollectedDataTable2" ThisKey="ID" OtherKey="ValueFK_CollectedDataTable" Type="zCollectedDataTable" />
       <Association Name="zCollectedDataTable_zCollectedDataTable" Member="zCollectedDataTable1" ThisKey="ValueFK_CollectedDataTable" OtherKey="ID" Type="zCollectedDataTable" IsForeignKey="true" />
       <Association Name="zCollectedRowsTable_zCollectedDataTable" Member="zCollectedRowsTable" ThisKey="FK_CollectedRowsTable" OtherKey="ID" Type="zCollectedRowsTable" IsForeignKey="true" />
-      <Association Name="zColumnTable_zCollectedDataTable" Member="zColumnTable" ThisKey="FK_ColumnTable" OtherKey="ID" Type="zColumnTable" IsForeignKey="true" />
       <Association Name="zConstantListTable_zCollectedDataTable" Member="zConstantListTable" ThisKey="FK_ConstantListTable" OtherKey="ID" Type="zConstantListTable" IsForeignKey="true" />
+      <Association Name="zColumnTable_zCollectedDataTable" Member="zColumnTable" ThisKey="FK_ColumnTable" OtherKey="ID" Type="zColumnTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.zCollectedRowsTable" Member="zCollectedRowsTable">
@@ -58,23 +58,6 @@
       <Association Name="zApplicationTable_zCollectedRowsTable" Member="zApplicationTable" ThisKey="FK_ApplicationTable" OtherKey="ID" Type="zApplicationTable" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.zColumnTable" Member="zColumnTable">
-    <Type Name="zColumnTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="FK_SectionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="DataType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FK_ColumnTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_ConstantListsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="zColumnTable_zCollectedDataTable" Member="zCollectedDataTable" ThisKey="ID" OtherKey="FK_ColumnTable" Type="zCollectedDataTable" />
-      <Association Name="zColumnTable_zColumnTable" Member="zColumnTable2" ThisKey="ID" OtherKey="FK_ColumnTable" Type="zColumnTable" />
-      <Association Name="zColumnTable_zColumnTable" Member="zColumnTable1" ThisKey="FK_ColumnTable" OtherKey="ID" Type="zColumnTable" IsForeignKey="true" />
-      <Association Name="zSectionTable_zColumnTable" Member="zSectionTable" ThisKey="FK_SectionTable" OtherKey="ID" Type="zSectionTable" IsForeignKey="true" />
-      <Association Name="zConstantListTable_zColumnTable" Member="zConstantListTable" ThisKey="FK_ConstantListsTable" OtherKey="ID" Type="zConstantListTable" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.zConstantListTable" Member="zConstantListTable">
     <Type Name="zConstantListTable">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -82,7 +65,7 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
       <Column Name="FK_CompetitionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="zConstantListTable_zCollectedDataTable" Member="zCollectedDataTable" ThisKey="ID" OtherKey="FK_ConstantListTable" Type="zCollectedDataTable" />
-      <Association Name="zConstantListTable_zColumnTable" Member="zColumnTable" ThisKey="ID" OtherKey="FK_ConstantListsTable" Type="zColumnTable" />
+      <Association Name="zConstantListTable_zColumnTable" Member="zColumnTables" ThisKey="ID" OtherKey="FK_ConstantListsTable" Type="zColumnTable" />
       <Association Name="zCompetitionsTable_zConstantListTable" Member="zCompetitionsTable" ThisKey="FK_CompetitionTable" OtherKey="ID" Type="zCompetitionsTable" IsForeignKey="true" />
     </Type>
   </Table>
@@ -157,6 +140,29 @@
       <Column Name="FK_ApplicationTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="AddDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="zApplicationTable_zDocumentsTable" Member="zApplicationTable" ThisKey="FK_ApplicationTable" OtherKey="ID" Type="zApplicationTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.zColumnTable" Member="zColumnTables">
+    <Type Name="zColumnTable">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="FK_SectionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DataType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FK_ColumnTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_ConstantListsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_ColumnConnectFromTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_ColumnConnectToTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="zColumnTable_zCollectedDataTable" Member="zCollectedDataTables" ThisKey="ID" OtherKey="FK_ColumnTable" Type="zCollectedDataTable" />
+      <Association Name="zColumnTable_zColumnTable" Member="zColumnTables" ThisKey="ID" OtherKey="FK_ColumnTable" Type="zColumnTable" />
+      <Association Name="zColumnTable_zColumnTable1" Member="zColumnTables1" ThisKey="ID" OtherKey="FK_ColumnConnectToTable" Type="zColumnTable" />
+      <Association Name="zColumnTable_zColumnTable2" Member="zColumnTables2" ThisKey="ID" OtherKey="FK_ColumnConnectFromTable" Type="zColumnTable" />
+      <Association Name="zColumnTable_zColumnTable" Member="zColumnTable1" ThisKey="FK_ColumnTable" OtherKey="ID" Type="zColumnTable" IsForeignKey="true" />
+      <Association Name="zSectionTable_zColumnTable" Member="zSectionTable" ThisKey="FK_SectionTable" OtherKey="ID" Type="zSectionTable" IsForeignKey="true" />
+      <Association Name="zColumnTable_zColumnTable1" Member="zColumnTable2" ThisKey="FK_ColumnConnectToTable" OtherKey="ID" Type="zColumnTable" IsForeignKey="true" />
+      <Association Name="zColumnTable_zColumnTable2" Member="zColumnTable3" ThisKey="FK_ColumnConnectFromTable" OtherKey="ID" Type="zColumnTable" IsForeignKey="true" />
+      <Association Name="zConstantListTable_zColumnTable" Member="zConstantListTable" ThisKey="FK_ConstantListsTable" OtherKey="ID" Type="zConstantListTable" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

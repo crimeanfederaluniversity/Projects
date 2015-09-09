@@ -72,7 +72,7 @@ namespace Competitions
                 }
                 case 14:
                 {
-                    return "Суммирование по двум столбцам";
+                    return "Название заявки";
                 }
                 default :
                 {
@@ -123,10 +123,9 @@ namespace Competitions
                 return false;
             }
         }
-        public bool DataTypeWithConnectionToCollectedAndColumn(int dataType)
+        public bool DataTypeWithConnectionToColumnsWithParams(int dataType)
         {
-            if (IsDataTypeSymWithParam(dataType)
-                || IsDataTypeSymByTwoColumns(dataType))
+            if (IsDataTypeSymWithParam(dataType))
             {
                 return true;
             }
@@ -289,7 +288,7 @@ namespace Competitions
                 return false;
             } 
         }
-        public bool IsDataTypeSymByTwoColumns(int dataType)
+        public bool IsDataTypeNameOfApplication(int dataType)
         {
             if (dataType == 14)
             {

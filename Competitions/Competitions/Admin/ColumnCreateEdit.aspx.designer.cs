@@ -85,6 +85,33 @@ namespace Competitions.Admin {
         protected global::System.Web.UI.WebControls.DropDownList FkToConstantDropDown;
         
         /// <summary>
+        /// Panel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Panel1;
+        
+        /// <summary>
+        /// Fk_ColumnConnectFromDropDown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList Fk_ColumnConnectFromDropDown;
+        
+        /// <summary>
+        /// Fk_ColumnConnectToDropDown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList Fk_ColumnConnectToDropDown;
+        
+        /// <summary>
         /// CreateSaveButton control.
         /// </summary>
         /// <remarks>

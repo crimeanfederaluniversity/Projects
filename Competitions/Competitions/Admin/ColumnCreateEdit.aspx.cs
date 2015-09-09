@@ -10,13 +10,73 @@ namespace Competitions.Admin
 {
     public partial class ColumnCreateEdit : System.Web.UI.Page
     {
+        private ListItem[] GetColumnsInThisSection(int sectionId)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            List<zColumnTable> columnList = (from a in competitionDataBase.zColumnTables
+                                             where a.Active
+                                             join b in competitionDataBase.zSectionTable
+                                                 on a.FK_SectionTable equals b.ID
+                                             where b.Active == true
+                                                   && b.ID == sectionId
+                                             select a).Distinct().ToList();
+
+            ListItem[] newListItemAray = new ListItem[columnList.Count];
+            for (int i = 0; i < columnList.Count; i++)
+            {
+                ListItem newItem = new ListItem();
+                newItem.Text = columnList[i].Name;
+                newItem.Value = columnList[i].ID.ToString();            
+                newListItemAray[i] = newItem;
+            }
+            return newListItemAray;
+        }
+        private ListItem[] GetColumnsInThisApplicationWithoutThisSection(int sectionId, int competitionId)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            List<zColumnTable> columnList = (from a in competitionDataBase.zColumnTables
+                                             where a.Active
+                                             join b in competitionDataBase.zSectionTable
+                                                 on a.FK_SectionTable equals b.ID
+                                             where b.Active == true
+                                                   && b.ID != sectionId
+                                                   && b.FK_CompetitionsTable == competitionId
+                                             select a).Distinct().ToList();
+
+            ListItem[] newListItemAray = new ListItem[columnList.Count];
+            for (int i = 0; i < columnList.Count; i++)
+            {
+                ListItem newItem = new ListItem();
+                newItem.Text = columnList[i].Name;
+                newItem.Value = columnList[i].ID.ToString();
+                newListItemAray[i] = newItem;
+            }
+            return newListItemAray;
+        }
+        private ListItem[] GetConstantList(int competitionId)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            List<zConstantListTable> constantList = (from a in competitionDataBase.zConstantListTable
+                                                     where a.Active
+                                                           && a.FK_CompetitionTable == competitionId
+                                                     select a).ToList();
+
+            ListItem[] newListItemAray = new ListItem[constantList.Count];
+            for (int i = 0; i < constantList.Count; i++)
+            {
+                ListItem newItem = new ListItem();
+                newItem.Text = constantList[i].Name;
+                newItem.Value = constantList[i].ID.ToString();
+                newListItemAray[i] = newItem;
+            }
+            return newListItemAray;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {         
             if (!Page.IsPostBack)
             {
                 DataType dataType = new DataType();
                 DataTypeDropDownList.Items.AddRange(dataType.GetDataTypeListItemCollection());
-
                 var sessionParam1 = Session["CompetitionID"];
                 var sessionParam2 = Session["SectionID"];
                 var sessionParam3 = Session["ColumnID"];
@@ -30,42 +90,14 @@ namespace Competitions.Admin
                     int competitionId = (int)sessionParam1;
                     int sectionId = (int)sessionParam2;
                     int columnId = (int)sessionParam3;
-
                     CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                    List <zColumnTable> columnList = (from a in competitionDataBase.zColumnTable
-                        where a.Active
-                        join b in competitionDataBase.zSectionTable
-                            on a.FK_SectionTable equals b.ID
-                        where b.Active == true
-                              && b.ID != sectionId
-                              && b.FK_CompetitionsTable == competitionId
-                        select a).Distinct().ToList();
-                    foreach (zColumnTable currentColumn in columnList)
-                    {
-                        ListItem newItem = new  ListItem();
-                        newItem.Text = currentColumn.Name;
-                        newItem.Value = currentColumn.ID.ToString();
-                        FkToColumnDropDown.Items.Add(newItem);
-                    }
-
-                    List<zConstantListTable> constantList = (from a in competitionDataBase.zConstantListTable
-                        where a.Active
-                              && a.FK_CompetitionTable == competitionId
-                        select a).ToList();
-
-                    foreach (zConstantListTable currentConstantList in constantList)
-                    {
-                        ListItem newItem = new ListItem();
-                        newItem.Text = currentConstantList.Name;
-                        newItem.Value = currentConstantList.ID.ToString();
-                        FkToConstantDropDown.Items.Add(newItem);
-                    }
-                                     
-
-
+                    FkToColumnDropDown.Items.AddRange(GetColumnsInThisApplicationWithoutThisSection(sectionId,competitionId));
+                    FkToConstantDropDown.Items.AddRange(GetConstantList(competitionId));
+                    Fk_ColumnConnectFromDropDown.Items.AddRange(GetColumnsInThisSection(sectionId));
+                    Fk_ColumnConnectToDropDown.Items.AddRange(GetColumnsInThisApplicationWithoutThisSection(sectionId, competitionId));
                     if (columnId > 0)
                     {
-                        zColumnTable currentColum = (from a in competitionDataBase.zColumnTable
+                        zColumnTable currentColum = (from a in competitionDataBase.zColumnTables
                                                         where a.Active == true
                                                               && a.ID == columnId
                                                               && a.FK_SectionTable == sectionId
@@ -91,6 +123,14 @@ namespace Competitions.Admin
                                     .Selected = true;
                                 ChooseConstantForDropDownDiv.Visible = true;
                             }
+                            if (dataType.DataTypeWithConnectionToColumnsWithParams(currentColum.DataType))
+                            {
+                                Fk_ColumnConnectFromDropDown.Items.FindByValue(currentColum.FK_ColumnConnectFromTable.ToString()).Selected = true;
+                                Fk_ColumnConnectToDropDown.Items.FindByValue(currentColum.FK_ColumnConnectToTable.ToString()).Selected = true;
+                                Panel1.Visible = true;
+                                FkToColumnDropDown.Items.FindByValue(currentColum.FK_ColumnTable.ToString()).Selected = true;
+                                ChooseColumnForDropDownDiv.Visible = true;
+                            }
                         }
                     }
                 }
@@ -100,8 +140,16 @@ namespace Competitions.Admin
         {
             DataType dataType = new DataType();
             int chosenValue = Convert.ToInt32(DataTypeDropDownList.SelectedValue);
-                ChooseColumnForDropDownDiv.Visible = dataType.DataTypeWithConnectionToCollected(chosenValue);
-                ChooseConstantForDropDownDiv.Visible = dataType.DataTypeWithConnectionToConstant(chosenValue);    
+
+            ChooseColumnForDropDownDiv.Visible = dataType.DataTypeWithConnectionToCollected(chosenValue);
+            ChooseConstantForDropDownDiv.Visible = dataType.DataTypeWithConnectionToConstant(chosenValue);
+            Panel1.Visible = dataType.DataTypeWithConnectionToColumnsWithParams(chosenValue);
+
+            if (Panel1.Visible)
+            {               
+                ChooseColumnForDropDownDiv.Visible = true;
+            }
+           
         }
         protected void CreateSaveButton_Click(object sender, EventArgs e)
         {
@@ -125,7 +173,7 @@ namespace Competitions.Admin
                 {
                     if ((NameTextBox.Text.Length > 0) && (DescriptionTextBox.Text.Length > 0))
                     {
-                        zColumnTable currentColumn = (from a in competitionDataBase.zColumnTable
+                        zColumnTable currentColumn = (from a in competitionDataBase.zColumnTables
                                                          where a.Active == true
                                                                && a.ID == columnId
                                                                && a.FK_SectionTable == sectionId
@@ -149,7 +197,13 @@ namespace Competitions.Admin
                             if (dataType.DataTypeWithConnectionToConstant(dataTypeSelectedValue))
                             {
                                 currentColumn.FK_ConstantListsTable = Convert.ToInt32(FkToConstantDropDown.SelectedValue);
-                            }                        
+                            }
+                            if (dataType.DataTypeWithConnectionToColumnsWithParams(dataTypeSelectedValue))
+                            {
+                                currentColumn.FK_ConstantListsTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
+                                currentColumn.FK_ColumnConnectFromTable = Convert.ToInt32(Fk_ColumnConnectFromDropDown.SelectedValue);
+                                currentColumn.FK_ColumnConnectToTable = Convert.ToInt32(Fk_ColumnConnectToDropDown.SelectedValue);
+                            }
                             competitionDataBase.SubmitChanges();
                         }
                     }
@@ -173,7 +227,13 @@ namespace Competitions.Admin
                         {
                             newColumn.FK_ConstantListsTable = Convert.ToInt32(FkToConstantDropDown.SelectedValue);
                         }
-                        competitionDataBase.zColumnTable.InsertOnSubmit(newColumn);
+                        if (dataType.DataTypeWithConnectionToColumnsWithParams(dataTypeSelectedValue))
+                        {
+                            newColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
+                            newColumn.FK_ColumnConnectFromTable = Convert.ToInt32(Fk_ColumnConnectFromDropDown.SelectedValue);
+                            newColumn.FK_ColumnConnectToTable = Convert.ToInt32(Fk_ColumnConnectToDropDown.SelectedValue);
+                        }
+                        competitionDataBase.zColumnTables.InsertOnSubmit(newColumn);
                         competitionDataBase.SubmitChanges();
                     }
                 }

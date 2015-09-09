@@ -166,7 +166,41 @@ namespace Competitions.User
                 }                              
             }
             return true;
-        }   
+        }
+        public double GetValueFromCollectedData(int rowId, int columnId)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            zColumnTable currentColumn = (from a in competitionDataBase.zColumnTables
+                where a.ID == columnId
+                select a).FirstOrDefault();
+            DataType dataType = new DataType();
+            if (columnId != null)
+            {
+                zCollectedDataTable currenCollectedDataTable = (from a in competitionDataBase.zCollectedDataTable
+                                                                where a.Active == true
+                                                                      && a.FK_ColumnTable == columnId
+                                                                      && a.FK_CollectedRowsTable == rowId
+                                                                select a).FirstOrDefault();
+
+                if (dataType.IsDataTypeFloat(currentColumn.DataType))
+                {
+                    return (double) currenCollectedDataTable.ValueDouble;
+                }
+                if (dataType.IsDataTypeInteger(currentColumn.DataType))
+                {
+                    return (double)currenCollectedDataTable.ValueInt;
+                }
+                if (dataType.IsDataTypeBit(currentColumn.DataType))
+                {
+                    if ((bool)currenCollectedDataTable.ValueBit)
+                    {
+                        return 1;
+                    }
+                }
+
+            }
+            return 0;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
@@ -219,7 +253,7 @@ namespace Competitions.User
                                                 where a.ID == sectionId
                                                 select a).FirstOrDefault();
                 //найдем все колонки привязанные к этой секции
-                List<zColumnTable> columnInSectionList = (from a in competitionDataBase.zColumnTable
+                List<zColumnTable> columnInSectionList = (from a in competitionDataBase.zColumnTables
                                                           where a.Active == true
                                                                 && a.FK_SectionTable == sectionId
                                                           select a).ToList();
@@ -403,7 +437,7 @@ namespace Competitions.User
                             #region sum
                             if (dataType.IsDataTypeSum(currentColumn.DataType))
                             {
-                                zColumnTable columnToSum = (from a in competitionDataBase.zColumnTable
+                                zColumnTable columnToSum = (from a in competitionDataBase.zColumnTables
                                     where a.ID == currentColumn.FK_ColumnTable
                                     select a).FirstOrDefault();
                                 newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
@@ -463,7 +497,7 @@ namespace Competitions.User
                             #region MaxValue
                             if (dataType.IsDataTypeMaxValue(currentColumn.DataType))
                             {
-                                zColumnTable columnToFind = (from a in competitionDataBase.zColumnTable
+                                zColumnTable columnToFind = (from a in competitionDataBase.zColumnTables
                                                             where a.ID == currentColumn.FK_ColumnTable
                                                             select a).FirstOrDefault();
                                 newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
@@ -517,7 +551,7 @@ namespace Competitions.User
                             #region MinValue
                             if (dataType.IsDataTypeMinValue(currentColumn.DataType))
                             {
-                                zColumnTable columnToFind = (from a in competitionDataBase.zColumnTable
+                                zColumnTable columnToFind = (from a in competitionDataBase.zColumnTables
                                                              where a.ID == currentColumn.FK_ColumnTable
                                                              select a).FirstOrDefault();
                                 newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
@@ -580,6 +614,54 @@ namespace Competitions.User
                             }
 
                             #endregion
+                            #region sumWithParams
+                            if (dataType.IsDataTypeSymWithParam(currentColumn.DataType))
+                            {
+                                zColumnTable columnToSum = (from a in competitionDataBase.zColumnTables
+                                                            where a.ID == currentColumn.FK_ColumnTable
+                                                            select a).FirstOrDefault();
+                                newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
+
+                                //у нас есть колонка которую нужно суммировать
+                                //но нужно суммировать не все значения а только те которые связаны                          
+
+                                zCollectedDataTable collectedDataFrom =
+                                    (from a in competitionDataBase.zCollectedDataTable
+                                        where a.FK_CollectedRowsTable == currentRow.ID
+                                              && a.FK_ColumnTable == currentColumn.FK_ColumnConnectFromTable
+                                        select a).FirstOrDefault();
+
+                                int iD = (int) collectedDataFrom.ValueFK_CollectedDataTable;
+                                //мы получили по сути ID мероприятия для которого считаем
+
+                                List<zCollectedRowsTable> collectedDataRowsToSum =
+                                    (from a in competitionDataBase.zCollectedDataTable
+                                        where a.Active == true
+                                              && a.FK_ColumnTable == currentColumn.FK_ColumnConnectToTable
+                                              && a.ValueFK_CollectedDataTable == iD
+                                              join b in competitionDataBase.zCollectedRowsTable
+                                              on a.FK_CollectedRowsTable equals b.ID
+                                              where b.Active == true
+                                        select b).Distinct().ToList();
+                                //получили список строк в таблице из которой берем числа для суммирования и только те строки которые нам нужны
+
+                                double sum = 0;
+                                foreach (zCollectedRowsTable currentRowToSum in collectedDataRowsToSum)
+                                {
+                                    sum += GetValueFromCollectedData(currentRowToSum.ID, (int) currentColumn.FK_ColumnTable);
+                                }
+                                newDataRow["ReadOnlyLablelValue" + i.ToString()] = sum.ToString();
+                            }
+                            #endregion
+                            #region aplikcationName
+                            if (dataType.IsDataTypeNameOfApplication(currentColumn.DataType))
+                            {
+                                newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
+                                newDataRow["ReadOnlyLablelValue" + i.ToString()] = (from a in competitionDataBase.zApplicationTables
+                                                                                        where a.ID ==applicationId
+                                                                                        select a.Name).FirstOrDefault();
+                            }
+                            #endregion
                         }
                         #endregion
                     }      
@@ -630,7 +712,7 @@ namespace Competitions.User
                                         select a).FirstOrDefault();
                                 if (currentCollectedData != null)
                                 {
-                                    zColumnTable currentColumn = (from a in competitionDataBase.zColumnTable
+                                    zColumnTable currentColumn = (from a in competitionDataBase.zColumnTables
                                         where a.ID == currentCollectedData.FK_ColumnTable
                                         select a).FirstOrDefault();
                                     DataType dataType = new  DataType();
@@ -658,7 +740,7 @@ namespace Competitions.User
                                         if (currentDropDownListDownList != null)
                                         {
                                             zColumnTable DropDownItemsColumn =
-                                                (from a in competitionDataBase.zColumnTable
+                                                (from a in competitionDataBase.zColumnTables
                                                     where a.ID == currentColumn.FK_ColumnTable
                                                     && a.Active == true
                                                     select a).FirstOrDefault();
@@ -834,7 +916,7 @@ namespace Competitions.User
                     if (currentCollectedData != null)
                     {
                         #region сохраняем в зависимоти от типа данных
-                        zColumnTable currenColumn = (from a in competitionDataBase.zColumnTable
+                        zColumnTable currenColumn = (from a in competitionDataBase.zColumnTables
                             where a.ID == currentCollectedData.FK_ColumnTable
                             select a).FirstOrDefault();
                         //---------------------------------------------------------------------------------------------------------------
@@ -897,7 +979,6 @@ namespace Competitions.User
                 }              
             }
             Response.Redirect("FillSection.aspx");
-        }
-        
+        }       
     }
 }
