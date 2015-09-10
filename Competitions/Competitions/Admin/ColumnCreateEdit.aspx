@@ -43,6 +43,7 @@
             <asp:DropDownList ID="Fk_ColumnConnectToDropDown" runat="server" AutoPostBack="True" Height="26px" Width="190px">
             </asp:DropDownList>
         </asp:Panel>
+        <br />
         <asp:CheckBox ID="TotalUpCheckBox" runat="server" Text="Итого" />
         <br />
         <asp:Button ID="CreateSaveButton"  runat="server" Text="Сохранить" OnClick="CreateSaveButton_Click" />

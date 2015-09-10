@@ -372,21 +372,29 @@ namespace Competitions.User
                             //начнем заполнять DataTable
                             newDataRow["ID" + i.ToString()] = currentCollectedData.ID;
                             #region float
+
                             if (dataType.IsDataTypeFloat(currentColumn.DataType))
                             {
                                 newDataRow["EditTextBoxVisible" + i.ToString()] = true;
-                                double doubleValue = (double)currentCollectedData.ValueDouble;
-                                totalUpSums[i] += doubleValue;
-                                newDataRow["EditTextBoxValue" + i.ToString()] = doubleValue.ToString(); // currentCollectedData.ValueDouble;
+                                if (currentCollectedData.ValueDouble != null)
+                                {
+                                    double doubleValue = (double) currentCollectedData.ValueDouble;
+                                    totalUpSums[i] += doubleValue;
+                                    newDataRow["EditTextBoxValue" + i.ToString()] = doubleValue.ToString();
+                                }                               
                             }
+                        
                             #endregion
                             #region int
                             if (dataType.IsDataTypeInteger(currentColumn.DataType))
                             {
                                 newDataRow["EditTextBoxVisible" + i.ToString()] = true;
-                                int intValue = (int)currentCollectedData.ValueInt;
-                                totalUpSums[i] += intValue;
-                                newDataRow["EditTextBoxValue" + i.ToString()] = intValue.ToString(); // currentCollectedData.ValueInt;
+                                if (currentCollectedData.ValueInt!=null)
+                                { 
+                                    int intValue = (int)currentCollectedData.ValueInt;
+                                    totalUpSums[i] += intValue;
+                                    newDataRow["EditTextBoxValue" + i.ToString()] = intValue.ToString(); // currentCollectedData.ValueInt;
+                                }
                             }
                             #endregion
                             #region text
@@ -678,9 +686,10 @@ namespace Competitions.User
                     }      
                     dataTable.Rows.Add(newDataRow);
 
-                   
+
                 }
 
+                #region TotalUp
                 DataRow newDataRowForTotalUp = dataTable.NewRow();
                 bool anyTotalUp = false;
                 //foreach (zColumnTable currentColumn in columnInSectionList)
@@ -717,10 +726,10 @@ namespace Competitions.User
                     #endregion
                 }
                if (anyTotalUp) dataTable.Rows.Add(newDataRowForTotalUp);
-
+                #endregion
                 #region DataBaseBind
 
-                if (currentRowsList.Count >= currentSection.ColumnMaxCount)
+               if (currentRowsList.Count >= currentSection.ColumnMaxCount)
                 {
                     permitAddRow = false;
                 }
