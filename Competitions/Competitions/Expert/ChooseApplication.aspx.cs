@@ -52,5 +52,11 @@ namespace Competitions.Expert
         {
             Response.Redirect("Main.aspx");
         }
+        protected void GetApplicationButtonClick(object sender, EventArgs e)
+        {
+        }
+        protected void GetExpertPointButtonClick(object sender, EventArgs e)
+        {
+        }
     }
 }

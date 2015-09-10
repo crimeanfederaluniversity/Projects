@@ -10,24 +10,24 @@
 namespace Competitions.Admin {
     
     
-    public partial class ExpertPointPage {
+    public partial class CompetitionExpertEdit {
         
         /// <summary>
-        /// ExpertsPointGV элемент управления.
+        /// connectedExpertsGV элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView ExpertsPointGV;
+        protected global::System.Web.UI.WebControls.GridView connectedExpertsGV;
         
         /// <summary>
-        /// Button1 элемент управления.
+        /// unconnectedExpertsGV элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.GridView unconnectedExpertsGV;
     }
 }

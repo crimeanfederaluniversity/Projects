@@ -1,16 +1,25 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ChooseApplicationAction.aspx.cs" Inherits="Competitions.User.ChooseApplicationAction" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <p>
-    </p>
-    <p>
-        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-        <br />
-    </p>
-    <p>
         <asp:Button ID="GoBackButton" runat="server" OnClick="GoBackButton_Click" Text="Назад" />
     </p>
+    <asp:Label ID="Label1" style="font-size: 20px" runat="server" Text="Label"></asp:Label>
+    <br />
+    <br />
     <p>
-        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Перейти к заполнению форм" />
+        <asp:GridView ID="BlockGV" runat="server" AutoGenerateColumns="False">
+            <Columns>
+                <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
+                <asp:BoundField DataField="BlockName"   HeaderText="Название" Visible="true" />   
+                   
+                <asp:TemplateField HeaderText="Перейти к заполнению">
+                        <ItemTemplate>
+                            <asp:Button ID="FillButton" runat="server" CommandName="Select" Text="Заполнить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="FillButtonClick"/>
+                        </ItemTemplate>
+                </asp:TemplateField>
+                           
+            </Columns>
+        </asp:GridView>
     </p>
 <p>
         <asp:GridView ID="DocumentsGV" runat="server" AutoGenerateColumns="False">
@@ -33,7 +42,6 @@
             </Columns>
         </asp:GridView>
     <p>
-        &nbsp;<p>
         <asp:FileUpload ID="FileUpload1" runat="server" AllowMultiple="True" />
     </p>
 <p>

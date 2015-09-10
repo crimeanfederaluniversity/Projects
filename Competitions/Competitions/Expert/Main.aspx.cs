@@ -18,5 +18,10 @@ namespace Competitions.Expert
         {
             Response.Redirect("ApplicationsForExpert.aspx");
         }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ChooseApplication.aspx");
+        }
     }
 }

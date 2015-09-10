@@ -22,6 +22,7 @@ namespace Competitions.Admin
                       && b.FK_ApplicationsTable == applicationId
                 select a).ToList();
             return experts;
+
         }
    
         private DataTable GetFilledDataTable(List<UsersTable> expertsList)
@@ -29,20 +30,48 @@ namespace Competitions.Admin
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add("ID", typeof(string));
                 dataTable.Columns.Add("Name", typeof(string));
+                dataTable.Columns.Add("AccessLevel", typeof(int));
                 foreach (UsersTable currentExpert in expertsList)
                 {
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = currentExpert.ID;
-                    dataRow["Name"] = currentExpert.Email;          
+                    dataRow["Name"] = currentExpert.Email;
+                    dataRow["AccessLevel"] = currentExpert.AccessLevel;  
                     dataTable.Rows.Add(dataRow);
                 }
             return dataTable;
 
         }
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            var appid = Session["ApplicationID"];
+            int idapp = Convert.ToInt32(appid);
+            Button download = (Button)e.Row.FindControl("ExpertDownloadButton");
+            if (download != null)
+            {
+                CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
+                List<zExpertPointsValue> nwList = (from a in CompetitionsDataBase.zExpertPointsValue
+                                                   where a.Active == true
+                                                   && a.FK_ExpertsTable == Convert.ToInt32(download.CommandArgument)
+                                                   && a.FK_ApplicationTable == idapp
+                                                   select a).ToList();
+                download.Enabled = true;
+                foreach (zExpertPointsValue currentValue in nwList)
+                {
+                    if (currentValue.Sended != true)
+                        download.Enabled = false;
+                }
+                if (nwList.Count < 1)
+                {
+                    download.Enabled = false;
+                }
+
+            }
+        }    
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
-            {
+            {          
                 var appIdTmp = Session["ApplicationID"];
                 if (appIdTmp == null)
                 {
@@ -55,9 +84,15 @@ namespace Competitions.Admin
         
             }
         }
+        
         protected void ExpertDownloadButtonClick(object sender, EventArgs e)
         {
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Функционал в разработке');", true);
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Функционал в разработке!');", true);
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Возможность скачать все, только если все готовы!');", true);
         }
          
     }

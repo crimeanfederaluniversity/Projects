@@ -179,6 +179,7 @@
     <Content Include="Admin\ChooseSection.aspx" />
     <Content Include="Admin\ColumnCreateEdit.aspx" />
     <Content Include="Admin\CompetitionCreateEdit.aspx" />
+    <Content Include="Admin\CompetitionExpertEdit.aspx" />
     <Content Include="Admin\ConstantListCreate.aspx" />
     <Content Include="Admin\ExpertPointPage.aspx" />
     <Content Include="Admin\Main.aspx" />
@@ -418,6 +419,13 @@
     </Compile>
     <Compile Include="Admin\CompetitionCreateEdit.aspx.designer.cs">
       <DependentUpon>CompetitionCreateEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\CompetitionExpertEdit.aspx.cs">
+      <DependentUpon>CompetitionExpertEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\CompetitionExpertEdit.aspx.designer.cs">
+      <DependentUpon>CompetitionExpertEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\ConstantListCreate.aspx.cs">
       <DependentUpon>ConstantListCreate.aspx</DependentUpon>

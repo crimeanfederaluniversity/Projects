@@ -90,8 +90,19 @@ namespace Competitions.Admin
                                                         select a).FirstOrDefault();
                 if (currentApplication != null)
                 {
-                    currentApplication.Accept = true;
-                   
+                    List <zExpertsAndCompetitionMappngTamplateTable> sovetexpertlist = (from a in competitionDataBase.zExpertsAndCompetitionMappngTamplateTable
+                                                                                        where a.Active == true && a.FK_CompetitionsTable == currentApplication.FK_CompetitionTable
+                                                                                        select a).ToList();
+                    foreach(var SovetExperts in sovetexpertlist )
+                    { 
+                    zExpertsAndApplicationMappingTable sovetexpertlink = new zExpertsAndApplicationMappingTable();
+                    sovetexpertlink.Active = true;
+                    sovetexpertlink.FK_ApplicationsTable = currentApplication.ID;
+                    sovetexpertlink.FK_UsersTable = SovetExperts.FK_UsersTable;
+                    competitionDataBase.zExpertsAndApplicationMappingTables.InsertOnSubmit(sovetexpertlink);
+                    competitionDataBase.SubmitChanges();
+                    }
+                    currentApplication.Accept = true;                   
                     competitionDataBase.SubmitChanges();
                 }
             }

@@ -21,6 +21,9 @@ namespace Competitions.User
                 dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Number", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
+                dataTable.Columns.Add(new DataColumn("Budjet", typeof(string)));
+                dataTable.Columns.Add(new DataColumn("StartDate", typeof(string)));
+                dataTable.Columns.Add(new DataColumn("EndDate", typeof(string)));
 
                 List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTable
                                                              where a.Active == true
@@ -32,6 +35,9 @@ namespace Competitions.User
                     dataRow["ID"] = currentCompetition.ID;
                     dataRow["Name"] = currentCompetition.Name;
                     dataRow["Number"] = currentCompetition.Number;
+                    dataRow["Budjet"] = Convert.ToInt32(currentCompetition.Budjet);
+                    dataRow["StartDate"] = Convert.ToDateTime(currentCompetition.StartDate);
+                    dataRow["EndDate"] = Convert.ToDateTime(currentCompetition.EndDate);
                    
                     dataTable.Rows.Add(dataRow);
                 }

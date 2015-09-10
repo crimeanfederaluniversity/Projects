@@ -7,13 +7,13 @@
         <br />
         <asp:GridView ID="ApplicationGV" runat="server" AutoGenerateColumns="False">
             <Columns>
-                <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
+                <asp:BoundField DataField="ID"   HeaderText="Код заявки" Visible="true" />
                 <asp:BoundField DataField="Name"   HeaderText="Название" Visible="true" />
                 <asp:BoundField DataField="CompetitionName"   HeaderText="Конкурс" Visible="true" />    
                  
-                <asp:TemplateField HeaderText="Получить сгенерированный документ">
+                <asp:TemplateField HeaderText="Cкачать заявку">
                         <ItemTemplate>
-                            <asp:Button ID="GetDocButton" runat="server" CommandName="Select" Text="Загрузить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
+                            <asp:Button ID="GetDocButton" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>    
                 <asp:TemplateField HeaderText="Оценить">

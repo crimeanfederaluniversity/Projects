@@ -51,11 +51,36 @@ namespace Competitions.User
 
                 DocumentsGV.DataSource = dataTable;
                 DocumentsGV.DataBind();
+
+
+                List <zBlockTable> currentBlock = (from a in competitionDataBase.zBlockTable
+                                                        where a.Active == true
+                                                        select a).ToList();
+               
+                DataTable dataTable2 = new DataTable();
+                dataTable2.Columns.Add(new DataColumn("ID", typeof(string)));
+                dataTable2.Columns.Add(new DataColumn("BlockName", typeof(string)));
+
+                foreach (zBlockTable current  in currentBlock)
+                {
+                    DataRow dataRow2 = dataTable2.NewRow();
+                    dataRow2["ID"] = current.ID;
+                    dataRow2["BlockName"] = current.BlockName;
+                    
+                    dataTable2.Rows.Add(dataRow2);
+                }
+
+                BlockGV.DataSource = dataTable2;
+                BlockGV.DataBind();
             }
         }
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void FillButtonClick(object sender, EventArgs e)
         {
-            Response.Redirect("ChooseSection.aspx");
+            Button button = (Button)sender;
+            {
+                Session["BlockID"] = Convert.ToInt32(button.CommandArgument);
+                Response.Redirect("ChooseSection.aspx");
+            }
         }
         protected void NewDocument(int applicationId, string fileName)
         {

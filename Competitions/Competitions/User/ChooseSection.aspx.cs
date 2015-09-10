@@ -15,6 +15,7 @@ namespace Competitions.User
         {
             var sessionParam = Session["ApplicationID"];
             var userIdParam = Session["UserID"];
+            var blokParam = Session["BlockID"];
 
             if (!Page.IsPostBack)
             {
@@ -27,6 +28,7 @@ namespace Competitions.User
                 {
                     int iD = (int) sessionParam;
                     int userId = (int) userIdParam;
+                    int idblock = (int)blokParam;
 
                     CompetitionDataContext competitionDataBase = new CompetitionDataContext();
 
@@ -41,7 +43,7 @@ namespace Competitions.User
 
                     List<zSectionTable> sectionList = (from a in competitionDataBase.zSectionTable
                                                        where a.FK_CompetitionsTable == currenApplication.FK_CompetitionTable
-                              && a.Active == true
+                              && a.Active == true && a.FK_BlockID == idblock
                         select a).ToList();
 
                     foreach (zSectionTable zurrentSection in sectionList)

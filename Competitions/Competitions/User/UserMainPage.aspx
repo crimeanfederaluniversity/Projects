@@ -11,6 +11,9 @@
                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
                 <asp:BoundField DataField="Number"   HeaderText="Шифр" Visible="true" />
                 <asp:BoundField DataField="Name"   HeaderText="Конкурс" Visible="true" />
+                <asp:BoundField DataField="Budjet"   HeaderText="Бюджет" Visible="true" />
+                <asp:BoundField DataField="StartDate"   HeaderText="Дата начала" Visible="true" />
+                <asp:BoundField DataField="EndDate"   HeaderText="Дата окончания" Visible="true" />
                 <asp:TemplateField HeaderText="Подать заявку">
                         <ItemTemplate>
                            <asp:Button ID="NewApplication" runat="server" OnClientClick="return confirm('Вы уверены, что хотите подать заявку?');" Text="Подать заявку" CommandArgument='<%# Eval("ID") %>' OnClick="NewApplication_Click" />

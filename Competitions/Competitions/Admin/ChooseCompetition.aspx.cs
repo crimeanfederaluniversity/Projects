@@ -90,6 +90,16 @@ namespace Competitions.Admin
             Session["CompetitionID"] = 0;
             Response.Redirect("CompetitionCreateEdit.aspx");
         }
+        protected void ExpertSovetButtonClick(object sender, EventArgs e)
+        {
+             Button button = (Button) sender;
+             if (button != null)
+             {
+                 Session["CompetitionID"] = button.CommandArgument;
+                 Response.Redirect("CompetitionExpertEdit.aspx");
+             }
+        }
+        
         protected void StartStopButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;

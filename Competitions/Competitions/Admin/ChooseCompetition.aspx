@@ -30,6 +30,11 @@
                             <asp:Button ID="StartStopButton" runat="server" CommandName="Select" Text="Изменить статус" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="StartStopButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
+                <asp:TemplateField HeaderText="Экспертный совет">
+                        <ItemTemplate>                         
+                            <asp:Button ID="ExpertSovetButton" runat="server" CommandName="Select" Text="Изменить состав" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="ExpertSovetButtonClick"/>
+                        </ItemTemplate>
+                </asp:TemplateField>
                   <asp:TemplateField HeaderText="Удалить">
                         <ItemTemplate>
                             <asp:Button ID="DeleteButton" runat="server" CommandName="Select" Text="Удалить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="DeleteButtonClick"/>

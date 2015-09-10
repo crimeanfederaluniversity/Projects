@@ -11,19 +11,7 @@
       <Association Name="UsersTable_zCompetitionsTable" Member="zCompetitionsTable" ThisKey="ID" OtherKey="FK_Curator" Type="zCompetitionsTable" />
       <Association Name="UsersTable_zExpertPointsValue" Member="zExpertPointsValue" ThisKey="ID" OtherKey="FK_ExpertsTable" Type="zExpertPointsValue" />
       <Association Name="UsersTable_zApplicationTable" Member="zApplicationTable" ThisKey="ID" OtherKey="FK_UsersTable" Type="zApplicationTable" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zSectionTable" Member="zSectionTable">
-    <Type Name="zSectionTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="FK_CompetitionsTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ColumnMaxCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="zSectionTable_zCollectedRowsTable" Member="zCollectedRowsTable" ThisKey="ID" OtherKey="FK_SectionTable" Type="zCollectedRowsTable" />
-      <Association Name="zSectionTable_zColumnTable" Member="zColumnTables" ThisKey="ID" OtherKey="FK_SectionTable" Type="zColumnTable" />
-      <Association Name="zCompetitionsTable_zSectionTable" Member="zCompetitionsTable" ThisKey="FK_CompetitionsTable" OtherKey="ID" Type="zCompetitionsTable" IsForeignKey="true" />
+      <Association Name="UsersTable_zExpertsAndCompetitionMappngTamplateTable" Member="zExpertsAndCompetitionMappngTamplateTable" ThisKey="ID" OtherKey="FK_UsersTable" Type="zExpertsAndCompetitionMappngTamplateTable" />
     </Type>
   </Table>
   <Table Name="dbo.zCollectedDataTable" Member="zCollectedDataTable">
@@ -55,8 +43,8 @@
       <Column Name="FK_SectionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="FK_ApplicationTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="zCollectedRowsTable_zCollectedDataTable" Member="zCollectedDataTable" ThisKey="ID" OtherKey="FK_CollectedRowsTable" Type="zCollectedDataTable" />
-      <Association Name="zSectionTable_zCollectedRowsTable" Member="zSectionTable" ThisKey="FK_SectionTable" OtherKey="ID" Type="zSectionTable" IsForeignKey="true" />
       <Association Name="zApplicationTable_zCollectedRowsTable" Member="zApplicationTable" ThisKey="FK_ApplicationTable" OtherKey="ID" Type="zApplicationTable" IsForeignKey="true" />
+      <Association Name="zSectionTable_zCollectedRowsTable" Member="zSectionTable" ThisKey="FK_SectionTable" OtherKey="ID" Type="zSectionTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.zConstantListTable" Member="zConstantListTable">
@@ -112,9 +100,10 @@
       <Column Name="EndDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="FK_Curator" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Budjet" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Association Name="zCompetitionsTable_zSectionTable" Member="zSectionTable" ThisKey="ID" OtherKey="FK_CompetitionsTable" Type="zSectionTable" />
       <Association Name="zCompetitionsTable_zConstantListTable" Member="zConstantListTable" ThisKey="ID" OtherKey="FK_CompetitionTable" Type="zConstantListTable" />
       <Association Name="zCompetitionsTable_zApplicationTable" Member="zApplicationTable" ThisKey="ID" OtherKey="FK_CompetitionTable" Type="zApplicationTable" />
+      <Association Name="zCompetitionsTable_zExpertsAndCompetitionMappngTamplateTable" Member="zExpertsAndCompetitionMappngTamplateTable" ThisKey="ID" OtherKey="FK_CompetitionsTable" Type="zExpertsAndCompetitionMappngTamplateTable" />
+      <Association Name="zCompetitionsTable_zSectionTable" Member="zSectionTable" ThisKey="ID" OtherKey="FK_CompetitionsTable" Type="zSectionTable" />
       <Association Name="UsersTable_zCompetitionsTable" Member="UsersTable" ThisKey="FK_Curator" OtherKey="ID" Type="UsersTable" IsForeignKey="true" />
     </Type>
   </Table>
@@ -151,6 +140,39 @@
       <Association Name="zApplicationTable_zExpertPointsValue" Member="zExpertPointsValue" ThisKey="ID" OtherKey="FK_ApplicationTable" Type="zExpertPointsValue" />
       <Association Name="UsersTable_zApplicationTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="ID" Type="UsersTable" IsForeignKey="true" />
       <Association Name="zCompetitionsTable_zApplicationTable" Member="zCompetitionsTable" ThisKey="FK_CompetitionTable" OtherKey="ID" Type="zCompetitionsTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.zExpertsAndCompetitionMappngTamplateTable" Member="zExpertsAndCompetitionMappngTamplateTable">
+    <Type Name="zExpertsAndCompetitionMappngTamplateTable">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FK_CompetitionsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="UsersTable_zExpertsAndCompetitionMappngTamplateTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="ID" Type="UsersTable" IsForeignKey="true" />
+      <Association Name="zCompetitionsTable_zExpertsAndCompetitionMappngTamplateTable" Member="zCompetitionsTable" ThisKey="FK_CompetitionsTable" OtherKey="ID" Type="zCompetitionsTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.zBlockTable" Member="zBlockTable">
+    <Type Name="zBlockTable">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BlockName" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="zBlockTable_zSectionTable" Member="zSectionTable" ThisKey="ID" OtherKey="FK_BlockID" Type="zSectionTable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.zSectionTable" Member="zSectionTable">
+    <Type Name="zSectionTable">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="FK_CompetitionsTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ColumnMaxCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_BlockID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="zSectionTable_zCollectedRowsTable" Member="zCollectedRowsTable" ThisKey="ID" OtherKey="FK_SectionTable" Type="zCollectedRowsTable" />
+      <Association Name="zSectionTable_zColumnTable" Member="zColumnTables" ThisKey="ID" OtherKey="FK_SectionTable" Type="zColumnTable" />
+      <Association Name="zCompetitionsTable_zSectionTable" Member="zCompetitionsTable" ThisKey="FK_CompetitionsTable" OtherKey="ID" Type="zCompetitionsTable" IsForeignKey="true" />
+      <Association Name="zBlockTable_zSectionTable" Member="zBlockTable" ThisKey="FK_BlockID" OtherKey="ID" Type="zBlockTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.zColumnTable" Member="zColumnTables">
