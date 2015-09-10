@@ -146,6 +146,7 @@
       <Column Name="FK_ConstantListsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FK_ColumnConnectFromTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FK_ColumnConnectToTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TotalUp" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="zColumnTable_zCollectedDataTable" Member="zCollectedDataTables" ThisKey="ID" OtherKey="FK_ColumnTable" Type="zCollectedDataTable" />
       <Association Name="zColumnTable_zColumnTable" Member="zColumnTables" ThisKey="ID" OtherKey="FK_ColumnTable" Type="zColumnTable" />
       <Association Name="zColumnTable_zColumnTable1" Member="zColumnTables1" ThisKey="ID" OtherKey="FK_ColumnConnectToTable" Type="zColumnTable" />

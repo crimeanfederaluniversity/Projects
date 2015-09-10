@@ -3168,6 +3168,8 @@ namespace Competitions
 		
 		private System.Nullable<int> _FK_ColumnConnectToTable;
 		
+		private System.Nullable<bool> _TotalUp;
+		
 		private EntitySet<zCollectedDataTable> _zCollectedDataTables;
 		
 		private EntitySet<zColumnTable> _zColumnTables;
@@ -3210,6 +3212,8 @@ namespace Competitions
     partial void OnFK_ColumnConnectFromTableChanged();
     partial void OnFK_ColumnConnectToTableChanging(System.Nullable<int> value);
     partial void OnFK_ColumnConnectToTableChanged();
+    partial void OnTotalUpChanging(System.Nullable<bool> value);
+    partial void OnTotalUpChanged();
     #endregion
 		
 		public zColumnTable()
@@ -3442,6 +3446,26 @@ namespace Competitions
 					this._FK_ColumnConnectToTable = value;
 					this.SendPropertyChanged("FK_ColumnConnectToTable");
 					this.OnFK_ColumnConnectToTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalUp", DbType="Bit")]
+		public System.Nullable<bool> TotalUp
+		{
+			get
+			{
+				return this._TotalUp;
+			}
+			set
+			{
+				if ((this._TotalUp != value))
+				{
+					this.OnTotalUpChanging(value);
+					this.SendPropertyChanging();
+					this._TotalUp = value;
+					this.SendPropertyChanged("TotalUp");
+					this.OnTotalUpChanged();
 				}
 			}
 		}

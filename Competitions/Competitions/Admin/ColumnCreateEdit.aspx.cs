@@ -111,17 +111,21 @@ namespace Competitions.Admin
                         {
                             NameTextBox.Text = currentColum.Name;
                             DescriptionTextBox.Text = currentColum.Description;
+                            if (currentColum.TotalUp!=null)
+                            TotalUpCheckBox.Checked = (bool)currentColum.TotalUp;
                             DataTypeDropDownList.SelectedIndex = currentColum.DataType;
                             if (dataType.DataTypeWithConnectionToCollected(currentColum.DataType))
                             {
                                 FkToColumnDropDown.Items.FindByValue(currentColum.FK_ColumnTable.ToString()).Selected=true;
                                 ChooseColumnForDropDownDiv.Visible = true;
+                                
                             }
                             if (dataType.DataTypeWithConnectionToConstant(currentColum.DataType))
                             {
                                 FkToConstantDropDown.Items.FindByValue(currentColum.FK_ConstantListsTable.ToString())
                                     .Selected = true;
                                 ChooseConstantForDropDownDiv.Visible = true;
+                                TotalUpCheckBox.Visible = false;
                             }
                             if (dataType.DataTypeWithConnectionToColumnsWithParams(currentColum.DataType))
                             {
@@ -130,6 +134,7 @@ namespace Competitions.Admin
                                 Panel1.Visible = true;
                                 FkToColumnDropDown.Items.FindByValue(currentColum.FK_ColumnTable.ToString()).Selected = true;
                                 ChooseColumnForDropDownDiv.Visible = true;
+                                
                             }
                         }
                     }
@@ -144,7 +149,7 @@ namespace Competitions.Admin
             ChooseColumnForDropDownDiv.Visible = dataType.DataTypeWithConnectionToCollected(chosenValue);
             ChooseConstantForDropDownDiv.Visible = dataType.DataTypeWithConnectionToConstant(chosenValue);
             Panel1.Visible = dataType.DataTypeWithConnectionToColumnsWithParams(chosenValue);
-
+            TotalUpCheckBox.Visible = !dataType.DataTypeWithConnectionToConstant(chosenValue);
             if (Panel1.Visible)
             {               
                 ChooseColumnForDropDownDiv.Visible = true;
@@ -189,7 +194,7 @@ namespace Competitions.Admin
                             currentColumn.Description = DescriptionTextBox.Text;
                             currentColumn.DataType =
                                 Convert.ToInt32(DataTypeDropDownList.SelectedValue);
-
+                            currentColumn.TotalUp = TotalUpCheckBox.Checked;
                             if (dataType.DataTypeWithConnectionToCollected(dataTypeSelectedValue))
                             {
                                 currentColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
@@ -200,7 +205,7 @@ namespace Competitions.Admin
                             }
                             if (dataType.DataTypeWithConnectionToColumnsWithParams(dataTypeSelectedValue))
                             {
-                                currentColumn.FK_ConstantListsTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
+                                currentColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
                                 currentColumn.FK_ColumnConnectFromTable = Convert.ToInt32(Fk_ColumnConnectFromDropDown.SelectedValue);
                                 currentColumn.FK_ColumnConnectToTable = Convert.ToInt32(Fk_ColumnConnectToDropDown.SelectedValue);
                             }
@@ -219,6 +224,7 @@ namespace Competitions.Admin
                         newColumn.Active = true;
                         newColumn.FK_SectionTable = sectionId;
                         newColumn.DataType = dataTypeSelectedValue;
+                        newColumn.TotalUp = TotalUpCheckBox.Checked;
                         if (dataType.DataTypeWithConnectionToCollected(dataTypeSelectedValue))
                         {
                             newColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);

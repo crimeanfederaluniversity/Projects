@@ -112,6 +112,15 @@ namespace Competitions.Admin {
         protected global::System.Web.UI.WebControls.DropDownList Fk_ColumnConnectToDropDown;
         
         /// <summary>
+        /// TotalUpCheckBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox TotalUpCheckBox;
+        
+        /// <summary>
         /// CreateSaveButton control.
         /// </summary>
         /// <remarks>

@@ -314,6 +314,10 @@ namespace Competitions.User
                 #endregion
                 //пройдемся по каждой строке
                 int iterator = 0;
+
+                double[] totalUpSums = new double[10];
+                for (int i = 0; i < 10; i++)
+                    totalUpSums[i] = 0;
                 foreach (zCollectedRowsTable currentRow in currentRowsList)
                 {
                     iterator++;
@@ -321,6 +325,8 @@ namespace Competitions.User
                     //пройдемся по каждой колонке
                     
                     DataRow newDataRow = dataTable.NewRow();
+
+                    
                     //foreach (zColumnTable currentColumn in columnInSectionList)
                     for (int i = 0; i < 10; i++)
                     {
@@ -369,14 +375,18 @@ namespace Competitions.User
                             if (dataType.IsDataTypeFloat(currentColumn.DataType))
                             {
                                 newDataRow["EditTextBoxVisible" + i.ToString()] = true;
-                                newDataRow["EditTextBoxValue" + i.ToString()] = currentCollectedData.ValueDouble.ToString(); // currentCollectedData.ValueDouble;
+                                double doubleValue = (double)currentCollectedData.ValueDouble;
+                                totalUpSums[i] += doubleValue;
+                                newDataRow["EditTextBoxValue" + i.ToString()] = doubleValue.ToString(); // currentCollectedData.ValueDouble;
                             }
                             #endregion
                             #region int
                             if (dataType.IsDataTypeInteger(currentColumn.DataType))
                             {
                                 newDataRow["EditTextBoxVisible" + i.ToString()] = true;
-                                newDataRow["EditTextBoxValue" + i.ToString()] = currentCollectedData.ValueInt.ToString(); // currentCollectedData.ValueInt;
+                                int intValue = (int)currentCollectedData.ValueInt;
+                                totalUpSums[i] += intValue;
+                                newDataRow["EditTextBoxValue" + i.ToString()] = intValue.ToString(); // currentCollectedData.ValueInt;
                             }
                             #endregion
                             #region text
@@ -444,7 +454,30 @@ namespace Competitions.User
                                 double AllSum = 0;
                                 if (dataType.IsDataTypeInteger(columnToSum.DataType))
                                 {
-                                    newDataRow["ReadOnlyLablelValue" + i.ToString()] =
+                                    AllSum = (int) (from a in competitionDataBase.zCollectedDataTable
+                                        where a.FK_ColumnTable == columnToSum.ID
+                                              && a.Active == true
+                                        join b in competitionDataBase.zCollectedRowsTable
+                                            on a.FK_CollectedRowsTable equals b.ID
+                                        where b.Active == true
+                                              && b.FK_ApplicationTable == applicationId
+                                        select a.ValueInt).Distinct().Sum();
+                                }
+                                if (dataType.IsDataTypeFloat(columnToSum.DataType))
+                                {
+                                    AllSum = (double)
+                                        (from a in competitionDataBase.zCollectedDataTable
+                                         where a.FK_ColumnTable == columnToSum.ID
+                                               && a.Active == true
+                                         join b in competitionDataBase.zCollectedRowsTable
+                                             on a.FK_CollectedRowsTable equals b.ID
+                                         where b.Active == true
+                                               && b.FK_ApplicationTable == applicationId
+                                         select a.ValueDouble).Distinct().Sum();
+                                }
+                                if (dataType.IsDataTypeBit(columnToSum.DataType))
+                                {
+                                    AllSum =
                                         (from a in competitionDataBase.zCollectedDataTable
                                             where a.FK_ColumnTable == columnToSum.ID
                                                   && a.Active == true
@@ -452,34 +485,11 @@ namespace Competitions.User
                                                 on a.FK_CollectedRowsTable equals b.ID
                                             where b.Active == true
                                                   && b.FK_ApplicationTable == applicationId
-                                            select a.ValueInt).Distinct().Sum().ToString();
+                                                  && a.ValueBit == true
+                                            select a).Distinct().Count();
                                 }
-                                if (dataType.IsDataTypeFloat(columnToSum.DataType))
-                                {
-                                    newDataRow["ReadOnlyLablelValue" + i.ToString()] =
-                                        (from a in competitionDataBase.zCollectedDataTable
-                                         where a.FK_ColumnTable == columnToSum.ID
-                                               && a.Active == true
-                                         join b in competitionDataBase.zCollectedRowsTable
-                                             on a.FK_CollectedRowsTable equals b.ID
-                                         where b.Active == true
-                                               && b.FK_ApplicationTable == applicationId
-                                         select a.ValueDouble).Distinct().Sum().ToString();
-                                }
-                                if (dataType.IsDataTypeBit(columnToSum.DataType))
-                                {
-                                    newDataRow["ReadOnlyLablelValue" + i.ToString()] =
-                                        (from a in competitionDataBase.zCollectedDataTable
-                                         where a.FK_ColumnTable == columnToSum.ID
-                                               && a.Active == true
-                                         join b in competitionDataBase.zCollectedRowsTable
-                                             on a.FK_CollectedRowsTable equals b.ID
-                                         where b.Active == true
-                                               && b.FK_ApplicationTable == applicationId
-                                               && a.ValueBit == true
-                                         select a).Distinct().Count().ToString();
-                                }
-                                                                   
+                                newDataRow["ReadOnlyLablelValue" + i.ToString()] = AllSum.ToString();
+                                totalUpSums[i] += AllSum;
                             }
                             #endregion
                             #region ConstantNecessarily
@@ -650,6 +660,7 @@ namespace Competitions.User
                                 {
                                     sum += GetValueFromCollectedData(currentRowToSum.ID, (int) currentColumn.FK_ColumnTable);
                                 }
+                                totalUpSums[i] += sum;
                                 newDataRow["ReadOnlyLablelValue" + i.ToString()] = sum.ToString();
                             }
                             #endregion
@@ -666,7 +677,47 @@ namespace Competitions.User
                         #endregion
                     }      
                     dataTable.Rows.Add(newDataRow);
+
+                   
                 }
+
+                DataRow newDataRowForTotalUp = dataTable.NewRow();
+                bool anyTotalUp = false;
+                //foreach (zColumnTable currentColumn in columnInSectionList)
+                for (int i = 0; i < 10; i++)
+                {
+                    #region записываем стандартный значения во все поля
+                    newDataRowForTotalUp["ID" + i.ToString()] = 0;
+                    newDataRowForTotalUp["ReadOnlyLablelVisible" + i.ToString()] = false;
+                    newDataRowForTotalUp["ReadOnlyLablelValue" + i.ToString()] = "";
+                    newDataRowForTotalUp["EditTextBoxVisible" + i.ToString()] = false;
+                    newDataRowForTotalUp["EditTextBoxValue" + i.ToString()] = "";
+                    newDataRowForTotalUp["EditBoolCheckBoxVisible" + i.ToString()] = false;
+                    newDataRowForTotalUp["EditBoolCheckBoxValue" + i.ToString()] = false;
+                    newDataRowForTotalUp["ChooseOnlyDropDownVisible" + i.ToString()] = false;
+                    //newDataRow["ChooseOnlyDropDownValue" + i.ToString()] = null;
+                    newDataRowForTotalUp["ChooseDateCalendarVisible" + i.ToString()] = false;
+                    newDataRowForTotalUp["ChooseDateCalendarValue" + i.ToString()] = DateTime.Now;
+                    #endregion                  
+                    #region
+
+                    if (i < columnInSectionList.Count)
+                    {
+                        if (columnInSectionList[i].TotalUp != null)
+                        {
+                            if ((bool) columnInSectionList[i].TotalUp)
+                            {
+                                anyTotalUp = true;
+                                newDataRowForTotalUp["ReadOnlyLablelVisible" + i.ToString()] = true;
+                                newDataRowForTotalUp["ReadOnlyLablelValue" + i.ToString()] ="Итого: " + totalUpSums[i].ToString();
+                            }
+                        }
+                    }
+
+                    #endregion
+                }
+               if (anyTotalUp) dataTable.Rows.Add(newDataRowForTotalUp);
+
                 #region DataBaseBind
 
                 if (currentRowsList.Count >= currentSection.ColumnMaxCount)
