@@ -9,7 +9,7 @@ namespace Competitions
 {
     public class DataType
     {
-        private int dataTypeCount = 15;
+        private int dataTypeCount = 16;
         public string GetDataTypeName(int dataType)
         {
             switch (dataType)
@@ -74,6 +74,10 @@ namespace Competitions
                 {
                     return "Название заявки";
                 }
+                case 15:
+                {
+                    return "Один к одному по критерию";
+                }
                 default :
                 {
                     return "error";
@@ -125,7 +129,7 @@ namespace Competitions
         }
         public bool DataTypeWithConnectionToColumnsWithParams(int dataType)
         {
-            if (IsDataTypeSymWithParam(dataType))
+            if ((IsDataTypeSymWithParam(dataType)) || (IsDataTypeOneToOneWithParams(dataType)))
             {
                 return true;
             }
@@ -291,6 +295,17 @@ namespace Competitions
         public bool IsDataTypeNameOfApplication(int dataType)
         {
             if (dataType == 14)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsDataTypeOneToOneWithParams(int dataType)
+        {
+            if (dataType == 15)
             {
                 return true;
             }

@@ -7,6 +7,9 @@
         Название<br />
         <asp:TextBox ID="NameTextBox" runat="server" Width="545px"></asp:TextBox>
         <br />
+        Уникальная метка<br />
+        <asp:TextBox ID="UniqueMarkTextBox" runat="server" Width="542px"></asp:TextBox>
+        <br />
         Описание<br />
         <asp:TextBox ID="DescriptionTextBox" runat="server" Width="545px"></asp:TextBox>
         <br />
@@ -30,7 +33,7 @@
 
         <br />
         <div id="ChooseConstantForDropDownDiv" runat="server" Visible="False">
-                    <asp:DropDownList ID="FkToConstantDropDown" runat="server"  Height="21px" Width="554px">
+                    <asp:DropDownList ID="FkToConstantDropDown" runat="server"  Height="21px" Width="554px" OnSelectedIndexChanged="FkToConstantDropDown_SelectedIndexChanged">
         </asp:DropDownList>
               <br />
             

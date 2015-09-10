@@ -111,6 +111,7 @@ namespace Competitions.Admin
                         {
                             NameTextBox.Text = currentColum.Name;
                             DescriptionTextBox.Text = currentColum.Description;
+                            UniqueMarkTextBox.Text = currentColum.UniqueMark;
                             if (currentColum.TotalUp!=null)
                             TotalUpCheckBox.Checked = (bool)currentColum.TotalUp;
                             DataTypeDropDownList.SelectedIndex = currentColum.DataType;
@@ -195,6 +196,7 @@ namespace Competitions.Admin
                             currentColumn.DataType =
                                 Convert.ToInt32(DataTypeDropDownList.SelectedValue);
                             currentColumn.TotalUp = TotalUpCheckBox.Checked;
+                            currentColumn.UniqueMark = UniqueMarkTextBox.Text;
                             if (dataType.DataTypeWithConnectionToCollected(dataTypeSelectedValue))
                             {
                                 currentColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
@@ -225,6 +227,7 @@ namespace Competitions.Admin
                         newColumn.FK_SectionTable = sectionId;
                         newColumn.DataType = dataTypeSelectedValue;
                         newColumn.TotalUp = TotalUpCheckBox.Checked;
+                        newColumn.UniqueMark = UniqueMarkTextBox.Text;
                         if (dataType.DataTypeWithConnectionToCollected(dataTypeSelectedValue))
                         {
                             newColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
@@ -249,6 +252,15 @@ namespace Competitions.Admin
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("ChooseColumn.aspx");
+        }
+        protected void FkToConstantDropDown_SelectedIndexChanged(object sender, EventArgs e) /// доделай чтобы во втором дроп дауне лишнего не было
+        {
+            DataType dataType = new DataType();
+
+            if (dataType.IsDataTypeSymWithParam(Convert.ToInt32(DataTypeDropDownList.SelectedValue)))
+            {
+                
+            }
         }    
     }
 }

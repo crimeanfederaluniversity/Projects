@@ -53,12 +53,10 @@ namespace Competitions.User
                 DocumentsGV.DataBind();
             }
         }
-
         protected void Button1_Click(object sender, EventArgs e)
         {
             Response.Redirect("ChooseSection.aspx");
         }
-
         protected void NewDocument(int applicationId, string fileName)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext(); 
@@ -123,8 +121,6 @@ namespace Competitions.User
             }
             Response.Redirect("ChooseApplicationAction.aspx");
         }
-
-
         private byte[] ReadByteArryFromFile(string destPath)
         {
             byte[] buff = null;
@@ -134,7 +130,6 @@ namespace Competitions.User
             buff = br.ReadBytes((int)numBytes);
             return buff;
         }
-
         protected void OpenButtonClick(object sender, EventArgs e)
         {
             Button button = (Button) sender;
@@ -173,12 +168,9 @@ namespace Competitions.User
                 Response.Redirect("ChooseApplicationAction.aspx");
             }
         }
-
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("ChooseApplication.aspx");
-        }
-        
-
+        }      
     }
 }
