@@ -9,7 +9,7 @@ namespace Competitions
 {
     public class DataType
     {
-        private int dataTypeCount = 16;
+        private int dataTypeCount = 17;
         public string GetDataTypeName(int dataType)
         {
             switch (dataType)
@@ -78,6 +78,10 @@ namespace Competitions
                 {
                     return "Один к одному по критерию";
                 }
+                case 16:
+                {
+                    return "По существующим таблицам (Все обязательно) по критерию (CheckBox)";
+                }
                 default :
                 {
                     return "error";
@@ -100,6 +104,7 @@ namespace Competitions
             }
             return newListItemAray;
         }
+
         public bool DataTypeWithConnectionToCollected(int dataType)
         {
             if (IsDataTypeDropDown(dataType)
@@ -130,6 +135,17 @@ namespace Competitions
         public bool DataTypeWithConnectionToColumnsWithParams(int dataType)
         {
             if ((IsDataTypeSymWithParam(dataType)) || (IsDataTypeOneToOneWithParams(dataType)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool DataTypeDependOfBit(int dataType)
+        {
+            if (IsDataTypeNecessarilyShowWithParam(dataType))
             {
                 return true;
             }
@@ -306,6 +322,17 @@ namespace Competitions
         public bool IsDataTypeOneToOneWithParams(int dataType)
         {
             if (dataType == 15)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsDataTypeNecessarilyShowWithParam(int dataType)
+        {
+            if (dataType == 16)
             {
                 return true;
             }

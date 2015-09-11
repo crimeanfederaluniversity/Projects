@@ -13,7 +13,7 @@ namespace Competitions.User
 {
     public partial class FillSection : System.Web.UI.Page
     {
-        private int columnCount = 10;
+        const int columnCount = 10;
         private bool permitAddRow = true;
         private bool permitDeleteRow = true;
         public zCollectedRowsTable CreateNewRow(int applicationId,int sectionId)
@@ -94,6 +94,104 @@ namespace Competitions.User
                                                         select a).ToList();
 
             CreateRowsForConstantAndNecessary(mustBeDataList, applicationId, sectionId, columnId);
+            return false;
+        }
+        public bool AddRowWithNecwssairlyLinesWithParams (int columnTableWithNeededValueId, int applicationId, int currentSectionId, int currentColumnId , int columnTableWithCheckBox)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            List<zCollectedDataTable> mustBeDataList = new List<zCollectedDataTable>();
+            List<zCollectedRowsTable> mustBeDataRows = (from a in competitionDataBase.zCollectedRowsTable
+                where a.Active == true
+                      && a.FK_ApplicationTable == applicationId
+                join b in competitionDataBase.zCollectedDataTable
+                    on a.ID equals b.FK_CollectedRowsTable
+                where b.Active == true
+                      && b.FK_ColumnTable == columnTableWithNeededValueId
+                select a).Distinct().ToList();
+
+            foreach (zCollectedRowsTable curRow in mustBeDataRows)
+            {
+                zCollectedDataTable data = (from a in competitionDataBase.zCollectedDataTable
+                    where a.FK_CollectedRowsTable == curRow.ID
+                          && a.Active == true
+                          && a.FK_ColumnTable == columnTableWithNeededValueId
+                    select a).FirstOrDefault();
+                zCollectedDataTable checkBox = (from a in competitionDataBase.zCollectedDataTable
+                                                where a.FK_CollectedRowsTable == curRow.ID
+                                                      && a.Active == true
+                                                      && a.FK_ColumnTable == columnTableWithCheckBox
+                                                select a).FirstOrDefault();
+                if (checkBox != null)
+                {
+                    if (checkBox.ValueBit != null)
+                    {
+                        if (checkBox.ValueBit == true)
+                        {
+                            mustBeDataList.Add(data);
+                        }
+                    }
+                }
+            }
+
+            CreateRowsForConstantAndNecessary(mustBeDataList, applicationId, currentSectionId, currentColumnId);
+            return false;
+        }
+        public bool DeleteRowWithUnSelectedCheckBox(int columnTableWithNeededValueId, int applicationId, int currentSectionId, int currentColumnId, int columnTableWithCheckBox)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            List<zCollectedDataTable> mustNOTBeDataList = new List<zCollectedDataTable>();
+            List<zCollectedRowsTable> mustBeDataRows = (from a in competitionDataBase.zCollectedRowsTable
+                                                        where a.Active == true
+                                                              && a.FK_ApplicationTable == applicationId
+                                                        join b in competitionDataBase.zCollectedDataTable
+                                                            on a.ID equals b.FK_CollectedRowsTable
+                                                        where b.Active == true
+                                                              && b.FK_ColumnTable == columnTableWithNeededValueId
+                                                        select a).Distinct().ToList();
+
+            foreach (zCollectedRowsTable curRow in mustBeDataRows)
+            {
+                zCollectedDataTable data = (from a in competitionDataBase.zCollectedDataTable
+                                            where a.FK_CollectedRowsTable == curRow.ID
+                                                  && a.Active == true
+                                                  && a.FK_ColumnTable == columnTableWithNeededValueId
+                                            select a).FirstOrDefault();
+                zCollectedDataTable checkBox = (from a in competitionDataBase.zCollectedDataTable
+                                                where a.FK_CollectedRowsTable == curRow.ID
+                                                      && a.Active == true
+                                                      && a.FK_ColumnTable == columnTableWithCheckBox
+                                                select a).FirstOrDefault();
+                if (checkBox != null)
+                {
+                    if (checkBox.ValueBit != null)
+                    {
+                        if (checkBox.ValueBit != true)
+                        {
+                            mustNOTBeDataList.Add(data);
+                        }
+                    }
+                    else
+                    {
+                        mustNOTBeDataList.Add(data);
+                    }
+                }
+            }
+            foreach (zCollectedDataTable currentDataToDel in mustNOTBeDataList)
+            {
+                zCollectedRowsTable currentRowToDel = (from a in competitionDataBase.zCollectedRowsTable
+                    where a.Active == true
+                    join b in competitionDataBase.zCollectedDataTable
+                        on a.ID equals b.FK_CollectedRowsTable
+                    where
+                        b.ValueFK_CollectedDataTable == currentDataToDel.ID
+                    select a).FirstOrDefault(); // надо бы считать лист и если там их много то удалить сразу все
+                if (currentRowToDel != null)
+                {
+                    currentRowToDel.Active = false;
+                    competitionDataBase.SubmitChanges();
+                }
+            }
+            // найти лишние строки
             return false;
         }
         public bool DeleteRow(int rowId)
@@ -201,8 +299,6 @@ namespace Competitions.User
             }
             return 0;
         }
-
-
         protected void Page_Load(object sender, EventArgs e)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
@@ -270,7 +366,6 @@ namespace Competitions.User
                         permitAddRow = false;
                         permitDeleteRow = false;
 
-
                         DeleteRowWithBadFk(applicationId, sectionId, currentColumn.ID,true);
                         AddRowWithConstant((int) currentColumn.FK_ConstantListsTable, applicationId, sectionId,
                             currentColumn.ID);
@@ -280,14 +375,20 @@ namespace Competitions.User
                         permitAddRow = false;
                         permitDeleteRow = false;
 
-
-                        // DeleteRowsWithDisabledConstant((int)currentColumn.FK_ConstantListsTable, applicationId, sectionId,
-                        //     currentColumn.ID);
                         DeleteRowWithBadFk(applicationId, sectionId,currentColumn.ID,false);
                         AddRowWithNecwssairlyLines ((int)currentColumn.FK_ColumnTable, applicationId, sectionId,
                             currentColumn.ID);
                     }
-
+                    if (dataType.IsDataTypeNecessarilyShowWithParam(currentColumn.DataType))
+                    {
+                        permitAddRow = false;
+                        permitDeleteRow = false;
+                        DeleteRowWithBadFk(applicationId, sectionId, currentColumn.ID, false);
+                        DeleteRowWithUnSelectedCheckBox((int)currentColumn.FK_ColumnTable, applicationId, sectionId,
+                            currentColumn.ID, (int)currentColumn.FK_ColumnConnectToTable);
+                        AddRowWithNecwssairlyLinesWithParams((int)currentColumn.FK_ColumnTable, applicationId, sectionId,
+                            currentColumn.ID,(int)currentColumn.FK_ColumnConnectToTable);
+                    }
                 }
 
                 #endregion
@@ -317,7 +418,6 @@ namespace Competitions.User
                 #endregion
                 //пройдемся по каждой строке
                 int iterator = 0;
-
                 double[] totalUpSums = new double[10];
                 for (int i = 0; i < 10; i++)
                     totalUpSums[i] = 0;
@@ -325,12 +425,8 @@ namespace Competitions.User
                 {
                     iterator++;
                     //в каждой строке есть одна или больше колонок
-                    //пройдемся по каждой колонке
-                    
+                    //пройдемся по каждой колонке                   
                     DataRow newDataRow = dataTable.NewRow();
-
-                    
-                    //foreach (zColumnTable currentColumn in columnInSectionList)
                     for (int i = 0; i < 10; i++)
                     {
                         #region записываем стандартный значения во все поля
@@ -415,10 +511,7 @@ namespace Competitions.User
                         #endregion
                     }      
                     dataTable.Rows.Add(newDataRow);
-
-
                 }
-
                 #region TotalUp
                 DataRow newDataRowForTotalUp = dataTable.NewRow();
                 bool anyTotalUp = false;

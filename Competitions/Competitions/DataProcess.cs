@@ -356,6 +356,21 @@ namespace Competitions
             }
 
             #endregion
+            #region CollectedNecessarilyWithParams
+
+            if (dataType.IsDataTypeNecessarilyShowWithParam(currentColumn.DataType))
+            {
+                if (currentCollectedData.ValueFK_CollectedDataTable != null)
+                {
+                    zCollectedDataTable getCollectedData =
+                        (from a in competitionDataBase.zCollectedDataTable
+                            where a.ID == currentCollectedData.ValueFK_CollectedDataTable
+                            select a).FirstOrDefault();
+                    return getCollectedData.ValueText;
+                }
+            }
+
+            #endregion
             #region sumWithParams
 
             if (dataType.IsDataTypeSymWithParam(currentColumn.DataType))
@@ -404,34 +419,76 @@ namespace Competitions
             #region oneToOneWithParams
             if (dataType.IsDataTypeOneToOneWithParams(currentColumn.DataType))
             {
-                zCollectedDataTable collectedDataFrom =
-                    (from a in competitionDataBase.zCollectedDataTable
-                     where a.FK_CollectedRowsTable == currentRowId
-                           && a.FK_ColumnTable == currentColumn.FK_ColumnConnectFromTable
-                     select a).FirstOrDefault();
+                zColumnTable columnConnectetFrom = (from a in competitionDataBase.zColumnTables
+                                                    where a.ID == currentColumn.FK_ColumnConnectFromTable
+                                                    select a).FirstOrDefault();
 
-                int iD = (int)collectedDataFrom.ValueFK_CollectedDataTable;
-                //мы получили по сути ID параметра для которого ищем значение
+                zColumnTable columnConnectetTo = (from a in competitionDataBase.zColumnTables
+                                                    where a.ID == currentColumn.FK_ColumnConnectToTable
+                                                    select a).FirstOrDefault();
+                zColumnTable collumnToGetValue = (from a in competitionDataBase.zColumnTables
+                    where a.ID == currentColumn.FK_ColumnTable
+                    select a).FirstOrDefault();
 
-                List<zCollectedRowsTable> collectedDataRows =
-                    (from a in competitionDataBase.zCollectedDataTable
-                     where a.Active == true
-                           && a.FK_ColumnTable == currentColumn.FK_ColumnConnectToTable
-                           && a.ValueFK_CollectedDataTable == iD
-                     join b in competitionDataBase.zCollectedRowsTable
-                         on a.FK_CollectedRowsTable equals b.ID
-                     where b.Active == true
-                     select b).Distinct().ToList();
-                
-                if (collectedDataRows.Count > 1)
-                    return "ERROR";
-                if (collectedDataRows.Count == 1)
-                return GetStringValueFromCollectedData(collectedDataRows[0].ID, (int)currentColumn.FK_ColumnTable);                                
+                zCollectedDataTable collectedDataFrom = (from a in competitionDataBase.zCollectedDataTable
+                    where a.Active == true
+                          && a.FK_CollectedRowsTable == currentRowId
+                          && a.FK_ColumnTable == columnConnectetFrom.ID
+                    select a).FirstOrDefault(); // значение которое ссылается
+
+                if ((columnConnectetFrom!=null)&&(columnConnectetTo!=null)&&(collumnToGetValue!=null))
+                {
+                    if (columnConnectetFrom.DataType == columnConnectetTo.DataType) // значит оба ссылаются на одного и того же// не тестировано
+                    {
+                       /* zCollectedRowsTable distatntRow = (from a in competitionDataBase.zCollectedRowsTable
+                                                           where a.Active == true
+                                                           join b in competitionDataBase.zCollectedDataTable
+                                                               on a.ID equals b.FK_CollectedRowsTable
+                                                           where b.ID == collectedDataFrom.ValueFK_CollectedDataTable
+                                                           select a).FirstOrDefault();
+                        
+                        zCollectedDataTable distantRowValue = (from a in competitionDataBase.zCollectedDataTable
+                                                               where a.Active == true
+                                                                     && a.FK_CollectedRowsTable == distatntRow.ID
+                                                                       && a.FK_ColumnTable == collumnToGetValue.ID
+                                                               select a).FirstOrDefault();
+
+                        if (distantRowValue != null)
+                        {
+                            if (IsCellReadWrite(collumnToGetValue.DataType))
+                            {
+                                return (GetReadWriteString(collumnToGetValue, distantRowValue));
+                            }
+                        }*/
+                    }
+                    else //наш ссылается на него
+                    {
+                        zCollectedRowsTable distatntRow = (from a in competitionDataBase.zCollectedRowsTable
+                            where a.Active == true
+                            join b in competitionDataBase.zCollectedDataTable
+                                on a.ID equals b.FK_CollectedRowsTable
+                            where b.ID == collectedDataFrom.ValueFK_CollectedDataTable
+                            select a).FirstOrDefault();
+                        //нащли далбнюю строку
+                        zCollectedDataTable distantRowValue = (from a in competitionDataBase.zCollectedDataTable
+                            where a.Active == true
+                                  && a.FK_CollectedRowsTable == distatntRow.ID
+                                    && a.FK_ColumnTable == collumnToGetValue.ID
+                            select a).FirstOrDefault();
+
+                        if (distantRowValue != null)
+                        {
+                            if (IsCellReadWrite(collumnToGetValue.DataType))
+                            {
+                                return (GetReadWriteString(collumnToGetValue, distantRowValue));
+                            }
+                        }
+                    }
+                }                         
             }
             #endregion
             return "";
-        }
-     
+        }    
         public bool IsCellDate(int dataTypeIndex)
         {
             DataType dataType = new DataType();
@@ -456,7 +513,8 @@ namespace Competitions
             DataType dataType = new DataType();
             if ((dataType.IsDataTypeIterator(dataTypeIndex)) || (dataType.IsDataTypeSum(dataTypeIndex)) || (dataType.IsDataTypeConstantNecessarilyShow(dataTypeIndex))
                 ||(dataType.IsDataTypeMaxValue(dataTypeIndex)) || (dataType.IsDataTypeMinValue(dataTypeIndex)) || (dataType.IsDataTypeNecessarilyShow(dataTypeIndex))
-                ||(dataType.IsDataTypeSymWithParam(dataTypeIndex)) || (dataType.IsDataTypeNameOfApplication(dataTypeIndex)) || (dataType.IsDataTypeOneToOneWithParams(dataTypeIndex)))
+                ||(dataType.IsDataTypeSymWithParam(dataTypeIndex)) || (dataType.IsDataTypeNameOfApplication(dataTypeIndex)) || (dataType.IsDataTypeOneToOneWithParams(dataTypeIndex))
+                || (dataType.IsDataTypeNecessarilyShowWithParam(dataTypeIndex)))
             {
                 return true;
             }

@@ -71,6 +71,38 @@ namespace Competitions.Admin
             }
             return newListItemAray;
         }
+        private ListItem[] GetColumnsInThisApplicationWithBitDataType(int sectionId, int competitionId)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            List<zColumnTable> columnList = (from a in competitionDataBase.zColumnTables
+                                             where a.Active
+                                             join b in competitionDataBase.zSectionTable
+                                                 on a.FK_SectionTable equals b.ID
+                                             where b.Active == true
+                                                   && b.ID != sectionId
+                                                   && b.FK_CompetitionsTable == competitionId
+                                             select a).Distinct().ToList();
+            List<zColumnTable> onlyBitColumnList = new List<zColumnTable>();
+            DataType dataType = new DataType();
+            foreach (zColumnTable currentColumn in columnList)
+            {
+                if (dataType.IsDataTypeBit(currentColumn.DataType))
+                {
+                    onlyBitColumnList.Add(currentColumn);
+                }
+            }
+
+            ListItem[] newListItemAray = new ListItem[onlyBitColumnList.Count];
+
+            for (int i = 0; i < onlyBitColumnList.Count; i++)
+            {             
+                    ListItem newItem = new ListItem();
+                    newItem.Text = onlyBitColumnList[i].Name;
+                    newItem.Value = onlyBitColumnList[i].ID.ToString();
+                    newListItemAray[i] = newItem;               
+            }
+            return newListItemAray;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {         
             if (!Page.IsPostBack)
@@ -95,6 +127,7 @@ namespace Competitions.Admin
                     FkToConstantDropDown.Items.AddRange(GetConstantList(competitionId));
                     Fk_ColumnConnectFromDropDown.Items.AddRange(GetColumnsInThisSection(sectionId));
                     Fk_ColumnConnectToDropDown.Items.AddRange(GetColumnsInThisApplicationWithoutThisSection(sectionId, competitionId));
+                    BitColumnsDropDown.Items.AddRange(GetColumnsInThisApplicationWithBitDataType(sectionId,competitionId));
                     if (columnId > 0)
                     {
                         zColumnTable currentColum = (from a in competitionDataBase.zColumnTables
@@ -118,25 +151,33 @@ namespace Competitions.Admin
                             if (dataType.DataTypeWithConnectionToCollected(currentColum.DataType))
                             {
                                 FkToColumnDropDown.Items.FindByValue(currentColum.FK_ColumnTable.ToString()).Selected=true;
-                                ChooseColumnForDropDownDiv.Visible = true;
+                                //ChooseColumnForDropDownDiv.Visible = true;
                                 
                             }
                             if (dataType.DataTypeWithConnectionToConstant(currentColum.DataType))
                             {
                                 FkToConstantDropDown.Items.FindByValue(currentColum.FK_ConstantListsTable.ToString())
                                     .Selected = true;
-                                ChooseConstantForDropDownDiv.Visible = true;
-                                TotalUpCheckBox.Visible = false;
+                                //ChooseConstantForDropDownDiv.Visible = true;
+                                //TotalUpCheckBox.Visible = false;
                             }
                             if (dataType.DataTypeWithConnectionToColumnsWithParams(currentColum.DataType))
                             {
                                 Fk_ColumnConnectFromDropDown.Items.FindByValue(currentColum.FK_ColumnConnectFromTable.ToString()).Selected = true;
                                 Fk_ColumnConnectToDropDown.Items.FindByValue(currentColum.FK_ColumnConnectToTable.ToString()).Selected = true;
-                                Panel1.Visible = true;
+                                //Panel1.Visible = true;
                                 FkToColumnDropDown.Items.FindByValue(currentColum.FK_ColumnTable.ToString()).Selected = true;
-                                ChooseColumnForDropDownDiv.Visible = true;
+                                //ChooseColumnForDropDownDiv.Visible = true;
                                 
                             }
+                            if (dataType.DataTypeDependOfBit(currentColum.DataType))
+                            {
+                                FkToColumnDropDown.Items.FindByValue(currentColum.FK_ColumnTable.ToString()).Selected = true;
+                                BitColumnsDropDown.Items.FindByValue(currentColum.FK_ColumnConnectToTable.ToString()).Selected = true;
+                                //ChooseColumnForDropDownDiv.Visible = true;
+                                //ChooseBitForDepend.Visible = true;
+                            }
+                            ShowOnlyAppropriateDivs();
                         }
                     }
                 }
@@ -144,18 +185,38 @@ namespace Competitions.Admin
         }
         protected void DataTypeDropDownList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ShowOnlyAppropriateDivs();
+        }
+        protected void ShowOnlyAppropriateDivs()
+        {
+            ChooseColumnForDropDownDiv.Visible = false;
+            ChooseConstantForDropDownDiv.Visible = false;
+            ChooseBitForDepend.Visible = false;
+            Panel1.Visible = false;
+            TotalUpCheckBox.Visible = false;
+
             DataType dataType = new DataType();
             int chosenValue = Convert.ToInt32(DataTypeDropDownList.SelectedValue);
-
-            ChooseColumnForDropDownDiv.Visible = dataType.DataTypeWithConnectionToCollected(chosenValue);
-            ChooseConstantForDropDownDiv.Visible = dataType.DataTypeWithConnectionToConstant(chosenValue);
-            Panel1.Visible = dataType.DataTypeWithConnectionToColumnsWithParams(chosenValue);
-            TotalUpCheckBox.Visible = !dataType.DataTypeWithConnectionToConstant(chosenValue);
-            if (Panel1.Visible)
-            {               
+            if (dataType.DataTypeWithConnectionToCollected(chosenValue))
+            {
                 ChooseColumnForDropDownDiv.Visible = true;
+                TotalUpCheckBox.Visible = true;
             }
-           
+            if (dataType.DataTypeWithConnectionToConstant(chosenValue))
+            {
+                ChooseConstantForDropDownDiv.Visible = true;
+            }
+            if (dataType.DataTypeWithConnectionToColumnsWithParams(chosenValue))
+            {
+                ChooseColumnForDropDownDiv.Visible = true;
+                Panel1.Visible = true;
+                TotalUpCheckBox.Visible = true;
+            }
+            if (dataType.DataTypeDependOfBit(chosenValue))
+            {
+                ChooseColumnForDropDownDiv.Visible = true;
+                ChooseBitForDepend.Visible = true;
+            }
         }
         protected void CreateSaveButton_Click(object sender, EventArgs e)
         {
@@ -211,6 +272,11 @@ namespace Competitions.Admin
                                 currentColumn.FK_ColumnConnectFromTable = Convert.ToInt32(Fk_ColumnConnectFromDropDown.SelectedValue);
                                 currentColumn.FK_ColumnConnectToTable = Convert.ToInt32(Fk_ColumnConnectToDropDown.SelectedValue);
                             }
+                            if (dataType.DataTypeDependOfBit(dataTypeSelectedValue))
+                            {
+                                currentColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
+                                currentColumn.FK_ColumnConnectToTable = Convert.ToInt32(BitColumnsDropDown.SelectedValue);
+                            }
                             competitionDataBase.SubmitChanges();
                         }
                     }
@@ -241,6 +307,11 @@ namespace Competitions.Admin
                             newColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
                             newColumn.FK_ColumnConnectFromTable = Convert.ToInt32(Fk_ColumnConnectFromDropDown.SelectedValue);
                             newColumn.FK_ColumnConnectToTable = Convert.ToInt32(Fk_ColumnConnectToDropDown.SelectedValue);
+                        }
+                        if (dataType.DataTypeDependOfBit(dataTypeSelectedValue))
+                        {
+                            newColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
+                            newColumn.FK_ColumnConnectToTable = Convert.ToInt32(BitColumnsDropDown.SelectedValue);
                         }
                         competitionDataBase.zColumnTables.InsertOnSubmit(newColumn);
                         competitionDataBase.SubmitChanges();
