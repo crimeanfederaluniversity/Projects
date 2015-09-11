@@ -201,6 +201,8 @@ namespace Competitions.User
             }
             return 0;
         }
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
@@ -247,6 +249,7 @@ namespace Competitions.User
 
                 #endregion
                 DataType dataType = new DataType();
+                
                 //нам нужно узнать как выглядит таблица и создать её
                 //у каждой сектии свой тип таблиц сначала возьмем текующую секцию
                 zSectionTable currentSection = (from a in competitionDataBase.zSectionTable
@@ -371,316 +374,43 @@ namespace Competitions.User
                             //теперь в currentCollectedData точно есть поле в таблице
                             //начнем заполнять DataTable
                             newDataRow["ID" + i.ToString()] = currentCollectedData.ID;
-                            #region float
+                            DataProcess dataProcess = new DataProcess();
+                            dataProcess.ClearTotalUp();
+                            int dType = (int) currentColumn.DataType;
+                            
+                            if (dataProcess.IsCellReadWrite(dType))
+                            {
+                                newDataRow["EditTextBoxVisible" + i.ToString()] = true;
+                                newDataRow["EditTextBoxValue" + i.ToString()] =
+                                    dataProcess.GetReadWriteString(currentColumn, currentCollectedData);
+                            }
 
-                            if (dataType.IsDataTypeFloat(currentColumn.DataType))
-                            {
-                                newDataRow["EditTextBoxVisible" + i.ToString()] = true;
-                                if (currentCollectedData.ValueDouble != null)
-                                {
-                                    double doubleValue = (double) currentCollectedData.ValueDouble;
-                                    totalUpSums[i] += doubleValue;
-                                    newDataRow["EditTextBoxValue" + i.ToString()] = doubleValue.ToString();
-                                }                               
-                            }
-                        
-                            #endregion
-                            #region int
-                            if (dataType.IsDataTypeInteger(currentColumn.DataType))
-                            {
-                                newDataRow["EditTextBoxVisible" + i.ToString()] = true;
-                                if (currentCollectedData.ValueInt!=null)
-                                { 
-                                    int intValue = (int)currentCollectedData.ValueInt;
-                                    totalUpSums[i] += intValue;
-                                    newDataRow["EditTextBoxValue" + i.ToString()] = intValue.ToString(); // currentCollectedData.ValueInt;
-                                }
-                            }
-                            #endregion
-                            #region text
-                            if (dataType.IsDataTypeText(currentColumn.DataType))
-                            {
-                                newDataRow["EditTextBoxVisible" + i.ToString()] = true;
-                                newDataRow["EditTextBoxValue" + i.ToString()] = currentCollectedData.ValueText; // currentCollectedData.ValueText;
-                            }
-                            #endregion
-                            #region bit
-                            if (dataType.IsDataTypeBit(currentColumn.DataType))
+                            if (dataProcess.IsCellCheckBox(dType))
                             {
                                 newDataRow["EditBoolCheckBoxVisible" + i.ToString()] = true;
-                                if (currentCollectedData.ValueBit == null)
-                                {
-                                    newDataRow["EditBoolCheckBoxValue" + i.ToString()] = false;
-                                }
-                                else
-                                {
-                                    newDataRow["EditBoolCheckBoxValue" + i.ToString()] = currentCollectedData.ValueBit;
-                                }
+                                newDataRow["EditBoolCheckBoxValue" + i.ToString()] =
+                                    dataProcess.GetBoolDataValue(currentColumn, currentCollectedData);
                             }
-                            #endregion
-                            #region dropDown
-                            if (dataType.IsDataTypeDropDown(currentColumn.DataType))
-                            {
-                                newDataRow["ChooseOnlyDropDownVisible" + i.ToString()] = true;
-                            }
-                            #endregion
-                            #region constDropDown
-                            if (dataType.IsDataTypeConstantDropDown(currentColumn.DataType))
-                            {
-                                newDataRow["ChooseOnlyDropDownVisible" + i.ToString()] = true;
-                            }
-                            #endregion
-                            #region date
-                            if (dataType.IsDataTypeDate(currentColumn.DataType))
+
+                            if (dataProcess.IsCellDate(dType))
                             {
                                 newDataRow["ChooseDateCalendarVisible" + i.ToString()] = true;
-                                if (currentCollectedData.ValueDataTime == null)
-                                {
-                                    newDataRow["ChooseDateCalendarValue" + i.ToString()] = DateTime.Today;                                  
-                                }
-                                else
-                                {
-                                    newDataRow["ChooseDateCalendarValue" + i.ToString()] =
-                                        ((DateTime) currentCollectedData.ValueDataTime);
-                                }
+                                newDataRow["ChooseDateCalendarValue" + i.ToString()] =
+                                    dataProcess.GetDateDataValue(currentColumn, currentCollectedData);
                             }
-                            #endregion
-                            #region iterator
-                            if (dataType.IsDataTypeIterator(currentColumn.DataType))
+
+                            if (dataProcess.IsCellReadOnly(dType))
                             {
                                 newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
-                                newDataRow["ReadOnlyLablelValue" + i.ToString()] = (iterator).ToString(); 
+                                newDataRow["ReadOnlyLablelValue" + i.ToString()] =
+                                    dataProcess.GetReadOnlyString(currentColumn, currentCollectedData,applicationId,currentRow.ID,iterator);
                             }
-                            #endregion
-                            #region sum
-                            if (dataType.IsDataTypeSum(currentColumn.DataType))
+
+                            if (dataProcess.IsCellDropDown(dType))
                             {
-                                zColumnTable columnToSum = (from a in competitionDataBase.zColumnTables
-                                    where a.ID == currentColumn.FK_ColumnTable
-                                    select a).FirstOrDefault();
-                                newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
-                                double AllSum = 0;
-                                if (dataType.IsDataTypeInteger(columnToSum.DataType))
-                                {
-                                    AllSum = (int) (from a in competitionDataBase.zCollectedDataTable
-                                        where a.FK_ColumnTable == columnToSum.ID
-                                              && a.Active == true
-                                        join b in competitionDataBase.zCollectedRowsTable
-                                            on a.FK_CollectedRowsTable equals b.ID
-                                        where b.Active == true
-                                              && b.FK_ApplicationTable == applicationId
-                                        select a.ValueInt).Distinct().Sum();
-                                }
-                                if (dataType.IsDataTypeFloat(columnToSum.DataType))
-                                {
-                                    AllSum = (double)
-                                        (from a in competitionDataBase.zCollectedDataTable
-                                         where a.FK_ColumnTable == columnToSum.ID
-                                               && a.Active == true
-                                         join b in competitionDataBase.zCollectedRowsTable
-                                             on a.FK_CollectedRowsTable equals b.ID
-                                         where b.Active == true
-                                               && b.FK_ApplicationTable == applicationId
-                                         select a.ValueDouble).Distinct().Sum();
-                                }
-                                if (dataType.IsDataTypeBit(columnToSum.DataType))
-                                {
-                                    AllSum =
-                                        (from a in competitionDataBase.zCollectedDataTable
-                                            where a.FK_ColumnTable == columnToSum.ID
-                                                  && a.Active == true
-                                            join b in competitionDataBase.zCollectedRowsTable
-                                                on a.FK_CollectedRowsTable equals b.ID
-                                            where b.Active == true
-                                                  && b.FK_ApplicationTable == applicationId
-                                                  && a.ValueBit == true
-                                            select a).Distinct().Count();
-                                }
-                                newDataRow["ReadOnlyLablelValue" + i.ToString()] = AllSum.ToString();
-                                totalUpSums[i] += AllSum;
+                                newDataRow["ChooseOnlyDropDownVisible" + i.ToString()] = true;
                             }
-                            #endregion
-                            #region ConstantNecessarily
-                            if (dataType.IsDataTypeConstantNecessarilyShow(currentColumn.DataType))
-                            {
-                                newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
-                                zCollectedDataTable getCollectedData =
-                                    (from a in competitionDataBase.zCollectedDataTable
-                                        where a.ID == currentCollectedData.ValueFK_CollectedDataTable
-                                        select a).FirstOrDefault();
-                                newDataRow["ReadOnlyLablelValue" + i.ToString()] = getCollectedData.ValueText;
-                            }
-                           
-                            #endregion
-                            #region MaxValue
-                            if (dataType.IsDataTypeMaxValue(currentColumn.DataType))
-                            {
-                                zColumnTable columnToFind = (from a in competitionDataBase.zColumnTables
-                                                            where a.ID == currentColumn.FK_ColumnTable
-                                                            select a).FirstOrDefault();
-                                newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
-
-                                if (dataType.IsDataTypeInteger(columnToFind.DataType))
-                                {
-                                    newDataRow["ReadOnlyLablelValue" + i.ToString()] =
-                                        (from a in competitionDataBase.zCollectedDataTable
-                                            where a.FK_ColumnTable == columnToFind.ID
-                                                  && a.Active == true
-                                            join b in competitionDataBase.zCollectedRowsTable
-                                                on a.FK_CollectedRowsTable equals b.ID
-                                            where b.Active == true
-                                                  && b.FK_ApplicationTable == applicationId
-                                            select a.ValueInt).Distinct()
-                                            .OrderByDescending(param => param)
-                                            .FirstOrDefault();
-                                }
-                                if (dataType.IsDataTypeFloat(columnToFind.DataType))
-                                {
-                                    newDataRow["ReadOnlyLablelValue" + i.ToString()] =
-                                        (from a in competitionDataBase.zCollectedDataTable
-                                         where a.FK_ColumnTable == columnToFind.ID
-                                               && a.Active == true
-                                         join b in competitionDataBase.zCollectedRowsTable
-                                             on a.FK_CollectedRowsTable equals b.ID
-                                         where b.Active == true
-                                               && b.FK_ApplicationTable == applicationId
-                                         select a.ValueDouble).Distinct()
-                                            .OrderByDescending(param => param)
-                                            .FirstOrDefault();
-                                }
-                                
-                                if (dataType.IsDataTypeDate(columnToFind.DataType))
-                                {
-                                    newDataRow["ReadOnlyLablelValue" + i.ToString()] =
-                                        (from a in competitionDataBase.zCollectedDataTable
-                                         where a.FK_ColumnTable == columnToFind.ID
-                                               && a.Active == true
-                                         join b in competitionDataBase.zCollectedRowsTable
-                                             on a.FK_CollectedRowsTable equals b.ID
-                                         where b.Active == true
-                                               && b.FK_ApplicationTable == applicationId                                             
-                                         select a.ValueDataTime).Distinct()
-                                            .OrderByDescending(param => param)
-                                            .FirstOrDefault().ToString().Split(' ')[0];
-                                }
-
-                            }
-                            #endregion
-                            #region MinValue
-                            if (dataType.IsDataTypeMinValue(currentColumn.DataType))
-                            {
-                                zColumnTable columnToFind = (from a in competitionDataBase.zColumnTables
-                                                             where a.ID == currentColumn.FK_ColumnTable
-                                                             select a).FirstOrDefault();
-                                newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
-
-                                if (dataType.IsDataTypeInteger(columnToFind.DataType))
-                                {
-                                    newDataRow["ReadOnlyLablelValue" + i.ToString()] =
-                                        (from a in competitionDataBase.zCollectedDataTable
-                                         where a.FK_ColumnTable == columnToFind.ID
-                                               && a.Active == true
-                                         join b in competitionDataBase.zCollectedRowsTable
-                                             on a.FK_CollectedRowsTable equals b.ID
-                                         where b.Active == true
-                                               && b.FK_ApplicationTable == applicationId
-                                         select a.ValueInt).Distinct()
-                                            .OrderBy(param => param)
-                                            .FirstOrDefault();
-                                }
-                                if (dataType.IsDataTypeFloat(columnToFind.DataType))
-                                {
-                                    newDataRow["ReadOnlyLablelValue" + i.ToString()] =
-                                        (from a in competitionDataBase.zCollectedDataTable
-                                         where a.FK_ColumnTable == columnToFind.ID
-                                               && a.Active == true
-                                         join b in competitionDataBase.zCollectedRowsTable
-                                             on a.FK_CollectedRowsTable equals b.ID
-                                         where b.Active == true
-                                               && b.FK_ApplicationTable == applicationId
-                                         select a.ValueDouble).Distinct()
-                                            .OrderBy(param => param)
-                                            .FirstOrDefault();
-                                }
-
-                                if (dataType.IsDataTypeDate(columnToFind.DataType))
-                                {
-                                    newDataRow["ReadOnlyLablelValue" + i.ToString()] =
-                                        (from a in competitionDataBase.zCollectedDataTable
-                                         where a.FK_ColumnTable == columnToFind.ID
-                                               && a.Active == true
-                                         join b in competitionDataBase.zCollectedRowsTable
-                                             on a.FK_CollectedRowsTable equals b.ID
-                                         where b.Active == true
-                                               && b.FK_ApplicationTable == applicationId
-                                         select a.ValueDataTime).Distinct()
-                                            .OrderBy(param => param)
-                                            .FirstOrDefault().ToString().Split(' ')[0];
-                                }
-
-                            }
-                            #endregion
-                            #region CollectedNecessarily
-                            if (dataType.IsDataTypeNecessarilyShow(currentColumn.DataType))
-                            {
-                                newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
-                                zCollectedDataTable getCollectedData =
-                                    (from a in competitionDataBase.zCollectedDataTable
-                                     where a.ID == currentCollectedData.ValueFK_CollectedDataTable
-                                     select a).FirstOrDefault();
-                                newDataRow["ReadOnlyLablelValue" + i.ToString()] = getCollectedData.ValueText;
-                            }
-
-                            #endregion
-                            #region sumWithParams
-                            if (dataType.IsDataTypeSymWithParam(currentColumn.DataType))
-                            {
-                                zColumnTable columnToSum = (from a in competitionDataBase.zColumnTables
-                                                            where a.ID == currentColumn.FK_ColumnTable
-                                                            select a).FirstOrDefault();
-                                newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
-
-                                //у нас есть колонка которую нужно суммировать
-                                //но нужно суммировать не все значения а только те которые связаны                          
-
-                                zCollectedDataTable collectedDataFrom =
-                                    (from a in competitionDataBase.zCollectedDataTable
-                                        where a.FK_CollectedRowsTable == currentRow.ID
-                                              && a.FK_ColumnTable == currentColumn.FK_ColumnConnectFromTable
-                                        select a).FirstOrDefault();
-
-                                int iD = (int) collectedDataFrom.ValueFK_CollectedDataTable;
-                                //мы получили по сути ID мероприятия для которого считаем
-
-                                List<zCollectedRowsTable> collectedDataRowsToSum =
-                                    (from a in competitionDataBase.zCollectedDataTable
-                                        where a.Active == true
-                                              && a.FK_ColumnTable == currentColumn.FK_ColumnConnectToTable
-                                              && a.ValueFK_CollectedDataTable == iD
-                                              join b in competitionDataBase.zCollectedRowsTable
-                                              on a.FK_CollectedRowsTable equals b.ID
-                                              where b.Active == true
-                                        select b).Distinct().ToList();
-                                //получили список строк в таблице из которой берем числа для суммирования и только те строки которые нам нужны
-
-                                double sum = 0;
-                                foreach (zCollectedRowsTable currentRowToSum in collectedDataRowsToSum)
-                                {
-                                    sum += GetValueFromCollectedData(currentRowToSum.ID, (int) currentColumn.FK_ColumnTable);
-                                }
-                                totalUpSums[i] += sum;
-                                newDataRow["ReadOnlyLablelValue" + i.ToString()] = sum.ToString();
-                            }
-                            #endregion
-                            #region aplikcationName
-                            if (dataType.IsDataTypeNameOfApplication(currentColumn.DataType))
-                            {
-                                newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
-                                newDataRow["ReadOnlyLablelValue" + i.ToString()] = (from a in competitionDataBase.zApplicationTable
-                                                                                        where a.ID ==applicationId
-                                                                                        select a.Name).FirstOrDefault();
-                            }
-                            #endregion
+                            totalUpSums[i] += dataProcess.GetToTotalUpValue();
                         }
                         #endregion
                     }      
