@@ -20,7 +20,20 @@
                             <asp:TextBox        ID="EditTextBox0"        runat="server"  Visible='<%# Bind("EditTextBoxVisible0") %>'         Text='<%# Bind("EditTextBoxValue0") %>'    TextMode="MultiLine"            ></asp:TextBox>                                                   
                             <asp:CheckBox       ID="EditBoolCheckBox0"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible0") %>'    Checked='<%# Bind("EditBoolCheckBoxValue0") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown0" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible0") %>'  CssClass="dropdown"     ></asp:DropDownList>
-                            <asp:Calendar       ID="ChooseDateCalendar0" runat="server"  Visible='<%# Bind("ChooseDateCalendarVisible0") %>'  SelectedDate='<%# Bind("ChooseDateCalendarValue0") %>' ></asp:Calendar>
+                            <asp:Calendar       ID="ChooseDateCalendar0" runat="server"  Visible='<%# Bind("ChooseDateCalendarVisible0") %>'  SelectedDate='<%# Bind("ChooseDateCalendarValue0") %>' ></asp:Calendar>                            
+                            <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire0" ControlToValidate="EditTextBox0" Enabled=     '<%# Bind("TextBoxRequireValidateEnable0") %>' Text="Введите данные"  ForeColor="Red" > 
+                            </asp:RequiredFieldValidator>
+                            <asp:RangeValidator runat="server" ID="TextBoxValidate0" ControlToValidate="EditTextBox0" 
+                               
+                                Enabled=     '<%# Bind("TextBoxValidateEnable0") %>'
+                                MaximumValue='<%# Bind("TextBoxValidateMaxValue0") %>' 
+                                MinimumValue='<%# Bind("TextBoxValidateMinValue0") %>'
+                                Text=        '<%# Bind("TextBoxValidateText0") %>'
+                                Type=        '<%# Bind("TextBoxValidateType0") %>'
+                                
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" 
+                            SetFocusOnError="True">
+                        </asp:RangeValidator>
                         </ItemTemplate>
                     </asp:TemplateField>  
                    
@@ -32,6 +45,17 @@
                             <asp:CheckBox       ID="EditBoolCheckBox1"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible1") %>'    Checked='<%# Bind("EditBoolCheckBoxValue1") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown1" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible1") %>'  CssClass="dropdown"       ></asp:DropDownList>
                             <asp:Calendar       ID="ChooseDateCalendar1" runat="server"  Visible='<%# Bind("ChooseDateCalendarVisible1") %>'  SelectedDate='<%# Bind("ChooseDateCalendarValue1") %>' ></asp:Calendar>
+                        <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire1" ControlToValidate="EditTextBox1" Enabled=     '<%# Bind("TextBoxRequireValidateEnable1") %>' Text="Введите данные"  ForeColor="Red"> 
+                            </asp:RequiredFieldValidator>
+                            <asp:RangeValidator runat="server" ID="TextBoxValidate1" ControlToValidate="EditTextBox1" 
+                                Enabled=     '<%# Bind("TextBoxValidateEnable1") %>'
+                                MaximumValue='<%# Bind("TextBoxValidateMaxValue1") %>' 
+                                MinimumValue='<%# Bind("TextBoxValidateMinValue1") %>'
+                                Text=        '<%# Bind("TextBoxValidateText1") %>'
+                                Type=        '<%# Bind("TextBoxValidateType1") %>'
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" 
+                            SetFocusOnError="True">
+                        </asp:RangeValidator>                        
                         </ItemTemplate>
                     </asp:TemplateField> 
                    
@@ -43,6 +67,17 @@
                             <asp:CheckBox       ID="EditBoolCheckBox2"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible2") %>'    Checked='<%# Bind("EditBoolCheckBoxValue2") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown2" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible2") %>'  CssClass="dropdown"      ></asp:DropDownList>
                             <asp:Calendar       ID="ChooseDateCalendar2" runat="server"  Visible='<%# Bind("ChooseDateCalendarVisible2") %>'  SelectedDate='<%# Bind("ChooseDateCalendarValue2") %>' ></asp:Calendar>
+                            <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire2" ControlToValidate="EditTextBox2" Enabled=     '<%# Bind("TextBoxRequireValidateEnable2") %>' Text="Введите данные"  ForeColor="Red"> 
+                            </asp:RequiredFieldValidator>
+                            <asp:RangeValidator runat="server" ID="TextBoxValidate2" ControlToValidate="EditTextBox2" 
+                                Enabled=     '<%# Bind("TextBoxValidateEnable2") %>'
+                                MaximumValue='<%# Bind("TextBoxValidateMaxValue2") %>' 
+                                MinimumValue='<%# Bind("TextBoxValidateMinValue2") %>'
+                                Text=        '<%# Bind("TextBoxValidateText2") %>'
+                                Type=        '<%# Bind("TextBoxValidateType2") %>'
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" 
+                            SetFocusOnError="True">
+                        </asp:RangeValidator>
                         </ItemTemplate>
                     </asp:TemplateField> 
                    
@@ -54,6 +89,17 @@
                             <asp:CheckBox       ID="EditBoolCheckBox3"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible3") %>'    Checked='<%# Bind("EditBoolCheckBoxValue3") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown3" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible3") %>'  CssClass="dropdown"       ></asp:DropDownList>
                             <asp:Calendar       ID="ChooseDateCalendar3" runat="server"  Visible='<%# Bind("ChooseDateCalendarVisible3") %>'  SelectedDate='<%# Bind("ChooseDateCalendarValue3") %>' ></asp:Calendar>
+                            <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire3" ControlToValidate="EditTextBox3" Enabled=     '<%# Bind("TextBoxRequireValidateEnable3") %>' Text="Введите данные"  ForeColor="Red"> 
+                            </asp:RequiredFieldValidator>
+                            <asp:RangeValidator runat="server" ID="TextBoxValidate3" ControlToValidate="EditTextBox3" 
+                                Enabled=     '<%# Bind("TextBoxValidateEnable3") %>'
+                                MaximumValue='<%# Bind("TextBoxValidateMaxValue3") %>' 
+                                MinimumValue='<%# Bind("TextBoxValidateMinValue3") %>'
+                                Text=        '<%# Bind("TextBoxValidateText3") %>'
+                                Type=        '<%# Bind("TextBoxValidateType3") %>'
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" 
+                            SetFocusOnError="True">
+                        </asp:RangeValidator>
                         </ItemTemplate>
                     </asp:TemplateField> 
                    
@@ -65,6 +111,17 @@
                             <asp:CheckBox       ID="EditBoolCheckBox4"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible4") %>'    Checked='<%# Bind("EditBoolCheckBoxValue4") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown4" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible4") %>'  CssClass="dropdown"   ></asp:DropDownList>
                             <asp:Calendar       ID="ChooseDateCalendar4" runat="server"  Visible='<%# Bind("ChooseDateCalendarVisible4") %>'  SelectedDate='<%# Bind("ChooseDateCalendarValue4") %>' ></asp:Calendar>
+                            <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire4" ControlToValidate="EditTextBox4" Enabled=     '<%# Bind("TextBoxRequireValidateEnable4") %>' Text="Введите данные"  ForeColor="Red"> 
+                            </asp:RequiredFieldValidator>
+                            <asp:RangeValidator runat="server" ID="TextBoxValidate4" ControlToValidate="EditTextBox4" 
+                                Enabled=     '<%# Bind("TextBoxValidateEnable4") %>'
+                                MaximumValue='<%# Bind("TextBoxValidateMaxValue4") %>' 
+                                MinimumValue='<%# Bind("TextBoxValidateMinValue4") %>'
+                                Text=        '<%# Bind("TextBoxValidateText4") %>'
+                                Type=        '<%# Bind("TextBoxValidateType4") %>'
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" 
+                            SetFocusOnError="True">
+                        </asp:RangeValidator>
                         </ItemTemplate>
                     </asp:TemplateField> 
                    
@@ -76,6 +133,17 @@
                             <asp:CheckBox       ID="EditBoolCheckBox5"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible5") %>'    Checked='<%# Bind("EditBoolCheckBoxValue5") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown5" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible5") %>'  CssClass="dropdown"       ></asp:DropDownList>
                             <asp:Calendar       ID="ChooseDateCalendar5" runat="server"  Visible='<%# Bind("ChooseDateCalendarVisible5") %>'  SelectedDate='<%# Bind("ChooseDateCalendarValue5") %>' ></asp:Calendar>
+                            <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire5" ControlToValidate="EditTextBox5" Enabled=     '<%# Bind("TextBoxRequireValidateEnable5") %>' Text="Введите данные"  ForeColor="Red"> 
+                            </asp:RequiredFieldValidator>
+                            <asp:RangeValidator runat="server" ID="TextBoxValidate5" ControlToValidate="EditTextBox5" 
+                                Enabled=     '<%# Bind("TextBoxValidateEnable5") %>'
+                                MaximumValue='<%# Bind("TextBoxValidateMaxValue5") %>' 
+                                MinimumValue='<%# Bind("TextBoxValidateMinValue5") %>'
+                                Text=        '<%# Bind("TextBoxValidateText5") %>'
+                                Type=        '<%# Bind("TextBoxValidateType5") %>'
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" 
+                            SetFocusOnError="True">
+                        </asp:RangeValidator>
                         </ItemTemplate>
                     </asp:TemplateField> 
                    
@@ -87,6 +155,17 @@
                             <asp:CheckBox       ID="EditBoolCheckBox6"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible6") %>'    Checked='<%# Bind("EditBoolCheckBoxValue6") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown6" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible6") %>'  CssClass="dropdown"      ></asp:DropDownList>
                             <asp:Calendar       ID="ChooseDateCalendar6" runat="server"  Visible='<%# Bind("ChooseDateCalendarVisible6") %>'  SelectedDate='<%# Bind("ChooseDateCalendarValue6") %>' ></asp:Calendar>
+                            <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire6" ControlToValidate="EditTextBox6" Enabled=     '<%# Bind("TextBoxRequireValidateEnable6") %>' Text="Введите данные"  ForeColor="Red"> 
+                            </asp:RequiredFieldValidator>
+                            <asp:RangeValidator runat="server" ID="TextBoxValidate6" ControlToValidate="EditTextBox6" 
+                                Enabled=     '<%# Bind("TextBoxValidateEnable6") %>'
+                                MaximumValue='<%# Bind("TextBoxValidateMaxValue6") %>' 
+                                MinimumValue='<%# Bind("TextBoxValidateMinValue6") %>'
+                                Text=        '<%# Bind("TextBoxValidateText6") %>'
+                                Type=        '<%# Bind("TextBoxValidateType6") %>'
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" 
+                            SetFocusOnError="True">
+                        </asp:RangeValidator>
                         </ItemTemplate>
                     </asp:TemplateField> 
                    
@@ -98,6 +177,17 @@
                             <asp:CheckBox       ID="EditBoolCheckBox7"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible7") %>'    Checked='<%# Bind("EditBoolCheckBoxValue7") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown7" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible7") %>'  CssClass="dropdown"     ></asp:DropDownList>
                             <asp:Calendar       ID="ChooseDateCalendar7" runat="server"  Visible='<%# Bind("ChooseDateCalendarVisible7") %>'  SelectedDate='<%# Bind("ChooseDateCalendarValue7") %>' ></asp:Calendar>
+                            <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire7" ControlToValidate="EditTextBox7" Enabled=     '<%# Bind("TextBoxRequireValidateEnable7") %>' Text="Введите данные"  ForeColor="Red" > 
+                            </asp:RequiredFieldValidator>
+                            <asp:RangeValidator runat="server" ID="TextBoxValidate7" ControlToValidate="EditTextBox7" 
+                                Enabled=     '<%# Bind("TextBoxValidateEnable7") %>'
+                                MaximumValue='<%# Bind("TextBoxValidateMaxValue7") %>' 
+                                MinimumValue='<%# Bind("TextBoxValidateMinValue7") %>'
+                                Text=        '<%# Bind("TextBoxValidateText7") %>'
+                                Type=        '<%# Bind("TextBoxValidateType7") %>'
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" 
+                            SetFocusOnError="True">
+                        </asp:RangeValidator>
                         </ItemTemplate>
                     </asp:TemplateField> 
                    
@@ -109,6 +199,18 @@
                             <asp:CheckBox       ID="EditBoolCheckBox8"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible8") %>'    Checked='<%# Bind("EditBoolCheckBoxValue8") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown8" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible8") %>'  CssClass="dropdown"        ></asp:DropDownList>
                             <asp:Calendar       ID="ChooseDateCalendar8" runat="server"  Visible='<%# Bind("ChooseDateCalendarVisible8") %>'  SelectedDate='<%# Bind("ChooseDateCalendarValue8") %>' ></asp:Calendar>
+                            <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire8" ControlToValidate="EditTextBox8" Enabled=     '<%# Bind("TextBoxRequireValidateEnable8") %>' Text="Введите данные"  ForeColor="Red"> 
+                            </asp:RequiredFieldValidator>
+                            <asp:RangeValidator runat="server" ID="TextBoxValidate8" ControlToValidate="EditTextBox8" 
+                                Enabled=     '<%# Bind("TextBoxValidateEnable8") %>'
+                                MaximumValue='<%# Bind("TextBoxValidateMaxValue8") %>' 
+                                MinimumValue='<%# Bind("TextBoxValidateMinValue8") %>'
+                                Text=        '<%# Bind("TextBoxValidateText8") %>'
+                                Type=        '<%# Bind("TextBoxValidateType8") %>'
+                                
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" 
+                            SetFocusOnError="True">
+                        </asp:RangeValidator>
                         </ItemTemplate>
                     </asp:TemplateField> 
                    
@@ -120,6 +222,17 @@
                             <asp:CheckBox       ID="EditBoolCheckBox9"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible9") %>'    Checked='<%# Bind("EditBoolCheckBoxValue9") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown9" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible9") %>'  CssClass="dropdown"        ></asp:DropDownList>
                             <asp:Calendar       ID="ChooseDateCalendar9" runat="server"  Visible='<%# Bind("ChooseDateCalendarVisible9") %>'  SelectedDate='<%# Bind("ChooseDateCalendarValue9") %>' ></asp:Calendar>
+                            <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire9" ControlToValidate="EditTextBox9" Enabled=     '<%# Bind("TextBoxRequireValidateEnable9") %>' Text="Введите данные"  ForeColor="Red"> 
+                            </asp:RequiredFieldValidator>
+                            <asp:RangeValidator runat="server" ID="TextBoxValidate9" ControlToValidate="EditTextBox9" 
+                                Enabled=     '<%# Bind("TextBoxValidateEnable9") %>'
+                                MaximumValue='<%# Bind("TextBoxValidateMaxValue9") %>' 
+                                MinimumValue='<%# Bind("TextBoxValidateMinValue9") %>'
+                                Text=        '<%# Bind("TextBoxValidateText9") %>'
+                                Type=        '<%# Bind("TextBoxValidateType9") %>'
+                            ErrorMessage="Ошибка" ForeColor="Red" Display="Dynamic" 
+                            SetFocusOnError="True">
+                        </asp:RangeValidator>
                         </ItemTemplate>
                     </asp:TemplateField> 
 

@@ -42,7 +42,12 @@
             </asp:DropDownList>
         </asp:Panel>
 
+        <asp:CheckBox ID="SortByCheckBox" runat="server" Text="Сортировать по этому показателю" />
+        <br />
+
         <asp:CheckBox ID="TotalUpCheckBox" runat="server" Text="Итого" />
+
+        <br />
 
         <asp:Button ID="CreateSaveButton"  runat="server" Text="Сохранить" OnClick="CreateSaveButton_Click" />
     

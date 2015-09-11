@@ -145,6 +145,8 @@ namespace Competitions.Admin
                             NameTextBox.Text = currentColum.Name;
                             DescriptionTextBox.Text = currentColum.Description;
                             UniqueMarkTextBox.Text = currentColum.UniqueMark;
+                            if (currentColum.SortBy != null)
+                            SortByCheckBox.Checked = (bool) currentColum.SortBy;
                             if (currentColum.TotalUp!=null)
                             TotalUpCheckBox.Checked = (bool)currentColum.TotalUp;
                             DataTypeDropDownList.SelectedIndex = currentColum.DataType;
@@ -257,6 +259,7 @@ namespace Competitions.Admin
                             currentColumn.DataType =
                                 Convert.ToInt32(DataTypeDropDownList.SelectedValue);
                             currentColumn.TotalUp = TotalUpCheckBox.Checked;
+                            currentColumn.SortBy = SortByCheckBox.Checked;
                             currentColumn.UniqueMark = UniqueMarkTextBox.Text;
                             if (dataType.DataTypeWithConnectionToCollected(dataTypeSelectedValue))
                             {
@@ -292,6 +295,7 @@ namespace Competitions.Admin
                         newColumn.Active = true;
                         newColumn.FK_SectionTable = sectionId;
                         newColumn.DataType = dataTypeSelectedValue;
+                        newColumn.SortBy = SortByCheckBox.Checked;
                         newColumn.TotalUp = TotalUpCheckBox.Checked;
                         newColumn.UniqueMark = UniqueMarkTextBox.Text;
                         if (dataType.DataTypeWithConnectionToCollected(dataTypeSelectedValue))

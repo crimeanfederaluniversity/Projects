@@ -3,21 +3,57 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data;
+using System.Security.Cryptography.X509Certificates;
+using System.Web.UI.WebControls;
+using Competitions;
 
 namespace Competitions
 {
+    public class ValidatorParams
+    {
+        public bool Enabled { set; get; }
+        public double MinValue {set; get; }
+        public double MaxValue {set; get; }
+        public ValidationDataType ContentType {set; get; }
+        public string ErrorMessage {set; get; }
+
+        public ValidatorParams(bool enabled, double minValue, double maxValue, ValidationDataType contenType,
+            string errorMessage)
+        {
+            Enabled = enabled;
+            MinValue = minValue;
+            MaxValue = maxValue;
+            ContentType = contenType;
+            ErrorMessage = errorMessage;
+        }
+
+        public ValidatorParams()
+        {
+            Enabled = false;
+            MinValue = 0;
+            MaxValue = 0;
+            ContentType = ValidationDataType.String;
+            ErrorMessage = "No error";
+        }
+    }
     public class DataProcess
     {
+        private  ValidatorParams validator = new ValidatorParams();
         private double _toTotalUp = 0;
-        public void ClearTotalUp()
+
+        public ValidatorParams GetValidatorParams()
+        {
+            return validator;
+        }
+        public void     ClearTotalUp()
         {
             _toTotalUp = 0;
         }
-        public double GetToTotalUpValue()
+        public double   GetToTotalUpValue()
         {
             return _toTotalUp;
         }
-        public string GetStringValueFromCollectedData(int rowId, int columnId)
+        public string   GetStringValueFromCollectedData(int rowId, int columnId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
             zColumnTable currentColumn = (from a in competitionDataBase.zColumnTables
@@ -78,10 +114,16 @@ namespace Competitions
         public string   GetReadWriteString(zColumnTable currentColumn, zCollectedDataTable currentCollectedData)
         {
             DataType dataType = new DataType();
+            validator.Enabled = true;
             #region float
 
             if (dataType.IsDataTypeFloat(currentColumn.DataType))
             {
+                validator.ContentType=ValidationDataType.Double;
+                validator.ErrorMessage = "Только числовое значение!";
+                validator.MinValue = -100000000000;
+                validator.MaxValue = 100000000000;
+                 
                 if (currentCollectedData.ValueDouble != null)
                 {
                     double doubleValue = (double) currentCollectedData.ValueDouble;
@@ -95,6 +137,10 @@ namespace Competitions
 
             if (dataType.IsDataTypeInteger(currentColumn.DataType))
             {
+                validator.ContentType = ValidationDataType.Integer;
+                validator.ErrorMessage = "Только целочисленное значение!";
+                validator.MinValue = Int32.MinValue;
+                validator.MaxValue = Int32.MaxValue;
                 if (currentCollectedData.ValueInt != null)
                 {
                     int intValue = (int) currentCollectedData.ValueInt;
@@ -105,9 +151,14 @@ namespace Competitions
 
             #endregion
             #region text
-
+           
             if (dataType.IsDataTypeText(currentColumn.DataType))
             {
+                validator.Enabled = false;
+                validator.ContentType = ValidationDataType.String;
+                validator.ErrorMessage = "Введите текст!";
+                validator.MinValue = 1;
+                validator.MaxValue = 50000;
                 return currentCollectedData.ValueText;
             }
 
@@ -489,6 +540,7 @@ namespace Competitions
             #endregion
             return "";
         }    
+      
         public bool IsCellDate(int dataTypeIndex)
         {
             DataType dataType = new DataType();

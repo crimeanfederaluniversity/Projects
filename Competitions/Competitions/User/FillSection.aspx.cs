@@ -341,6 +341,16 @@ namespace Competitions.User
 
                     dataTable.Columns.Add(new DataColumn("ChooseDateCalendarVisible" + i.ToString(), typeof(bool)));
                     dataTable.Columns.Add(new DataColumn("ChooseDateCalendarValue" + i.ToString(), typeof(DateTime)));
+
+                    // валидаор
+                    dataTable.Columns.Add(new DataColumn("TextBoxValidateEnable" + i.ToString(), typeof(bool)));
+                    dataTable.Columns.Add(new DataColumn("TextBoxValidateMinValue" + i.ToString(), typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("TextBoxValidateMaxValue" + i.ToString(), typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("TextBoxValidateType" + i.ToString(), typeof(ValidationDataType)));
+                    dataTable.Columns.Add(new DataColumn("TextBoxValidateText" + i.ToString(), typeof(string)));
+
+                    dataTable.Columns.Add(new DataColumn("TextBoxRequireValidateEnable" + i.ToString(), typeof(bool)));
+                    
                 }
 
                 #endregion
@@ -397,7 +407,7 @@ namespace Competitions.User
                 List<zCollectedRowsTable> currentRowsList = (from a in competitionDataBase.zCollectedRowsTable
                                                              where a.Active == true
                                                                    && a.FK_ApplicationTable == applicationId
-                                                                   && a.FK_SectionTable == sectionId
+                                                                   && a.FK_SectionTable == sectionId                                                                  
                                                              select a).ToList();
                 //если человек заходит в первый раз то может и не быть строк, надо создать одну
                 if (currentRowsList.Count == 0)
@@ -438,9 +448,17 @@ namespace Competitions.User
                         newDataRow["EditBoolCheckBoxVisible" + i.ToString()] = false;
                         newDataRow["EditBoolCheckBoxValue" + i.ToString()] = false;
                         newDataRow["ChooseOnlyDropDownVisible" + i.ToString()] = false;
-                        //newDataRow["ChooseOnlyDropDownValue" + i.ToString()] = null;
                         newDataRow["ChooseDateCalendarVisible" + i.ToString()] = false;
                         newDataRow["ChooseDateCalendarValue" + i.ToString()] = DateTime.Now;
+                        //validator
+                        newDataRow["TextBoxValidateEnable" + i.ToString()] = false;
+                        newDataRow["TextBoxValidateMinValue" + i.ToString()] = 0;
+                        newDataRow["TextBoxValidateMaxValue" + i.ToString()] = 0;
+                        newDataRow["TextBoxValidateType" + i.ToString()] = ValidationDataType.String;
+                        newDataRow["TextBoxValidateText" + i.ToString()] = "";
+
+                        newDataRow["TextBoxRequireValidateEnable" + i.ToString()] = false;
+                        
                         #endregion
                         #region записываем имеющиеся данные в нужные поля
                         if (i < columnInSectionList.Count)
@@ -479,6 +497,14 @@ namespace Competitions.User
                                 newDataRow["EditTextBoxVisible" + i.ToString()] = true;
                                 newDataRow["EditTextBoxValue" + i.ToString()] =
                                     dataProcess.GetReadWriteString(currentColumn, currentCollectedData);
+                                ValidatorParams currentValidator = dataProcess.GetValidatorParams();
+
+                                newDataRow["TextBoxRequireValidateEnable" + i.ToString()] = true;
+                                newDataRow["TextBoxValidateEnable" + i.ToString()] = currentValidator.Enabled;
+                                newDataRow["TextBoxValidateMinValue" + i.ToString()] = currentValidator.MinValue;
+                                newDataRow["TextBoxValidateMaxValue" + i.ToString()] = currentValidator.MaxValue;
+                                newDataRow["TextBoxValidateType" + i.ToString()] = currentValidator.ContentType;
+                                newDataRow["TextBoxValidateText" + i.ToString()] = currentValidator.ErrorMessage;
                             }
 
                             if (dataProcess.IsCellCheckBox(dType))
@@ -530,6 +556,14 @@ namespace Competitions.User
                     //newDataRow["ChooseOnlyDropDownValue" + i.ToString()] = null;
                     newDataRowForTotalUp["ChooseDateCalendarVisible" + i.ToString()] = false;
                     newDataRowForTotalUp["ChooseDateCalendarValue" + i.ToString()] = DateTime.Now;
+
+                    newDataRowForTotalUp["TextBoxValidateEnable" + i.ToString()] = false;
+                    newDataRowForTotalUp["TextBoxValidateMinValue" + i.ToString()] = 0;
+                    newDataRowForTotalUp["TextBoxValidateMaxValue" + i.ToString()] = 0;
+                    newDataRowForTotalUp["TextBoxValidateType" + i.ToString()] = ValidationDataType.String;
+                    newDataRowForTotalUp["TextBoxValidateText" + i.ToString()] = "";
+
+                    newDataRowForTotalUp["TextBoxRequireValidateEnable" + i.ToString()] = false;
                     #endregion                  
                     #region
 
@@ -561,7 +595,11 @@ namespace Competitions.User
                     permitAddRow = false;
                     permitDeleteRow = false;
                 }
-
+                /*
+                DataView dv = dataTable.DefaultView;
+                dv.Sort = "[ReadOnlyLablelValue0]";
+                DataTable sortedDT = dv.ToTable();
+                */
                 FillingGV.DataSource = dataTable;
 
                 FillingGV.Columns[10].Visible = permitDeleteRow;
