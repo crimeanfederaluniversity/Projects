@@ -12,28 +12,34 @@ namespace Competitions
     public class ValidatorParams
     {
         public bool Enabled { set; get; }
+        public bool RequireValidatorEnabled { set; get; }
         public double MinValue {set; get; }
         public double MaxValue {set; get; }
         public ValidationDataType ContentType {set; get; }
         public string ErrorMessage {set; get; }
 
+        public TextBoxMode TextBoxTextMode { set; get; }
         public ValidatorParams(bool enabled, double minValue, double maxValue, ValidationDataType contenType,
-            string errorMessage)
+            string errorMessage, TextBoxMode textBoxTextMode,bool enableRequireValidator)
         {
             Enabled = enabled;
             MinValue = minValue;
             MaxValue = maxValue;
             ContentType = contenType;
             ErrorMessage = errorMessage;
+            TextBoxTextMode = textBoxTextMode;
+            RequireValidatorEnabled = enableRequireValidator;
         }
 
         public ValidatorParams()
         {
             Enabled = false;
+            RequireValidatorEnabled = false;
             MinValue = 0;
             MaxValue = 0;
             ContentType = ValidationDataType.String;
             ErrorMessage = "No error";
+            TextBoxTextMode= TextBoxMode.SingleLine;
         }
     }
     public class DataProcess
@@ -123,7 +129,8 @@ namespace Competitions
                 validator.ErrorMessage = "Только числовое значение!";
                 validator.MinValue = -100000000000;
                 validator.MaxValue = 100000000000;
-                 
+                validator.RequireValidatorEnabled = true;
+                validator.TextBoxTextMode = TextBoxMode.SingleLine;
                 if (currentCollectedData.ValueDouble != null)
                 {
                     double doubleValue = (double) currentCollectedData.ValueDouble;
@@ -141,6 +148,8 @@ namespace Competitions
                 validator.ErrorMessage = "Только целочисленное значение!";
                 validator.MinValue = Int32.MinValue;
                 validator.MaxValue = Int32.MaxValue;
+                validator.RequireValidatorEnabled = true;
+                validator.TextBoxTextMode = TextBoxMode.SingleLine;
                 if (currentCollectedData.ValueInt != null)
                 {
                     int intValue = (int) currentCollectedData.ValueInt;
@@ -159,6 +168,8 @@ namespace Competitions
                 validator.ErrorMessage = "Введите текст!";
                 validator.MinValue = 1;
                 validator.MaxValue = 50000;
+                validator.RequireValidatorEnabled = true;
+                validator.TextBoxTextMode = TextBoxMode.MultiLine;
                 return currentCollectedData.ValueText;
             }
 

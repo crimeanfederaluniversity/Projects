@@ -16,6 +16,15 @@ namespace Competitions.User
         const int columnCount = 10;
         private bool permitAddRow = true;
         private bool permitDeleteRow = true;
+
+        public string GetShortString(string textValue, int maxLength,string endingString )
+        {
+            if (textValue.Length > maxLength)
+            {
+                return textValue.Remove(maxLength, textValue.Length - maxLength) + endingString;
+            }
+            return textValue;
+        }
         public zCollectedRowsTable CreateNewRow(int applicationId,int sectionId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
@@ -350,7 +359,8 @@ namespace Competitions.User
                     dataTable.Columns.Add(new DataColumn("TextBoxValidateText" + i.ToString(), typeof(string)));
 
                     dataTable.Columns.Add(new DataColumn("TextBoxRequireValidateEnable" + i.ToString(), typeof(bool)));
-                    
+
+                    dataTable.Columns.Add(new DataColumn("EditTextBoxMode" + i.ToString(), typeof(TextBoxMode)));                                      
                 }
 
                 #endregion
@@ -458,7 +468,8 @@ namespace Competitions.User
                         newDataRow["TextBoxValidateText" + i.ToString()] = "";
 
                         newDataRow["TextBoxRequireValidateEnable" + i.ToString()] = false;
-                        
+
+                        newDataRow["EditTextBoxMode" + i.ToString()] = TextBoxMode.SingleLine;
                         #endregion
                         #region записываем имеющиеся данные в нужные поля
                         if (i < columnInSectionList.Count)
@@ -499,12 +510,13 @@ namespace Competitions.User
                                     dataProcess.GetReadWriteString(currentColumn, currentCollectedData);
                                 ValidatorParams currentValidator = dataProcess.GetValidatorParams();
 
-                                newDataRow["TextBoxRequireValidateEnable" + i.ToString()] = true;
+                                newDataRow["TextBoxRequireValidateEnable" + i.ToString()] = currentValidator.RequireValidatorEnabled;
                                 newDataRow["TextBoxValidateEnable" + i.ToString()] = currentValidator.Enabled;
                                 newDataRow["TextBoxValidateMinValue" + i.ToString()] = currentValidator.MinValue;
                                 newDataRow["TextBoxValidateMaxValue" + i.ToString()] = currentValidator.MaxValue;
                                 newDataRow["TextBoxValidateType" + i.ToString()] = currentValidator.ContentType;
                                 newDataRow["TextBoxValidateText" + i.ToString()] = currentValidator.ErrorMessage;
+                                newDataRow["EditTextBoxMode" + i.ToString()] = currentValidator.TextBoxTextMode;
                             }
 
                             if (dataProcess.IsCellCheckBox(dType))
@@ -564,6 +576,8 @@ namespace Competitions.User
                     newDataRowForTotalUp["TextBoxValidateText" + i.ToString()] = "";
 
                     newDataRowForTotalUp["TextBoxRequireValidateEnable" + i.ToString()] = false;
+
+                    newDataRowForTotalUp["EditTextBoxMode" + i.ToString()] = TextBoxMode.SingleLine;
                     #endregion                  
                     #region
 
@@ -611,6 +625,7 @@ namespace Competitions.User
                     FillingGV.Columns[i].Visible = true;
                 }
                 FillingGV.DataBind();
+                
                 #endregion
             }
         }
@@ -711,6 +726,8 @@ namespace Competitions.User
                                                 {
                                                     newListItem.Text = tmpCollectedForDropDown.ValueDataTime.ToString();
                                                 }
+                                                newListItem.Attributes.Add("title", newListItem.Text);
+                                                //newListItem.Text = GetShortString(newListItem.Text, 50, "...");
                                                 currentDropDownListDownList.Items.Add(newListItem);
                                                 #endregion
                                             }
@@ -742,8 +759,9 @@ namespace Competitions.User
                                                     newListItem.Selected = true;
                                                 }
                                                 newListItem.Value = tmpCollectedForDropDown.ID.ToString();
-                                                newListItem.Text = tmpCollectedForDropDown.ValueText;       
-                                      
+                                                newListItem.Text = tmpCollectedForDropDown.ValueText;                                                
+                                                newListItem.Attributes.Add("title", newListItem.Text);
+                                                //newListItem.Text = GetShortString(newListItem.Text, 50, "...");
                                                 currentDropDownListDownList.Items.Add(newListItem);
                                             }
                                         }
