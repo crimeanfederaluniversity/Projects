@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserMainPage.aspx.cs" Inherits="Competitions.User.UserMainPage" %>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div>
-        <h2><span style="font-size: 30px">Добро пожаловать в систему "Конкурсы и проекты Программы развития" </span></h2>
+        <h2><span style="font-size: 20px">Добро пожаловать в систему "Конкурсы и проекты Программы развития" </span></h2>
         <br />
          <asp:Button ID="MyApplication" runat="server" Text="Мои заявки" OnClick="MyApplication_Click" />
         <br />

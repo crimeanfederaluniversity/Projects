@@ -46,7 +46,7 @@ namespace Competitions.Admin
                     if (iD > 0)
                     {
                         CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                        zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
+                        zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTables
                             where a.Active == true
                                   && a.ID == iD
                             select a).FirstOrDefault();
@@ -101,7 +101,7 @@ namespace Competitions.Admin
                 {
                     if ((NameTextBox.Text.Length > 0) && (DescriptionTextBox.Text.Length > 0))
                     {
-                        zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
+                        zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTables
                             where a.Active == true
                                   && a.ID == iD
                             select a).FirstOrDefault();
@@ -150,7 +150,7 @@ namespace Competitions.Admin
                         newCompetition.EndDate = Calendar2.SelectedDate;
                         newCompetition.Active = true;
                         newCompetition.OpenForApplications = false;
-                        competitionDataBase.zCompetitionsTable.InsertOnSubmit(newCompetition);
+                        competitionDataBase.zCompetitionsTables.InsertOnSubmit(newCompetition);
                         competitionDataBase.SubmitChanges();
                         if (FileUpload1.HasFile)
                         {
@@ -189,7 +189,7 @@ namespace Competitions.Admin
             int iD = (int) sessionParam;
             if (iD > 0)
             {
-                zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
+                zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTables
                     where a.Active == true
                           && a.ID == iD
                     select a).FirstOrDefault();

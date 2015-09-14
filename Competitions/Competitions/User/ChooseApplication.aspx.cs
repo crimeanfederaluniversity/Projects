@@ -10,6 +10,12 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Text;
+using System.Text.RegularExpressions;
+using iTextSharp.text;
+using iTextSharp.text.html.simpleparser;
+using iTextSharp.text.pdf;
+using iTextSharp.text.html;
 
 
 namespace Competitions.User
@@ -37,7 +43,7 @@ namespace Competitions.User
                List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTable
                     where a.FK_UsersTable == userId
                           && a.Active == true
-                          join b in competitionDataBase.zCompetitionsTable
+                          join b in competitionDataBase.zCompetitionsTables
                           on a.FK_CompetitionTable equals b.ID
                           where b.Active == true
                           && b.OpenForApplications == true
@@ -48,7 +54,7 @@ namespace Competitions.User
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = currentApplication.ID;
                     dataRow["Name"] = currentApplication.Name;
-                    dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTable
+                    dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTables
                         where a.ID == (Convert.ToInt32(currentApplication.FK_CompetitionTable))
                         select a.Name).FirstOrDefault();
                     dataTable.Rows.Add(dataRow);
@@ -171,7 +177,7 @@ namespace Competitions.User
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
                 
-                zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
+                zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTables
                                                          join b in competitionDataBase.zApplicationTable
                                                          on a.ID equals b.FK_CompetitionTable
                     where b.ID == iD

@@ -28,5 +28,10 @@ namespace Competitions.Admin
         {
             Response.Redirect("ReadyApplications.aspx");
         }
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ManualPage.aspx");
+        }
     }
 }

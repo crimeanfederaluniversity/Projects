@@ -27,6 +27,10 @@ namespace Competitions
             {
                 Response.Redirect("~/Expert/Main.aspx");
             }
+            else if (accessLevel == 15)
+            {
+                Response.Redirect("~/Curator/CuratorMainPage.aspx");
+            }
             else //если входим сюда то что то не так) скорей всего пользователю не присвоен уровень в UsersTable
             {
                 FormsAuthentication.SignOut();

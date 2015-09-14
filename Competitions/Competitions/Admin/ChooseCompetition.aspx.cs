@@ -22,7 +22,7 @@ namespace Competitions.Admin
                 dataTable.Columns.Add(new DataColumn("Number", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("Status", typeof(string)));
 
-                List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTable
+                List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTables
                     where a.Active == true
                     select a).ToList();
 
@@ -71,7 +71,7 @@ namespace Competitions.Admin
             {
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                zCompetitionsTable competitionToDelete = (from a in competitionDataBase.zCompetitionsTable
+                zCompetitionsTable competitionToDelete = (from a in competitionDataBase.zCompetitionsTables
                     where a.ID == iD
                     select a).FirstOrDefault();
                 if (competitionToDelete!=null)
@@ -106,7 +106,7 @@ namespace Competitions.Admin
             {
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                zCompetitionsTable competitionToChangeStatus = (from a in competitionDataBase.zCompetitionsTable
+                zCompetitionsTable competitionToChangeStatus = (from a in competitionDataBase.zCompetitionsTables
                                                           where a.ID == iD
                                                           select a).FirstOrDefault();
                 if (competitionToChangeStatus != null)

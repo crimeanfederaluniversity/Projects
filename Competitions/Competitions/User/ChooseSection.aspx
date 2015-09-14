@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ChooseSection.aspx.cs" Inherits="Competitions.User.ChooseSection" %>
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">    <div>
-    
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">   
+     <div>  
         <asp:Button ID="GoBackButton" runat="server" OnClick="GoBackButton_Click" Text="Назад" />
         <br />
         <br />
@@ -8,7 +8,7 @@
             <Columns>
                 <asp:BoundField DataField="ID" HeaderText="" Visible="false" />
                 <asp:BoundField DataField="Name" HeaderText="Название" Visible="true" />
-                <asp:BoundField DataField="Status" HeaderText="Состояние" Visible="true" />
+                <asp:BoundField DataField="Status" HeaderText="Состояние" Visible="false" />
 
                 <asp:TemplateField HeaderText="Заполнение">
                     <ItemTemplate>
@@ -17,4 +17,5 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
+           </div> 
 </asp:Content>

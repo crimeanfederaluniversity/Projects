@@ -25,7 +25,7 @@ namespace Competitions.User
                 dataTable.Columns.Add(new DataColumn("StartDate", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("EndDate", typeof(string)));
 
-                List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTable
+                List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTables
                                                              where a.Active == true
                                                              select a).ToList();
 

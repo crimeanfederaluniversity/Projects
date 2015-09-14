@@ -32,7 +32,7 @@ namespace Competitions.Expert
                                                            where 
                                                            a.Active == true
                                                            && a.Sended == true
-                                                           join b in competitionDataBase.zCompetitionsTable
+                                                           join b in competitionDataBase.zCompetitionsTables
                                                            on a.FK_CompetitionTable equals b.ID
                                                            where b.Active == true
                                                            join c in competitionDataBase.zExpertsAndApplicationMappingTables
@@ -47,7 +47,7 @@ namespace Competitions.Expert
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = currentApplication.ID;
                     dataRow["Name"] = currentApplication.Name;
-                    dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTable
+                    dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTables
                                                   where a.ID == (Convert.ToInt32(currentApplication.FK_CompetitionTable))
                                                   select a.Name).FirstOrDefault();
                     

@@ -5,7 +5,7 @@
         <br />
         <asp:Button ID="GoBackButton" runat="server"  Text="Назад" Width="131px" style="height: 26px" OnClick="GoBackButton_Click" />
         <br />
-        <h2><span style="font-size: 30px">Cоздание нового конкурса в системе:" </span></h2>
+        <h2><span style="font-size: 30px">Cоздание нового конкурса в системе: </span></h2>
         <br /> 
         Название
         <br />

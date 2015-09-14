@@ -37,7 +37,7 @@ namespace Competitions.Admin
                     dataRow["Name"] = currentApplication.Name;
                     dataRow["Description"] = "";
                     dataRow["SendedDataTime"] = currentApplication.SendedDataTime;
-                    dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTable
+                    dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTables
                                               where a.ID == currentApplication.FK_CompetitionTable
                                               select a.Name).FirstOrDefault();
                     dataRow["Autor"] = (from a in CompetitionsDataBase.UsersTable
