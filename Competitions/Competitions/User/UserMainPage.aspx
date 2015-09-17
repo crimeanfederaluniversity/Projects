@@ -1,10 +1,12 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserMainPage.aspx.cs" Inherits="Competitions.User.UserMainPage" %>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div>
-        <h2><span style="font-size: 20px">Добро пожаловать в систему "Конкурсы и проекты Программы развития" </span></h2>
+        
         <br />
-         <asp:Button ID="MyApplication" runat="server" Text="Мои заявки" OnClick="MyApplication_Click" />
+         <asp:Button ID="MyApplication" runat="server" Text="Мои заявки" OnClick="MyApplication_Click" Width="233px" />
+        <asp:Button ID="Button1" runat="server" Text="Архив" Width="250px" OnClick="Button1_Click" />
         <br />
+        <h2><span style="font-size: 20px">На данный момент для подачи заявак доступны следующие конкурсы:</span></h2>
         <br />
          <asp:GridView ID="MainGV" runat="server" AutoGenerateColumns="False">
             <Columns>

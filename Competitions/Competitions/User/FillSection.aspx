@@ -34,6 +34,7 @@
                             <asp:TextBox        ID="EditTextBox0"        runat="server"  CssClass="textBox" Visible='<%# Bind("EditTextBoxVisible0") %>'         Text='<%# Bind("EditTextBoxValue0") %>'    TextMode='<%# Bind("EditTextBoxMode0") %>'            ></asp:TextBox>                                                   
                             <asp:CheckBox       ID="EditBoolCheckBox0"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible0") %>'    Checked='<%# Bind("EditBoolCheckBoxValue0") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown0" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible0") %>'  CssClass="dropdown"     ></asp:DropDownList>
+
                             <asp:Calendar       ID="ChooseDateCalendar0" runat="server"  Visible='<%# Bind("ChooseDateCalendarVisible0") %>'  SelectedDate='<%# Bind("ChooseDateCalendarValue0") %>' ></asp:Calendar>                            
                             <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire0" ControlToValidate="EditTextBox0" Enabled=     '<%# Bind("TextBoxRequireValidateEnable0") %>' Text="Введите данные"  ForeColor="Red" > 
                             </asp:RequiredFieldValidator>

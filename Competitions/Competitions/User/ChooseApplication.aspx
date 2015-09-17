@@ -11,13 +11,13 @@
             
                 <asp:TemplateField HeaderText="Заполнить">
                         <ItemTemplate>
-                            <asp:Button ID="FillButton" runat="server" CommandName="Select" Text="Заполнить" CommandArgument='<%# Eval("ID") %>' Enabled='<%# Eval("FillNSendEnabled") %>' Width="200px" OnClick="FillButtonClick"/>
+                            <asp:Button ID="FillButton" runat="server" CommandName="Select" Text="Заполнить" CommandArgument='<%# Eval("ID") %>'   Width="200px" OnClick="FillButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
                 
                 <asp:TemplateField HeaderText="Отправить на рассмотрение">
                         <ItemTemplate>
-                            <asp:Button ID="SendButton" runat="server" CommandName="Select" OnClientClick="return confirm('Вы уверены, что хотите отправить заявку на рассмотрение?');" Text="Отправить" CommandArgument='<%# Eval("ID") %>' Enabled='<%# Eval("FillNSendEnabled") %>' Width="200px" OnClick="SendButtonClick"/>
+                            <asp:Button ID="SendButton" runat="server" CommandName="Select" OnClientClick="return confirm('Вы уверены, что хотите отправить заявку на рассмотрение?');" Text="Отправить" CommandArgument='<%# Eval("ID") %>'   Width="200px" OnClick="SendButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
 
@@ -31,7 +31,8 @@
         </asp:GridView>
 
         <br />
-
         
+        
+
     </div>
 </asp:Content>

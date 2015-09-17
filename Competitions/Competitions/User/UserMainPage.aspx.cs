@@ -36,8 +36,8 @@ namespace Competitions.User
                     dataRow["Name"] = currentCompetition.Name;
                     dataRow["Number"] = currentCompetition.Number;
                     dataRow["Budjet"] = Convert.ToInt32(currentCompetition.Budjet);
-                    dataRow["StartDate"] = Convert.ToDateTime(currentCompetition.StartDate);
-                    dataRow["EndDate"] = Convert.ToDateTime(currentCompetition.EndDate);
+                    dataRow["StartDate"] = currentCompetition.StartDate.ToString().Split(' ')[0];
+                    dataRow["EndDate"] = currentCompetition.EndDate.ToString().Split(' ')[0];
                    
                     dataTable.Rows.Add(dataRow);
                 }
@@ -64,6 +64,11 @@ namespace Competitions.User
                     Response.Redirect("~/User/ApplicationCreateEdit.aspx");
                 }
             }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/User/ArchiveApplications.aspx");
         }
     }
 }

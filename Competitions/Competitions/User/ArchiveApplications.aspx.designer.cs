@@ -10,7 +10,7 @@
 namespace Competitions.User {
     
     
-    public partial class ChooseApplication {
+    public partial class ArchiveApplications {
         
         /// <summary>
         /// ApplicationGV элемент управления.
