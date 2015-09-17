@@ -25,17 +25,35 @@ namespace Competitions.User
                     Response.Redirect("ChooseApplication.aspx");
                 }
                 else
-                {
+                {                 
                     int iD = (int) sessionParam;
                     int userId = (int) userIdParam;
-                    int idblock = (int)blokParam;
-
-                    CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-
+                    int idblock = (int)blokParam;                   
+                    CompetitionDataContext competitionDataBase = new CompetitionDataContext();                    
                     zApplicationTable currenApplication = (from a in competitionDataBase.zApplicationTable
                         where a.ID == iD
                         select a).FirstOrDefault();
 
+                    List<zSectionTable> sectionList = (from a in competitionDataBase.zSectionTable
+                                                       where a.FK_CompetitionsTable == currenApplication.FK_CompetitionTable
+                              && a.Active == true && a.FK_BlockID == idblock
+                                                       select a).ToList();
+
+                    FillingPages newPagesParams = new FillingPages();                  
+                    newPagesParams.CurrentPage = 0;
+                    newPagesParams.ApplicationId = iD;
+                    newPagesParams.BlockId = idblock;
+                    newPagesParams.SectionId = new List<int>();
+                    foreach (zSectionTable currentSection in sectionList)
+                    {
+                        newPagesParams.PagesCount++;
+                        
+                        newPagesParams.SectionId.Add(currentSection.ID);
+                    }
+
+                    Session["PagesParams"] = newPagesParams;
+                    Response.Redirect("FillSection.aspx");
+                    /*
                     DataTable dataTable = new DataTable();
                     dataTable.Columns.Add(new DataColumn("ID", typeof (string)));
                     dataTable.Columns.Add(new DataColumn("Name", typeof (string)));
@@ -57,6 +75,7 @@ namespace Competitions.User
 
                     ApplicationGV.DataSource = dataTable;
                     ApplicationGV.DataBind();
+                    */
                 }
             }
         }
@@ -71,8 +90,6 @@ namespace Competitions.User
                 Session["SectionID"] = Convert.ToInt32(button.CommandArgument);
                 Response.Redirect("FillSection.aspx");
             }
-
-            //  Response.Redirect("ChooseApplication.aspx");
         }        
     }
 }

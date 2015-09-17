@@ -532,17 +532,20 @@ namespace Competitions
                             where b.ID == collectedDataFrom.ValueFK_CollectedDataTable
                             select a).FirstOrDefault();
                         //нащли далбнюю строку
-                        zCollectedDataTable distantRowValue = (from a in competitionDataBase.zCollectedDataTable
-                            where a.Active == true
-                                  && a.FK_CollectedRowsTable == distatntRow.ID
-                                    && a.FK_ColumnTable == collumnToGetValue.ID
-                            select a).FirstOrDefault();
-
-                        if (distantRowValue != null)
+                        if (distatntRow != null) //дальней строки нет
                         {
-                            if (IsCellReadWrite(collumnToGetValue.DataType))
+                            zCollectedDataTable distantRowValue = (from a in competitionDataBase.zCollectedDataTable
+                                where a.Active == true
+                                      && a.FK_CollectedRowsTable == distatntRow.ID
+                                      && a.FK_ColumnTable == collumnToGetValue.ID
+                                select a).FirstOrDefault();
+
+                            if (distantRowValue != null)
                             {
-                                return (GetReadWriteString(collumnToGetValue, distantRowValue));
+                                if (IsCellReadWrite(collumnToGetValue.DataType))
+                                {
+                                    return (GetReadWriteString(collumnToGetValue, distantRowValue));
+                                }
                             }
                         }
                     }

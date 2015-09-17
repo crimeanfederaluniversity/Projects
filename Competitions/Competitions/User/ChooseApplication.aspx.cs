@@ -13,10 +13,7 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
-using iTextSharp.text;
-using iTextSharp.text.html.simpleparser;
-using iTextSharp.text.pdf;
-using iTextSharp.text.html;
+
 
 
 namespace Competitions.User
@@ -206,6 +203,21 @@ namespace Competitions.User
                 }
                 return currentCollecterRowsTable;
             }
+
+            private List<string> GetColmnNamesForNestedList(List<string> columnsUniqueNames ,int applicationId)
+            {
+                List<string> columnNames = new List<string>();
+                foreach (string currentUnique in columnsUniqueNames)
+                {
+                    zColumnTable currentColumn = GetColumnByUniqueMark(currentUnique, applicationId);
+                    //CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+                    if (currentColumn!=null)
+                        columnNames.Add(currentColumn.Name);
+                    else
+                     columnNames.Add("Без названия");
+                }
+                return columnNames;
+            }
             private List<List<string>> GetNestedDataList(List<string> columnsUniqueNames, int applicationId)
             {
                 List<List<string>> newNestedList = new List<List<string>>();
@@ -213,6 +225,7 @@ namespace Competitions.User
                 zColumnTable firstColumnInUniques = GetColumnByUniqueMark(columnsUniqueNames[0], applicationId);
                 List<zCollectedRowsTable> rowsList = GetRowsThatHaveColumn(firstColumnInUniques, applicationId);
 
+                newNestedList.Add(GetColmnNamesForNestedList(columnsUniqueNames, applicationId));
                 foreach (zCollectedRowsTable currentRow in rowsList)
                 {
                     newNestedList.Add(GetListWithDataFromRowByUnique(currentRow, columnsUniqueNames,applicationId));
@@ -353,12 +366,12 @@ namespace Competitions.User
 
             return "NULL";
         }
-        private List<zColumnTable> FindColumnsWithUniqueMarkExist(int applicationId)
+        private zColumnTable FindColumnWithUniqueMark(int applicationId,string uniqueMark)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-            List<zColumnTable> currentColumnList = (from a in  competitionDataBase.zColumnTables
+            zColumnTable currentColumn = (from a in  competitionDataBase.zColumnTables
                                  where a.Active == true
-                                 && a.UniqueMark.Length>2
+                                 && a.UniqueMark == uniqueMark
                                  join b in competitionDataBase.zSectionTable
                                  on a.FK_SectionTable equals  b.ID
                                  where b.Active == true
@@ -366,9 +379,9 @@ namespace Competitions.User
                                  on b.FK_CompetitionsTable equals c.FK_CompetitionTable
                                  where c.Active == true
                                  && c.ID == applicationId
-                                 select a).Distinct().ToList();
-            
-            return currentColumnList;
+                                 select a).FirstOrDefault();
+
+            return currentColumn;
         }
         private XmlNode FindNode(XmlNodeList list, string nodeName)
         {
@@ -449,8 +462,7 @@ namespace Competitions.User
             CreateXmlTable createXmlTableClass = new CreateXmlTable();
             List<TagToReplace> tagsToReplaces = tagsToReplaceClass.GetTagsToReplace(document);
             //мы получили список того что нужно заменить
-            //пройдемся по каждому
-
+            #region поочереди заменяем
             foreach (TagToReplace currentTagToReplace in tagsToReplaces)
             {
                 if (currentTagToReplace.ReplaceType == 2)
@@ -465,15 +477,21 @@ namespace Competitions.User
                         sectNode.ReplaceChild(newXmlNode, nodeToReplace);
                     }
                 }
+                else if (currentTagToReplace.ReplaceType == 1)
+                {
+                    XmlNode childNode = FindNodeByValue(document.ChildNodes, "#Line*" + currentTagToReplace.ReplacemantList[0]+"#");
+                    zColumnTable currentColumn = FindColumnWithUniqueMark(applicationId,currentTagToReplace.ReplacemantList[0]);
+                    if (currentColumn != null)
+                    {
+                        childNode.Value = FindValue(currentColumn, applicationId);
+                    }
+                    else
+                    {
+                        childNode.Value = "Значение отсутствует";
+                    }
+                }
             }
-
-            //XmlNode childNode = FindNodeByValue(document.ChildNodes, "Ueeeeeeees");
-            //XmlNode nodeToReplace = FindAfterParentNode(sectNode, childNode);
-            //XmlNode newParamNode = xmlTableCreate.XmlTableCreateInit(document);
-            //document.ImportNode(newParamNode, true);
-            //sectNode.AppendChild(newParamNode);
-            //sectNode.ReplaceChild(newParamNode, nodeToReplace);
-
+            #endregion
             #region подчищаем и сохраняем в файл
             string newXmlFile = document.OuterXml;
             newXmlFile=newXmlFile.Replace("xmlns:w=\"w\"", "").Replace("xmlns:wx=\"wx\"", "").Replace("xmlns:wsp=\"wsp\"", "");

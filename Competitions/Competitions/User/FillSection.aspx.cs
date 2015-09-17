@@ -17,6 +17,123 @@ namespace Competitions.User
         private bool permitAddRow = true;
         private bool permitDeleteRow = true;
 
+        public int GetApplicationIdFromSession()
+        {
+            FillingPages newPagesParams = (FillingPages)Session["PagesParams"];
+            if (newPagesParams.SectionId == null)
+            {
+                //error
+                Response.Redirect("ChooseApplicationAction.aspx");
+            }
+
+            int applicationId = newPagesParams.ApplicationId;
+            return applicationId;
+        }
+
+        public int GetSectionId()
+        {
+            FillingPages newPagesParams = (FillingPages)Session["PagesParams"];
+            if (newPagesParams.SectionId == null)
+            {
+                //error
+                Response.Redirect("ChooseApplicationAction.aspx");
+            }
+
+            int sectionId = newPagesParams.SectionId[newPagesParams.CurrentPage];
+            return sectionId;
+        }
+        public bool SaveChanges()
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            DataType dataType = new DataType();
+            foreach (GridViewRow currentRow in FillingGV.Rows)
+            {
+                for (int i = 0; i < columnCount; i++)
+                {
+                    Label idLabel = (Label)currentRow.FindControl("ID" + i.ToString());
+                    if (idLabel == null)
+                    {
+                        Response.Redirect("~/Default.aspx");
+                    }
+                    zCollectedDataTable currentCollectedData = (from a in competitionDataBase.zCollectedDataTable
+                                                                where a.ID == Convert.ToInt32(idLabel.Text)
+                                                                select a).FirstOrDefault();
+                    if (currentCollectedData != null)
+                    {
+                        #region сохраняем в зависимоти от типа данных
+                        zColumnTable currenColumn = (from a in competitionDataBase.zColumnTables
+                                                     where a.ID == currentCollectedData.FK_ColumnTable
+                                                     select a).FirstOrDefault();
+                        //---------------------------------------------------------------------------------------------------------------
+                        if (dataType.IsDataTypeBit(currenColumn.DataType))
+                        {
+                            CheckBox gvCheckBox = (CheckBox)currentRow.FindControl("EditBoolCheckBox" + i.ToString());
+                            if (gvCheckBox != null)
+                            {
+                                currentCollectedData.ValueBit = gvCheckBox.Checked;
+                            }
+                        }
+                        //---------------------------------------------------------------------------------------------------------------
+                        if (dataType.IsDataTypeInteger(currenColumn.DataType))
+                        {
+                            TextBox gvTextBox = (TextBox)currentRow.FindControl("EditTextBox" + i.ToString());
+                            if (gvTextBox != null)
+                            {
+                                if (gvTextBox.Text.Any())
+                                {
+                                    currentCollectedData.ValueInt = Convert.ToInt32(gvTextBox.Text);
+
+                                }
+                            }
+                        }
+                        //---------------------------------------------------------------------------------------------------------------
+                        if (dataType.IsDataTypeFloat(currenColumn.DataType))
+                        {
+                            TextBox gvTextBox = (TextBox)currentRow.FindControl("EditTextBox" + i.ToString());
+                            if (gvTextBox != null)
+                            {
+                                if (gvTextBox.Text.Any())
+                                    currentCollectedData.ValueDouble = Convert.ToDouble(gvTextBox.Text);
+                            }
+                        }
+                        //---------------------------------------------------------------------------------------------------------------
+                        if (dataType.IsDataTypeText(currenColumn.DataType))
+                        {
+                            TextBox gvTextBox = (TextBox)currentRow.FindControl("EditTextBox" + i.ToString());
+                            if (gvTextBox != null)
+                            {
+                                if (gvTextBox.Text.Any())
+                                {
+                                    currentCollectedData.ValueText = gvTextBox.Text;
+                                }
+                            }
+                        }
+                        //---------------------------------------------------------------------------------------------------------------
+                        if (dataType.IsDataTypeDate(currenColumn.DataType))
+                        {
+                            Calendar gvCalendar = (Calendar)currentRow.FindControl("ChooseDateCalendar" + i.ToString());
+                            if (gvCalendar != null)
+                            {
+                                if (gvCalendar.SelectedDate > DateTime.MinValue)
+                                currentCollectedData.ValueDataTime = gvCalendar.SelectedDate;
+                            }
+                        }
+                        if ((dataType.IsDataTypeDropDown(currenColumn.DataType)) || (dataType.IsDataTypeConstantDropDown(currenColumn.DataType)))
+                        {
+                            DropDownList gvDropDownList = (DropDownList)currentRow.FindControl("ChooseOnlyDropDown" + i.ToString());
+                            if (gvDropDownList != null)
+                            {
+                                if (gvDropDownList.SelectedValue.Any())
+                                currentCollectedData.ValueFK_CollectedDataTable = Convert.ToInt32(gvDropDownList.SelectedValue);
+                            }
+                        }
+                        #endregion
+                        competitionDataBase.SubmitChanges();
+                    }
+                }
+            }
+            return true;
+        }
         public string GetShortString(string textValue, int maxLength,string endingString )
         {
             if (textValue.Length > maxLength)
@@ -310,23 +427,22 @@ namespace Competitions.User
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
             if (!Page.IsPostBack)
             {
                 #region SETUP
                 #region session
-                var sessionParam1 = Session["ApplicationID"];
-                var sessionParam2 = Session["SectionID"];
                 var userIdParam = Session["UserID"];
-
-                if ((sessionParam1 == null) || (sessionParam2 == null) || (userIdParam == null))
+                FillingPages newPagesParams = (FillingPages)Session["PagesParams"];
+                if ((userIdParam == null) || (newPagesParams.SectionId==null))
                 {
                     //error
                     Response.Redirect("ChooseSection.aspx");
                 }
 
-                int applicationId = Convert.ToInt32(sessionParam1);
-                int sectionId = Convert.ToInt32(sessionParam2);
+                int applicationId = newPagesParams.ApplicationId;
+                int sectionId = GetSectionId();
                 int userId = Convert.ToInt32(userIdParam);
                 #endregion
                 //создадим большой dataTable
@@ -445,7 +561,8 @@ namespace Competitions.User
                 {
                     iterator++;
                     //в каждой строке есть одна или больше колонок
-                    //пройдемся по каждой колонке                   
+                    //пройдемся по каждой колонке    
+                    bool doAddRow = true;
                     DataRow newDataRow = dataTable.NewRow();
                     for (int i = 0; i < 10; i++)
                     {
@@ -536,8 +653,13 @@ namespace Competitions.User
                             if (dataProcess.IsCellReadOnly(dType))
                             {
                                 newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
-                                newDataRow["ReadOnlyLablelValue" + i.ToString()] =
-                                    dataProcess.GetReadOnlyString(currentColumn, currentCollectedData,applicationId,currentRow.ID,iterator);
+                                string tmp = dataProcess.GetReadOnlyString(currentColumn, currentCollectedData,applicationId,currentRow.ID,iterator);
+                                if (tmp == "")
+                                {
+                                    doAddRow = false;
+                                }
+                                newDataRow["ReadOnlyLablelValue" + i.ToString()] = tmp;
+
                             }
 
                             if (dataProcess.IsCellDropDown(dType))
@@ -547,7 +669,8 @@ namespace Competitions.User
                             totalUpSums[i] += dataProcess.GetToTotalUpValue();
                         }
                         #endregion
-                    }      
+                    }    
+                    if (doAddRow)
                     dataTable.Rows.Add(newDataRow);
                 }
                 #region TotalUp
@@ -654,18 +777,16 @@ namespace Competitions.User
                                     DataType dataType = new  DataType();
 
                                     #region session
-                                    var sessionParam1 = Session["ApplicationID"];
-                                    var sessionParam2 = Session["SectionID"];
                                     var userIdParam = Session["UserID"];
-
-                                    if ((sessionParam1 == null) || (sessionParam2 == null) || (userIdParam == null))
+                                    FillingPages newPagesParams = (FillingPages)Session["PagesParams"];
+                                    if ((userIdParam == null) || (newPagesParams.SectionId == null))
                                     {
                                         //error
                                         Response.Redirect("ChooseSection.aspx");
                                     }
 
-                                    int applicationId = Convert.ToInt32(sessionParam1);
-                                    int sectionId = Convert.ToInt32(sessionParam2);
+                                    int applicationId = newPagesParams.ApplicationId;
+                                    int sectionId = newPagesParams.SectionId[newPagesParams.CurrentPage];
                                     int userId = Convert.ToInt32(userIdParam);
                                     #endregion
                                     #region dropDown
@@ -780,18 +901,16 @@ namespace Competitions.User
             {
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
                 #region session
-                var sessionParam1 = Session["ApplicationID"];
-                var sessionParam2 = Session["SectionID"];
                 var userIdParam = Session["UserID"];
 
-                if ((sessionParam1 == null) || (sessionParam2 == null) || (userIdParam == null))
+                if (userIdParam == null)
                 {
                     //error
                     Response.Redirect("ChooseSection.aspx");
                 }
 
-                int applicationId = Convert.ToInt32(sessionParam1);
-                int sectionId = Convert.ToInt32(sessionParam2);
+                int applicationId = GetApplicationIdFromSession();
+                int sectionId = GetSectionId();
                 int userId = Convert.ToInt32(userIdParam);
                 #endregion
                 zCollectedRowsTable currentRow = (from a in competitionDataBase.zCollectedRowsTable
@@ -810,26 +929,21 @@ namespace Competitions.User
                 }
             }   
         }
-        protected void GoBackButton_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("ChooseSection.aspx");
-        }
         protected void AddRowButton_Click(object sender, EventArgs e)
         {
+            SaveChanges();
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
             #region session
-            var sessionParam1 = Session["ApplicationID"];
-            var sessionParam2 = Session["SectionID"];
             var userIdParam = Session["UserID"];
-
-            if ((sessionParam1 == null) || (sessionParam2 == null) || (userIdParam == null))
+            FillingPages newPagesParams = (FillingPages)Session["PagesParams"];
+            if ((userIdParam == null) || (newPagesParams.SectionId == null))
             {
                 //error
                 Response.Redirect("ChooseSection.aspx");
             }
 
-            int applicationId = Convert.ToInt32(sessionParam1);
-            int sectionId = Convert.ToInt32(sessionParam2);
+            int applicationId = newPagesParams.ApplicationId;
+            int sectionId = newPagesParams.SectionId[newPagesParams.CurrentPage];
             int userId = Convert.ToInt32(userIdParam);
             #endregion
             zCollectedRowsTable newRow = new zCollectedRowsTable();
@@ -842,81 +956,31 @@ namespace Competitions.User
         }
         protected void SaveButton_Click(object sender, EventArgs e)
         {
-            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-            DataType dataType = new DataType();
-            foreach (GridViewRow currentRow in FillingGV.Rows)
+            SaveChanges();
+            Response.Redirect("FillSection.aspx");
+        }
+        protected void PreviousSection_Click(object sender, EventArgs e)
+        {
+            SaveChanges();
+            FillingPages newPagesParams = (FillingPages)Session["PagesParams"];
+            newPagesParams.CurrentPage--;
+            if (newPagesParams.CurrentPage == -1)
             {
-                for (int i = 0; i < columnCount; i++)
-                {
-                    Label idLabel = (Label) currentRow.FindControl("ID"+i.ToString());
-                    zCollectedDataTable currentCollectedData = (from a in competitionDataBase.zCollectedDataTable
-                        where a.ID == Convert.ToInt32(idLabel.Text)
-                        select a).FirstOrDefault();
-                    if (currentCollectedData != null)
-                    {
-                        #region сохраняем в зависимоти от типа данных
-                        zColumnTable currenColumn = (from a in competitionDataBase.zColumnTables
-                            where a.ID == currentCollectedData.FK_ColumnTable
-                            select a).FirstOrDefault();
-                        //---------------------------------------------------------------------------------------------------------------
-                        if (dataType.IsDataTypeBit(currenColumn.DataType))
-                        {
-                            CheckBox gvCheckBox = (CheckBox)currentRow.FindControl("EditBoolCheckBox" + i.ToString());
-                            if (gvCheckBox != null)
-                            {
-                                currentCollectedData.ValueBit = gvCheckBox.Checked;
-                            }
-                        }
-                        //---------------------------------------------------------------------------------------------------------------
-                        if (dataType.IsDataTypeInteger(currenColumn.DataType))
-                        {
-                            TextBox gvTextBox = (TextBox)currentRow.FindControl("EditTextBox" + i.ToString());
-                            if (gvTextBox != null)
-                            {
-                                currentCollectedData.ValueInt = Convert.ToInt32(gvTextBox.Text);
-                            }
-                        }
-                        //---------------------------------------------------------------------------------------------------------------
-                        if (dataType.IsDataTypeFloat(currenColumn.DataType))
-                        {
-                            TextBox gvTextBox = (TextBox)currentRow.FindControl("EditTextBox" + i.ToString());
-                            if (gvTextBox != null)
-                            {
-                                if (gvTextBox.Text.Any())
-                                currentCollectedData.ValueDouble = Convert.ToDouble(gvTextBox.Text);
-                            }
-                        }
-                        //---------------------------------------------------------------------------------------------------------------
-                        if (dataType.IsDataTypeText(currenColumn.DataType))
-                        {
-                            TextBox gvTextBox = (TextBox)currentRow.FindControl("EditTextBox" + i.ToString());
-                            if (gvTextBox != null)
-                            {
-                                currentCollectedData.ValueText = gvTextBox.Text;
-                            }
-                        }
-                        //---------------------------------------------------------------------------------------------------------------
-                        if (dataType.IsDataTypeDate(currenColumn.DataType))
-                        {
-                            Calendar gvCalendar = (Calendar)currentRow.FindControl("ChooseDateCalendar" + i.ToString());
-                            if (gvCalendar != null)
-                            {
-                                currentCollectedData.ValueDataTime = gvCalendar.SelectedDate;
-                            }
-                        }
-                        if ((dataType.IsDataTypeDropDown(currenColumn.DataType)) || (dataType.IsDataTypeConstantDropDown(currenColumn.DataType)))
-                        {
-                            DropDownList gvDropDownList = (DropDownList)currentRow.FindControl("ChooseOnlyDropDown" + i.ToString());
-                            if (gvDropDownList != null)
-                            {
-                                currentCollectedData.ValueFK_CollectedDataTable = Convert.ToInt32(gvDropDownList.SelectedValue);
-                            }
-                        }                      
-                        #endregion
-                        competitionDataBase.SubmitChanges();
-                    }
-                }              
+                Response.Redirect("ChooseApplicationAction.aspx");
             }
+            Session["PagesParams"] = newPagesParams;
+            Response.Redirect("FillSection.aspx");
+        }
+        protected void NextSection_Click(object sender, EventArgs e)
+        {
+            SaveChanges();
+            FillingPages newPagesParams = (FillingPages)Session["PagesParams"];
+            newPagesParams.CurrentPage++;
+            if (newPagesParams.CurrentPage == newPagesParams.PagesCount)
+            {
+                Response.Redirect("ChooseApplicationAction.aspx");
+            }
+            Session["PagesParams"] = newPagesParams;
             Response.Redirect("FillSection.aspx");
         }       
     }

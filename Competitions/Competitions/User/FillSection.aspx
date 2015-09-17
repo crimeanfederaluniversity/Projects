@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="FillSection.aspx.cs" Inherits="Competitions.User.FillSection" %>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">    <div>
-        <asp:Button ID="GoBackButton" runat="server" Text="Назад" OnClick="GoBackButton_Click" />
+        
     <style>
         .dropdown {
             max-width: 200px;
@@ -16,6 +16,10 @@
         }
         
     </style>
+        <br />
+        <br />
+        <asp:Button ID="PreviousSection" runat="server" OnClick="PreviousSection_Click" CausesValidation="False" Text="Предыдущий пункт" />
+&nbsp;<asp:Button ID="NextSection" runat="server" OnClick="NextSection_Click" Text="Далее" Width="192px" />
         <br />
     
     <asp:GridView ID="FillingGV" Width="100%"  BorderStyle="Solid" runat="server" AutoGenerateColumns="False" 
@@ -248,7 +252,7 @@
 
                     <asp:TemplateField HeaderText="Удалить">
                         <ItemTemplate>
-                            <asp:Button ID="DeleteRowButton" runat="server" CommandName="Select" Text="Удалить" CommandArgument='<%# Eval("ID0") %>' Width="200px" OnClick="DeleteRowButtonClick"/>
+                            <asp:Button ID="DeleteRowButton" runat="server" CommandName="Select" Text="Удалить" CommandArgument='<%# Eval("ID0") %>' CausesValidation="False" Width="200px" OnClick="DeleteRowButtonClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                     
@@ -256,6 +260,6 @@
                </Columns>
         </asp:GridView>       
     </div>       
-        <asp:Button ID="SaveButton" runat="server" Text="Сохранить" OnClick="SaveButton_Click" />
-        <asp:Button ID="AddRowButton" runat="server" Text="Добавить строку" OnClick="AddRowButton_Click" />
+        <asp:Button ID="SaveButton" runat="server" Text="Сохранить" CausesValidation="False" OnClick="SaveButton_Click" />
+        <asp:Button ID="AddRowButton" runat="server" Text="Добавить строку" CausesValidation="False" OnClick="AddRowButton_Click" />
 </asp:Content>

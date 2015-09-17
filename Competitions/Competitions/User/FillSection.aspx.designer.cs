@@ -13,13 +13,22 @@ namespace Competitions.User {
     public partial class FillSection {
         
         /// <summary>
-        /// GoBackButton control.
+        /// PreviousSection control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoBackButton;
+        protected global::System.Web.UI.WebControls.Button PreviousSection;
+        
+        /// <summary>
+        /// NextSection control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button NextSection;
         
         /// <summary>
         /// FillingGV control.
