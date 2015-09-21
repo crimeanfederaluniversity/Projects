@@ -113,6 +113,12 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
+                    <asp:TemplateField Visible="true" HeaderText="Комментарии">
+                        <ItemTemplate>
+                            <asp:Button ID="ButtonComent" runat="server" CommandName="Select" Text="Редактировать" Width="150px" CommandArgument='<%# Eval("ReportArchiveTableID") %>' OnClick="ButtonComentClick"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
                 </Columns>
             </asp:GridView>
 

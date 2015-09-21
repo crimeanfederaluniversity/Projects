@@ -301,7 +301,17 @@ namespace KPIWeb.StatisticsDepartment
                 message.Replace("'", @"\'").Replace("\n", "\\n").Replace("\r", "\\r")),
                 true);
         }
-
+        protected void ButtonComentClick(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            {
+                using (KPIWebDataContext kPiDataContext = new KPIWebDataContext())
+                {
+                    Session["ReportID"] = Convert.ToInt32(button.CommandArgument);
+                    Response.Redirect("~/StatisticsDepartment/ReportComentAdd.aspx");
+                }
+            }
+        }
         protected void ButtonMailSending2_Click(object sender, EventArgs e)
         {
             if (!CheckBox1.Checked)

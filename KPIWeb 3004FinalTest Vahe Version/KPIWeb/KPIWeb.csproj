@@ -299,6 +299,7 @@
     <Content Include="Site.Master" />
     <Content Include="StatisticsDepartment\BasicParametrs.aspx" />
     <Content Include="StatisticsDepartment\Indicators.aspx" />
+    <Content Include="StatisticsDepartment\ReportComentAdd.aspx" />
     <Content Include="StatisticsDepartment\ReportFilling.aspx" />
     <Content Include="StatisticsDepartment\ReportViewer.aspx" />
     <Content Include="StatisticsDepartment\StastisticsHomePage.aspx" />
@@ -818,6 +819,13 @@
     </Compile>
     <Compile Include="StatisticsDepartment\MonitoringMain.aspx.designer.cs">
       <DependentUpon>MonitoringMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StatisticsDepartment\ReportComentAdd.aspx.cs">
+      <DependentUpon>ReportComentAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StatisticsDepartment\ReportComentAdd.aspx.designer.cs">
+      <DependentUpon>ReportComentAdd.aspx</DependentUpon>
     </Compile>
     <Compile Include="StatisticsDepartment\ReportFilling.aspx.cs">
       <DependentUpon>ReportFilling.aspx</DependentUpon>

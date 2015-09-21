@@ -10,33 +10,24 @@
 namespace KPIWeb.StatisticsDepartment {
     
     
-    public partial class ReportViewer {
+    public partial class ReportComentAdd {
         
         /// <summary>
-        /// Button1 элемент управления.
+        /// SaveButton элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button SaveButton;
         
         /// <summary>
-        /// CheckBox1 элемент управления.
+        /// GridView1 элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBox1;
-        
-        /// <summary>
-        /// GridviewActiveCampaign элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridviewActiveCampaign;
+        protected global::System.Web.UI.WebControls.GridView GridView1;
     }
 }
