@@ -40,12 +40,12 @@
         &nbsp;<asp:TextBox ID="TextBox6" runat="server" Width="200px" class="tb1" Height="50px" TextMode="MultiLine"></asp:TextBox>
         <br />
         &nbsp;<asp:Label ID="Label4" runat="server" Text="Активный"></asp:Label>
-        <asp:CheckBox ID="CheckBox1" runat="server" Enabled="False" />
+        <asp:CheckBox ID="CheckBox1" Text=" " runat="server" Enabled="False" />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<asp:Label ID="Label5" runat="server" Text="Активный"></asp:Label>
-        <asp:CheckBox ID="CheckBox2" runat="server" Enabled="False" />
+        <asp:CheckBox ID="CheckBox2" Text=" " runat="server" Enabled="False" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <asp:Label ID="Label6" runat="server" Text="Активный"></asp:Label>
-        <asp:CheckBox ID="CheckBox3" runat="server" Enabled="False" />
+        <asp:CheckBox ID="CheckBox3" Text=" " runat="server" Enabled="False" />
         <br />
         <br />
         &nbsp;<asp:Button ID="Button9" runat="server" Height="25px" OnClick="Button9_Click" Text="Сохранить" Width="200px" Enabled="False" />

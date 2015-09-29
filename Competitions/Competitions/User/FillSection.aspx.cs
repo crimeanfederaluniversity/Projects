@@ -16,7 +16,6 @@ namespace Competitions.User
         const int columnCount = 10;
         private bool permitAddRow = true;
         private bool permitDeleteRow = true;
-
         public int GetApplicationIdFromSession()
         {
             FillingPages newPagesParams = (FillingPages)Session["PagesParams"];
@@ -29,7 +28,6 @@ namespace Competitions.User
             int applicationId = newPagesParams.ApplicationId;
             return applicationId;
         }
-
         public int GetSectionId()
         {
             FillingPages newPagesParams = (FillingPages)Session["PagesParams"];
@@ -111,11 +109,18 @@ namespace Competitions.User
                         //---------------------------------------------------------------------------------------------------------------
                         if (dataType.IsDataTypeDate(currenColumn.DataType))
                         {
-                            Calendar gvCalendar = (Calendar)currentRow.FindControl("ChooseDateCalendar" + i.ToString());
-                            if (gvCalendar != null)
+                            TextBox gvTextBox = (TextBox)currentRow.FindControl("EditTextBox" + i.ToString());
+                            if (gvTextBox != null)
                             {
-                                if (gvCalendar.SelectedDate > DateTime.MinValue)
-                                currentCollectedData.ValueDataTime = gvCalendar.SelectedDate;
+                                if (gvTextBox.Text.Any())
+                                {
+                                    if (Convert.ToDateTime(gvTextBox.Text) > DateTime.MinValue)
+                                    
+                                    {
+                                        currentCollectedData.ValueDataTime = Convert.ToDateTime(gvTextBox.Text);
+                                    }
+                                    
+                                }
                             }
                         }
                         if ((dataType.IsDataTypeDropDown(currenColumn.DataType)) || (dataType.IsDataTypeConstantDropDown(currenColumn.DataType)))
@@ -427,7 +432,7 @@ namespace Competitions.User
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
             if (!Page.IsPostBack)
             {
@@ -463,9 +468,6 @@ namespace Competitions.User
 
                     dataTable.Columns.Add(new DataColumn("ChooseOnlyDropDownVisible" + i.ToString(), typeof(bool)));
                    // dataTable.Columns.Add(new DataColumn("ChooseOnlyDropDownValue" + i.ToString(), typeof(ListItemCollection)));
-
-                    dataTable.Columns.Add(new DataColumn("ChooseDateCalendarVisible" + i.ToString(), typeof(bool)));
-                    dataTable.Columns.Add(new DataColumn("ChooseDateCalendarValue" + i.ToString(), typeof(DateTime)));
 
                     // валидаор
                     dataTable.Columns.Add(new DataColumn("TextBoxValidateEnable" + i.ToString(), typeof(bool)));
@@ -575,8 +577,6 @@ namespace Competitions.User
                         newDataRow["EditBoolCheckBoxVisible" + i.ToString()] = false;
                         newDataRow["EditBoolCheckBoxValue" + i.ToString()] = false;
                         newDataRow["ChooseOnlyDropDownVisible" + i.ToString()] = false;
-                        newDataRow["ChooseDateCalendarVisible" + i.ToString()] = false;
-                        newDataRow["ChooseDateCalendarValue" + i.ToString()] = DateTime.Now;
                         //validator
                         newDataRow["TextBoxValidateEnable" + i.ToString()] = false;
                         newDataRow["TextBoxValidateMinValue" + i.ToString()] = 0;
@@ -623,10 +623,9 @@ namespace Competitions.User
                             if (dataProcess.IsCellReadWrite(dType))
                             {
                                 newDataRow["EditTextBoxVisible" + i.ToString()] = true;
-                                newDataRow["EditTextBoxValue" + i.ToString()] =
-                                    dataProcess.GetReadWriteString(currentColumn, currentCollectedData);
+                                string str = dataProcess.GetReadWriteString(currentColumn, currentCollectedData);
+                                newDataRow["EditTextBoxValue" + i.ToString()] = str;                                    
                                 ValidatorParams currentValidator = dataProcess.GetValidatorParams();
-
                                 newDataRow["TextBoxRequireValidateEnable" + i.ToString()] = currentValidator.RequireValidatorEnabled;
                                 newDataRow["TextBoxValidateEnable" + i.ToString()] = currentValidator.Enabled;
                                 newDataRow["TextBoxValidateMinValue" + i.ToString()] = currentValidator.MinValue;
@@ -642,14 +641,7 @@ namespace Competitions.User
                                 newDataRow["EditBoolCheckBoxValue" + i.ToString()] =
                                     dataProcess.GetBoolDataValue(currentColumn, currentCollectedData);
                             }
-
-                            if (dataProcess.IsCellDate(dType))
-                            {
-                                newDataRow["ChooseDateCalendarVisible" + i.ToString()] = true;
-                                newDataRow["ChooseDateCalendarValue" + i.ToString()] =
-                                    dataProcess.GetDateDataValue(currentColumn, currentCollectedData);
-                            }
-
+                           
                             if (dataProcess.IsCellReadOnly(dType))
                             {
                                 newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
@@ -689,8 +681,6 @@ namespace Competitions.User
                     newDataRowForTotalUp["EditBoolCheckBoxValue" + i.ToString()] = false;
                     newDataRowForTotalUp["ChooseOnlyDropDownVisible" + i.ToString()] = false;
                     //newDataRow["ChooseOnlyDropDownValue" + i.ToString()] = null;
-                    newDataRowForTotalUp["ChooseDateCalendarVisible" + i.ToString()] = false;
-                    newDataRowForTotalUp["ChooseDateCalendarValue" + i.ToString()] = DateTime.Now;
 
                     newDataRowForTotalUp["TextBoxValidateEnable" + i.ToString()] = false;
                     newDataRowForTotalUp["TextBoxValidateMinValue" + i.ToString()] = 0;
@@ -748,7 +738,52 @@ namespace Competitions.User
                     FillingGV.Columns[i].Visible = true;
                 }
                 FillingGV.DataBind();
-                
+
+                if (FillingGV.Rows.Count==0)
+                {
+                    var isGoBack = Session["IsGoBack"];
+                    FillingPages newPagesParamsTmp = (FillingPages)Session["PagesParams"];
+                    if (isGoBack != null)
+                    {
+                        newPagesParamsTmp.CurrentPage++;
+                    }
+                    else if (((bool) isGoBack) == false)
+                    {
+                        newPagesParamsTmp.CurrentPage++;
+                    }
+                    else
+                    {
+                        newPagesParamsTmp.CurrentPage--;
+                    }
+                                    
+                    if (newPagesParamsTmp.CurrentPage == newPagesParamsTmp.PagesCount)
+                    {
+                        Response.Redirect("~/Default.aspx");
+                    }
+                    Session["PagesParams"] = newPagesParamsTmp;
+                    Response.Redirect("FillSection.aspx");
+                }
+
+                foreach (GridViewRow row in FillingGV.Rows)
+                {
+                    for (int i = 0; i < 10; i++)
+                    {
+                        TextBox textbox = row.FindControl("EditTextBox"+i) as TextBox;
+                        if (textbox != null)
+                        {
+                            if (textbox.TextMode == TextBoxMode.MultiLine)
+                            {
+                                textbox.Attributes.Add("onkeyup", "setHeightAndWidth(this)");
+                                textbox.Attributes.Add("onkeydown", "setHeightAndWidth(this)");
+                                textbox.Attributes.Add("class", "textBox1");
+                            }
+                            else
+                            {
+                                textbox.Attributes.Add("class", "textBox");
+                            }
+                        }
+                    }                
+                }
                 #endregion
             }
         }
@@ -961,27 +996,39 @@ namespace Competitions.User
         }
         protected void PreviousSection_Click(object sender, EventArgs e)
         {
+            Session["IsGoBack"] = true;
             SaveChanges();
             FillingPages newPagesParams = (FillingPages)Session["PagesParams"];
             newPagesParams.CurrentPage--;
             if (newPagesParams.CurrentPage == -1)
             {
-                Response.Redirect("ChooseApplicationAction.aspx");
+                Response.Redirect("~/Default.aspx");
             }
             Session["PagesParams"] = newPagesParams;
             Response.Redirect("FillSection.aspx");
         }
         protected void NextSection_Click(object sender, EventArgs e)
         {
+            Session["IsGoBack"] = false;
             SaveChanges();
             FillingPages newPagesParams = (FillingPages)Session["PagesParams"];
             newPagesParams.CurrentPage++;
             if (newPagesParams.CurrentPage == newPagesParams.PagesCount)
             {
-                Response.Redirect("ChooseApplicationAction.aspx");
+                Response.Redirect("~/Default.aspx");
             }
             Session["PagesParams"] = newPagesParams;
             Response.Redirect("FillSection.aspx");
+        }
+
+        protected void GoBackButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("UserMainPage.aspx");
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Default.aspx");
         }       
     }
 }

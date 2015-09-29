@@ -19,6 +19,10 @@ namespace KPIWeb
         public int l3 { get; set; }
         public int l4 { get; set; }
         public int l5 { get; set; }
+        public Serialization()
+        {
+            
+        }
         public Serialization(int IdTmp)
         {
             this.Id = IdTmp;

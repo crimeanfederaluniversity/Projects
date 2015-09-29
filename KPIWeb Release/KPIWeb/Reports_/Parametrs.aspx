@@ -286,8 +286,6 @@ background-color:#FFFFFF}
             </div>
             </div>
         </div>
-    <style type="text/css">
-
 
 
 </asp:Content>

@@ -53,6 +53,7 @@ namespace KPIWeb.Reports
                               && b.Active == true
                               && c.Active == true
                               && d.Active == true
+                              && d.OnlyForProrector == false
                               && d.StartDateTime < DateTime.Now
                         select d).Distinct().ToList();
                 }

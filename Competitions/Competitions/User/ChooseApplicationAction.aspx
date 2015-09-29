@@ -1,8 +1,30 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ChooseApplicationAction.aspx.cs" Inherits="Competitions.User.ChooseApplicationAction" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <p>
-        <asp:Button ID="GoBackButton" runat="server" OnClick="GoBackButton_Click" Text="Назад" />
-    </p>
+    
+    <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
+    <div>    
+        <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Text="Назад" Width="125px" OnClick="GoBackButton_Click" />   
+         <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" OnClick="Button2_Click" /> 
+    </div> 
+</asp:Panel> 
+        
+        <style type="text/css">
+            
+            .top_panel {
+            position:fixed;
+            left:0;
+            top:3.5em;
+            width:100%;
+            height:30px;
+            background-color:#222222;
+            z-index:10;
+            color:#05ff01;  
+            padding-top:5px;
+            font-weight:bold;
+        }
+        </style>
+        <br />
+    <br />
     <asp:Label ID="Label1" style="font-size: 20px" runat="server" Text="Label"></asp:Label>
     <br />
     <br />

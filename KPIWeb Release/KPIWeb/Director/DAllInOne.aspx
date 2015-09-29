@@ -18,8 +18,6 @@
 		  <asp:Button ID="Button5" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right" OnClick="Button5_Click" Text="Нормативные документы" Width="300px" />
 	</div>
 </asp:Panel>
-    
-    
      
     <br />
         <br />

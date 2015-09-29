@@ -71,7 +71,7 @@ namespace Competitions.User
 
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ChooseApplication.aspx");
+            Response.Redirect("UserMainPage.aspx");
         }
 
         protected void CreateEditButton_Click(object sender, EventArgs e)
@@ -132,6 +132,11 @@ namespace Competitions.User
             }
 
             Response.Redirect("ChooseApplication.aspx");
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Default.aspx");
         }
     }
 }

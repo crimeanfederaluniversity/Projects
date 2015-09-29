@@ -35,7 +35,6 @@ namespace KPIWeb.Reports
                 Lv_5 = lv5;
             }
         }
-
         private void CheckAllChildNodes(TreeNode treeNode, bool nodeChecked) // Рекурсивно проставляем галочки
         {
             foreach (TreeNode node in treeNode.ChildNodes)
@@ -47,8 +46,6 @@ namespace KPIWeb.Reports
                 }
             }
         }
-
-
         public class MyObject
         {
             public int Id;
@@ -56,7 +53,6 @@ namespace KPIWeb.Reports
             public string Name;
             public bool Checked;
         }
-
         private void BindTree(IEnumerable<MyObject> list, TreeNode parentNode)
         {
             var nodes = list.Where(x => parentNode == null ? x.ParentId == 0 : x.ParentId == int.Parse(parentNode.Value));
@@ -77,7 +73,6 @@ namespace KPIWeb.Reports
                 BindTree(list, newNode);
             }
         }
-
         public bool CheckIfChecked(int lv0, int Lv_1, int Lv_2, int Lv_3, int Lv_4, int Lv_5, int ReportID)
         {
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
@@ -100,7 +95,6 @@ namespace KPIWeb.Reports
             }
             return true;
         }
-
         protected void FillGridVIews(int reportID)
         {   
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
@@ -205,7 +199,6 @@ namespace KPIWeb.Reports
                 }
             }
         }
-
         protected List<int> getCalcByIndicator(List<int> indArr)
         {
             List<int> calcListTemp = new List<int>();
@@ -245,7 +238,6 @@ namespace KPIWeb.Reports
             }
             return calcListTemp;           
         }
-
         protected List<int> getBasicByCalc(List<int> calcArr)
         {
             List<int> basicListTemp = new List<int>();

@@ -193,6 +193,7 @@
     <Content Include="Admin\ReadyApplications.aspx" />
     <Content Include="Admin\SectionCreateEdit.aspx" />
     <Content Include="Admin\TaskPRManual.aspx" />
+    <Content Include="CalendarIcon.png" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -217,7 +218,12 @@
       <LastGenOutput>Competition.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Properties\PublishProfiles\Competitions.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Images\CalendarIcon.png" />
+    <Content Include="Images\InitialImage.png" />
+    <Content Include="Images\SelectedButton.png" />
+    <Content Include="InitialImage.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -250,14 +256,12 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="SelectedButton.png" />
     <Content Include="Site.Master" />
     <Content Include="User\ApplicationCreateEdit.aspx" />
-    <Content Include="User\ArchiveApplications.aspx" />
-    <Content Include="User\ChooseApplication.aspx" />
     <Content Include="User\ChooseApplicationAction.aspx" />
     <Content Include="User\ChooseSection.aspx" />
     <Content Include="User\FillSection.aspx" />
-    <Content Include="User\Main.aspx" />
     <Content Include="User\UserMainPage.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -635,20 +639,6 @@
     <Compile Include="User\ApplicationCreateEdit.aspx.designer.cs">
       <DependentUpon>ApplicationCreateEdit.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User\ArchiveApplications.aspx.cs">
-      <DependentUpon>ArchiveApplications.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="User\ArchiveApplications.aspx.designer.cs">
-      <DependentUpon>ArchiveApplications.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="User\ChooseApplication.aspx.cs">
-      <DependentUpon>ChooseApplication.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="User\ChooseApplication.aspx.designer.cs">
-      <DependentUpon>ChooseApplication.aspx</DependentUpon>
-    </Compile>
     <Compile Include="User\ChooseApplicationAction.aspx.cs">
       <DependentUpon>ChooseApplicationAction.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -669,13 +659,6 @@
     </Compile>
     <Compile Include="User\FillSection.aspx.designer.cs">
       <DependentUpon>FillSection.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="User\Main.aspx.cs">
-      <DependentUpon>Main.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="User\Main.aspx.designer.cs">
-      <DependentUpon>Main.aspx</DependentUpon>
     </Compile>
     <Compile Include="User\UserMainPage.aspx.cs">
       <DependentUpon>UserMainPage.aspx</DependentUpon>

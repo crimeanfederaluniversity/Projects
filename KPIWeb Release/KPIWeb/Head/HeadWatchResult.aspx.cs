@@ -172,5 +172,15 @@ namespace KPIWeb.Head
             }
 
         }
+
+        protected void GoBackButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("HeadMain.aspx");
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Default.aspx");
+        }
     }
 }

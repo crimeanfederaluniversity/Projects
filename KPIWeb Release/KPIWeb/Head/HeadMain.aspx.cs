@@ -11,6 +11,7 @@ namespace KPIWeb.Head
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Button1.Text = "Просмотреть значения целевых показателей " + Environment.NewLine + " по научным и образовательным структурным подразделениям ";
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
@@ -46,6 +47,9 @@ namespace KPIWeb.Head
             Response.Redirect("~/Info_Pages/OwnersProcessInfo.aspx");
         }
 
-
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Default.aspx");
+        }
     }
 }

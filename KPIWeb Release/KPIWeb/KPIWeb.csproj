@@ -201,6 +201,14 @@
     <Content Include="Decan\DecViewBasicParams.aspx" />
     <Content Include="Decan\DecViewReport.aspx" />
     <Content Include="DepartmentFilling\ChooseBasic.aspx" />
+    <Content Include="ProrectorReportFilling\ChooseAcademy.aspx" />
+    <Content Include="ProrectorReportFilling\ChooseFaculty.aspx" />
+    <Content Include="ProrectorReportFilling\ChooseReport.aspx" />
+    <Content Include="ProrectorReportFilling\ChooseStruct.aspx" />
+    <Content Include="ProrectorReportFilling\FillingPage.aspx" />
+    <Content Include="ProrectorReportFilling\FillOnlyCheckBoxes.aspx" />
+    <Content Include="ProrectorReportFilling\Main.aspx" />
+    <Content Include="ProrectorReportFilling\SpecParamCheckBoxes.aspx" />
     <Content Include="Reports_\FillingTheReportByDepartment.aspx" />
     <Content Include="DepartmentFilling\Main.aspx" />
     <Content Include="Director\Checked.png" />
@@ -494,6 +502,64 @@
     </Compile>
     <Compile Include="DepartmentFilling\ChooseBasic.aspx.designer.cs">
       <DependentUpon>ChooseBasic.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MainFunctions.cs" />
+    <Compile Include="ProrectorFunctions.cs" />
+    <Compile Include="ProrectorReportFilling\ChooseAcademy.aspx.cs">
+      <DependentUpon>ChooseAcademy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\ChooseAcademy.aspx.designer.cs">
+      <DependentUpon>ChooseAcademy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\ChooseFaculty.aspx.cs">
+      <DependentUpon>ChooseFaculty.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\ChooseFaculty.aspx.designer.cs">
+      <DependentUpon>ChooseFaculty.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\ChooseReport.aspx.cs">
+      <DependentUpon>ChooseReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\ChooseReport.aspx.designer.cs">
+      <DependentUpon>ChooseReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\ChooseStruct.aspx.cs">
+      <DependentUpon>ChooseStruct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\ChooseStruct.aspx.designer.cs">
+      <DependentUpon>ChooseStruct.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\FillingPage.aspx.cs">
+      <DependentUpon>FillingPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\FillingPage.aspx.designer.cs">
+      <DependentUpon>FillingPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\FillOnlyCheckBoxes.aspx.cs">
+      <DependentUpon>FillOnlyCheckBoxes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\FillOnlyCheckBoxes.aspx.designer.cs">
+      <DependentUpon>FillOnlyCheckBoxes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\Main.aspx.cs">
+      <DependentUpon>Main.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\Main.aspx.designer.cs">
+      <DependentUpon>Main.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\SpecParamCheckBoxes.aspx.cs">
+      <DependentUpon>SpecParamCheckBoxes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\SpecParamCheckBoxes.aspx.designer.cs">
+      <DependentUpon>SpecParamCheckBoxes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports_\FillingTheReportByDepartment.aspx.cs">
       <DependentUpon>FillingTheReportByDepartment.aspx</DependentUpon>

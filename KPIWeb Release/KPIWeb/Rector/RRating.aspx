@@ -85,13 +85,7 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                  
-                 
-                 <asp:TemplateField HeaderText="Отправить сообщение">
-                        <ItemTemplate>
-                            <asp:Button ID="Button3" runat="server" CommandName="Select" Text='<%# Eval("Button_Text") %>' CommandArgument='<%# Eval("ID") %>' Width="200px" 
-                                OnClick="Button3Click " />
-                        </ItemTemplate>
-                    </asp:TemplateField>
+                
 
                 </Columns>
         </asp:GridView>   

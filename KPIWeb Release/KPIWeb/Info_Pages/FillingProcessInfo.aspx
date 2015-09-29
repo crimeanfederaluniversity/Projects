@@ -1,7 +1,15 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="FillingProcessInfo.aspx.cs" Inherits="KPIWeb.FillingProcessInfo" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-      <br />
+      
+    <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
+    <div>    
+        <asp:Button ID="GoBackButton" runat="server" OnClientClick="window.history.back(1); return false;" Text="Назад" Width="125px" OnClick="GoBackButton_Click" />
+        <asp:Button ID="Button2" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" OnClick="Button2_Click" />     
+    </div> 
+</asp:Panel> 
+    <br />
+    <br />
       Выберите отчет<style>  
 
     .LoadPanel 

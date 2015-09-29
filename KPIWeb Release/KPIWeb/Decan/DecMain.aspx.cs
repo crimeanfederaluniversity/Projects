@@ -46,6 +46,7 @@ namespace KPIWeb.Decan
                                                 && c.Active == true
                                                 && d.Active == true
                                                 && d.StartDateTime < DateTime.Now
+                                                && d.OnlyForProrector == false
                                                 select d).Distinct().ToList();
                 ///тут мы получили список активных отччетов пользователя
                 /// пользователь привязан к таблице первого подразделения

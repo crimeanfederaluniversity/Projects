@@ -107,11 +107,6 @@ namespace KPIWeb.Rector
                 GridView1.DataBind();
             }
         }
-
-
-
-
-
         protected void ButtonViewClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;

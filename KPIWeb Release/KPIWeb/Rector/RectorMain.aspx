@@ -78,4 +78,5 @@
 
         <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()" OnClick="Button1_Click" Text="Работа с целевыми показателями" Width="350px" />
 &nbsp;<asp:Button ID="Button3" runat="server" OnClientClick="showLoadPanel()" OnClick="Button3_Click" Text="Работа с первичными данными" Width="350px" />
+    &nbsp;<asp:Button ID="Button7" runat="server" OnClientClick="showLoadPanel()" OnClick="Button7_Click" Text="Заполнение отчета" Width="350px" />
     </asp:Content>

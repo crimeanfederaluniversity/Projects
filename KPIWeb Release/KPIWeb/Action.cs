@@ -87,7 +87,7 @@ namespace KPIWeb
             catch (Exception e)
 
             {
-                EmailCopy emailCopy = new EmailCopy();
+                EmailCopies emailCopy = new EmailCopies();
                 emailCopy.EmailFrom = from;
                 emailCopy.EmailTo = mailto;
                 emailCopy.EmailTitle = caption;
@@ -100,7 +100,7 @@ namespace KPIWeb
                 kpiWeb.SubmitChanges();
                 return 0;
             }
-                EmailCopy emailCopy2 = new EmailCopy();
+                EmailCopies emailCopy2 = new EmailCopies();
                 emailCopy2.EmailFrom = from;
                 emailCopy2.EmailTo = mailto;
                 emailCopy2.EmailTitle = caption;

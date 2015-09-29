@@ -56,9 +56,11 @@ namespace KPIWeb.Rector
         {
             ParametrType paramType = new ParametrType(1);
             Session["paramType"] = paramType;
-            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RM2: Prorector " + (string)ViewState["login"] + " vibral raboty s Pervichnimi dannimy i pereshel na stranicy vibora otcheta");
+            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RM1: Prorector " + (string)ViewState["login"] + " vibral raboty s Celevimi Pokazatelyami i pereshel na stranicy vibora otcheta");
             Response.Redirect("~/Rector/RectorChooseReport.aspx");
         }
+
+
         protected void Button4_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Rector/RectorMain.aspx");
@@ -77,6 +79,12 @@ namespace KPIWeb.Rector
         protected void Button6_Click(object sender, EventArgs e)
         {
 
+        }
+
+        protected void Button7_Click(object sender, EventArgs e)
+        {
+            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RM11: Prorector " + (string)ViewState["login"] + " pereshel k samostoyatelnomu zapolneniyu otcheta");
+            Response.Redirect("~/ProrectorReportFilling/ChooseReport.aspx");
         }
     }
 }

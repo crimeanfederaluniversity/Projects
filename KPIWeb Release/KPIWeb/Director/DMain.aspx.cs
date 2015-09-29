@@ -40,6 +40,7 @@ namespace KPIWeb.Director
                                                         where b.Active == true
                                                         && b.FK_FirstLevelSubmisionTableId == userTable.FK_FirstLevelSubdivisionTable
                                                         && a.StartDateTime < DateTime.Now
+                                                        && a.OnlyForProrector == false
                                                     select a).Distinct().ToList();
 
                 /// тут мы получили список активных отччетов пользователя

@@ -30,7 +30,6 @@ namespace KPIWeb.Reports
     public partial class FillingTheReport : System.Web.UI.Page
     {
         public int col_ = 0;
-
         protected void Page_Load(object sender, EventArgs e)
         {
             #region JavaScriptFunctions
@@ -197,7 +196,7 @@ namespace KPIWeb.Reports
                     List<int> StatusList = new List<int>();
                     #region
 
-                    if (userLevel != 3)
+                    if (userLevel == 3)
                     {
                         List<BasicParametersTable> BasicParams =
                             (from a in kPiDataContext.ReportArchiveAndBasicParametrsMappingTable
@@ -300,6 +299,7 @@ namespace KPIWeb.Reports
                             }
                         }
                         additionalColumnCount += 1;
+                        columnNames.Add("  ");
                     }
                     /* columnNames.Add("Кафедра:\r\n" + (from a in kPiDataContext.ThirdLevelSubdivisionTable
                                                    where a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
@@ -842,8 +842,9 @@ namespace KPIWeb.Reports
                         KPIWebDataContext.SubmitChanges();
                     }
                     //надо рассчитать рассчетные
-                    FillingTheReportFunctions Calculate = new FillingTheReportFunctions();
-                    Calculate.CalcCalculate(ReportArchiveID, userTable);
+                    AutoCalculateAfterSave calculate = new AutoCalculateAfterSave();
+                    calculate.AutoCalculate(ReportArchiveID,UserID,(int)userTable.FK_ThirdLevelSubdivisionTable,3,null);
+                    //Calculate.CalcCalculate(ReportArchiveID, userTable);
                     int AllCnt = (int)ViewState["AllCnt"];
                     if (AllCnt == notNullCnt)
                     {

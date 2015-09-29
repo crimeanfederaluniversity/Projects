@@ -1,5 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="HeadWatchResult.aspx.cs" Inherits="KPIWeb.Head.HeadWatchResult" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">  
+
+<asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
+    <div>    
+        <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Text="Назад" Width="125px" OnClick="GoBackButton_Click" />
+        <asp:Button ID="Button2" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" OnClick="Button2_Click" />     
+    </div> 
+</asp:Panel> 
+
  <style>   
     .gridView2
 {
@@ -235,6 +243,7 @@
 
 
     <br />
+
         <script type="text/javascript" >
             var counter = 0;
             var masoftables = [];
@@ -281,7 +290,7 @@
 
                         $('#' + masoftables[i] + ' tr th').each(function (s) {
 
-                            $("th:nth-child(" + (s + 1) + ")", gridHeader).css('width', ($(this).width() +21).toString() + "px");
+                            $("th:nth-child(" + (s + 1) + ")", gridHeader).css('width', ($(this).width() + 21).toString() + "px");
                         });
 
 
@@ -289,7 +298,7 @@
                         document.getElementById(masoftables[i]).id = "ffg" + i.toString();
                         $(("#" + cthead)).css('position', 'absolute');
 
-                        $(("#" + cthead)).css('z-index', '222');
+                        $(("#" + cthead)).css('z-index', '9');
                         //  $(("#" + cthead + " tr")).css('left', ($('#' + 'ffg' + i.toString()).offset().left + 1).toString() + "px");
 
 
@@ -347,16 +356,16 @@
                     ownerdiv += '_' + i.toString();
                     cthead += '_' + i.toString();
 
-                    if ((document.getElementById(ownerdiv).getBoundingClientRect().top) < 50) {
+                    if ((document.getElementById(ownerdiv).getBoundingClientRect().top) < 90) {
 
 
-                        if ((document.getElementById(ownerdiv).getBoundingClientRect().bottom) < 100) {
+                        if ((document.getElementById(ownerdiv).getBoundingClientRect().bottom) < 140) {
                             $('#' + cthead).css('position', 'absolute');
                         }
                         else {
                             $('#' + cthead).css('position', 'fixed');
                             $('#' + cthead).css('width', (((document.getElementById(ownerdiv).getBoundingClientRect().right - document.getElementById(ownerdiv).getBoundingClientRect().left).toString()) + "px"));
-                            $('#' + cthead).css('top', '48px');
+                            $('#' + cthead).css('top', '88px');
                             $('#' + cthead).css('left', ((document.getElementById(ownerdiv).getBoundingClientRect().left + 1).toString()) + "px");
                         }
                     }
@@ -366,11 +375,7 @@
                         $('#' + cthead).css('left', ((0).toString()) + "px");
                         $('#' + cthead).css('top', '0');
                     }
-
-
                 }
             }
-
        </script>
-
 </asp:Content>

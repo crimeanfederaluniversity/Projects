@@ -52,6 +52,7 @@ namespace Competitions.User
                     }
 
                     Session["PagesParams"] = newPagesParams;
+                    Session["IsGoBack"] = false;
                     Response.Redirect("FillSection.aspx");
                     /*
                     DataTable dataTable = new DataTable();
@@ -90,6 +91,11 @@ namespace Competitions.User
                 Session["SectionID"] = Convert.ToInt32(button.CommandArgument);
                 Response.Redirect("FillSection.aspx");
             }
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Default.aspx");
         }        
     }
 }

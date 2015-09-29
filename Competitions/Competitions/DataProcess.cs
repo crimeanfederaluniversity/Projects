@@ -120,11 +120,12 @@ namespace Competitions
         public string   GetReadWriteString(zColumnTable currentColumn, zCollectedDataTable currentCollectedData)
         {
             DataType dataType = new DataType();
-            validator.Enabled = true;
+            
             #region float
 
             if (dataType.IsDataTypeFloat(currentColumn.DataType))
             {
+                validator.Enabled = true;
                 validator.ContentType=ValidationDataType.Double;
                 validator.ErrorMessage = "Только числовое значение!";
                 validator.MinValue = -100000000000;
@@ -140,8 +141,27 @@ namespace Competitions
             }
 
             #endregion
-            #region int
+            #region Date
 
+            if (dataType.IsDataTypeDate(currentColumn.DataType))
+            {
+                validator.Enabled = false;
+                validator.ErrorMessage = "";
+                validator.RequireValidatorEnabled = true;
+                validator.TextBoxTextMode = TextBoxMode.Date;
+                if (currentCollectedData.ValueDataTime != null)
+                {
+                    DateTime dateTime = (DateTime) currentCollectedData.ValueDataTime;
+                    string tmpStr = dateTime.ToString().Split(' ')[0];
+                    string[] tmpArray = tmpStr.Split('.');
+                    string tmp2 = tmpArray[2] + "-" + tmpArray[1] + "-" + tmpArray[0];
+                    return tmp2;
+                }
+            }
+
+            #endregion
+            #region int
+            validator.Enabled = true;
             if (dataType.IsDataTypeInteger(currentColumn.DataType))
             {
                 validator.ContentType = ValidationDataType.Integer;
@@ -568,7 +588,8 @@ namespace Competitions
         public bool IsCellReadWrite(int dataTypeIndex)
         {
             DataType dataType = new DataType();
-            if ((dataType.IsDataTypeText(dataTypeIndex)) || (dataType.IsDataTypeFloat(dataTypeIndex)) || (dataType.IsDataTypeInteger(dataTypeIndex)))
+            if ((dataType.IsDataTypeText(dataTypeIndex)) || (dataType.IsDataTypeFloat(dataTypeIndex)) || (dataType.IsDataTypeInteger(dataTypeIndex))||
+                (dataType.IsDataTypeDate(dataTypeIndex)))
             {
                 return true;
             }

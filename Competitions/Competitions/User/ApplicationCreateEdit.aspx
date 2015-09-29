@@ -1,17 +1,42 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="ApplicationCreateEdit.aspx.cs" Inherits="Competitions.User.ApplicationCreateEdit" %>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div>
-    
-        <asp:Button ID="GoBackButton" runat="server" OnClick="GoBackButton_Click" Text="Назад" />
+   <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
+    <div>    
+        <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Text="Назад" Width="125px" OnClick="GoBackButton_Click" />   
+         <asp:Button ID="Button2" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" OnClick="Button2_Click" /> 
+    </div> 
+</asp:Panel> 
+        
+        <style type="text/css">
+            
+            .top_panel {
+            position:fixed;
+            left:0;
+            top:3.5em;
+            width:100%;
+            height:30px;
+            background-color:#222222;
+            z-index:10;
+            color:#05ff01;  
+            padding-top:5px;
+            font-weight:bold;
+        }
+        </style>
+
+      <div>   
+      
         <br />
                 <h2><span style="font-size: 30px">Создание новой заявки  </span></h2>
         <br />
         Название Вашего проекта <br />
         <asp:TextBox ID="ApplicationNameTextBox" runat="server" Height="38px" Width="484px"></asp:TextBox>
+          
+          <asp:RequiredFieldValidator runat="server" ID="TextBox" ControlToValidate="ApplicationNameTextBox" Enabled="True" Text="Введите название Вашего проекта "  ForeColor="Red" > 
+                            </asp:RequiredFieldValidator>
         <br />
         <br />
         <br />
-        <asp:Button ID="CreateEditButton" runat="server" OnClick="CreateEditButton_Click" Text="Сохранить" />
+        <asp:Button ID="CreateEditButton" runat="server" OnClick="CreateEditButton_Click" Text="Создать заявку" />
     
     </div>
 </asp:Content>
