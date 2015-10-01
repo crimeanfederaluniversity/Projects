@@ -10,7 +10,7 @@
 namespace Competitions.Curator {
     
     
-    public partial class CuratorTZ {
+    public partial class NewCuratorTZ {
         
         /// <summary>
         /// GoBackButton элемент управления.

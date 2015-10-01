@@ -233,7 +233,27 @@
       <Association Name="zCompetitionsTable_zExpertsAndCompetitionMappngTamplateTable" Member="zExpertsAndCompetitionMappngTamplateTables" ThisKey="ID" OtherKey="FK_CompetitionsTable" Type="zExpertsAndCompetitionMappngTamplateTable" />
       <Association Name="zCompetitionsTable_zSectionTable" Member="zSectionTables" ThisKey="ID" OtherKey="FK_CompetitionsTable" Type="zSectionTable" />
       <Association Name="zCompetitionsTable_zActionsCompetitionsMappingTable" Member="zActionsCompetitionsMappingTables" ThisKey="ID" OtherKey="FK_Competiton" Type="zActionsCompetitionsMappingTable" />
+      <Association Name="zCompetitionsTable_zFormCompetitionMappingTable" Member="zFormCompetitionMappingTables" ThisKey="ID" OtherKey="FK_Competition" Type="zFormCompetitionMappingTable" />
       <Association Name="UsersTable_zCompetitionsTable" Member="UsersTable" ThisKey="FK_Curator" OtherKey="ID" Type="UsersTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.zTemplateFormTable" Member="zTemplateFormTables">
+    <Type Name="zTemplateFormTable">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FormName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="zTemplateFormTable_zFormCompetitionMappingTable" Member="zFormCompetitionMappingTables" ThisKey="ID" OtherKey="FK_Form" Type="zFormCompetitionMappingTable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.zFormCompetitionMappingTable" Member="zFormCompetitionMappingTables">
+    <Type Name="zFormCompetitionMappingTable">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FK_Competition" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_Form" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="zCompetitionsTable_zFormCompetitionMappingTable" Member="zCompetitionsTable" ThisKey="FK_Competition" OtherKey="ID" Type="zCompetitionsTable" IsForeignKey="true" />
+      <Association Name="zTemplateFormTable_zFormCompetitionMappingTable" Member="zTemplateFormTable" ThisKey="FK_Form" OtherKey="ID" Type="zTemplateFormTable" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

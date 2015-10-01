@@ -1,6 +1,9 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="CuratorApplications.aspx.cs" Inherits="Competitions.Curator.CuratorApplications" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">   
+    <br />
+            <asp:Button ID="GoBackButton" runat="server"  Text="Назад" Width="131px" style="height: 26px" OnClick="GoBackButton_Click" />
+        <br />   
     <h2><span style="font-size: 30px">Заявки на конкурс:</span></h2>
     <br />
  <asp:GridView ID="ApplicationGV" runat="server" AutoGenerateColumns="False">

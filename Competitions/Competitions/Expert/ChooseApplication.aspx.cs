@@ -13,14 +13,30 @@ namespace Competitions.Expert
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            var userIdtmp = Session["UserID"];
+            if (userIdtmp == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userId = (int)userIdtmp;
             if (!Page.IsPostBack)
             {
              CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
-                List<zApplicationTable> applicationsList = (from a in CompetitionsDataBase.zApplicationTable
-                    where a.Active == true
-                    join b in CompetitionsDataBase.zExpertsAndApplicationMappingTables
-                    on a.ID equals b.ID
-                    select a).ToList();
+             List<zApplicationTable> applicationsList = (from a in CompetitionsDataBase.zApplicationTable
+                                                         where
+                                                         a.Active == true
+                                                         && a.Sended == true
+                                                         join b in CompetitionsDataBase.zCompetitionsTables
+                                                         on a.FK_CompetitionTable equals b.ID
+                                                         where b.Active == true                                                       
+                                                         join c in CompetitionsDataBase.zExpertsAndApplicationMappingTables
+                                                         on a.ID equals c.FK_ApplicationsTable
+                                                         where c.Active == true
+                                                         && c.FK_UsersTable == userId
+                                                         join d in CompetitionsDataBase.zExpertPointsValue
+                                                         on a.ID equals d.FK_ApplicationTable
+                                                         where d.Sended == true   
+                                                         select a).Distinct().ToList();
                 DataTable dataTable = new  DataTable();
 
                 dataTable.Columns.Add("ID", typeof (string));

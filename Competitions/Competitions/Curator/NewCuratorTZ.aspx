@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CuratorTZ.aspx.cs" Inherits="Competitions.Curator.CuratorTZ" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NewCuratorTZ.aspx.cs" Inherits="Competitions.Curator.NewCuratorTZ" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-     <div>   
+         <div>   
         <br />
         <asp:Button ID="GoBackButton" runat="server"  Text="Назад" Width="131px" style="height: 26px" OnClick="GoBackButton_Click" />
         <h2><span style="font-size: 30px">Cоздание нового конкурса в системе: </span></h2>
@@ -28,5 +28,4 @@
          <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Далее" />
         <br />
              </div>
- 
 </asp:Content>

@@ -200,10 +200,11 @@
     <Content Include="Content\Site.css" />
     <Content Include="Curator\CuratorApplications.aspx" />
     <Content Include="Curator\CuratorCompetition.aspx" />
-    <Content Include="Curator\CuratorCompetitionCreateEdit.aspx" />
     <Content Include="Curator\CuratorExpertPointPage.aspx" />
+    <Content Include="Curator\CuratorFormCreate.aspx" />
     <Content Include="Curator\CuratorMainPage.aspx" />
     <Content Include="Curator\CuratorTZ.aspx" />
+    <Content Include="Curator\NewCuratorTZ.aspx" />
     <Content Include="Expert\ApplicationsForExpert.aspx" />
     <Content Include="Expert\ChooseApplication.aspx" />
     <Content Include="Expert\EvaluateApplication.aspx" />
@@ -548,19 +549,19 @@
     <Compile Include="Curator\CuratorCompetition.aspx.designer.cs">
       <DependentUpon>CuratorCompetition.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Curator\CuratorCompetitionCreateEdit.aspx.cs">
-      <DependentUpon>CuratorCompetitionCreateEdit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Curator\CuratorCompetitionCreateEdit.aspx.designer.cs">
-      <DependentUpon>CuratorCompetitionCreateEdit.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Curator\CuratorExpertPointPage.aspx.cs">
       <DependentUpon>CuratorExpertPointPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Curator\CuratorExpertPointPage.aspx.designer.cs">
       <DependentUpon>CuratorExpertPointPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Curator\CuratorFormCreate.aspx.cs">
+      <DependentUpon>CuratorFormCreate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Curator\CuratorFormCreate.aspx.designer.cs">
+      <DependentUpon>CuratorFormCreate.aspx</DependentUpon>
     </Compile>
     <Compile Include="Curator\CuratorMainPage.aspx.cs">
       <DependentUpon>CuratorMainPage.aspx</DependentUpon>
@@ -575,6 +576,13 @@
     </Compile>
     <Compile Include="Curator\CuratorTZ.aspx.designer.cs">
       <DependentUpon>CuratorTZ.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Curator\NewCuratorTZ.aspx.cs">
+      <DependentUpon>NewCuratorTZ.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Curator\NewCuratorTZ.aspx.designer.cs">
+      <DependentUpon>NewCuratorTZ.aspx</DependentUpon>
     </Compile>
     <Compile Include="DataProcess.cs" />
     <Compile Include="DataType.cs" />

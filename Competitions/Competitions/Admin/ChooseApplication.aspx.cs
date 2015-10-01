@@ -15,21 +15,23 @@ namespace Competitions.Admin
         {
             if (!Page.IsPostBack)
             {
-             CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
+                CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
                 List<zApplicationTable> applicationsList = (from a in CompetitionsDataBase.zApplicationTable
                     where a.Active == true && a.Accept == false
                     && a.Sended == true
                     select a).ToList();
                 DataTable dataTable = new  DataTable();
 
-                dataTable.Columns.Add("ID", typeof (string));
-                dataTable.Columns.Add("Name", typeof(string));
-                dataTable.Columns.Add("Description", typeof(string));
-                dataTable.Columns.Add("Autor", typeof(string));
-                dataTable.Columns.Add("Competition", typeof(string));
-                dataTable.Columns.Add("Experts", typeof(string));
-                dataTable.Columns.Add("SendedDataTime", typeof(string));
-                
+                if (applicationsList != null)
+                {
+                    DataTable dataTable = new DataTable();
+                    dataTable.Columns.Add("ID", typeof(string));
+                    dataTable.Columns.Add("Name", typeof(string));
+                    dataTable.Columns.Add("Description", typeof(string));
+                    dataTable.Columns.Add("Autor", typeof(string));
+                    dataTable.Columns.Add("Competition", typeof(string));
+                    dataTable.Columns.Add("Experts", typeof(string));
+                    dataTable.Columns.Add("SendedDataTime", typeof(string));
 
                 
                 foreach (zApplicationTable currentApplication in applicationsList)
@@ -41,30 +43,35 @@ namespace Competitions.Admin
                     dataRow["SendedDataTime"] = currentApplication.SendedDataTime.ToString().Split(' ')[0];
                     dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTables
                                                   where a.ID == currentApplication.FK_CompetitionTable
-                                                  select  a.Name).FirstOrDefault();
-                    dataRow["Autor"] = (from a in CompetitionsDataBase.UsersTable 
+                                                  select a.Name).FirstOrDefault();
+                        dataRow["Autor"] = (from a in CompetitionsDataBase.UsersTable
                                             where a.ID == currentApplication.FK_UsersTable
                                             select a.Email).FirstOrDefault();
-                    List<UsersTable> expertsList = (from a in CompetitionsDataBase.UsersTable
-                        join b in CompetitionsDataBase.zExpertsAndApplicationMappingTables
-                            on a.ID equals b.FK_UsersTable
-                        where a.AccessLevel == 5
-                              && a.Active == true
-                              && b.FK_ApplicationsTable == currentApplication.ID
-                              && b.Active == true
-                        select a).ToList();
-                    string expertNamesList = "";
-                    
-                    foreach (UsersTable currentExpert in expertsList)
-                    {
-                        expertNamesList += currentExpert.Email + " \n";
+                        List<UsersTable> expertsList = (from a in CompetitionsDataBase.UsersTable
+                                                        join b in CompetitionsDataBase.zExpertsAndApplicationMappingTables
+                                                            on a.ID equals b.FK_UsersTable
+                                                        where a.AccessLevel == 5
+                                                              && a.Active == true
+                                                              && b.FK_ApplicationsTable == currentApplication.ID
+                                                              && b.Active == true
+                                                        select a).ToList();
+                        string expertNamesList = "";
 
+                        foreach (UsersTable currentExpert in expertsList)
+                        {
+                            expertNamesList += currentExpert.Email + " \n";
+
+                        }
+                        dataRow["Experts"] = expertNamesList;
+                        dataTable.Rows.Add(dataRow);
                     }
-                    dataRow["Experts"] = expertNamesList;
-                    dataTable.Rows.Add(dataRow);
+                    ApplicationGV.DataSource = dataTable;
+                    ApplicationGV.DataBind();
                 }
-                ApplicationGV.DataSource = dataTable;
-                ApplicationGV.DataBind();
+            }
+            else
+            {
+                Label1.Visible = true;
             }
         }
 

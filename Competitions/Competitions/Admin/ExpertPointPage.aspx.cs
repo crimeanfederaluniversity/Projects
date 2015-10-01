@@ -27,25 +27,49 @@ namespace Competitions.Admin
    
         private DataTable GetFilledDataTable(List<UsersTable> expertsList)
         {
+            
+            var appid = Session["ApplicationID"];
+            int idapp = Convert.ToInt32(appid);
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add("ID", typeof(string));
                 dataTable.Columns.Add("Name", typeof(string));
-                dataTable.Columns.Add("AccessLevel", typeof(int));
+                dataTable.Columns.Add("AccessLevel", typeof(string));
+                dataTable.Columns.Add("SendedDataTime", typeof(string));
                 dataTable.Columns.Add(new DataColumn("Color", typeof(string)));
                 foreach (UsersTable currentExpert in expertsList)
                 {
+                    CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = currentExpert.ID;
                     dataRow["Name"] = currentExpert.Email;
-                    dataRow["AccessLevel"] = currentExpert.AccessLevel;
+
+     zExpertsAndCompetitionMappngTamplateTable accesstext = (from f in CompetitionsDataBase.zExpertsAndCompetitionMappngTamplateTable                                               
+                                               where f.Active == true && f.FK_UsersTable == currentExpert.ID
+                                               select f).FirstOrDefault();
+                     if (accesstext == null)
+                     { 
+                         dataRow["AccessLevel"] =  "Привлеченный эксперт"; 
+                     }
+                     else 
+                     {
+                         dataRow["AccessLevel"] = "Член экспертного совета";
+                     }
+                    
+                    
+
+                    dataRow["SendedDataTime"] = (from a in CompetitionsDataBase.zExpertPointsValue
+                                              where a.Active == true
+                                              && a.FK_ExpertsTable == currentExpert.ID
+                                              && a.FK_ApplicationTable == idapp
+                                                 select a.SendedDataTime).Distinct().FirstOrDefault().ToString().Split(' ')[0];
                    
-                    var appid = Session["ApplicationID"];
-                    int idapp = Convert.ToInt32(appid);
-                    CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
+                    var appID = Session["ApplicationID"];
+                    int IDapp = Convert.ToInt32(appID);
+                    
                     List<zExpertPointsValue> nwList = (from a in CompetitionsDataBase.zExpertPointsValue
                                                        where a.Active == true
                                                        && a.FK_ExpertsTable == Convert.ToInt32(currentExpert.ID)
-                                                       && a.FK_ApplicationTable == idapp
+                                                       && a.FK_ApplicationTable == IDapp
                                                        select a).ToList();
                    // download.Enabled = true;
                     dataRow["Color"] = 3; // зеленый
@@ -141,6 +165,7 @@ namespace Competitions.Admin
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Возможность скачать все, только если все готовы!');", true);
         }
 

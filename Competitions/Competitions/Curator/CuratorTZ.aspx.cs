@@ -15,7 +15,6 @@ namespace Competitions.Curator
 
             {
                 CompetitionDataContext curator = new CompetitionDataContext();
-
                   List<zActionPRManualTable> comp = (from a in curator.zActionPRManualTables where a.Active == true select a).ToList();              
                 foreach (zActionPRManualTable n in comp)
                 {
@@ -26,24 +25,17 @@ namespace Competitions.Curator
                 }
 
                 var sessionParam = Session["CompetitionID"];
-                if (sessionParam == null)
-                {
-                    //error
-                    Response.Redirect("ChooseCompetition.aspx");
-                }
-                else
+                if (sessionParam != null)
                 {
                     int iD = (int)sessionParam;
                     if (iD > 0)
                     {
                         CompetitionDataContext competitionDataBase = new CompetitionDataContext();
                         zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTables
-                            where a.Active == true
-                                  && a.ID == iD
-                            select a).FirstOrDefault();
+                                                                 where a.Active == true && a.ID == iD
+                                                                 select a).FirstOrDefault();
                         if (currentCompetition == null)
-                        {
-                            //error
+                        {                          
                             Response.Redirect("CuratorCompetition.aspx");
                         }
                         else
@@ -51,106 +43,107 @@ namespace Competitions.Curator
                             NameTextBox.Text = currentCompetition.Name;
                             DescriptionTextBox.Text = currentCompetition.Number;
                             BudjetTextBox.Text = currentCompetition.Budjet.ToString();
-               
+
                             Calendar1.SelectedDate = Convert.ToDateTime(currentCompetition.StartDate);
                             Calendar2.SelectedDate = Convert.ToDateTime(currentCompetition.EndDate);
-                             
-                    }
-                }
-            }
-        }
-        }
-        protected void CreateSaveButtonClick(object sender, EventArgs e)
-        {
-         /*   CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-             var sessionParam = Session["CompetitionID"];
-            if (sessionParam == null)
-            {
-                //error
-                Response.Redirect("ChooseCompetition.aspx");
-            }
-            else
-            {
-                int iD = (int) sessionParam;
-                if (iD > 0)
-                {
-                    if ((NameTextBox.Text.Length > 0) && (DescriptionTextBox.Text.Length > 0))
-                    {
-                        zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
-                            where a.Active == true
-                                  && a.ID == iD
-                            select a).FirstOrDefault();
-                        if (currentCompetition == null)
-                        {
-                            //error
-                            Response.Redirect("ChooseCompetition.aspx");
                         }
-                        else
-                        {
-                            currentCompetition.Name = NameTextBox.Text;
-                            currentCompetition.Number = DescriptionTextBox.Text;
-                            currentCompetition.Budjet = Convert.ToDouble(BudjetTextBox.Text);
-                            currentCompetition.FK_Curator = Convert.ToInt32(DropDownList1.SelectedIndex);
-                            currentCompetition.StartDate = Calendar1.SelectedDate;
-                            currentCompetition.EndDate = Calendar2.SelectedDate;
-                            if (FileUpload1.HasFile)
-                            {
-                                try
-                                {
-                                    String path = Server.MapPath("~/documents/templates");
-                                    Directory.CreateDirectory(path + "\\\\" + currentCompetition.ID.ToString());
-                                    FileUpload1.PostedFile.SaveAs(path + "\\\\" + currentCompetition.ID.ToString() + "\\\\" + FileUpload1.FileName);
-                                    currentCompetition.TemplateDocName = FileUpload1.FileName;
-                                    // FileStatusLabel.Text = "Файл загружен!";
-                                }
-                                catch (Exception ex)
-                                {
-                                    //  FileStatusLabel.Text = "Не удалось загрузить файл.";
-                                }
-                            }
-                            competitionDataBase.SubmitChanges();
-                        }
-                    }
+                    }             
+                    
                 }
                 else
                 {
-                    if ((NameTextBox.Text.Length > 0) && (DescriptionTextBox.Text.Length > 0))
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ошибка!');", true);
+                }
+            }
+        }
+
+        protected void CreateSaveButtonClick(object sender, EventArgs e)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            var sessionParam = Session["CompetitionID"];
+            var userId = Session["UserID"];
+            if (sessionParam != null && userId != null)
+            {
+                int iD = (int)sessionParam;
+                int user = (int)userId;
+                if (iD > 0)
+                {
+                  zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTables
+                                                                 where a.Active == true && a.ID == iD
+                                                                 select a).FirstOrDefault();
+                        if (currentCompetition == null)
+                        {
+                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ошибка!');", true); 
+                        }
+                        else
+                        {
+                            foreach (ListItem current in CheckBoxList1.Items)
+                            {
+                                zActionsCompetitionsMappingTable action = (from a in competitionDataBase.zActionsCompetitionsMappingTables
+                                                                                     where a.FK_Competiton == iD
+                                                                                     && a.FK_ActionPR == Convert.ToInt32(current.Value)
+                                                                                     select a).FirstOrDefault();
+                                if (action == null)
+                                {
+                                    action = new zActionsCompetitionsMappingTable();
+                                    action.Active = current.Selected;
+                                    action.FK_Competiton = iD;
+                                    action.FK_ActionPR = Convert.ToInt32(current.Value);
+                                    competitionDataBase.zActionsCompetitionsMappingTables.InsertOnSubmit(action);
+                                    competitionDataBase.SubmitChanges();   
+                                }
+                                else
+                                {
+                                    action.Active = current.Selected;
+                                    competitionDataBase.SubmitChanges(); 
+                                }
+
+                            }
+                            currentCompetition.Name = NameTextBox.Text;
+                            currentCompetition.Number = DescriptionTextBox.Text;
+                            currentCompetition.Budjet = Convert.ToDouble(BudjetTextBox.Text);
+                            currentCompetition.FK_Curator = user;
+                            currentCompetition.StartDate = Calendar1.SelectedDate;
+                            currentCompetition.EndDate = Calendar2.SelectedDate;                           
+                            competitionDataBase.SubmitChanges();
+                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Готово!');", true); 
+                        }
+                    }
+                }
+
+                else
+                {
+                    zCompetitionsTable newCompetition = new zCompetitionsTable();
+                    foreach (ListItem current in CheckBoxList1.Items)
                     {
-                        zCompetitionsTable newCompetition = new zCompetitionsTable();
+                        zActionsCompetitionsMappingTable actionlink = new zActionsCompetitionsMappingTable();
+                        actionlink.FK_Competiton = newCompetition.ID;
+                        actionlink.FK_ActionPR = Convert.ToInt32(current.Value);
+                        actionlink.Active = current.Selected;
+                        competitionDataBase.zActionsCompetitionsMappingTables.InsertOnSubmit(actionlink);
+                        competitionDataBase.SubmitChanges();
+                    }                        
                         newCompetition.Name = NameTextBox.Text;
                         newCompetition.Number = DescriptionTextBox.Text;
                         newCompetition.Budjet = Convert.ToDouble(BudjetTextBox.Text);
-                        newCompetition.FK_Curator = Convert.ToInt32(DropDownList1.SelectedIndex);
+                       // newCompetition.FK_Curator = user;
                         newCompetition.StartDate = Calendar1.SelectedDate;
                         newCompetition.EndDate = Calendar2.SelectedDate;
                         newCompetition.Active = true;
                         newCompetition.OpenForApplications = false;
-                        competitionDataBase.zCompetitionsTable.InsertOnSubmit(newCompetition);
-                        competitionDataBase.SubmitChanges();
-                        if (FileUpload1.HasFile)
-                        {
-                            try
-                            {
-                                String path = Server.MapPath("~/documents/templates");
-                                Directory.CreateDirectory(path + "\\\\" + newCompetition.ID.ToString());
-                                FileUpload1.PostedFile.SaveAs(path + "\\\\" + newCompetition.ID.ToString() + "\\\\" + FileUpload1.FileName);
-                                newCompetition.TemplateDocName = FileUpload1.FileName;
-                                // FileStatusLabel.Text = "Файл загружен!";
-                            }
-                            catch (Exception ex)
-                            {
-                                //  FileStatusLabel.Text = "Не удалось загрузить файл.";
-                            }
-                        }
-                        competitionDataBase.SubmitChanges();
-                    }
+                        competitionDataBase.zCompetitionsTables.InsertOnSubmit(newCompetition);
+                        competitionDataBase.SubmitChanges();              
+                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Готово!');", true); 
                 }
             }
-            Response.Redirect("ChooseCompetition.aspx");*/
-        }
+                        
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("CuratorCompetition.aspx");
+        }
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("CuratorFormCreate.aspx");
         }
          
     }

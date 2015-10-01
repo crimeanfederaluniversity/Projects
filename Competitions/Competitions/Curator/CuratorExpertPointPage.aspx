@@ -1,5 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CuratorExpertPointPage.aspx.cs" Inherits="Competitions.Curator.CuratorExpertPointPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <br />
+            <asp:Button ID="GoBackButton" runat="server"  Text="Назад" Width="131px" style="height: 26px" OnClick="GoBackButton_Click" />
+        <br />   
       <asp:GridView ID="ExpertsPointGV" runat="server" AutoGenerateColumns="False"  >
             <Columns>
                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />

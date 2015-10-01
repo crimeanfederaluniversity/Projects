@@ -11,6 +11,7 @@
                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
                 <asp:BoundField DataField="Name"   HeaderText="Имя" Visible="true" />
                 <asp:BoundField DataField="AccessLevel"   HeaderText="Вид эксперта" Visible="true" />
+                <asp:BoundField DataField="SendedDataTime"   HeaderText="Дата экспертного заключения" Visible="true" />
                 
 
                 <asp:TemplateField HeaderText="Скачать экспертное заключение">

@@ -66,11 +66,17 @@ namespace Competitions.Curator
         }
         protected void NewCompetitionButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("CuratorCompetitionCreateEdit.aspx");
+             
+            Response.Redirect("NewCuratorTZ.aspx");
+
         }
         protected void ChangeButtonClick(object sender, EventArgs e)
         {
-            Response.Redirect("CuratorCompetitionCreateEdit.aspx");
+            Button button = (Button)sender;
+            {
+                Session["CompetitionID"] = Convert.ToInt32(button.CommandArgument);
+                Response.Redirect("CuratorTZ.aspx");
+            }
         }
         protected void OpenButtonClick(object sender, EventArgs e)
         {
@@ -90,6 +96,11 @@ namespace Competitions.Curator
                 }
             }
             Response.Redirect("CuratorCompetition.aspx");
+        }
+
+        protected void GoBackButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

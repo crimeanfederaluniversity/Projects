@@ -65,6 +65,11 @@ namespace Competitions.Curator
         {
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Функционал в разработке!');", true);
         }
+
+        protected void GoBackButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("CuratorApplications.aspx");
+        }
         
     }
 }
