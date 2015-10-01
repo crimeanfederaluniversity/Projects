@@ -39,6 +39,15 @@ namespace KPIWeb.ProrectorReportFilling
             int secondLevelId = Convert.ToInt32(mySession.l2);
             int thirdLevelId = Convert.ToInt32(mySession.l3);
 
+            CollectedDataStatusProcess collectedDataStatusProcess = new CollectedDataStatusProcess();;
+            
+            if ((collectedDataStatusProcess.DoesAllCollectedHaveNeededStatus(5, 3, thirdLevelId, reportId,
+                userId, false)) && (collectedDataStatusProcess.DoesAnyCollectedHaveNeededStatus(5, 3, thirdLevelId, reportId,
+                userId, false)))
+            {
+                Response.Redirect("FillingPage.aspx");
+            }
+
             SecondLevelSubdivisionTable secondLevel = mainFunctions.GetSecondLevelById(secondLevelId);
             FirstLevelSubdivisionTable firstLevel = mainFunctions.GetFirstLevelById(firstLevelId);
             ThirdLevelSubdivisionTable thirdLevel = new ThirdLevelSubdivisionTable();
@@ -79,11 +88,13 @@ namespace KPIWeb.ProrectorReportFilling
                         where
                             a.FK_ThirdLevelSubdivisionTable == thirdLevelId &&
                             a.FK_Specialization == spec.SpecializationTableID
+                            && a.Active == true
                         select a).FirstOrDefault();
 
                     FourthLevelParametrs fourthLevelParametrs = fourthLevelParametrs =
                         (from a in kpiWebDataContext.FourthLevelParametrs
                             where a.FourthLevelParametrsID == currentFourth.FourthLevelSubdivisionTableID
+                            && a.Active == true
                             select a).FirstOrDefault();
 
                     DataRow dataRow = dataTable.NewRow();
@@ -144,6 +155,7 @@ namespace KPIWeb.ProrectorReportFilling
                     var ss = labelId.Text;
                     FourthLevelParametrs fourthLevelParametrsTables = (from a in kpiWebDataContext.FourthLevelParametrs
                         where a.FourthLevelParametrsID == Convert.ToInt32(labelId.Text)
+                        where a.Active == true
                         select a).FirstOrDefault();
                     if (fourthLevelParametrsTables != null)
                     {

@@ -843,7 +843,7 @@ namespace KPIWeb.Reports
                     }
                     //надо рассчитать рассчетные
                     AutoCalculateAfterSave calculate = new AutoCalculateAfterSave();
-                    calculate.AutoCalculate(ReportArchiveID,UserID,(int)userTable.FK_ThirdLevelSubdivisionTable,3,null);
+                    calculate.AutoCalculate(ReportArchiveID,UserID,(int)userTable.FK_ThirdLevelSubdivisionTable,3,null,0);
                     //Calculate.CalcCalculate(ReportArchiveID, userTable);
                     int AllCnt = (int)ViewState["AllCnt"];
                     if (AllCnt == notNullCnt)

@@ -150,7 +150,7 @@
                             <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
                             <asp:BoundField DataField="Name"   HeaderText="Название" Visible="true" />
                             <asp:BoundField DataField="CompetitionName"   HeaderText="Конкурс" Visible="true" />
-                                       
+                            <asp:BoundField DataField="SendedDate"   HeaderText="Дата отправки на рассмотрение" Visible="true" />   
                             <asp:TemplateField HeaderText="Скачать заявку">
                                     <ItemTemplate>
                                         <asp:Button ID="GetDocButton" runat="server" CommandName="Select" Text="Загрузить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>

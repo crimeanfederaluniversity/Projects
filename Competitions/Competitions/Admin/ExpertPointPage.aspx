@@ -2,6 +2,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     
      
+    <asp:Button ID="GoBackButton" runat="server" OnClick="Button2_Click" Text="Назад" Width="113px" />
+    <br />
+    <br />
+     
     <asp:GridView ID="ExpertsPointGV" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView1_RowDataBound">
             <Columns>
                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />

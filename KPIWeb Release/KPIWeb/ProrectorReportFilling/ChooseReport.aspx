@@ -253,9 +253,15 @@ background-color:#FFFFFF}
                  <asp:BoundField DataField="Status" HeaderText=" Статус" Visible="True" />
                     <asp:TemplateField  HeaderText="Перейти к заполнению отчета">
                         <ItemTemplate >
-                            <asp:Button ID="ButtonViewReport" OnClientClick="showLoadPanel()" runat="server" CommandName="Select" Text="Перейти" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonViewClick"/>                           
+                            <asp:Button ID="ButtonViewReport" OnClientClick="showLoadPanel()" runat="server" Enabled='<%# Eval("ViewButtonEnabled") %>' CommandName="Select" Text="Заполнить" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonViewClick"/>                           
                         </ItemTemplate>
                     </asp:TemplateField>   
+                 
+                 <asp:TemplateField Visible="True"  HeaderText="Перейти к заполнению отчета по КФУ в целом">
+                        <ItemTemplate >
+                            <asp:Button ID="ButtonFillReportForAllStruct" OnClientClick="showLoadPanel()" runat="server" Enabled='<%# Eval("ViewButtonEnabled") %>' CommandName="Select" Text="Заполнить" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonFillReportForAllStruct"/>                           
+                        </ItemTemplate>
+                    </asp:TemplateField> 
 
                  <asp:TemplateField  HeaderText="Отправить внесенные данные">
                         <ItemTemplate >

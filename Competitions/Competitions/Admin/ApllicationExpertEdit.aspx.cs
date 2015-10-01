@@ -134,5 +134,10 @@ namespace Competitions.Admin
             }
             Response.Redirect("ApllicationExpertEdit.aspx");
         }
+
+        protected void GoBackButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ChooseApplication.aspx");
+        }
     }
 }

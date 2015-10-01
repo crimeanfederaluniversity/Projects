@@ -30,7 +30,7 @@
         <br />
         Дата окончания конкурса<asp:Calendar ID="Calendar2" runat="server"></asp:Calendar>
         <br />
-        <asp:FileUpload ID="FileUpload1" runat="server" />
+        Файл шаблона<asp:FileUpload ID="FileUpload1" runat="server" />
         <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">LinkButton</asp:LinkButton>
         <br />
         <br />

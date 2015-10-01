@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="ReadyApplications.aspx.cs" Inherits="Competitions.Admin.ReadyApplications" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:Button ID="GoBackButton" runat="server" OnClick="Button1_Click" Text="Назад" Width="147px" />
     <br />
     <h2><span style="font-size: 30px">Список обработанных заявок:</span></h2>
     <br />

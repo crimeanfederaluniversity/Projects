@@ -105,6 +105,7 @@ namespace KPIWeb.ProrectorReportFilling
         {
             MainFunctions mainFunctions = new MainFunctions();
             CheckBoxesToShow checkBoxesToShow = new CheckBoxesToShow();
+            CollectedDataStatusProcess collectedDataStatusProcess = new CollectedDataStatusProcess();
             Serialization userSer = (Serialization)Session["UserID"];
             if (userSer == null)
             {
@@ -133,6 +134,13 @@ namespace KPIWeb.ProrectorReportFilling
                 List<FourthLevelStruct> fourthLevelToFillInReport = GetFourthLevelStructs(reportId); 
                 List<int> firstLevelList = (from a in fourthLevelToFillInReport
                     select a.firstLevelId).Distinct().ToList();
+                if ((collectedDataStatusProcess.DoesAllCollectedHaveNeededStatus(5, 0, 1, reportId, userId, true))&& (collectedDataStatusProcess.DoesAnyCollectedHaveNeededStatus(5, 0, 1, reportId, userId, true)))
+                {
+                    ClearAllCheckedButton.Enabled = false;
+                    SaveChangesButton.Enabled = false;
+                    TreeView1.Enabled = false;
+                }
+
 
                 int iD = 1;
                 int parRoot = iD;
@@ -194,7 +202,6 @@ namespace KPIWeb.ProrectorReportFilling
             }
             return true;
         }
-
         public bool SaveAll()
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
@@ -231,7 +238,7 @@ namespace KPIWeb.ProrectorReportFilling
             }
             int userId = userSer.Id;
             AutoCalculateAfterSave autoCalculateAfterSave = new AutoCalculateAfterSave();
-            autoCalculateAfterSave.AutoCalculate(reportId,userId,1,0,null);
+            autoCalculateAfterSave.AutoCalculate(reportId,userId,1,0,null,0);
 
             return true;
         }

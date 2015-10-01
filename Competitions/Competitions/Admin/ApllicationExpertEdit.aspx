@@ -1,7 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ApllicationExpertEdit.aspx.cs" Inherits="Competitions.Admin.ApllicationExpertEdit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     
-    
+    <br />
+    <asp:Button ID="GoBackButton" runat="server" Text="Назад" OnClick="GoBackButton_Click" Width="157px" />
+    <br />
+
     Прикрепленные эксперты
     <asp:GridView ID="connectedExpertsGV" runat="server" AutoGenerateColumns="False">
             <Columns>

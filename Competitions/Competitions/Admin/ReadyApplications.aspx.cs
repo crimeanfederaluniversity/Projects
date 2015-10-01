@@ -36,7 +36,7 @@ namespace Competitions.Admin
                     dataRow["ID"] = currentApplication.ID;
                     dataRow["Name"] = currentApplication.Name;
                     dataRow["Description"] = "";
-                    dataRow["SendedDataTime"] = currentApplication.SendedDataTime;
+                    dataRow["SendedDataTime"] = currentApplication.SendedDataTime.ToString().Split(' ')[0]; ;
                     dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTables
                                               where a.ID == currentApplication.FK_CompetitionTable
                                               select a.Name).FirstOrDefault();
@@ -75,6 +75,11 @@ namespace Competitions.Admin
                 Session["ApplicationID"] = button.CommandArgument;
                 Response.Redirect("ExpertPointPage.aspx");
             }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Default.aspx");
         }
     }
 }

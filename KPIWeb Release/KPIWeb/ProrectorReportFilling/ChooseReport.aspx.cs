@@ -48,7 +48,8 @@ namespace KPIWeb.ProrectorReportFilling
 
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("ReportArchiveID", typeof(string)));
-                dataTable.Columns.Add(new DataColumn("ConfirmButtonEnabled", typeof(bool)));             
+                dataTable.Columns.Add(new DataColumn("ConfirmButtonEnabled", typeof(bool)));
+                dataTable.Columns.Add(new DataColumn("ViewButtonEnabled", typeof(bool)));  
                 dataTable.Columns.Add(new DataColumn("ReportName", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("StartDate", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("EndDate", typeof(string)));
@@ -62,10 +63,20 @@ namespace KPIWeb.ProrectorReportFilling
                     dataRow["StartDate"] = reportRow.StartDateTime.ToString().Split(' ')[0];
                     dataRow["EndDate"] = reportRow.EndDateTime.ToString().Split(' ')[0];
                     dataRow["Status"] = collectedDataStatusProcess.GetStatusNameForStructInReportByStructIdNLevel(1,0,
-                        reportRow.ReportArchiveTableID,userId);
-                    dataRow["ConfirmButtonEnabled"] = 
-                        !collectedDataStatusProcess.DoesAnyCollectedHaveNeededStatus(0, 0, 1,
-                            reportRow.ReportArchiveTableID, userId);
+                        reportRow.ReportArchiveTableID, userId, true);
+                    dataRow["ConfirmButtonEnabled"] =
+                        !collectedDataStatusProcess.DoesAnyCollectedHaveNullValue( 0, 1,
+                            reportRow.ReportArchiveTableID, userId,true);
+
+                    dataRow["ViewButtonEnabled"] = true;
+
+                    if (!mainFunctions.CanUserEditAnyInReport(userId,
+                        reportRow.ReportArchiveTableID))
+                    {
+                        dataRow["ConfirmButtonEnabled"] = false;
+                        dataRow["ViewButtonEnabled"] = false;
+                    }
+
                     dataTable.Rows.Add(dataRow);
                 }
                 GridView1.DataSource = dataTable;
@@ -118,7 +129,8 @@ namespace KPIWeb.ProrectorReportFilling
             Button button = (Button)sender;
             {
                 KPIWebDataContext kPiDataContext = new KPIWebDataContext();
-                MainFunctions mainFunctions = new MainFunctions();
+               // MainFunctions mainFunctions = new MainFunctions();
+                CollectedDataProcess collectedDataProcess = new CollectedDataProcess();
                 ToGetOnlyNeededStructAutoFilter toGetOnlyNeededStructAutoFilter = new ToGetOnlyNeededStructAutoFilter();
                 Serialization userSer = (Serialization)Session["UserID"];
                 if (userSer == null)
@@ -133,6 +145,8 @@ namespace KPIWeb.ProrectorReportFilling
 
                     foreach (ThirdLevelSubdivisionTable currentThirdLevel in thirdLevelListToFillWithZero)
                     {
+                        collectedDataProcess.SetStatusToAllCollected(reportId, 3, currentThirdLevel.ThirdLevelSubdivisionTableID,userId,5);
+                        /*
                         ThirdLevelParametrs currentThirdParam = (from a in kPiDataContext.ThirdLevelParametrs
                             where a.ThirdLevelParametrsID == currentThirdLevel.ThirdLevelSubdivisionTableID
                             select a).FirstOrDefault();
@@ -159,11 +173,13 @@ namespace KPIWeb.ProrectorReportFilling
                                 select a).Distinct().ToList();
                         foreach (BasicParametersTable currentBasic in basicsForThirdInReportForUser)
                         {
-                            mainFunctions.ConfirmCollectedBasic(reportId,
+                            ////CONFIRMATION
+                            collectedDataProcess.ConfirmCollectedBasic(reportId,
                                 currentBasic.BasicParametersTableID, 3, currentThirdLevel.ThirdLevelSubdivisionTableID);
-                        }                      
+                        }       */               
                     }
-            }            
+            }  
+            Response.Redirect("ChooseReport.aspx");
         }                
         protected void ButtonZeroToAllNullReportClick(object sender, EventArgs e)
         {
@@ -182,7 +198,7 @@ namespace KPIWeb.ProrectorReportFilling
 
                     List<ThirdLevelSubdivisionTable> thirdLevelListToFillWithZero =
                         toGetOnlyNeededStructAutoFilter.GetAllThirdLevelList(reportId, userId);
-
+                    CollectedDataProcess collectedDataProcess = new CollectedDataProcess();
                     foreach (ThirdLevelSubdivisionTable currentThirdLevel in thirdLevelListToFillWithZero)
                     {
                         ThirdLevelParametrs currentThirdParam = (from a in kPiDataContext.ThirdLevelParametrs
@@ -211,13 +227,38 @@ namespace KPIWeb.ProrectorReportFilling
                                 select a).Distinct().ToList();
                         foreach (BasicParametersTable currentBasic in basicsForThirdInReportForUser)
                         {
-                            mainFunctions.GetCollectedBasicParametrByReportBasicLevel(reportId,
+                            collectedDataProcess.GetCollectedBasicParametrByReportBasicLevel(reportId,
                                 currentBasic.BasicParametersTableID, 3, currentThirdLevel.ThirdLevelSubdivisionTableID,
                                 true,0, userId);
                         }                      
                     }
             }            
         }
+        protected void ButtonFillReportForAllStruct(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            {
+                CheckBoxesToShow checkBoxesToShow = new CheckBoxesToShow();
+                Serialization newSession = new Serialization();
+                MainFunctions mainFunctions = new MainFunctions();
+                newSession.ReportArchiveID = Convert.ToInt32(button.CommandArgument);
+                Session["ProrectorFillingSession"] = newSession;
+                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Prorector " + (string)ViewState["login"] + " pereshel k zapolneniyu otcheta po vsemy CFU, ID = " + button.CommandArgument);
 
+                Serialization userSer = (Serialization)Session["UserID"];
+                if (userSer == null)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+                int userId = userSer.Id;
+                UsersTable userTable = mainFunctions.GetUserById(userId);
+                if (userTable.AccessLevel != 5)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+
+                Response.Redirect("FillingAllBasicsForAllStruct.aspx");
+            }   
+        }
     }
 }

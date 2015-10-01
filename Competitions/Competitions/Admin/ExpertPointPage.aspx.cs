@@ -143,6 +143,11 @@ namespace Competitions.Admin
         {
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Возможность скачать все, только если все готовы!');", true);
         }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ReadyApplications.aspx");
+        }
          
     }
 }

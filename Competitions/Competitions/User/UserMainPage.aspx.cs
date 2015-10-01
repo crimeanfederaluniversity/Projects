@@ -37,7 +37,7 @@ namespace Competitions.User
                     dataTable.Columns.Add(new DataColumn("Budjet", typeof (string)));
                     dataTable.Columns.Add(new DataColumn("StartDate", typeof (string)));
                     dataTable.Columns.Add(new DataColumn("EndDate", typeof (string)));
-
+                    
                     List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTables
                         where a.Active == true
                         select a).ToList();
@@ -94,7 +94,8 @@ namespace Competitions.User
                     dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("CompetitionName", typeof(string)));
-
+                    dataTable.Columns.Add(new DataColumn("SendedDate", typeof(string)));
+                    
                     List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTable
                                                                where a.FK_UsersTable == userId
                                                                      && a.Active == true
@@ -113,6 +114,14 @@ namespace Competitions.User
                         dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTables
                                                       where a.ID == (Convert.ToInt32(currentApplication.FK_CompetitionTable))
                                                       select a.Name).FirstOrDefault();
+                        if (currentApplication.SendedDataTime == null)
+                        {
+                            dataRow["SendedDate"] = "Не отправлялось на рассмотрение";
+                        }
+                        else
+                        {
+                            dataRow["SendedDate"] = currentApplication.SendedDataTime.ToString().Split(' ')[0];
+                        }          
                         dataTable.Rows.Add(dataRow);
                     }
                     ArchiveApplicationGV.DataSource = dataTable;
@@ -135,7 +144,6 @@ namespace Competitions.User
                 }
             }
         }
-
         protected void NewApplication_Click(object sender, EventArgs e)
         {
             Session["ApplicationID"] = 0;
@@ -388,7 +396,7 @@ namespace Competitions.User
                     competitionDataBase.SubmitChanges();
                 }
             }
-            Response.Redirect("ChooseApplication.aspx");
+            Response.Redirect("UserMainPage.aspx");
         }
         private byte[] ReadByteArryFromFile(string destPath)
         {
@@ -600,7 +608,6 @@ namespace Competitions.User
                 }
             }
         }
-
         protected void Tab1_Click(object sender, EventArgs e)
         {
             Tab1.CssClass = "Clicked";
@@ -622,8 +629,6 @@ namespace Competitions.User
             Tab3.CssClass = "Clicked";
             MainView.ActiveViewIndex = 2;
         }
-
-
         protected void Button2_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Default.aspx");

@@ -205,6 +205,7 @@
     <Content Include="ProrectorReportFilling\ChooseFaculty.aspx" />
     <Content Include="ProrectorReportFilling\ChooseReport.aspx" />
     <Content Include="ProrectorReportFilling\ChooseStruct.aspx" />
+    <Content Include="ProrectorReportFilling\FillingAllBasicsForAllStruct.aspx" />
     <Content Include="ProrectorReportFilling\FillingPage.aspx" />
     <Content Include="ProrectorReportFilling\FillOnlyCheckBoxes.aspx" />
     <Content Include="ProrectorReportFilling\Main.aspx" />
@@ -532,6 +533,13 @@
     </Compile>
     <Compile Include="ProrectorReportFilling\ChooseStruct.aspx.designer.cs">
       <DependentUpon>ChooseStruct.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\FillingAllBasicsForAllStruct.aspx.cs">
+      <DependentUpon>FillingAllBasicsForAllStruct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProrectorReportFilling\FillingAllBasicsForAllStruct.aspx.designer.cs">
+      <DependentUpon>FillingAllBasicsForAllStruct.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProrectorReportFilling\FillingPage.aspx.cs">
       <DependentUpon>FillingPage.aspx</DependentUpon>

@@ -59,7 +59,7 @@ namespace KPIWeb.ProrectorReportFilling
                     dataRow["StructDataStatus"] =
                         collectedDataStatusProcess.GetStatusNameForStructInReportByStructIdNLevel(
                             currentFirstLevel.FirstLevelSubdivisionTableID,
-                            1, reportID, userID);
+                            1, reportID, userID,false);
                     dataTable.Rows.Add(dataRow);
                 }
                 GridView1.DataSource = dataTable;

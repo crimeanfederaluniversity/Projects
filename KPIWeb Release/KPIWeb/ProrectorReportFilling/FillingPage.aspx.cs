@@ -103,7 +103,7 @@ namespace KPIWeb.ProrectorReportFilling
 
                        
                     string status = collectedDataStatusProcess.GetStatusNameForStructListInReportByStructIdListnLevel((from a in thirdLevelToShowList select a.ThirdLevelSubdivisionTableID).ToList(), 3,
-                            reportId, userId);
+                            reportId, userId,false);
                     DataStatusLabel.Text = "Статус данных: " + status;
 
                     Button6.Enabled = false;
@@ -161,10 +161,11 @@ namespace KPIWeb.ProrectorReportFilling
                         }
                         int dataType = (int) basicParametrAdditional.DataType;
                         int columnId = 0;
+                        CollectedDataProcess collectedDataProcess = new CollectedDataProcess();
                         foreach (ThirdLevelSubdivisionTable currentThird in thirdLevelToShowList)
                         {
                             CollectedBasicParametersTable currentCollectedData =
-                                mainFunctions.GetCollectedBasicParametrByReportBasicLevel(reportId,
+                                collectedDataProcess.GetCollectedBasicParametrByReportBasicLevel(reportId,
                                     currentBasic.BasicParametersTableID, 3, currentThird.ThirdLevelSubdivisionTableID,
                                     true,null,
                                     userId);
@@ -279,7 +280,7 @@ namespace KPIWeb.ProrectorReportFilling
                     #endregion
 
                     string status = collectedDataStatusProcess.GetStatusNameForStructInReportByStructIdNLevel(thirdLevelId, 3,
-                            reportId, userId);
+                            reportId, userId,false);
                     DataStatusLabel.Text = "Статус данных: " + status;
 
                     Button6.Enabled = false;
@@ -357,14 +358,18 @@ namespace KPIWeb.ProrectorReportFilling
                         int dataType = (int)basicParametrs.DataType;
                         //узнали параметры базового показателя
                         int j = 0;
+                        CollectedDataProcess  collectedDataProcess = new CollectedDataProcess();
                         //если хоть одной специальности базовый показатель нужен то мы его выведем
                         foreach (FourthLevelSubdivisionTable currentSpecialization in specialzations)
                         {
 
-                            
+
                             FourthLevelParametrs fourthParametrs =
                                 (from a in kpiWebDataContext.FourthLevelParametrs
-                                 where a.FourthLevelParametrsID == currentSpecialization.FourthLevelSubdivisionTableID
+                                    where
+                                        a.FourthLevelParametrsID == currentSpecialization.FourthLevelSubdivisionTableID
+                                        && a.Active == true 
+                
                                  select a).FirstOrDefault();
                             // узнали параметры специальности
                             // если этото параметр и эта специальность дружат  
@@ -376,7 +381,7 @@ namespace KPIWeb.ProrectorReportFilling
                             // это для деления на магистров аспирантов итд
                             {
                                 j++; //потом проверка и следовательно БП нуно выводить
-                                CollectedBasicParametersTable collectedBasicTmp =  mainFunctions.GetCollectedBasicParametrByReportBasicLevel(reportId,
+                                CollectedBasicParametersTable collectedBasicTmp =  collectedDataProcess.GetCollectedBasicParametrByReportBasicLevel(reportId,
                                     currentBasicParam.BasicParametersTableID, 4,
                                     currentSpecialization.FourthLevelSubdivisionTableID, true,null, userId);
                                 if (collectedBasicTmp.Status > 4) reportIsConfirmed = true;                                  
@@ -498,11 +503,11 @@ namespace KPIWeb.ProrectorReportFilling
             {
                 List<ThirdLevelSubdivisionTable> thirdLevelToShowList =
                         toGetOnlyNeededStructAutoFilter.GetThirdLevelList(reportId, userId, secondLevelId, 1);
-                autoCalculateAfterSave.AutoCalculate(reportId, userId,0,0,thirdLevelToShowList);
+                autoCalculateAfterSave.AutoCalculate(reportId, userId,0,0,thirdLevelToShowList,0);
             }
             else
             {
-                autoCalculateAfterSave.AutoCalculate(reportId, userId, thirdLevelId,3,null);
+                autoCalculateAfterSave.AutoCalculate(reportId, userId, thirdLevelId,3,null,0);
             }
 
 
@@ -744,6 +749,8 @@ namespace KPIWeb.ProrectorReportFilling
                      thirdLevelListToFillWithZero =
                         toGetOnlyNeededStructAutoFilter.GetThirdLevelList(reportId, userId, secondLevelId, 1);
                  }
+
+                 CollectedDataProcess collectedDataProcess = new CollectedDataProcess();
                
                  foreach (ThirdLevelSubdivisionTable currentThirdLevel in thirdLevelListToFillWithZero)
                  {
@@ -773,7 +780,8 @@ namespace KPIWeb.ProrectorReportFilling
                           select a).Distinct().ToList();
                      foreach (BasicParametersTable currentBasic in basicsForThirdInReportForUser)
                      {
-                         mainFunctions.ConfirmCollectedBasic(reportId,
+                         //CONFIRMATION
+                         collectedDataProcess.ConfirmCollectedBasic(reportId,
                              currentBasic.BasicParametersTableID, 3, currentThirdLevel.ThirdLevelSubdivisionTableID);
                      }
                  }

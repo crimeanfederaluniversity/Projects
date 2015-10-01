@@ -74,7 +74,7 @@ namespace KPIWeb.ProrectorReportFilling
                                                          select a).FirstOrDefault();
                     dataRow["Status"] =
                         collectedDataStatusProcess.GetStatusNameForStructInReportByStructIdNLevel(
-                            CurrentThird.ThirdLevelSubdivisionTableID, 3, reportID, userID);
+                            CurrentThird.ThirdLevelSubdivisionTableID, 3, reportID, userID,false);
                     dataTable.Rows.Add(dataRow);
                 }
 
@@ -86,7 +86,7 @@ namespace KPIWeb.ProrectorReportFilling
                     List<int> tmpArrayOfIds = (List<int>)(from a in OnlyKafedras select a.ThirdLevelSubdivisionTableID).ToList();
                     dataRow["Status"] =
                         collectedDataStatusProcess.GetStatusNameForStructListInReportByStructIdListnLevel(
-                            tmpArrayOfIds, 3, reportID, userID);            
+                            tmpArrayOfIds, 3, reportID, userID,false);            
                     dataTable.Rows.Add(dataRow);
                 }
 

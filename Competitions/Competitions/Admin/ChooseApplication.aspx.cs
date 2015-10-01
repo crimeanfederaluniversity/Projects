@@ -18,6 +18,7 @@ namespace Competitions.Admin
              CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
                 List<zApplicationTable> applicationsList = (from a in CompetitionsDataBase.zApplicationTable
                     where a.Active == true && a.Accept == false
+                    && a.Sended == true
                     select a).ToList();
                 DataTable dataTable = new  DataTable();
 
@@ -37,7 +38,7 @@ namespace Competitions.Admin
                     dataRow["ID"] = currentApplication.ID;
                     dataRow["Name"] = currentApplication.Name;
                     dataRow["Description"] = "";
-                    dataRow["SendedDataTime"] = currentApplication.SendedDataTime;
+                    dataRow["SendedDataTime"] = currentApplication.SendedDataTime.ToString().Split(' ')[0];
                     dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTables
                                                   where a.ID == currentApplication.FK_CompetitionTable
                                                   select  a.Name).FirstOrDefault();
@@ -109,6 +110,11 @@ namespace Competitions.Admin
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка привязана к выбранным экспертам и перемещена в раздел готовых заявок!');", true);
             Response.Redirect("ChooseApplication.aspx");
 
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Default.aspx");
         }
     }
 }

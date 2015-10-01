@@ -36,7 +36,10 @@ namespace Competitions.User
                 //error
                 Response.Redirect("ChooseApplicationAction.aspx");
             }
-
+            if (newPagesParams.SectionId.Count == 0)
+            {
+                return 0;
+            }
             int sectionId = newPagesParams.SectionId[newPagesParams.CurrentPage];
             return sectionId;
         }
@@ -448,6 +451,10 @@ namespace Competitions.User
 
                 int applicationId = newPagesParams.ApplicationId;
                 int sectionId = GetSectionId();
+                if (sectionId == 0)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
                 int userId = Convert.ToInt32(userIdParam);
                 #endregion
                 //создадим большой dataTable
@@ -1002,7 +1009,7 @@ namespace Competitions.User
             newPagesParams.CurrentPage--;
             if (newPagesParams.CurrentPage == -1)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect("ChooseApplicationAction.aspx");
             }
             Session["PagesParams"] = newPagesParams;
             Response.Redirect("FillSection.aspx");
@@ -1015,17 +1022,15 @@ namespace Competitions.User
             newPagesParams.CurrentPage++;
             if (newPagesParams.CurrentPage == newPagesParams.PagesCount)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect("ChooseApplicationAction.aspx");
             }
             Session["PagesParams"] = newPagesParams;
             Response.Redirect("FillSection.aspx");
         }
-
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("UserMainPage.aspx");
+            Response.Redirect("ChooseApplicationAction.aspx");
         }
-
         protected void Button2_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Default.aspx");
