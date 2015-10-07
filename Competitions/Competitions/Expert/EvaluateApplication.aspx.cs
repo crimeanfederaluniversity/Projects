@@ -33,6 +33,9 @@ namespace Competitions.Expert
                 dataTable.Columns.Add("ID", typeof(string));
                 dataTable.Columns.Add("Name", typeof(string));
                 dataTable.Columns.Add("Text", typeof(string));
+                dataTable.Columns.Add("ErrorText", typeof(string));
+                dataTable.Columns.Add("MaxValue", typeof(int));
+                dataTable.Columns.Add("MinValue", typeof(int));
 
                 foreach (zExpertPoint currentExpertPoint in expertPointsList)
                 {
@@ -40,21 +43,30 @@ namespace Competitions.Expert
                         where a.FK_ApplicationTable == applicationId
                               && a.FK_ExpertsTable == userId
                               && a.FK_ExpertPoints == currentExpertPoint.ID
+                              && a.Sended == false
                         select a).FirstOrDefault();
                     if (currentExpertPointValue == null)
                     {
-                        currentExpertPointValue = new zExpertPointsValue();
-                        currentExpertPointValue.FK_ApplicationTable = applicationId;
-                        currentExpertPointValue.FK_ExpertsTable = userId;
-                        currentExpertPointValue.LastChangeDataTime = DateTime.Now;
-                        currentExpertPointValue.FK_ExpertPoints = currentExpertPoint.ID;
-                        currentExpertPointValue.Sended = false;
-                        CompetitionsDataBase.zExpertPointsValue.InsertOnSubmit(currentExpertPointValue);
-                        CompetitionsDataBase.SubmitChanges();
+                        zExpertPointsValue currentExpertPointValue2 = new zExpertPointsValue();
+                        currentExpertPointValue2.FK_ApplicationTable = applicationId;
+                        currentExpertPointValue2.FK_ExpertsTable = userId;
+                        currentExpertPointValue2.LastChangeDataTime = DateTime.Now;
+                        currentExpertPointValue2.FK_ExpertPoints = currentExpertPoint.ID;
+                        currentExpertPointValue2.Sended = false;
+                        currentExpertPointValue2.Active = true;
+                        CompetitionsDataBase.zExpertPointsValue.InsertOnSubmit(currentExpertPointValue2);
+                        CompetitionsDataBase.SubmitChanges();               
+                    }
+                    else
+                    {
+                                           
                     }
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = currentExpertPointValue.ID;
                     dataRow["Name"] = currentExpertPoint.Name;
+                    dataRow["ErrorText"] = "Значение должно быть в диапазоне от 0 до "+currentExpertPoint.MaxValue;
+                    dataRow["MaxValue"] = currentExpertPoint.MaxValue;
+                    dataRow["MinValue"] = currentExpertPoint.MinValue;
                     if (currentExpertPointValue.Value != null)
                     {
                         dataRow["Text"] = currentExpertPointValue.Value;
@@ -160,11 +172,9 @@ namespace Competitions.Expert
 
         protected void Button2_Click(object sender, EventArgs e)
         {
- 
-
-            var sessionParam1 = Session["ApplicationID"];
+                 var sessionParam1 = Session["ApplicationID"];
                  var sessionParam2 = Session["UserID"];
-                if ((sessionParam1 == null)||(sessionParam2==null))
+                 if ((sessionParam1 == null)||(sessionParam2==null))
                 {
                     //error
                     Response.Redirect("~/Default.aspx");
@@ -173,10 +183,9 @@ namespace Competitions.Expert
                 int userId = Convert.ToInt32(sessionParam2);
 
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                List<zExpertPointsValue> currentApplication = (from a in competitionDataBase.zExpertPointsValue
-                                                         where a.Active == true
+                List<zExpertPointsValue> currentApplication = (from a in competitionDataBase.zExpertPointsValue where a.Active == true
                                                                && a.FK_ApplicationTable == applicationId && a.FK_ExpertsTable == userId
-                                                         select a).ToList();
+                                                               select a).ToList();
                  
                     foreach (zExpertPointsValue current in currentApplication)
                     {
@@ -184,7 +193,7 @@ namespace Competitions.Expert
                         current.SendedDataTime = DateTime.Now;
                         competitionDataBase.SubmitChanges();
                     }
-                    
+                    Response.Redirect("~/Default.aspx");
             }
         
         

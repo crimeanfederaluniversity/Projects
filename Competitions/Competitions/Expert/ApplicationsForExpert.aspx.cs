@@ -28,22 +28,21 @@ namespace Competitions.Expert
                 dataTable.Columns.Add(new DataColumn("CompetitionName", typeof(string)));
                                  
                 List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTable
-                                                           where a.Active == true
-                                                           && a.Sended == true
+                                                           where a.Active == true && a.Sended == true
                                                            join b in competitionDataBase.zCompetitionsTables
                                                            on a.FK_CompetitionTable equals b.ID
                                                            where b.Active == true
                                                            join c in competitionDataBase.zExpertsAndApplicationMappingTables
                                                            on a.ID equals c.FK_ApplicationsTable
-                                                           where c.Active == true
-                                                           && c.FK_UsersTable == userId                                                                                                                                                                
+                                                           where c.Active == true && c.FK_UsersTable == userId                                                                                                                                                                
                                                            select a).Distinct().ToList();
+              
                 List<zApplicationTable> notreadyapp = new List<zApplicationTable>();
                 foreach (zApplicationTable current in applicationList)
                 {
                     List<zExpertPointsValue> notsended = (from a in competitionDataBase.zExpertPointsValue
-                                                          where a.Active == true && a.Sended == true 
-                                                          && a.FK_ApplicationTable == current.ID                                                          
+                                                          where a.Active == true && a.Sended == true
+                                                          && a.FK_ApplicationTable == current.ID && a.FK_ExpertsTable == userId                                                          
                                                           select a).ToList();
                     if (notsended.Count == 0)
                     {

@@ -65,15 +65,11 @@ namespace Competitions.User
                     dataTable.Columns.Add(new DataColumn("CompetitionName", typeof (string)));
 
                     List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTable
-                        where a.FK_UsersTable == userId
-                              && a.Active == true
-                        join b in competitionDataBase.zCompetitionsTables
-                            on a.FK_CompetitionTable equals b.ID
-                        where b.Active == true
-                              && b.OpenForApplications == true
-                              && a.Sended == false 
-                              && b.EndDate > DateTime.Now
-                        select a).Distinct().ToList();
+                                                               where a.FK_UsersTable == userId && a.Sended == false  && a.Active == true
+                                                               join b in competitionDataBase.zCompetitionsTables
+                                                               on a.FK_CompetitionTable equals b.ID where b.Active == true
+                                                               && b.OpenForApplications == true  
+                                                               select a).Distinct().ToList();
 
                     foreach (zApplicationTable currentApplication in applicationList)
                     {
@@ -97,13 +93,10 @@ namespace Competitions.User
                     dataTable.Columns.Add(new DataColumn("SendedDate", typeof(string)));
                     
                     List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTable
-                                                               where a.FK_UsersTable == userId
-                                                                     && a.Active == true
+                                                               where a.FK_UsersTable == userId  && a.Active == true && a.Sended == true
                                                                join b in competitionDataBase.zCompetitionsTables
-                                                                   on a.FK_CompetitionTable equals b.ID
-                                                               where b.Active == true
-                                                                     && b.OpenForApplications == true
-                                                                     && (a.Sended == true || b.EndDate<DateTime.Now)
+                                                               on a.FK_CompetitionTable equals b.ID
+                                                               where b.Active == true && b.OpenForApplications == true
                                                                select a).Distinct().ToList();
 
                     foreach (zApplicationTable currentApplication in applicationList)

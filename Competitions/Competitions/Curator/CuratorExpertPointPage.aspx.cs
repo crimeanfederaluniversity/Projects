@@ -31,14 +31,26 @@ namespace Competitions.Curator
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add("ID", typeof(string));
             dataTable.Columns.Add("Name", typeof(string));
-            dataTable.Columns.Add("AccessLevel", typeof(int));
+            dataTable.Columns.Add("AccessLevel", typeof(string));
 
             foreach (UsersTable currentExpert in expertsList)
             {
                 DataRow dataRow = dataTable.NewRow();
                 dataRow["ID"] = currentExpert.ID;
                 dataRow["Name"] = currentExpert.Email;
-                dataRow["AccessLevel"] = currentExpert.AccessLevel;
+                CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
+                zExpertsAndCompetitionMappngTamplateTable accesstext = (from f in CompetitionsDataBase.zExpertsAndCompetitionMappngTamplateTable
+                                                                        where f.Active == true && f.FK_UsersTable == currentExpert.ID
+                                                                        select f).FirstOrDefault();
+                if (accesstext == null)
+                {
+                    dataRow["AccessLevel"] = "Привлеченный эксперт";
+                }
+                else
+                {
+                    dataRow["AccessLevel"] = "Член экспертного совета";
+                }
+                    
                 dataTable.Rows.Add(dataRow);
             }
             return dataTable;

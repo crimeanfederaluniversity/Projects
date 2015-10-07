@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.IO.Compression;
+
 
 namespace Competitions.Admin
 {
@@ -165,7 +167,6 @@ namespace Competitions.Admin
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Возможность скачать все, только если все готовы!');", true);
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -201,6 +202,16 @@ namespace Competitions.User
         protected void Button2_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Default.aspx");
+        }
+
+        protected void Button2_Click1(object sender, EventArgs e)
+        {
+           /* String path = Server.MapPath("~/documents/byApplication");
+            string zipPath = @"c:\result.zip";
+            ZipFile zip = new ZipFile()
+            ZipFile.CreateFromDirectory(path, zipPath);
+          */
+ 
         }      
     }
 }

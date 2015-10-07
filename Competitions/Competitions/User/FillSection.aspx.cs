@@ -496,6 +496,7 @@ namespace Competitions.User
                 zSectionTable currentSection = (from a in competitionDataBase.zSectionTable
                                                 where a.ID == sectionId
                                                 select a).FirstOrDefault();
+                LabelHint.Text = currentSection.Name;
                 //найдем все колонки привязанные к этой секции
                 List<zColumnTable> columnInSectionList = (from a in competitionDataBase.zColumnTables
                                                           where a.Active == true

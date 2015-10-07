@@ -64,6 +64,8 @@
             </Columns>
         </asp:GridView>
     <p>
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click1" Text="Скачать в архив" />
+    <p>
         <asp:FileUpload ID="FileUpload1" runat="server" AllowMultiple="True" />
     </p>
 <p>

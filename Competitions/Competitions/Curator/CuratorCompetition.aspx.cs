@@ -100,7 +100,7 @@ namespace Competitions.Curator
 
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("CuratorMainPage.aspx");
         }
     }
 }

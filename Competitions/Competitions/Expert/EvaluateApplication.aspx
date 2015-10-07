@@ -13,7 +13,17 @@
                      <asp:TemplateField Visible="true"   HeaderText="Значение">
                         <ItemTemplate > 
                             <asp:Label      ID="ID" runat="server"  Visible="false"  Text='<%# Bind("ID") %>'></asp:Label>                         
-                            <asp:TextBox ID="ValueTextBox" runat="server" Text='<%# Bind("Text") %>' ></asp:TextBox>                                             
+                            <asp:TextBox ID="ValueTextBox" runat="server" Text='<%# Bind("Text") %>' ></asp:TextBox>  
+                            <asp:RangeValidator runat="server" ID="TextBoxValidate1" ControlToValidate="ValueTextBox" 
+                                Enabled =    "true"
+                                MaximumValue= '<%# Bind("MaxValue") %>' 
+                                MinimumValue='<%# Bind("MinValue") %>' 
+                                Text='<%# Bind("ErrorText") %>' 
+
+                                Type=        "Integer"
+                            ErrorMessage='<%# Bind("ErrorText") %>'  ForeColor="Red" Display="Dynamic" 
+                            SetFocusOnError="True">
+                        </asp:RangeValidator>                                              
                         </ItemTemplate>
                     </asp:TemplateField>  
                    </Columns>
