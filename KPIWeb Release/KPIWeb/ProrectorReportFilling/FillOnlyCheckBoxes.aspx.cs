@@ -10,6 +10,7 @@ namespace KPIWeb.ProrectorReportFilling
 {
     public partial class FillOnlyCheckBoxes : System.Web.UI.Page
     {
+       
         public class MyObject
         {
             public int Id;
@@ -79,7 +80,7 @@ namespace KPIWeb.ProrectorReportFilling
                           && f.FK_SecondLevelSubdivisionTable == c.SecondLevelSubdivisionTableID
                           && f.FK_ThirdLevelSubdivisionTable == b.ThirdLevelSubdivisionTableID
                           && f.FK_ReportArchiveTableId == reportId
-
+                          
                     join g in kpiWebDataContext.FourthLevelParametrs
                         on a.FourthLevelSubdivisionTableID equals g.FourthLevelParametrsID
 
@@ -140,7 +141,7 @@ namespace KPIWeb.ProrectorReportFilling
                     SaveChangesButton.Enabled = false;
                     TreeView1.Enabled = false;
                 }
-
+                List<int> fourthLevelToSave = new List<int>(); 
 
                 int iD = 1;
                 int parRoot = iD;
@@ -165,10 +166,13 @@ namespace KPIWeb.ProrectorReportFilling
                             string tmp2 =(from a in fourthLevelToFillInReport where a.fourthLevelId == currentFourth select a.fourthLevelName).FirstOrDefault();
                             bool tmp2Checked = (from a in fourthLevelToFillInReport  where a.fourthLevelId == currentFourth select a.isChecked).FirstOrDefault();
                             list.Add(new MyObject() { Id = currentFourth, ParentId = par1, Name = tmp2, Checked = tmp2Checked });
+
+                            fourthLevelToSave.Add(currentFourth);
                             iD++;
                         }
                     }
                 }
+                ViewState["fourthLevelToSave"] = fourthLevelToSave;
                 BindTree(list, null);
                 TreeView1.CollapseAll();
             }
@@ -211,17 +215,21 @@ namespace KPIWeb.ProrectorReportFilling
                 Response.Redirect("~/Default.aspx");
             }
             int reportId = Convert.ToInt32(mySession.ReportArchiveID);
-            List<FourthLevelStruct> fourthLevelToFillInReport = GetFourthLevelStructs(reportId);
-
-            foreach (FourthLevelStruct currentFourth in fourthLevelToFillInReport)
+           /* List<FourthLevelStruct> fourthLevelToFillInReport = GetFourthLevelStructs(reportId);
+            fourthLevelToSave*/
+            List<int> fourthLevelToSave = (List<int>) ViewState["fourthLevelToSave"];
+            foreach (int currentFourthId in fourthLevelToSave)
             {
-                TreeNode currentNode = FindNodeByValue(currentFourth.fourthLevelId.ToString(), TreeView1.Nodes);
+                TreeNode currentNode = FindNodeByValue(currentFourthId.ToString(), TreeView1.Nodes);
+                FourthLevelParametrs currentFourthparam = (from a in kpiWebDataContext.FourthLevelParametrs
+                    where a.FourthLevelParametrsID == currentFourthId
+                    select a).FirstOrDefault();
                 if (currentNode == null)
                     continue;
-                if (currentNode.Checked != currentFourth.isChecked)
+                if (currentNode.Checked != currentFourthparam.IsNetworkComunication)
                 {
                     FourthLevelParametrs dbCurrentFourthParam = (from a in kpiWebDataContext.FourthLevelParametrs
-                                                                 where a.FourthLevelParametrsID == currentFourth.fourthLevelId
+                                                                 where a.FourthLevelParametrsID == currentFourthId
                                                                  select a).FirstOrDefault();
                     if (dbCurrentFourthParam != null)
                     {

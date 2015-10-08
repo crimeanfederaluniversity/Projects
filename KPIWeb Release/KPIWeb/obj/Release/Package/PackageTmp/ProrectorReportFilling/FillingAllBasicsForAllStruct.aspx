@@ -1,19 +1,13 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ChooseReport.aspx.cs" Inherits="KPIWeb.ProrectorReportFilling.ChooseReport" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">  
-<script type="text/javascript">
-    function showLoadPanel() {
-        document.getElementById('LoadPanel_').style.visibility = 'visible';
-    }
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="FillingAllBasicsForAllStruct.aspx.cs" Inherits="KPIWeb.ProrectorReportFilling.FillingAllBasicsForAllStruct" %>
 
-    function confirmThenLoadPanel (message) {
-        if (confirm(message)) {
-            showLoadPanel();
-            return true;
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    
+    <script type="text/javascript">
+        function showLoadPanel() {
+            document.getElementById('LoadPanel_').style.visibility = 'visible';
         }
-        return false;
-    }
     </script>
-<style>  
+    <style>  
         body {
         top: 50px;
     }
@@ -204,7 +198,7 @@ background-color:#FFFFFF}
 
 }
 </style>     
-<div id="LoadPanel_" class='LoadPanel'>               
+    <div id="LoadPanel_" class='LoadPanel'>               
             <div id="floatingCirclesG">
             <div class="f_circleG" id="frotateG_01">
             </div>
@@ -224,7 +218,7 @@ background-color:#FFFFFF}
             </div>
             </div>
         </div>
-<style type="text/css">
+     <style type="text/css">
    .button_right 
    {
        float: right;
@@ -235,47 +229,60 @@ background-color:#FFFFFF}
     <div>    
         <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Text="Назад" Width="125px" OnClick="GoBackButton_Click" />
         <asp:Button ID="Button2" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" OnClick="Button2_Click" />
+
+        <asp:Label ID="DataStatusLabel" runat="server" Text=""></asp:Label>
+
         <asp:Button ID="Button5" runat="server" CssClass="button_right" OnClientClick="showLoadPanel()"  Text="Нормативные документы" Width="250px" OnClick="Button5_Click" />
     </div> 
 </asp:Panel> 
-<br />
-<br />
-<h2>   
-<asp:Label ID="PageName" runat="server" Text="Страница выбора отчета" Font-Size="20pt"></asp:Label>
-</h2>
-<br />
-<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" style="margin-top: 0px; position:relative">
-             <Columns>                
-                 <asp:BoundField DataField="ReportArchiveID"   HeaderText="Current Report ID" Visible="false" />    
-                 <asp:BoundField DataField="ReportName" HeaderText="Название отчёта" Visible="True" />          
-                 <asp:BoundField DataField="StartDate" HeaderText="Начальная дата отчёта" Visible="True" />
-                 <asp:BoundField DataField="EndDate" HeaderText="Конечная дата отчёта" Visible="True" />
-                 <asp:BoundField DataField="Status" HeaderText=" Статус" Visible="True" />
-                    <asp:TemplateField  HeaderText="Перейти к заполнению отчета">
+    <br />
+        
+    
+     <h4>
+<asp:Label ID="ReportNameLabel" runat="server" Text="reportName"></asp:Label>
+</h4>
+    <br>
+    <asp:GridView ID="GridviewCollectedBasicParameters"  BorderStyle="Solid" runat="server" AutoGenerateColumns="False" 
+                BorderColor="Black"  BorderWidth="1px" CellPadding="0">
+               <Columns>                
+                    <asp:BoundField DataField="BasicParametersTableID" HeaderText="Код показателя" Visible="true" />
+                    <asp:TemplateField Visible="false"  InsertVisible="False">
                         <ItemTemplate >
-                            <asp:Button ID="ButtonViewReport" OnClientClick="showLoadPanel()" runat="server" Enabled='<%# Eval("ViewButtonEnabled") %>' CommandName="Select" Text="Заполнить" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonViewClick"/>                           
+                            <asp:Label ID="LabelCollectedBasicParametersTableID"  runat="server" Visible="false"  Text='<%# Bind("CollectedBasicParametersTableID") %>'></asp:Label>
                         </ItemTemplate>
-                    </asp:TemplateField>   
-                 
-                 <asp:TemplateField Visible="True"  HeaderText="Перейти к заполнению отчета по КФУ в целом">
-                        <ItemTemplate >
-                            <asp:Button ID="ButtonFillReportForAllStruct" OnClientClick="showLoadPanel()" runat="server" Enabled='<%# Eval("ViewButtonEnabledForAllStruct") %>' CommandName="Select" Text="Заполнить" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonFillReportForAllStruct"/>                           
+                    </asp:TemplateField>
+                    <asp:TemplateField  HeaderText="Название показателя" >
+                        <ItemTemplate>
+                            <asp:Label ID="Name" CssClass="NameMin"  runat="server" Visible="True" Text='<%# Bind("Name") %>'></asp:Label>
                         </ItemTemplate>
-                    </asp:TemplateField> 
+                    </asp:TemplateField>
+                     <asp:BoundField DataField="Comment"  HeaderText="Комментарий" Visible="true" />  
+                                            
+                     <asp:TemplateField  HeaderText="Значение">
+                        <ItemTemplate  >
+                            <asp:Label ID="NotNull0"  runat="server" Visible="false" Text='<%# Bind("NotNull0") %>'></asp:Label>
+                            <asp:TextBox ID="Value0"  Width="95%" style="text-align: center; background-color:transparent;" BorderWidth="0" ReadOnly='<%# Bind("TextBoxReadOnly0") %>' runat="server" Text='<%# Bind("Value0") %>'></asp:TextBox>
+                            <asp:RangeValidator runat="server" ID="Validate0" ControlToValidate="Value0" 
+                            ErrorMessage='<%# Bind("RangeValidatorMessage0") %>'
+                            Text=        '<%# Bind("RangeValidatorMessage0") %>'
+                            Type=        '<%# Bind("RangeValidatorType0") %>'
+                            MaximumValue='<%# Bind("RangeValidatorMaxValue0") %>' 
+                            MinimumValue='<%# Bind("RangeValidatorMinValue0") %>'
+                            Enabled=     '<%# Bind("RangeValidatorEnabled0") %>'
+                            ForeColor="Red" Display="Dynamic"                               
+                            SetFocusOnError="True" >
+                            </asp:RangeValidator>
+                            <asp:Label ID="CollectId0" runat="server"  Visible="false" Text='<%# Bind("CollectId0") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>  
+                    </Columns>   
+    </asp:GridView>
+    
+    <br />
+    
+    <asp:Button ID="SaveButton" runat="server" Text="Сохранить" OnClick="SaveButton_Click" Width="399px" />
+    <br />
+    <asp:Button ID="SendButton" runat="server" Text="Отправить" OnClick="SendButton_Click" Width="399px" />
+    
 
-                 <asp:TemplateField  HeaderText="Отправить внесенные данные">
-                        <ItemTemplate >
-                            <asp:Button ID="ButtonConfirmReport" OnClientClick="return confirmThenLoadPanel('Данные будут отправлены и недоступны для редактирования! Продолжить?')" runat="server" CommandName="Select" Text="Отправить" Width="200px" 
-                                CommandArgument='<%# Eval("ReportArchiveID") %>' Enabled='<%# Eval("ConfirmButtonEnabled") %>' OnClick="ButtonConfirmClick"/>                           
-                        </ItemTemplate>
-                    </asp:TemplateField>  
-                 
-                 <asp:TemplateField  HeaderText="Заполнить все пустые поля нулями" Visible="False">
-                        <ItemTemplate >
-                            <asp:Button ID="ButtonZeroToAllNullReport" OnClientClick="return confirmThenLoadPanel('Все пустые поля будут заполнены нулями! Это может занять несколько минут! Продолжить?')" runat="server" CommandName="Select" Text="Заполнить" Width="200px" 
-                                CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonZeroToAllNullReportClick"/>                           
-                        </ItemTemplate>
-                    </asp:TemplateField>  
-                </Columns>
-        </asp:GridView>
 </asp:Content>

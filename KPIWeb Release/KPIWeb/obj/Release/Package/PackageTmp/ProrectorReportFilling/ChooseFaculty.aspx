@@ -1,19 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ChooseReport.aspx.cs" Inherits="KPIWeb.ProrectorReportFilling.ChooseReport" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">  
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ChooseFaculty.aspx.cs" Inherits="KPIWeb.ProrectorReportFilling.ChooseFaculty" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <script type="text/javascript">
     function showLoadPanel() {
         document.getElementById('LoadPanel_').style.visibility = 'visible';
     }
-
-    function confirmThenLoadPanel (message) {
-        if (confirm(message)) {
-            showLoadPanel();
-            return true;
-        }
-        return false;
-    }
     </script>
-<style>  
+    <style>  
         body {
         top: 50px;
     }
@@ -204,7 +196,7 @@ background-color:#FFFFFF}
 
 }
 </style>     
-<div id="LoadPanel_" class='LoadPanel'>               
+    <div id="LoadPanel_" class='LoadPanel'>               
             <div id="floatingCirclesG">
             <div class="f_circleG" id="frotateG_01">
             </div>
@@ -224,7 +216,7 @@ background-color:#FFFFFF}
             </div>
             </div>
         </div>
-<style type="text/css">
+    <style type="text/css">
    .button_right 
    {
        float: right;
@@ -238,44 +230,26 @@ background-color:#FFFFFF}
         <asp:Button ID="Button5" runat="server" CssClass="button_right" OnClientClick="showLoadPanel()"  Text="Нормативные документы" Width="250px" OnClick="Button5_Click" />
     </div> 
 </asp:Panel> 
-<br />
-<br />
-<h2>   
-<asp:Label ID="PageName" runat="server" Text="Страница выбора отчета" Font-Size="20pt"></asp:Label>
+    
+    <br/>
+    <br/>
+    <h2>
+    <asp:Label ID="ReportNameLabel" runat="server" Text="ReportNameLabel"></asp:Label>
 </h2>
+    <h2>
+    <asp:Label ID="FirstLevelLabel" runat="server" Text="FirstLevelNameLabel"></asp:Label>
+</h2> 
 <br />
-<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" style="margin-top: 0px; position:relative">
-             <Columns>                
-                 <asp:BoundField DataField="ReportArchiveID"   HeaderText="Current Report ID" Visible="false" />    
-                 <asp:BoundField DataField="ReportName" HeaderText="Название отчёта" Visible="True" />          
-                 <asp:BoundField DataField="StartDate" HeaderText="Начальная дата отчёта" Visible="True" />
-                 <asp:BoundField DataField="EndDate" HeaderText="Конечная дата отчёта" Visible="True" />
-                 <asp:BoundField DataField="Status" HeaderText=" Статус" Visible="True" />
-                    <asp:TemplateField  HeaderText="Перейти к заполнению отчета">
-                        <ItemTemplate >
-                            <asp:Button ID="ButtonViewReport" OnClientClick="showLoadPanel()" runat="server" Enabled='<%# Eval("ViewButtonEnabled") %>' CommandName="Select" Text="Заполнить" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonViewClick"/>                           
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" style="margin-top: 0px">
+             <Columns>                               
+                  <asp:BoundField DataField="StructName" HeaderText="Структурное подразделение" Visible="True" />
+                  <asp:BoundField DataField="StructDataStatus" HeaderText="Статус" Visible="True" />             
+                  <asp:TemplateField HeaderText="Перейти к заполнению">
+                        <ItemTemplate>
+                            <asp:Button ID="ButtonViewStruct" runat="server" OnClientClick="showLoadPanel()" CommandName="Select" Text="Перейти" Width="200px" CommandArgument='<%# Eval("StructID") %>' OnClick="ButtonStructDeeperClick"/>
                         </ItemTemplate>
-                    </asp:TemplateField>   
-                 
-                 <asp:TemplateField Visible="True"  HeaderText="Перейти к заполнению отчета по КФУ в целом">
-                        <ItemTemplate >
-                            <asp:Button ID="ButtonFillReportForAllStruct" OnClientClick="showLoadPanel()" runat="server" Enabled='<%# Eval("ViewButtonEnabledForAllStruct") %>' CommandName="Select" Text="Заполнить" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonFillReportForAllStruct"/>                           
-                        </ItemTemplate>
-                    </asp:TemplateField> 
-
-                 <asp:TemplateField  HeaderText="Отправить внесенные данные">
-                        <ItemTemplate >
-                            <asp:Button ID="ButtonConfirmReport" OnClientClick="return confirmThenLoadPanel('Данные будут отправлены и недоступны для редактирования! Продолжить?')" runat="server" CommandName="Select" Text="Отправить" Width="200px" 
-                                CommandArgument='<%# Eval("ReportArchiveID") %>' Enabled='<%# Eval("ConfirmButtonEnabled") %>' OnClick="ButtonConfirmClick"/>                           
-                        </ItemTemplate>
-                    </asp:TemplateField>  
-                 
-                 <asp:TemplateField  HeaderText="Заполнить все пустые поля нулями" Visible="False">
-                        <ItemTemplate >
-                            <asp:Button ID="ButtonZeroToAllNullReport" OnClientClick="return confirmThenLoadPanel('Все пустые поля будут заполнены нулями! Это может занять несколько минут! Продолжить?')" runat="server" CommandName="Select" Text="Заполнить" Width="200px" 
-                                CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonZeroToAllNullReportClick"/>                           
-                        </ItemTemplate>
-                    </asp:TemplateField>  
+                    </asp:TemplateField>
                 </Columns>
-        </asp:GridView>
+        </asp:GridView>   
+
 </asp:Content>

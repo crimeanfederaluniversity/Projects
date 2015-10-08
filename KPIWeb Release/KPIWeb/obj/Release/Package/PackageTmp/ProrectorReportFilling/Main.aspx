@@ -1,11 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="FillingAllBasicsForAllStruct.aspx.cs" Inherits="KPIWeb.ProrectorReportFilling.FillingAllBasicsForAllStruct" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Main.aspx.cs" Inherits="KPIWeb.ProrectorReportFilling.Main" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    
-    <script type="text/javascript">
-        function showLoadPanel() {
-            document.getElementById('LoadPanel_').style.visibility = 'visible';
-        }
+<script type="text/javascript">
+    function showLoadPanel() {
+        document.getElementById('LoadPanel_').style.visibility = 'visible';
+    }
     </script>
     <style>  
         body {
@@ -218,7 +216,7 @@ background-color:#FFFFFF}
             </div>
             </div>
         </div>
-     <style type="text/css">
+    <style type="text/css">
    .button_right 
    {
        float: right;
@@ -227,65 +225,10 @@ background-color:#FFFFFF}
 </style>
 <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
     <div>    
-        <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Text="Назад" Width="125px" OnClick="GoBackButton_Click" />
-        <asp:Button ID="Button2" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" OnClick="Button2_Click" />
-
-        <asp:Label ID="DataStatusLabel" runat="server" Text=""></asp:Label>
-
-        <asp:Button ID="Button5" runat="server" CssClass="button_right" OnClientClick="showLoadPanel()"  Text="Нормативные документы" Width="250px" OnClick="Button5_Click" />
+        <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Text="Назад" Width="125px" />
+        <asp:Button ID="GoForwardButton" runat="server" OnClientClick="showLoadPanel()" Text="Вперед" Width="125px" />
+        <asp:Button ID="Button2" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" />
+        <asp:Button ID="Button5" runat="server" CssClass="button_right" OnClientClick="showLoadPanel()"  Text="Нормативные документы" Width="250px" />
     </div> 
 </asp:Panel> 
-    <br />
-        
-    
-     <h4>
-<asp:Label ID="ReportNameLabel" runat="server" Text="reportName"></asp:Label>
-</h4>
-    <p>
-        Значения по данным показателям вносятся суммарно по всем структурным подразделениям КФУ.
-    </p>
-    <br>
-    <asp:GridView ID="GridviewCollectedBasicParameters"  BorderStyle="Solid" runat="server" AutoGenerateColumns="False" 
-                BorderColor="Black"  BorderWidth="1px" CellPadding="0">
-               <Columns>                
-                    <asp:BoundField DataField="BasicParametersTableID" HeaderText="Код показателя" Visible="true" />
-                    <asp:TemplateField Visible="false"  InsertVisible="False">
-                        <ItemTemplate >
-                            <asp:Label ID="LabelCollectedBasicParametersTableID"  runat="server" Visible="false"  Text='<%# Bind("CollectedBasicParametersTableID") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField  HeaderText="Название показателя" >
-                        <ItemTemplate>
-                            <asp:Label ID="Name" CssClass="NameMin"  runat="server" Visible="True" Text='<%# Bind("Name") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                     <asp:BoundField DataField="Comment"  HeaderText="Комментарий" Visible="true" />  
-                                            
-                     <asp:TemplateField  HeaderText="Значение">
-                        <ItemTemplate  >
-                            <asp:Label ID="NotNull0"  runat="server" Visible="false" Text='<%# Bind("NotNull0") %>'></asp:Label>
-                            <asp:TextBox ID="Value0"  Width="95%" style="text-align: center; background-color:transparent;" BorderWidth="0" ReadOnly='<%# Bind("TextBoxReadOnly0") %>' runat="server" Text='<%# Bind("Value0") %>'></asp:TextBox>
-                            <asp:RangeValidator runat="server" ID="Validate0" ControlToValidate="Value0" 
-                            ErrorMessage='<%# Bind("RangeValidatorMessage0") %>'
-                            Text=        '<%# Bind("RangeValidatorMessage0") %>'
-                            Type=        '<%# Bind("RangeValidatorType0") %>'
-                            MaximumValue='<%# Bind("RangeValidatorMaxValue0") %>' 
-                            MinimumValue='<%# Bind("RangeValidatorMinValue0") %>'
-                            Enabled=     '<%# Bind("RangeValidatorEnabled0") %>'
-                            ForeColor="Red" Display="Dynamic"                               
-                            SetFocusOnError="True" >
-                            </asp:RangeValidator>
-                            <asp:Label ID="CollectId0" runat="server"  Visible="false" Text='<%# Bind("CollectId0") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>  
-                    </Columns>   
-    </asp:GridView>
-    
-    <br />
-    
-    <asp:Button ID="SaveButton" runat="server" Text="Сохранить" OnClick="SaveButton_Click" Width="399px" />
-    <br />
-    <asp:Button ID="SendButton" runat="server" Text="Отправить" OnClick="SendButton_Click" Width="399px" />
-    
-
 </asp:Content>

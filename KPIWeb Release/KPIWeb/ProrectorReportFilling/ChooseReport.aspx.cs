@@ -49,12 +49,14 @@ namespace KPIWeb.ProrectorReportFilling
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("ReportArchiveID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("ConfirmButtonEnabled", typeof(bool)));
-                dataTable.Columns.Add(new DataColumn("ViewButtonEnabled", typeof(bool)));  
+                dataTable.Columns.Add(new DataColumn("ViewButtonEnabled", typeof(bool)));
+                dataTable.Columns.Add(new DataColumn("ViewButtonEnabledForAllStruct", typeof(bool)));          
                 dataTable.Columns.Add(new DataColumn("ReportName", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("StartDate", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("EndDate", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Status", typeof(string)));
-                
+
+                TmpProrectorFillFunctions tmpProrectorFillFunctions = new TmpProrectorFillFunctions();
                 foreach (ReportArchiveTable reportRow in reportsArchiveTablesTable)
                 {
                     DataRow dataRow = dataTable.NewRow();
@@ -62,19 +64,37 @@ namespace KPIWeb.ProrectorReportFilling
                     dataRow["ReportName"] = reportRow.Name;
                     dataRow["StartDate"] = reportRow.StartDateTime.ToString().Split(' ')[0];
                     dataRow["EndDate"] = reportRow.EndDateTime.ToString().Split(' ')[0];
-                    dataRow["Status"] = collectedDataStatusProcess.GetStatusNameForStructInReportByStructIdNLevel(1,0,
-                        reportRow.ReportArchiveTableID, userId, true);
+                    dataRow["Status"] = "Нет данных";
+                    if ( tmpProrectorFillFunctions.CanProrectorFillReportByStruct(reportRow.ReportArchiveTableID,userId))
+                    {
+                        dataRow["Status"] = collectedDataStatusProcess.GetStatusNameForStructInReportByStructIdNLevel(1, 0,
+                       reportRow.ReportArchiveTableID, userId, true);
+                    }
+                    if (tmpProrectorFillFunctions.CanProrectorFillReportForAllStruct(reportRow.ReportArchiveTableID,
+                        userId))
+                    {
+                        dataRow["Status"] = tmpProrectorFillFunctions.GetStatusNameForStructOnly(1,null,null,null,null,null,userId,reportRow.ReportArchiveTableID);
+                    }
+                   
+
+
                     dataRow["ConfirmButtonEnabled"] =
                         !collectedDataStatusProcess.DoesAnyCollectedHaveNullValue( 0, 1,
                             reportRow.ReportArchiveTableID, userId,true);
 
-                    dataRow["ViewButtonEnabled"] = true;
+                    
 
                     if (!mainFunctions.CanUserEditAnyInReport(userId,
                         reportRow.ReportArchiveTableID))
                     {
                         dataRow["ConfirmButtonEnabled"] = false;
                         dataRow["ViewButtonEnabled"] = false;
+                        dataRow["ViewButtonEnabledForAllStruct"] = false;
+                    }
+                    else
+                    {
+                        dataRow["ViewButtonEnabled"] = tmpProrectorFillFunctions.CanProrectorFillReportByStruct(reportRow.ReportArchiveTableID,userId);
+                        dataRow["ViewButtonEnabledForAllStruct"] = tmpProrectorFillFunctions.CanProrectorFillReportForAllStruct(reportRow.ReportArchiveTableID, userId);                        dataRow["ConfirmButtonEnabled"] = true;
                     }
 
                     dataTable.Rows.Add(dataRow);

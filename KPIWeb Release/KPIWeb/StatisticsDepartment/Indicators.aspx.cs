@@ -215,7 +215,7 @@ namespace KPIWeb.StatisticsDepartment
 
             TextBox1.Text = CalculateAbb.CalculateForLevel(1, IndicatorFormula0.Text, 2007, 0,
             Convert.ToInt32(TextBox2.Text), Convert.ToInt32(TextBox3.Text), Convert.ToInt32(TextBox4.Text),
-            Convert.ToInt32(TextBox5.Text), Convert.ToInt32(TextBox6.Text), Convert.ToInt32(TextBox7.Text),0,-1).ToString();
+            Convert.ToInt32(TextBox5.Text), Convert.ToInt32(TextBox6.Text), Convert.ToInt32(TextBox7.Text),0,-1,false).ToString();
         }//Рассчет с подразделениями
 
         protected void Menu1_MenuItemClick(object sender, MenuEventArgs e)

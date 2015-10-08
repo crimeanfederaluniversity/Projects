@@ -555,7 +555,7 @@ namespace KPIWeb.Rector
                         OtS.LableColor = "#000000";
 
                         OtS.Value =
-                            ForRCalc.GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID, SpecID);
+                            ForRCalc.GetCalculatedWithParams(currentStruct, ParamType, ParamID, ReportID, SpecID,userID);
                         sorted.Add(OtS);
                     }
 
@@ -1002,7 +1002,7 @@ namespace KPIWeb.Rector
                                         double tmp =
                                             ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct,
                                                 ParamType,
-                                                CurrentIndicator.IndicatorsTableID, ReportID, SpecID));
+                                                CurrentIndicator.IndicatorsTableID, ReportID, SpecID,userID));
 
                                         if (tmp == (float) 1E+20)
                                         {
@@ -1033,7 +1033,7 @@ namespace KPIWeb.Rector
                                         double tmp =
                                             ForRCalc.CalculatedForDB(
                                                 (float) ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
-                                                    CurrentIndicator.IndicatorsTableID, ReportID, SpecID));
+                                                    CurrentIndicator.IndicatorsTableID, ReportID, SpecID,userID));
                                         if (tmp == (float) 1E+20)
                                         {
                                             value_ = "Рассчет невозможен";
@@ -1054,7 +1054,7 @@ namespace KPIWeb.Rector
                                     dataRow["Color"] = "3";
                                     collected.CollectedValue =
                                         ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
-                                            CurrentIndicator.IndicatorsTableID, ReportID, SpecID));
+                                            CurrentIndicator.IndicatorsTableID, ReportID, SpecID,userID));
                                     //12;                               
                                     kpiWebDataContext.SubmitChanges();
                                     value_ = ((float) collected.CollectedValue).ToString("0.##");
@@ -1275,7 +1275,7 @@ namespace KPIWeb.Rector
                                 collected.LastChangeDateTime = DateTime.Now;
                                 collected.Active = true;
                                 collected.CollectedValue = ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
-                                    CurrentCalculated.CalculatedParametrsID, ReportID, SpecID); //11;
+                                    CurrentCalculated.CalculatedParametrsID, ReportID, SpecID,userID); //11;
                                 kpiWebDataContext.CollectedCalculatedParametrs.InsertOnSubmit(collected);
                                 kpiWebDataContext.SubmitChanges();
                             }
@@ -1340,7 +1340,7 @@ namespace KPIWeb.Rector
                                         double tmp =
                                             ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct,
                                                 ParamType,
-                                                CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
+                                                CurrentCalculated.CalculatedParametrsID, ReportID, SpecID,userID));
                                         if (tmp == (float) 1E+20)
                                         {
                                             value_ = "Рассчет невозможен";
@@ -1365,7 +1365,7 @@ namespace KPIWeb.Rector
                                         collected.CollectedValue =
                                             ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct,
                                                 ParamType,
-                                                CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
+                                                CurrentCalculated.CalculatedParametrsID, ReportID, SpecID,userID));
                                         kpiWebDataContext.SubmitChanges();
                                         value_ = ((float) collected.CollectedValue).ToString("0.##");
                                     }
@@ -1388,7 +1388,7 @@ namespace KPIWeb.Rector
                                             double tmp =
                                                 ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct,
                                                     ParamType,
-                                                    CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
+                                                    CurrentCalculated.CalculatedParametrsID, ReportID, SpecID,userID));
                                             if (tmp == (float) 1E+20)
                                             {
                                                 value_ = "Рассчет невозможен";
@@ -1412,7 +1412,7 @@ namespace KPIWeb.Rector
                                     dataRow["LableColor"] = "#000000";
                                     collected.CollectedValue =
                                         ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
-                                            CurrentCalculated.CalculatedParametrsID, ReportID, SpecID));
+                                            CurrentCalculated.CalculatedParametrsID, ReportID, SpecID,userID));
                                     kpiWebDataContext.SubmitChanges();
                                     value_ = ((float) collected.CollectedValue).ToString("0.##");
                                 }
@@ -1494,7 +1494,7 @@ namespace KPIWeb.Rector
 
                             double tmpdd = ForRCalc.GetCalculatedWithParams(mainStruct, ParamType,
                                 CurrebtBasic.BasicParametersTableID,
-                                ReportID, SpecID);
+                                ReportID, SpecID, userID);
                             dataRow["Value"] = tmpdd.ToString("0.##");
                             dataRow["UserPosition"] = "";
                             dataRow["UserID"] = 0;
@@ -1633,7 +1633,7 @@ namespace KPIWeb.Rector
 
                             OtS.Value =
                                 ForRCalc.GetCalculatedWithParams(mainStruct, ParamType, ParamID, ReportID,
-                                    currentSpec.SpecializationTableID);
+                                    currentSpec.SpecializationTableID,userID);
 
                             sorted.Add(OtS);
 

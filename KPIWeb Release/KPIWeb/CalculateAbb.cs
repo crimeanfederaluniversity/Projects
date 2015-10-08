@@ -15,13 +15,32 @@ namespace KPIWeb
 
         public static string replaseAbbWithValueForLevel(int type, string input, int reportId, int specID, int Lv0,
             int Lv1, int Lv2, int Lv3,
-            int Lv4, int Lv5, int paramType)
+            int Lv4, int Lv5, int paramType, bool forZeroLevelOnly)
         {
             string abbTmp = input;
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             double? a = 0;
             if (specID == 0)
             {
+                /*if (forZeroLevelOnly)
+                {
+                    a = (from collect in kpiWebDataContext.CollectedBasicParametersTable
+                         join basic in kpiWebDataContext.BasicParametersTable
+                         on collect.FK_BasicParametersTable equals basic.BasicParametersTableID
+                         where
+                             collect.FK_ZeroLevelSubdivisionTable == Lv0
+                             && collect.FK_FirstLevelSubdivisionTable == null
+                             && basic.AbbreviationEN == abbTmp                             
+                         select collect.CollectedValue).FirstOrDefault();
+                    if (a == null) // так быть не должно)
+                    {
+                        a = 0;
+                        //  LogHandler.LogWriter.WriteLog(LogCategory.ERROR, "Замена аббревиатуры вернула NULL "+
+                        //  abbTmp+" "+Lv0+" "+Lv1+" "+Lv2+" "+Lv3+" "+Lv4+" "+Lv5+" " +reportId); 
+                    }
+                    return a.ToString();
+                }
+                */
                 if (((reportId == 1) || (reportId == 3)) && (Lv1 == 0) && (paramType==0)) //CONNECTREPORTTMP
                 {
                     int tmp = // все из за этих финансовых показателей
@@ -212,7 +231,7 @@ namespace KPIWeb
             }
             return tmpStr;
         }
-        public static double CalculateForLevel(int type, string input, int report, int spec, int Lv0, int Lv1, int Lv2, int Lv3, int Lv4, int Lv5, int param1, int paramType)
+        public static double CalculateForLevel(int type, string input, int report, int spec, int Lv0, int Lv1, int Lv2, int Lv3, int Lv4, int Lv5, int param1, int paramType, bool isForZeroLevelOnly)
         {
             string tmpStr;
             tmpStr = input;
@@ -233,18 +252,20 @@ namespace KPIWeb
                         {
                             string strtmp = str;
                             bool isforall = false;
+
                             if (str.Substring(0, 4) == "CFU_")
                             {
                                 isforall = true;
                                 strtmp = (str.Remove(0, 4));
                             }
+
                             if (isforall)
                             {
-                                tmpStr = tmpStr.Remove(idx, str.Length).Insert(idx, replaseAbbWithValueForLevel(type, strtmp, report, spec, Lv0, 0, 0, 0, 0, 0, paramType));
+                                tmpStr = tmpStr.Remove(idx, str.Length).Insert(idx, replaseAbbWithValueForLevel(type, strtmp, report, spec, Lv0, 0, 0, 0, 0, 0, paramType, isForZeroLevelOnly));
                             }
                             else
                             {
-                                tmpStr = tmpStr.Remove(idx, str.Length).Insert(idx, replaseAbbWithValueForLevel(type, str, report, spec, Lv0, Lv1, Lv2, Lv3, Lv4, Lv5, paramType));
+                                tmpStr = tmpStr.Remove(idx, str.Length).Insert(idx, replaseAbbWithValueForLevel(type, str, report, spec, Lv0, Lv1, Lv2, Lv3, Lv4, Lv5, paramType, isForZeroLevelOnly));
                             }
                         }
                                  

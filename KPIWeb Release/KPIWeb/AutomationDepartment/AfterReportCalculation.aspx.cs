@@ -126,7 +126,7 @@ namespace KPIWeb.AutomationDepartment
                             ForRCalc.CalculatedForDB(
                                 (float)
                                     ForRCalc.GetCalculatedWithParams(mainStruct, 0, CurrentIndicator.IndicatorsTableID,
-                                        ReportID, 0));
+                                        ReportID, 0, 0 /*тут должен быть ID проректора*/));
                         CollectedIndicatorsForR newCollected = new CollectedIndicatorsForR();
                         newCollected.Active = true;
                         newCollected.CreatedDateTime = DateTime.Now;
@@ -162,7 +162,7 @@ namespace KPIWeb.AutomationDepartment
                                 new ForRCalc.Struct(1, CurrentFirstLevel.FirstLevelSubdivisionTableID, 0, 0, 0, "N");
                         double tmp =
                             ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0,
-                                CurrentIndicator.IndicatorsTableID, ReportID, 0));
+                                CurrentIndicator.IndicatorsTableID, ReportID, 0,0 /*тут должен быть ID проректора*/));
                         CollectedIndicatorsForR newCollected = new CollectedIndicatorsForR();
                         newCollected.Active = true;
                         newCollected.CreatedDateTime = DateTime.Now;
@@ -199,7 +199,7 @@ namespace KPIWeb.AutomationDepartment
                                     CurrentSecondLevel.SecondLevelSubdivisionTableID, 0, 0, "N");
                         double tmp =
                             ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0,
-                                CurrentIndicator.IndicatorsTableID, ReportID, 0));
+                                CurrentIndicator.IndicatorsTableID, ReportID, 0, 0 /*тут должен быть ID проректора*/));
                         CollectedIndicatorsForR newCollected = new CollectedIndicatorsForR();
                         newCollected.Active = true;
                         newCollected.CreatedDateTime = DateTime.Now;

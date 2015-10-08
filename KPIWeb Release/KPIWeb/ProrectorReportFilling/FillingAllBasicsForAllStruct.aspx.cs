@@ -78,36 +78,63 @@ namespace KPIWeb.ProrectorReportFilling
                                                                                   && c.FK_ReportArchiveTable == reportId
 
                                                                             select a).Distinct().ToList();
+                bool canConfirm = true;
+                bool allConfirmed = true;
+                TmpProrectorFillFunctions tmpProrectorFillFunctions = new TmpProrectorFillFunctions();
 
                     foreach (BasicParametersTable currentBasic in basicParametersToFillList)
                     {
-                        DataRow dataRow = dataTable.NewRow();
-                        dataRow["Name"] = currentBasic.Name;
-                        dataRow["CurrentReportArchiveID"] = reportId;
-                        dataRow["BasicParametersTableID"] = currentBasic.BasicParametersTableID;
-                        dataRow["Comment"] = mainFunctions.GetCommentForBasicInReport(currentBasic.BasicParametersTableID, reportId); ;
-                        BasicParametrAdditional basicParametrAdditional =
-                            (from a in kpiWebDataContext.BasicParametrAdditional
-                             where a.BasicParametrAdditionalID == currentBasic.BasicParametersTableID
-                             select a).FirstOrDefault();
-                        if (basicParametrAdditional == null)
-                        {
-                            Response.Redirect("~/Default.aspx");
-                        }
-                        int dataType = (int)basicParametrAdditional.DataType;
-                        int columnId = 0;
                         CollectedDataProcess collectedDataProcess = new CollectedDataProcess();
+                        if (tmpProrectorFillFunctions.IsBasicNotToShow(currentBasic.BasicParametersTableID))
+                        {
+                            CollectedBasicParametersTable currentCollectedData =
+                                collectedDataProcess.GetCollectedBasicParametrByReportBasicLevel(reportId,
+                                    currentBasic.BasicParametersTableID, 0, 1,
+                                    true,0,userId);
+
+                        }
+                        else
+                        {
+
+                            #region filling
+
+                            DataRow dataRow = dataTable.NewRow();
+                            dataRow["Name"] = currentBasic.Name;
+                            dataRow["CurrentReportArchiveID"] = reportId;
+                            dataRow["BasicParametersTableID"] = currentBasic.BasicParametersTableID;
+                            dataRow["Comment"] =
+                                mainFunctions.GetCommentForBasicInReport(currentBasic.BasicParametersTableID, reportId);;
+                            BasicParametrAdditional basicParametrAdditional =
+                                (from a in kpiWebDataContext.BasicParametrAdditional
+                                    where a.BasicParametrAdditionalID == currentBasic.BasicParametersTableID
+                                    select a).FirstOrDefault();
+                            if (basicParametrAdditional == null)
+                            {
+                                Response.Redirect("~/Default.aspx");
+                            }
+                            int dataType = (int) basicParametrAdditional.DataType;
+                            int columnId = 0;
+                           
 
                             CollectedBasicParametersTable currentCollectedData =
                                 collectedDataProcess.GetCollectedBasicParametrByReportBasicLevel(reportId,
                                     currentBasic.BasicParametersTableID, 0, 1,
                                     true, null,
                                     userId);
-                          //  if (currentCollectedData.Status > 4) reportIsConfirmed = true;
+                            if (currentCollectedData.Status != 5)
+                            {
+                                allConfirmed = false;
+                            }
+                            if (currentCollectedData.CollectedValue == null)
+                            {
+                                canConfirm = false;
+                            }
+                            //  if (currentCollectedData.Status > 4) reportIsConfirmed = true;
                             dataRow["Value0"] = currentCollectedData.CollectedValue.ToString();
                             dataRow["CollectId0"] =
                                 currentCollectedData.CollectedBasicParametersTableID.ToString();
                             dataRow["TextBoxReadOnly0"] = currentCollectedData.Status == 5 ? true : false;
+
                             dataRow["NotNull0"] = 1.ToString();
 
                             dataRow["RangeValidatorEnabled0"] =
@@ -121,11 +148,18 @@ namespace KPIWeb.ProrectorReportFilling
                             dataRow["RangeValidatorMessage0"] =
                                 rangeValidatorFunctions.GetValidateErrorTextForDataType(dataType);
 
+                            dataTable.Rows.Add(dataRow);
 
-                        dataTable.Rows.Add(dataRow);
+                            #endregion
+                        }
                     }
-
-                    GridviewCollectedBasicParameters.DataSource = dataTable;
+                    SendButton.Enabled = canConfirm;
+                    if (allConfirmed)
+                    {
+                        SendButton.Enabled = false;
+                        SaveButton.Enabled = false;
+                    }
+                    GridviewCollectedBasicParameters.DataSource = dataTable;         
                     GridviewCollectedBasicParameters.DataBind();
             }
         }
@@ -172,6 +206,69 @@ namespace KPIWeb.ProrectorReportFilling
                     }
                 }
             }
+            Response.Redirect("FillingAllBasicsForAllStruct.aspx");
+        }
+
+        protected void SendButton_Click(object sender, EventArgs e)
+        {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+           
+            MainFunctions mainFunctions = new MainFunctions();
+            Serialization userSer = (Serialization)Session["UserID"];
+            if (userSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userId = userSer.Id;
+            UsersTable userTable = mainFunctions.GetUserById(userId);
+            if (userTable.AccessLevel != 5)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            ViewState["login"] = userTable.Email;
+            Serialization mySession = (Serialization)Session["ProrectorFillingSession"];
+            if (mySession == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+
+            int reportId = Convert.ToInt32(mySession.ReportArchiveID);         
+            ReportArchiveTable report = mainFunctions.GetReportById(reportId);
+          
+            List<BasicParametersTable> basicParametersToFillList = (from a in kpiWebDataContext.BasicParametersTable
+                                                                            where a.Active == true
+
+                                                                            join b in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                                                                on a.BasicParametersTableID equals b.FK_ParametrsTable
+                                                                            where b.Active == true
+                                                                                  && b.FK_UsersTable == userId
+                                                                                  && b.CanEdit == true
+
+                                                                            join c in kpiWebDataContext.ReportArchiveAndBasicParametrsMappingTable
+                                                                                on a.BasicParametersTableID equals c.FK_BasicParametrsTable
+                                                                            where c.Active == true
+                                                                                  && c.FK_ReportArchiveTable == reportId
+
+                                                                            select a).Distinct().ToList();
+
+                TmpProrectorFillFunctions tmpProrectorFillFunctions = new TmpProrectorFillFunctions();
+
+                    foreach (BasicParametersTable currentBasic in basicParametersToFillList)
+                    {
+                        CollectedDataProcess collectedDataProcess = new CollectedDataProcess();
+                            CollectedBasicParametersTable currentCollectedData =
+                                collectedDataProcess.GetCollectedBasicParametrByReportBasicLevel(reportId,
+                                    currentBasic.BasicParametersTableID, 0, 1,
+                                    true,0,userId);
+                            CollectedBasicParametersTable currentCollectedData2 = (from a in kpiWebDataContext.CollectedBasicParametersTable
+                            where a.CollectedBasicParametersTableID == currentCollectedData.CollectedBasicParametersTableID
+                            select a).FirstOrDefault();
+                            currentCollectedData2.Status = 5;
+
+                        kpiWebDataContext.SubmitChanges();
+                    }
+
+            Response.Redirect("ChooseReport.aspx");
         }
     }
 }

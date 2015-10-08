@@ -407,10 +407,15 @@ namespace KPIWeb.Rector
             }
             return uniqeStruct;
         }
-        public static double GetCalculatedWithParams(Struct StructToCalcFor, int ParamType, int ParamID, int ReportID, int SpecID) // читает показатель
+        public static double GetCalculatedWithParams(Struct StructToCalcFor, int ParamType, int ParamID, int ReportID, int SpecID,int userId) // читает показатель
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-
+            bool isForAll = false;
+            TmpProrectorFillFunctions tmpProrectorFillFunctions = new TmpProrectorFillFunctions();
+            if (tmpProrectorFillFunctions.CanProrectorFillReportForAllStruct(ReportID, userId))
+            {
+                isForAll = true;
+            }
             double result = 0;
             if (ParamType == 0) // считаем целевой показатель
             {
@@ -421,7 +426,7 @@ namespace KPIWeb.Rector
                     (double)CalculateAbb.CalculateForLevel(1, Abbreviature.CalculatedAbbToFormula(Indicator.Formula)
                         , ReportID, SpecID, StructToCalcFor.Lv_0
                         , StructToCalcFor.Lv_1, StructToCalcFor.Lv_2, StructToCalcFor.Lv_3, StructToCalcFor.Lv_4,
-                        StructToCalcFor.Lv_5, 0,0);
+                        StructToCalcFor.Lv_5, 0, 0, isForAll);
             }
             else if (ParamType == 1) // считаем рассчетный
             {
@@ -430,7 +435,7 @@ namespace KPIWeb.Rector
                                                   select a).FirstOrDefault();
                 return (double)CalculateAbb.CalculateForLevel(1, Calculated.Formula, ReportID, SpecID, StructToCalcFor.Lv_0
                         , StructToCalcFor.Lv_1, StructToCalcFor.Lv_2, StructToCalcFor.Lv_3, StructToCalcFor.Lv_4,
-                        StructToCalcFor.Lv_5, 0,1);
+                        StructToCalcFor.Lv_5, 0, 1, isForAll);
             }
             else if (ParamType == 2) // суммируем базовый
             {

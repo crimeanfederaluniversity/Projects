@@ -5,13 +5,26 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.IO;
 using System.IO.Compression;
 
 
 namespace Competitions.Admin
 {
+
+
     public partial class ExpertPointPage : System.Web.UI.Page
-    {    
+    {
+        private byte[] ReadByteArryFromFile(string destPath)
+        {
+            byte[] buff = null;
+            FileStream fs = new FileStream(destPath, FileMode.Open, FileAccess.Read);
+            BinaryReader br = new BinaryReader(fs);
+            long numBytes = new FileInfo(destPath).Length;
+            buff = br.ReadBytes((int)numBytes);
+            return buff;
+        }
+
         private List<UsersTable> GetExpertsInApplicationList(int applicationId)
         {
             CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
@@ -167,7 +180,17 @@ namespace Competitions.Admin
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Возможность скачать все, только если все готовы!');", true);
+            var appid = Session["ApplicationID"];
+            int idapp = Convert.ToInt32(appid);
+            string dirPath = Server.MapPath("~/documents/byApplication/" + idapp);
+            string zipFile = Server.MapPath("~/documents/generatedZipFiles/") + idapp+".zip";
+            System.IO.Compression.ZipFile.CreateFromDirectory(dirPath, zipFile);
+            HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
+            HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=file.zip");
+            HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(zipFile));
+            HttpContext.Current.Response.End();
+            Response.End();
+            
         }
 
         protected void Button2_Click(object sender, EventArgs e)

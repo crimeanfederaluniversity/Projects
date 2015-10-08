@@ -376,7 +376,7 @@ namespace KPIWeb.FinKadr
                         (float) CalculateAbb.CalculateForLevel(1, Abbreviature.CalculatedAbbToFormula(Indicator.Formula)
                             , ReportID, SpecID, StructToCalcFor.Lv_0
                             , StructToCalcFor.Lv_1, StructToCalcFor.Lv_2, StructToCalcFor.Lv_3, StructToCalcFor.Lv_4,
-                            StructToCalcFor.Lv_5, 0,0);
+                            StructToCalcFor.Lv_5, 0,0,false);
             }
             else if (ParamType == 1) // считаем рассчетный
             {
@@ -385,7 +385,7 @@ namespace KPIWeb.FinKadr
                                              select a).FirstOrDefault();
                 return (float)CalculateAbb.CalculateForLevel(1, Calculated.Formula, ReportID, SpecID , StructToCalcFor.Lv_0
                         , StructToCalcFor.Lv_1, StructToCalcFor.Lv_2, StructToCalcFor.Lv_3, StructToCalcFor.Lv_4,
-                        StructToCalcFor.Lv_5, 0,1);
+                        StructToCalcFor.Lv_5, 0,1,false);
             }
             else if (ParamType == 2) // суммируем базовый
             {

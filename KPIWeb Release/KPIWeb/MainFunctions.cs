@@ -1457,6 +1457,19 @@ namespace KPIWeb
             List<ThirdLevelSubdivisionTable> thirdLevelList = thirdLevelListIn ?? mainFunctions.GetAllThirdLevelsByLevelAndId(subdivisionLevel, subdivisionId);
             foreach (ThirdLevelSubdivisionTable currentThird in thirdLevelList)
             {
+                if ((from a in _kPiDataContext.ReportArchiveAndLevelMappingTable
+                    where
+                        a.FK_ReportArchiveTableId == reportId &&
+                        a.FK_ThirdLevelSubdivisionTable == currentThird.ThirdLevelSubdivisionTableID
+                    select a).Any())
+                {
+                    
+                }
+                else
+                {                    
+                    continue;
+                }
+
                 ThirdLevelParametrs thirdLevelParams = (from a in _kPiDataContext.ThirdLevelParametrs
                     where a.ThirdLevelParametrsID == currentThird.ThirdLevelSubdivisionTableID
                     select a).FirstOrDefault();
@@ -1658,6 +1671,88 @@ namespace KPIWeb
                 collectedBasicParameter.Status = 5;
                 _kPiDataContext.SubmitChanges();
             }
+        }
+    }
+    public class TmpProrectorFillFunctions
+    {
+        /*
+
+        12758 form.politic@mail.ru		Проректор по международной деятельности и информационной политике
+        12401 elena-chuyan@rambler.ru	Первый проректор
+
+        12324 vladimir@crimea.edu		Проректор по учебной и методической деятельности
+        12399 napks@napks.edu.ua		Проректор по научной деятельности
+        12402 va.mikheev@mail.ru		Проректор по организационной и правовой деятельности
+        12405 barkova.cfu@yandex.ru		Проректор по финансовой и экономической деятельности       
+        12412 kfu.innovacia@mail.ru		Проректор по инновационной деятельности и перспективному развитию
+         */
+        private readonly KPIWebDataContext _kPiDataContext = new KPIWebDataContext();
+        private int[] prorectorFillsByStruct = new[] { 12758 }; // заполняют по кафедрам 
+        private int[] prorectorFillsForAllStruct = new[] { 12758, 12401, 12324, 12399, 12402, 12405, 12412 };// заполняют для всего КФУ сразу
+        private int[] reportsToAllowFillForAllStruct = new[] {4};
+        private int[] reportsToAllowFillByStruct = new[] {4};
+
+        private int[] basicParametrsNotToShow0 = new[] { 3730, 3731, 3732, 3733, 3734, 3735, 3736, 3737, 3738 };
+        private int[] basicParametrsNotToShow1 = new[] { 3740, 3741, 3742, 3743, 3744, 3745, 3746, 3747, 3748 };
+        private int[] basicParametrsNotToShow2 = new[] { 3750, 3751, 3752, 3753, 3754, 3755, 3756, 3757, 3758 };
+        private int[] basicParametrsNotToShow3 = new[] { 3760, 3761, 3762, 3763, 3764, 3765, 3766, 3767, 3768 };
+        private int[] basicParametrsNotToShow4 = new[] { 3770, 3771, 3772, 3773, 3774, 3775, 3776, 3777, 3778 };
+
+        public bool IsBasicNotToShow(int id)
+        {
+            if (basicParametrsNotToShow0.Contains(id))
+                return true;
+            if (basicParametrsNotToShow1.Contains(id))
+                return true;
+            if (basicParametrsNotToShow2.Contains(id))
+                return true;
+            if (basicParametrsNotToShow3.Contains(id))
+                return true;
+            if (basicParametrsNotToShow4.Contains(id))
+                return true;
+
+            return false;
+        }
+        public bool CanProrectorFillReportByStruct(int reportId, int userId)
+        {
+            if ((reportsToAllowFillByStruct.Contains(reportId)) && (prorectorFillsByStruct.Contains(userId)))
+                return true;
+            return false;
+        }
+        public bool CanProrectorFillReportForAllStruct(int reportId, int userId)
+        {
+            if ((prorectorFillsForAllStruct.Contains(userId)) && (reportsToAllowFillForAllStruct.Contains(reportId)))
+                return true;
+            return false;
+        }
+        public string GetStatusNameForStructOnly(int? l0,int? l1,int? l2, int? l3, int? l4, int? l5 , int userId, int reportId)
+        {
+            List<CollectedBasicParametersTable> collectedList = (from a in _kPiDataContext.CollectedBasicParametersTable
+                      where (a.FK_ZeroLevelSubdivisionTable == l0 || (a.FK_ZeroLevelSubdivisionTable == null && l0==null))
+                      && (a.FK_FirstLevelSubdivisionTable == l1 || (a.FK_FirstLevelSubdivisionTable == null && l1 == null))
+                      && (a.FK_SecondLevelSubdivisionTable == l2 || (a.FK_SecondLevelSubdivisionTable == null && l2 == null))
+                      && (a.FK_ThirdLevelSubdivisionTable == l3 || (a.FK_ThirdLevelSubdivisionTable == null && l3 == null))
+                      && (a.FK_FourthLevelSubdivisionTable == l4 || (a.FK_FourthLevelSubdivisionTable == null && l4 == null))
+                      && (a.FK_FifthLevelSubdivisionTable == l5 || (a.FK_FifthLevelSubdivisionTable == null && l5 == null))
+                      && a.FK_ReportArchiveTable == reportId
+                      && a.Active == true
+                join b in _kPiDataContext.BasicParametrsAndUsersMapping
+                    on a.FK_BasicParametersTable equals b.FK_ParametrsTable
+                where b.CanEdit == true
+                      && b.Active == true
+                      && b.FK_UsersTable == userId
+                select a).Distinct().ToList();
+
+            int collectedWithStatus0 = (from a in collectedList where (a.Status == 0) && (a.CollectedValue.ToString().Any()) select a).Count();  //status=0 данных нет 
+            int collectedWithStatus2 = (from a in collectedList where (a.Status == 2) && (a.CollectedValue.ToString().Any()) select a).Count();  //status=2 данные есть
+            int collectedWithStatus5 = (from a in collectedList where (a.Status == 5) && (a.CollectedValue.ToString().Any()) select a).Count();  //status=5 данные утверждены директором академии
+            if (collectedList.Count == 0)
+                return "Данные не вносились";
+            if (collectedList.Count == collectedWithStatus5)
+                return "Данные отправлены";
+            if (collectedList.Count == collectedWithStatus0 + collectedWithStatus2)
+                return "Данные ожидают отправки";
+            return "Данные частично внесены";
         }
     }
 }
