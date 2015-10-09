@@ -14,7 +14,7 @@ namespace Competitions.Curator
             if (!Page.IsPostBack)
             {
                 CompetitionDataContext curator = new CompetitionDataContext();
-                List<zTemplateFormTable> comp = (from a in curator.zTemplateFormTables where a.Active == true select a).ToList();
+                List<zTemplateFormTable> comp = (from a in curator.zTemplateFormTable where a.Active == true select a).ToList();
                 foreach (zTemplateFormTable n in comp)
                 {
                     ListItem TmpItem = new ListItem();
@@ -35,7 +35,7 @@ namespace Competitions.Curator
                           foreach(ListItem current in CheckBoxList1.Items)
                         {
                         CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                        zFormCompetitionMappingTable link = (from a in competitionDataBase.zFormCompetitionMappingTables
+                        zFormCompetitionMappingTable link = (from a in competitionDataBase.zFormCompetitionMappingTable
                                                                           where a.FK_Competition == iD && a.Active == true
                                                                                 && a.FK_Form == Convert.ToInt32(current.Value)
                                                                           select a).Distinct().FirstOrDefault();
@@ -72,7 +72,7 @@ namespace Competitions.Curator
                        CompetitionDataContext competitionDataBase = new CompetitionDataContext();                    
                           foreach(ListItem current in CheckBoxList1.Items)
                         {
-                             zFormCompetitionMappingTable currentlink = (from a in competitionDataBase.zFormCompetitionMappingTables
+                             zFormCompetitionMappingTable currentlink = (from a in competitionDataBase.zFormCompetitionMappingTable
                                                                          where  a.FK_Competition == iD
                                                                          && a.FK_Form == Convert.ToInt32(current.Value)
                                                                  select a).Distinct().FirstOrDefault();
@@ -87,7 +87,7 @@ namespace Competitions.Curator
                             newlink.FK_Competition = iD;
                             newlink.FK_Form = Convert.ToInt32(current.Value);
                             newlink.Active = current.Selected;
-                            competitionDataBase.zFormCompetitionMappingTables.InsertOnSubmit(newlink);
+                            competitionDataBase.zFormCompetitionMappingTable.InsertOnSubmit(newlink);
                             competitionDataBase.SubmitChanges();
                             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Готово!');", true);
                             Response.Redirect("CuratorCompetition.aspx");

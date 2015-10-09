@@ -26,7 +26,7 @@ namespace Competitions.Admin
             {
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
 
-                CompetitionNameLabel.Text = (from a in competitionDataBase.zCompetitionsTables
+                CompetitionNameLabel.Text = (from a in competitionDataBase.zCompetitionsTable
                                              where a.ID == competitionId
                                              select a.Name).FirstOrDefault();
                 SectionNameLeabel.Text = (from a in competitionDataBase.zSectionTable
@@ -38,7 +38,7 @@ namespace Competitions.Admin
                 dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Description", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("DataType", typeof (string)));
-                List<zColumnTable> columnList = (from a in competitionDataBase.zColumnTables
+                List<zColumnTable> columnList = (from a in competitionDataBase.zColumnTable
                                                    where a.Active == true
                                                    && a.FK_SectionTable == sectionId
                                                    select a).ToList();
@@ -77,7 +77,7 @@ namespace Competitions.Admin
             {
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                zColumnTable columnToDelete = (from a in competitionDataBase.zColumnTables
+                zColumnTable columnToDelete = (from a in competitionDataBase.zColumnTable
                                                  where a.ID == iD
                                                  select a).FirstOrDefault();
                 if (columnToDelete != null)

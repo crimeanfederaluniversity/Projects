@@ -62,7 +62,7 @@ namespace Competitions.User
                     if (currentCollectedData != null)
                     {
                         #region сохраняем в зависимоти от типа данных
-                        zColumnTable currenColumn = (from a in competitionDataBase.zColumnTables
+                        zColumnTable currenColumn = (from a in competitionDataBase.zColumnTable
                                                      where a.ID == currentCollectedData.FK_ColumnTable
                                                      select a).FirstOrDefault();
                         //---------------------------------------------------------------------------------------------------------------
@@ -402,7 +402,7 @@ namespace Competitions.User
         public double GetValueFromCollectedData(int rowId, int columnId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-            zColumnTable currentColumn = (from a in competitionDataBase.zColumnTables
+            zColumnTable currentColumn = (from a in competitionDataBase.zColumnTable
                 where a.ID == columnId
                 select a).FirstOrDefault();
             DataType dataType = new DataType();
@@ -498,7 +498,7 @@ namespace Competitions.User
                                                 select a).FirstOrDefault();
                 LabelHint.Text = currentSection.Name;
                 //найдем все колонки привязанные к этой секции
-                List<zColumnTable> columnInSectionList = (from a in competitionDataBase.zColumnTables
+                List<zColumnTable> columnInSectionList = (from a in competitionDataBase.zColumnTable
                                                           where a.Active == true
                                                                 && a.FK_SectionTable == sectionId
                                                           select a).ToList();
@@ -814,7 +814,7 @@ namespace Competitions.User
                                         select a).FirstOrDefault();
                                 if (currentCollectedData != null)
                                 {
-                                    zColumnTable currentColumn = (from a in competitionDataBase.zColumnTables
+                                    zColumnTable currentColumn = (from a in competitionDataBase.zColumnTable
                                         where a.ID == currentCollectedData.FK_ColumnTable
                                         select a).FirstOrDefault();
                                     DataType dataType = new  DataType();
@@ -840,7 +840,7 @@ namespace Competitions.User
                                         if (currentDropDownListDownList != null)
                                         {
                                             zColumnTable DropDownItemsColumn =
-                                                (from a in competitionDataBase.zColumnTables
+                                                (from a in competitionDataBase.zColumnTable
                                                     where a.ID == currentColumn.FK_ColumnTable
                                                     && a.Active == true
                                                     select a).FirstOrDefault();

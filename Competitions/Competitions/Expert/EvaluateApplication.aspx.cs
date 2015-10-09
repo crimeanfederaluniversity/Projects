@@ -24,7 +24,7 @@ namespace Competitions.Expert
                 int applicationId = Convert.ToInt32(sessionParam1);
                 int userId = Convert.ToInt32(sessionParam2);
                 CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
-                List<zExpertPoint> expertPointsList = (from a in CompetitionsDataBase.zExpertPoints
+                List<zExpertPoints> expertPointsList = (from a in CompetitionsDataBase.zExpertPoints
                                                             where a.Active == true          
                                                             && a.ID !=6
                                                             select a).ToList();
@@ -37,7 +37,7 @@ namespace Competitions.Expert
                 dataTable.Columns.Add("MaxValue", typeof(int));
                 dataTable.Columns.Add("MinValue", typeof(int));
 
-                foreach (zExpertPoint currentExpertPoint in expertPointsList)
+                foreach (zExpertPoints currentExpertPoint in expertPointsList)
                 {
                     zExpertPointsValue currentExpertPointValue = (from a in CompetitionsDataBase.zExpertPointsValue
                         where a.FK_ApplicationTable == applicationId

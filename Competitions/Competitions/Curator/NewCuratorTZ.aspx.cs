@@ -14,7 +14,7 @@ namespace Competitions.Curator
             if (!Page.IsPostBack)
             {
                 CompetitionDataContext curator = new CompetitionDataContext();
-                List<zActionPRManualTable> comp = (from a in curator.zActionPRManualTables where a.Active == true select a).ToList();
+                List<zActionPRManualTable> comp = (from a in curator.zActionPRManualTable where a.Active == true select a).ToList();
                 foreach (zActionPRManualTable n in comp)
                 {
                     ListItem TmpItem = new ListItem();
@@ -36,7 +36,7 @@ namespace Competitions.Curator
                 newCompetition.EndDate = Calendar2.SelectedDate;
                 newCompetition.Active = true;
                 newCompetition.OpenForApplications = false;
-                competitionDataBase.zCompetitionsTables.InsertOnSubmit(newCompetition);
+                competitionDataBase.zCompetitionsTable.InsertOnSubmit(newCompetition);
                 competitionDataBase.SubmitChanges();
                 foreach (ListItem current in CheckBoxList1.Items)
                 {
@@ -44,7 +44,7 @@ namespace Competitions.Curator
                     actionlink.FK_Competiton = newCompetition.ID;
                     actionlink.FK_ActionPR = Convert.ToInt32(current.Value);
                     actionlink.Active = current.Selected;
-                    competitionDataBase.zActionsCompetitionsMappingTables.InsertOnSubmit(actionlink);
+                    competitionDataBase.zActionsCompetitionsMappingTable.InsertOnSubmit(actionlink);
                     competitionDataBase.SubmitChanges();
                 }
                 Session["CompetitionID"] = newCompetition.ID;

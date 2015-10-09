@@ -13,7 +13,7 @@ namespace Competitions.Admin
         private ListItem[] GetColumnsInThisSection(int sectionId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-            List<zColumnTable> columnList = (from a in competitionDataBase.zColumnTables
+            List<zColumnTable> columnList = (from a in competitionDataBase.zColumnTable
                                              where a.Active
                                              join b in competitionDataBase.zSectionTable
                                                  on a.FK_SectionTable equals b.ID
@@ -34,7 +34,7 @@ namespace Competitions.Admin
         private ListItem[] GetColumnsInThisApplicationWithoutThisSection(int sectionId, int competitionId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-            List<zColumnTable> columnList = (from a in competitionDataBase.zColumnTables
+            List<zColumnTable> columnList = (from a in competitionDataBase.zColumnTable
                                              where a.Active
                                              join b in competitionDataBase.zSectionTable
                                                  on a.FK_SectionTable equals b.ID
@@ -74,7 +74,7 @@ namespace Competitions.Admin
         private ListItem[] GetColumnsInThisApplicationWithBitDataType(int sectionId, int competitionId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-            List<zColumnTable> columnList = (from a in competitionDataBase.zColumnTables
+            List<zColumnTable> columnList = (from a in competitionDataBase.zColumnTable
                                              where a.Active
                                              join b in competitionDataBase.zSectionTable
                                                  on a.FK_SectionTable equals b.ID
@@ -130,7 +130,7 @@ namespace Competitions.Admin
                     BitColumnsDropDown.Items.AddRange(GetColumnsInThisApplicationWithBitDataType(sectionId,competitionId));
                     if (columnId > 0)
                     {
-                        zColumnTable currentColum = (from a in competitionDataBase.zColumnTables
+                        zColumnTable currentColum = (from a in competitionDataBase.zColumnTable
                                                         where a.Active == true
                                                               && a.ID == columnId
                                                               && a.FK_SectionTable == sectionId
@@ -242,7 +242,7 @@ namespace Competitions.Admin
                 {
                     if ((NameTextBox.Text.Length > 0) && (DescriptionTextBox.Text.Length > 0))
                     {
-                        zColumnTable currentColumn = (from a in competitionDataBase.zColumnTables
+                        zColumnTable currentColumn = (from a in competitionDataBase.zColumnTable
                                                          where a.Active == true
                                                                && a.ID == columnId
                                                                && a.FK_SectionTable == sectionId
@@ -317,7 +317,7 @@ namespace Competitions.Admin
                             newColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
                             newColumn.FK_ColumnConnectToTable = Convert.ToInt32(BitColumnsDropDown.SelectedValue);
                         }
-                        competitionDataBase.zColumnTables.InsertOnSubmit(newColumn);
+                        competitionDataBase.zColumnTable.InsertOnSubmit(newColumn);
                         competitionDataBase.SubmitChanges();
                     }
                 }

@@ -31,7 +31,7 @@ namespace Competitions.Admin
             List<UsersTable> experts = (from a in CompetitionsDataBase.UsersTable
                 where a.Active == true
                       && a.AccessLevel == 5 
-                join b in CompetitionsDataBase.zExpertsAndApplicationMappingTables
+                join b in CompetitionsDataBase.zExpertsAndApplicationMappingTable
                     on a.ID equals b.FK_UsersTable
                 where b.Active == true
                       && b.FK_ApplicationsTable == applicationId

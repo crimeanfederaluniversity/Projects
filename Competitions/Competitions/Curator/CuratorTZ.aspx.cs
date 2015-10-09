@@ -15,7 +15,7 @@ namespace Competitions.Curator
 
             {
                 CompetitionDataContext curator = new CompetitionDataContext();
-                  List<zActionPRManualTable> comp = (from a in curator.zActionPRManualTables where a.Active == true select a).ToList();              
+                  List<zActionPRManualTable> comp = (from a in curator.zActionPRManualTable where a.Active == true select a).ToList();              
                 foreach (zActionPRManualTable n in comp)
                 {
                     ListItem TmpItem = new ListItem();
@@ -31,7 +31,7 @@ namespace Competitions.Curator
                     if (iD > 0)
                     {
                         CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                        zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTables
+                        zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
                                                                  where a.Active == true && a.ID == iD
                                                                  select a).FirstOrDefault();
                         if (currentCompetition == null)
@@ -68,7 +68,7 @@ namespace Competitions.Curator
                 int user = (int)userId;
                 if (iD > 0)
                 {
-                  zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTables
+                  zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
                                                                  where a.Active == true && a.ID == iD
                                                                  select a).FirstOrDefault();
                         if (currentCompetition == null)
@@ -79,7 +79,7 @@ namespace Competitions.Curator
                         {
                             foreach (ListItem current in CheckBoxList1.Items)
                             {
-                                zActionsCompetitionsMappingTable action = (from a in competitionDataBase.zActionsCompetitionsMappingTables
+                                zActionsCompetitionsMappingTable action = (from a in competitionDataBase.zActionsCompetitionsMappingTable
                                                                                      where a.FK_Competiton == iD
                                                                                      && a.FK_ActionPR == Convert.ToInt32(current.Value)
                                                                                      select a).FirstOrDefault();
@@ -89,7 +89,7 @@ namespace Competitions.Curator
                                     action.Active = current.Selected;
                                     action.FK_Competiton = iD;
                                     action.FK_ActionPR = Convert.ToInt32(current.Value);
-                                    competitionDataBase.zActionsCompetitionsMappingTables.InsertOnSubmit(action);
+                                    competitionDataBase.zActionsCompetitionsMappingTable.InsertOnSubmit(action);
                                     competitionDataBase.SubmitChanges();   
                                 }
                                 else
@@ -120,7 +120,7 @@ namespace Competitions.Curator
                         actionlink.FK_Competiton = newCompetition.ID;
                         actionlink.FK_ActionPR = Convert.ToInt32(current.Value);
                         actionlink.Active = current.Selected;
-                        competitionDataBase.zActionsCompetitionsMappingTables.InsertOnSubmit(actionlink);
+                        competitionDataBase.zActionsCompetitionsMappingTable.InsertOnSubmit(actionlink);
                         competitionDataBase.SubmitChanges();
                     }                        
                         newCompetition.Name = NameTextBox.Text;
@@ -131,7 +131,7 @@ namespace Competitions.Curator
                         newCompetition.EndDate = Calendar2.SelectedDate;
                         newCompetition.Active = true;
                         newCompetition.OpenForApplications = false;
-                        competitionDataBase.zCompetitionsTables.InsertOnSubmit(newCompetition);
+                        competitionDataBase.zCompetitionsTable.InsertOnSubmit(newCompetition);
                         competitionDataBase.SubmitChanges();              
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Готово!');", true); 
                 }

@@ -38,7 +38,7 @@ namespace Competitions.User
                     dataTable.Columns.Add(new DataColumn("StartDate", typeof (string)));
                     dataTable.Columns.Add(new DataColumn("EndDate", typeof (string)));
                     
-                    List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTables
+                    List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTable
                         where a.Active == true
                         select a).ToList();
 
@@ -66,7 +66,7 @@ namespace Competitions.User
 
                     List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTable
                                                                where a.FK_UsersTable == userId && a.Sended == false  && a.Active == true
-                                                               join b in competitionDataBase.zCompetitionsTables
+                                                               join b in competitionDataBase.zCompetitionsTable
                                                                on a.FK_CompetitionTable equals b.ID where b.Active == true
                                                                && b.OpenForApplications == true  
                                                                select a).Distinct().ToList();
@@ -76,7 +76,7 @@ namespace Competitions.User
                         DataRow dataRow = dataTable.NewRow();
                         dataRow["ID"] = currentApplication.ID;
                         dataRow["Name"] = currentApplication.Name;
-                        dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTables
+                        dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTable
                             where a.ID == (Convert.ToInt32(currentApplication.FK_CompetitionTable))
                             select a.Name).FirstOrDefault();
                         dataTable.Rows.Add(dataRow);
@@ -94,7 +94,7 @@ namespace Competitions.User
                     
                     List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTable
                                                                where a.FK_UsersTable == userId  && a.Active == true && a.Sended == true
-                                                               join b in competitionDataBase.zCompetitionsTables
+                                                               join b in competitionDataBase.zCompetitionsTable
                                                                on a.FK_CompetitionTable equals b.ID
                                                                where b.Active == true && b.OpenForApplications == true
                                                                select a).Distinct().ToList();
@@ -104,7 +104,7 @@ namespace Competitions.User
                         DataRow dataRow = dataTable.NewRow();
                         dataRow["ID"] = currentApplication.ID;
                         dataRow["Name"] = currentApplication.Name;
-                        dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTables
+                        dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTable
                                                       where a.ID == (Convert.ToInt32(currentApplication.FK_CompetitionTable))
                                                       select a.Name).FirstOrDefault();
                         if (currentApplication.SendedDataTime == null)
@@ -288,7 +288,7 @@ namespace Competitions.User
             private zColumnTable GetColumnByUniqueMark (string mark,int applicationId)
             {
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                List<zColumnTable> currentColumnList = (from a in competitionDataBase.zColumnTables
+                List<zColumnTable> currentColumnList = (from a in competitionDataBase.zColumnTable
                                                         where a.Active == true
                                                         && a.UniqueMark.Length > 2
                                                         join b in competitionDataBase.zSectionTable
@@ -427,7 +427,7 @@ namespace Competitions.User
         private zColumnTable FindColumnWithUniqueMark(int applicationId,string uniqueMark)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-            zColumnTable currentColumn = (from a in  competitionDataBase.zColumnTables
+            zColumnTable currentColumn = (from a in  competitionDataBase.zColumnTable
                                  where a.Active == true
                                  && a.UniqueMark == uniqueMark
                                  join b in competitionDataBase.zSectionTable
@@ -564,7 +564,7 @@ namespace Competitions.User
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
                 
-                zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTables
+                zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
                                                          join b in competitionDataBase.zApplicationTable
                                                          on a.ID equals b.FK_CompetitionTable
                     where b.ID == iD

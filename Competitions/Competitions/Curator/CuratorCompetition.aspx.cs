@@ -30,7 +30,7 @@ namespace Competitions.Curator
                 dataTable.Columns.Add(new DataColumn("StartDate", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("EndDate", typeof(string)));
 
-                List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTables
+                List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTable
                                                              where a.Active == true && a.FK_Curator == userId
                                                              select a).ToList();
 
@@ -56,7 +56,7 @@ namespace Competitions.Curator
             if (send != null)
             {
                 CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
-                List<zCompetitionsTable> nwList = (from a in CompetitionsDataBase.zCompetitionsTables
+                List<zCompetitionsTable> nwList = (from a in CompetitionsDataBase.zCompetitionsTable
                                                    where a.Active == true
                                                    && a.ID == Convert.ToInt32(send.CommandArgument)
                                                    && a.Sended == true
@@ -84,7 +84,7 @@ namespace Competitions.Curator
             {
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                zCompetitionsTable currentApplication = (from a in competitionDataBase.zCompetitionsTables
+                zCompetitionsTable currentApplication = (from a in competitionDataBase.zCompetitionsTable
                                                         where a.Active == true
                                                               && a.ID == iD
                                                         select a).FirstOrDefault();

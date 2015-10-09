@@ -29,10 +29,10 @@ namespace Competitions.Expert
                                  
                 List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTable
                                                            where a.Active == true && a.Sended == true
-                                                           join b in competitionDataBase.zCompetitionsTables
+                                                           join b in competitionDataBase.zCompetitionsTable
                                                            on a.FK_CompetitionTable equals b.ID
                                                            where b.Active == true
-                                                           join c in competitionDataBase.zExpertsAndApplicationMappingTables
+                                                           join c in competitionDataBase.zExpertsAndApplicationMappingTable
                                                            on a.ID equals c.FK_ApplicationsTable
                                                            where c.Active == true && c.FK_UsersTable == userId                                                                                                                                                                
                                                            select a).Distinct().ToList();
@@ -61,7 +61,7 @@ namespace Competitions.Expert
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = currentApplication.ID;
                     dataRow["Name"] = currentApplication.Name;
-                    dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTables
+                    dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTable
                                                   where a.ID == (Convert.ToInt32(currentApplication.FK_CompetitionTable))
                                                   select a.Name).FirstOrDefault();
                     

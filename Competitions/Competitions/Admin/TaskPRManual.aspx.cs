@@ -24,7 +24,7 @@ namespace Competitions.Admin
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("TaskPR", typeof(string)));
-                List<zTaskPRManualTable> List = (from a in manual.zTaskPRManualTables
+                List<zTaskPRManualTable> List = (from a in manual.zTaskPRManualTable
                                                    where a.Active == true
                                                    select a).ToList();
                 foreach (zTaskPRManualTable current in List)
@@ -45,7 +45,7 @@ namespace Competitions.Admin
             zTaskPRManualTable newtask = new zTaskPRManualTable();
             newtask.Active = true;
             newtask.TaskPR = TextBox1.Text;
-            manual.zTaskPRManualTables.InsertOnSubmit(newtask);
+            manual.zTaskPRManualTable.InsertOnSubmit(newtask);
             manual.SubmitChanges();
             GridviewApdate();
         }

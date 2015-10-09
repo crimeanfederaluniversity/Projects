@@ -36,7 +36,7 @@ namespace Competitions.User
                 dataTable.Columns.Add(new DataColumn("Name", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("CreateDate", typeof (string)));
 
-                List<zDocumentsTable> documentsList = (from a in competitionDataBase.zDocumentsTables
+                List<zDocumentsTable> documentsList = (from a in competitionDataBase.zDocumentsTable
                     where a.FK_ApplicationTable == applicationId
                           && a.Active == true
                     select a).ToList();
@@ -91,7 +91,7 @@ namespace Competitions.User
             newDocument.FK_ApplicationTable = applicationId;
             newDocument.Name = fileName;
             newDocument.AddDateTime = DateTime.Now;
-            competitionDataBase.zDocumentsTables.InsertOnSubmit(newDocument);
+            competitionDataBase.zDocumentsTable.InsertOnSubmit(newDocument);
             competitionDataBase.SubmitChanges();
         }        
         protected void AddDocumentsButton_Click(object sender, EventArgs e)
@@ -161,7 +161,7 @@ namespace Competitions.User
             Button button = (Button) sender;
             {
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                zDocumentsTable currentDocument = (from a in competitionDataBase.zDocumentsTables
+                zDocumentsTable currentDocument = (from a in competitionDataBase.zDocumentsTable
                     where a.ID == Convert.ToInt32(button.CommandArgument)
                     select a).FirstOrDefault();
                 if (currentDocument != null)
@@ -183,7 +183,7 @@ namespace Competitions.User
             Button button = (Button)sender;
             {
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                zDocumentsTable currentDocument = (from a in competitionDataBase.zDocumentsTables
+                zDocumentsTable currentDocument = (from a in competitionDataBase.zDocumentsTable
                                                    where a.ID == Convert.ToInt32(button.CommandArgument)
                                                    select a).FirstOrDefault();
                 if (currentDocument != null)

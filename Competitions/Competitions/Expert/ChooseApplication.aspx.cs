@@ -27,10 +27,10 @@ namespace Competitions.Expert
              CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
              List<zApplicationTable> applicationList = (from a in CompetitionsDataBase.zApplicationTable
                                                         where a.Active == true && a.Sended == true
-                                                        join b in CompetitionsDataBase.zCompetitionsTables
+                                                        join b in CompetitionsDataBase.zCompetitionsTable
                                                         on a.FK_CompetitionTable equals b.ID
                                                         where b.Active == true
-                                                        join c in CompetitionsDataBase.zExpertsAndApplicationMappingTables
+                                                        join c in CompetitionsDataBase.zExpertsAndApplicationMappingTable
                                                         on a.ID equals c.FK_ApplicationsTable
                                                         where c.Active == true && c.FK_UsersTable == userId
                                                         select a).Distinct().ToList();
@@ -67,7 +67,7 @@ namespace Competitions.Expert
                     dataRow["ID"] = currentApplication.ID;
                     dataRow["Name"] = currentApplication.Name;
                     dataRow["Description"] = "";
-                    dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTables
+                    dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTable
                                                   where a.ID == currentApplication.FK_CompetitionTable
                                                   select  a.Name).FirstOrDefault();
                     dataRow["Autor"] = (from a in CompetitionsDataBase.UsersTable 
@@ -230,7 +230,7 @@ namespace Competitions.Expert
             private zColumnTable GetColumnByUniqueMark(string mark, int applicationId)
             {
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                List<zColumnTable> currentColumnList = (from a in competitionDataBase.zColumnTables
+                List<zColumnTable> currentColumnList = (from a in competitionDataBase.zColumnTable
                                                         where a.Active == true
                                                         && a.UniqueMark.Length > 2
                                                         join b in competitionDataBase.zSectionTable
@@ -369,7 +369,7 @@ namespace Competitions.Expert
         private zColumnTable FindColumnWithUniqueMark(int applicationId, string uniqueMark)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-            zColumnTable currentColumn = (from a in competitionDataBase.zColumnTables
+            zColumnTable currentColumn = (from a in competitionDataBase.zColumnTable
                                           where a.Active == true
                                           && a.UniqueMark == uniqueMark
                                           join b in competitionDataBase.zSectionTable
@@ -506,7 +506,7 @@ namespace Competitions.Expert
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
 
-                zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTables
+                zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
                                                          join b in competitionDataBase.zApplicationTable
                                                          on a.ID equals b.FK_CompetitionTable
                                                          where b.ID == iD

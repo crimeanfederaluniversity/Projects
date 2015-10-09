@@ -17,7 +17,7 @@ namespace Competitions.Admin
             List<UsersTable> experts = (from a in CompetitionsDataBase.UsersTable
                 where a.Active == true
                       && a.AccessLevel == 5
-                join b in CompetitionsDataBase.zExpertsAndApplicationMappingTables
+                join b in CompetitionsDataBase.zExpertsAndApplicationMappingTable
                     on a.ID equals b.FK_UsersTable
                 where b.Active == true
                       && b.FK_ApplicationsTable == applicationId
@@ -86,7 +86,7 @@ namespace Competitions.Admin
 
                 CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
                 zExpertsAndApplicationMappingTable expertAndApplicationConnection =
-                    (from a in CompetitionsDataBase.zExpertsAndApplicationMappingTables
+                    (from a in CompetitionsDataBase.zExpertsAndApplicationMappingTable
                         where a.FK_UsersTable == Convert.ToInt32(button.CommandArgument)
                               && a.Active == true
                               && a.FK_ApplicationsTable == applicationId
@@ -113,7 +113,7 @@ namespace Competitions.Admin
 
                 CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
                 zExpertsAndApplicationMappingTable expertAndApplicationConnection =
-                    (from a in CompetitionsDataBase.zExpertsAndApplicationMappingTables
+                    (from a in CompetitionsDataBase.zExpertsAndApplicationMappingTable
                      where a.FK_UsersTable == Convert.ToInt32(button.CommandArgument)
                            && a.FK_ApplicationsTable == applicationId
                      select a).FirstOrDefault();
@@ -128,7 +128,7 @@ namespace Competitions.Admin
                     expertAndApplicationConnection.Active = true;
                     expertAndApplicationConnection.FK_ApplicationsTable = applicationId;
                     expertAndApplicationConnection.FK_UsersTable = Convert.ToInt32(button.CommandArgument);
-                    CompetitionsDataBase.zExpertsAndApplicationMappingTables.InsertOnSubmit(expertAndApplicationConnection);
+                    CompetitionsDataBase.zExpertsAndApplicationMappingTable.InsertOnSubmit(expertAndApplicationConnection);
                     CompetitionsDataBase.SubmitChanges();
                 }
             }

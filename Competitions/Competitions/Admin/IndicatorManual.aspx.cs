@@ -27,7 +27,7 @@ namespace Competitions.Admin
                 dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("IndicatorName", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("IndicatorValue", typeof(int)));
-                List<zIndicatorManualTable> List = (from a in manual.zIndicatorManualTables
+                List<zIndicatorManualTable> List = (from a in manual.zIndicatorManualTable
                                                  where a.Active == true
                                                  select a).ToList();
                 foreach (zIndicatorManualTable current in List)
@@ -50,7 +50,7 @@ namespace Competitions.Admin
             newindicator.Active = true;
             newindicator.IndicatorName = TextBox1.Text;
             newindicator.IndicatorValue = Convert.ToInt32(TextBox2.Text);
-            manual.zIndicatorManualTables.InsertOnSubmit(newindicator);
+            manual.zIndicatorManualTable.InsertOnSubmit(newindicator);
             manual.SubmitChanges();
             GridviewApdate();
         }

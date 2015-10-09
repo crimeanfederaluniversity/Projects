@@ -45,7 +45,7 @@ namespace Competitions.User
                     else
                     {
                         ApplicationNameTextBox.Text = currentApplication.Name;
-                        string currenCompetitionName = (from a in competitionDataBase.zCompetitionsTables
+                        string currenCompetitionName = (from a in competitionDataBase.zCompetitionsTable
                             where a.ID == currentApplication.FK_CompetitionTable
                             select a.Name).FirstOrDefault();
                     }

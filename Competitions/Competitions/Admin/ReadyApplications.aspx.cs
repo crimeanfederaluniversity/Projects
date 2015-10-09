@@ -37,14 +37,14 @@ namespace Competitions.Admin
                     dataRow["Name"] = currentApplication.Name;
                     dataRow["Description"] = "";
                     dataRow["SendedDataTime"] = currentApplication.SendedDataTime.ToString().Split(' ')[0]; ;
-                    dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTables
+                    dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTable
                                               where a.ID == currentApplication.FK_CompetitionTable
                                               select a.Name).FirstOrDefault();
                     dataRow["Autor"] = (from a in CompetitionsDataBase.UsersTable
                                         where a.ID == currentApplication.FK_UsersTable
                                         select a.Email).FirstOrDefault();
                     List<UsersTable> expertsList = (from a in CompetitionsDataBase.UsersTable
-                                                    join b in CompetitionsDataBase.zExpertsAndApplicationMappingTables
+                                                    join b in CompetitionsDataBase.zExpertsAndApplicationMappingTable
                                                         on a.ID equals b.FK_UsersTable
                                                     where a.AccessLevel == 5
                                                           && a.Active == true

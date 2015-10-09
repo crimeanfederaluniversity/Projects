@@ -21,7 +21,7 @@ namespace Competitions.Curator
             if (!Page.IsPostBack)
             {
                 CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
-                List<zCompetitionsTable> competitionsList = (from a in CompetitionsDataBase.zCompetitionsTables
+                List<zCompetitionsTable> competitionsList = (from a in CompetitionsDataBase.zCompetitionsTable
                                                              where a.Active == true && a.FK_Curator == userId
                                                              select a).ToList();
                 foreach (zCompetitionsTable current in competitionsList)
@@ -49,14 +49,14 @@ namespace Competitions.Curator
                         dataRow["Name"] = currentApplication.Name;
                         dataRow["Description"] = "";
                         dataRow["SendedDataTime"] = currentApplication.SendedDataTime;
-                        dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTables
+                        dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTable
                                                   where a.ID == currentApplication.FK_CompetitionTable
                                                   select a.Name).FirstOrDefault();
                         dataRow["Autor"] = (from a in CompetitionsDataBase.UsersTable
                                             where a.ID == currentApplication.FK_UsersTable
                                             select a.Email).FirstOrDefault();
                         List<UsersTable> expertsList = (from a in CompetitionsDataBase.UsersTable
-                                                        join b in CompetitionsDataBase.zExpertsAndApplicationMappingTables
+                                                        join b in CompetitionsDataBase.zExpertsAndApplicationMappingTable
                                                             on a.ID equals b.FK_UsersTable
                                                         where a.AccessLevel == 5
                                                               && a.Active == true

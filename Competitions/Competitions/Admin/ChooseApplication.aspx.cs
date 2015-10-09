@@ -42,14 +42,14 @@ namespace Competitions.Admin
                     dataRow["Name"] = currentApplication.Name;
                     dataRow["Description"] = "";
                     dataRow["SendedDataTime"] = currentApplication.SendedDataTime.ToString().Split(' ')[0];
-                    dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTables
+                    dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTable
                                                   where a.ID == currentApplication.FK_CompetitionTable
                                                   select a.Name).FirstOrDefault();
                         dataRow["Autor"] = (from a in CompetitionsDataBase.UsersTable
                                             where a.ID == currentApplication.FK_UsersTable
                                             select a.Email).FirstOrDefault();
                         List<UsersTable> expertsList = (from a in CompetitionsDataBase.UsersTable
-                                                        join b in CompetitionsDataBase.zExpertsAndApplicationMappingTables
+                                                        join b in CompetitionsDataBase.zExpertsAndApplicationMappingTable
                                                             on a.ID equals b.FK_UsersTable
                                                         where a.AccessLevel == 5
                                                               && a.Active == true
@@ -102,7 +102,7 @@ namespace Competitions.Admin
                     List<zExpertsAndCompetitionMappngTamplateTable> sovetexpertlist = (from a in competitionDataBase.zExpertsAndCompetitionMappngTamplateTable
                                                                                        where a.Active == true && a.FK_CompetitionsTable == currentApplication.FK_CompetitionTable
                                                                                        select a).ToList();
-                    List<zExpertPoint> expertPointsList = (from a in competitionDataBase.zExpertPoints
+                    List<zExpertPoints> expertPointsList = (from a in competitionDataBase.zExpertPoints
                                                            where a.Active == true
                                                            && a.ID != 6
                                                            select a).ToList();
@@ -112,10 +112,10 @@ namespace Competitions.Admin
                         sovetexpertlink.Active = true;
                         sovetexpertlink.FK_ApplicationsTable = currentApplication.ID;
                         sovetexpertlink.FK_UsersTable = SovetExperts.FK_UsersTable;
-                        competitionDataBase.zExpertsAndApplicationMappingTables.InsertOnSubmit(sovetexpertlink);
+                        competitionDataBase.zExpertsAndApplicationMappingTable.InsertOnSubmit(sovetexpertlink);
                         competitionDataBase.SubmitChanges();
 
-                        foreach (zExpertPoint currentExpertPoint in expertPointsList)
+                        foreach (zExpertPoints currentExpertPoint in expertPointsList)
                         {
                             zExpertPointsValue currentExpertPointValue = (from a in competitionDataBase.zExpertPointsValue
                                                                           where a.FK_ApplicationTable == iD

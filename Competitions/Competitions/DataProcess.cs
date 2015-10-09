@@ -62,7 +62,7 @@ namespace Competitions
         public string   GetStringValueFromCollectedData(int rowId, int columnId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-            zColumnTable currentColumn = (from a in competitionDataBase.zColumnTables
+            zColumnTable currentColumn = (from a in competitionDataBase.zColumnTable
                                           where a.ID == columnId
                                           select a).FirstOrDefault();
             DataType dataType = new DataType();
@@ -85,7 +85,7 @@ namespace Competitions
         public double   GetValueFromCollectedData(int rowId, int columnId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-            zColumnTable currentColumn = (from a in competitionDataBase.zColumnTables
+            zColumnTable currentColumn = (from a in competitionDataBase.zColumnTable
                                           where a.ID == columnId
                                           select a).FirstOrDefault();
             DataType dataType = new DataType();
@@ -253,7 +253,7 @@ namespace Competitions
 
             if (dataType.IsDataTypeSum(currentColumn.DataType))
             {
-                zColumnTable columnToSum = (from a in competitionDataBase.zColumnTables
+                zColumnTable columnToSum = (from a in competitionDataBase.zColumnTable
                     where a.ID == currentColumn.FK_ColumnTable
                     select a).FirstOrDefault();
                 double AllSum = 0;
@@ -314,7 +314,7 @@ namespace Competitions
 
             if (dataType.IsDataTypeMaxValue(currentColumn.DataType))
             {
-                zColumnTable columnToFind = (from a in competitionDataBase.zColumnTables
+                zColumnTable columnToFind = (from a in competitionDataBase.zColumnTable
                     where a.ID == currentColumn.FK_ColumnTable
                     select a).FirstOrDefault();
                 string tmpResult = "";
@@ -372,7 +372,7 @@ namespace Competitions
 
             if (dataType.IsDataTypeMinValue(currentColumn.DataType))
             {
-                zColumnTable columnToFind = (from a in competitionDataBase.zColumnTables
+                zColumnTable columnToFind = (from a in competitionDataBase.zColumnTable
                     where a.ID == currentColumn.FK_ColumnTable
                     select a).FirstOrDefault();
                 string tmpResult = "";
@@ -501,14 +501,14 @@ namespace Competitions
             #region oneToOneWithParams
             if (dataType.IsDataTypeOneToOneWithParams(currentColumn.DataType))
             {
-                zColumnTable columnConnectetFrom = (from a in competitionDataBase.zColumnTables
+                zColumnTable columnConnectetFrom = (from a in competitionDataBase.zColumnTable
                                                     where a.ID == currentColumn.FK_ColumnConnectFromTable
                                                     select a).FirstOrDefault();
 
-                zColumnTable columnConnectetTo = (from a in competitionDataBase.zColumnTables
+                zColumnTable columnConnectetTo = (from a in competitionDataBase.zColumnTable
                                                     where a.ID == currentColumn.FK_ColumnConnectToTable
                                                     select a).FirstOrDefault();
-                zColumnTable collumnToGetValue = (from a in competitionDataBase.zColumnTables
+                zColumnTable collumnToGetValue = (from a in competitionDataBase.zColumnTable
                     where a.ID == currentColumn.FK_ColumnTable
                     select a).FirstOrDefault();
 
