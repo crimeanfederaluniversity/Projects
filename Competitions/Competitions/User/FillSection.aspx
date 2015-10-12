@@ -56,7 +56,9 @@
 &nbsp;<asp:Button ID="NextSection" runat="server" OnClick="NextSection_Click" Text="Далее" Width="192px" />
         <br />
         <br />
-    <asp:Label   ID="LabelHint"  runat="server"  Visible="true"> </asp:Label>
+    <asp:Label   ID="LabelHint"  style="font-size:20px"  runat="server"  Visible="true"> </asp:Label>
+    <br />
+    <asp:Label   ID="LabelDescription"  runat="server"  Visible="true"> </asp:Label>
     <asp:GridView ID="FillingGV" Width="100%"  BorderStyle="Solid" runat="server" AutoGenerateColumns="False" 
         CssClass="gridView"
                 BorderColor="Black"  BorderWidth="1px" CellPadding="0" EnableTheming="True" OnRowDataBound="FillingGV_RowDataBound" >

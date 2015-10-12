@@ -172,12 +172,13 @@ namespace Competitions.Admin
         
             }
         }
-        
+               
+       
         protected void ExpertDownloadButtonClick(object sender, EventArgs e)
         {
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Функционал в разработке!');", true);
+            
         }
-
+       
         protected void Button1_Click(object sender, EventArgs e)
         {
             var appid = Session["ApplicationID"];

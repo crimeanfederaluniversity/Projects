@@ -5,11 +5,22 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
+using System.IO.Compression;
 
 namespace Competitions.Expert
 {
     public partial class ApplicationsForExpert : System.Web.UI.Page
     {
+        private byte[] ReadByteArryFromFile(string destPath)
+        {
+            byte[] buff = null;
+            FileStream fs = new FileStream(destPath, FileMode.Open, FileAccess.Read);
+            BinaryReader br = new BinaryReader(fs);
+            long numBytes = new FileInfo(destPath).Length;
+            buff = br.ReadBytes((int)numBytes);
+            return buff;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             var userIdtmp = Session["UserID"];
@@ -75,7 +86,19 @@ namespace Competitions.Expert
         }
         protected void GetDocButtonClick(object sender, EventArgs e)
         {
-
+            Button button = (Button)sender;
+            {
+                var appid = button.CommandArgument;
+                int idapp = Convert.ToInt32(appid);
+                string dirPath = Server.MapPath("~/documents/byApplication/" + idapp);
+                string zipFile = Server.MapPath("~/documents/generatedZipFiles/") + idapp + ".zip";
+                System.IO.Compression.ZipFile.CreateFromDirectory(dirPath, zipFile);
+                HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
+                HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=file.zip");
+                HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(zipFile));
+                HttpContext.Current.Response.End();
+                Response.End();
+            }
         }
         protected void EvaluateButtonClick(object sender, EventArgs e)
         {

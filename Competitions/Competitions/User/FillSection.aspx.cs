@@ -497,6 +497,10 @@ namespace Competitions.User
                                                 where a.ID == sectionId
                                                 select a).FirstOrDefault();
                 LabelHint.Text = currentSection.Name;
+                if (currentSection.Description != "123")
+                {
+                    LabelDescription.Text = currentSection.Description;
+                }
                 //найдем все колонки привязанные к этой секции
                 List<zColumnTable> columnInSectionList = (from a in competitionDataBase.zColumnTable
                                                           where a.Active == true
