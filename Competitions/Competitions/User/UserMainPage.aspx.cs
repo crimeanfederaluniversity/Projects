@@ -154,9 +154,9 @@ namespace Competitions.User
             private string TableTag = "Table";
             private string LineTag = "Line";
 
-            private char TagStart = '#';
-            private char TagEnd = '#';
-            private char TagMiddle = '*';
+            private char TagStart = 'Z';
+            private char TagEnd = 'Z';
+            private char TagMiddle = 'z';
 
             private int TagNameToTagReplaceType(string tagName)
             {
@@ -537,16 +537,19 @@ namespace Competitions.User
                 }
                 else if (currentTagToReplace.ReplaceType == 1)
                 {
-                    XmlNode childNode = FindNodeByValue(document.ChildNodes, "#Line*" + currentTagToReplace.ReplacemantList[0]+"#");
+                    XmlNode childNode = FindNodeByValue(document.ChildNodes, "ZLinez" + currentTagToReplace.ReplacemantList[0]+"Z");
                     zColumnTable currentColumn = FindColumnWithUniqueMark(applicationId,currentTagToReplace.ReplacemantList[0]);
                     if (currentColumn != null)
                     {
                         childNode.Value = FindValue(currentColumn, applicationId);
                     }
-                    else
-                    {
-                        childNode.Value = "Значение отсутствует";
-                    }
+                        if (childNode == null)
+                        {
+                            //childNode.Value = "Значение отсутствует";
+                        }
+                     
+                       
+                    
                 }
             }
             #endregion
