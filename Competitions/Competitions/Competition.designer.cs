@@ -30,12 +30,12 @@ namespace Competitions
 		
     #region Определения метода расширяемости
     partial void OnCreated();
-    partial void InsertzTemplateFormTable(zTemplateFormTable instance);
-    partial void UpdatezTemplateFormTable(zTemplateFormTable instance);
-    partial void DeletezTemplateFormTable(zTemplateFormTable instance);
     partial void InsertUsersTable(UsersTable instance);
     partial void UpdateUsersTable(UsersTable instance);
     partial void DeleteUsersTable(UsersTable instance);
+    partial void InsertzTemplateFormTable(zTemplateFormTable instance);
+    partial void UpdatezTemplateFormTable(zTemplateFormTable instance);
+    partial void DeletezTemplateFormTable(zTemplateFormTable instance);
     partial void InsertzActionPRManualTable(zActionPRManualTable instance);
     partial void UpdatezActionPRManualTable(zActionPRManualTable instance);
     partial void DeletezActionPRManualTable(zActionPRManualTable instance);
@@ -93,7 +93,7 @@ namespace Competitions
     #endregion
 		
 		public CompetitionDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["CompetitionsDBConnectionString1"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["CompetitionsDBConnectionString2"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -122,19 +122,19 @@ namespace Competitions
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<zTemplateFormTable> zTemplateFormTable
-		{
-			get
-			{
-				return this.GetTable<zTemplateFormTable>();
-			}
-		}
-		
 		public System.Data.Linq.Table<UsersTable> UsersTable
 		{
 			get
 			{
 				return this.GetTable<UsersTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<zTemplateFormTable> zTemplateFormTable
+		{
+			get
+			{
+				return this.GetTable<zTemplateFormTable>();
 			}
 		}
 		
@@ -280,168 +280,6 @@ namespace Competitions
 			{
 				return this.GetTable<zTaskPRManualTable>();
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.zTemplateFormTable")]
-	public partial class zTemplateFormTable : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private System.Nullable<bool> _Active;
-		
-		private string _FormName;
-		
-		private string _Description;
-		
-		private EntitySet<zFormCompetitionMappingTable> _zFormCompetitionMappingTable;
-		
-    #region Определения метода расширяемости
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnActiveChanging(System.Nullable<bool> value);
-    partial void OnActiveChanged();
-    partial void OnFormNameChanging(string value);
-    partial void OnFormNameChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    #endregion
-		
-		public zTemplateFormTable()
-		{
-			this._zFormCompetitionMappingTable = new EntitySet<zFormCompetitionMappingTable>(new Action<zFormCompetitionMappingTable>(this.attach_zFormCompetitionMappingTable), new Action<zFormCompetitionMappingTable>(this.detach_zFormCompetitionMappingTable));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
-		public System.Nullable<bool> Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FormName", DbType="VarChar(MAX)")]
-		public string FormName
-		{
-			get
-			{
-				return this._FormName;
-			}
-			set
-			{
-				if ((this._FormName != value))
-				{
-					this.OnFormNameChanging(value);
-					this.SendPropertyChanging();
-					this._FormName = value;
-					this.SendPropertyChanged("FormName");
-					this.OnFormNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="VarChar(MAX)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zTemplateFormTable_zFormCompetitionMappingTable", Storage="_zFormCompetitionMappingTable", ThisKey="ID", OtherKey="FK_Form")]
-		public EntitySet<zFormCompetitionMappingTable> zFormCompetitionMappingTable
-		{
-			get
-			{
-				return this._zFormCompetitionMappingTable;
-			}
-			set
-			{
-				this._zFormCompetitionMappingTable.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_zFormCompetitionMappingTable(zFormCompetitionMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.zTemplateFormTable = this;
-		}
-		
-		private void detach_zFormCompetitionMappingTable(zFormCompetitionMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.zTemplateFormTable = null;
 		}
 	}
 	
@@ -740,6 +578,168 @@ namespace Competitions
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.zTemplateFormTable")]
+	public partial class zTemplateFormTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private System.Nullable<bool> _Active;
+		
+		private string _FormName;
+		
+		private string _Description;
+		
+		private EntitySet<zFormCompetitionMappingTable> _zFormCompetitionMappingTable;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnFormNameChanging(string value);
+    partial void OnFormNameChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    #endregion
+		
+		public zTemplateFormTable()
+		{
+			this._zFormCompetitionMappingTable = new EntitySet<zFormCompetitionMappingTable>(new Action<zFormCompetitionMappingTable>(this.attach_zFormCompetitionMappingTable), new Action<zFormCompetitionMappingTable>(this.detach_zFormCompetitionMappingTable));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FormName", DbType="VarChar(MAX)")]
+		public string FormName
+		{
+			get
+			{
+				return this._FormName;
+			}
+			set
+			{
+				if ((this._FormName != value))
+				{
+					this.OnFormNameChanging(value);
+					this.SendPropertyChanging();
+					this._FormName = value;
+					this.SendPropertyChanged("FormName");
+					this.OnFormNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="VarChar(MAX)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zTemplateFormTable_zFormCompetitionMappingTable", Storage="_zFormCompetitionMappingTable", ThisKey="ID", OtherKey="FK_Form")]
+		public EntitySet<zFormCompetitionMappingTable> zFormCompetitionMappingTable
+		{
+			get
+			{
+				return this._zFormCompetitionMappingTable;
+			}
+			set
+			{
+				this._zFormCompetitionMappingTable.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_zFormCompetitionMappingTable(zFormCompetitionMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.zTemplateFormTable = this;
+		}
+		
+		private void detach_zFormCompetitionMappingTable(zFormCompetitionMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.zTemplateFormTable = null;
 		}
 	}
 	

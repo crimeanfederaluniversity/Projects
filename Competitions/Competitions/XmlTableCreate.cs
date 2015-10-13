@@ -326,7 +326,7 @@ namespace Competitions
             newNode.InnerText = value;
             return newNode;
         }
-        public XmlNode GetXmlTable(XmlDocument document, List<List<string>> nestedDataList) // nested  Вложенный лист// внутренний лист по колонкам//основной по строкам
+        public XmlNode GetXmlTable(XmlDocument document, List<List<string>> nestedDataList,bool isLastLineSum) // nested  Вложенный лист// внутренний лист по колонкам//основной по строкам
         {
             XmlNode newNode = CreateTableNodeWithHeader(document);
             foreach (List<string> currentRowList in nestedDataList)

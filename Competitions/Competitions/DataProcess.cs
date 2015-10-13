@@ -573,8 +573,40 @@ namespace Competitions
             }
             #endregion
             return "";
-        }    
-      
+        }
+
+        public string GetDropDownSelectedValueString(zColumnTable currentColumn,  zCollectedDataTable currentCollectedData, int applicationId, int currentRowId)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            DataType dataType = new DataType();
+
+            #region ConstantDropDown
+
+            if (dataType.IsDataTypeConstantDropDown(currentColumn.DataType))
+            {
+                zCollectedDataTable getCollectedData =
+                    (from a in competitionDataBase.zCollectedDataTable
+                     where a.ID == currentCollectedData.ValueFK_CollectedDataTable
+                     select a).FirstOrDefault();
+                return getCollectedData.ValueText;
+            }
+
+            #endregion
+
+            #region OtherTableDropDown
+
+            if (dataType.IsDataTypeDropDown(currentColumn.DataType))
+            {
+                zCollectedDataTable getCollectedData =
+                    (from a in competitionDataBase.zCollectedDataTable
+                     where a.ID == currentCollectedData.ValueFK_CollectedDataTable
+                     select a).FirstOrDefault();
+                return getCollectedData.ValueText;
+            }
+
+            #endregion
+            return "";
+        }
         public bool IsCellDate(int dataTypeIndex)
         {
             DataType dataType = new DataType();

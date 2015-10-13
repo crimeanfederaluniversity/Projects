@@ -10,63 +10,12 @@
 </asp:Panel> 
         
 
-        <style type="text/css">
-            
-            .top_panel {
-    position:fixed;
-    left:0;
-    top:3.5em;
-    width:100%;
-    height:30px;
-    background-color:#222222;
-    z-index:10;
-    color:#05ff01;  
-    padding-top:5px;
-    font-weight:bold;
-}
-
-            .CalendarPic
-            {
-                top: 0px;
-                width: 30px;
-                height: 30px;
-            }
-            .CalendarTextBox
-            {
-                top: 0px;
-            }
-             .Initial
-             {
-                 display: block;
-                 padding: 4px 18px 4px 18px;
-                 float: left;
-                 background: url("../images/InitialImage.png") no-repeat right top;
-                 color: Black;
-                 font-weight: bold;
-             }
-            .Initial:hover
-            {
-                color: White;
-                background: url("../images/SelectedButton.png") no-repeat right top;
-            }
-            .Clicked
-            {
-                float: left;
-                display: block;
-                background: url("../images/SelectedButton.png") no-repeat right top;
-                padding: 4px 18px 4px 18px;
-                color: Black;
-                font-weight: bold;
-                color: White;
-
-
-            }
-        </style>
-         <br />
         <br />
         <table width="100%" align="center">
       <tr>
         <td>
+            <br />
+            <br />
             <br />
           <asp:Button Text="Открытые конкурсы" BorderStyle="None" ID="Tab1" CssClass="Initial" runat="server"
               OnClick="Tab1_Click" />
