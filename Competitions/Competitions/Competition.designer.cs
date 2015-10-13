@@ -4638,7 +4638,9 @@ namespace Competitions
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
-	}
+
+        public string ValueText { get; set; }
+    }
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.zExpertsAndApplicationMappingTable")]
 	public partial class zExpertsAndApplicationMappingTable : INotifyPropertyChanging, INotifyPropertyChanged
