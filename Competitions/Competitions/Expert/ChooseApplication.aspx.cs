@@ -343,15 +343,7 @@ namespace Competitions.Expert
             }
             Response.Redirect("UserMainPage.aspx");
         }
-        private byte[] ReadByteArryFromFile(string destPath)
-        {
-            byte[] buff = null;
-            FileStream fs = new FileStream(destPath, FileMode.Open, FileAccess.Read);
-            BinaryReader br = new BinaryReader(fs);
-            long numBytes = new FileInfo(destPath).Length;
-            buff = br.ReadBytes((int)numBytes);
-            return buff;
-        }
+     
         private string FindValue(zColumnTable column, int applicationId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();

@@ -232,7 +232,7 @@ namespace Competitions
         {
             XmlTableCreate xmlTableCreate = new XmlTableCreate();
             List<List<string>> newNestedList = GetNestedDataList(currentTagToReplace.ReplacemantList, applicationId);
-            XmlNode newXmlTableNode = xmlTableCreate.GetXmlTable(document, newNestedList);
+            XmlNode newXmlTableNode = xmlTableCreate.GetXmlTable(document, newNestedList,false);
             return newXmlTableNode;
         }
     }
