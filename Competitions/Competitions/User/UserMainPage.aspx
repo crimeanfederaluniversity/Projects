@@ -10,12 +10,13 @@
 </asp:Panel> 
         
 
+        <h2><span style="font-size: 30px">Добро пожаловать в систему &quot;Конкурсы и проекты Программы развития&quot; </span></h2>
+        
+
         <br />
         <table width="100%" align="center">
       <tr>
         <td>
-            <br />
-            <br />
             <br />
           <asp:Button Text="Открытые конкурсы" BorderStyle="None" ID="Tab1" CssClass="Initial" runat="server"
               OnClick="Tab1_Click" />
@@ -54,7 +55,8 @@
               <table style="width: 100%; border-width: 1px; border-color: #666; border-style: hidden">
                 <tr>
                   <td>
-<h2><span style="font-size:20px">Мои заявки </span></h2>
+                      <h2><span style="font-size: 20px">Заявки, доступные для заполнения:</span></h2>
+ 
         <br />
         <asp:GridView ID="ApplicationGV" runat="server" AutoGenerateColumns="False">
             <Columns>
@@ -92,7 +94,7 @@
               <table style="width: 100%; border-width: 1px; border-color: #666; border-style: hidden">
                 <tr>
                   <td>
-                      <h2><span style="font-size: 30px">Архив заявок </span></h2>
+                      <h2><span style="font-size: 20px">Архив заявок: </span></h2>
                     <br />
                     <asp:GridView ID="ArchiveApplicationGV" runat="server" AutoGenerateColumns="False">
                         <Columns>

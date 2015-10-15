@@ -94,41 +94,58 @@ namespace Competitions.Admin
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
                 zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
-                                                        where a.Active == true && a.Accept == false
-                                                              && a.ID == iD
-                                                        select a).FirstOrDefault();
+                    where a.Active == true && a.Accept == false
+                          && a.ID == iD
+                    select a).FirstOrDefault();
                 if (currentApplication != null)
                 {
                     List<zExpertsAndCompetitionMappngTamplateTable> sovetexpertlist = (from a in competitionDataBase.zExpertsAndCompetitionMappngTamplateTable
                                                                                        where a.Active == true && a.FK_CompetitionsTable == currentApplication.FK_CompetitionTable
                                                                                        select a).ToList();
-                    List<zExpertPoints> expertPointsList = (from a in competitionDataBase.zExpertPoints
-                                                           where a.Active == true
-                                                           && a.ID != 6
-                                                           select a).ToList();
-                    foreach (var SovetExperts in sovetexpertlist)
+                    
+                    if (sovetexpertlist.Count == 0)
                     {
-                        zExpertsAndApplicationMappingTable sovetexpertlink = new zExpertsAndApplicationMappingTable();
-                        sovetexpertlink.Active = true;
-                        sovetexpertlink.FK_ApplicationsTable = currentApplication.ID;
-                        sovetexpertlink.FK_UsersTable = SovetExperts.FK_UsersTable;
-                        competitionDataBase.zExpertsAndApplicationMappingTable.InsertOnSubmit(sovetexpertlink);
-                        competitionDataBase.SubmitChanges();
-
-                        foreach (zExpertPoints currentExpertPoint in expertPointsList)
+                        /*   Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                            "alert('К данному конкурсу не выбран экспертный совет! Вы действительно хотите продолжить?');",
+                            true);
+                      */
+                    }
+                    else
+                    {
+                        foreach (var SovetExperts in sovetexpertlist)
                         {
-                            zExpertPointsValue currentExpertPointValue = (from a in competitionDataBase.zExpertPointsValue
-                                                                          where a.FK_ApplicationTable == iD
-                                                                                && a.FK_ExpertsTable == SovetExperts.FK_UsersTable
-                                                                                && a.FK_ExpertPoints == currentExpertPoint.ID
-                                                                                && a.Sended == false
-                                                                          select a).FirstOrDefault();
+                            zExpertsAndApplicationMappingTable sovetexpertlink =  new zExpertsAndApplicationMappingTable();
+                            sovetexpertlink.Active = true;
+                            sovetexpertlink.FK_ApplicationsTable = currentApplication.ID;
+                            sovetexpertlink.FK_UsersTable = SovetExperts.FK_UsersTable;
+                            competitionDataBase.zExpertsAndApplicationMappingTable.InsertOnSubmit(sovetexpertlink);
+                            competitionDataBase.SubmitChanges();
+                        }
+                    }
+
+                    List<zExpertPoints> expertPointsList = (from a in competitionDataBase.zExpertPoints
+                                                            where a.Active == true && a.ID != 6
+                                                            select a).ToList();
+                   List<zExpertsAndApplicationMappingTable> allexperts = (from a in competitionDataBase.zExpertsAndApplicationMappingTable
+                                                                          where a.Active == true && 
+                                                                          a.FK_ApplicationsTable == iD select a ).ToList();                   
+                    foreach (zExpertPoints currentExpertPoint in expertPointsList)
+                    {
+                        foreach (zExpertsAndApplicationMappingTable currentExpert in allexperts)
+                        {
+                            zExpertPointsValue currentExpertPointValue =
+                                (from a in competitionDataBase.zExpertPointsValue
+                                    where a.FK_ApplicationTable == iD
+                                          && a.FK_ExpertsTable == currentExpert.FK_UsersTable
+                                          && a.FK_ExpertPoints == currentExpertPoint.ID
+                                          && a.Sended == false
+                                    select a).FirstOrDefault();
                             if (currentExpertPointValue == null)
                             {
                                 zExpertPointsValue sovetexpertpoints = new zExpertPointsValue();
                                 sovetexpertpoints.Active = true;
                                 sovetexpertpoints.FK_ApplicationTable = currentApplication.ID;
-                                sovetexpertpoints.FK_ExpertsTable = SovetExperts.FK_UsersTable;
+                                sovetexpertpoints.FK_ExpertsTable = currentExpert.FK_UsersTable;
                                 sovetexpertpoints.LastChangeDataTime = DateTime.Now;
                                 sovetexpertpoints.FK_ExpertPoints = currentExpertPoint.ID;
                                 sovetexpertpoints.Sended = false;
@@ -137,16 +154,16 @@ namespace Competitions.Admin
                             }
 
                         }
-                        currentApplication.Accept = true;
-                        competitionDataBase.SubmitChanges();
+                    }
+                    currentApplication.Accept = true;
+                    competitionDataBase.SubmitChanges();
+                 }
+                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                        "alert('Заявка привязана к выбранным экспертам и перемещена в раздел готовых заявок!');", true);
+                        Response.Redirect("ChooseApplication.aspx");
                     }
                 }
-                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка привязана к выбранным экспертам и перемещена в раздел готовых заявок!');", true);
-                Response.Redirect("ChooseApplication.aspx");
-
-            }
-        }
-
+       
         protected void Button1_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Default.aspx");

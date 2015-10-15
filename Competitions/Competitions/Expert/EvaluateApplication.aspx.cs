@@ -47,20 +47,18 @@ namespace Competitions.Expert
                         select a).FirstOrDefault();
                     if (currentExpertPointValue == null)
                     {
-                        zExpertPointsValue currentExpertPointValue2 = new zExpertPointsValue();
-                        currentExpertPointValue2.FK_ApplicationTable = applicationId;
-                        currentExpertPointValue2.FK_ExpertsTable = userId;
-                        currentExpertPointValue2.LastChangeDataTime = DateTime.Now;
-                        currentExpertPointValue2.FK_ExpertPoints = currentExpertPoint.ID;
-                        currentExpertPointValue2.Sended = false;
-                        currentExpertPointValue2.Active = true;
-                        CompetitionsDataBase.zExpertPointsValue.InsertOnSubmit(currentExpertPointValue2);
-                        CompetitionsDataBase.SubmitChanges();               
+                        currentExpertPointValue = new zExpertPointsValue();
+                        currentExpertPointValue.FK_ApplicationTable = applicationId;
+                        currentExpertPointValue.FK_ExpertsTable = userId;
+                        currentExpertPointValue.LastChangeDataTime = DateTime.Now;
+                        currentExpertPointValue.FK_ExpertPoints = currentExpertPoint.ID;
+                        currentExpertPointValue.Sended = false;
+                        currentExpertPointValue.Active = true;
+                        CompetitionsDataBase.zExpertPointsValue.InsertOnSubmit(currentExpertPointValue);
+                        CompetitionsDataBase.SubmitChanges();
+
                     }
-                    else
-                    {
-                                           
-                    }
+                   
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = currentExpertPointValue.ID;
                     dataRow["Name"] = currentExpertPoint.Name;

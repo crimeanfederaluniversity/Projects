@@ -1,7 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="ManualPage.aspx.cs" Inherits="Competitions.Admin.ManualPage" %>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div>
-        <h2><span style="font-size: 20px"> Справочники:</span></h2>
+          <asp:Button ID="GoBackButton" runat="server" OnClick="Button1_Click" Text="Назад" Width="130px" />
+          <h2><span style="font-size: 20px"> Справочники:</span></h2>
         <p>
             <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Мероприятия Программы развития" Width="300px" />
         </p>

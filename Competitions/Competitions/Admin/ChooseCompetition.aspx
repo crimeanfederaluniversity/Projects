@@ -3,6 +3,7 @@
         <br />
         <asp:Button ID="GoBackButton" runat="server" OnClick="GoBackButton_Click" Text="Назад" />
         <br />
+       <h2><span style="font-size: 30px">Список всех имеющихся конкурсов: </span></h2>
         <br />
         <asp:Button ID="NewCompetitionButton" runat="server" OnClick="NewCompetitionButton_Click" Text="Создать новый конкурс" />
         <br />

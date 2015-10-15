@@ -112,11 +112,10 @@ namespace Competitions.Admin
                 int applicationId = Convert.ToInt32(appIdTmp);
 
                 CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
-                zExpertsAndApplicationMappingTable expertAndApplicationConnection =
-                    (from a in CompetitionsDataBase.zExpertsAndApplicationMappingTable
-                     where a.FK_UsersTable == Convert.ToInt32(button.CommandArgument)
-                           && a.FK_ApplicationsTable == applicationId
-                     select a).FirstOrDefault();
+                zExpertsAndApplicationMappingTable expertAndApplicationConnection = (from a in CompetitionsDataBase.zExpertsAndApplicationMappingTable
+                                                                                     where a.FK_UsersTable == Convert.ToInt32(button.CommandArgument)
+                                                                                     && a.FK_ApplicationsTable == applicationId
+                                                                                     select a).FirstOrDefault();
                 if (expertAndApplicationConnection != null)
                 {
                     expertAndApplicationConnection.Active = true;
