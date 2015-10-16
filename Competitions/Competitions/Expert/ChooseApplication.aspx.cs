@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -122,19 +123,32 @@ namespace Competitions.Expert
                 string zipFile = Server.MapPath("~/documents/generatedZipFiles/") + idapp + ".zip";
                 string extractPath = Server.MapPath("~/documents/extract/");
                 CreateXmlFile createXmlFile = new CreateXmlFile();
+                string asdadasdda = System.Web.HttpContext.Current.Server.MapPath("~/") + @"documents\generatedZipFiles\" + idapp + ".zip";
                 createXmlFile.CreateDocument(templateFilePath, newFilePath, idapp);
-               // if (Directory.Exists(zipFile) && !File.Exists(idapp + ".zip"))
-               //{  ZipFile DeleteDirectory(zipFile); }
-                ZipFile.CreateFromDirectory(dirPath, zipFile);             
-                HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
-                HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=file.zip");
-                HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(zipFile));
-                HttpContext.Current.Response.End();
+              
+                if (File.Exists(System.Web.HttpContext.Current.Server.MapPath("~/") + @"documents\generatedZipFiles\" + idapp + ".zip"))
+                    {
+                        File.Delete(System.Web.HttpContext.Current.Server.MapPath("~/") + @"documents\generatedZipFiles\" + idapp + ".zip");
+                        ZipFile.CreateFromDirectory(dirPath, zipFile);
+                        HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
+                        HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=file.zip");
+                        HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(zipFile));
+                        HttpContext.Current.Response.End();
+                    }
+                    else
+                    {
+                        ZipFile.CreateFromDirectory(dirPath, zipFile);
+                        HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
+                        HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=file.zip");
+                        HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(zipFile));
+                        HttpContext.Current.Response.End();
+                    }
                 Response.End();
             }
         }
 
         
+
 
         protected void GetExpertPointButtonClick(object sender, EventArgs e)
         {
