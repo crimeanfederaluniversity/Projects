@@ -22,6 +22,7 @@
                             <asp:Button ID="ExpertChangeButton" runat="server" CommandName="Select" Text="Изменить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="ExpertChangeButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
+
                    <asp:TemplateField HeaderText="Принять заявку">
                         <ItemTemplate>
                             <asp:Button ID="AcceptButton" runat="server" CommandName="Select" OnClientClick="return confirm('Вы уверены, что хотите принять заявку?');" Text="Принять" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="AcceptButtonClick"/>

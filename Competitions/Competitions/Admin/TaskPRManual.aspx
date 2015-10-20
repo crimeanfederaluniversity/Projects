@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="TaskPRManual.aspx.cs" Inherits="Competitions.Admin.TaskPRManual" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Назад" />
     <div>
         <h2><span style="font-size: 20px"> Задачи Программы развития:</span></h2>
             <asp:GridView ID="TaskGV" runat="server" AutoGenerateColumns="False">

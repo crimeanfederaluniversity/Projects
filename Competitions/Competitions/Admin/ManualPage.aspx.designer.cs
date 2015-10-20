@@ -13,13 +13,13 @@ namespace Competitions.Admin {
     public partial class ManualPage {
         
         /// <summary>
-        /// GoBackButton элемент управления.
+        /// Button4 элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoBackButton;
+        protected global::System.Web.UI.WebControls.Button Button4;
         
         /// <summary>
         /// Button1 элемент управления.

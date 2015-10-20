@@ -13,6 +13,15 @@ namespace Competitions.Admin {
     public partial class IndicatorManual {
         
         /// <summary>
+        /// Button2 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button2;
+        
+        /// <summary>
         /// IndicatorGV элемент управления.
         /// </summary>
         /// <remarks>

@@ -14,7 +14,11 @@
                 <asp:BoundField DataField="SendedDataTime"   HeaderText="Дата отправки на рассмотрение" Visible="true" />
                 <asp:BoundField DataField="Autor"   HeaderText="Автор" Visible="false" />            
                  
-               
+                 <asp:TemplateField HeaderText="Заявка">
+                        <ItemTemplate>
+                            <asp:Button ID="ApplicationButton" runat="server" CommandName="Select" Text="Просмотреть" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="ApplicationButtonClick"/>
+                        </ItemTemplate>
+                </asp:TemplateField>
                  <asp:TemplateField HeaderText="Экспертное заключение">
                         <ItemTemplate>
                             <asp:Button ID="ExpertPointButton" runat="server" CommandName="Select" Text="Просмотреть" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="ExpertPointButtonClick"/>

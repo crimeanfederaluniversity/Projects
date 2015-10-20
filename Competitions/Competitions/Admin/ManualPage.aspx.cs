@@ -11,7 +11,7 @@ namespace Competitions.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Response.Redirect("~/Default.aspx");
+            
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -27,6 +27,12 @@ namespace Competitions.Admin
         protected void Button3_Click(object sender, EventArgs e)
         {
             Response.Redirect("TaskPRManual.aspx");
+        }
+        
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Default.aspx");
         }
     }
 }

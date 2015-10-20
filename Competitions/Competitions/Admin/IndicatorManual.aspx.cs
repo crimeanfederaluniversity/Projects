@@ -54,6 +54,11 @@ namespace Competitions.Admin
             manual.SubmitChanges();
             GridviewApdate();
         }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ManualPage.aspx");
+        }
         
     }
 }

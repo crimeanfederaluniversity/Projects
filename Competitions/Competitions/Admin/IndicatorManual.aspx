@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="IndicatorManual.aspx.cs" Inherits="Competitions.Admin.IndicatorManual" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Назад" />
     <div>
         <h2><span style="font-size: 20px"> Целевые показатели Программы развития:</span></h2>
          <asp:GridView ID="IndicatorGV" runat="server" AutoGenerateColumns="False">
