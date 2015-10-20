@@ -171,8 +171,48 @@ namespace Competitions.Expert
 
                 Directory.CreateDirectory(newFileDirectory);
 
-                CreateXmlFile createXmlFile = new CreateXmlFile();
-                createXmlFile.CreateExpertDocument(templateFilePath, newFilePath, applicationId, userid);
+                return newNestedList;
+            }
+            public XmlNode GetXmlTable(XmlDocument document, TagToReplace currentTagToReplace, int applicationId)
+            {
+                XmlTableCreate xmlTableCreate = new XmlTableCreate();
+                List<List<string>> newNestedList = GetNestedDataList(currentTagToReplace.ReplacemantList, applicationId);
+                XmlNode newXmlTableNode = xmlTableCreate.GetXmlTable(document, newNestedList,false);
+                return newXmlTableNode;
+            }
+        }
+        protected void FillButtonClick(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            {
+                int iD = Convert.ToInt32(button.CommandArgument);
+                Session["ApplicationID"] = iD;
+                Response.Redirect("ChooseApplicationAction.aspx");
+            }
+        }
+        protected void SendButtonClick(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            {
+                int iD = Convert.ToInt32(button.CommandArgument);
+                CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+                zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
+                                                        where a.Active == true
+                                                              && a.ID == iD
+                                                        select a).FirstOrDefault();
+                if (currentApplication != null)
+                {
+                    currentApplication.Sended = true;
+                    currentApplication.SendedDataTime = DateTime.Now;
+                    competitionDataBase.SubmitChanges();
+                }
+            }
+            Response.Redirect("UserMainPage.aspx");
+        }
+        private string FindValue(zColumnTable column, int applicationId)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            DataType dataType = new DataType();
 
 
                 HttpContext.Current.Response.ContentType = "application/x-zip-compressed";

@@ -8,6 +8,7 @@ using System.Data;
 using System.IO;
 using System.Net;
 using System.Xml;
+using Competitions;
 
 namespace Competitions.User
 {
@@ -184,7 +185,137 @@ namespace Competitions.User
             return buff;
         }
 
-     
+
+        private zColumnTable FindColumnWithUniqueMark(int applicationId,string uniqueMark)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            zColumnTable currentColumn = (from a in  competitionDataBase.zColumnTable
+                                 where a.Active == true
+                                 && a.UniqueMark == uniqueMark
+                                 join b in competitionDataBase.zSectionTable
+                                 on a.FK_SectionTable equals  b.ID
+                                 where b.Active == true
+                                 join c in competitionDataBase.zApplicationTable
+                                 on b.FK_CompetitionsTable equals c.FK_CompetitionTable
+                                 where c.Active == true
+                                 && c.ID == applicationId
+                                 select a).FirstOrDefault();
+
+            return currentColumn;
+        }
+        private XmlNode FindNode(XmlNodeList list, string nodeName)
+        {
+            if (list.Count > 0)
+            {
+                foreach (XmlNode node in list)
+                {
+                    if (node.Name.Equals(nodeName)) return node;
+                    if (node.HasChildNodes)
+                    {
+                        XmlNode nodeFound = FindNode(node.ChildNodes, nodeName);
+                        if (nodeFound != null)
+                            return nodeFound;
+                    }
+                }
+            }
+            return null;
+        }
+        private XmlNode FindNodeByValue(XmlNodeList list, string nodeValue)
+        {
+            if (list.Count > 0)
+            {
+                foreach (XmlNode node in list)
+                {
+                    if (node.Value != null)
+                    {
+                        if (node.Value.Equals(nodeValue)) return node;
+                    }
+                    if (node.HasChildNodes)
+                    {
+                        XmlNode nodeFound = FindNodeByValue(node.ChildNodes, nodeValue);
+                        if (nodeFound != null)
+                            return nodeFound;
+                    }
+                }
+            }
+            return null;
+        }
+        private XmlNode FindAfterParentNode(XmlNode parentNode, XmlNode childNodeWithValue)
+        {
+            XmlNode currentNode = childNodeWithValue;
+            for (;;)
+            {
+                if (currentNode.ParentNode == parentNode)
+                {
+                    return currentNode;
+                }
+                else
+                {
+                    currentNode = currentNode.ParentNode;
+                }
+            }
+        }
+        private bool CreateDocument(string templatePath, string newFilePath , int applicationId)
+        {
+            #region открываем шаблон
+            string xmlFile = File.ReadAllText(templatePath);
+            XmlDocument document = new XmlDocument();
+            document.LoadXml(xmlFile);
+            #endregion
+            #region старый вариант
+            /*
+            List<zColumnTable> columnListWithUniqueMark = FindColumnsWithUniqueMarkExist(applicationId);
+            foreach (zColumnTable currentColumn in columnListWithUniqueMark)
+            {
+                xmlFile = xmlFile.Replace(currentColumn.UniqueMark, FindValue(currentColumn, applicationId));
+            }*/
+            #endregion
+            XmlNode sectNode = FindNode(document.ChildNodes, "wx:sect");
+            //нам нужен список того в файле что нужно заменить)
+            // пока что 2 вхождения ищем
+            //1) #Table* заменяем весь ноде после секции 
+            //2) #Line*  заменяем только значение нода
+            TagsToReplace tagsToReplaceClass = new TagsToReplace();
+            CreateXmlTable createXmlTableClass = new CreateXmlTable();
+            List<TagToReplace> tagsToReplaces = tagsToReplaceClass.GetTagsToReplace(document);
+            //мы получили список того что нужно заменить
+            #region поочереди заменяем
+            foreach (TagToReplace currentTagToReplace in tagsToReplaces)
+            {
+                if (currentTagToReplace.ReplaceType == 2)
+                {
+                    XmlNode newXmlNode = createXmlTableClass.GetXmlTable(document, currentTagToReplace, applicationId);
+                    document.ImportNode(newXmlNode, true);
+                    sectNode.AppendChild(newXmlNode);
+                    XmlNode lastNode = FindNodeByValue(sectNode.ChildNodes, currentTagToReplace.TagsNode.OuterXml);
+                    XmlNode nodeToReplace = FindAfterParentNode(sectNode, lastNode);
+                    if (nodeToReplace!=null)
+                    {
+                        sectNode.ReplaceChild(newXmlNode, nodeToReplace);
+                    }
+                }
+                else if (currentTagToReplace.ReplaceType == 1)
+                {
+                    XmlNode childNode = FindNodeByValue(document.ChildNodes, "ZLinez" + currentTagToReplace.ReplacemantList[0]+"Z");
+                    zColumnTable currentColumn = FindColumnWithUniqueMark(applicationId,currentTagToReplace.ReplacemantList[0]);
+                    if (currentColumn != null)
+                    {
+                        childNode.Value = FindValue(currentColumn, applicationId);
+                    }
+                    if (childNode == null)
+                    {
+                        //childNode.Value = "Значение отсутствует";
+                    }                                                             
+                }
+            }
+            #endregion
+            #region подчищаем и сохраняем в файл
+            string newXmlFile = document.OuterXml;
+            newXmlFile=newXmlFile.Replace("xmlns:w=\"w\"", "").Replace("xmlns:wx=\"wx\"", "").Replace("xmlns:wsp=\"wsp\"", "");
+            File.WriteAllText(newFilePath,newXmlFile);
+            #endregion
+            return true;
+        }
         protected void GetDocButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
