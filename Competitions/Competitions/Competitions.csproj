@@ -260,6 +260,7 @@
     <Content Include="Global.asax" />
     <Content Include="SelectedButton.png" />
     <Content Include="Site.Master" />
+    <Content Include="Styles.css" />
     <Content Include="User\ApplicationCreateEdit.aspx" />
     <Content Include="User\ChooseApplicationAction.aspx" />
     <Content Include="User\ChooseSection.aspx" />

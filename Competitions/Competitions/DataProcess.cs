@@ -46,12 +46,11 @@ namespace Competitions
     {
         private  ValidatorParams validator = new ValidatorParams();
         private double _toTotalUp = 0;
-
         public ValidatorParams GetValidatorParams()
         {
             return validator;
         }
-        public void     ClearTotalUp()
+        public void ClearTotalUp()
         {
             _toTotalUp = 0;
         }
@@ -77,8 +76,7 @@ namespace Competitions
                 if (dataType.IsDataTypeText(currentColumn.DataType))
                 {
                     return currenCollectedDataTable.ValueText;
-                }
-              
+                }             
             }
             return "";
         }
@@ -113,14 +111,12 @@ namespace Competitions
                         return 1;
                     }
                 }
-
             }
             return 0;
         }
         public string   GetReadWriteString(zColumnTable currentColumn, zCollectedDataTable currentCollectedData)
         {
-            DataType dataType = new DataType();
-            
+            DataType dataType = new DataType();          
             #region float
 
             if (dataType.IsDataTypeFloat(currentColumn.DataType))
@@ -572,9 +568,16 @@ namespace Competitions
                 }                         
             }
             #endregion
+            #region DropDown
+
+            if (dataType.IsDataTypeDropDown(currentColumn.DataType))
+            {
+                return GetDropDownSelectedValueString(currentColumn, currentCollectedData, applicationId, currentRowId);
+            }
+            #endregion
+           
             return "";
         }
-
         public string GetDropDownSelectedValueString(zColumnTable currentColumn,  zCollectedDataTable currentCollectedData, int applicationId, int currentRowId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
@@ -592,7 +595,6 @@ namespace Competitions
             }
 
             #endregion
-
             #region OtherTableDropDown
 
             if (dataType.IsDataTypeDropDown(currentColumn.DataType))

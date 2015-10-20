@@ -1,7 +1,46 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserMainPage.aspx.cs" Inherits="Competitions.User.UserMainPage" %>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div>
+        <style type="text/css">
+.Initial
+{
+  display: block;
+  padding: 4px 18px 4px 18px;
+  float: left;
+  background: url("../Images/InitialImage.png") no-repeat right top;
+  color: Black;
+  font-weight: bold;
+}
+.Initial:hover
+{
+  color: White;
+  background: url("../Images/SelectedButton.png") no-repeat right top;
+}
+.Clicked
+{
+  float: left;
+  display: block;
+  background: url("../Images/SelectedButton.png") no-repeat right top;
+  padding: 4px 18px 4px 18px;
+  color: Black;
+  font-weight: bold;
+  color: White;
+}
 
+.top_panel {
+    position:fixed;
+    left:0;
+    top:3.5em;
+    width:100%;
+    height:30px;
+    background-color:#222222;
+    z-index:10;
+    color:#05ff01;  
+    padding-top:5px;
+    font-weight:bold;
+}
+
+</style>
 
 <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
     <div>    
@@ -10,7 +49,8 @@
 </asp:Panel> 
         
 
-        <h2><span style="font-size: 30px">Добро пожаловать в систему &quot;Конкурсы и проекты Программы развития&quot; </span></h2>
+        <h2>&nbsp;</h2>
+        <h2>&nbsp;<span style="font-size: 30px">Добро пожаловать в систему &quot;Конкурсы и проекты Программы развития&quot; </span></h2>
         
 
         <br />
@@ -18,6 +58,10 @@
       <tr>
         <td>
             <br />
+            
+
+            
+
           <asp:Button Text="Открытые конкурсы" BorderStyle="None" ID="Tab1" CssClass="Initial" runat="server"
               OnClick="Tab1_Click" />
           <asp:Button Text="Мои активные заявки" BorderStyle="None" ID="Tab2" CssClass="Initial" runat="server"
@@ -78,7 +122,7 @@
 
                 <asp:TemplateField HeaderText="Скачать заявку">
                         <ItemTemplate>
-                            <asp:Button ID="GetDocButton" runat="server" CommandName="Select" Text="Загрузить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
+                            <asp:Button ID="GetDocButton2" runat="server" CommandName="Select" Text="Загрузить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
              
@@ -104,7 +148,7 @@
                             <asp:BoundField DataField="SendedDate"   HeaderText="Дата отправки на рассмотрение" Visible="true" />   
                             <asp:TemplateField HeaderText="Скачать заявку">
                                     <ItemTemplate>
-                                        <asp:Button ID="GetDocButton" runat="server" CommandName="Select" Text="Загрузить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
+                                        <asp:Button ID="GetDocButton" runat="server" Text="Загрузить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
                                     </ItemTemplate>
                             </asp:TemplateField>
              

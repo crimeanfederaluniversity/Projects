@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Xml;
 using System.IO;
+using Antlr.Runtime.Misc;
 
 namespace Competitions
 {
@@ -107,7 +108,7 @@ namespace Competitions
     }
     class CreateXmlTable
     {
-        private string GetValueFromKnownRowByUniqueMark(zCollectedRowsTable currentRow, string uniqueName, int applicationId)
+        private string GetValueFromKnownRowByUniqueMark(zCollectedRowsTable currentRow, string uniqueName, int applicationId,int rowId)
         {
             zColumnTable currentColumn = GetColumnByUniqueMark(uniqueName, applicationId);
             if (currentColumn == null)
@@ -145,16 +146,21 @@ namespace Competitions
 
             if (dataProcess.IsCellReadOnly(dType))
             {
-                return dataProcess.GetReadOnlyString(currentColumn, currentCollectedData, applicationId, currentRow.ID, 0);
+                return dataProcess.GetReadOnlyString(currentColumn, currentCollectedData, applicationId, currentRow.ID, rowId);
             }
+            if (dataProcess.IsCellDropDown(dType))
+            {
+                return dataProcess.GetDropDownSelectedValueString(currentColumn, currentCollectedData, applicationId, currentRow.ID);
+            }
+            
             return "";
         }
-        private List<string> GetListWithDataFromRowByUnique(zCollectedRowsTable currentRow, List<string> columnsUniqueNames, int applicationId)
+        private List<string> GetListWithDataFromRowByUnique(zCollectedRowsTable currentRow, List<string> columnsUniqueNames, int applicationId,int rowId)
         {
             List<string> newValueRowList = new List<string>();
             foreach (string uniqueName in columnsUniqueNames)
             {
-                newValueRowList.Add(GetValueFromKnownRowByUniqueMark(currentRow, uniqueName, applicationId));
+                newValueRowList.Add(GetValueFromKnownRowByUniqueMark(currentRow, uniqueName, applicationId,rowId));
             }
             return newValueRowList;
         }
@@ -197,7 +203,6 @@ namespace Competitions
             }
             return currentCollecterRowsTable;
         }
-
         private List<string> GetColmnNamesForNestedList(List<string> columnsUniqueNames, int applicationId)
         {
             List<string> columnNames = new List<string>();
@@ -212,20 +217,84 @@ namespace Competitions
             }
             return columnNames;
         }
+
+        private bool IsColumnTotalUpByUniqueMark(string uniqueMark, int applicationId)
+        {
+            zColumnTable myColumn = GetColumnByUniqueMark (uniqueMark, applicationId);
+            if (myColumn==null)
+                return false;
+            if (myColumn.TotalUp == true)
+                return true;
+            return false;
+        }
+        private List<int> GetToTotalUpColumnIdList(List<string> columnsUniqueNames,int applicationId)
+        {
+            List<int> toTotalUp = new List<int>();
+            int i = 0;
+            foreach (string currentColumnMark in columnsUniqueNames)
+            {
+                if (IsColumnTotalUpByUniqueMark(currentColumnMark,applicationId))
+                toTotalUp.Add(i);
+                i++;
+            }
+            return toTotalUp;
+        }
+
+        public List<string> GetStringListByColumnIdNNestedList(List<List<string>> nestedList, int columnId)
+        {
+            List<string> newStringList = new List<string>();
+            foreach (List<string> stringList in nestedList)
+            {
+                newStringList.Add(stringList[columnId]);
+            }
+            return newStringList;
+        }
+        public string GetTotalUpValue(List<string> valuesList)
+        {
+            double sumValue = 0;
+            for (int i = 1; i < valuesList.Count; i++)
+            {
+                sumValue += Convert.ToDouble(valuesList[i]);
+            }
+            return sumValue.ToString();
+        }
+        private List<string> GetTotalUpStringList(List<List<string>> nestedList, List<int> columnIdsToTotalUp)
+        {
+            List<string> newStringList = new List<string>();
+            int columnCount = nestedList[0].Count;
+            for (int i = 0; i < columnCount; i++)
+            {
+                if (columnIdsToTotalUp.Contains(i))
+                {
+                    newStringList.Add(GetTotalUpValue(GetStringListByColumnIdNNestedList(nestedList,i)));
+                }
+                else
+                {
+                    newStringList.Add("");
+                }               
+            }
+            return newStringList;
+        }
         private List<List<string>> GetNestedDataList(List<string> columnsUniqueNames, int applicationId)
         {
             List<List<string>> newNestedList = new List<List<string>>();
             //по первому марку найдем список строк в базе
             zColumnTable firstColumnInUniques = GetColumnByUniqueMark(columnsUniqueNames[0], applicationId);
             List<zCollectedRowsTable> rowsList = GetRowsThatHaveColumn(firstColumnInUniques, applicationId);
-
+            
             newNestedList.Add(GetColmnNamesForNestedList(columnsUniqueNames, applicationId));
+            int i = 1;
             foreach (zCollectedRowsTable currentRow in rowsList)
             {
-                newNestedList.Add(GetListWithDataFromRowByUnique(currentRow, columnsUniqueNames, applicationId));
+                newNestedList.Add(GetListWithDataFromRowByUnique(currentRow, columnsUniqueNames, applicationId,i));
+                i++;
             }
 
-
+            List<int> toTotalUp = GetToTotalUpColumnIdList(columnsUniqueNames, applicationId);
+            if (toTotalUp.Any())
+            {
+                newNestedList.Add(GetTotalUpStringList(newNestedList, toTotalUp));
+            }
             return newNestedList;
         }
         public XmlNode GetXmlTable(XmlDocument document, TagToReplace currentTagToReplace, int applicationId)

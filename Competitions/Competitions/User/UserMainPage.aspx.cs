@@ -145,8 +145,6 @@ namespace Competitions.User
             Session["ApplicationID"] = 0;
             Response.Redirect("ApplicationCreateEdit.aspx");
         }
-
-
         protected void FillButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -184,8 +182,6 @@ namespace Competitions.User
             buff = br.ReadBytes((int)numBytes);
             return buff;
         }
-
-
         protected void GetDocButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
