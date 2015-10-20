@@ -8,7 +8,6 @@ using System.Data;
 using System.IO;
 using System.Net;
 using System.Xml;
-using Competitions;
 
 namespace Competitions.User
 {
@@ -22,11 +21,11 @@ namespace Competitions.User
             if (!Page.IsPostBack)
             {
                 var userIdtmp = Session["UserID"];
-                    if (userIdtmp == null)
-                    {
-                        Response.Redirect("~/Default.aspx");
-                    }
-                    int userId = (int) userIdtmp;
+                if (userIdtmp == null)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+                int userId = (int)userIdtmp;
 
                 Tab1.CssClass = "Clicked";
                 MainView.ActiveViewIndex = 0;
@@ -34,16 +33,16 @@ namespace Competitions.User
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
                 {
                     DataTable dataTable = new DataTable();
-                    dataTable.Columns.Add(new DataColumn("ID", typeof (string)));
-                    dataTable.Columns.Add(new DataColumn("Number", typeof (string)));
-                    dataTable.Columns.Add(new DataColumn("Name", typeof (string)));
-                    dataTable.Columns.Add(new DataColumn("Budjet", typeof (string)));
-                    dataTable.Columns.Add(new DataColumn("StartDate", typeof (string)));
-                    dataTable.Columns.Add(new DataColumn("EndDate", typeof (string)));
-                    
+                    dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("Number", typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("Budjet", typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("StartDate", typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("EndDate", typeof(string)));
+
                     List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTable
-                        where a.Active == true
-                        select a).ToList();
+                                                                 where a.Active == true
+                                                                 select a).ToList();
 
                     foreach (zCompetitionsTable currentCompetition in competitionsList)
                     {
@@ -60,18 +59,19 @@ namespace Competitions.User
                     MainGV.DataSource = dataTable;
                     MainGV.DataBind();
                 }
-                ////////////////////////////////////////////////////////////////////////////////////////
-                {                  
+                //////////////////////////////////////////////////////////////////////////////////////// 
+                {
                     DataTable dataTable = new DataTable();
-                    dataTable.Columns.Add(new DataColumn("ID", typeof (string)));
-                    dataTable.Columns.Add(new DataColumn("Name", typeof (string)));
-                    dataTable.Columns.Add(new DataColumn("CompetitionName", typeof (string)));
+                    dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("CompetitionName", typeof(string)));
 
                     List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTable
-                                                               where a.FK_UsersTable == userId && a.Sended == false  && a.Active == true
+                                                               where a.FK_UsersTable == userId && a.Sended == false && a.Active == true
                                                                join b in competitionDataBase.zCompetitionsTable
-                                                               on a.FK_CompetitionTable equals b.ID where b.Active == true
-                                                               && b.OpenForApplications == true  
+                                                               on a.FK_CompetitionTable equals b.ID
+                                                               where b.Active == true
+                                                                   && b.OpenForApplications == true
                                                                select a).Distinct().ToList();
 
                     foreach (zApplicationTable currentApplication in applicationList)
@@ -80,23 +80,23 @@ namespace Competitions.User
                         dataRow["ID"] = currentApplication.ID;
                         dataRow["Name"] = currentApplication.Name;
                         dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTable
-                            where a.ID == (Convert.ToInt32(currentApplication.FK_CompetitionTable))
-                            select a.Name).FirstOrDefault();
+                                                      where a.ID == (Convert.ToInt32(currentApplication.FK_CompetitionTable))
+                                                      select a.Name).FirstOrDefault();
                         dataTable.Rows.Add(dataRow);
                     }
                     ApplicationGV.DataSource = dataTable;
                     ApplicationGV.DataBind();
                 }
-                //////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////// 
                 {
                     DataTable dataTable = new DataTable();
                     dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("CompetitionName", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("SendedDate", typeof(string)));
-                    
+
                     List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTable
-                                                               where a.FK_UsersTable == userId  && a.Active == true && a.Sended == true
+                                                               where a.FK_UsersTable == userId && a.Active == true && a.Sended == true
                                                                join b in competitionDataBase.zCompetitionsTable
                                                                on a.FK_CompetitionTable equals b.ID
                                                                where b.Active == true && b.OpenForApplications == true
@@ -117,11 +117,11 @@ namespace Competitions.User
                         else
                         {
                             dataRow["SendedDate"] = currentApplication.SendedDataTime.ToString().Split(' ')[0];
-                        }          
+                        }
                         dataTable.Rows.Add(dataRow);
                     }
                     ArchiveApplicationGV.DataSource = dataTable;
-                    ArchiveApplicationGV.DataBind(); 
+                    ArchiveApplicationGV.DataBind();
                 }
             }
         }
@@ -144,9 +144,9 @@ namespace Competitions.User
         {
             Session["ApplicationID"] = 0;
             Response.Redirect("ApplicationCreateEdit.aspx");
-        }        
+        }
 
-        
+
         protected void FillButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -158,14 +158,14 @@ namespace Competitions.User
         }
         protected void SendButtonClick(object sender, EventArgs e)
         {
-             Button button = (Button)sender;
+            Button button = (Button)sender;
             {
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
                 zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
-                    where a.Active == true
-                          && a.ID == iD
-                    select a).FirstOrDefault();
+                                                        where a.Active == true
+                                                        && a.ID == iD
+                                                        select a).FirstOrDefault();
                 if (currentApplication != null)
                 {
                     currentApplication.Sended = true;
@@ -186,148 +186,18 @@ namespace Competitions.User
         }
 
 
-        private zColumnTable FindColumnWithUniqueMark(int applicationId,string uniqueMark)
-        {
-            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-            zColumnTable currentColumn = (from a in  competitionDataBase.zColumnTable
-                                 where a.Active == true
-                                 && a.UniqueMark == uniqueMark
-                                 join b in competitionDataBase.zSectionTable
-                                 on a.FK_SectionTable equals  b.ID
-                                 where b.Active == true
-                                 join c in competitionDataBase.zApplicationTable
-                                 on b.FK_CompetitionsTable equals c.FK_CompetitionTable
-                                 where c.Active == true
-                                 && c.ID == applicationId
-                                 select a).FirstOrDefault();
-
-            return currentColumn;
-        }
-        private XmlNode FindNode(XmlNodeList list, string nodeName)
-        {
-            if (list.Count > 0)
-            {
-                foreach (XmlNode node in list)
-                {
-                    if (node.Name.Equals(nodeName)) return node;
-                    if (node.HasChildNodes)
-                    {
-                        XmlNode nodeFound = FindNode(node.ChildNodes, nodeName);
-                        if (nodeFound != null)
-                            return nodeFound;
-                    }
-                }
-            }
-            return null;
-        }
-        private XmlNode FindNodeByValue(XmlNodeList list, string nodeValue)
-        {
-            if (list.Count > 0)
-            {
-                foreach (XmlNode node in list)
-                {
-                    if (node.Value != null)
-                    {
-                        if (node.Value.Equals(nodeValue)) return node;
-                    }
-                    if (node.HasChildNodes)
-                    {
-                        XmlNode nodeFound = FindNodeByValue(node.ChildNodes, nodeValue);
-                        if (nodeFound != null)
-                            return nodeFound;
-                    }
-                }
-            }
-            return null;
-        }
-        private XmlNode FindAfterParentNode(XmlNode parentNode, XmlNode childNodeWithValue)
-        {
-            XmlNode currentNode = childNodeWithValue;
-            for (;;)
-            {
-                if (currentNode.ParentNode == parentNode)
-                {
-                    return currentNode;
-                }
-                else
-                {
-                    currentNode = currentNode.ParentNode;
-                }
-            }
-        }
-        private bool CreateDocument(string templatePath, string newFilePath , int applicationId)
-        {
-            #region открываем шаблон
-            string xmlFile = File.ReadAllText(templatePath);
-            XmlDocument document = new XmlDocument();
-            document.LoadXml(xmlFile);
-            #endregion
-            #region старый вариант
-            /*
-            List<zColumnTable> columnListWithUniqueMark = FindColumnsWithUniqueMarkExist(applicationId);
-            foreach (zColumnTable currentColumn in columnListWithUniqueMark)
-            {
-                xmlFile = xmlFile.Replace(currentColumn.UniqueMark, FindValue(currentColumn, applicationId));
-            }*/
-            #endregion
-            XmlNode sectNode = FindNode(document.ChildNodes, "wx:sect");
-            //нам нужен список того в файле что нужно заменить)
-            // пока что 2 вхождения ищем
-            //1) #Table* заменяем весь ноде после секции 
-            //2) #Line*  заменяем только значение нода
-            TagsToReplace tagsToReplaceClass = new TagsToReplace();
-            CreateXmlTable createXmlTableClass = new CreateXmlTable();
-            List<TagToReplace> tagsToReplaces = tagsToReplaceClass.GetTagsToReplace(document);
-            //мы получили список того что нужно заменить
-            #region поочереди заменяем
-            foreach (TagToReplace currentTagToReplace in tagsToReplaces)
-            {
-                if (currentTagToReplace.ReplaceType == 2)
-                {
-                    XmlNode newXmlNode = createXmlTableClass.GetXmlTable(document, currentTagToReplace, applicationId);
-                    document.ImportNode(newXmlNode, true);
-                    sectNode.AppendChild(newXmlNode);
-                    XmlNode lastNode = FindNodeByValue(sectNode.ChildNodes, currentTagToReplace.TagsNode.OuterXml);
-                    XmlNode nodeToReplace = FindAfterParentNode(sectNode, lastNode);
-                    if (nodeToReplace!=null)
-                    {
-                        sectNode.ReplaceChild(newXmlNode, nodeToReplace);
-                    }
-                }
-                else if (currentTagToReplace.ReplaceType == 1)
-                {
-                    XmlNode childNode = FindNodeByValue(document.ChildNodes, "ZLinez" + currentTagToReplace.ReplacemantList[0]+"Z");
-                    zColumnTable currentColumn = FindColumnWithUniqueMark(applicationId,currentTagToReplace.ReplacemantList[0]);
-                    if (currentColumn != null)
-                    {
-                        childNode.Value = FindValue(currentColumn, applicationId);
-                    }
-                    if (childNode == null)
-                    {
-                        //childNode.Value = "Значение отсутствует";
-                    }                                                             
-                }
-            }
-            #endregion
-            #region подчищаем и сохраняем в файл
-            string newXmlFile = document.OuterXml;
-            newXmlFile=newXmlFile.Replace("xmlns:w=\"w\"", "").Replace("xmlns:wx=\"wx\"", "").Replace("xmlns:wsp=\"wsp\"", "");
-            File.WriteAllText(newFilePath,newXmlFile);
-            #endregion
-            return true;
-        }
         protected void GetDocButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
             {
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                
+
                 zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
                                                          join b in competitionDataBase.zApplicationTable
                                                          on a.ID equals b.FK_CompetitionTable
-                    where b.ID == iD
-                    select a).FirstOrDefault();
+                                                         where b.ID == iD
+                                                         select a).FirstOrDefault();
                 if (currentCompetition != null)
                 {
                     var userIdtmp = Session["UserID"];
@@ -337,20 +207,20 @@ namespace Competitions.User
                     }
                     int userId = (int)userIdtmp;
 
-                    if (currentCompetition.TemplateDocName!=null)
+                    if (currentCompetition.TemplateDocName != null)
                     {
                         if (currentCompetition.TemplateDocName.Any())
                         {
                             string templateFilePath = Server.MapPath("~/documents/templates") + "\\" + currentCompetition.ID.ToString() + "\\" + currentCompetition.TemplateDocName;
-                            string newFileName = DateTime.Now.ToString() +" "+ currentCompetition.TemplateDocName;
+                            string newFileName = DateTime.Now.ToString() + " " + currentCompetition.TemplateDocName;
                             newFileName = newFileName.Replace(":", "_");
                             string newFileDirectory = Server.MapPath("~/documents/generated") + "\\" + userId.ToString();
-                            string newFilePath =  newFileDirectory + "\\" + newFileName;
+                            string newFilePath = newFileDirectory + "\\" + newFileName;
 
                             Directory.CreateDirectory(newFileDirectory);
                             CreateXmlFile createXmlFile = new CreateXmlFile();
                             createXmlFile.CreateDocument(templateFilePath, newFilePath, iD);
-                                                      
+
                             HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
                             HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=" + currentCompetition.TemplateDocName);
                             HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(newFilePath));
