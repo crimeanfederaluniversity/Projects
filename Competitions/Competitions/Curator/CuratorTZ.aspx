@@ -23,7 +23,7 @@
          <asp:CheckBoxList ID="CheckBoxList1" runat="server">
          </asp:CheckBoxList>
          <br />
-         <asp:Button ID="CreateSaveButton" runat="server" OnClick="CreateSaveButtonClick" Text="Сохранить" Width="131px" />
+         <asp:Button ID="SaveButton" runat="server" OnClick="SaveButtonClick" Text="Сохранить" Width="131px" />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Далее" />
         <br />

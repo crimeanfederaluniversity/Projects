@@ -76,13 +76,13 @@ namespace Competitions.Curator {
         protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxList1;
         
         /// <summary>
-        /// CreateSaveButton элемент управления.
+        /// SaveButton элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CreateSaveButton;
+        protected global::System.Web.UI.WebControls.Button SaveButton;
         
         /// <summary>
         /// Button1 элемент управления.

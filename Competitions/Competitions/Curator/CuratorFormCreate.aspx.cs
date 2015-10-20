@@ -41,7 +41,8 @@ namespace Competitions.Curator
                                                                           select a).Distinct().FirstOrDefault();
                         if (link != null)
                         {
-                            current.Selected = true;
+                            if (current.Value == link.ID.ToString())
+                            { current.Selected = true; }                        
                         }
                        
 

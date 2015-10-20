@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.IO;
+using System.IO.Compression;
 
 namespace Competitions.Curator
 {
@@ -78,9 +80,60 @@ namespace Competitions.Curator
                 }
             }
         }
+
+        private byte[] ReadByteArryFromFile(string destPath)
+        {
+            byte[] buff = null;
+            FileStream fs = new FileStream(destPath, FileMode.Open, FileAccess.Read);
+            BinaryReader br = new BinaryReader(fs);
+            long numBytes = new FileInfo(destPath).Length;
+            buff = br.ReadBytes((int) numBytes);
+            return buff;
+        }
+
         protected void GetDocButtonClick(object sender, EventArgs e)
         {
+            Button button = (Button)sender;
+            {            
+                var appid = button.CommandArgument;
+                int idapp = Convert.ToInt32(appid);
+                CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+                zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
+                                                         join b in competitionDataBase.zApplicationTable
+                                                         on a.ID equals b.FK_CompetitionTable
+                                                         where b.ID == idapp
+                                                         select a).FirstOrDefault();
 
+                string dirPath = Server.MapPath("~/documents/byApplication/" + idapp);
+                string templateFilePath = Server.MapPath("~/documents/templates") + "\\" + currentCompetition.ID.ToString() + "\\" + currentCompetition.TemplateDocName;
+                string newFileName = DateTime.Now.ToString() + " " + currentCompetition.TemplateDocName;
+                newFileName = newFileName.Replace(":", "_");
+                string newFilePath = dirPath + "\\" + newFileName;
+                string zipFile = Server.MapPath("~/documents/generatedZipFiles/") + idapp + ".zip";
+                string extractPath = Server.MapPath("~/documents/extract/");
+                CreateXmlFile createXmlFile = new CreateXmlFile();
+                string asdadasdda = System.Web.HttpContext.Current.Server.MapPath("~/") + @"documents\generatedZipFiles\" + idapp + ".zip";
+                createXmlFile.CreateDocument(templateFilePath, newFilePath, idapp);
+
+                if (File.Exists(System.Web.HttpContext.Current.Server.MapPath("~/") + @"documents\generatedZipFiles\" + idapp + ".zip"))
+                {
+                    File.Delete(System.Web.HttpContext.Current.Server.MapPath("~/") + @"documents\generatedZipFiles\" + idapp + ".zip");
+                    ZipFile.CreateFromDirectory(dirPath, zipFile);
+                    HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
+                    HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=file.zip");
+                    HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(zipFile));
+                    HttpContext.Current.Response.End();
+                }
+                else
+                {
+                    ZipFile.CreateFromDirectory(dirPath, zipFile);
+                    HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
+                    HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=file.zip");
+                    HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(zipFile));
+                    HttpContext.Current.Response.End();
+                }
+                Response.End();
+            }
         }
         protected void ExpertPointButtonClick(object sender, EventArgs e)
         {

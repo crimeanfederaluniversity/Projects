@@ -5,7 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
-
+using System.IO;
+using System.IO.Compression;
 namespace Competitions.Curator
 {
     public partial class CuratorExpertPointPage : System.Web.UI.Page
@@ -73,9 +74,46 @@ namespace Competitions.Curator
 
             }
         }
+        private byte[] ReadByteArryFromFile(string destPath)
+        {
+            byte[] buff = null;
+            FileStream fs = new FileStream(destPath, FileMode.Open, FileAccess.Read);
+            BinaryReader br = new BinaryReader(fs);
+            long numBytes = new FileInfo(destPath).Length;
+            buff = br.ReadBytes((int)numBytes);
+            return buff;
+        }
         protected void ExpertDownloadButtonClick(object sender, EventArgs e)
         {
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Функционал в разработке!');", true);
+            Button button = (Button)sender;
+            {
+                var appIdTmp = Session["ApplicationID"];
+                if (appIdTmp == null)
+                {
+                    Response.Redirect("Main.aspx");
+                }
+                int applicationId = Convert.ToInt32(appIdTmp);
+                int userid = Convert.ToInt32(button.CommandArgument);
+
+
+                string templateFilePath = Server.MapPath("~/documents/expertdoc/expertpoint.xml");
+                string newFileName = DateTime.Now.ToString();
+                newFileName = newFileName.Replace(":", "_");
+                string newFileDirectory = Server.MapPath("~/documents/generated") + "\\" + userid.ToString();
+                string newFilePath = newFileDirectory + "\\" + newFileName;
+
+                Directory.CreateDirectory(newFileDirectory);
+
+                CreateXmlFile createXmlFile = new CreateXmlFile();
+                createXmlFile.CreateExpertDocument(templateFilePath, newFilePath, applicationId, userid);
+
+
+                HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
+                HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=expertpoint.xml");
+                HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(newFilePath));
+                HttpContext.Current.Response.End();
+                Response.End();
+            }
         }
 
         protected void GoBackButton_Click(object sender, EventArgs e)

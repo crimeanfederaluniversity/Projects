@@ -43,7 +43,19 @@ namespace Competitions.Curator
                             NameTextBox.Text = currentCompetition.Name;
                             DescriptionTextBox.Text = currentCompetition.Number;
                             BudjetTextBox.Text = currentCompetition.Budjet.ToString();
-
+                            foreach (ListItem current in CheckBoxList1.Items)
+                            {
+                              zActionsCompetitionsMappingTable action = (from a in competitionDataBase.zActionsCompetitionsMappingTable
+                                                                                     where a.Active == true && a.FK_Competiton == iD 
+                                                                                     && a.FK_ActionPR == Convert.ToInt32(current.Value)
+                                                                         select a).Distinct().FirstOrDefault();
+                              if (action != null)
+                                {              
+                                  if (action.FK_ActionPR == Convert.ToInt32(current.Value))
+                                  {current.Selected = true;}                              
+                                }
+                                else { }
+                            }
                             Calendar1.SelectedDate = Convert.ToDateTime(currentCompetition.StartDate);
                             Calendar2.SelectedDate = Convert.ToDateTime(currentCompetition.EndDate);
                         }
@@ -57,7 +69,7 @@ namespace Competitions.Curator
             }
         }
 
-        protected void CreateSaveButtonClick(object sender, EventArgs e)
+        protected void SaveButtonClick(object sender, EventArgs e)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
             var sessionParam = Session["CompetitionID"];
@@ -71,34 +83,34 @@ namespace Competitions.Curator
                   zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
                                                                  where a.Active == true && a.ID == iD
                                                                  select a).FirstOrDefault();
-                        if (currentCompetition == null)
-                        {
-                            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ошибка!');", true); 
-                        }
-                        else
-                        {
+                        if (currentCompetition != null)
+                        {                       
                             foreach (ListItem current in CheckBoxList1.Items)
                             {
                                 zActionsCompetitionsMappingTable action = (from a in competitionDataBase.zActionsCompetitionsMappingTable
-                                                                                     where a.FK_Competiton == iD
-                                                                                     && a.FK_ActionPR == Convert.ToInt32(current.Value)
-                                                                                     select a).FirstOrDefault();
-                                if (action == null)
+                                                                            where a.FK_Competiton == iD
+                                                                            && a.FK_ActionPR == Convert.ToInt32(current.Value)
+                                                                            select a).FirstOrDefault();
+                                if (action != null)
                                 {
+                                    if (current.Selected == true)
+                                    {
+                                        action.Active = true;
+                                        competitionDataBase.SubmitChanges();
+                                    }
+                                }
+                                else
+                                {                                  
                                     action = new zActionsCompetitionsMappingTable();
                                     action.Active = current.Selected;
                                     action.FK_Competiton = iD;
                                     action.FK_ActionPR = Convert.ToInt32(current.Value);
                                     competitionDataBase.zActionsCompetitionsMappingTable.InsertOnSubmit(action);
-                                    competitionDataBase.SubmitChanges();   
-                                }
-                                else
-                                {
-                                    action.Active = current.Selected;
-                                    competitionDataBase.SubmitChanges(); 
+                                    competitionDataBase.SubmitChanges();
                                 }
 
                             }
+                                               
                             currentCompetition.Name = NameTextBox.Text;
                             currentCompetition.Number = DescriptionTextBox.Text;
                             currentCompetition.Budjet = Convert.ToDouble(BudjetTextBox.Text);
@@ -107,34 +119,10 @@ namespace Competitions.Curator
                             currentCompetition.EndDate = Calendar2.SelectedDate;                           
                             competitionDataBase.SubmitChanges();
                             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Готово!');", true); 
+                            }
                         }
                     }
-                }
-
-                else
-                {
-                    zCompetitionsTable newCompetition = new zCompetitionsTable();
-                    foreach (ListItem current in CheckBoxList1.Items)
-                    {
-                        zActionsCompetitionsMappingTable actionlink = new zActionsCompetitionsMappingTable();
-                        actionlink.FK_Competiton = newCompetition.ID;
-                        actionlink.FK_ActionPR = Convert.ToInt32(current.Value);
-                        actionlink.Active = current.Selected;
-                        competitionDataBase.zActionsCompetitionsMappingTable.InsertOnSubmit(actionlink);
-                        competitionDataBase.SubmitChanges();
-                    }                        
-                        newCompetition.Name = NameTextBox.Text;
-                        newCompetition.Number = DescriptionTextBox.Text;
-                        newCompetition.Budjet = Convert.ToDouble(BudjetTextBox.Text);
-                       // newCompetition.FK_Curator = user;
-                        newCompetition.StartDate = Calendar1.SelectedDate;
-                        newCompetition.EndDate = Calendar2.SelectedDate;
-                        newCompetition.Active = true;
-                        newCompetition.OpenForApplications = false;
-                        competitionDataBase.zCompetitionsTable.InsertOnSubmit(newCompetition);
-                        competitionDataBase.SubmitChanges();              
-                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Готово!');", true); 
-                }
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ошибка!');", true);          
             }
                         
         protected void GoBackButton_Click(object sender, EventArgs e)
