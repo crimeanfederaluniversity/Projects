@@ -50,7 +50,7 @@
         
 
         <h2>&nbsp;</h2>
-        <h2>&nbsp;<span style="font-size: 30px">Добро пожаловать в систему &quot;Конкурсы и проекты Программы развития&quot; </span></h2>
+        <h2>&nbsp;<span style="font-size: 30px">Добро пожаловать в систему управления заявками модуля &quot;Конкурсы и проекты Программы развития&quot; </span></h2>
         
 
         <br />
@@ -73,7 +73,8 @@
               <table style="width: 100%; border-style: hidden">
                 <tr>
                   <td>
-                      <h2><span style="font-size: 20px">На данный момент для подачи заявак доступны следующие конкурсы:</span></h2>
+                      <h2>Внимание! Вы межете подать не более одной заявки на определенный конкурс<span style="font-size: 20px">.</span></h2>
+                        <h2><span style="font-size: 20px">На данный момент для подачи заявок доступны следующие конкурсы:</span></h2>
                         <br />
                          <asp:GridView ID="MainGV" runat="server" AutoGenerateColumns="False">
                             <Columns>
@@ -108,9 +109,9 @@
                 <asp:BoundField DataField="Name"   HeaderText="Название" Visible="true" />
                 <asp:BoundField DataField="CompetitionName"   HeaderText="Конкурс" Visible="true" />
             
-                <asp:TemplateField HeaderText="Заполнить">
+                <asp:TemplateField HeaderText="Редактировать заявку">
                         <ItemTemplate>
-                            <asp:Button ID="FillButton" runat="server" CommandName="Select" Text="Заполнить" CommandArgument='<%# Eval("ID") %>'   Width="200px" OnClick="FillButtonClick"/>
+                            <asp:Button ID="FillButton" runat="server" CommandName="Select" Text="Редактировать" CommandArgument='<%# Eval("ID") %>'   Width="200px" OnClick="FillButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
                 
@@ -122,7 +123,7 @@
 
                 <asp:TemplateField HeaderText="Скачать заявку">
                         <ItemTemplate>
-                            <asp:Button ID="GetDocButton2" runat="server" CommandName="Select" Text="Загрузить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
+                            <asp:Button ID="GetDocButton2" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
              

@@ -14,14 +14,14 @@
                 <asp:BoundField DataField="SendedDataTime"   HeaderText="Дата отправки на рассмотрение" Visible="true" />
                 <asp:BoundField DataField="Autor"   HeaderText="Автор" Visible="false" />            
                  
-                 <asp:TemplateField HeaderText="Заявка">
+                 <asp:TemplateField HeaderText="Скачать заявку">
                         <ItemTemplate>
-                            <asp:Button ID="ApplicationButton" runat="server" CommandName="Select" Text="Просмотреть" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="ApplicationButtonClick"/>
+                            <asp:Button ID="ApplicationButton" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="ApplicationButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
                  <asp:TemplateField HeaderText="Экспертное заключение">
                         <ItemTemplate>
-                            <asp:Button ID="ExpertPointButton" runat="server" CommandName="Select" Text="Просмотреть" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="ExpertPointButtonClick"/>
+                            <asp:Button ID="ExpertPointButton" runat="server" CommandName="Select" Text="Просмотреть" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="ExpertPointButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

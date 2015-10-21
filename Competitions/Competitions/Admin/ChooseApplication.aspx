@@ -16,16 +16,26 @@
                 <asp:BoundField DataField="Competition"   HeaderText="Конкурс" Visible="true" />
                 <asp:BoundField DataField="SendedDataTime"   HeaderText="Дата отправки на рассмотрение" Visible="true" />
                 <asp:BoundField DataField="Autor"   HeaderText="Автор" Visible="false" />            
-                <asp:BoundField DataField="Experts"   HeaderText="Привлеченные эксперты" Visible="true" />     
-                <asp:TemplateField HeaderText="Изменить состав экспертов">
+                <asp:BoundField DataField="Experts"   HeaderText="Эксперты прикрепленные к заявке" Visible="true" />    
+                 <asp:TemplateField HeaderText="Изменить прикрепленных экспертов">
                         <ItemTemplate>
-                            <asp:Button ID="ExpertChangeButton" runat="server" CommandName="Select" Text="Изменить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="ExpertChangeButtonClick"/>
+                            <asp:Button ID="ExpertChangeButton" runat="server" CommandName="Select" Text="Изменить" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="ExpertChangeButtonClick"/>
+                        </ItemTemplate>
+                </asp:TemplateField> 
+                <asp:TemplateField HeaderText="Скачать заявку">
+                        <ItemTemplate>
+                            <asp:Button ID="ApplicationButton" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="ApplicationButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
-
+               
                    <asp:TemplateField HeaderText="Принять заявку">
                         <ItemTemplate>
-                            <asp:Button ID="AcceptButton" runat="server" CommandName="Select" OnClientClick="return confirm('Вы уверены, что хотите принять заявку?');" Text="Принять" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="AcceptButtonClick"/>
+                            <asp:Button ID="AcceptButton" runat="server" CommandName="Select" OnClientClick="return confirm('Вы уверены, что хотите принять заявку?');" Text="Принять" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="AcceptButtonClick"/>                      
+                        </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Вернуть на доработку">
+                        <ItemTemplate>
+                            <asp:Button ID="BackToUserButton" runat="server" CommandName="Select" OnClientClick="return confirm('Вы уверены, что хотите вернуть заявку на доработку отправителю?');" Text="Вернуть" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="BackToUserButtonClick"/>                      
                         </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
