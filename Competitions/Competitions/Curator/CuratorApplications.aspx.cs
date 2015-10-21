@@ -113,7 +113,7 @@ namespace Competitions.Curator
                 string extractPath = Server.MapPath("~/documents/extract/");
                 CreateXmlFile createXmlFile = new CreateXmlFile();
                 string asdadasdda = System.Web.HttpContext.Current.Server.MapPath("~/") + @"documents\generatedZipFiles\" + idapp + ".zip";
-                createXmlFile.CreateDocument(templateFilePath, newFilePath, idapp);
+                createXmlFile.CreateDocument(templateFilePath, newFilePath, idapp,0);
 
                 if (File.Exists(System.Web.HttpContext.Current.Server.MapPath("~/") + @"documents\generatedZipFiles\" + idapp + ".zip"))
                 {

@@ -210,22 +210,38 @@ namespace Competitions.User
                             string templateFilePath = Server.MapPath("~/documents/templates") + "\\" + currentCompetition.ID.ToString() + "\\" + currentCompetition.TemplateDocName;
                             string newFileName = DateTime.Now.ToString() + " " + currentCompetition.TemplateDocName;
                             newFileName = newFileName.Replace(":", "_");
-                            string newFileDirectory = Server.MapPath("~/documents/generated") + "\\" + userId.ToString();
+                            string newFileDirectory = Server.MapPath("~/documents/generated") + "\\" + iD.ToString();
                             string newFilePath = newFileDirectory + "\\" + newFileName;
+
 
                             Directory.CreateDirectory(newFileDirectory);
                             CreateXmlFile createXmlFile = new CreateXmlFile();
-                            createXmlFile.CreateDocument(templateFilePath, newFilePath, iD);
+                            int docType = 0;
+                           
+                            try
+                            {
+                                 RadioButtonList newRadioButtonList =
+                                button.Parent.FindControl("RadioButtonList1") as RadioButtonList;
+                                docType = Convert.ToInt32(newRadioButtonList.SelectedValue);
+                            }
+                            catch (Exception)
+                            {
+                                
+                                throw;
+                            }
+                            createXmlFile.CreateDocument(templateFilePath, newFilePath, iD, docType);
+                            string convertedFilePath = createXmlFile.ConvertedFilePath;
 
                             HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
-                            HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=" + currentCompetition.TemplateDocName);
-                            HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(newFilePath));
+                            HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=document." + createXmlFile.ConvertedFileExtension);
+                            HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(convertedFilePath));
                             HttpContext.Current.Response.End();
-                            Response.End();
+                            Response.End();                         
                         }
                     }
                 }
             }
+            //Response.Redirect("UserMainPage.aspx");
         }
         protected void Tab1_Click(object sender, EventArgs e)
         {

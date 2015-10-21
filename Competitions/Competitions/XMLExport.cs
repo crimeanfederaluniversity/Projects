@@ -217,7 +217,6 @@ namespace Competitions
             }
             return columnNames;
         }
-
         private bool IsColumnTotalUpByUniqueMark(string uniqueMark, int applicationId)
         {
             zColumnTable myColumn = GetColumnByUniqueMark (uniqueMark, applicationId);
@@ -239,7 +238,6 @@ namespace Competitions
             }
             return toTotalUp;
         }
-
         public List<string> GetStringListByColumnIdNNestedList(List<List<string>> nestedList, int columnId)
         {
             List<string> newStringList = new List<string>();
@@ -307,6 +305,8 @@ namespace Competitions
     }
     public class CreateXmlFile
     {
+        public string ConvertedFileExtension;
+        public string ConvertedFilePath;
         private string FindValue(zColumnTable column, int applicationId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
@@ -400,7 +400,7 @@ namespace Competitions
                 }
             }
         }
-        public bool CreateDocument(string templatePath, string newFilePath, int applicationId)
+        public bool CreateDocument(string templatePath, string newFilePath, int applicationId,int documentType)
         {
             #region создаем экземпляры нужных классов
             XmlTableCreate xmlTableCreate = new XmlTableCreate();
@@ -461,6 +461,12 @@ namespace Competitions
             string newXmlFile = document.OuterXml;
             newXmlFile = newXmlFile.Replace("xmlns:w=\"w\"", "").Replace("xmlns:wx=\"wx\"", "").Replace("xmlns:wsp=\"wsp\"", "");
             File.WriteAllText(newFilePath, newXmlFile);
+            #endregion
+            #region конвертируем его в другой формат
+                Converter converter = new Converter();
+                converter.Convert(newFilePath, newFilePath, documentType);
+            ConvertedFileExtension = converter.ConvertedFilaExtension;
+            ConvertedFilePath = converter.ConvertedFilePath;
             #endregion
             return true;
         }

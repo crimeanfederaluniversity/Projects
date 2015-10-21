@@ -1,5 +1,56 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserMainPage.aspx.cs" Inherits="Competitions.User.UserMainPage" %>
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+<asp:Content runat="server" ID="BodyContent"  ContentPlaceHolderID="MainContent">
+    <link rel="stylesheet" type="text/css" href="../Spinner.css"> 
+    
+    
+    <script type="text/javascript">
+        function hideLoadPanel() {
+            document.getElementById('LoadPanel_').style.visibility = 'hidden';
+        }
+        function showLoadPanel() {
+            document.getElementById('LoadPanel_').style.visibility = 'visible';
+        }
+    </script>
+    <style>  
+
+        .LoadPanel 
+   {
+          position: fixed;
+          z-index: 10;
+          background-color: whitesmoke;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0.9;
+          visibility: hidden;
+   }
+</style>     
+    <div id="LoadPanel_" class='LoadPanel'>               
+            <div id="floatingCirclesG">
+            <div class="f_circleG" id="frotateG_01">
+            </div>
+            <div class="f_circleG" id="frotateG_02">
+            </div>
+            <div class="f_circleG" id="frotateG_03">
+            </div>
+            <div class="f_circleG" id="frotateG_04">
+            </div>
+            <div class="f_circleG" id="frotateG_05">
+            </div>
+            <div class="f_circleG" id="frotateG_06">
+            </div>
+            <div class="f_circleG" id="frotateG_07">
+            </div>
+            <div class="f_circleG" id="frotateG_08">
+            </div>
+            </div>
+        </div>
+     
+    
+
+    
+
     <div>
         <style type="text/css">
 .Initial
@@ -123,6 +174,15 @@
 
                 <asp:TemplateField HeaderText="Скачать заявку">
                         <ItemTemplate>
+                            
+                            <asp:RadioButtonList ID="RadioButtonList1" RepeatColumns="3" runat="server">
+                                <asp:ListItem Value="0" Selected="True">doc</asp:ListItem>
+                                <asp:ListItem Value="1">docx</asp:ListItem>
+                                <asp:ListItem Value="2">rtf</asp:ListItem>
+                                <asp:ListItem Value="3">pdf</asp:ListItem>
+                                <asp:ListItem Value="4">odt</asp:ListItem>
+                            </asp:RadioButtonList>
+
                             <asp:Button ID="GetDocButton2" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
@@ -149,7 +209,14 @@
                             <asp:BoundField DataField="SendedDate"   HeaderText="Дата отправки на рассмотрение" Visible="true" />   
                             <asp:TemplateField HeaderText="Скачать заявку">
                                     <ItemTemplate>
-                                        <asp:Button ID="GetDocButton" runat="server" Text="Загрузить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
+                                                                    <asp:RadioButtonList ID="RadioButtonList1" RepeatColumns="3" runat="server">
+                                <asp:ListItem Value="0" Selected="True">doc</asp:ListItem>
+                                <asp:ListItem Value="1">docx</asp:ListItem>
+                                <asp:ListItem Value="2">rtf</asp:ListItem>
+                                <asp:ListItem Value="3">pdf</asp:ListItem>
+                                <asp:ListItem Value="4">odt</asp:ListItem>
+                            </asp:RadioButtonList>
+                                        <asp:Button ID="GetDocButton" runat="server" Text="Скачать"  CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
                                     </ItemTemplate>
                             </asp:TemplateField>
              
