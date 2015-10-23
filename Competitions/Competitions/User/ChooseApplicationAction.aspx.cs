@@ -30,7 +30,11 @@ namespace Competitions.User
                 zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
                     where a.ID == applicationId
                     select a).FirstOrDefault();
+                zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
+                    where a.ID == currentApplication.FK_CompetitionTable
+                    select a).FirstOrDefault();
                 Label1.Text = currentApplication.Name;
+                Label2.Text = currentCompetition.Name;
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("ID", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("Name", typeof (string)));
@@ -61,13 +65,23 @@ namespace Competitions.User
                 DataTable dataTable2 = new DataTable();
                 dataTable2.Columns.Add(new DataColumn("ID", typeof(string)));
                 dataTable2.Columns.Add(new DataColumn("BlockName", typeof(string)));
-
+                dataTable2.Columns.Add(new DataColumn("Status", typeof(string)));
+                dataTable2.Columns.Add(new DataColumn("EnableButton", typeof(bool)));
+                Status status = new Status();
+                int statusHistory = 2;
                 foreach (zBlockTable current  in currentBlock)
                 {
                     DataRow dataRow2 = dataTable2.NewRow();
                     dataRow2["ID"] = current.ID;
                     dataRow2["BlockName"] = current.BlockName;
-                    
+                    int blockStatus = status.GetStatusIdForBlockInApplication(current.ID, currentApplication.ID);
+                    dataRow2["Status"] = status.GetStatusNameByStatusId(blockStatus);
+                    dataRow2["EnableButton"] = false;
+                    if (status.IsDataReady(statusHistory))
+                    {
+                        dataRow2["EnableButton"] = true;
+                    }
+                    statusHistory = blockStatus;
                     dataTable2.Rows.Add(dataRow2);
                 }
 
@@ -93,10 +107,10 @@ namespace Competitions.User
             newDocument.AddDateTime = DateTime.Now;
             competitionDataBase.zDocumentsTable.InsertOnSubmit(newDocument);
             competitionDataBase.SubmitChanges();
-        }        
-        protected void AddDocumentsButton_Click(object sender, EventArgs e)
+        }
+        private void AddDoc()
         {
-            var sessionParam1 = Session["ApplicationID"];       
+                        var sessionParam1 = Session["ApplicationID"];       
             if ((sessionParam1 == null))
             {
                 Response.Redirect("ChooseApplication.aspx");
@@ -146,6 +160,10 @@ namespace Competitions.User
                 }
             }
             Response.Redirect("ChooseApplicationAction.aspx");
+        }
+        protected void AddDocumentsButton_Click(object sender, EventArgs e)
+        {
+            AddDoc();
         }
         private byte[] ReadByteArryFromFile(string destPath)
         {
@@ -198,20 +216,13 @@ namespace Competitions.User
         {
             Response.Redirect("UserMainPage.aspx");
         }
-
         protected void Button2_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Default.aspx");
         }
-
-        protected void Button2_Click1(object sender, EventArgs e)
+        protected void FileUpload1_Load(object sender, EventArgs e)
         {
-           /* String path = Server.MapPath("~/documents/byApplication");
-            string zipPath = @"c:\result.zip";
-            ZipFile zip = new ZipFile()
-            ZipFile.CreateFromDirectory(path, zipPath);
-          */
- 
+            
         }      
     }
 }

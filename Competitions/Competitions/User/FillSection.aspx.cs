@@ -1066,10 +1066,12 @@ namespace Competitions.User
         }
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
+            SaveChanges();
             Response.Redirect("ChooseApplicationAction.aspx");
         }
         protected void Button2_Click(object sender, EventArgs e)
         {
+            SaveChanges();
             Response.Redirect("~/Default.aspx");
         }       
     }

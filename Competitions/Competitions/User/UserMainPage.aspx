@@ -110,7 +110,7 @@
 
             
 
-          <asp:Button Text="Открытые конкурсы" BorderStyle="None" ID="Tab1" CssClass="Initial" runat="server"
+          <asp:Button Text="Все открытые конкурсы" BorderStyle="None" ID="Tab1" CssClass="Initial" runat="server"
               OnClick="Tab1_Click" />
           <asp:Button Text="Мои активные заявки" BorderStyle="None" ID="Tab2" CssClass="Initial" runat="server"
               OnClick="Tab2_Click" />
@@ -159,13 +159,14 @@
             
                 <asp:TemplateField HeaderText="Редактировать заявку">
                         <ItemTemplate>
-                            <asp:Button ID="FillButton" runat="server" CommandName="Select" Text="Редактировать" CommandArgument='<%# Eval("ID") %>'   Width="200px" OnClick="FillButtonClick"/>
+                            <asp:Button ID="FillButton" runat="server" CommandName="Select" Text="Заполнить" CommandArgument='<%# Eval("ID") %>'   Width="200px" OnClick="FillButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
                 
                 <asp:TemplateField HeaderText="Отправить на рассмотрение">
                         <ItemTemplate>
-                            <asp:Button ID="SendButton" runat="server" CommandName="Select" OnClientClick="return confirm('Вы уверены, что хотите отправить заявку на рассмотрение?');" Text="Отправить" CommandArgument='<%# Eval("ID") %>'   Width="200px" OnClick="SendButtonClick"/>
+                            <asp:Label ID="StatusLabel" runat="server"  Enabled='<%# Bind("StatusLabelEnabled") %>' Visible='<%# Bind("StatusLabelEnabled") %>'  Text="Для отправки на рассмотрение необходимо полностью заполнить заявку!"></asp:Label>
+                            <asp:Button ID="SendButton" runat="server"  Enabled='<%# Bind("SendButtonEnabled") %>'  Visible='<%# Bind("SendButtonEnabled") %>' CommandName="Select" OnClientClick="return confirm('Вы уверены, что хотите отправить заявку на рассмотрение?');" Text="Отправить" CommandArgument='<%# Eval("ID") %>'   Width="200px" OnClick="SendButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
 

@@ -633,6 +633,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MainCompetitionFunctions.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session.cs" />
@@ -651,6 +652,7 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="Status.cs" />
     <Compile Include="User\ApplicationCreateEdit.aspx.cs">
       <DependentUpon>ApplicationCreateEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

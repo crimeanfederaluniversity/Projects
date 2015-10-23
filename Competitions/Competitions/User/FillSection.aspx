@@ -3,10 +3,72 @@
 
 <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
     <div>    
-        <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Text="Назад" Width="125px" OnClick="GoBackButton_Click" />
-        <asp:Button ID="Button2" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" OnClick="Button2_Click" />   
+        <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Text="К заявке" Width="125px" OnClick="GoBackButton_Click" />
+        &nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" />
+        &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="PreviousSection" runat="server" CausesValidation="False" OnClick="PreviousSection_Click" OnClientClick="showLoadPanel()" Text="Предыдущий пункт" />
+&nbsp;
+        <asp:Button ID="NextSection" OnClientClick="showLoadPanel()" runat="server" OnClick="NextSection_Click" Text="Далее" Width="192px" />
     </div> 
 </asp:Panel> 
+    
+    
+    
+    <link rel="stylesheet" type="text/css" href="../Spinner.css"> 
+        <script type="text/javascript">
+            function hideLoadPanel() {
+                document.getElementById('LoadPanel_').style.visibility = 'hidden';
+            }
+            function showLoadPanel() {
+                //document.getElementById('LoadPanel_').style.visibility = 'visible';
+            }
+    </script>
+    <style>  
+
+        .LoadPanel 
+   {
+          position: fixed;
+          z-index: 10;
+          background-color: whitesmoke;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0.9;
+          visibility: hidden;
+   }
+</style>     
+    <div id="LoadPanel_" class='LoadPanel'>               
+            <div id="floatingCirclesG">
+            <div class="f_circleG" id="frotateG_01">
+            </div>
+            <div class="f_circleG" id="frotateG_02">
+            </div>
+            <div class="f_circleG" id="frotateG_03">
+            </div>
+            <div class="f_circleG" id="frotateG_04">
+            </div>
+            <div class="f_circleG" id="frotateG_05">
+            </div>
+            <div class="f_circleG" id="frotateG_06">
+            </div>
+            <div class="f_circleG" id="frotateG_07">
+            </div>
+            <div class="f_circleG" id="frotateG_08">
+            </div>
+            </div>
+        </div>
+     
+    
+
+    
+
+    <div>
+
+
+    
+
+    
+
 
     <script type="text/javascript">
         function setHeightAndWidth(txtdesc) {
@@ -51,10 +113,6 @@
         
     </style>
      <br />
-        <br />
-        <asp:Button ID="PreviousSection" runat="server" OnClick="PreviousSection_Click" CausesValidation="False" Text="Предыдущий пункт" />
-&nbsp;<asp:Button ID="NextSection" runat="server" OnClick="NextSection_Click" Text="Далее" Width="192px" />
-        <br />
         <br />
     <asp:Label   ID="LabelHint"   runat="server"  Visible="true"> </asp:Label>
     <br />
@@ -280,7 +338,7 @@
 
                     <asp:TemplateField HeaderText="Удалить">
                         <ItemTemplate>
-                            <asp:Button ID="DeleteRowButton" runat="server" CommandName="Select" Text="Удалить" CommandArgument='<%# Eval("ID0") %>' CausesValidation="False" Width="200px" OnClick="DeleteRowButtonClick"/>
+                            <asp:Button ID="DeleteRowButton" runat="server" OnClientClick="showLoadPanel()" CommandName="Select" Text="Удалить" CommandArgument='<%# Eval("ID0") %>' CausesValidation="False" Width="200px" OnClick="DeleteRowButtonClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                     
@@ -288,6 +346,7 @@
                </Columns>
         </asp:GridView>       
     </div>       
-        <asp:Button ID="SaveButton" runat="server" Text="Сохранить" CausesValidation="False" OnClick="SaveButton_Click" />
-        <asp:Button ID="AddRowButton" runat="server" Text="Добавить строку" CausesValidation="False" OnClick="AddRowButton_Click" />
+        <asp:Button ID="SaveButton" runat="server" Text="Сохранить" OnClientClick="showLoadPanel()" CausesValidation="False" OnClick="SaveButton_Click" />
+        <asp:Button ID="AddRowButton" runat="server" Text="Добавить строку" OnClientClick="showLoadPanel()" CausesValidation="False" OnClick="AddRowButton_Click" />
+    </div>
 </asp:Content>

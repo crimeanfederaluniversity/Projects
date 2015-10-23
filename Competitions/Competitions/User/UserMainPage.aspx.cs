@@ -65,7 +65,8 @@ namespace Competitions.User
                     dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("CompetitionName", typeof(string)));
-
+                    dataTable.Columns.Add(new DataColumn("StatusLabelEnabled", typeof(bool)));
+                    dataTable.Columns.Add(new DataColumn("SendButtonEnabled", typeof(bool)));
                     List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTable
                                                                where a.FK_UsersTable == userId && a.Sended == false && a.Active == true
                                                                join b in competitionDataBase.zCompetitionsTable
@@ -73,6 +74,8 @@ namespace Competitions.User
                                                                where b.Active == true
                                                                    && b.OpenForApplications == true
                                                                select a).Distinct().ToList();
+
+                    Status status = new Status();
 
                     foreach (zApplicationTable currentApplication in applicationList)
                     {
@@ -82,6 +85,16 @@ namespace Competitions.User
                         dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTable
                                                       where a.ID == (Convert.ToInt32(currentApplication.FK_CompetitionTable))
                                                       select a.Name).FirstOrDefault();
+                        if (status.IsApplicationReadyToSend(currentApplication.ID))
+                        {
+                            dataRow["StatusLabelEnabled"] = false;
+                             dataRow["SendButtonEnabled"] = true;
+                        }
+                        else
+                        {
+                            dataRow["StatusLabelEnabled"] = true;
+                            dataRow["SendButtonEnabled"] = false;
+                        }                  
                         dataTable.Rows.Add(dataRow);
                     }
                     ApplicationGV.DataSource = dataTable;
@@ -135,16 +148,12 @@ namespace Competitions.User
             {
                 using (CompetitionDataContext newBid = new CompetitionDataContext())
                 {
+                    Session["ApplicationID"] = 0;
                     Session["ID_Konkurs"] = Convert.ToInt32(button.CommandArgument);
                     Response.Redirect("~/User/ApplicationCreateEdit.aspx");
                 }
             }
-        }
-        protected void NewApplication_Click(object sender, EventArgs e)
-        {
-            Session["ApplicationID"] = 0;
-            Response.Redirect("ApplicationCreateEdit.aspx");
-        }
+        }    
         protected void FillButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
