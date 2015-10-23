@@ -1,6 +1,9 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CompetitionExpertEdit.aspx.cs" Inherits="Competitions.Admin.CompetitionExpertEdit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">  
-  Прикрепленные эксперты
+    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Назад" />
+    <br />
+    <br />
+    Прикрепленные эксперты
     <asp:GridView ID="connectedExpertsGV" runat="server" AutoGenerateColumns="False">
             <Columns>
                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />

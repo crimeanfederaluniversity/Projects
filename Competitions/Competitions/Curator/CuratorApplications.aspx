@@ -4,7 +4,7 @@
     <br />
             <asp:Button ID="GoBackButton" runat="server"  Text="Назад" Width="131px" style="height: 26px" OnClick="GoBackButton_Click" />
         <br />   
-    <h2><span style="font-size: 30px">Заявки на конкурс:</span></h2>
+    <h2><span style="font-size: 20px">Cписок всех заявок, поданных на ваши конкурсы :</span></h2>
     <br />
  <asp:GridView ID="ApplicationGV" runat="server" AutoGenerateColumns="False">
             <Columns>

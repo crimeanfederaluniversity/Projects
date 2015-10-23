@@ -50,7 +50,7 @@ namespace Competitions.Curator
                         dataRow["ID"] = currentApplication.ID;
                         dataRow["Name"] = currentApplication.Name;
                         dataRow["Description"] = "";
-                        dataRow["SendedDataTime"] = currentApplication.SendedDataTime;
+                        dataRow["SendedDataTime"] = currentApplication.SendedDataTime.ToString().Split(' ')[0];
                         dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTable
                                                   where a.ID == currentApplication.FK_CompetitionTable
                                                   select a.Name).FirstOrDefault();

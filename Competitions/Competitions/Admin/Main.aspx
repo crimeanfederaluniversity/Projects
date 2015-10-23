@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Main.aspx.cs" Inherits="Competitions.Admin.Main" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-       <h2><span style="font-size: 30px">Добро пожаловать в систему "Конкурсы и проекты Программы развития" </span></h2>
+       <h2><span style="font-size: 20px">Добро пожаловать в систему администрирования модуля "Конкурсы и проекты Программы развития" </span></h2>
     <br />
     <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Работа со справочниками" Width="300px" Height="50px" />
     <br />

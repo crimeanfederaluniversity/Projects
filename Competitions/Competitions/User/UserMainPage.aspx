@@ -98,13 +98,10 @@
         <asp:Button ID="Button2" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" OnClick="Button2_Click" />   
     </div> 
 </asp:Panel> 
+         <br />
+        <h2>&nbsp;<span style="font-size: 20px">Добро пожаловать в систему управления заявками модуля &quot;Конкурсы и проекты Программы развития&quot; </span></h2>
         
-
-        <h2>&nbsp;</h2>
-        <h2>&nbsp;<span style="font-size: 30px">Добро пожаловать в систему управления заявками модуля &quot;Конкурсы и проекты Программы развития&quot; </span></h2>
-        
-
-        <br />
+          
         <table width="100%" align="center">
       <tr>
         <td>
@@ -124,9 +121,9 @@
               <table style="width: 100%; border-style: hidden">
                 <tr>
                   <td>
-                      <h2>Внимание! Вы межете подать не более одной заявки на определенный конкурс<span style="font-size: 20px">.</span></h2>
+                      <h2><span style="font-size: 20px">Внимание! Вы можете подать не более одной заявки на определенный конкурс.</span></h2>
                         <h2><span style="font-size: 20px">На данный момент для подачи заявок доступны следующие конкурсы:</span></h2>
-                        <br />
+                        
                          <asp:GridView ID="MainGV" runat="server" AutoGenerateColumns="False">
                             <Columns>
                                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />

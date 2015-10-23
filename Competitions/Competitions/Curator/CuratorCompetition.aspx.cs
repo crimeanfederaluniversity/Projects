@@ -41,8 +41,8 @@ namespace Competitions.Curator
                     dataRow["Name"] = currentCompetition.Name;
                     dataRow["Number"] = currentCompetition.Number;
                     dataRow["Budjet"] = Convert.ToInt32(currentCompetition.Budjet);
-                    dataRow["StartDate"] = Convert.ToDateTime(currentCompetition.StartDate);
-                    dataRow["EndDate"] = Convert.ToDateTime(currentCompetition.EndDate);
+                    dataRow["StartDate"] = currentCompetition.StartDate.ToString().Split(' ')[0];
+                    dataRow["EndDate"] = currentCompetition.EndDate.ToString().Split(' ')[0];
 
                     dataTable.Rows.Add(dataRow);
                 }

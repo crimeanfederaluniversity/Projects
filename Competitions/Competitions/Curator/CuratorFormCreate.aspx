@@ -3,7 +3,7 @@
     <br />
         <asp:Button ID="GoBackButton" runat="server"  Text="Назад" Width="131px" style="height: 26px" OnClick="GoBackButton_Click" />
         <br />
-        <h2><span style="font-size: 30px">Выберите формы, которые необходимы в шаблоне: </span></h2>
+        <h2><span style="font-size: 20px">Выберите формы, которые необходимы в шаблоне: </span></h2>
          <asp:CheckBoxList ID="CheckBoxList1" runat="server">
          </asp:CheckBoxList>
         <br />

@@ -208,7 +208,7 @@ namespace Competitions.User
                         if (currentCompetition.TemplateDocName.Any())
                         {
                             string templateFilePath = Server.MapPath("~/documents/templates") + "\\" + currentCompetition.ID.ToString() + "\\" + currentCompetition.TemplateDocName;
-                            string newFileName = DateTime.Now.ToString() + " " + currentCompetition.TemplateDocName;
+                            string newFileName = "Заявка пользователя на конкурс " + currentCompetition.TemplateDocName;
                             newFileName = newFileName.Replace(":", "_");
                             string newFileDirectory = Server.MapPath("~/documents/generated") + "\\" + iD.ToString();
                             string newFilePath = newFileDirectory + "\\" + newFileName;

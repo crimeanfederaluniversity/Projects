@@ -22,6 +22,15 @@ namespace Competitions.Curator {
         protected global::System.Web.UI.WebControls.Button GoBackButton;
         
         /// <summary>
+        /// Label1 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+        
+        /// <summary>
         /// ExpertsPointGV элемент управления.
         /// </summary>
         /// <remarks>

@@ -28,6 +28,18 @@ namespace Competitions.User
             int applicationId = newPagesParams.ApplicationId;
             return applicationId;
         }
+        public int GetBlockIdFromSession()
+        {
+            FillingPages newPagesParams = (FillingPages)Session["PagesParams"];
+            if (newPagesParams.BlockId == null)
+            {
+                //error
+                Response.Redirect("ChooseApplicationAction.aspx");
+            }
+
+            int blockId = newPagesParams.BlockId;
+            return blockId;
+        }
         public int GetSectionId()
         {
             FillingPages newPagesParams = (FillingPages)Session["PagesParams"];
@@ -490,13 +502,33 @@ namespace Competitions.User
 
                 #endregion
                 DataType dataType = new DataType();
-                
+                int blockId = GetBlockIdFromSession();
+
                 //нам нужно узнать как выглядит таблица и создать её
                 //у каждой сектии свой тип таблиц сначала возьмем текующую секцию
+                List <zSectionTable> allSection = (from a in competitionDataBase.zSectionTable
+                                                where a.FK_BlockID == blockId  
+                                                join b in competitionDataBase.zApplicationTable
+                                                on  a.FK_CompetitionsTable equals b.FK_CompetitionTable
+                                                where b.ID == applicationId
+                                                select a).ToList();
                 zSectionTable currentSection = (from a in competitionDataBase.zSectionTable
-                                                where a.ID == sectionId
-                                                select a).FirstOrDefault();
-                LabelHint.Text = currentSection.Name;
+                                                      where  a.ID == sectionId
+                                                      select a).FirstOrDefault();
+
+                string namesInLine = " ";
+                if (allSection.Count != null)
+                {
+                    foreach (var n in allSection)
+                    {
+                        if (n.ID == currentSection.ID)                        
+                        namesInLine += "<font size=\"3\" color=\"red\" face=\"Arial\">" + n.Name + "</font> -->";                        
+                        else
+                        namesInLine +=  n.Name + "</font> -->";                      
+                    }                    
+                    LabelHint.Text = namesInLine;
+                }
+                              
                 if (currentSection.Description != "123")
                 {
                     LabelDescription.Text = currentSection.Description;

@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Button ID="GoBackButton" runat="server" OnClick="Button1_Click" Text="Назад" Width="130px" />
     <br />
-     <h2><span style="font-size: 30px">Список заявок, ожидающих обработки:</span></h2>
+     <h2><span style="font-size: 20px">Список заявок, ожидающих обработки:</span></h2>
     <h2><span style="font-size: 30px">
         <asp:Label ID="Label1" runat="server" Text="На данный момент у Вас нет активных заявок" Visible="False"></asp:Label>
         </span></h2>

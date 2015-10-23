@@ -4,6 +4,8 @@
      
     <asp:Button ID="GoBackButton" runat="server" OnClick="Button2_Click" Text="Назад" Width="113px" />
     <br />
+        <asp:Label   ID="Label1" style="font-size: 20px"  runat="server"  Visible="true"> </asp:Label>
+    <br />
     <br />
      
     <asp:GridView ID="ExpertsPointGV" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView1_RowDataBound">
@@ -24,5 +26,4 @@
             </Columns>
         </asp:GridView>
     <br />
-    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Скачать все экспертные оценки" Width="305px" />
     </asp:Content>

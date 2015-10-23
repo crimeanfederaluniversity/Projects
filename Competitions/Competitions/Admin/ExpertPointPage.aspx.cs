@@ -21,13 +21,13 @@ namespace Competitions.Admin
         {
             CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
             List<UsersTable> experts = (from a in CompetitionsDataBase.UsersTable
-                where a.Active == true
-                      && a.AccessLevel == 5 
-                join b in CompetitionsDataBase.zExpertsAndApplicationMappingTable
-                    on a.ID equals b.FK_UsersTable
-                where b.Active == true
-                      && b.FK_ApplicationsTable == applicationId
-                select a).ToList();
+                                        where a.Active == true
+                                         && a.AccessLevel == 5 
+                                        join b in CompetitionsDataBase.zExpertsAndApplicationMappingTable
+                                         on a.ID equals b.FK_UsersTable
+                                        where b.Active == true
+                                         && b.FK_ApplicationsTable == applicationId
+                                             select a).ToList();
             return experts;
 
         }
@@ -151,14 +151,19 @@ namespace Competitions.Admin
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
-            {          
+            {
+                
                 var appIdTmp = Session["ApplicationID"];
                 if (appIdTmp == null)
                 {
                     Response.Redirect("Main.aspx");
                 }
                 int applicationId = Convert.ToInt32(appIdTmp);
-
+                CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
+                zApplicationTable name = (from a in CompetitionsDataBase.zApplicationTable
+                    where a.ID == applicationId
+                    select a).FirstOrDefault();
+                Label1.Text = "Заключения экспертов на заявку: " + name.Name;
                 ExpertsPointGV.DataSource = GetFilledDataTable(GetExpertsInApplicationList(applicationId));
                 ExpertsPointGV.DataBind();
         
@@ -213,20 +218,7 @@ namespace Competitions.Admin
           
      ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            var appid = Session["ApplicationID"];
-            int idapp = Convert.ToInt32(appid);
-            string dirPath = Server.MapPath("~/documents/byApplication/" + idapp);
-            string zipFile = Server.MapPath("~/documents/generatedZipFiles/") + idapp+".zip";
-            System.IO.Compression.ZipFile.CreateFromDirectory(dirPath, zipFile);
-            HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
-            HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=file.zip");
-            HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(zipFile));
-            HttpContext.Current.Response.End();
-            Response.End();
-            
-        }
+     
 
         protected void Button2_Click(object sender, EventArgs e)
         {
