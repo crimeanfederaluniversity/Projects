@@ -50,7 +50,7 @@ namespace Competitions.Admin
                     dataRow["ID"] = currentExpert.ID;
                     dataRow["Name"] = currentExpert.Email;
 
-     zExpertsAndCompetitionMappngTamplateTable accesstext = (from f in CompetitionsDataBase.zExpertsAndCompetitionMappngTamplateTable                                               
+               zExpertsAndCompetitionMappngTamplateTable accesstext = (from f in CompetitionsDataBase.zExpertsAndCompetitionMappngTamplateTable                                               
                                                where f.Active == true && f.FK_UsersTable == currentExpert.ID
                                                select f).FirstOrDefault();
                      if (accesstext == null)

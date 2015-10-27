@@ -26,11 +26,12 @@ namespace Competitions.User
                     Response.Redirect("~/Default.aspx");
                 }
                 int userId = (int)userIdtmp;
-
+                
+                CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+               
                 Tab1.CssClass = "Clicked";
                 MainView.ActiveViewIndex = 0;
-
-                CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+                
                 {
                     DataTable dataTable = new DataTable();
                     dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
@@ -107,13 +108,14 @@ namespace Competitions.User
                     dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("CompetitionName", typeof(string)));
                     dataTable.Columns.Add(new DataColumn("SendedDate", typeof(string)));
-
+                    dataTable.Columns.Add(new DataColumn("Accept", typeof(string)));
                     List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTable
                                                                where a.FK_UsersTable == userId && a.Active == true && a.Sended == true
                                                                join b in competitionDataBase.zCompetitionsTable
                                                                on a.FK_CompetitionTable equals b.ID
                                                                where b.Active == true && b.OpenForApplications == true
                                                                select a).Distinct().ToList();
+                    
 
                     foreach (zApplicationTable currentApplication in applicationList)
                     {
@@ -131,6 +133,15 @@ namespace Competitions.User
                         {
                             dataRow["SendedDate"] = currentApplication.SendedDataTime.ToString().Split(' ')[0];
                         }
+                        zApplicationTable accept = (from a in competitionDataBase.zApplicationTable
+                                           where a.ID == (Convert.ToInt32(currentApplication.ID))
+                                           select a).FirstOrDefault();
+                        if (accept.Accept == true)
+                            
+                            dataRow["Accept"] = "Принята";
+                        else
+                            dataRow["Accept"] = "На рассмотрении";
+                        
                         dataTable.Rows.Add(dataRow);
                     }
                     ArchiveApplicationGV.DataSource = dataTable;

@@ -33,10 +33,10 @@ namespace Competitions.Admin
                     DataTable dataTable = new DataTable();
                     dataTable.Columns.Add("ID", typeof(string));
                     dataTable.Columns.Add("Name", typeof(string));
-                    dataTable.Columns.Add("Description", typeof(string));
+                    dataTable.Columns.Add("Email", typeof(string));
                     dataTable.Columns.Add("Autor", typeof(string));
                     dataTable.Columns.Add("Competition", typeof(string));
-                    dataTable.Columns.Add("Experts", typeof(string));
+      
                     dataTable.Columns.Add("SendedDataTime", typeof(string));
                   
 
@@ -46,36 +46,18 @@ namespace Competitions.Admin
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = currentApplication.ID;
                     dataRow["Name"] = currentApplication.Name;
-                    dataRow["Description"] = "";
+                    dataRow["Email"] = (from a in CompetitionsDataBase.UsersTable
+                                        where a.ID == currentApplication.FK_UsersTable
+                                        select a.Email).FirstOrDefault();
+                
                     if (currentApplication.Sended == false)                   
                     dataRow["SendedDataTime"] = "Заявка в процессе заполнения";                   
                     else
-                    dataRow["SendedDataTime"] = currentApplication.SendedDataTime.ToString().Split(' ')[0];
-                    
-               
+                    dataRow["SendedDataTime"] = currentApplication.SendedDataTime.ToString().Split(' ')[0];                                 
                     dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTable
-                                                  where a.ID == currentApplication.FK_CompetitionTable
+                                                  where a.ID == currentApplication.FK_CompetitionTable 
                                                   select a.Name).FirstOrDefault();
-                        dataRow["Autor"] = (from a in CompetitionsDataBase.UsersTable
-                                            where a.ID == currentApplication.FK_UsersTable
-                                            select a.Email).FirstOrDefault();
-                        List<UsersTable> expertsList = (from a in CompetitionsDataBase.UsersTable
-                                                        join b in CompetitionsDataBase.zExpertsAndApplicationMappingTable
-                                                            on a.ID equals b.FK_UsersTable
-                                                        where a.AccessLevel == 5
-                                                              && a.Active == true
-                                                              && b.FK_ApplicationsTable == currentApplication.ID
-                                                              && b.Active == true
-                                                        select a).ToList();
-                        string expertNamesList = "";
-
-                     
-                        foreach (UsersTable currentExpert in expertsList)
-                        {
-                            expertNamesList += currentExpert.Email + " \n";
-
-                        }
-                        dataRow["Experts"] = expertNamesList;
+ 
                         dataTable.Rows.Add(dataRow);
                     }
                     ApplicationGV.DataSource = dataTable;
@@ -87,7 +69,43 @@ namespace Competitions.Admin
                 Label1.Visible = true;
             }
         }
-            
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            Button sovexp = (Button) e.Row.FindControl("SovetexpertChangeButton");
+            Button exp = (Button) e.Row.FindControl("ExpertChangeButton");
+            Button accept = (Button) e.Row.FindControl("AcceptButton");
+            Button back = (Button)e.Row.FindControl("BackToUserButton");
+            if (sovexp != null && exp != null && accept != null)
+            {
+                CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
+                List<zApplicationTable> applicationsList = (from a in CompetitionsDataBase.zApplicationTable
+                                                            where a.Active == true && a.Accept == false && a.ID == Convert.ToInt32(accept.CommandArgument)
+                                                            join b in CompetitionsDataBase.zCompetitionsTable
+                                                            on a.FK_CompetitionTable equals b.ID
+                                                            where b.Active == true
+                                                            select a).ToList();
+                 
+                    foreach (var n in applicationsList)
+                    {
+                        if (n.Sended == false)
+                        {
+                            sovexp.Enabled = false;
+                            exp.Enabled = false;
+                            accept.Enabled = false;
+                            back.Enabled = false;
+                        }
+                        else
+                        {
+                            sovexp.Enabled = true;
+                            exp.Enabled = true;
+                            accept.Enabled = true;
+                            back.Enabled = true;
+                        }
+                    }
+                }
+            }     
+
         protected void ExpertChangeButtonClick(object sender, EventArgs e)
         {
             Button button = (Button) sender;
@@ -95,6 +113,15 @@ namespace Competitions.Admin
             {
                 Session["ApplicationID"] = button.CommandArgument;
                 Response.Redirect("ApllicationExpertEdit.aspx");
+            }
+        }
+        protected void SovetexpertChangeButtonClick(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            if (button != null)
+            {
+                Session["ApplicationID"] = button.CommandArgument;
+                Response.Redirect("ApplicationSovetexpertEdit.aspx");
             }
         }
         private byte[] ReadByteArryFromFile(string destPath)
@@ -163,31 +190,7 @@ namespace Competitions.Admin
                     select a).FirstOrDefault();
                 if (currentApplication != null)
                 {
-                    List<zExpertsAndCompetitionMappngTamplateTable> sovetexpertlist =
-                        (from a in competitionDataBase.zExpertsAndCompetitionMappngTamplateTable
-                            where a.Active == true && a.FK_CompetitionsTable == currentApplication.FK_CompetitionTable
-                            select a).ToList();
-
-                    if (sovetexpertlist.Count == 0)
-                    {
-                        /*   Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
-                            "alert('К данному конкурсу не выбран экспертный совет! Вы действительно хотите продолжить?');",
-                            true);
-                      */
-                    }
-                    else
-                    {
-                        foreach (var SovetExperts in sovetexpertlist)
-                        {
-                            zExpertsAndApplicationMappingTable sovetexpertlink =
-                                new zExpertsAndApplicationMappingTable();
-                            sovetexpertlink.Active = true;
-                            sovetexpertlink.FK_ApplicationsTable = currentApplication.ID;
-                            sovetexpertlink.FK_UsersTable = SovetExperts.FK_UsersTable;
-                            competitionDataBase.zExpertsAndApplicationMappingTable.InsertOnSubmit(sovetexpertlink);
-                            competitionDataBase.SubmitChanges();
-                        }
-                    }
+                   
 
                     List<zExpertPoints> expertPointsList = (from a in competitionDataBase.zExpertPoints
                         where a.Active == true && a.ID != 6

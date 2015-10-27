@@ -10,7 +10,7 @@
 namespace Competitions.Admin {
     
     
-    public partial class ApllicationExpertEdit {
+    public partial class ApplicationSovetexpertEdit {
         
         /// <summary>
         /// GoBackButton элемент управления.
@@ -22,21 +22,21 @@ namespace Competitions.Admin {
         protected global::System.Web.UI.WebControls.Button GoBackButton;
         
         /// <summary>
-        /// connectedExpertsGV элемент управления.
+        /// sovetExpertsGV элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView connectedExpertsGV;
+        protected global::System.Web.UI.WebControls.GridView sovetExpertsGV;
         
         /// <summary>
-        /// unconnectedExpertsGV элемент управления.
+        /// LinkExpertsButton элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView unconnectedExpertsGV;
+        protected global::System.Web.UI.WebControls.Button LinkExpertsButton;
     }
 }

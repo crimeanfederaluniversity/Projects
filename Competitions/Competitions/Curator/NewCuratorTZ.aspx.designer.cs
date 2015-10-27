@@ -31,15 +31,6 @@ namespace Competitions.Curator {
         protected global::System.Web.UI.WebControls.TextBox NameTextBox;
         
         /// <summary>
-        /// DescriptionTextBox элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DescriptionTextBox;
-        
-        /// <summary>
         /// BudjetTextBox элемент управления.
         /// </summary>
         /// <remarks>
@@ -83,14 +74,5 @@ namespace Competitions.Curator {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button CreateSaveButton;
-        
-        /// <summary>
-        /// Button1 элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
     }
 }

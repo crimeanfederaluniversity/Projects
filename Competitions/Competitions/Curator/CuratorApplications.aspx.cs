@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.IO;
 using System.IO.Compression;
+using Microsoft.Office.Interop.Word;
 
 namespace Competitions.Curator
 {
@@ -30,16 +31,16 @@ namespace Competitions.Curator
                 {
                    
                     List<zApplicationTable> applicationsList = (from a in CompetitionsDataBase.zApplicationTable
-                                                                where a.Active == true && a.Accept == true && a.Sended == true && a.FK_CompetitionTable == current.ID
+                                                                where a.Active == true   && a.Sended == true && a.FK_CompetitionTable == current.ID
                                                                 select a).ToList();
                     DataTable dataTable = new DataTable();
 
                     dataTable.Columns.Add("ID", typeof(string));
-                    dataTable.Columns.Add("Name", typeof(string));
-                    dataTable.Columns.Add("Description", typeof(string));
-                    dataTable.Columns.Add("Autor", typeof(string));
+                    dataTable.Columns.Add("Name", typeof(string));               
                     dataTable.Columns.Add("Competition", typeof(string));
                     dataTable.Columns.Add("Experts", typeof(string));
+                    dataTable.Columns.Add("Email", typeof(string));
+                    dataTable.Columns.Add("Accept", typeof(string));
                     dataTable.Columns.Add("SendedDataTime", typeof(string));
 
 
@@ -48,15 +49,27 @@ namespace Competitions.Curator
                     {
                         DataRow dataRow = dataTable.NewRow();
                         dataRow["ID"] = currentApplication.ID;
-                        dataRow["Name"] = currentApplication.Name;
-                        dataRow["Description"] = "";
+                        dataRow["Name"] = currentApplication.Name;                
                         dataRow["SendedDataTime"] = currentApplication.SendedDataTime.ToString().Split(' ')[0];
                         dataRow["Competition"] = (from a in CompetitionsDataBase.zCompetitionsTable
                                                   where a.ID == currentApplication.FK_CompetitionTable
                                                   select a.Name).FirstOrDefault();
-                        dataRow["Autor"] = (from a in CompetitionsDataBase.UsersTable
+                        dataRow["Email"] = (from a in CompetitionsDataBase.UsersTable
                                             where a.ID == currentApplication.FK_UsersTable
                                             select a.Email).FirstOrDefault();
+ 
+                        zApplicationTable status = (from a in CompetitionsDataBase.zApplicationTable
+                                            where a.ID == currentApplication.ID
+                                            select a).FirstOrDefault();
+                        if (status.Accept == true)
+                        {
+                            dataRow["Accept"] = "Принята";
+                        }
+                        else
+                        {
+                            dataRow["Accept"] = "На рассмотрении";
+                        }
+
                         List<UsersTable> expertsList = (from a in CompetitionsDataBase.UsersTable
                                                         join b in CompetitionsDataBase.zExpertsAndApplicationMappingTable
                                                             on a.ID equals b.FK_UsersTable

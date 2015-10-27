@@ -29,6 +29,11 @@
     <br />
     <asp:Label ID="Label2" style="font-size: 20px" runat="server" Text="Label"></asp:Label>
     <br />
+    <asp:Label ID="Label3" style="font-size: 20px" runat="server" Text="Укажите даты начала и окончания реализации Вашего проекта:"></asp:Label>
+    <asp:Calendar ID="Calendar1" runat="server"></asp:Calendar>
+    <br />
+    <asp:Calendar ID="Calendar2" runat="server"></asp:Calendar>
+    <br />
     <br />
     <br />
     <p>

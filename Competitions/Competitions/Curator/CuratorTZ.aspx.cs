@@ -24,6 +24,7 @@ namespace Competitions.Curator
                     CheckBoxList1.Items.Add(TmpItem);
                 }
 
+                
                 var sessionParam = Session["CompetitionID"];
                 if (sessionParam != null)
                 {
@@ -40,8 +41,7 @@ namespace Competitions.Curator
                         }
                         else
                         {
-                            NameTextBox.Text = currentCompetition.Name;
-                            DescriptionTextBox.Text = currentCompetition.Number;
+                            NameTextBox.Text = currentCompetition.Name;                            
                             BudjetTextBox.Text = currentCompetition.Budjet.ToString();
                             foreach (ListItem current in CheckBoxList1.Items)
                             {
@@ -111,8 +111,7 @@ namespace Competitions.Curator
 
                             }
                                                
-                            currentCompetition.Name = NameTextBox.Text;
-                            currentCompetition.Number = DescriptionTextBox.Text;
+                            currentCompetition.Name = NameTextBox.Text;                            
                             currentCompetition.Budjet = Convert.ToDouble(BudjetTextBox.Text);
                             currentCompetition.FK_Curator = user;
                             currentCompetition.StartDate = Calendar1.SelectedDate;
@@ -129,10 +128,6 @@ namespace Competitions.Curator
         {
             Response.Redirect("CuratorCompetition.aspx");
         }
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("CuratorFormCreate.aspx");
-        }
-         
+     
     }
 }

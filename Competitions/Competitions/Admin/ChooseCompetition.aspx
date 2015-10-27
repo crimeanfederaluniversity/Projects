@@ -8,7 +8,7 @@
         <asp:Button ID="NewCompetitionButton" runat="server" OnClick="NewCompetitionButton_Click" Text="Создать новый конкурс" />
         <br />
         <br />
-        <asp:GridView ID="CompetitionsGV" runat="server" AutoGenerateColumns="False">
+        <asp:GridView ID="CompetitionsGV" runat="server" AutoGenerateColumns="False" OnRowDataBound="CompetitionsGVRowDataBound">
             <Columns>
                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
                 <asp:BoundField DataField="Number"   HeaderText="Шифр конкурса" Visible="true" />

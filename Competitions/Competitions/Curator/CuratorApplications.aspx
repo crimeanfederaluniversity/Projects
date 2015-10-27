@@ -10,9 +10,10 @@
             <Columns>
                 <asp:BoundField DataField="ID"   HeaderText="Код заявки" Visible="true" />
                 <asp:BoundField DataField="Name"   HeaderText="Название" Visible="true" />
-                <asp:BoundField DataField="Description"   HeaderText="Описание" Visible="false" />
+                <asp:BoundField DataField="Email"   HeaderText="Отправитель" Visible="true" />
                 <asp:BoundField DataField="Competition"   HeaderText="Конкурс" Visible="true" />
                 <asp:BoundField DataField="SendedDataTime"   HeaderText="Дата отправки на рассмотрение" Visible="true" />
+                <asp:BoundField DataField="Accept"  HeaderText="Статус" Visible="true" />
                 <asp:TemplateField HeaderText="Cкачать заявку">
                         <ItemTemplate>
                             <asp:Button ID="GetDocButton" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>

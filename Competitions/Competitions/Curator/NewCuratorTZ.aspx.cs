@@ -26,12 +26,19 @@ namespace Competitions.Curator
         }
         protected void CreateSaveButtonClick(object sender, EventArgs e)
         {
+            var userIdtmp = Session["UserID"];
+            if (userIdtmp == null)
+            {
+                Response.Redirect("~/CuratorMainPage.aspx");
+            }
+            int userId = (int)userIdtmp;
+
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();          
                 zCompetitionsTable newCompetition = new zCompetitionsTable();                
                 newCompetition.Name = NameTextBox.Text;
-                newCompetition.Number = DescriptionTextBox.Text;
+               
                 newCompetition.Budjet = Convert.ToDouble(BudjetTextBox.Text);
-                // newCompetition.FK_Curator = user;
+                newCompetition.FK_Curator = userId;
                 newCompetition.StartDate = Calendar1.SelectedDate;
                 newCompetition.EndDate = Calendar2.SelectedDate;
                 newCompetition.Active = true;
@@ -55,9 +62,6 @@ namespace Competitions.Curator
         {
             Response.Redirect("CuratorCompetition.aspx");
         }
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("CuratorFormCreate.aspx");
-        }
+        
     }
 }

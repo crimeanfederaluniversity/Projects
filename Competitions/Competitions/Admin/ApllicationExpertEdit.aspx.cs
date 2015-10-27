@@ -11,6 +11,29 @@ namespace Competitions.Admin
 {
     public partial class ApllicationExpertEdit : System.Web.UI.Page
     {
+        private List<UsersTable> GetSovetCompetitionExpertsList(int applicationId)
+        {
+            CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
+            List<zExpertsAndCompetitionMappngTamplateTable> sovetExperts = (from a in CompetitionsDataBase.zExpertsAndCompetitionMappngTamplateTable
+                                                                            where a.Active == true
+                                                                            join b in CompetitionsDataBase.zApplicationTable
+                                                                            on a.FK_CompetitionsTable equals b.FK_CompetitionTable
+                                                                            where b.ID == applicationId
+                                                                            join c in CompetitionsDataBase.zCompetitionsTable
+                                                                            on b.FK_CompetitionTable equals c.ID
+                                                                            where c.Active == true
+                                                                            select a).ToList();
+
+            List<UsersTable> sovetexpertnames = new List<UsersTable>();
+            foreach (var currentUser in sovetExperts)
+            {
+                UsersTable sovexp = (from a in CompetitionsDataBase.UsersTable
+                                     where a.ID == currentUser.FK_UsersTable
+                                     select a).FirstOrDefault();
+                sovetexpertnames.Add(sovexp);
+            }
+            return sovetexpertnames;
+        }
         private List<UsersTable> GetExpertsInApplicationList(int applicationId)
         {
             CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
@@ -32,12 +55,18 @@ namespace Competitions.Admin
                       && a.AccessLevel == 5           
                 select a).ToList();
             List<UsersTable> expertsInApplication = GetExpertsInApplicationList(applicationId);
+            List<UsersTable> SovetexpertApplication = GetSovetCompetitionExpertsList(applicationId);
             foreach (UsersTable currentUser in expertsInApplication)
-            {
-                allExperts.Remove(currentUser);
+            {                
+                foreach (UsersTable currentsovetuser in SovetexpertApplication)
+                {
+                    allExperts.Remove(currentUser);
+                    allExperts.Remove(currentsovetuser);
+                }
             }
             return allExperts;
         }
+    
         private DataTable GetFilledDataTable(List<UsersTable> expertsList)
         {
                 DataTable dataTable = new DataTable();
@@ -65,10 +94,12 @@ namespace Competitions.Admin
                 int applicationId = Convert.ToInt32(appIdTmp);
 
               connectedExpertsGV.DataSource=GetFilledDataTable(GetExpertsInApplicationList(applicationId));
-              unconnectedExpertsGV.DataSource=GetFilledDataTable(GetExpertsOutApplicationList(applicationId)); 
+              unconnectedExpertsGV.DataSource=GetFilledDataTable(GetExpertsOutApplicationList(applicationId));
+                
                 
                 connectedExpertsGV.DataBind();
                 unconnectedExpertsGV.DataBind();
+                
                     
             }
         }
@@ -138,5 +169,13 @@ namespace Competitions.Admin
         {
             Response.Redirect("ChooseApplication.aspx");
         }
+
+       
+
+
+
+
+
+
     }
 }

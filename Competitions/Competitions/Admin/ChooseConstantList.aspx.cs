@@ -86,10 +86,19 @@ namespace Competitions.Admin
                 zConstantListTable constantListToDelete = (from a in competitionDataBase.zConstantListTable
                                                where a.ID == iD
                                                select a).FirstOrDefault();
+               List <zCollectedDataTable> constatvalue = (from a in competitionDataBase.zCollectedDataTable
+                    where a.Active && a.FK_ConstantListTable == constantListToDelete.ID
+                    select a).ToList();
                 if (constantListToDelete != null)
                 {
                     constantListToDelete.Active = false;
                     competitionDataBase.SubmitChanges();
+                    foreach (zCollectedDataTable n in constatvalue)
+                    {
+                        n.Active = false;
+                        competitionDataBase.SubmitChanges();
+                    }
+                    
                 }
                 else
                 {

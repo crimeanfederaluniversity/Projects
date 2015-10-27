@@ -29,6 +29,7 @@ namespace Competitions.Curator
                 dataTable.Columns.Add(new DataColumn("Budjet", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("StartDate", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("EndDate", typeof(string)));
+                dataTable.Columns.Add(new DataColumn("Sended", typeof(string)));
 
                 List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTable
                                                              where a.Active == true && a.FK_Curator == userId
@@ -43,7 +44,15 @@ namespace Competitions.Curator
                     dataRow["Budjet"] = Convert.ToInt32(currentCompetition.Budjet);
                     dataRow["StartDate"] = currentCompetition.StartDate.ToString().Split(' ')[0];
                     dataRow["EndDate"] = currentCompetition.EndDate.ToString().Split(' ')[0];
-
+                    if (currentCompetition.Sended == false)
+                    {
+                        dataRow["Sended"] = "На рассмотрении";
+                    }
+                    else
+                    {
+                        dataRow["Sended"] = "Открыт для подачи заявок";
+                    }
+                   
                     dataTable.Rows.Add(dataRow);
                 }
                 CompetitionsGV.DataSource = dataTable;
@@ -53,15 +62,25 @@ namespace Competitions.Curator
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             Button send = (Button)e.Row.FindControl("OpenButton");
-            if (send != null)
+            Button change = (Button)e.Row.FindControl("ChangeButton");
+
+            if (send != null && change!= null)
             {
                 CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
-                List<zCompetitionsTable> nwList = (from a in CompetitionsDataBase.zCompetitionsTable
+                zCompetitionsTable sended = (from a in CompetitionsDataBase.zCompetitionsTable
                                                    where a.Active == true
-                                                   && a.ID == Convert.ToInt32(send.CommandArgument)
-                                                   && a.Sended == true
-                                                   select a).ToList();
-                send.Enabled = false;
+                                                   && a.ID == Convert.ToInt32(send.CommandArgument)                                                  
+                                                   select a).FirstOrDefault();
+                if (sended.Sended == true)
+                {
+                    send.Enabled = false;
+                    change.Enabled = false;
+                }
+                else
+                {
+                    send.Enabled = true;
+                    change.Enabled = true;
+                }
             }
         }
         protected void NewCompetitionButton_Click(object sender, EventArgs e)

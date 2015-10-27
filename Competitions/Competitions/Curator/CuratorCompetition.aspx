@@ -10,7 +10,7 @@
         <asp:Button ID="NewCompetitionButton" runat="server" OnClick="NewCompetitionButton_Click" Text="Создать новый конкурс" />
         <br />
         <br />
-        <asp:GridView ID="CompetitionsGV" runat="server" AutoGenerateColumns="False">
+        <asp:GridView ID="CompetitionsGV" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView1_RowDataBound">
             <Columns>
                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
                 <asp:BoundField DataField="Number"   HeaderText="Шифр конкурса" Visible="true" />
@@ -18,7 +18,7 @@
                 <asp:BoundField DataField="Budjet"   HeaderText="Бюджет" Visible="true" />
                 <asp:BoundField DataField="StartDate"   HeaderText="Дата начала" Visible="true" />
                 <asp:BoundField DataField="EndDate"   HeaderText="Дата окончания" Visible="true" />
-                 
+                 <asp:BoundField DataField="Sended"   HeaderText="Статус" Visible="true" />
                 <asp:TemplateField HeaderText="Редактировать информацию о конкурсе">
                         <ItemTemplate>
                             <asp:Button ID="ChangeButton" runat="server" CommandName="Select" Text="Редактировать" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="ChangeButtonClick"/>

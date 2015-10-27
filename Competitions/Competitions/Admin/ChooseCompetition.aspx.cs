@@ -46,7 +46,34 @@ namespace Competitions.Admin
                 CompetitionsGV.DataSource = dataTable;
                 CompetitionsGV.DataBind();
             }
-        }      
+        }
+        protected void CompetitionsGVRowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            Button open = (Button)e.Row.FindControl("OpenButton");
+            Button change = (Button)e.Row.FindControl("ChangeButton");
+
+            if (open != null && change != null  )
+            {
+                CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
+                List<zCompetitionsTable> compList = (from a in CompetitionsDataBase.zCompetitionsTable
+                                                     where a.Active == true && a.ID == Convert.ToInt32(open.CommandArgument)                                                            
+                                                            select a).ToList();
+
+                foreach (var n in compList)
+                {
+                    if (n.OpenForApplications == true)
+                    {
+                        open.Enabled = false;
+                        change.Enabled = false;
+                    }
+                    else
+                    {
+                        open.Enabled = true;
+                        change.Enabled = true;
+                    }
+                }
+            }
+        }  
         protected void OpenButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
