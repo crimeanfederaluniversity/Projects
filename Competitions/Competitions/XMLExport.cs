@@ -136,7 +136,14 @@ namespace Competitions
 
             if (dataProcess.IsCellCheckBox(dType))
             {
-                return dataProcess.GetBoolDataValue(currentColumn, currentCollectedData).ToString();
+                if (dataProcess.GetBoolDataValue(currentColumn, currentCollectedData))
+                {
+                    return "☑";
+                }
+                else
+                {
+                    return "☐"; 
+                }
             }
 
             if (dataProcess.IsCellDate(dType))

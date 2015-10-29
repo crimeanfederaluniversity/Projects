@@ -7,7 +7,11 @@
          <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" OnClick="Button2_Click" /> 
     </div> 
 </asp:Panel> 
-        
+    
+    <br />
+    <br />
+
+
         <style type="text/css">
             
             .top_panel {
@@ -29,10 +33,22 @@
     <br />
     <asp:Label ID="Label2" style="font-size: 20px" runat="server" Text="Label"></asp:Label>
     <br />
-    <asp:Label ID="Label3" style="font-size: 20px" runat="server" Text="Укажите даты начала и окончания реализации Вашего проекта:"></asp:Label>
-    <asp:Calendar ID="Calendar1" runat="server"></asp:Calendar>
+    
+    
+
+
+
     <br />
-    <asp:Calendar ID="Calendar2" runat="server"></asp:Calendar>
+    <script src="../Calendar/datepicker.js" type="text/javascript" charset="UTF-8" ></script>
+    <link rel="stylesheet" type="text/css" href="../Calendar/datepicker.css" />
+    <b>Дата в формате dd.mm.yyyy:</b>
+    
+   
+   
+	<br/>
+	<input name="data" id ="data"> 
+	<input type="button" style="background: url('../Calendar/datepicker.jpg') no-repeat; width: 30px; border: 0px;" onclick="displayDatePicker('data', false, 'dmy', '.');">
+
     <br />
     <br />
     <br />
@@ -54,7 +70,7 @@
     <p>
         &nbsp;</p>
     <p>
-        Прикрепление документов к заявке</p>
+        Прикрепление документов к заявке (не более 5 файлов)</p>
 <p>
         <asp:GridView ID="DocumentsGV" runat="server" AutoGenerateColumns="False">
             <Columns>
@@ -76,16 +92,30 @@
             </Columns>
         </asp:GridView>
     <p>
-        &nbsp;<p>
-        <asp:FileUpload ID="FileUpload1" runat="server" AllowMultiple="True" Width="392px" />
+        
+        <script>
+            function countFiles() {
+                if (document.getElementById('FileUpload1').files.count() > 5)
+                    return false;
+                return true;
+            }
             
+        </script>
+
+        &nbsp;<p>
+        <asp:FileUpload ID="FileUpload1" runat="server" AllowMultiple="True"  Width="392px" />
+            
+
             <asp:RegularExpressionValidator ID="uplValidator" runat="server" ControlToValidate="FileUpload1"
- ErrorMessage="Неверный формат файла" ForeColor="Red"
+ ErrorMessage="Неверный формат файла"  ForeColor="Red"
  ValidationExpression="(.+\.([Jj][Pp][Gg])|.+\.([Pp][Nn][Gg])|.+\.([Dd][Oo][Cc])|.+\.([Dd][Oo][Cc][Xx])|.+\.([Xx][Ll][Ss])|.+\.([Xx][Ll][Ss][Xx])|.+\.(Rr][Tt][Ff]))"></asp:RegularExpressionValidator>
+
+    &nbsp;
+        <asp:Label ID="ToManyFilesLabelError" runat="server" ForeColor="Red" Visible="False" Text="Не более 5 файлов"></asp:Label>
 
     </p>
 <p>
-        <asp:Button ID="AddDocumentsButton" runat="server" OnClick="AddDocumentsButton_Click" Text="Загрузить выбранные файлы на сервер" />
+        <asp:Button ID="AddDocumentsButton" runat="server" OnClientClick="return countFiles()" OnClick="AddDocumentsButton_Click" Text="Загрузить выбранные файлы на сервер" />
     </p>
     <p>
         &nbsp;</p>

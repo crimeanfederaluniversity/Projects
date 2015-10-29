@@ -251,12 +251,28 @@ namespace Competitions.User
                             }
                             createXmlFile.CreateDocument(templateFilePath, newFilePath, iD, docType);
                             string convertedFilePath = createXmlFile.ConvertedFilePath;
-
+                            
                             HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
                             HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=document." + createXmlFile.ConvertedFileExtension);
                             HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(convertedFilePath));
-                            HttpContext.Current.Response.End();
-                            Response.End();                         
+                            HttpContext.Current.Response.End();                           
+                            Response.End();      
+                             
+                          /*  System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
+                            response.ClearContent();
+                            response.Clear();
+                            response.ContentType = "text/plain";
+                            response.AddHeader("Content-Disposition", "attachment; filename=document." + createXmlFile.ConvertedFileExtension);
+                            response.TransmitFile(convertedFilePath);
+                            response.Flush();
+                            response.Clear();
+                            response.Redirect("~/User/UserMainPage.aspx");
+                            response.End();
+
+                            */
+                            /*
+                            Response.WriteFile(convertedFilePath);
+                            Response.Redirect("~/User/UserMainPage.aspx");*/
                         }
                     }
                 }
@@ -268,6 +284,7 @@ namespace Competitions.User
             Tab1.CssClass = "Clicked";
             Tab2.CssClass = "Initial";
             Tab3.CssClass = "Initial";
+            Tab4.CssClass = "Initial";
             MainView.ActiveViewIndex = 0;
         }
         protected void Tab2_Click(object sender, EventArgs e)
@@ -275,6 +292,7 @@ namespace Competitions.User
             Tab1.CssClass = "Initial";
             Tab2.CssClass = "Clicked";
             Tab3.CssClass = "Initial";
+            Tab4.CssClass = "Initial";
             MainView.ActiveViewIndex = 1;
         }
         protected void Tab3_Click(object sender, EventArgs e)
@@ -282,7 +300,16 @@ namespace Competitions.User
             Tab1.CssClass = "Initial";
             Tab2.CssClass = "Initial";
             Tab3.CssClass = "Clicked";
+            Tab4.CssClass = "Initial";
             MainView.ActiveViewIndex = 2;
+        }
+        protected void Tab4_Click(object sender, EventArgs e)
+        {
+            Tab1.CssClass = "Initial";
+            Tab2.CssClass = "Initial";
+            Tab3.CssClass = "Initial";
+            Tab4.CssClass = "Clicked";
+            MainView.ActiveViewIndex = 3;
         }
         protected void Button2_Click(object sender, EventArgs e)
         {

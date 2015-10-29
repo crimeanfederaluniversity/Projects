@@ -217,7 +217,7 @@ namespace Competitions.Admin
                                 sovetexpertpoints.Active = true;
                                 sovetexpertpoints.FK_ApplicationTable = currentApplication.ID;
                                 sovetexpertpoints.FK_ExpertsTable = currentExpert.FK_UsersTable;
-                                //sovetexpertpoints.LastChangeDataTime = DateTime.Now;
+                                sovetexpertpoints.LastChangeDataTime = DateTime.Now;
                                 sovetexpertpoints.FK_ExpertPoints = currentExpertPoint.ID;
                                 sovetexpertpoints.Sended = false;
                                 competitionDataBase.zExpertPointsValue.InsertOnSubmit(sovetexpertpoints);

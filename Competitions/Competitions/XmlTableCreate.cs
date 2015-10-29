@@ -211,6 +211,17 @@ namespace Competitions
 
             return newNode;
         }
+        private XmlNode CreateTableMakeRowCantSplit(XmlDocument document)
+        {
+            XmlNode newNode = document.CreateNode(XmlNodeType.Element, "w:trPr", "w");
+            newNode.AppendChild(CreateTableMakeRowCantSplitParam(document));
+            return newNode;
+        }
+        private XmlNode CreateTableMakeRowCantSplitParam(XmlDocument document)
+        {
+            XmlNode newNode = document.CreateNode(XmlNodeType.Element, "w:cantSplit", "w");         
+            return newNode;
+        }
         private XmlNode CreateTableRow(XmlDocument document, List<string> valueList)
         {
             XmlNode newNode = document.CreateNode(XmlNodeType.Element, "w:tr", "w");
@@ -223,6 +234,8 @@ namespace Competitions
             newNode.Attributes.Append(newAttribute0);                     
             newNode.Attributes.Append(newAttribute1);                       
             newNode.Attributes.Append(newAttribute2);
+
+            newNode.AppendChild(CreateTableMakeRowCantSplit(document));
 
             foreach (string currentValue in valueList)
             {

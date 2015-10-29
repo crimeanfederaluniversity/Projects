@@ -15,6 +15,7 @@ namespace Competitions.User
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            var iiiiii = Request["data"];
             if (!Page.IsPostBack)
             {
                 var sessionParam1 = Session["ApplicationID"];
@@ -110,6 +111,9 @@ namespace Competitions.User
         }
         private void AddDoc()
         {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();        
+
+            
                         var sessionParam1 = Session["ApplicationID"];       
             if ((sessionParam1 == null))
             {
@@ -117,45 +121,62 @@ namespace Competitions.User
             }
 
             int applicationId = Convert.ToInt32(sessionParam1);
-            CompetitionDataContext competitionDataBase = new CompetitionDataContext();          
+
+            List<zDocumentsTable> documentsList = (from a in competitionDataBase.zDocumentsTable
+                                                   where a.FK_ApplicationTable == applicationId
+                                                         && a.Active == true
+                                                   select a).ToList();
+
             String path = Server.MapPath("~/documents/byApplication");
             Directory.CreateDirectory(path + "\\\\" + applicationId.ToString());
             if (FileUpload1.HasFile)
             {
-                if (FileUpload1.PostedFiles.Count > 1)
+                if (FileUpload1.PostedFiles.Count + documentsList.Count() > 5)
                 {
-                    int AttachOK = 0;
-                    int AttachError = 0;
-                    string DBLinkCombine = "";
-                    foreach (var file in FileUpload1.PostedFiles)
+                    ToManyFilesLabelError.Visible = true;
+                    //Response.End();
+                }
+
+                else
+                {
+
+
+                    if (FileUpload1.PostedFiles.Count > 1)
+                    {
+                        int AttachOK = 0;
+                        int AttachError = 0;
+                        string DBLinkCombine = "";
+                        foreach (var file in FileUpload1.PostedFiles)
+                        {
+                            try
+                            {
+                                file.SaveAs(path + "\\\\" + applicationId.ToString() + "\\\\" + file.FileName);
+                                NewDocument(applicationId, file.FileName);
+                                AttachOK++;
+                            }
+                            catch (Exception ex)
+                            {
+                                AttachError++;
+                            }
+
+                            //  FileStatusLabel.Text = "Загружено " + AttachOK.ToString() + " файлов из " + (AttachError + AttachOK).ToString();
+                            // NewCampaign.DocumentLocation = DBLinkCombine;
+                            // DBConnection.SubmitChanges();
+                        }
+                    }
+                    else
                     {
                         try
-                        {                           
-                            file.SaveAs(path +"\\\\"+ applicationId.ToString() + "\\\\" + file.FileName);
-                           NewDocument(applicationId,file.FileName);
-                            AttachOK++;
+                        {
+                            FileUpload1.PostedFile.SaveAs(path + "\\\\" + applicationId.ToString() + "\\\\" +
+                                                          FileUpload1.FileName);
+                            NewDocument(applicationId, FileUpload1.FileName);
+                            // FileStatusLabel.Text = "Файл загружен!";
                         }
                         catch (Exception ex)
                         {
-                            AttachError++;
+                            //  FileStatusLabel.Text = "Не удалось загрузить файл.";
                         }
-
-                      //  FileStatusLabel.Text = "Загружено " + AttachOK.ToString() + " файлов из " + (AttachError + AttachOK).ToString();
-                       // NewCampaign.DocumentLocation = DBLinkCombine;
-                       // DBConnection.SubmitChanges();
-                    }
-                }
-                else
-                {
-                    try
-                    {
-                        FileUpload1.PostedFile.SaveAs(path +"\\\\"+ applicationId.ToString() + "\\\\" + FileUpload1.FileName);
-                        NewDocument(applicationId, FileUpload1.FileName);
-                       // FileStatusLabel.Text = "Файл загружен!";
-                    }
-                    catch (Exception ex)
-                    {
-                      //  FileStatusLabel.Text = "Не удалось загрузить файл.";
                     }
                 }
             }

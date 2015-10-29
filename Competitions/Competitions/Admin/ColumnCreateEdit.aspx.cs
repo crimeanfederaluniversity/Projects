@@ -174,7 +174,7 @@ namespace Competitions.Admin
                             }
                             if (dataType.DataTypeDependOfBit(currentColum.DataType))
                             {
-                                FkToColumnDropDown.Items.FindByValue(currentColum.FK_ColumnTable.ToString()).Selected = true;
+                                //FkToColumnDropDown.Items.FindByValue(currentColum.FK_ColumnTable.ToString()).Selected = true;
                                 BitColumnsDropDown.Items.FindByValue(currentColum.FK_ColumnConnectToTable.ToString()).Selected = true;
                                 //ChooseColumnForDropDownDiv.Visible = true;
                                 //ChooseBitForDepend.Visible = true;
@@ -216,7 +216,7 @@ namespace Competitions.Admin
             }
             if (dataType.DataTypeDependOfBit(chosenValue))
             {
-                ChooseColumnForDropDownDiv.Visible = true;
+                //ChooseColumnForDropDownDiv.Visible = true;
                 ChooseBitForDepend.Visible = true;
             }
         }
@@ -238,15 +238,33 @@ namespace Competitions.Admin
                 int competitionId = (int)sessionParam1;
                 int sectionId = (int)sessionParam2;
                 int columnId = (int) sessionParam3;
+
+                zColumnTable currentColumn = null;
+                bool isNewRowKInTable = false;
                 if (columnId > 0)
                 {
-                    if ((NameTextBox.Text.Length > 0) && (DescriptionTextBox.Text.Length > 0))
-                    {
-                        zColumnTable currentColumn = (from a in competitionDataBase.zColumnTable
+                    isNewRowKInTable = false;
+                }
+                else
+                {
+                    isNewRowKInTable = true;
+                }
+
+                if (isNewRowKInTable)
+                {
+                    currentColumn = new zColumnTable();
+                }
+                else
+                {
+                    currentColumn = (from a in competitionDataBase.zColumnTable
                                                          where a.Active == true
                                                                && a.ID == columnId
                                                                && a.FK_SectionTable == sectionId
                                                          select a).FirstOrDefault();
+                }
+
+                if ((NameTextBox.Text.Length > 0) && (DescriptionTextBox.Text.Length > 0))
+                    {                   
                         if (currentColumn == null)
                         {
                             //error
@@ -256,8 +274,9 @@ namespace Competitions.Admin
                         {
                             currentColumn.Name = NameTextBox.Text;
                             currentColumn.Description = DescriptionTextBox.Text;
-                            currentColumn.DataType =
-                                Convert.ToInt32(DataTypeDropDownList.SelectedValue);
+                            currentColumn.Active = true;
+                            currentColumn.FK_SectionTable = sectionId;
+                            currentColumn.DataType = dataTypeSelectedValue;
                             currentColumn.TotalUp = TotalUpCheckBox.Checked;
                             currentColumn.SortBy = SortByCheckBox.Checked;
                             currentColumn.UniqueMark = UniqueMarkTextBox.Text;
@@ -277,51 +296,17 @@ namespace Competitions.Admin
                             }
                             if (dataType.DataTypeDependOfBit(dataTypeSelectedValue))
                             {
-                                currentColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
+                                //currentColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
                                 currentColumn.FK_ColumnConnectToTable = Convert.ToInt32(BitColumnsDropDown.SelectedValue);
+                            }
+                            if (isNewRowKInTable)
+                            {
+                                competitionDataBase.zColumnTable.InsertOnSubmit(currentColumn);
                             }
                             competitionDataBase.SubmitChanges();
                         }
                     }
-                }
-                else
-                {
-                    if ((NameTextBox.Text.Length > 0) && (DescriptionTextBox.Text.Length > 0))
-                    {
-                        
-                        zColumnTable newColumn = new zColumnTable();
-                        newColumn.Name = NameTextBox.Text;
-                        newColumn.Description = DescriptionTextBox.Text;
-                        newColumn.Active = true;
-                        newColumn.FK_SectionTable = sectionId;
-                        newColumn.DataType = dataTypeSelectedValue;
-                        newColumn.SortBy = SortByCheckBox.Checked;
-                        newColumn.TotalUp = TotalUpCheckBox.Checked;
-                        newColumn.UniqueMark = UniqueMarkTextBox.Text;
-                        if (dataType.DataTypeWithConnectionToCollected(dataTypeSelectedValue))
-                        {
-                            newColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
-                        }
-                        if (dataType.DataTypeWithConnectionToConstant(dataTypeSelectedValue))
-                        {
-                            newColumn.FK_ConstantListsTable = Convert.ToInt32(FkToConstantDropDown.SelectedValue);
-                        }
-                        if (dataType.DataTypeWithConnectionToColumnsWithParams(dataTypeSelectedValue))
-                        {
-                            newColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
-                            newColumn.FK_ColumnConnectFromTable = Convert.ToInt32(Fk_ColumnConnectFromDropDown.SelectedValue);
-                            newColumn.FK_ColumnConnectToTable = Convert.ToInt32(Fk_ColumnConnectToDropDown.SelectedValue);
-                        }
-                        if (dataType.DataTypeDependOfBit(dataTypeSelectedValue))
-                        {
-                            newColumn.FK_ColumnTable = Convert.ToInt32(FkToColumnDropDown.SelectedValue);
-                            newColumn.FK_ColumnConnectToTable = Convert.ToInt32(BitColumnsDropDown.SelectedValue);
-                        }
-                        competitionDataBase.zColumnTable.InsertOnSubmit(newColumn);
-                        competitionDataBase.SubmitChanges();
-                    }
-                }
-            }
+                }                          
             Response.Redirect("ChooseColumn.aspx");
         }
         protected void GoBackButton_Click(object sender, EventArgs e)

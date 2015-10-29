@@ -5,10 +5,13 @@
     <div>    
         <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Text="К заявке" Width="125px" OnClick="GoBackButton_Click" />
         &nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" />
-        &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="PreviousSection" runat="server" CausesValidation="False" OnClick="PreviousSection_Click" OnClientClick="showLoadPanel()" Text="Предыдущий пункт" />
+        &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="PreviousSection" runat="server" CausesValidation="False" OnClick="PreviousSection_Click" OnClientClick="showLoadPanel()" Text="Предыдущий шаг" />
 &nbsp;
-        <asp:Button ID="NextSection" OnClientClick="showLoadPanel()" runat="server" OnClick="NextSection_Click" Text="Далее" Width="192px" />
-    </div> 
+        <asp:Button ID="NextSection" OnClientClick="showLoadPanel()" runat="server" OnClick="NextSection_Click" Text="Сохранить и перейти к следующему шагу" Width="314px" />
+        &nbsp;
+
+  <asp:Button ID="SaveButton" runat="server" Text="Сохранить изменения" OnClientClick="showLoadPanel()" CausesValidation="False" OnClick="SaveButton_Click" />
+          </div> 
 </asp:Panel> 
     
     
@@ -56,20 +59,9 @@
             <div class="f_circleG" id="frotateG_08">
             </div>
             </div>
-        </div>
-     
-    
-
-    
-
+        </div>  
     <div>
-
-
     
-
-    
-
-
     <script type="text/javascript">
         function setHeightAndWidth(txtdesc) {
             txtdesc.style.height = txtdesc.scrollHeight + "px";
@@ -111,9 +103,14 @@
             width: 100%;      
         }
         
+        .auto-style1 {
+            font-size: large;
+        }
+        
     </style>
      <br />
         <br />
+        <span class="auto-style1">Список шагов:</span><br />
     <asp:Label   ID="LabelHint"   runat="server"  Visible="true"> </asp:Label>
     <br />
     <br />
@@ -130,6 +127,9 @@
                             <asp:TextBox        ID="EditTextBox0"        runat="server"  Visible='<%# Bind("EditTextBoxVisible0") %>'         Text='<%# Bind("EditTextBoxValue0") %>'    TextMode='<%# Bind("EditTextBoxMode0") %>'            ></asp:TextBox>                                                   
                             <asp:CheckBox       ID="EditBoolCheckBox0"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible0") %>'    Checked='<%# Bind("EditBoolCheckBoxValue0") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown0" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible0") %>'  CssClass="dropdown"     ></asp:DropDownList>                                                       
+                            <asp:FileUpload     ID="FileUpload0"         runat="server"  Visible='<%# Bind("FileUploadVisible0") %>'          AllowMultiple="False"  />
+                            <asp:LinkButton     ID="FileLinkButton0"     runat="server"  Visible='<%# Bind("FileLinkButtonVisible0") %>'         Text='<%# Bind("FileLinkButtonText0") %>' CommandArgument='<%# Bind("ID0") %>' OnClick="GvOpenDocumentButtonClick"></asp:LinkButton>
+                            <asp:LinkButton     ID="DeleteFileLinkButton0" runat="server" Visible='<%# Bind("DeleteFileLinkButtonVisible0") %>'  Text="   Удалить"                         CommandArgument='<%# Bind("ID0") %>' OnClick="GvDeleteDocumentButtonClick"></asp:LinkButton>
                             <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire0" ControlToValidate="EditTextBox0" Enabled=     '<%# Bind("TextBoxRequireValidateEnable0") %>' Text="Введите данные"  ForeColor="Red" > 
                             </asp:RequiredFieldValidator>
                             <asp:RangeValidator runat="server" ID="TextBoxValidate0" ControlToValidate="EditTextBox0" 
@@ -153,7 +153,10 @@
                             <asp:TextBox        ID="EditTextBox1"        runat="server"  Visible='<%# Bind("EditTextBoxVisible1") %>'         Text='<%# Bind("EditTextBoxValue1") %>'          TextMode='<%# Bind("EditTextBoxMode1") %>'      ></asp:TextBox>                                                   
                             <asp:CheckBox       ID="EditBoolCheckBox1"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible1") %>'    Checked='<%# Bind("EditBoolCheckBoxValue1") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown1" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible1") %>'  CssClass="dropdown"       ></asp:DropDownList>                            
-                        <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire1" ControlToValidate="EditTextBox1" Enabled=     '<%# Bind("TextBoxRequireValidateEnable1") %>' Text="Введите данные"  ForeColor="Red"> 
+                            <asp:FileUpload     ID="FileUpload1"         runat="server"  Visible='<%# Bind("FileUploadVisible1") %>' AllowMultiple="False"  />
+                         <asp:LinkButton     ID="FileLinkButton1"     runat="server"  Visible='<%# Bind("FileLinkButtonVisible1") %>'      Text='<%# Bind("FileLinkButtonText1") %>' CommandArgument='<%# Bind("ID1") %>' OnClick="GvOpenDocumentButtonClick"></asp:LinkButton>
+                            <asp:LinkButton     ID="DeleteFileLinkButton1" runat="server" Visible='<%# Bind("DeleteFileLinkButtonVisible1") %>'  Text="Удалить" CommandArgument='<%# Bind("ID1") %>' OnClick="GvDeleteDocumentButtonClick"></asp:LinkButton>
+                            <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire1" ControlToValidate="EditTextBox1" Enabled=     '<%# Bind("TextBoxRequireValidateEnable1") %>' Text="Введите данные"  ForeColor="Red"> 
                             </asp:RequiredFieldValidator>
                             <asp:RangeValidator runat="server" ID="TextBoxValidate1" ControlToValidate="EditTextBox1" 
                                 Enabled=     '<%# Bind("TextBoxValidateEnable1") %>'
@@ -174,6 +177,9 @@
                             <asp:TextBox        ID="EditTextBox2"        runat="server"  Visible='<%# Bind("EditTextBoxVisible2") %>'         Text='<%# Bind("EditTextBoxValue2") %>'           TextMode='<%# Bind("EditTextBoxMode2") %>'      ></asp:TextBox>                                                   
                             <asp:CheckBox       ID="EditBoolCheckBox2"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible2") %>'    Checked='<%# Bind("EditBoolCheckBoxValue2") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown2" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible2") %>'  CssClass="dropdown"      ></asp:DropDownList>                           
+                            <asp:FileUpload     ID="FileUpload2"         runat="server"  Visible='<%# Bind("FileUploadVisible2") %>' AllowMultiple="False"  />
+                            <asp:LinkButton     ID="FileLinkButton2"     runat="server"  Visible='<%# Bind("FileLinkButtonVisible2") %>'      Text='<%# Bind("FileLinkButtonText2") %>' CommandArgument='<%# Bind("ID2") %>'  OnClick="GvOpenDocumentButtonClick"></asp:LinkButton>
+                            <asp:LinkButton     ID="DeleteFileLinkButton2" runat="server" Visible='<%# Bind("DeleteFileLinkButtonVisible2") %>'  Text="Удалить"  CommandArgument='<%# Bind("ID2") %>' OnClick="GvDeleteDocumentButtonClick"></asp:LinkButton>
                             <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire2" ControlToValidate="EditTextBox2" Enabled=     '<%# Bind("TextBoxRequireValidateEnable2") %>' Text="Введите данные"  ForeColor="Red"> 
                             </asp:RequiredFieldValidator>
                             <asp:RangeValidator runat="server" ID="TextBoxValidate2" ControlToValidate="EditTextBox2" 
@@ -195,6 +201,9 @@
                             <asp:TextBox        ID="EditTextBox3"        runat="server"  Visible='<%# Bind("EditTextBoxVisible3") %>'         Text='<%# Bind("EditTextBoxValue3") %>'          TextMode='<%# Bind("EditTextBoxMode3") %>'       ></asp:TextBox>                                                   
                             <asp:CheckBox       ID="EditBoolCheckBox3"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible3") %>'    Checked='<%# Bind("EditBoolCheckBoxValue3") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown3" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible3") %>'  CssClass="dropdown"       ></asp:DropDownList>
+                            <asp:FileUpload     ID="FileUpload3"         runat="server"  Visible='<%# Bind("FileUploadVisible3") %>' AllowMultiple="False"  />
+                            <asp:LinkButton     ID="FileLinkButton3"     runat="server"  Visible='<%# Bind("FileLinkButtonVisible3") %>'      Text='<%# Bind("FileLinkButtonText3") %>' CommandArgument='<%# Bind("ID3") %>'  OnClick="GvOpenDocumentButtonClick"></asp:LinkButton>
+                            <asp:LinkButton     ID="DeleteFileLinkButton3" runat="server" Visible='<%# Bind("DeleteFileLinkButtonVisible3") %>'  Text="Удалить"  CommandArgument='<%# Bind("ID3") %>' OnClick="GvDeleteDocumentButtonClick"></asp:LinkButton>
                             <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire3" ControlToValidate="EditTextBox3" Enabled=     '<%# Bind("TextBoxRequireValidateEnable3") %>' Text="Введите данные"  ForeColor="Red"> 
                             </asp:RequiredFieldValidator>
                             <asp:RangeValidator runat="server" ID="TextBoxValidate3" ControlToValidate="EditTextBox3" 
@@ -216,6 +225,9 @@
                             <asp:TextBox        ID="EditTextBox4"        runat="server"  Visible='<%# Bind("EditTextBoxVisible4") %>'         Text='<%# Bind("EditTextBoxValue4") %>'          TextMode='<%# Bind("EditTextBoxMode4") %>'       ></asp:TextBox>                                                   
                             <asp:CheckBox       ID="EditBoolCheckBox4"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible4") %>'    Checked='<%# Bind("EditBoolCheckBoxValue4") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown4" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible4") %>'  CssClass="dropdown"   ></asp:DropDownList>
+                            <asp:FileUpload     ID="FileUpload4"         runat="server"  Visible='<%# Bind("FileUploadVisible4") %>' AllowMultiple="False"  />
+                            <asp:LinkButton     ID="FileLinkButton4"     runat="server"  Visible='<%# Bind("FileLinkButtonVisible4") %>'      Text='<%# Bind("FileLinkButtonText4") %>' CommandArgument='<%# Bind("ID4") %>' OnClick="GvOpenDocumentButtonClick"></asp:LinkButton>
+                            <asp:LinkButton     ID="DeleteFileLinkButton4" runat="server" Visible='<%# Bind("DeleteFileLinkButtonVisible4") %>'  Text="Удалить" CommandArgument='<%# Bind("ID4") %>' OnClick="GvDeleteDocumentButtonClick"></asp:LinkButton>
                             <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire4" ControlToValidate="EditTextBox4" Enabled=     '<%# Bind("TextBoxRequireValidateEnable4") %>' Text="Введите данные"  ForeColor="Red"> 
                             </asp:RequiredFieldValidator>
                             <asp:RangeValidator runat="server" ID="TextBoxValidate4" ControlToValidate="EditTextBox4" 
@@ -237,6 +249,9 @@
                             <asp:TextBox        ID="EditTextBox5"        runat="server"  Visible='<%# Bind("EditTextBoxVisible5") %>'         Text='<%# Bind("EditTextBoxValue5") %>'        TextMode='<%# Bind("EditTextBoxMode5") %>'         ></asp:TextBox>                                                   
                             <asp:CheckBox       ID="EditBoolCheckBox5"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible5") %>'    Checked='<%# Bind("EditBoolCheckBoxValue5") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown5" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible5") %>'  CssClass="dropdown"       ></asp:DropDownList>
+                            <asp:FileUpload     ID="FileUpload5"         runat="server"  Visible='<%# Bind("FileUploadVisible5") %>' AllowMultiple="False"  />
+                            <asp:LinkButton     ID="FileLinkButton5"     runat="server"  Visible='<%# Bind("FileLinkButtonVisible5") %>'      Text='<%# Bind("FileLinkButtonText5") %>' CommandArgument='<%# Bind("ID5") %>' OnClick="GvOpenDocumentButtonClick"></asp:LinkButton>
+                            <asp:LinkButton     ID="DeleteFileLinkButton5" runat="server" Visible='<%# Bind("DeleteFileLinkButtonVisible5") %>'  Text="Удалить" CommandArgument='<%# Bind("ID5") %>' OnClick="GvDeleteDocumentButtonClick"></asp:LinkButton>
                             <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire5" ControlToValidate="EditTextBox5" Enabled=     '<%# Bind("TextBoxRequireValidateEnable5") %>' Text="Введите данные"  ForeColor="Red"> 
                             </asp:RequiredFieldValidator>
                             <asp:RangeValidator runat="server" ID="TextBoxValidate5" ControlToValidate="EditTextBox5" 
@@ -258,6 +273,9 @@
                             <asp:TextBox        ID="EditTextBox6"        runat="server"  Visible='<%# Bind("EditTextBoxVisible6") %>'         Text='<%# Bind("EditTextBoxValue6") %>'         TextMode='<%# Bind("EditTextBoxMode6") %>'      ></asp:TextBox>                                                   
                             <asp:CheckBox       ID="EditBoolCheckBox6"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible6") %>'    Checked='<%# Bind("EditBoolCheckBoxValue6") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown6" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible6") %>'  CssClass="dropdown"      ></asp:DropDownList>
+                            <asp:FileUpload     ID="FileUpload6"         runat="server"  Visible='<%# Bind("FileUploadVisible6") %>' AllowMultiple="False"  />
+                            <asp:LinkButton     ID="FileLinkButton6"     runat="server"  Visible='<%# Bind("FileLinkButtonVisible6") %>'      Text='<%# Bind("FileLinkButtonText6") %>' CommandArgument='<%# Bind("ID6") %>' OnClick="GvOpenDocumentButtonClick"></asp:LinkButton>
+                            <asp:LinkButton     ID="DeleteFileLinkButton6" runat="server" Visible='<%# Bind("DeleteFileLinkButtonVisible6") %>'  Text="Удалить" CommandArgument='<%# Bind("ID6") %>' OnClick="GvDeleteDocumentButtonClick"></asp:LinkButton>
                             <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire6" ControlToValidate="EditTextBox6" Enabled=     '<%# Bind("TextBoxRequireValidateEnable6") %>' Text="Введите данные"  ForeColor="Red"> 
                             </asp:RequiredFieldValidator>
                             <asp:RangeValidator runat="server" ID="TextBoxValidate6" ControlToValidate="EditTextBox6" 
@@ -279,6 +297,9 @@
                             <asp:TextBox        ID="EditTextBox7"        runat="server"  Visible='<%# Bind("EditTextBoxVisible7") %>'         Text='<%# Bind("EditTextBoxValue7") %>'         TextMode='<%# Bind("EditTextBoxMode7") %>'       ></asp:TextBox>                                                   
                             <asp:CheckBox       ID="EditBoolCheckBox7"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible7") %>'    Checked='<%# Bind("EditBoolCheckBoxValue7") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown7" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible7") %>'  CssClass="dropdown"     ></asp:DropDownList>
+                            <asp:FileUpload     ID="FileUpload7"         runat="server"  Visible='<%# Bind("FileUploadVisible7") %>' AllowMultiple="False"  />
+                            <asp:LinkButton     ID="FileLinkButton7"     runat="server"  Visible='<%# Bind("FileLinkButtonVisible7") %>'      Text='<%# Bind("FileLinkButtonText7") %>' CommandArgument='<%# Bind("ID7") %>' OnClick="GvOpenDocumentButtonClick"></asp:LinkButton>
+                            <asp:LinkButton     ID="DeleteFileLinkButton7" runat="server" Visible='<%# Bind("DeleteFileLinkButtonVisible7") %>'  Text="Удалить" CommandArgument='<%# Bind("ID7") %>' OnClick="GvDeleteDocumentButtonClick"></asp:LinkButton>
                             <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire7" ControlToValidate="EditTextBox7" Enabled=     '<%# Bind("TextBoxRequireValidateEnable7") %>' Text="Введите данные"  ForeColor="Red" > 
                             </asp:RequiredFieldValidator>
                             <asp:RangeValidator runat="server" ID="TextBoxValidate7" ControlToValidate="EditTextBox7" 
@@ -300,6 +321,9 @@
                             <asp:TextBox        ID="EditTextBox8"        runat="server"  Visible='<%# Bind("EditTextBoxVisible8") %>'         Text='<%# Bind("EditTextBoxValue8") %>'          TextMode='<%# Bind("EditTextBoxMode8") %>'       ></asp:TextBox>                                                   
                             <asp:CheckBox       ID="EditBoolCheckBox8"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible8") %>'    Checked='<%# Bind("EditBoolCheckBoxValue8") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown8" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible8") %>'  CssClass="dropdown"        ></asp:DropDownList>
+                            <asp:FileUpload     ID="FileUpload8"         runat="server"  Visible='<%# Bind("FileUploadVisible8") %>' AllowMultiple="False"  />
+                            <asp:LinkButton     ID="FileLinkButton8"     runat="server"  Visible='<%# Bind("FileLinkButtonVisible8") %>'      Text='<%# Bind("FileLinkButtonText8") %>' CommandArgument='<%# Bind("ID8") %>' OnClick="GvOpenDocumentButtonClick"></asp:LinkButton>
+                            <asp:LinkButton     ID="DeleteFileLinkButton8" runat="server" Visible='<%# Bind("DeleteFileLinkButtonVisible8") %>'  Text="Удалить" CommandArgument='<%# Bind("ID8") %>' OnClick="GvDeleteDocumentButtonClick"></asp:LinkButton>
                             <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire8" ControlToValidate="EditTextBox8" Enabled=     '<%# Bind("TextBoxRequireValidateEnable8") %>' Text="Введите данные"  ForeColor="Red"> 
                             </asp:RequiredFieldValidator>
                             <asp:RangeValidator runat="server" ID="TextBoxValidate8" ControlToValidate="EditTextBox8" 
@@ -322,7 +346,10 @@
                             <asp:TextBox        ID="EditTextBox9"        runat="server"  Visible='<%# Bind("EditTextBoxVisible9") %>'         Text='<%# Bind("EditTextBoxValue9") %>'        TextMode='<%# Bind("EditTextBoxMode9") %>'         ></asp:TextBox>                                                   
                             <asp:CheckBox       ID="EditBoolCheckBox9"   runat="server"  Visible='<%# Bind("EditBoolCheckBoxVisible9") %>'    Checked='<%# Bind("EditBoolCheckBoxValue9") %>'        ></asp:CheckBox>                            
                             <asp:DropDownList   ID="ChooseOnlyDropDown9" runat="server"  Visible='<%# Bind("ChooseOnlyDropDownVisible9") %>'  CssClass="dropdown"        ></asp:DropDownList>
-                            <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire9" ControlToValidate="EditTextBox9" Enabled=     '<%# Bind("TextBoxRequireValidateEnable9") %>' Text="Введите данные"  ForeColor="Red"> 
+                            <asp:FileUpload     ID="FileUpload9"         runat="server"  Visible='<%# Bind("FileUploadVisible9") %>' AllowMultiple="False"  />
+                            <asp:LinkButton     ID="FileLinkButton9"     runat="server"  Visible='<%# Bind("FileLinkButtonVisible9") %>'      Text='<%# Bind("FileLinkButtonText9") %>' CommandArgument='<%# Bind("ID9") %>' OnClick="GvOpenDocumentButtonClick"></asp:LinkButton>
+                            <asp:LinkButton     ID="DeleteFileLinkButton9" runat="server" Visible='<%# Bind("DeleteFileLinkButtonVisible9") %>'  Text="Удалить" CommandArgument='<%# Bind("ID9") %>' OnClick="GvDeleteDocumentButtonClick"></asp:LinkButton>
+                              <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire9" ControlToValidate="EditTextBox9" Enabled=     '<%# Bind("TextBoxRequireValidateEnable9") %>' Text="Введите данные"  ForeColor="Red"> 
                             </asp:RequiredFieldValidator>
                             <asp:RangeValidator runat="server" ID="TextBoxValidate9" ControlToValidate="EditTextBox9" 
                                 Enabled=     '<%# Bind("TextBoxValidateEnable9") %>'
@@ -346,7 +373,9 @@
                </Columns>
         </asp:GridView>       
     </div>       
-        <asp:Button ID="SaveButton" runat="server" Text="Сохранить" OnClientClick="showLoadPanel()" CausesValidation="False" OnClick="SaveButton_Click" />
+        
+        <br />
+        
         <asp:Button ID="AddRowButton" runat="server" Text="Добавить строку" OnClientClick="showLoadPanel()" CausesValidation="False" OnClick="AddRowButton_Click" />
     </div>
 </asp:Content>

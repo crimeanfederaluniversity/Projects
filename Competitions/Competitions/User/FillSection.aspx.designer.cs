@@ -58,6 +58,15 @@ namespace Competitions.User {
         protected global::System.Web.UI.WebControls.Button NextSection;
         
         /// <summary>
+        /// SaveButton элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SaveButton;
+        
+        /// <summary>
         /// LabelHint элемент управления.
         /// </summary>
         /// <remarks>
@@ -83,15 +92,6 @@ namespace Competitions.User {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView FillingGV;
-        
-        /// <summary>
-        /// SaveButton элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SaveButton;
         
         /// <summary>
         /// AddRowButton элемент управления.

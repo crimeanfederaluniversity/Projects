@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
@@ -54,6 +55,95 @@ namespace Competitions.User
             }
             int sectionId = newPagesParams.SectionId[newPagesParams.CurrentPage];
             return sectionId;
+        }
+        private string UploadFile(FileUpload fileUpload, int collectedDataId)
+        {         
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            zCollectedRowsTable currentRow = (from a in competitionDataBase.zCollectedDataTable
+                join b in competitionDataBase.zCollectedRowsTable
+                    on a.FK_CollectedRowsTable equals b.ID
+                where a.ID == collectedDataId
+                && a.Active == true
+                && b.Active == true
+                select b).FirstOrDefault();
+            if (currentRow == null)
+                return null;
+            int applicationId = currentRow.FK_ApplicationTable;
+            string documentsPath = Server.MapPath("~/documents/byApplication");
+            Directory.CreateDirectory(documentsPath + "\\\\" + applicationId.ToString());
+            string applicationPath = Server.MapPath("~/documents/byApplication/"+applicationId.ToString());
+            Directory.CreateDirectory(applicationPath + "\\\\" + collectedDataId.ToString());
+            if (fileUpload.HasFile)
+            {
+                if (fileUpload.PostedFiles.Count > 1)
+                    {
+                        //NOT ALLOWED
+                        /*
+                            int AttachOK = 0;
+                            int AttachError = 0;
+                            string DBLinkCombine = "";
+                            foreach (var file in FileUpload1.PostedFiles)
+                            {
+                                try
+                                {
+                                    file.SaveAs(path + "\\\\" + applicationId.ToString() + "\\\\" + file.FileName);
+                                    NewDocument(applicationId, file.FileName);
+                                    AttachOK++;
+                                }
+                                catch (Exception ex)
+                                {
+                                    AttachError++;
+                                }
+
+                                //  FileStatusLabel.Text = "Загружено " + AttachOK.ToString() + " файлов из " + (AttachError + AttachOK).ToString();
+                                // NewCampaign.DocumentLocation = DBLinkCombine;
+                                // DBConnection.SubmitChanges();
+                            }*/
+                        }
+                        else
+                        {
+                            try
+                            {
+                                fileUpload.PostedFile.SaveAs(applicationPath + "\\\\" + collectedDataId.ToString()+"\\\\" + fileUpload.FileName);
+                                return fileUpload.FileName;
+                            }
+                            catch (Exception ex)
+                            {
+                                return null;
+                                //  FileStatusLabel.Text = "Не удалось загрузить файл.";
+                            }
+                }
+            }
+            return null;
+        }
+        private string GetFileByCollectedData(int collectedDataId)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            zCollectedDataTable currentCollected = (from a in competitionDataBase.zCollectedDataTable
+                where a.ID == collectedDataId
+                select a).FirstOrDefault();
+            if (currentCollected == null)
+                return null;
+            zCollectedRowsTable currentRow = (from a in competitionDataBase.zCollectedRowsTable
+                where a.ID == currentCollected.FK_CollectedRowsTable
+                select a).FirstOrDefault();
+            if (currentRow == null)
+                return null;
+            int applicationId = currentRow.FK_ApplicationTable;
+            string filePath = Server.MapPath("~/documents/byApplication/" + applicationId.ToString() + "/" + collectedDataId.ToString() + "/" + currentCollected.ValueText);
+            if (!File.Exists(filePath))
+                return null;
+            return filePath;
+        }
+        private string GetFileNameByCollectedData(int collectedDataId)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            zCollectedDataTable currentCollected = (from a in competitionDataBase.zCollectedDataTable
+                where a.ID == collectedDataId
+                select a).FirstOrDefault();
+            if (currentCollected == null)
+                return null;
+            return currentCollected.ValueText;
         }
         public bool SaveChanges()
         {
@@ -138,7 +228,7 @@ namespace Competitions.User
                                 }
                             }
                         }
-                        if ((dataType.IsDataTypeDropDown(currenColumn.DataType)) || (dataType.IsDataTypeConstantDropDown(currenColumn.DataType)))
+                        if ((dataType.IsDataTypeDropDown(currenColumn.DataType)) || (dataType.IsDataTypeConstantDropDown(currenColumn.DataType))|| (dataType.IsDataTypeConstntAtLeastOneWithCheckBoxParam(currenColumn.DataType)))
                         {
                             DropDownList gvDropDownList = (DropDownList)currentRow.FindControl("ChooseOnlyDropDown" + i.ToString());
                             if (gvDropDownList != null)
@@ -146,6 +236,16 @@ namespace Competitions.User
                                 if (gvDropDownList.SelectedValue.Any())
                                 currentCollectedData.ValueFK_CollectedDataTable = Convert.ToInt32(gvDropDownList.SelectedValue);
                             }
+                        }
+                        if (dataType.IsDataTypeFileUpload(currenColumn.DataType))
+                        {
+                            FileUpload gvFileUpload = (FileUpload)currentRow.FindControl("FileUpload" + i.ToString());
+                            if (gvFileUpload != null)
+                            {
+                                if (gvFileUpload.Visible == true)
+                                currentCollectedData.ValueText = UploadFile(gvFileUpload, currentCollectedData.ID);
+                            }
+                            
                         }
                         #endregion
                         competitionDataBase.SubmitChanges();
@@ -227,73 +327,62 @@ namespace Competitions.User
 
             return true;
         }
-        public bool AddRowWithNecwssairlyLines (int columnTableId,int applicationId,int sectionId,int columnId)
+        public List<zCollectedRowsTable> GetMustBeRows(int applicationId, int? columnTableWithNeededValueId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-            List<zCollectedDataTable> mustBeDataList = (from a in competitionDataBase.zCollectedDataTable
-                                                        where a.Active == true
-                                                              && a.FK_ColumnTable == columnTableId
-                                                              join b in competitionDataBase.zCollectedRowsTable
-                                                              on a.FK_CollectedRowsTable equals b.ID
-                                                              where b.Active == true
-                                                              && b.FK_ApplicationTable == applicationId
-                                                        select a).ToList();
-
-            CreateRowsForConstantAndNecessary(mustBeDataList, applicationId, sectionId, columnId);
-            return false;
+            return (from a in competitionDataBase.zCollectedRowsTable
+                    where a.Active == true
+                          && a.FK_ApplicationTable == applicationId
+                    join b in competitionDataBase.zCollectedDataTable
+                        on a.ID equals b.FK_CollectedRowsTable
+                    where b.Active == true
+                          && b.FK_ColumnTable == columnTableWithNeededValueId
+                    select a).Distinct().ToList();
         }
-        public bool AddRowWithNecwssairlyLinesWithParams (int columnTableWithNeededValueId, int applicationId, int currentSectionId, int currentColumnId , int columnTableWithCheckBox)
+        public List<zCollectedDataTable> GetMustNotBeByCheckBoxesData(int applicationId, int columnTableWithNeededValueId, int columnTableWithCheckBox)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-            List<zCollectedDataTable> mustBeDataList = new List<zCollectedDataTable>();
-            List<zCollectedRowsTable> mustBeDataRows = (from a in competitionDataBase.zCollectedRowsTable
-                where a.Active == true
-                      && a.FK_ApplicationTable == applicationId
-                join b in competitionDataBase.zCollectedDataTable
-                    on a.ID equals b.FK_CollectedRowsTable
-                where b.Active == true
-                      && b.FK_ColumnTable == columnTableWithNeededValueId
-                select a).Distinct().ToList();
-
+            List<zCollectedDataTable> mustNOTBeDataList = new List<zCollectedDataTable>();
+            //найдем лист строк которые на значение которых ссылается наша колонка 
+            List<zCollectedRowsTable> mustBeDataRows = GetMustBeRows(applicationId, columnTableWithNeededValueId);
+            // пройдемся по этому листу чтобы найти строки которые нужно удалить из-за отсутстви галочки          
             foreach (zCollectedRowsTable curRow in mustBeDataRows)
             {
                 zCollectedDataTable data = (from a in competitionDataBase.zCollectedDataTable
-                    where a.FK_CollectedRowsTable == curRow.ID
-                          && a.Active == true
-                          && a.FK_ColumnTable == columnTableWithNeededValueId
-                    select a).FirstOrDefault();
+                                            where a.FK_CollectedRowsTable == curRow.ID
+                                                  && a.Active == true
+                                                  && a.FK_ColumnTable == columnTableWithNeededValueId
+                                            select a).FirstOrDefault();
+                //нашли в строке ячейку ссылкой на колонку значения
                 zCollectedDataTable checkBox = (from a in competitionDataBase.zCollectedDataTable
                                                 where a.FK_CollectedRowsTable == curRow.ID
                                                       && a.Active == true
                                                       && a.FK_ColumnTable == columnTableWithCheckBox
                                                 select a).FirstOrDefault();
+                //нашли в строке ячейку с галочкой
                 if (checkBox != null)
                 {
                     if (checkBox.ValueBit != null)
                     {
-                        if (checkBox.ValueBit == true)
+                        if (checkBox.ValueBit != true)
                         {
-                            mustBeDataList.Add(data);
+                            mustNOTBeDataList.Add(data);
                         }
                     }
+                    else
+                    {
+                        mustNOTBeDataList.Add(data);
+                    }
                 }
+                //создали лист с строками где чекбокс без галочки
             }
-
-            CreateRowsForConstantAndNecessary(mustBeDataList, applicationId, currentSectionId, currentColumnId);
-            return false;
+            return mustNOTBeDataList;
         }
-        public bool DeleteRowWithUnSelectedCheckBox(int columnTableWithNeededValueId, int applicationId, int currentSectionId, int currentColumnId, int columnTableWithCheckBox)
+        public List<zCollectedDataTable> GetMustBeByCheckBoxeData(int applicationId, int? columnTableWithNeededValueId, int? columnTableWithCheckBox)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-            List<zCollectedDataTable> mustNOTBeDataList = new List<zCollectedDataTable>();
-            List<zCollectedRowsTable> mustBeDataRows = (from a in competitionDataBase.zCollectedRowsTable
-                                                        where a.Active == true
-                                                              && a.FK_ApplicationTable == applicationId
-                                                        join b in competitionDataBase.zCollectedDataTable
-                                                            on a.ID equals b.FK_CollectedRowsTable
-                                                        where b.Active == true
-                                                              && b.FK_ColumnTable == columnTableWithNeededValueId
-                                                        select a).Distinct().ToList();
+            List<zCollectedDataTable> mustBeDataList = new List<zCollectedDataTable>();
+            List<zCollectedRowsTable> mustBeDataRows = GetMustBeRows(applicationId, columnTableWithNeededValueId);
 
             foreach (zCollectedRowsTable curRow in mustBeDataRows)
             {
@@ -311,33 +400,69 @@ namespace Competitions.User
                 {
                     if (checkBox.ValueBit != null)
                     {
-                        if (checkBox.ValueBit != true)
+                        if (checkBox.ValueBit == true)
                         {
-                            mustNOTBeDataList.Add(data);
+                            mustBeDataList.Add(data);
                         }
-                    }
-                    else
-                    {
-                        mustNOTBeDataList.Add(data);
                     }
                 }
             }
-            foreach (zCollectedDataTable currentDataToDel in mustNOTBeDataList)
+            return mustBeDataList;
+        }
+        public bool AddRowWithNecwssairlyLines (int columnTableId,int applicationId,int sectionId,int columnId)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            List<zCollectedDataTable> mustBeDataList = (from a in competitionDataBase.zCollectedDataTable
+                                                        where a.Active == true
+                                                              && a.FK_ColumnTable == columnTableId
+                                                              join b in competitionDataBase.zCollectedRowsTable
+                                                              on a.FK_CollectedRowsTable equals b.ID
+                                                              where b.Active == true
+                                                              && b.FK_ApplicationTable == applicationId
+                                                        select a).ToList();
+
+            CreateRowsForConstantAndNecessary(mustBeDataList, applicationId, sectionId, columnId);
+            return false;
+        }
+        public bool AddRowWithNecwssairlyLinesWithParams(int columnTableWithNeededValueId, int applicationId, int currentSectionId, int currentColumnId, int columnTableWithCheckBox)
+        {
+            // columnTableWithNeededValueId  // наша колонка ссылаетс на эту чтобы получить значение 
+            // constantListWithNeededValueId // наша колонка ссылаетс на этот лист констант чтобы получить значение 
+            // currentColumnId               // айдишник самой колонки
+            // columnTableWithCheckBox       // наша колонка ссылается на эту чтобы проверить чекбокс
+            List<zCollectedDataTable> mustBeDataList = GetMustBeByCheckBoxeData(applicationId,
+                columnTableWithNeededValueId, columnTableWithCheckBox);
+            CreateRowsForConstantAndNecessary(mustBeDataList, applicationId, currentSectionId, currentColumnId);
+            return false;
+        }
+        public bool DeleteRowWithUnSelectedCheckBox(int columnTableWithNeededValueId, int applicationId, int currentSectionId, int currentColumnId, int columnTableWithCheckBox)
+        {
+            // columnTableWithNeededValueId  // наша колонка ссылаетс на эту чтобы получить значение 
+            // constantListWithNeededValueId // наша колонка ссылаетс на этот лист констант чтобы получить значение 
+            // currentColumnId               // айдишник самой колонки
+            // columnTableWithCheckBox       // наша колонка ссылается на эту чтобы проверить чекбокс
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            List<zCollectedDataTable> mustNotBeDataList = GetMustNotBeByCheckBoxesData(applicationId,
+                columnTableWithNeededValueId, columnTableWithCheckBox);
+            foreach (zCollectedDataTable currentDataToDel in mustNotBeDataList)
             {
-                zCollectedRowsTable currentRowToDel = (from a in competitionDataBase.zCollectedRowsTable
+                List<zCollectedRowsTable> rowsToDelList = (from a in competitionDataBase.zCollectedRowsTable
                     where a.Active == true
                     join b in competitionDataBase.zCollectedDataTable
                         on a.ID equals b.FK_CollectedRowsTable
                     where
                         b.ValueFK_CollectedDataTable == currentDataToDel.ID
-                    select a).FirstOrDefault(); // надо бы считать лист и если там их много то удалить сразу все
-                if (currentRowToDel != null)
+                    select a).Distinct().ToList(); // надо бы считать лист и если там их много то удалить сразу все
+                foreach (zCollectedRowsTable currentRowToDel in rowsToDelList)
                 {
-                    currentRowToDel.Active = false;
-                    competitionDataBase.SubmitChanges();
-                }
+                    if (currentRowToDel != null)
+                    {
+                        currentRowToDel.Active = false;
+                        competitionDataBase.SubmitChanges();
+                    }
+                }         
             }
-            // найти лишние строки
+            
             return false;
         }
         public bool DeleteRow(int rowId)
@@ -359,6 +484,7 @@ namespace Competitions.User
         }
         public bool DeleteRowWithBadFk(int applicationId, int sectionId, int columnId , bool isDataConstant)
         {
+            //эта функция удаляет строку если в ней одна из колонок ссылается на несуществующее значение
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
             List<zCollectedDataTable> existingCollectedDataTableList = (
                 from a in competitionDataBase.zCollectedDataTable
@@ -446,12 +572,12 @@ namespace Competitions.User
             return 0;
         }
         protected void Page_Load(object sender, EventArgs e)
-        {
-            
+        {           
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
             if (!Page.IsPostBack)
             {
                 #region SETUP
+                DataType dataType = new DataType();
                 #region session
                 var userIdParam = Session["UserID"];
                 FillingPages newPagesParams = (FillingPages)Session["PagesParams"];
@@ -469,8 +595,7 @@ namespace Competitions.User
                 }
                 int userId = Convert.ToInt32(userIdParam);
                 #endregion
-                //создадим большой dataTable
-                #region dataTableCreate
+                #region dataTableCreate создадим большой dataTable
                 DataTable dataTable = new DataTable();
                 for (int i = 0; i < 10; i++)
                 {
@@ -486,7 +611,12 @@ namespace Competitions.User
                     dataTable.Columns.Add(new DataColumn("EditBoolCheckBoxValue" + i.ToString(), typeof(bool)));
 
                     dataTable.Columns.Add(new DataColumn("ChooseOnlyDropDownVisible" + i.ToString(), typeof(bool)));
-                   // dataTable.Columns.Add(new DataColumn("ChooseOnlyDropDownValue" + i.ToString(), typeof(ListItemCollection)));
+
+                    dataTable.Columns.Add(new DataColumn("FileUploadVisible" + i.ToString(), typeof(bool)));
+                    dataTable.Columns.Add(new DataColumn("FileLinkButtonVisible" + i.ToString(), typeof(bool)));
+                    dataTable.Columns.Add(new DataColumn("FileLinkButtonText" + i.ToString(), typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("DeleteFileLinkButtonVisible" + i.ToString(), typeof(bool)));
+                    // dataTable.Columns.Add(new DataColumn("ChooseOnlyDropDownValue" + i.ToString(), typeof(ListItemCollection)));
 
                     // валидаор
                     dataTable.Columns.Add(new DataColumn("TextBoxValidateEnable" + i.ToString(), typeof(bool)));
@@ -497,25 +627,29 @@ namespace Competitions.User
 
                     dataTable.Columns.Add(new DataColumn("TextBoxRequireValidateEnable" + i.ToString(), typeof(bool)));
 
-                    dataTable.Columns.Add(new DataColumn("EditTextBoxMode" + i.ToString(), typeof(TextBoxMode)));                                      
+                    dataTable.Columns.Add(new DataColumn("EditTextBoxMode" + i.ToString(), typeof(TextBoxMode)));     
+                    
+                    
+                        
                 }
 
-                #endregion
-                DataType dataType = new DataType();
+                #endregion                
+                #region найдем нашу секцию currentSection
                 int blockId = GetBlockIdFromSession();
-
                 //нам нужно узнать как выглядит таблица и создать её
                 //у каждой сектии свой тип таблиц сначала возьмем текующую секцию
-                List <zSectionTable> allSection = (from a in competitionDataBase.zSectionTable
-                                                where a.FK_BlockID == blockId  
-                                                join b in competitionDataBase.zApplicationTable
-                                                on  a.FK_CompetitionsTable equals b.FK_CompetitionTable
-                                                where b.ID == applicationId
-                                                select a).ToList();
+               
                 zSectionTable currentSection = (from a in competitionDataBase.zSectionTable
                                                       where  a.ID == sectionId
                                                       select a).FirstOrDefault();
-
+                #endregion
+                #region сделаем легенду
+                List<zSectionTable> allSection = (from a in competitionDataBase.zSectionTable
+                                                  where a.FK_BlockID == blockId
+                                                  join b in competitionDataBase.zApplicationTable
+                                                  on a.FK_CompetitionsTable equals b.FK_CompetitionTable
+                                                  where b.ID == applicationId
+                                                  select a).ToList();
                 string namesInLine = " ";
                 if (allSection.Count != null)
                 {
@@ -528,7 +662,7 @@ namespace Competitions.User
                     }                    
                     LabelHint.Text = namesInLine;
                 }
-                              
+                #endregion
                 if (currentSection.Description != "123")
                 {
                     LabelDescription.Text = currentSection.Description;
@@ -539,7 +673,7 @@ namespace Competitions.User
                                                                 && a.FK_SectionTable == sectionId
                                                           select a).ToList();
 
-                #region constRosManage
+                #region constRowManage
 
                 foreach (zColumnTable currentColumn in columnInSectionList)
                 {
@@ -568,8 +702,17 @@ namespace Competitions.User
                         DeleteRowWithBadFk(applicationId, sectionId, currentColumn.ID, false);
                         DeleteRowWithUnSelectedCheckBox((int)currentColumn.FK_ColumnTable, applicationId, sectionId,
                             currentColumn.ID, (int)currentColumn.FK_ColumnConnectToTable);
-                        AddRowWithNecwssairlyLinesWithParams((int)currentColumn.FK_ColumnTable, applicationId, sectionId,
+                        AddRowWithNecwssairlyLinesWithParams((int)currentColumn.FK_ColumnTable,applicationId, sectionId,
                             currentColumn.ID,(int)currentColumn.FK_ColumnConnectToTable);
+                    }
+                    if (dataType.IsDataTypeConstntAtLeastOneWithCheckBoxParam(currentColumn.DataType))
+                    {
+                        permitAddRow = true;
+                        permitDeleteRow = true;
+                        DeleteRowWithUnSelectedCheckBox((int)currentColumn.FK_ColumnTable, applicationId, sectionId,
+                            currentColumn.ID, (int)currentColumn.FK_ColumnConnectToTable);
+                        AddRowWithNecwssairlyLinesWithParams((int)currentColumn.FK_ColumnTable, applicationId, sectionId,
+                            currentColumn.ID, (int)currentColumn.FK_ColumnConnectToTable);
                     }
                 }
 
@@ -621,6 +764,12 @@ namespace Competitions.User
                         newDataRow["EditBoolCheckBoxVisible" + i.ToString()] = false;
                         newDataRow["EditBoolCheckBoxValue" + i.ToString()] = false;
                         newDataRow["ChooseOnlyDropDownVisible" + i.ToString()] = false;
+
+                        newDataRow["FileUploadVisible" + i.ToString()] = false;
+                        newDataRow["FileLinkButtonVisible" + i.ToString()] = false;
+                        newDataRow["DeleteFileLinkButtonVisible" + i.ToString()] = false;
+                        newDataRow["FileLinkButtonText" + i.ToString()] = "";
+
                         //validator
                         newDataRow["TextBoxValidateEnable" + i.ToString()] = false;
                         newDataRow["TextBoxValidateMinValue" + i.ToString()] = 0;
@@ -631,6 +780,8 @@ namespace Competitions.User
                         newDataRow["TextBoxRequireValidateEnable" + i.ToString()] = false;
 
                         newDataRow["EditTextBoxMode" + i.ToString()] = TextBoxMode.SingleLine;
+
+                        
                         #endregion
                         #region записываем имеющиеся данные в нужные поля
                         if (i < columnInSectionList.Count)
@@ -663,7 +814,8 @@ namespace Competitions.User
                             DataProcess dataProcess = new DataProcess();
                             dataProcess.ClearTotalUp();
                             int dType = (int) currentColumn.DataType;
-                            
+
+                            #region readwrite
                             if (dataProcess.IsCellReadWrite(dType))
                             {
                                 newDataRow["EditTextBoxVisible" + i.ToString()] = true;
@@ -678,14 +830,16 @@ namespace Competitions.User
                                 newDataRow["TextBoxValidateText" + i.ToString()] = currentValidator.ErrorMessage;
                                 newDataRow["EditTextBoxMode" + i.ToString()] = currentValidator.TextBoxTextMode;
                             }
-
+                            #endregion
+                            #region checkbox
                             if (dataProcess.IsCellCheckBox(dType))
                             {
                                 newDataRow["EditBoolCheckBoxVisible" + i.ToString()] = true;
                                 newDataRow["EditBoolCheckBoxValue" + i.ToString()] =
                                     dataProcess.GetBoolDataValue(currentColumn, currentCollectedData);
                             }
-                           
+                            #endregion
+                            #region readonly
                             if (dataProcess.IsCellReadOnly(dType))
                             {
                                 newDataRow["ReadOnlyLablelVisible" + i.ToString()] = true;
@@ -697,11 +851,35 @@ namespace Competitions.User
                                 newDataRow["ReadOnlyLablelValue" + i.ToString()] = tmp;
 
                             }
-
+                            #endregion
+                            #region dropdown
                             if (dataProcess.IsCellDropDown(dType))
                             {
                                 newDataRow["ChooseOnlyDropDownVisible" + i.ToString()] = true;
                             }
+                            #endregion
+                            #region fileupload
+                            if (dataProcess.IsCellFileUpload(dType))
+                            {
+                                if (currentCollectedData.ValueText!=null)
+                                {
+                                    if (currentCollectedData.ValueText.Length > 3)
+                                    {
+                                        newDataRow["FileLinkButtonVisible" + i.ToString()] = true;
+                                        newDataRow["DeleteFileLinkButtonVisible" + i.ToString()] = true;
+                                        newDataRow["FileLinkButtonText" + i.ToString()] = currentCollectedData.ValueText;
+                                    }
+                                    else
+                                    {
+                                        newDataRow["FileUploadVisible" + i.ToString()] = true;
+                                    }
+                                }
+                                else
+                                {
+                                    newDataRow["FileUploadVisible" + i.ToString()] = true;
+                                }
+                            }
+                            #endregion                          
                             totalUpSums[i] += dataProcess.GetToTotalUpValue();
                         }
                         #endregion
@@ -853,47 +1031,118 @@ namespace Competitions.User
                                     zColumnTable currentColumn = (from a in competitionDataBase.zColumnTable
                                         where a.ID == currentCollectedData.FK_ColumnTable
                                         select a).FirstOrDefault();
-                                    DataType dataType = new  DataType();
+                                    DataType dataType = new DataType();
+                                    DropDownList currentDropDownListDownList =
+                                        e.Row.FindControl("ChooseOnlyDropDown" + i) as DropDownList;
 
-                                    #region session
-                                    var userIdParam = Session["UserID"];
-                                    FillingPages newPagesParams = (FillingPages)Session["PagesParams"];
-                                    if ((userIdParam == null) || (newPagesParams.SectionId == null))
+                                    if (currentDropDownListDownList != null)
                                     {
-                                        //error
-                                        Response.Redirect("ChooseSection.aspx");
-                                    }
+                                        #region session
 
-                                    int applicationId = newPagesParams.ApplicationId;
-                                    int sectionId = newPagesParams.SectionId[newPagesParams.CurrentPage];
-                                    int userId = Convert.ToInt32(userIdParam);
-                                    #endregion
-                                    #region dropDown
-                                    if (dataType.IsDataTypeDropDown(currentColumn.DataType))
-                                    {
-                                        DropDownList currentDropDownListDownList = e.Row.FindControl("ChooseOnlyDropDown" + i) as DropDownList;
-                                        
-                                        if (currentDropDownListDownList != null)
+                                        var userIdParam = Session["UserID"];
+                                        FillingPages newPagesParams = (FillingPages) Session["PagesParams"];
+                                        if ((userIdParam == null) || (newPagesParams.SectionId == null))
                                         {
-                                            zColumnTable DropDownItemsColumn =
-                                                (from a in competitionDataBase.zColumnTable
-                                                    where a.ID == currentColumn.FK_ColumnTable
-                                                    && a.Active == true
+                                            //error
+                                            Response.Redirect("ChooseSection.aspx");
+                                        }
+
+                                        int applicationId = newPagesParams.ApplicationId;
+                                        int sectionId = newPagesParams.SectionId[newPagesParams.CurrentPage];
+                                        int userId = Convert.ToInt32(userIdParam);
+
+                                        #endregion
+
+                                        #region dropDown
+
+                                        if (dataType.IsDataTypeDropDown(currentColumn.DataType))
+                                        {
+                                            
+                                                zColumnTable DropDownItemsColumn =
+                                                    (from a in competitionDataBase.zColumnTable
+                                                        where a.ID == currentColumn.FK_ColumnTable
+                                                              && a.Active == true
+                                                        select a).FirstOrDefault();
+
+                                                List<zCollectedDataTable> collectedDataList =
+                                                    (from a in competitionDataBase.zCollectedDataTable
+                                                        join b in competitionDataBase.zCollectedRowsTable
+                                                            on a.FK_CollectedRowsTable equals b.ID
+                                                        where b.FK_ApplicationTable == applicationId
+                                                              && a.Active == true
+                                                              && b.Active == true
+                                                              && a.FK_ColumnTable == currentColumn.FK_ColumnTable
+                                                        select a).Distinct().ToList();
+
+                                                foreach (
+                                                    zCollectedDataTable tmpCollectedForDropDown in collectedDataList)
+                                                {
+                                                    #region вытаскиваем в зависимости от типа данных
+
+                                                    ListItem newListItem = new ListItem();
+                                                    if (currentCollectedData.ValueFK_CollectedDataTable ==
+                                                        tmpCollectedForDropDown.ID)
+                                                    {
+                                                        newListItem.Selected = true;
+                                                    }
+                                                    newListItem.Value = tmpCollectedForDropDown.ID.ToString();
+                                                    //---------------------------------------------------------------------------------------------------------------
+                                                    if (dataType.IsDataTypeBit(DropDownItemsColumn.DataType))
+                                                    {
+                                                        newListItem.Text = tmpCollectedForDropDown.ValueBit.ToString();
+                                                    }
+                                                    //---------------------------------------------------------------------------------------------------------------
+                                                    if (dataType.IsDataTypeInteger(DropDownItemsColumn.DataType))
+                                                    {
+                                                        newListItem.Text = tmpCollectedForDropDown.ValueInt.ToString();
+                                                    }
+                                                    //---------------------------------------------------------------------------------------------------------------
+                                                    if (dataType.IsDataTypeFloat(DropDownItemsColumn.DataType))
+                                                    {
+                                                        newListItem.Text =
+                                                            tmpCollectedForDropDown.ValueDouble.ToString();
+                                                    }
+                                                    //---------------------------------------------------------------------------------------------------------------
+                                                    if (dataType.IsDataTypeText(DropDownItemsColumn.DataType))
+                                                    {
+                                                        newListItem.Text = tmpCollectedForDropDown.ValueText;
+                                                    }
+                                                    //---------------------------------------------------------------------------------------------------------------
+                                                    if (dataType.IsDataTypeDate(DropDownItemsColumn.DataType))
+                                                    {
+                                                        newListItem.Text =
+                                                            tmpCollectedForDropDown.ValueDataTime.ToString();
+                                                    }
+                                                    newListItem.Attributes.Add("title", newListItem.Text);
+                                                    //newListItem.Text = GetShortString(newListItem.Text, 50, "...");
+                                                    currentDropDownListDownList.Items.Add(newListItem);
+
+                                                    #endregion
+                                                }
+                                         }
+                      
+
+                                    #endregion
+
+                                        #region constDropDown
+
+                                    {
+                                        if (dataType.IsDataTypeConstantDropDown(currentColumn.DataType))
+                                        {
+                                            zConstantListTable currentConstList =
+                                                (from a in competitionDataBase.zConstantListTable
+                                                    where a.ID == currentColumn.FK_ConstantListsTable
+                                                          && a.Active == true
                                                     select a).FirstOrDefault();
 
                                             List<zCollectedDataTable> collectedDataList =
                                                 (from a in competitionDataBase.zCollectedDataTable
-                                                    join b in competitionDataBase.zCollectedRowsTable
-                                                        on a.FK_CollectedRowsTable equals b.ID
-                                                    where b.FK_ApplicationTable == applicationId
+                                                    where a.FK_ConstantListTable == currentConstList.ID
                                                           && a.Active == true
-                                                          && b.Active == true
-                                                          && a.FK_ColumnTable == currentColumn.FK_ColumnTable
                                                     select a).Distinct().ToList();
 
                                             foreach (zCollectedDataTable tmpCollectedForDropDown in collectedDataList)
-                                            {                                              
-                                                #region вытаскиваем в зависимости от типа данных
+                                            {
                                                 ListItem newListItem = new ListItem();
                                                 if (currentCollectedData.ValueFK_CollectedDataTable ==
                                                     tmpCollectedForDropDown.ID)
@@ -901,73 +1150,40 @@ namespace Competitions.User
                                                     newListItem.Selected = true;
                                                 }
                                                 newListItem.Value = tmpCollectedForDropDown.ID.ToString();
-                                                //---------------------------------------------------------------------------------------------------------------
-                                                if (dataType.IsDataTypeBit(DropDownItemsColumn.DataType))
-                                                {
-                                                    newListItem.Text = tmpCollectedForDropDown.ValueBit.ToString();
-                                                }
-                                                //---------------------------------------------------------------------------------------------------------------
-                                                if (dataType.IsDataTypeInteger(DropDownItemsColumn.DataType))
-                                                {
-                                                    newListItem.Text = tmpCollectedForDropDown.ValueInt.ToString();
-                                                }
-                                                //---------------------------------------------------------------------------------------------------------------
-                                                if (dataType.IsDataTypeFloat(DropDownItemsColumn.DataType))
-                                                {
-                                                    newListItem.Text = tmpCollectedForDropDown.ValueDouble.ToString();
-                                                }
-                                                //---------------------------------------------------------------------------------------------------------------
-                                                if (dataType.IsDataTypeText(DropDownItemsColumn.DataType))
-                                                {
-                                                    newListItem.Text = tmpCollectedForDropDown.ValueText;
-                                                }
-                                                //---------------------------------------------------------------------------------------------------------------
-                                                if (dataType.IsDataTypeDate(DropDownItemsColumn.DataType))
-                                                {
-                                                    newListItem.Text = tmpCollectedForDropDown.ValueDataTime.ToString();
-                                                }
+                                                newListItem.Text = tmpCollectedForDropDown.ValueText;
                                                 newListItem.Attributes.Add("title", newListItem.Text);
                                                 //newListItem.Text = GetShortString(newListItem.Text, 50, "...");
                                                 currentDropDownListDownList.Items.Add(newListItem);
-                                                #endregion
                                             }
                                         }
                                     }
-                                    #endregion
-                                    #region constDropDown
-                                    if (dataType.IsDataTypeConstantDropDown(currentColumn.DataType))
-                                    {
-                                        DropDownList currentDropDownListDownList = e.Row.FindControl("ChooseOnlyDropDown" + i) as DropDownList;
-                                        if (currentDropDownListDownList != null)
-                                        {
-                                            zConstantListTable currentConstList = (from a in competitionDataBase.zConstantListTable
-                                                where a.ID == currentColumn.FK_ConstantListsTable
-                                                && a.Active == true
-                                                select a).FirstOrDefault();
-                                         
-                                            List<zCollectedDataTable> collectedDataList =
-                                                (from a in competitionDataBase.zCollectedDataTable
-                                                 where a.FK_ConstantListTable == currentConstList.ID
-                                                 && a.Active == true
-                                                 select a).Distinct().ToList();
 
-                                            foreach (zCollectedDataTable tmpCollectedForDropDown in collectedDataList)
+                                    #endregion
+
+                                        #region atLeastOne
+
+                                        if (dataType.IsDataTypeConstntAtLeastOneWithCheckBoxParam(currentColumn.DataType))
+                                        {
+                                            List<zCollectedDataTable> checkedItemsToPutInDropDown =
+                                                GetMustBeByCheckBoxeData(applicationId,currentColumn.FK_ColumnTable,
+                                                    currentColumn.FK_ColumnConnectToTable);
+                                            DataProcess dataProcess = new DataProcess();
+                                            foreach (zCollectedDataTable currentData in checkedItemsToPutInDropDown)
                                             {
                                                 ListItem newListItem = new ListItem();
-                                                if (currentCollectedData.ValueFK_CollectedDataTable == tmpCollectedForDropDown.ID)
-                                                {
-                                                    newListItem.Selected = true;
-                                                }
-                                                newListItem.Value = tmpCollectedForDropDown.ID.ToString();
-                                                newListItem.Text = tmpCollectedForDropDown.ValueText;                                                
-                                                newListItem.Attributes.Add("title", newListItem.Text);
-                                                //newListItem.Text = GetShortString(newListItem.Text, 50, "...");
+                                                if (currentData.ID == currentCollectedData.ValueFK_CollectedDataTable)
+                                                  newListItem.Selected = true;
+                                                newListItem.Value = currentData.ID.ToString();
+                                                newListItem.Text = (from a in competitionDataBase.zCollectedDataTable
+                                                    where a.ID == currentData.ValueFK_CollectedDataTable
+                                                    select a.ValueText).FirstOrDefault();
                                                 currentDropDownListDownList.Items.Add(newListItem);
                                             }
                                         }
+
+                                        #endregion
                                     }
-                                    #endregion
-                                }
+                                }                 
                             }
                         }
                     }
@@ -1073,6 +1289,41 @@ namespace Competitions.User
         {
             SaveChanges();
             Response.Redirect("~/Default.aspx");
-        }       
+        }
+        protected void GvOpenDocumentButtonClick(object sender, EventArgs e)
+        {
+            LinkButton button = (LinkButton)sender;
+            {
+                
+                if (button!=null)
+                {
+                    string filePath = 
+                    (GetFileByCollectedData(Convert.ToInt32(button.CommandArgument)));
+                    string fileName = (GetFileNameByCollectedData(Convert.ToInt32(button.CommandArgument)));
+                    //Response.ContentType = "Application/pdf";
+                   // string FilePath = MapPath("acrobat.pdf");
+                    Response.AddHeader("content-disposition", "attachment; filename=" + fileName);
+                    Response.TransmitFile(filePath);
+                    Response.End();
+                }
+                //Response.Redirect("FillSection.aspx");
+            }
+        }
+        protected void GvDeleteDocumentButtonClick(object sender, EventArgs e)
+        {
+            LinkButton button = (LinkButton)sender;
+            {
+                CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+                zCollectedDataTable currentCollected = (from a in competitionDataBase.zCollectedDataTable
+                                                        where a.ID == Convert.ToInt32(button.CommandArgument)
+                                                        select a).FirstOrDefault();
+                if (currentCollected != null)
+                {
+                    currentCollected.ValueText = null;
+                    competitionDataBase.SubmitChanges();
+                }
+                Response.Redirect("FillSection.aspx");
+            }
+        }     
     }
 }

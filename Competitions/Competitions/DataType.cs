@@ -9,7 +9,7 @@ namespace Competitions
 {
     public class DataType
     {
-        private int dataTypeCount = 17;
+        private int dataTypeCount = 19;
         public string GetDataTypeName(int dataType)
         {
             switch (dataType)
@@ -82,6 +82,14 @@ namespace Competitions
                 {
                     return "По существующим таблицам (Все обязательно) по критерию (CheckBox)";
                 }
+                case 17:
+                {
+                    return "Прикрепление файлов";
+                }
+                case 18:
+                {
+                    return "Хотябы один для каждой константы по критерию (CheckBox)";
+                }
                 default :
                 {
                     return "error";
@@ -104,14 +112,15 @@ namespace Competitions
             }
             return newListItemAray;
         }
-
         public bool DataTypeWithConnectionToCollected(int dataType)
         {
             if (IsDataTypeDropDown(dataType)
                 || IsDataTypeSum(dataType)
                 || IsDataTypeNecessarilyShow(dataType)
                 || IsDataTypeMaxValue(dataType)
-                || IsDataTypeMinValue(dataType))
+                || IsDataTypeMinValue(dataType)
+                || IsDataTypeNecessarilyShowWithParam(dataType)
+                || IsDataTypeConstntAtLeastOneWithCheckBoxParam(dataType))
             {
                 return true;
             }
@@ -123,7 +132,7 @@ namespace Competitions
         public bool DataTypeWithConnectionToConstant(int dataType)
         {
             if (IsDataTypeConstantDropDown(dataType)
-                || IsDataTypeConstantNecessarilyShow(dataType))
+                || IsDataTypeConstantNecessarilyShow(dataType) )
             {
                 return true;
             }
@@ -145,7 +154,7 @@ namespace Competitions
         }
         public bool DataTypeDependOfBit(int dataType)
         {
-            if (IsDataTypeNecessarilyShowWithParam(dataType))
+            if (IsDataTypeNecessarilyShowWithParam(dataType)||IsDataTypeConstntAtLeastOneWithCheckBoxParam(dataType))
             {
                 return true;
             }
@@ -333,6 +342,28 @@ namespace Competitions
         public bool IsDataTypeNecessarilyShowWithParam(int dataType)
         {
             if (dataType == 16)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsDataTypeFileUpload(int dataType)
+        {
+            if (dataType == 17)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsDataTypeConstntAtLeastOneWithCheckBoxParam(int dataType)
+        {
+            if (dataType == 18)
             {
                 return true;
             }

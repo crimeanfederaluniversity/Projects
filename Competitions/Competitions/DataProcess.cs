@@ -644,11 +644,17 @@ namespace Competitions
         public bool IsCellDropDown(int dataTypeIndex)
         {
             DataType dataType = new DataType();
-            if ((dataType.IsDataTypeConstantDropDown(dataTypeIndex)) || (dataType.IsDataTypeDropDown(dataTypeIndex)))
+            if ((dataType.IsDataTypeConstantDropDown(dataTypeIndex)) || (dataType.IsDataTypeDropDown(dataTypeIndex)) || (dataType.IsDataTypeConstntAtLeastOneWithCheckBoxParam(dataTypeIndex)))
             {
                 return true;
             }
             return false; 
         }
+        public bool IsCellFileUpload(int dataTypeIndex)
+        {
+            DataType dataType = new DataType();
+            return dataType.IsDataTypeFileUpload(dataTypeIndex);
+        }
+
     }
 }

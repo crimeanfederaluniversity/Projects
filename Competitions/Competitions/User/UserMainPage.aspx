@@ -2,11 +2,16 @@
 <asp:Content runat="server" ID="BodyContent"  ContentPlaceHolderID="MainContent">
     <link rel="stylesheet" type="text/css" href="../Spinner.css"> 
     
-    
-    <script type="text/javascript">
-        function hideLoadPanel() {
+    <script>
+        window.onload = function () {
             document.getElementById('LoadPanel_').style.visibility = 'hidden';
         }
+        document.onload = function () {
+            document.getElementById('LoadPanel_').style.visibility = 'hidden';
+        }
+</script>
+
+    <script type="text/javascript">
         function showLoadPanel() {
             document.getElementById('LoadPanel_').style.visibility = 'visible';
         }
@@ -105,17 +110,15 @@
         <table width="100%" align="center">
       <tr>
         <td>
-            <br />
-            
-
-            
-
+            <br />                      
           <asp:Button Text="Все открытые конкурсы" BorderStyle="None" ID="Tab1" CssClass="Initial" runat="server"
               OnClick="Tab1_Click" Width="262px" />
           <asp:Button Text="Заявки в работе" BorderStyle="None" ID="Tab2" CssClass="Initial" runat="server"
               OnClick="Tab2_Click" />
           <asp:Button Text="Поданные заявки" BorderStyle="None" ID="Tab3" CssClass="Initial" runat="server"
               OnClick="Tab3_Click" />
+          <asp:Button Text="Черновики" BorderStyle="None" ID="Tab4" CssClass="Initial" runat="server"
+              OnClick="Tab4_Click" />
           <asp:MultiView ID="MainView" runat="server">
             <asp:View ID="View1" runat="server">
               <table style="width: 100%; border-style: hidden">
@@ -181,7 +184,7 @@
                                 <asp:ListItem Value="4">odt</asp:ListItem>
                             </asp:RadioButtonList>
 
-                            <asp:Button ID="GetDocButton2" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
+                            <asp:Button ID="GetDocButton2" runat="server"  CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
              
@@ -219,6 +222,30 @@
                                     </ItemTemplate>
                             </asp:TemplateField>
              
+                        </Columns>
+                    </asp:GridView>
+                    <br />
+                  </td>
+                </tr>
+              </table>
+            </asp:View>
+            <asp:View ID="View4" runat="server">
+              <table style="width: 100%; border-width: 1px; border-color: #666; border-style: hidden">
+                <tr>
+                  <td>
+                      <h2><span style="font-size: 20px">Черновики: </span></h2>
+                    <br />
+                    <asp:GridView ID="DraftGridView" runat="server" AutoGenerateColumns="False">
+                        <Columns>
+                            <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
+                            <asp:BoundField DataField="Name"   HeaderText="Название" Visible="true" />
+                            <asp:BoundField DataField="CompetitionName"   HeaderText="Конкурс" Visible="true" />                           
+                            
+                            <asp:TemplateField HeaderText="Редактировать заявку">
+                                <ItemTemplate>
+                                    <asp:Button ID="FillButton" runat="server" CommandName="Select" Text="Заполнить" CommandArgument='<%# Eval("ID") %>'   Width="200px" OnClick="FillButtonClick"/>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
                     <br />

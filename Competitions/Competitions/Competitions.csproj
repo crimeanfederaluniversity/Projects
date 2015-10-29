@@ -201,6 +201,9 @@
     <Content Include="Admin\SectionCreateEdit.aspx" />
     <Content Include="Admin\TaskPRManual.aspx" />
     <Content Include="CalendarIcon.png" />
+    <Content Include="Calendar\datepicker.css" />
+    <Content Include="Calendar\datepicker.jpg" />
+    <Content Include="Calendar\datepicker.js" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
