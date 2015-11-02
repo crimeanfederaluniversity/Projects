@@ -64,9 +64,9 @@ namespace Competitions.User {
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-<<<<<<< .mine        protected global::System.Web.UI.WebControls.Label Label2;
-=======        protected global::System.Web.UI.HtmlControls.HtmlInputText startdata;
->>>>>>> .theirs        
+      protected global::System.Web.UI.WebControls.Label Label2;
+      protected global::System.Web.UI.HtmlControls.HtmlInputText startdata;
+     
         /// <summary>
         /// enddata элемент управления.
         /// </summary>
