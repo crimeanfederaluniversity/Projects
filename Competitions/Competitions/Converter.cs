@@ -25,14 +25,14 @@ namespace Competitions
                     ConvertedFilaExtension = "doc";
                     ConvertedFilePath = documentToCreatePathWithoutExtension + ".doc";
                     return ConvertDocumentTo(sourcePath, ConvertedFilePath,
-                        WdSaveFormat.wdFormatDocument97);
+                        WdSaveFormat.wdFormatRTF);
                 }
                 case 1:
                 {
                     ConvertedFilaExtension = "docx";
                     ConvertedFilePath = documentToCreatePathWithoutExtension + ".docx";
                     return ConvertDocumentTo(sourcePath, ConvertedFilePath,
-                        WdSaveFormat.wdFormatDocumentDefault);
+                        WdSaveFormat.wdFormatRTF);
                 }
                 case 2:
                 {
@@ -46,14 +46,14 @@ namespace Competitions
                     ConvertedFilaExtension = "pdf";
                     ConvertedFilePath = documentToCreatePathWithoutExtension + ".pdf";
                     return ConvertDocumentTo(sourcePath, ConvertedFilePath,
-                        WdSaveFormat.wdFormatPDF);
+                        WdSaveFormat.wdFormatRTF);
                 }
                 case 4:
                 {
                     ConvertedFilaExtension = "odt";
                     ConvertedFilePath = documentToCreatePathWithoutExtension + ".odt";
                     return ConvertDocumentTo(sourcePath, ConvertedFilePath,
-                        WdSaveFormat.wdFormatOpenDocumentText);
+                        WdSaveFormat.wdFormatRTF);
                 }
             }
             return "error";
@@ -71,11 +71,8 @@ namespace Competitions
                 ScreenUpdating = false
             };
 
-            doc = msWordDoc.Documents.Open(sourcePath, ref oMissing
-              , ref oMissing, ref oMissing, ref oMissing, ref oMissing
-              , ref oMissing, ref oMissing, ref oMissing, ref oMissing
-              , ref oMissing, ref oMissing, ref oMissing, ref oMissing
-              , ref oMissing, ref oMissing);
+           // doc = msWordDoc.Documents.Open(sourcePath, ref oMissing , ref oMissing, ref oMissing, ref oMissing, ref oMissing , ref oMissing, ref oMissing, ref oMissing, ref oMissing
+           //   , ref oMissing, ref oMissing, ref oMissing, ref oMissing , ref oMissing, ref oMissing);
 
             try
             {        
@@ -84,7 +81,7 @@ namespace Competitions
                 if (doc != null)
                 {
                     doc.Activate();
-                    doc.Protect(WdProtectionType.wdAllowOnlyReading, ref oMissing, ref oMissing, ref oMissing, ref oMissing);
+                  //  doc.Protect(WdProtectionType.wdAllowOnlyReading, ref oMissing, ref oMissing, ref oMissing, ref oMissing);
                     //doc.ReadOnly = true;
                     // save Document as PDF
                     //object fileFormat = WdSaveFormat.wdFormatPDF;

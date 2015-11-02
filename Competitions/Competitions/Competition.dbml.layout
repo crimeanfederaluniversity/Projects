@@ -26,12 +26,6 @@
         <elementListCompartment Id="e1ff0e3c-cb05-4dc0-9a70-c33eb641c312" absoluteBounds="9.265, 17.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="c6042d48-8188-457f-80b3-42d184469d86" absoluteBounds="6.25, 15.5, 2, 2.5401025390625005">
-      <DataClassMoniker Name="/CompetitionDataContext/zApplicationTable" />
-      <nestedChildShapes>
-        <elementListCompartment Id="a319cefa-4ffd-41b9-977b-f77f03db72c9" absoluteBounds="6.265, 15.96, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="e3d955a8-5034-4a99-ba4d-ba1b035fe3fc" absoluteBounds="3.5, 22.375, 2, 1.3862939453125023">
       <DataClassMoniker Name="/CompetitionDataContext/zBlockTable" />
       <nestedChildShapes>
@@ -116,24 +110,11 @@
         <elementListCompartment Id="8c3b478d-8255-4a26-ad90-eb413fd803cb" absoluteBounds="6.265, 22.46, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="d13a3ecb-5a66-42bb-ba50-e540d337c6f1" absoluteBounds="3.75, 0.75, 2, 1.3862939453125">
-      <DataClassMoniker Name="/CompetitionDataContext/zTaskPRManualTable" />
-      <nestedChildShapes>
-        <elementListCompartment Id="2a70e8f1-403c-439c-8f8a-6e93ce040d8a" absoluteBounds="3.765, 1.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <associationConnector edgePoints="[(8.5 : 8.7612939453125); (8.875 : 9.1362939453125); (8.875 : 18.0392976888021); (9.25 : 18.0392976888021)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.5 : 8.06814697265625); (8.75 : 8.06814697265625); (8.75 : 16.125); (10.25 : 16.125); (10.25 : 17.25)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/zActionPRManualTable/zActionPRManualTable_zActionsCompetitionsMappingTable" />
       <nodes>
         <classShapeMoniker Id="74341560-288b-42c9-8140-b20dc218b36d" />
         <classShapeMoniker Id="bea88e7c-0f65-4c22-9626-f106c837343b" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 15.6458968098958); (1.75 : 16.1041989049479); (2.19791916666667 : 16.1041989049479 : JumpStart); (2.36458583333333 : 16.1041989049479 : JumpEnd); (4.41666666666667 : 16.1041989049479 : JumpStart); (4.58333333333333 : 16.1041989049479 : JumpEnd); (4.94791916666667 : 16.1041989049479 : JumpStart); (5.11458583333333 : 16.1041989049479 : JumpEnd); (6.25 : 16.1041989049479)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/CompetitionDataContext/UsersTable/UsersTable_zApplicationTable" />
-      <nodes>
-        <classShapeMoniker Id="e6f66c07-836e-4841-934c-2ceb608b5625" />
-        <classShapeMoniker Id="c6042d48-8188-457f-80b3-42d184469d86" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(15.4592307692308 : 22.6843082682292); (15.4592307692308 : 22.9343082682292); (16.0546153846154 : 22.9343082682292); (16.0546153846154 : 22.6843082682292)]" fixedFrom="NotFixed" fixedTo="NotFixed">
@@ -143,21 +124,14 @@
         <classShapeMoniker Id="9b23fe0c-3534-4f5b-a66b-70027e8b2a5b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(14 : 19.9767976888021); (14.75 : 19.9767976888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(14 : 19.9767976888021); (14.75 : 19.9767976888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/zCollectedRowsTable/zCollectedRowsTable_zCollectedDataTable" />
       <nodes>
         <classShapeMoniker Id="7b5861b8-3b8a-4275-b0f4-bd94841792f1" />
         <classShapeMoniker Id="9b23fe0c-3534-4f5b-a66b-70027e8b2a5b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 16.5392976888021); (8.79166666666667 : 16.5392976888021 : JumpStart); (8.95833333333333 : 16.5392976888021 : JumpEnd); (11.75 : 16.5392976888021); (11.75 : 16.9535953776042); (13 : 16.9535953776042); (13 : 19)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/CompetitionDataContext/zApplicationTable/zApplicationTable_zCollectedRowsTable" />
-      <nodes>
-        <classShapeMoniker Id="c6042d48-8188-457f-80b3-42d184469d86" />
-        <classShapeMoniker Id="7b5861b8-3b8a-4275-b0f4-bd94841792f1" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(11 : 21.6627018229167); (12.9166666666667 : 21.6627018229167 : JumpStart); (13.0833333333333 : 21.6627018229167 : JumpEnd); (14.75 : 21.6627018229167)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(11 : 21.6627018229167); (14.75 : 21.6627018229167)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/zColumnTable/zColumnTable_zCollectedDataTable" />
       <nodes>
         <classShapeMoniker Id="9608c403-2c53-4566-a128-93675dcbb9c8" />
@@ -185,144 +159,177 @@
         <classShapeMoniker Id="9608c403-2c53-4566-a128-93675dcbb9c8" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 18.4964465332031); (9.25 : 18.4964465332031)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 19.4311027018229); (10.7773076923077 : 19.4311027018229); (10.7773076923077 : 18.8285953776042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/zCompetitionsTable/zCompetitionsTable_zActionsCompetitionsMappingTable" />
       <nodes>
         <classShapeMoniker Id="62157db0-6536-482c-9344-51ee3bc06c1f" />
         <classShapeMoniker Id="bea88e7c-0f65-4c22-9626-f106c837343b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 17.3325512695313); (6.25 : 17.3325512695313)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/CompetitionDataContext/zCompetitionsTable/zCompetitionsTable_zApplicationTable" />
-      <nodes>
-        <classShapeMoniker Id="62157db0-6536-482c-9344-51ee3bc06c1f" />
-        <classShapeMoniker Id="c6042d48-8188-457f-80b3-42d184469d86" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(2.2812525 : 15.6458968098958); (2.2812525 : 18.0873527018229); (3.5 : 18.0873527018229)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.2812525 : 15.6458968098958); (2.2812525 : 18.0873527018229); (3.5 : 18.0873527018229)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/UsersTable/UsersTable_zCompetitionsTable" />
       <nodes>
         <classShapeMoniker Id="e6f66c07-836e-4841-934c-2ceb608b5625" />
         <classShapeMoniker Id="62157db0-6536-482c-9344-51ee3bc06c1f" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(7.25 : 19.625); (7.25 : 19.125); (8.54166666666667 : 19.125 : JumpStart); (8.70833333333333 : 19.125 : JumpEnd); (11.75 : 19.125); (11.75 : 21.1206461002604); (12.9166666666667 : 21.1206461002604 : JumpStart); (13.0833333333333 : 21.1206461002604 : JumpEnd); (14.75 : 21.1206461002604)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.25 : 20.263691130008); (8.75 : 20.263691130008); (8.75 : 19.625); (9.62589743589744 : 19.625 : JumpStart); (9.7925641025641 : 19.625 : JumpEnd); (10.2212820512821 : 19.625 : JumpStart); (10.3879487179487 : 19.625 : JumpEnd); (11.75 : 19.625); (11.75 : 18.75); (15.75 : 18.75); (15.75 : 19.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/zConstantListTable/zConstantListTable_zCollectedDataTable" />
       <nodes>
         <classShapeMoniker Id="e904f34e-81ee-4010-80b6-a031dfc21bce" />
         <classShapeMoniker Id="9b23fe0c-3534-4f5b-a66b-70027e8b2a5b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 20.263690630008); (8.54166666666667 : 20.263690630008 : JumpStart); (8.70833333333333 : 20.263690630008 : JumpEnd); (9 : 20.263690630008)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.25 : 20.263690630008); (8.44791666666667 : 20.263690630008 : JumpStart); (8.61458333333333 : 20.263690630008 : JumpEnd); (9 : 20.263690630008)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/zConstantListTable/zConstantListTable_zColumnTable" />
       <nodes>
         <classShapeMoniker Id="e904f34e-81ee-4010-80b6-a031dfc21bce" />
         <classShapeMoniker Id="9608c403-2c53-4566-a128-93675dcbb9c8" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(4.5 : 19.5497054036458); (4.5 : 20.4142976888021); (5.79166666666667 : 20.4142976888021 : JumpStart); (5.95833333333333 : 20.4142976888021 : JumpEnd); (6.25 : 20.4142976888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(4.5 : 19.5497054036458); (4.5 : 20.4142976888021); (6.25 : 20.4142976888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/zCompetitionsTable/zCompetitionsTable_zConstantListTable" />
       <nodes>
         <classShapeMoniker Id="62157db0-6536-482c-9344-51ee3bc06c1f" />
         <classShapeMoniker Id="e904f34e-81ee-4010-80b6-a031dfc21bce" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 18.038563077524); (8.625 : 18.413563077524); (8.625 : 25.3854484049479); (9 : 25.3854484049479)]" fixedFrom="NotFixed" fixedTo="Algorithm">
-      <AssociationMoniker Name="/CompetitionDataContext/zApplicationTable/zApplicationTable_zDocumentsTable" />
-      <nodes>
-        <classShapeMoniker Id="c6042d48-8188-457f-80b3-42d184469d86" />
-        <classShapeMoniker Id="b8c500ce-29df-47ab-a347-f431ca9a1b24" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 15.0392976888021); (4.41666666666667 : 15.0392976888021 : JumpStart); (4.58333333333333 : 15.0392976888021 : JumpEnd); (4.94791916666667 : 15.0392976888021 : JumpStart); (5.11458583333333 : 15.0392976888021 : JumpEnd); (8.32291666666667 : 15.0392976888021 : JumpStart); (8.48958333333333 : 15.0392976888021 : JumpEnd); (8.79166666666667 : 15.0392976888021 : JumpStart); (8.95833333333333 : 15.0392976888021 : JumpEnd); (9 : 15.0392976888021); (9 : 14); (9.04166666666667 : 14 : JumpStart); (9.20833333333333 : 14 : JumpEnd); (11.4166666666667 : 14 : JumpStart); (11.5833333333333 : 14 : JumpEnd); (11.75 : 14); (11.75 : 14.4151025390625); (12.3854146666667 : 14.4151025390625 : JumpStart); (12.5520813333333 : 14.4151025390625 : JumpEnd); (13 : 14.4151025390625); (13 : 14.1651025390625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 15.0392976888021); (4.41666666666667 : 15.0392976888021 : JumpStart); (4.58333333333333 : 15.0392976888021 : JumpEnd); (7.55729216666667 : 15.0392976888021 : JumpStart); (7.72395883333333 : 15.0392976888021 : JumpEnd); (8.32291666666667 : 15.0392976888021 : JumpStart); (8.48958333333333 : 15.0392976888021 : JumpEnd); (8.66666666666667 : 15.0392976888021 : JumpStart); (8.83333333333333 : 15.0392976888021 : JumpEnd); (9 : 15.0392976888021); (9 : 14); (9.04166666666667 : 14 : JumpStart); (9.20833333333333 : 14 : JumpEnd); (11.75 : 14); (11.75 : 14.4151025390625); (13 : 14.4151025390625); (13 : 14.1651025390625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/UsersTable/UsersTable_zExpertPointsValue" />
       <nodes>
         <classShapeMoniker Id="e6f66c07-836e-4841-934c-2ceb608b5625" />
         <classShapeMoniker Id="8238abc6-7521-4a80-ac06-d7b957d24bdf" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 16.1839440332031); (8.79166666666667 : 16.1839440332031 : JumpStart); (8.95833333333333 : 16.1839440332031 : JumpEnd); (11.75 : 16.1839440332031); (11.75 : 14.875); (12.468748 : 14.875); (12.468748 : 14.1651025390625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/CompetitionDataContext/zApplicationTable/zApplicationTable_zExpertPointsValue" />
-      <nodes>
-        <classShapeMoniker Id="c6042d48-8188-457f-80b3-42d184469d86" />
-        <classShapeMoniker Id="8238abc6-7521-4a80-ac06-d7b957d24bdf" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(11.25 : 12.2604484049479); (12 : 12.2604484049479)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(11.25 : 12.2604484049479); (12 : 12.2604484049479)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/zExpertPoints/zExpertPoints_zExpertPointsValue" />
       <nodes>
         <classShapeMoniker Id="d4100d5d-e285-4a8f-899f-e9c6ce809d87" />
         <classShapeMoniker Id="8238abc6-7521-4a80-ac06-d7b957d24bdf" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 15.269651344401); (4.41666666666667 : 15.269651344401 : JumpStart); (4.58333333333333 : 15.269651344401 : JumpEnd); (4.94791916666667 : 15.269651344401 : JumpStart); (5.11458583333333 : 15.269651344401 : JumpEnd); (8.79166666666667 : 15.269651344401 : JumpStart); (8.95833333333333 : 15.269651344401 : JumpEnd); (9.125 : 15.269651344401); (9.125 : 13.75); (11.5 : 13.75); (11.5 : 14.5401025390625); (12.3854146666667 : 14.5401025390625 : JumpStart); (12.5520813333333 : 14.5401025390625 : JumpEnd); (13.4999995 : 14.5401025390625); (13.4999995 : 15.125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.48437375 : 15.6458968098958); (1.48437375 : 16.0080476888021); (1.79947979166667 : 16.0080476888021 : JumpStart); (1.96614645833333 : 16.0080476888021 : JumpEnd); (2.19791916666667 : 16.0080476888021 : JumpStart); (2.36458583333333 : 16.0080476888021 : JumpEnd); (4.41666666666667 : 16.0080476888021 : JumpStart); (4.58333333333333 : 16.0080476888021 : JumpEnd); (4.94791916666667 : 16.0080476888021 : JumpStart); (5.11458583333333 : 16.0080476888021 : JumpEnd); (7.55729216666667 : 16.0080476888021 : JumpStart); (7.72395883333333 : 16.0080476888021 : JumpEnd); (8.66666666666667 : 16.0080476888021 : JumpStart); (8.83333333333333 : 16.0080476888021 : JumpEnd); (12 : 16.0080476888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/UsersTable/UsersTable_zExpertsAndApplicationMappingTable" />
       <nodes>
         <classShapeMoniker Id="e6f66c07-836e-4841-934c-2ceb608b5625" />
         <classShapeMoniker Id="c1c5a415-55f6-4fb3-a773-d3c151bf8bf9" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 15.9750197054036); (8.79166666666667 : 15.9750197054036 : JumpStart); (8.95833333333333 : 15.9750197054036 : JumpEnd); (11.6666666666667 : 15.9750197054036 : JumpStart); (11.8333333333333 : 15.9750197054036 : JumpEnd); (12 : 15.9750197054036)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/CompetitionDataContext/zApplicationTable/zApplicationTable_zExpertsAndApplicationMappingTable" />
-      <nodes>
-        <classShapeMoniker Id="c6042d48-8188-457f-80b3-42d184469d86" />
-        <classShapeMoniker Id="c1c5a415-55f6-4fb3-a773-d3c151bf8bf9" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 14.2267976888021); (4.41666666666667 : 14.2267976888021 : JumpStart); (4.58333333333333 : 14.2267976888021 : JumpEnd); (6.25 : 14.2267976888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 14.2267976888021); (4.41666666666667 : 14.2267976888021 : JumpStart); (4.58333333333333 : 14.2267976888021 : JumpEnd); (6.25 : 14.2267976888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/UsersTable/UsersTable_zExpertsAndCompetitionMappngTamplateTable" />
       <nodes>
         <classShapeMoniker Id="e6f66c07-836e-4841-934c-2ceb608b5625" />
         <classShapeMoniker Id="4a9af941-861b-4a90-8fda-03faec5e84f6" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(4.5 : 16.625); (4.5 : 13.582146344401); (6.25 : 13.582146344401)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(4.5 : 16.625); (4.5 : 13.582146344401); (6.25 : 13.582146344401)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/zCompetitionsTable/zCompetitionsTable_zExpertsAndCompetitionMappngTamplateTable" />
       <nodes>
         <classShapeMoniker Id="62157db0-6536-482c-9344-51ee3bc06c1f" />
         <classShapeMoniker Id="4a9af941-861b-4a90-8fda-03faec5e84f6" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.0312525 : 16.625); (5.0312525 : 14.8401965332031); (8.32291666666667 : 14.8401965332031 : JumpStart); (8.48958333333333 : 14.8401965332031 : JumpEnd); (8.79166666666667 : 14.8401965332031 : JumpStart); (9.20833333333333 : 14.8401965332031 : JumpEnd); (9.25 : 14.8401965332031)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.0312525 : 16.625); (5.0312525 : 14.8401965332031); (7.55729216666667 : 14.8401965332031 : JumpStart); (7.72395883333333 : 14.8401965332031 : JumpEnd); (8.32291666666667 : 14.8401965332031 : JumpStart); (8.48958333333333 : 14.8401965332031 : JumpEnd); (8.66666666666667 : 14.8401965332031 : JumpStart); (8.83333333333333 : 14.8401965332031 : JumpEnd); (8.91666666666667 : 14.8401965332031 : JumpStart); (9.08333333333333 : 14.8401965332031 : JumpEnd); (9.25 : 14.8401965332031)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/zCompetitionsTable/zCompetitionsTable_zFormCompetitionMappingTable" />
       <nodes>
         <classShapeMoniker Id="62157db0-6536-482c-9344-51ee3bc06c1f" />
         <classShapeMoniker Id="b2c097a1-a1f7-46a7-bb20-d1f12bda48c3" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.40625 : 11.8285953776042); (8.40625 : 15.1544745166016); (8.79166666666667 : 15.1544745166016 : JumpStart); (8.95833333333333 : 15.1544745166016 : JumpEnd); (9.04166666666667 : 15.1544745166016 : JumpStart); (9.20833333333333 : 15.1544745166016 : JumpEnd); (9.25 : 15.1544745166016)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.40625 : 11.8285953776042); (8.40625 : 15.4339465332031); (9.25 : 15.4339465332031)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/zTemplateFormTable/zTemplateFormTable_zFormCompetitionMappingTable" />
       <nodes>
         <classShapeMoniker Id="f214ac84-fb0c-4ced-bff2-4db4f113b472" />
         <classShapeMoniker Id="b2c097a1-a1f7-46a7-bb20-d1f12bda48c3" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 23.7324039713542); (8.54166666666667 : 23.7324039713542 : JumpStart); (8.70833333333333 : 23.7324039713542 : JumpEnd); (13 : 23.7324039713542); (13 : 20.5785953776042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.25 : 23.7324039713542); (13 : 23.7324039713542); (13 : 20.5785953776042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/zSectionTable/zSectionTable_zCollectedRowsTable" />
       <nodes>
         <classShapeMoniker Id="2759d92c-fbcf-40ec-aa93-06847e3cb662" />
         <classShapeMoniker Id="7b5861b8-3b8a-4275-b0f4-bd94841792f1" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 22.5296541341146); (8.54166666666667 : 22.5296541341146 : JumpStart); (8.70833333333333 : 22.5296541341146 : JumpEnd); (9 : 22.5296541341146)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.25 : 22.5296541341146); (9 : 22.5296541341146)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/zSectionTable/zSectionTable_zColumnTable" />
       <nodes>
         <classShapeMoniker Id="2759d92c-fbcf-40ec-aa93-06847e3cb662" />
         <classShapeMoniker Id="9608c403-2c53-4566-a128-93675dcbb9c8" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 19.5481659421074); (5.875 : 19.9231659421074); (5.875 : 23.0777498372396); (6.25 : 23.0777498372396)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 19.5481659421074); (5.875 : 19.9231659421074); (5.875 : 23.0777498372396); (6.25 : 23.0777498372396)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/zCompetitionsTable/zCompetitionsTable_zSectionTable" />
       <nodes>
         <classShapeMoniker Id="62157db0-6536-482c-9344-51ee3bc06c1f" />
         <classShapeMoniker Id="2759d92c-fbcf-40ec-aa93-06847e3cb662" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 22.6638749186198); (5.79166666666667 : 22.6638749186198 : JumpStart); (5.95833333333333 : 22.6638749186198 : JumpEnd); (6.25 : 22.6638749186198)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 22.6638749186198); (6.25 : 22.6638749186198)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CompetitionDataContext/zBlockTable/zBlockTable_zSectionTable" />
       <nodes>
         <classShapeMoniker Id="e3d955a8-5034-4a99-ba4d-ba1b035fe3fc" />
         <classShapeMoniker Id="2759d92c-fbcf-40ec-aa93-06847e3cb662" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="f69a2880-0b77-48b7-afba-600312b444e3" absoluteBounds="6.875, 16.375, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/CompetitionDataContext/zApplicationTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e8cc0c4a-9d01-4243-9c78-db9adcfbd243" absoluteBounds="6.89, 16.835, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(7.875 : 19.2997054036458); (7.875 : 19.5625); (11.90625 : 19.5625); (11.90625 : 19.7892976888021); (12 : 19.7892976888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CompetitionDataContext/zApplicationTable/zApplicationTable_zCollectedRowsTable" />
+      <nodes>
+        <classShapeMoniker Id="f69a2880-0b77-48b7-afba-600312b444e3" />
+        <classShapeMoniker Id="7b5861b8-3b8a-4275-b0f4-bd94841792f1" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.53125 : 19.2997054036458); (8.53125 : 25.3854484049479); (9 : 25.3854484049479)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CompetitionDataContext/zApplicationTable/zApplicationTable_zDocumentsTable" />
+      <nodes>
+        <classShapeMoniker Id="f69a2880-0b77-48b7-afba-600312b444e3" />
+        <classShapeMoniker Id="b8c500ce-29df-47ab-a347-f431ca9a1b24" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.6406255 : 16.375); (7.6406255 : 14.7035953776042); (8.32291666666667 : 14.7035953776042 : JumpStart); (8.48958333333333 : 14.7035953776042 : JumpEnd); (8.66666666666667 : 14.7035953776042 : JumpStart); (8.83333333333333 : 14.7035953776042 : JumpEnd); (9.125 : 14.7035953776042); (9.125 : 13.1458968098958); (11.625 : 13.1458968098958); (11.625 : 12.8125005); (12 : 12.8125005)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CompetitionDataContext/zApplicationTable/zApplicationTable_zExpertPointsValue" />
+      <nodes>
+        <classShapeMoniker Id="f69a2880-0b77-48b7-afba-600312b444e3" />
+        <classShapeMoniker Id="8238abc6-7521-4a80-ac06-d7b957d24bdf" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.22656025 : 16.375); (7.22656025 : 16.0393001888021); (7.55729216666667 : 16.0393001888021 : JumpStart); (7.72395883333333 : 16.0393001888021 : JumpEnd); (8.66666666666667 : 16.0393001888021 : JumpStart); (8.83333333333333 : 16.0393001888021 : JumpEnd); (12 : 16.0393001888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CompetitionDataContext/zApplicationTable/zApplicationTable_zExpertsAndApplicationMappingTable" />
+      <nodes>
+        <classShapeMoniker Id="f69a2880-0b77-48b7-afba-600312b444e3" />
+        <classShapeMoniker Id="c1c5a415-55f6-4fb3-a773-d3c151bf8bf9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.882813125 : 15.6458968098958); (1.882813125 : 16.46875); (2.19791916666667 : 16.46875 : JumpStart); (2.36458583333333 : 16.46875 : JumpEnd); (4.41666666666667 : 16.46875 : JumpStart); (4.58333333333333 : 16.46875 : JumpEnd); (6.875 : 16.46875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CompetitionDataContext/UsersTable/UsersTable_zApplicationTable" />
+      <nodes>
+        <classShapeMoniker Id="e6f66c07-836e-4841-934c-2ceb608b5625" />
+        <classShapeMoniker Id="f69a2880-0b77-48b7-afba-600312b444e3" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 17.9623527018229); (6.875 : 17.9623527018229)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/CompetitionDataContext/zCompetitionsTable/zCompetitionsTable_zApplicationTable" />
+      <nodes>
+        <classShapeMoniker Id="62157db0-6536-482c-9344-51ee3bc06c1f" />
+        <classShapeMoniker Id="f69a2880-0b77-48b7-afba-600312b444e3" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="f545ab60-a97b-4504-bb52-4119a05c3e5f" absoluteBounds="7.875, 3.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/CompetitionDataContext/zTaskPRManualTable" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c3b3c1a8-93ad-4d2c-9cfe-5f08d50f87b7" absoluteBounds="7.89, 4.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(1.75 : 13.875); (1.75 : 4.53929768880208); (7.875 : 4.53929768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CompetitionDataContext/UsersTable/UsersTable_zTaskPRManualTable" />
+      <nodes>
+        <classShapeMoniker Id="e6f66c07-836e-4841-934c-2ceb608b5625" />
+        <classShapeMoniker Id="f545ab60-a97b-4504-bb52-4119a05c3e5f" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

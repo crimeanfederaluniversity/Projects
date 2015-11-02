@@ -52,8 +52,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+    <Reference Include="microsoft.office.interop.word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\microsoft.office.interop.word.dll</HintPath>
     </Reference>
     <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -184,6 +186,7 @@
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Admin\ActionPRManual.aspx" />
     <Content Include="Admin\ApllicationExpertEdit.aspx" />
+    <Content Include="Admin\ApplicationSovetexpertEdit.aspx" />
     <Content Include="Admin\ChooseApplication.aspx" />
     <Content Include="Admin\ChooseColumn.aspx" />
     <Content Include="Admin\ChooseCompetition.aspx" />
@@ -413,6 +416,13 @@
     </Compile>
     <Compile Include="Admin\ApllicationExpertEdit.aspx.designer.cs">
       <DependentUpon>ApllicationExpertEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ApplicationSovetexpertEdit.aspx.cs">
+      <DependentUpon>ApplicationSovetexpertEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ApplicationSovetexpertEdit.aspx.designer.cs">
+      <DependentUpon>ApplicationSovetexpertEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\ChooseApplication.aspx.cs">
       <DependentUpon>ChooseApplication.aspx</DependentUpon>
