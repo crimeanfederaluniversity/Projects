@@ -13,8 +13,8 @@ namespace Competitions
     {
         public bool Enabled { set; get; }
         public bool RequireValidatorEnabled { set; get; }
-        public double MinValue {set; get; }
-        public double MaxValue {set; get; }
+        public string MinValue {set; get; }
+        public string MaxValue {set; get; }
         public ValidationDataType ContentType {set; get; }
         public string ErrorMessage {set; get; }
 
@@ -23,8 +23,8 @@ namespace Competitions
             string errorMessage, TextBoxMode textBoxTextMode,bool enableRequireValidator)
         {
             Enabled = enabled;
-            MinValue = minValue;
-            MaxValue = maxValue;
+            MinValue = minValue.ToString();
+            MaxValue = maxValue.ToString();
             ContentType = contenType;
             ErrorMessage = errorMessage;
             TextBoxTextMode = textBoxTextMode;
@@ -35,8 +35,8 @@ namespace Competitions
         {
             Enabled = false;
             RequireValidatorEnabled = false;
-            MinValue = 0;
-            MaxValue = 0;
+            MinValue = 0.ToString();
+            MaxValue = 0.ToString();
             ContentType = ValidationDataType.String;
             ErrorMessage = "No error";
             TextBoxTextMode= TextBoxMode.SingleLine;
@@ -124,8 +124,8 @@ namespace Competitions
                 validator.Enabled = true;
                 validator.ContentType=ValidationDataType.Double;
                 validator.ErrorMessage = "Только числовое значение!";
-                validator.MinValue = -100000000000;
-                validator.MaxValue = 100000000000;
+                validator.MinValue = (-100000000000).ToString();
+                validator.MaxValue = 100000000000.ToString();
                 validator.RequireValidatorEnabled = true;
                 validator.TextBoxTextMode = TextBoxMode.SingleLine;
                 if (currentCollectedData.ValueDouble != null)
@@ -141,10 +141,13 @@ namespace Competitions
 
             if (dataType.IsDataTypeDate(currentColumn.DataType))
             {
-                validator.Enabled = false;
-                validator.ErrorMessage = "";
+                validator.Enabled = true;
+                validator.ErrorMessage = "Введите корректную дату";
+                validator.ContentType = ValidationDataType.Date;
+                validator.MinValue = "1900/01/01";
+                validator.MaxValue = "2100/01/01";
                 validator.RequireValidatorEnabled = true;
-                validator.TextBoxTextMode = TextBoxMode.Date;
+                validator.TextBoxTextMode = TextBoxMode.SingleLine;
                 if (currentCollectedData.ValueDataTime != null)
                 {
                     DateTime dateTime = (DateTime) currentCollectedData.ValueDataTime;
@@ -162,8 +165,8 @@ namespace Competitions
             {
                 validator.ContentType = ValidationDataType.Integer;
                 validator.ErrorMessage = "Только целочисленное значение!";
-                validator.MinValue = Int32.MinValue;
-                validator.MaxValue = Int32.MaxValue;
+                validator.MinValue = Int32.MinValue.ToString();
+                validator.MaxValue = Int32.MaxValue.ToString();
                 validator.RequireValidatorEnabled = true;
                 validator.TextBoxTextMode = TextBoxMode.SingleLine;
                 if (currentCollectedData.ValueInt != null)
@@ -182,8 +185,8 @@ namespace Competitions
                 validator.Enabled = false;
                 validator.ContentType = ValidationDataType.String;
                 validator.ErrorMessage = "Введите текст!";
-                validator.MinValue = 1;
-                validator.MaxValue = 50000;
+                validator.MinValue = 1.ToString();
+                validator.MaxValue = 50000.ToString();
                 validator.RequireValidatorEnabled = true;
                 validator.TextBoxTextMode = TextBoxMode.MultiLine;
                 return currentCollectedData.ValueText;
@@ -656,5 +659,129 @@ namespace Competitions
             return dataType.IsDataTypeFileUpload(dataTypeIndex);
         }
 
+    }
+    public class CompetitionCountDown
+    {
+        private int GetDaysBeforeCompetitionEnd(int competitionId)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            DateTime today = DateTime.Today;
+            zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
+                where a.ID == competitionId
+                      && a.Active == true
+                select a).FirstOrDefault();
+            if (currentCompetition == null)
+                return -1;
+            if (currentCompetition.EndDate == null)
+                return -1;
+            DateTime competitionEndTime = Convert.ToDateTime(currentCompetition.EndDate);
+            if (today > competitionEndTime)
+                return -1;
+
+            double  days = (competitionEndTime - today ).TotalDays;
+            if (days > 0)
+                return Convert.ToInt32(days);
+            return -1;
+        }
+        private string GetDateNameByType(int dateType)
+        {
+            if (dateType == 0)
+                return "дней";
+            if (dateType == 1)
+                return "дня";
+            if (dateType == 2)
+                return "день";
+
+            return "дня/дней";
+        }
+        private string GetLeftNameByType(int dateType)
+        {
+            if (dateType == 0)
+                return "осталось";
+            if (dateType == 1)
+                return "осталось";
+            if (dateType == 2)
+                return "остался";
+
+            return "осталось(ся)";
+        }
+        private int GetDateTypeByLastNumberValue(int lastNumbervalue)
+        {
+            if (lastNumbervalue == 1)
+                return 2;
+            if (lastNumbervalue == 0 || lastNumbervalue >= 5)
+            {
+                return 0;
+            }
+            if (lastNumbervalue == 2 || lastNumbervalue == 3 || lastNumbervalue == 4)
+                return 1;
+            return -1;
+        }
+        private string GetNameByTypeAndWordNumber(int type, int wordNumber)
+        {
+            if (wordNumber == 0)
+            {
+                return GetDateNameByType(type);
+            }
+            if (wordNumber == 1)
+            {
+                return GetLeftNameByType(type);
+            }
+            return "error";
+        }
+        private string GetDaysNameBasedOnCount(int daysLeft,int wordNumber)
+        {
+            string daysLeftAsString = daysLeft.ToString();
+            if (daysLeftAsString.Length>1)
+            {
+                char lastByOne = daysLeftAsString[daysLeftAsString.Length - 2];
+                if (lastByOne == 1)
+                    return GetNameByTypeAndWordNumber(0, wordNumber);
+                char last = daysLeftAsString[daysLeftAsString.Length - 1];
+                return GetNameByTypeAndWordNumber(GetDateTypeByLastNumberValue(last), wordNumber);
+            }
+            else
+            {
+                char last = daysLeftAsString[daysLeftAsString.Length - 1];
+                return GetNameByTypeAndWordNumber(GetDateTypeByLastNumberValue(last), wordNumber);
+            }
+        }
+        public string GetDaysBeforeCompetitionEndMessage(int competitionId)
+        {
+            int daysLeft = GetDaysBeforeCompetitionEnd(competitionId);
+            if (daysLeft > 0)
+            {
+                return "До окончания конкурса " + GetDaysNameBasedOnCount(daysLeft, 1) + " " + daysLeft + " "+ GetDaysNameBasedOnCount(daysLeft, 0);
+            }
+            else if (daysLeft == 0)
+            {
+                return "Конкурс завершиться сегодня";
+            }
+            else
+            {
+                return "Конкурс закрыт";
+            }
+        }
+
+        public string GetDaysBeforeCompetitionEndMessageByApplicationId(int applicationId)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            zApplicationTable currentApplicationTable = (from a in competitionDataBase.zApplicationTable
+                where a.ID == applicationId
+                && a.Active == true
+                select a).FirstOrDefault();
+            if (currentApplicationTable == null)
+                return GetDaysBeforeCompetitionEndMessage(-1);
+            if (currentApplicationTable.FK_CompetitionTable == null)
+                return GetDaysBeforeCompetitionEndMessage(-1);
+            return GetDaysBeforeCompetitionEndMessage(Convert.ToInt32(currentApplicationTable.FK_CompetitionTable));
+        }
+
+        public bool IsCompetitionEndDateExpired(int competitoinId)
+        {
+            if (GetDaysBeforeCompetitionEnd(competitoinId) >= 0)
+                return false;
+            return true;
+        }
     }
 }

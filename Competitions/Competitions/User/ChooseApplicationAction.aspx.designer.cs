@@ -40,6 +40,15 @@ namespace Competitions.User {
         protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
+        /// CountDownLabel элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label CountDownLabel;
+        
+        /// <summary>
         /// Label1 элемент управления.
         /// </summary>
         /// <remarks>
@@ -49,23 +58,15 @@ namespace Competitions.User {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// Label2 элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
-        
-        /// <summary>
         /// startdata элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText startdata;
-        
+<<<<<<< .mine        protected global::System.Web.UI.WebControls.Label Label2;
+=======        protected global::System.Web.UI.HtmlControls.HtmlInputText startdata;
+>>>>>>> .theirs        
         /// <summary>
         /// enddata элемент управления.
         /// </summary>

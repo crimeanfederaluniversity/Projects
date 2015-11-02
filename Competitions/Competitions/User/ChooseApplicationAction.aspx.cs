@@ -35,6 +35,11 @@ namespace Competitions.User
                 zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
                     where a.ID == currentApplication.FK_CompetitionTable
                     select a).FirstOrDefault();
+
+                CompetitionCountDown competitionCountDown = new CompetitionCountDown();
+                CountDownLabel.Text =
+                    competitionCountDown.GetDaysBeforeCompetitionEndMessage(currentCompetition.ID);
+
                 Label1.Text = currentApplication.Name;
                 Label2.Text = currentCompetition.Name;
                 startdata.Value = Convert.ToString(currentApplication.StartProjectDate).Split(' ')[0];;

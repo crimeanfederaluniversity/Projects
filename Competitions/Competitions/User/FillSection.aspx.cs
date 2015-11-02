@@ -219,10 +219,20 @@ namespace Competitions.User
                             {
                                 if (gvTextBox.Text.Any())
                                 {
-                                    if (Convert.ToDateTime(gvTextBox.Text) > DateTime.MinValue)
-                                    
+                                    DateTime? newDateTime = null;
+                                    try
                                     {
-                                        currentCollectedData.ValueDataTime = Convert.ToDateTime(gvTextBox.Text);
+                                        if (Convert.ToDateTime(gvTextBox.Text) > DateTime.MinValue)
+                                        {
+                                            newDateTime = Convert.ToDateTime(gvTextBox.Text);
+                                            currentCollectedData.ValueDataTime = newDateTime;
+                                        }
+                                    
+                                    }
+                                    catch (Exception)
+                                    {
+                                        continue;
+                                        throw;
                                     }
                                     
                                 }
@@ -588,6 +598,11 @@ namespace Competitions.User
                 }
 
                 int applicationId = newPagesParams.ApplicationId;
+
+                CompetitionCountDown competitionCountDown = new CompetitionCountDown();
+                CountDownLabel.Text =
+                    competitionCountDown.GetDaysBeforeCompetitionEndMessageByApplicationId(applicationId);
+
                 int sectionId = GetSectionId();
                 if (sectionId == 0)
                 {
@@ -616,6 +631,10 @@ namespace Competitions.User
                     dataTable.Columns.Add(new DataColumn("FileLinkButtonVisible" + i.ToString(), typeof(bool)));
                     dataTable.Columns.Add(new DataColumn("FileLinkButtonText" + i.ToString(), typeof(string)));
                     dataTable.Columns.Add(new DataColumn("DeleteFileLinkButtonVisible" + i.ToString(), typeof(bool)));
+
+                    dataTable.Columns.Add(new DataColumn("CalendarButtonClick" + i.ToString(), typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("CalendarButtonVisible" + i.ToString(), typeof(bool)));
+                    
                     // dataTable.Columns.Add(new DataColumn("ChooseOnlyDropDownValue" + i.ToString(), typeof(ListItemCollection)));
 
                     // валидаор
@@ -764,12 +783,14 @@ namespace Competitions.User
                         newDataRow["EditBoolCheckBoxVisible" + i.ToString()] = false;
                         newDataRow["EditBoolCheckBoxValue" + i.ToString()] = false;
                         newDataRow["ChooseOnlyDropDownVisible" + i.ToString()] = false;
-
+                       
                         newDataRow["FileUploadVisible" + i.ToString()] = false;
                         newDataRow["FileLinkButtonVisible" + i.ToString()] = false;
                         newDataRow["DeleteFileLinkButtonVisible" + i.ToString()] = false;
                         newDataRow["FileLinkButtonText" + i.ToString()] = "";
 
+                        newDataRow["CalendarButtonClick" + i.ToString()] = "";
+                        newDataRow["CalendarButtonVisible" + i.ToString()] = false;
                         //validator
                         newDataRow["TextBoxValidateEnable" + i.ToString()] = false;
                         newDataRow["TextBoxValidateMinValue" + i.ToString()] = 0;
@@ -850,6 +871,7 @@ namespace Competitions.User
                                 }
                                 newDataRow["ReadOnlyLablelValue" + i.ToString()] = tmp;
 
+                               
                             }
                             #endregion
                             #region dropdown
@@ -880,6 +902,13 @@ namespace Competitions.User
                                 }
                             }
                             #endregion                          
+                            #region additionalForDateCalendar
+                            if (dataProcess.IsCellDate(dType))
+                            {
+                                newDataRow["CalendarButtonClick" + i.ToString()] = "displayDatePicker('ctl00$MainContent$FillingGV$ctl" + (iterator+1).ToString("D2") + "$EditTextBox" + i + "', false, 'ymd', '-')";
+                                newDataRow["CalendarButtonVisible" + i.ToString()] = true;
+                            }
+                            #endregion
                             totalUpSums[i] += dataProcess.GetToTotalUpValue();
                         }
                         #endregion
@@ -903,6 +932,15 @@ namespace Competitions.User
                     newDataRowForTotalUp["EditBoolCheckBoxValue" + i.ToString()] = false;
                     newDataRowForTotalUp["ChooseOnlyDropDownVisible" + i.ToString()] = false;
                     //newDataRow["ChooseOnlyDropDownValue" + i.ToString()] = null;
+
+
+                    newDataRowForTotalUp["FileUploadVisible" + i.ToString()] = false;
+                    newDataRowForTotalUp["FileLinkButtonVisible" + i.ToString()] = false;
+                    newDataRowForTotalUp["DeleteFileLinkButtonVisible" + i.ToString()] = false;
+                    newDataRowForTotalUp["FileLinkButtonText" + i.ToString()] = "";
+
+                    newDataRowForTotalUp["CalendarButtonClick" + i.ToString()] = "";
+                    newDataRowForTotalUp["CalendarButtonVisible" + i.ToString()] = false;
 
                     newDataRowForTotalUp["TextBoxValidateEnable" + i.ToString()] = false;
                     newDataRowForTotalUp["TextBoxValidateMinValue" + i.ToString()] = 0;
@@ -1192,8 +1230,9 @@ namespace Competitions.User
         }
         protected void DeleteRowButtonClick(object sender, EventArgs e)
         {
-            Button button = (Button)sender;
+            ImageButton button = (ImageButton)sender;
             {
+                SaveChanges();
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
                 #region session
                 var userIdParam = Session["UserID"];

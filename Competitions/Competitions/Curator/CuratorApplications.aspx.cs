@@ -33,7 +33,7 @@ namespace Competitions.Curator
                     List<zApplicationTable> applicationsList = (from a in CompetitionsDataBase.zApplicationTable
                                                                 where a.Active == true   && a.Sended == true && a.FK_CompetitionTable == current.ID
                                                                 select a).ToList();
-                    DataTable dataTable = new DataTable();
+                    System.Data.DataTable dataTable = new System.Data.DataTable();
 
                     dataTable.Columns.Add("ID", typeof(string));
                     dataTable.Columns.Add("Name", typeof(string));               
@@ -42,8 +42,6 @@ namespace Competitions.Curator
                     dataTable.Columns.Add("Email", typeof(string));
                     dataTable.Columns.Add("Accept", typeof(string));
                     dataTable.Columns.Add("SendedDataTime", typeof(string));
-
-
 
                     foreach (zApplicationTable currentApplication in applicationsList)
                     {

@@ -5,6 +5,7 @@
     <div>    
         <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Text="Назад" Width="125px" OnClick="GoBackButton_Click" />   
          <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" OnClick="Button2_Click" /> 
+        &nbsp;      <asp:Label ID="CountDownLabel" runat="server" Text="Label"></asp:Label>
     </div> 
 </asp:Panel> 
     
@@ -47,8 +48,9 @@
    
 	<br/>
     Стартовая дата:<input id="startdata" type="text" runat="server"/> 
-	<input type="button" style="background: url('../Calendar/datepicker.jpg') no-repeat; width: 30px; border: 0px;" onclick="displayDatePicker('ctl00$MainContent$startdata', false, 'ymd', '-');">
-
+<<<<<<< .mine	<input type="button" style="background: url('../Calendar/datepicker.jpg') no-repeat; width: 30px; border: 0px;" onclick="displayDatePicker('data', false, 'dmy', '.');">
+=======	<input type="button" style="background: url('../Calendar/datepicker.jpg') no-repeat; width: 30px; border: 0px;" onclick="displayDatePicker('ctl00$MainContent$startdata', false, 'ymd', '-');">
+>>>>>>> .theirs
     Конечная дата:<input id="enddata" type="text" runat="server"/> 
 	<input type="button" style="background: url('../Calendar/datepicker.jpg') no-repeat; width: 30px; border: 0px;" onclick="displayDatePicker('ctl00$MainContent$enddata', false, 'ymd', '-');">
     <asp:Button ID="Button2" runat="server" OnClick="Button2_Click1" Text="Сохранить" />
