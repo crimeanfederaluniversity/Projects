@@ -41,14 +41,17 @@
     <br />
     <script src="../Calendar/datepicker.js" type="text/javascript" charset="UTF-8" ></script>
     <link rel="stylesheet" type="text/css" href="../Calendar/datepicker.css" />
-    <b>Дата в формате dd.mm.yyyy:</b>
+    <b>Укажите даты начала и окончания реализации Вашего проекта:</b>
     
    
    
 	<br/>
-	<input name="data" id ="data"> 
-	<input type="button" style="background: url('../Calendar/datepicker.jpg') no-repeat; width: 30px; border: 0px;" onclick="displayDatePicker('data', false, 'dmy', '.');">
+    Стартовая дата:<input id="startdata" type="text" runat="server"/> 
+	<input type="button" style="background: url('../Calendar/datepicker.jpg') no-repeat; width: 30px; border: 0px;" onclick="displayDatePicker('ctl00$MainContent$startdata', false, 'ymd', '-');">
 
+    Конечная дата:<input id="enddata" type="text" runat="server"/> 
+	<input type="button" style="background: url('../Calendar/datepicker.jpg') no-repeat; width: 30px; border: 0px;" onclick="displayDatePicker('ctl00$MainContent$enddata', false, 'ymd', '-');">
+    <asp:Button ID="Button2" runat="server" OnClick="Button2_Click1" Text="Сохранить" />
     <br />
     <br />
     <br />

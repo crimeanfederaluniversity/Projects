@@ -42,9 +42,9 @@ namespace Competitions.User
                     dataTable.Columns.Add(new DataColumn("EndDate", typeof(string)));
 
                     List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTable
-                                                                 where a.Active == true
+                                                                 where a.Active == true && a.OpenForApplications == true
                                                                  select a).ToList();
-
+                   
                     foreach (zCompetitionsTable currentCompetition in competitionsList)
                     {
                         DataRow dataRow = dataTable.NewRow();
@@ -149,6 +149,43 @@ namespace Competitions.User
                 }
             }
         }
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            var userIdtmp = Session["UserID"];
+            if (userIdtmp == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userId = (int) userIdtmp;
+
+            Button newapp = (Button) e.Row.FindControl("NewApplication");
+            if (newapp != null)
+            {
+                CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+                List<zApplicationTable> applicationexist = (from a in competitionDataBase.zApplicationTable
+                    where a.FK_UsersTable == userId && a.Sended == true &&a.Active == true && a.EndProjectDate > DateTime.Now
+                    join b in competitionDataBase.zCompetitionsTable
+                        on a.FK_CompetitionTable equals b.ID
+                    where b.Active == true && b.ID == Convert.ToInt32(newapp.CommandArgument)
+                    select a).Distinct().ToList();
+                  
+                List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTable
+                                                             where a.Active == true && a.OpenForApplications == true && a.ID == Convert.ToInt32(newapp.CommandArgument)
+                                                                 select a).ToList();
+                   
+                if (applicationexist.Count > 0)
+                {
+                    foreach (var n in competitionsList)
+                        {
+                            newapp.Enabled = false;
+                        }                      
+                    }                   
+                    Label1.Visible = true;
+                }
+            }
+        
+
         protected void MyApplication_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/User/ChooseApplication.aspx");

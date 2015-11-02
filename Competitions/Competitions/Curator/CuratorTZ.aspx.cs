@@ -15,11 +15,11 @@ namespace Competitions.Curator
 
             {
                 CompetitionDataContext curator = new CompetitionDataContext();
-                  List<zActionPRManualTable> comp = (from a in curator.zActionPRManualTable where a.Active == true select a).ToList();              
-                foreach (zActionPRManualTable n in comp)
+                List<zTaskPRManualTable> comp = (from a in curator.zTaskPRManualTable where a.Active == true select a).ToList();
+                foreach (zTaskPRManualTable n in comp)
                 {
                     ListItem TmpItem = new ListItem();
-                    TmpItem.Text = n.ActionPR;
+                    TmpItem.Text = n.TaskPR;
                     TmpItem.Value = n.ID.ToString();
                     CheckBoxList1.Items.Add(TmpItem);
                 }

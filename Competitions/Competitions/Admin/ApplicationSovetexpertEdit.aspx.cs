@@ -58,7 +58,7 @@ namespace Competitions.Admin
                     Response.Redirect("Main.aspx");
                 }
                 int applicationId = Convert.ToInt32(appIdTmp);
- 
+
                 sovetExpertsGV.DataSource = GetFilledDataTable(GetSovetCompetitionExpertsList(applicationId));
                 sovetExpertsGV.DataBind();
 
@@ -110,5 +110,6 @@ namespace Competitions.Admin
         {
             Response.Redirect("ChooseApplication.aspx");
         }
+ 
     }
 }

@@ -125,9 +125,12 @@
                 <tr>
                   <td>
                       <h2><span style="font-size: 20px"> Примечание:Вы можете отправить не более одной заявки! Вы не можете подавать заявки на конкурсы если&nbsp; участвуете в реализации другой заявки в текущее время!</span></h2>
+                  
+                            <asp:Label ID="Label1" runat="server" Visible = "False" Text="У Вас уже есть поданная на конкурс заявка!"></asp:Label>
+                   
                         <h2><span style="font-size: 20px">На данный момент для подачи заявок доступны следующие конкурсы:</span></h2>
                         
-                         <asp:GridView ID="MainGV" runat="server" AutoGenerateColumns="False">
+                         <asp:GridView ID="MainGV" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView1_RowDataBound">
                             <Columns>
                                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
                                 <asp:BoundField DataField="Number"   HeaderText="Шифр" Visible="true" />

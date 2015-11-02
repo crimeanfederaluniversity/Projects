@@ -58,31 +58,31 @@ namespace Competitions.User {
         protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// Label3 элемент управления.
+        /// startdata элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText startdata;
         
         /// <summary>
-        /// Calendar1 элемент управления.
+        /// enddata элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar Calendar1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText enddata;
         
         /// <summary>
-        /// Calendar2 элемент управления.
+        /// Button2 элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar Calendar2;
+        protected global::System.Web.UI.WebControls.Button Button2;
         
         /// <summary>
         /// BlockGV элемент управления.

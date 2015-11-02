@@ -11,77 +11,6 @@ namespace Competitions.Admin
 {
     public partial class ApllicationExpertEdit : System.Web.UI.Page
     {
-        private List<UsersTable> GetSovetCompetitionExpertsList(int applicationId)
-        {
-            CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
-            List<zExpertsAndCompetitionMappngTamplateTable> sovetExperts = (from a in CompetitionsDataBase.zExpertsAndCompetitionMappngTamplateTable
-                                                                            where a.Active == true
-                                                                            join b in CompetitionsDataBase.zApplicationTable
-                                                                            on a.FK_CompetitionsTable equals b.FK_CompetitionTable
-                                                                            where b.ID == applicationId
-                                                                            join c in CompetitionsDataBase.zCompetitionsTable
-                                                                            on b.FK_CompetitionTable equals c.ID
-                                                                            where c.Active == true
-                                                                            select a).ToList();
-
-            List<UsersTable> sovetexpertnames = new List<UsersTable>();
-            foreach (var currentUser in sovetExperts)
-            {
-                UsersTable sovexp = (from a in CompetitionsDataBase.UsersTable
-                                     where a.ID == currentUser.FK_UsersTable
-                                     select a).FirstOrDefault();
-                sovetexpertnames.Add(sovexp);
-            }
-            return sovetexpertnames;
-        }
-        private List<UsersTable> GetExpertsInApplicationList(int applicationId)
-        {
-            CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
-            List<UsersTable> experts = (from a in CompetitionsDataBase.UsersTable
-                where a.Active == true
-                      && a.AccessLevel == 5
-                join b in CompetitionsDataBase.zExpertsAndApplicationMappingTable
-                    on a.ID equals b.FK_UsersTable
-                where b.Active == true
-                      && b.FK_ApplicationsTable == applicationId
-                select a).ToList();
-            return experts;
-        }
-        private List<UsersTable> GetExpertsOutApplicationList(int applicationId)
-        {
-            CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
-            List<UsersTable> allExperts = (from a in CompetitionsDataBase.UsersTable
-                where a.Active == true
-                      && a.AccessLevel == 5           
-                select a).ToList();
-            List<UsersTable> expertsInApplication = GetExpertsInApplicationList(applicationId);
-            List<UsersTable> SovetexpertApplication = GetSovetCompetitionExpertsList(applicationId);
-            foreach (UsersTable currentUser in expertsInApplication)
-            {                
-                foreach (UsersTable currentsovetuser in SovetexpertApplication)
-                {
-                    allExperts.Remove(currentUser);
-                    allExperts.Remove(currentsovetuser);
-                }
-            }
-            return allExperts;
-        }
-    
-        private DataTable GetFilledDataTable(List<UsersTable> expertsList)
-        {
-                DataTable dataTable = new DataTable();
-                dataTable.Columns.Add("ID", typeof(string));
-                dataTable.Columns.Add("Name", typeof(string));
-                foreach (UsersTable currentExpert in expertsList)
-                {
-                    DataRow dataRow = dataTable.NewRow();
-                    dataRow["ID"] = currentExpert.ID;
-                    dataRow["Name"] = currentExpert.Email;          
-                    dataTable.Rows.Add(dataRow);
-                }
-            return dataTable;
-
-        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -93,16 +22,84 @@ namespace Competitions.Admin
                 }
                 int applicationId = Convert.ToInt32(appIdTmp);
 
-              connectedExpertsGV.DataSource=GetFilledDataTable(GetExpertsInApplicationList(applicationId));
-              unconnectedExpertsGV.DataSource=GetFilledDataTable(GetExpertsOutApplicationList(applicationId));
-                
-                
+                CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
+                List<UsersTable> sovetExperts = (from d in CompetitionsDataBase.UsersTable
+                                                 where d.Active == true 
+                                                 join a in   CompetitionsDataBase.zExpertsAndCompetitionMappngTamplateTable
+                                                 on d.ID equals a.FK_UsersTable
+                                                 where a.Active == true
+                                                 join b in CompetitionsDataBase.zApplicationTable
+                                                 on a.FK_CompetitionsTable equals b.FK_CompetitionTable
+                                                 where b.ID == applicationId
+                                                 join c in CompetitionsDataBase.zCompetitionsTable
+                                                 on b.FK_CompetitionTable equals c.ID
+                                                 where c.Active == true
+                                                 select d).ToList();
+
+                List<UsersTable> experts = (from a in CompetitionsDataBase.UsersTable
+                                            where a.Active == true
+                                                  && a.AccessLevel == 5
+                                            join b in CompetitionsDataBase.zExpertsAndApplicationMappingTable
+                                                on a.ID equals b.FK_UsersTable
+                                            where b.Active == true
+                                                  && b.FK_ApplicationsTable == applicationId
+                                            select a).ToList();
+                if (sovetExperts != null)
+                {
+                    foreach (UsersTable current in sovetExperts)
+                    {
+                        if (experts.Contains(current))
+                        {
+                            experts.Remove(current);
+                        }                     
+                    }
+                }
+                DataTable dataTable1 = new DataTable();
+                dataTable1.Columns.Add("ID", typeof(string));
+                dataTable1.Columns.Add("Name", typeof(string));
+                foreach (UsersTable currentExpert in experts)
+                {
+                    DataRow dataRow = dataTable1.NewRow();
+                    dataRow["ID"] = currentExpert.ID;
+                    dataRow["Name"] = currentExpert.Email;
+                    dataTable1.Rows.Add(dataRow);
+                }
+                connectedExpertsGV.DataSource = dataTable1;
                 connectedExpertsGV.DataBind();
-                unconnectedExpertsGV.DataBind();
+
+                List<UsersTable> allExperts = (from a in CompetitionsDataBase.UsersTable
+                                               where a.Active == true
+                                                     && a.AccessLevel == 5
+                                               select a).ToList();
+                if (sovetExperts != null)
+                {
+                    foreach (UsersTable current in sovetExperts)
+                    {
+                        allExperts.Remove(current);
+                    }
+                    foreach (UsersTable n in experts)
+                    {
+                        allExperts.Remove(n);
+                    }
+
+                }
                 
-                    
+                DataTable dataTable2 = new DataTable();
+                dataTable2.Columns.Add("ID", typeof(string));
+                dataTable2.Columns.Add("Name", typeof(string));
+                foreach (UsersTable currentExpert in allExperts)
+                {
+                    DataRow dataRow = dataTable2.NewRow();
+                    dataRow["ID"] = currentExpert.ID;
+                    dataRow["Name"] = currentExpert.Email;
+                    dataTable2.Rows.Add(dataRow);
+                }
+                unconnectedExpertsGV.DataSource = dataTable2;
+                unconnectedExpertsGV.DataBind();
+
             }
         }
+        
         protected void ExpertDeleteButtonClick (object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -169,13 +166,6 @@ namespace Competitions.Admin
         {
             Response.Redirect("ChooseApplication.aspx");
         }
-
-       
-
-
-
-
-
 
     }
 }

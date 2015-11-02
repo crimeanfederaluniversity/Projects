@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ApplicationSovetexpertEdit.aspx.cs" Inherits="Competitions.Admin.ApplicationSovetexpertEdit" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server"><br />
-    <asp:Button ID="GoBackButton" runat="server" Text="Назад" OnClick="GoBackButton_Click" Width="157px" />
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+       <asp:Button ID="GoBackButton" runat="server" Text="Назад" OnClick="GoBackButton_Click" Width="157px" />
     <br />
        Состав экспертного совета (определяется в настройках конкурса):
             <br />

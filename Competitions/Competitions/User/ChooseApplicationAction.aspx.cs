@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.Ajax.Utilities;
 
 namespace Competitions.User
 {
@@ -15,7 +16,7 @@ namespace Competitions.User
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var iiiiii = Request["data"];
+       
             if (!Page.IsPostBack)
             {
                 var sessionParam1 = Session["ApplicationID"];
@@ -36,6 +37,8 @@ namespace Competitions.User
                     select a).FirstOrDefault();
                 Label1.Text = currentApplication.Name;
                 Label2.Text = currentCompetition.Name;
+                startdata.Value = Convert.ToString(currentApplication.StartProjectDate).Split(' ')[0];;
+                enddata.Value = Convert.ToString(currentApplication.EndProjectDate).Split(' ')[0];;
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("ID", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("Name", typeof (string)));
@@ -90,6 +93,31 @@ namespace Competitions.User
                 BlockGV.DataBind();
             }
         }
+        protected void Button2_Click1(object sender, EventArgs e)
+        {
+            var sessionParam1 = Session["ApplicationID"];
+
+            if ((sessionParam1 == null))
+            {
+                Response.Redirect("ChooseApplication.aspx");
+            }
+            int applicationId = Convert.ToInt32(sessionParam1);
+
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
+                                                    where a.ID == applicationId
+                                                    select a).FirstOrDefault();
+            if (currentApplication != null)
+            {
+                var start = Request["ctl00$MainContent$startdata"];
+                var end = Request["ctl00$MainContent$enddata"];
+                currentApplication.StartProjectDate = Convert.ToDateTime(start).Date;
+                currentApplication.EndProjectDate = Convert.ToDateTime(end).Date;
+                competitionDataBase.SubmitChanges();
+            }
+            
+
+        }    
         protected void FillButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -244,6 +272,8 @@ namespace Competitions.User
         protected void FileUpload1_Load(object sender, EventArgs e)
         {
             
-        }      
+        }
+
+          
     }
 }
