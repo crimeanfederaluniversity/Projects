@@ -21,14 +21,10 @@
                             <asp:Button ID="ApplicationButton" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="ApplicationButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Прикрепить экспертный совет к заявке">
+                 
+                 <asp:TemplateField HeaderText="Прикрепить экспертов к заявке">
                         <ItemTemplate>
-                            <asp:Button ID="SovetexpertChangeButton" runat="server" CommandName="Select" Text="Прикрепить" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="SovetexpertChangeButtonClick"/>
-                        </ItemTemplate>
-                </asp:TemplateField> 
-                 <asp:TemplateField HeaderText="Назначить привлеченных экспертов к заявке">
-                        <ItemTemplate>
-                            <asp:Button ID="ExpertChangeButton" runat="server" CommandName="Select" Text="Назначить" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="ExpertChangeButtonClick"/>
+                            <asp:Button ID="ExpertChangeButton" runat="server" CommandName="Select" Text="Прикрепить" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="ExpertChangeButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField> 
                 

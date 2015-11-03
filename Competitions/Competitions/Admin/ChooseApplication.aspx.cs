@@ -72,11 +72,11 @@ namespace Competitions.Admin
 
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            Button sovexp = (Button) e.Row.FindControl("SovetexpertChangeButton");
+           
             Button exp = (Button) e.Row.FindControl("ExpertChangeButton");
             Button accept = (Button) e.Row.FindControl("AcceptButton");
             Button back = (Button)e.Row.FindControl("BackToUserButton");
-            if (sovexp != null && exp != null && accept != null)
+            if ( exp != null && accept != null)
             {
                 CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
                 List<zApplicationTable> applicationsList = (from a in CompetitionsDataBase.zApplicationTable
@@ -92,14 +92,14 @@ namespace Competitions.Admin
                       
                         if (n.Sended == false)
                         {
-                            sovexp.Enabled = false;
+                            
                             exp.Enabled = false;
                             accept.Enabled = false;
                             back.Enabled = false;
                         }
                         else
                         {
-                            sovexp.Enabled = true;
+                            
                             exp.Enabled = true;
                             accept.Enabled = true;
                             back.Enabled = true;
@@ -117,15 +117,7 @@ namespace Competitions.Admin
                 Response.Redirect("ApplicationExpertsAndExpertsGroupEdit.aspx");
             }
         }
-        protected void SovetexpertChangeButtonClick(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            if (button != null)
-            {
-                Session["ApplicationID"] = button.CommandArgument;
-                Response.Redirect("ApplicationSovetexpertEdit.aspx");
-            }
-        }
+     
         private byte[] ReadByteArryFromFile(string destPath)
         {
             byte[] buff = null;
@@ -230,14 +222,9 @@ namespace Competitions.Admin
                     }
                     currentApplication.Accept = true;
                     competitionDataBase.SubmitChanges();
-                }
-                else
-                {
-                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                        "alert('Заявка еще не отправлена на рассмотрение пользователем!');", true);
-                }
-                        
+                }                                     
                     }
+            Response.Redirect("ChooseApplication.aspx");
                 }
 
         protected void BackToUserButtonClick(object sender, EventArgs e)
@@ -255,14 +242,9 @@ namespace Competitions.Admin
                     currentApplication.Sended = false;
                     competitionDataBase.SubmitChanges();
                 }
-                else
-                {
-                    {
-                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
-                        "alert('Заявка еще не отправлена на рассмотрение пользователем!');", true);
-                    }
-                }
+             
             }
+            Response.Redirect("ChooseApplication.aspx");
         }
 
         protected void Button1_Click(object sender, EventArgs e)

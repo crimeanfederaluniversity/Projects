@@ -13,6 +13,15 @@ namespace Competitions.Admin {
     public partial class ApplicationExpertsAndExpertsGroupEdit {
         
         /// <summary>
+        /// GoBackButton элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GoBackButton;
+        
+        /// <summary>
         /// ExpertsGV элемент управления.
         /// </summary>
         /// <remarks>

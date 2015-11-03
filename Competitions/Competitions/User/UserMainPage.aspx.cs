@@ -213,11 +213,10 @@ namespace Competitions.User
             if (newapp != null)
             {
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                List<zApplicationTable> applicationexist = (from a in competitionDataBase.zApplicationTable
-                    where
-                        a.FK_UsersTable == userId && a.Sended == true && a.Active == true &&
-                        a.EndProjectDate > DateTime.Now
-                    select a).Distinct().ToList();
+                List<zApplicationTable> applicationexist = (from a in competitionDataBase.zApplicationTable where
+                                                            a.FK_UsersTable == userId && a.Sended == true && a.Active == true &&
+                                                            a.EndProjectDate > DateTime.Now
+                                                            select a).Distinct().ToList();
 
                 List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTable
                     where
@@ -225,11 +224,9 @@ namespace Competitions.User
                         a.ID == Convert.ToInt32(newapp.CommandArgument)
                     select a).ToList();
 
-                if (applicationexist.Count != null)
+                if (applicationexist.Count != 0)
                 {
-
                     newapp.Enabled = false;
-
                     Label1.Visible = true;
                 }
             }
