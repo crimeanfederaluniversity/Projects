@@ -204,6 +204,7 @@
     <Content Include="Admin\ReadyApplications.aspx" />
     <Content Include="Admin\SectionCreateEdit.aspx" />
     <Content Include="Admin\TaskPRManual.aspx" />
+    <Content Include="Admin\WatchUniqueMarksInCompetition.aspx" />
     <Content Include="CalendarIcon.png" />
     <Content Include="Calendar\datepicker.css" />
     <Content Include="Calendar\datepicker.jpg" />
@@ -545,6 +546,13 @@
     </Compile>
     <Compile Include="Admin\TaskPRManual.aspx.designer.cs">
       <DependentUpon>TaskPRManual.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\WatchUniqueMarksInCompetition.aspx.cs">
+      <DependentUpon>WatchUniqueMarksInCompetition.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\WatchUniqueMarksInCompetition.aspx.designer.cs">
+      <DependentUpon>WatchUniqueMarksInCompetition.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">

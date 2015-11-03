@@ -59,6 +59,25 @@ namespace Competitions.User
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = currentDocument.ID;
                     dataRow["Name"] = currentDocument.Name;
+                    if (currentDocument.Name == null)
+                    {
+                        dataRow["Name"] = "ссылка";
+                        if (currentDocument.LinkOut != null)
+                        {
+                            string linkOutString = currentDocument.LinkOut;
+                            if (linkOutString.Length > 100)
+                            {
+                                linkOutString = linkOutString.Remove(100) + "...";
+                                dataRow["Name"] = linkOutString;
+                            }
+                            else
+                            {
+                                dataRow["Name"] = currentDocument.LinkOut;
+                            }
+                            
+                        }
+                       
+                    }                    
                     dataRow["CreateDate"] = currentDocument.AddDateTime.ToString().Split(' ')[0];
                     dataTable.Rows.Add(dataRow);
                 }
@@ -138,16 +157,27 @@ namespace Competitions.User
             newDocument.Active = true;
             newDocument.FK_ApplicationTable = applicationId;
             newDocument.Name = fileName;
+            newDocument.LinkOut = null;
+            newDocument.AddDateTime = DateTime.Now;
+            competitionDataBase.zDocumentsTable.InsertOnSubmit(newDocument);
+            competitionDataBase.SubmitChanges();
+        }
+        protected void NewLink(int applicationId, string linkOut)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            zDocumentsTable newDocument = new zDocumentsTable();
+            newDocument.Active = true;
+            newDocument.FK_ApplicationTable = applicationId;
+            newDocument.Name = null;
+            newDocument.LinkOut = linkOut;
             newDocument.AddDateTime = DateTime.Now;
             competitionDataBase.zDocumentsTable.InsertOnSubmit(newDocument);
             competitionDataBase.SubmitChanges();
         }
         private void AddDoc()
         {
-            CompetitionDataContext competitionDataBase = new CompetitionDataContext();        
-
-            
-                        var sessionParam1 = Session["ApplicationID"];       
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();                   
+            var sessionParam1 = Session["ApplicationID"];       
             if ((sessionParam1 == null))
             {
                 Response.Redirect("ChooseApplication.aspx");
@@ -213,11 +243,26 @@ namespace Competitions.User
                     }
                 }
             }
-            Response.Redirect("ChooseApplicationAction.aspx");
+            
+        }
+        private void ConnectLink()
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            var sessionParam1 = Session["ApplicationID"];
+            if ((sessionParam1 == null))
+            {
+                Response.Redirect("ChooseApplication.aspx");
+            }
+            int applicationId = Convert.ToInt32(sessionParam1);
+            if (LinkToFileTextBox.Text.Any())
+                if (LinkToFileTextBox.Text.Length>5)
+                    NewLink(applicationId, LinkToFileTextBox.Text);
         }
         protected void AddDocumentsButton_Click(object sender, EventArgs e)
         {
             AddDoc();
+            ConnectLink();
+            Response.Redirect("ChooseApplicationAction.aspx");
         }
         private byte[] ReadByteArryFromFile(string destPath)
         {
@@ -238,15 +283,24 @@ namespace Competitions.User
                     select a).FirstOrDefault();
                 if (currentDocument != null)
                 {
-                    String path = Server.MapPath("~/documents/byApplication") + "\\\\" + currentDocument.FK_ApplicationTable.ToString() + "\\\\" + currentDocument.Name;
-                  //  Response.Redirect(,false);
+                    if (currentDocument.LinkOut!=null)
+                    {
+                        Response.Redirect(currentDocument.LinkOut);
+                    }
+                    else if (currentDocument.Name!=null)
+                    {
+                        String path = Server.MapPath("~/documents/byApplication") + "\\\\" +
+                                      currentDocument.FK_ApplicationTable.ToString() + "\\\\" + currentDocument.Name;
+                        //  Response.Redirect(,false);
 
-                    HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
-                    HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=" + currentDocument.Name);
-                    HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(path));
-                    HttpContext.Current.Response.End();
+                        HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
+                        HttpContext.Current.Response.AppendHeader("Content-Disposition",
+                            "attachment; filename=" + currentDocument.Name);
+                        HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(path));
+                        HttpContext.Current.Response.End();
 
-                    Response.End();
+                        Response.End();
+                    }
                 }
             }
         }
@@ -277,8 +331,6 @@ namespace Competitions.User
         protected void FileUpload1_Load(object sender, EventArgs e)
         {
             
-        }
-
-          
+        }         
     }
 }

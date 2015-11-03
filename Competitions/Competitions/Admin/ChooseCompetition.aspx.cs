@@ -126,6 +126,15 @@ namespace Competitions.Admin
                  Response.Redirect("CompetitionExpertEdit.aspx");
              }
         }
+        protected void MarksButtonClick(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            {
+                int iD = Convert.ToInt32(button.CommandArgument);
+                Session["CompetitionID"] = iD;
+                Response.Redirect("WatchUniqueMarksInCompetition.aspx"); 
+            }           
+        }
         
         protected void StartStopButtonClick(object sender, EventArgs e)
         {

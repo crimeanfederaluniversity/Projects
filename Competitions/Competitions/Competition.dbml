@@ -143,16 +143,6 @@
       <Association Name="zCompetitionsTable_zConstantListTable" Member="zCompetitionsTable" ThisKey="FK_CompetitionTable" OtherKey="ID" Type="zCompetitionsTable" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.zDocumentsTable" Member="zDocumentsTable">
-    <Type Name="zDocumentsTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="FK_ApplicationTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="AddDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="zApplicationTable_zDocumentsTable" Member="zApplicationTable" ThisKey="FK_ApplicationTable" OtherKey="ID" Type="zApplicationTable" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.zExpertPoints" Member="zExpertPoints">
     <Type Name="zExpertPoints">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -246,9 +236,9 @@
       <Column Name="StartProjectDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="EndProjectDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="zApplicationTable_zCollectedRowsTable" Member="zCollectedRowsTable" ThisKey="ID" OtherKey="FK_ApplicationTable" Type="zCollectedRowsTable" />
-      <Association Name="zApplicationTable_zDocumentsTable" Member="zDocumentsTable" ThisKey="ID" OtherKey="FK_ApplicationTable" Type="zDocumentsTable" />
       <Association Name="zApplicationTable_zExpertPointsValue" Member="zExpertPointsValue" ThisKey="ID" OtherKey="FK_ApplicationTable" Type="zExpertPointsValue" />
       <Association Name="zApplicationTable_zExpertsAndApplicationMappingTable" Member="zExpertsAndApplicationMappingTable" ThisKey="ID" OtherKey="FK_ApplicationsTable" Type="zExpertsAndApplicationMappingTable" />
+      <Association Name="zApplicationTable_zDocumentsTable" Member="zDocumentsTable" ThisKey="ID" OtherKey="FK_ApplicationTable" Type="zDocumentsTable" />
       <Association Name="UsersTable_zApplicationTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="ID" Type="UsersTable" IsForeignKey="true" />
       <Association Name="zCompetitionsTable_zApplicationTable" Member="zCompetitionsTable" ThisKey="FK_CompetitionTable" OtherKey="ID" Type="zCompetitionsTable" IsForeignKey="true" />
     </Type>
@@ -278,6 +268,17 @@
       <Column Name="FK_ExpertGroupTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="UsersTable_zExpertAndExpertGroupMappingTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="ID" Type="UsersTable" IsForeignKey="true" />
       <Association Name="zExpertGroup_zExpertAndExpertGroupMappingTable" Member="zExpertGroup" ThisKey="FK_ExpertGroupTable" OtherKey="ID" Type="zExpertGroup" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.zDocumentsTable" Member="zDocumentsTable">
+    <Type Name="zDocumentsTable">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="FK_ApplicationTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AddDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LinkOut" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="zApplicationTable_zDocumentsTable" Member="zApplicationTable" ThisKey="FK_ApplicationTable" OtherKey="ID" Type="zApplicationTable" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

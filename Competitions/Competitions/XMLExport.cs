@@ -297,6 +297,10 @@ namespace Competitions
             List<List<string>> newNestedList = new List<List<string>>();
             //по первому марку найдем список строк в базе
             zColumnTable firstColumnInUniques = GetColumnByUniqueMark(columnsUniqueNames[0], applicationId);
+            if (firstColumnInUniques == null)
+            {
+                return null;
+            }
             List<zCollectedRowsTable> rowsList = GetRowsThatHaveColumn(firstColumnInUniques, applicationId);
             
             newNestedList.Add(GetColmnNamesForNestedList(columnsUniqueNames, applicationId));
@@ -318,6 +322,8 @@ namespace Competitions
         {
             XmlTableCreate xmlTableCreate = new XmlTableCreate();
             List<List<string>> newNestedList = GetNestedDataList(currentTagToReplace.ReplacemantList, applicationId);
+            if (newNestedList == null)
+                return null;
             XmlNode newXmlTableNode = xmlTableCreate.GetXmlTable(document, newNestedList,false);
             return newXmlTableNode;
         }
@@ -452,13 +458,21 @@ namespace Competitions
                 if (currentTagToReplace.ReplaceType == 2)
                 {
                     XmlNode newXmlNode = createXmlTableClass.GetXmlTable(document, currentTagToReplace, applicationId);
-                    document.ImportNode(newXmlNode, true);
-                    sectNode.AppendChild(newXmlNode);
-                    XmlNode lastNode = FindNodeByValue(sectNode.ChildNodes, currentTagToReplace.TagsNode.OuterXml);
-                    XmlNode nodeToReplace = FindAfterParentNode(sectNode, lastNode);
-                    if (nodeToReplace != null)
+                    if (newXmlNode != null)
                     {
-                        sectNode.ReplaceChild(newXmlNode, nodeToReplace);
+                        document.ImportNode(newXmlNode, true);
+                        sectNode.AppendChild(newXmlNode);
+                        XmlNode lastNode = FindNodeByValue(sectNode.ChildNodes, currentTagToReplace.TagsNode.OuterXml);
+                        XmlNode nodeToReplace = FindAfterParentNode(sectNode, lastNode);
+                        if (nodeToReplace != null)
+                        {
+                            sectNode.ReplaceChild(newXmlNode, nodeToReplace);
+                        }
+                    }
+                    else
+                    {
+                        XmlNode childNode = FindNodeByValue(document.ChildNodes, currentTagToReplace.TagsNode.Value);
+                        childNode.Value = "Данные не внесены";
                     }
                 }
                 else if (currentTagToReplace.ReplaceType == 1)

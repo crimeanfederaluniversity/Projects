@@ -199,7 +199,6 @@ namespace Competitions.User
                 #endregion
             }
         }
-
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             var userIdtmp = Session["UserID"];
@@ -231,7 +230,6 @@ namespace Competitions.User
                 }
             }
         }
-
         protected void MyApplication_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/User/ChooseApplication.aspx");
@@ -335,6 +333,10 @@ namespace Competitions.User
                             createXmlFile.CreateDocument(templateFilePath, newFilePath, iD, docType);
                             string convertedFilePath = createXmlFile.ConvertedFilePath;
                             
+
+
+
+
                             HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
                             HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=document." + createXmlFile.ConvertedFileExtension);
                             HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(convertedFilePath));

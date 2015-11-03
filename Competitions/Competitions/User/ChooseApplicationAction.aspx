@@ -48,10 +48,7 @@
    
 	<br/>
     Стартовая дата:<input id="startdata" type="text" runat="server"/> 
-<<<<<<< .mine	<input type="button" style="background: url('../Calendar/datepicker.jpg') no-repeat; width: 30px; border: 0px;" onclick="displayDatePicker('data', false, 'dmy', '.');">
-=======	<input type="button" style="background: url('../Calendar/datepicker.jpg') no-repeat; width: 30px; border: 0px;" onclick="displayDatePicker('ctl00$MainContent$startdata', false, 'ymd', '-');">
->>>>>>> .theirs
-    Конечная дата:<input id="enddata" type="text" runat="server"/> 
+    <input type="button" style="background: url('../Calendar/datepicker.jpg') no-repeat; width: 30px; border: 0px;" onclick="displayDatePicker('ctl00$MainContent$startdata', false, 'ymd', '-');">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Конечная дата:<input id="enddata" type="text" runat="server"/> 
 	<input type="button" style="background: url('../Calendar/datepicker.jpg') no-repeat; width: 30px; border: 0px;" onclick="displayDatePicker('ctl00$MainContent$enddata', false, 'ymd', '-');">
     <asp:Button ID="Button2" runat="server" OnClick="Button2_Click1" Text="Сохранить" />
     <br />
@@ -65,7 +62,7 @@
                 <asp:BoundField DataField="Status"   HeaderText="Статус" Visible="true" />    
                 <asp:TemplateField HeaderText="Перейти к заполнению">
                         <ItemTemplate>
-                            <asp:Button ID="FillButton" runat="server" CommandName="Select" Text="Заполнить" CommandArgument='<%# Eval("ID") %>' Enabled='<%# Bind("EnableButton") %>' Width="200px" OnClick="FillButtonClick"/>
+                            <asp:Button ID="FillButton" runat="server" CommandName="Select" Text="Заполнить" CausesValidation="False" CommandArgument='<%# Eval("ID") %>' Enabled='<%# Bind("EnableButton") %>' Width="200px" OnClick="FillButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
                            
@@ -80,17 +77,17 @@
         <asp:GridView ID="DocumentsGV" runat="server" AutoGenerateColumns="False">
             <Columns>
                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
-                <asp:BoundField DataField="Name"   HeaderText="Название" Visible="true" />   
+                <asp:BoundField DataField="Name" HeaderText="Название" Visible="true" />   
                 <asp:BoundField DataField="CreateDate"   HeaderText="Дата загрузки" Visible="true" />     
                 <asp:TemplateField HeaderText="Скачать документ">
                         <ItemTemplate>
-                            <asp:Button ID="OpenButton" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="OpenButtonClick"/>
+                            <asp:Button ID="OpenButton" runat="server" CommandName="Select" Text="Скачать" CausesValidation="False" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="OpenButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
                 
                 <asp:TemplateField HeaderText="Удалить документ">
                         <ItemTemplate>
-                            <asp:Button ID="DeleteButton" runat="server" CommandName="Select" OnClientClick="return confirm('Вы уверены что хотите удалить документ?');" Text="Удалить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="DeleteButtonClick"/>
+                            <asp:Button ID="DeleteButton" runat="server" CommandName="Select" CausesValidation="False" OnClientClick="return confirm('Вы уверены что хотите удалить документ?');" Text="Удалить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="DeleteButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
                           
@@ -108,6 +105,13 @@
         </script>
 
         &nbsp;<p>
+        
+        <asp:TextBox ID="LinkToFileTextBox" runat="server" Width="299px"></asp:TextBox>
+            &nbsp;&nbsp;Прямая ссылка на файл<p>
+             <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="LinkToFileTextBox"
+ ErrorMessage="Неправильная ссылка. Пример: 'https://www.google.com'"  ForeColor="Red"
+ ValidationExpression="http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&amp;=]*)?"></asp:RegularExpressionValidator>
+
         <asp:FileUpload ID="FileUpload1" runat="server" AllowMultiple="True"  Width="392px" />
             
 
@@ -119,8 +123,10 @@
         <asp:Label ID="ToManyFilesLabelError" runat="server" ForeColor="Red" Visible="False" Text="Не более 5 файлов"></asp:Label>
 
     </p>
+    <p>
+        &nbsp;</p>
 <p>
-        <asp:Button ID="AddDocumentsButton" runat="server" OnClientClick="return countFiles()" OnClick="AddDocumentsButton_Click" Text="Загрузить выбранные файлы на сервер" />
+        <asp:Button ID="AddDocumentsButton" runat="server" CausesValidation="True"  OnClick="AddDocumentsButton_Click" Text="Загрузить выбранные файлы на сервер и прикрепить ссылки" Width="497px" />
     </p>
     <p>
         &nbsp;</p>

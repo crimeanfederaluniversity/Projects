@@ -20,6 +20,9 @@ namespace Competitions
         private int dataTypeNotToCheck5 = 13;
         private int dataTypeNotToCheck6 = 14;             
         private int dataTypeNotToCheck7 = 16;
+        private int dataTypeNotToCheck8 = 16; //17
+        private int dataTypeNotToCheck9 = 18;
+        private int dataTypeNotToCheck10 = 19;
 
         private int statusNoData = 0;
         private int statusPartly = 1;
@@ -131,6 +134,12 @@ namespace Competitions
                                 continue;
                             if (currentColumn.DataType == dataTypeNotToCheck7) //автоинкремент
                                 continue;
+                            if (currentColumn.DataType == dataTypeNotToCheck8) //автоинкремент
+                                continue;
+                            if (currentColumn.DataType == dataTypeNotToCheck9) //автоинкремент
+                                continue;
+                            if (currentColumn.DataType == dataTypeNotToCheck10) //автоинкремент
+                                continue;
                             if (!DoesColumnInApplicationHasData(currentColumn.ID, applicationId))
                                 return false;
                         }
@@ -209,7 +218,9 @@ namespace Competitions
                  && c.DataType != dataTypeNotToCheck5
                  && c.DataType!= dataTypeNotToCheck6
                  && c.DataType != dataTypeNotToCheck7
-
+                 && c.DataType != dataTypeNotToCheck8
+                 && c.DataType != dataTypeNotToCheck9
+                 && c.DataType != dataTypeNotToCheck10
                 select a).Distinct().ToList();
 
             int allCollectedCount = allDataInApplication.Count;

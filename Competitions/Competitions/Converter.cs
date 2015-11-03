@@ -71,8 +71,8 @@ namespace Competitions
                 ScreenUpdating = false
             };
 
-           // doc = msWordDoc.Documents.Open(sourcePath, ref oMissing , ref oMissing, ref oMissing, ref oMissing, ref oMissing , ref oMissing, ref oMissing, ref oMissing, ref oMissing
-           //   , ref oMissing, ref oMissing, ref oMissing, ref oMissing , ref oMissing, ref oMissing);
+            doc = msWordDoc.Documents.Open(sourcePath, ref oMissing , ref oMissing, ref oMissing, ref oMissing, ref oMissing , ref oMissing, ref oMissing, ref oMissing, ref oMissing
+            , ref oMissing, ref oMissing, ref oMissing, ref oMissing , ref oMissing, ref oMissing);
 
             try
             {        
@@ -81,7 +81,7 @@ namespace Competitions
                 if (doc != null)
                 {
                     doc.Activate();
-                  //  doc.Protect(WdProtectionType.wdAllowOnlyReading, ref oMissing, ref oMissing, ref oMissing, ref oMissing);
+                    doc.Protect(WdProtectionType.wdAllowOnlyReading, ref oMissing, ref oMissing, ref oMissing, ref oMissing);
                     //doc.ReadOnly = true;
                     // save Document as PDF
                     //object fileFormat = WdSaveFormat.wdFormatPDF;

@@ -112,13 +112,13 @@
         <td>
             <br />                      
           <asp:Button Text="Все открытые конкурсы" BorderStyle="None" ID="Tab1" CssClass="Initial" runat="server"
-              OnClick="Tab1_Click" Width="262px" />
+              OnClick="Tab1_Click" Width="250px" />
           <asp:Button Text="Заявки в работе" BorderStyle="None" ID="Tab2" CssClass="Initial" runat="server"
-              OnClick="Tab2_Click" />
+              OnClick="Tab2_Click" Width="250px" />
           <asp:Button Text="Поданные заявки" BorderStyle="None" ID="Tab3" CssClass="Initial" runat="server"
-              OnClick="Tab3_Click" />
+              OnClick="Tab3_Click" Width="250px"/>
           <asp:Button Text="Черновики" BorderStyle="None" ID="Tab4" CssClass="Initial" runat="server"
-              OnClick="Tab4_Click" />
+              OnClick="Tab4_Click" Width="250px"/>
           <asp:MultiView ID="MainView" runat="server">
             <asp:View ID="View1" runat="server">
               <table style="width: 100%; border-style: hidden">
