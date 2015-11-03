@@ -90,6 +90,12 @@ namespace Competitions
     partial void InsertzTaskPRManualTable(zTaskPRManualTable instance);
     partial void UpdatezTaskPRManualTable(zTaskPRManualTable instance);
     partial void DeletezTaskPRManualTable(zTaskPRManualTable instance);
+    partial void InsertzExpertGroup(zExpertGroup instance);
+    partial void UpdatezExpertGroup(zExpertGroup instance);
+    partial void DeletezExpertGroup(zExpertGroup instance);
+    partial void InsertzExpertAndExpertGroupMappingTable(zExpertAndExpertGroupMappingTable instance);
+    partial void UpdatezExpertAndExpertGroupMappingTable(zExpertAndExpertGroupMappingTable instance);
+    partial void DeletezExpertAndExpertGroupMappingTable(zExpertAndExpertGroupMappingTable instance);
     #endregion
 		
 		public CompetitionDataContext() : 
@@ -281,6 +287,22 @@ namespace Competitions
 				return this.GetTable<zTaskPRManualTable>();
 			}
 		}
+		
+		public System.Data.Linq.Table<zExpertGroup> zExpertGroup
+		{
+			get
+			{
+				return this.GetTable<zExpertGroup>();
+			}
+		}
+		
+		public System.Data.Linq.Table<zExpertAndExpertGroupMappingTable> zExpertAndExpertGroupMappingTable
+		{
+			get
+			{
+				return this.GetTable<zExpertAndExpertGroupMappingTable>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UsersTable")]
@@ -311,6 +333,8 @@ namespace Competitions
 		
 		private EntitySet<zTaskPRManualTable> _zTaskPRManualTable;
 		
+		private EntitySet<zExpertAndExpertGroupMappingTable> _zExpertAndExpertGroupMappingTable;
+		
     #region Определения метода расширяемости
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -335,6 +359,7 @@ namespace Competitions
 			this._zExpertsAndCompetitionMappngTamplateTable = new EntitySet<zExpertsAndCompetitionMappngTamplateTable>(new Action<zExpertsAndCompetitionMappngTamplateTable>(this.attach_zExpertsAndCompetitionMappngTamplateTable), new Action<zExpertsAndCompetitionMappngTamplateTable>(this.detach_zExpertsAndCompetitionMappngTamplateTable));
 			this._zApplicationTable = new EntitySet<zApplicationTable>(new Action<zApplicationTable>(this.attach_zApplicationTable), new Action<zApplicationTable>(this.detach_zApplicationTable));
 			this._zTaskPRManualTable = new EntitySet<zTaskPRManualTable>(new Action<zTaskPRManualTable>(this.attach_zTaskPRManualTable), new Action<zTaskPRManualTable>(this.detach_zTaskPRManualTable));
+			this._zExpertAndExpertGroupMappingTable = new EntitySet<zExpertAndExpertGroupMappingTable>(new Action<zExpertAndExpertGroupMappingTable>(this.attach_zExpertAndExpertGroupMappingTable), new Action<zExpertAndExpertGroupMappingTable>(this.detach_zExpertAndExpertGroupMappingTable));
 			OnCreated();
 		}
 		
@@ -516,6 +541,19 @@ namespace Competitions
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_zExpertAndExpertGroupMappingTable", Storage="_zExpertAndExpertGroupMappingTable", ThisKey="ID", OtherKey="FK_UsersTable")]
+		public EntitySet<zExpertAndExpertGroupMappingTable> zExpertAndExpertGroupMappingTable
+		{
+			get
+			{
+				return this._zExpertAndExpertGroupMappingTable;
+			}
+			set
+			{
+				this._zExpertAndExpertGroupMappingTable.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -603,6 +641,18 @@ namespace Competitions
 		}
 		
 		private void detach_zTaskPRManualTable(zTaskPRManualTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.UsersTable = null;
+		}
+		
+		private void attach_zExpertAndExpertGroupMappingTable(zExpertAndExpertGroupMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.UsersTable = this;
+		}
+		
+		private void detach_zExpertAndExpertGroupMappingTable(zExpertAndExpertGroupMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
@@ -5992,6 +6042,360 @@ namespace Competitions
 						this._FK_UsersTable = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("UsersTable");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.zExpertGroup")]
+	public partial class zExpertGroup : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private System.Nullable<bool> _Active;
+		
+		private string _Name;
+		
+		private EntitySet<zExpertAndExpertGroupMappingTable> _zExpertAndExpertGroupMappingTable;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public zExpertGroup()
+		{
+			this._zExpertAndExpertGroupMappingTable = new EntitySet<zExpertAndExpertGroupMappingTable>(new Action<zExpertAndExpertGroupMappingTable>(this.attach_zExpertAndExpertGroupMappingTable), new Action<zExpertAndExpertGroupMappingTable>(this.detach_zExpertAndExpertGroupMappingTable));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(1000)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zExpertGroup_zExpertAndExpertGroupMappingTable", Storage="_zExpertAndExpertGroupMappingTable", ThisKey="ID", OtherKey="FK_ExpertGroupTable")]
+		public EntitySet<zExpertAndExpertGroupMappingTable> zExpertAndExpertGroupMappingTable
+		{
+			get
+			{
+				return this._zExpertAndExpertGroupMappingTable;
+			}
+			set
+			{
+				this._zExpertAndExpertGroupMappingTable.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_zExpertAndExpertGroupMappingTable(zExpertAndExpertGroupMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.zExpertGroup = this;
+		}
+		
+		private void detach_zExpertAndExpertGroupMappingTable(zExpertAndExpertGroupMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.zExpertGroup = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.zExpertAndExpertGroupMappingTable")]
+	public partial class zExpertAndExpertGroupMappingTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private bool _Active;
+		
+		private System.Nullable<int> _FK_UsersTable;
+		
+		private System.Nullable<int> _FK_ExpertGroupTable;
+		
+		private EntityRef<UsersTable> _UsersTable;
+		
+		private EntityRef<zExpertGroup> _zExpertGroup;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnFK_UsersTableChanging(System.Nullable<int> value);
+    partial void OnFK_UsersTableChanged();
+    partial void OnFK_ExpertGroupTableChanging(System.Nullable<int> value);
+    partial void OnFK_ExpertGroupTableChanged();
+    #endregion
+		
+		public zExpertAndExpertGroupMappingTable()
+		{
+			this._UsersTable = default(EntityRef<UsersTable>);
+			this._zExpertGroup = default(EntityRef<zExpertGroup>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_UsersTable", DbType="Int")]
+		public System.Nullable<int> FK_UsersTable
+		{
+			get
+			{
+				return this._FK_UsersTable;
+			}
+			set
+			{
+				if ((this._FK_UsersTable != value))
+				{
+					if (this._UsersTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_UsersTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_UsersTable = value;
+					this.SendPropertyChanged("FK_UsersTable");
+					this.OnFK_UsersTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ExpertGroupTable", DbType="Int")]
+		public System.Nullable<int> FK_ExpertGroupTable
+		{
+			get
+			{
+				return this._FK_ExpertGroupTable;
+			}
+			set
+			{
+				if ((this._FK_ExpertGroupTable != value))
+				{
+					if (this._zExpertGroup.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_ExpertGroupTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_ExpertGroupTable = value;
+					this.SendPropertyChanged("FK_ExpertGroupTable");
+					this.OnFK_ExpertGroupTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_zExpertAndExpertGroupMappingTable", Storage="_UsersTable", ThisKey="FK_UsersTable", OtherKey="ID", IsForeignKey=true)]
+		public UsersTable UsersTable
+		{
+			get
+			{
+				return this._UsersTable.Entity;
+			}
+			set
+			{
+				UsersTable previousValue = this._UsersTable.Entity;
+				if (((previousValue != value) 
+							|| (this._UsersTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._UsersTable.Entity = null;
+						previousValue.zExpertAndExpertGroupMappingTable.Remove(this);
+					}
+					this._UsersTable.Entity = value;
+					if ((value != null))
+					{
+						value.zExpertAndExpertGroupMappingTable.Add(this);
+						this._FK_UsersTable = value.ID;
+					}
+					else
+					{
+						this._FK_UsersTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("UsersTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zExpertGroup_zExpertAndExpertGroupMappingTable", Storage="_zExpertGroup", ThisKey="FK_ExpertGroupTable", OtherKey="ID", IsForeignKey=true)]
+		public zExpertGroup zExpertGroup
+		{
+			get
+			{
+				return this._zExpertGroup.Entity;
+			}
+			set
+			{
+				zExpertGroup previousValue = this._zExpertGroup.Entity;
+				if (((previousValue != value) 
+							|| (this._zExpertGroup.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._zExpertGroup.Entity = null;
+						previousValue.zExpertAndExpertGroupMappingTable.Remove(this);
+					}
+					this._zExpertGroup.Entity = value;
+					if ((value != null))
+					{
+						value.zExpertAndExpertGroupMappingTable.Add(this);
+						this._FK_ExpertGroupTable = value.ID;
+					}
+					else
+					{
+						this._FK_ExpertGroupTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("zExpertGroup");
 				}
 			}
 		}

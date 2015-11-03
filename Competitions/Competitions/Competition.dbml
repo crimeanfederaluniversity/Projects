@@ -13,6 +13,7 @@
       <Association Name="UsersTable_zExpertsAndCompetitionMappngTamplateTable" Member="zExpertsAndCompetitionMappngTamplateTable" ThisKey="ID" OtherKey="FK_UsersTable" Type="zExpertsAndCompetitionMappngTamplateTable" />
       <Association Name="UsersTable_zApplicationTable" Member="zApplicationTable" ThisKey="ID" OtherKey="FK_UsersTable" Type="zApplicationTable" />
       <Association Name="UsersTable_zTaskPRManualTable" Member="zTaskPRManualTable" ThisKey="ID" OtherKey="FK_UsersTable" Type="zTaskPRManualTable" />
+      <Association Name="UsersTable_zExpertAndExpertGroupMappingTable" Member="zExpertAndExpertGroupMappingTable" ThisKey="ID" OtherKey="FK_UsersTable" Type="zExpertAndExpertGroupMappingTable" />
     </Type>
   </Table>
   <Table Name="dbo.zTemplateFormTable" Member="zTemplateFormTable">
@@ -259,6 +260,24 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="UsersTable_zTaskPRManualTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="ID" Type="UsersTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.zExpertGroup" Member="zExpertGroup">
+    <Type Name="zExpertGroup">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Association Name="zExpertGroup_zExpertAndExpertGroupMappingTable" Member="zExpertAndExpertGroupMappingTable" ThisKey="ID" OtherKey="FK_ExpertGroupTable" Type="zExpertAndExpertGroupMappingTable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.zExpertAndExpertGroupMappingTable" Member="zExpertAndExpertGroupMappingTable">
+    <Type Name="zExpertAndExpertGroupMappingTable">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_ExpertGroupTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="UsersTable_zExpertAndExpertGroupMappingTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="ID" Type="UsersTable" IsForeignKey="true" />
+      <Association Name="zExpertGroup_zExpertAndExpertGroupMappingTable" Member="zExpertGroup" ThisKey="FK_ExpertGroupTable" OtherKey="ID" Type="zExpertGroup" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

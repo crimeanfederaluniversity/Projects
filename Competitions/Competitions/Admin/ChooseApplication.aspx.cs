@@ -114,7 +114,7 @@ namespace Competitions.Admin
             if (button != null)
             {
                 Session["ApplicationID"] = button.CommandArgument;
-                Response.Redirect("ApllicationExpertEdit.aspx");
+                Response.Redirect("ApplicationExpertsAndExpertsGroupEdit.aspx");
             }
         }
         protected void SovetexpertChangeButtonClick(object sender, EventArgs e)

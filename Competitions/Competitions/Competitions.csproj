@@ -186,6 +186,7 @@
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Admin\ActionPRManual.aspx" />
     <Content Include="Admin\ApllicationExpertEdit.aspx" />
+    <Content Include="Admin\ApplicationExpertsAndExpertsGroupEdit.aspx" />
     <Content Include="Admin\ApplicationSovetexpertEdit.aspx" />
     <Content Include="Admin\ChooseApplication.aspx" />
     <Content Include="Admin\ChooseColumn.aspx" />
@@ -234,12 +235,14 @@
     </Content>
     <None Include="Properties\PublishProfiles\Competitions.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Images\Add.png" />
     <Content Include="Images\CalendarIcon.png" />
     <Content Include="Images\Delete.png" />
     <Content Include="Images\Download.png" />
     <Content Include="Images\Edit.png" />
     <Content Include="Images\InitialImage.png" />
     <Content Include="Images\SelectedButton.png" />
+    <Content Include="Images\True.png" />
     <Content Include="InitialImage.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -416,6 +419,13 @@
     </Compile>
     <Compile Include="Admin\ApllicationExpertEdit.aspx.designer.cs">
       <DependentUpon>ApllicationExpertEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ApplicationExpertsAndExpertsGroupEdit.aspx.cs">
+      <DependentUpon>ApplicationExpertsAndExpertsGroupEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ApplicationExpertsAndExpertsGroupEdit.aspx.designer.cs">
+      <DependentUpon>ApplicationExpertsAndExpertsGroupEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\ApplicationSovetexpertEdit.aspx.cs">
       <DependentUpon>ApplicationSovetexpertEdit.aspx</DependentUpon>

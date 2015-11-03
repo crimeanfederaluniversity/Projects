@@ -50,7 +50,6 @@ namespace Competitions.Expert
                         currentExpertPointValue = new zExpertPointsValue();
                         currentExpertPointValue.FK_ApplicationTable = applicationId;
                         currentExpertPointValue.FK_ExpertsTable = userId;
-                        currentExpertPointValue.LastChangeDataTime = DateTime.Now;
                         currentExpertPointValue.FK_ExpertPoints = currentExpertPoint.ID;
                         currentExpertPointValue.Sended = false;
                         currentExpertPointValue.Active = true;
