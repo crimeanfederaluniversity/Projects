@@ -213,6 +213,19 @@ namespace Competitions
             #endregion
             return false;
         }
+
+        public bool GetIsFileConnected(zCollectedDataTable currentCollectedData)
+        {
+            if (currentCollectedData.ValueText == null)
+               return false;
+            if (!currentCollectedData.ValueText.Any())
+               return false;
+            if (currentCollectedData.ValueText.Length > 3)
+                return true;     
+            return false;
+        }
+
+
         public DateTime GetDateDataValue(zColumnTable currentColumn, zCollectedDataTable currentCollectedData)
         {
             DataType dataType = new DataType();
@@ -578,7 +591,21 @@ namespace Competitions
                 return GetDropDownSelectedValueString(currentColumn, currentCollectedData, applicationId, currentRowId);
             }
             #endregion
-           
+            #region applikcationCreateName
+
+            if (dataType.IsDataTypeApplicationCreateDate(currentColumn.DataType))
+            {
+                var tmp = (from a in competitionDataBase.zApplicationTable
+                           where a.ID == applicationId
+                           select a).FirstOrDefault();
+                if (tmp == null)
+                    return "error";
+                if (tmp.CretaDateTime == null)
+                    return "error";
+                return tmp.CretaDateTime.ToString().Split(' ')[0];
+            }
+
+            #endregion
             return "";
         }
         public string GetDropDownSelectedValueString(zColumnTable currentColumn,  zCollectedDataTable currentCollectedData, int applicationId, int currentRowId)
@@ -638,7 +665,7 @@ namespace Competitions
             if ((dataType.IsDataTypeIterator(dataTypeIndex)) || (dataType.IsDataTypeSum(dataTypeIndex)) || (dataType.IsDataTypeConstantNecessarilyShow(dataTypeIndex))
                 ||(dataType.IsDataTypeMaxValue(dataTypeIndex)) || (dataType.IsDataTypeMinValue(dataTypeIndex)) || (dataType.IsDataTypeNecessarilyShow(dataTypeIndex))
                 ||(dataType.IsDataTypeSymWithParam(dataTypeIndex)) || (dataType.IsDataTypeNameOfApplication(dataTypeIndex)) || (dataType.IsDataTypeOneToOneWithParams(dataTypeIndex))
-                || (dataType.IsDataTypeNecessarilyShowWithParam(dataTypeIndex)))
+                || (dataType.IsDataTypeNecessarilyShowWithParam(dataTypeIndex)) || (dataType.IsDataTypeApplicationCreateDate(dataTypeIndex)))
             {
                 return true;
             }
@@ -735,10 +762,11 @@ namespace Competitions
             if (daysLeftAsString.Length>1)
             {
                 char lastByOne = daysLeftAsString[daysLeftAsString.Length - 2];
-                if (lastByOne == 1)
+                
+                if ( (int) Char.GetNumericValue(lastByOne) == 1)
                     return GetNameByTypeAndWordNumber(0, wordNumber);
                 char last = daysLeftAsString[daysLeftAsString.Length - 1];
-                return GetNameByTypeAndWordNumber(GetDateTypeByLastNumberValue(last), wordNumber);
+                return GetNameByTypeAndWordNumber(GetDateTypeByLastNumberValue((int)Char.GetNumericValue(last)), wordNumber);
             }
             else
             {
@@ -782,6 +810,19 @@ namespace Competitions
             if (GetDaysBeforeCompetitionEnd(competitoinId) >= 0)
                 return false;
             return true;
+        }
+        public bool IsCompetitionEndDateExpiredByApplication(int applicationId)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            zApplicationTable currentApplicationTable = (from a in competitionDataBase.zApplicationTable
+                                                         where a.ID == applicationId
+                                                         && a.Active == true
+                                                         select a).FirstOrDefault();
+            if (currentApplicationTable == null)
+                return IsCompetitionEndDateExpired(-1);
+            if (currentApplicationTable.FK_CompetitionTable == null)
+                return IsCompetitionEndDateExpired(-1);
+            return IsCompetitionEndDateExpired(Convert.ToInt32(currentApplicationTable.FK_CompetitionTable));
         }
     }
 }

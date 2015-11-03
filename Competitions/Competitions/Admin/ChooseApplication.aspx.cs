@@ -85,9 +85,11 @@ namespace Competitions.Admin
                                                             on a.FK_CompetitionTable equals b.ID
                                                             where b.Active == true
                                                             select a).ToList();
+               
                  
                     foreach (var n in applicationsList)
                     {
+                      
                         if (n.Sended == false)
                         {
                             sovexp.Enabled = false;

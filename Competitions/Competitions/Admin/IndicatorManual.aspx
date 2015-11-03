@@ -6,7 +6,7 @@
         <h2><span style="font-size: 20px"> Целевые показатели Программы развития:</span></h2>
          <asp:GridView ID="IndicatorGV" runat="server" AutoGenerateColumns="False">
             <Columns>
-                <asp:BoundField DataField="ID"   HeaderText="Номер" Visible="true" />
+                <asp:BoundField DataField="ID"   HeaderText="Номер" Visible="false" />
                 <asp:BoundField DataField="IndicatorName"   HeaderText="Название индикатора" Visible="true" />
                 <asp:BoundField DataField="IndicatorValue"   HeaderText="Значение" Visible="true" />
                     </Columns>

@@ -159,6 +159,18 @@ namespace Competitions
             {
                 return dataProcess.GetDropDownSelectedValueString(currentColumn, currentCollectedData, applicationId, currentRow.ID);
             }
+            if (dataProcess.IsCellFileUpload(dType))
+            {
+                if (dataProcess.GetIsFileConnected(currentCollectedData))
+                {
+                    return "☑";
+                }
+                else
+                {
+                    return "☐"; 
+                }
+            }
+            
             
             return "";
         }

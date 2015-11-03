@@ -11,8 +11,6 @@ using System.Xml;
 
 namespace Competitions.User
 {
-
-
     public partial class UserMainPage : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -28,10 +26,12 @@ namespace Competitions.User
                 int userId = (int)userIdtmp;
                 
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-               
+                CompetitionCountDown competitionCountDown = new CompetitionCountDown();
+
+                
                 Tab1.CssClass = "Clicked";
                 MainView.ActiveViewIndex = 0;
-                
+                #region competitions
                 {
                     DataTable dataTable = new DataTable();
                     dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
@@ -47,6 +47,9 @@ namespace Competitions.User
                    
                     foreach (zCompetitionsTable currentCompetition in competitionsList)
                     {
+                        if (competitionCountDown.IsCompetitionEndDateExpired(currentCompetition.ID))
+                            continue;
+
                         DataRow dataRow = dataTable.NewRow();
                         dataRow["ID"] = currentCompetition.ID;
                         dataRow["Name"] = currentCompetition.Name;
@@ -60,7 +63,15 @@ namespace Competitions.User
                     MainGV.DataSource = dataTable;
                     MainGV.DataBind();
                 }
-                //////////////////////////////////////////////////////////////////////////////////////// 
+                #endregion
+
+                /// в  первую таблицу все те у которых конкурс еще открыт а заявка не отправлена
+                /// во вторую все те у которых заявка отправлена
+                /// в  третью все те у которых закрыта заявка
+
+                
+
+                #region currentApplications
                 {
                     DataTable dataTable = new DataTable();
                     dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
@@ -80,6 +91,9 @@ namespace Competitions.User
 
                     foreach (zApplicationTable currentApplication in applicationList)
                     {
+                        if (competitionCountDown.IsCompetitionEndDateExpiredByApplication(currentApplication.ID))
+                            continue;
+
                         DataRow dataRow = dataTable.NewRow();
                         dataRow["ID"] = currentApplication.ID;
                         dataRow["Name"] = currentApplication.Name;
@@ -101,7 +115,8 @@ namespace Competitions.User
                     ApplicationGV.DataSource = dataTable;
                     ApplicationGV.DataBind();
                 }
-                ////////////////////////////////////////////////////////// 
+                #endregion
+                #region applicationsArchive
                 {
                     DataTable dataTable = new DataTable();
                     dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
@@ -113,12 +128,13 @@ namespace Competitions.User
                                                                where a.FK_UsersTable == userId && a.Active == true && a.Sended == true
                                                                join b in competitionDataBase.zCompetitionsTable
                                                                on a.FK_CompetitionTable equals b.ID
-                                                               where b.Active == true && b.OpenForApplications == true
+                                                               where b.Active == true
                                                                select a).Distinct().ToList();
                     
 
                     foreach (zApplicationTable currentApplication in applicationList)
                     {
+
                         DataRow dataRow = dataTable.NewRow();
                         dataRow["ID"] = currentApplication.ID;
                         dataRow["Name"] = currentApplication.Name;
@@ -147,6 +163,40 @@ namespace Competitions.User
                     ArchiveApplicationGV.DataSource = dataTable;
                     ArchiveApplicationGV.DataBind();
                 }
+                #endregion
+                #region draftApplications
+                {
+                    DataTable dataTable = new DataTable();
+                    dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("CompetitionName", typeof(string)));
+
+                   
+
+                    List<zApplicationTable> applicationList = (from a in competitionDataBase.zApplicationTable
+                                                               where a.FK_UsersTable == userId && a.Active == true
+                                                               join b in competitionDataBase.zCompetitionsTable
+                                                               on a.FK_CompetitionTable equals b.ID
+                                                               where b.Active == true 
+                                                               select a).Distinct().ToList();
+
+
+                    foreach (zApplicationTable currentApplication in applicationList)
+                    {
+                        if (!competitionCountDown.IsCompetitionEndDateExpiredByApplication(currentApplication.ID))
+                            continue;
+                        DataRow dataRow = dataTable.NewRow();
+                        dataRow["ID"] = currentApplication.ID;
+                        dataRow["Name"] = currentApplication.Name;
+                        dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTable
+                                                      where a.ID == (Convert.ToInt32(currentApplication.FK_CompetitionTable))
+                                                      select a.Name).FirstOrDefault();
+                        dataTable.Rows.Add(dataRow);
+                    }
+                    DraftGridView.DataSource = dataTable;
+                    DraftGridView.DataBind();
+                }
+                #endregion
             }
         }
 
@@ -164,27 +214,26 @@ namespace Competitions.User
             {
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
                 List<zApplicationTable> applicationexist = (from a in competitionDataBase.zApplicationTable
-                    where a.FK_UsersTable == userId && a.Sended == true &&a.Active == true && a.EndProjectDate > DateTime.Now
-                    join b in competitionDataBase.zCompetitionsTable
-                        on a.FK_CompetitionTable equals b.ID
-                    where b.Active == true && b.ID == Convert.ToInt32(newapp.CommandArgument)
+                    where
+                        a.FK_UsersTable == userId && a.Sended == true && a.Active == true &&
+                        a.EndProjectDate > DateTime.Now
                     select a).Distinct().ToList();
-                  
+
                 List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTable
-                                                             where a.Active == true && a.OpenForApplications == true && a.ID == Convert.ToInt32(newapp.CommandArgument)
-                                                                 select a).ToList();
-                   
-                if (applicationexist.Count > 0)
+                    where
+                        a.Active == true && a.OpenForApplications == true &&
+                        a.ID == Convert.ToInt32(newapp.CommandArgument)
+                    select a).ToList();
+
+                if (applicationexist.Count != null)
                 {
-                    foreach (var n in competitionsList)
-                        {
-                            newapp.Enabled = false;
-                        }                      
-                    }                   
+
+                    newapp.Enabled = false;
+
                     Label1.Visible = true;
                 }
             }
-        
+        }
 
         protected void MyApplication_Click(object sender, EventArgs e)
         {
@@ -316,6 +365,7 @@ namespace Competitions.User
             }
             //Response.Redirect("UserMainPage.aspx");
         }
+        #region tabClick
         protected void Tab1_Click(object sender, EventArgs e)
         {
             Tab1.CssClass = "Clicked";
@@ -348,6 +398,7 @@ namespace Competitions.User
             Tab4.CssClass = "Clicked";
             MainView.ActiveViewIndex = 3;
         }
+        #endregion
         protected void Button2_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Default.aspx");

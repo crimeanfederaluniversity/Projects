@@ -9,7 +9,7 @@ namespace Competitions
 {
     public class DataType
     {
-        private int dataTypeCount = 19;
+        private int dataTypeCount = 20;
         public string GetDataTypeName(int dataType)
         {
             switch (dataType)
@@ -89,6 +89,10 @@ namespace Competitions
                 case 18:
                 {
                     return "Хотябы один для каждой константы по критерию (CheckBox)";
+                }
+                case 19:
+                {
+                    return "Дата создания заявки";
                 }
                 default :
                 {
@@ -364,6 +368,17 @@ namespace Competitions
         public bool IsDataTypeConstntAtLeastOneWithCheckBoxParam(int dataType)
         {
             if (dataType == 18)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsDataTypeApplicationCreateDate(int dataType)
+        {
+            if (dataType == 19)
             {
                 return true;
             }
