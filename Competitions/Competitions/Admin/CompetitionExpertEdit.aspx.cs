@@ -10,27 +10,25 @@ namespace Competitions.Admin
 {
     public partial class CompetitionExpertEdit : System.Web.UI.Page
     {
-        private List<UsersTable> GetExpertsInCompetitionList(int competitionId)
+        private List<UsersTable> GetExpertsInGroup(int groupid)
         {
             CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
+              
             List<UsersTable> experts = (from a in CompetitionsDataBase.UsersTable
-                                        where a.Active == true
-                                              && a.AccessLevel == 5
-                                        join b in CompetitionsDataBase.zExpertsAndCompetitionMappngTamplateTable
+                                        where a.Active == true  && a.AccessLevel == 5
+                                        join b in CompetitionsDataBase.zExpertAndExpertGroupMappingTable
                                             on a.ID equals b.FK_UsersTable
-                                        where b.Active == true
-                                              && b.FK_CompetitionsTable == competitionId
+                                        where b.Active == true && b.FK_ExpertGroupTable == groupid
                                         select a).ToList();
             return experts;
         }
-        private List<UsersTable> GetExpertsOutCompetitionList(int competitionId)
+        private List<UsersTable> GetExpertsOutGroup(int groupid)
         {
             CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
             List<UsersTable> allExperts = (from a in CompetitionsDataBase.UsersTable
-                                           where a.Active == true
-                                                 && a.AccessLevel == 5
+                                           where a.Active == true && a.AccessLevel == 5
                                            select a).ToList();
-            List<UsersTable> expertsInCompetition = GetExpertsInCompetitionList(competitionId);
+            List<UsersTable> expertsInCompetition = GetExpertsInGroup(groupid);
             foreach (UsersTable currentUser in expertsInCompetition)
             {
                 allExperts.Remove(currentUser);
@@ -56,87 +54,93 @@ namespace Competitions.Admin
         {
             if (!Page.IsPostBack)
             {
-                var appIdTmp = Session["CompetitionID"];
-                if (appIdTmp == null)
+                var IdTmp = Session["GroupID"];
+                if (IdTmp == null)
                 {
                     Response.Redirect("Main.aspx");
                 }
-                int competitionId = Convert.ToInt32(appIdTmp);
+                int groupid = Convert.ToInt32(IdTmp);
 
-                connectedExpertsGV.DataSource = GetFilledDataTable(GetExpertsInCompetitionList(competitionId));
-                unconnectedExpertsGV.DataSource = GetFilledDataTable(GetExpertsOutCompetitionList(competitionId));
+                connectedExpertsGV.DataSource = GetFilledDataTable(GetExpertsInGroup(groupid));
+                unconnectedExpertsGV.DataSource = GetFilledDataTable(GetExpertsOutGroup(groupid));
 
                 connectedExpertsGV.DataBind();
                 unconnectedExpertsGV.DataBind();
 
             }
         }
+
         protected void ExpertDeleteButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
             if (button != null)
             {
-                var appIdTmp = Session["CompetitionID"];
-                if (appIdTmp == null)
+                var IdTmp = Session["GroupID"];
+                if (IdTmp == null)
                 {
-                    Response.Redirect("CompetitionExpertEdit.aspx");
+                    Response.Redirect("Main.aspx");
                 }
-                int competitionId = Convert.ToInt32(appIdTmp);
+                int groupid = Convert.ToInt32(IdTmp);
 
                 CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
-                zExpertsAndCompetitionMappngTamplateTable  expertAndCompetitionConnection =
-                    (from a in CompetitionsDataBase.zExpertsAndCompetitionMappngTamplateTable
+                zExpertAndExpertGroupMappingTable expertdelete =
+                    (from a in CompetitionsDataBase.zExpertAndExpertGroupMappingTable
                      where a.FK_UsersTable == Convert.ToInt32(button.CommandArgument)
                            && a.Active == true
-                           && a.FK_CompetitionsTable == competitionId
+                           && a.FK_ExpertGroupTable == groupid
                      select a).FirstOrDefault();
-                if (expertAndCompetitionConnection != null)
+                if (expertdelete != null)
                 {
-                    expertAndCompetitionConnection.Active = false;
+                    expertdelete.Active = false;
                     CompetitionsDataBase.SubmitChanges();
                 }
             }
             Response.Redirect("CompetitionExpertEdit.aspx");
+
         }
+
         protected void ExpertAddButtonClick(object sender, EventArgs e)
         {
+            
             Button button = (Button)sender;
             if (button != null)
             {
-                var appIdTmp = Session["CompetitionID"];
-                if (appIdTmp == null)
+                var IdTmp = Session["GroupID"];
+                if (IdTmp == null)
                 {
-                    Response.Redirect("ApllicationExpertEdit.aspx");
+                    Response.Redirect("Main.aspx");
                 }
-                int competitionId = Convert.ToInt32(appIdTmp);
+                int groupid = Convert.ToInt32(IdTmp);
 
                 CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
-                zExpertsAndCompetitionMappngTamplateTable expertAndCompetitionConnection =
-                    (from a in CompetitionsDataBase.zExpertsAndCompetitionMappngTamplateTable
-                     where a.FK_UsersTable == Convert.ToInt32(button.CommandArgument)
-                           && a.FK_CompetitionsTable == competitionId
-                     select a).FirstOrDefault();
-                if (expertAndCompetitionConnection != null)
+                zExpertAndExpertGroupMappingTable expertadd =
+                     (from a in CompetitionsDataBase.zExpertAndExpertGroupMappingTable
+                      where a.FK_UsersTable == Convert.ToInt32(button.CommandArgument)
+                            && a.Active == false
+                            && a.FK_ExpertGroupTable == groupid
+                      select a).FirstOrDefault();
+
+                if (expertadd != null)
                 {
-                    expertAndCompetitionConnection.Active = true;
+                    expertadd.Active = true;
                     CompetitionsDataBase.SubmitChanges();
                 }
                 else
                 {
-                    expertAndCompetitionConnection = new zExpertsAndCompetitionMappngTamplateTable();
-                    expertAndCompetitionConnection.Active = true;
-                    expertAndCompetitionConnection.FK_CompetitionsTable = competitionId;
-                    expertAndCompetitionConnection.FK_UsersTable = Convert.ToInt32(button.CommandArgument);
-                    CompetitionsDataBase.zExpertsAndCompetitionMappngTamplateTable.InsertOnSubmit(expertAndCompetitionConnection);
+                    zExpertAndExpertGroupMappingTable newexpertingroup = new zExpertAndExpertGroupMappingTable();
+                    newexpertingroup.Active = true;
+                    newexpertingroup.FK_ExpertGroupTable = groupid;
+                    newexpertingroup.FK_UsersTable = Convert.ToInt32(button.CommandArgument);
+                    CompetitionsDataBase.zExpertAndExpertGroupMappingTable.InsertOnSubmit(newexpertingroup);
                     CompetitionsDataBase.SubmitChanges();
                 }
             }
             Response.Redirect("CompetitionExpertEdit.aspx");
+        
         }
-
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ChooseCompetition.aspx");
+            Response.Redirect("ApplicationSovetexpertEdit.aspx");
         }
     }
 }

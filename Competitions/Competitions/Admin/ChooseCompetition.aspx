@@ -5,7 +5,9 @@
         <br />
        <h2><span style="font-size: 20px">Список всех имеющихся конкурсов: </span></h2>
         <br />
-        <asp:Button ID="NewCompetitionButton" runat="server" OnClick="NewCompetitionButton_Click" Text="Создать новый конкурс" />
+        <asp:Button ID="NewCompetitionButton" runat="server" OnClick="NewCompetitionButton_Click" Text="Создать новый конкурс" Width="200px" />
+        &nbsp;&nbsp;&nbsp;
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Экспертные группы" Width="200px" />
         <br />
         <br />
         <asp:GridView ID="CompetitionsGV" runat="server" AutoGenerateColumns="False" OnRowDataBound="CompetitionsGVRowDataBound">
@@ -24,11 +26,7 @@
                             <asp:Button ID="ChangeButton" runat="server" CommandName="Select" Text="Редактировать" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="ChangeButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
-               <asp:TemplateField HeaderText="Экспертный совет для конкурса">
-                        <ItemTemplate>                         
-                            <asp:Button ID="ExpertSovetButton" runat="server" CommandName="Select" Text="Изменить состав" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="ExpertSovetButtonClick"/>
-                        </ItemTemplate>
-                </asp:TemplateField>
+            
                 <asp:TemplateField HeaderText="Статус конкурса">
                         <ItemTemplate>                         
                                 <asp:Label ID="Status" runat="server" Text='<%# Bind("Status") %>'  Visible="True"></asp:Label>

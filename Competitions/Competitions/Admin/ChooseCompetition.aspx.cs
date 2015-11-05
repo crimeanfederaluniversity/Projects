@@ -117,15 +117,7 @@ namespace Competitions.Admin
             Session["CompetitionID"] = 0;
             Response.Redirect("CompetitionCreateEdit.aspx");
         }
-        protected void ExpertSovetButtonClick(object sender, EventArgs e)
-        {
-             Button button = (Button) sender;
-             if (button != null)
-             {
-                 Session["CompetitionID"] = button.CommandArgument;
-                 Response.Redirect("CompetitionExpertEdit.aspx");
-             }
-        }
+      
         protected void MarksButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -167,6 +159,12 @@ namespace Competitions.Admin
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("Main.aspx");
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ApplicationSovetexpertEdit.aspx");
+            
         }
     }
 }

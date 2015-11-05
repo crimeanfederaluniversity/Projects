@@ -3,8 +3,8 @@
     <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Назад" />
     <br />
     <br />
-    Прикрепленные эксперты
-    <asp:GridView ID="connectedExpertsGV" runat="server" AutoGenerateColumns="False">
+    Эксперты прикрепленные к группе:<br />
+&nbsp;<asp:GridView ID="connectedExpertsGV" runat="server" AutoGenerateColumns="False">
             <Columns>
                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
                 <asp:BoundField DataField="Name"   HeaderText="Имя" Visible="true" />
@@ -18,8 +18,12 @@
     
     
     
-    Все эксперты
-    <asp:GridView ID="unconnectedExpertsGV" runat="server" AutoGenerateColumns="False">
+    <br />
+    
+    
+    
+    Все эксперты:<br />
+&nbsp;<asp:GridView ID="unconnectedExpertsGV" runat="server" AutoGenerateColumns="False">
             <Columns>
                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
                 <asp:BoundField DataField="Name"   HeaderText="Имя" Visible="true" />

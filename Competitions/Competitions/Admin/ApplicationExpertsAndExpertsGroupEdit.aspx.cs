@@ -209,46 +209,7 @@ namespace Competitions.Admin
                 dataTable1.Rows.Add(dataRow);
             }
 
-            /*
-                List<UsersTable> experts = (from a in competitionsDataBase.UsersTable
-                                                   where a.Active == true && a.AccessLevel == 5                
-                                                   select a).ToList();
-                foreach (UsersTable currentUser in experts)
-                {
-                    DataRow dataRow = dataTable1.NewRow();
-
-                    List<zExpertAndExpertGroupMappingTable> groupname = (from a in competitionsDataBase.zExpertAndExpertGroupMappingTable
-                                                                         where a.Active == true && a.FK_UsersTable == currentUser.ID
-                                                                         join b in competitionsDataBase.zExpertAndExpertGroupMappingTable
-                                                                         on a.ID equals b.FK_ExpertGroupTable
-                                                                         where b.Active == true
-                                                                         select a).ToList();
-
-                    if (groupname != null)
-                    {
-                        foreach (var n in groupname)
-                        {
-                            dataRow["ExpertGroupId"] = (from a in competitionsDataBase.zExpertGroup
-                                where a.Active == true
-                                join b in competitionsDataBase.zExpertAndExpertGroupMappingTable
-                                    on a.ID equals b.FK_ExpertGroupTable
-                                where b.FK_UsersTable == n.FK_UsersTable
-                                select a.ID).FirstOrDefault();
-                            dataRow["ExpertGroupName"] = (from a in competitionsDataBase.zExpertGroup
-                                where a.Active == true
-                                join b in competitionsDataBase.zExpertAndExpertGroupMappingTable
-                                    on a.ID equals b.FK_ExpertGroupTable
-                                where b.FK_UsersTable == n.FK_UsersTable
-                                select a.Name).FirstOrDefault().ToString();
-
-                        }
-                    }
-
-                    dataRow["UserId"] = currentUser.ID;
-                    dataRow["UserName"] = currentUser.Email;
-                    dataTable1.Rows.Add(dataRow);   
-                }
-           */ 
+            
             ExpertsGV.DataSource = dataTable1;
             ExpertsGV.DataBind();
         }
