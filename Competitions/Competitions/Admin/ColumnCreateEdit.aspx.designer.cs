@@ -139,60 +139,6 @@ namespace Competitions.Admin {
         protected global::System.Web.UI.WebControls.DropDownList Fk_ColumnConnectToDropDown;
         
         /// <summary>
-        /// PanelForConnectionToTwoInSameSection элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelForConnectionToTwoInSameSection;
-        
-        /// <summary>
-        /// FK_ColumnOneInSameRow элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList FK_ColumnOneInSameRow;
-        
-        /// <summary>
-        /// FK_ColumnTwoInSameRow элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList FK_ColumnTwoInSameRow;
-        
-        /// <summary>
-        /// PanelForMaxEndMinValue элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelForMaxEndMinValue;
-        
-        /// <summary>
-        /// MinValueTextBox элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox MinValueTextBox;
-        
-        /// <summary>
-        /// MaxValueTextBox элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox MaxValueTextBox;
-        
-        /// <summary>
         /// SortByCheckBox элемент управления.
         /// </summary>
         /// <remarks>
@@ -202,15 +148,6 @@ namespace Competitions.Admin {
         protected global::System.Web.UI.WebControls.CheckBox SortByCheckBox;
         
         /// <summary>
-        /// ColumnVisibleCheckBox элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox ColumnVisibleCheckBox;
-        
-        /// <summary>
         /// TotalUpCheckBox элемент управления.
         /// </summary>
         /// <remarks>
@@ -218,6 +155,15 @@ namespace Competitions.Admin {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox TotalUpCheckBox;
+        
+        /// <summary>
+        /// VisibleCheckBox элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox VisibleCheckBox;
         
         /// <summary>
         /// CreateSaveButton элемент управления.

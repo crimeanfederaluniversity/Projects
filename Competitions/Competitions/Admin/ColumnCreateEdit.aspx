@@ -41,49 +41,14 @@
             <asp:DropDownList ID="Fk_ColumnConnectToDropDown" runat="server" AutoPostBack="True" Height="26px" Width="190px">
             </asp:DropDownList>
         </asp:Panel>
-        
-        <asp:Panel ID="PanelForConnectionToTwoInSameSection" runat="server" Visible="false">
-            Операнд слева от знака
-            <br />
-            <asp:DropDownList ID="FK_ColumnOneInSameRow" runat="server" AutoPostBack="True" Height="31px" Width="188px">
-            </asp:DropDownList>
-            <br />
-            Операнд справа от знака<br /> &nbsp;<asp:DropDownList ID="FK_ColumnTwoInSameRow" runat="server" AutoPostBack="True" Height="26px" Width="190px">
-            </asp:DropDownList>
-        </asp:Panel>
-        
-        
-        <asp:Panel ID="PanelForMaxEndMinValue" runat="server" Visible="false">
-            Минимальное значение
-            <br />
-            (Пока только 0 - если надо чтобы минимальное значение было не раньше чем начало заявки.<br /> Если ограничений нет, оставить пустым)
-            <br />
-            <asp:TextBox ID="MinValueTextBox" runat="server"></asp:TextBox>
-            <br />
-            Максимальное значение
-            <br />
-            (Пока только 0 - если надо чтобы максимальное значение было не позже чем окончание заявки.
-            <br />
-            Если ограничений нет, оставить пустым)
-            <br />
-            <asp:TextBox ID="MaxValueTextBox" runat="server"></asp:TextBox>
-            <br /> 
-        </asp:Panel>
-
-        <br />
-
-        <br />
 
         <asp:CheckBox ID="SortByCheckBox" runat="server" Text="Сортировать по этому показателю" />
-        <br />
-
-        <asp:CheckBox ID="ColumnVisibleCheckBox" runat="server" Text="Visible" Checked="True" />
         <br />
 
         <asp:CheckBox ID="TotalUpCheckBox" runat="server" Text="Итого" />
 
         <br />
-        <br />
+        <asp:CheckBox ID="VisibleCheckBox" runat="server"  Text="Скрыть колонку" />
 
         <br />
 

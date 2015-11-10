@@ -22,22 +22,22 @@ namespace Competitions.User {
         protected global::System.Web.UI.WebControls.Panel top_panel2;
         
         /// <summary>
-        /// Button2 элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
-        
-        /// <summary>
         /// GoBackButton элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoBackButton;
+        protected global::System.Web.UI.WebControls.ImageButton GoBackButton;
+        
+        /// <summary>
+        /// Button2 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton Button2;
         
         /// <summary>
         /// PreviousSection элемент управления.
@@ -46,7 +46,7 @@ namespace Competitions.User {
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button PreviousSection;
+        protected global::System.Web.UI.WebControls.ImageButton PreviousSection;
         
         /// <summary>
         /// NextSection элемент управления.
@@ -55,7 +55,7 @@ namespace Competitions.User {
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button NextSection;
+        protected global::System.Web.UI.WebControls.ImageButton NextSection;
         
         /// <summary>
         /// SaveButton элемент управления.
@@ -64,7 +64,7 @@ namespace Competitions.User {
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SaveButton;
+        protected global::System.Web.UI.WebControls.ImageButton SaveButton;
         
         /// <summary>
         /// CountDownLabel элемент управления.

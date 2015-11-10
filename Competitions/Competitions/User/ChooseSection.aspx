@@ -2,8 +2,10 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">   
     <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
     <div>    
-        <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Text="Назад" Width="125px" OnClick="GoBackButton_Click" />
-        <asp:Button ID="Button2" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" OnClick="Button2_Click" />   
+                &nbsp;&nbsp;&nbsp;    
+                <asp:ImageButton ID="GoBackButton" ImageAlign="Middle" ImageUrl="~/Images/Back.png" OnClick="GoBackButton_Click" OnClientClick="showLoadPanel()" runat="server" Width="30px" />
+                &nbsp;
+         <asp:ImageButton ID="Button2" runat="server" OnClick="Button2_Click" OnClientClick="showLoadPanel()" ImageAlign="Middle"  Width="30px"  ImageUrl="~/Images/Home.png"  />
     </div> 
 </asp:Panel> 
 

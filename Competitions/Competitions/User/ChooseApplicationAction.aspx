@@ -3,8 +3,8 @@
     
     <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
     <div>    
-        <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Text="Назад" Width="125px" OnClick="GoBackButton_Click" />   
-         <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" OnClick="Button2_Click" /> 
+                <asp:ImageButton ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Width="30px" OnClick="GoBackButton_Click" ImageAlign="Middle" ImageUrl="~/Images/Back.png" ToolTip="Назад" />
+         <asp:ImageButton ID="ImageButton1" runat="server" OnClientClick="showLoadPanel()"  Width="30px" OnClick="Button2_Click" ImageUrl="~/Images/Home.png" ImageAlign="Middle" ToolTip="На главную" />
         &nbsp;      <asp:Label ID="CountDownLabel" runat="server" Text="Label"></asp:Label>
     </div> 
 </asp:Panel> 

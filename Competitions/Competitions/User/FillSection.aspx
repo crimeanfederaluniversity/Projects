@@ -2,18 +2,22 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">    <div>
 
 <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
-    <div>    
-        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" />
+    <div>
+
+        <asp:ImageButton ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Width="40px" OnClick="GoBackButton_Click" ImageAlign="Middle" ImageUrl="~/Images/ToStart.png" ToolTip="К заявке"     />
+        &nbsp; 
+         <asp:ImageButton ID="Button2" runat="server" OnClientClick="showLoadPanel()"  Width="30px" OnClick="Button2_Click" ImageUrl="~/Images/Home.png" ImageAlign="Middle" ToolTip="На главную" />
+        &nbsp;&nbsp;&nbsp;&nbsp; 
+        <asp:ImageButton ID="PreviousSection" runat="server" OnClientClick="showLoadPanel()"  Width="30px" OnClick="PreviousSection_Click" ImageUrl="~/Images/Back.png" ImageAlign="Middle" ToolTip="Назад" />
+&nbsp;
+         
+         <asp:ImageButton ID="NextSection" runat="server" OnClientClick="showLoadPanel()"  Width="30px" OnClick="NextSection_Click" ImageUrl="~/Images/Next.png" ImageAlign="Middle" ToolTip="Вперед" />
         &nbsp;
-        <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Text="К заявке" Width="125px" OnClick="GoBackButton_Click" />      
-        &nbsp;
-        <asp:Button ID="PreviousSection" runat="server" CausesValidation="False" OnClick="PreviousSection_Click" OnClientClick="showLoadPanel()" Text="Предыдущий шаг" />
-        &nbsp;
-        <asp:Button ID="NextSection" OnClientClick="showLoadPanel()" runat="server" OnClick="NextSection_Click" Text="Сохранить и перейти к следующему шагу" Width="314px" />
-        &nbsp;
-        <asp:Button ID="SaveButton" runat="server" Text="Сохранить изменения" OnClientClick="showLoadPanel()" CausesValidation="False" OnClick="SaveButton_Click" />
-        &nbsp;      
-        <asp:Label ID="CountDownLabel" runat="server" Text="Label"></asp:Label>
+
+ 
+         <asp:ImageButton ID="SaveButton" runat="server" OnClientClick="showLoadPanel()"  Width="30px" OnClick="SaveButton_Click" ImageUrl="~/Images/Save.png" ImageAlign="Middle" ToolTip="Сохранить изменения" />
+
+  &nbsp;      <asp:Label ID="CountDownLabel" runat="server" Text="Label"></asp:Label>
           </div> 
 </asp:Panel> 
     
@@ -23,23 +27,11 @@
 
     <link rel="stylesheet" type="text/css" href="../Spinner.css"> 
         <script type="text/javascript">
-            function showLoadPanel() {
-                document.getElementById('LoadPanel_').style.visibility = 'visible';
-            }
             function hideLoadPanel() {
                 document.getElementById('LoadPanel_').style.visibility = 'hidden';
             }
-            function startSpinner() {
-                setTimeout(checkState, 1000);
-                showLoadPanel();
-            }
-            function checkState() {
-                if (document.readyState)
-                    if (document.readyState != "complete")
-                        setTimeout(checkState, 1000); 
-                    else {
-                        hideLoadPanel();
-                    }
+            function showLoadPanel() {
+                //document.getElementById('LoadPanel_').style.visibility = 'visible';
             }
     </script>
     <style>  
@@ -415,7 +407,7 @@
                     <asp:TemplateField ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle" HeaderStyle-HorizontalAlign="Center" 
                          HeaderText="Удалить">
                         <ItemTemplate >
-                            <asp:ImageButton ID="DeleteRowButton" runat="server" OnClientClick="showLoadPanel()" Visible='<%# Bind("DeleteRowButtonVisible") %>' CommandName="Select" CommandArgument='<%# Eval("ID0") %>'  CausesValidation="False" Width="20px" OnClick="DeleteRowButtonClick" ImageUrl="~/Images/Delete.png" ImageAlign="Middle" />
+                            <asp:ImageButton ID="DeleteRowButton" runat="server" OnClientClick="showLoadPanel()" CommandName="Select" CommandArgument='<%# Eval("ID0") %>'  CausesValidation="False" Width="20px" OnClick="DeleteRowButtonClick" ImageUrl="~/Images/Delete.png" ImageAlign="Middle" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     

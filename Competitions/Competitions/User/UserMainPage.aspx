@@ -106,7 +106,7 @@
 
 <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
     <div>    
-        <asp:Button ID="Button2" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" OnClick="Button2_Click" />   
+       <asp:ImageButton ID="Button2"  runat="server" ImageUrl="~/Images/Home.png" OnClientClick="showLoadPanel()"  Width="30px" OnClick="Button2_Click"  ImageAlign="Middle" ToolTip="На главную" />
     </div> 
 </asp:Panel> 
          <br />
