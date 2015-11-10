@@ -20,7 +20,7 @@ namespace Competitions
         private int dataTypeNotToCheck5 = 13;
         private int dataTypeNotToCheck6 = 14;             
         private int dataTypeNotToCheck7 = 16;
-        private int dataTypeNotToCheck8 = 16; //17
+        private int dataTypeNotToCheck8 = 17; //17
         private int dataTypeNotToCheck9 = 18;
         private int dataTypeNotToCheck10 = 19;
 
@@ -35,6 +35,17 @@ namespace Competitions
             List<zBlockTable> blockList = (from a in _competitionDataBase.zBlockTable
                                               where a.Active == true
                                               select a).ToList();
+            zApplicationTable currentApplication  = (from a in _competitionDataBase.zApplicationTable
+                                                     where a.ID == applicationId
+                                                     && a.Active == true
+                                                     select a).FirstOrDefault();
+            if (currentApplication == null)
+                return false;
+            if (currentApplication.StartProjectDate == null)
+                return false;
+            if (currentApplication.EndProjectDate == null)
+                return false;
+
             foreach (zBlockTable block in blockList)
             {
                 if (GetStatusIdForBlockInApplication(block.ID, applicationId) != statusAllData)
@@ -42,6 +53,8 @@ namespace Competitions
                     return false;
                 }
             }
+
+            
             return true;
         }
         public bool IsDataReady(int status)

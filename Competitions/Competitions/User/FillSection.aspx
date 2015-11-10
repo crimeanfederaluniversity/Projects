@@ -3,15 +3,17 @@
 
 <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
     <div>    
-        <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Text="К заявке" Width="125px" OnClick="GoBackButton_Click" />
-        &nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" />
-        &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="PreviousSection" runat="server" CausesValidation="False" OnClick="PreviousSection_Click" OnClientClick="showLoadPanel()" Text="Предыдущий шаг" />
-&nbsp;
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" />
+        &nbsp;
+        <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Text="К заявке" Width="125px" OnClick="GoBackButton_Click" />      
+        &nbsp;
+        <asp:Button ID="PreviousSection" runat="server" CausesValidation="False" OnClick="PreviousSection_Click" OnClientClick="showLoadPanel()" Text="Предыдущий шаг" />
+        &nbsp;
         <asp:Button ID="NextSection" OnClientClick="showLoadPanel()" runat="server" OnClick="NextSection_Click" Text="Сохранить и перейти к следующему шагу" Width="314px" />
         &nbsp;
-
-  <asp:Button ID="SaveButton" runat="server" Text="Сохранить изменения" OnClientClick="showLoadPanel()" CausesValidation="False" OnClick="SaveButton_Click" />
-  &nbsp;      <asp:Label ID="CountDownLabel" runat="server" Text="Label"></asp:Label>
+        <asp:Button ID="SaveButton" runat="server" Text="Сохранить изменения" OnClientClick="showLoadPanel()" CausesValidation="False" OnClick="SaveButton_Click" />
+        &nbsp;      
+        <asp:Label ID="CountDownLabel" runat="server" Text="Label"></asp:Label>
           </div> 
 </asp:Panel> 
     
@@ -21,11 +23,23 @@
 
     <link rel="stylesheet" type="text/css" href="../Spinner.css"> 
         <script type="text/javascript">
+            function showLoadPanel() {
+                document.getElementById('LoadPanel_').style.visibility = 'visible';
+            }
             function hideLoadPanel() {
                 document.getElementById('LoadPanel_').style.visibility = 'hidden';
             }
-            function showLoadPanel() {
-                //document.getElementById('LoadPanel_').style.visibility = 'visible';
+            function startSpinner() {
+                setTimeout(checkState, 1000);
+                showLoadPanel();
+            }
+            function checkState() {
+                if (document.readyState)
+                    if (document.readyState != "complete")
+                        setTimeout(checkState, 1000); 
+                    else {
+                        hideLoadPanel();
+                    }
             }
     </script>
     <style>  
@@ -401,7 +415,7 @@
                     <asp:TemplateField ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle" HeaderStyle-HorizontalAlign="Center" 
                          HeaderText="Удалить">
                         <ItemTemplate >
-                            <asp:ImageButton ID="DeleteRowButton" runat="server" OnClientClick="showLoadPanel()" CommandName="Select" CommandArgument='<%# Eval("ID0") %>'  CausesValidation="False" Width="20px" OnClick="DeleteRowButtonClick" ImageUrl="~/Images/Delete.png" ImageAlign="Middle" />
+                            <asp:ImageButton ID="DeleteRowButton" runat="server" OnClientClick="showLoadPanel()" Visible='<%# Bind("DeleteRowButtonVisible") %>' CommandName="Select" CommandArgument='<%# Eval("ID0") %>'  CausesValidation="False" Width="20px" OnClick="DeleteRowButtonClick" ImageUrl="~/Images/Delete.png" ImageAlign="Middle" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     

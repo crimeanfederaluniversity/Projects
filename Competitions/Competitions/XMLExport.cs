@@ -305,6 +305,8 @@ namespace Competitions
             
             newNestedList.Add(GetColmnNamesForNestedList(columnsUniqueNames, applicationId));
             int i = 1;
+            if (rowsList == null)
+                return null;
             foreach (zCollectedRowsTable currentRow in rowsList)
             {
                 newNestedList.Add(GetListWithDataFromRowByUnique(currentRow, columnsUniqueNames, applicationId,i));

@@ -145,6 +145,29 @@ namespace Competitions.User
                 return null;
             return currentCollected.ValueText;
         }
+        private double GetDoubleValueFromCollectedData(zCollectedDataTable collectedData)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            zColumnTable currenColumn = (from a in competitionDataBase.zColumnTable
+                where a.ID == collectedData.FK_ColumnTable
+                select a).FirstOrDefault();
+
+            if (currenColumn == null)
+                return 0;
+
+            DataType dataType = new DataType();
+
+            if (dataType.IsDataTypeInteger(currenColumn.DataType))
+            {
+                return Convert.ToDouble(collectedData.ValueInt);
+            }
+            //---------------------------------------------------------------------------------------------------------------
+            if (dataType.IsDataTypeFloat(currenColumn.DataType))
+            {
+                return Convert.ToDouble(collectedData.ValueDouble);
+            }
+            return 0;
+        }
         public bool SaveChanges()
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
@@ -256,6 +279,55 @@ namespace Competitions.User
                                 currentCollectedData.ValueText = UploadFile(gvFileUpload, currentCollectedData.ID);
                             }
                             
+                        }
+                        if (dataType.IsCellCalculateInRow(currenColumn.DataType))
+                        {
+                            TextBox gvTextBox = (TextBox)currentRow.FindControl("EditTextBox" + i.ToString());
+                            if (gvTextBox != null)
+                            {
+                                    zCollectedRowsTable currentCollectedRow =
+                                        (from a in competitionDataBase.zCollectedRowsTable
+                                            where a.ID == currentCollectedData.FK_CollectedRowsTable
+                                            select a).FirstOrDefault();
+                                    zCollectedDataTable fkFromCollectedData =
+                                        (from a in competitionDataBase.zCollectedDataTable
+                                            where a.Active == true
+                                                  && a.FK_CollectedRowsTable == currentCollectedRow.ID
+                                                  && a.FK_ColumnTable == currenColumn.FK_ColumnConnectFromTable
+                                            select a).FirstOrDefault();
+                                    zCollectedDataTable fkToCollectedData =
+                                        (from a in competitionDataBase.zCollectedDataTable
+                                            where a.Active == true
+                                                  && a.FK_CollectedRowsTable == currentCollectedRow.ID
+                                                  && a.FK_ColumnTable == currenColumn.FK_ColumnConnectToTable
+                                            select a).FirstOrDefault();
+                                double collectedValueFrom = GetDoubleValueFromCollectedData(fkFromCollectedData);
+                                double collectedValueTo = GetDoubleValueFromCollectedData(fkToCollectedData);
+                                double result = 0;
+
+                                if (dataType.IsDataTypeSumInRow(currenColumn.DataType))
+                                {
+                                    result = collectedValueFrom + collectedValueTo;
+                                }
+
+                                if (dataType.IsDataTypeMultipleInRow(currenColumn.DataType))
+                                {
+                                    result = collectedValueFrom * collectedValueTo;
+                                }
+
+                                if (dataType.IsDataTypeSubtractionInRow(currenColumn.DataType))
+                                {
+                                    result = collectedValueFrom - collectedValueTo;
+                                }
+
+                                if (dataType.IsDataTypeDivideInRow(currenColumn.DataType))
+                                {
+                                    result = collectedValueFrom / collectedValueTo;
+                                }
+
+                                currentCollectedData.ValueDouble = result;
+
+                            }
                         }
                         #endregion
                         competitionDataBase.SubmitChanges();
@@ -587,11 +659,14 @@ namespace Competitions.User
             if (!Page.IsPostBack)
             {
                 #region SETUP
+
                 DataType dataType = new DataType();
+
                 #region session
+
                 var userIdParam = Session["UserID"];
-                FillingPages newPagesParams = (FillingPages)Session["PagesParams"];
-                if ((userIdParam == null) || (newPagesParams.SectionId==null))
+                FillingPages newPagesParams = (FillingPages) Session["PagesParams"];
+                if ((userIdParam == null) || (newPagesParams.SectionId == null))
                 {
                     //error
                     Response.Redirect("ChooseSection.aspx");
@@ -609,88 +684,101 @@ namespace Competitions.User
                     Response.Redirect("~/Default.aspx");
                 }
                 int userId = Convert.ToInt32(userIdParam);
+
                 #endregion
+
                 #region dataTableCreate создадим большой dataTable
+
                 DataTable dataTable = new DataTable();
+                dataTable.Columns.Add(new DataColumn("DeleteRowButtonVisible", typeof (bool)));
                 for (int i = 0; i < 10; i++)
                 {
-                    dataTable.Columns.Add(new DataColumn("ID" + i.ToString(), typeof(string))); // тут будет id collectedData
+                    dataTable.Columns.Add(new DataColumn("ID" + i.ToString(), typeof (string)));
+                        // тут будет id collectedData
 
-                    dataTable.Columns.Add(new DataColumn("ReadOnlyLablelVisible" + i.ToString(), typeof(bool)));
-                    dataTable.Columns.Add(new DataColumn("ReadOnlyLablelValue" + i.ToString(), typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("ReadOnlyLablelVisible" + i.ToString(), typeof (bool)));
+                    dataTable.Columns.Add(new DataColumn("ReadOnlyLablelValue" + i.ToString(), typeof (string)));
 
-                    dataTable.Columns.Add(new DataColumn("EditTextBoxVisible" + i.ToString(), typeof(bool)));
-                    dataTable.Columns.Add(new DataColumn("EditTextBoxValue" + i.ToString(), typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("EditTextBoxVisible" + i.ToString(), typeof (bool)));
+                    dataTable.Columns.Add(new DataColumn("EditTextBoxValue" + i.ToString(), typeof (string)));
 
-                    dataTable.Columns.Add(new DataColumn("EditBoolCheckBoxVisible" + i.ToString(), typeof(bool)));
-                    dataTable.Columns.Add(new DataColumn("EditBoolCheckBoxValue" + i.ToString(), typeof(bool)));
+                    dataTable.Columns.Add(new DataColumn("EditBoolCheckBoxVisible" + i.ToString(), typeof (bool)));
+                    dataTable.Columns.Add(new DataColumn("EditBoolCheckBoxValue" + i.ToString(), typeof (bool)));
 
-                    dataTable.Columns.Add(new DataColumn("ChooseOnlyDropDownVisible" + i.ToString(), typeof(bool)));
+                    dataTable.Columns.Add(new DataColumn("ChooseOnlyDropDownVisible" + i.ToString(), typeof (bool)));
 
-                    dataTable.Columns.Add(new DataColumn("FileUploadVisible" + i.ToString(), typeof(bool)));
-                    dataTable.Columns.Add(new DataColumn("FileLinkButtonVisible" + i.ToString(), typeof(bool)));
-                    dataTable.Columns.Add(new DataColumn("FileLinkButtonText" + i.ToString(), typeof(string)));
-                    dataTable.Columns.Add(new DataColumn("DeleteFileLinkButtonVisible" + i.ToString(), typeof(bool)));
+                    dataTable.Columns.Add(new DataColumn("FileUploadVisible" + i.ToString(), typeof (bool)));
+                    dataTable.Columns.Add(new DataColumn("FileLinkButtonVisible" + i.ToString(), typeof (bool)));
+                    dataTable.Columns.Add(new DataColumn("FileLinkButtonText" + i.ToString(), typeof (string)));
+                    dataTable.Columns.Add(new DataColumn("DeleteFileLinkButtonVisible" + i.ToString(), typeof (bool)));
 
-                    dataTable.Columns.Add(new DataColumn("CalendarButtonClick" + i.ToString(), typeof(string)));
-                    dataTable.Columns.Add(new DataColumn("CalendarButtonVisible" + i.ToString(), typeof(bool)));
-                    
+                    dataTable.Columns.Add(new DataColumn("CalendarButtonClick" + i.ToString(), typeof (string)));
+                    dataTable.Columns.Add(new DataColumn("CalendarButtonVisible" + i.ToString(), typeof (bool)));
+
                     // dataTable.Columns.Add(new DataColumn("ChooseOnlyDropDownValue" + i.ToString(), typeof(ListItemCollection)));
 
                     // валидаор
-                    dataTable.Columns.Add(new DataColumn("TextBoxValidateEnable" + i.ToString(), typeof(bool)));
-                    dataTable.Columns.Add(new DataColumn("TextBoxValidateMinValue" + i.ToString(), typeof(string)));
-                    dataTable.Columns.Add(new DataColumn("TextBoxValidateMaxValue" + i.ToString(), typeof(string)));
-                    dataTable.Columns.Add(new DataColumn("TextBoxValidateType" + i.ToString(), typeof(ValidationDataType)));
-                    dataTable.Columns.Add(new DataColumn("TextBoxValidateText" + i.ToString(), typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("TextBoxValidateEnable" + i.ToString(), typeof (bool)));
+                    dataTable.Columns.Add(new DataColumn("TextBoxValidateMinValue" + i.ToString(), typeof (string)));
+                    dataTable.Columns.Add(new DataColumn("TextBoxValidateMaxValue" + i.ToString(), typeof (string)));
+                    dataTable.Columns.Add(new DataColumn("TextBoxValidateType" + i.ToString(),
+                        typeof (ValidationDataType)));
+                    dataTable.Columns.Add(new DataColumn("TextBoxValidateText" + i.ToString(), typeof (string)));
 
-                    dataTable.Columns.Add(new DataColumn("TextBoxRequireValidateEnable" + i.ToString(), typeof(bool)));
+                    dataTable.Columns.Add(new DataColumn("TextBoxRequireValidateEnable" + i.ToString(), typeof (bool)));
 
-                    dataTable.Columns.Add(new DataColumn("EditTextBoxMode" + i.ToString(), typeof(TextBoxMode)));     
-                    
-                    
-                        
+                    dataTable.Columns.Add(new DataColumn("EditTextBoxMode" + i.ToString(), typeof (TextBoxMode)));
+
+
+
                 }
 
-                #endregion                
+                #endregion
+
                 #region найдем нашу секцию currentSection
+
                 int blockId = GetBlockIdFromSession();
                 //нам нужно узнать как выглядит таблица и создать её
                 //у каждой сектии свой тип таблиц сначала возьмем текующую секцию
-               
+
                 zSectionTable currentSection = (from a in competitionDataBase.zSectionTable
-                                                      where  a.ID == sectionId
-                                                      select a).FirstOrDefault();
+                    where a.ID == sectionId
+                    select a).FirstOrDefault();
+
                 #endregion
+
                 #region сделаем легенду
+
                 List<zSectionTable> allSection = (from a in competitionDataBase.zSectionTable
-                                                  where a.FK_BlockID == blockId
-                                                  join b in competitionDataBase.zApplicationTable
-                                                  on a.FK_CompetitionsTable equals b.FK_CompetitionTable
-                                                  where b.ID == applicationId
-                                                  select a).ToList();
+                    where a.FK_BlockID == blockId
+                    join b in competitionDataBase.zApplicationTable
+                        on a.FK_CompetitionsTable equals b.FK_CompetitionTable
+                    where b.ID == applicationId
+                    select a).ToList();
                 string namesInLine = " ";
                 if (allSection.Count != null)
                 {
                     foreach (var n in allSection)
                     {
-                        if (n.ID == currentSection.ID)                        
-                        namesInLine += "<font size=\"3\" color=\"red\" face=\"Arial\">" + n.Name + "</font> -->";                        
+                        if (n.ID == currentSection.ID)
+                            namesInLine += "<font size=\"3\" color=\"red\" face=\"Arial\">" + n.Name + "</font> -->";
                         else
-                        namesInLine +=  n.Name + "</font> -->";                      
-                    }                    
+                            namesInLine += n.Name + "</font> -->";
+                    }
                     LabelHint.Text = namesInLine;
                 }
+
                 #endregion
+
                 if (currentSection.Description != "123")
                 {
                     LabelDescription.Text = currentSection.Description;
                 }
                 //найдем все колонки привязанные к этой секции
                 List<zColumnTable> columnInSectionList = (from a in competitionDataBase.zColumnTable
-                                                          where a.Active == true
-                                                                && a.FK_SectionTable == sectionId
-                                                          select a).ToList();
+                    where a.Active == true
+                          && a.FK_SectionTable == sectionId
+                    select a).ToList();
 
                 #region constRowManage
 
@@ -701,7 +789,7 @@ namespace Competitions.User
                         permitAddRow = false;
                         permitDeleteRow = false;
 
-                        DeleteRowWithBadFk(applicationId, sectionId, currentColumn.ID,true);
+                        DeleteRowWithBadFk(applicationId, sectionId, currentColumn.ID, true);
                         AddRowWithConstant((int) currentColumn.FK_ConstantListsTable, applicationId, sectionId,
                             currentColumn.ID);
                     }
@@ -710,8 +798,8 @@ namespace Competitions.User
                         permitAddRow = false;
                         permitDeleteRow = false;
 
-                        DeleteRowWithBadFk(applicationId, sectionId,currentColumn.ID,false);
-                        AddRowWithNecwssairlyLines ((int)currentColumn.FK_ColumnTable, applicationId, sectionId,
+                        DeleteRowWithBadFk(applicationId, sectionId, currentColumn.ID, false);
+                        AddRowWithNecwssairlyLines((int) currentColumn.FK_ColumnTable, applicationId, sectionId,
                             currentColumn.ID);
                     }
                     if (dataType.IsDataTypeNecessarilyShowWithParam(currentColumn.DataType))
@@ -719,19 +807,21 @@ namespace Competitions.User
                         permitAddRow = false;
                         permitDeleteRow = false;
                         DeleteRowWithBadFk(applicationId, sectionId, currentColumn.ID, false);
-                        DeleteRowWithUnSelectedCheckBox((int)currentColumn.FK_ColumnTable, applicationId, sectionId,
-                            currentColumn.ID, (int)currentColumn.FK_ColumnConnectToTable);
-                        AddRowWithNecwssairlyLinesWithParams((int)currentColumn.FK_ColumnTable,applicationId, sectionId,
-                            currentColumn.ID,(int)currentColumn.FK_ColumnConnectToTable);
+                        DeleteRowWithUnSelectedCheckBox((int) currentColumn.FK_ColumnTable, applicationId, sectionId,
+                            currentColumn.ID, (int) currentColumn.FK_ColumnConnectToTable);
+                        AddRowWithNecwssairlyLinesWithParams((int) currentColumn.FK_ColumnTable, applicationId,
+                            sectionId,
+                            currentColumn.ID, (int) currentColumn.FK_ColumnConnectToTable);
                     }
                     if (dataType.IsDataTypeConstntAtLeastOneWithCheckBoxParam(currentColumn.DataType))
                     {
                         permitAddRow = true;
                         permitDeleteRow = true;
-                        DeleteRowWithUnSelectedCheckBox((int)currentColumn.FK_ColumnTable, applicationId, sectionId,
-                            currentColumn.ID, (int)currentColumn.FK_ColumnConnectToTable);
-                        AddRowWithNecwssairlyLinesWithParams((int)currentColumn.FK_ColumnTable, applicationId, sectionId,
-                            currentColumn.ID, (int)currentColumn.FK_ColumnConnectToTable);
+                        DeleteRowWithUnSelectedCheckBox((int) currentColumn.FK_ColumnTable, applicationId, sectionId,
+                            currentColumn.ID, (int) currentColumn.FK_ColumnConnectToTable);
+                        AddRowWithNecwssairlyLinesWithParams((int) currentColumn.FK_ColumnTable, applicationId,
+                            sectionId,
+                            currentColumn.ID, (int) currentColumn.FK_ColumnConnectToTable);
                     }
                 }
 
@@ -739,10 +829,10 @@ namespace Competitions.User
 
                 //найдем теперь все строки созданные и заполненные пользователем в этой секции этой заявки
                 List<zCollectedRowsTable> currentRowsList = (from a in competitionDataBase.zCollectedRowsTable
-                                                             where a.Active == true
-                                                                   && a.FK_ApplicationTable == applicationId
-                                                                   && a.FK_SectionTable == sectionId                                                                  
-                                                             select a).ToList();
+                    where a.Active == true
+                          && a.FK_ApplicationTable == applicationId
+                          && a.FK_SectionTable == sectionId
+                    select a).ToList();
                 //если человек заходит в первый раз то может и не быть строк, надо создать одну
                 if (currentRowsList.Count == 0)
                 {
@@ -758,20 +848,27 @@ namespace Competitions.User
                 //теперь есть как минимум одна строка :)
 
                 //ограничим кол-во строк в таблицах
-                
+
                 #endregion
+
                 //пройдемся по каждой строке
                 int iterator = 0;
                 double[] totalUpSums = new double[10];
+                bool[] columnVisible = new bool[10];
                 for (int i = 0; i < 10; i++)
+                {
                     totalUpSums[i] = 0;
-                foreach (zCollectedRowsTable currentRow in currentRowsList)
+                    columnVisible[i] = true;
+                }
+                           
+            foreach (zCollectedRowsTable currentRow in currentRowsList)
                 {
                     iterator++;
                     //в каждой строке есть одна или больше колонок
                     //пройдемся по каждой колонке    
                     bool doAddRow = true;
                     DataRow newDataRow = dataTable.NewRow();
+                    newDataRow["DeleteRowButtonVisible"] = true;
                     for (int i = 0; i < 10; i++)
                     {
                         #region записываем стандартный значения во все поля
@@ -808,6 +905,7 @@ namespace Competitions.User
                         if (i < columnInSectionList.Count)
                         {
                             zColumnTable currentColumn = columnInSectionList[i];
+                            columnVisible[i] = currentColumn.Visible;
                             //надо найти значение в CollectedData
                             zCollectedDataTable currentCollectedData =
                                 (from a in competitionDataBase.zCollectedDataTable
@@ -815,6 +913,7 @@ namespace Competitions.User
                                        && a.FK_CollectedRowsTable == currentRow.ID
                                        && a.FK_ColumnTable == currentColumn.ID
                                  select a).FirstOrDefault();
+                            
                             //если такого поля не существует значит его надо создать
                             //потом можно будет перенести в отдельный класс если понадобится
                             if (currentCollectedData == null)
@@ -920,6 +1019,7 @@ namespace Competitions.User
                 DataRow newDataRowForTotalUp = dataTable.NewRow();
                 bool anyTotalUp = false;
                 //foreach (zColumnTable currentColumn in columnInSectionList)
+                newDataRowForTotalUp["DeleteRowButtonVisible"] = false;
                 for (int i = 0; i < 10; i++)
                 {
                     #region записываем стандартный значения во все поля
@@ -995,7 +1095,7 @@ namespace Competitions.User
                 for (int i = 0; i < columnInSectionList.Count; i++)
                 {
                     FillingGV.Columns[i].HeaderText = columnInSectionList[i].Name;
-                    FillingGV.Columns[i].Visible = true;
+                    FillingGV.Columns[i].Visible = columnVisible[i];
                 }
                 FillingGV.DataBind();
 
@@ -1045,6 +1145,7 @@ namespace Competitions.User
                     }                
                 }
                 #endregion
+
             }
         }
         protected void FillingGV_RowDataBound(object sender, GridViewRowEventArgs e)

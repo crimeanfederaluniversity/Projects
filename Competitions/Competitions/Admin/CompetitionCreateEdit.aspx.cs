@@ -13,10 +13,8 @@ namespace Competitions.Admin
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
-
             {
                 CompetitionDataContext curator = new CompetitionDataContext();
-
                 List<UsersTable> curators = (from a in curator.UsersTable
                                        where a.AccessLevel == 15 && a.Active == true
                                        select a).ToList();
@@ -80,6 +78,24 @@ namespace Competitions.Admin
                                 LinkButton1.Visible = false;
                                 LinkButton1.Enabled = false;
                             }
+
+                            if (currentCompetition.TemplateDocWithoutMarksName != null)
+                            {
+                                if (currentCompetition.TemplateDocWithoutMarksName.Any())
+                                {
+                                    LinkButton2.Text = currentCompetition.TemplateDocWithoutMarksName;
+                                }
+                                else
+                                {
+                                    LinkButton2.Visible = false;
+                                    LinkButton2.Enabled = false;
+                                }
+                            }
+                            else
+                            {
+                                LinkButton2.Visible = false;
+                                LinkButton2.Enabled = false;
+                            }
                         }
                     }
                 }
@@ -133,6 +149,21 @@ namespace Competitions.Admin
                                     //  FileStatusLabel.Text = "Не удалось загрузить файл.";
                                 }
                             }
+                            if (FileUpload2.HasFile)
+                            {
+                                try
+                                {
+                                    String path = Server.MapPath("~/documents/templatesWithNoMark");
+                                    Directory.CreateDirectory(path + "\\\\" + currentCompetition.ID.ToString());
+                                    FileUpload2.PostedFile.SaveAs(path + "\\\\" + currentCompetition.ID.ToString() + "\\\\" + FileUpload2.FileName);
+                                    currentCompetition.TemplateDocWithoutMarksName = FileUpload2.FileName;
+                                    // FileStatusLabel.Text = "Файл загружен!";
+                                }
+                                catch (Exception ex)
+                                {
+                                    //  FileStatusLabel.Text = "Не удалось загрузить файл.";
+                                }
+                            }
                             competitionDataBase.SubmitChanges();
                         }
                     }
@@ -160,6 +191,21 @@ namespace Competitions.Admin
                                 Directory.CreateDirectory(path + "\\\\" + newCompetition.ID.ToString());
                                 FileUpload1.PostedFile.SaveAs(path + "\\\\" + newCompetition.ID.ToString() + "\\\\" + FileUpload1.FileName);
                                 newCompetition.TemplateDocName = FileUpload1.FileName;
+                                // FileStatusLabel.Text = "Файл загружен!";
+                            }
+                            catch (Exception ex)
+                            {
+                                //  FileStatusLabel.Text = "Не удалось загрузить файл.";
+                            }
+                        }
+                        if (FileUpload2.HasFile)
+                        {
+                            try
+                            {
+                                String path = Server.MapPath("~/documents/templatesWithNoMark");
+                                Directory.CreateDirectory(path + "\\\\" + newCompetition.ID.ToString());
+                                FileUpload2.PostedFile.SaveAs(path + "\\\\" + newCompetition.ID.ToString() + "\\\\" + FileUpload2.FileName);
+                                newCompetition.TemplateDocWithoutMarksName = FileUpload2.FileName;
                                 // FileStatusLabel.Text = "Файл загружен!";
                             }
                             catch (Exception ex)
@@ -207,7 +253,38 @@ namespace Competitions.Admin
                     
                 }
 
-            }     
+            }
+        protected void LinkButton2_Click(object sender, EventArgs e)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            var sessionParam = Session["CompetitionID"];
+            if (sessionParam == null)
+            {
+                //error
+                Response.Redirect("ChooseCompetition.aspx");
+            }
+            int iD = (int) sessionParam;
+            if (iD > 0)
+            {
+                zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
+                    where a.Active == true
+                          && a.ID == iD
+                    select a).FirstOrDefault();
+                if (currentCompetition == null)
+                {
+                    //error
+                    Response.Redirect("ChooseCompetition.aspx");
+                }
+                String path = Server.MapPath("~/documents/templatesWithNoMark") + "\\\\" + currentCompetition.ID.ToString() + "\\\\" + currentCompetition.TemplateDocWithoutMarksName;
+                        HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
+                        HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=" + currentCompetition.TemplateDocWithoutMarksName);
+                        HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(path));
+                        HttpContext.Current.Response.End();
+                        Response.End();
+                    
+                }
+
+            }   
         private byte[] ReadByteArryFromFile(string destPath)
         {
             byte[] buff = null;

@@ -370,6 +370,35 @@ namespace Competitions.User
             }
             //Response.Redirect("UserMainPage.aspx");
         }
+        protected void GetTamplateWithNoMarkButton(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            {
+                int iD = Convert.ToInt32(button.CommandArgument);
+                CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+                zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
+                                                         join b in competitionDataBase.zApplicationTable
+                                                         on a.ID equals b.FK_CompetitionTable
+                                                         where b.ID == iD
+                                                         select a).FirstOrDefault();
+                if (currentCompetition != null)
+                {
+                    if (currentCompetition.TemplateDocWithoutMarksName != null)
+                    {
+                        if (currentCompetition.TemplateDocWithoutMarksName.Any())
+                        {
+                            string templatesWithNoMark = Server.MapPath("~/documents/templatesWithNoMark") + "\\" + currentCompetition.ID.ToString() + "\\" + currentCompetition.TemplateDocWithoutMarksName;
+                            HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
+                            HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=" + currentCompetition.TemplateDocWithoutMarksName);
+                            HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(templatesWithNoMark));
+                            HttpContext.Current.Response.End();                           
+                            Response.End();      
+                         
+                        }
+                    }
+                }
+            }
+        }      
         #region tabClick
         protected void Tab1_Click(object sender, EventArgs e)
         {

@@ -9,7 +9,7 @@ namespace Competitions
 {
     public class DataType
     {
-        private int dataTypeCount = 20;
+        private int dataTypeCount = 24;
         public string GetDataTypeName(int dataType)
         {
             switch (dataType)
@@ -94,6 +94,22 @@ namespace Competitions
                 {
                     return "Дата создания заявки";
                 }
+                case 20:
+                {
+                    return "Умножение в строке";
+                }
+                case 21:
+                {
+                    return "Сложение в строке";
+                }
+                case 22:
+                {
+                    return "Деление в строке";
+                }
+                case 23:
+                {
+                    return "Вычитание в строке";
+                }
                 default :
                 {
                     return "error";
@@ -148,6 +164,18 @@ namespace Competitions
         public bool DataTypeWithConnectionToColumnsWithParams(int dataType)
         {
             if ((IsDataTypeSymWithParam(dataType)) || (IsDataTypeOneToOneWithParams(dataType)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool DataTypeWithConnectionToTwoColumnsInSameSection(int dataType)
+        {
+            if ((IsDataTypeMultipleInRow(dataType)) || (IsDataTypeSumInRow(dataType)) ||
+                (IsDataTypeDivideInRow(dataType)) || (IsDataTypeSubtractionInRow(dataType)))
             {
                 return true;
             }
@@ -386,6 +414,63 @@ namespace Competitions
             {
                 return false;
             }
+        }
+
+        public bool IsDataTypeMultipleInRow(int dataType)
+        {
+            if (dataType == 20)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsDataTypeSumInRow(int dataType)
+        {
+            if (dataType == 21)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsDataTypeDivideInRow(int dataType)
+        {
+            if (dataType == 22)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsDataTypeSubtractionInRow(int dataType)
+        {
+            if (dataType == 23)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsCellCalculateInRow(int dataTypeIndex)
+        {
+            if ((IsDataTypeMultipleInRow(dataTypeIndex))
+                || (IsDataTypeSumInRow(dataTypeIndex))
+                || (IsDataTypeDivideInRow(dataTypeIndex))
+                || (IsDataTypeSubtractionInRow(dataTypeIndex)))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

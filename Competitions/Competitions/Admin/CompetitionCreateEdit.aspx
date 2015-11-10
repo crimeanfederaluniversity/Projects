@@ -30,8 +30,12 @@
         <br />
         Дата окончания конкурса<asp:Calendar ID="Calendar2" runat="server"></asp:Calendar>
         <br />
-        Файл шаблона<asp:FileUpload ID="FileUpload1" runat="server" />
+        Файл шаблона с метками (для экспорта) <asp:FileUpload ID="FileUpload1" runat="server" />
         <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">LinkButton</asp:LinkButton>
+        <br />
+        <br />
+        Файл шаблона с примерами таблиц (для скачивания) <asp:FileUpload ID="FileUpload2" runat="server" />
+        <asp:LinkButton ID="LinkButton2" runat="server" OnClick="LinkButton2_Click">LinkButton</asp:LinkButton>
         <br />
         <br />
         <asp:Button ID="CreateSaveButton" runat="server" OnClick="CreateSaveButtonClick" Text="Сохранить" Width="131px" />

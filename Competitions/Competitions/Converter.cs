@@ -25,14 +25,14 @@ namespace Competitions
                     ConvertedFilaExtension = "doc";
                     ConvertedFilePath = documentToCreatePathWithoutExtension + ".doc";
                     return ConvertDocumentTo(sourcePath, ConvertedFilePath,
-                        WdSaveFormat.wdFormatRTF);
+                        WdSaveFormat.wdFormatDocument97);
                 }
                 case 1:
                 {
                     ConvertedFilaExtension = "docx";
                     ConvertedFilePath = documentToCreatePathWithoutExtension + ".docx";
                     return ConvertDocumentTo(sourcePath, ConvertedFilePath,
-                        WdSaveFormat.wdFormatRTF);
+                        WdSaveFormat.wdFormatDocument);
                 }
                 case 2:
                 {
@@ -46,14 +46,14 @@ namespace Competitions
                     ConvertedFilaExtension = "pdf";
                     ConvertedFilePath = documentToCreatePathWithoutExtension + ".pdf";
                     return ConvertDocumentTo(sourcePath, ConvertedFilePath,
-                        WdSaveFormat.wdFormatRTF);
+                        WdSaveFormat.wdFormatPDF);
                 }
                 case 4:
                 {
                     ConvertedFilaExtension = "odt";
                     ConvertedFilePath = documentToCreatePathWithoutExtension + ".odt";
                     return ConvertDocumentTo(sourcePath, ConvertedFilePath,
-                        WdSaveFormat.wdFormatRTF);
+                        WdSaveFormat.wdFormatOpenDocumentText);
                 }
             }
             return "error";

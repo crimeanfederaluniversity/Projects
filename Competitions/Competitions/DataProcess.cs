@@ -50,7 +50,7 @@ namespace Competitions
         {
             return validator;
         }
-        public void ClearTotalUp()
+        public void     ClearTotalUp()
         {
             _toTotalUp = 0;
         }
@@ -95,9 +95,8 @@ namespace Competitions
                                                                       && a.FK_CollectedRowsTable == rowId
                                                                 select a).FirstOrDefault();
 
-                if (dataType.IsDataTypeFloat(currentColumn.DataType))
-                {
-                    
+                if (dataType.IsDataTypeFloat(currentColumn.DataType) || dataType.IsCellCalculateInRow(currentColumn.DataType))
+                {                
                     return (double)currenCollectedDataTable.ValueDouble;
                 }
                 if (dataType.IsDataTypeInteger(currentColumn.DataType))
@@ -213,8 +212,7 @@ namespace Competitions
             #endregion
             return false;
         }
-
-        public bool GetIsFileConnected(zCollectedDataTable currentCollectedData)
+        public bool     GetIsFileConnected(zCollectedDataTable currentCollectedData)
         {
             if (currentCollectedData.ValueText == null)
                return false;
@@ -224,8 +222,6 @@ namespace Competitions
                 return true;     
             return false;
         }
-
-
         public DateTime GetDateDataValue(zColumnTable currentColumn, zCollectedDataTable currentCollectedData)
         {
             DataType dataType = new DataType();
@@ -280,7 +276,7 @@ namespace Competitions
                               && b.FK_ApplicationTable == applicationId
                         select a.ValueInt).Distinct().Sum();
                 }
-                if (dataType.IsDataTypeFloat(columnToSum.DataType))
+                if (dataType.IsDataTypeFloat(columnToSum.DataType) || dataType.IsCellCalculateInRow(columnToSum.DataType))
                 {
                     AllSum = (double)
                         (from a in competitionDataBase.zCollectedDataTable
@@ -486,6 +482,7 @@ namespace Competitions
                         join b in competitionDataBase.zCollectedRowsTable
                             on a.FK_CollectedRowsTable equals b.ID
                         where b.Active == true
+                        && b.FK_ApplicationTable == applicationId
                         select b).Distinct().ToList();
                 //получили список строк в таблице из которой берем числа для суммирования и только те строки которые нам нужны
 
@@ -606,9 +603,33 @@ namespace Competitions
             }
 
             #endregion
+            #region CalcInRow
+
+            if (dataType.IsCellCalculateInRow(currentColumn.DataType))
+            {
+                if (currentCollectedData.ValueDouble.ToString() == "")
+                    return 0.ToString();
+                _toTotalUp = Convert.ToDouble(currentCollectedData.ValueDouble);
+                return currentCollectedData.ValueDouble.ToString();
+            }
+            #endregion
+            #region AtLeastOneWithCheckBox
+            if (dataType.IsDataTypeConstntAtLeastOneWithCheckBoxParam(currentColumn.DataType))
+            {
+                zCollectedDataTable getCollectedData =
+                    (from a in competitionDataBase.zCollectedDataTable
+                     where a.ID == currentCollectedData.ValueFK_CollectedDataTable
+                     select a).FirstOrDefault();
+                zCollectedDataTable getCollectedData2 =
+                    (from a in competitionDataBase.zCollectedDataTable
+                     where a.ID == getCollectedData.ValueFK_CollectedDataTable
+                     select a).FirstOrDefault();
+                return getCollectedData2.ValueText;
+            }
+            #endregion
             return "";
         }
-        public string GetDropDownSelectedValueString(zColumnTable currentColumn,  zCollectedDataTable currentCollectedData, int applicationId, int currentRowId)
+        public string   GetDropDownSelectedValueString(zColumnTable currentColumn,  zCollectedDataTable currentCollectedData, int applicationId, int currentRowId)
         {
             CompetitionDataContext competitionDataBase = new CompetitionDataContext();
             DataType dataType = new DataType();
@@ -665,7 +686,8 @@ namespace Competitions
             if ((dataType.IsDataTypeIterator(dataTypeIndex)) || (dataType.IsDataTypeSum(dataTypeIndex)) || (dataType.IsDataTypeConstantNecessarilyShow(dataTypeIndex))
                 ||(dataType.IsDataTypeMaxValue(dataTypeIndex)) || (dataType.IsDataTypeMinValue(dataTypeIndex)) || (dataType.IsDataTypeNecessarilyShow(dataTypeIndex))
                 ||(dataType.IsDataTypeSymWithParam(dataTypeIndex)) || (dataType.IsDataTypeNameOfApplication(dataTypeIndex)) || (dataType.IsDataTypeOneToOneWithParams(dataTypeIndex))
-                || (dataType.IsDataTypeNecessarilyShowWithParam(dataTypeIndex)) || (dataType.IsDataTypeApplicationCreateDate(dataTypeIndex)))
+                || (dataType.IsDataTypeNecessarilyShowWithParam(dataTypeIndex)) || (dataType.IsDataTypeApplicationCreateDate(dataTypeIndex)) || IsCellCalculateInRow(dataTypeIndex) 
+                || dataType.IsDataTypeConstntAtLeastOneWithCheckBoxParam(dataTypeIndex))
             {
                 return true;
             }
@@ -685,7 +707,15 @@ namespace Competitions
             DataType dataType = new DataType();
             return dataType.IsDataTypeFileUpload(dataTypeIndex);
         }
-
+        public bool IsCellCalculateInRow(int dataTypeIndex)
+        {
+            DataType dataType = new DataType();
+            if (dataType.IsCellCalculateInRow(dataTypeIndex))
+            {
+                return true;
+            }
+            return false; 
+        }
     }
     public class CompetitionCountDown
     {

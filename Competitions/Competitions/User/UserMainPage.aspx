@@ -1,23 +1,29 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserMainPage.aspx.cs" Inherits="Competitions.User.UserMainPage" %>
 <asp:Content runat="server" ID="BodyContent"  ContentPlaceHolderID="MainContent">
     <link rel="stylesheet" type="text/css" href="../Spinner.css"> 
-    
-    <script>
-        window.onload = function () {
-            document.getElementById('LoadPanel_').style.visibility = 'hidden';
-        }
-        document.onload = function () {
-            document.getElementById('LoadPanel_').style.visibility = 'hidden';
-        }
-</script>
-
     <script type="text/javascript">
         function showLoadPanel() {
             document.getElementById('LoadPanel_').style.visibility = 'visible';
         }
+        function hideLoadPanel() {
+            document.getElementById('LoadPanel_').style.visibility = 'hidden';
+        }
+        function startSpinner(){
+            setTimeout(checkState, 100);         
+            showLoadPanel();
+        }
+        function checkState()
+        {
+            if (document.readyState)
+                if (document.readyState == "complete")        
+                        hideLoadPanel();
+                else
+                {
+                        setTimeout(checkState, 100);
+                }
+        }
     </script>
     <style>  
-
         .LoadPanel 
    {
           position: fixed;
@@ -112,13 +118,13 @@
         <td>
             <br />                      
           <asp:Button Text="Все открытые конкурсы" BorderStyle="None" ID="Tab1" CssClass="Initial" runat="server"
-              OnClick="Tab1_Click" Width="250px" />
+              OnClick="Tab1_Click" Width="210px" />
           <asp:Button Text="Заявки в работе" BorderStyle="None" ID="Tab2" CssClass="Initial" runat="server"
-              OnClick="Tab2_Click" Width="250px" />
+              OnClick="Tab2_Click" Width="210px" />
           <asp:Button Text="Поданные заявки" BorderStyle="None" ID="Tab3" CssClass="Initial" runat="server"
-              OnClick="Tab3_Click" Width="250px"/>
+              OnClick="Tab3_Click" Width="210px"/>
           <asp:Button Text="Черновики" BorderStyle="None" ID="Tab4" CssClass="Initial" runat="server"
-              OnClick="Tab4_Click" Width="250px"/>
+              OnClick="Tab4_Click" Width="210px"/>
           <asp:MultiView ID="MainView" runat="server">
             <asp:View ID="View1" runat="server">
               <table style="width: 100%; border-style: hidden">
@@ -136,6 +142,11 @@
                                 <asp:BoundField DataField="Budjet"   HeaderText="Бюджет" Visible="true" />
                                 <asp:BoundField DataField="StartDate"   HeaderText="Дата начала" Visible="true" />
                                 <asp:BoundField DataField="EndDate"   HeaderText="Дата окончания" Visible="true" />
+                                <asp:TemplateField HeaderText="Скачать шаблон заявки">
+                                        <ItemTemplate>
+                                           <asp:Button ID="GetTamplateWithNoMarkButton" runat="server" Text="Скачать" CommandArgument='<%# Eval("ID") %>' OnClick="GetTamplateWithNoMarkButton" />
+                                        </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Подать заявку">
                                         <ItemTemplate>
                                            <asp:Button ID="NewApplication" runat="server" OnClientClick="return confirm('Вы уверены, что хотите создать новую заявку?');" Text="Подать заявку" CommandArgument='<%# Eval("ID") %>' OnClick="NewApplication_Click1" />
@@ -185,7 +196,7 @@
                                 <asp:ListItem Value="4">odt</asp:ListItem>
                             </asp:RadioButtonList>
 
-                            <asp:Button ID="GetDocButton2" runat="server"  CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
+                            <asp:Button ID="GetDocButton2" runat="server"  CommandName="Select" Text="Скачать" OnClientClick="startFileDownload()"  CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
              
