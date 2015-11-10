@@ -57,12 +57,16 @@ namespace Competitions.Admin
                      { 
                          dataRow["AccessLevel"] =  "Привлеченный эксперт"; 
                      }
-                     else 
+                     else
                      {
-                         dataRow["AccessLevel"] = "Член экспертного совета";
+                         dataRow["AccessLevel"] = (from a in CompetitionsDataBase.zExpertGroup
+                             where a.Active == true
+                             join b in CompetitionsDataBase.zExpertAndExpertGroupMappingTable
+                                 on a.ID equals b.FK_ExpertGroupTable
+                             where b.FK_UsersTable == Convert.ToInt32(currentExpert.ID)
+                             select a.Name).FirstOrDefault();
                      }
-                    
-                    
+                                       
 
                     dataRow["SendedDataTime"] = (from a in CompetitionsDataBase.zExpertPointsValue
                                               where a.Active == true

@@ -4,7 +4,9 @@
      
     <asp:Button ID="GoBackButton" runat="server" OnClick="Button2_Click" Text="Назад" Width="113px" />
     <br />
-        <asp:Label   ID="Label1" style="font-size: 20px"  runat="server"  Visible="true"> </asp:Label>
+        Заключения экспертов на заявку: 
+    <br />
+    <asp:Label   ID="Label1" style="font-size: 20px"  runat="server"  Visible="true"> </asp:Label>
     <br />
     <br />
      
@@ -12,7 +14,7 @@
             <Columns>
                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
                 <asp:BoundField DataField="Name"   HeaderText="Имя" Visible="true" />
-                <asp:BoundField DataField="AccessLevel"   HeaderText="Вид эксперта" Visible="true" />
+                <asp:BoundField DataField="AccessLevel"   HeaderText="Принадлежность к группе" Visible="true" />
                 <asp:BoundField DataField="SendedDataTime"   HeaderText="Дата экспертного заключения" Visible="true" />
                 
 

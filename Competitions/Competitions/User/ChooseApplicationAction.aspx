@@ -107,7 +107,7 @@
         &nbsp;<p>
         
         <asp:TextBox ID="LinkToFileTextBox" runat="server" Width="299px"></asp:TextBox>
-            &nbsp;&nbsp;Прямая ссылка на файл<p>
+            &nbsp;&nbsp;Укажите прямую ссылку на документ:<p>
              <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="LinkToFileTextBox"
  ErrorMessage="Неправильная ссылка. Пример: 'https://www.google.com'"  ForeColor="Red"
  ValidationExpression="http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&amp;=]*)?"></asp:RegularExpressionValidator>

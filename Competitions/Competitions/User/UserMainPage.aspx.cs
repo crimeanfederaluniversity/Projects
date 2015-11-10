@@ -226,8 +226,13 @@ namespace Competitions.User
                 if (applicationexist.Count != 0)
                 {
                     newapp.Enabled = false;
-                    Label1.Visible = true;
+                    Label1.Visible = true;                    
                 }
+                else
+                {
+                    Label2.Visible = true;
+                }
+               
             }
         }
         protected void MyApplication_Click(object sender, EventArgs e)
@@ -272,6 +277,7 @@ namespace Competitions.User
                     competitionDataBase.SubmitChanges();
                 }
             }
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка отправлена на рассмотрение!');", true);  
             Response.Redirect("UserMainPage.aspx");
         }
         private byte[] ReadByteArryFromFile(string destPath)

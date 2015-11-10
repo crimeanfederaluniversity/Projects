@@ -12,6 +12,6 @@
     
     <br />
     <br />
-    <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Готовые заявки" Width="300px" Height="50px" />
+    <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Обработанные заявки" Width="300px" Height="50px" />
     
 </asp:Content>

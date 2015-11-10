@@ -125,7 +125,7 @@
                 <tr>
                   <td>
                        <asp:Label ID="Label1" runat="server" Visible = "False"  style="font-size: 20px; color: red" Text="У Вас уже есть поданная на конкурс заявка!"></asp:Label>
-                      <h2><span style="font-size: 20px"> Примечание:Вы можете отправить не более одной заявки! Вы не можете подавать заявки на конкурсы если&nbsp; участвуете в реализации другой заявки в текущее время!</span></h2>                                                            
+                      <h2><span style="font-size: 20px"> Примечание: Вы можете подать новую заявку, если сроки реализации Вашей прежней заявки еще не истекли!</span></h2>                                                            
                         <h2><span style="font-size: 20px">На данный момент для подачи заявок доступны следующие конкурсы:</span></h2>
                         
                          <asp:GridView ID="MainGV" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView1_RowDataBound">
@@ -202,30 +202,33 @@
                 <tr>
                   <td>
                       <h2><span style="font-size: 20px">Поданные заявки: </span></h2>
-                    <br />
-                    <asp:GridView ID="ArchiveApplicationGV" runat="server" AutoGenerateColumns="False">
-                        <Columns>
-                            <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
-                            <asp:BoundField DataField="Name"   HeaderText="Название" Visible="true" />
-                            <asp:BoundField DataField="CompetitionName"   HeaderText="Конкурс" Visible="true" />
-                            <asp:BoundField DataField="SendedDate"   HeaderText="Дата отправки на рассмотрение" Visible="true" />   
-                            <asp:BoundField DataField="Accept"   HeaderText="Статус заявки" Visible="true" />
-                            <asp:TemplateField HeaderText="Скачать заявку">
-                                    <ItemTemplate>
-                                                                    <asp:RadioButtonList ID="RadioButtonList1" RepeatColumns="3" runat="server">
-                                <asp:ListItem Value="0" Selected="True">doc</asp:ListItem>
-                                <asp:ListItem Value="1">docx</asp:ListItem>
-                                <asp:ListItem Value="2">rtf</asp:ListItem>
-                                <asp:ListItem Value="3">pdf</asp:ListItem>
-                                <asp:ListItem Value="4">odt</asp:ListItem>
-                            </asp:RadioButtonList>
-                                        <asp:Button ID="GetDocButton" runat="server" Text="Скачать"  CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
-                                    </ItemTemplate>
-                            </asp:TemplateField>
-             
-                        </Columns>
-                    </asp:GridView>
-                    <br />
+                      <p>
+                      <asp:Label ID="Label2" runat="server" Visible = "False"  style="font-size: 20px" Text="На данный момент у Вас нет поданных заявок"></asp:Label>
+                          <p>
+                              <br />
+                              <asp:GridView ID="ArchiveApplicationGV" runat="server" AutoGenerateColumns="False">
+                                  <Columns>
+                                      <asp:BoundField DataField="ID" HeaderText="" Visible="false" />
+                                      <asp:BoundField DataField="Name" HeaderText="Название" Visible="true" />
+                                      <asp:BoundField DataField="CompetitionName" HeaderText="Конкурс" Visible="true" />
+                                      <asp:BoundField DataField="SendedDate" HeaderText="Дата отправки на рассмотрение" Visible="true" />
+                                      <asp:BoundField DataField="Accept" HeaderText="Статус заявки" Visible="true" />
+                                      <asp:TemplateField HeaderText="Скачать заявку">
+                                          <ItemTemplate>
+                                              <asp:RadioButtonList ID="RadioButtonList1" runat="server" RepeatColumns="3">
+                                                  <asp:ListItem Selected="True" Value="0">doc</asp:ListItem>
+                                                  <asp:ListItem Value="1">docx</asp:ListItem>
+                                                  <asp:ListItem Value="2">rtf</asp:ListItem>
+                                                  <asp:ListItem Value="3">pdf</asp:ListItem>
+                                                  <asp:ListItem Value="4">odt</asp:ListItem>
+                                              </asp:RadioButtonList>
+                                              <asp:Button ID="GetDocButton" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="GetDocButtonClick" Text="Скачать" Width="200px" />
+                                          </ItemTemplate>
+                                      </asp:TemplateField>
+                                  </Columns>
+                              </asp:GridView>
+                              <br />
+                          </p>
                   </td>
                 </tr>
               </table>

@@ -130,6 +130,15 @@ namespace Competitions.User {
         protected global::System.Web.UI.WebControls.View View3;
         
         /// <summary>
+        /// Label2 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+        
+        /// <summary>
         /// ArchiveApplicationGV элемент управления.
         /// </summary>
         /// <remarks>
