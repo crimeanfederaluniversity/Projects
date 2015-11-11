@@ -106,7 +106,7 @@ namespace Competitions.Admin
             zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
                                                     where a.Active == true && a.Accept == false
                                                           && a.ID == applicationId 
-                                                          //&& a.Sended == true
+                                                          && a.Sended == true
                                                     select a).FirstOrDefault();
             if (currentApplication != null)
             {
@@ -146,6 +146,53 @@ namespace Competitions.Admin
             }
             Response.Redirect("ApplicationExpertsAndExpertsGroupEdit.aspx");
         }
+
+        protected void DeleteGroupButtonClick(object sender, EventArgs e)
+        {
+            var sessionParam1 = Session["ApplicationID"];
+            ImageButton button = (ImageButton)sender;
+
+            if (sessionParam1 == null && button != null)
+            {
+                //error
+                Response.Redirect("~/Default.aspx");
+            }
+            int applicationId = Convert.ToInt32(sessionParam1);
+            int groupId = Convert.ToInt32(button.CommandArgument);
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
+                                                    where a.Active == true && a.Accept == false
+                                                          && a.ID == applicationId
+                                                    && a.Sended == true
+                                                    select a).FirstOrDefault();
+            if (currentApplication != null)
+            {
+                List<zExpertAndExpertGroupMappingTable> currentgroup =
+                    (from a in competitionDataBase.zExpertAndExpertGroupMappingTable
+                     where a.Active == true && a.FK_ExpertGroupTable == groupId
+                     select a).ToList();
+                if (currentgroup != null)
+                {
+                    foreach (var n in currentgroup)
+                    {
+                        zExpertsAndApplicationMappingTable expertlink =
+                        (from a in competitionDataBase.zExpertsAndApplicationMappingTable
+                         where a.FK_ApplicationsTable == applicationId
+                               && a.FK_UsersTable == n.FK_UsersTable
+                         select a).FirstOrDefault();
+                        if (expertlink != null)
+                        {
+                            expertlink.Active = false;                            
+                            competitionDataBase.SubmitChanges();
+                        }
+                        
+                    }
+                }
+
+            }
+            Response.Redirect("ApplicationExpertsAndExpertsGroupEdit.aspx");
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -239,27 +286,37 @@ namespace Competitions.Admin
                 }
             }
         }
+
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
-        { 
+        {
             var sessionParam1 = Session["ApplicationID"];
-                if (sessionParam1 == null )
-                {
-                    //error
-                    Response.Redirect("~/Default.aspx");
-                }
-                int applicationId = Convert.ToInt32(sessionParam1);
-            ImageButton addexpert = (ImageButton)e.Row.FindControl("AddExpertButton");
-            ImageButton deletexpert = (ImageButton)e.Row.FindControl("DeleteExpertButton");
-            ImageButton addgroup = (ImageButton)e.Row.FindControl("AddExpertGroup");
+            if (sessionParam1 == null)
+            {
+                //error
+                Response.Redirect("~/Default.aspx");
+            }
+            int applicationId = Convert.ToInt32(sessionParam1);
+            ImageButton addexpert = (ImageButton) e.Row.FindControl("AddExpertButton");
+            ImageButton deletexpert = (ImageButton) e.Row.FindControl("DeleteExpertButton");
+            ImageButton addgroup = (ImageButton) e.Row.FindControl("AddExpertGroup");
+            ImageButton deletegroup = (ImageButton) e.Row.FindControl("DeleteGroupButton");            
             Label status = (Label) e.Row.FindControl("StatusLabel");
-            Label groupstatus = (Label)e.Row.FindControl("GroupStatusLabel");
+            Label groupstatus = (Label) e.Row.FindControl("GroupStatusLabel");
             if (addexpert != null && deletexpert != null && addgroup != null)
             {
+                if (Convert.ToInt32(addgroup.CommandArgument) == 0 && Convert.ToInt32(deletegroup.CommandArgument) == 0)
+                {
+                    addgroup.Visible = false;
+                    deletegroup.Visible = false;
+
+                }
                 CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
-                zExpertsAndApplicationMappingTable buttonstate = (from a in CompetitionsDataBase.zExpertsAndApplicationMappingTable
-                                                                  where  a.FK_UsersTable == Convert.ToInt32(addexpert.CommandArgument)
-                                                                  && a.FK_ApplicationsTable == applicationId
-                                                                  select a).FirstOrDefault();
+              
+                zExpertsAndApplicationMappingTable buttonstate =
+                    (from a in CompetitionsDataBase.zExpertsAndApplicationMappingTable
+                        where a.FK_UsersTable == Convert.ToInt32(addexpert.CommandArgument)
+                              && a.FK_ApplicationsTable == applicationId
+                        select a).FirstOrDefault();
                 if (buttonstate == null)
                 {
                     deletexpert.Visible = false;
@@ -275,9 +332,38 @@ namespace Competitions.Admin
                     {
                         deletexpert.Visible = false;
                     }
-                }      
+                }
+                List<zExpertAndExpertGroupMappingTable> currentgroup =
+                    (from a in CompetitionsDataBase.zExpertAndExpertGroupMappingTable
+                        where a.Active == true && a.FK_ExpertGroupTable == Convert.ToInt32(addgroup.CommandArgument)
+                        select a).ToList();
+                if (currentgroup != null)
+                {
+                    foreach (var n in currentgroup)
+                    {
+                        zExpertsAndApplicationMappingTable expertlink =
+                            (from a in CompetitionsDataBase.zExpertsAndApplicationMappingTable
+                                where a.FK_ApplicationsTable == applicationId
+                                      && a.FK_UsersTable == n.FK_UsersTable
+                                select a).FirstOrDefault();
+                        if (expertlink != null)
+                        {
+                            if (expertlink.Active == true)
+                            {
+                                addgroup.Visible = false;
+                                
+                            }
+                            else
+                            {
+                                deletegroup.Visible = false;
+                            }
+
+                        }
+                    }
+                }
             }
         }
+
         protected void ExpertsGV_PreRender(object sender, EventArgs e)
         {
             MergeRows(ExpertsGV);
