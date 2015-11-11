@@ -42,8 +42,23 @@ namespace Competitions.User
 
                 Label1.Text = currentApplication.Name;
                 Label2.Text = currentCompetition.Name;
-                startdata.Value = Convert.ToString(currentApplication.StartProjectDate).Split(' ')[0];;
-                enddata.Value = Convert.ToString(currentApplication.EndProjectDate).Split(' ')[0];;
+
+                if (currentApplication.StartProjectDate != null)
+                {
+                    DateTime dateTime = (DateTime)currentApplication.StartProjectDate;
+                    string tmpStr = dateTime.ToString().Split(' ')[0];
+                    string[] tmpArray = tmpStr.Split('.');
+                    string tmp2 = tmpArray[2] + "-" + tmpArray[1] + "-" + tmpArray[0];
+                    startdata.Value = tmp2;
+                }
+                if (currentApplication.EndProjectDate != null)
+                {
+                    DateTime dateTime = (DateTime)currentApplication.EndProjectDate;
+                    string tmpStr = dateTime.ToString().Split(' ')[0];
+                    string[] tmpArray = tmpStr.Split('.');
+                    string tmp2 = tmpArray[2] + "-" + tmpArray[1] + "-" + tmpArray[0];
+                    enddata.Value = tmp2;
+                }
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("ID", typeof (string)));
                 dataTable.Columns.Add(new DataColumn("Name", typeof (string)));

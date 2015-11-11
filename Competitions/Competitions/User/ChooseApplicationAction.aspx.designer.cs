@@ -73,7 +73,7 @@ namespace Competitions.User {
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText startdata;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl startdata;
         
         /// <summary>
         /// enddata элемент управления.
@@ -82,7 +82,7 @@ namespace Competitions.User {
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText enddata;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl enddata;
         
         /// <summary>
         /// Button2 элемент управления.

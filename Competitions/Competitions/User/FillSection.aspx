@@ -175,14 +175,14 @@
                             <asp:LinkButton     ID="DeleteFileLinkButton1" runat="server" Visible='<%# Bind("DeleteFileLinkButtonVisible1") %>'  Text="Удалить" CommandArgument='<%# Bind("ID1") %>' OnClick="GvDeleteDocumentButtonClick"></asp:LinkButton>
                             <asp:RequiredFieldValidator runat="server" ID="TextBoxRequire1" ControlToValidate="EditTextBox1" Enabled=     '<%# Bind("TextBoxRequireValidateEnable1") %>' Text="Введите данные"  ForeColor="Red"> 
                             </asp:RequiredFieldValidator>
-                            <asp:RangeValidator runat="server" ID="TextBoxValidate1" ControlToValidate="EditTextBox1" 
+                            <asp:RangeValidator runat="server" ID="TextBoxValidate1" ControlToValidate="EditTextBox1"  
                                 Enabled=     '<%# Bind("TextBoxValidateEnable1") %>'
                                 MaximumValue='<%# Bind("TextBoxValidateMaxValue1") %>' 
                                 MinimumValue='<%# Bind("TextBoxValidateMinValue1") %>'
                                 Text=        '<%# Bind("TextBoxValidateText1") %>'
                                 Type=        '<%# Bind("TextBoxValidateType1") %>'
                             ErrorMessage='<%# Bind("TextBoxValidateText1") %>' ForeColor="Red" Display="Dynamic" 
-                            SetFocusOnError="True">
+                            SetFocusOnError="True" EnableClientScript="True">
                         </asp:RangeValidator>                        
                         </ItemTemplate>
                     </asp:TemplateField> 

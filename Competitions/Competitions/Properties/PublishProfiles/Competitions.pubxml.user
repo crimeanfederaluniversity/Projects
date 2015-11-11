@@ -61,19 +61,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2015 11:05:31</publishTime>
     </File>
     <File Include="Admin/ActionPRManual.aspx">
-      <publishTime>10/20/2015 11:05:36</publishTime>
+      <publishTime>11/02/2015 14:30:17</publishTime>
     </File>
     <File Include="Admin/ApllicationExpertEdit.aspx">
-      <publishTime>10/20/2015 11:05:31</publishTime>
+      <publishTime>10/29/2015 10:57:31</publishTime>
+    </File>
+    <File Include="Admin/ApplicationExpertsAndExpertsGroupEdit.aspx">
+      <publishTime>11/03/2015 14:26:36</publishTime>
+    </File>
+    <File Include="Admin/ApplicationSovetexpertEdit.aspx">
+      <publishTime>11/05/2015 12:03:00</publishTime>
     </File>
     <File Include="Admin/ChooseApplication.aspx">
-      <publishTime>10/23/2015 13:46:51</publishTime>
+      <publishTime>11/03/2015 14:26:37</publishTime>
     </File>
     <File Include="Admin/ChooseColumn.aspx">
       <publishTime>10/20/2015 11:05:31</publishTime>
     </File>
     <File Include="Admin/ChooseCompetition.aspx">
-      <publishTime>10/23/2015 13:46:51</publishTime>
+      <publishTime>11/05/2015 12:03:00</publishTime>
     </File>
     <File Include="Admin/ChooseConstantList.aspx">
       <publishTime>10/20/2015 11:05:31</publishTime>
@@ -82,28 +88,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2015 11:05:31</publishTime>
     </File>
     <File Include="Admin/ColumnCreateEdit.aspx">
-      <publishTime>10/20/2015 11:05:31</publishTime>
+      <publishTime>11/10/2015 14:27:34</publishTime>
     </File>
     <File Include="Admin/CompetitionCreateEdit.aspx">
-      <publishTime>10/20/2015 11:05:31</publishTime>
+      <publishTime>11/05/2015 09:14:14</publishTime>
     </File>
     <File Include="Admin/CompetitionExpertEdit.aspx">
-      <publishTime>10/23/2015 13:46:51</publishTime>
+      <publishTime>11/05/2015 12:03:00</publishTime>
     </File>
     <File Include="Admin/ConstantListCreate.aspx">
       <publishTime>10/20/2015 11:05:31</publishTime>
     </File>
     <File Include="Admin/ExpertPointPage.aspx">
-      <publishTime>10/23/2015 13:46:51</publishTime>
+      <publishTime>11/10/2015 14:01:50</publishTime>
     </File>
     <File Include="Admin/IndicatorManual.aspx">
-      <publishTime>10/20/2015 11:05:36</publishTime>
+      <publishTime>11/02/2015 14:32:24</publishTime>
     </File>
     <File Include="Admin/Main.aspx">
-      <publishTime>10/23/2015 13:46:51</publishTime>
+      <publishTime>11/10/2015 14:01:50</publishTime>
     </File>
     <File Include="Admin/ManualPage.aspx">
-      <publishTime>10/20/2015 11:05:36</publishTime>
+      <publishTime>11/02/2015 14:31:23</publishTime>
     </File>
     <File Include="Admin/ReadyApplications.aspx">
       <publishTime>10/23/2015 13:46:51</publishTime>
@@ -112,7 +118,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2015 11:05:31</publishTime>
     </File>
     <File Include="Admin/TaskPRManual.aspx">
-      <publishTime>10/20/2015 11:05:36</publishTime>
+      <publishTime>11/02/2015 14:30:17</publishTime>
+    </File>
+    <File Include="Admin/WatchUniqueMarksInCompetition.aspx">
+      <publishTime>11/03/2015 12:27:05</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>10/20/2015 11:05:33</publishTime>
@@ -124,7 +133,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2015 11:05:34</publishTime>
     </File>
     <File Include="bin/Competitions.dll">
-      <publishTime>10/26/2015 19:59:50</publishTime>
+      <publishTime>11/11/2015 13:06:07</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/20/2015 11:05:32</publishTime>
@@ -240,29 +249,38 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Bundle.config">
       <publishTime>10/20/2015 11:05:30</publishTime>
     </File>
+    <File Include="Calendar/datepicker.css">
+      <publishTime>10/29/2015 10:22:37</publishTime>
+    </File>
+    <File Include="Calendar/datepicker.jpg">
+      <publishTime>12/23/2008 16:02:54</publishTime>
+    </File>
+    <File Include="Calendar/datepicker.js">
+      <publishTime>10/29/2015 11:42:30</publishTime>
+    </File>
     <File Include="CalendarIcon.png">
       <publishTime>10/20/2015 11:05:31</publishTime>
     </File>
     <File Include="Competition.dbml">
-      <publishTime>10/20/2015 11:05:31</publishTime>
+      <publishTime>11/10/2015 13:39:42</publishTime>
     </File>
     <File Include="Contact.aspx">
       <publishTime>10/20/2015 11:05:31</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
-      <publishTime>10/20/2015 11:05:30</publishTime>
+      <publishTime>11/03/2015 13:34:34</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css">
-      <publishTime>10/20/2015 11:05:30</publishTime>
+      <publishTime>11/03/2015 13:18:29</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>10/20/2015 11:05:30</publishTime>
+      <publishTime>11/03/2015 13:18:32</publishTime>
     </File>
     <File Include="Curator/CuratorApplications.aspx">
-      <publishTime>10/23/2015 13:46:53</publishTime>
+      <publishTime>10/29/2015 10:57:31</publishTime>
     </File>
     <File Include="Curator/CuratorCompetition.aspx">
-      <publishTime>10/23/2015 13:46:53</publishTime>
+      <publishTime>10/29/2015 10:57:31</publishTime>
     </File>
     <File Include="Curator/CuratorCompetitionCreateEdit.aspx">
       <publishTime>09/17/2015 09:06:31</publishTime>
@@ -274,13 +292,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/23/2015 13:46:53</publishTime>
     </File>
     <File Include="Curator/CuratorMainPage.aspx">
-      <publishTime>10/23/2015 13:46:53</publishTime>
+      <publishTime>11/10/2015 14:01:50</publishTime>
     </File>
     <File Include="Curator/CuratorTZ.aspx">
-      <publishTime>10/20/2015 16:33:32</publishTime>
+      <publishTime>10/29/2015 10:57:31</publishTime>
     </File>
     <File Include="Curator/NewCuratorTZ.aspx">
-      <publishTime>10/20/2015 11:05:30</publishTime>
+      <publishTime>10/29/2015 10:57:31</publishTime>
     </File>
     <File Include="Default.aspx">
       <publishTime>10/20/2015 11:05:32</publishTime>
@@ -315,14 +333,29 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Global.asax">
       <publishTime>10/20/2015 11:05:32</publishTime>
     </File>
+    <File Include="Images/Add.png">
+      <publishTime>11/03/2015 10:19:03</publishTime>
+    </File>
     <File Include="Images/CalendarIcon.png">
       <publishTime>10/20/2015 11:05:32</publishTime>
+    </File>
+    <File Include="Images/Delete.png">
+      <publishTime>10/29/2015 16:10:19</publishTime>
+    </File>
+    <File Include="Images/Download.png">
+      <publishTime>10/29/2015 16:10:19</publishTime>
+    </File>
+    <File Include="Images/Edit.png">
+      <publishTime>10/29/2015 16:10:19</publishTime>
     </File>
     <File Include="Images/InitialImage.png">
       <publishTime>10/20/2015 11:05:32</publishTime>
     </File>
     <File Include="Images/SelectedButton.png">
       <publishTime>10/20/2015 11:05:32</publishTime>
+    </File>
+    <File Include="Images/True.png">
+      <publishTime>11/03/2015 10:19:03</publishTime>
     </File>
     <File Include="InitialImage.png">
       <publishTime>10/20/2015 11:05:30</publishTime>
@@ -418,7 +451,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2015 11:05:32</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>10/20/2015 11:05:32</publishTime>
+      <publishTime>10/28/2015 16:30:39</publishTime>
     </File>
     <File Include="SelectedButton.png">
       <publishTime>10/20/2015 11:05:31</publishTime>
@@ -433,25 +466,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/21/2015 15:14:28</publishTime>
     </File>
     <File Include="User/ApplicationCreateEdit.aspx">
-      <publishTime>10/20/2015 11:05:32</publishTime>
+      <publishTime>11/10/2015 14:27:34</publishTime>
     </File>
     <File Include="User/ChooseApplicationAction.aspx">
-      <publishTime>10/26/2015 19:57:59</publishTime>
+      <publishTime>11/10/2015 14:45:18</publishTime>
     </File>
     <File Include="User/ChooseSection.aspx">
-      <publishTime>10/20/2015 11:05:32</publishTime>
+      <publishTime>11/10/2015 14:27:34</publishTime>
     </File>
     <File Include="User/FillSection.aspx">
-      <publishTime>10/26/2015 19:35:09</publishTime>
+      <publishTime>11/10/2015 14:45:19</publishTime>
     </File>
     <File Include="User/UserMainPage.aspx">
-      <publishTime>10/26/2015 17:29:19</publishTime>
+      <publishTime>11/10/2015 14:27:34</publishTime>
     </File>
     <File Include="ViewSwitcher.ascx">
       <publishTime>10/20/2015 11:05:32</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/26/2015 19:59:51</publishTime>
+      <publishTime>11/11/2015 13:06:07</publishTime>
     </File>
   </ItemGroup>
 </Project>

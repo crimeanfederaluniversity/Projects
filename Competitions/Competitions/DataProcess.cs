@@ -115,83 +115,96 @@ namespace Competitions
         }
         public string   GetReadWriteString(zColumnTable currentColumn, zCollectedDataTable currentCollectedData)
         {
-            DataType dataType = new DataType();          
-            #region float
-
-            if (dataType.IsDataTypeFloat(currentColumn.DataType))
+            try
             {
+                DataType dataType = new DataType();
+
+                #region float
+
+                if (dataType.IsDataTypeFloat(currentColumn.DataType))
+                {
+                    validator.Enabled = true;
+                    validator.ContentType = ValidationDataType.Double;
+                    validator.ErrorMessage = "Только числовое значение!";
+                    validator.MinValue = (-100000000000).ToString();
+                    validator.MaxValue = 100000000000.ToString();
+                    validator.RequireValidatorEnabled = true;
+                    validator.TextBoxTextMode = TextBoxMode.SingleLine;
+                    if (currentCollectedData.ValueDouble != null)
+                    {
+                        double doubleValue = (double) currentCollectedData.ValueDouble;
+                        _toTotalUp = doubleValue;
+                        return doubleValue.ToString();
+                    }
+                }
+
+                #endregion
+
+                #region Date
+
+                if (dataType.IsDataTypeDate(currentColumn.DataType))
+                {
+                    validator.Enabled = true;
+                    validator.ErrorMessage = "Введите корректную дату";
+                    validator.ContentType = ValidationDataType.Date;
+                    validator.MinValue = "1900/01/01";
+                    validator.MaxValue = "2100/01/01";
+                    validator.RequireValidatorEnabled = true;
+                    validator.TextBoxTextMode = TextBoxMode.SingleLine;
+                    if (currentCollectedData.ValueDataTime != null)
+                    {
+                        DateTime dateTime = (DateTime) currentCollectedData.ValueDataTime;
+                        string tmpStr = dateTime.ToString().Split(' ')[0];
+                        string[] tmpArray = tmpStr.Split('.');
+                        string tmp2 = tmpArray[2] + "-" + tmpArray[1] + "-" + tmpArray[0];
+                        return tmp2;
+                    }
+                }
+
+                #endregion
+
+                #region int
+
                 validator.Enabled = true;
-                validator.ContentType=ValidationDataType.Double;
-                validator.ErrorMessage = "Только числовое значение!";
-                validator.MinValue = (-100000000000).ToString();
-                validator.MaxValue = 100000000000.ToString();
-                validator.RequireValidatorEnabled = true;
-                validator.TextBoxTextMode = TextBoxMode.SingleLine;
-                if (currentCollectedData.ValueDouble != null)
+                if (dataType.IsDataTypeInteger(currentColumn.DataType))
                 {
-                    double doubleValue = (double) currentCollectedData.ValueDouble;
-                    _toTotalUp = doubleValue;
-                    return doubleValue.ToString();
+                    validator.ContentType = ValidationDataType.Integer;
+                    validator.ErrorMessage = "Только целочисленное значение!";
+                    validator.MinValue = Int32.MinValue.ToString();
+                    validator.MaxValue = Int32.MaxValue.ToString();
+                    validator.RequireValidatorEnabled = true;
+                    validator.TextBoxTextMode = TextBoxMode.SingleLine;
+                    if (currentCollectedData.ValueInt != null)
+                    {
+                        int intValue = (int) currentCollectedData.ValueInt;
+                        _toTotalUp = intValue;
+                        return intValue.ToString();
+                    }
                 }
-            }
 
-            #endregion
-            #region Date
+                #endregion
 
-            if (dataType.IsDataTypeDate(currentColumn.DataType))
-            {
-                validator.Enabled = true;
-                validator.ErrorMessage = "Введите корректную дату";
-                validator.ContentType = ValidationDataType.Date;
-                validator.MinValue = "1900/01/01";
-                validator.MaxValue = "2100/01/01";
-                validator.RequireValidatorEnabled = true;
-                validator.TextBoxTextMode = TextBoxMode.SingleLine;
-                if (currentCollectedData.ValueDataTime != null)
+                #region text
+
+                if (dataType.IsDataTypeText(currentColumn.DataType))
                 {
-                    DateTime dateTime = (DateTime) currentCollectedData.ValueDataTime;
-                    string tmpStr = dateTime.ToString().Split(' ')[0];
-                    string[] tmpArray = tmpStr.Split('.');
-                    string tmp2 = tmpArray[2] + "-" + tmpArray[1] + "-" + tmpArray[0];
-                    return tmp2;
+                    validator.Enabled = false;
+                    validator.ContentType = ValidationDataType.String;
+                    validator.ErrorMessage = "Введите текст!";
+                    validator.MinValue = 1.ToString();
+                    validator.MaxValue = 50000.ToString();
+                    validator.RequireValidatorEnabled = true;
+                    validator.TextBoxTextMode = TextBoxMode.MultiLine;
+                    return currentCollectedData.ValueText;
                 }
-            }
 
-            #endregion
-            #region int
-            validator.Enabled = true;
-            if (dataType.IsDataTypeInteger(currentColumn.DataType))
+                #endregion
+            }
+            catch
             {
-                validator.ContentType = ValidationDataType.Integer;
-                validator.ErrorMessage = "Только целочисленное значение!";
-                validator.MinValue = Int32.MinValue.ToString();
-                validator.MaxValue = Int32.MaxValue.ToString();
-                validator.RequireValidatorEnabled = true;
-                validator.TextBoxTextMode = TextBoxMode.SingleLine;
-                if (currentCollectedData.ValueInt != null)
-                {
-                    int intValue = (int) currentCollectedData.ValueInt;
-                    _toTotalUp = intValue;
-                    return intValue.ToString();
-                }
+                return "0";
             }
 
-            #endregion
-            #region text
-           
-            if (dataType.IsDataTypeText(currentColumn.DataType))
-            {
-                validator.Enabled = false;
-                validator.ContentType = ValidationDataType.String;
-                validator.ErrorMessage = "Введите текст!";
-                validator.MinValue = 1.ToString();
-                validator.MaxValue = 50000.ToString();
-                validator.RequireValidatorEnabled = true;
-                validator.TextBoxTextMode = TextBoxMode.MultiLine;
-                return currentCollectedData.ValueText;
-            }
-
-            #endregion
             return "0";
         }
         public bool     GetBoolDataValue(zColumnTable currentColumn, zCollectedDataTable currentCollectedData)
