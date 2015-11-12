@@ -130,6 +130,21 @@ namespace Competitions.Admin
             }
         }
 
+        protected void BackButtonClick(object sender, EventArgs e)
+        { 
+            Button button = (Button)sender;
+            if (button != null)
+            {
+                CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
+                zApplicationTable application = (from a in CompetitionsDataBase.zApplicationTable
+                                                            where a.Active == true && a.Accept == true && a.ID == Convert.ToInt32(button.CommandArgument)
+                                                            select a).FirstOrDefault();
+                application.Accept = false;
+                CompetitionsDataBase.SubmitChanges();
+            }
+            Response.Redirect("ReadyApplications.aspx");
+        }
+
         protected void Button1_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Default.aspx");

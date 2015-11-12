@@ -66,7 +66,7 @@ namespace Competitions.Expert
                     dataRow["MinValue"] = currentExpertPoint.MinValue;
                     if (currentExpertPointValue.Value != null)
                     {
-                        dataRow["Text"] = currentExpertPointValue.Value;
+                        dataRow["Text"] = currentExpertPointValue.Value;  
                     }
                     else
                     {
@@ -111,6 +111,12 @@ namespace Competitions.Expert
             }
         }
 
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+          
+          
+        }
+
         protected void Button1_Click(object sender, EventArgs e)
         {
             var sessionParam1 = Session["ApplicationID"];
@@ -139,6 +145,7 @@ namespace Competitions.Expert
                         currentExpertPointValue.LastChangeDataTime = DateTime.Now;
                         CompetitionsDataBase.SubmitChanges();
                     }
+                    
                 }
             }
             #region doComment
@@ -191,8 +198,6 @@ namespace Competitions.Expert
                         competitionDataBase.SubmitChanges();
                     }
                     Response.Redirect("~/Default.aspx");
-            }
-        
-        
+            }      
     }
 }

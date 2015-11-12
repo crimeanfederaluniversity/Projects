@@ -24,6 +24,11 @@
                             <asp:Button ID="ExpertPointButton" runat="server" CommandName="Select" Text="Просмотреть" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="ExpertPointButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
+                <asp:TemplateField HeaderText="Вернуть на обработку">
+                        <ItemTemplate>
+                            <asp:Button ID="BackButton" runat="server" CommandName="Select" Text="Вернуть" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="BackButtonClick"/>
+                        </ItemTemplate>
+                </asp:TemplateField>
             </Columns>
         </asp:GridView>
 </asp:Content>

@@ -14,16 +14,18 @@
             <Columns>
                 <asp:BoundField DataField="ID"   HeaderText="" Visible="false" />
                 <asp:BoundField DataField="Number"   HeaderText="Шифр конкурса" Visible="true" />
-                <asp:BoundField DataField="Name"   HeaderText="Название" Visible="true" />                
+                <asp:BoundField DataField="Name"   HeaderText="Название конкурса" Visible="true" />                
                
-                 <asp:TemplateField HeaderText="Создать/редактировать формы конкурса">
+                 <asp:TemplateField HeaderText="Создать или редактировать формы конкурса">
                         <ItemTemplate>
-                            <asp:Button ID="OpenButton" runat="server" CommandName="Select" Text="Открыть" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="OpenButtonClick"/>
+                             <asp:Button ID="OpenButton"  runat="server" CommandName="Select"  CommandArgument='<%# Eval("ID") %>'  Width="150px" OnClick="OpenButtonClick"  Text="Открыть" />
+                            
                         </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Редактировать информацию о конкурсе">
                         <ItemTemplate>
-                            <asp:Button ID="ChangeButton" runat="server" CommandName="Select" Text="Редактировать" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="ChangeButtonClick"/>
+                             <asp:Button ID="ChangeButton"  runat="server" CommandName="Select" CommandArgument='<%# Eval("ID") %>'  Width="150px" OnClick="ChangeButtonClick"  Text="Редактировать"/>
+                             
                         </ItemTemplate>
                 </asp:TemplateField>
             
@@ -35,12 +37,14 @@
                 </asp:TemplateField>
                <asp:TemplateField HeaderText="Метки в конкурсе">
                         <ItemTemplate>
-                            <asp:Button ID="MarksButton" runat="server" CommandName="Select" Text="Просмотреть метки" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="MarksButtonClick"/>
+                             <asp:Button ID="MarksButton"  runat="server" CommandName="Select"  CommandArgument='<%# Eval("ID") %>'  Width="150px" OnClick="MarksButtonClick"   Text="Просмотреть" />
+ 
                         </ItemTemplate>
                 </asp:TemplateField>
                   <asp:TemplateField HeaderText="Удалить конкурс">
                         <ItemTemplate>
-                            <asp:Button ID="DeleteButton" runat="server" CommandName="Select" Text="Удалить" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="DeleteButtonClick"/>
+                             <asp:Button ID="DeleteButton"  runat="server"  CommandArgument='<%# Eval("ID") %>'   OnClick="DeleteButtonClick" Text="Удалить" Width="150px"/>
+                           
                         </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

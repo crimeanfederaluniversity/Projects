@@ -770,7 +770,7 @@ namespace Competitions.User
 
                 #endregion
 
-                if (currentSection.Description != "123")
+                if (currentSection.Description != "123" && currentSection.Active == true)
                 {
                     LabelDescription.Text = currentSection.Description;
                 }

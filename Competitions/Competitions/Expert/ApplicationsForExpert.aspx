@@ -13,12 +13,12 @@
                  
                 <asp:TemplateField HeaderText="Cкачать заявку">
                         <ItemTemplate>
-                            <asp:Button ID="GetDocButton" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
+                            <asp:Button ID="GetDocButton" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="GetDocButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>    
                 <asp:TemplateField HeaderText="Оценить">
                         <ItemTemplate>
-                            <asp:Button ID="EvaluateButton" runat="server" CommandName="Select" Text="Оценить" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="EvaluateButtonClick"/>
+                            <asp:Button ID="EvaluateButton" runat="server" CommandName="Select" Text="Оценить" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="EvaluateButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>         
                     

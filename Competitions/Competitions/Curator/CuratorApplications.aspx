@@ -16,12 +16,12 @@
                 <asp:BoundField DataField="Accept"  HeaderText="Статус" Visible="true" />
                 <asp:TemplateField HeaderText="Cкачать заявку">
                         <ItemTemplate>
-                            <asp:Button ID="GetDocButton" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
+                            <asp:Button ID="GetDocButton" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="GetDocButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>    
                  <asp:TemplateField HeaderText="Экспертное заключение">
                         <ItemTemplate>
-                            <asp:Button ID="ExpertPointButton" runat="server" CommandName="Select" Text="Просмотреть" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="ExpertPointButtonClick"/>
+                            <asp:Button ID="ExpertPointButton" runat="server" CommandName="Select" Text="Просмотреть" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="ExpertPointButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

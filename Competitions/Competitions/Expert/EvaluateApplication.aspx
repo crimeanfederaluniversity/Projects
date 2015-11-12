@@ -5,14 +5,15 @@
      <br />
     <h2><span style="font-size: 30px">Основные критерии оценки заявки: </span></h2>
     <br />
-    <asp:GridView ID="EvaluateGV"  BorderStyle="Solid" runat="server" AutoGenerateColumns="False" 
+    <asp:GridView ID="EvaluateGV"  BorderStyle="Solid" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView1_RowDataBound"
                 BorderColor="Black"  BorderWidth="1px" CellPadding="0" EnableTheming="True">
                <Columns>         
                      
                      <asp:BoundField DataField="Name"   HeaderText="Название" Visible="true" />
                      <asp:TemplateField Visible="true"   HeaderText="Значение">
                         <ItemTemplate > 
-                            <asp:Label      ID="ID" runat="server"  Visible="false"  Text='<%# Bind("ID") %>'></asp:Label>                         
+                            <asp:Label      ID="ID" runat="server"  Visible="false"  Text='<%# Bind("ID") %>'></asp:Label>       
+                                          
                             <asp:TextBox ID="ValueTextBox" runat="server" Text='<%# Bind("Text") %>' ></asp:TextBox>  
                             <asp:RangeValidator runat="server" ID="TextBoxValidate1" ControlToValidate="ValueTextBox" 
                                 Enabled =    "true"
@@ -28,6 +29,7 @@
                     </asp:TemplateField>  
                    </Columns>
      </asp:GridView>
+    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
     <br />
     <p>
         Комментарий эксперта</p>

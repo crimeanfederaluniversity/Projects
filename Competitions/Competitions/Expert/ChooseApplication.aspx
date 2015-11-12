@@ -13,12 +13,12 @@
                 <asp:BoundField DataField="Autor"   HeaderText="Автор" Visible="false" />     
                  <asp:TemplateField HeaderText="Cкачать заявку">
                         <ItemTemplate>
-                            <asp:Button ID="GetApplicationButton" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetApplicationButtonClick"/>
+                            <asp:Button ID="GetApplicationButton" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="GetApplicationButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>       
                    <asp:TemplateField HeaderText="Cкачать экспертную оценку">
                         <ItemTemplate>
-                            <asp:Button ID="GetExpertPointButton" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetExpertPointButtonClick"/>
+                            <asp:Button ID="GetExpertPointButton" runat="server" CommandName="Select" Text="Скачать" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="GetExpertPointButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>            
             </Columns>

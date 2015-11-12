@@ -262,23 +262,53 @@ namespace Competitions.User
         }
         protected void SendButtonClick(object sender, EventArgs e)
         {
+            var userIdtmp = Session["UserID"];
+                if (userIdtmp == null)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+                int userId = (int)userIdtmp;
             Button button = (Button)sender;
             {
+
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
                 zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
                                                         where a.Active == true
-                                                        && a.ID == iD
+                                                        && a.ID == iD 
                                                         select a).FirstOrDefault();
-                if (currentApplication != null)
+                List<zApplicationTable> existApplication = (from a in competitionDataBase.zApplicationTable
+                                                        where a.Active == true && a.Sended== true && a.FK_UsersTable == userId
+                                                        select a).ToList();
+                if (currentApplication != null && existApplication.Count == 0)
                 {
                     currentApplication.Sended = true;
                     currentApplication.SendedDataTime = DateTime.Now;
                     competitionDataBase.SubmitChanges();
                 }
-            }
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка отправлена на рассмотрение!');", true);  
-            Response.Redirect("UserMainPage.aspx");
+                if (currentApplication != null && existApplication.Count != 0)
+                    {
+                        foreach (var n in existApplication)
+                        {
+                            if (currentApplication.StartProjectDate < n.EndProjectDate)
+                            {
+                                Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
+                                    "alert('Вы не можете отправить данную заявку, т.к. у Вас пересекаются сроки реализации с отправленной ранее заявкой!');",
+                                    true);
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                    currentApplication.Sended = true;
+                    currentApplication.SendedDataTime = DateTime.Now;
+                    competitionDataBase.SubmitChanges();
+                    }
+                    
+                }
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка отправлена на рассмотрение!');", true);     
+                Response.Redirect("UserMainPage.aspx");
         }
         private byte[] ReadByteArryFromFile(string destPath)
         {

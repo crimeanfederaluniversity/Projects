@@ -21,12 +21,12 @@
                  <asp:BoundField DataField="Sended"   HeaderText="Статус" Visible="true" />
                 <asp:TemplateField HeaderText="Редактировать информацию о конкурсе">
                         <ItemTemplate>
-                            <asp:Button ID="ChangeButton" runat="server" CommandName="Select" Text="Редактировать" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="ChangeButtonClick"/>
+                            <asp:Button ID="ChangeButton" runat="server" CommandName="Select" Text="Редактировать" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="ChangeButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
               <asp:TemplateField HeaderText="Отправить на рассмотрение">
                         <ItemTemplate>
-                            <asp:Button ID="OpenButton" runat="server" CommandName="Select" Text="Отправить" OnClientClick="return confirm('Вы уверены, что хотите отправить конкурс на рассмотрение?');" CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="OpenButtonClick"/>
+                            <asp:Button ID="OpenButton" runat="server" CommandName="Select" Text="Отправить" OnClientClick="return confirm('Вы уверены, что хотите отправить конкурс на рассмотрение?');" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="OpenButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
                
