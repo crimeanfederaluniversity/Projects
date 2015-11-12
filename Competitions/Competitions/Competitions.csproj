@@ -234,12 +234,17 @@
     <None Include="Properties\PublishProfiles\Competitions.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Images\Add.png" />
+    <Content Include="Images\Back.png" />
     <Content Include="Images\CalendarIcon.png" />
     <Content Include="Images\Delete.png" />
     <Content Include="Images\Download.png" />
     <Content Include="Images\Edit.png" />
+    <Content Include="Images\Home.png" />
     <Content Include="Images\InitialImage.png" />
+    <Content Include="Images\Next.png" />
+    <Content Include="Images\Save.png" />
     <Content Include="Images\SelectedButton.png" />
+    <Content Include="Images\ToStart.png" />
     <Content Include="Images\True.png" />
     <Content Include="InitialImage.png" />
     <Content Include="Scripts\bootstrap.js" />

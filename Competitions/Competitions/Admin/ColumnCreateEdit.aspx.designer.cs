@@ -139,6 +139,33 @@ namespace Competitions.Admin {
         protected global::System.Web.UI.WebControls.DropDownList Fk_ColumnConnectToDropDown;
         
         /// <summary>
+        /// MathInRowPanel элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel MathInRowPanel;
+        
+        /// <summary>
+        /// LeftValueDropDown элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList LeftValueDropDown;
+        
+        /// <summary>
+        /// RightValueDropDown элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList RightValueDropDown;
+        
+        /// <summary>
         /// SortByCheckBox элемент управления.
         /// </summary>
         /// <remarks>

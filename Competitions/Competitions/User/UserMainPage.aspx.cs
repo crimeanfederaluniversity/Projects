@@ -376,10 +376,8 @@ namespace Competitions.User
             {
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
-                zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
-                                                         join b in competitionDataBase.zApplicationTable
-                                                         on a.ID equals b.FK_CompetitionTable
-                                                         where b.ID == iD
+                zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable                                                       
+                                                         where a.ID == iD
                                                          select a).FirstOrDefault();
                 if (currentCompetition != null)
                 {

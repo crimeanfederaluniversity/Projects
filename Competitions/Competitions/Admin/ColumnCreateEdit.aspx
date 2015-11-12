@@ -40,19 +40,25 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <asp:DropDownList ID="Fk_ColumnConnectToDropDown" runat="server" AutoPostBack="True" Height="26px" Width="190px">
             </asp:DropDownList>
+        </asp:Panel>           
+        <asp:Panel ID="MathInRowPanel" runat="server" Visible="false">
+                  Операнд слева от знака    
+                  <br />
+            <asp:DropDownList ID="LeftValueDropDown" runat="server" AutoPostBack="True" Height="31px" Width="188px">
+            </asp:DropDownList>
+                  <br />
+                 Операнд справа от знака
+                  <br />
+            <asp:DropDownList ID="RightValueDropDown" runat="server" AutoPostBack="True" Height="26px" Width="190px">
+            </asp:DropDownList>
+                  <br />
         </asp:Panel>
-
         <asp:CheckBox ID="SortByCheckBox" runat="server" Text="Сортировать по этому показателю" />
         <br />
-
         <asp:CheckBox ID="TotalUpCheckBox" runat="server" Text="Итого" />
-
         <br />
         <asp:CheckBox ID="VisibleCheckBox" runat="server"  Text="Скрыть колонку" />
-
         <br />
-
-        <asp:Button ID="CreateSaveButton"  runat="server" Text="Сохранить" OnClick="CreateSaveButton_Click" />
-    
+        <asp:Button ID="CreateSaveButton"  runat="server" Text="Сохранить" OnClick="CreateSaveButton_Click" />    
     </div>
 </asp:Content>

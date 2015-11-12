@@ -67,7 +67,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/29/2015 10:57:31</publishTime>
     </File>
     <File Include="Admin/ApplicationExpertsAndExpertsGroupEdit.aspx">
-      <publishTime>11/03/2015 14:26:36</publishTime>
+      <publishTime>11/11/2015 15:08:52</publishTime>
     </File>
     <File Include="Admin/ApplicationSovetexpertEdit.aspx">
       <publishTime>11/05/2015 12:03:00</publishTime>
@@ -133,7 +133,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2015 11:05:34</publishTime>
     </File>
     <File Include="bin/Competitions.dll">
-      <publishTime>11/11/2015 13:06:07</publishTime>
+      <publishTime>11/11/2015 15:43:48</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/20/2015 11:05:32</publishTime>
@@ -336,6 +336,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Images/Add.png">
       <publishTime>11/03/2015 10:19:03</publishTime>
     </File>
+    <File Include="Images/Back.png">
+      <publishTime>11/10/2015 14:27:34</publishTime>
+    </File>
     <File Include="Images/CalendarIcon.png">
       <publishTime>10/20/2015 11:05:32</publishTime>
     </File>
@@ -348,11 +351,23 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Images/Edit.png">
       <publishTime>10/29/2015 16:10:19</publishTime>
     </File>
+    <File Include="Images/Home.png">
+      <publishTime>11/10/2015 14:27:34</publishTime>
+    </File>
     <File Include="Images/InitialImage.png">
       <publishTime>10/20/2015 11:05:32</publishTime>
     </File>
+    <File Include="Images/Next.png">
+      <publishTime>11/10/2015 14:27:34</publishTime>
+    </File>
+    <File Include="Images/Save.png">
+      <publishTime>11/10/2015 14:27:34</publishTime>
+    </File>
     <File Include="Images/SelectedButton.png">
       <publishTime>10/20/2015 11:05:32</publishTime>
+    </File>
+    <File Include="Images/ToStart.png">
+      <publishTime>11/10/2015 14:27:34</publishTime>
     </File>
     <File Include="Images/True.png">
       <publishTime>11/03/2015 10:19:03</publishTime>
