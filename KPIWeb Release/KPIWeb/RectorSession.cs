@@ -72,6 +72,8 @@ namespace KPIWeb
     [Serializable]
     public class RectorChartSession
     {
+        public int? prorectorId;
+        public int reportId;
         string name;
         string info;
         public List<int> IndicatorsList;

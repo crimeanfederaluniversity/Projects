@@ -1,11 +1,10 @@
 ﻿<%@ Page Language="C#" Title="Заполение" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableEventValidation="true" EnableViewStateMac="false" CodeBehind="FillingTheReport.aspx.cs" Inherits="KPIWeb.Reports.FillingTheReport" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent" >
-
      <link rel="stylesheet" type="text/css" href="../Spinner.css">     
-
     <script type="text/javascript">
-        function showLoadPanel() {
+        function showLoadPanel() 
+		{
             document.getElementById('LoadPanel_').style.visibility = 'visible';
         }
     </script>

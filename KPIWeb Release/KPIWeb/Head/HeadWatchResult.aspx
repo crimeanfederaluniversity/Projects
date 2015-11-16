@@ -8,6 +8,13 @@
     </div> 
 </asp:Panel> 
 
+    <br />
+    <br />
+    <asp:DropDownList ID="DropDownList1" runat="server" Height="29px" Width="225px">
+    </asp:DropDownList>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <asp:Button ID="Button3" runat="server" Height="33px" OnClick="Button3_Click" Text="Обновить" Width="170px" />
+
  <style>   
     .gridView2
 {
@@ -18,7 +25,7 @@
     <H2> Сводная таблица значений целевых показателей. </H2>
     <br />
     <br />
-    <asp:GridView ID="GridviewCollected"  BorderStyle="Solid" runat="server"  CssClass="Grid_view_V_style Grid_view_style GridHeader gridView2" ShowFooter="true" AutoGenerateColumns="False" 
+    <asp:GridView ID="GridviewCollected"  BorderStyle="Solid" runat="server"   ShowFooter="true" AutoGenerateColumns="False" 
                 BorderColor="Black"  BorderWidth="1px" CellPadding="0">
             
                 <Columns>                  
@@ -290,7 +297,7 @@
 
                         $('#' + masoftables[i] + ' tr th').each(function (s) {
 
-                            $("th:nth-child(" + (s + 1) + ")", gridHeader).css('width', ($(this).width() + 21).toString() + "px");
+                            $("th:nth-child(" + (s + 1) + ")", gridHeader).css('width', ($(this).width() + 22).toString() + "px");
                         });
 
 
@@ -328,7 +335,7 @@
                         //$("th:nth-child(" + (s + 1) + ")", $("#" + cthead)).css('width', ($(this).width() + 3).toString() + "px");
                         // $("th:nth-child(" + (s + 1) + ")", $("#" + cthead)).css('color', "#ff0000");
                         if (($('#' + masoftables[i] + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width()) != ($('#' + cthead + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width()))
-                        { $("#" + cthead + " tr th:nth-child(" + ((f + 1).toString()) + ")").css('width', (($('#' + masoftables[i] + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width() + 21).toString()) + "px"); }
+                        { $("#" + cthead + " tr th:nth-child(" + ((f + 1).toString()) + ")").css('width', (($('#' + masoftables[i] + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width() + 22).toString()) + "px"); }
                         //$('#cdf').text("ws= "+window.screen.availWidth.toString() + "\nwh= " + windowheighter.toString());
 
                     });

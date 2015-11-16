@@ -54,5 +54,8 @@
        <br />
        <asp:Button ID="Button14" runat="server" OnClick="Button14_Click" Text="Рассчет для ректора" Width="394px" />
        <br />
+       <br />
+       <asp:Button ID="Button15" runat="server" OnClick="Button15_Click" Text="Статусы рассчитываемых данных" Width="400px" />
+       <br />
         
 </asp:Content>

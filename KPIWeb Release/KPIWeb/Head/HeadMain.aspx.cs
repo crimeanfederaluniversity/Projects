@@ -51,5 +51,10 @@ namespace KPIWeb.Head
         {
             Response.Redirect("~/Default.aspx");
         }
+
+        protected void Button6_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/AutomationDepartment/WatchProrectorSubmit.aspx");
+        }
     }
 }

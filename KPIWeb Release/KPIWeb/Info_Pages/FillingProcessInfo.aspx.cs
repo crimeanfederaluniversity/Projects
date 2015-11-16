@@ -205,5 +205,10 @@ namespace KPIWeb
         {
             Response.Redirect("~/Default.aspx");
         }
+
+        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

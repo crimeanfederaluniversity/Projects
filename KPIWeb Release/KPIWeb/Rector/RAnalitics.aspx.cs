@@ -205,6 +205,9 @@ namespace KPIWeb.Rector
                 {
                     RectorChartSession RectorChart = new RectorChartSession();
                     RectorChart.IndicatorsList = IndicatorList;
+                    RectorChooseReportClass rectorChooseReport = new RectorChooseReportClass();
+                    RectorChart.reportId = rectorChooseReport.GetNewestReportId();
+                    RectorChart.prorectorId = null;
                     Session["RectorChart"] = RectorChart;
                     Response.Redirect("~/Rector/RShowChart.aspx");
                 }
@@ -236,6 +239,9 @@ namespace KPIWeb.Rector
                 {
                     RectorChartSession RectorChart = new RectorChartSession();
                     RectorChart.IndicatorsList = IndicatorList;
+                    RectorChooseReportClass rectorChooseReport = new RectorChooseReportClass();
+                    RectorChart.reportId = rectorChooseReport.GetNewestReportId();
+                    RectorChart.prorectorId = Convert.ToInt32(button.CommandArgument);
                     Session["RectorChart"] = RectorChart;
                     Response.Redirect("~/Rector/RShowChart.aspx");
                 }
@@ -270,6 +276,9 @@ namespace KPIWeb.Rector
 
             RectorChartSession RectorChart = new RectorChartSession();
             RectorChart.IndicatorsList = IndicatorList;
+            RectorChooseReportClass rectorChooseReport = new RectorChooseReportClass();
+            RectorChart.reportId = rectorChooseReport.GetNewestReportId();
+            RectorChart.prorectorId = null;
             Session["RectorChart"] = RectorChart;
             Response.Redirect("~/Rector/RShowChart.aspx");
         }
@@ -287,22 +296,27 @@ namespace KPIWeb.Rector
             {
                 RectorChartSession RectorChart = new RectorChartSession();
                 RectorChart.IndicatorsList = IndicatorList;
+                RectorChooseReportClass rectorChooseReport = new RectorChooseReportClass();
+                RectorChart.reportId = rectorChooseReport.GetNewestReportId();
+                RectorChart.prorectorId = null;
                 Session["RectorChart"] = RectorChart;
                 Response.Redirect("~/Rector/RShowChart.aspx");
             }
         }
-
         protected void Button3_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Rector/ViewDocument.aspx");
         }
-
         protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
-
         protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/RectorMain.aspx");
+        }
+
+        protected void GoBackButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Rector/RectorMain.aspx");
         }       

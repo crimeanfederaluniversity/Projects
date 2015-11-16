@@ -2,8 +2,15 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
-    
+<asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
+    <div>    
+        <asp:Button ID="GoBackButton" runat="server" OnClientClick="window.history.back(1); return false;" Text="Назад" Width="125px" />
+        <asp:Button ID="Button2" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" OnClick="Button2_Click1" />     
+    </div> 
+</asp:Panel> 
+
      <br />
+    <br />
      Выберите отчет<br />
      <asp:DropDownList ID="DropDownList1" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
      </asp:DropDownList>

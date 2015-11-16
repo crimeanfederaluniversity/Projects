@@ -25,7 +25,7 @@
     <p>
         &nbsp;</p>
     <p>
-        <asp:Button ID="calculateButton" runat="server" OnClick="calculateButton_Click" Text="Рассчет" Width="263px" />
+        <asp:Button ID="calculateButton" runat="server" OnClick="CalculateButton_Click" Text="Рассчет" Width="263px" />
     </p>
 
 </asp:Content>

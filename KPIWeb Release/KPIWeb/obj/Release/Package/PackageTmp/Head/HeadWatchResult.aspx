@@ -1,5 +1,20 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="HeadWatchResult.aspx.cs" Inherits="KPIWeb.Head.HeadWatchResult" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">  
+
+<asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
+    <div>    
+        <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Text="Назад" Width="125px" OnClick="GoBackButton_Click" />
+        <asp:Button ID="Button2" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" OnClick="Button2_Click" />     
+    </div> 
+</asp:Panel> 
+
+    <br />
+    <br />
+    <asp:DropDownList ID="DropDownList1" runat="server" Height="29px" Width="225px">
+    </asp:DropDownList>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <asp:Button ID="Button3" runat="server" Height="33px" OnClick="Button3_Click" Text="Обновить" Width="170px" />
+
  <style>   
     .gridView2
 {
@@ -10,7 +25,7 @@
     <H2> Сводная таблица значений целевых показателей. </H2>
     <br />
     <br />
-    <asp:GridView ID="GridviewCollected"  BorderStyle="Solid" runat="server"  CssClass="Grid_view_V_style Grid_view_style GridHeader gridView2" ShowFooter="true" AutoGenerateColumns="False" 
+    <asp:GridView ID="GridviewCollected"  BorderStyle="Solid" runat="server"   ShowFooter="true" AutoGenerateColumns="False" 
                 BorderColor="Black"  BorderWidth="1px" CellPadding="0">
             
                 <Columns>                  
@@ -235,6 +250,7 @@
 
 
     <br />
+
         <script type="text/javascript" >
             var counter = 0;
             var masoftables = [];
@@ -281,7 +297,7 @@
 
                         $('#' + masoftables[i] + ' tr th').each(function (s) {
 
-                            $("th:nth-child(" + (s + 1) + ")", gridHeader).css('width', ($(this).width() +21).toString() + "px");
+                            $("th:nth-child(" + (s + 1) + ")", gridHeader).css('width', ($(this).width() + 22).toString() + "px");
                         });
 
 
@@ -289,7 +305,7 @@
                         document.getElementById(masoftables[i]).id = "ffg" + i.toString();
                         $(("#" + cthead)).css('position', 'absolute');
 
-                        $(("#" + cthead)).css('z-index', '222');
+                        $(("#" + cthead)).css('z-index', '9');
                         //  $(("#" + cthead + " tr")).css('left', ($('#' + 'ffg' + i.toString()).offset().left + 1).toString() + "px");
 
 
@@ -319,7 +335,7 @@
                         //$("th:nth-child(" + (s + 1) + ")", $("#" + cthead)).css('width', ($(this).width() + 3).toString() + "px");
                         // $("th:nth-child(" + (s + 1) + ")", $("#" + cthead)).css('color', "#ff0000");
                         if (($('#' + masoftables[i] + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width()) != ($('#' + cthead + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width()))
-                        { $("#" + cthead + " tr th:nth-child(" + ((f + 1).toString()) + ")").css('width', (($('#' + masoftables[i] + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width() + 21).toString()) + "px"); }
+                        { $("#" + cthead + " tr th:nth-child(" + ((f + 1).toString()) + ")").css('width', (($('#' + masoftables[i] + ' tr th:nth-child(' + ((f + 1).toString()) + ')').width() + 22).toString()) + "px"); }
                         //$('#cdf').text("ws= "+window.screen.availWidth.toString() + "\nwh= " + windowheighter.toString());
 
                     });
@@ -347,16 +363,16 @@
                     ownerdiv += '_' + i.toString();
                     cthead += '_' + i.toString();
 
-                    if ((document.getElementById(ownerdiv).getBoundingClientRect().top) < 50) {
+                    if ((document.getElementById(ownerdiv).getBoundingClientRect().top) < 90) {
 
 
-                        if ((document.getElementById(ownerdiv).getBoundingClientRect().bottom) < 100) {
+                        if ((document.getElementById(ownerdiv).getBoundingClientRect().bottom) < 140) {
                             $('#' + cthead).css('position', 'absolute');
                         }
                         else {
                             $('#' + cthead).css('position', 'fixed');
                             $('#' + cthead).css('width', (((document.getElementById(ownerdiv).getBoundingClientRect().right - document.getElementById(ownerdiv).getBoundingClientRect().left).toString()) + "px"));
-                            $('#' + cthead).css('top', '48px');
+                            $('#' + cthead).css('top', '88px');
                             $('#' + cthead).css('left', ((document.getElementById(ownerdiv).getBoundingClientRect().left + 1).toString()) + "px");
                         }
                     }
@@ -366,11 +382,7 @@
                         $('#' + cthead).css('left', ((0).toString()) + "px");
                         $('#' + cthead).css('top', '0');
                     }
-
-
                 }
             }
-
        </script>
-
 </asp:Content>

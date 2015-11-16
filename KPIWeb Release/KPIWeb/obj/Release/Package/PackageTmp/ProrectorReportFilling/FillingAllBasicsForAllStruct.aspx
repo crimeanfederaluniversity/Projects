@@ -241,6 +241,9 @@ background-color:#FFFFFF}
      <h4>
 <asp:Label ID="ReportNameLabel" runat="server" Text="reportName"></asp:Label>
 </h4>
+    <p>
+        Значения по данным показателям вносятся суммарно по всем структурным подразделениям КФУ.
+    </p>
     <br>
     <asp:GridView ID="GridviewCollectedBasicParameters"  BorderStyle="Solid" runat="server" AutoGenerateColumns="False" 
                 BorderColor="Black"  BorderWidth="1px" CellPadding="0">

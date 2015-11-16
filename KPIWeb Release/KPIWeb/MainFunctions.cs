@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.EnterpriseServices.Internal;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -240,7 +241,99 @@ namespace KPIWeb
                       && a.Active == true
                 select a).Distinct().ToList();
             return fourthLevelList;
-        }    
+        }
+
+        public List<IndicatorsTable> GetIndicatorsInReport(int reportId)
+        {
+            List<IndicatorsTable> newIndicatorsTable = (from a in _kPiDataContext.IndicatorsTable
+                where a.Active == true
+                join b in _kPiDataContext.ReportArchiveAndIndicatorsMappingTable
+                    on a.IndicatorsTableID equals b.FK_IndicatorsTable
+                where b.Active == true
+                      && b.FK_ReportArchiveTable == reportId
+                select a).Distinct().ToList();
+            return newIndicatorsTable;
+        }
+        public List<CalculatedParametrs> GetCalculatedParametrsInReport(int reportId)
+        {
+            return (from a in _kPiDataContext.CalculatedParametrs
+                        where a.Active == true 
+                        join b in _kPiDataContext.ReportArchiveAndCalculatedParametrsMappingTable
+                        on a.CalculatedParametrsID equals b.FK_CalculatedParametrsTable
+                        where b.Active == true
+                        && b.FK_ReportArchiveTable == reportId
+                        select  a).Distinct().ToList();
+        }
+        public string GetResponsibleProrectorPositionForIndicator (int indicatorId)
+        {
+            UsersTable responsibleProrector = (from a in _kPiDataContext.UsersTable
+                where a.Active == true
+                      && a.AccessLevel == 5
+                join b in _kPiDataContext.IndicatorsAndUsersMapping
+                    on a.UsersTableID equals b.FK_UsresTable
+                where b.Active == true
+                      && b.CanConfirm == true
+                      && b.FK_IndicatorsTable == indicatorId
+                      && a.UsersTableID != 12769
+                      && a.UsersTableID != 12803
+                      && a.UsersTableID != 12806
+                select a).FirstOrDefault();
+            if (responsibleProrector == null)
+            {
+                return "Ответственный проректор не назначен";
+            }
+            else
+            {
+                return responsibleProrector.Position;
+            }
+        }
+        public string GetResponsibleProrectorPositionForCalculated(int calculatedId)
+        {
+            UsersTable responsibleProrector = (from a in _kPiDataContext.UsersTable
+                                               where a.Active == true
+                                                     && a.AccessLevel == 5
+                                               join b in _kPiDataContext.CalculatedParametrsAndUsersMapping
+                                                   on a.UsersTableID equals b.FK_UsersTable
+                                               where b.Active == true
+                                                     && b.CanConfirm == true
+                                                     && b.FK_CalculatedParametrsTable == calculatedId
+                                                     && a.UsersTableID != 12769
+                                                     && a.UsersTableID != 12803
+                                                     && a.UsersTableID != 12806
+                                               select a).FirstOrDefault();
+            if (responsibleProrector == null)
+            {
+                return "Ответственный проректор не назначен";
+            }
+            else
+            {
+                return responsibleProrector.Position;
+            }
+        }
+        public CollectedIndocators GetCollectedIndicatorInReport(int indicatorsId, int reportId)
+        {
+            return (from a in _kPiDataContext.CollectedIndocators
+                where a.Active == true
+                      && a.FK_ReportArchiveTable == reportId
+                      && a.FK_Indicators == indicatorsId
+                select a).FirstOrDefault();
+        }
+        public CollectedCalculatedParametrs GetCollectedCalculatedInRepost(int calculatedId, int reportId)
+        {
+            return (from a in _kPiDataContext.CollectedCalculatedParametrs
+                    where a.Active == true
+                          && a.FK_ReportArchiveTable == reportId
+                          && a.FK_CalculatedParametrs == calculatedId
+                    select a).FirstOrDefault();
+        }
+        public ConfirmationHistory GetConfirmationHistoryLine(int indicatorId, int calculatedId, int reportId)
+        {
+            return (from a in _kPiDataContext.ConfirmationHistory
+                where (a.FK_CalculatedParamTable == calculatedId || calculatedId == 0)
+                      && (a.FK_IndicatorsTable == indicatorId || indicatorId == 0)
+                      && a.FK_ReportTable == reportId
+                select a).Distinct().FirstOrDefault();
+        }
     }
     public class RangeValidatorFunctions
     {
@@ -1679,16 +1772,20 @@ namespace KPIWeb
 
         12758 form.politic@mail.ru		Проректор по международной деятельности и информационной политике
         12401 elena-chuyan@rambler.ru	Первый проректор
-
-        12324 vladimir@crimea.edu		Проректор по учебной и методической деятельности
+         * 
+        
+         * 
         12399 napks@napks.edu.ua		Проректор по научной деятельности
+         * 
+        12324 vladimir@crimea.edu		Проректор по учебной и методической деятельности
         12402 va.mikheev@mail.ru		Проректор по организационной и правовой деятельности
         12405 barkova.cfu@yandex.ru		Проректор по финансовой и экономической деятельности       
+         * 
         12412 kfu.innovacia@mail.ru		Проректор по инновационной деятельности и перспективному развитию
          */
         private readonly KPIWebDataContext _kPiDataContext = new KPIWebDataContext();
-        private int[] prorectorFillsByStruct = new[] { 12758 }; // заполняют по кафедрам 
-        private int[] prorectorFillsForAllStruct = new[] { 12758, 12401, 12324, 12399, 12402, 12405, 12412 };// заполняют для всего КФУ сразу
+        private int[] prorectorFillsByStruct = new[] { 12758, 12401, 12399, 12412 }; // заполняют по кафедрам 
+        private int[] prorectorFillsForAllStruct = new[] { 12402, 12405,12324 };// заполняют для всего КФУ сразу
         private int[] reportsToAllowFillForAllStruct = new[] {4};
         private int[] reportsToAllowFillByStruct = new[] {4};
 

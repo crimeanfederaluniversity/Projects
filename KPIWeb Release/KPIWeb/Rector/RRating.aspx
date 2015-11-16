@@ -15,7 +15,12 @@
       <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel();"  Text="Назад" Width="125px" Enabled="True" OnClick="GoBackButton_Click" />
       <asp:Button ID="GoForwardButton" runat="server" OnClientClick="showLoadPanel();"  Text="Вперед" Width="125px" OnClick="GoForwardButton_Click" />
         &nbsp; &nbsp; <asp:Button ID="Button22" OnClientClick="showLoadPanel()" runat="server"  Text="На главную" Width="125px" Enabled="True" OnClick="Button22_Click" />
-        &nbsp; &nbsp;<asp:Button ID="Button5" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right" OnClick="Button5_Click" Text="Нормативные документы" Width="300px" />
+         &nbsp;&nbsp;
+            <asp:DropDownList ID="RectorChooseReportDropDown" runat="server" Height="20px" Width="550px" AutoPostBack="True" OnSelectedIndexChanged="RectorChooseReportDropDown_SelectedIndexChanged">
+            </asp:DropDownList>
+            &nbsp; &nbsp;
+            
+            &nbsp; &nbsp;<asp:Button ID="Button5" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right" OnClick="Button5_Click" Text="Нормативные документы" Width="300px" />
             &nbsp; &nbsp; &nbsp; &nbsp;
         </div>
 
@@ -27,6 +32,11 @@
          <asp:Label ID="Title" runat="server" Text="Заголовок" Font-Size="20pt"></asp:Label>
 
          <br />
+         <div id="noDataMessage" runat="server" Visible="False">           
+           <h3 align="center">
+            <asp:Label ID="noDataMessageLabel" runat="server" Text="Сведения внесены по совокупным данным, разложение невозможно."></asp:Label>
+           </h3>               
+        </div> 
          <br />
          <style>     
 
@@ -73,14 +83,14 @@
                  
                     <asp:TemplateField HeaderText="Детализация показателя по академиям">
                         <ItemTemplate>
-                            <asp:Button ID="Button1" runat="server" CommandName="Select" Text='<%# Eval("Button_Text") %>' CommandArgument='<%# Eval("ID") %>' Width="200px" 
+                            <asp:Button ID="Button1" runat="server" CommandName="Select" Text='<%# Eval("Button_Text") %>' Enabled='<%# Eval("ButtonDetal1Visible") %>' CommandArgument='<%# Eval("ID") %>' Width="200px" 
                                 OnClick="Button1Click " />
                         </ItemTemplate>
                     </asp:TemplateField>
                     
                   <asp:TemplateField HeaderText="Детализация показателя по факультетам">
                         <ItemTemplate>
-                            <asp:Button ID="Button2" runat="server" CommandName="Select" Text='<%# Eval("Button_Text") %>' CommandArgument='<%# Eval("ID") %>' Width="200px" 
+                            <asp:Button ID="Button2" runat="server" CommandName="Select" Text='<%# Eval("Button_Text") %>' Enabled='<%# Eval("ButtonDetal2Visible") %>' CommandArgument='<%# Eval("ID") %>' Width="200px" 
                                 OnClick="Button2Click " />
                         </ItemTemplate>
                     </asp:TemplateField>

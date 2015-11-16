@@ -83,7 +83,7 @@ namespace KPIWeb.Rector
                 Name = name;
             }
         }
-        public static List<Struct> GetAllSecondLevel()
+        public static List<Struct> GetAllSecondLevelInReport(int reportId)
         {
             List<Struct> tmpStrucList = new List<Struct>();
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();          
@@ -91,8 +91,20 @@ namespace KPIWeb.Rector
                         tmpStrucList = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
                                         join b in kpiWebDataContext.SecondLevelSubdivisionTable
                                         on a.FirstLevelSubdivisionTableID equals b.FK_FirstLevelSubdivisionTable
-                                        where a.Active == true
-                                        && b.Active == true
+                                        
+
+
+
+
+                                        join c in kpiWebDataContext.ReportArchiveAndLevelMappingTable
+                                      on b.SecondLevelSubdivisionTableID equals c.FK_SecondLevelSubdivisionTable
+
+                                        where c.Active == true
+
+                                         && (c.FK_ReportArchiveTableId == reportId || reportId == 0 ||
+                             (reportId == 100500 && (c.FK_ReportArchiveTableId == 3 || c.FK_ReportArchiveTableId == 1)))
+
+
                                         select new Struct(1, "")
                                         {
                                             Lv_0 = (int)a.FK_ZeroLevelSubvisionTable,
@@ -102,7 +114,7 @@ namespace KPIWeb.Rector
                                             Lv_4 = 0,
                                             Lv_5 = 0,
                                             Name = b.Name
-                                        }).ToList();
+                                        }).Distinct().ToList();
     
 
             return tmpStrucList;
@@ -145,7 +157,8 @@ namespace KPIWeb.Rector
                                         on a.FirstLevelSubdivisionTableID equals b.FK_FirstLevelSubmisionTableId
 
                                         where a.Active == true
-                                        && b.FK_ReportArchiveTableId == ReportID
+                                        && (b.FK_ReportArchiveTableId == ReportID || ReportID == 0 ||
+                             (ReportID == 100500 && (b.FK_ReportArchiveTableId == 3 || b.FK_ReportArchiveTableId == 1)))
                                         && b.Active == true
                                         && a.FK_ZeroLevelSubvisionTable == ParentStruct.Lv_0
                                         select new Struct(1, "")
@@ -171,6 +184,10 @@ namespace KPIWeb.Rector
                                        on a.FirstLevelSubdivisionTableID equals c.FK_FirstLevelSubmisionTableId
 
                                         where a.Active == true
+
+                                         && (c.FK_ReportArchiveTableId == ReportID || ReportID == 0 ||
+                             (ReportID == 100500 && (c.FK_ReportArchiveTableId == 3 || c.FK_ReportArchiveTableId == 1)))
+                              && c.Active == true
                                         && b.SecondLevelSubdivisionTableID == c.FK_SecondLevelSubdivisionTable
                                         && b.Active == true
                                         && a.FK_ZeroLevelSubvisionTable == ParentStruct.Lv_0
@@ -199,10 +216,15 @@ namespace KPIWeb.Rector
                                        on a.FirstLevelSubdivisionTableID equals d.FK_FirstLevelSubmisionTableId
 
                                         where a.Active == true
+
+                                         && (d.FK_ReportArchiveTableId == ReportID || ReportID == 0 ||
+                             (ReportID == 100500 && (d.FK_ReportArchiveTableId == 3 || d.FK_ReportArchiveTableId == 1)))
+
                                         && b.SecondLevelSubdivisionTableID == c.FK_SecondLevelSubdivisionTable
                                         && c.ThirdLevelSubdivisionTableID == d.FK_ThirdLevelSubdivisionTable
                                         where a.Active == true
                                         && b.Active == true
+                                         && d.Active == true
                                         && c.Active == true
                                         && a.FK_ZeroLevelSubvisionTable == ParentStruct.Lv_0
                                         && b.FK_FirstLevelSubdivisionTable == ParentStruct.Lv_1
@@ -231,6 +253,7 @@ namespace KPIWeb.Rector
                                         where a.Active == true
                                         && b.Active == true
                                         && c.Active == true
+                                         && d.Active == true
                                         && a.FK_ZeroLevelSubvisionTable == ParentStruct.Lv_0
                                         && b.FK_FirstLevelSubdivisionTable == ParentStruct.Lv_1
                                         && c.FK_SecondLevelSubdivisionTable == ParentStruct.Lv_2
@@ -567,7 +590,7 @@ namespace KPIWeb.Rector
             }
             return tmp;
         }
-        public static ChartOneValue GetCalculatedIndicator(int ReportID, IndicatorsTable Indicator, FirstLevelSubdivisionTable Academy, SecondLevelSubdivisionTable Faculty) // academyID == null && facultyID==null значит для всего КФУ
+        public static ChartOneValue GetCalculatedIndicator(int ReportID, IndicatorsTable Indicator, FirstLevelSubdivisionTable Academy, SecondLevelSubdivisionTable Faculty,DateTime? startDate,DateTime? endDate) // academyID == null && facultyID==null значит для всего КФУ
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             float Planned_Value = 0;
@@ -621,31 +644,40 @@ namespace KPIWeb.Rector
             {
                 //mainStruct = new ForRCalc.Struct(1, 0, 0, 0, 0, "N");
                 collected = (from a in kpiWebDataContext.CollectedIndicatorsForR
-                             where a.FK_ReportArchiveTable == ReportID
+                             where (a.FK_ReportArchiveTable == ReportID || ReportID == 0 ||
+                             (ReportID == 100500 && (a.FK_ReportArchiveTable == 3 || a.FK_ReportArchiveTable == 1)))
                              && a.FK_IndicatorsTable == Indicator.IndicatorsTableID
                              && a.FK_FirstLevelSubdivisionTable == null
                              && a.FK_SecondLevelSubdivisionTable == null
-                             select a).FirstOrDefault();
+                             && (a.CreatedDateTime < endDate || endDate == null)
+                             && (a.CreatedDateTime > startDate || startDate == null)
+                             select a).OrderByDescending(dc => dc.CreatedDateTime).FirstOrDefault();
             }
             else if (Faculty != null)
             {
                 //mainStruct = new ForRCalc.Struct(1, Faculty.FK_FirstLevelSubdivisionTable, Faculty.SecondLevelSubdivisionTableID, 0, 0, "N");
                 collected = (from a in kpiWebDataContext.CollectedIndicatorsForR
-                             where a.FK_ReportArchiveTable == ReportID
+                             where (a.FK_ReportArchiveTable == ReportID || ReportID == 0 ||
+                             (ReportID == 100500 && (a.FK_ReportArchiveTable == 3 || a.FK_ReportArchiveTable == 1)))
                              && a.FK_IndicatorsTable == Indicator.IndicatorsTableID
                              && a.FK_FirstLevelSubdivisionTable == Faculty.FK_FirstLevelSubdivisionTable
                              && a.FK_SecondLevelSubdivisionTable == Faculty.SecondLevelSubdivisionTableID
-                             select a).FirstOrDefault();
+                              && (a.CreatedDateTime < endDate || endDate == null)
+                              && (a.CreatedDateTime > startDate || startDate == null)
+                             select a).OrderByDescending(dc => dc.CreatedDateTime).FirstOrDefault();
             }
             else if (Academy != null)
             {
                 //mainStruct = new ForRCalc.Struct(1, Academy.FirstLevelSubdivisionTableID, 0, 0, 0, "N");
                 collected = (from a in kpiWebDataContext.CollectedIndicatorsForR
-                             where a.FK_ReportArchiveTable == ReportID
+                             where (a.FK_ReportArchiveTable == ReportID || ReportID == 0 ||
+                             (ReportID == 100500 && (a.FK_ReportArchiveTable == 3 || a.FK_ReportArchiveTable == 1)))
                              && a.FK_IndicatorsTable == Indicator.IndicatorsTableID
                              && a.FK_FirstLevelSubdivisionTable == Academy.FirstLevelSubdivisionTableID
                              && a.FK_SecondLevelSubdivisionTable == null
-                             select a).FirstOrDefault();
+                              && (a.CreatedDateTime < endDate || endDate == null)
+                              && (a.CreatedDateTime > startDate || startDate == null)
+                             select a).OrderByDescending(dc => dc.CreatedDateTime).FirstOrDefault();
             }
             /*    
         float tmp = ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0, Indicator.IndicatorsTableID, ReportID, 0));
@@ -675,8 +707,7 @@ namespace KPIWeb.Rector
             #endregion
             ChartOneValue DataRowForChart = new ChartOneValue(Name_, Value_, Planned_Value);
             return DataRowForChart;
-        }
-  
+        } 
         public static ChartValueWithAllPlanned GetAllPlannedForIndicator(int IndicatorID)
         {
             ChartValueWithAllPlanned tmp = new ChartValueWithAllPlanned();
@@ -693,48 +724,175 @@ namespace KPIWeb.Rector
                                                               select a).OrderBy(c => c.Date).ToList();
             List<ChartPlannedValue> PlannedValues = new List<ChartPlannedValue>();
             PlannedIndicator prev = null;
+            DateTime startDate = Convert.ToDateTime("01,01,2000");
             foreach (PlannedIndicator currentPlanned in PlannedForIndicatorList)
             {
                 ChartPlannedValue PlannedTemp = new ChartPlannedValue();
                 PlannedTemp.Date = (DateTime)currentPlanned.Date;
                 PlannedTemp.PlannedValue = (float)currentPlanned.Value;
-                CollectedIndicatorsForR ValuesForIndicatorList = new CollectedIndicatorsForR();
-                float tmp2 =0;
-                if (prev == null)
-                {
-                    CollectedIndicatorsForR collected = (from a in kpiWebDataContext.CollectedIndicatorsForR
-                                                                  where a.Active == true
-                                                                  && a.FK_FirstLevelSubdivisionTable == null
-                                                                  && a.FK_IndicatorsTable == CurrentIndicator.IndicatorsTableID
-                                                                  && a.CreatedDateTime < currentPlanned.Date
-                                                                  select a).FirstOrDefault();
-                    if(collected!=null )
-                    {
-                        tmp2 = (float) collected.Value;
-                    }
-                    
-                }
-                else
-                {
-                    CollectedIndicatorsForR collected = (from a in kpiWebDataContext.CollectedIndicatorsForR
-                                                         where a.Active == true
-                                                         && a.FK_FirstLevelSubdivisionTable == null
-                                                         && a.FK_IndicatorsTable == CurrentIndicator.IndicatorsTableID
-                                                         && a.CreatedDateTime < currentPlanned.Date
-                                                         && a.CreatedDateTime > prev.Date
-                                                         select a).FirstOrDefault();
-                    if (collected != null)
-                    {
-                        tmp2 = (float)collected.Value;
-                    }
-                }
-                PlannedTemp.RealValue = tmp2;
+                DateTime endDate = PlannedTemp.Date;
+                ChartOneValue tmpChart = GetCalculatedIndicator(0, CurrentIndicator, null, null,startDate, endDate);
+                PlannedTemp.RealValue = tmpChart.value;
+                startDate = endDate;
                 PlannedValues.Add(PlannedTemp);
-                prev = currentPlanned;
             }
             tmp.PlannedAndRealValuesList = PlannedValues;
             return tmp;
         }
+        public ChartValueArray AllIndicatorsForAcademys(int ReportID)
+        {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
 
+            List<IndicatorsTable> Indicators = (
+                            from a in kpiWebDataContext.IndicatorsTable
+                            where
+                                a.Active == true
+                            select a).OrderBy(mc => mc.SortID).ToList();
+
+            ChartValueArray DataForChart = new ChartValueArray("График достижения плановых значений целевых показателей");
+            foreach (IndicatorsTable CurrentIndicator in Indicators)
+            {
+                DataForChart.ChartValues.Add(ForRCalc.GetCalculatedIndicator(0, CurrentIndicator, null, null,null,null));
+            }
+            return DataForChart;
+        }        
+        public ChartValueArray IndicatorForAllAcademys(int IndicatorID, int ReportID)
+        {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            IndicatorsTable Indicator = (from a in kpiWebDataContext.IndicatorsTable
+                                         where a.IndicatorsTableID == IndicatorID
+                                         select a).FirstOrDefault();
+            List<FirstLevelSubdivisionTable> AcademyList = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
+                                                            where a.Active == true
+                                                            select a).ToList();
+
+            ChartValueArray DataForChart = new ChartValueArray("Целевой показатель '" + Indicator.Name + "' в разрезе академий КФУ");
+
+            foreach (FirstLevelSubdivisionTable CurrentAcademy in AcademyList)
+            {
+                DataForChart.ChartValues.Add(ForRCalc.GetCalculatedIndicator(ReportID, Indicator, CurrentAcademy, null, null, null));
+            }
+            return DataForChart;
+        }             
+        public ChartValueArray AllIndicatorsForOneAcademy(int AcademyID, int ReportID)
+        {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+
+            List<IndicatorsTable> Indicators = (
+                            from a in kpiWebDataContext.IndicatorsTable
+                            where
+                                a.Active == true
+                            select a).OrderBy(mc => mc.SortID).ToList();
+            FirstLevelSubdivisionTable FirstLevelRow = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
+                                                        where a.FirstLevelSubdivisionTableID == AcademyID
+                                                        select a).FirstOrDefault();
+            ChartValueArray DataForChart = new ChartValueArray("График достижения плановых значений целевых показателей для академии " + FirstLevelRow.Name);
+            foreach (IndicatorsTable CurrentIndicator in Indicators)
+            {
+                DataForChart.ChartValues.Add(ForRCalc.GetCalculatedIndicator(ReportID, CurrentIndicator, FirstLevelRow, null, null, null));
+            }
+            return DataForChart;
+        }
+        public ChartValueArray IndicatorsForCFU(List<int> Indicators, int ReportID)
+        {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            ChartValueArray DataForChart = new ChartValueArray("График достижения выбранных плановых значений целевых показателей для КФУ");
+            foreach (int CurrentIndicatorID in Indicators)
+            {
+                IndicatorsTable Indicator = (
+                               from a in kpiWebDataContext.IndicatorsTable
+                               where
+                                   a.Active == true
+                                   && a.IndicatorsTableID == CurrentIndicatorID
+                               select a).FirstOrDefault();
+                DataForChart.ChartValues.Add(ForRCalc.GetCalculatedIndicator(ReportID, Indicator, null, null, null, null));
+            }
+            return DataForChart;
+        }
+        public ChartOneValue IndicatorsForCFUOneIndicator(int curIndicator, int reportId)
+        {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            IndicatorsTable Indicator = (
+                           from a in kpiWebDataContext.IndicatorsTable
+                           where
+                               a.Active == true
+                               && a.IndicatorsTableID == curIndicator
+                           select a).FirstOrDefault();
+
+            return ForRCalc.GetCalculatedIndicator(reportId, Indicator, null, null, null,null);
+        }
+        public ChartValueArray IndicatorsForAllFacultys(int IndicatorID, int ReportID)
+        {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            IndicatorsTable Indicator = (from a in kpiWebDataContext.IndicatorsTable
+                                         where a.IndicatorsTableID == IndicatorID
+                                         select a).FirstOrDefault();
+            List<SecondLevelSubdivisionTable> FacultyList = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                                                             where a.Active == true
+                                                             select a).ToList();
+
+            ChartValueArray DataForChart = new ChartValueArray("Целевой показатель '" + Indicator.Name + "' в разрезе факультетов КФУ");
+
+            foreach (SecondLevelSubdivisionTable CurrentFavulty in FacultyList)
+            {
+                FirstLevelSubdivisionTable Academy = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
+                                                      where a.FirstLevelSubdivisionTableID == CurrentFavulty.FK_FirstLevelSubdivisionTable
+                                                      select a).FirstOrDefault();
+                DataForChart.ChartValues.Add(ForRCalc.GetCalculatedIndicator(0, Indicator, Academy, CurrentFavulty,null,null));
+            }
+            return DataForChart;
+        }
+        public ChartValueArray IndicatorsForAcademyFacultys(int IndicatorID, int AcademyID, int reportId)
+        {
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+
+            IndicatorsTable Indicator = (from a in kpiWebDataContext.IndicatorsTable
+                                         where a.IndicatorsTableID == IndicatorID
+                                         select a).FirstOrDefault();
+
+            List<SecondLevelSubdivisionTable> FacultyList = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                                                             where a.Active == true && a.FK_FirstLevelSubdivisionTable == AcademyID
+                                                             select a).ToList();
+
+            ChartValueArray DataForChart = new ChartValueArray("Целевой показатель '" + Indicator.Name + "' в разрезе " + (from b in kpiWebDataContext.FirstLevelSubdivisionTable where b.FirstLevelSubdivisionTableID == AcademyID select b.Name).FirstOrDefault());
+
+            foreach (SecondLevelSubdivisionTable CurrentFavulty in FacultyList)
+            {
+                FirstLevelSubdivisionTable Academy = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
+                                                      where a.FirstLevelSubdivisionTableID == CurrentFavulty.FK_FirstLevelSubdivisionTable
+                                                      select a).FirstOrDefault();
+                DataForChart.ChartValues.Add(GetCalculatedIndicator(reportId, Indicator, Academy, CurrentFavulty,null,null));
+            }
+            return DataForChart;
+        }
+        public string FloatToStrFormat(float value, float plannedValue, int DataType)
+        {
+            if (DataType == 1)
+            {
+                string tmpValue = Math.Ceiling(value).ToString();// value.ToString("0");
+                return tmpValue;
+            }
+            else if (DataType == 2)
+            {
+                string tmpValue = value.ToString();
+                string tmpPlanned = plannedValue.ToString();
+                int PlannedNumbersAftepPoint = 2;
+                if (tmpPlanned.IndexOf(',') != -1)
+                {
+                    PlannedNumbersAftepPoint = (tmpPlanned.Length - tmpPlanned.IndexOf(',') + 1);
+                }
+                int ValuePointIndex = tmpValue.IndexOf(',');
+                if (ValuePointIndex != -1)
+                {
+                    if ((tmpValue.Length - ValuePointIndex - PlannedNumbersAftepPoint) > 0)
+                    {
+                        tmpValue = tmpValue.Remove(ValuePointIndex + PlannedNumbersAftepPoint, tmpValue.Length - ValuePointIndex - PlannedNumbersAftepPoint);
+                    }
+                }
+                return tmpValue;
+            }
+
+            return "0";
+        }
     }
 }

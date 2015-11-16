@@ -193,6 +193,7 @@
     <Content Include="AutomationDepartment\ReturnReportForUser.aspx" />
     <Content Include="AutomationDepartment\SendInvite.aspx" />
     <Content Include="AutomationDepartment\WatchingParamtrsState.aspx" />
+    <Content Include="AutomationDepartment\WatchProrectorSubmit.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -456,6 +457,13 @@
     </Compile>
     <Compile Include="AutomationDepartment\WatchingParamtrsState.aspx.designer.cs">
       <DependentUpon>WatchingParamtrsState.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AutomationDepartment\WatchProrectorSubmit.aspx.cs">
+      <DependentUpon>WatchProrectorSubmit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutomationDepartment\WatchProrectorSubmit.aspx.designer.cs">
+      <DependentUpon>WatchProrectorSubmit.aspx</DependentUpon>
     </Compile>
     <Compile Include="CalculateAbb.cs" />
     <Compile Include="CalculateIndicator.cs" />

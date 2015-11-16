@@ -51,13 +51,14 @@
     
             <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
         <div>    
-      <asp:Button ID="GoBackButton" runat="server" OnClientClick="JavaScript:window.history.back(1); return false; showLoadPanel();"  Text="Назад" Width="125px" Enabled="True" />
+      <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel();"  Text="Назад" Width="125px" Enabled="True" OnClick="GoBackButton_Click" />
       <asp:Button ID="GoForwardButton" runat="server" OnClientClick="JavaScript:window.history.forward(1); return false; showLoadPanel();"  Text="Вперед" Width="125px" />
         &nbsp; &nbsp; <asp:Button ID="Button2" OnClientClick="showLoadPanel()" runat="server"  Text="На главную" Width="125px" Enabled="True" OnClick="Button2_Click" />
-        &nbsp; &nbsp;       
-        <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right"  Text="Выбор отчета" Enabled="False" Width="225px" />
-        &nbsp; &nbsp;
-        <asp:Button ID="Button6" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right"  Text="Button" Width="150px" Visible="False" />
+            &nbsp;&nbsp;
+            <asp:DropDownList ID="RectorChooseReportDropDown" runat="server" Height="26px" Width="550px" AutoPostBack="True" OnSelectedIndexChanged="RectorChooseReportDropDown_SelectedIndexChanged">
+            </asp:DropDownList>
+            &nbsp; &nbsp;
+        <asp:Button ID="Button6" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right"  Text="Button" Width="150px" Visible="False" OnClick="Button6_Click" />
         &nbsp; &nbsp;
         </div>
 
@@ -68,9 +69,21 @@
     <div style="position: relative" id="owow">
        
         <div id="idh1_1">Прогресс достижения целевых показателей КФУ</div>
+         
+        <div id="prorectorNameDiv" runat="server" Visible="False">           
+           <h3 align="center">
+            <asp:Label ID="prorectorNameLabel" runat="server" Text=""></asp:Label>
+           </h3>               
+        </div> 
+        
+
+
        <div id="asdasd" style="position: relative;">
+          
         <div id="gwownerdiv">
-             
+            
+            
+
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Width="700px" OnRowDataBound="GridView1_RowDataBound" CssClass="rrrr">
             <Columns>
                 <asp:BoundField HeaderText="ID индикатора" DataField="IndicatorID" ItemStyle-Width="120px" Visible="False" />
@@ -95,14 +108,14 @@
                 <asp:TemplateField HeaderText="Подробнее">
                     <ItemTemplate>
                         <asp:Button ID="Button7" runat="server" OnClientClick="showLoadPanel()" CommandName="Select" Text='<%# Eval("Button_Text") %>' CommandArgument='<%# Eval("IndicatorID") %>' OnClick="DetailedButtonClick"/>
-                        </ItemTemplate>
+                        <asp:Label ID="labelPrerctorFault" runat="server" Text='<%# Bind("IsResponsibleForWrongData") %>' Visible="True"></asp:Label>
+                    </ItemTemplate>
                     </asp:TemplateField>
             </Columns>
         </asp:GridView>
 
             </div>
            
-
        </div>
         <br />
     

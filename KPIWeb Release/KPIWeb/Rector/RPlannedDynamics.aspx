@@ -24,9 +24,7 @@
       <asp:Button ID="GoBackButton" runat="server" OnClick="Button2_Click"  Text="Назад" Width="125px" Enabled="True" />
       <asp:Button ID="GoForwardButton" runat="server" OnClientClick="JavaScript:window.history.forward(1); return false;"  Enabled = "False" Text="Вперед" Width="125px" />
         &nbsp; &nbsp; <asp:Button ID="Button2" runat="server"  Text="На главную" Width="125px" Enabled="True" OnClick="Button2_Click" />
-        &nbsp; &nbsp;       
-        <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()"   Text="Выбор отчета" Enabled="False" Width="225px" />
-       <asp:Button ID="Button5" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right" OnClick="Button5_Click" Text="Нормативные документы" Width="300px" />
+            &nbsp;<asp:Button ID="Button5" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right" OnClick="Button5_Click" Text="Нормативные документы" Width="300px" />
 
                  &nbsp; &nbsp; &nbsp; &nbsp;
         </div>

@@ -257,7 +257,7 @@ background-color:#FFFFFF}
                         </ItemTemplate>
                     </asp:TemplateField>   
                  
-                 <asp:TemplateField Visible="False"  HeaderText="Перейти к заполнению отчета по КФУ в целом">
+                 <asp:TemplateField Visible="True"  HeaderText="Перейти к заполнению отчета по КФУ в целом">
                         <ItemTemplate >
                             <asp:Button ID="ButtonFillReportForAllStruct" OnClientClick="showLoadPanel()" runat="server" Enabled='<%# Eval("ViewButtonEnabledForAllStruct") %>' CommandName="Select" Text="Заполнить" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonFillReportForAllStruct"/>                           
                         </ItemTemplate>

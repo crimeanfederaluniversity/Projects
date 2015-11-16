@@ -367,7 +367,7 @@ namespace KPIWeb.AutomationDepartment
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Пользователь с таким логином уже существует, выберите другой логин!');", true);
             }
 
-            else if ((from a in kPiDataContext.UsersTable where a.Email == EmailText.Text select a).ToList().Count > 0)
+            else if ((from a in kPiDataContext.UsersTable where a.Email == EmailText.Text && a.Active == true select a).ToList().Count > 0)
             {
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
                     "alert('Введенный адрес электронной почты уже зарегестрирован, введите другой');", true);

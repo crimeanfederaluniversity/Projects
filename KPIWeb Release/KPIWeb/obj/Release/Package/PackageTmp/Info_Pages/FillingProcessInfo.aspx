@@ -1,7 +1,15 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="FillingProcessInfo.aspx.cs" Inherits="KPIWeb.FillingProcessInfo" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-      <br />
+      
+    <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
+    <div>    
+        <asp:Button ID="GoBackButton" runat="server" OnClientClick="window.history.back(1); return false;" Text="Назад" Width="125px" OnClick="GoBackButton_Click" />
+        <asp:Button ID="Button2" runat="server" OnClientClick="showLoadPanel()" Text="На главную" Width="125px" OnClick="Button2_Click" />     
+    </div> 
+</asp:Panel> 
+    <br />
+    <br />
       Выберите отчет<style>  
 
     .LoadPanel 
@@ -218,7 +226,7 @@ background-color:#FFFFFF}
             }
     </script>
 
-      <asp:DropDownList ID="DropDownList1" runat="server">
+      <asp:DropDownList ID="DropDownList1" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
       </asp:DropDownList>
 
       <span style="color: rgb(0, 0, 0); font-family: tahoma, arial, verdana, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color: rgb(255, 255, 255);">

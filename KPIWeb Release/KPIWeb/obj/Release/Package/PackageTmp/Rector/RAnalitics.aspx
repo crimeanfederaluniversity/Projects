@@ -54,11 +54,11 @@
 
         <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
         <div>    
-      <asp:Button ID="GoBackButton" runat="server" OnClientClick="JavaScript:window.history.back(1); return false; showLoadPanel();"  Text="Назад" Width="125px" Enabled="True" />
+      <asp:Button ID="GoBackButton" runat="server" OnClientClick="showLoadPanel();"  Text="Назад" Width="125px" Enabled="True" OnClick="GoBackButton_Click" />
       <asp:Button ID="GoForwardButton" runat="server" OnClientClick="JavaScript:window.history.forward(1); return false; showLoadPanel();"  Enabled="False" Text="Вперед" Width="125px" />
         &nbsp; &nbsp; <asp:Button ID="Button2" OnClientClick="showLoadPanel()" runat="server"  Text="На главную" Width="125px" Enabled="True" OnClick="Button2_Click" />
         &nbsp; &nbsp;       
-        <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()"  Text="Выбор отчета" Enabled="False" Width="225px" />
+        <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()"  Text="Выбор отчета" Enabled="False" Width="225px" Visible="False" />
         &nbsp; &nbsp;
         <asp:Button ID="Button3" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right" OnClick="Button3_Click" Text="Нормативные документы" Width="300px" />
 

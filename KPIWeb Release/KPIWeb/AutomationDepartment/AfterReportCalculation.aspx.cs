@@ -56,15 +56,16 @@ namespace KPIWeb.AutomationDepartment
             }
         }
 
-        protected void calculateButton_Click(object sender, EventArgs e)
+        protected void CalculateButton_Click(object sender, EventArgs e)
         {
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
-            int ReportID = Convert.ToInt32(reportList.Items[reportList.SelectedIndex].Value); // пока только один отчет и надо сделать быстро)
             #region init
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            int reportId = Convert.ToInt32(reportList.Items[reportList.SelectedIndex].Value); // пока только один отчет и надо сделать быстро)
             //сначала берем все показатели целевые которые включены в выбранный отчет
             //находим все структурные подразделения 1-го уровня которые участвуют в этом отчете
             //находим все структурные подразделения 2-го уровня которые участвуют в этом отчете
-            List<IndicatorsTable> IndicatorsToCalculateList = new List<IndicatorsTable>();
+            List<IndicatorsTable> indicatorsToCalculateList = new List<IndicatorsTable>();
+            bool allSelectedAreInReport = true;
             foreach (ListItem tmpItem in indicatorsList.Items)
             {
                 if (tmpItem.Selected == true)
@@ -74,70 +75,68 @@ namespace KPIWeb.AutomationDepartment
                          join b in kPiDataContext.ReportArchiveAndIndicatorsMappingTable
                          on a.IndicatorsTableID equals  b.FK_IndicatorsTable
                          where b.Active == true
-                         && b.FK_ReportArchiveTable == ReportID
+                         && b.FK_ReportArchiveTable == reportId
                          select a).FirstOrDefault();
                     if (tmpIndicator == null)
                     {
                         //ERROR
-                        IndicatorsToCalculateList.Clear();
-                        break;
+                        //IndicatorsToCalculateList.Clear();
+                       // break;
+                        allSelectedAreInReport = false;
                     }
                     else
                     {
-                        IndicatorsToCalculateList.Add(tmpIndicator);
-                    }
-
-                    
+                        indicatorsToCalculateList.Add(tmpIndicator);
+                    }                  
                 }
             }
-
-            if (IndicatorsToCalculateList.Count > 0)
+            #endregion
+            if (indicatorsToCalculateList.Count > 0)
             {
-                List<FirstLevelSubdivisionTable> FirstLevelToCalculate =
+                #region getFirstAndSecondListInReport
+                List<FirstLevelSubdivisionTable> firstLevelToCalculate =
                     (from a in kPiDataContext.FirstLevelSubdivisionTable
                         join b in kPiDataContext.ReportArchiveAndLevelMappingTable
                             on a.FirstLevelSubdivisionTableID equals b.FK_FirstLevelSubmisionTableId
-                        where b.FK_ReportArchiveTableId == ReportID
+                        where b.FK_ReportArchiveTableId == reportId
                         select a).Distinct().ToList();
 
-                List<SecondLevelSubdivisionTable> SecondLevelToCalculate =
+                List<SecondLevelSubdivisionTable> secondLevelToCalculate =
                     (from a in kPiDataContext.SecondLevelSubdivisionTable
                         join b in kPiDataContext.ReportArchiveAndLevelMappingTable
                             on a.SecondLevelSubdivisionTableID equals b.FK_SecondLevelSubdivisionTable
-                        where b.FK_ReportArchiveTableId == ReportID
+                        where b.FK_ReportArchiveTableId == reportId
                         select a).Distinct().ToList();
                 //теперь пройдемся поочереди по каждому показателю
                 //первым делом посчитаем показатель для КФУ
                 //потом посчитаем показатель для каждого структурного 1-го уровня
                 //потом посчитаем показатель для каждого структурного 2-го уровня
                 //поехали:)
-
                 #endregion
-
-                foreach (IndicatorsTable CurrentIndicator in IndicatorsToCalculateList)
+                foreach (IndicatorsTable currentIndicator in indicatorsToCalculateList)
                     //считаем каждый показатель для каждого факультета, каждой академии и всего КФУ
                 {
                     #region calcForCFU
 
                     {
                         //считай для КФУ
-                        ForRCalc.Struct mainStruct = mainStruct = new ForRCalc.Struct(1, 0, 0, 0, 0, "N");
+                        ForRCalc.Struct mainStruct = new ForRCalc.Struct(1, 0, 0, 0, 0, "N");
                         double tmp =
                             ForRCalc.CalculatedForDB(
                                 (float)
-                                    ForRCalc.GetCalculatedWithParams(mainStruct, 0, CurrentIndicator.IndicatorsTableID,
-                                        ReportID, 0, 0 /*тут должен быть ID проректора*/));
+                                    ForRCalc.GetCalculatedWithParams(mainStruct, 0, currentIndicator.IndicatorsTableID,
+                                        reportId, 0, 0 /*тут должен быть ID проректора*/));
                         CollectedIndicatorsForR newCollected = new CollectedIndicatorsForR();
                         newCollected.Active = true;
                         newCollected.CreatedDateTime = DateTime.Now;
-                        newCollected.FK_ReportArchiveTable = ReportID;
-                        newCollected.FK_IndicatorsTable = CurrentIndicator.IndicatorsTableID;
-                        newCollected.FK_FirstLevelSubdivisionTable = null;
+                        newCollected.FK_ReportArchiveTable = reportId;
+                        newCollected.FK_IndicatorsTable = currentIndicator.IndicatorsTableID;
+                        newCollected.FK_FirstLevelSubdivisionTable =  null;
                         newCollected.FK_SecondLevelSubdivisionTable = null;
-                        newCollected.FK_ThirdLevelSubdivisionTable = null;
+                        newCollected.FK_ThirdLevelSubdivisionTable =  null;
                         newCollected.FK_FourthLelevlSubdivisionTable = null;
                         newCollected.FK_FifthLevelSubdivisionTable = null;
-                        if (tmp == (float) 1E+20)
+                        if (tmp > (float) 1E+19)
                         {
                             newCollected.Value = null;
                         }
@@ -150,30 +149,32 @@ namespace KPIWeb.AutomationDepartment
 
                     #endregion
 
-                    kPiDataContext.SubmitChanges();
+                    //kPiDataContext.SubmitChanges();
 
                     #region calcForAcademys
 
-                    foreach (FirstLevelSubdivisionTable CurrentFirstLevel in FirstLevelToCalculate)
+                    foreach (FirstLevelSubdivisionTable currentFirstLevel in firstLevelToCalculate)
                     {
                         //считай для академий
                         ForRCalc.Struct mainStruct =
                             mainStruct =
-                                new ForRCalc.Struct(1, CurrentFirstLevel.FirstLevelSubdivisionTableID, 0, 0, 0, "N");
+                                new ForRCalc.Struct(1, currentFirstLevel.FirstLevelSubdivisionTableID, 0, 0, 0, "N");
                         double tmp =
                             ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0,
-                                CurrentIndicator.IndicatorsTableID, ReportID, 0,0 /*тут должен быть ID проректора*/));
-                        CollectedIndicatorsForR newCollected = new CollectedIndicatorsForR();
-                        newCollected.Active = true;
-                        newCollected.CreatedDateTime = DateTime.Now;
-                        newCollected.FK_ReportArchiveTable = ReportID;
-                        newCollected.FK_IndicatorsTable = CurrentIndicator.IndicatorsTableID;
-                        newCollected.FK_FirstLevelSubdivisionTable = CurrentFirstLevel.FirstLevelSubdivisionTableID;
-                        newCollected.FK_SecondLevelSubdivisionTable = null;
-                        newCollected.FK_ThirdLevelSubdivisionTable = null;
-                        newCollected.FK_FourthLelevlSubdivisionTable = null;
-                        newCollected.FK_FifthLevelSubdivisionTable = null;
-                        if (tmp == (float) 1E+20)
+                                currentIndicator.IndicatorsTableID, reportId, 0,0 /*тут должен быть ID проректора*/));
+                        CollectedIndicatorsForR newCollected = new CollectedIndicatorsForR
+                        {
+                            Active = true,
+                            CreatedDateTime = DateTime.Now,
+                            FK_ReportArchiveTable = reportId,
+                            FK_IndicatorsTable = currentIndicator.IndicatorsTableID,
+                            FK_FirstLevelSubdivisionTable = currentFirstLevel.FirstLevelSubdivisionTableID,
+                            FK_SecondLevelSubdivisionTable = null,
+                            FK_ThirdLevelSubdivisionTable = null,
+                            FK_FourthLelevlSubdivisionTable = null,
+                            FK_FifthLevelSubdivisionTable = null
+                        };
+                        if (tmp > (float) 1E+19)
                         {
                             newCollected.Value = null;
                         }
@@ -186,31 +187,31 @@ namespace KPIWeb.AutomationDepartment
 
                     #endregion
 
-                    kPiDataContext.SubmitChanges();
+                    //kPiDataContext.SubmitChanges();
 
                     #region CalcForFaculys
 
-                    foreach (SecondLevelSubdivisionTable CurrentSecondLevel in SecondLevelToCalculate)
+                    foreach (SecondLevelSubdivisionTable currentSecondLevel in secondLevelToCalculate)
                     {
                         // считай для кафедр
                         ForRCalc.Struct mainStruct =
                             mainStruct =
-                                new ForRCalc.Struct(1, CurrentSecondLevel.FK_FirstLevelSubdivisionTable,
-                                    CurrentSecondLevel.SecondLevelSubdivisionTableID, 0, 0, "N");
+                                new ForRCalc.Struct(1, currentSecondLevel.FK_FirstLevelSubdivisionTable,
+                                    currentSecondLevel.SecondLevelSubdivisionTableID, 0, 0, "N");
                         double tmp =
                             ForRCalc.CalculatedForDB(ForRCalc.GetCalculatedWithParams(mainStruct, 0,
-                                CurrentIndicator.IndicatorsTableID, ReportID, 0, 0 /*тут должен быть ID проректора*/));
+                                currentIndicator.IndicatorsTableID, reportId, 0, 0 /*тут должен быть ID проректора*/));
                         CollectedIndicatorsForR newCollected = new CollectedIndicatorsForR();
                         newCollected.Active = true;
                         newCollected.CreatedDateTime = DateTime.Now;
-                        newCollected.FK_ReportArchiveTable = ReportID;
-                        newCollected.FK_IndicatorsTable = CurrentIndicator.IndicatorsTableID;
-                        newCollected.FK_FirstLevelSubdivisionTable = CurrentSecondLevel.FK_FirstLevelSubdivisionTable;
-                        newCollected.FK_SecondLevelSubdivisionTable = CurrentSecondLevel.SecondLevelSubdivisionTableID;
+                        newCollected.FK_ReportArchiveTable = reportId;
+                        newCollected.FK_IndicatorsTable = currentIndicator.IndicatorsTableID;
+                        newCollected.FK_FirstLevelSubdivisionTable = currentSecondLevel.FK_FirstLevelSubdivisionTable;
+                        newCollected.FK_SecondLevelSubdivisionTable = currentSecondLevel.SecondLevelSubdivisionTableID;
                         newCollected.FK_ThirdLevelSubdivisionTable = null;
                         newCollected.FK_FourthLelevlSubdivisionTable = null;
                         newCollected.FK_FifthLevelSubdivisionTable = null;
-                        if (tmp == (float) 1E+20)
+                        if (tmp > (float) 1E+19)
                         {
                             newCollected.Value = null;
                         }

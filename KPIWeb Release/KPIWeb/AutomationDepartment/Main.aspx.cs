@@ -114,5 +114,10 @@ namespace KPIWeb.AutomationDepartment
         {
             Response.Redirect("~/AutomationDepartment/AfterReportCalculation.aspx");
         }
+
+        protected void Button15_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("WatchProrectorSubmit.aspx");
+        }
     }
 }

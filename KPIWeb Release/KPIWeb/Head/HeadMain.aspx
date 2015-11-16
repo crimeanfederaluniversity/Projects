@@ -21,6 +21,10 @@
     <br />
     <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Общие сведения по отчетам" Enabled="false" Width="600px" />
     <br />
+    <br />
+    <asp:Button ID="Button6" runat="server" Text="Информация по утверждению проректорами" Width="600px" OnClick="Button6_Click" />
+    <br />
+    <br />
       <script type="text/javascript">
           function showLoadPanel()
           {

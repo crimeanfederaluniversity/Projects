@@ -12,6 +12,8 @@ namespace KPIWeb.StatisticsDepartment
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Label1.Visible = false;
+            TextBox1.Visible = false;
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
@@ -43,36 +45,23 @@ namespace KPIWeb.StatisticsDepartment
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-
-            if (TextBox1.Text != "")
+            if (TextBox2.Text != "" && FileUpload1.HasFile)
             {
                 KPIWebDataContext kPiDataContext = new KPIWebDataContext();
                 DocumentTable doc = new DocumentTable();
-
                 doc.DocumentName = TextBox2.Text;
-                doc.DocumentLink = TextBox1.Text;
+                string fileName = FileUpload1.FileName;
+                doc.DocumentLink = fileName;
                 doc.Active = true;
                 kPiDataContext.DocumentTable.InsertOnSubmit(doc);
-                kPiDataContext.SubmitChanges();
-
-                string savepath = Server.MapPath("//docs//");
-                string fileName = TextBox1.Text;
-                if (FileUpload1.HasFile)
-                {
-                    FileUpload1.PostedFile.SaveAs(Server.MapPath("//Rector/docs//" + fileName));
+                kPiDataContext.SubmitChanges();              
+                FileUpload1.PostedFile.SaveAs(Server.MapPath("//Rector//docs//" + fileName));
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Документ сохранен');" + "document.location = 'Document.aspx';", true);
                 }
                 else
                 {
                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Документ не прикреплен');" + "document.location = 'Document.aspx';", true);
-                }
-
-                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Документ сохранен');" + "document.location = 'Document.aspx';", true);
-            }
-
-            else
-            {
-                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Введите точное имя файла');", true);
-            }
+                }                           
         }
         protected void DeleteButtonClick(object sender, EventArgs e)
         {

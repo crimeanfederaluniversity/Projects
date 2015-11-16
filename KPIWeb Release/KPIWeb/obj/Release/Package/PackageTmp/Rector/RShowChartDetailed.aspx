@@ -58,12 +58,17 @@
         </div>
             <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
         <div>    
-      <asp:Button ID="GoBackButton" runat="server" OnClientClick="JavaScript:window.history.back(1); return false; showLoadPanel();"  Text="Назад" Width="125px" Enabled="True" />
+      <asp:Button ID="GoBackButton" runat="server"  Text="Назад" Width="125px" Enabled="True" OnClick="GoBackButton_Click" />
       <asp:Button ID="GoForwardButton" runat="server" OnClientClick="JavaScript:window.history.forward(1); return false; showLoadPanel();"  Text="Вперед" Width="125px" />
         &nbsp; &nbsp; <asp:Button ID="Button2" OnClientClick="showLoadPanel()" runat="server"  Text="На главную" Width="125px" Enabled="True" OnClick="Button2_Click" />
         &nbsp; &nbsp;       
-        <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()"  Text="Выбор отчета" Enabled="False" Width="225px" />
-        &nbsp; &nbsp;
+        <asp:Button ID="Button1" runat="server" OnClientClick="showLoadPanel()"  Text="Выбор отчета" Visible="False" Width="225px" />
+        &nbsp;
+            &nbsp;&nbsp;
+            <asp:DropDownList ID="RectorChooseReportDropDown" runat="server" Height="20px" Width="550px" AutoPostBack="True" OnSelectedIndexChanged="RectorChooseReportDropDown_SelectedIndexChanged">
+            </asp:DropDownList>
+            &nbsp; &nbsp;
+             &nbsp;
         <asp:Button ID="Button6" runat="server" OnClientClick="showLoadPanel()" Text="Button" Width="150px" Visible="False" />
         <asp:Button ID="Button5" runat="server" OnClientClick="showLoadPanel()" CssClass="button_right" OnClick="Button5_Click" Text="Нормативные документы" Width="300px" />
     
@@ -73,6 +78,13 @@
     </asp:Panel>
 
     <h1>Вклад структурных подразделений в достижение значения целевого показателя</h1>
+    
+             <div id="noDataMessage" runat="server" Visible="False">           
+           <h1 align="center">
+            <asp:Label ID="noDataMessageLabel" runat="server" Text="Сведения внесены по совокупным данным, разложение невозможно."></asp:Label>
+           </h1>               
+        </div> 
+
     <div>
       <style>
        .chart{ opacity: 0.99;}
