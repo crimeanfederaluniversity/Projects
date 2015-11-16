@@ -132,7 +132,7 @@ namespace Competitions.User
                 BlockGV.DataBind();
             }
         }
-        protected void Button2_Click1(object sender, EventArgs e)
+        protected void SaveDates()
         {
             var sessionParam1 = Session["ApplicationID"];
 
@@ -150,15 +150,30 @@ namespace Competitions.User
             {
                 var start = Request["ctl00$MainContent$startdata"];
                 var end = Request["ctl00$MainContent$enddata"];
-                currentApplication.StartProjectDate = Convert.ToDateTime(start).Date;
-                currentApplication.EndProjectDate = Convert.ToDateTime(end).Date;
+                try
+                {
+                    currentApplication.StartProjectDate = Convert.ToDateTime(start).Date;
+                }
+                catch
+                {
+                }
+
+
+                try
+                {
+                    currentApplication.EndProjectDate = Convert.ToDateTime(end).Date;
+                }
+                catch
+                {
+                }
+                
                 competitionDataBase.SubmitChanges();
             }
             
-
-        }    
+        }
         protected void FillButtonClick(object sender, EventArgs e)
         {
+            SaveDates();
             Button button = (Button)sender;
             {
                 Session["BlockID"] = Convert.ToInt32(button.CommandArgument);
@@ -275,6 +290,7 @@ namespace Competitions.User
         }
         protected void AddDocumentsButton_Click(object sender, EventArgs e)
         {
+            SaveDates();
             AddDoc();
             ConnectLink();
             Response.Redirect("ChooseApplicationAction.aspx");
@@ -290,6 +306,7 @@ namespace Competitions.User
         }
         protected void OpenButtonClick(object sender, EventArgs e)
         {
+            SaveDates();
             Button button = (Button) sender;
             {
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
@@ -321,6 +338,7 @@ namespace Competitions.User
         }
         protected void DeleteButtonClick(object sender, EventArgs e)
         {
+            SaveDates();
             Button button = (Button)sender;
             {
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
@@ -335,17 +353,15 @@ namespace Competitions.User
                 Response.Redirect("ChooseApplicationAction.aspx");
             }
         }
-        protected void GoBackButton_Click(object sender, EventArgs e)
+        protected void GoBackButton_Click(object sender, ImageClickEventArgs e)
         {
+            SaveDates();
             Response.Redirect("UserMainPage.aspx");
         }
-        protected void Button2_Click(object sender, EventArgs e)
+        protected void Button2_Click(object sender, ImageClickEventArgs e)
         {
+            SaveDates();
             Response.Redirect("~/Default.aspx");
-        }
-        protected void FileUpload1_Load(object sender, EventArgs e)
-        {
-            
         }         
     }
 }

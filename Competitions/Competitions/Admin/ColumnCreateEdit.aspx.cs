@@ -229,6 +229,7 @@ namespace Competitions.Admin
             }
             if (dataType.IsCellCalculateInRow(chosenValue))
             {
+                TotalUpCheckBox.Visible = true;
                 MathInRowPanel.Visible = true;
             }
         }

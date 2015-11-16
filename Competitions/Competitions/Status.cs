@@ -18,18 +18,18 @@ namespace Competitions
         private int dataTypeNotToCheck3 = 11;
         private int dataTypeNotToCheck4 = 12;
         private int dataTypeNotToCheck5 = 13;
-        private int dataTypeNotToCheck6 = 14;             
+        private int dataTypeNotToCheck6 = 14;
+        private int dataTypeNotToCheck11 = 15;  
         private int dataTypeNotToCheck7 = 16;
         private int dataTypeNotToCheck8 = 17; //17
         private int dataTypeNotToCheck9 = 18;
         private int dataTypeNotToCheck10 = 19;
-
+        
         private int statusNoData = 0;
         private int statusPartly = 1;
         private int statusAllData = 2;
         
         private readonly CompetitionDataContext _competitionDataBase = new CompetitionDataContext();
-
         public bool IsApplicationReadyToSend(int applicationId)
         {
             List<zBlockTable> blockList = (from a in _competitionDataBase.zBlockTable
@@ -52,9 +52,7 @@ namespace Competitions
                 {
                     return false;
                 }
-            }
-
-            
+            }            
             return true;
         }
         public bool IsDataReady(int status)
@@ -153,6 +151,8 @@ namespace Competitions
                                 continue;
                             if (currentColumn.DataType == dataTypeNotToCheck10) //автоинкремент
                                 continue;
+                            if (currentColumn.DataType == dataTypeNotToCheck11) //автоинкремент
+                                continue;
                             if (!DoesColumnInApplicationHasData(currentColumn.ID, applicationId))
                                 return false;
                         }
@@ -234,6 +234,7 @@ namespace Competitions
                  && c.DataType != dataTypeNotToCheck8
                  && c.DataType != dataTypeNotToCheck9
                  && c.DataType != dataTypeNotToCheck10
+                 && c.DataType !=  dataTypeNotToCheck11
                 select a).Distinct().ToList();
 
             int allCollectedCount = allDataInApplication.Count;

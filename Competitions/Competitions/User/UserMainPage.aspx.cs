@@ -13,6 +13,28 @@ namespace Competitions.User
 {
     public partial class UserMainPage : System.Web.UI.Page
     {
+        protected bool DoesDateRangesCross(DateTime? startDate1,DateTime? endDate1,DateTime? startDate2,DateTime? endDate2)
+        {
+            if (startDate1 == null || startDate2 == null || endDate1 == null || endDate2 == null)
+                return false;
+            if (startDate2 > endDate1 || startDate1 > endDate2)
+                return true;
+            return false;
+        }
+
+        protected void SendApplication( int applicationId)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
+                                                        where a.Active == true
+                                                        && a.ID == applicationId 
+                                                        select a).FirstOrDefault();
+            currentApplication.Sended = true;
+            currentApplication.SendedDataTime = DateTime.Now;
+            competitionDataBase.SubmitChanges();
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка отправлена на рассмотрение!');", true);
+            Response.Redirect("UserMainPage.aspx");
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -262,14 +284,14 @@ namespace Competitions.User
         }
         protected void SendButtonClick(object sender, EventArgs e)
         {
+            Button button = (Button)sender;
+            {
             var userIdtmp = Session["UserID"];
                 if (userIdtmp == null)
                 {
                     Response.Redirect("~/Default.aspx");
                 }
                 int userId = (int)userIdtmp;
-            Button button = (Button)sender;
-            {
 
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
@@ -280,35 +302,43 @@ namespace Competitions.User
                 List<zApplicationTable> existApplication = (from a in competitionDataBase.zApplicationTable
                                                         where a.Active == true && a.Sended== true && a.FK_UsersTable == userId
                                                         select a).ToList();
-                if (currentApplication != null && existApplication.Count == 0)
+
+                if (currentApplication != null && existApplication.Count == 0) //Если других заявок нет  то отправляем сразу
                 {
-                    currentApplication.Sended = true;
-                    currentApplication.SendedDataTime = DateTime.Now;
-                    competitionDataBase.SubmitChanges();
+                    SendApplication(currentApplication.ID);
                 }
-                if (currentApplication != null && existApplication.Count != 0)
+                else if (currentApplication != null && existApplication.Count != 0)
+                {
+                    bool canSendApplicationByDates = true;
+                    bool canSendApplicationByFkCompetition = true;
+                    foreach (zApplicationTable n in existApplication)
                     {
-                        foreach (var n in existApplication)
+                        if (!DoesDateRangesCross(currentApplication.StartProjectDate,
+                            currentApplication.EndProjectDate, n.StartProjectDate, n.EndProjectDate))
                         {
-                            if (currentApplication.StartProjectDate < n.EndProjectDate)
-                            {
-                                Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
-                                    "alert('Вы не можете отправить данную заявку, т.к. у Вас пересекаются сроки реализации с отправленной ранее заявкой!');",
-                                    true);
-                            }
-                            else
-                            {
-                                continue;
-                            }
+                            canSendApplicationByDates = false;
                         }
-                    currentApplication.Sended = true;
-                    currentApplication.SendedDataTime = DateTime.Now;
-                    competitionDataBase.SubmitChanges();
+
+                        if (n.FK_CompetitionTable == currentApplication.FK_CompetitionTable)
+                        {
+                            canSendApplicationByFkCompetition = false;
+                        }
+                    }
+                    if (canSendApplicationByDates && canSendApplicationByFkCompetition)
+                    {
+                        SendApplication(currentApplication.ID);                              
+                    }
+                    else if (!canSendApplicationByFkCompetition)
+                    {
+                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Вы уже подали заявку на данный конкурс!');", true);
+                    }
+                    else if (!canSendApplicationByDates)
+                    {
+                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Даты реализации данного проекта пересекаются с датами отправленной Вами ранее заявки!');", true);
                     }
                     
-                }
-                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка отправлена на рассмотрение!');", true);     
-                Response.Redirect("UserMainPage.aspx");
+                }                
+            }
         }
         private byte[] ReadByteArryFromFile(string destPath)
         {

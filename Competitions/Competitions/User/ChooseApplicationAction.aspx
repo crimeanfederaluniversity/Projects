@@ -51,7 +51,6 @@
     <input type="button" style="background: url('../Calendar/datepicker.jpg') no-repeat; width: 30px; border: 0px;" onclick="displayDatePicker('ctl00$MainContent$startdata', false, 'ymd', '-');">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     Конечная дата:<input id="enddata" type="date" runat="server"/> 
 	<input type="button" style="background: url('../Calendar/datepicker.jpg') no-repeat; width: 30px; border: 0px;" onclick="displayDatePicker('ctl00$MainContent$enddata', false, 'ymd', '-');">
-    <asp:Button ID="Button2" runat="server" OnClick="Button2_Click1" Text="Сохранить" />
     <br />
     <br />
     <br />

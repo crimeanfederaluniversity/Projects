@@ -56,12 +56,7 @@
             <div class="f_circleG" id="frotateG_08">
             </div>
             </div>
-        </div>
-     
-    
-
-    
-
+        </div>     
     <div>
         <style type="text/css">
 .Initial
@@ -103,16 +98,13 @@
 }
 
 </style>
-
-<asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
+        <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
     <div>    
        <asp:ImageButton ID="Button2"  runat="server" ImageUrl="~/Images/Home.png" OnClientClick="showLoadPanel()"  Width="30px" OnClick="Button2_Click"  ImageAlign="Middle" ToolTip="На главную" />
     </div> 
 </asp:Panel> 
-         <br />
-        <h2>&nbsp;<span style="font-size: 20px">Добро пожаловать в систему управления заявками модуля &quot;Конкурсы и проекты Программы развития&quot; </span></h2>
-        
-          
+        <br />
+        <h2>&nbsp;<span style="font-size: 20px">Добро пожаловать в систему управления заявками модуля &quot;Конкурсы и проекты Программы развития&quot; </span></h2>        
         <table width="100%" align="center">
       <tr>
         <td>
@@ -272,7 +264,5 @@
         </td>
       </tr>
     </table>
-       
-    
     </div>
 </asp:Content>

@@ -754,6 +754,7 @@ namespace Competitions.User
                     join b in competitionDataBase.zApplicationTable
                         on a.FK_CompetitionsTable equals b.FK_CompetitionTable
                     where b.ID == applicationId
+                    where a.Active == true
                     select a).ToList();
                 string namesInLine = " ";
                 if (allSection.Count != null)

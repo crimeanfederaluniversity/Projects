@@ -7,12 +7,11 @@ namespace Competitions
 {
     public class MainCompetitionFunctions
     {
-    }
 
+    }
     public class DataBaseSimilarRequests
     {
         private readonly CompetitionDataContext _competitionDataBase = new CompetitionDataContext();
-
         public zBlockTable GetBlockTableById(int blockId)
         {
             return (from a in _competitionDataBase.zBlockTable
@@ -33,7 +32,6 @@ namespace Competitions
                       && c.ID == applicationId
                 select a).Distinct().ToList();
         }
-
         public List<zColumnTable> GetColumnsListInSection(int sectionId)
         {
             return (from a in _competitionDataBase.zColumnTable

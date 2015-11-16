@@ -588,6 +588,10 @@ namespace Competitions
                                 {
                                     return (GetReadWriteString(collumnToGetValue, distantRowValue));
                                 }
+                                if (IsCellCalculateInRow(collumnToGetValue.DataType))
+                                {
+                                    return (distantRowValue.ValueDouble).ToString();
+                                }
                             }
                         }
                     }
@@ -633,6 +637,10 @@ namespace Competitions
                     (from a in competitionDataBase.zCollectedDataTable
                      where a.ID == currentCollectedData.ValueFK_CollectedDataTable
                      select a).FirstOrDefault();
+                if (getCollectedData == null)
+                    return "";
+                if (getCollectedData.ValueFK_CollectedDataTable == null)
+                    return "";
                 zCollectedDataTable getCollectedData2 =
                     (from a in competitionDataBase.zCollectedDataTable
                      where a.ID == getCollectedData.ValueFK_CollectedDataTable
@@ -700,7 +708,7 @@ namespace Competitions
                 ||(dataType.IsDataTypeMaxValue(dataTypeIndex)) || (dataType.IsDataTypeMinValue(dataTypeIndex)) || (dataType.IsDataTypeNecessarilyShow(dataTypeIndex))
                 ||(dataType.IsDataTypeSymWithParam(dataTypeIndex)) || (dataType.IsDataTypeNameOfApplication(dataTypeIndex)) || (dataType.IsDataTypeOneToOneWithParams(dataTypeIndex))
                 || (dataType.IsDataTypeNecessarilyShowWithParam(dataTypeIndex)) || (dataType.IsDataTypeApplicationCreateDate(dataTypeIndex)) || IsCellCalculateInRow(dataTypeIndex) 
-                || dataType.IsDataTypeConstntAtLeastOneWithCheckBoxParam(dataTypeIndex))
+                )//|| dataType.IsDataTypeConstntAtLeastOneWithCheckBoxParam(dataTypeIndex))
             {
                 return true;
             }
