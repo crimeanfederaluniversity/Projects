@@ -27,7 +27,7 @@ namespace Competitions.Admin
                 zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
                                                         where a.Active == true && a.Accept == false
                                                               && a.ID == applicationId 
-                                                              //&& a.Sended == true
+                                                              && a.Sended == true
                                                         select a).FirstOrDefault();
                 if (currentApplication != null)
                 {
@@ -73,7 +73,7 @@ namespace Competitions.Admin
                 zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
                                                         where a.Active == true && a.Accept == false
                                                               && a.ID == applicationId 
-                                                              //&& a.Sended == true
+                                                              && a.Sended == true
                                                         select a).FirstOrDefault();
                 if (currentApplication != null)
                 {

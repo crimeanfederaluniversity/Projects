@@ -132,15 +132,63 @@ namespace Competitions.Admin
 
         protected void BackButtonClick(object sender, EventArgs e)
         { 
-            Button button = (Button)sender;
+            Button button = (Button) sender;
             if (button != null)
             {
+                int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext CompetitionsDataBase = new CompetitionDataContext();
-                zApplicationTable application = (from a in CompetitionsDataBase.zApplicationTable
+                zApplicationTable currentapplication = (from a in CompetitionsDataBase.zApplicationTable
                                                             where a.Active == true && a.Accept == true && a.ID == Convert.ToInt32(button.CommandArgument)
                                                             select a).FirstOrDefault();
-                application.Accept = false;
-                CompetitionsDataBase.SubmitChanges();
+                if (currentapplication != null)
+                {CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+                     List<zExpertPoints> expertPointsList = (from a in competitionDataBase.zExpertPoints
+                        where a.Active == true && a.ID != 6
+                        select a).ToList();
+
+                    List<zExpertsAndApplicationMappingTable> allexperts =
+                        (from a in competitionDataBase.zExpertsAndApplicationMappingTable
+                            where a.Active == true &&
+                                  a.FK_ApplicationsTable == iD
+                            select a).ToList();
+                    foreach (zExpertsAndApplicationMappingTable currentExpert in allexperts)
+                    {
+                        zExpertPointsValue currentExpertPointComment = (from a in competitionDataBase.zExpertPointsValue
+                            where a.FK_ApplicationTable == iD
+                                  && a.FK_ExpertsTable == currentExpert.FK_UsersTable
+                                  && a.FK_ExpertPoints == 6
+                            select a).FirstOrDefault();
+                        if (currentExpertPointComment != null)
+                        {
+                            if (currentExpertPointComment.Active == true)
+                            {
+                                currentExpertPointComment.Active = false;
+                                competitionDataBase.SubmitChanges();
+                            }
+                        }
+                        foreach (zExpertPoints currentExpertPoint in expertPointsList)
+                            {
+                                zExpertPointsValue currentExpertPointValue =
+                                    (from a in competitionDataBase.zExpertPointsValue
+                                        where
+                                            a.FK_ApplicationTable == iD
+                                            && a.FK_ExpertsTable == currentExpert.FK_UsersTable
+                                            && a.FK_ExpertPoints == currentExpertPoint.ID
+                                        select a).FirstOrDefault();
+                                if (currentExpertPointValue != null)
+                                { 
+                                    if (currentExpertPointValue.Active == true)
+                                    {
+                                        currentExpertPointValue.Active = false;
+                                        competitionDataBase.SubmitChanges();
+                                    }
+                                }
+
+                            }
+                        }                   
+                    currentapplication.Accept = false;
+                    CompetitionsDataBase.SubmitChanges();
+                }
             }
             Response.Redirect("ReadyApplications.aspx");
         }

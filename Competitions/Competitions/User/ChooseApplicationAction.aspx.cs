@@ -232,8 +232,6 @@ namespace Competitions.User
 
                 else
                 {
-
-
                     if (FileUpload1.PostedFiles.Count > 1)
                     {
                         int AttachOK = 0;
@@ -251,10 +249,6 @@ namespace Competitions.User
                             {
                                 AttachError++;
                             }
-
-                            //  FileStatusLabel.Text = "Загружено " + AttachOK.ToString() + " файлов из " + (AttachError + AttachOK).ToString();
-                            // NewCampaign.DocumentLocation = DBLinkCombine;
-                            // DBConnection.SubmitChanges();
                         }
                     }
                     else

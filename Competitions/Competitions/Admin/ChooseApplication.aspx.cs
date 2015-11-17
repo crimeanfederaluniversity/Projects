@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
 using System.IO.Compression;
+using Microsoft.Office.Interop.Word;
 
 namespace Competitions.Admin
 {
@@ -171,61 +172,94 @@ namespace Competitions.Admin
                 Response.End();
             }
         }
+
         protected void AcceptButtonClick(object sender, EventArgs e)
         {
-            Button button = (Button)sender;
+            Button button = (Button) sender;
             if (button != null)
             {
                 int iD = Convert.ToInt32(button.CommandArgument);
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
                 zApplicationTable currentApplication = (from a in competitionDataBase.zApplicationTable
                     where a.Active == true && a.Accept == false
-                          && a.ID == iD &&  a.Sended == true
+                          && a.ID == iD && a.Sended == true
                     select a).FirstOrDefault();
                 if (currentApplication != null)
                 {
-                   
-
                     List<zExpertPoints> expertPointsList = (from a in competitionDataBase.zExpertPoints
                         where a.Active == true && a.ID != 6
                         select a).ToList();
+
                     List<zExpertsAndApplicationMappingTable> allexperts =
                         (from a in competitionDataBase.zExpertsAndApplicationMappingTable
                             where a.Active == true &&
                                   a.FK_ApplicationsTable == iD
                             select a).ToList();
-                    foreach (zExpertPoints currentExpertPoint in expertPointsList)
+                    foreach (zExpertsAndApplicationMappingTable currentExpert in allexperts)
                     {
-                        foreach (zExpertsAndApplicationMappingTable currentExpert in allexperts)
+                        zExpertPointsValue currentExpertPointComment = (from a in competitionDataBase.zExpertPointsValue
+                            where a.FK_ApplicationTable == iD
+                                  && a.FK_ExpertsTable == currentExpert.FK_UsersTable
+                                  && a.FK_ExpertPoints == 6
+                            select a).FirstOrDefault();
+                        if (currentExpertPointComment == null)
                         {
-                            zExpertPointsValue currentExpertPointValue =
-                                (from a in competitionDataBase.zExpertPointsValue
-                                    where a.FK_ApplicationTable == iD
-                                          && a.FK_ExpertsTable == currentExpert.FK_UsersTable
-                                          && a.FK_ExpertPoints == currentExpertPoint.ID
-                                          && a.Sended == false
+                            zExpertPointsValue expertcoment = new zExpertPointsValue();
+                            expertcoment.Active = true;
+                            expertcoment.FK_ApplicationTable = currentApplication.ID;
+                            expertcoment.FK_ExpertsTable = currentExpert.FK_UsersTable;
+                            expertcoment.FK_ExpertPoints = 6;
+                            expertcoment.Sended = false;
+                            competitionDataBase.zExpertPointsValue.InsertOnSubmit(expertcoment);
+                            competitionDataBase.SubmitChanges();
+                        }
+                        else
+                        {
+                            if (currentExpertPointComment.Active == false)
+                            {
+                                currentExpertPointComment.Active = true;
+                                competitionDataBase.SubmitChanges();
+                            }
+                        }
+
+                        foreach (zExpertPoints currentExpertPoint in expertPointsList)
+                        {
+                            zExpertPointsValue currentExpertPointValue =  (from a in competitionDataBase.zExpertPointsValue
+                                    where
+                                        a.FK_ApplicationTable == iD
+                                        && a.FK_ExpertsTable == currentExpert.FK_UsersTable
+                                        && a.FK_ExpertPoints == currentExpertPoint.ID
                                     select a).FirstOrDefault();
                             if (currentExpertPointValue == null)
                             {
-                                zExpertPointsValue sovetexpertpoints = new zExpertPointsValue();
-                                sovetexpertpoints.Active = true;
-                                sovetexpertpoints.FK_ApplicationTable = currentApplication.ID;
-                                sovetexpertpoints.FK_ExpertsTable = currentExpert.FK_UsersTable;
-                                sovetexpertpoints.LastChangeDataTime = DateTime.Now;
-                                sovetexpertpoints.FK_ExpertPoints = currentExpertPoint.ID;
-                                sovetexpertpoints.Sended = false;
-                                competitionDataBase.zExpertPointsValue.InsertOnSubmit(sovetexpertpoints);
+                                zExpertPointsValue expertpoints = new zExpertPointsValue();
+                                expertpoints.Active = true;
+                                expertpoints.FK_ApplicationTable = currentApplication.ID;
+                                expertpoints.FK_ExpertsTable = currentExpert.FK_UsersTable;
+                                expertpoints.FK_ExpertPoints = currentExpertPoint.ID;
+                                expertpoints.Sended = false;
+                                competitionDataBase.zExpertPointsValue.InsertOnSubmit(expertpoints);
                                 competitionDataBase.SubmitChanges();
+                            }
+                            else
+                            {
+                                if (currentExpertPointValue.Active == false)
+                                {
+                                    currentExpertPointValue.Active = true;
+                                    competitionDataBase.SubmitChanges();
+                                }
                             }
 
                         }
                     }
-                    currentApplication.Accept = true;
-                    competitionDataBase.SubmitChanges();
-                }                                     
+                
+                currentApplication.Accept = true;
+                competitionDataBase.SubmitChanges();
                     }
-            Response.Redirect("ChooseApplication.aspx");
-                }
+                
+                Response.Redirect("ChooseApplication.aspx");
+            }
+        }
 
         protected void BackToUserButtonClick(object sender, EventArgs e)
         {

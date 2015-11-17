@@ -52,17 +52,13 @@ namespace Competitions.Expert
                 foreach (zApplicationTable current in applicationList)
                 {
                     List<zExpertPointsValue> notsended = (from a in competitionDataBase.zExpertPointsValue
-                                                          where a.Active == true && a.Sended == true
+                                                          where a.Active == true && a.Sended == false
                                                           && a.FK_ApplicationTable == current.ID && a.FK_ExpertsTable == userId                                                          
                                                           select a).ToList();
-                    if (notsended.Count == 0)
+                    if (notsended.Count == 6)
                     {
                         notreadyapp.Add(current);
-                    }
-                    else
-                    {
-                        continue;  
-                    }
+                    }                 
 
                 }
 

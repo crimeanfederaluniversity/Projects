@@ -47,20 +47,16 @@ namespace Competitions.Expert
                                                         where c.Active == true && c.FK_UsersTable == userId
                                                         select a).Distinct().ToList();
 
-             List<zApplicationTable> notreadyapp = new List<zApplicationTable>();
+             List<zApplicationTable> readyapp = new List<zApplicationTable>();
              foreach (zApplicationTable current in applicationList)
              {
-                 List<zExpertPointsValue> notsended = (from a in CompetitionsDataBase.zExpertPointsValue
-                                                       where a.Active == true && a.Sended == false
+                 List<zExpertPointsValue> sended = (from a in CompetitionsDataBase.zExpertPointsValue
+                                                       where a.Active == true && a.Sended == true
                                                        && a.FK_ApplicationTable == current.ID && a.FK_ExpertsTable == userId
                                                        select a).ToList();
-                 if (notsended.Count == 0)
+                 if (sended.Count == 6)
                  {
-                     notreadyapp.Add(current);
-                 }
-                 else
-                 {
-                     continue;
+                     readyapp.Add(current);
                  }
 
              }
@@ -73,7 +69,7 @@ namespace Competitions.Expert
                 dataTable.Columns.Add("Autor", typeof(string));
                 dataTable.Columns.Add("Competition", typeof(string));
 
-                foreach (zApplicationTable currentApplication in notreadyapp)
+                foreach (zApplicationTable currentApplication in readyapp)
                 {
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = currentApplication.ID;
