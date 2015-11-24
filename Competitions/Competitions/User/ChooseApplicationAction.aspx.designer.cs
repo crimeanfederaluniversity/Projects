@@ -85,6 +85,33 @@ namespace Competitions.User {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl enddata;
         
         /// <summary>
+        /// PartnersGV элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView PartnersGV;
+        
+        /// <summary>
+        /// AddRowButton элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AddRowButton;
+        
+        /// <summary>
+        /// SavePartners элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SavePartners;
+        
+        /// <summary>
         /// BlockGV элемент управления.
         /// </summary>
         /// <remarks>
@@ -103,15 +130,6 @@ namespace Competitions.User {
         protected global::System.Web.UI.WebControls.GridView DocumentsGV;
         
         /// <summary>
-        /// LinkToFileTextBox элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox LinkToFileTextBox;
-        
-        /// <summary>
         /// RegularExpressionValidator1 элемент управления.
         /// </summary>
         /// <remarks>
@@ -121,13 +139,13 @@ namespace Competitions.User {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator1;
         
         /// <summary>
-        /// FileUpload1 элемент управления.
+        /// ToManyFilesLabelError элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
+        protected global::System.Web.UI.WebControls.Label ToManyFilesLabelError;
         
         /// <summary>
         /// uplValidator элемент управления.
@@ -139,13 +157,22 @@ namespace Competitions.User {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator uplValidator;
         
         /// <summary>
-        /// ToManyFilesLabelError элемент управления.
+        /// FileUpload1 элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ToManyFilesLabelError;
+        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
+        
+        /// <summary>
+        /// LinkToFileTextBox элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox LinkToFileTextBox;
         
         /// <summary>
         /// AddDocumentsButton элемент управления.

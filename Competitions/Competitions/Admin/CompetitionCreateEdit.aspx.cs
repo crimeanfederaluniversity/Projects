@@ -15,7 +15,7 @@ namespace Competitions.Admin
             if (!Page.IsPostBack)
             {
                 CompetitionDataContext curator = new CompetitionDataContext();
-                List<UsersTable> curators = (from a in curator.UsersTable
+               /* List<UsersTable> curators = (from a in curator.UsersTable
                                        where a.AccessLevel == 15 && a.Active == true
                                        select a).ToList();
 
@@ -31,7 +31,7 @@ namespace Competitions.Admin
                     tmpItem.Value = current.ID.ToString();
                     DropDownList1.Items.Add(tmpItem);
                 }
-
+                */
                 var sessionParam = Session["CompetitionID"];
                 if (sessionParam == null)
                 {
@@ -58,7 +58,7 @@ namespace Competitions.Admin
                             NameTextBox.Text = currentCompetition.Name;
                             DescriptionTextBox.Text = currentCompetition.Number;
                             BudjetTextBox.Text = currentCompetition.Budjet.ToString();
-                            DropDownList1.SelectedIndex = Convert.ToInt32(currentCompetition.FK_Curator);
+                            //DropDownList1.SelectedIndex = Convert.ToInt32(currentCompetition.FK_Curator);
                             Calendar1.SelectedDate = Convert.ToDateTime(currentCompetition.StartDate);
                             Calendar2.SelectedDate = Convert.ToDateTime(currentCompetition.EndDate);
                             if (currentCompetition.TemplateDocName!=null) 
@@ -131,7 +131,7 @@ namespace Competitions.Admin
                             currentCompetition.Name = NameTextBox.Text;
                             currentCompetition.Number = DescriptionTextBox.Text;
                             currentCompetition.Budjet = Convert.ToDouble(BudjetTextBox.Text);
-                            currentCompetition.FK_Curator = Convert.ToInt32(DropDownList1.SelectedIndex);
+                          //  currentCompetition.FK_Curator = Convert.ToInt32(DropDownList1.SelectedIndex);
                             currentCompetition.StartDate = Calendar1.SelectedDate;
                             currentCompetition.EndDate = Calendar2.SelectedDate;
                             if (FileUpload1.HasFile)
@@ -176,7 +176,7 @@ namespace Competitions.Admin
                         newCompetition.Name = NameTextBox.Text;
                         newCompetition.Number = DescriptionTextBox.Text;
                         newCompetition.Budjet = Convert.ToDouble(BudjetTextBox.Text);
-                        newCompetition.FK_Curator = Convert.ToInt32(DropDownList1.SelectedIndex);
+                       // newCompetition.FK_Curator = Convert.ToInt32(DropDownList1.SelectedIndex);
                         newCompetition.StartDate = Calendar1.SelectedDate;
                         newCompetition.EndDate = Calendar2.SelectedDate;
                         newCompetition.Active = true;

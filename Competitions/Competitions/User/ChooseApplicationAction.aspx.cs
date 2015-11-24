@@ -130,8 +130,76 @@ namespace Competitions.User
 
                 BlockGV.DataSource = dataTable2;
                 BlockGV.DataBind();
+
+                List<zPartnersTable> partners = (from a in competitionDataBase.zPartnersTable
+                    where a.Active == true
+                    join b in competitionDataBase.zApplicationAndPartnersMappingTable
+                        on a.ID equals b.FK_PartnersTable
+                    where b.Active == true && b.FK_Application == applicationId
+                    select a).ToList();
+                DataTable dataTable3 = new DataTable();
+                dataTable3.Columns.Add(new DataColumn("ID", typeof(string)));
+                dataTable3.Columns.Add(new DataColumn("Surname", typeof(string)));
+                dataTable3.Columns.Add(new DataColumn("Name", typeof(string)));
+                dataTable3.Columns.Add(new DataColumn("Patronymic", typeof(string)));
+                dataTable3.Columns.Add(new DataColumn("Role", typeof(bool)));
+                foreach (zPartnersTable current in partners)
+                {
+                    DataRow dataRow3 = dataTable3.NewRow();
+                    dataRow3["ID"] = current.ID;
+                    dataRow3["Surname"] = current.Surname;
+                    dataRow3["Name"] = current.Name;
+                    dataRow3["Patronymic"] = current.Patronymic;
+                    dataRow3["Role"] = false;
+                    if (current.Role == null && current.Role == false)
+                    {
+                        dataRow3["Role"] = false;
+                    }
+                    if (current.Role == true)
+                    {
+                        dataRow3["Role"] = true;
+                    }
+                   
+                    dataTable3.Rows.Add(dataRow3);
+                }
+                PartnersGV.DataSource = dataTable3;
+                PartnersGV.DataBind();
             }
         }
+
+        public void SaveChanges()
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            
+            foreach (GridViewRow currentRow in PartnersGV.Rows)
+            {   
+                Label partnerID = (Label) currentRow.FindControl("ID");
+                TextBox surname = (TextBox) currentRow.FindControl("Surname");
+                TextBox name = (TextBox) currentRow.FindControl("Name");
+                TextBox patronymic = (TextBox) currentRow.FindControl("Patronymic");
+                CheckBox role = (CheckBox) currentRow.FindControl("Role");
+
+                if (partnerID != null)
+                {
+                    zPartnersTable currentpartner = (from a in competitionDataBase.zPartnersTable
+                        where a.ID == Convert.ToInt32(partnerID.Text)
+                        select a).FirstOrDefault();
+                    if (currentpartner != null)
+                    {
+                        if (surname.Text.Any() && name.Text.Any() && patronymic.Text.Any())
+                        {
+                            currentpartner.Surname = surname.Text;
+                            currentpartner.Name = name.Text;
+                            currentpartner.Patronymic = patronymic.Text;
+                            currentpartner.Role = role.Checked;
+                            competitionDataBase.SubmitChanges();
+                        }
+                    }
+
+                }
+            }
+        }
+
         protected void SaveDates()
         {
             var sessionParam1 = Session["ApplicationID"];
@@ -356,6 +424,135 @@ namespace Competitions.User
         {
             SaveDates();
             Response.Redirect("~/Default.aspx");
+        }
+
+        protected void AddRowButton_Click(object sender, EventArgs e)
+        {
+            SaveChanges();
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            var userIdParam = Session["UserID"];
+            int userId = Convert.ToInt32(userIdParam);
+            var applicationId = Session["ApplicationID"];
+            int appid = Convert.ToInt32(applicationId);
+
+
+            zPartnersTable newPartner = new zPartnersTable();
+            newPartner.Active = true;
+            newPartner.Role = false;
+            competitionDataBase.zPartnersTable.InsertOnSubmit(newPartner);
+            competitionDataBase.SubmitChanges();
+
+            zApplicationAndPartnersMappingTable newLink = new zApplicationAndPartnersMappingTable();
+            newLink.Active = true;
+            newLink.FK_Application = appid;
+            newLink.FK_PartnersTable = newPartner.ID;
+            competitionDataBase.zApplicationAndPartnersMappingTable.InsertOnSubmit(newLink);
+            competitionDataBase.SubmitChanges();
+            Response.Redirect("ChooseApplicationAction.aspx");
+        }
+
+        protected void PartnersGV_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            var userIdParam = Session["UserID"];
+            int userId = Convert.ToInt32(userIdParam);
+            var applicationId = Session["ApplicationID"];
+            int appid = Convert.ToInt32(applicationId);
+
+            Label idLabel = (Label) e.Row.FindControl("ID");
+            if (idLabel != null)
+            {               
+                Label error1 = (Label)e.Row.FindControl("Error1");
+                Label error2 = (Label)e.Row.FindControl("Error2");
+
+                List<zPartnersTable> one = (from a in competitionDataBase.zPartnersTable
+                    where a.Active == true && a.Role == true
+                    select a).ToList();
+                zPartnersTable currentone = (from a in competitionDataBase.zPartnersTable
+                    where a.Active == true && a.Role == true && a.ID == Convert.ToInt32(idLabel.Text)
+                    select a).FirstOrDefault();
+                if (one != null && currentone != null)
+                {
+                    List<int> lider = (from a in one
+                        where a.Name == currentone.Name
+                              && a.Surname == currentone.Surname
+                              && a.Patronymic == currentone.Patronymic
+                        select a.ID).ToList();
+                    if (lider.Count > 1)
+                    {
+                        error1.Visible = true;
+                    }
+                    else
+                    {
+                        error1.Visible = false; 
+                    }
+                }
+
+                List<zPartnersTable> two = (from a in competitionDataBase.zPartnersTable
+                    where a.Active == true && a.Role == false
+                    select a).ToList();
+                zPartnersTable currenttwo = (from a in competitionDataBase.zPartnersTable
+                    where a.Active == true && a.Role == false && a.ID == Convert.ToInt32(idLabel.Text)
+                    select a).FirstOrDefault();
+                if (two != null && currenttwo != null)
+                {
+                    List<int> teamuser = (from a in two
+                        where a.Name == currenttwo.Name
+                              && a.Surname == currenttwo.Surname
+                              && a.Patronymic == currenttwo.Patronymic
+                        select a.ID).ToList();
+
+                    if (teamuser.Count >= 2)
+                    {
+                        error2.Visible = true;
+                    }
+                    else
+                    {
+                        error2.Visible = false;
+                    }
+                }
+            }
+        }
+
+        protected
+            void DeleteRowButtonClick(object sender, EventArgs e)
+        {
+            ImageButton button = (ImageButton)sender;
+            {
+                SaveChanges();
+                CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+                var userIdParam = Session["UserID"];
+                int userId = Convert.ToInt32(userIdParam);
+                var applicationId = Session["ApplicationID"];
+                int appid = Convert.ToInt32(applicationId);
+                int partnerid = Convert.ToInt32(button.CommandArgument);
+               
+                zPartnersTable currentPartner = (from a in competitionDataBase.zPartnersTable
+                    where a.Active == true && a.ID == partnerid 
+                    join b in competitionDataBase.zApplicationAndPartnersMappingTable
+                    on a.ID equals b.FK_PartnersTable
+                                                 where b.Active == true && b.FK_Application == appid
+                    select a).FirstOrDefault();
+                currentPartner.Active = false;        
+                competitionDataBase.SubmitChanges();
+
+                zApplicationAndPartnersMappingTable currentLink =
+                    (from a in competitionDataBase.zApplicationAndPartnersMappingTable
+                        where a.Active == true && a.FK_PartnersTable == partnerid &&
+                              a.FK_Application == appid
+                        select a).FirstOrDefault();
+
+                currentLink.Active = false;               
+                competitionDataBase.SubmitChanges();
+                Response.Redirect("ChooseApplicationAction.aspx");
+            }
+        }
+
+        protected void SavePartners_Click(object sender, EventArgs e)
+        {
+            SaveChanges();
+            Response.Redirect("ChooseApplicationAction.aspx");
+            
         }         
     }
 }

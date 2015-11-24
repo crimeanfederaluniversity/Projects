@@ -117,13 +117,13 @@ namespace Competitions.Curator
 
                 string dirPath = Server.MapPath("~/documents/byApplication/" + idapp);
                 string templateFilePath = Server.MapPath("~/documents/templates") + "\\" + currentCompetition.ID.ToString() + "\\" + currentCompetition.TemplateDocName;
-                string newFileName = DateTime.Now.ToString() + " " + currentCompetition.TemplateDocName;
-                newFileName = newFileName.Replace(":", "_");
+                string newFileName = "Заявка " + currentCompetition.TemplateDocName + ".doc"; ;
+  
                 string newFilePath = dirPath + "\\" + newFileName;
                 string zipFile = Server.MapPath("~/documents/generatedZipFiles/") + idapp + ".zip";
                 string extractPath = Server.MapPath("~/documents/extract/");
                 CreateXmlFile createXmlFile = new CreateXmlFile();
-                string asdadasdda = System.Web.HttpContext.Current.Server.MapPath("~/") + @"documents\generatedZipFiles\" + idapp + ".zip";
+
                 createXmlFile.CreateDocument(templateFilePath, newFilePath, idapp,0);
 
                 if (File.Exists(System.Web.HttpContext.Current.Server.MapPath("~/") + @"documents\generatedZipFiles\" + idapp + ".zip"))
@@ -131,7 +131,7 @@ namespace Competitions.Curator
                     File.Delete(System.Web.HttpContext.Current.Server.MapPath("~/") + @"documents\generatedZipFiles\" + idapp + ".zip");
                     ZipFile.CreateFromDirectory(dirPath, zipFile);
                     HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
-                    HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=file.zip");
+                    HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=Заявка №" + idapp.ToString() + ".zip");
                     HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(zipFile));
                     HttpContext.Current.Response.End();
                 }
@@ -139,7 +139,7 @@ namespace Competitions.Curator
                 {
                     ZipFile.CreateFromDirectory(dirPath, zipFile);
                     HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
-                    HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=file.zip");
+                    HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=Заявка №" + idapp.ToString() + ".zip");
                     HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(zipFile));
                     HttpContext.Current.Response.End();
                 }

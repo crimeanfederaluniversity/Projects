@@ -232,6 +232,7 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Properties\PublishProfiles\Competitions.pubxml" />
+    <None Include="Properties\PublishProfiles\Version17.11.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Images\Add.png" />
     <Content Include="Images\Back.png" />

@@ -11,18 +11,12 @@
         <br />
         <asp:TextBox ID="NameTextBox" runat="server" Height="28px" Width="603px"></asp:TextBox>
         <br />
-        <br />
         Шифр конкурса<br />
         <asp:TextBox ID="DescriptionTextBox" runat="server" style="margin-bottom: 0px" Width="205px"></asp:TextBox>
         <br />
         <br />
         Бюджет конкурса<br />
         <asp:TextBox ID="BudjetTextBox" runat="server" Width="205px"></asp:TextBox>
-        <br />
-        <br />
-        Куратор<br />
-        <asp:DropDownList ID="DropDownList1" runat="server" Height="16px" Width="216px">
-        </asp:DropDownList>
         <br />
         <br />
         Дата начала конкурса<br />

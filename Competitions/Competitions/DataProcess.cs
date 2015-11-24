@@ -717,7 +717,9 @@ namespace Competitions
         public bool IsCellDropDown(int dataTypeIndex)
         {
             DataType dataType = new DataType();
-            if ((dataType.IsDataTypeConstantDropDown(dataTypeIndex)) || (dataType.IsDataTypeDropDown(dataTypeIndex)) || (dataType.IsDataTypeConstntAtLeastOneWithCheckBoxParam(dataTypeIndex)))
+            if ((dataType.IsDataTypeConstantDropDown(dataTypeIndex)) || (dataType.IsDataTypeDropDown(dataTypeIndex)) 
+                || (dataType.IsDataTypeConstntAtLeastOneWithCheckBoxParam(dataTypeIndex))
+                || (dataType.IsDataTypeFkToColumnAtLeastOneWithCheckBoxParam(dataTypeIndex)))
             {
                 return true;
             }

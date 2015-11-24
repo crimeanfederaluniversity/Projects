@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="CompetitionsDB" Class="CompetitionDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=V-ПК;Initial Catalog=CompetitionsDB;User ID=Potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="CompetitionsDBConnectionString2" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=РЕМА-ПК\REMAIDEMBUHAT;Initial Catalog=CompetitionsDB;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="CompetitionsDBConnectionString2" Provider="System.Data.SqlClient" />
   <Table Name="dbo.UsersTable" Member="UsersTable">
     <Type Name="UsersTable">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -7,13 +7,14 @@
       <Column Name="Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="AccessLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="UsersTable_zExpertPointsValue" Member="zExpertPointsValue" ThisKey="ID" OtherKey="FK_ExpertsTable" Type="zExpertPointsValue" />
       <Association Name="UsersTable_zExpertsAndApplicationMappingTable" Member="zExpertsAndApplicationMappingTable" ThisKey="ID" OtherKey="FK_UsersTable" Type="zExpertsAndApplicationMappingTable" />
       <Association Name="UsersTable_zExpertsAndCompetitionMappngTamplateTable" Member="zExpertsAndCompetitionMappngTamplateTable" ThisKey="ID" OtherKey="FK_UsersTable" Type="zExpertsAndCompetitionMappngTamplateTable" />
       <Association Name="UsersTable_zApplicationTable" Member="zApplicationTable" ThisKey="ID" OtherKey="FK_UsersTable" Type="zApplicationTable" />
       <Association Name="UsersTable_zTaskPRManualTable" Member="zTaskPRManualTable" ThisKey="ID" OtherKey="FK_UsersTable" Type="zTaskPRManualTable" />
       <Association Name="UsersTable_zExpertAndExpertGroupMappingTable" Member="zExpertAndExpertGroupMappingTable" ThisKey="ID" OtherKey="FK_UsersTable" Type="zExpertAndExpertGroupMappingTable" />
       <Association Name="UsersTable_zCompetitionsTable" Member="zCompetitionsTable" ThisKey="ID" OtherKey="FK_Curator" Type="zCompetitionsTable" />
+      <Association Name="UsersTable_zExpertPointsValue" Member="zExpertPointsValue" ThisKey="ID" OtherKey="FK_ExpertsTable" Type="zExpertPointsValue" />
+      <Association Name="UsersTable_zPartnersTable" Member="zPartnersTable" ThisKey="ID" OtherKey="FK_UsersTable" Type="zPartnersTable" />
     </Type>
   </Table>
   <Table Name="dbo.zTemplateFormTable" Member="zTemplateFormTable">
@@ -105,22 +106,6 @@
       <Association Name="zExpertPoints_zExpertPointsValue" Member="zExpertPointsValue" ThisKey="ID" OtherKey="FK_ExpertPoints" Type="zExpertPointsValue" />
     </Type>
   </Table>
-  <Table Name="dbo.zExpertPointsValue" Member="zExpertPointsValue">
-    <Type Name="zExpertPointsValue">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Value" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="FK_ExpertsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_ApplicationTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_ExpertPoints" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="LastChangeDataTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="Sended" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="SendedDataTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="UsersTable_zExpertPointsValue" Member="UsersTable" ThisKey="FK_ExpertsTable" OtherKey="ID" Type="UsersTable" IsForeignKey="true" />
-      <Association Name="zExpertPoints_zExpertPointsValue" Member="zExpertPoints" ThisKey="FK_ExpertPoints" OtherKey="ID" Type="zExpertPoints" IsForeignKey="true" />
-      <Association Name="zApplicationTable_zExpertPointsValue" Member="zApplicationTable" ThisKey="FK_ApplicationTable" OtherKey="ID" Type="zApplicationTable" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.zExpertsAndApplicationMappingTable" Member="zExpertsAndApplicationMappingTable">
     <Type Name="zExpertsAndApplicationMappingTable">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -188,9 +173,10 @@
       <Column Name="StartProjectDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="EndProjectDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="zApplicationTable_zCollectedRowsTable" Member="zCollectedRowsTable" ThisKey="ID" OtherKey="FK_ApplicationTable" Type="zCollectedRowsTable" />
-      <Association Name="zApplicationTable_zExpertPointsValue" Member="zExpertPointsValue" ThisKey="ID" OtherKey="FK_ApplicationTable" Type="zExpertPointsValue" />
       <Association Name="zApplicationTable_zExpertsAndApplicationMappingTable" Member="zExpertsAndApplicationMappingTable" ThisKey="ID" OtherKey="FK_ApplicationsTable" Type="zExpertsAndApplicationMappingTable" />
       <Association Name="zApplicationTable_zDocumentsTable" Member="zDocumentsTable" ThisKey="ID" OtherKey="FK_ApplicationTable" Type="zDocumentsTable" />
+      <Association Name="zApplicationTable_zExpertPointsValue" Member="zExpertPointsValue" ThisKey="ID" OtherKey="FK_ApplicationTable" Type="zExpertPointsValue" />
+      <Association Name="zApplicationTable_zApplicationAndPartnersMappingTable" Member="zApplicationAndPartnersMappingTable" ThisKey="ID" OtherKey="FK_Application" Type="zApplicationAndPartnersMappingTable" />
       <Association Name="UsersTable_zApplicationTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="ID" Type="UsersTable" IsForeignKey="true" />
       <Association Name="zCompetitionsTable_zApplicationTable" Member="zCompetitionsTable" ThisKey="FK_CompetitionTable" OtherKey="ID" Type="zCompetitionsTable" IsForeignKey="true" />
     </Type>
@@ -283,6 +269,45 @@
       <Association Name="zColumnTable_zColumnTable1" Member="zColumnTable3" ThisKey="FK_ColumnConnectToTable" OtherKey="ID" Type="zColumnTable" IsForeignKey="true" />
       <Association Name="zColumnTable_zColumnTable2" Member="zColumnTable5" ThisKey="FK_ColumnConnectFromTable" OtherKey="ID" Type="zColumnTable" IsForeignKey="true" />
       <Association Name="zConstantListTable_zColumnTable" Member="zConstantListTable" ThisKey="FK_ConstantListsTable" OtherKey="ID" Type="zConstantListTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.zExpertPointsValue" Member="zExpertPointsValue">
+    <Type Name="zExpertPointsValue">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="FK_ExpertsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_ApplicationTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_ExpertPoints" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LastChangeDataTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Sended" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="SendedDataTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="UsersTable_zExpertPointsValue" Member="UsersTable" ThisKey="FK_ExpertsTable" OtherKey="ID" Type="UsersTable" IsForeignKey="true" />
+      <Association Name="zApplicationTable_zExpertPointsValue" Member="zApplicationTable" ThisKey="FK_ApplicationTable" OtherKey="ID" Type="zApplicationTable" IsForeignKey="true" />
+      <Association Name="zExpertPoints_zExpertPointsValue" Member="zExpertPoints" ThisKey="FK_ExpertPoints" OtherKey="ID" Type="zExpertPoints" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.zPartnersTable" Member="zPartnersTable">
+    <Type Name="zPartnersTable">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Surname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Patronymic" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Role" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="zPartnersTable_zApplicationAndPartnersMappingTable" Member="zApplicationAndPartnersMappingTable" ThisKey="ID" OtherKey="FK_PartnersTable" Type="zApplicationAndPartnersMappingTable" />
+      <Association Name="UsersTable_zPartnersTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="ID" Type="UsersTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.zApplicationAndPartnersMappingTable" Member="zApplicationAndPartnersMappingTable">
+    <Type Name="zApplicationAndPartnersMappingTable">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FK_PartnersTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_Application" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="zApplicationTable_zApplicationAndPartnersMappingTable" Member="zApplicationTable" ThisKey="FK_Application" OtherKey="ID" Type="zApplicationTable" IsForeignKey="true" />
+      <Association Name="zPartnersTable_zApplicationAndPartnersMappingTable" Member="zPartnersTable" ThisKey="FK_PartnersTable" OtherKey="ID" Type="zPartnersTable" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

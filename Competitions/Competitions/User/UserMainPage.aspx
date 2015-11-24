@@ -113,7 +113,7 @@
               OnClick="Tab1_Click" Width="210px" />
           <asp:Button Text="Заявки в работе" BorderStyle="None" ID="Tab2" CssClass="Initial" runat="server"
               OnClick="Tab2_Click" Width="210px" />
-          <asp:Button Text="Поданные заявки" BorderStyle="None" ID="Tab3" CssClass="Initial" runat="server"
+          <asp:Button Text="Поданые заявки" BorderStyle="None" ID="Tab3" CssClass="Initial" runat="server"
               OnClick="Tab3_Click" Width="210px"/>
           <asp:Button Text="Черновики" BorderStyle="None" ID="Tab4" CssClass="Initial" runat="server"
               OnClick="Tab4_Click" Width="210px"/>
@@ -122,7 +122,7 @@
               <table style="width: 100%; border-style: hidden">
                 <tr>
                   <td>
-                       <asp:Label ID="Label1" runat="server" Visible = "False"  style="font-size: 20px; color: red" Text="У Вас уже есть поданная на конкурс заявка!"></asp:Label>
+                       <asp:Label ID="Label1" runat="server" Visible = "False"  style="font-size: 20px; color: red" Text="У Вас уже есть поданая на конкурс заявка!"></asp:Label>
                       <h2><span style="font-size: 20px"> Примечание: Вы можете подать новую заявку, если сроки реализации Вашей прежней заявки еще не истекли!</span></h2>                                                            
                         <h2><span style="font-size: 20px">На данный момент для подачи заявок доступны следующие конкурсы:</span></h2>
                         
@@ -134,7 +134,7 @@
                                 <asp:BoundField DataField="Budjet"   HeaderText="Бюджет" Visible="true" />
                                 <asp:BoundField DataField="StartDate"   HeaderText="Дата начала" Visible="true" />
                                 <asp:BoundField DataField="EndDate"   HeaderText="Дата окончания" Visible="true" />
-                                <asp:TemplateField HeaderText="Скачать шаблон заявки">
+                                <asp:TemplateField HeaderText="Шаблон заявки">
                                         <ItemTemplate>
                                            <asp:Button ID="GetTamplateWithNoMarkButton" runat="server" Text="Скачать" CommandArgument='<%# Eval("ID") %>' OnClick="GetTamplateWithNoMarkButton" />
                                         </ItemTemplate>
@@ -166,14 +166,14 @@
             
                 <asp:TemplateField HeaderText="Редактировать заявку">
                         <ItemTemplate>
-                            <asp:Button ID="FillButton" runat="server" CommandName="Select" Text="Заполнить" CommandArgument='<%# Eval("ID") %>'   Width="200px" OnClick="FillButtonClick"/>
+                            <asp:Button ID="FillButton" runat="server" CommandName="Select" Text="Заполнить" CommandArgument='<%# Eval("ID") %>'   Width="150px" OnClick="FillButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
                 
                 <asp:TemplateField HeaderText="Отправить на рассмотрение">
                         <ItemTemplate>
                             <asp:Label ID="StatusLabel" runat="server"  Enabled='<%# Bind("StatusLabelEnabled") %>' Visible='<%# Bind("StatusLabelEnabled") %>'  Text="Для отправки на рассмотрение необходимо полностью заполнить заявку!"></asp:Label>
-                            <asp:Button ID="SendButton" runat="server"  Enabled='<%# Bind("SendButtonEnabled") %>'  Visible='<%# Bind("SendButtonEnabled") %>' CommandName="Select" OnClientClick="return confirm('Внимание! Вы можете отправить только одну заявку. Оставшиеся заявки будут перемещены в раздел черновики.Вы уверены, что хотите продолжить??');" Text="Отправить" CommandArgument='<%# Eval("ID") %>'   Width="200px" OnClick="SendButtonClick"/>
+                            <asp:Button ID="SendButton" runat="server"  Enabled='<%# Bind("SendButtonEnabled") %>'  Visible='<%# Bind("SendButtonEnabled") %>' CommandName="Select" OnClientClick="return confirm('Внимание! Вы можете отправить только одну заявку. Оставшиеся заявки будут перемещены в раздел черновики.Вы уверены, что хотите продолжить??');" Text="Отправить" CommandArgument='<%# Eval("ID") %>'   Width="150px" OnClick="SendButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
 
@@ -188,7 +188,7 @@
                                 <asp:ListItem Value="4">odt</asp:ListItem>
                             </asp:RadioButtonList>
 
-                            <asp:Button ID="GetDocButton2" runat="server"  CommandName="Select" Text="Скачать" OnClientClick="startFileDownload()"  CommandArgument='<%# Eval("ID") %>' Width="200px" OnClick="GetDocButtonClick"/>
+                            <asp:Button ID="GetDocButton2" runat="server"  CommandName="Select" Text="Скачать" OnClientClick="startFileDownload()"  CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="GetDocButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
              
@@ -204,9 +204,9 @@
               <table style="width: 100%; border-width: 1px; border-color: #666; border-style: hidden">
                 <tr>
                   <td>
-                      <h2><span style="font-size: 20px">Поданные заявки: </span></h2>
+                      <h2><span style="font-size: 20px">Поданые заявки: </span></h2>
                       <p>
-                      <asp:Label ID="Label2" runat="server" Visible = "False"  style="font-size: 20px" Text="На данный момент у Вас нет поданных заявок"></asp:Label>
+                      <asp:Label ID="Label2" runat="server" Visible = "False"  style="font-size: 20px" Text="На данный момент у Вас нет поданых заявок"></asp:Label>
                           <p>
                               <br />
                               <asp:GridView ID="ArchiveApplicationGV" runat="server" AutoGenerateColumns="False">
@@ -225,7 +225,7 @@
                                                   <asp:ListItem Value="3">pdf</asp:ListItem>
                                                   <asp:ListItem Value="4">odt</asp:ListItem>
                                               </asp:RadioButtonList>
-                                              <asp:Button ID="GetDocButton" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="GetDocButtonClick" Text="Скачать" Width="200px" />
+                                              <asp:Button ID="GetDocButton" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="GetDocButtonClick" Text="Скачать" Width="150px" />
                                           </ItemTemplate>
                                       </asp:TemplateField>
                                   </Columns>
@@ -250,7 +250,7 @@
                             
                             <asp:TemplateField HeaderText="Редактировать заявку">
                                 <ItemTemplate>
-                                    <asp:Button ID="FillButton" runat="server" CommandName="Select" Text="Заполнить" CommandArgument='<%# Eval("ID") %>'   Width="200px" OnClick="FillButtonClick"/>
+                                    <asp:Button ID="FillButton" runat="server" CommandName="Select" Text="Заполнить" CommandArgument='<%# Eval("ID") %>'   Width="150px" OnClick="FillButtonClick"/>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>

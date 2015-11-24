@@ -343,7 +343,6 @@ namespace Competitions.Admin
                 
             }
         }
-
-           
+         
     }
 }

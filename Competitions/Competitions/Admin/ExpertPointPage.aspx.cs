@@ -203,10 +203,10 @@ namespace Competitions.Admin
    
  
                                 string templateFilePath = Server.MapPath("~/documents/expertdoc/expertpoint.xml");
-                                string newFileName = DateTime.Now.ToString();
-                                newFileName = newFileName.Replace(":", "_");
+                                string newFileName = "Заключение на заявку №" + applicationId.ToString() + ".doc";
+                             
                                 string newFileDirectory = Server.MapPath("~/documents/generated") + "\\" + userid.ToString();
-                                string newFilePath = newFileDirectory + "\\" + newFileName;
+                                string newFilePath = newFileDirectory + "\\" + newFileName + ".doc";
 
                                 Directory.CreateDirectory(newFileDirectory);
 
@@ -215,7 +215,7 @@ namespace Competitions.Admin
                                
 
                                 HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
-                                HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=expertpoint.xml" );
+                                HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=Заключение на заявку №" + applicationId.ToString() + ".doc");
                                 HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(newFilePath));
                                 HttpContext.Current.Response.End();
                                 Response.End();

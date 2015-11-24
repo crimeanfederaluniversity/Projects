@@ -73,6 +73,7 @@ namespace Competitions.User
             Directory.CreateDirectory(documentsPath + "\\\\" + applicationId.ToString());
             string applicationPath = Server.MapPath("~/documents/byApplication/"+applicationId.ToString());
             Directory.CreateDirectory(applicationPath + "\\\\" + collectedDataId.ToString());
+          
             if (fileUpload.HasFile)
             {
                 if (fileUpload.PostedFiles.Count > 1)
@@ -261,7 +262,9 @@ namespace Competitions.User
                                 }
                             }
                         }
-                        if ((dataType.IsDataTypeDropDown(currenColumn.DataType)) || (dataType.IsDataTypeConstantDropDown(currenColumn.DataType))|| (dataType.IsDataTypeConstntAtLeastOneWithCheckBoxParam(currenColumn.DataType)))
+                        if ((dataType.IsDataTypeDropDown(currenColumn.DataType)) || (dataType.IsDataTypeConstantDropDown(currenColumn.DataType))
+                            || (dataType.IsDataTypeConstntAtLeastOneWithCheckBoxParam(currenColumn.DataType))
+                            || (dataType.IsDataTypeFkToColumnAtLeastOneWithCheckBoxParam(currenColumn.DataType)))
                         {
                             DropDownList gvDropDownList = (DropDownList)currentRow.FindControl("ChooseOnlyDropDown" + i.ToString());
                             if (gvDropDownList != null)
@@ -824,6 +827,16 @@ namespace Competitions.User
                             sectionId,
                             currentColumn.ID, (int) currentColumn.FK_ColumnConnectToTable);
                     }
+                    if (dataType.IsDataTypeFkToColumnAtLeastOneWithCheckBoxParam(currentColumn.DataType))
+                    {
+                        permitAddRow = true;
+                        permitDeleteRow = true;
+                        DeleteRowWithUnSelectedCheckBox((int)currentColumn.FK_ColumnTable, applicationId, sectionId,
+                            currentColumn.ID, (int)currentColumn.FK_ColumnConnectToTable);
+                        AddRowWithNecwssairlyLinesWithParams((int)currentColumn.FK_ColumnTable, applicationId,
+                            sectionId,
+                            currentColumn.ID, (int)currentColumn.FK_ColumnConnectToTable);
+                    }
                 }
 
                 #endregion
@@ -1322,6 +1335,29 @@ namespace Competitions.User
                                         }
 
                                         #endregion
+                                        #region atLeastOneFKCollected
+
+                                        if (dataType.IsDataTypeFkToColumnAtLeastOneWithCheckBoxParam(currentColumn.DataType))
+                                        {
+                                            List<zCollectedDataTable> checkedItemsToPutInDropDown =
+                                                GetMustBeByCheckBoxeData(applicationId, currentColumn.FK_ColumnTable,
+                                                    currentColumn.FK_ColumnConnectToTable);
+                                            DataProcess dataProcess = new DataProcess();
+                                            foreach (zCollectedDataTable currentData in checkedItemsToPutInDropDown)
+                                            {
+                                                ListItem newListItem = new ListItem();
+                                                if (currentData.ID == currentCollectedData.ValueFK_CollectedDataTable)
+                                                    newListItem.Selected = true;
+                                                newListItem.Value = currentData.ID.ToString();
+                                                newListItem.Text = currentData.ValueText; 
+                                                /*    (from a in competitionDataBase.zCollectedDataTable
+                                                                    where a.ID == currentData.ValueFK_CollectedDataTable
+                                                                    select a.ValueText).FirstOrDefault();*/
+                                                currentDropDownListDownList.Items.Add(newListItem);
+                                            }
+                                        }
+
+                                        #endregion
                                     }
                                 }                 
                             }
@@ -1464,6 +1500,43 @@ namespace Competitions.User
                     currentCollected.ValueText = null;
                     competitionDataBase.SubmitChanges();
                 }
+                zCollectedRowsTable currentRow = (from a in competitionDataBase.zCollectedDataTable
+                                                  join b in competitionDataBase.zCollectedRowsTable
+                                                      on a.FK_CollectedRowsTable equals b.ID
+                                                  where a.ID == currentCollected.ID
+                                                  && a.Active == true
+                                                  && b.Active == true
+                                                  select b).FirstOrDefault();
+                int applicationId = currentRow.FK_ApplicationTable;
+                string applicationPath = Server.MapPath("~/documents/byApplication/" + applicationId.ToString() + "/" + button.CommandArgument);
+                // моя хрень
+                 //Directory.EnumerateFiles(applicationPath);
+                if (Directory.Exists(applicationPath))               
+                {
+
+
+                    try
+                    {
+                        var dir = new DirectoryInfo(applicationPath);
+                        dir.Attributes = dir.Attributes & ~FileAttributes.ReadOnly;
+                        dir.Delete(true);
+                       
+                    }
+                    catch (IOException ex)
+                    {
+
+                    }
+
+
+
+
+                   // Directory.Delete(applicationPath);
+                    //File.Delete(System.Web.HttpContext.Current.Server.MapPath("~/") + @"documents\byApplication\" +
+                     //           applicationId.ToString());
+                    
+                }
+                
+                // закончилась
                 Response.Redirect("FillSection.aspx");
             }
         }     

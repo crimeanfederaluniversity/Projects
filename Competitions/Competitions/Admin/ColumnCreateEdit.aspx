@@ -12,7 +12,7 @@
         <br />
         Описание<br />
         <asp:TextBox ID="DescriptionTextBox" runat="server" Width="545px"></asp:TextBox>
-        <br />
+        <br />IsDataTypeDropDownWithParam
         Тип вносимых данных<br />
         <asp:DropDownList ID="DataTypeDropDownList" runat="server" Height="25px" Width="554px" AutoPostBack="True" OnSelectedIndexChanged="DataTypeDropDownList_SelectedIndexChanged">
         </asp:DropDownList>

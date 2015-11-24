@@ -4,18 +4,18 @@
 <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
     <div>
 
-        <asp:ImageButton ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" Width="40px" OnClick="GoBackButton_Click" ImageAlign="Middle" ImageUrl="~/Images/ToStart.png" ToolTip="К заявке"     />
+        <asp:ImageButton ID="GoBackButton" runat="server" OnClientClick="showLoadPanel()" CausesValidation="False" Width="40px" OnClick="GoBackButton_Click" ImageAlign="Middle" ImageUrl="~/Images/ToStart.png" ToolTip="К заявке"     />
         &nbsp; 
-         <asp:ImageButton ID="Button2" runat="server" OnClientClick="showLoadPanel()"  Width="30px" OnClick="Button2_Click" ImageUrl="~/Images/Home.png" ImageAlign="Middle" ToolTip="На главную" />
+         <asp:ImageButton ID="Button2" runat="server" OnClientClick="showLoadPanel()"  CausesValidation="False" Width="30px" OnClick="Button2_Click" ImageUrl="~/Images/Home.png" ImageAlign="Middle" ToolTip="На главную" />
         &nbsp;&nbsp;&nbsp;&nbsp; 
-        <asp:ImageButton ID="PreviousSection" runat="server" OnClientClick="showLoadPanel()"  Width="30px" OnClick="PreviousSection_Click" ImageUrl="~/Images/Back.png" ImageAlign="Middle" ToolTip="Назад" />
+        <asp:ImageButton ID="PreviousSection" runat="server" CausesValidation="False" OnClientClick="showLoadPanel()"  Width="30px" OnClick="PreviousSection_Click" ImageUrl="~/Images/Back.png" ImageAlign="Middle" ToolTip="Назад" />
 &nbsp;
          
          <asp:ImageButton ID="NextSection" runat="server" OnClientClick="showLoadPanel()"  Width="30px" OnClick="NextSection_Click" ImageUrl="~/Images/Next.png" ImageAlign="Middle" ToolTip="Вперед" />
         &nbsp;
 
  
-         <asp:ImageButton ID="SaveButton" runat="server" OnClientClick="showLoadPanel()"  Width="30px" OnClick="SaveButton_Click" ImageUrl="~/Images/Save.png" ImageAlign="Middle" ToolTip="Сохранить изменения" />
+         <asp:ImageButton ID="SaveButton" runat="server" OnClientClick="showLoadPanel()" CausesValidation="False" Width="30px" OnClick="SaveButton_Click" ImageUrl="~/Images/Save.png" ImageAlign="Middle" ToolTip="Сохранить изменения" />
 
   &nbsp;      <asp:Label ID="CountDownLabel" runat="server" Text="Label"></asp:Label>
           </div> 

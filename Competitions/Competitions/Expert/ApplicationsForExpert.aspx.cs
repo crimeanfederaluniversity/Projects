@@ -101,7 +101,7 @@ namespace Competitions.Expert
 
                 string dirPath = Server.MapPath("~/documents/byApplication/" + idapp);
                 string templateFilePath = Server.MapPath("~/documents/templates") + "\\" + currentCompetition.ID.ToString() + "\\" + currentCompetition.TemplateDocName;
-                string newFileName = "Заявка " + currentCompetition.TemplateDocName;
+                string newFileName = "Заявка " + currentCompetition.TemplateDocName + ".doc";
                 newFileName = newFileName.Replace(":", "_");
                 string newFilePath = dirPath + "\\" + newFileName;
                 string zipFile = Server.MapPath("~/documents/generatedZipFiles/") + idapp + ".zip";

@@ -9,7 +9,7 @@ namespace Competitions
 {
     public class DataType
     {
-        private int dataTypeCount = 24;
+        private int dataTypeCount = 25;
         public string GetDataTypeName(int dataType)
         {
             switch (dataType)
@@ -110,6 +110,10 @@ namespace Competitions
                 {
                     return "Вычитание в строке";
                 }
+                case 24:
+                {
+                    return "По существующим таблицам (Выпадающий список) по критерию (CheckBox)";
+                }
                 default :
                 {
                     return "error";
@@ -140,7 +144,8 @@ namespace Competitions
                 || IsDataTypeMaxValue(dataType)
                 || IsDataTypeMinValue(dataType)
                 || IsDataTypeNecessarilyShowWithParam(dataType)
-                || IsDataTypeConstntAtLeastOneWithCheckBoxParam(dataType))
+                || IsDataTypeConstntAtLeastOneWithCheckBoxParam(dataType)
+                || IsDataTypeFkToColumnAtLeastOneWithCheckBoxParam(dataType))
             {
                 return true;
             }
@@ -186,7 +191,7 @@ namespace Competitions
         }
         public bool DataTypeDependOfBit(int dataType)
         {
-            if (IsDataTypeNecessarilyShowWithParam(dataType)||IsDataTypeConstntAtLeastOneWithCheckBoxParam(dataType))
+            if (IsDataTypeNecessarilyShowWithParam(dataType) || IsDataTypeConstntAtLeastOneWithCheckBoxParam(dataType) || IsDataTypeFkToColumnAtLeastOneWithCheckBoxParam(dataType))
             {
                 return true;
             }
@@ -452,6 +457,17 @@ namespace Competitions
         public bool IsDataTypeSubtractionInRow(int dataType)
         {
             if (dataType == 23)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsDataTypeFkToColumnAtLeastOneWithCheckBoxParam(int dataType)
+        {
+            if (dataType == 24)
             {
                 return true;
             }

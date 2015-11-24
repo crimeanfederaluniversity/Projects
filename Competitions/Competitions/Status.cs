@@ -45,7 +45,49 @@ namespace Competitions
                 return false;
             if (currentApplication.EndProjectDate == null)
                 return false;
+            List<zPartnersTable> one = (from a in _competitionDataBase.zPartnersTable
+                                        where a.Active == true && a.Role == true
+                                        select a).ToList();
+            zPartnersTable currentone = (from a in _competitionDataBase.zPartnersTable
+                                         where a.Active == true && a.Role == true
+                                         join b in _competitionDataBase.zApplicationAndPartnersMappingTable
+                                         on a.ID equals b.FK_PartnersTable
+                                             where b.Active == true && b.FK_Application == Convert.ToInt32(currentApplication.ID)
+                                         select a).FirstOrDefault();
+            if (one != null && currentone != null)
+            {
+                List<int> lider = (from a in one
+                                   where a.Name == currentone.Name
+                                         && a.Surname == currentone.Surname
+                                         && a.Patronymic == currentone.Patronymic
+                                   select a.ID).ToList();
+                if (lider.Count > 1)
+                {
+                    return false;
+                }
+            }
+            List<zPartnersTable> two = (from a in _competitionDataBase.zPartnersTable
+                    where a.Active == true && a.Role == false
+                    select a).ToList();
+                zPartnersTable currenttwo = (from a in _competitionDataBase.zPartnersTable
+                    where a.Active == true && a.Role == false
+                     join b in _competitionDataBase.zApplicationAndPartnersMappingTable
+                     on a.ID equals b.FK_PartnersTable
+                     where b.Active == true && b.FK_Application == Convert.ToInt32(currentApplication.ID)  
+                     select a).FirstOrDefault();
+            if (two != null && currenttwo != null)
+            {
+                List<int> teamuser = (from a in two
+                    where a.Name == currenttwo.Name
+                          && a.Surname == currenttwo.Surname
+                          && a.Patronymic == currenttwo.Patronymic
+                    select a.ID).ToList();
 
+                if (teamuser.Count >= 2)
+                {
+                    return false;
+                }
+            }
             foreach (zBlockTable block in blockList)
             {
                 if (GetStatusIdForBlockInApplication(block.ID, applicationId) != statusAllData)

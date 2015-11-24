@@ -91,7 +91,7 @@ namespace Competitions.Admin
 
                 string dirPath = Server.MapPath("~/documents/byApplication/" + idapp);
                 string templateFilePath = Server.MapPath("~/documents/templates") + "\\" + currentCompetition.ID.ToString() + "\\" + currentCompetition.TemplateDocName;
-                string newFileName = "Заявка " + currentCompetition.TemplateDocName;
+                string newFileName = "Заявка " + currentCompetition.TemplateDocName + ".doc";
                 newFileName = newFileName.Replace(":", "_");
                 string newFilePath = dirPath + "\\" + newFileName;
                 string zipFile = Server.MapPath("~/documents/generatedZipFiles/") + idapp + ".zip";
@@ -105,7 +105,7 @@ namespace Competitions.Admin
                     File.Delete(System.Web.HttpContext.Current.Server.MapPath("~/") + @"documents\generatedZipFiles\" + idapp + ".zip");
                     ZipFile.CreateFromDirectory(dirPath, zipFile);
                     HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
-                    HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=file.zip");
+                    HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=Заявка №" + idapp.ToString() + ".zip");
                     HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(zipFile));
                     HttpContext.Current.Response.End();
                 }
@@ -113,7 +113,7 @@ namespace Competitions.Admin
                 {
                     ZipFile.CreateFromDirectory(dirPath, zipFile);
                     HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
-                    HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=file.zip");
+                    HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=Заявка №" + idapp.ToString() + ".zip");
                     HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(zipFile));
                     HttpContext.Current.Response.End();
                 }

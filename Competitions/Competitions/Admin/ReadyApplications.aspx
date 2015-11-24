@@ -26,7 +26,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Вернуть на обработку">
                         <ItemTemplate>
-                            <asp:Button ID="BackButton" runat="server" CommandName="Select" Text="Вернуть" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="BackButtonClick"/>
+                            <asp:Button ID="BackButton" runat="server" CommandName="Select" OnClientClick="return confirm('Вы уверены, что хотите вернуть заявку в раздел необработанные?');" Text="Вернуть" CommandArgument='<%# Eval("ID") %>' Width="150px" OnClick="BackButtonClick"/>
                         </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

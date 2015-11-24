@@ -35,6 +35,17 @@ namespace Competitions.User
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка отправлена на рассмотрение!');", true);
             Response.Redirect("UserMainPage.aspx");
         }
+
+        
+
+        protected bool competitionIsClosed(zApplicationTable currentApplication)
+        {
+            CompetitionDataContext competitionDataBase = new CompetitionDataContext();
+            zCompetitionsTable currentCompetition = (from a in competitionDataBase.zCompetitionsTable
+                                                     where a.ID == currentApplication.FK_CompetitionTable
+                                                    select a).FirstOrDefault();
+            return !currentCompetition.OpenForApplications;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -122,6 +133,7 @@ namespace Competitions.User
                         dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTable
                                                       where a.ID == (Convert.ToInt32(currentApplication.FK_CompetitionTable))
                                                       select a.Name).FirstOrDefault();
+                       
                         if (status.IsApplicationReadyToSend(currentApplication.ID))
                         {
                             dataRow["StatusLabelEnabled"] = false;
@@ -150,7 +162,7 @@ namespace Competitions.User
                                                                where a.FK_UsersTable == userId && a.Active == true && a.Sended == true
                                                                join b in competitionDataBase.zCompetitionsTable
                                                                on a.FK_CompetitionTable equals b.ID
-                                                               where b.Active == true
+                                                               where b.Active == true 
                                                                select a).Distinct().ToList();
                     
 
@@ -205,15 +217,17 @@ namespace Competitions.User
 
                     foreach (zApplicationTable currentApplication in applicationList)
                     {
-                        if (!competitionCountDown.IsCompetitionEndDateExpiredByApplication(currentApplication.ID))
-                            continue;
-                        DataRow dataRow = dataTable.NewRow();
-                        dataRow["ID"] = currentApplication.ID;
-                        dataRow["Name"] = currentApplication.Name;
-                        dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTable
-                                                      where a.ID == (Convert.ToInt32(currentApplication.FK_CompetitionTable))
-                                                      select a.Name).FirstOrDefault();
-                        dataTable.Rows.Add(dataRow);
+                        if (competitionIsClosed(currentApplication) ||
+                            competitionCountDown.IsCompetitionEndDateExpiredByApplication(currentApplication.ID))
+                        {
+                            DataRow dataRow = dataTable.NewRow();
+                            dataRow["ID"] = currentApplication.ID;
+                            dataRow["Name"] = currentApplication.Name;
+                            dataRow["CompetitionName"] = (from a in competitionDataBase.zCompetitionsTable
+                                where a.ID == (Convert.ToInt32(currentApplication.FK_CompetitionTable))
+                                select a.Name).FirstOrDefault();
+                            dataTable.Rows.Add(dataRow);
+                        }
                     }
                     DraftGridView.DataSource = dataTable;
                     DraftGridView.DataBind();
@@ -235,15 +249,11 @@ namespace Competitions.User
             {
                 CompetitionDataContext competitionDataBase = new CompetitionDataContext();
                 List<zApplicationTable> applicationexist = (from a in competitionDataBase.zApplicationTable where
-                                                            a.FK_UsersTable == userId && a.Sended == true && a.Active == true &&
-                                                            a.EndProjectDate > DateTime.Now
-                                                            select a).Distinct().ToList();
-
-                List<zCompetitionsTable> competitionsList = (from a in competitionDataBase.zCompetitionsTable
-                    where
-                        a.Active == true && a.OpenForApplications == true &&
-                        a.ID == Convert.ToInt32(newapp.CommandArgument)
-                    select a).ToList();
+                                                            a.FK_UsersTable == userId && a.Sended == true && a.Active == true
+                                                            join b in competitionDataBase.zCompetitionsTable 
+                                                            on a.FK_CompetitionTable equals  b.ID
+                                                            where b.Active == true
+                                                            select a).Distinct().ToList();               
 
                 if (applicationexist.Count != 0)
                 {
