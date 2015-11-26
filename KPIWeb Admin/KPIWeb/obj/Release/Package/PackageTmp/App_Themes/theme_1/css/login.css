@@ -1,0 +1,38 @@
+﻿.style_log{
+    background-image:url("/css/images/kfu_gerb.png");
+    
+    background-repeat:no-repeat;
+   
+    background-size:2%;
+    background-position:70% 17%;
+    }
+relative_position {
+     position:relative;
+}
+.first_div_on_login {
+  
+   position:relative;
+   left:100px;
+   
+}
+.login_image_gerb {
+   /* position:absolute;
+    top:30%;
+    left:50%;
+    width:100%;
+    height:100%;
+    background-image:url("/App_Themes/theme_1/css/images/kfu_gerb.png");
+    opacity:0.6;
+    background-repeat:no-repeat;
+    
+    background-size:20em;
+ */
+}
+
+
+.second_div_on_login {
+        background-color:#ffd800;
+}
+.third_div_on_login {
+        background-color:#00ffe0;
+}
