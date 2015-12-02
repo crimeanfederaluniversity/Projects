@@ -1,5 +1,88 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="MainDB" Class="PersonalPagesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=РЕМА-ПК\REMAIDEMBUHAT;Initial Catalog=MainDB;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="MainDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.StudentsTable" Member="StudentsTable">
+    <Type Name="StudentsTable">
+      <Column Name="StudentsTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Surname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Patronimyc" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Gender" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_FirstLevelSubdivision" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_SecondLevelSubdivision" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_Specialisation" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="YearOfEnter" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Kurs" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="FirstLevelSubdivisionTable_StudentsTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivision" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="SecondLevelSubdivisionTable_StudentsTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivision" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ZeroLevelSubdivisionTable" Member="ZeroLevelSubdivisionTable">
+    <Type Name="ZeroLevelSubdivisionTable">
+      <Column Name="ZeroLevelSubdivisionTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Association Name="ZeroLevelSubdivisionTable_FirstLevelSubdivisionTable" Member="FirstLevelSubdivisionTable" ThisKey="ZeroLevelSubdivisionTableID" OtherKey="FK_ZeroLevelSubvisionTable" Type="FirstLevelSubdivisionTable" />
+      <Association Name="ZeroLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="ZeroLevelSubdivisionTableID" OtherKey="FK_ZeroLevelSubdivisionTable" Type="UsersTable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FirstLevelSubdivisionTable" Member="FirstLevelSubdivisionTable">
+    <Type Name="FirstLevelSubdivisionTable">
+      <Column Name="FirstLevelSubdivisionTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="FK_ZeroLevelSubvisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AbbRu" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="FirstLevelSubdivisionTable_StudentsTable" Member="StudentsTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivision" Type="StudentsTable" />
+      <Association Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="SecondLevelSubdivisionTable" />
+      <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="UsersTable" />
+      <Association Name="ZeroLevelSubdivisionTable_FirstLevelSubdivisionTable" Member="ZeroLevelSubdivisionTable" ThisKey="FK_ZeroLevelSubvisionTable" OtherKey="ZeroLevelSubdivisionTableID" Type="ZeroLevelSubdivisionTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SecondLevelSubdivisionTable" Member="SecondLevelSubdivisionTable">
+    <Type Name="SecondLevelSubdivisionTable">
+      <Column Name="SecondLevelSubdivisionTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="FK_FirstLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="SecondLevelSubdivisionTable_StudentsTable" Member="StudentsTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivision" Type="StudentsTable" />
+      <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="ThirdLevelSubdivisionTable" />
+      <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="UsersTable" />
+      <Association Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ThirdLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable">
+    <Type Name="ThirdLevelSubdivisionTable">
+      <Column Name="ThirdLevelSubdivisionTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="FK_SecondLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ThirdLevelSubdivisionTable_FourthLevelSubdivisionTable" Member="FourthLevelSubdivisionTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="FourthLevelSubdivisionTable" />
+      <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="UsersTable" />
+      <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FourthLevelSubdivisionTable" Member="FourthLevelSubdivisionTable">
+    <Type Name="FourthLevelSubdivisionTable">
+      <Column Name="FourthLevelSubdivisionTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="FK_ThirdLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FK_Specialization" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="FourthLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="FourthLevelSubdivisionTableID" OtherKey="FK_FourthLevelSubdivisionTable" Type="UsersTable" />
+      <Association Name="ThirdLevelSubdivisionTable_FourthLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ManualTable" Member="ManualTable">
+    <Type Name="ManualTable">
+      <Column Name="ManualID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ManualName" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ManualLink" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.UsersTable" Member="UsersTable">
     <Type Name="UsersTable">
       <Column Name="UsersTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -17,6 +100,33 @@
       <Column Name="PassCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Confirmed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="Position" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Surname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Patronimyc" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MonitorCheck" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IndicatorCheck" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DocumentCheck" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="RatingCheck" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CompetitionCheck" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AcademicDegree" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AcademicRank" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Association Name="UsersTable_TypeOfWritingFIO" Member="TypeOfWritingFIO" ThisKey="UsersTableID" OtherKey="FK_UserTableID" Type="TypeOfWritingFIO" />
+      <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="FourthLevelSubdivisionTable_UsersTable" Member="FourthLevelSubdivisionTable" ThisKey="FK_FourthLevelSubdivisionTable" OtherKey="FourthLevelSubdivisionTableID" Type="FourthLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="ZeroLevelSubdivisionTable_UsersTable" Member="ZeroLevelSubdivisionTable" ThisKey="FK_ZeroLevelSubdivisionTable" OtherKey="ZeroLevelSubdivisionTableID" Type="ZeroLevelSubdivisionTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TypeOfWritingFIO" Member="TypeOfWritingFIO">
+    <Type Name="TypeOfWritingFIO">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FK_UserTableID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Surname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Patronimyc" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="UsersTable_TypeOfWritingFIO" Member="UsersTable" ThisKey="FK_UserTableID" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

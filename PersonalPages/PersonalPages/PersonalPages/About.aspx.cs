@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,14 @@ namespace PersonalPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
+            List<ManualTable> man = (from a in PersonalPagesDB.ManualTable where a.Active == true select a).ToList();
+
+            LinksLable.Text = "";
+            foreach (ManualTable link in man)
+            {
+                LinksLable.Text += "<a href=\"" + ConfigurationManager.AppSettings.Get("SiteName") + "/manuals/" + link.ManualLink + "\" target=\"_blank\"  >" + link.ManualName + "</a> </br>";
+            }
 
         }
     }

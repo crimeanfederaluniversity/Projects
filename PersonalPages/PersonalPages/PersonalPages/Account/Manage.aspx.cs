@@ -4,122 +4,111 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PersonalPages.Models;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace PersonalPages.Account
 {
     public partial class Manage : System.Web.UI.Page
     {
-        protected string SuccessMessage
+        protected void Page_Load(object sender, EventArgs e)
         {
-            get;
-            private set;
-        }
+            //TextBox1.Text = "";
 
-        protected bool CanRemoveExternalLogins
-        {
-            get;
-            private set;
-        }
-
-        private bool HasPassword(UserManager manager)
-        {
-            var user = manager.FindById(User.Identity.GetUserId());
-            return (user != null && user.PasswordHash != null);
-        }
-
-        protected void Page_Load()
-        {
-            if (!IsPostBack)
+            Serialization UserSer = (Serialization) Session["UserID"];
+            if (UserSer == null)
             {
-                // Определите разделы для отображения
-                UserManager manager = new UserManager();
-                if (HasPassword(manager))
-                {
-                    changePasswordHolder.Visible = true;
-                }
-                else
-                {
-                    setPassword.Visible = true;
-                    changePasswordHolder.Visible = false;
-                }
-                CanRemoveExternalLogins = manager.GetLogins(User.Identity.GetUserId()).Count() > 1;
+                Response.Redirect("~/Default.aspx");
+            }
 
-                // Отобразить сообщение об успехе
-                var message = Request.QueryString["m"];
-                if (message != null)
-                {
-                    // Извлечь строку запроса из действия
-                    Form.Action = ResolveUrl("~/Account/Manage");
+            int userID = UserSer.Id;
+            ViewState["ID"] = userID;
+            PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
+            UsersTable userTable =
+                (from a in PersonalPagesDB.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+            StudentsTable studTable =
+                (from a in PersonalPagesDB.StudentsTable where a.StudentsTableID == userID select a).FirstOrDefault();
 
-                    SuccessMessage =
-                        message == "ChangePwdSuccess" ? "Пароль изменен."
-                        : message == "SetPwdSuccess" ? "Пароль задан."
-                        : message == "RemoveLoginSuccess" ? "Учетная запись удалена."
-                        : String.Empty;
-                    successMessage.Visible = !String.IsNullOrEmpty(SuccessMessage);
+            if (userTable != null && studTable == null)
+            {
+                if (!IsPostBack)
+                {
+                    Label1.Text += userTable.Surname;
+                    Label2.Text += userTable.Name;
+                    Label3.Text += userTable.Patronimyc;
+                    Label4.Text += userTable.Position;
+                    Label5.Text += userTable.Email;
+                    Label6.Text = (from b in PersonalPagesDB.FirstLevelSubdivisionTable
+                        where b.FirstLevelSubdivisionTableID == userTable.FK_FirstLevelSubdivisionTable
+                        select b.Name).FirstOrDefault();
+                    if (userTable.FK_SecondLevelSubdivisionTable != null)
+                    {
+                        Label7.Text = (from c in PersonalPagesDB.SecondLevelSubdivisionTable
+                            where c.SecondLevelSubdivisionTableID == userTable.FK_SecondLevelSubdivisionTable
+                            select c.Name).FirstOrDefault();
+                    }
+                    if (userTable.FK_ThirdLevelSubdivisionTable != null)
+                    {
+                        Label8.Text = (from d in PersonalPagesDB.ThirdLevelSubdivisionTable
+                            where d.ThirdLevelSubdivisionTableID == userTable.FK_ThirdLevelSubdivisionTable
+                            select d.Name).FirstOrDefault();
+                    }
+
                 }
+            }
+            if (userTable == null && studTable != null)
+            {
+                Label1.Text += studTable.Surname;
+                Label2.Text += studTable.Name;
+                Label3.Text += studTable.Patronimyc;
+                Label4.Text += studTable.Email;
+
+                Label5.Text = (from b in PersonalPagesDB.FirstLevelSubdivisionTable
+                    where b.FirstLevelSubdivisionTableID == studTable.FK_FirstLevelSubdivision
+                    select b.Name).FirstOrDefault();
+
+                Label6.Text = (from c in PersonalPagesDB.SecondLevelSubdivisionTable
+                    where c.SecondLevelSubdivisionTableID == studTable.FK_SecondLevelSubdivision
+                    select c.Name).FirstOrDefault();
+                Label7.Text += studTable.YearOfEnter;
             }
         }
 
-        protected void ChangePassword_Click(object sender, EventArgs e)
+        protected void Button1_Click(object sender, EventArgs e)
         {
-            if (IsValid)
+            TextBox1.Text = "";
+            Label9.Visible = true;
+            Label10.Visible = true;
+            Label11.Visible = true;
+
+            TextBox1.Visible = true;
+            TextBox2.Visible = true;
+            TextBox3.Visible = true;
+
+            Button2.Visible = true;
+
+            SetFocus(Button2);
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
+            UsersTable user = (from a in PersonalPagesDB.UsersTable where a.UsersTableID == (int)ViewState["ID"] select a).FirstOrDefault();
+
+            if ((user != null) && (TextBox1.Text.Equals(user.Password)) && (TextBox2.Text.Any()) && (TextBox2.Text.Equals(TextBox3.Text)))
             {
-                UserManager manager = new UserManager();
-                IdentityResult result = manager.ChangePassword(User.Identity.GetUserId(), CurrentPassword.Text, NewPassword.Text);
-                if (result.Succeeded)
-                {
-                    Response.Redirect("~/Account/Manage?m=ChangePwdSuccess");
-                }
-                else
-                {
-                    AddErrors(result);
-                }
+                user.Password = TextBox2.Text;
+                PersonalPagesDB.SubmitChanges();
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                            "alert('Пароль успешно изменен!');", true);
+                Response.Redirect("~/Default.aspx");
+            }
+            else
+            {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script",
+                            "alert('Произошла ошибка, проверьте правильность данных!');", true);
             }
         }
-
-        protected void SetPassword_Click(object sender, EventArgs e)
-        {
-            if (IsValid)
-            {
-                // Создание информации о локальном имени входа и связывание локальной учетной записи с пользователем
-                UserManager manager = new UserManager();
-                IdentityResult result = manager.AddPassword(User.Identity.GetUserId(), password.Text);
-                if (result.Succeeded)
-                {
-                    Response.Redirect("~/Account/Manage?m=SetPwdSuccess");
-                }
-                else
-                {
-                    AddErrors(result);
-                }
-            }
-        }
-
-        public IEnumerable<UserLoginInfo> GetLogins()
-        {
-            UserManager manager = new UserManager();
-            var accounts = manager.GetLogins(User.Identity.GetUserId());
-            CanRemoveExternalLogins = accounts.Count() > 1 || HasPassword(manager);
-            return accounts;
-        }
-
-        public void RemoveLogin(string loginProvider, string providerKey)
-        {
-            UserManager manager = new UserManager();
-            var result = manager.RemoveLogin(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
-            var msg = result.Succeeded
-                ? "?m=RemoveLoginSuccess"
-                : String.Empty;
-            Response.Redirect("~/Account/Manage" + msg);
-        }
-
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-        }
+ 
     }
 }
