@@ -11,7 +11,10 @@ namespace PersonalPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!Page.IsPostBack)
+            {
+                Label1.Text="Студент";
+            }
         }
     }
 }
