@@ -12,30 +12,35 @@ namespace PersonalPages
     {
         private UsersTable user;
         private StudentsTable student;
-        public void Directions(UsersTable user)
-        {
-            if (user.Position == null)
-            {
-                FormsAuthentication.SetAuthCookie(user.Email, true);
-            }
-            else if (user.Position.Length > 2)
-            {
-                FormsAuthentication.SetAuthCookie(user.Position, true);
-            }
-            else
-            {
-                FormsAuthentication.SetAuthCookie(user.Email, true);
-            }
 
-            if (student != null || user!= null)
-            {            
-                Response.Redirect("UserMainPage.aspx");           
+        public void StudentDirections(StudentsTable student)
+        {
+            if (student != null || user == null)
+            {
+                FormsAuthentication.SetAuthCookie(student.Email, true);
+                Response.Redirect("UserMainPage.aspx");
             }
             else //если входим сюда то что то не так) скорей всего пользователю не присвоен уровень в UsersTable
             {
                 FormsAuthentication.SignOut();
                 Session.Abandon();
-                Response.Redirect("~/Account/UserLogin.aspx");
+                Response.Redirect("~/Account/Login.aspx");
+            }
+        }
+
+        public void UserDirections(UsersTable user)
+        {
+            if (student == null || user != null)
+            {  
+           FormsAuthentication.SetAuthCookie(user.Email, true);                               
+                Response.Redirect("UserMainPage.aspx");           
+            }
+            
+            else //если входим сюда то что то не так) скорей всего пользователю не присвоен уровень в UsersTable
+            {
+                FormsAuthentication.SignOut();
+                Session.Abandon();
+                Response.Redirect("~/Account/Login.aspx");
             }
         }
 
@@ -46,7 +51,7 @@ namespace PersonalPages
             {
                 FormsAuthentication.SignOut();
                 Session.Abandon();
-                Response.Redirect("~/Account/UserLogin.aspx");
+                Response.Redirect("~/Account/Login.aspx");
             }
             PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
             UsersTable user = (from usersTables in PersonalPagesDB.UsersTable
@@ -59,21 +64,19 @@ namespace PersonalPages
             {
 
                 if (user != null && student == null)
-                {
-                    FormsAuthentication.SetAuthCookie(user.Email, true);              
-                    Response.Redirect("UserMainPage.aspx");
+                {                                       
+                    UserDirections(user);
                 }
                 if (user == null && student != null)
                 {
-                    FormsAuthentication.SetAuthCookie(student.Email, true);
-                    Response.Redirect("UserMainPage.aspx");
+                    StudentDirections(student);
                 }
             }
             else
             {
                 FormsAuthentication.SignOut();
                 Session.Abandon();
-                Response.Redirect("~/Account/UserLogin.aspx");
+                Response.Redirect("~/Account/Login.aspx");
             }
         }
     }
