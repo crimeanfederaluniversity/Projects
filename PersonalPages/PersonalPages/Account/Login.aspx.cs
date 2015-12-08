@@ -21,13 +21,13 @@ namespace PersonalPages.Account
         {
                     PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
 
-                        UsersTable user = (from usersTables in usersDB.UsersTable
+                        UsersTable user = (from usersTables in usersDB.UsersTables
                                            where usersTables.Email == UserName.Text
                                             && (usersTables.Password == Password.Text)
                                            &&  usersTables.Active == true
                                            select usersTables).FirstOrDefault();
 
-                        StudentsTable student = (from studTables in usersDB.StudentsTable
+                        StudentsTable student = (from studTables in usersDB.StudentsTables
                                                  where studTables.Email == UserName.Text
                                             && (studTables.Password == Password.Text)
                                            && studTables.Active == true
