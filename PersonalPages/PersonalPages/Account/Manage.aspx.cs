@@ -25,9 +25,9 @@ namespace PersonalPages.Account
             PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
 
             UsersTable userTable =
-                (from a in PersonalPagesDB.UsersTables where a.UsersTableID == userID select a).FirstOrDefault();
+                (from a in PersonalPagesDB.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
             StudentsTable studTable =
-                (from a in PersonalPagesDB.StudentsTables where a.StudentsTableID == userID select a).FirstOrDefault();
+                (from a in PersonalPagesDB.StudentsTable where a.StudentsTableID == userID select a).FirstOrDefault();
 
             if (userTable != null && studTable == null)
             {
@@ -38,18 +38,18 @@ namespace PersonalPages.Account
                     Label3.Text += userTable.Patronimyc;
                     Label4.Text += userTable.Position;
                     Label5.Text += userTable.Email;
-                    Label6.Text = (from b in PersonalPagesDB.FirstLevelSubdivisionTables
+                    Label6.Text = (from b in PersonalPagesDB.FirstLevelSubdivisionTable
                         where b.FirstLevelSubdivisionTableID == userTable.FK_FirstLevelSubdivisionTable
                         select b.Name).FirstOrDefault();
                     if (userTable.FK_SecondLevelSubdivisionTable != null)
                     {
-                        Label7.Text = (from c in PersonalPagesDB.SecondLevelSubdivisionTables
+                        Label7.Text = (from c in PersonalPagesDB.SecondLevelSubdivisionTable
                             where c.SecondLevelSubdivisionTableID == userTable.FK_SecondLevelSubdivisionTable
                             select c.Name).FirstOrDefault();
                     }
                     if (userTable.FK_ThirdLevelSubdivisionTable != null)
                     {
-                        Label8.Text = (from d in PersonalPagesDB.ThirdLevelSubdivisionTables
+                        Label8.Text = (from d in PersonalPagesDB.ThirdLevelSubdivisionTable
                             where d.ThirdLevelSubdivisionTableID == userTable.FK_ThirdLevelSubdivisionTable
                             select d.Name).FirstOrDefault();
                     }
@@ -60,7 +60,7 @@ namespace PersonalPages.Account
                         dataTable.Columns.Add(new DataColumn("FIO", typeof (string)));
 
                         List<TypeOfWritingFIO> fio =
-                            (from a in PersonalPagesDB.TypeOfWritingFIOs
+                            (from a in PersonalPagesDB.TypeOfWritingFIO
                                 where a.FK_UserTableID == userID && a.Active == true
                                 select a).ToList();
 
@@ -81,11 +81,11 @@ namespace PersonalPages.Account
                 Label3.Text += studTable.Patronimyc;
                 Label4.Text += studTable.Email;
 
-                Label5.Text = (from b in PersonalPagesDB.FirstLevelSubdivisionTables
+                Label5.Text = (from b in PersonalPagesDB.FirstLevelSubdivisionTable
                     where b.FirstLevelSubdivisionTableID == studTable.FK_FirstLevelSubdivision
                     select b.Name).FirstOrDefault();
 
-                Label6.Text = (from c in PersonalPagesDB.SecondLevelSubdivisionTables
+                Label6.Text = (from c in PersonalPagesDB.SecondLevelSubdivisionTable
                     where c.SecondLevelSubdivisionTableID == studTable.FK_SecondLevelSubdivision
                     select c.Name).FirstOrDefault();
                 Label7.Text += studTable.YearOfEnter;
@@ -98,7 +98,7 @@ namespace PersonalPages.Account
                 using (PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext())
                 {
                     var check =
-                    (from a in PersonalPagesDB.TypeOfWritingFIOs
+                    (from a in PersonalPagesDB.TypeOfWritingFIO
                      where
                          a.ID == Convert.ToInt32(button.CommandArgument)
                      select a)
@@ -132,7 +132,7 @@ namespace PersonalPages.Account
         {
             PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
             UsersTable user =
-                (from a in PersonalPagesDB.UsersTables where a.UsersTableID == (int) ViewState["ID"] select a)
+                (from a in PersonalPagesDB.UsersTable where a.UsersTableID == (int) ViewState["ID"] select a)
                     .FirstOrDefault();
 
             if ((user != null) && (TextBox1.Text.Equals(user.Password)) && (TextBox2.Text.Any()) &&
@@ -164,7 +164,7 @@ namespace PersonalPages.Account
             TypeOfWritingFIO newRow = new TypeOfWritingFIO();
             newRow.Active = true;
             newRow.FK_UserTableID = userID;
-            PersonalPagesDB.TypeOfWritingFIOs.InsertOnSubmit(newRow);
+            PersonalPagesDB.TypeOfWritingFIO.InsertOnSubmit(newRow);
             PersonalPagesDB.SubmitChanges();
             Response.Redirect("Manage.aspx");
         }
@@ -178,7 +178,7 @@ namespace PersonalPages.Account
                     if (idLabel != null)
                     {                   
                         PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
-                        TypeOfWritingFIO newfio =(from a in PersonalPagesDB.TypeOfWritingFIOs
+                        TypeOfWritingFIO newfio =(from a in PersonalPagesDB.TypeOfWritingFIO
                             where a.ID == Convert.ToInt32(idLabel.Text) && a.Active == true
                             select a).FirstOrDefault();
                         if (newfio != null)

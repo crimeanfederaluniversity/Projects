@@ -13,7 +13,7 @@ namespace PersonalPages
         protected void Page_Load(object sender, EventArgs e)
         {
             PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
-            List<ManualTable> man = (from a in PersonalPagesDB.ManualTables where a.Active == true select a).ToList();
+            List<ManualTable> man = (from a in PersonalPagesDB.ManualTable where a.Active == true select a).ToList();
 
             LinksLable.Text = "";
             foreach (ManualTable link in man)

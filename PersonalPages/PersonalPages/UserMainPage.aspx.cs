@@ -61,7 +61,12 @@ namespace PersonalPages
 
         protected void Button8_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/");
+            Response.Redirect("TeacherPage.aspx");
+        }
+
+        protected void Button9_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Metodist.aspx");
         }
     }
 }
