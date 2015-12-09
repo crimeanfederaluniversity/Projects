@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using PersonalPages;
 
 namespace KPIWeb
 {
@@ -79,6 +80,19 @@ namespace KPIWeb
             Session.Abandon();
             Response.Redirect("~/Account/UserLogin.aspx");
             //Context.GetOwinContext().Authentication.SignOut();
+        }
+
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("http://cfu-portal.ru");
+            }
+            int userId = UserSer.Id;
+
+            SubdomainRedirect subdomainRedirect = new SubdomainRedirect();
+            Response.Redirect(subdomainRedirect.CreateLinkToSubdomain("http://cfu-portal.ru", userId, 10));
         }
 
     

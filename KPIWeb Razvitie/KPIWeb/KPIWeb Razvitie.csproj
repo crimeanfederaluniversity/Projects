@@ -251,6 +251,7 @@
     </Content>
     <None Include="Properties\PublishProfiles\Export.pubxml" />
     <None Include="Properties\PublishProfiles\home.pubxml" />
+    <None Include="Properties\PublishProfiles\razvitiedeploy.pubxml" />
     <None Include="Properties\PublishProfiles\V_TEST1.pubxml" />
     <None Include="Properties\PublishProfiles\Web.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -601,6 +602,7 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Account\Users.cs" />
+    <Compile Include="SubdomainRedirect.cs" />
     <Compile Include="Types\Role.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

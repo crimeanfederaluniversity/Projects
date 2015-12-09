@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using PersonalPages;
 
 namespace KPIWeb
 {
@@ -78,12 +79,22 @@ namespace KPIWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            SubdomainRedirect subdomainRedirect = new SubdomainRedirect();
+            string passCode = Request.Params[subdomainRedirect.PassCodeKeyName];
+            int userIdFromGet = subdomainRedirect.GetUserIdByPassCode(passCode);
+            if (userIdFromGet != 0)
+            {
+                Serialization UserSerId = new Serialization(userIdFromGet);
+                Session["UserID"] = UserSerId;
+            }
+            // автологин
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
                 FormsAuthentication.SignOut();
                 Session.Abandon();
-                Response.Redirect("~/Account/UserLogin.aspx");
+                Response.Redirect("http://cfu-portal.ru");
             }
             KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
             UsersTable user = (from usersTables in KPIWebDataContext.UsersTable
@@ -106,7 +117,7 @@ namespace KPIWeb
             {
                 FormsAuthentication.SignOut();
                 Session.Abandon();
-                Response.Redirect("~/Account/UserLogin.aspx");
+                Response.Redirect("http://cfu-portal.ru");
             }
         }
     }

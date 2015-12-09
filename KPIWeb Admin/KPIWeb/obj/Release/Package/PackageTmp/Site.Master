@@ -49,7 +49,8 @@
                         <span class="icon-bar"></span>
                     </button>
                     <!--<a class="navbar-brand" runat="server" href="~/">Программный комплекс КПЭ-КФУ</a>-->
-                    <a class="navbar-brand" runat="server" href="~/">ИАС «КФУ-Программа развития»</a>
+                    <asp:LinkButton ID="LinkButton1" class="navbar-brand" runat="server" OnClick="LinkButton1_Click">ИАС «КФУ-Программа развития»</asp:LinkButton>
+                    <!-- <a class="navbar-brand" runat="server"  href="12">ИАС «КФУ-Программа развития»</a>-->
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">

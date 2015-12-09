@@ -245,6 +245,7 @@
       <LastGenOutput>KPIWeb.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Properties\PublishProfiles\adminDeploy.pubxml" />
     <None Include="Properties\PublishProfiles\Export.pubxml" />
     <None Include="Properties\PublishProfiles\home.pubxml" />
     <None Include="Properties\PublishProfiles\V_TEST1.pubxml" />
@@ -597,6 +598,7 @@
     <Compile Include="StatisticsDepartment\StastisticsHomePage.aspx.designer.cs">
       <DependentUpon>StastisticsHomePage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SubdomainRedirect.cs" />
     <Compile Include="Types\Role.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

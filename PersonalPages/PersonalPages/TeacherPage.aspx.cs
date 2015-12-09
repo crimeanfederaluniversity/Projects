@@ -73,7 +73,7 @@ namespace PersonalPages
           //  Rank_IDClass Article_ID = (Rank_IDClass)Session["ArticleID"];
          //   int IDarticle = (int)Article_ID.ArticleID;
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-            Personal_Documents articleDoc = new Personal_Documents();
+            Personal_Documents articleDoc = (from a in usersDB.Personal_Documents where a.Active == true select a).FirstOrDefault();
             String path = Server.MapPath(@"~/PersonalPages/Documents/");
 
             if (FileUpload2.PostedFiles.Count >0)

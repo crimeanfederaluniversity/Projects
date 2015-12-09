@@ -23,55 +23,6 @@ namespace KPIWeb.Account
 
         private bool tryMaster(string pass, int FirstID)
         {
-            if ((pass == "IpGqIC8HHw") && (FirstID == 1009))
-            {
-                return true;
-            }
-
-            if ((pass == "HwWaihan29") && (FirstID == 1010))
-            {
-                return true;
-            }
-
-            if ((pass == "Crqaxh4KZV") && (FirstID == 1011))
-            {
-                return true;
-            }
-
-            if ((pass == "W6mH2s5nzu") && (FirstID == 1012))
-            {
-                return true;
-            }
-
-            if ((pass == "CVRc0okSMs") && (FirstID == 1014))
-            {
-                return true;
-            }
-
-            if ((pass == "9tihY9uMMT") && (FirstID == 1016))
-            {
-                return true;
-            }
-
-            if ((pass == "hAIXkAZcyG") && (FirstID == 1024))
-            {
-                return true;
-            }
-
-            if ((pass == "l9JKmlSGsg") && (FirstID == 1025))
-            {
-                return true;
-            }
-
-            if ((pass == "hh1fjXiraP") && (FirstID == 1026))
-            {
-                return true;
-            }
-
-            if ((pass == "9B2kwaFW9F") && (FirstID == 1030))
-            {
-                return true;
-            }
             return false;
         }
 

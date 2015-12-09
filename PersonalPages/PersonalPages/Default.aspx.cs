@@ -31,8 +31,14 @@ namespace PersonalPages
         public void UserDirections(UsersTable user)
         {
             if (student == null || user != null)
-            {  
-           FormsAuthentication.SetAuthCookie(user.Email, true);                               
+            {
+                if (user.AccessLevel == 9 || user.AccessLevel == 10)
+                {
+                    Serialization UserSer = (Serialization)Session["UserID"];        
+                    SubdomainRedirect subdomainRedirect = new SubdomainRedirect();
+                    Response.Redirect(subdomainRedirect.CreateLinkToSubdomain("http://admin.cfu-portal.ru", user.UsersTableID, 10));
+                }
+                FormsAuthentication.SetAuthCookie(user.Email, true);                               
                 Response.Redirect("UserMainPage.aspx");           
             }
             
@@ -46,6 +52,16 @@ namespace PersonalPages
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            SubdomainRedirect subdomainRedirect = new SubdomainRedirect();
+            string passCode = Request.Params[subdomainRedirect.PassCodeKeyName];
+            int userIdFromGet = subdomainRedirect.GetUserIdByPassCode(passCode);
+            if (userIdFromGet != 0)
+            {
+                Serialization UserSerId = new Serialization(userIdFromGet);
+                Session["UserID"] = UserSerId;
+            }
+           
+
             Serialization UserSer = (Serialization) Session["UserID"];
             if (UserSer == null)
             {
