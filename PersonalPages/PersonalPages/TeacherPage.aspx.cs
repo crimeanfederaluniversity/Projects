@@ -63,14 +63,7 @@ namespace PersonalPages
             
             string DocName= (from a in PersonalPagesDB.Personal_Documents where a.ID==FileID select a.Doc_URL).FirstOrDefault();
 
-                if (File.Exists(DocName))
-                {
                     Response.Redirect(@"~/PersonalPages/Documents/"+DocName);
-                }
-                else
-                {
-                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Документ не найден');", true);
-                }
             }
           
         
