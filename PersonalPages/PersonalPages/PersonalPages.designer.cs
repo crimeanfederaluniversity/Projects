@@ -48,9 +48,9 @@ namespace PersonalPages
     partial void InsertBasicParametrsAndUsersMapping(BasicParametrsAndUsersMapping instance);
     partial void UpdateBasicParametrsAndUsersMapping(BasicParametrsAndUsersMapping instance);
     partial void DeleteBasicParametrsAndUsersMapping(BasicParametrsAndUsersMapping instance);
-    partial void InsertCalculatedParametr(CalculatedParametr instance);
-    partial void UpdateCalculatedParametr(CalculatedParametr instance);
-    partial void DeleteCalculatedParametr(CalculatedParametr instance);
+    partial void InsertCalculatedParametrs(CalculatedParametrs instance);
+    partial void UpdateCalculatedParametrs(CalculatedParametrs instance);
+    partial void DeleteCalculatedParametrs(CalculatedParametrs instance);
     partial void InsertCalculatedParametrsAndRolesMappingTable(CalculatedParametrsAndRolesMappingTable instance);
     partial void UpdateCalculatedParametrsAndRolesMappingTable(CalculatedParametrsAndRolesMappingTable instance);
     partial void DeleteCalculatedParametrsAndRolesMappingTable(CalculatedParametrsAndRolesMappingTable instance);
@@ -60,33 +60,33 @@ namespace PersonalPages
     partial void InsertCollectedBasicParametersTable(CollectedBasicParametersTable instance);
     partial void UpdateCollectedBasicParametersTable(CollectedBasicParametersTable instance);
     partial void DeleteCollectedBasicParametersTable(CollectedBasicParametersTable instance);
-    partial void InsertCollectedCalculatedParametr(CollectedCalculatedParametr instance);
-    partial void UpdateCollectedCalculatedParametr(CollectedCalculatedParametr instance);
-    partial void DeleteCollectedCalculatedParametr(CollectedCalculatedParametr instance);
+    partial void InsertCollectedCalculatedParametrs(CollectedCalculatedParametrs instance);
+    partial void UpdateCollectedCalculatedParametrs(CollectedCalculatedParametrs instance);
+    partial void DeleteCollectedCalculatedParametrs(CollectedCalculatedParametrs instance);
     partial void InsertCollectedIndicatorsForR(CollectedIndicatorsForR instance);
     partial void UpdateCollectedIndicatorsForR(CollectedIndicatorsForR instance);
     partial void DeleteCollectedIndicatorsForR(CollectedIndicatorsForR instance);
-    partial void InsertCollectedIndocator(CollectedIndocator instance);
-    partial void UpdateCollectedIndocator(CollectedIndocator instance);
-    partial void DeleteCollectedIndocator(CollectedIndocator instance);
+    partial void InsertCollectedIndocators(CollectedIndocators instance);
+    partial void UpdateCollectedIndocators(CollectedIndocators instance);
+    partial void DeleteCollectedIndocators(CollectedIndocators instance);
     partial void InsertCommetntForBasicInReport(CommetntForBasicInReport instance);
     partial void UpdateCommetntForBasicInReport(CommetntForBasicInReport instance);
     partial void DeleteCommetntForBasicInReport(CommetntForBasicInReport instance);
     partial void InsertConfirmationHistory(ConfirmationHistory instance);
     partial void UpdateConfirmationHistory(ConfirmationHistory instance);
     partial void DeleteConfirmationHistory(ConfirmationHistory instance);
-    partial void InsertConnectGroup_And_User(ConnectGroup_And_User instance);
-    partial void UpdateConnectGroup_And_User(ConnectGroup_And_User instance);
-    partial void DeleteConnectGroup_And_User(ConnectGroup_And_User instance);
+    partial void InsertConnectGroup_And_Users(ConnectGroup_And_Users instance);
+    partial void UpdateConnectGroup_And_Users(ConnectGroup_And_Users instance);
+    partial void DeleteConnectGroup_And_Users(ConnectGroup_And_Users instance);
     partial void InsertDocumentTable(DocumentTable instance);
     partial void UpdateDocumentTable(DocumentTable instance);
     partial void DeleteDocumentTable(DocumentTable instance);
     partial void InsertEducationCostTable(EducationCostTable instance);
     partial void UpdateEducationCostTable(EducationCostTable instance);
     partial void DeleteEducationCostTable(EducationCostTable instance);
-    partial void InsertEmailCopy(EmailCopy instance);
-    partial void UpdateEmailCopy(EmailCopy instance);
-    partial void DeleteEmailCopy(EmailCopy instance);
+    partial void InsertEmailCopies(EmailCopies instance);
+    partial void UpdateEmailCopies(EmailCopies instance);
+    partial void DeleteEmailCopies(EmailCopies instance);
     partial void InsertEmailSendHistory(EmailSendHistory instance);
     partial void UpdateEmailSendHistory(EmailSendHistory instance);
     partial void DeleteEmailSendHistory(EmailSendHistory instance);
@@ -105,9 +105,9 @@ namespace PersonalPages
     partial void InsertFirstLevelSubdivisionTable(FirstLevelSubdivisionTable instance);
     partial void UpdateFirstLevelSubdivisionTable(FirstLevelSubdivisionTable instance);
     partial void DeleteFirstLevelSubdivisionTable(FirstLevelSubdivisionTable instance);
-    partial void InsertFourthLevelParametr(FourthLevelParametr instance);
-    partial void UpdateFourthLevelParametr(FourthLevelParametr instance);
-    partial void DeleteFourthLevelParametr(FourthLevelParametr instance);
+    partial void InsertFourthLevelParametrs(FourthLevelParametrs instance);
+    partial void UpdateFourthLevelParametrs(FourthLevelParametrs instance);
+    partial void DeleteFourthLevelParametrs(FourthLevelParametrs instance);
     partial void InsertFourthLevelSubdivisionTable(FourthLevelSubdivisionTable instance);
     partial void UpdateFourthLevelSubdivisionTable(FourthLevelSubdivisionTable instance);
     partial void DeleteFourthLevelSubdivisionTable(FourthLevelSubdivisionTable instance);
@@ -132,27 +132,27 @@ namespace PersonalPages
     partial void InsertMultiUser(MultiUser instance);
     partial void UpdateMultiUser(MultiUser instance);
     partial void DeleteMultiUser(MultiUser instance);
-    partial void InsertPersonal_Document(Personal_Document instance);
-    partial void UpdatePersonal_Document(Personal_Document instance);
-    partial void DeletePersonal_Document(Personal_Document instance);
+    partial void InsertPersonal_Documents(Personal_Documents instance);
+    partial void UpdatePersonal_Documents(Personal_Documents instance);
+    partial void DeletePersonal_Documents(Personal_Documents instance);
     partial void InsertPlannedIndicator(PlannedIndicator instance);
     partial void UpdatePlannedIndicator(PlannedIndicator instance);
     partial void DeletePlannedIndicator(PlannedIndicator instance);
     partial void InsertRank_AddArticleCreateTable(Rank_AddArticleCreateTable instance);
     partial void UpdateRank_AddArticleCreateTable(Rank_AddArticleCreateTable instance);
     partial void DeleteRank_AddArticleCreateTable(Rank_AddArticleCreateTable instance);
-    partial void InsertRank_Article(Rank_Article instance);
-    partial void UpdateRank_Article(Rank_Article instance);
-    partial void DeleteRank_Article(Rank_Article instance);
-    partial void InsertRank_ArticleValue(Rank_ArticleValue instance);
-    partial void UpdateRank_ArticleValue(Rank_ArticleValue instance);
-    partial void DeleteRank_ArticleValue(Rank_ArticleValue instance);
-    partial void InsertRank_Autor(Rank_Autor instance);
-    partial void UpdateRank_Autor(Rank_Autor instance);
-    partial void DeleteRank_Autor(Rank_Autor instance);
-    partial void InsertRank_AutorsAndArticle(Rank_AutorsAndArticle instance);
-    partial void UpdateRank_AutorsAndArticle(Rank_AutorsAndArticle instance);
-    partial void DeleteRank_AutorsAndArticle(Rank_AutorsAndArticle instance);
+    partial void InsertRank_Articles(Rank_Articles instance);
+    partial void UpdateRank_Articles(Rank_Articles instance);
+    partial void DeleteRank_Articles(Rank_Articles instance);
+    partial void InsertRank_ArticleValues(Rank_ArticleValues instance);
+    partial void UpdateRank_ArticleValues(Rank_ArticleValues instance);
+    partial void DeleteRank_ArticleValues(Rank_ArticleValues instance);
+    partial void InsertRank_Autors(Rank_Autors instance);
+    partial void UpdateRank_Autors(Rank_Autors instance);
+    partial void DeleteRank_Autors(Rank_Autors instance);
+    partial void InsertRank_AutorsAndArticles(Rank_AutorsAndArticles instance);
+    partial void UpdateRank_AutorsAndArticles(Rank_AutorsAndArticles instance);
+    partial void DeleteRank_AutorsAndArticles(Rank_AutorsAndArticles instance);
     partial void InsertRank_Collected_ParametrsValue(Rank_Collected_ParametrsValue instance);
     partial void UpdateRank_Collected_ParametrsValue(Rank_Collected_ParametrsValue instance);
     partial void DeleteRank_Collected_ParametrsValue(Rank_Collected_ParametrsValue instance);
@@ -168,21 +168,21 @@ namespace PersonalPages
     partial void InsertRank_Param_Type(Rank_Param_Type instance);
     partial void UpdateRank_Param_Type(Rank_Param_Type instance);
     partial void DeleteRank_Param_Type(Rank_Param_Type instance);
-    partial void InsertRank_Parametr(Rank_Parametr instance);
-    partial void UpdateRank_Parametr(Rank_Parametr instance);
-    partial void DeleteRank_Parametr(Rank_Parametr instance);
-    partial void InsertRank_Point(Rank_Point instance);
-    partial void UpdateRank_Point(Rank_Point instance);
-    partial void DeleteRank_Point(Rank_Point instance);
-    partial void InsertRank_Position(Rank_Position instance);
-    partial void UpdateRank_Position(Rank_Position instance);
-    partial void DeleteRank_Position(Rank_Position instance);
+    partial void InsertRank_Parametrs(Rank_Parametrs instance);
+    partial void UpdateRank_Parametrs(Rank_Parametrs instance);
+    partial void DeleteRank_Parametrs(Rank_Parametrs instance);
+    partial void InsertRank_Points(Rank_Points instance);
+    partial void UpdateRank_Points(Rank_Points instance);
+    partial void DeleteRank_Points(Rank_Points instance);
+    partial void InsertRank_Positions(Rank_Positions instance);
+    partial void UpdateRank_Positions(Rank_Positions instance);
+    partial void DeleteRank_Positions(Rank_Positions instance);
     partial void InsertRank_Raiting_History(Rank_Raiting_History instance);
     partial void UpdateRank_Raiting_History(Rank_Raiting_History instance);
     partial void DeleteRank_Raiting_History(Rank_Raiting_History instance);
-    partial void InsertRank_StructureRaiting(Rank_StructureRaiting instance);
-    partial void UpdateRank_StructureRaiting(Rank_StructureRaiting instance);
-    partial void DeleteRank_StructureRaiting(Rank_StructureRaiting instance);
+    partial void InsertRank_StructureRaitings(Rank_StructureRaitings instance);
+    partial void UpdateRank_StructureRaitings(Rank_StructureRaitings instance);
+    partial void DeleteRank_StructureRaitings(Rank_StructureRaitings instance);
     partial void InsertReportArchiveAndBasicParametrsMappingTable(ReportArchiveAndBasicParametrsMappingTable instance);
     partial void UpdateReportArchiveAndBasicParametrsMappingTable(ReportArchiveAndBasicParametrsMappingTable instance);
     partial void DeleteReportArchiveAndBasicParametrsMappingTable(ReportArchiveAndBasicParametrsMappingTable instance);
@@ -213,9 +213,9 @@ namespace PersonalPages
     partial void InsertSubdivisionClassTable(SubdivisionClassTable instance);
     partial void UpdateSubdivisionClassTable(SubdivisionClassTable instance);
     partial void DeleteSubdivisionClassTable(SubdivisionClassTable instance);
-    partial void InsertThirdLevelParametr(ThirdLevelParametr instance);
-    partial void UpdateThirdLevelParametr(ThirdLevelParametr instance);
-    partial void DeleteThirdLevelParametr(ThirdLevelParametr instance);
+    partial void InsertThirdLevelParametrs(ThirdLevelParametrs instance);
+    partial void UpdateThirdLevelParametrs(ThirdLevelParametrs instance);
+    partial void DeleteThirdLevelParametrs(ThirdLevelParametrs instance);
     partial void InsertThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
     partial void UpdateThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
     partial void DeleteThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
@@ -267,9 +267,9 @@ namespace PersonalPages
     partial void InsertzExpertGroup(zExpertGroup instance);
     partial void UpdatezExpertGroup(zExpertGroup instance);
     partial void DeletezExpertGroup(zExpertGroup instance);
-    partial void InsertzExpertPoint(zExpertPoint instance);
-    partial void UpdatezExpertPoint(zExpertPoint instance);
-    partial void DeletezExpertPoint(zExpertPoint instance);
+    partial void InsertzExpertPoints(zExpertPoints instance);
+    partial void UpdatezExpertPoints(zExpertPoints instance);
+    partial void DeletezExpertPoints(zExpertPoints instance);
     partial void InsertzExpertPointsValue(zExpertPointsValue instance);
     partial void UpdatezExpertPointsValue(zExpertPointsValue instance);
     partial void DeletezExpertPointsValue(zExpertPointsValue instance);
@@ -326,7 +326,7 @@ namespace PersonalPages
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<BasicParametersAndRolesMappingTable> BasicParametersAndRolesMappingTables
+		public System.Data.Linq.Table<BasicParametersAndRolesMappingTable> BasicParametersAndRolesMappingTable
 		{
 			get
 			{
@@ -334,7 +334,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zTemplateFormTable> zTemplateFormTables
+		public System.Data.Linq.Table<zTemplateFormTable> zTemplateFormTable
 		{
 			get
 			{
@@ -342,7 +342,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<BasicParametersTable> BasicParametersTables
+		public System.Data.Linq.Table<BasicParametersTable> BasicParametersTable
 		{
 			get
 			{
@@ -350,7 +350,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<BasicParametrAdditional> BasicParametrAdditionals
+		public System.Data.Linq.Table<BasicParametrAdditional> BasicParametrAdditional
 		{
 			get
 			{
@@ -358,7 +358,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<BasicParametrsAndSubdivisionClassMappingTable> BasicParametrsAndSubdivisionClassMappingTables
+		public System.Data.Linq.Table<BasicParametrsAndSubdivisionClassMappingTable> BasicParametrsAndSubdivisionClassMappingTable
 		{
 			get
 			{
@@ -366,7 +366,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<BasicParametrsAndUsersMapping> BasicParametrsAndUsersMappings
+		public System.Data.Linq.Table<BasicParametrsAndUsersMapping> BasicParametrsAndUsersMapping
 		{
 			get
 			{
@@ -374,15 +374,15 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<CalculatedParametr> CalculatedParametrs
+		public System.Data.Linq.Table<CalculatedParametrs> CalculatedParametrs
 		{
 			get
 			{
-				return this.GetTable<CalculatedParametr>();
+				return this.GetTable<CalculatedParametrs>();
 			}
 		}
 		
-		public System.Data.Linq.Table<CalculatedParametrsAndRolesMappingTable> CalculatedParametrsAndRolesMappingTables
+		public System.Data.Linq.Table<CalculatedParametrsAndRolesMappingTable> CalculatedParametrsAndRolesMappingTable
 		{
 			get
 			{
@@ -390,7 +390,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<CalculatedParametrsAndUsersMapping> CalculatedParametrsAndUsersMappings
+		public System.Data.Linq.Table<CalculatedParametrsAndUsersMapping> CalculatedParametrsAndUsersMapping
 		{
 			get
 			{
@@ -398,7 +398,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<CollectedBasicParametersTable> CollectedBasicParametersTables
+		public System.Data.Linq.Table<CollectedBasicParametersTable> CollectedBasicParametersTable
 		{
 			get
 			{
@@ -406,15 +406,15 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<CollectedCalculatedParametr> CollectedCalculatedParametrs
+		public System.Data.Linq.Table<CollectedCalculatedParametrs> CollectedCalculatedParametrs
 		{
 			get
 			{
-				return this.GetTable<CollectedCalculatedParametr>();
+				return this.GetTable<CollectedCalculatedParametrs>();
 			}
 		}
 		
-		public System.Data.Linq.Table<CollectedIndicatorsForR> CollectedIndicatorsForRs
+		public System.Data.Linq.Table<CollectedIndicatorsForR> CollectedIndicatorsForR
 		{
 			get
 			{
@@ -422,15 +422,15 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<CollectedIndocator> CollectedIndocators
+		public System.Data.Linq.Table<CollectedIndocators> CollectedIndocators
 		{
 			get
 			{
-				return this.GetTable<CollectedIndocator>();
+				return this.GetTable<CollectedIndocators>();
 			}
 		}
 		
-		public System.Data.Linq.Table<CommetntForBasicInReport> CommetntForBasicInReports
+		public System.Data.Linq.Table<CommetntForBasicInReport> CommetntForBasicInReport
 		{
 			get
 			{
@@ -438,7 +438,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<ConfirmationHistory> ConfirmationHistories
+		public System.Data.Linq.Table<ConfirmationHistory> ConfirmationHistory
 		{
 			get
 			{
@@ -446,15 +446,15 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<ConnectGroup_And_User> ConnectGroup_And_Users
+		public System.Data.Linq.Table<ConnectGroup_And_Users> ConnectGroup_And_Users
 		{
 			get
 			{
-				return this.GetTable<ConnectGroup_And_User>();
+				return this.GetTable<ConnectGroup_And_Users>();
 			}
 		}
 		
-		public System.Data.Linq.Table<DocumentTable> DocumentTables
+		public System.Data.Linq.Table<DocumentTable> DocumentTable
 		{
 			get
 			{
@@ -462,7 +462,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<EducationCostTable> EducationCostTables
+		public System.Data.Linq.Table<EducationCostTable> EducationCostTable
 		{
 			get
 			{
@@ -470,15 +470,15 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<EmailCopy> EmailCopies
+		public System.Data.Linq.Table<EmailCopies> EmailCopies
 		{
 			get
 			{
-				return this.GetTable<EmailCopy>();
+				return this.GetTable<EmailCopies>();
 			}
 		}
 		
-		public System.Data.Linq.Table<EmailSendHistory> EmailSendHistories
+		public System.Data.Linq.Table<EmailSendHistory> EmailSendHistory
 		{
 			get
 			{
@@ -486,7 +486,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<EmailSendTable> EmailSendTables
+		public System.Data.Linq.Table<EmailSendTable> EmailSendTable
 		{
 			get
 			{
@@ -494,7 +494,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<EmailTemplate> EmailTemplates
+		public System.Data.Linq.Table<EmailTemplate> EmailTemplate
 		{
 			get
 			{
@@ -502,7 +502,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<FieldOfExpertise> FieldOfExpertises
+		public System.Data.Linq.Table<FieldOfExpertise> FieldOfExpertise
 		{
 			get
 			{
@@ -510,7 +510,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<FifthLevelSubdivisionTable> FifthLevelSubdivisionTables
+		public System.Data.Linq.Table<FifthLevelSubdivisionTable> FifthLevelSubdivisionTable
 		{
 			get
 			{
@@ -518,7 +518,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<FirstLevelSubdivisionTable> FirstLevelSubdivisionTables
+		public System.Data.Linq.Table<FirstLevelSubdivisionTable> FirstLevelSubdivisionTable
 		{
 			get
 			{
@@ -526,15 +526,15 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<FourthLevelParametr> FourthLevelParametrs
+		public System.Data.Linq.Table<FourthLevelParametrs> FourthLevelParametrs
 		{
 			get
 			{
-				return this.GetTable<FourthLevelParametr>();
+				return this.GetTable<FourthLevelParametrs>();
 			}
 		}
 		
-		public System.Data.Linq.Table<FourthLevelSubdivisionTable> FourthLevelSubdivisionTables
+		public System.Data.Linq.Table<FourthLevelSubdivisionTable> FourthLevelSubdivisionTable
 		{
 			get
 			{
@@ -542,7 +542,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<GroupsTable> GroupsTables
+		public System.Data.Linq.Table<GroupsTable> GroupsTable
 		{
 			get
 			{
@@ -550,7 +550,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<IndicatorClass> IndicatorClasses
+		public System.Data.Linq.Table<IndicatorClass> IndicatorClass
 		{
 			get
 			{
@@ -558,7 +558,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<IndicatorsAndRolesMappingTable> IndicatorsAndRolesMappingTables
+		public System.Data.Linq.Table<IndicatorsAndRolesMappingTable> IndicatorsAndRolesMappingTable
 		{
 			get
 			{
@@ -566,7 +566,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<IndicatorsAndUsersMapping> IndicatorsAndUsersMappings
+		public System.Data.Linq.Table<IndicatorsAndUsersMapping> IndicatorsAndUsersMapping
 		{
 			get
 			{
@@ -574,7 +574,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<IndicatorsTable> IndicatorsTables
+		public System.Data.Linq.Table<IndicatorsTable> IndicatorsTable
 		{
 			get
 			{
@@ -582,7 +582,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<ManualTable> ManualTables
+		public System.Data.Linq.Table<ManualTable> ManualTable
 		{
 			get
 			{
@@ -590,7 +590,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<MultiUser> MultiUsers
+		public System.Data.Linq.Table<MultiUser> MultiUser
 		{
 			get
 			{
@@ -598,15 +598,15 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<Personal_Document> Personal_Documents
+		public System.Data.Linq.Table<Personal_Documents> Personal_Documents
 		{
 			get
 			{
-				return this.GetTable<Personal_Document>();
+				return this.GetTable<Personal_Documents>();
 			}
 		}
 		
-		public System.Data.Linq.Table<PlannedIndicator> PlannedIndicators
+		public System.Data.Linq.Table<PlannedIndicator> PlannedIndicator
 		{
 			get
 			{
@@ -614,7 +614,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_AddArticleCreateTable> Rank_AddArticleCreateTables
+		public System.Data.Linq.Table<Rank_AddArticleCreateTable> Rank_AddArticleCreateTable
 		{
 			get
 			{
@@ -622,39 +622,39 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_Article> Rank_Articles
+		public System.Data.Linq.Table<Rank_Articles> Rank_Articles
 		{
 			get
 			{
-				return this.GetTable<Rank_Article>();
+				return this.GetTable<Rank_Articles>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_ArticleValue> Rank_ArticleValues
+		public System.Data.Linq.Table<Rank_ArticleValues> Rank_ArticleValues
 		{
 			get
 			{
-				return this.GetTable<Rank_ArticleValue>();
+				return this.GetTable<Rank_ArticleValues>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_Autor> Rank_Autors
+		public System.Data.Linq.Table<Rank_Autors> Rank_Autors
 		{
 			get
 			{
-				return this.GetTable<Rank_Autor>();
+				return this.GetTable<Rank_Autors>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_AutorsAndArticle> Rank_AutorsAndArticles
+		public System.Data.Linq.Table<Rank_AutorsAndArticles> Rank_AutorsAndArticles
 		{
 			get
 			{
-				return this.GetTable<Rank_AutorsAndArticle>();
+				return this.GetTable<Rank_AutorsAndArticles>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_Collected_ParametrsValue> Rank_Collected_ParametrsValues
+		public System.Data.Linq.Table<Rank_Collected_ParametrsValue> Rank_Collected_ParametrsValue
 		{
 			get
 			{
@@ -662,7 +662,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_Connect_ParamType_Param> Rank_Connect_ParamType_Params
+		public System.Data.Linq.Table<Rank_Connect_ParamType_Param> Rank_Connect_ParamType_Param
 		{
 			get
 			{
@@ -670,7 +670,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_ConnectedParametrs_ArticleCreateTable> Rank_ConnectedParametrs_ArticleCreateTables
+		public System.Data.Linq.Table<Rank_ConnectedParametrs_ArticleCreateTable> Rank_ConnectedParametrs_ArticleCreateTable
 		{
 			get
 			{
@@ -678,7 +678,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_Mark> Rank_Marks
+		public System.Data.Linq.Table<Rank_Mark> Rank_Mark
 		{
 			get
 			{
@@ -686,7 +686,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_Param_Type> Rank_Param_Types
+		public System.Data.Linq.Table<Rank_Param_Type> Rank_Param_Type
 		{
 			get
 			{
@@ -694,31 +694,31 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_Parametr> Rank_Parametrs
+		public System.Data.Linq.Table<Rank_Parametrs> Rank_Parametrs
 		{
 			get
 			{
-				return this.GetTable<Rank_Parametr>();
+				return this.GetTable<Rank_Parametrs>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_Point> Rank_Points
+		public System.Data.Linq.Table<Rank_Points> Rank_Points
 		{
 			get
 			{
-				return this.GetTable<Rank_Point>();
+				return this.GetTable<Rank_Points>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_Position> Rank_Positions
+		public System.Data.Linq.Table<Rank_Positions> Rank_Positions
 		{
 			get
 			{
-				return this.GetTable<Rank_Position>();
+				return this.GetTable<Rank_Positions>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_Raiting_History> Rank_Raiting_Histories
+		public System.Data.Linq.Table<Rank_Raiting_History> Rank_Raiting_History
 		{
 			get
 			{
@@ -726,15 +726,15 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_StructureRaiting> Rank_StructureRaitings
+		public System.Data.Linq.Table<Rank_StructureRaitings> Rank_StructureRaitings
 		{
 			get
 			{
-				return this.GetTable<Rank_StructureRaiting>();
+				return this.GetTable<Rank_StructureRaitings>();
 			}
 		}
 		
-		public System.Data.Linq.Table<ReportArchiveAndBasicParametrsMappingTable> ReportArchiveAndBasicParametrsMappingTables
+		public System.Data.Linq.Table<ReportArchiveAndBasicParametrsMappingTable> ReportArchiveAndBasicParametrsMappingTable
 		{
 			get
 			{
@@ -742,7 +742,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<ReportArchiveAndCalculatedParametrsMappingTable> ReportArchiveAndCalculatedParametrsMappingTables
+		public System.Data.Linq.Table<ReportArchiveAndCalculatedParametrsMappingTable> ReportArchiveAndCalculatedParametrsMappingTable
 		{
 			get
 			{
@@ -750,7 +750,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<ReportArchiveAndIndicatorsMappingTable> ReportArchiveAndIndicatorsMappingTables
+		public System.Data.Linq.Table<ReportArchiveAndIndicatorsMappingTable> ReportArchiveAndIndicatorsMappingTable
 		{
 			get
 			{
@@ -758,7 +758,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTables
+		public System.Data.Linq.Table<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTable
 		{
 			get
 			{
@@ -766,7 +766,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<ReportArchiveTable> ReportArchiveTables
+		public System.Data.Linq.Table<ReportArchiveTable> ReportArchiveTable
 		{
 			get
 			{
@@ -774,7 +774,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<RolesTable> RolesTables
+		public System.Data.Linq.Table<RolesTable> RolesTable
 		{
 			get
 			{
@@ -782,7 +782,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<SecondLevelSubdivisionTable> SecondLevelSubdivisionTables
+		public System.Data.Linq.Table<SecondLevelSubdivisionTable> SecondLevelSubdivisionTable
 		{
 			get
 			{
@@ -790,7 +790,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<SpecializationTable> SpecializationTables
+		public System.Data.Linq.Table<SpecializationTable> SpecializationTable
 		{
 			get
 			{
@@ -798,7 +798,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<StudentsTable> StudentsTables
+		public System.Data.Linq.Table<StudentsTable> StudentsTable
 		{
 			get
 			{
@@ -806,7 +806,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<SubdivisionClassTable> SubdivisionClassTables
+		public System.Data.Linq.Table<SubdivisionClassTable> SubdivisionClassTable
 		{
 			get
 			{
@@ -814,15 +814,15 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<ThirdLevelParametr> ThirdLevelParametrs
+		public System.Data.Linq.Table<ThirdLevelParametrs> ThirdLevelParametrs
 		{
 			get
 			{
-				return this.GetTable<ThirdLevelParametr>();
+				return this.GetTable<ThirdLevelParametrs>();
 			}
 		}
 		
-		public System.Data.Linq.Table<ThirdLevelSubdivisionTable> ThirdLevelSubdivisionTables
+		public System.Data.Linq.Table<ThirdLevelSubdivisionTable> ThirdLevelSubdivisionTable
 		{
 			get
 			{
@@ -830,7 +830,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<TypeOfWritingFIO> TypeOfWritingFIOs
+		public System.Data.Linq.Table<TypeOfWritingFIO> TypeOfWritingFIO
 		{
 			get
 			{
@@ -838,7 +838,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<UsersTable> UsersTables
+		public System.Data.Linq.Table<UsersTable> UsersTable
 		{
 			get
 			{
@@ -846,7 +846,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zActionPRManualTable> zActionPRManualTables
+		public System.Data.Linq.Table<zActionPRManualTable> zActionPRManualTable
 		{
 			get
 			{
@@ -854,7 +854,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zActionsCompetitionsMappingTable> zActionsCompetitionsMappingTables
+		public System.Data.Linq.Table<zActionsCompetitionsMappingTable> zActionsCompetitionsMappingTable
 		{
 			get
 			{
@@ -862,7 +862,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zApplicationAndPartnersMappingTable> zApplicationAndPartnersMappingTables
+		public System.Data.Linq.Table<zApplicationAndPartnersMappingTable> zApplicationAndPartnersMappingTable
 		{
 			get
 			{
@@ -870,7 +870,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zApplicationTable> zApplicationTables
+		public System.Data.Linq.Table<zApplicationTable> zApplicationTable
 		{
 			get
 			{
@@ -878,7 +878,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zBlockTable> zBlockTables
+		public System.Data.Linq.Table<zBlockTable> zBlockTable
 		{
 			get
 			{
@@ -886,7 +886,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zCollectedDataTable> zCollectedDataTables
+		public System.Data.Linq.Table<zCollectedDataTable> zCollectedDataTable
 		{
 			get
 			{
@@ -894,7 +894,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zCollectedRowsTable> zCollectedRowsTables
+		public System.Data.Linq.Table<zCollectedRowsTable> zCollectedRowsTable
 		{
 			get
 			{
@@ -902,7 +902,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zColumnTable> zColumnTables
+		public System.Data.Linq.Table<zColumnTable> zColumnTable
 		{
 			get
 			{
@@ -910,7 +910,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zCompetitionsTable> zCompetitionsTables
+		public System.Data.Linq.Table<zCompetitionsTable> zCompetitionsTable
 		{
 			get
 			{
@@ -918,7 +918,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zConstantListTable> zConstantListTables
+		public System.Data.Linq.Table<zConstantListTable> zConstantListTable
 		{
 			get
 			{
@@ -926,7 +926,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zDocumentsTable> zDocumentsTables
+		public System.Data.Linq.Table<zDocumentsTable> zDocumentsTable
 		{
 			get
 			{
@@ -934,7 +934,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<ZeroLevelSubdivisionTable> ZeroLevelSubdivisionTables
+		public System.Data.Linq.Table<ZeroLevelSubdivisionTable> ZeroLevelSubdivisionTable
 		{
 			get
 			{
@@ -942,7 +942,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zExpertAndExpertGroupMappingTable> zExpertAndExpertGroupMappingTables
+		public System.Data.Linq.Table<zExpertAndExpertGroupMappingTable> zExpertAndExpertGroupMappingTable
 		{
 			get
 			{
@@ -950,7 +950,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zExpertGroup> zExpertGroups
+		public System.Data.Linq.Table<zExpertGroup> zExpertGroup
 		{
 			get
 			{
@@ -958,15 +958,15 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zExpertPoint> zExpertPoints
+		public System.Data.Linq.Table<zExpertPoints> zExpertPoints
 		{
 			get
 			{
-				return this.GetTable<zExpertPoint>();
+				return this.GetTable<zExpertPoints>();
 			}
 		}
 		
-		public System.Data.Linq.Table<zExpertPointsValue> zExpertPointsValues
+		public System.Data.Linq.Table<zExpertPointsValue> zExpertPointsValue
 		{
 			get
 			{
@@ -974,7 +974,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zExpertsAndApplicationMappingTable> zExpertsAndApplicationMappingTables
+		public System.Data.Linq.Table<zExpertsAndApplicationMappingTable> zExpertsAndApplicationMappingTable
 		{
 			get
 			{
@@ -982,7 +982,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zExpertsAndCompetitionMappngTamplateTable> zExpertsAndCompetitionMappngTamplateTables
+		public System.Data.Linq.Table<zExpertsAndCompetitionMappngTamplateTable> zExpertsAndCompetitionMappngTamplateTable
 		{
 			get
 			{
@@ -990,7 +990,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zFormCompetitionMappingTable> zFormCompetitionMappingTables
+		public System.Data.Linq.Table<zFormCompetitionMappingTable> zFormCompetitionMappingTable
 		{
 			get
 			{
@@ -998,7 +998,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zIndicatorManualTable> zIndicatorManualTables
+		public System.Data.Linq.Table<zIndicatorManualTable> zIndicatorManualTable
 		{
 			get
 			{
@@ -1006,7 +1006,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zPartnersTable> zPartnersTables
+		public System.Data.Linq.Table<zPartnersTable> zPartnersTable
 		{
 			get
 			{
@@ -1014,7 +1014,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zSectionTable> zSectionTables
+		public System.Data.Linq.Table<zSectionTable> zSectionTable
 		{
 			get
 			{
@@ -1022,7 +1022,7 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<zTaskPRManualTable> zTaskPRManualTables
+		public System.Data.Linq.Table<zTaskPRManualTable> zTaskPRManualTable
 		{
 			get
 			{
@@ -1247,12 +1247,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._BasicParametersTable.Entity = null;
-						previousValue.BasicParametersAndRolesMappingTables.Remove(this);
+						previousValue.BasicParametersAndRolesMappingTable.Remove(this);
 					}
 					this._BasicParametersTable.Entity = value;
 					if ((value != null))
 					{
-						value.BasicParametersAndRolesMappingTables.Add(this);
+						value.BasicParametersAndRolesMappingTable.Add(this);
 						this._FK_BasicParametersTable = value.BasicParametersTableID;
 					}
 					else
@@ -1281,12 +1281,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._RolesTable.Entity = null;
-						previousValue.BasicParametersAndRolesMappingTables.Remove(this);
+						previousValue.BasicParametersAndRolesMappingTable.Remove(this);
 					}
 					this._RolesTable.Entity = value;
 					if ((value != null))
 					{
-						value.BasicParametersAndRolesMappingTables.Add(this);
+						value.BasicParametersAndRolesMappingTable.Add(this);
 						this._FK_RolesTable = value.RolesTableID;
 					}
 					else
@@ -1333,7 +1333,7 @@ namespace PersonalPages
 		
 		private string _Description;
 		
-		private EntitySet<zFormCompetitionMappingTable> _zFormCompetitionMappingTables;
+		private EntitySet<zFormCompetitionMappingTable> _zFormCompetitionMappingTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -1351,7 +1351,7 @@ namespace PersonalPages
 		
 		public zTemplateFormTable()
 		{
-			this._zFormCompetitionMappingTables = new EntitySet<zFormCompetitionMappingTable>(new Action<zFormCompetitionMappingTable>(this.attach_zFormCompetitionMappingTables), new Action<zFormCompetitionMappingTable>(this.detach_zFormCompetitionMappingTables));
+			this._zFormCompetitionMappingTable = new EntitySet<zFormCompetitionMappingTable>(new Action<zFormCompetitionMappingTable>(this.attach_zFormCompetitionMappingTable), new Action<zFormCompetitionMappingTable>(this.detach_zFormCompetitionMappingTable));
 			OnCreated();
 		}
 		
@@ -1435,16 +1435,16 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zTemplateFormTable_zFormCompetitionMappingTable", Storage="_zFormCompetitionMappingTables", ThisKey="ID", OtherKey="FK_Form")]
-		public EntitySet<zFormCompetitionMappingTable> zFormCompetitionMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zTemplateFormTable_zFormCompetitionMappingTable", Storage="_zFormCompetitionMappingTable", ThisKey="ID", OtherKey="FK_Form")]
+		public EntitySet<zFormCompetitionMappingTable> zFormCompetitionMappingTable
 		{
 			get
 			{
-				return this._zFormCompetitionMappingTables;
+				return this._zFormCompetitionMappingTable;
 			}
 			set
 			{
-				this._zFormCompetitionMappingTables.Assign(value);
+				this._zFormCompetitionMappingTable.Assign(value);
 			}
 		}
 		
@@ -1468,13 +1468,13 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_zFormCompetitionMappingTables(zFormCompetitionMappingTable entity)
+		private void attach_zFormCompetitionMappingTable(zFormCompetitionMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zTemplateFormTable = this;
 		}
 		
-		private void detach_zFormCompetitionMappingTables(zFormCompetitionMappingTable entity)
+		private void detach_zFormCompetitionMappingTable(zFormCompetitionMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zTemplateFormTable = null;
@@ -1499,21 +1499,21 @@ namespace PersonalPages
 		
 		private string _Measure;
 		
-		private EntitySet<BasicParametersAndRolesMappingTable> _BasicParametersAndRolesMappingTables;
+		private EntitySet<BasicParametersAndRolesMappingTable> _BasicParametersAndRolesMappingTable;
 		
 		private EntityRef<BasicParametrAdditional> _BasicParametrAdditional;
 		
-		private EntitySet<BasicParametrsAndSubdivisionClassMappingTable> _BasicParametrsAndSubdivisionClassMappingTables;
+		private EntitySet<BasicParametrsAndSubdivisionClassMappingTable> _BasicParametrsAndSubdivisionClassMappingTable;
 		
-		private EntitySet<BasicParametrsAndUsersMapping> _BasicParametrsAndUsersMappings;
+		private EntitySet<BasicParametrsAndUsersMapping> _BasicParametrsAndUsersMapping;
 		
-		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTables;
+		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
-		private EntitySet<CommetntForBasicInReport> _CommetntForBasicInReports;
+		private EntitySet<CommetntForBasicInReport> _CommetntForBasicInReport;
 		
-		private EntitySet<ConfirmationHistory> _ConfirmationHistories;
+		private EntitySet<ConfirmationHistory> _ConfirmationHistory;
 		
-		private EntitySet<ReportArchiveAndBasicParametrsMappingTable> _ReportArchiveAndBasicParametrsMappingTables;
+		private EntitySet<ReportArchiveAndBasicParametrsMappingTable> _ReportArchiveAndBasicParametrsMappingTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -1535,14 +1535,14 @@ namespace PersonalPages
 		
 		public BasicParametersTable()
 		{
-			this._BasicParametersAndRolesMappingTables = new EntitySet<BasicParametersAndRolesMappingTable>(new Action<BasicParametersAndRolesMappingTable>(this.attach_BasicParametersAndRolesMappingTables), new Action<BasicParametersAndRolesMappingTable>(this.detach_BasicParametersAndRolesMappingTables));
+			this._BasicParametersAndRolesMappingTable = new EntitySet<BasicParametersAndRolesMappingTable>(new Action<BasicParametersAndRolesMappingTable>(this.attach_BasicParametersAndRolesMappingTable), new Action<BasicParametersAndRolesMappingTable>(this.detach_BasicParametersAndRolesMappingTable));
 			this._BasicParametrAdditional = default(EntityRef<BasicParametrAdditional>);
-			this._BasicParametrsAndSubdivisionClassMappingTables = new EntitySet<BasicParametrsAndSubdivisionClassMappingTable>(new Action<BasicParametrsAndSubdivisionClassMappingTable>(this.attach_BasicParametrsAndSubdivisionClassMappingTables), new Action<BasicParametrsAndSubdivisionClassMappingTable>(this.detach_BasicParametrsAndSubdivisionClassMappingTables));
-			this._BasicParametrsAndUsersMappings = new EntitySet<BasicParametrsAndUsersMapping>(new Action<BasicParametrsAndUsersMapping>(this.attach_BasicParametrsAndUsersMappings), new Action<BasicParametrsAndUsersMapping>(this.detach_BasicParametrsAndUsersMappings));
-			this._CollectedBasicParametersTables = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTables), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTables));
-			this._CommetntForBasicInReports = new EntitySet<CommetntForBasicInReport>(new Action<CommetntForBasicInReport>(this.attach_CommetntForBasicInReports), new Action<CommetntForBasicInReport>(this.detach_CommetntForBasicInReports));
-			this._ConfirmationHistories = new EntitySet<ConfirmationHistory>(new Action<ConfirmationHistory>(this.attach_ConfirmationHistories), new Action<ConfirmationHistory>(this.detach_ConfirmationHistories));
-			this._ReportArchiveAndBasicParametrsMappingTables = new EntitySet<ReportArchiveAndBasicParametrsMappingTable>(new Action<ReportArchiveAndBasicParametrsMappingTable>(this.attach_ReportArchiveAndBasicParametrsMappingTables), new Action<ReportArchiveAndBasicParametrsMappingTable>(this.detach_ReportArchiveAndBasicParametrsMappingTables));
+			this._BasicParametrsAndSubdivisionClassMappingTable = new EntitySet<BasicParametrsAndSubdivisionClassMappingTable>(new Action<BasicParametrsAndSubdivisionClassMappingTable>(this.attach_BasicParametrsAndSubdivisionClassMappingTable), new Action<BasicParametrsAndSubdivisionClassMappingTable>(this.detach_BasicParametrsAndSubdivisionClassMappingTable));
+			this._BasicParametrsAndUsersMapping = new EntitySet<BasicParametrsAndUsersMapping>(new Action<BasicParametrsAndUsersMapping>(this.attach_BasicParametrsAndUsersMapping), new Action<BasicParametrsAndUsersMapping>(this.detach_BasicParametrsAndUsersMapping));
+			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
+			this._CommetntForBasicInReport = new EntitySet<CommetntForBasicInReport>(new Action<CommetntForBasicInReport>(this.attach_CommetntForBasicInReport), new Action<CommetntForBasicInReport>(this.detach_CommetntForBasicInReport));
+			this._ConfirmationHistory = new EntitySet<ConfirmationHistory>(new Action<ConfirmationHistory>(this.attach_ConfirmationHistory), new Action<ConfirmationHistory>(this.detach_ConfirmationHistory));
+			this._ReportArchiveAndBasicParametrsMappingTable = new EntitySet<ReportArchiveAndBasicParametrsMappingTable>(new Action<ReportArchiveAndBasicParametrsMappingTable>(this.attach_ReportArchiveAndBasicParametrsMappingTable), new Action<ReportArchiveAndBasicParametrsMappingTable>(this.detach_ReportArchiveAndBasicParametrsMappingTable));
 			OnCreated();
 		}
 		
@@ -1666,16 +1666,16 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_BasicParametersAndRolesMappingTable", Storage="_BasicParametersAndRolesMappingTables", ThisKey="BasicParametersTableID", OtherKey="FK_BasicParametersTable")]
-		public EntitySet<BasicParametersAndRolesMappingTable> BasicParametersAndRolesMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_BasicParametersAndRolesMappingTable", Storage="_BasicParametersAndRolesMappingTable", ThisKey="BasicParametersTableID", OtherKey="FK_BasicParametersTable")]
+		public EntitySet<BasicParametersAndRolesMappingTable> BasicParametersAndRolesMappingTable
 		{
 			get
 			{
-				return this._BasicParametersAndRolesMappingTables;
+				return this._BasicParametersAndRolesMappingTable;
 			}
 			set
 			{
-				this._BasicParametersAndRolesMappingTables.Assign(value);
+				this._BasicParametersAndRolesMappingTable.Assign(value);
 			}
 		}
 		
@@ -1708,81 +1708,81 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_BasicParametrsAndSubdivisionClassMappingTable", Storage="_BasicParametrsAndSubdivisionClassMappingTables", ThisKey="BasicParametersTableID", OtherKey="FK_BasicParametrsTable")]
-		public EntitySet<BasicParametrsAndSubdivisionClassMappingTable> BasicParametrsAndSubdivisionClassMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_BasicParametrsAndSubdivisionClassMappingTable", Storage="_BasicParametrsAndSubdivisionClassMappingTable", ThisKey="BasicParametersTableID", OtherKey="FK_BasicParametrsTable")]
+		public EntitySet<BasicParametrsAndSubdivisionClassMappingTable> BasicParametrsAndSubdivisionClassMappingTable
 		{
 			get
 			{
-				return this._BasicParametrsAndSubdivisionClassMappingTables;
+				return this._BasicParametrsAndSubdivisionClassMappingTable;
 			}
 			set
 			{
-				this._BasicParametrsAndSubdivisionClassMappingTables.Assign(value);
+				this._BasicParametrsAndSubdivisionClassMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_BasicParametrsAndUsersMapping", Storage="_BasicParametrsAndUsersMappings", ThisKey="BasicParametersTableID", OtherKey="FK_ParametrsTable")]
-		public EntitySet<BasicParametrsAndUsersMapping> BasicParametrsAndUsersMappings
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_BasicParametrsAndUsersMapping", Storage="_BasicParametrsAndUsersMapping", ThisKey="BasicParametersTableID", OtherKey="FK_ParametrsTable")]
+		public EntitySet<BasicParametrsAndUsersMapping> BasicParametrsAndUsersMapping
 		{
 			get
 			{
-				return this._BasicParametrsAndUsersMappings;
+				return this._BasicParametrsAndUsersMapping;
 			}
 			set
 			{
-				this._BasicParametrsAndUsersMappings.Assign(value);
+				this._BasicParametrsAndUsersMapping.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTables", ThisKey="BasicParametersTableID", OtherKey="FK_BasicParametersTable")]
-		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTable", ThisKey="BasicParametersTableID", OtherKey="FK_BasicParametersTable")]
+		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTable
 		{
 			get
 			{
-				return this._CollectedBasicParametersTables;
+				return this._CollectedBasicParametersTable;
 			}
 			set
 			{
-				this._CollectedBasicParametersTables.Assign(value);
+				this._CollectedBasicParametersTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_CommetntForBasicInReport", Storage="_CommetntForBasicInReports", ThisKey="BasicParametersTableID", OtherKey="FK_BasickParamets")]
-		public EntitySet<CommetntForBasicInReport> CommetntForBasicInReports
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_CommetntForBasicInReport", Storage="_CommetntForBasicInReport", ThisKey="BasicParametersTableID", OtherKey="FK_BasickParamets")]
+		public EntitySet<CommetntForBasicInReport> CommetntForBasicInReport
 		{
 			get
 			{
-				return this._CommetntForBasicInReports;
+				return this._CommetntForBasicInReport;
 			}
 			set
 			{
-				this._CommetntForBasicInReports.Assign(value);
+				this._CommetntForBasicInReport.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_ConfirmationHistory", Storage="_ConfirmationHistories", ThisKey="BasicParametersTableID", OtherKey="FK_BasicParamTable")]
-		public EntitySet<ConfirmationHistory> ConfirmationHistories
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_ConfirmationHistory", Storage="_ConfirmationHistory", ThisKey="BasicParametersTableID", OtherKey="FK_BasicParamTable")]
+		public EntitySet<ConfirmationHistory> ConfirmationHistory
 		{
 			get
 			{
-				return this._ConfirmationHistories;
+				return this._ConfirmationHistory;
 			}
 			set
 			{
-				this._ConfirmationHistories.Assign(value);
+				this._ConfirmationHistory.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_ReportArchiveAndBasicParametrsMappingTable", Storage="_ReportArchiveAndBasicParametrsMappingTables", ThisKey="BasicParametersTableID", OtherKey="FK_BasicParametrsTable")]
-		public EntitySet<ReportArchiveAndBasicParametrsMappingTable> ReportArchiveAndBasicParametrsMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BasicParametersTable_ReportArchiveAndBasicParametrsMappingTable", Storage="_ReportArchiveAndBasicParametrsMappingTable", ThisKey="BasicParametersTableID", OtherKey="FK_BasicParametrsTable")]
+		public EntitySet<ReportArchiveAndBasicParametrsMappingTable> ReportArchiveAndBasicParametrsMappingTable
 		{
 			get
 			{
-				return this._ReportArchiveAndBasicParametrsMappingTables;
+				return this._ReportArchiveAndBasicParametrsMappingTable;
 			}
 			set
 			{
-				this._ReportArchiveAndBasicParametrsMappingTables.Assign(value);
+				this._ReportArchiveAndBasicParametrsMappingTable.Assign(value);
 			}
 		}
 		
@@ -1806,85 +1806,85 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_BasicParametersAndRolesMappingTables(BasicParametersAndRolesMappingTable entity)
+		private void attach_BasicParametersAndRolesMappingTable(BasicParametersAndRolesMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.BasicParametersTable = this;
 		}
 		
-		private void detach_BasicParametersAndRolesMappingTables(BasicParametersAndRolesMappingTable entity)
+		private void detach_BasicParametersAndRolesMappingTable(BasicParametersAndRolesMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.BasicParametersTable = null;
 		}
 		
-		private void attach_BasicParametrsAndSubdivisionClassMappingTables(BasicParametrsAndSubdivisionClassMappingTable entity)
+		private void attach_BasicParametrsAndSubdivisionClassMappingTable(BasicParametrsAndSubdivisionClassMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.BasicParametersTable = this;
 		}
 		
-		private void detach_BasicParametrsAndSubdivisionClassMappingTables(BasicParametrsAndSubdivisionClassMappingTable entity)
+		private void detach_BasicParametrsAndSubdivisionClassMappingTable(BasicParametrsAndSubdivisionClassMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.BasicParametersTable = null;
 		}
 		
-		private void attach_BasicParametrsAndUsersMappings(BasicParametrsAndUsersMapping entity)
+		private void attach_BasicParametrsAndUsersMapping(BasicParametrsAndUsersMapping entity)
 		{
 			this.SendPropertyChanging();
 			entity.BasicParametersTable = this;
 		}
 		
-		private void detach_BasicParametrsAndUsersMappings(BasicParametrsAndUsersMapping entity)
+		private void detach_BasicParametrsAndUsersMapping(BasicParametrsAndUsersMapping entity)
 		{
 			this.SendPropertyChanging();
 			entity.BasicParametersTable = null;
 		}
 		
-		private void attach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void attach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.BasicParametersTable = this;
 		}
 		
-		private void detach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void detach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.BasicParametersTable = null;
 		}
 		
-		private void attach_CommetntForBasicInReports(CommetntForBasicInReport entity)
+		private void attach_CommetntForBasicInReport(CommetntForBasicInReport entity)
 		{
 			this.SendPropertyChanging();
 			entity.BasicParametersTable = this;
 		}
 		
-		private void detach_CommetntForBasicInReports(CommetntForBasicInReport entity)
+		private void detach_CommetntForBasicInReport(CommetntForBasicInReport entity)
 		{
 			this.SendPropertyChanging();
 			entity.BasicParametersTable = null;
 		}
 		
-		private void attach_ConfirmationHistories(ConfirmationHistory entity)
+		private void attach_ConfirmationHistory(ConfirmationHistory entity)
 		{
 			this.SendPropertyChanging();
 			entity.BasicParametersTable = this;
 		}
 		
-		private void detach_ConfirmationHistories(ConfirmationHistory entity)
+		private void detach_ConfirmationHistory(ConfirmationHistory entity)
 		{
 			this.SendPropertyChanging();
 			entity.BasicParametersTable = null;
 		}
 		
-		private void attach_ReportArchiveAndBasicParametrsMappingTables(ReportArchiveAndBasicParametrsMappingTable entity)
+		private void attach_ReportArchiveAndBasicParametrsMappingTable(ReportArchiveAndBasicParametrsMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.BasicParametersTable = this;
 		}
 		
-		private void detach_ReportArchiveAndBasicParametrsMappingTables(ReportArchiveAndBasicParametrsMappingTable entity)
+		private void detach_ReportArchiveAndBasicParametrsMappingTable(ReportArchiveAndBasicParametrsMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.BasicParametersTable = null;
@@ -2213,12 +2213,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FieldOfExpertise.Entity = null;
-						previousValue.BasicParametrAdditionals.Remove(this);
+						previousValue.BasicParametrAdditional.Remove(this);
 					}
 					this._FieldOfExpertise.Entity = value;
 					if ((value != null))
 					{
-						value.BasicParametrAdditionals.Add(this);
+						value.BasicParametrAdditional.Add(this);
 						this._FK_FieldOfExpertise = value.FieldOfExpertiseID;
 					}
 					else
@@ -2395,12 +2395,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._BasicParametersTable.Entity = null;
-						previousValue.BasicParametrsAndSubdivisionClassMappingTables.Remove(this);
+						previousValue.BasicParametrsAndSubdivisionClassMappingTable.Remove(this);
 					}
 					this._BasicParametersTable.Entity = value;
 					if ((value != null))
 					{
-						value.BasicParametrsAndSubdivisionClassMappingTables.Add(this);
+						value.BasicParametrsAndSubdivisionClassMappingTable.Add(this);
 						this._FK_BasicParametrsTable = value.BasicParametersTableID;
 					}
 					else
@@ -2429,12 +2429,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._SubdivisionClassTable.Entity = null;
-						previousValue.BasicParametrsAndSubdivisionClassMappingTables.Remove(this);
+						previousValue.BasicParametrsAndSubdivisionClassMappingTable.Remove(this);
 					}
 					this._SubdivisionClassTable.Entity = value;
 					if ((value != null))
 					{
-						value.BasicParametrsAndSubdivisionClassMappingTables.Add(this);
+						value.BasicParametrsAndSubdivisionClassMappingTable.Add(this);
 						this._FK_SubdivisionClassTable = value.ID;
 					}
 					else
@@ -2683,12 +2683,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._BasicParametersTable.Entity = null;
-						previousValue.BasicParametrsAndUsersMappings.Remove(this);
+						previousValue.BasicParametrsAndUsersMapping.Remove(this);
 					}
 					this._BasicParametersTable.Entity = value;
 					if ((value != null))
 					{
-						value.BasicParametrsAndUsersMappings.Add(this);
+						value.BasicParametrsAndUsersMapping.Add(this);
 						this._FK_ParametrsTable = value.BasicParametersTableID;
 					}
 					else
@@ -2717,12 +2717,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._UsersTable.Entity = null;
-						previousValue.BasicParametrsAndUsersMappings.Remove(this);
+						previousValue.BasicParametrsAndUsersMapping.Remove(this);
 					}
 					this._UsersTable.Entity = value;
 					if ((value != null))
 					{
-						value.BasicParametrsAndUsersMappings.Add(this);
+						value.BasicParametrsAndUsersMapping.Add(this);
 						this._FK_UsersTable = value.UsersTableID;
 					}
 					else
@@ -2756,7 +2756,7 @@ namespace PersonalPages
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CalculatedParametrs")]
-	public partial class CalculatedParametr : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class CalculatedParametrs : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -2775,15 +2775,15 @@ namespace PersonalPages
 		
 		private string _AbbreviationRU;
 		
-		private EntitySet<CalculatedParametrsAndRolesMappingTable> _CalculatedParametrsAndRolesMappingTables;
+		private EntitySet<CalculatedParametrsAndRolesMappingTable> _CalculatedParametrsAndRolesMappingTable;
 		
-		private EntitySet<CalculatedParametrsAndUsersMapping> _CalculatedParametrsAndUsersMappings;
+		private EntitySet<CalculatedParametrsAndUsersMapping> _CalculatedParametrsAndUsersMapping;
 		
-		private EntitySet<CollectedCalculatedParametr> _CollectedCalculatedParametrs;
+		private EntitySet<CollectedCalculatedParametrs> _CollectedCalculatedParametrs;
 		
-		private EntitySet<ConfirmationHistory> _ConfirmationHistories;
+		private EntitySet<ConfirmationHistory> _ConfirmationHistory;
 		
-		private EntitySet<ReportArchiveAndCalculatedParametrsMappingTable> _ReportArchiveAndCalculatedParametrsMappingTables;
+		private EntitySet<ReportArchiveAndCalculatedParametrsMappingTable> _ReportArchiveAndCalculatedParametrsMappingTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -2805,13 +2805,13 @@ namespace PersonalPages
     partial void OnAbbreviationRUChanged();
     #endregion
 		
-		public CalculatedParametr()
+		public CalculatedParametrs()
 		{
-			this._CalculatedParametrsAndRolesMappingTables = new EntitySet<CalculatedParametrsAndRolesMappingTable>(new Action<CalculatedParametrsAndRolesMappingTable>(this.attach_CalculatedParametrsAndRolesMappingTables), new Action<CalculatedParametrsAndRolesMappingTable>(this.detach_CalculatedParametrsAndRolesMappingTables));
-			this._CalculatedParametrsAndUsersMappings = new EntitySet<CalculatedParametrsAndUsersMapping>(new Action<CalculatedParametrsAndUsersMapping>(this.attach_CalculatedParametrsAndUsersMappings), new Action<CalculatedParametrsAndUsersMapping>(this.detach_CalculatedParametrsAndUsersMappings));
-			this._CollectedCalculatedParametrs = new EntitySet<CollectedCalculatedParametr>(new Action<CollectedCalculatedParametr>(this.attach_CollectedCalculatedParametrs), new Action<CollectedCalculatedParametr>(this.detach_CollectedCalculatedParametrs));
-			this._ConfirmationHistories = new EntitySet<ConfirmationHistory>(new Action<ConfirmationHistory>(this.attach_ConfirmationHistories), new Action<ConfirmationHistory>(this.detach_ConfirmationHistories));
-			this._ReportArchiveAndCalculatedParametrsMappingTables = new EntitySet<ReportArchiveAndCalculatedParametrsMappingTable>(new Action<ReportArchiveAndCalculatedParametrsMappingTable>(this.attach_ReportArchiveAndCalculatedParametrsMappingTables), new Action<ReportArchiveAndCalculatedParametrsMappingTable>(this.detach_ReportArchiveAndCalculatedParametrsMappingTables));
+			this._CalculatedParametrsAndRolesMappingTable = new EntitySet<CalculatedParametrsAndRolesMappingTable>(new Action<CalculatedParametrsAndRolesMappingTable>(this.attach_CalculatedParametrsAndRolesMappingTable), new Action<CalculatedParametrsAndRolesMappingTable>(this.detach_CalculatedParametrsAndRolesMappingTable));
+			this._CalculatedParametrsAndUsersMapping = new EntitySet<CalculatedParametrsAndUsersMapping>(new Action<CalculatedParametrsAndUsersMapping>(this.attach_CalculatedParametrsAndUsersMapping), new Action<CalculatedParametrsAndUsersMapping>(this.detach_CalculatedParametrsAndUsersMapping));
+			this._CollectedCalculatedParametrs = new EntitySet<CollectedCalculatedParametrs>(new Action<CollectedCalculatedParametrs>(this.attach_CollectedCalculatedParametrs), new Action<CollectedCalculatedParametrs>(this.detach_CollectedCalculatedParametrs));
+			this._ConfirmationHistory = new EntitySet<ConfirmationHistory>(new Action<ConfirmationHistory>(this.attach_ConfirmationHistory), new Action<ConfirmationHistory>(this.detach_ConfirmationHistory));
+			this._ReportArchiveAndCalculatedParametrsMappingTable = new EntitySet<ReportArchiveAndCalculatedParametrsMappingTable>(new Action<ReportArchiveAndCalculatedParametrsMappingTable>(this.attach_ReportArchiveAndCalculatedParametrsMappingTable), new Action<ReportArchiveAndCalculatedParametrsMappingTable>(this.detach_ReportArchiveAndCalculatedParametrsMappingTable));
 			OnCreated();
 		}
 		
@@ -2955,34 +2955,34 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametr_CalculatedParametrsAndRolesMappingTable", Storage="_CalculatedParametrsAndRolesMappingTables", ThisKey="CalculatedParametrsID", OtherKey="FK_CalculatedParametrs")]
-		public EntitySet<CalculatedParametrsAndRolesMappingTable> CalculatedParametrsAndRolesMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametrs_CalculatedParametrsAndRolesMappingTable", Storage="_CalculatedParametrsAndRolesMappingTable", ThisKey="CalculatedParametrsID", OtherKey="FK_CalculatedParametrs")]
+		public EntitySet<CalculatedParametrsAndRolesMappingTable> CalculatedParametrsAndRolesMappingTable
 		{
 			get
 			{
-				return this._CalculatedParametrsAndRolesMappingTables;
+				return this._CalculatedParametrsAndRolesMappingTable;
 			}
 			set
 			{
-				this._CalculatedParametrsAndRolesMappingTables.Assign(value);
+				this._CalculatedParametrsAndRolesMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametr_CalculatedParametrsAndUsersMapping", Storage="_CalculatedParametrsAndUsersMappings", ThisKey="CalculatedParametrsID", OtherKey="FK_CalculatedParametrsTable")]
-		public EntitySet<CalculatedParametrsAndUsersMapping> CalculatedParametrsAndUsersMappings
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametrs_CalculatedParametrsAndUsersMapping", Storage="_CalculatedParametrsAndUsersMapping", ThisKey="CalculatedParametrsID", OtherKey="FK_CalculatedParametrsTable")]
+		public EntitySet<CalculatedParametrsAndUsersMapping> CalculatedParametrsAndUsersMapping
 		{
 			get
 			{
-				return this._CalculatedParametrsAndUsersMappings;
+				return this._CalculatedParametrsAndUsersMapping;
 			}
 			set
 			{
-				this._CalculatedParametrsAndUsersMappings.Assign(value);
+				this._CalculatedParametrsAndUsersMapping.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametr_CollectedCalculatedParametr", Storage="_CollectedCalculatedParametrs", ThisKey="CalculatedParametrsID", OtherKey="FK_CalculatedParametrs")]
-		public EntitySet<CollectedCalculatedParametr> CollectedCalculatedParametrs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametrs_CollectedCalculatedParametrs", Storage="_CollectedCalculatedParametrs", ThisKey="CalculatedParametrsID", OtherKey="FK_CalculatedParametrs")]
+		public EntitySet<CollectedCalculatedParametrs> CollectedCalculatedParametrs
 		{
 			get
 			{
@@ -2994,29 +2994,29 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametr_ConfirmationHistory", Storage="_ConfirmationHistories", ThisKey="CalculatedParametrsID", OtherKey="FK_CalculatedParamTable")]
-		public EntitySet<ConfirmationHistory> ConfirmationHistories
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametrs_ConfirmationHistory", Storage="_ConfirmationHistory", ThisKey="CalculatedParametrsID", OtherKey="FK_CalculatedParamTable")]
+		public EntitySet<ConfirmationHistory> ConfirmationHistory
 		{
 			get
 			{
-				return this._ConfirmationHistories;
+				return this._ConfirmationHistory;
 			}
 			set
 			{
-				this._ConfirmationHistories.Assign(value);
+				this._ConfirmationHistory.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametr_ReportArchiveAndCalculatedParametrsMappingTable", Storage="_ReportArchiveAndCalculatedParametrsMappingTables", ThisKey="CalculatedParametrsID", OtherKey="FK_CalculatedParametrsTable")]
-		public EntitySet<ReportArchiveAndCalculatedParametrsMappingTable> ReportArchiveAndCalculatedParametrsMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametrs_ReportArchiveAndCalculatedParametrsMappingTable", Storage="_ReportArchiveAndCalculatedParametrsMappingTable", ThisKey="CalculatedParametrsID", OtherKey="FK_CalculatedParametrsTable")]
+		public EntitySet<ReportArchiveAndCalculatedParametrsMappingTable> ReportArchiveAndCalculatedParametrsMappingTable
 		{
 			get
 			{
-				return this._ReportArchiveAndCalculatedParametrsMappingTables;
+				return this._ReportArchiveAndCalculatedParametrsMappingTable;
 			}
 			set
 			{
-				this._ReportArchiveAndCalculatedParametrsMappingTables.Assign(value);
+				this._ReportArchiveAndCalculatedParametrsMappingTable.Assign(value);
 			}
 		}
 		
@@ -3040,64 +3040,64 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_CalculatedParametrsAndRolesMappingTables(CalculatedParametrsAndRolesMappingTable entity)
+		private void attach_CalculatedParametrsAndRolesMappingTable(CalculatedParametrsAndRolesMappingTable entity)
 		{
 			this.SendPropertyChanging();
-			entity.CalculatedParametr = this;
+			entity.CalculatedParametrs = this;
 		}
 		
-		private void detach_CalculatedParametrsAndRolesMappingTables(CalculatedParametrsAndRolesMappingTable entity)
+		private void detach_CalculatedParametrsAndRolesMappingTable(CalculatedParametrsAndRolesMappingTable entity)
 		{
 			this.SendPropertyChanging();
-			entity.CalculatedParametr = null;
+			entity.CalculatedParametrs = null;
 		}
 		
-		private void attach_CalculatedParametrsAndUsersMappings(CalculatedParametrsAndUsersMapping entity)
+		private void attach_CalculatedParametrsAndUsersMapping(CalculatedParametrsAndUsersMapping entity)
 		{
 			this.SendPropertyChanging();
-			entity.CalculatedParametr = this;
+			entity.CalculatedParametrs = this;
 		}
 		
-		private void detach_CalculatedParametrsAndUsersMappings(CalculatedParametrsAndUsersMapping entity)
+		private void detach_CalculatedParametrsAndUsersMapping(CalculatedParametrsAndUsersMapping entity)
 		{
 			this.SendPropertyChanging();
-			entity.CalculatedParametr = null;
+			entity.CalculatedParametrs = null;
 		}
 		
-		private void attach_CollectedCalculatedParametrs(CollectedCalculatedParametr entity)
+		private void attach_CollectedCalculatedParametrs(CollectedCalculatedParametrs entity)
 		{
 			this.SendPropertyChanging();
-			entity.CalculatedParametr = this;
+			entity.CalculatedParametrs = this;
 		}
 		
-		private void detach_CollectedCalculatedParametrs(CollectedCalculatedParametr entity)
+		private void detach_CollectedCalculatedParametrs(CollectedCalculatedParametrs entity)
 		{
 			this.SendPropertyChanging();
-			entity.CalculatedParametr = null;
+			entity.CalculatedParametrs = null;
 		}
 		
-		private void attach_ConfirmationHistories(ConfirmationHistory entity)
+		private void attach_ConfirmationHistory(ConfirmationHistory entity)
 		{
 			this.SendPropertyChanging();
-			entity.CalculatedParametr = this;
+			entity.CalculatedParametrs = this;
 		}
 		
-		private void detach_ConfirmationHistories(ConfirmationHistory entity)
+		private void detach_ConfirmationHistory(ConfirmationHistory entity)
 		{
 			this.SendPropertyChanging();
-			entity.CalculatedParametr = null;
+			entity.CalculatedParametrs = null;
 		}
 		
-		private void attach_ReportArchiveAndCalculatedParametrsMappingTables(ReportArchiveAndCalculatedParametrsMappingTable entity)
+		private void attach_ReportArchiveAndCalculatedParametrsMappingTable(ReportArchiveAndCalculatedParametrsMappingTable entity)
 		{
 			this.SendPropertyChanging();
-			entity.CalculatedParametr = this;
+			entity.CalculatedParametrs = this;
 		}
 		
-		private void detach_ReportArchiveAndCalculatedParametrsMappingTables(ReportArchiveAndCalculatedParametrsMappingTable entity)
+		private void detach_ReportArchiveAndCalculatedParametrsMappingTable(ReportArchiveAndCalculatedParametrsMappingTable entity)
 		{
 			this.SendPropertyChanging();
-			entity.CalculatedParametr = null;
+			entity.CalculatedParametrs = null;
 		}
 	}
 	
@@ -3121,7 +3121,7 @@ namespace PersonalPages
 		
 		private System.Nullable<bool> _CanConfirm;
 		
-		private EntityRef<CalculatedParametr> _CalculatedParametr;
+		private EntityRef<CalculatedParametrs> _CalculatedParametrs;
 		
 		private EntityRef<RolesTable> _RolesTable;
 		
@@ -3147,7 +3147,7 @@ namespace PersonalPages
 		
 		public CalculatedParametrsAndRolesMappingTable()
 		{
-			this._CalculatedParametr = default(EntityRef<CalculatedParametr>);
+			this._CalculatedParametrs = default(EntityRef<CalculatedParametrs>);
 			this._RolesTable = default(EntityRef<RolesTable>);
 			OnCreated();
 		}
@@ -3227,7 +3227,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_CalculatedParametrs != value))
 				{
-					if (this._CalculatedParametr.HasLoadedOrAssignedValue)
+					if (this._CalculatedParametrs.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -3300,36 +3300,36 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametr_CalculatedParametrsAndRolesMappingTable", Storage="_CalculatedParametr", ThisKey="FK_CalculatedParametrs", OtherKey="CalculatedParametrsID", IsForeignKey=true)]
-		public CalculatedParametr CalculatedParametr
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametrs_CalculatedParametrsAndRolesMappingTable", Storage="_CalculatedParametrs", ThisKey="FK_CalculatedParametrs", OtherKey="CalculatedParametrsID", IsForeignKey=true)]
+		public CalculatedParametrs CalculatedParametrs
 		{
 			get
 			{
-				return this._CalculatedParametr.Entity;
+				return this._CalculatedParametrs.Entity;
 			}
 			set
 			{
-				CalculatedParametr previousValue = this._CalculatedParametr.Entity;
+				CalculatedParametrs previousValue = this._CalculatedParametrs.Entity;
 				if (((previousValue != value) 
-							|| (this._CalculatedParametr.HasLoadedOrAssignedValue == false)))
+							|| (this._CalculatedParametrs.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._CalculatedParametr.Entity = null;
-						previousValue.CalculatedParametrsAndRolesMappingTables.Remove(this);
+						this._CalculatedParametrs.Entity = null;
+						previousValue.CalculatedParametrsAndRolesMappingTable.Remove(this);
 					}
-					this._CalculatedParametr.Entity = value;
+					this._CalculatedParametrs.Entity = value;
 					if ((value != null))
 					{
-						value.CalculatedParametrsAndRolesMappingTables.Add(this);
+						value.CalculatedParametrsAndRolesMappingTable.Add(this);
 						this._FK_CalculatedParametrs = value.CalculatedParametrsID;
 					}
 					else
 					{
 						this._FK_CalculatedParametrs = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("CalculatedParametr");
+					this.SendPropertyChanged("CalculatedParametrs");
 				}
 			}
 		}
@@ -3351,12 +3351,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._RolesTable.Entity = null;
-						previousValue.CalculatedParametrsAndRolesMappingTables.Remove(this);
+						previousValue.CalculatedParametrsAndRolesMappingTable.Remove(this);
 					}
 					this._RolesTable.Entity = value;
 					if ((value != null))
 					{
-						value.CalculatedParametrsAndRolesMappingTables.Add(this);
+						value.CalculatedParametrsAndRolesMappingTable.Add(this);
 						this._FK_RolesTable = value.RolesTableID;
 					}
 					else
@@ -3409,7 +3409,7 @@ namespace PersonalPages
 		
 		private System.Nullable<int> _FK_CalculatedParametrsTable;
 		
-		private EntityRef<CalculatedParametr> _CalculatedParametr;
+		private EntityRef<CalculatedParametrs> _CalculatedParametrs;
 		
 		private EntityRef<UsersTable> _UsersTable;
 		
@@ -3435,7 +3435,7 @@ namespace PersonalPages
 		
 		public CalculatedParametrsAndUsersMapping()
 		{
-			this._CalculatedParametr = default(EntityRef<CalculatedParametr>);
+			this._CalculatedParametrs = default(EntityRef<CalculatedParametrs>);
 			this._UsersTable = default(EntityRef<UsersTable>);
 			OnCreated();
 		}
@@ -3575,7 +3575,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_CalculatedParametrsTable != value))
 				{
-					if (this._CalculatedParametr.HasLoadedOrAssignedValue)
+					if (this._CalculatedParametrs.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -3588,36 +3588,36 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametr_CalculatedParametrsAndUsersMapping", Storage="_CalculatedParametr", ThisKey="FK_CalculatedParametrsTable", OtherKey="CalculatedParametrsID", IsForeignKey=true)]
-		public CalculatedParametr CalculatedParametr
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametrs_CalculatedParametrsAndUsersMapping", Storage="_CalculatedParametrs", ThisKey="FK_CalculatedParametrsTable", OtherKey="CalculatedParametrsID", IsForeignKey=true)]
+		public CalculatedParametrs CalculatedParametrs
 		{
 			get
 			{
-				return this._CalculatedParametr.Entity;
+				return this._CalculatedParametrs.Entity;
 			}
 			set
 			{
-				CalculatedParametr previousValue = this._CalculatedParametr.Entity;
+				CalculatedParametrs previousValue = this._CalculatedParametrs.Entity;
 				if (((previousValue != value) 
-							|| (this._CalculatedParametr.HasLoadedOrAssignedValue == false)))
+							|| (this._CalculatedParametrs.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._CalculatedParametr.Entity = null;
-						previousValue.CalculatedParametrsAndUsersMappings.Remove(this);
+						this._CalculatedParametrs.Entity = null;
+						previousValue.CalculatedParametrsAndUsersMapping.Remove(this);
 					}
-					this._CalculatedParametr.Entity = value;
+					this._CalculatedParametrs.Entity = value;
 					if ((value != null))
 					{
-						value.CalculatedParametrsAndUsersMappings.Add(this);
+						value.CalculatedParametrsAndUsersMapping.Add(this);
 						this._FK_CalculatedParametrsTable = value.CalculatedParametrsID;
 					}
 					else
 					{
 						this._FK_CalculatedParametrsTable = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("CalculatedParametr");
+					this.SendPropertyChanged("CalculatedParametrs");
 				}
 			}
 		}
@@ -3639,12 +3639,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._UsersTable.Entity = null;
-						previousValue.CalculatedParametrsAndUsersMappings.Remove(this);
+						previousValue.CalculatedParametrsAndUsersMapping.Remove(this);
 					}
 					this._UsersTable.Entity = value;
 					if ((value != null))
 					{
-						value.CalculatedParametrsAndUsersMappings.Add(this);
+						value.CalculatedParametrsAndUsersMapping.Add(this);
 						this._FK_UsersTable = value.UsersTableID;
 					}
 					else
@@ -4158,12 +4158,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._BasicParametersTable.Entity = null;
-						previousValue.CollectedBasicParametersTables.Remove(this);
+						previousValue.CollectedBasicParametersTable.Remove(this);
 					}
 					this._BasicParametersTable.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedBasicParametersTables.Add(this);
+						value.CollectedBasicParametersTable.Add(this);
 						this._FK_BasicParametersTable = value.BasicParametersTableID;
 					}
 					else
@@ -4192,12 +4192,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FifthLevelSubdivisionTable.Entity = null;
-						previousValue.CollectedBasicParametersTables.Remove(this);
+						previousValue.CollectedBasicParametersTable.Remove(this);
 					}
 					this._FifthLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedBasicParametersTables.Add(this);
+						value.CollectedBasicParametersTable.Add(this);
 						this._FK_FifthLevelSubdivisionTable = value.FifthLevelSubdivisionTableID;
 					}
 					else
@@ -4226,12 +4226,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FirstLevelSubdivisionTable.Entity = null;
-						previousValue.CollectedBasicParametersTables.Remove(this);
+						previousValue.CollectedBasicParametersTable.Remove(this);
 					}
 					this._FirstLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedBasicParametersTables.Add(this);
+						value.CollectedBasicParametersTable.Add(this);
 						this._FK_FirstLevelSubdivisionTable = value.FirstLevelSubdivisionTableID;
 					}
 					else
@@ -4260,12 +4260,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FourthLevelSubdivisionTable.Entity = null;
-						previousValue.CollectedBasicParametersTables.Remove(this);
+						previousValue.CollectedBasicParametersTable.Remove(this);
 					}
 					this._FourthLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedBasicParametersTables.Add(this);
+						value.CollectedBasicParametersTable.Add(this);
 						this._FK_FourthLevelSubdivisionTable = value.FourthLevelSubdivisionTableID;
 					}
 					else
@@ -4294,12 +4294,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ReportArchiveTable.Entity = null;
-						previousValue.CollectedBasicParametersTables.Remove(this);
+						previousValue.CollectedBasicParametersTable.Remove(this);
 					}
 					this._ReportArchiveTable.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedBasicParametersTables.Add(this);
+						value.CollectedBasicParametersTable.Add(this);
 						this._FK_ReportArchiveTable = value.ReportArchiveTableID;
 					}
 					else
@@ -4328,12 +4328,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._SecondLevelSubdivisionTable.Entity = null;
-						previousValue.CollectedBasicParametersTables.Remove(this);
+						previousValue.CollectedBasicParametersTable.Remove(this);
 					}
 					this._SecondLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedBasicParametersTables.Add(this);
+						value.CollectedBasicParametersTable.Add(this);
 						this._FK_SecondLevelSubdivisionTable = value.SecondLevelSubdivisionTableID;
 					}
 					else
@@ -4362,12 +4362,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ThirdLevelSubdivisionTable.Entity = null;
-						previousValue.CollectedBasicParametersTables.Remove(this);
+						previousValue.CollectedBasicParametersTable.Remove(this);
 					}
 					this._ThirdLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedBasicParametersTables.Add(this);
+						value.CollectedBasicParametersTable.Add(this);
 						this._FK_ThirdLevelSubdivisionTable = value.ThirdLevelSubdivisionTableID;
 					}
 					else
@@ -4396,12 +4396,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._UsersTable.Entity = null;
-						previousValue.CollectedBasicParametersTables.Remove(this);
+						previousValue.CollectedBasicParametersTable.Remove(this);
 					}
 					this._UsersTable.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedBasicParametersTables.Add(this);
+						value.CollectedBasicParametersTable.Add(this);
 						this._FK_UsersTable = value.UsersTableID;
 					}
 					else
@@ -4430,12 +4430,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ZeroLevelSubdivisionTable.Entity = null;
-						previousValue.CollectedBasicParametersTables.Remove(this);
+						previousValue.CollectedBasicParametersTable.Remove(this);
 					}
 					this._ZeroLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedBasicParametersTables.Add(this);
+						value.CollectedBasicParametersTable.Add(this);
 						this._FK_ZeroLevelSubdivisionTable = value.ZeroLevelSubdivisionTableID;
 					}
 					else
@@ -4469,7 +4469,7 @@ namespace PersonalPages
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CollectedCalculatedParametrs")]
-	public partial class CollectedCalculatedParametr : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class CollectedCalculatedParametrs : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -4494,7 +4494,7 @@ namespace PersonalPages
 		
 		private System.Nullable<int> _FK_ReportArchiveTable;
 		
-		private EntityRef<CalculatedParametr> _CalculatedParametr;
+		private EntityRef<CalculatedParametrs> _CalculatedParametrs;
 		
 		private EntityRef<ReportArchiveTable> _ReportArchiveTable;
 		
@@ -4526,9 +4526,9 @@ namespace PersonalPages
     partial void OnFK_ReportArchiveTableChanged();
     #endregion
 		
-		public CollectedCalculatedParametr()
+		public CollectedCalculatedParametrs()
 		{
-			this._CalculatedParametr = default(EntityRef<CalculatedParametr>);
+			this._CalculatedParametrs = default(EntityRef<CalculatedParametrs>);
 			this._ReportArchiveTable = default(EntityRef<ReportArchiveTable>);
 			this._UsersTable = default(EntityRef<UsersTable>);
 			OnCreated();
@@ -4585,7 +4585,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_CalculatedParametrs != value))
 				{
-					if (this._CalculatedParametr.HasLoadedOrAssignedValue)
+					if (this._CalculatedParametrs.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -4746,26 +4746,26 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametr_CollectedCalculatedParametr", Storage="_CalculatedParametr", ThisKey="FK_CalculatedParametrs", OtherKey="CalculatedParametrsID", IsForeignKey=true)]
-		public CalculatedParametr CalculatedParametr
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametrs_CollectedCalculatedParametrs", Storage="_CalculatedParametrs", ThisKey="FK_CalculatedParametrs", OtherKey="CalculatedParametrsID", IsForeignKey=true)]
+		public CalculatedParametrs CalculatedParametrs
 		{
 			get
 			{
-				return this._CalculatedParametr.Entity;
+				return this._CalculatedParametrs.Entity;
 			}
 			set
 			{
-				CalculatedParametr previousValue = this._CalculatedParametr.Entity;
+				CalculatedParametrs previousValue = this._CalculatedParametrs.Entity;
 				if (((previousValue != value) 
-							|| (this._CalculatedParametr.HasLoadedOrAssignedValue == false)))
+							|| (this._CalculatedParametrs.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._CalculatedParametr.Entity = null;
+						this._CalculatedParametrs.Entity = null;
 						previousValue.CollectedCalculatedParametrs.Remove(this);
 					}
-					this._CalculatedParametr.Entity = value;
+					this._CalculatedParametrs.Entity = value;
 					if ((value != null))
 					{
 						value.CollectedCalculatedParametrs.Add(this);
@@ -4775,12 +4775,12 @@ namespace PersonalPages
 					{
 						this._FK_CalculatedParametrs = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("CalculatedParametr");
+					this.SendPropertyChanged("CalculatedParametrs");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedCalculatedParametr", Storage="_ReportArchiveTable", ThisKey="FK_ReportArchiveTable", OtherKey="ReportArchiveTableID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedCalculatedParametrs", Storage="_ReportArchiveTable", ThisKey="FK_ReportArchiveTable", OtherKey="ReportArchiveTableID", IsForeignKey=true)]
 		public ReportArchiveTable ReportArchiveTable
 		{
 			get
@@ -4814,7 +4814,7 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_CollectedCalculatedParametr", Storage="_UsersTable", ThisKey="FK_UsersTable", OtherKey="UsersTableID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_CollectedCalculatedParametrs", Storage="_UsersTable", ThisKey="FK_UsersTable", OtherKey="UsersTableID", IsForeignKey=true)]
 		public UsersTable UsersTable
 		{
 			get
@@ -5216,12 +5216,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FifthLevelSubdivisionTable.Entity = null;
-						previousValue.CollectedIndicatorsForRs.Remove(this);
+						previousValue.CollectedIndicatorsForR.Remove(this);
 					}
 					this._FifthLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedIndicatorsForRs.Add(this);
+						value.CollectedIndicatorsForR.Add(this);
 						this._FK_FifthLevelSubdivisionTable = value.FifthLevelSubdivisionTableID;
 					}
 					else
@@ -5250,12 +5250,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FirstLevelSubdivisionTable.Entity = null;
-						previousValue.CollectedIndicatorsForRs.Remove(this);
+						previousValue.CollectedIndicatorsForR.Remove(this);
 					}
 					this._FirstLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedIndicatorsForRs.Add(this);
+						value.CollectedIndicatorsForR.Add(this);
 						this._FK_FirstLevelSubdivisionTable = value.FirstLevelSubdivisionTableID;
 					}
 					else
@@ -5284,12 +5284,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FourthLevelSubdivisionTable.Entity = null;
-						previousValue.CollectedIndicatorsForRs.Remove(this);
+						previousValue.CollectedIndicatorsForR.Remove(this);
 					}
 					this._FourthLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedIndicatorsForRs.Add(this);
+						value.CollectedIndicatorsForR.Add(this);
 						this._FK_FourthLelevlSubdivisionTable = value.FourthLevelSubdivisionTableID;
 					}
 					else
@@ -5318,12 +5318,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._IndicatorsTable.Entity = null;
-						previousValue.CollectedIndicatorsForRs.Remove(this);
+						previousValue.CollectedIndicatorsForR.Remove(this);
 					}
 					this._IndicatorsTable.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedIndicatorsForRs.Add(this);
+						value.CollectedIndicatorsForR.Add(this);
 						this._FK_IndicatorsTable = value.IndicatorsTableID;
 					}
 					else
@@ -5352,12 +5352,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ReportArchiveTable.Entity = null;
-						previousValue.CollectedIndicatorsForRs.Remove(this);
+						previousValue.CollectedIndicatorsForR.Remove(this);
 					}
 					this._ReportArchiveTable.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedIndicatorsForRs.Add(this);
+						value.CollectedIndicatorsForR.Add(this);
 						this._FK_ReportArchiveTable = value.ReportArchiveTableID;
 					}
 					else
@@ -5386,12 +5386,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._SecondLevelSubdivisionTable.Entity = null;
-						previousValue.CollectedIndicatorsForRs.Remove(this);
+						previousValue.CollectedIndicatorsForR.Remove(this);
 					}
 					this._SecondLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedIndicatorsForRs.Add(this);
+						value.CollectedIndicatorsForR.Add(this);
 						this._FK_SecondLevelSubdivisionTable = value.SecondLevelSubdivisionTableID;
 					}
 					else
@@ -5420,12 +5420,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ThirdLevelSubdivisionTable.Entity = null;
-						previousValue.CollectedIndicatorsForRs.Remove(this);
+						previousValue.CollectedIndicatorsForR.Remove(this);
 					}
 					this._ThirdLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedIndicatorsForRs.Add(this);
+						value.CollectedIndicatorsForR.Add(this);
 						this._FK_ThirdLevelSubdivisionTable = value.ThirdLevelSubdivisionTableID;
 					}
 					else
@@ -5459,7 +5459,7 @@ namespace PersonalPages
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CollectedIndocators")]
-	public partial class CollectedIndocator : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class CollectedIndocators : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -5516,7 +5516,7 @@ namespace PersonalPages
     partial void OnFK_ReportArchiveTableChanged();
     #endregion
 		
-		public CollectedIndocator()
+		public CollectedIndocators()
 		{
 			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
 			this._ReportArchiveTable = default(EntityRef<ReportArchiveTable>);
@@ -5736,7 +5736,7 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndocator", Storage="_IndicatorsTable", ThisKey="FK_Indicators", OtherKey="IndicatorsTableID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndocators", Storage="_IndicatorsTable", ThisKey="FK_Indicators", OtherKey="IndicatorsTableID", IsForeignKey=true)]
 		public IndicatorsTable IndicatorsTable
 		{
 			get
@@ -5770,7 +5770,7 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedIndocator", Storage="_ReportArchiveTable", ThisKey="FK_ReportArchiveTable", OtherKey="ReportArchiveTableID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedIndocators", Storage="_ReportArchiveTable", ThisKey="FK_ReportArchiveTable", OtherKey="ReportArchiveTableID", IsForeignKey=true)]
 		public ReportArchiveTable ReportArchiveTable
 		{
 			get
@@ -5804,7 +5804,7 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_CollectedIndocator", Storage="_UsersTable", ThisKey="FK_UsersTable", OtherKey="UsersTableID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_CollectedIndocators", Storage="_UsersTable", ThisKey="FK_UsersTable", OtherKey="UsersTableID", IsForeignKey=true)]
 		public UsersTable UsersTable
 		{
 			get
@@ -6027,12 +6027,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._BasicParametersTable.Entity = null;
-						previousValue.CommetntForBasicInReports.Remove(this);
+						previousValue.CommetntForBasicInReport.Remove(this);
 					}
 					this._BasicParametersTable.Entity = value;
 					if ((value != null))
 					{
-						value.CommetntForBasicInReports.Add(this);
+						value.CommetntForBasicInReport.Add(this);
 						this._FK_BasickParamets = value.BasicParametersTableID;
 					}
 					else
@@ -6061,12 +6061,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ReportArchiveTable.Entity = null;
-						previousValue.CommetntForBasicInReports.Remove(this);
+						previousValue.CommetntForBasicInReport.Remove(this);
 					}
 					this._ReportArchiveTable.Entity = value;
 					if ((value != null))
 					{
-						value.CommetntForBasicInReports.Add(this);
+						value.CommetntForBasicInReport.Add(this);
 						this._FK_Report = value.ReportArchiveTableID;
 					}
 					else
@@ -6125,7 +6125,7 @@ namespace PersonalPages
 		
 		private EntityRef<BasicParametersTable> _BasicParametersTable;
 		
-		private EntityRef<CalculatedParametr> _CalculatedParametr;
+		private EntityRef<CalculatedParametrs> _CalculatedParametrs;
 		
 		private EntityRef<IndicatorsTable> _IndicatorsTable;
 		
@@ -6160,7 +6160,7 @@ namespace PersonalPages
 		public ConfirmationHistory()
 		{
 			this._BasicParametersTable = default(EntityRef<BasicParametersTable>);
-			this._CalculatedParametr = default(EntityRef<CalculatedParametr>);
+			this._CalculatedParametrs = default(EntityRef<CalculatedParametrs>);
 			this._IndicatorsTable = default(EntityRef<IndicatorsTable>);
 			this._ReportArchiveTable = default(EntityRef<ReportArchiveTable>);
 			this._UsersTable = default(EntityRef<UsersTable>);
@@ -6262,7 +6262,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_CalculatedParamTable != value))
 				{
-					if (this._CalculatedParametr.HasLoadedOrAssignedValue)
+					if (this._CalculatedParametrs.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -6384,12 +6384,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._BasicParametersTable.Entity = null;
-						previousValue.ConfirmationHistories.Remove(this);
+						previousValue.ConfirmationHistory.Remove(this);
 					}
 					this._BasicParametersTable.Entity = value;
 					if ((value != null))
 					{
-						value.ConfirmationHistories.Add(this);
+						value.ConfirmationHistory.Add(this);
 						this._FK_BasicParamTable = value.BasicParametersTableID;
 					}
 					else
@@ -6401,36 +6401,36 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametr_ConfirmationHistory", Storage="_CalculatedParametr", ThisKey="FK_CalculatedParamTable", OtherKey="CalculatedParametrsID", IsForeignKey=true)]
-		public CalculatedParametr CalculatedParametr
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametrs_ConfirmationHistory", Storage="_CalculatedParametrs", ThisKey="FK_CalculatedParamTable", OtherKey="CalculatedParametrsID", IsForeignKey=true)]
+		public CalculatedParametrs CalculatedParametrs
 		{
 			get
 			{
-				return this._CalculatedParametr.Entity;
+				return this._CalculatedParametrs.Entity;
 			}
 			set
 			{
-				CalculatedParametr previousValue = this._CalculatedParametr.Entity;
+				CalculatedParametrs previousValue = this._CalculatedParametrs.Entity;
 				if (((previousValue != value) 
-							|| (this._CalculatedParametr.HasLoadedOrAssignedValue == false)))
+							|| (this._CalculatedParametrs.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._CalculatedParametr.Entity = null;
-						previousValue.ConfirmationHistories.Remove(this);
+						this._CalculatedParametrs.Entity = null;
+						previousValue.ConfirmationHistory.Remove(this);
 					}
-					this._CalculatedParametr.Entity = value;
+					this._CalculatedParametrs.Entity = value;
 					if ((value != null))
 					{
-						value.ConfirmationHistories.Add(this);
+						value.ConfirmationHistory.Add(this);
 						this._FK_CalculatedParamTable = value.CalculatedParametrsID;
 					}
 					else
 					{
 						this._FK_CalculatedParamTable = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("CalculatedParametr");
+					this.SendPropertyChanged("CalculatedParametrs");
 				}
 			}
 		}
@@ -6452,12 +6452,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._IndicatorsTable.Entity = null;
-						previousValue.ConfirmationHistories.Remove(this);
+						previousValue.ConfirmationHistory.Remove(this);
 					}
 					this._IndicatorsTable.Entity = value;
 					if ((value != null))
 					{
-						value.ConfirmationHistories.Add(this);
+						value.ConfirmationHistory.Add(this);
 						this._FK_IndicatorsTable = value.IndicatorsTableID;
 					}
 					else
@@ -6486,12 +6486,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ReportArchiveTable.Entity = null;
-						previousValue.ConfirmationHistories.Remove(this);
+						previousValue.ConfirmationHistory.Remove(this);
 					}
 					this._ReportArchiveTable.Entity = value;
 					if ((value != null))
 					{
-						value.ConfirmationHistories.Add(this);
+						value.ConfirmationHistory.Add(this);
 						this._FK_ReportTable = value.ReportArchiveTableID;
 					}
 					else
@@ -6520,12 +6520,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._UsersTable.Entity = null;
-						previousValue.ConfirmationHistories.Remove(this);
+						previousValue.ConfirmationHistory.Remove(this);
 					}
 					this._UsersTable.Entity = value;
 					if ((value != null))
 					{
-						value.ConfirmationHistories.Add(this);
+						value.ConfirmationHistory.Add(this);
 						this._FK_UsersTable = value.UsersTableID;
 					}
 					else
@@ -6559,7 +6559,7 @@ namespace PersonalPages
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ConnectGroup_And_Users")]
-	public partial class ConnectGroup_And_User : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ConnectGroup_And_Users : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -6594,7 +6594,7 @@ namespace PersonalPages
     partial void OnSubject_NameChanged();
     #endregion
 		
-		public ConnectGroup_And_User()
+		public ConnectGroup_And_Users()
 		{
 			this._GroupsTable = default(EntityRef<GroupsTable>);
 			this._UsersTable = default(EntityRef<UsersTable>);
@@ -6709,7 +6709,7 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GroupsTable_ConnectGroup_And_User", Storage="_GroupsTable", ThisKey="FK_GroupTable", OtherKey="ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GroupsTable_ConnectGroup_And_Users", Storage="_GroupsTable", ThisKey="FK_GroupTable", OtherKey="ID", IsForeignKey=true)]
 		public GroupsTable GroupsTable
 		{
 			get
@@ -6743,7 +6743,7 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_ConnectGroup_And_User", Storage="_UsersTable", ThisKey="FK_UserTable", OtherKey="UsersTableID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_ConnectGroup_And_Users", Storage="_UsersTable", ThisKey="FK_UserTable", OtherKey="UsersTableID", IsForeignKey=true)]
 		public UsersTable UsersTable
 		{
 			get
@@ -7213,12 +7213,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._SpecializationTable.Entity = null;
-						previousValue.EducationCostTables.Remove(this);
+						previousValue.EducationCostTable.Remove(this);
 					}
 					this._SpecializationTable.Entity = value;
 					if ((value != null))
 					{
-						value.EducationCostTables.Add(this);
+						value.EducationCostTable.Add(this);
 						this._FK_Specialization = value.SpecializationTableID;
 					}
 					else
@@ -7252,7 +7252,7 @@ namespace PersonalPages
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EmailCopies")]
-	public partial class EmailCopy : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class EmailCopies : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -7299,7 +7299,7 @@ namespace PersonalPages
     partial void OnErrorMessageChanged();
     #endregion
 		
-		public EmailCopy()
+		public EmailCopies()
 		{
 			OnCreated();
 		}
@@ -7690,12 +7690,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ReportArchiveTable.Entity = null;
-						previousValue.EmailSendHistories.Remove(this);
+						previousValue.EmailSendHistory.Remove(this);
 					}
 					this._ReportArchiveTable.Entity = value;
 					if ((value != null))
 					{
-						value.EmailSendHistories.Add(this);
+						value.EmailSendHistory.Add(this);
 						this._FK_ReportsArchiveTable = value.ReportArchiveTableID;
 					}
 					else
@@ -8152,9 +8152,9 @@ namespace PersonalPages
 		
 		private string _Name;
 		
-		private EntitySet<BasicParametrAdditional> _BasicParametrAdditionals;
+		private EntitySet<BasicParametrAdditional> _BasicParametrAdditional;
 		
-		private EntitySet<SpecializationTable> _SpecializationTables;
+		private EntitySet<SpecializationTable> _SpecializationTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -8170,8 +8170,8 @@ namespace PersonalPages
 		
 		public FieldOfExpertise()
 		{
-			this._BasicParametrAdditionals = new EntitySet<BasicParametrAdditional>(new Action<BasicParametrAdditional>(this.attach_BasicParametrAdditionals), new Action<BasicParametrAdditional>(this.detach_BasicParametrAdditionals));
-			this._SpecializationTables = new EntitySet<SpecializationTable>(new Action<SpecializationTable>(this.attach_SpecializationTables), new Action<SpecializationTable>(this.detach_SpecializationTables));
+			this._BasicParametrAdditional = new EntitySet<BasicParametrAdditional>(new Action<BasicParametrAdditional>(this.attach_BasicParametrAdditional), new Action<BasicParametrAdditional>(this.detach_BasicParametrAdditional));
+			this._SpecializationTable = new EntitySet<SpecializationTable>(new Action<SpecializationTable>(this.attach_SpecializationTable), new Action<SpecializationTable>(this.detach_SpecializationTable));
 			OnCreated();
 		}
 		
@@ -8235,29 +8235,29 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldOfExpertise_BasicParametrAdditional", Storage="_BasicParametrAdditionals", ThisKey="FieldOfExpertiseID", OtherKey="FK_FieldOfExpertise")]
-		public EntitySet<BasicParametrAdditional> BasicParametrAdditionals
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldOfExpertise_BasicParametrAdditional", Storage="_BasicParametrAdditional", ThisKey="FieldOfExpertiseID", OtherKey="FK_FieldOfExpertise")]
+		public EntitySet<BasicParametrAdditional> BasicParametrAdditional
 		{
 			get
 			{
-				return this._BasicParametrAdditionals;
+				return this._BasicParametrAdditional;
 			}
 			set
 			{
-				this._BasicParametrAdditionals.Assign(value);
+				this._BasicParametrAdditional.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldOfExpertise_SpecializationTable", Storage="_SpecializationTables", ThisKey="FieldOfExpertiseID", OtherKey="FK_FieldOfExpertise")]
-		public EntitySet<SpecializationTable> SpecializationTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldOfExpertise_SpecializationTable", Storage="_SpecializationTable", ThisKey="FieldOfExpertiseID", OtherKey="FK_FieldOfExpertise")]
+		public EntitySet<SpecializationTable> SpecializationTable
 		{
 			get
 			{
-				return this._SpecializationTables;
+				return this._SpecializationTable;
 			}
 			set
 			{
-				this._SpecializationTables.Assign(value);
+				this._SpecializationTable.Assign(value);
 			}
 		}
 		
@@ -8281,25 +8281,25 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_BasicParametrAdditionals(BasicParametrAdditional entity)
+		private void attach_BasicParametrAdditional(BasicParametrAdditional entity)
 		{
 			this.SendPropertyChanging();
 			entity.FieldOfExpertise = this;
 		}
 		
-		private void detach_BasicParametrAdditionals(BasicParametrAdditional entity)
+		private void detach_BasicParametrAdditional(BasicParametrAdditional entity)
 		{
 			this.SendPropertyChanging();
 			entity.FieldOfExpertise = null;
 		}
 		
-		private void attach_SpecializationTables(SpecializationTable entity)
+		private void attach_SpecializationTable(SpecializationTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FieldOfExpertise = this;
 		}
 		
-		private void detach_SpecializationTables(SpecializationTable entity)
+		private void detach_SpecializationTable(SpecializationTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FieldOfExpertise = null;
@@ -8320,13 +8320,13 @@ namespace PersonalPages
 		
 		private int _FK_FourthLevelSubdivisionTable;
 		
-		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTables;
+		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
-		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForRs;
+		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
 		
-		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTables;
+		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTable;
 		
-		private EntitySet<UsersTable> _UsersTables;
+		private EntitySet<UsersTable> _UsersTable;
 		
 		private EntityRef<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
 		
@@ -8346,10 +8346,10 @@ namespace PersonalPages
 		
 		public FifthLevelSubdivisionTable()
 		{
-			this._CollectedBasicParametersTables = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTables), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTables));
-			this._CollectedIndicatorsForRs = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForRs), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForRs));
-			this._ReportArchiveAndLevelMappingTables = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTables), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTables));
-			this._UsersTables = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTables), new Action<UsersTable>(this.detach_UsersTables));
+			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
+			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
+			this._ReportArchiveAndLevelMappingTable = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTable), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTable));
+			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
 			this._FourthLevelSubdivisionTable = default(EntityRef<FourthLevelSubdivisionTable>);
 			OnCreated();
 		}
@@ -8438,55 +8438,55 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FifthLevelSubdivisionTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTables", ThisKey="FifthLevelSubdivisionTableID", OtherKey="FK_FifthLevelSubdivisionTable")]
-		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FifthLevelSubdivisionTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTable", ThisKey="FifthLevelSubdivisionTableID", OtherKey="FK_FifthLevelSubdivisionTable")]
+		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTable
 		{
 			get
 			{
-				return this._CollectedBasicParametersTables;
+				return this._CollectedBasicParametersTable;
 			}
 			set
 			{
-				this._CollectedBasicParametersTables.Assign(value);
+				this._CollectedBasicParametersTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FifthLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForRs", ThisKey="FifthLevelSubdivisionTableID", OtherKey="FK_FifthLevelSubdivisionTable")]
-		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForRs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FifthLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="FifthLevelSubdivisionTableID", OtherKey="FK_FifthLevelSubdivisionTable")]
+		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
 		{
 			get
 			{
-				return this._CollectedIndicatorsForRs;
+				return this._CollectedIndicatorsForR;
 			}
 			set
 			{
-				this._CollectedIndicatorsForRs.Assign(value);
+				this._CollectedIndicatorsForR.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FifthLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTables", ThisKey="FifthLevelSubdivisionTableID", OtherKey="FK_FifthLevelSubdivisionTable")]
-		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FifthLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTable", ThisKey="FifthLevelSubdivisionTableID", OtherKey="FK_FifthLevelSubdivisionTable")]
+		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTable
 		{
 			get
 			{
-				return this._ReportArchiveAndLevelMappingTables;
+				return this._ReportArchiveAndLevelMappingTable;
 			}
 			set
 			{
-				this._ReportArchiveAndLevelMappingTables.Assign(value);
+				this._ReportArchiveAndLevelMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FifthLevelSubdivisionTable_UsersTable", Storage="_UsersTables", ThisKey="FifthLevelSubdivisionTableID", OtherKey="FK_FifthLevelSubdivisionTable")]
-		public EntitySet<UsersTable> UsersTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FifthLevelSubdivisionTable_UsersTable", Storage="_UsersTable", ThisKey="FifthLevelSubdivisionTableID", OtherKey="FK_FifthLevelSubdivisionTable")]
+		public EntitySet<UsersTable> UsersTable
 		{
 			get
 			{
-				return this._UsersTables;
+				return this._UsersTable;
 			}
 			set
 			{
-				this._UsersTables.Assign(value);
+				this._UsersTable.Assign(value);
 			}
 		}
 		
@@ -8507,12 +8507,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FourthLevelSubdivisionTable.Entity = null;
-						previousValue.FifthLevelSubdivisionTables.Remove(this);
+						previousValue.FifthLevelSubdivisionTable.Remove(this);
 					}
 					this._FourthLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.FifthLevelSubdivisionTables.Add(this);
+						value.FifthLevelSubdivisionTable.Add(this);
 						this._FK_FourthLevelSubdivisionTable = value.FourthLevelSubdivisionTableID;
 					}
 					else
@@ -8544,49 +8544,49 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void attach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FifthLevelSubdivisionTable = this;
 		}
 		
-		private void detach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void detach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FifthLevelSubdivisionTable = null;
 		}
 		
-		private void attach_CollectedIndicatorsForRs(CollectedIndicatorsForR entity)
+		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.FifthLevelSubdivisionTable = this;
 		}
 		
-		private void detach_CollectedIndicatorsForRs(CollectedIndicatorsForR entity)
+		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.FifthLevelSubdivisionTable = null;
 		}
 		
-		private void attach_ReportArchiveAndLevelMappingTables(ReportArchiveAndLevelMappingTable entity)
+		private void attach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FifthLevelSubdivisionTable = this;
 		}
 		
-		private void detach_ReportArchiveAndLevelMappingTables(ReportArchiveAndLevelMappingTable entity)
+		private void detach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FifthLevelSubdivisionTable = null;
 		}
 		
-		private void attach_UsersTables(UsersTable entity)
+		private void attach_UsersTable(UsersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FifthLevelSubdivisionTable = this;
 		}
 		
-		private void detach_UsersTables(UsersTable entity)
+		private void detach_UsersTable(UsersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FifthLevelSubdivisionTable = null;
@@ -8609,19 +8609,19 @@ namespace PersonalPages
 		
 		private string _AbbRu;
 		
-		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTables;
+		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
-		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForRs;
+		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
 		
-		private EntitySet<Rank_StructureRaiting> _Rank_StructureRaitings;
+		private EntitySet<Rank_StructureRaitings> _Rank_StructureRaitings;
 		
-		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTables;
+		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTable;
 		
-		private EntitySet<SecondLevelSubdivisionTable> _SecondLevelSubdivisionTables;
+		private EntitySet<SecondLevelSubdivisionTable> _SecondLevelSubdivisionTable;
 		
-		private EntitySet<StudentsTable> _StudentsTables;
+		private EntitySet<StudentsTable> _StudentsTable;
 		
-		private EntitySet<UsersTable> _UsersTables;
+		private EntitySet<UsersTable> _UsersTable;
 		
 		private EntityRef<ZeroLevelSubdivisionTable> _ZeroLevelSubdivisionTable;
 		
@@ -8643,13 +8643,13 @@ namespace PersonalPages
 		
 		public FirstLevelSubdivisionTable()
 		{
-			this._CollectedBasicParametersTables = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTables), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTables));
-			this._CollectedIndicatorsForRs = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForRs), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForRs));
-			this._Rank_StructureRaitings = new EntitySet<Rank_StructureRaiting>(new Action<Rank_StructureRaiting>(this.attach_Rank_StructureRaitings), new Action<Rank_StructureRaiting>(this.detach_Rank_StructureRaitings));
-			this._ReportArchiveAndLevelMappingTables = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTables), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTables));
-			this._SecondLevelSubdivisionTables = new EntitySet<SecondLevelSubdivisionTable>(new Action<SecondLevelSubdivisionTable>(this.attach_SecondLevelSubdivisionTables), new Action<SecondLevelSubdivisionTable>(this.detach_SecondLevelSubdivisionTables));
-			this._StudentsTables = new EntitySet<StudentsTable>(new Action<StudentsTable>(this.attach_StudentsTables), new Action<StudentsTable>(this.detach_StudentsTables));
-			this._UsersTables = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTables), new Action<UsersTable>(this.detach_UsersTables));
+			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
+			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
+			this._Rank_StructureRaitings = new EntitySet<Rank_StructureRaitings>(new Action<Rank_StructureRaitings>(this.attach_Rank_StructureRaitings), new Action<Rank_StructureRaitings>(this.detach_Rank_StructureRaitings));
+			this._ReportArchiveAndLevelMappingTable = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTable), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTable));
+			this._SecondLevelSubdivisionTable = new EntitySet<SecondLevelSubdivisionTable>(new Action<SecondLevelSubdivisionTable>(this.attach_SecondLevelSubdivisionTable), new Action<SecondLevelSubdivisionTable>(this.detach_SecondLevelSubdivisionTable));
+			this._StudentsTable = new EntitySet<StudentsTable>(new Action<StudentsTable>(this.attach_StudentsTable), new Action<StudentsTable>(this.detach_StudentsTable));
+			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
 			this._ZeroLevelSubdivisionTable = default(EntityRef<ZeroLevelSubdivisionTable>);
 			OnCreated();
 		}
@@ -8758,34 +8758,34 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTables", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubdivisionTable")]
-		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTable", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubdivisionTable")]
+		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTable
 		{
 			get
 			{
-				return this._CollectedBasicParametersTables;
+				return this._CollectedBasicParametersTable;
 			}
 			set
 			{
-				this._CollectedBasicParametersTables.Assign(value);
+				this._CollectedBasicParametersTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForRs", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubdivisionTable")]
-		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForRs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubdivisionTable")]
+		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
 		{
 			get
 			{
-				return this._CollectedIndicatorsForRs;
+				return this._CollectedIndicatorsForR;
 			}
 			set
 			{
-				this._CollectedIndicatorsForRs.Assign(value);
+				this._CollectedIndicatorsForR.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_Rank_StructureRaiting", Storage="_Rank_StructureRaitings", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevel")]
-		public EntitySet<Rank_StructureRaiting> Rank_StructureRaitings
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_Rank_StructureRaitings", Storage="_Rank_StructureRaitings", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevel")]
+		public EntitySet<Rank_StructureRaitings> Rank_StructureRaitings
 		{
 			get
 			{
@@ -8797,55 +8797,55 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTables", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubmisionTableId")]
-		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTable", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubmisionTableId")]
+		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTable
 		{
 			get
 			{
-				return this._ReportArchiveAndLevelMappingTables;
+				return this._ReportArchiveAndLevelMappingTable;
 			}
 			set
 			{
-				this._ReportArchiveAndLevelMappingTables.Assign(value);
+				this._ReportArchiveAndLevelMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable", Storage="_SecondLevelSubdivisionTables", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubdivisionTable")]
-		public EntitySet<SecondLevelSubdivisionTable> SecondLevelSubdivisionTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable", Storage="_SecondLevelSubdivisionTable", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubdivisionTable")]
+		public EntitySet<SecondLevelSubdivisionTable> SecondLevelSubdivisionTable
 		{
 			get
 			{
-				return this._SecondLevelSubdivisionTables;
+				return this._SecondLevelSubdivisionTable;
 			}
 			set
 			{
-				this._SecondLevelSubdivisionTables.Assign(value);
+				this._SecondLevelSubdivisionTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_StudentsTable", Storage="_StudentsTables", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubdivision")]
-		public EntitySet<StudentsTable> StudentsTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_StudentsTable", Storage="_StudentsTable", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubdivision")]
+		public EntitySet<StudentsTable> StudentsTable
 		{
 			get
 			{
-				return this._StudentsTables;
+				return this._StudentsTable;
 			}
 			set
 			{
-				this._StudentsTables.Assign(value);
+				this._StudentsTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_UsersTable", Storage="_UsersTables", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubdivisionTable")]
-		public EntitySet<UsersTable> UsersTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_UsersTable", Storage="_UsersTable", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubdivisionTable")]
+		public EntitySet<UsersTable> UsersTable
 		{
 			get
 			{
-				return this._UsersTables;
+				return this._UsersTable;
 			}
 			set
 			{
-				this._UsersTables.Assign(value);
+				this._UsersTable.Assign(value);
 			}
 		}
 		
@@ -8866,12 +8866,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ZeroLevelSubdivisionTable.Entity = null;
-						previousValue.FirstLevelSubdivisionTables.Remove(this);
+						previousValue.FirstLevelSubdivisionTable.Remove(this);
 					}
 					this._ZeroLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.FirstLevelSubdivisionTables.Add(this);
+						value.FirstLevelSubdivisionTable.Add(this);
 						this._FK_ZeroLevelSubvisionTable = value.ZeroLevelSubdivisionTableID;
 					}
 					else
@@ -8903,85 +8903,85 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void attach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = this;
 		}
 		
-		private void detach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void detach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = null;
 		}
 		
-		private void attach_CollectedIndicatorsForRs(CollectedIndicatorsForR entity)
+		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = this;
 		}
 		
-		private void detach_CollectedIndicatorsForRs(CollectedIndicatorsForR entity)
+		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = null;
 		}
 		
-		private void attach_Rank_StructureRaitings(Rank_StructureRaiting entity)
+		private void attach_Rank_StructureRaitings(Rank_StructureRaitings entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = this;
 		}
 		
-		private void detach_Rank_StructureRaitings(Rank_StructureRaiting entity)
+		private void detach_Rank_StructureRaitings(Rank_StructureRaitings entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = null;
 		}
 		
-		private void attach_ReportArchiveAndLevelMappingTables(ReportArchiveAndLevelMappingTable entity)
+		private void attach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = this;
 		}
 		
-		private void detach_ReportArchiveAndLevelMappingTables(ReportArchiveAndLevelMappingTable entity)
+		private void detach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = null;
 		}
 		
-		private void attach_SecondLevelSubdivisionTables(SecondLevelSubdivisionTable entity)
+		private void attach_SecondLevelSubdivisionTable(SecondLevelSubdivisionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = this;
 		}
 		
-		private void detach_SecondLevelSubdivisionTables(SecondLevelSubdivisionTable entity)
+		private void detach_SecondLevelSubdivisionTable(SecondLevelSubdivisionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = null;
 		}
 		
-		private void attach_StudentsTables(StudentsTable entity)
+		private void attach_StudentsTable(StudentsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = this;
 		}
 		
-		private void detach_StudentsTables(StudentsTable entity)
+		private void detach_StudentsTable(StudentsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = null;
 		}
 		
-		private void attach_UsersTables(UsersTable entity)
+		private void attach_UsersTable(UsersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = this;
 		}
 		
-		private void detach_UsersTables(UsersTable entity)
+		private void detach_UsersTable(UsersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = null;
@@ -8989,7 +8989,7 @@ namespace PersonalPages
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FourthLevelParametrs")]
-	public partial class FourthLevelParametr : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class FourthLevelParametrs : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -9030,7 +9030,7 @@ namespace PersonalPages
     partial void OnSpecTypeChanged();
     #endregion
 		
-		public FourthLevelParametr()
+		public FourthLevelParametrs()
 		{
 			this._FourthLevelSubdivisionTable = default(EntityRef<FourthLevelSubdivisionTable>);
 			OnCreated();
@@ -9180,7 +9180,7 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_FourthLevelParametr", Storage="_FourthLevelSubdivisionTable", ThisKey="FourthLevelParametrsID", OtherKey="FourthLevelSubdivisionTableID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_FourthLevelParametrs", Storage="_FourthLevelSubdivisionTable", ThisKey="FourthLevelParametrsID", OtherKey="FourthLevelSubdivisionTableID", IsForeignKey=true)]
 		public FourthLevelSubdivisionTable FourthLevelSubdivisionTable
 		{
 			get
@@ -9197,12 +9197,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FourthLevelSubdivisionTable.Entity = null;
-						previousValue.FourthLevelParametr = null;
+						previousValue.FourthLevelParametrs = null;
 					}
 					this._FourthLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.FourthLevelParametr = this;
+						value.FourthLevelParametrs = this;
 						this._FourthLevelParametrsID = value.FourthLevelSubdivisionTableID;
 					}
 					else
@@ -9251,17 +9251,17 @@ namespace PersonalPages
 		
 		private int _FK_Specialization;
 		
-		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTables;
+		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
-		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForRs;
+		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
 		
-		private EntitySet<FifthLevelSubdivisionTable> _FifthLevelSubdivisionTables;
+		private EntitySet<FifthLevelSubdivisionTable> _FifthLevelSubdivisionTable;
 		
-		private EntityRef<FourthLevelParametr> _FourthLevelParametr;
+		private EntityRef<FourthLevelParametrs> _FourthLevelParametrs;
 		
-		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTables;
+		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTable;
 		
-		private EntitySet<UsersTable> _UsersTables;
+		private EntitySet<UsersTable> _UsersTable;
 		
 		private EntityRef<SpecializationTable> _SpecializationTable;
 		
@@ -9285,12 +9285,12 @@ namespace PersonalPages
 		
 		public FourthLevelSubdivisionTable()
 		{
-			this._CollectedBasicParametersTables = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTables), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTables));
-			this._CollectedIndicatorsForRs = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForRs), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForRs));
-			this._FifthLevelSubdivisionTables = new EntitySet<FifthLevelSubdivisionTable>(new Action<FifthLevelSubdivisionTable>(this.attach_FifthLevelSubdivisionTables), new Action<FifthLevelSubdivisionTable>(this.detach_FifthLevelSubdivisionTables));
-			this._FourthLevelParametr = default(EntityRef<FourthLevelParametr>);
-			this._ReportArchiveAndLevelMappingTables = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTables), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTables));
-			this._UsersTables = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTables), new Action<UsersTable>(this.detach_UsersTables));
+			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
+			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
+			this._FifthLevelSubdivisionTable = new EntitySet<FifthLevelSubdivisionTable>(new Action<FifthLevelSubdivisionTable>(this.attach_FifthLevelSubdivisionTable), new Action<FifthLevelSubdivisionTable>(this.detach_FifthLevelSubdivisionTable));
+			this._FourthLevelParametrs = default(EntityRef<FourthLevelParametrs>);
+			this._ReportArchiveAndLevelMappingTable = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTable), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTable));
+			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
 			this._SpecializationTable = default(EntityRef<SpecializationTable>);
 			this._ThirdLevelSubdivisionTable = default(EntityRef<ThirdLevelSubdivisionTable>);
 			OnCreated();
@@ -9404,97 +9404,97 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTables", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FK_FourthLevelSubdivisionTable")]
-		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTable", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FK_FourthLevelSubdivisionTable")]
+		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTable
 		{
 			get
 			{
-				return this._CollectedBasicParametersTables;
+				return this._CollectedBasicParametersTable;
 			}
 			set
 			{
-				this._CollectedBasicParametersTables.Assign(value);
+				this._CollectedBasicParametersTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForRs", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FK_FourthLelevlSubdivisionTable")]
-		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForRs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FK_FourthLelevlSubdivisionTable")]
+		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
 		{
 			get
 			{
-				return this._CollectedIndicatorsForRs;
+				return this._CollectedIndicatorsForR;
 			}
 			set
 			{
-				this._CollectedIndicatorsForRs.Assign(value);
+				this._CollectedIndicatorsForR.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_FifthLevelSubdivisionTable", Storage="_FifthLevelSubdivisionTables", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FK_FourthLevelSubdivisionTable")]
-		public EntitySet<FifthLevelSubdivisionTable> FifthLevelSubdivisionTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_FifthLevelSubdivisionTable", Storage="_FifthLevelSubdivisionTable", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FK_FourthLevelSubdivisionTable")]
+		public EntitySet<FifthLevelSubdivisionTable> FifthLevelSubdivisionTable
 		{
 			get
 			{
-				return this._FifthLevelSubdivisionTables;
+				return this._FifthLevelSubdivisionTable;
 			}
 			set
 			{
-				this._FifthLevelSubdivisionTables.Assign(value);
+				this._FifthLevelSubdivisionTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_FourthLevelParametr", Storage="_FourthLevelParametr", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FourthLevelParametrsID", IsUnique=true, IsForeignKey=false)]
-		public FourthLevelParametr FourthLevelParametr
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_FourthLevelParametrs", Storage="_FourthLevelParametrs", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FourthLevelParametrsID", IsUnique=true, IsForeignKey=false)]
+		public FourthLevelParametrs FourthLevelParametrs
 		{
 			get
 			{
-				return this._FourthLevelParametr.Entity;
+				return this._FourthLevelParametrs.Entity;
 			}
 			set
 			{
-				FourthLevelParametr previousValue = this._FourthLevelParametr.Entity;
+				FourthLevelParametrs previousValue = this._FourthLevelParametrs.Entity;
 				if (((previousValue != value) 
-							|| (this._FourthLevelParametr.HasLoadedOrAssignedValue == false)))
+							|| (this._FourthLevelParametrs.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._FourthLevelParametr.Entity = null;
+						this._FourthLevelParametrs.Entity = null;
 						previousValue.FourthLevelSubdivisionTable = null;
 					}
-					this._FourthLevelParametr.Entity = value;
+					this._FourthLevelParametrs.Entity = value;
 					if ((value != null))
 					{
 						value.FourthLevelSubdivisionTable = this;
 					}
-					this.SendPropertyChanged("FourthLevelParametr");
+					this.SendPropertyChanged("FourthLevelParametrs");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTables", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FK_FourthLevelSubdivisionTable")]
-		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTable", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FK_FourthLevelSubdivisionTable")]
+		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTable
 		{
 			get
 			{
-				return this._ReportArchiveAndLevelMappingTables;
+				return this._ReportArchiveAndLevelMappingTable;
 			}
 			set
 			{
-				this._ReportArchiveAndLevelMappingTables.Assign(value);
+				this._ReportArchiveAndLevelMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_UsersTable", Storage="_UsersTables", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FK_FourthLevelSubdivisionTable")]
-		public EntitySet<UsersTable> UsersTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FourthLevelSubdivisionTable_UsersTable", Storage="_UsersTable", ThisKey="FourthLevelSubdivisionTableID", OtherKey="FK_FourthLevelSubdivisionTable")]
+		public EntitySet<UsersTable> UsersTable
 		{
 			get
 			{
-				return this._UsersTables;
+				return this._UsersTable;
 			}
 			set
 			{
-				this._UsersTables.Assign(value);
+				this._UsersTable.Assign(value);
 			}
 		}
 		
@@ -9515,12 +9515,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._SpecializationTable.Entity = null;
-						previousValue.FourthLevelSubdivisionTables.Remove(this);
+						previousValue.FourthLevelSubdivisionTable.Remove(this);
 					}
 					this._SpecializationTable.Entity = value;
 					if ((value != null))
 					{
-						value.FourthLevelSubdivisionTables.Add(this);
+						value.FourthLevelSubdivisionTable.Add(this);
 						this._FK_Specialization = value.SpecializationTableID;
 					}
 					else
@@ -9549,12 +9549,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ThirdLevelSubdivisionTable.Entity = null;
-						previousValue.FourthLevelSubdivisionTables.Remove(this);
+						previousValue.FourthLevelSubdivisionTable.Remove(this);
 					}
 					this._ThirdLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.FourthLevelSubdivisionTables.Add(this);
+						value.FourthLevelSubdivisionTable.Add(this);
 						this._FK_ThirdLevelSubdivisionTable = value.ThirdLevelSubdivisionTableID;
 					}
 					else
@@ -9586,61 +9586,61 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void attach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FourthLevelSubdivisionTable = this;
 		}
 		
-		private void detach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void detach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FourthLevelSubdivisionTable = null;
 		}
 		
-		private void attach_CollectedIndicatorsForRs(CollectedIndicatorsForR entity)
+		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.FourthLevelSubdivisionTable = this;
 		}
 		
-		private void detach_CollectedIndicatorsForRs(CollectedIndicatorsForR entity)
+		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.FourthLevelSubdivisionTable = null;
 		}
 		
-		private void attach_FifthLevelSubdivisionTables(FifthLevelSubdivisionTable entity)
+		private void attach_FifthLevelSubdivisionTable(FifthLevelSubdivisionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FourthLevelSubdivisionTable = this;
 		}
 		
-		private void detach_FifthLevelSubdivisionTables(FifthLevelSubdivisionTable entity)
+		private void detach_FifthLevelSubdivisionTable(FifthLevelSubdivisionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FourthLevelSubdivisionTable = null;
 		}
 		
-		private void attach_ReportArchiveAndLevelMappingTables(ReportArchiveAndLevelMappingTable entity)
+		private void attach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FourthLevelSubdivisionTable = this;
 		}
 		
-		private void detach_ReportArchiveAndLevelMappingTables(ReportArchiveAndLevelMappingTable entity)
+		private void detach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FourthLevelSubdivisionTable = null;
 		}
 		
-		private void attach_UsersTables(UsersTable entity)
+		private void attach_UsersTable(UsersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FourthLevelSubdivisionTable = this;
 		}
 		
-		private void detach_UsersTables(UsersTable entity)
+		private void detach_UsersTable(UsersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FourthLevelSubdivisionTable = null;
@@ -9661,9 +9661,9 @@ namespace PersonalPages
 		
 		private System.Nullable<int> _FK_SecondLevel;
 		
-		private EntitySet<ConnectGroup_And_User> _ConnectGroup_And_Users;
+		private EntitySet<ConnectGroup_And_Users> _ConnectGroup_And_Users;
 		
-		private EntitySet<Personal_Document> _Personal_Documents;
+		private EntitySet<Personal_Documents> _Personal_Documents;
 		
 		private EntityRef<SecondLevelSubdivisionTable> _SecondLevelSubdivisionTable;
 		
@@ -9683,8 +9683,8 @@ namespace PersonalPages
 		
 		public GroupsTable()
 		{
-			this._ConnectGroup_And_Users = new EntitySet<ConnectGroup_And_User>(new Action<ConnectGroup_And_User>(this.attach_ConnectGroup_And_Users), new Action<ConnectGroup_And_User>(this.detach_ConnectGroup_And_Users));
-			this._Personal_Documents = new EntitySet<Personal_Document>(new Action<Personal_Document>(this.attach_Personal_Documents), new Action<Personal_Document>(this.detach_Personal_Documents));
+			this._ConnectGroup_And_Users = new EntitySet<ConnectGroup_And_Users>(new Action<ConnectGroup_And_Users>(this.attach_ConnectGroup_And_Users), new Action<ConnectGroup_And_Users>(this.detach_ConnectGroup_And_Users));
+			this._Personal_Documents = new EntitySet<Personal_Documents>(new Action<Personal_Documents>(this.attach_Personal_Documents), new Action<Personal_Documents>(this.detach_Personal_Documents));
 			this._SecondLevelSubdivisionTable = default(EntityRef<SecondLevelSubdivisionTable>);
 			OnCreated();
 		}
@@ -9773,8 +9773,8 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GroupsTable_ConnectGroup_And_User", Storage="_ConnectGroup_And_Users", ThisKey="ID", OtherKey="FK_GroupTable")]
-		public EntitySet<ConnectGroup_And_User> ConnectGroup_And_Users
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GroupsTable_ConnectGroup_And_Users", Storage="_ConnectGroup_And_Users", ThisKey="ID", OtherKey="FK_GroupTable")]
+		public EntitySet<ConnectGroup_And_Users> ConnectGroup_And_Users
 		{
 			get
 			{
@@ -9786,8 +9786,8 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GroupsTable_Personal_Document", Storage="_Personal_Documents", ThisKey="ID", OtherKey="FK_Group")]
-		public EntitySet<Personal_Document> Personal_Documents
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GroupsTable_Personal_Documents", Storage="_Personal_Documents", ThisKey="ID", OtherKey="FK_Group")]
+		public EntitySet<Personal_Documents> Personal_Documents
 		{
 			get
 			{
@@ -9816,12 +9816,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._SecondLevelSubdivisionTable.Entity = null;
-						previousValue.GroupsTables.Remove(this);
+						previousValue.GroupsTable.Remove(this);
 					}
 					this._SecondLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.GroupsTables.Add(this);
+						value.GroupsTable.Add(this);
 						this._FK_SecondLevel = value.SecondLevelSubdivisionTableID;
 					}
 					else
@@ -9853,25 +9853,25 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_ConnectGroup_And_Users(ConnectGroup_And_User entity)
+		private void attach_ConnectGroup_And_Users(ConnectGroup_And_Users entity)
 		{
 			this.SendPropertyChanging();
 			entity.GroupsTable = this;
 		}
 		
-		private void detach_ConnectGroup_And_Users(ConnectGroup_And_User entity)
+		private void detach_ConnectGroup_And_Users(ConnectGroup_And_Users entity)
 		{
 			this.SendPropertyChanging();
 			entity.GroupsTable = null;
 		}
 		
-		private void attach_Personal_Documents(Personal_Document entity)
+		private void attach_Personal_Documents(Personal_Documents entity)
 		{
 			this.SendPropertyChanging();
 			entity.GroupsTable = this;
 		}
 		
-		private void detach_Personal_Documents(Personal_Document entity)
+		private void detach_Personal_Documents(Personal_Documents entity)
 		{
 			this.SendPropertyChanging();
 			entity.GroupsTable = null;
@@ -9888,7 +9888,7 @@ namespace PersonalPages
 		
 		private string _ClassName;
 		
-		private EntitySet<IndicatorsTable> _IndicatorsTables;
+		private EntitySet<IndicatorsTable> _IndicatorsTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -9902,7 +9902,7 @@ namespace PersonalPages
 		
 		public IndicatorClass()
 		{
-			this._IndicatorsTables = new EntitySet<IndicatorsTable>(new Action<IndicatorsTable>(this.attach_IndicatorsTables), new Action<IndicatorsTable>(this.detach_IndicatorsTables));
+			this._IndicatorsTable = new EntitySet<IndicatorsTable>(new Action<IndicatorsTable>(this.attach_IndicatorsTable), new Action<IndicatorsTable>(this.detach_IndicatorsTable));
 			OnCreated();
 		}
 		
@@ -9946,16 +9946,16 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorClass_IndicatorsTable", Storage="_IndicatorsTables", ThisKey="IndicatorClassID", OtherKey="FK_IndicatorClass")]
-		public EntitySet<IndicatorsTable> IndicatorsTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorClass_IndicatorsTable", Storage="_IndicatorsTable", ThisKey="IndicatorClassID", OtherKey="FK_IndicatorClass")]
+		public EntitySet<IndicatorsTable> IndicatorsTable
 		{
 			get
 			{
-				return this._IndicatorsTables;
+				return this._IndicatorsTable;
 			}
 			set
 			{
-				this._IndicatorsTables.Assign(value);
+				this._IndicatorsTable.Assign(value);
 			}
 		}
 		
@@ -9979,13 +9979,13 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_IndicatorsTables(IndicatorsTable entity)
+		private void attach_IndicatorsTable(IndicatorsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorClass = this;
 		}
 		
-		private void detach_IndicatorsTables(IndicatorsTable entity)
+		private void detach_IndicatorsTable(IndicatorsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorClass = null;
@@ -10208,12 +10208,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._IndicatorsTable.Entity = null;
-						previousValue.IndicatorsAndRolesMappingTables.Remove(this);
+						previousValue.IndicatorsAndRolesMappingTable.Remove(this);
 					}
 					this._IndicatorsTable.Entity = value;
 					if ((value != null))
 					{
-						value.IndicatorsAndRolesMappingTables.Add(this);
+						value.IndicatorsAndRolesMappingTable.Add(this);
 						this._FK_Indicators = value.IndicatorsTableID;
 					}
 					else
@@ -10242,12 +10242,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._RolesTable.Entity = null;
-						previousValue.IndicatorsAndRolesMappingTables.Remove(this);
+						previousValue.IndicatorsAndRolesMappingTable.Remove(this);
 					}
 					this._RolesTable.Entity = value;
 					if ((value != null))
 					{
-						value.IndicatorsAndRolesMappingTables.Add(this);
+						value.IndicatorsAndRolesMappingTable.Add(this);
 						this._FK_RolesTable = value.RolesTableID;
 					}
 					else
@@ -10496,12 +10496,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._IndicatorsTable.Entity = null;
-						previousValue.IndicatorsAndUsersMappings.Remove(this);
+						previousValue.IndicatorsAndUsersMapping.Remove(this);
 					}
 					this._IndicatorsTable.Entity = value;
 					if ((value != null))
 					{
-						value.IndicatorsAndUsersMappings.Add(this);
+						value.IndicatorsAndUsersMapping.Add(this);
 						this._FK_IndicatorsTable = value.IndicatorsTableID;
 					}
 					else
@@ -10530,12 +10530,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._UsersTable.Entity = null;
-						previousValue.IndicatorsAndUsersMappings.Remove(this);
+						previousValue.IndicatorsAndUsersMapping.Remove(this);
 					}
 					this._UsersTable.Entity = value;
 					if ((value != null))
 					{
-						value.IndicatorsAndUsersMappings.Add(this);
+						value.IndicatorsAndUsersMapping.Add(this);
 						this._FK_UsresTable = value.UsersTableID;
 					}
 					else
@@ -10590,19 +10590,19 @@ namespace PersonalPages
 		
 		private System.Nullable<int> _SortID;
 		
-		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForRs;
+		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
 		
-		private EntitySet<CollectedIndocator> _CollectedIndocators;
+		private EntitySet<CollectedIndocators> _CollectedIndocators;
 		
-		private EntitySet<ConfirmationHistory> _ConfirmationHistories;
+		private EntitySet<ConfirmationHistory> _ConfirmationHistory;
 		
-		private EntitySet<IndicatorsAndRolesMappingTable> _IndicatorsAndRolesMappingTables;
+		private EntitySet<IndicatorsAndRolesMappingTable> _IndicatorsAndRolesMappingTable;
 		
-		private EntitySet<IndicatorsAndUsersMapping> _IndicatorsAndUsersMappings;
+		private EntitySet<IndicatorsAndUsersMapping> _IndicatorsAndUsersMapping;
 		
-		private EntitySet<PlannedIndicator> _PlannedIndicators;
+		private EntitySet<PlannedIndicator> _PlannedIndicator;
 		
-		private EntitySet<ReportArchiveAndIndicatorsMappingTable> _ReportArchiveAndIndicatorsMappingTables;
+		private EntitySet<ReportArchiveAndIndicatorsMappingTable> _ReportArchiveAndIndicatorsMappingTable;
 		
 		private EntityRef<IndicatorClass> _IndicatorClass;
 		
@@ -10630,13 +10630,13 @@ namespace PersonalPages
 		
 		public IndicatorsTable()
 		{
-			this._CollectedIndicatorsForRs = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForRs), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForRs));
-			this._CollectedIndocators = new EntitySet<CollectedIndocator>(new Action<CollectedIndocator>(this.attach_CollectedIndocators), new Action<CollectedIndocator>(this.detach_CollectedIndocators));
-			this._ConfirmationHistories = new EntitySet<ConfirmationHistory>(new Action<ConfirmationHistory>(this.attach_ConfirmationHistories), new Action<ConfirmationHistory>(this.detach_ConfirmationHistories));
-			this._IndicatorsAndRolesMappingTables = new EntitySet<IndicatorsAndRolesMappingTable>(new Action<IndicatorsAndRolesMappingTable>(this.attach_IndicatorsAndRolesMappingTables), new Action<IndicatorsAndRolesMappingTable>(this.detach_IndicatorsAndRolesMappingTables));
-			this._IndicatorsAndUsersMappings = new EntitySet<IndicatorsAndUsersMapping>(new Action<IndicatorsAndUsersMapping>(this.attach_IndicatorsAndUsersMappings), new Action<IndicatorsAndUsersMapping>(this.detach_IndicatorsAndUsersMappings));
-			this._PlannedIndicators = new EntitySet<PlannedIndicator>(new Action<PlannedIndicator>(this.attach_PlannedIndicators), new Action<PlannedIndicator>(this.detach_PlannedIndicators));
-			this._ReportArchiveAndIndicatorsMappingTables = new EntitySet<ReportArchiveAndIndicatorsMappingTable>(new Action<ReportArchiveAndIndicatorsMappingTable>(this.attach_ReportArchiveAndIndicatorsMappingTables), new Action<ReportArchiveAndIndicatorsMappingTable>(this.detach_ReportArchiveAndIndicatorsMappingTables));
+			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
+			this._CollectedIndocators = new EntitySet<CollectedIndocators>(new Action<CollectedIndocators>(this.attach_CollectedIndocators), new Action<CollectedIndocators>(this.detach_CollectedIndocators));
+			this._ConfirmationHistory = new EntitySet<ConfirmationHistory>(new Action<ConfirmationHistory>(this.attach_ConfirmationHistory), new Action<ConfirmationHistory>(this.detach_ConfirmationHistory));
+			this._IndicatorsAndRolesMappingTable = new EntitySet<IndicatorsAndRolesMappingTable>(new Action<IndicatorsAndRolesMappingTable>(this.attach_IndicatorsAndRolesMappingTable), new Action<IndicatorsAndRolesMappingTable>(this.detach_IndicatorsAndRolesMappingTable));
+			this._IndicatorsAndUsersMapping = new EntitySet<IndicatorsAndUsersMapping>(new Action<IndicatorsAndUsersMapping>(this.attach_IndicatorsAndUsersMapping), new Action<IndicatorsAndUsersMapping>(this.detach_IndicatorsAndUsersMapping));
+			this._PlannedIndicator = new EntitySet<PlannedIndicator>(new Action<PlannedIndicator>(this.attach_PlannedIndicator), new Action<PlannedIndicator>(this.detach_PlannedIndicator));
+			this._ReportArchiveAndIndicatorsMappingTable = new EntitySet<ReportArchiveAndIndicatorsMappingTable>(new Action<ReportArchiveAndIndicatorsMappingTable>(this.attach_ReportArchiveAndIndicatorsMappingTable), new Action<ReportArchiveAndIndicatorsMappingTable>(this.detach_ReportArchiveAndIndicatorsMappingTable));
 			this._IndicatorClass = default(EntityRef<IndicatorClass>);
 			OnCreated();
 		}
@@ -10805,21 +10805,21 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForRs", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
-		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForRs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
+		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
 		{
 			get
 			{
-				return this._CollectedIndicatorsForRs;
+				return this._CollectedIndicatorsForR;
 			}
 			set
 			{
-				this._CollectedIndicatorsForRs.Assign(value);
+				this._CollectedIndicatorsForR.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndocator", Storage="_CollectedIndocators", ThisKey="IndicatorsTableID", OtherKey="FK_Indicators")]
-		public EntitySet<CollectedIndocator> CollectedIndocators
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_CollectedIndocators", Storage="_CollectedIndocators", ThisKey="IndicatorsTableID", OtherKey="FK_Indicators")]
+		public EntitySet<CollectedIndocators> CollectedIndocators
 		{
 			get
 			{
@@ -10831,68 +10831,68 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_ConfirmationHistory", Storage="_ConfirmationHistories", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
-		public EntitySet<ConfirmationHistory> ConfirmationHistories
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_ConfirmationHistory", Storage="_ConfirmationHistory", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
+		public EntitySet<ConfirmationHistory> ConfirmationHistory
 		{
 			get
 			{
-				return this._ConfirmationHistories;
+				return this._ConfirmationHistory;
 			}
 			set
 			{
-				this._ConfirmationHistories.Assign(value);
+				this._ConfirmationHistory.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_IndicatorsAndRolesMappingTable", Storage="_IndicatorsAndRolesMappingTables", ThisKey="IndicatorsTableID", OtherKey="FK_Indicators")]
-		public EntitySet<IndicatorsAndRolesMappingTable> IndicatorsAndRolesMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_IndicatorsAndRolesMappingTable", Storage="_IndicatorsAndRolesMappingTable", ThisKey="IndicatorsTableID", OtherKey="FK_Indicators")]
+		public EntitySet<IndicatorsAndRolesMappingTable> IndicatorsAndRolesMappingTable
 		{
 			get
 			{
-				return this._IndicatorsAndRolesMappingTables;
+				return this._IndicatorsAndRolesMappingTable;
 			}
 			set
 			{
-				this._IndicatorsAndRolesMappingTables.Assign(value);
+				this._IndicatorsAndRolesMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_IndicatorsAndUsersMapping", Storage="_IndicatorsAndUsersMappings", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
-		public EntitySet<IndicatorsAndUsersMapping> IndicatorsAndUsersMappings
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_IndicatorsAndUsersMapping", Storage="_IndicatorsAndUsersMapping", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
+		public EntitySet<IndicatorsAndUsersMapping> IndicatorsAndUsersMapping
 		{
 			get
 			{
-				return this._IndicatorsAndUsersMappings;
+				return this._IndicatorsAndUsersMapping;
 			}
 			set
 			{
-				this._IndicatorsAndUsersMappings.Assign(value);
+				this._IndicatorsAndUsersMapping.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_PlannedIndicator", Storage="_PlannedIndicators", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
-		public EntitySet<PlannedIndicator> PlannedIndicators
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_PlannedIndicator", Storage="_PlannedIndicator", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
+		public EntitySet<PlannedIndicator> PlannedIndicator
 		{
 			get
 			{
-				return this._PlannedIndicators;
+				return this._PlannedIndicator;
 			}
 			set
 			{
-				this._PlannedIndicators.Assign(value);
+				this._PlannedIndicator.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable", Storage="_ReportArchiveAndIndicatorsMappingTables", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
-		public EntitySet<ReportArchiveAndIndicatorsMappingTable> ReportArchiveAndIndicatorsMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IndicatorsTable_ReportArchiveAndIndicatorsMappingTable", Storage="_ReportArchiveAndIndicatorsMappingTable", ThisKey="IndicatorsTableID", OtherKey="FK_IndicatorsTable")]
+		public EntitySet<ReportArchiveAndIndicatorsMappingTable> ReportArchiveAndIndicatorsMappingTable
 		{
 			get
 			{
-				return this._ReportArchiveAndIndicatorsMappingTables;
+				return this._ReportArchiveAndIndicatorsMappingTable;
 			}
 			set
 			{
-				this._ReportArchiveAndIndicatorsMappingTables.Assign(value);
+				this._ReportArchiveAndIndicatorsMappingTable.Assign(value);
 			}
 		}
 		
@@ -10913,12 +10913,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._IndicatorClass.Entity = null;
-						previousValue.IndicatorsTables.Remove(this);
+						previousValue.IndicatorsTable.Remove(this);
 					}
 					this._IndicatorClass.Entity = value;
 					if ((value != null))
 					{
-						value.IndicatorsTables.Add(this);
+						value.IndicatorsTable.Add(this);
 						this._FK_IndicatorClass = value.IndicatorClassID;
 					}
 					else
@@ -10950,85 +10950,85 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_CollectedIndicatorsForRs(CollectedIndicatorsForR entity)
+		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorsTable = this;
 		}
 		
-		private void detach_CollectedIndicatorsForRs(CollectedIndicatorsForR entity)
+		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorsTable = null;
 		}
 		
-		private void attach_CollectedIndocators(CollectedIndocator entity)
+		private void attach_CollectedIndocators(CollectedIndocators entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorsTable = this;
 		}
 		
-		private void detach_CollectedIndocators(CollectedIndocator entity)
+		private void detach_CollectedIndocators(CollectedIndocators entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorsTable = null;
 		}
 		
-		private void attach_ConfirmationHistories(ConfirmationHistory entity)
+		private void attach_ConfirmationHistory(ConfirmationHistory entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorsTable = this;
 		}
 		
-		private void detach_ConfirmationHistories(ConfirmationHistory entity)
+		private void detach_ConfirmationHistory(ConfirmationHistory entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorsTable = null;
 		}
 		
-		private void attach_IndicatorsAndRolesMappingTables(IndicatorsAndRolesMappingTable entity)
+		private void attach_IndicatorsAndRolesMappingTable(IndicatorsAndRolesMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorsTable = this;
 		}
 		
-		private void detach_IndicatorsAndRolesMappingTables(IndicatorsAndRolesMappingTable entity)
+		private void detach_IndicatorsAndRolesMappingTable(IndicatorsAndRolesMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorsTable = null;
 		}
 		
-		private void attach_IndicatorsAndUsersMappings(IndicatorsAndUsersMapping entity)
+		private void attach_IndicatorsAndUsersMapping(IndicatorsAndUsersMapping entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorsTable = this;
 		}
 		
-		private void detach_IndicatorsAndUsersMappings(IndicatorsAndUsersMapping entity)
+		private void detach_IndicatorsAndUsersMapping(IndicatorsAndUsersMapping entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorsTable = null;
 		}
 		
-		private void attach_PlannedIndicators(PlannedIndicator entity)
+		private void attach_PlannedIndicator(PlannedIndicator entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorsTable = this;
 		}
 		
-		private void detach_PlannedIndicators(PlannedIndicator entity)
+		private void detach_PlannedIndicator(PlannedIndicator entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorsTable = null;
 		}
 		
-		private void attach_ReportArchiveAndIndicatorsMappingTables(ReportArchiveAndIndicatorsMappingTable entity)
+		private void attach_ReportArchiveAndIndicatorsMappingTable(ReportArchiveAndIndicatorsMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorsTable = this;
 		}
 		
-		private void detach_ReportArchiveAndIndicatorsMappingTables(ReportArchiveAndIndicatorsMappingTable entity)
+		private void detach_ReportArchiveAndIndicatorsMappingTable(ReportArchiveAndIndicatorsMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.IndicatorsTable = null;
@@ -11313,12 +11313,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._UsersTable.Entity = null;
-						previousValue.MultiUsers.Remove(this);
+						previousValue.MultiUser.Remove(this);
 					}
 					this._UsersTable.Entity = value;
 					if ((value != null))
 					{
-						value.MultiUsers.Add(this);
+						value.MultiUser.Add(this);
 						this._FK_UserCanAccess = value.UsersTableID;
 					}
 					else
@@ -11347,12 +11347,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._UsersTable1.Entity = null;
-						previousValue.MultiUsers1.Remove(this);
+						previousValue.MultiUser1.Remove(this);
 					}
 					this._UsersTable1.Entity = value;
 					if ((value != null))
 					{
-						value.MultiUsers1.Add(this);
+						value.MultiUser1.Add(this);
 						this._FK_UserToAccess = value.UsersTableID;
 					}
 					else
@@ -11386,7 +11386,7 @@ namespace PersonalPages
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Personal_Documents")]
-	public partial class Personal_Document : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class Personal_Documents : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -11423,7 +11423,7 @@ namespace PersonalPages
     partial void OnDoc_TypeChanged();
     #endregion
 		
-		public Personal_Document()
+		public Personal_Documents()
 		{
 			this._GroupsTable = default(EntityRef<GroupsTable>);
 			OnCreated();
@@ -11553,7 +11553,7 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GroupsTable_Personal_Document", Storage="_GroupsTable", ThisKey="FK_Group", OtherKey="ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="GroupsTable_Personal_Documents", Storage="_GroupsTable", ThisKey="FK_Group", OtherKey="ID", IsForeignKey=true)]
 		public GroupsTable GroupsTable
 		{
 			get
@@ -11769,12 +11769,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._IndicatorsTable.Entity = null;
-						previousValue.PlannedIndicators.Remove(this);
+						previousValue.PlannedIndicator.Remove(this);
 					}
 					this._IndicatorsTable.Entity = value;
 					if ((value != null))
 					{
-						value.PlannedIndicators.Add(this);
+						value.PlannedIndicator.Add(this);
 						this._FK_IndicatorsTable = value.IndicatorsTableID;
 					}
 					else
@@ -11942,7 +11942,7 @@ namespace PersonalPages
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rank_Articles")]
-	public partial class Rank_Article : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class Rank_Articles : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -11965,11 +11965,11 @@ namespace PersonalPages
 		
 		private string _File_Name;
 		
-		private EntitySet<Rank_AutorsAndArticle> _Rank_AutorsAndArticles;
+		private EntitySet<Rank_AutorsAndArticles> _Rank_AutorsAndArticles;
 		
 		private EntityRef<Rank_Mark> _Rank_Mark;
 		
-		private EntityRef<Rank_Parametr> _Rank_Parametr;
+		private EntityRef<Rank_Parametrs> _Rank_Parametrs;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -11995,11 +11995,11 @@ namespace PersonalPages
     partial void OnFile_NameChanged();
     #endregion
 		
-		public Rank_Article()
+		public Rank_Articles()
 		{
-			this._Rank_AutorsAndArticles = new EntitySet<Rank_AutorsAndArticle>(new Action<Rank_AutorsAndArticle>(this.attach_Rank_AutorsAndArticles), new Action<Rank_AutorsAndArticle>(this.detach_Rank_AutorsAndArticles));
+			this._Rank_AutorsAndArticles = new EntitySet<Rank_AutorsAndArticles>(new Action<Rank_AutorsAndArticles>(this.attach_Rank_AutorsAndArticles), new Action<Rank_AutorsAndArticles>(this.detach_Rank_AutorsAndArticles));
 			this._Rank_Mark = default(EntityRef<Rank_Mark>);
-			this._Rank_Parametr = default(EntityRef<Rank_Parametr>);
+			this._Rank_Parametrs = default(EntityRef<Rank_Parametrs>);
 			OnCreated();
 		}
 		
@@ -12114,7 +12114,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_Parametrs != value))
 				{
-					if (this._Rank_Parametr.HasLoadedOrAssignedValue)
+					if (this._Rank_Parametrs.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -12191,8 +12191,8 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Article_Rank_AutorsAndArticle", Storage="_Rank_AutorsAndArticles", ThisKey="ID", OtherKey="FK_Article")]
-		public EntitySet<Rank_AutorsAndArticle> Rank_AutorsAndArticles
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Articles_Rank_AutorsAndArticles", Storage="_Rank_AutorsAndArticles", ThisKey="ID", OtherKey="FK_Article")]
+		public EntitySet<Rank_AutorsAndArticles> Rank_AutorsAndArticles
 		{
 			get
 			{
@@ -12204,7 +12204,7 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Mark_Rank_Article", Storage="_Rank_Mark", ThisKey="FK_Mark", OtherKey="ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Mark_Rank_Articles", Storage="_Rank_Mark", ThisKey="FK_Mark", OtherKey="ID", IsForeignKey=true)]
 		public Rank_Mark Rank_Mark
 		{
 			get
@@ -12238,26 +12238,26 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametr_Rank_Article", Storage="_Rank_Parametr", ThisKey="FK_Parametrs", OtherKey="ID", IsForeignKey=true)]
-		public Rank_Parametr Rank_Parametr
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametrs_Rank_Articles", Storage="_Rank_Parametrs", ThisKey="FK_Parametrs", OtherKey="ID", IsForeignKey=true)]
+		public Rank_Parametrs Rank_Parametrs
 		{
 			get
 			{
-				return this._Rank_Parametr.Entity;
+				return this._Rank_Parametrs.Entity;
 			}
 			set
 			{
-				Rank_Parametr previousValue = this._Rank_Parametr.Entity;
+				Rank_Parametrs previousValue = this._Rank_Parametrs.Entity;
 				if (((previousValue != value) 
-							|| (this._Rank_Parametr.HasLoadedOrAssignedValue == false)))
+							|| (this._Rank_Parametrs.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Rank_Parametr.Entity = null;
+						this._Rank_Parametrs.Entity = null;
 						previousValue.Rank_Articles.Remove(this);
 					}
-					this._Rank_Parametr.Entity = value;
+					this._Rank_Parametrs.Entity = value;
 					if ((value != null))
 					{
 						value.Rank_Articles.Add(this);
@@ -12267,7 +12267,7 @@ namespace PersonalPages
 					{
 						this._FK_Parametrs = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Rank_Parametr");
+					this.SendPropertyChanged("Rank_Parametrs");
 				}
 			}
 		}
@@ -12292,21 +12292,21 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_Rank_AutorsAndArticles(Rank_AutorsAndArticle entity)
+		private void attach_Rank_AutorsAndArticles(Rank_AutorsAndArticles entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Article = this;
+			entity.Rank_Articles = this;
 		}
 		
-		private void detach_Rank_AutorsAndArticles(Rank_AutorsAndArticle entity)
+		private void detach_Rank_AutorsAndArticles(Rank_AutorsAndArticles entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Article = null;
+			entity.Rank_Articles = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rank_ArticleValues")]
-	public partial class Rank_ArticleValue : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class Rank_ArticleValues : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -12337,7 +12337,7 @@ namespace PersonalPages
     partial void OnValueChanged();
     #endregion
 		
-		public Rank_ArticleValue()
+		public Rank_ArticleValues()
 		{
 			OnCreated();
 		}
@@ -12464,7 +12464,7 @@ namespace PersonalPages
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rank_Autors")]
-	public partial class Rank_Autor : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class Rank_Autors : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -12483,13 +12483,13 @@ namespace PersonalPages
 		
 		private string _ThirdName;
 		
-		private EntitySet<Rank_AutorsAndArticle> _Rank_AutorsAndArticles;
+		private EntitySet<Rank_AutorsAndArticles> _Rank_AutorsAndArticles;
 		
-		private EntitySet<Rank_Collected_ParametrsValue> _Rank_Collected_ParametrsValues;
+		private EntitySet<Rank_Collected_ParametrsValue> _Rank_Collected_ParametrsValue;
 		
-		private EntitySet<Rank_Raiting_History> _Rank_Raiting_Histories;
+		private EntitySet<Rank_Raiting_History> _Rank_Raiting_History;
 		
-		private EntityRef<Rank_Position> _Rank_Position;
+		private EntityRef<Rank_Positions> _Rank_Positions;
 		
 		private EntityRef<UsersTable> _UsersTable;
 		
@@ -12513,12 +12513,12 @@ namespace PersonalPages
     partial void OnThirdNameChanged();
     #endregion
 		
-		public Rank_Autor()
+		public Rank_Autors()
 		{
-			this._Rank_AutorsAndArticles = new EntitySet<Rank_AutorsAndArticle>(new Action<Rank_AutorsAndArticle>(this.attach_Rank_AutorsAndArticles), new Action<Rank_AutorsAndArticle>(this.detach_Rank_AutorsAndArticles));
-			this._Rank_Collected_ParametrsValues = new EntitySet<Rank_Collected_ParametrsValue>(new Action<Rank_Collected_ParametrsValue>(this.attach_Rank_Collected_ParametrsValues), new Action<Rank_Collected_ParametrsValue>(this.detach_Rank_Collected_ParametrsValues));
-			this._Rank_Raiting_Histories = new EntitySet<Rank_Raiting_History>(new Action<Rank_Raiting_History>(this.attach_Rank_Raiting_Histories), new Action<Rank_Raiting_History>(this.detach_Rank_Raiting_Histories));
-			this._Rank_Position = default(EntityRef<Rank_Position>);
+			this._Rank_AutorsAndArticles = new EntitySet<Rank_AutorsAndArticles>(new Action<Rank_AutorsAndArticles>(this.attach_Rank_AutorsAndArticles), new Action<Rank_AutorsAndArticles>(this.detach_Rank_AutorsAndArticles));
+			this._Rank_Collected_ParametrsValue = new EntitySet<Rank_Collected_ParametrsValue>(new Action<Rank_Collected_ParametrsValue>(this.attach_Rank_Collected_ParametrsValue), new Action<Rank_Collected_ParametrsValue>(this.detach_Rank_Collected_ParametrsValue));
+			this._Rank_Raiting_History = new EntitySet<Rank_Raiting_History>(new Action<Rank_Raiting_History>(this.attach_Rank_Raiting_History), new Action<Rank_Raiting_History>(this.detach_Rank_Raiting_History));
+			this._Rank_Positions = default(EntityRef<Rank_Positions>);
 			this._UsersTable = default(EntityRef<UsersTable>);
 			OnCreated();
 		}
@@ -12618,7 +12618,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_Positions != value))
 				{
-					if (this._Rank_Position.HasLoadedOrAssignedValue)
+					if (this._Rank_Positions.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -12671,8 +12671,8 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Autor_Rank_AutorsAndArticle", Storage="_Rank_AutorsAndArticles", ThisKey="ID_Autor", OtherKey="FK_Autors")]
-		public EntitySet<Rank_AutorsAndArticle> Rank_AutorsAndArticles
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Autors_Rank_AutorsAndArticles", Storage="_Rank_AutorsAndArticles", ThisKey="ID_Autor", OtherKey="FK_Autors")]
+		public EntitySet<Rank_AutorsAndArticles> Rank_AutorsAndArticles
 		{
 			get
 			{
@@ -12684,52 +12684,52 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Autor_Rank_Collected_ParametrsValue", Storage="_Rank_Collected_ParametrsValues", ThisKey="ID_Autor", OtherKey="FK_Autor")]
-		public EntitySet<Rank_Collected_ParametrsValue> Rank_Collected_ParametrsValues
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Autors_Rank_Collected_ParametrsValue", Storage="_Rank_Collected_ParametrsValue", ThisKey="ID_Autor", OtherKey="FK_Autor")]
+		public EntitySet<Rank_Collected_ParametrsValue> Rank_Collected_ParametrsValue
 		{
 			get
 			{
-				return this._Rank_Collected_ParametrsValues;
+				return this._Rank_Collected_ParametrsValue;
 			}
 			set
 			{
-				this._Rank_Collected_ParametrsValues.Assign(value);
+				this._Rank_Collected_ParametrsValue.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Autor_Rank_Raiting_History", Storage="_Rank_Raiting_Histories", ThisKey="ID_Autor", OtherKey="FK_Autor")]
-		public EntitySet<Rank_Raiting_History> Rank_Raiting_Histories
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Autors_Rank_Raiting_History", Storage="_Rank_Raiting_History", ThisKey="ID_Autor", OtherKey="FK_Autor")]
+		public EntitySet<Rank_Raiting_History> Rank_Raiting_History
 		{
 			get
 			{
-				return this._Rank_Raiting_Histories;
+				return this._Rank_Raiting_History;
 			}
 			set
 			{
-				this._Rank_Raiting_Histories.Assign(value);
+				this._Rank_Raiting_History.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Position_Rank_Autor", Storage="_Rank_Position", ThisKey="FK_Positions", OtherKey="ID", IsForeignKey=true)]
-		public Rank_Position Rank_Position
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Positions_Rank_Autors", Storage="_Rank_Positions", ThisKey="FK_Positions", OtherKey="ID", IsForeignKey=true)]
+		public Rank_Positions Rank_Positions
 		{
 			get
 			{
-				return this._Rank_Position.Entity;
+				return this._Rank_Positions.Entity;
 			}
 			set
 			{
-				Rank_Position previousValue = this._Rank_Position.Entity;
+				Rank_Positions previousValue = this._Rank_Positions.Entity;
 				if (((previousValue != value) 
-							|| (this._Rank_Position.HasLoadedOrAssignedValue == false)))
+							|| (this._Rank_Positions.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Rank_Position.Entity = null;
+						this._Rank_Positions.Entity = null;
 						previousValue.Rank_Autors.Remove(this);
 					}
-					this._Rank_Position.Entity = value;
+					this._Rank_Positions.Entity = value;
 					if ((value != null))
 					{
 						value.Rank_Autors.Add(this);
@@ -12739,12 +12739,12 @@ namespace PersonalPages
 					{
 						this._FK_Positions = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Rank_Position");
+					this.SendPropertyChanged("Rank_Positions");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_Rank_Autor", Storage="_UsersTable", ThisKey="FK_Users", OtherKey="UsersTableID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_Rank_Autors", Storage="_UsersTable", ThisKey="FK_Users", OtherKey="UsersTableID", IsForeignKey=true)]
 		public UsersTable UsersTable
 		{
 			get
@@ -12798,45 +12798,45 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_Rank_AutorsAndArticles(Rank_AutorsAndArticle entity)
+		private void attach_Rank_AutorsAndArticles(Rank_AutorsAndArticles entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Autor = this;
+			entity.Rank_Autors = this;
 		}
 		
-		private void detach_Rank_AutorsAndArticles(Rank_AutorsAndArticle entity)
+		private void detach_Rank_AutorsAndArticles(Rank_AutorsAndArticles entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Autor = null;
+			entity.Rank_Autors = null;
 		}
 		
-		private void attach_Rank_Collected_ParametrsValues(Rank_Collected_ParametrsValue entity)
+		private void attach_Rank_Collected_ParametrsValue(Rank_Collected_ParametrsValue entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Autor = this;
+			entity.Rank_Autors = this;
 		}
 		
-		private void detach_Rank_Collected_ParametrsValues(Rank_Collected_ParametrsValue entity)
+		private void detach_Rank_Collected_ParametrsValue(Rank_Collected_ParametrsValue entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Autor = null;
+			entity.Rank_Autors = null;
 		}
 		
-		private void attach_Rank_Raiting_Histories(Rank_Raiting_History entity)
+		private void attach_Rank_Raiting_History(Rank_Raiting_History entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Autor = this;
+			entity.Rank_Autors = this;
 		}
 		
-		private void detach_Rank_Raiting_Histories(Rank_Raiting_History entity)
+		private void detach_Rank_Raiting_History(Rank_Raiting_History entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Autor = null;
+			entity.Rank_Autors = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rank_AutorsAndArticles")]
-	public partial class Rank_AutorsAndArticle : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class Rank_AutorsAndArticles : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -12853,9 +12853,9 @@ namespace PersonalPages
 		
 		private System.Nullable<int> _FK_Param_Type;
 		
-		private EntityRef<Rank_Article> _Rank_Article;
+		private EntityRef<Rank_Articles> _Rank_Articles;
 		
-		private EntityRef<Rank_Autor> _Rank_Autor;
+		private EntityRef<Rank_Autors> _Rank_Autors;
 		
 		private EntityRef<Rank_Param_Type> _Rank_Param_Type;
 		
@@ -12877,10 +12877,10 @@ namespace PersonalPages
     partial void OnFK_Param_TypeChanged();
     #endregion
 		
-		public Rank_AutorsAndArticle()
+		public Rank_AutorsAndArticles()
 		{
-			this._Rank_Article = default(EntityRef<Rank_Article>);
-			this._Rank_Autor = default(EntityRef<Rank_Autor>);
+			this._Rank_Articles = default(EntityRef<Rank_Articles>);
+			this._Rank_Autors = default(EntityRef<Rank_Autors>);
 			this._Rank_Param_Type = default(EntityRef<Rank_Param_Type>);
 			OnCreated();
 		}
@@ -12936,7 +12936,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_Autors != value))
 				{
-					if (this._Rank_Autor.HasLoadedOrAssignedValue)
+					if (this._Rank_Autors.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -12960,7 +12960,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_Article != value))
 				{
-					if (this._Rank_Article.HasLoadedOrAssignedValue)
+					if (this._Rank_Articles.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -13017,26 +13017,26 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Article_Rank_AutorsAndArticle", Storage="_Rank_Article", ThisKey="FK_Article", OtherKey="ID", IsForeignKey=true)]
-		public Rank_Article Rank_Article
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Articles_Rank_AutorsAndArticles", Storage="_Rank_Articles", ThisKey="FK_Article", OtherKey="ID", IsForeignKey=true)]
+		public Rank_Articles Rank_Articles
 		{
 			get
 			{
-				return this._Rank_Article.Entity;
+				return this._Rank_Articles.Entity;
 			}
 			set
 			{
-				Rank_Article previousValue = this._Rank_Article.Entity;
+				Rank_Articles previousValue = this._Rank_Articles.Entity;
 				if (((previousValue != value) 
-							|| (this._Rank_Article.HasLoadedOrAssignedValue == false)))
+							|| (this._Rank_Articles.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Rank_Article.Entity = null;
+						this._Rank_Articles.Entity = null;
 						previousValue.Rank_AutorsAndArticles.Remove(this);
 					}
-					this._Rank_Article.Entity = value;
+					this._Rank_Articles.Entity = value;
 					if ((value != null))
 					{
 						value.Rank_AutorsAndArticles.Add(this);
@@ -13046,31 +13046,31 @@ namespace PersonalPages
 					{
 						this._FK_Article = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Rank_Article");
+					this.SendPropertyChanged("Rank_Articles");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Autor_Rank_AutorsAndArticle", Storage="_Rank_Autor", ThisKey="FK_Autors", OtherKey="ID_Autor", IsForeignKey=true)]
-		public Rank_Autor Rank_Autor
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Autors_Rank_AutorsAndArticles", Storage="_Rank_Autors", ThisKey="FK_Autors", OtherKey="ID_Autor", IsForeignKey=true)]
+		public Rank_Autors Rank_Autors
 		{
 			get
 			{
-				return this._Rank_Autor.Entity;
+				return this._Rank_Autors.Entity;
 			}
 			set
 			{
-				Rank_Autor previousValue = this._Rank_Autor.Entity;
+				Rank_Autors previousValue = this._Rank_Autors.Entity;
 				if (((previousValue != value) 
-							|| (this._Rank_Autor.HasLoadedOrAssignedValue == false)))
+							|| (this._Rank_Autors.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Rank_Autor.Entity = null;
+						this._Rank_Autors.Entity = null;
 						previousValue.Rank_AutorsAndArticles.Remove(this);
 					}
-					this._Rank_Autor.Entity = value;
+					this._Rank_Autors.Entity = value;
 					if ((value != null))
 					{
 						value.Rank_AutorsAndArticles.Add(this);
@@ -13080,12 +13080,12 @@ namespace PersonalPages
 					{
 						this._FK_Autors = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Rank_Autor");
+					this.SendPropertyChanged("Rank_Autors");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Param_Type_Rank_AutorsAndArticle", Storage="_Rank_Param_Type", ThisKey="FK_Param_Type", OtherKey="ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Param_Type_Rank_AutorsAndArticles", Storage="_Rank_Param_Type", ThisKey="FK_Param_Type", OtherKey="ID", IsForeignKey=true)]
 		public Rank_Param_Type Rank_Param_Type
 		{
 			get
@@ -13158,9 +13158,9 @@ namespace PersonalPages
 		
 		private System.Nullable<int> _Status;
 		
-		private EntityRef<Rank_Autor> _Rank_Autor;
+		private EntityRef<Rank_Autors> _Rank_Autors;
 		
-		private EntityRef<Rank_Parametr> _Rank_Parametr;
+		private EntityRef<Rank_Parametrs> _Rank_Parametrs;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -13182,8 +13182,8 @@ namespace PersonalPages
 		
 		public Rank_Collected_ParametrsValue()
 		{
-			this._Rank_Autor = default(EntityRef<Rank_Autor>);
-			this._Rank_Parametr = default(EntityRef<Rank_Parametr>);
+			this._Rank_Autors = default(EntityRef<Rank_Autors>);
+			this._Rank_Parametrs = default(EntityRef<Rank_Parametrs>);
 			OnCreated();
 		}
 		
@@ -13238,7 +13238,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_Parametrs != value))
 				{
-					if (this._Rank_Parametr.HasLoadedOrAssignedValue)
+					if (this._Rank_Parametrs.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -13262,7 +13262,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_Autor != value))
 				{
-					if (this._Rank_Autor.HasLoadedOrAssignedValue)
+					if (this._Rank_Autors.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -13315,70 +13315,70 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Autor_Rank_Collected_ParametrsValue", Storage="_Rank_Autor", ThisKey="FK_Autor", OtherKey="ID_Autor", IsForeignKey=true)]
-		public Rank_Autor Rank_Autor
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Autors_Rank_Collected_ParametrsValue", Storage="_Rank_Autors", ThisKey="FK_Autor", OtherKey="ID_Autor", IsForeignKey=true)]
+		public Rank_Autors Rank_Autors
 		{
 			get
 			{
-				return this._Rank_Autor.Entity;
+				return this._Rank_Autors.Entity;
 			}
 			set
 			{
-				Rank_Autor previousValue = this._Rank_Autor.Entity;
+				Rank_Autors previousValue = this._Rank_Autors.Entity;
 				if (((previousValue != value) 
-							|| (this._Rank_Autor.HasLoadedOrAssignedValue == false)))
+							|| (this._Rank_Autors.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Rank_Autor.Entity = null;
-						previousValue.Rank_Collected_ParametrsValues.Remove(this);
+						this._Rank_Autors.Entity = null;
+						previousValue.Rank_Collected_ParametrsValue.Remove(this);
 					}
-					this._Rank_Autor.Entity = value;
+					this._Rank_Autors.Entity = value;
 					if ((value != null))
 					{
-						value.Rank_Collected_ParametrsValues.Add(this);
+						value.Rank_Collected_ParametrsValue.Add(this);
 						this._FK_Autor = value.ID_Autor;
 					}
 					else
 					{
 						this._FK_Autor = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Rank_Autor");
+					this.SendPropertyChanged("Rank_Autors");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametr_Rank_Collected_ParametrsValue", Storage="_Rank_Parametr", ThisKey="FK_Parametrs", OtherKey="ID", IsForeignKey=true)]
-		public Rank_Parametr Rank_Parametr
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametrs_Rank_Collected_ParametrsValue", Storage="_Rank_Parametrs", ThisKey="FK_Parametrs", OtherKey="ID", IsForeignKey=true)]
+		public Rank_Parametrs Rank_Parametrs
 		{
 			get
 			{
-				return this._Rank_Parametr.Entity;
+				return this._Rank_Parametrs.Entity;
 			}
 			set
 			{
-				Rank_Parametr previousValue = this._Rank_Parametr.Entity;
+				Rank_Parametrs previousValue = this._Rank_Parametrs.Entity;
 				if (((previousValue != value) 
-							|| (this._Rank_Parametr.HasLoadedOrAssignedValue == false)))
+							|| (this._Rank_Parametrs.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Rank_Parametr.Entity = null;
-						previousValue.Rank_Collected_ParametrsValues.Remove(this);
+						this._Rank_Parametrs.Entity = null;
+						previousValue.Rank_Collected_ParametrsValue.Remove(this);
 					}
-					this._Rank_Parametr.Entity = value;
+					this._Rank_Parametrs.Entity = value;
 					if ((value != null))
 					{
-						value.Rank_Collected_ParametrsValues.Add(this);
+						value.Rank_Collected_ParametrsValue.Add(this);
 						this._FK_Parametrs = value.ID;
 					}
 					else
 					{
 						this._FK_Parametrs = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Rank_Parametr");
+					this.SendPropertyChanged("Rank_Parametrs");
 				}
 			}
 		}
@@ -13420,7 +13420,7 @@ namespace PersonalPages
 		
 		private EntityRef<Rank_Param_Type> _Rank_Param_Type;
 		
-		private EntityRef<Rank_Parametr> _Rank_Parametr;
+		private EntityRef<Rank_Parametrs> _Rank_Parametrs;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -13439,7 +13439,7 @@ namespace PersonalPages
 		public Rank_Connect_ParamType_Param()
 		{
 			this._Rank_Param_Type = default(EntityRef<Rank_Param_Type>);
-			this._Rank_Parametr = default(EntityRef<Rank_Parametr>);
+			this._Rank_Parametrs = default(EntityRef<Rank_Parametrs>);
 			OnCreated();
 		}
 		
@@ -13518,7 +13518,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_Parametrs != value))
 				{
-					if (this._Rank_Parametr.HasLoadedOrAssignedValue)
+					if (this._Rank_Parametrs.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -13548,12 +13548,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._Rank_Param_Type.Entity = null;
-						previousValue.Rank_Connect_ParamType_Params.Remove(this);
+						previousValue.Rank_Connect_ParamType_Param.Remove(this);
 					}
 					this._Rank_Param_Type.Entity = value;
 					if ((value != null))
 					{
-						value.Rank_Connect_ParamType_Params.Add(this);
+						value.Rank_Connect_ParamType_Param.Add(this);
 						this._FK_Param_Type = value.ID;
 					}
 					else
@@ -13565,36 +13565,36 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametr_Rank_Connect_ParamType_Param", Storage="_Rank_Parametr", ThisKey="FK_Parametrs", OtherKey="ID", IsForeignKey=true)]
-		public Rank_Parametr Rank_Parametr
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametrs_Rank_Connect_ParamType_Param", Storage="_Rank_Parametrs", ThisKey="FK_Parametrs", OtherKey="ID", IsForeignKey=true)]
+		public Rank_Parametrs Rank_Parametrs
 		{
 			get
 			{
-				return this._Rank_Parametr.Entity;
+				return this._Rank_Parametrs.Entity;
 			}
 			set
 			{
-				Rank_Parametr previousValue = this._Rank_Parametr.Entity;
+				Rank_Parametrs previousValue = this._Rank_Parametrs.Entity;
 				if (((previousValue != value) 
-							|| (this._Rank_Parametr.HasLoadedOrAssignedValue == false)))
+							|| (this._Rank_Parametrs.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Rank_Parametr.Entity = null;
-						previousValue.Rank_Connect_ParamType_Params.Remove(this);
+						this._Rank_Parametrs.Entity = null;
+						previousValue.Rank_Connect_ParamType_Param.Remove(this);
 					}
-					this._Rank_Parametr.Entity = value;
+					this._Rank_Parametrs.Entity = value;
 					if ((value != null))
 					{
-						value.Rank_Connect_ParamType_Params.Add(this);
+						value.Rank_Connect_ParamType_Param.Add(this);
 						this._FK_Parametrs = value.ID;
 					}
 					else
 					{
 						this._FK_Parametrs = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Rank_Parametr");
+					this.SendPropertyChanged("Rank_Parametrs");
 				}
 			}
 		}
@@ -13768,9 +13768,9 @@ namespace PersonalPages
 		
 		private System.Nullable<int> _Points;
 		
-		private EntitySet<Rank_Article> _Rank_Articles;
+		private EntitySet<Rank_Articles> _Rank_Articles;
 		
-		private EntitySet<Rank_Point> _Rank_Points;
+		private EntitySet<Rank_Points> _Rank_Points;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -13788,8 +13788,8 @@ namespace PersonalPages
 		
 		public Rank_Mark()
 		{
-			this._Rank_Articles = new EntitySet<Rank_Article>(new Action<Rank_Article>(this.attach_Rank_Articles), new Action<Rank_Article>(this.detach_Rank_Articles));
-			this._Rank_Points = new EntitySet<Rank_Point>(new Action<Rank_Point>(this.attach_Rank_Points), new Action<Rank_Point>(this.detach_Rank_Points));
+			this._Rank_Articles = new EntitySet<Rank_Articles>(new Action<Rank_Articles>(this.attach_Rank_Articles), new Action<Rank_Articles>(this.detach_Rank_Articles));
+			this._Rank_Points = new EntitySet<Rank_Points>(new Action<Rank_Points>(this.attach_Rank_Points), new Action<Rank_Points>(this.detach_Rank_Points));
 			OnCreated();
 		}
 		
@@ -13873,8 +13873,8 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Mark_Rank_Article", Storage="_Rank_Articles", ThisKey="ID", OtherKey="FK_Mark")]
-		public EntitySet<Rank_Article> Rank_Articles
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Mark_Rank_Articles", Storage="_Rank_Articles", ThisKey="ID", OtherKey="FK_Mark")]
+		public EntitySet<Rank_Articles> Rank_Articles
 		{
 			get
 			{
@@ -13886,8 +13886,8 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Mark_Rank_Point", Storage="_Rank_Points", ThisKey="ID", OtherKey="FK_Mark")]
-		public EntitySet<Rank_Point> Rank_Points
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Mark_Rank_Points", Storage="_Rank_Points", ThisKey="ID", OtherKey="FK_Mark")]
+		public EntitySet<Rank_Points> Rank_Points
 		{
 			get
 			{
@@ -13919,25 +13919,25 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_Rank_Articles(Rank_Article entity)
+		private void attach_Rank_Articles(Rank_Articles entity)
 		{
 			this.SendPropertyChanging();
 			entity.Rank_Mark = this;
 		}
 		
-		private void detach_Rank_Articles(Rank_Article entity)
+		private void detach_Rank_Articles(Rank_Articles entity)
 		{
 			this.SendPropertyChanging();
 			entity.Rank_Mark = null;
 		}
 		
-		private void attach_Rank_Points(Rank_Point entity)
+		private void attach_Rank_Points(Rank_Points entity)
 		{
 			this.SendPropertyChanging();
 			entity.Rank_Mark = this;
 		}
 		
-		private void detach_Rank_Points(Rank_Point entity)
+		private void detach_Rank_Points(Rank_Points entity)
 		{
 			this.SendPropertyChanging();
 			entity.Rank_Mark = null;
@@ -13958,9 +13958,9 @@ namespace PersonalPages
 		
 		private System.Nullable<double> _Param_Value;
 		
-		private EntitySet<Rank_AutorsAndArticle> _Rank_AutorsAndArticles;
+		private EntitySet<Rank_AutorsAndArticles> _Rank_AutorsAndArticles;
 		
-		private EntitySet<Rank_Connect_ParamType_Param> _Rank_Connect_ParamType_Params;
+		private EntitySet<Rank_Connect_ParamType_Param> _Rank_Connect_ParamType_Param;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -13978,8 +13978,8 @@ namespace PersonalPages
 		
 		public Rank_Param_Type()
 		{
-			this._Rank_AutorsAndArticles = new EntitySet<Rank_AutorsAndArticle>(new Action<Rank_AutorsAndArticle>(this.attach_Rank_AutorsAndArticles), new Action<Rank_AutorsAndArticle>(this.detach_Rank_AutorsAndArticles));
-			this._Rank_Connect_ParamType_Params = new EntitySet<Rank_Connect_ParamType_Param>(new Action<Rank_Connect_ParamType_Param>(this.attach_Rank_Connect_ParamType_Params), new Action<Rank_Connect_ParamType_Param>(this.detach_Rank_Connect_ParamType_Params));
+			this._Rank_AutorsAndArticles = new EntitySet<Rank_AutorsAndArticles>(new Action<Rank_AutorsAndArticles>(this.attach_Rank_AutorsAndArticles), new Action<Rank_AutorsAndArticles>(this.detach_Rank_AutorsAndArticles));
+			this._Rank_Connect_ParamType_Param = new EntitySet<Rank_Connect_ParamType_Param>(new Action<Rank_Connect_ParamType_Param>(this.attach_Rank_Connect_ParamType_Param), new Action<Rank_Connect_ParamType_Param>(this.detach_Rank_Connect_ParamType_Param));
 			OnCreated();
 		}
 		
@@ -14063,8 +14063,8 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Param_Type_Rank_AutorsAndArticle", Storage="_Rank_AutorsAndArticles", ThisKey="ID", OtherKey="FK_Param_Type")]
-		public EntitySet<Rank_AutorsAndArticle> Rank_AutorsAndArticles
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Param_Type_Rank_AutorsAndArticles", Storage="_Rank_AutorsAndArticles", ThisKey="ID", OtherKey="FK_Param_Type")]
+		public EntitySet<Rank_AutorsAndArticles> Rank_AutorsAndArticles
 		{
 			get
 			{
@@ -14076,16 +14076,16 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Param_Type_Rank_Connect_ParamType_Param", Storage="_Rank_Connect_ParamType_Params", ThisKey="ID", OtherKey="FK_Param_Type")]
-		public EntitySet<Rank_Connect_ParamType_Param> Rank_Connect_ParamType_Params
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Param_Type_Rank_Connect_ParamType_Param", Storage="_Rank_Connect_ParamType_Param", ThisKey="ID", OtherKey="FK_Param_Type")]
+		public EntitySet<Rank_Connect_ParamType_Param> Rank_Connect_ParamType_Param
 		{
 			get
 			{
-				return this._Rank_Connect_ParamType_Params;
+				return this._Rank_Connect_ParamType_Param;
 			}
 			set
 			{
-				this._Rank_Connect_ParamType_Params.Assign(value);
+				this._Rank_Connect_ParamType_Param.Assign(value);
 			}
 		}
 		
@@ -14109,25 +14109,25 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_Rank_AutorsAndArticles(Rank_AutorsAndArticle entity)
+		private void attach_Rank_AutorsAndArticles(Rank_AutorsAndArticles entity)
 		{
 			this.SendPropertyChanging();
 			entity.Rank_Param_Type = this;
 		}
 		
-		private void detach_Rank_AutorsAndArticles(Rank_AutorsAndArticle entity)
+		private void detach_Rank_AutorsAndArticles(Rank_AutorsAndArticles entity)
 		{
 			this.SendPropertyChanging();
 			entity.Rank_Param_Type = null;
 		}
 		
-		private void attach_Rank_Connect_ParamType_Params(Rank_Connect_ParamType_Param entity)
+		private void attach_Rank_Connect_ParamType_Param(Rank_Connect_ParamType_Param entity)
 		{
 			this.SendPropertyChanging();
 			entity.Rank_Param_Type = this;
 		}
 		
-		private void detach_Rank_Connect_ParamType_Params(Rank_Connect_ParamType_Param entity)
+		private void detach_Rank_Connect_ParamType_Param(Rank_Connect_ParamType_Param entity)
 		{
 			this.SendPropertyChanging();
 			entity.Rank_Param_Type = null;
@@ -14135,7 +14135,7 @@ namespace PersonalPages
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rank_Parametrs")]
-	public partial class Rank_Parametr : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class Rank_Parametrs : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -14150,13 +14150,13 @@ namespace PersonalPages
 		
 		private string _Formula;
 		
-		private EntitySet<Rank_Article> _Rank_Articles;
+		private EntitySet<Rank_Articles> _Rank_Articles;
 		
-		private EntitySet<Rank_Collected_ParametrsValue> _Rank_Collected_ParametrsValues;
+		private EntitySet<Rank_Collected_ParametrsValue> _Rank_Collected_ParametrsValue;
 		
-		private EntitySet<Rank_Connect_ParamType_Param> _Rank_Connect_ParamType_Params;
+		private EntitySet<Rank_Connect_ParamType_Param> _Rank_Connect_ParamType_Param;
 		
-		private EntitySet<Rank_Point> _Rank_Points;
+		private EntitySet<Rank_Points> _Rank_Points;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -14174,12 +14174,12 @@ namespace PersonalPages
     partial void OnFormulaChanged();
     #endregion
 		
-		public Rank_Parametr()
+		public Rank_Parametrs()
 		{
-			this._Rank_Articles = new EntitySet<Rank_Article>(new Action<Rank_Article>(this.attach_Rank_Articles), new Action<Rank_Article>(this.detach_Rank_Articles));
-			this._Rank_Collected_ParametrsValues = new EntitySet<Rank_Collected_ParametrsValue>(new Action<Rank_Collected_ParametrsValue>(this.attach_Rank_Collected_ParametrsValues), new Action<Rank_Collected_ParametrsValue>(this.detach_Rank_Collected_ParametrsValues));
-			this._Rank_Connect_ParamType_Params = new EntitySet<Rank_Connect_ParamType_Param>(new Action<Rank_Connect_ParamType_Param>(this.attach_Rank_Connect_ParamType_Params), new Action<Rank_Connect_ParamType_Param>(this.detach_Rank_Connect_ParamType_Params));
-			this._Rank_Points = new EntitySet<Rank_Point>(new Action<Rank_Point>(this.attach_Rank_Points), new Action<Rank_Point>(this.detach_Rank_Points));
+			this._Rank_Articles = new EntitySet<Rank_Articles>(new Action<Rank_Articles>(this.attach_Rank_Articles), new Action<Rank_Articles>(this.detach_Rank_Articles));
+			this._Rank_Collected_ParametrsValue = new EntitySet<Rank_Collected_ParametrsValue>(new Action<Rank_Collected_ParametrsValue>(this.attach_Rank_Collected_ParametrsValue), new Action<Rank_Collected_ParametrsValue>(this.detach_Rank_Collected_ParametrsValue));
+			this._Rank_Connect_ParamType_Param = new EntitySet<Rank_Connect_ParamType_Param>(new Action<Rank_Connect_ParamType_Param>(this.attach_Rank_Connect_ParamType_Param), new Action<Rank_Connect_ParamType_Param>(this.detach_Rank_Connect_ParamType_Param));
+			this._Rank_Points = new EntitySet<Rank_Points>(new Action<Rank_Points>(this.attach_Rank_Points), new Action<Rank_Points>(this.detach_Rank_Points));
 			OnCreated();
 		}
 		
@@ -14283,8 +14283,8 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametr_Rank_Article", Storage="_Rank_Articles", ThisKey="ID", OtherKey="FK_Parametrs")]
-		public EntitySet<Rank_Article> Rank_Articles
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametrs_Rank_Articles", Storage="_Rank_Articles", ThisKey="ID", OtherKey="FK_Parametrs")]
+		public EntitySet<Rank_Articles> Rank_Articles
 		{
 			get
 			{
@@ -14296,34 +14296,34 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametr_Rank_Collected_ParametrsValue", Storage="_Rank_Collected_ParametrsValues", ThisKey="ID", OtherKey="FK_Parametrs")]
-		public EntitySet<Rank_Collected_ParametrsValue> Rank_Collected_ParametrsValues
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametrs_Rank_Collected_ParametrsValue", Storage="_Rank_Collected_ParametrsValue", ThisKey="ID", OtherKey="FK_Parametrs")]
+		public EntitySet<Rank_Collected_ParametrsValue> Rank_Collected_ParametrsValue
 		{
 			get
 			{
-				return this._Rank_Collected_ParametrsValues;
+				return this._Rank_Collected_ParametrsValue;
 			}
 			set
 			{
-				this._Rank_Collected_ParametrsValues.Assign(value);
+				this._Rank_Collected_ParametrsValue.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametr_Rank_Connect_ParamType_Param", Storage="_Rank_Connect_ParamType_Params", ThisKey="ID", OtherKey="FK_Parametrs")]
-		public EntitySet<Rank_Connect_ParamType_Param> Rank_Connect_ParamType_Params
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametrs_Rank_Connect_ParamType_Param", Storage="_Rank_Connect_ParamType_Param", ThisKey="ID", OtherKey="FK_Parametrs")]
+		public EntitySet<Rank_Connect_ParamType_Param> Rank_Connect_ParamType_Param
 		{
 			get
 			{
-				return this._Rank_Connect_ParamType_Params;
+				return this._Rank_Connect_ParamType_Param;
 			}
 			set
 			{
-				this._Rank_Connect_ParamType_Params.Assign(value);
+				this._Rank_Connect_ParamType_Param.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametr_Rank_Point", Storage="_Rank_Points", ThisKey="ID", OtherKey="FK_Parametrs")]
-		public EntitySet<Rank_Point> Rank_Points
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametrs_Rank_Points", Storage="_Rank_Points", ThisKey="ID", OtherKey="FK_Parametrs")]
+		public EntitySet<Rank_Points> Rank_Points
 		{
 			get
 			{
@@ -14355,57 +14355,57 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_Rank_Articles(Rank_Article entity)
+		private void attach_Rank_Articles(Rank_Articles entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Parametr = this;
+			entity.Rank_Parametrs = this;
 		}
 		
-		private void detach_Rank_Articles(Rank_Article entity)
+		private void detach_Rank_Articles(Rank_Articles entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Parametr = null;
+			entity.Rank_Parametrs = null;
 		}
 		
-		private void attach_Rank_Collected_ParametrsValues(Rank_Collected_ParametrsValue entity)
+		private void attach_Rank_Collected_ParametrsValue(Rank_Collected_ParametrsValue entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Parametr = this;
+			entity.Rank_Parametrs = this;
 		}
 		
-		private void detach_Rank_Collected_ParametrsValues(Rank_Collected_ParametrsValue entity)
+		private void detach_Rank_Collected_ParametrsValue(Rank_Collected_ParametrsValue entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Parametr = null;
+			entity.Rank_Parametrs = null;
 		}
 		
-		private void attach_Rank_Connect_ParamType_Params(Rank_Connect_ParamType_Param entity)
+		private void attach_Rank_Connect_ParamType_Param(Rank_Connect_ParamType_Param entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Parametr = this;
+			entity.Rank_Parametrs = this;
 		}
 		
-		private void detach_Rank_Connect_ParamType_Params(Rank_Connect_ParamType_Param entity)
+		private void detach_Rank_Connect_ParamType_Param(Rank_Connect_ParamType_Param entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Parametr = null;
+			entity.Rank_Parametrs = null;
 		}
 		
-		private void attach_Rank_Points(Rank_Point entity)
+		private void attach_Rank_Points(Rank_Points entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Parametr = this;
+			entity.Rank_Parametrs = this;
 		}
 		
-		private void detach_Rank_Points(Rank_Point entity)
+		private void detach_Rank_Points(Rank_Points entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Parametr = null;
+			entity.Rank_Parametrs = null;
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rank_Points")]
-	public partial class Rank_Point : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class Rank_Points : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -14420,7 +14420,7 @@ namespace PersonalPages
 		
 		private EntityRef<Rank_Mark> _Rank_Mark;
 		
-		private EntityRef<Rank_Parametr> _Rank_Parametr;
+		private EntityRef<Rank_Parametrs> _Rank_Parametrs;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -14436,10 +14436,10 @@ namespace PersonalPages
     partial void OnFK_ParametrsChanged();
     #endregion
 		
-		public Rank_Point()
+		public Rank_Points()
 		{
 			this._Rank_Mark = default(EntityRef<Rank_Mark>);
-			this._Rank_Parametr = default(EntityRef<Rank_Parametr>);
+			this._Rank_Parametrs = default(EntityRef<Rank_Parametrs>);
 			OnCreated();
 		}
 		
@@ -14518,7 +14518,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_Parametrs != value))
 				{
-					if (this._Rank_Parametr.HasLoadedOrAssignedValue)
+					if (this._Rank_Parametrs.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -14531,7 +14531,7 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Mark_Rank_Point", Storage="_Rank_Mark", ThisKey="FK_Mark", OtherKey="ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Mark_Rank_Points", Storage="_Rank_Mark", ThisKey="FK_Mark", OtherKey="ID", IsForeignKey=true)]
 		public Rank_Mark Rank_Mark
 		{
 			get
@@ -14565,26 +14565,26 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametr_Rank_Point", Storage="_Rank_Parametr", ThisKey="FK_Parametrs", OtherKey="ID", IsForeignKey=true)]
-		public Rank_Parametr Rank_Parametr
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametrs_Rank_Points", Storage="_Rank_Parametrs", ThisKey="FK_Parametrs", OtherKey="ID", IsForeignKey=true)]
+		public Rank_Parametrs Rank_Parametrs
 		{
 			get
 			{
-				return this._Rank_Parametr.Entity;
+				return this._Rank_Parametrs.Entity;
 			}
 			set
 			{
-				Rank_Parametr previousValue = this._Rank_Parametr.Entity;
+				Rank_Parametrs previousValue = this._Rank_Parametrs.Entity;
 				if (((previousValue != value) 
-							|| (this._Rank_Parametr.HasLoadedOrAssignedValue == false)))
+							|| (this._Rank_Parametrs.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Rank_Parametr.Entity = null;
+						this._Rank_Parametrs.Entity = null;
 						previousValue.Rank_Points.Remove(this);
 					}
-					this._Rank_Parametr.Entity = value;
+					this._Rank_Parametrs.Entity = value;
 					if ((value != null))
 					{
 						value.Rank_Points.Add(this);
@@ -14594,7 +14594,7 @@ namespace PersonalPages
 					{
 						this._FK_Parametrs = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Rank_Parametr");
+					this.SendPropertyChanged("Rank_Parametrs");
 				}
 			}
 		}
@@ -14621,7 +14621,7 @@ namespace PersonalPages
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rank_Positions")]
-	public partial class Rank_Position : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class Rank_Positions : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -14632,7 +14632,7 @@ namespace PersonalPages
 		
 		private string _Position;
 		
-		private EntitySet<Rank_Autor> _Rank_Autors;
+		private EntitySet<Rank_Autors> _Rank_Autors;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -14646,9 +14646,9 @@ namespace PersonalPages
     partial void OnPositionChanged();
     #endregion
 		
-		public Rank_Position()
+		public Rank_Positions()
 		{
-			this._Rank_Autors = new EntitySet<Rank_Autor>(new Action<Rank_Autor>(this.attach_Rank_Autors), new Action<Rank_Autor>(this.detach_Rank_Autors));
+			this._Rank_Autors = new EntitySet<Rank_Autors>(new Action<Rank_Autors>(this.attach_Rank_Autors), new Action<Rank_Autors>(this.detach_Rank_Autors));
 			OnCreated();
 		}
 		
@@ -14712,8 +14712,8 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Position_Rank_Autor", Storage="_Rank_Autors", ThisKey="ID", OtherKey="FK_Positions")]
-		public EntitySet<Rank_Autor> Rank_Autors
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Positions_Rank_Autors", Storage="_Rank_Autors", ThisKey="ID", OtherKey="FK_Positions")]
+		public EntitySet<Rank_Autors> Rank_Autors
 		{
 			get
 			{
@@ -14745,16 +14745,16 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_Rank_Autors(Rank_Autor entity)
+		private void attach_Rank_Autors(Rank_Autors entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Position = this;
+			entity.Rank_Positions = this;
 		}
 		
-		private void detach_Rank_Autors(Rank_Autor entity)
+		private void detach_Rank_Autors(Rank_Autors entity)
 		{
 			this.SendPropertyChanging();
-			entity.Rank_Position = null;
+			entity.Rank_Positions = null;
 		}
 	}
 	
@@ -14774,7 +14774,7 @@ namespace PersonalPages
 		
 		private System.Nullable<double> _Raiting_Value;
 		
-		private EntityRef<Rank_Autor> _Rank_Autor;
+		private EntityRef<Rank_Autors> _Rank_Autors;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -14794,7 +14794,7 @@ namespace PersonalPages
 		
 		public Rank_Raiting_History()
 		{
-			this._Rank_Autor = default(EntityRef<Rank_Autor>);
+			this._Rank_Autors = default(EntityRef<Rank_Autors>);
 			OnCreated();
 		}
 		
@@ -14849,7 +14849,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_Autor != value))
 				{
-					if (this._Rank_Autor.HasLoadedOrAssignedValue)
+					if (this._Rank_Autors.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -14902,36 +14902,36 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Autor_Rank_Raiting_History", Storage="_Rank_Autor", ThisKey="FK_Autor", OtherKey="ID_Autor", IsForeignKey=true)]
-		public Rank_Autor Rank_Autor
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Autors_Rank_Raiting_History", Storage="_Rank_Autors", ThisKey="FK_Autor", OtherKey="ID_Autor", IsForeignKey=true)]
+		public Rank_Autors Rank_Autors
 		{
 			get
 			{
-				return this._Rank_Autor.Entity;
+				return this._Rank_Autors.Entity;
 			}
 			set
 			{
-				Rank_Autor previousValue = this._Rank_Autor.Entity;
+				Rank_Autors previousValue = this._Rank_Autors.Entity;
 				if (((previousValue != value) 
-							|| (this._Rank_Autor.HasLoadedOrAssignedValue == false)))
+							|| (this._Rank_Autors.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Rank_Autor.Entity = null;
-						previousValue.Rank_Raiting_Histories.Remove(this);
+						this._Rank_Autors.Entity = null;
+						previousValue.Rank_Raiting_History.Remove(this);
 					}
-					this._Rank_Autor.Entity = value;
+					this._Rank_Autors.Entity = value;
 					if ((value != null))
 					{
-						value.Rank_Raiting_Histories.Add(this);
+						value.Rank_Raiting_History.Add(this);
 						this._FK_Autor = value.ID_Autor;
 					}
 					else
 					{
 						this._FK_Autor = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Rank_Autor");
+					this.SendPropertyChanged("Rank_Autors");
 				}
 			}
 		}
@@ -14958,7 +14958,7 @@ namespace PersonalPages
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rank_StructureRaitings")]
-	public partial class Rank_StructureRaiting : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class Rank_StructureRaitings : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -14999,7 +14999,7 @@ namespace PersonalPages
     partial void OnValueChanged();
     #endregion
 		
-		public Rank_StructureRaiting()
+		public Rank_StructureRaitings()
 		{
 			this._FirstLevelSubdivisionTable = default(EntityRef<FirstLevelSubdivisionTable>);
 			this._SecondLevelSubdivisionTable = default(EntityRef<SecondLevelSubdivisionTable>);
@@ -15139,7 +15139,7 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_Rank_StructureRaiting", Storage="_FirstLevelSubdivisionTable", ThisKey="FK_FirstLevel", OtherKey="FirstLevelSubdivisionTableID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_Rank_StructureRaitings", Storage="_FirstLevelSubdivisionTable", ThisKey="FK_FirstLevel", OtherKey="FirstLevelSubdivisionTableID", IsForeignKey=true)]
 		public FirstLevelSubdivisionTable FirstLevelSubdivisionTable
 		{
 			get
@@ -15173,7 +15173,7 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_Rank_StructureRaiting", Storage="_SecondLevelSubdivisionTable", ThisKey="FK_SecondLevel", OtherKey="SecondLevelSubdivisionTableID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_Rank_StructureRaitings", Storage="_SecondLevelSubdivisionTable", ThisKey="FK_SecondLevel", OtherKey="SecondLevelSubdivisionTableID", IsForeignKey=true)]
 		public SecondLevelSubdivisionTable SecondLevelSubdivisionTable
 		{
 			get
@@ -15207,7 +15207,7 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_Rank_StructureRaiting", Storage="_ThirdLevelSubdivisionTable", ThisKey="FK_ThirdLevel", OtherKey="ThirdLevelSubdivisionTableID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_Rank_StructureRaitings", Storage="_ThirdLevelSubdivisionTable", ThisKey="FK_ThirdLevel", OtherKey="ThirdLevelSubdivisionTableID", IsForeignKey=true)]
 		public ThirdLevelSubdivisionTable ThirdLevelSubdivisionTable
 		{
 			get
@@ -15406,12 +15406,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._BasicParametersTable.Entity = null;
-						previousValue.ReportArchiveAndBasicParametrsMappingTables.Remove(this);
+						previousValue.ReportArchiveAndBasicParametrsMappingTable.Remove(this);
 					}
 					this._BasicParametersTable.Entity = value;
 					if ((value != null))
 					{
-						value.ReportArchiveAndBasicParametrsMappingTables.Add(this);
+						value.ReportArchiveAndBasicParametrsMappingTable.Add(this);
 						this._FK_BasicParametrsTable = value.BasicParametersTableID;
 					}
 					else
@@ -15440,12 +15440,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ReportArchiveTable.Entity = null;
-						previousValue.ReportArchiveAndBasicParametrsMappingTables.Remove(this);
+						previousValue.ReportArchiveAndBasicParametrsMappingTable.Remove(this);
 					}
 					this._ReportArchiveTable.Entity = value;
 					if ((value != null))
 					{
-						value.ReportArchiveAndBasicParametrsMappingTables.Add(this);
+						value.ReportArchiveAndBasicParametrsMappingTable.Add(this);
 						this._FK_ReportArchiveTable = value.ReportArchiveTableID;
 					}
 					else
@@ -15492,7 +15492,7 @@ namespace PersonalPages
 		
 		private int _FK_CalculatedParametrsTable;
 		
-		private EntityRef<CalculatedParametr> _CalculatedParametr;
+		private EntityRef<CalculatedParametrs> _CalculatedParametrs;
 		
 		private EntityRef<ReportArchiveTable> _ReportArchiveTable;
 		
@@ -15512,7 +15512,7 @@ namespace PersonalPages
 		
 		public ReportArchiveAndCalculatedParametrsMappingTable()
 		{
-			this._CalculatedParametr = default(EntityRef<CalculatedParametr>);
+			this._CalculatedParametrs = default(EntityRef<CalculatedParametrs>);
 			this._ReportArchiveTable = default(EntityRef<ReportArchiveTable>);
 			OnCreated();
 		}
@@ -15592,7 +15592,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_CalculatedParametrsTable != value))
 				{
-					if (this._CalculatedParametr.HasLoadedOrAssignedValue)
+					if (this._CalculatedParametrs.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -15605,36 +15605,36 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametr_ReportArchiveAndCalculatedParametrsMappingTable", Storage="_CalculatedParametr", ThisKey="FK_CalculatedParametrsTable", OtherKey="CalculatedParametrsID", IsForeignKey=true)]
-		public CalculatedParametr CalculatedParametr
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CalculatedParametrs_ReportArchiveAndCalculatedParametrsMappingTable", Storage="_CalculatedParametrs", ThisKey="FK_CalculatedParametrsTable", OtherKey="CalculatedParametrsID", IsForeignKey=true)]
+		public CalculatedParametrs CalculatedParametrs
 		{
 			get
 			{
-				return this._CalculatedParametr.Entity;
+				return this._CalculatedParametrs.Entity;
 			}
 			set
 			{
-				CalculatedParametr previousValue = this._CalculatedParametr.Entity;
+				CalculatedParametrs previousValue = this._CalculatedParametrs.Entity;
 				if (((previousValue != value) 
-							|| (this._CalculatedParametr.HasLoadedOrAssignedValue == false)))
+							|| (this._CalculatedParametrs.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._CalculatedParametr.Entity = null;
-						previousValue.ReportArchiveAndCalculatedParametrsMappingTables.Remove(this);
+						this._CalculatedParametrs.Entity = null;
+						previousValue.ReportArchiveAndCalculatedParametrsMappingTable.Remove(this);
 					}
-					this._CalculatedParametr.Entity = value;
+					this._CalculatedParametrs.Entity = value;
 					if ((value != null))
 					{
-						value.ReportArchiveAndCalculatedParametrsMappingTables.Add(this);
+						value.ReportArchiveAndCalculatedParametrsMappingTable.Add(this);
 						this._FK_CalculatedParametrsTable = value.CalculatedParametrsID;
 					}
 					else
 					{
 						this._FK_CalculatedParametrsTable = default(int);
 					}
-					this.SendPropertyChanged("CalculatedParametr");
+					this.SendPropertyChanged("CalculatedParametrs");
 				}
 			}
 		}
@@ -15656,12 +15656,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ReportArchiveTable.Entity = null;
-						previousValue.ReportArchiveAndCalculatedParametrsMappingTables.Remove(this);
+						previousValue.ReportArchiveAndCalculatedParametrsMappingTable.Remove(this);
 					}
 					this._ReportArchiveTable.Entity = value;
 					if ((value != null))
 					{
-						value.ReportArchiveAndCalculatedParametrsMappingTables.Add(this);
+						value.ReportArchiveAndCalculatedParametrsMappingTable.Add(this);
 						this._FK_ReportArchiveTable = value.ReportArchiveTableID;
 					}
 					else
@@ -15838,12 +15838,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._IndicatorsTable.Entity = null;
-						previousValue.ReportArchiveAndIndicatorsMappingTables.Remove(this);
+						previousValue.ReportArchiveAndIndicatorsMappingTable.Remove(this);
 					}
 					this._IndicatorsTable.Entity = value;
 					if ((value != null))
 					{
-						value.ReportArchiveAndIndicatorsMappingTables.Add(this);
+						value.ReportArchiveAndIndicatorsMappingTable.Add(this);
 						this._FK_IndicatorsTable = value.IndicatorsTableID;
 					}
 					else
@@ -15872,12 +15872,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ReportArchiveTable.Entity = null;
-						previousValue.ReportArchiveAndIndicatorsMappingTables.Remove(this);
+						previousValue.ReportArchiveAndIndicatorsMappingTable.Remove(this);
 					}
 					this._ReportArchiveTable.Entity = value;
 					if ((value != null))
 					{
-						value.ReportArchiveAndIndicatorsMappingTables.Add(this);
+						value.ReportArchiveAndIndicatorsMappingTable.Add(this);
 						this._FK_ReportArchiveTable = value.ReportArchiveTableID;
 					}
 					else
@@ -16178,12 +16178,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FifthLevelSubdivisionTable.Entity = null;
-						previousValue.ReportArchiveAndLevelMappingTables.Remove(this);
+						previousValue.ReportArchiveAndLevelMappingTable.Remove(this);
 					}
 					this._FifthLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.ReportArchiveAndLevelMappingTables.Add(this);
+						value.ReportArchiveAndLevelMappingTable.Add(this);
 						this._FK_FifthLevelSubdivisionTable = value.FifthLevelSubdivisionTableID;
 					}
 					else
@@ -16212,12 +16212,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FirstLevelSubdivisionTable.Entity = null;
-						previousValue.ReportArchiveAndLevelMappingTables.Remove(this);
+						previousValue.ReportArchiveAndLevelMappingTable.Remove(this);
 					}
 					this._FirstLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.ReportArchiveAndLevelMappingTables.Add(this);
+						value.ReportArchiveAndLevelMappingTable.Add(this);
 						this._FK_FirstLevelSubmisionTableId = value.FirstLevelSubdivisionTableID;
 					}
 					else
@@ -16246,12 +16246,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FourthLevelSubdivisionTable.Entity = null;
-						previousValue.ReportArchiveAndLevelMappingTables.Remove(this);
+						previousValue.ReportArchiveAndLevelMappingTable.Remove(this);
 					}
 					this._FourthLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.ReportArchiveAndLevelMappingTables.Add(this);
+						value.ReportArchiveAndLevelMappingTable.Add(this);
 						this._FK_FourthLevelSubdivisionTable = value.FourthLevelSubdivisionTableID;
 					}
 					else
@@ -16280,12 +16280,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ReportArchiveTable.Entity = null;
-						previousValue.ReportArchiveAndLevelMappingTables.Remove(this);
+						previousValue.ReportArchiveAndLevelMappingTable.Remove(this);
 					}
 					this._ReportArchiveTable.Entity = value;
 					if ((value != null))
 					{
-						value.ReportArchiveAndLevelMappingTables.Add(this);
+						value.ReportArchiveAndLevelMappingTable.Add(this);
 						this._FK_ReportArchiveTableId = value.ReportArchiveTableID;
 					}
 					else
@@ -16314,12 +16314,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._SecondLevelSubdivisionTable.Entity = null;
-						previousValue.ReportArchiveAndLevelMappingTables.Remove(this);
+						previousValue.ReportArchiveAndLevelMappingTable.Remove(this);
 					}
 					this._SecondLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.ReportArchiveAndLevelMappingTables.Add(this);
+						value.ReportArchiveAndLevelMappingTable.Add(this);
 						this._FK_SecondLevelSubdivisionTable = value.SecondLevelSubdivisionTableID;
 					}
 					else
@@ -16348,12 +16348,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ThirdLevelSubdivisionTable.Entity = null;
-						previousValue.ReportArchiveAndLevelMappingTables.Remove(this);
+						previousValue.ReportArchiveAndLevelMappingTable.Remove(this);
 					}
 					this._ThirdLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.ReportArchiveAndLevelMappingTables.Add(this);
+						value.ReportArchiveAndLevelMappingTable.Add(this);
 						this._FK_ThirdLevelSubdivisionTable = value.ThirdLevelSubdivisionTableID;
 					}
 					else
@@ -16420,27 +16420,27 @@ namespace PersonalPages
 		
 		private System.Nullable<bool> _OnlyForProrector;
 		
-		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTables;
+		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
-		private EntitySet<CollectedCalculatedParametr> _CollectedCalculatedParametrs;
+		private EntitySet<CollectedCalculatedParametrs> _CollectedCalculatedParametrs;
 		
-		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForRs;
+		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
 		
-		private EntitySet<CollectedIndocator> _CollectedIndocators;
+		private EntitySet<CollectedIndocators> _CollectedIndocators;
 		
-		private EntitySet<CommetntForBasicInReport> _CommetntForBasicInReports;
+		private EntitySet<CommetntForBasicInReport> _CommetntForBasicInReport;
 		
-		private EntitySet<ConfirmationHistory> _ConfirmationHistories;
+		private EntitySet<ConfirmationHistory> _ConfirmationHistory;
 		
-		private EntitySet<EmailSendHistory> _EmailSendHistories;
+		private EntitySet<EmailSendHistory> _EmailSendHistory;
 		
-		private EntitySet<ReportArchiveAndBasicParametrsMappingTable> _ReportArchiveAndBasicParametrsMappingTables;
+		private EntitySet<ReportArchiveAndBasicParametrsMappingTable> _ReportArchiveAndBasicParametrsMappingTable;
 		
-		private EntitySet<ReportArchiveAndCalculatedParametrsMappingTable> _ReportArchiveAndCalculatedParametrsMappingTables;
+		private EntitySet<ReportArchiveAndCalculatedParametrsMappingTable> _ReportArchiveAndCalculatedParametrsMappingTable;
 		
-		private EntitySet<ReportArchiveAndIndicatorsMappingTable> _ReportArchiveAndIndicatorsMappingTables;
+		private EntitySet<ReportArchiveAndIndicatorsMappingTable> _ReportArchiveAndIndicatorsMappingTable;
 		
-		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTables;
+		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -16478,17 +16478,17 @@ namespace PersonalPages
 		
 		public ReportArchiveTable()
 		{
-			this._CollectedBasicParametersTables = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTables), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTables));
-			this._CollectedCalculatedParametrs = new EntitySet<CollectedCalculatedParametr>(new Action<CollectedCalculatedParametr>(this.attach_CollectedCalculatedParametrs), new Action<CollectedCalculatedParametr>(this.detach_CollectedCalculatedParametrs));
-			this._CollectedIndicatorsForRs = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForRs), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForRs));
-			this._CollectedIndocators = new EntitySet<CollectedIndocator>(new Action<CollectedIndocator>(this.attach_CollectedIndocators), new Action<CollectedIndocator>(this.detach_CollectedIndocators));
-			this._CommetntForBasicInReports = new EntitySet<CommetntForBasicInReport>(new Action<CommetntForBasicInReport>(this.attach_CommetntForBasicInReports), new Action<CommetntForBasicInReport>(this.detach_CommetntForBasicInReports));
-			this._ConfirmationHistories = new EntitySet<ConfirmationHistory>(new Action<ConfirmationHistory>(this.attach_ConfirmationHistories), new Action<ConfirmationHistory>(this.detach_ConfirmationHistories));
-			this._EmailSendHistories = new EntitySet<EmailSendHistory>(new Action<EmailSendHistory>(this.attach_EmailSendHistories), new Action<EmailSendHistory>(this.detach_EmailSendHistories));
-			this._ReportArchiveAndBasicParametrsMappingTables = new EntitySet<ReportArchiveAndBasicParametrsMappingTable>(new Action<ReportArchiveAndBasicParametrsMappingTable>(this.attach_ReportArchiveAndBasicParametrsMappingTables), new Action<ReportArchiveAndBasicParametrsMappingTable>(this.detach_ReportArchiveAndBasicParametrsMappingTables));
-			this._ReportArchiveAndCalculatedParametrsMappingTables = new EntitySet<ReportArchiveAndCalculatedParametrsMappingTable>(new Action<ReportArchiveAndCalculatedParametrsMappingTable>(this.attach_ReportArchiveAndCalculatedParametrsMappingTables), new Action<ReportArchiveAndCalculatedParametrsMappingTable>(this.detach_ReportArchiveAndCalculatedParametrsMappingTables));
-			this._ReportArchiveAndIndicatorsMappingTables = new EntitySet<ReportArchiveAndIndicatorsMappingTable>(new Action<ReportArchiveAndIndicatorsMappingTable>(this.attach_ReportArchiveAndIndicatorsMappingTables), new Action<ReportArchiveAndIndicatorsMappingTable>(this.detach_ReportArchiveAndIndicatorsMappingTables));
-			this._ReportArchiveAndLevelMappingTables = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTables), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTables));
+			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
+			this._CollectedCalculatedParametrs = new EntitySet<CollectedCalculatedParametrs>(new Action<CollectedCalculatedParametrs>(this.attach_CollectedCalculatedParametrs), new Action<CollectedCalculatedParametrs>(this.detach_CollectedCalculatedParametrs));
+			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
+			this._CollectedIndocators = new EntitySet<CollectedIndocators>(new Action<CollectedIndocators>(this.attach_CollectedIndocators), new Action<CollectedIndocators>(this.detach_CollectedIndocators));
+			this._CommetntForBasicInReport = new EntitySet<CommetntForBasicInReport>(new Action<CommetntForBasicInReport>(this.attach_CommetntForBasicInReport), new Action<CommetntForBasicInReport>(this.detach_CommetntForBasicInReport));
+			this._ConfirmationHistory = new EntitySet<ConfirmationHistory>(new Action<ConfirmationHistory>(this.attach_ConfirmationHistory), new Action<ConfirmationHistory>(this.detach_ConfirmationHistory));
+			this._EmailSendHistory = new EntitySet<EmailSendHistory>(new Action<EmailSendHistory>(this.attach_EmailSendHistory), new Action<EmailSendHistory>(this.detach_EmailSendHistory));
+			this._ReportArchiveAndBasicParametrsMappingTable = new EntitySet<ReportArchiveAndBasicParametrsMappingTable>(new Action<ReportArchiveAndBasicParametrsMappingTable>(this.attach_ReportArchiveAndBasicParametrsMappingTable), new Action<ReportArchiveAndBasicParametrsMappingTable>(this.detach_ReportArchiveAndBasicParametrsMappingTable));
+			this._ReportArchiveAndCalculatedParametrsMappingTable = new EntitySet<ReportArchiveAndCalculatedParametrsMappingTable>(new Action<ReportArchiveAndCalculatedParametrsMappingTable>(this.attach_ReportArchiveAndCalculatedParametrsMappingTable), new Action<ReportArchiveAndCalculatedParametrsMappingTable>(this.detach_ReportArchiveAndCalculatedParametrsMappingTable));
+			this._ReportArchiveAndIndicatorsMappingTable = new EntitySet<ReportArchiveAndIndicatorsMappingTable>(new Action<ReportArchiveAndIndicatorsMappingTable>(this.attach_ReportArchiveAndIndicatorsMappingTable), new Action<ReportArchiveAndIndicatorsMappingTable>(this.detach_ReportArchiveAndIndicatorsMappingTable));
+			this._ReportArchiveAndLevelMappingTable = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTable), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTable));
 			OnCreated();
 		}
 		
@@ -16772,21 +16772,21 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTables", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
-		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTable", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
+		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTable
 		{
 			get
 			{
-				return this._CollectedBasicParametersTables;
+				return this._CollectedBasicParametersTable;
 			}
 			set
 			{
-				this._CollectedBasicParametersTables.Assign(value);
+				this._CollectedBasicParametersTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedCalculatedParametr", Storage="_CollectedCalculatedParametrs", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
-		public EntitySet<CollectedCalculatedParametr> CollectedCalculatedParametrs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedCalculatedParametrs", Storage="_CollectedCalculatedParametrs", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
+		public EntitySet<CollectedCalculatedParametrs> CollectedCalculatedParametrs
 		{
 			get
 			{
@@ -16798,21 +16798,21 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForRs", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
-		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForRs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
+		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
 		{
 			get
 			{
-				return this._CollectedIndicatorsForRs;
+				return this._CollectedIndicatorsForR;
 			}
 			set
 			{
-				this._CollectedIndicatorsForRs.Assign(value);
+				this._CollectedIndicatorsForR.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedIndocator", Storage="_CollectedIndocators", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
-		public EntitySet<CollectedIndocator> CollectedIndocators
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CollectedIndocators", Storage="_CollectedIndocators", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
+		public EntitySet<CollectedIndocators> CollectedIndocators
 		{
 			get
 			{
@@ -16824,94 +16824,94 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CommetntForBasicInReport", Storage="_CommetntForBasicInReports", ThisKey="ReportArchiveTableID", OtherKey="FK_Report")]
-		public EntitySet<CommetntForBasicInReport> CommetntForBasicInReports
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_CommetntForBasicInReport", Storage="_CommetntForBasicInReport", ThisKey="ReportArchiveTableID", OtherKey="FK_Report")]
+		public EntitySet<CommetntForBasicInReport> CommetntForBasicInReport
 		{
 			get
 			{
-				return this._CommetntForBasicInReports;
+				return this._CommetntForBasicInReport;
 			}
 			set
 			{
-				this._CommetntForBasicInReports.Assign(value);
+				this._CommetntForBasicInReport.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ConfirmationHistory", Storage="_ConfirmationHistories", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportTable")]
-		public EntitySet<ConfirmationHistory> ConfirmationHistories
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ConfirmationHistory", Storage="_ConfirmationHistory", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportTable")]
+		public EntitySet<ConfirmationHistory> ConfirmationHistory
 		{
 			get
 			{
-				return this._ConfirmationHistories;
+				return this._ConfirmationHistory;
 			}
 			set
 			{
-				this._ConfirmationHistories.Assign(value);
+				this._ConfirmationHistory.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_EmailSendHistory", Storage="_EmailSendHistories", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportsArchiveTable")]
-		public EntitySet<EmailSendHistory> EmailSendHistories
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_EmailSendHistory", Storage="_EmailSendHistory", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportsArchiveTable")]
+		public EntitySet<EmailSendHistory> EmailSendHistory
 		{
 			get
 			{
-				return this._EmailSendHistories;
+				return this._EmailSendHistory;
 			}
 			set
 			{
-				this._EmailSendHistories.Assign(value);
+				this._EmailSendHistory.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ReportArchiveAndBasicParametrsMappingTable", Storage="_ReportArchiveAndBasicParametrsMappingTables", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
-		public EntitySet<ReportArchiveAndBasicParametrsMappingTable> ReportArchiveAndBasicParametrsMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ReportArchiveAndBasicParametrsMappingTable", Storage="_ReportArchiveAndBasicParametrsMappingTable", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
+		public EntitySet<ReportArchiveAndBasicParametrsMappingTable> ReportArchiveAndBasicParametrsMappingTable
 		{
 			get
 			{
-				return this._ReportArchiveAndBasicParametrsMappingTables;
+				return this._ReportArchiveAndBasicParametrsMappingTable;
 			}
 			set
 			{
-				this._ReportArchiveAndBasicParametrsMappingTables.Assign(value);
+				this._ReportArchiveAndBasicParametrsMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ReportArchiveAndCalculatedParametrsMappingTable", Storage="_ReportArchiveAndCalculatedParametrsMappingTables", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
-		public EntitySet<ReportArchiveAndCalculatedParametrsMappingTable> ReportArchiveAndCalculatedParametrsMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ReportArchiveAndCalculatedParametrsMappingTable", Storage="_ReportArchiveAndCalculatedParametrsMappingTable", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
+		public EntitySet<ReportArchiveAndCalculatedParametrsMappingTable> ReportArchiveAndCalculatedParametrsMappingTable
 		{
 			get
 			{
-				return this._ReportArchiveAndCalculatedParametrsMappingTables;
+				return this._ReportArchiveAndCalculatedParametrsMappingTable;
 			}
 			set
 			{
-				this._ReportArchiveAndCalculatedParametrsMappingTables.Assign(value);
+				this._ReportArchiveAndCalculatedParametrsMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ReportArchiveAndIndicatorsMappingTable", Storage="_ReportArchiveAndIndicatorsMappingTables", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
-		public EntitySet<ReportArchiveAndIndicatorsMappingTable> ReportArchiveAndIndicatorsMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ReportArchiveAndIndicatorsMappingTable", Storage="_ReportArchiveAndIndicatorsMappingTable", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTable")]
+		public EntitySet<ReportArchiveAndIndicatorsMappingTable> ReportArchiveAndIndicatorsMappingTable
 		{
 			get
 			{
-				return this._ReportArchiveAndIndicatorsMappingTables;
+				return this._ReportArchiveAndIndicatorsMappingTable;
 			}
 			set
 			{
-				this._ReportArchiveAndIndicatorsMappingTables.Assign(value);
+				this._ReportArchiveAndIndicatorsMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTables", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTableId")]
-		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ReportArchiveTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTable", ThisKey="ReportArchiveTableID", OtherKey="FK_ReportArchiveTableId")]
+		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTable
 		{
 			get
 			{
-				return this._ReportArchiveAndLevelMappingTables;
+				return this._ReportArchiveAndLevelMappingTable;
 			}
 			set
 			{
-				this._ReportArchiveAndLevelMappingTables.Assign(value);
+				this._ReportArchiveAndLevelMappingTable.Assign(value);
 			}
 		}
 		
@@ -16935,133 +16935,133 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void attach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = this;
 		}
 		
-		private void detach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void detach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = null;
 		}
 		
-		private void attach_CollectedCalculatedParametrs(CollectedCalculatedParametr entity)
+		private void attach_CollectedCalculatedParametrs(CollectedCalculatedParametrs entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = this;
 		}
 		
-		private void detach_CollectedCalculatedParametrs(CollectedCalculatedParametr entity)
+		private void detach_CollectedCalculatedParametrs(CollectedCalculatedParametrs entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = null;
 		}
 		
-		private void attach_CollectedIndicatorsForRs(CollectedIndicatorsForR entity)
+		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = this;
 		}
 		
-		private void detach_CollectedIndicatorsForRs(CollectedIndicatorsForR entity)
+		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = null;
 		}
 		
-		private void attach_CollectedIndocators(CollectedIndocator entity)
+		private void attach_CollectedIndocators(CollectedIndocators entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = this;
 		}
 		
-		private void detach_CollectedIndocators(CollectedIndocator entity)
+		private void detach_CollectedIndocators(CollectedIndocators entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = null;
 		}
 		
-		private void attach_CommetntForBasicInReports(CommetntForBasicInReport entity)
+		private void attach_CommetntForBasicInReport(CommetntForBasicInReport entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = this;
 		}
 		
-		private void detach_CommetntForBasicInReports(CommetntForBasicInReport entity)
+		private void detach_CommetntForBasicInReport(CommetntForBasicInReport entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = null;
 		}
 		
-		private void attach_ConfirmationHistories(ConfirmationHistory entity)
+		private void attach_ConfirmationHistory(ConfirmationHistory entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = this;
 		}
 		
-		private void detach_ConfirmationHistories(ConfirmationHistory entity)
+		private void detach_ConfirmationHistory(ConfirmationHistory entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = null;
 		}
 		
-		private void attach_EmailSendHistories(EmailSendHistory entity)
+		private void attach_EmailSendHistory(EmailSendHistory entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = this;
 		}
 		
-		private void detach_EmailSendHistories(EmailSendHistory entity)
+		private void detach_EmailSendHistory(EmailSendHistory entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = null;
 		}
 		
-		private void attach_ReportArchiveAndBasicParametrsMappingTables(ReportArchiveAndBasicParametrsMappingTable entity)
+		private void attach_ReportArchiveAndBasicParametrsMappingTable(ReportArchiveAndBasicParametrsMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = this;
 		}
 		
-		private void detach_ReportArchiveAndBasicParametrsMappingTables(ReportArchiveAndBasicParametrsMappingTable entity)
+		private void detach_ReportArchiveAndBasicParametrsMappingTable(ReportArchiveAndBasicParametrsMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = null;
 		}
 		
-		private void attach_ReportArchiveAndCalculatedParametrsMappingTables(ReportArchiveAndCalculatedParametrsMappingTable entity)
+		private void attach_ReportArchiveAndCalculatedParametrsMappingTable(ReportArchiveAndCalculatedParametrsMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = this;
 		}
 		
-		private void detach_ReportArchiveAndCalculatedParametrsMappingTables(ReportArchiveAndCalculatedParametrsMappingTable entity)
+		private void detach_ReportArchiveAndCalculatedParametrsMappingTable(ReportArchiveAndCalculatedParametrsMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = null;
 		}
 		
-		private void attach_ReportArchiveAndIndicatorsMappingTables(ReportArchiveAndIndicatorsMappingTable entity)
+		private void attach_ReportArchiveAndIndicatorsMappingTable(ReportArchiveAndIndicatorsMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = this;
 		}
 		
-		private void detach_ReportArchiveAndIndicatorsMappingTables(ReportArchiveAndIndicatorsMappingTable entity)
+		private void detach_ReportArchiveAndIndicatorsMappingTable(ReportArchiveAndIndicatorsMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = null;
 		}
 		
-		private void attach_ReportArchiveAndLevelMappingTables(ReportArchiveAndLevelMappingTable entity)
+		private void attach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = this;
 		}
 		
-		private void detach_ReportArchiveAndLevelMappingTables(ReportArchiveAndLevelMappingTable entity)
+		private void detach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ReportArchiveTable = null;
@@ -17082,11 +17082,11 @@ namespace PersonalPages
 		
 		private System.Nullable<bool> _IsHead;
 		
-		private EntitySet<BasicParametersAndRolesMappingTable> _BasicParametersAndRolesMappingTables;
+		private EntitySet<BasicParametersAndRolesMappingTable> _BasicParametersAndRolesMappingTable;
 		
-		private EntitySet<CalculatedParametrsAndRolesMappingTable> _CalculatedParametrsAndRolesMappingTables;
+		private EntitySet<CalculatedParametrsAndRolesMappingTable> _CalculatedParametrsAndRolesMappingTable;
 		
-		private EntitySet<IndicatorsAndRolesMappingTable> _IndicatorsAndRolesMappingTables;
+		private EntitySet<IndicatorsAndRolesMappingTable> _IndicatorsAndRolesMappingTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -17104,9 +17104,9 @@ namespace PersonalPages
 		
 		public RolesTable()
 		{
-			this._BasicParametersAndRolesMappingTables = new EntitySet<BasicParametersAndRolesMappingTable>(new Action<BasicParametersAndRolesMappingTable>(this.attach_BasicParametersAndRolesMappingTables), new Action<BasicParametersAndRolesMappingTable>(this.detach_BasicParametersAndRolesMappingTables));
-			this._CalculatedParametrsAndRolesMappingTables = new EntitySet<CalculatedParametrsAndRolesMappingTable>(new Action<CalculatedParametrsAndRolesMappingTable>(this.attach_CalculatedParametrsAndRolesMappingTables), new Action<CalculatedParametrsAndRolesMappingTable>(this.detach_CalculatedParametrsAndRolesMappingTables));
-			this._IndicatorsAndRolesMappingTables = new EntitySet<IndicatorsAndRolesMappingTable>(new Action<IndicatorsAndRolesMappingTable>(this.attach_IndicatorsAndRolesMappingTables), new Action<IndicatorsAndRolesMappingTable>(this.detach_IndicatorsAndRolesMappingTables));
+			this._BasicParametersAndRolesMappingTable = new EntitySet<BasicParametersAndRolesMappingTable>(new Action<BasicParametersAndRolesMappingTable>(this.attach_BasicParametersAndRolesMappingTable), new Action<BasicParametersAndRolesMappingTable>(this.detach_BasicParametersAndRolesMappingTable));
+			this._CalculatedParametrsAndRolesMappingTable = new EntitySet<CalculatedParametrsAndRolesMappingTable>(new Action<CalculatedParametrsAndRolesMappingTable>(this.attach_CalculatedParametrsAndRolesMappingTable), new Action<CalculatedParametrsAndRolesMappingTable>(this.detach_CalculatedParametrsAndRolesMappingTable));
+			this._IndicatorsAndRolesMappingTable = new EntitySet<IndicatorsAndRolesMappingTable>(new Action<IndicatorsAndRolesMappingTable>(this.attach_IndicatorsAndRolesMappingTable), new Action<IndicatorsAndRolesMappingTable>(this.detach_IndicatorsAndRolesMappingTable));
 			OnCreated();
 		}
 		
@@ -17190,42 +17190,42 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_BasicParametersAndRolesMappingTable", Storage="_BasicParametersAndRolesMappingTables", ThisKey="RolesTableID", OtherKey="FK_RolesTable")]
-		public EntitySet<BasicParametersAndRolesMappingTable> BasicParametersAndRolesMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_BasicParametersAndRolesMappingTable", Storage="_BasicParametersAndRolesMappingTable", ThisKey="RolesTableID", OtherKey="FK_RolesTable")]
+		public EntitySet<BasicParametersAndRolesMappingTable> BasicParametersAndRolesMappingTable
 		{
 			get
 			{
-				return this._BasicParametersAndRolesMappingTables;
+				return this._BasicParametersAndRolesMappingTable;
 			}
 			set
 			{
-				this._BasicParametersAndRolesMappingTables.Assign(value);
+				this._BasicParametersAndRolesMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_CalculatedParametrsAndRolesMappingTable", Storage="_CalculatedParametrsAndRolesMappingTables", ThisKey="RolesTableID", OtherKey="FK_RolesTable")]
-		public EntitySet<CalculatedParametrsAndRolesMappingTable> CalculatedParametrsAndRolesMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_CalculatedParametrsAndRolesMappingTable", Storage="_CalculatedParametrsAndRolesMappingTable", ThisKey="RolesTableID", OtherKey="FK_RolesTable")]
+		public EntitySet<CalculatedParametrsAndRolesMappingTable> CalculatedParametrsAndRolesMappingTable
 		{
 			get
 			{
-				return this._CalculatedParametrsAndRolesMappingTables;
+				return this._CalculatedParametrsAndRolesMappingTable;
 			}
 			set
 			{
-				this._CalculatedParametrsAndRolesMappingTables.Assign(value);
+				this._CalculatedParametrsAndRolesMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_IndicatorsAndRolesMappingTable", Storage="_IndicatorsAndRolesMappingTables", ThisKey="RolesTableID", OtherKey="FK_RolesTable")]
-		public EntitySet<IndicatorsAndRolesMappingTable> IndicatorsAndRolesMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RolesTable_IndicatorsAndRolesMappingTable", Storage="_IndicatorsAndRolesMappingTable", ThisKey="RolesTableID", OtherKey="FK_RolesTable")]
+		public EntitySet<IndicatorsAndRolesMappingTable> IndicatorsAndRolesMappingTable
 		{
 			get
 			{
-				return this._IndicatorsAndRolesMappingTables;
+				return this._IndicatorsAndRolesMappingTable;
 			}
 			set
 			{
-				this._IndicatorsAndRolesMappingTables.Assign(value);
+				this._IndicatorsAndRolesMappingTable.Assign(value);
 			}
 		}
 		
@@ -17249,37 +17249,37 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_BasicParametersAndRolesMappingTables(BasicParametersAndRolesMappingTable entity)
+		private void attach_BasicParametersAndRolesMappingTable(BasicParametersAndRolesMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.RolesTable = this;
 		}
 		
-		private void detach_BasicParametersAndRolesMappingTables(BasicParametersAndRolesMappingTable entity)
+		private void detach_BasicParametersAndRolesMappingTable(BasicParametersAndRolesMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.RolesTable = null;
 		}
 		
-		private void attach_CalculatedParametrsAndRolesMappingTables(CalculatedParametrsAndRolesMappingTable entity)
+		private void attach_CalculatedParametrsAndRolesMappingTable(CalculatedParametrsAndRolesMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.RolesTable = this;
 		}
 		
-		private void detach_CalculatedParametrsAndRolesMappingTables(CalculatedParametrsAndRolesMappingTable entity)
+		private void detach_CalculatedParametrsAndRolesMappingTable(CalculatedParametrsAndRolesMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.RolesTable = null;
 		}
 		
-		private void attach_IndicatorsAndRolesMappingTables(IndicatorsAndRolesMappingTable entity)
+		private void attach_IndicatorsAndRolesMappingTable(IndicatorsAndRolesMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.RolesTable = this;
 		}
 		
-		private void detach_IndicatorsAndRolesMappingTables(IndicatorsAndRolesMappingTable entity)
+		private void detach_IndicatorsAndRolesMappingTable(IndicatorsAndRolesMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.RolesTable = null;
@@ -17300,21 +17300,21 @@ namespace PersonalPages
 		
 		private int _FK_FirstLevelSubdivisionTable;
 		
-		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTables;
+		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
-		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForRs;
+		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
 		
-		private EntitySet<GroupsTable> _GroupsTables;
+		private EntitySet<GroupsTable> _GroupsTable;
 		
-		private EntitySet<Rank_StructureRaiting> _Rank_StructureRaitings;
+		private EntitySet<Rank_StructureRaitings> _Rank_StructureRaitings;
 		
-		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTables;
+		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTable;
 		
-		private EntitySet<StudentsTable> _StudentsTables;
+		private EntitySet<StudentsTable> _StudentsTable;
 		
-		private EntitySet<ThirdLevelSubdivisionTable> _ThirdLevelSubdivisionTables;
+		private EntitySet<ThirdLevelSubdivisionTable> _ThirdLevelSubdivisionTable;
 		
-		private EntitySet<UsersTable> _UsersTables;
+		private EntitySet<UsersTable> _UsersTable;
 		
 		private EntityRef<FirstLevelSubdivisionTable> _FirstLevelSubdivisionTable;
 		
@@ -17334,14 +17334,14 @@ namespace PersonalPages
 		
 		public SecondLevelSubdivisionTable()
 		{
-			this._CollectedBasicParametersTables = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTables), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTables));
-			this._CollectedIndicatorsForRs = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForRs), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForRs));
-			this._GroupsTables = new EntitySet<GroupsTable>(new Action<GroupsTable>(this.attach_GroupsTables), new Action<GroupsTable>(this.detach_GroupsTables));
-			this._Rank_StructureRaitings = new EntitySet<Rank_StructureRaiting>(new Action<Rank_StructureRaiting>(this.attach_Rank_StructureRaitings), new Action<Rank_StructureRaiting>(this.detach_Rank_StructureRaitings));
-			this._ReportArchiveAndLevelMappingTables = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTables), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTables));
-			this._StudentsTables = new EntitySet<StudentsTable>(new Action<StudentsTable>(this.attach_StudentsTables), new Action<StudentsTable>(this.detach_StudentsTables));
-			this._ThirdLevelSubdivisionTables = new EntitySet<ThirdLevelSubdivisionTable>(new Action<ThirdLevelSubdivisionTable>(this.attach_ThirdLevelSubdivisionTables), new Action<ThirdLevelSubdivisionTable>(this.detach_ThirdLevelSubdivisionTables));
-			this._UsersTables = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTables), new Action<UsersTable>(this.detach_UsersTables));
+			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
+			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
+			this._GroupsTable = new EntitySet<GroupsTable>(new Action<GroupsTable>(this.attach_GroupsTable), new Action<GroupsTable>(this.detach_GroupsTable));
+			this._Rank_StructureRaitings = new EntitySet<Rank_StructureRaitings>(new Action<Rank_StructureRaitings>(this.attach_Rank_StructureRaitings), new Action<Rank_StructureRaitings>(this.detach_Rank_StructureRaitings));
+			this._ReportArchiveAndLevelMappingTable = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTable), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTable));
+			this._StudentsTable = new EntitySet<StudentsTable>(new Action<StudentsTable>(this.attach_StudentsTable), new Action<StudentsTable>(this.detach_StudentsTable));
+			this._ThirdLevelSubdivisionTable = new EntitySet<ThirdLevelSubdivisionTable>(new Action<ThirdLevelSubdivisionTable>(this.attach_ThirdLevelSubdivisionTable), new Action<ThirdLevelSubdivisionTable>(this.detach_ThirdLevelSubdivisionTable));
+			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
 			this._FirstLevelSubdivisionTable = default(EntityRef<FirstLevelSubdivisionTable>);
 			OnCreated();
 		}
@@ -17430,47 +17430,47 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTables", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevelSubdivisionTable")]
-		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTable", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevelSubdivisionTable")]
+		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTable
 		{
 			get
 			{
-				return this._CollectedBasicParametersTables;
+				return this._CollectedBasicParametersTable;
 			}
 			set
 			{
-				this._CollectedBasicParametersTables.Assign(value);
+				this._CollectedBasicParametersTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForRs", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevelSubdivisionTable")]
-		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForRs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevelSubdivisionTable")]
+		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
 		{
 			get
 			{
-				return this._CollectedIndicatorsForRs;
+				return this._CollectedIndicatorsForR;
 			}
 			set
 			{
-				this._CollectedIndicatorsForRs.Assign(value);
+				this._CollectedIndicatorsForR.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_GroupsTable", Storage="_GroupsTables", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevel")]
-		public EntitySet<GroupsTable> GroupsTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_GroupsTable", Storage="_GroupsTable", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevel")]
+		public EntitySet<GroupsTable> GroupsTable
 		{
 			get
 			{
-				return this._GroupsTables;
+				return this._GroupsTable;
 			}
 			set
 			{
-				this._GroupsTables.Assign(value);
+				this._GroupsTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_Rank_StructureRaiting", Storage="_Rank_StructureRaitings", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevel")]
-		public EntitySet<Rank_StructureRaiting> Rank_StructureRaitings
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_Rank_StructureRaitings", Storage="_Rank_StructureRaitings", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevel")]
+		public EntitySet<Rank_StructureRaitings> Rank_StructureRaitings
 		{
 			get
 			{
@@ -17482,55 +17482,55 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTables", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevelSubdivisionTable")]
-		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTable", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevelSubdivisionTable")]
+		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTable
 		{
 			get
 			{
-				return this._ReportArchiveAndLevelMappingTables;
+				return this._ReportArchiveAndLevelMappingTable;
 			}
 			set
 			{
-				this._ReportArchiveAndLevelMappingTables.Assign(value);
+				this._ReportArchiveAndLevelMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_StudentsTable", Storage="_StudentsTables", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevelSubdivision")]
-		public EntitySet<StudentsTable> StudentsTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_StudentsTable", Storage="_StudentsTable", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevelSubdivision")]
+		public EntitySet<StudentsTable> StudentsTable
 		{
 			get
 			{
-				return this._StudentsTables;
+				return this._StudentsTable;
 			}
 			set
 			{
-				this._StudentsTables.Assign(value);
+				this._StudentsTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable", Storage="_ThirdLevelSubdivisionTables", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevelSubdivisionTable")]
-		public EntitySet<ThirdLevelSubdivisionTable> ThirdLevelSubdivisionTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable", Storage="_ThirdLevelSubdivisionTable", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevelSubdivisionTable")]
+		public EntitySet<ThirdLevelSubdivisionTable> ThirdLevelSubdivisionTable
 		{
 			get
 			{
-				return this._ThirdLevelSubdivisionTables;
+				return this._ThirdLevelSubdivisionTable;
 			}
 			set
 			{
-				this._ThirdLevelSubdivisionTables.Assign(value);
+				this._ThirdLevelSubdivisionTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_UsersTable", Storage="_UsersTables", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevelSubdivisionTable")]
-		public EntitySet<UsersTable> UsersTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_UsersTable", Storage="_UsersTable", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevelSubdivisionTable")]
+		public EntitySet<UsersTable> UsersTable
 		{
 			get
 			{
-				return this._UsersTables;
+				return this._UsersTable;
 			}
 			set
 			{
-				this._UsersTables.Assign(value);
+				this._UsersTable.Assign(value);
 			}
 		}
 		
@@ -17551,12 +17551,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FirstLevelSubdivisionTable.Entity = null;
-						previousValue.SecondLevelSubdivisionTables.Remove(this);
+						previousValue.SecondLevelSubdivisionTable.Remove(this);
 					}
 					this._FirstLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.SecondLevelSubdivisionTables.Add(this);
+						value.SecondLevelSubdivisionTable.Add(this);
 						this._FK_FirstLevelSubdivisionTable = value.FirstLevelSubdivisionTableID;
 					}
 					else
@@ -17588,97 +17588,97 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void attach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = this;
 		}
 		
-		private void detach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void detach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = null;
 		}
 		
-		private void attach_CollectedIndicatorsForRs(CollectedIndicatorsForR entity)
+		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = this;
 		}
 		
-		private void detach_CollectedIndicatorsForRs(CollectedIndicatorsForR entity)
+		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = null;
 		}
 		
-		private void attach_GroupsTables(GroupsTable entity)
+		private void attach_GroupsTable(GroupsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = this;
 		}
 		
-		private void detach_GroupsTables(GroupsTable entity)
+		private void detach_GroupsTable(GroupsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = null;
 		}
 		
-		private void attach_Rank_StructureRaitings(Rank_StructureRaiting entity)
+		private void attach_Rank_StructureRaitings(Rank_StructureRaitings entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = this;
 		}
 		
-		private void detach_Rank_StructureRaitings(Rank_StructureRaiting entity)
+		private void detach_Rank_StructureRaitings(Rank_StructureRaitings entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = null;
 		}
 		
-		private void attach_ReportArchiveAndLevelMappingTables(ReportArchiveAndLevelMappingTable entity)
+		private void attach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = this;
 		}
 		
-		private void detach_ReportArchiveAndLevelMappingTables(ReportArchiveAndLevelMappingTable entity)
+		private void detach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = null;
 		}
 		
-		private void attach_StudentsTables(StudentsTable entity)
+		private void attach_StudentsTable(StudentsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = this;
 		}
 		
-		private void detach_StudentsTables(StudentsTable entity)
+		private void detach_StudentsTable(StudentsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = null;
 		}
 		
-		private void attach_ThirdLevelSubdivisionTables(ThirdLevelSubdivisionTable entity)
+		private void attach_ThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = this;
 		}
 		
-		private void detach_ThirdLevelSubdivisionTables(ThirdLevelSubdivisionTable entity)
+		private void detach_ThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = null;
 		}
 		
-		private void attach_UsersTables(UsersTable entity)
+		private void attach_UsersTable(UsersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = this;
 		}
 		
-		private void detach_UsersTables(UsersTable entity)
+		private void detach_UsersTable(UsersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = null;
@@ -17701,11 +17701,11 @@ namespace PersonalPages
 		
 		private System.Nullable<int> _FK_FieldOfExpertise;
 		
-		private EntitySet<EducationCostTable> _EducationCostTables;
+		private EntitySet<EducationCostTable> _EducationCostTable;
 		
-		private EntitySet<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTables;
+		private EntitySet<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
 		
-		private EntitySet<StudentsTable> _StudentsTables;
+		private EntitySet<StudentsTable> _StudentsTable;
 		
 		private EntityRef<FieldOfExpertise> _FieldOfExpertise;
 		
@@ -17727,9 +17727,9 @@ namespace PersonalPages
 		
 		public SpecializationTable()
 		{
-			this._EducationCostTables = new EntitySet<EducationCostTable>(new Action<EducationCostTable>(this.attach_EducationCostTables), new Action<EducationCostTable>(this.detach_EducationCostTables));
-			this._FourthLevelSubdivisionTables = new EntitySet<FourthLevelSubdivisionTable>(new Action<FourthLevelSubdivisionTable>(this.attach_FourthLevelSubdivisionTables), new Action<FourthLevelSubdivisionTable>(this.detach_FourthLevelSubdivisionTables));
-			this._StudentsTables = new EntitySet<StudentsTable>(new Action<StudentsTable>(this.attach_StudentsTables), new Action<StudentsTable>(this.detach_StudentsTables));
+			this._EducationCostTable = new EntitySet<EducationCostTable>(new Action<EducationCostTable>(this.attach_EducationCostTable), new Action<EducationCostTable>(this.detach_EducationCostTable));
+			this._FourthLevelSubdivisionTable = new EntitySet<FourthLevelSubdivisionTable>(new Action<FourthLevelSubdivisionTable>(this.attach_FourthLevelSubdivisionTable), new Action<FourthLevelSubdivisionTable>(this.detach_FourthLevelSubdivisionTable));
+			this._StudentsTable = new EntitySet<StudentsTable>(new Action<StudentsTable>(this.attach_StudentsTable), new Action<StudentsTable>(this.detach_StudentsTable));
 			this._FieldOfExpertise = default(EntityRef<FieldOfExpertise>);
 			OnCreated();
 		}
@@ -17838,42 +17838,42 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SpecializationTable_EducationCostTable", Storage="_EducationCostTables", ThisKey="SpecializationTableID", OtherKey="FK_Specialization")]
-		public EntitySet<EducationCostTable> EducationCostTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SpecializationTable_EducationCostTable", Storage="_EducationCostTable", ThisKey="SpecializationTableID", OtherKey="FK_Specialization")]
+		public EntitySet<EducationCostTable> EducationCostTable
 		{
 			get
 			{
-				return this._EducationCostTables;
+				return this._EducationCostTable;
 			}
 			set
 			{
-				this._EducationCostTables.Assign(value);
+				this._EducationCostTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SpecializationTable_FourthLevelSubdivisionTable", Storage="_FourthLevelSubdivisionTables", ThisKey="SpecializationTableID", OtherKey="FK_Specialization")]
-		public EntitySet<FourthLevelSubdivisionTable> FourthLevelSubdivisionTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SpecializationTable_FourthLevelSubdivisionTable", Storage="_FourthLevelSubdivisionTable", ThisKey="SpecializationTableID", OtherKey="FK_Specialization")]
+		public EntitySet<FourthLevelSubdivisionTable> FourthLevelSubdivisionTable
 		{
 			get
 			{
-				return this._FourthLevelSubdivisionTables;
+				return this._FourthLevelSubdivisionTable;
 			}
 			set
 			{
-				this._FourthLevelSubdivisionTables.Assign(value);
+				this._FourthLevelSubdivisionTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SpecializationTable_StudentsTable", Storage="_StudentsTables", ThisKey="SpecializationTableID", OtherKey="FK_Specialisation")]
-		public EntitySet<StudentsTable> StudentsTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SpecializationTable_StudentsTable", Storage="_StudentsTable", ThisKey="SpecializationTableID", OtherKey="FK_Specialisation")]
+		public EntitySet<StudentsTable> StudentsTable
 		{
 			get
 			{
-				return this._StudentsTables;
+				return this._StudentsTable;
 			}
 			set
 			{
-				this._StudentsTables.Assign(value);
+				this._StudentsTable.Assign(value);
 			}
 		}
 		
@@ -17894,12 +17894,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FieldOfExpertise.Entity = null;
-						previousValue.SpecializationTables.Remove(this);
+						previousValue.SpecializationTable.Remove(this);
 					}
 					this._FieldOfExpertise.Entity = value;
 					if ((value != null))
 					{
-						value.SpecializationTables.Add(this);
+						value.SpecializationTable.Add(this);
 						this._FK_FieldOfExpertise = value.FieldOfExpertiseID;
 					}
 					else
@@ -17931,37 +17931,37 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_EducationCostTables(EducationCostTable entity)
+		private void attach_EducationCostTable(EducationCostTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SpecializationTable = this;
 		}
 		
-		private void detach_EducationCostTables(EducationCostTable entity)
+		private void detach_EducationCostTable(EducationCostTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SpecializationTable = null;
 		}
 		
-		private void attach_FourthLevelSubdivisionTables(FourthLevelSubdivisionTable entity)
+		private void attach_FourthLevelSubdivisionTable(FourthLevelSubdivisionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SpecializationTable = this;
 		}
 		
-		private void detach_FourthLevelSubdivisionTables(FourthLevelSubdivisionTable entity)
+		private void detach_FourthLevelSubdivisionTable(FourthLevelSubdivisionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SpecializationTable = null;
 		}
 		
-		private void attach_StudentsTables(StudentsTable entity)
+		private void attach_StudentsTable(StudentsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SpecializationTable = this;
 		}
 		
-		private void detach_StudentsTables(StudentsTable entity)
+		private void detach_StudentsTable(StudentsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SpecializationTable = null;
@@ -18383,12 +18383,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FirstLevelSubdivisionTable.Entity = null;
-						previousValue.StudentsTables.Remove(this);
+						previousValue.StudentsTable.Remove(this);
 					}
 					this._FirstLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.StudentsTables.Add(this);
+						value.StudentsTable.Add(this);
 						this._FK_FirstLevelSubdivision = value.FirstLevelSubdivisionTableID;
 					}
 					else
@@ -18417,12 +18417,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._SecondLevelSubdivisionTable.Entity = null;
-						previousValue.StudentsTables.Remove(this);
+						previousValue.StudentsTable.Remove(this);
 					}
 					this._SecondLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.StudentsTables.Add(this);
+						value.StudentsTable.Add(this);
 						this._FK_SecondLevelSubdivision = value.SecondLevelSubdivisionTableID;
 					}
 					else
@@ -18451,12 +18451,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._SpecializationTable.Entity = null;
-						previousValue.StudentsTables.Remove(this);
+						previousValue.StudentsTable.Remove(this);
 					}
 					this._SpecializationTable.Entity = value;
 					if ((value != null))
 					{
-						value.StudentsTables.Add(this);
+						value.StudentsTable.Add(this);
 						this._FK_Specialisation = value.SpecializationTableID;
 					}
 					else
@@ -18501,9 +18501,9 @@ namespace PersonalPages
 		
 		private string _Name;
 		
-		private EntitySet<BasicParametrsAndSubdivisionClassMappingTable> _BasicParametrsAndSubdivisionClassMappingTables;
+		private EntitySet<BasicParametrsAndSubdivisionClassMappingTable> _BasicParametrsAndSubdivisionClassMappingTable;
 		
-		private EntitySet<ThirdLevelParametr> _ThirdLevelParametrs;
+		private EntitySet<ThirdLevelParametrs> _ThirdLevelParametrs;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -18519,8 +18519,8 @@ namespace PersonalPages
 		
 		public SubdivisionClassTable()
 		{
-			this._BasicParametrsAndSubdivisionClassMappingTables = new EntitySet<BasicParametrsAndSubdivisionClassMappingTable>(new Action<BasicParametrsAndSubdivisionClassMappingTable>(this.attach_BasicParametrsAndSubdivisionClassMappingTables), new Action<BasicParametrsAndSubdivisionClassMappingTable>(this.detach_BasicParametrsAndSubdivisionClassMappingTables));
-			this._ThirdLevelParametrs = new EntitySet<ThirdLevelParametr>(new Action<ThirdLevelParametr>(this.attach_ThirdLevelParametrs), new Action<ThirdLevelParametr>(this.detach_ThirdLevelParametrs));
+			this._BasicParametrsAndSubdivisionClassMappingTable = new EntitySet<BasicParametrsAndSubdivisionClassMappingTable>(new Action<BasicParametrsAndSubdivisionClassMappingTable>(this.attach_BasicParametrsAndSubdivisionClassMappingTable), new Action<BasicParametrsAndSubdivisionClassMappingTable>(this.detach_BasicParametrsAndSubdivisionClassMappingTable));
+			this._ThirdLevelParametrs = new EntitySet<ThirdLevelParametrs>(new Action<ThirdLevelParametrs>(this.attach_ThirdLevelParametrs), new Action<ThirdLevelParametrs>(this.detach_ThirdLevelParametrs));
 			OnCreated();
 		}
 		
@@ -18584,21 +18584,21 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SubdivisionClassTable_BasicParametrsAndSubdivisionClassMappingTable", Storage="_BasicParametrsAndSubdivisionClassMappingTables", ThisKey="ID", OtherKey="FK_SubdivisionClassTable")]
-		public EntitySet<BasicParametrsAndSubdivisionClassMappingTable> BasicParametrsAndSubdivisionClassMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SubdivisionClassTable_BasicParametrsAndSubdivisionClassMappingTable", Storage="_BasicParametrsAndSubdivisionClassMappingTable", ThisKey="ID", OtherKey="FK_SubdivisionClassTable")]
+		public EntitySet<BasicParametrsAndSubdivisionClassMappingTable> BasicParametrsAndSubdivisionClassMappingTable
 		{
 			get
 			{
-				return this._BasicParametrsAndSubdivisionClassMappingTables;
+				return this._BasicParametrsAndSubdivisionClassMappingTable;
 			}
 			set
 			{
-				this._BasicParametrsAndSubdivisionClassMappingTables.Assign(value);
+				this._BasicParametrsAndSubdivisionClassMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SubdivisionClassTable_ThirdLevelParametr", Storage="_ThirdLevelParametrs", ThisKey="ID", OtherKey="FK_SubdivisionClassTable")]
-		public EntitySet<ThirdLevelParametr> ThirdLevelParametrs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SubdivisionClassTable_ThirdLevelParametrs", Storage="_ThirdLevelParametrs", ThisKey="ID", OtherKey="FK_SubdivisionClassTable")]
+		public EntitySet<ThirdLevelParametrs> ThirdLevelParametrs
 		{
 			get
 			{
@@ -18630,25 +18630,25 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_BasicParametrsAndSubdivisionClassMappingTables(BasicParametrsAndSubdivisionClassMappingTable entity)
+		private void attach_BasicParametrsAndSubdivisionClassMappingTable(BasicParametrsAndSubdivisionClassMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SubdivisionClassTable = this;
 		}
 		
-		private void detach_BasicParametrsAndSubdivisionClassMappingTables(BasicParametrsAndSubdivisionClassMappingTable entity)
+		private void detach_BasicParametrsAndSubdivisionClassMappingTable(BasicParametrsAndSubdivisionClassMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SubdivisionClassTable = null;
 		}
 		
-		private void attach_ThirdLevelParametrs(ThirdLevelParametr entity)
+		private void attach_ThirdLevelParametrs(ThirdLevelParametrs entity)
 		{
 			this.SendPropertyChanging();
 			entity.SubdivisionClassTable = this;
 		}
 		
-		private void detach_ThirdLevelParametrs(ThirdLevelParametr entity)
+		private void detach_ThirdLevelParametrs(ThirdLevelParametrs entity)
 		{
 			this.SendPropertyChanging();
 			entity.SubdivisionClassTable = null;
@@ -18656,7 +18656,7 @@ namespace PersonalPages
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ThirdLevelParametrs")]
-	public partial class ThirdLevelParametr : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ThirdLevelParametrs : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -18691,7 +18691,7 @@ namespace PersonalPages
     partial void OnFK_SubdivisionClassTableChanged();
     #endregion
 		
-		public ThirdLevelParametr()
+		public ThirdLevelParametrs()
 		{
 			this._SubdivisionClassTable = default(EntityRef<SubdivisionClassTable>);
 			this._ThirdLevelSubdivisionTable = default(EntityRef<ThirdLevelSubdivisionTable>);
@@ -18806,7 +18806,7 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SubdivisionClassTable_ThirdLevelParametr", Storage="_SubdivisionClassTable", ThisKey="FK_SubdivisionClassTable", OtherKey="ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SubdivisionClassTable_ThirdLevelParametrs", Storage="_SubdivisionClassTable", ThisKey="FK_SubdivisionClassTable", OtherKey="ID", IsForeignKey=true)]
 		public SubdivisionClassTable SubdivisionClassTable
 		{
 			get
@@ -18840,7 +18840,7 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_ThirdLevelParametr", Storage="_ThirdLevelSubdivisionTable", ThisKey="ThirdLevelParametrsID", OtherKey="ThirdLevelSubdivisionTableID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_ThirdLevelParametrs", Storage="_ThirdLevelSubdivisionTable", ThisKey="ThirdLevelParametrsID", OtherKey="ThirdLevelSubdivisionTableID", IsForeignKey=true)]
 		public ThirdLevelSubdivisionTable ThirdLevelSubdivisionTable
 		{
 			get
@@ -18857,12 +18857,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ThirdLevelSubdivisionTable.Entity = null;
-						previousValue.ThirdLevelParametr = null;
+						previousValue.ThirdLevelParametrs = null;
 					}
 					this._ThirdLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.ThirdLevelParametr = this;
+						value.ThirdLevelParametrs = this;
 						this._ThirdLevelParametrsID = value.ThirdLevelSubdivisionTableID;
 					}
 					else
@@ -18909,19 +18909,19 @@ namespace PersonalPages
 		
 		private int _FK_SecondLevelSubdivisionTable;
 		
-		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTables;
+		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
-		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForRs;
+		private EntitySet<CollectedIndicatorsForR> _CollectedIndicatorsForR;
 		
-		private EntitySet<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTables;
+		private EntitySet<FourthLevelSubdivisionTable> _FourthLevelSubdivisionTable;
 		
-		private EntitySet<Rank_StructureRaiting> _Rank_StructureRaitings;
+		private EntitySet<Rank_StructureRaitings> _Rank_StructureRaitings;
 		
-		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTables;
+		private EntitySet<ReportArchiveAndLevelMappingTable> _ReportArchiveAndLevelMappingTable;
 		
-		private EntityRef<ThirdLevelParametr> _ThirdLevelParametr;
+		private EntityRef<ThirdLevelParametrs> _ThirdLevelParametrs;
 		
-		private EntitySet<UsersTable> _UsersTables;
+		private EntitySet<UsersTable> _UsersTable;
 		
 		private EntityRef<SecondLevelSubdivisionTable> _SecondLevelSubdivisionTable;
 		
@@ -18941,13 +18941,13 @@ namespace PersonalPages
 		
 		public ThirdLevelSubdivisionTable()
 		{
-			this._CollectedBasicParametersTables = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTables), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTables));
-			this._CollectedIndicatorsForRs = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForRs), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForRs));
-			this._FourthLevelSubdivisionTables = new EntitySet<FourthLevelSubdivisionTable>(new Action<FourthLevelSubdivisionTable>(this.attach_FourthLevelSubdivisionTables), new Action<FourthLevelSubdivisionTable>(this.detach_FourthLevelSubdivisionTables));
-			this._Rank_StructureRaitings = new EntitySet<Rank_StructureRaiting>(new Action<Rank_StructureRaiting>(this.attach_Rank_StructureRaitings), new Action<Rank_StructureRaiting>(this.detach_Rank_StructureRaitings));
-			this._ReportArchiveAndLevelMappingTables = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTables), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTables));
-			this._ThirdLevelParametr = default(EntityRef<ThirdLevelParametr>);
-			this._UsersTables = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTables), new Action<UsersTable>(this.detach_UsersTables));
+			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
+			this._CollectedIndicatorsForR = new EntitySet<CollectedIndicatorsForR>(new Action<CollectedIndicatorsForR>(this.attach_CollectedIndicatorsForR), new Action<CollectedIndicatorsForR>(this.detach_CollectedIndicatorsForR));
+			this._FourthLevelSubdivisionTable = new EntitySet<FourthLevelSubdivisionTable>(new Action<FourthLevelSubdivisionTable>(this.attach_FourthLevelSubdivisionTable), new Action<FourthLevelSubdivisionTable>(this.detach_FourthLevelSubdivisionTable));
+			this._Rank_StructureRaitings = new EntitySet<Rank_StructureRaitings>(new Action<Rank_StructureRaitings>(this.attach_Rank_StructureRaitings), new Action<Rank_StructureRaitings>(this.detach_Rank_StructureRaitings));
+			this._ReportArchiveAndLevelMappingTable = new EntitySet<ReportArchiveAndLevelMappingTable>(new Action<ReportArchiveAndLevelMappingTable>(this.attach_ReportArchiveAndLevelMappingTable), new Action<ReportArchiveAndLevelMappingTable>(this.detach_ReportArchiveAndLevelMappingTable));
+			this._ThirdLevelParametrs = default(EntityRef<ThirdLevelParametrs>);
+			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
 			this._SecondLevelSubdivisionTable = default(EntityRef<SecondLevelSubdivisionTable>);
 			OnCreated();
 		}
@@ -19036,47 +19036,47 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTables", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevelSubdivisionTable")]
-		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTable", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevelSubdivisionTable")]
+		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTable
 		{
 			get
 			{
-				return this._CollectedBasicParametersTables;
+				return this._CollectedBasicParametersTable;
 			}
 			set
 			{
-				this._CollectedBasicParametersTables.Assign(value);
+				this._CollectedBasicParametersTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForRs", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevelSubdivisionTable")]
-		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForRs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_CollectedIndicatorsForR", Storage="_CollectedIndicatorsForR", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevelSubdivisionTable")]
+		public EntitySet<CollectedIndicatorsForR> CollectedIndicatorsForR
 		{
 			get
 			{
-				return this._CollectedIndicatorsForRs;
+				return this._CollectedIndicatorsForR;
 			}
 			set
 			{
-				this._CollectedIndicatorsForRs.Assign(value);
+				this._CollectedIndicatorsForR.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_FourthLevelSubdivisionTable", Storage="_FourthLevelSubdivisionTables", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevelSubdivisionTable")]
-		public EntitySet<FourthLevelSubdivisionTable> FourthLevelSubdivisionTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_FourthLevelSubdivisionTable", Storage="_FourthLevelSubdivisionTable", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevelSubdivisionTable")]
+		public EntitySet<FourthLevelSubdivisionTable> FourthLevelSubdivisionTable
 		{
 			get
 			{
-				return this._FourthLevelSubdivisionTables;
+				return this._FourthLevelSubdivisionTable;
 			}
 			set
 			{
-				this._FourthLevelSubdivisionTables.Assign(value);
+				this._FourthLevelSubdivisionTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_Rank_StructureRaiting", Storage="_Rank_StructureRaitings", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevel")]
-		public EntitySet<Rank_StructureRaiting> Rank_StructureRaitings
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_Rank_StructureRaitings", Storage="_Rank_StructureRaitings", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevel")]
+		public EntitySet<Rank_StructureRaitings> Rank_StructureRaitings
 		{
 			get
 			{
@@ -19088,58 +19088,58 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTables", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevelSubdivisionTable")]
-		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_ReportArchiveAndLevelMappingTable", Storage="_ReportArchiveAndLevelMappingTable", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevelSubdivisionTable")]
+		public EntitySet<ReportArchiveAndLevelMappingTable> ReportArchiveAndLevelMappingTable
 		{
 			get
 			{
-				return this._ReportArchiveAndLevelMappingTables;
+				return this._ReportArchiveAndLevelMappingTable;
 			}
 			set
 			{
-				this._ReportArchiveAndLevelMappingTables.Assign(value);
+				this._ReportArchiveAndLevelMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_ThirdLevelParametr", Storage="_ThirdLevelParametr", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="ThirdLevelParametrsID", IsUnique=true, IsForeignKey=false)]
-		public ThirdLevelParametr ThirdLevelParametr
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_ThirdLevelParametrs", Storage="_ThirdLevelParametrs", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="ThirdLevelParametrsID", IsUnique=true, IsForeignKey=false)]
+		public ThirdLevelParametrs ThirdLevelParametrs
 		{
 			get
 			{
-				return this._ThirdLevelParametr.Entity;
+				return this._ThirdLevelParametrs.Entity;
 			}
 			set
 			{
-				ThirdLevelParametr previousValue = this._ThirdLevelParametr.Entity;
+				ThirdLevelParametrs previousValue = this._ThirdLevelParametrs.Entity;
 				if (((previousValue != value) 
-							|| (this._ThirdLevelParametr.HasLoadedOrAssignedValue == false)))
+							|| (this._ThirdLevelParametrs.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._ThirdLevelParametr.Entity = null;
+						this._ThirdLevelParametrs.Entity = null;
 						previousValue.ThirdLevelSubdivisionTable = null;
 					}
-					this._ThirdLevelParametr.Entity = value;
+					this._ThirdLevelParametrs.Entity = value;
 					if ((value != null))
 					{
 						value.ThirdLevelSubdivisionTable = this;
 					}
-					this.SendPropertyChanged("ThirdLevelParametr");
+					this.SendPropertyChanged("ThirdLevelParametrs");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_UsersTable", Storage="_UsersTables", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevelSubdivisionTable")]
-		public EntitySet<UsersTable> UsersTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_UsersTable", Storage="_UsersTable", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevelSubdivisionTable")]
+		public EntitySet<UsersTable> UsersTable
 		{
 			get
 			{
-				return this._UsersTables;
+				return this._UsersTable;
 			}
 			set
 			{
-				this._UsersTables.Assign(value);
+				this._UsersTable.Assign(value);
 			}
 		}
 		
@@ -19160,12 +19160,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._SecondLevelSubdivisionTable.Entity = null;
-						previousValue.ThirdLevelSubdivisionTables.Remove(this);
+						previousValue.ThirdLevelSubdivisionTable.Remove(this);
 					}
 					this._SecondLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.ThirdLevelSubdivisionTables.Add(this);
+						value.ThirdLevelSubdivisionTable.Add(this);
 						this._FK_SecondLevelSubdivisionTable = value.SecondLevelSubdivisionTableID;
 					}
 					else
@@ -19197,73 +19197,73 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void attach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ThirdLevelSubdivisionTable = this;
 		}
 		
-		private void detach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void detach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ThirdLevelSubdivisionTable = null;
 		}
 		
-		private void attach_CollectedIndicatorsForRs(CollectedIndicatorsForR entity)
+		private void attach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.ThirdLevelSubdivisionTable = this;
 		}
 		
-		private void detach_CollectedIndicatorsForRs(CollectedIndicatorsForR entity)
+		private void detach_CollectedIndicatorsForR(CollectedIndicatorsForR entity)
 		{
 			this.SendPropertyChanging();
 			entity.ThirdLevelSubdivisionTable = null;
 		}
 		
-		private void attach_FourthLevelSubdivisionTables(FourthLevelSubdivisionTable entity)
+		private void attach_FourthLevelSubdivisionTable(FourthLevelSubdivisionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ThirdLevelSubdivisionTable = this;
 		}
 		
-		private void detach_FourthLevelSubdivisionTables(FourthLevelSubdivisionTable entity)
+		private void detach_FourthLevelSubdivisionTable(FourthLevelSubdivisionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ThirdLevelSubdivisionTable = null;
 		}
 		
-		private void attach_Rank_StructureRaitings(Rank_StructureRaiting entity)
+		private void attach_Rank_StructureRaitings(Rank_StructureRaitings entity)
 		{
 			this.SendPropertyChanging();
 			entity.ThirdLevelSubdivisionTable = this;
 		}
 		
-		private void detach_Rank_StructureRaitings(Rank_StructureRaiting entity)
+		private void detach_Rank_StructureRaitings(Rank_StructureRaitings entity)
 		{
 			this.SendPropertyChanging();
 			entity.ThirdLevelSubdivisionTable = null;
 		}
 		
-		private void attach_ReportArchiveAndLevelMappingTables(ReportArchiveAndLevelMappingTable entity)
+		private void attach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ThirdLevelSubdivisionTable = this;
 		}
 		
-		private void detach_ReportArchiveAndLevelMappingTables(ReportArchiveAndLevelMappingTable entity)
+		private void detach_ReportArchiveAndLevelMappingTable(ReportArchiveAndLevelMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ThirdLevelSubdivisionTable = null;
 		}
 		
-		private void attach_UsersTables(UsersTable entity)
+		private void attach_UsersTable(UsersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ThirdLevelSubdivisionTable = this;
 		}
 		
-		private void detach_UsersTables(UsersTable entity)
+		private void detach_UsersTable(UsersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ThirdLevelSubdivisionTable = null;
@@ -19407,12 +19407,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._UsersTable.Entity = null;
-						previousValue.TypeOfWritingFIOs.Remove(this);
+						previousValue.TypeOfWritingFIO.Remove(this);
 					}
 					this._UsersTable.Entity = value;
 					if ((value != null))
 					{
-						value.TypeOfWritingFIOs.Add(this);
+						value.TypeOfWritingFIO.Add(this);
 						this._FK_UserTableID = value.UsersTableID;
 					}
 					else
@@ -19509,41 +19509,41 @@ namespace PersonalPages
 		
 		private System.Nullable<bool> _Gender;
 		
-		private EntitySet<BasicParametrsAndUsersMapping> _BasicParametrsAndUsersMappings;
+		private EntitySet<BasicParametrsAndUsersMapping> _BasicParametrsAndUsersMapping;
 		
-		private EntitySet<CalculatedParametrsAndUsersMapping> _CalculatedParametrsAndUsersMappings;
+		private EntitySet<CalculatedParametrsAndUsersMapping> _CalculatedParametrsAndUsersMapping;
 		
-		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTables;
+		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
-		private EntitySet<CollectedCalculatedParametr> _CollectedCalculatedParametrs;
+		private EntitySet<CollectedCalculatedParametrs> _CollectedCalculatedParametrs;
 		
-		private EntitySet<CollectedIndocator> _CollectedIndocators;
+		private EntitySet<CollectedIndocators> _CollectedIndocators;
 		
-		private EntitySet<ConfirmationHistory> _ConfirmationHistories;
+		private EntitySet<ConfirmationHistory> _ConfirmationHistory;
 		
-		private EntitySet<ConnectGroup_And_User> _ConnectGroup_And_Users;
+		private EntitySet<ConnectGroup_And_Users> _ConnectGroup_And_Users;
 		
-		private EntitySet<IndicatorsAndUsersMapping> _IndicatorsAndUsersMappings;
+		private EntitySet<IndicatorsAndUsersMapping> _IndicatorsAndUsersMapping;
 		
-		private EntitySet<MultiUser> _MultiUsers;
+		private EntitySet<MultiUser> _MultiUser;
 		
-		private EntitySet<MultiUser> _MultiUsers1;
+		private EntitySet<MultiUser> _MultiUser1;
 		
-		private EntitySet<Rank_Autor> _Rank_Autors;
+		private EntitySet<Rank_Autors> _Rank_Autors;
 		
-		private EntitySet<TypeOfWritingFIO> _TypeOfWritingFIOs;
+		private EntitySet<TypeOfWritingFIO> _TypeOfWritingFIO;
 		
-		private EntitySet<zCompetitionsTable> _zCompetitionsTables;
+		private EntitySet<zCompetitionsTable> _zCompetitionsTable;
 		
-		private EntitySet<zExpertAndExpertGroupMappingTable> _zExpertAndExpertGroupMappingTables;
+		private EntitySet<zExpertAndExpertGroupMappingTable> _zExpertAndExpertGroupMappingTable;
 		
-		private EntitySet<zExpertPointsValue> _zExpertPointsValues;
+		private EntitySet<zExpertPointsValue> _zExpertPointsValue;
 		
-		private EntitySet<zExpertsAndApplicationMappingTable> _zExpertsAndApplicationMappingTables;
+		private EntitySet<zExpertsAndApplicationMappingTable> _zExpertsAndApplicationMappingTable;
 		
-		private EntitySet<zPartnersTable> _zPartnersTables;
+		private EntitySet<zPartnersTable> _zPartnersTable;
 		
-		private EntitySet<zTaskPRManualTable> _zTaskPRManualTables;
+		private EntitySet<zTaskPRManualTable> _zTaskPRManualTable;
 		
 		private EntityRef<FifthLevelSubdivisionTable> _FifthLevelSubdivisionTable;
 		
@@ -19623,24 +19623,24 @@ namespace PersonalPages
 		
 		public UsersTable()
 		{
-			this._BasicParametrsAndUsersMappings = new EntitySet<BasicParametrsAndUsersMapping>(new Action<BasicParametrsAndUsersMapping>(this.attach_BasicParametrsAndUsersMappings), new Action<BasicParametrsAndUsersMapping>(this.detach_BasicParametrsAndUsersMappings));
-			this._CalculatedParametrsAndUsersMappings = new EntitySet<CalculatedParametrsAndUsersMapping>(new Action<CalculatedParametrsAndUsersMapping>(this.attach_CalculatedParametrsAndUsersMappings), new Action<CalculatedParametrsAndUsersMapping>(this.detach_CalculatedParametrsAndUsersMappings));
-			this._CollectedBasicParametersTables = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTables), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTables));
-			this._CollectedCalculatedParametrs = new EntitySet<CollectedCalculatedParametr>(new Action<CollectedCalculatedParametr>(this.attach_CollectedCalculatedParametrs), new Action<CollectedCalculatedParametr>(this.detach_CollectedCalculatedParametrs));
-			this._CollectedIndocators = new EntitySet<CollectedIndocator>(new Action<CollectedIndocator>(this.attach_CollectedIndocators), new Action<CollectedIndocator>(this.detach_CollectedIndocators));
-			this._ConfirmationHistories = new EntitySet<ConfirmationHistory>(new Action<ConfirmationHistory>(this.attach_ConfirmationHistories), new Action<ConfirmationHistory>(this.detach_ConfirmationHistories));
-			this._ConnectGroup_And_Users = new EntitySet<ConnectGroup_And_User>(new Action<ConnectGroup_And_User>(this.attach_ConnectGroup_And_Users), new Action<ConnectGroup_And_User>(this.detach_ConnectGroup_And_Users));
-			this._IndicatorsAndUsersMappings = new EntitySet<IndicatorsAndUsersMapping>(new Action<IndicatorsAndUsersMapping>(this.attach_IndicatorsAndUsersMappings), new Action<IndicatorsAndUsersMapping>(this.detach_IndicatorsAndUsersMappings));
-			this._MultiUsers = new EntitySet<MultiUser>(new Action<MultiUser>(this.attach_MultiUsers), new Action<MultiUser>(this.detach_MultiUsers));
-			this._MultiUsers1 = new EntitySet<MultiUser>(new Action<MultiUser>(this.attach_MultiUsers1), new Action<MultiUser>(this.detach_MultiUsers1));
-			this._Rank_Autors = new EntitySet<Rank_Autor>(new Action<Rank_Autor>(this.attach_Rank_Autors), new Action<Rank_Autor>(this.detach_Rank_Autors));
-			this._TypeOfWritingFIOs = new EntitySet<TypeOfWritingFIO>(new Action<TypeOfWritingFIO>(this.attach_TypeOfWritingFIOs), new Action<TypeOfWritingFIO>(this.detach_TypeOfWritingFIOs));
-			this._zCompetitionsTables = new EntitySet<zCompetitionsTable>(new Action<zCompetitionsTable>(this.attach_zCompetitionsTables), new Action<zCompetitionsTable>(this.detach_zCompetitionsTables));
-			this._zExpertAndExpertGroupMappingTables = new EntitySet<zExpertAndExpertGroupMappingTable>(new Action<zExpertAndExpertGroupMappingTable>(this.attach_zExpertAndExpertGroupMappingTables), new Action<zExpertAndExpertGroupMappingTable>(this.detach_zExpertAndExpertGroupMappingTables));
-			this._zExpertPointsValues = new EntitySet<zExpertPointsValue>(new Action<zExpertPointsValue>(this.attach_zExpertPointsValues), new Action<zExpertPointsValue>(this.detach_zExpertPointsValues));
-			this._zExpertsAndApplicationMappingTables = new EntitySet<zExpertsAndApplicationMappingTable>(new Action<zExpertsAndApplicationMappingTable>(this.attach_zExpertsAndApplicationMappingTables), new Action<zExpertsAndApplicationMappingTable>(this.detach_zExpertsAndApplicationMappingTables));
-			this._zPartnersTables = new EntitySet<zPartnersTable>(new Action<zPartnersTable>(this.attach_zPartnersTables), new Action<zPartnersTable>(this.detach_zPartnersTables));
-			this._zTaskPRManualTables = new EntitySet<zTaskPRManualTable>(new Action<zTaskPRManualTable>(this.attach_zTaskPRManualTables), new Action<zTaskPRManualTable>(this.detach_zTaskPRManualTables));
+			this._BasicParametrsAndUsersMapping = new EntitySet<BasicParametrsAndUsersMapping>(new Action<BasicParametrsAndUsersMapping>(this.attach_BasicParametrsAndUsersMapping), new Action<BasicParametrsAndUsersMapping>(this.detach_BasicParametrsAndUsersMapping));
+			this._CalculatedParametrsAndUsersMapping = new EntitySet<CalculatedParametrsAndUsersMapping>(new Action<CalculatedParametrsAndUsersMapping>(this.attach_CalculatedParametrsAndUsersMapping), new Action<CalculatedParametrsAndUsersMapping>(this.detach_CalculatedParametrsAndUsersMapping));
+			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
+			this._CollectedCalculatedParametrs = new EntitySet<CollectedCalculatedParametrs>(new Action<CollectedCalculatedParametrs>(this.attach_CollectedCalculatedParametrs), new Action<CollectedCalculatedParametrs>(this.detach_CollectedCalculatedParametrs));
+			this._CollectedIndocators = new EntitySet<CollectedIndocators>(new Action<CollectedIndocators>(this.attach_CollectedIndocators), new Action<CollectedIndocators>(this.detach_CollectedIndocators));
+			this._ConfirmationHistory = new EntitySet<ConfirmationHistory>(new Action<ConfirmationHistory>(this.attach_ConfirmationHistory), new Action<ConfirmationHistory>(this.detach_ConfirmationHistory));
+			this._ConnectGroup_And_Users = new EntitySet<ConnectGroup_And_Users>(new Action<ConnectGroup_And_Users>(this.attach_ConnectGroup_And_Users), new Action<ConnectGroup_And_Users>(this.detach_ConnectGroup_And_Users));
+			this._IndicatorsAndUsersMapping = new EntitySet<IndicatorsAndUsersMapping>(new Action<IndicatorsAndUsersMapping>(this.attach_IndicatorsAndUsersMapping), new Action<IndicatorsAndUsersMapping>(this.detach_IndicatorsAndUsersMapping));
+			this._MultiUser = new EntitySet<MultiUser>(new Action<MultiUser>(this.attach_MultiUser), new Action<MultiUser>(this.detach_MultiUser));
+			this._MultiUser1 = new EntitySet<MultiUser>(new Action<MultiUser>(this.attach_MultiUser1), new Action<MultiUser>(this.detach_MultiUser1));
+			this._Rank_Autors = new EntitySet<Rank_Autors>(new Action<Rank_Autors>(this.attach_Rank_Autors), new Action<Rank_Autors>(this.detach_Rank_Autors));
+			this._TypeOfWritingFIO = new EntitySet<TypeOfWritingFIO>(new Action<TypeOfWritingFIO>(this.attach_TypeOfWritingFIO), new Action<TypeOfWritingFIO>(this.detach_TypeOfWritingFIO));
+			this._zCompetitionsTable = new EntitySet<zCompetitionsTable>(new Action<zCompetitionsTable>(this.attach_zCompetitionsTable), new Action<zCompetitionsTable>(this.detach_zCompetitionsTable));
+			this._zExpertAndExpertGroupMappingTable = new EntitySet<zExpertAndExpertGroupMappingTable>(new Action<zExpertAndExpertGroupMappingTable>(this.attach_zExpertAndExpertGroupMappingTable), new Action<zExpertAndExpertGroupMappingTable>(this.detach_zExpertAndExpertGroupMappingTable));
+			this._zExpertPointsValue = new EntitySet<zExpertPointsValue>(new Action<zExpertPointsValue>(this.attach_zExpertPointsValue), new Action<zExpertPointsValue>(this.detach_zExpertPointsValue));
+			this._zExpertsAndApplicationMappingTable = new EntitySet<zExpertsAndApplicationMappingTable>(new Action<zExpertsAndApplicationMappingTable>(this.attach_zExpertsAndApplicationMappingTable), new Action<zExpertsAndApplicationMappingTable>(this.detach_zExpertsAndApplicationMappingTable));
+			this._zPartnersTable = new EntitySet<zPartnersTable>(new Action<zPartnersTable>(this.attach_zPartnersTable), new Action<zPartnersTable>(this.detach_zPartnersTable));
+			this._zTaskPRManualTable = new EntitySet<zTaskPRManualTable>(new Action<zTaskPRManualTable>(this.attach_zTaskPRManualTable), new Action<zTaskPRManualTable>(this.detach_zTaskPRManualTable));
 			this._FifthLevelSubdivisionTable = default(EntityRef<FifthLevelSubdivisionTable>);
 			this._FirstLevelSubdivisionTable = default(EntityRef<FirstLevelSubdivisionTable>);
 			this._FourthLevelSubdivisionTable = default(EntityRef<FourthLevelSubdivisionTable>);
@@ -20254,47 +20254,47 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_BasicParametrsAndUsersMapping", Storage="_BasicParametrsAndUsersMappings", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
-		public EntitySet<BasicParametrsAndUsersMapping> BasicParametrsAndUsersMappings
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_BasicParametrsAndUsersMapping", Storage="_BasicParametrsAndUsersMapping", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
+		public EntitySet<BasicParametrsAndUsersMapping> BasicParametrsAndUsersMapping
 		{
 			get
 			{
-				return this._BasicParametrsAndUsersMappings;
+				return this._BasicParametrsAndUsersMapping;
 			}
 			set
 			{
-				this._BasicParametrsAndUsersMappings.Assign(value);
+				this._BasicParametrsAndUsersMapping.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_CalculatedParametrsAndUsersMapping", Storage="_CalculatedParametrsAndUsersMappings", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
-		public EntitySet<CalculatedParametrsAndUsersMapping> CalculatedParametrsAndUsersMappings
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_CalculatedParametrsAndUsersMapping", Storage="_CalculatedParametrsAndUsersMapping", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
+		public EntitySet<CalculatedParametrsAndUsersMapping> CalculatedParametrsAndUsersMapping
 		{
 			get
 			{
-				return this._CalculatedParametrsAndUsersMappings;
+				return this._CalculatedParametrsAndUsersMapping;
 			}
 			set
 			{
-				this._CalculatedParametrsAndUsersMappings.Assign(value);
+				this._CalculatedParametrsAndUsersMapping.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTables", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
-		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTable", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
+		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTable
 		{
 			get
 			{
-				return this._CollectedBasicParametersTables;
+				return this._CollectedBasicParametersTable;
 			}
 			set
 			{
-				this._CollectedBasicParametersTables.Assign(value);
+				this._CollectedBasicParametersTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_CollectedCalculatedParametr", Storage="_CollectedCalculatedParametrs", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
-		public EntitySet<CollectedCalculatedParametr> CollectedCalculatedParametrs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_CollectedCalculatedParametrs", Storage="_CollectedCalculatedParametrs", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
+		public EntitySet<CollectedCalculatedParametrs> CollectedCalculatedParametrs
 		{
 			get
 			{
@@ -20306,8 +20306,8 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_CollectedIndocator", Storage="_CollectedIndocators", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
-		public EntitySet<CollectedIndocator> CollectedIndocators
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_CollectedIndocators", Storage="_CollectedIndocators", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
+		public EntitySet<CollectedIndocators> CollectedIndocators
 		{
 			get
 			{
@@ -20319,21 +20319,21 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_ConfirmationHistory", Storage="_ConfirmationHistories", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
-		public EntitySet<ConfirmationHistory> ConfirmationHistories
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_ConfirmationHistory", Storage="_ConfirmationHistory", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
+		public EntitySet<ConfirmationHistory> ConfirmationHistory
 		{
 			get
 			{
-				return this._ConfirmationHistories;
+				return this._ConfirmationHistory;
 			}
 			set
 			{
-				this._ConfirmationHistories.Assign(value);
+				this._ConfirmationHistory.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_ConnectGroup_And_User", Storage="_ConnectGroup_And_Users", ThisKey="UsersTableID", OtherKey="FK_UserTable")]
-		public EntitySet<ConnectGroup_And_User> ConnectGroup_And_Users
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_ConnectGroup_And_Users", Storage="_ConnectGroup_And_Users", ThisKey="UsersTableID", OtherKey="FK_UserTable")]
+		public EntitySet<ConnectGroup_And_Users> ConnectGroup_And_Users
 		{
 			get
 			{
@@ -20345,47 +20345,47 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_IndicatorsAndUsersMapping", Storage="_IndicatorsAndUsersMappings", ThisKey="UsersTableID", OtherKey="FK_UsresTable")]
-		public EntitySet<IndicatorsAndUsersMapping> IndicatorsAndUsersMappings
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_IndicatorsAndUsersMapping", Storage="_IndicatorsAndUsersMapping", ThisKey="UsersTableID", OtherKey="FK_UsresTable")]
+		public EntitySet<IndicatorsAndUsersMapping> IndicatorsAndUsersMapping
 		{
 			get
 			{
-				return this._IndicatorsAndUsersMappings;
+				return this._IndicatorsAndUsersMapping;
 			}
 			set
 			{
-				this._IndicatorsAndUsersMappings.Assign(value);
+				this._IndicatorsAndUsersMapping.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_MultiUser", Storage="_MultiUsers", ThisKey="UsersTableID", OtherKey="FK_UserCanAccess")]
-		public EntitySet<MultiUser> MultiUsers
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_MultiUser", Storage="_MultiUser", ThisKey="UsersTableID", OtherKey="FK_UserCanAccess")]
+		public EntitySet<MultiUser> MultiUser
 		{
 			get
 			{
-				return this._MultiUsers;
+				return this._MultiUser;
 			}
 			set
 			{
-				this._MultiUsers.Assign(value);
+				this._MultiUser.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_MultiUser1", Storage="_MultiUsers1", ThisKey="UsersTableID", OtherKey="FK_UserToAccess")]
-		public EntitySet<MultiUser> MultiUsers1
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_MultiUser1", Storage="_MultiUser1", ThisKey="UsersTableID", OtherKey="FK_UserToAccess")]
+		public EntitySet<MultiUser> MultiUser1
 		{
 			get
 			{
-				return this._MultiUsers1;
+				return this._MultiUser1;
 			}
 			set
 			{
-				this._MultiUsers1.Assign(value);
+				this._MultiUser1.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_Rank_Autor", Storage="_Rank_Autors", ThisKey="UsersTableID", OtherKey="FK_Users")]
-		public EntitySet<Rank_Autor> Rank_Autors
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_Rank_Autors", Storage="_Rank_Autors", ThisKey="UsersTableID", OtherKey="FK_Users")]
+		public EntitySet<Rank_Autors> Rank_Autors
 		{
 			get
 			{
@@ -20397,94 +20397,94 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_TypeOfWritingFIO", Storage="_TypeOfWritingFIOs", ThisKey="UsersTableID", OtherKey="FK_UserTableID")]
-		public EntitySet<TypeOfWritingFIO> TypeOfWritingFIOs
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_TypeOfWritingFIO", Storage="_TypeOfWritingFIO", ThisKey="UsersTableID", OtherKey="FK_UserTableID")]
+		public EntitySet<TypeOfWritingFIO> TypeOfWritingFIO
 		{
 			get
 			{
-				return this._TypeOfWritingFIOs;
+				return this._TypeOfWritingFIO;
 			}
 			set
 			{
-				this._TypeOfWritingFIOs.Assign(value);
+				this._TypeOfWritingFIO.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_zCompetitionsTable", Storage="_zCompetitionsTables", ThisKey="UsersTableID", OtherKey="FK_Curator")]
-		public EntitySet<zCompetitionsTable> zCompetitionsTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_zCompetitionsTable", Storage="_zCompetitionsTable", ThisKey="UsersTableID", OtherKey="FK_Curator")]
+		public EntitySet<zCompetitionsTable> zCompetitionsTable
 		{
 			get
 			{
-				return this._zCompetitionsTables;
+				return this._zCompetitionsTable;
 			}
 			set
 			{
-				this._zCompetitionsTables.Assign(value);
+				this._zCompetitionsTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_zExpertAndExpertGroupMappingTable", Storage="_zExpertAndExpertGroupMappingTables", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
-		public EntitySet<zExpertAndExpertGroupMappingTable> zExpertAndExpertGroupMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_zExpertAndExpertGroupMappingTable", Storage="_zExpertAndExpertGroupMappingTable", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
+		public EntitySet<zExpertAndExpertGroupMappingTable> zExpertAndExpertGroupMappingTable
 		{
 			get
 			{
-				return this._zExpertAndExpertGroupMappingTables;
+				return this._zExpertAndExpertGroupMappingTable;
 			}
 			set
 			{
-				this._zExpertAndExpertGroupMappingTables.Assign(value);
+				this._zExpertAndExpertGroupMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_zExpertPointsValue", Storage="_zExpertPointsValues", ThisKey="UsersTableID", OtherKey="FK_ExpertsTable")]
-		public EntitySet<zExpertPointsValue> zExpertPointsValues
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_zExpertPointsValue", Storage="_zExpertPointsValue", ThisKey="UsersTableID", OtherKey="FK_ExpertsTable")]
+		public EntitySet<zExpertPointsValue> zExpertPointsValue
 		{
 			get
 			{
-				return this._zExpertPointsValues;
+				return this._zExpertPointsValue;
 			}
 			set
 			{
-				this._zExpertPointsValues.Assign(value);
+				this._zExpertPointsValue.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_zExpertsAndApplicationMappingTable", Storage="_zExpertsAndApplicationMappingTables", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
-		public EntitySet<zExpertsAndApplicationMappingTable> zExpertsAndApplicationMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_zExpertsAndApplicationMappingTable", Storage="_zExpertsAndApplicationMappingTable", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
+		public EntitySet<zExpertsAndApplicationMappingTable> zExpertsAndApplicationMappingTable
 		{
 			get
 			{
-				return this._zExpertsAndApplicationMappingTables;
+				return this._zExpertsAndApplicationMappingTable;
 			}
 			set
 			{
-				this._zExpertsAndApplicationMappingTables.Assign(value);
+				this._zExpertsAndApplicationMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_zPartnersTable", Storage="_zPartnersTables", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
-		public EntitySet<zPartnersTable> zPartnersTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_zPartnersTable", Storage="_zPartnersTable", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
+		public EntitySet<zPartnersTable> zPartnersTable
 		{
 			get
 			{
-				return this._zPartnersTables;
+				return this._zPartnersTable;
 			}
 			set
 			{
-				this._zPartnersTables.Assign(value);
+				this._zPartnersTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_zTaskPRManualTable", Storage="_zTaskPRManualTables", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
-		public EntitySet<zTaskPRManualTable> zTaskPRManualTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_zTaskPRManualTable", Storage="_zTaskPRManualTable", ThisKey="UsersTableID", OtherKey="FK_UsersTable")]
+		public EntitySet<zTaskPRManualTable> zTaskPRManualTable
 		{
 			get
 			{
-				return this._zTaskPRManualTables;
+				return this._zTaskPRManualTable;
 			}
 			set
 			{
-				this._zTaskPRManualTables.Assign(value);
+				this._zTaskPRManualTable.Assign(value);
 			}
 		}
 		
@@ -20505,12 +20505,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FifthLevelSubdivisionTable.Entity = null;
-						previousValue.UsersTables.Remove(this);
+						previousValue.UsersTable.Remove(this);
 					}
 					this._FifthLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.UsersTables.Add(this);
+						value.UsersTable.Add(this);
 						this._FK_FifthLevelSubdivisionTable = value.FifthLevelSubdivisionTableID;
 					}
 					else
@@ -20539,12 +20539,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FirstLevelSubdivisionTable.Entity = null;
-						previousValue.UsersTables.Remove(this);
+						previousValue.UsersTable.Remove(this);
 					}
 					this._FirstLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.UsersTables.Add(this);
+						value.UsersTable.Add(this);
 						this._FK_FirstLevelSubdivisionTable = value.FirstLevelSubdivisionTableID;
 					}
 					else
@@ -20573,12 +20573,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._FourthLevelSubdivisionTable.Entity = null;
-						previousValue.UsersTables.Remove(this);
+						previousValue.UsersTable.Remove(this);
 					}
 					this._FourthLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.UsersTables.Add(this);
+						value.UsersTable.Add(this);
 						this._FK_FourthLevelSubdivisionTable = value.FourthLevelSubdivisionTableID;
 					}
 					else
@@ -20607,12 +20607,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._SecondLevelSubdivisionTable.Entity = null;
-						previousValue.UsersTables.Remove(this);
+						previousValue.UsersTable.Remove(this);
 					}
 					this._SecondLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.UsersTables.Add(this);
+						value.UsersTable.Add(this);
 						this._FK_SecondLevelSubdivisionTable = value.SecondLevelSubdivisionTableID;
 					}
 					else
@@ -20641,12 +20641,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ThirdLevelSubdivisionTable.Entity = null;
-						previousValue.UsersTables.Remove(this);
+						previousValue.UsersTable.Remove(this);
 					}
 					this._ThirdLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.UsersTables.Add(this);
+						value.UsersTable.Add(this);
 						this._FK_ThirdLevelSubdivisionTable = value.ThirdLevelSubdivisionTableID;
 					}
 					else
@@ -20675,12 +20675,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._ZeroLevelSubdivisionTable.Entity = null;
-						previousValue.UsersTables.Remove(this);
+						previousValue.UsersTable.Remove(this);
 					}
 					this._ZeroLevelSubdivisionTable.Entity = value;
 					if ((value != null))
 					{
-						value.UsersTables.Add(this);
+						value.UsersTable.Add(this);
 						this._FK_ZeroLevelSubdivisionTable = value.ZeroLevelSubdivisionTableID;
 					}
 					else
@@ -20712,217 +20712,217 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_BasicParametrsAndUsersMappings(BasicParametrsAndUsersMapping entity)
+		private void attach_BasicParametrsAndUsersMapping(BasicParametrsAndUsersMapping entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_BasicParametrsAndUsersMappings(BasicParametrsAndUsersMapping entity)
+		private void detach_BasicParametrsAndUsersMapping(BasicParametrsAndUsersMapping entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
 		
-		private void attach_CalculatedParametrsAndUsersMappings(CalculatedParametrsAndUsersMapping entity)
+		private void attach_CalculatedParametrsAndUsersMapping(CalculatedParametrsAndUsersMapping entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_CalculatedParametrsAndUsersMappings(CalculatedParametrsAndUsersMapping entity)
+		private void detach_CalculatedParametrsAndUsersMapping(CalculatedParametrsAndUsersMapping entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
 		
-		private void attach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void attach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void detach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
 		
-		private void attach_CollectedCalculatedParametrs(CollectedCalculatedParametr entity)
+		private void attach_CollectedCalculatedParametrs(CollectedCalculatedParametrs entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_CollectedCalculatedParametrs(CollectedCalculatedParametr entity)
+		private void detach_CollectedCalculatedParametrs(CollectedCalculatedParametrs entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
 		
-		private void attach_CollectedIndocators(CollectedIndocator entity)
+		private void attach_CollectedIndocators(CollectedIndocators entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_CollectedIndocators(CollectedIndocator entity)
+		private void detach_CollectedIndocators(CollectedIndocators entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
 		
-		private void attach_ConfirmationHistories(ConfirmationHistory entity)
+		private void attach_ConfirmationHistory(ConfirmationHistory entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_ConfirmationHistories(ConfirmationHistory entity)
+		private void detach_ConfirmationHistory(ConfirmationHistory entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
 		
-		private void attach_ConnectGroup_And_Users(ConnectGroup_And_User entity)
+		private void attach_ConnectGroup_And_Users(ConnectGroup_And_Users entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_ConnectGroup_And_Users(ConnectGroup_And_User entity)
+		private void detach_ConnectGroup_And_Users(ConnectGroup_And_Users entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
 		
-		private void attach_IndicatorsAndUsersMappings(IndicatorsAndUsersMapping entity)
+		private void attach_IndicatorsAndUsersMapping(IndicatorsAndUsersMapping entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_IndicatorsAndUsersMappings(IndicatorsAndUsersMapping entity)
+		private void detach_IndicatorsAndUsersMapping(IndicatorsAndUsersMapping entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
 		
-		private void attach_MultiUsers(MultiUser entity)
+		private void attach_MultiUser(MultiUser entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_MultiUsers(MultiUser entity)
+		private void detach_MultiUser(MultiUser entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
 		
-		private void attach_MultiUsers1(MultiUser entity)
+		private void attach_MultiUser1(MultiUser entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable1 = this;
 		}
 		
-		private void detach_MultiUsers1(MultiUser entity)
+		private void detach_MultiUser1(MultiUser entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable1 = null;
 		}
 		
-		private void attach_Rank_Autors(Rank_Autor entity)
+		private void attach_Rank_Autors(Rank_Autors entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_Rank_Autors(Rank_Autor entity)
+		private void detach_Rank_Autors(Rank_Autors entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
 		
-		private void attach_TypeOfWritingFIOs(TypeOfWritingFIO entity)
+		private void attach_TypeOfWritingFIO(TypeOfWritingFIO entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_TypeOfWritingFIOs(TypeOfWritingFIO entity)
+		private void detach_TypeOfWritingFIO(TypeOfWritingFIO entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
 		
-		private void attach_zCompetitionsTables(zCompetitionsTable entity)
+		private void attach_zCompetitionsTable(zCompetitionsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_zCompetitionsTables(zCompetitionsTable entity)
+		private void detach_zCompetitionsTable(zCompetitionsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
 		
-		private void attach_zExpertAndExpertGroupMappingTables(zExpertAndExpertGroupMappingTable entity)
+		private void attach_zExpertAndExpertGroupMappingTable(zExpertAndExpertGroupMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_zExpertAndExpertGroupMappingTables(zExpertAndExpertGroupMappingTable entity)
+		private void detach_zExpertAndExpertGroupMappingTable(zExpertAndExpertGroupMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
 		
-		private void attach_zExpertPointsValues(zExpertPointsValue entity)
+		private void attach_zExpertPointsValue(zExpertPointsValue entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_zExpertPointsValues(zExpertPointsValue entity)
+		private void detach_zExpertPointsValue(zExpertPointsValue entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
 		
-		private void attach_zExpertsAndApplicationMappingTables(zExpertsAndApplicationMappingTable entity)
+		private void attach_zExpertsAndApplicationMappingTable(zExpertsAndApplicationMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_zExpertsAndApplicationMappingTables(zExpertsAndApplicationMappingTable entity)
+		private void detach_zExpertsAndApplicationMappingTable(zExpertsAndApplicationMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
 		
-		private void attach_zPartnersTables(zPartnersTable entity)
+		private void attach_zPartnersTable(zPartnersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_zPartnersTables(zPartnersTable entity)
+		private void detach_zPartnersTable(zPartnersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
 		}
 		
-		private void attach_zTaskPRManualTables(zTaskPRManualTable entity)
+		private void attach_zTaskPRManualTable(zTaskPRManualTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = this;
 		}
 		
-		private void detach_zTaskPRManualTables(zTaskPRManualTable entity)
+		private void detach_zTaskPRManualTable(zTaskPRManualTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
@@ -20941,7 +20941,7 @@ namespace PersonalPages
 		
 		private System.Nullable<bool> _Active;
 		
-		private EntitySet<zActionsCompetitionsMappingTable> _zActionsCompetitionsMappingTables;
+		private EntitySet<zActionsCompetitionsMappingTable> _zActionsCompetitionsMappingTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -20957,7 +20957,7 @@ namespace PersonalPages
 		
 		public zActionPRManualTable()
 		{
-			this._zActionsCompetitionsMappingTables = new EntitySet<zActionsCompetitionsMappingTable>(new Action<zActionsCompetitionsMappingTable>(this.attach_zActionsCompetitionsMappingTables), new Action<zActionsCompetitionsMappingTable>(this.detach_zActionsCompetitionsMappingTables));
+			this._zActionsCompetitionsMappingTable = new EntitySet<zActionsCompetitionsMappingTable>(new Action<zActionsCompetitionsMappingTable>(this.attach_zActionsCompetitionsMappingTable), new Action<zActionsCompetitionsMappingTable>(this.detach_zActionsCompetitionsMappingTable));
 			OnCreated();
 		}
 		
@@ -21021,16 +21021,16 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zActionPRManualTable_zActionsCompetitionsMappingTable", Storage="_zActionsCompetitionsMappingTables", ThisKey="ID", OtherKey="FK_ActionPR")]
-		public EntitySet<zActionsCompetitionsMappingTable> zActionsCompetitionsMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zActionPRManualTable_zActionsCompetitionsMappingTable", Storage="_zActionsCompetitionsMappingTable", ThisKey="ID", OtherKey="FK_ActionPR")]
+		public EntitySet<zActionsCompetitionsMappingTable> zActionsCompetitionsMappingTable
 		{
 			get
 			{
-				return this._zActionsCompetitionsMappingTables;
+				return this._zActionsCompetitionsMappingTable;
 			}
 			set
 			{
-				this._zActionsCompetitionsMappingTables.Assign(value);
+				this._zActionsCompetitionsMappingTable.Assign(value);
 			}
 		}
 		
@@ -21054,13 +21054,13 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_zActionsCompetitionsMappingTables(zActionsCompetitionsMappingTable entity)
+		private void attach_zActionsCompetitionsMappingTable(zActionsCompetitionsMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zActionPRManualTable = this;
 		}
 		
-		private void detach_zActionsCompetitionsMappingTables(zActionsCompetitionsMappingTable entity)
+		private void detach_zActionsCompetitionsMappingTable(zActionsCompetitionsMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zActionPRManualTable = null;
@@ -21211,12 +21211,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zActionPRManualTable.Entity = null;
-						previousValue.zActionsCompetitionsMappingTables.Remove(this);
+						previousValue.zActionsCompetitionsMappingTable.Remove(this);
 					}
 					this._zActionPRManualTable.Entity = value;
 					if ((value != null))
 					{
-						value.zActionsCompetitionsMappingTables.Add(this);
+						value.zActionsCompetitionsMappingTable.Add(this);
 						this._FK_ActionPR = value.ID;
 					}
 					else
@@ -21245,12 +21245,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zCompetitionsTable.Entity = null;
-						previousValue.zActionsCompetitionsMappingTables.Remove(this);
+						previousValue.zActionsCompetitionsMappingTable.Remove(this);
 					}
 					this._zCompetitionsTable.Entity = value;
 					if ((value != null))
 					{
-						value.zActionsCompetitionsMappingTables.Add(this);
+						value.zActionsCompetitionsMappingTable.Add(this);
 						this._FK_Competiton = value.ID;
 					}
 					else
@@ -21427,12 +21427,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zApplicationTable.Entity = null;
-						previousValue.zApplicationAndPartnersMappingTables.Remove(this);
+						previousValue.zApplicationAndPartnersMappingTable.Remove(this);
 					}
 					this._zApplicationTable.Entity = value;
 					if ((value != null))
 					{
-						value.zApplicationAndPartnersMappingTables.Add(this);
+						value.zApplicationAndPartnersMappingTable.Add(this);
 						this._FK_Application = value.ID;
 					}
 					else
@@ -21461,12 +21461,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zPartnersTable.Entity = null;
-						previousValue.zApplicationAndPartnersMappingTables.Remove(this);
+						previousValue.zApplicationAndPartnersMappingTable.Remove(this);
 					}
 					this._zPartnersTable.Entity = value;
 					if ((value != null))
 					{
-						value.zApplicationAndPartnersMappingTables.Add(this);
+						value.zApplicationAndPartnersMappingTable.Add(this);
 						this._FK_PartnersTable = value.ID;
 					}
 					else
@@ -21527,15 +21527,15 @@ namespace PersonalPages
 		
 		private System.Nullable<System.DateTime> _EndProjectDate;
 		
-		private EntitySet<zApplicationAndPartnersMappingTable> _zApplicationAndPartnersMappingTables;
+		private EntitySet<zApplicationAndPartnersMappingTable> _zApplicationAndPartnersMappingTable;
 		
-		private EntitySet<zCollectedRowsTable> _zCollectedRowsTables;
+		private EntitySet<zCollectedRowsTable> _zCollectedRowsTable;
 		
-		private EntitySet<zDocumentsTable> _zDocumentsTables;
+		private EntitySet<zDocumentsTable> _zDocumentsTable;
 		
-		private EntitySet<zExpertPointsValue> _zExpertPointsValues;
+		private EntitySet<zExpertPointsValue> _zExpertPointsValue;
 		
-		private EntitySet<zExpertsAndApplicationMappingTable> _zExpertsAndApplicationMappingTables;
+		private EntitySet<zExpertsAndApplicationMappingTable> _zExpertsAndApplicationMappingTable;
 		
 		private EntityRef<zCompetitionsTable> _zCompetitionsTable;
 		
@@ -21569,11 +21569,11 @@ namespace PersonalPages
 		
 		public zApplicationTable()
 		{
-			this._zApplicationAndPartnersMappingTables = new EntitySet<zApplicationAndPartnersMappingTable>(new Action<zApplicationAndPartnersMappingTable>(this.attach_zApplicationAndPartnersMappingTables), new Action<zApplicationAndPartnersMappingTable>(this.detach_zApplicationAndPartnersMappingTables));
-			this._zCollectedRowsTables = new EntitySet<zCollectedRowsTable>(new Action<zCollectedRowsTable>(this.attach_zCollectedRowsTables), new Action<zCollectedRowsTable>(this.detach_zCollectedRowsTables));
-			this._zDocumentsTables = new EntitySet<zDocumentsTable>(new Action<zDocumentsTable>(this.attach_zDocumentsTables), new Action<zDocumentsTable>(this.detach_zDocumentsTables));
-			this._zExpertPointsValues = new EntitySet<zExpertPointsValue>(new Action<zExpertPointsValue>(this.attach_zExpertPointsValues), new Action<zExpertPointsValue>(this.detach_zExpertPointsValues));
-			this._zExpertsAndApplicationMappingTables = new EntitySet<zExpertsAndApplicationMappingTable>(new Action<zExpertsAndApplicationMappingTable>(this.attach_zExpertsAndApplicationMappingTables), new Action<zExpertsAndApplicationMappingTable>(this.detach_zExpertsAndApplicationMappingTables));
+			this._zApplicationAndPartnersMappingTable = new EntitySet<zApplicationAndPartnersMappingTable>(new Action<zApplicationAndPartnersMappingTable>(this.attach_zApplicationAndPartnersMappingTable), new Action<zApplicationAndPartnersMappingTable>(this.detach_zApplicationAndPartnersMappingTable));
+			this._zCollectedRowsTable = new EntitySet<zCollectedRowsTable>(new Action<zCollectedRowsTable>(this.attach_zCollectedRowsTable), new Action<zCollectedRowsTable>(this.detach_zCollectedRowsTable));
+			this._zDocumentsTable = new EntitySet<zDocumentsTable>(new Action<zDocumentsTable>(this.attach_zDocumentsTable), new Action<zDocumentsTable>(this.detach_zDocumentsTable));
+			this._zExpertPointsValue = new EntitySet<zExpertPointsValue>(new Action<zExpertPointsValue>(this.attach_zExpertPointsValue), new Action<zExpertPointsValue>(this.detach_zExpertPointsValue));
+			this._zExpertsAndApplicationMappingTable = new EntitySet<zExpertsAndApplicationMappingTable>(new Action<zExpertsAndApplicationMappingTable>(this.attach_zExpertsAndApplicationMappingTable), new Action<zExpertsAndApplicationMappingTable>(this.detach_zExpertsAndApplicationMappingTable));
 			this._zCompetitionsTable = default(EntityRef<zCompetitionsTable>);
 			OnCreated();
 		}
@@ -21802,68 +21802,68 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zApplicationTable_zApplicationAndPartnersMappingTable", Storage="_zApplicationAndPartnersMappingTables", ThisKey="ID", OtherKey="FK_Application")]
-		public EntitySet<zApplicationAndPartnersMappingTable> zApplicationAndPartnersMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zApplicationTable_zApplicationAndPartnersMappingTable", Storage="_zApplicationAndPartnersMappingTable", ThisKey="ID", OtherKey="FK_Application")]
+		public EntitySet<zApplicationAndPartnersMappingTable> zApplicationAndPartnersMappingTable
 		{
 			get
 			{
-				return this._zApplicationAndPartnersMappingTables;
+				return this._zApplicationAndPartnersMappingTable;
 			}
 			set
 			{
-				this._zApplicationAndPartnersMappingTables.Assign(value);
+				this._zApplicationAndPartnersMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zApplicationTable_zCollectedRowsTable", Storage="_zCollectedRowsTables", ThisKey="ID", OtherKey="FK_ApplicationTable")]
-		public EntitySet<zCollectedRowsTable> zCollectedRowsTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zApplicationTable_zCollectedRowsTable", Storage="_zCollectedRowsTable", ThisKey="ID", OtherKey="FK_ApplicationTable")]
+		public EntitySet<zCollectedRowsTable> zCollectedRowsTable
 		{
 			get
 			{
-				return this._zCollectedRowsTables;
+				return this._zCollectedRowsTable;
 			}
 			set
 			{
-				this._zCollectedRowsTables.Assign(value);
+				this._zCollectedRowsTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zApplicationTable_zDocumentsTable", Storage="_zDocumentsTables", ThisKey="ID", OtherKey="FK_ApplicationTable")]
-		public EntitySet<zDocumentsTable> zDocumentsTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zApplicationTable_zDocumentsTable", Storage="_zDocumentsTable", ThisKey="ID", OtherKey="FK_ApplicationTable")]
+		public EntitySet<zDocumentsTable> zDocumentsTable
 		{
 			get
 			{
-				return this._zDocumentsTables;
+				return this._zDocumentsTable;
 			}
 			set
 			{
-				this._zDocumentsTables.Assign(value);
+				this._zDocumentsTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zApplicationTable_zExpertPointsValue", Storage="_zExpertPointsValues", ThisKey="ID", OtherKey="FK_ApplicationTable")]
-		public EntitySet<zExpertPointsValue> zExpertPointsValues
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zApplicationTable_zExpertPointsValue", Storage="_zExpertPointsValue", ThisKey="ID", OtherKey="FK_ApplicationTable")]
+		public EntitySet<zExpertPointsValue> zExpertPointsValue
 		{
 			get
 			{
-				return this._zExpertPointsValues;
+				return this._zExpertPointsValue;
 			}
 			set
 			{
-				this._zExpertPointsValues.Assign(value);
+				this._zExpertPointsValue.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zApplicationTable_zExpertsAndApplicationMappingTable", Storage="_zExpertsAndApplicationMappingTables", ThisKey="ID", OtherKey="FK_ApplicationsTable")]
-		public EntitySet<zExpertsAndApplicationMappingTable> zExpertsAndApplicationMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zApplicationTable_zExpertsAndApplicationMappingTable", Storage="_zExpertsAndApplicationMappingTable", ThisKey="ID", OtherKey="FK_ApplicationsTable")]
+		public EntitySet<zExpertsAndApplicationMappingTable> zExpertsAndApplicationMappingTable
 		{
 			get
 			{
-				return this._zExpertsAndApplicationMappingTables;
+				return this._zExpertsAndApplicationMappingTable;
 			}
 			set
 			{
-				this._zExpertsAndApplicationMappingTables.Assign(value);
+				this._zExpertsAndApplicationMappingTable.Assign(value);
 			}
 		}
 		
@@ -21884,12 +21884,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zCompetitionsTable.Entity = null;
-						previousValue.zApplicationTables.Remove(this);
+						previousValue.zApplicationTable.Remove(this);
 					}
 					this._zCompetitionsTable.Entity = value;
 					if ((value != null))
 					{
-						value.zApplicationTables.Add(this);
+						value.zApplicationTable.Add(this);
 						this._FK_CompetitionTable = value.ID;
 					}
 					else
@@ -21921,61 +21921,61 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_zApplicationAndPartnersMappingTables(zApplicationAndPartnersMappingTable entity)
+		private void attach_zApplicationAndPartnersMappingTable(zApplicationAndPartnersMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zApplicationTable = this;
 		}
 		
-		private void detach_zApplicationAndPartnersMappingTables(zApplicationAndPartnersMappingTable entity)
+		private void detach_zApplicationAndPartnersMappingTable(zApplicationAndPartnersMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zApplicationTable = null;
 		}
 		
-		private void attach_zCollectedRowsTables(zCollectedRowsTable entity)
+		private void attach_zCollectedRowsTable(zCollectedRowsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zApplicationTable = this;
 		}
 		
-		private void detach_zCollectedRowsTables(zCollectedRowsTable entity)
+		private void detach_zCollectedRowsTable(zCollectedRowsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zApplicationTable = null;
 		}
 		
-		private void attach_zDocumentsTables(zDocumentsTable entity)
+		private void attach_zDocumentsTable(zDocumentsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zApplicationTable = this;
 		}
 		
-		private void detach_zDocumentsTables(zDocumentsTable entity)
+		private void detach_zDocumentsTable(zDocumentsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zApplicationTable = null;
 		}
 		
-		private void attach_zExpertPointsValues(zExpertPointsValue entity)
+		private void attach_zExpertPointsValue(zExpertPointsValue entity)
 		{
 			this.SendPropertyChanging();
 			entity.zApplicationTable = this;
 		}
 		
-		private void detach_zExpertPointsValues(zExpertPointsValue entity)
+		private void detach_zExpertPointsValue(zExpertPointsValue entity)
 		{
 			this.SendPropertyChanging();
 			entity.zApplicationTable = null;
 		}
 		
-		private void attach_zExpertsAndApplicationMappingTables(zExpertsAndApplicationMappingTable entity)
+		private void attach_zExpertsAndApplicationMappingTable(zExpertsAndApplicationMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zApplicationTable = this;
 		}
 		
-		private void detach_zExpertsAndApplicationMappingTables(zExpertsAndApplicationMappingTable entity)
+		private void detach_zExpertsAndApplicationMappingTable(zExpertsAndApplicationMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zApplicationTable = null;
@@ -21994,7 +21994,7 @@ namespace PersonalPages
 		
 		private bool _Active;
 		
-		private EntitySet<zSectionTable> _zSectionTables;
+		private EntitySet<zSectionTable> _zSectionTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -22010,7 +22010,7 @@ namespace PersonalPages
 		
 		public zBlockTable()
 		{
-			this._zSectionTables = new EntitySet<zSectionTable>(new Action<zSectionTable>(this.attach_zSectionTables), new Action<zSectionTable>(this.detach_zSectionTables));
+			this._zSectionTable = new EntitySet<zSectionTable>(new Action<zSectionTable>(this.attach_zSectionTable), new Action<zSectionTable>(this.detach_zSectionTable));
 			OnCreated();
 		}
 		
@@ -22074,16 +22074,16 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zBlockTable_zSectionTable", Storage="_zSectionTables", ThisKey="ID", OtherKey="FK_BlockID")]
-		public EntitySet<zSectionTable> zSectionTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zBlockTable_zSectionTable", Storage="_zSectionTable", ThisKey="ID", OtherKey="FK_BlockID")]
+		public EntitySet<zSectionTable> zSectionTable
 		{
 			get
 			{
-				return this._zSectionTables;
+				return this._zSectionTable;
 			}
 			set
 			{
-				this._zSectionTables.Assign(value);
+				this._zSectionTable.Assign(value);
 			}
 		}
 		
@@ -22107,13 +22107,13 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_zSectionTables(zSectionTable entity)
+		private void attach_zSectionTable(zSectionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zBlockTable = this;
 		}
 		
-		private void detach_zSectionTables(zSectionTable entity)
+		private void detach_zSectionTable(zSectionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zBlockTable = null;
@@ -22152,7 +22152,7 @@ namespace PersonalPages
 		
 		private System.Nullable<System.DateTime> _ValueDataTime;
 		
-		private EntitySet<zCollectedDataTable> _zCollectedDataTables;
+		private EntitySet<zCollectedDataTable> _zCollectedDataTable2;
 		
 		private EntityRef<zCollectedDataTable> _zCollectedDataTable1;
 		
@@ -22196,7 +22196,7 @@ namespace PersonalPages
 		
 		public zCollectedDataTable()
 		{
-			this._zCollectedDataTables = new EntitySet<zCollectedDataTable>(new Action<zCollectedDataTable>(this.attach_zCollectedDataTables), new Action<zCollectedDataTable>(this.detach_zCollectedDataTables));
+			this._zCollectedDataTable2 = new EntitySet<zCollectedDataTable>(new Action<zCollectedDataTable>(this.attach_zCollectedDataTable2), new Action<zCollectedDataTable>(this.detach_zCollectedDataTable2));
 			this._zCollectedDataTable1 = default(EntityRef<zCollectedDataTable>);
 			this._zCollectedRowsTable = default(EntityRef<zCollectedRowsTable>);
 			this._zColumnTable = default(EntityRef<zColumnTable>);
@@ -22480,16 +22480,16 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zCollectedDataTable_zCollectedDataTable", Storage="_zCollectedDataTables", ThisKey="ID", OtherKey="ValueFK_CollectedDataTable")]
-		public EntitySet<zCollectedDataTable> zCollectedDataTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zCollectedDataTable_zCollectedDataTable", Storage="_zCollectedDataTable2", ThisKey="ID", OtherKey="ValueFK_CollectedDataTable")]
+		public EntitySet<zCollectedDataTable> zCollectedDataTable2
 		{
 			get
 			{
-				return this._zCollectedDataTables;
+				return this._zCollectedDataTable2;
 			}
 			set
 			{
-				this._zCollectedDataTables.Assign(value);
+				this._zCollectedDataTable2.Assign(value);
 			}
 		}
 		
@@ -22510,12 +22510,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zCollectedDataTable1.Entity = null;
-						previousValue.zCollectedDataTables.Remove(this);
+						previousValue.zCollectedDataTable2.Remove(this);
 					}
 					this._zCollectedDataTable1.Entity = value;
 					if ((value != null))
 					{
-						value.zCollectedDataTables.Add(this);
+						value.zCollectedDataTable2.Add(this);
 						this._ValueFK_CollectedDataTable = value.ID;
 					}
 					else
@@ -22544,12 +22544,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zCollectedRowsTable.Entity = null;
-						previousValue.zCollectedDataTables.Remove(this);
+						previousValue.zCollectedDataTable.Remove(this);
 					}
 					this._zCollectedRowsTable.Entity = value;
 					if ((value != null))
 					{
-						value.zCollectedDataTables.Add(this);
+						value.zCollectedDataTable.Add(this);
 						this._FK_CollectedRowsTable = value.ID;
 					}
 					else
@@ -22578,12 +22578,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zColumnTable.Entity = null;
-						previousValue.zCollectedDataTables.Remove(this);
+						previousValue.zCollectedDataTable.Remove(this);
 					}
 					this._zColumnTable.Entity = value;
 					if ((value != null))
 					{
-						value.zCollectedDataTables.Add(this);
+						value.zCollectedDataTable.Add(this);
 						this._FK_ColumnTable = value.ID;
 					}
 					else
@@ -22612,12 +22612,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zConstantListTable.Entity = null;
-						previousValue.zCollectedDataTables.Remove(this);
+						previousValue.zCollectedDataTable.Remove(this);
 					}
 					this._zConstantListTable.Entity = value;
 					if ((value != null))
 					{
-						value.zCollectedDataTables.Add(this);
+						value.zCollectedDataTable.Add(this);
 						this._FK_ConstantListTable = value.ID;
 					}
 					else
@@ -22649,13 +22649,13 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_zCollectedDataTables(zCollectedDataTable entity)
+		private void attach_zCollectedDataTable2(zCollectedDataTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zCollectedDataTable1 = this;
 		}
 		
-		private void detach_zCollectedDataTables(zCollectedDataTable entity)
+		private void detach_zCollectedDataTable2(zCollectedDataTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zCollectedDataTable1 = null;
@@ -22676,7 +22676,7 @@ namespace PersonalPages
 		
 		private int _FK_ApplicationTable;
 		
-		private EntitySet<zCollectedDataTable> _zCollectedDataTables;
+		private EntitySet<zCollectedDataTable> _zCollectedDataTable;
 		
 		private EntityRef<zApplicationTable> _zApplicationTable;
 		
@@ -22698,7 +22698,7 @@ namespace PersonalPages
 		
 		public zCollectedRowsTable()
 		{
-			this._zCollectedDataTables = new EntitySet<zCollectedDataTable>(new Action<zCollectedDataTable>(this.attach_zCollectedDataTables), new Action<zCollectedDataTable>(this.detach_zCollectedDataTables));
+			this._zCollectedDataTable = new EntitySet<zCollectedDataTable>(new Action<zCollectedDataTable>(this.attach_zCollectedDataTable), new Action<zCollectedDataTable>(this.detach_zCollectedDataTable));
 			this._zApplicationTable = default(EntityRef<zApplicationTable>);
 			this._zSectionTable = default(EntityRef<zSectionTable>);
 			OnCreated();
@@ -22792,16 +22792,16 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zCollectedRowsTable_zCollectedDataTable", Storage="_zCollectedDataTables", ThisKey="ID", OtherKey="FK_CollectedRowsTable")]
-		public EntitySet<zCollectedDataTable> zCollectedDataTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zCollectedRowsTable_zCollectedDataTable", Storage="_zCollectedDataTable", ThisKey="ID", OtherKey="FK_CollectedRowsTable")]
+		public EntitySet<zCollectedDataTable> zCollectedDataTable
 		{
 			get
 			{
-				return this._zCollectedDataTables;
+				return this._zCollectedDataTable;
 			}
 			set
 			{
-				this._zCollectedDataTables.Assign(value);
+				this._zCollectedDataTable.Assign(value);
 			}
 		}
 		
@@ -22822,12 +22822,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zApplicationTable.Entity = null;
-						previousValue.zCollectedRowsTables.Remove(this);
+						previousValue.zCollectedRowsTable.Remove(this);
 					}
 					this._zApplicationTable.Entity = value;
 					if ((value != null))
 					{
-						value.zCollectedRowsTables.Add(this);
+						value.zCollectedRowsTable.Add(this);
 						this._FK_ApplicationTable = value.ID;
 					}
 					else
@@ -22856,12 +22856,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zSectionTable.Entity = null;
-						previousValue.zCollectedRowsTables.Remove(this);
+						previousValue.zCollectedRowsTable.Remove(this);
 					}
 					this._zSectionTable.Entity = value;
 					if ((value != null))
 					{
-						value.zCollectedRowsTables.Add(this);
+						value.zCollectedRowsTable.Add(this);
 						this._FK_SectionTable = value.ID;
 					}
 					else
@@ -22893,13 +22893,13 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_zCollectedDataTables(zCollectedDataTable entity)
+		private void attach_zCollectedDataTable(zCollectedDataTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zCollectedRowsTable = this;
 		}
 		
-		private void detach_zCollectedDataTables(zCollectedDataTable entity)
+		private void detach_zCollectedDataTable(zCollectedDataTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zCollectedRowsTable = null;
@@ -22944,19 +22944,19 @@ namespace PersonalPages
 		
 		private System.Nullable<double> _MinValue;
 		
-		private EntitySet<zCollectedDataTable> _zCollectedDataTables;
+		private EntitySet<zCollectedDataTable> _zCollectedDataTable;
 		
-		private EntitySet<zColumnTable> _zColumnTables;
+		private EntitySet<zColumnTable> _zColumnTable2;
 		
-		private EntitySet<zColumnTable> _zColumnTables1;
+		private EntitySet<zColumnTable> _zColumnTable4;
 		
-		private EntitySet<zColumnTable> _zColumnTables2;
+		private EntitySet<zColumnTable> _zColumnTable6;
 		
 		private EntityRef<zColumnTable> _zColumnTable1;
 		
-		private EntityRef<zColumnTable> _zColumnTable2;
-		
 		private EntityRef<zColumnTable> _zColumnTable3;
+		
+		private EntityRef<zColumnTable> _zColumnTable5;
 		
 		private EntityRef<zConstantListTable> _zConstantListTable;
 		
@@ -23002,13 +23002,13 @@ namespace PersonalPages
 		
 		public zColumnTable()
 		{
-			this._zCollectedDataTables = new EntitySet<zCollectedDataTable>(new Action<zCollectedDataTable>(this.attach_zCollectedDataTables), new Action<zCollectedDataTable>(this.detach_zCollectedDataTables));
-			this._zColumnTables = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTables), new Action<zColumnTable>(this.detach_zColumnTables));
-			this._zColumnTables1 = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTables1), new Action<zColumnTable>(this.detach_zColumnTables1));
-			this._zColumnTables2 = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTables2), new Action<zColumnTable>(this.detach_zColumnTables2));
+			this._zCollectedDataTable = new EntitySet<zCollectedDataTable>(new Action<zCollectedDataTable>(this.attach_zCollectedDataTable), new Action<zCollectedDataTable>(this.detach_zCollectedDataTable));
+			this._zColumnTable2 = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTable2), new Action<zColumnTable>(this.detach_zColumnTable2));
+			this._zColumnTable4 = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTable4), new Action<zColumnTable>(this.detach_zColumnTable4));
+			this._zColumnTable6 = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTable6), new Action<zColumnTable>(this.detach_zColumnTable6));
 			this._zColumnTable1 = default(EntityRef<zColumnTable>);
-			this._zColumnTable2 = default(EntityRef<zColumnTable>);
 			this._zColumnTable3 = default(EntityRef<zColumnTable>);
+			this._zColumnTable5 = default(EntityRef<zColumnTable>);
 			this._zConstantListTable = default(EntityRef<zConstantListTable>);
 			this._zSectionTable = default(EntityRef<zSectionTable>);
 			OnCreated();
@@ -23173,7 +23173,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_ColumnConnectFromTable != value))
 				{
-					if (this._zColumnTable3.HasLoadedOrAssignedValue)
+					if (this._zColumnTable5.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -23197,7 +23197,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_ColumnConnectToTable != value))
 				{
-					if (this._zColumnTable2.HasLoadedOrAssignedValue)
+					if (this._zColumnTable3.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -23354,55 +23354,55 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zCollectedDataTable", Storage="_zCollectedDataTables", ThisKey="ID", OtherKey="FK_ColumnTable")]
-		public EntitySet<zCollectedDataTable> zCollectedDataTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zCollectedDataTable", Storage="_zCollectedDataTable", ThisKey="ID", OtherKey="FK_ColumnTable")]
+		public EntitySet<zCollectedDataTable> zCollectedDataTable
 		{
 			get
 			{
-				return this._zCollectedDataTables;
+				return this._zCollectedDataTable;
 			}
 			set
 			{
-				this._zCollectedDataTables.Assign(value);
+				this._zCollectedDataTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable", Storage="_zColumnTables", ThisKey="ID", OtherKey="FK_ColumnTable")]
-		public EntitySet<zColumnTable> zColumnTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable", Storage="_zColumnTable2", ThisKey="ID", OtherKey="FK_ColumnTable")]
+		public EntitySet<zColumnTable> zColumnTable2
 		{
 			get
 			{
-				return this._zColumnTables;
+				return this._zColumnTable2;
 			}
 			set
 			{
-				this._zColumnTables.Assign(value);
+				this._zColumnTable2.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable1", Storage="_zColumnTables1", ThisKey="ID", OtherKey="FK_ColumnConnectToTable")]
-		public EntitySet<zColumnTable> zColumnTables1
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable1", Storage="_zColumnTable4", ThisKey="ID", OtherKey="FK_ColumnConnectToTable")]
+		public EntitySet<zColumnTable> zColumnTable4
 		{
 			get
 			{
-				return this._zColumnTables1;
+				return this._zColumnTable4;
 			}
 			set
 			{
-				this._zColumnTables1.Assign(value);
+				this._zColumnTable4.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable2", Storage="_zColumnTables2", ThisKey="ID", OtherKey="FK_ColumnConnectFromTable")]
-		public EntitySet<zColumnTable> zColumnTables2
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable2", Storage="_zColumnTable6", ThisKey="ID", OtherKey="FK_ColumnConnectFromTable")]
+		public EntitySet<zColumnTable> zColumnTable6
 		{
 			get
 			{
-				return this._zColumnTables2;
+				return this._zColumnTable6;
 			}
 			set
 			{
-				this._zColumnTables2.Assign(value);
+				this._zColumnTable6.Assign(value);
 			}
 		}
 		
@@ -23423,12 +23423,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zColumnTable1.Entity = null;
-						previousValue.zColumnTables.Remove(this);
+						previousValue.zColumnTable2.Remove(this);
 					}
 					this._zColumnTable1.Entity = value;
 					if ((value != null))
 					{
-						value.zColumnTables.Add(this);
+						value.zColumnTable2.Add(this);
 						this._FK_ColumnTable = value.ID;
 					}
 					else
@@ -23440,41 +23440,7 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable1", Storage="_zColumnTable2", ThisKey="FK_ColumnConnectToTable", OtherKey="ID", IsForeignKey=true)]
-		public zColumnTable zColumnTable2
-		{
-			get
-			{
-				return this._zColumnTable2.Entity;
-			}
-			set
-			{
-				zColumnTable previousValue = this._zColumnTable2.Entity;
-				if (((previousValue != value) 
-							|| (this._zColumnTable2.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._zColumnTable2.Entity = null;
-						previousValue.zColumnTables1.Remove(this);
-					}
-					this._zColumnTable2.Entity = value;
-					if ((value != null))
-					{
-						value.zColumnTables1.Add(this);
-						this._FK_ColumnConnectToTable = value.ID;
-					}
-					else
-					{
-						this._FK_ColumnConnectToTable = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("zColumnTable2");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable2", Storage="_zColumnTable3", ThisKey="FK_ColumnConnectFromTable", OtherKey="ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable1", Storage="_zColumnTable3", ThisKey="FK_ColumnConnectToTable", OtherKey="ID", IsForeignKey=true)]
 		public zColumnTable zColumnTable3
 		{
 			get
@@ -23491,19 +23457,53 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zColumnTable3.Entity = null;
-						previousValue.zColumnTables2.Remove(this);
+						previousValue.zColumnTable4.Remove(this);
 					}
 					this._zColumnTable3.Entity = value;
 					if ((value != null))
 					{
-						value.zColumnTables2.Add(this);
+						value.zColumnTable4.Add(this);
+						this._FK_ColumnConnectToTable = value.ID;
+					}
+					else
+					{
+						this._FK_ColumnConnectToTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("zColumnTable3");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zColumnTable_zColumnTable2", Storage="_zColumnTable5", ThisKey="FK_ColumnConnectFromTable", OtherKey="ID", IsForeignKey=true)]
+		public zColumnTable zColumnTable5
+		{
+			get
+			{
+				return this._zColumnTable5.Entity;
+			}
+			set
+			{
+				zColumnTable previousValue = this._zColumnTable5.Entity;
+				if (((previousValue != value) 
+							|| (this._zColumnTable5.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._zColumnTable5.Entity = null;
+						previousValue.zColumnTable6.Remove(this);
+					}
+					this._zColumnTable5.Entity = value;
+					if ((value != null))
+					{
+						value.zColumnTable6.Add(this);
 						this._FK_ColumnConnectFromTable = value.ID;
 					}
 					else
 					{
 						this._FK_ColumnConnectFromTable = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("zColumnTable3");
+					this.SendPropertyChanged("zColumnTable5");
 				}
 			}
 		}
@@ -23525,12 +23525,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zConstantListTable.Entity = null;
-						previousValue.zColumnTables.Remove(this);
+						previousValue.zColumnTable.Remove(this);
 					}
 					this._zConstantListTable.Entity = value;
 					if ((value != null))
 					{
-						value.zColumnTables.Add(this);
+						value.zColumnTable.Add(this);
 						this._FK_ConstantListsTable = value.ID;
 					}
 					else
@@ -23559,12 +23559,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zSectionTable.Entity = null;
-						previousValue.zColumnTables.Remove(this);
+						previousValue.zColumnTable.Remove(this);
 					}
 					this._zSectionTable.Entity = value;
 					if ((value != null))
 					{
-						value.zColumnTables.Add(this);
+						value.zColumnTable.Add(this);
 						this._FK_SectionTable = value.ID;
 					}
 					else
@@ -23596,52 +23596,52 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_zCollectedDataTables(zCollectedDataTable entity)
+		private void attach_zCollectedDataTable(zCollectedDataTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zColumnTable = this;
 		}
 		
-		private void detach_zCollectedDataTables(zCollectedDataTable entity)
+		private void detach_zCollectedDataTable(zCollectedDataTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zColumnTable = null;
 		}
 		
-		private void attach_zColumnTables(zColumnTable entity)
+		private void attach_zColumnTable2(zColumnTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zColumnTable1 = this;
 		}
 		
-		private void detach_zColumnTables(zColumnTable entity)
+		private void detach_zColumnTable2(zColumnTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zColumnTable1 = null;
 		}
 		
-		private void attach_zColumnTables1(zColumnTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.zColumnTable2 = this;
-		}
-		
-		private void detach_zColumnTables1(zColumnTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.zColumnTable2 = null;
-		}
-		
-		private void attach_zColumnTables2(zColumnTable entity)
+		private void attach_zColumnTable4(zColumnTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zColumnTable3 = this;
 		}
 		
-		private void detach_zColumnTables2(zColumnTable entity)
+		private void detach_zColumnTable4(zColumnTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zColumnTable3 = null;
+		}
+		
+		private void attach_zColumnTable6(zColumnTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.zColumnTable5 = this;
+		}
+		
+		private void detach_zColumnTable6(zColumnTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.zColumnTable5 = null;
 		}
 	}
 	
@@ -23675,17 +23675,17 @@ namespace PersonalPages
 		
 		private System.Nullable<int> _FK_Curator;
 		
-		private EntitySet<zActionsCompetitionsMappingTable> _zActionsCompetitionsMappingTables;
+		private EntitySet<zActionsCompetitionsMappingTable> _zActionsCompetitionsMappingTable;
 		
-		private EntitySet<zApplicationTable> _zApplicationTables;
+		private EntitySet<zApplicationTable> _zApplicationTable;
 		
-		private EntitySet<zConstantListTable> _zConstantListTables;
+		private EntitySet<zConstantListTable> _zConstantListTable;
 		
-		private EntitySet<zExpertsAndCompetitionMappngTamplateTable> _zExpertsAndCompetitionMappngTamplateTables;
+		private EntitySet<zExpertsAndCompetitionMappngTamplateTable> _zExpertsAndCompetitionMappngTamplateTable;
 		
-		private EntitySet<zFormCompetitionMappingTable> _zFormCompetitionMappingTables;
+		private EntitySet<zFormCompetitionMappingTable> _zFormCompetitionMappingTable;
 		
-		private EntitySet<zSectionTable> _zSectionTables;
+		private EntitySet<zSectionTable> _zSectionTable;
 		
 		private EntityRef<UsersTable> _UsersTable;
 		
@@ -23721,12 +23721,12 @@ namespace PersonalPages
 		
 		public zCompetitionsTable()
 		{
-			this._zActionsCompetitionsMappingTables = new EntitySet<zActionsCompetitionsMappingTable>(new Action<zActionsCompetitionsMappingTable>(this.attach_zActionsCompetitionsMappingTables), new Action<zActionsCompetitionsMappingTable>(this.detach_zActionsCompetitionsMappingTables));
-			this._zApplicationTables = new EntitySet<zApplicationTable>(new Action<zApplicationTable>(this.attach_zApplicationTables), new Action<zApplicationTable>(this.detach_zApplicationTables));
-			this._zConstantListTables = new EntitySet<zConstantListTable>(new Action<zConstantListTable>(this.attach_zConstantListTables), new Action<zConstantListTable>(this.detach_zConstantListTables));
-			this._zExpertsAndCompetitionMappngTamplateTables = new EntitySet<zExpertsAndCompetitionMappngTamplateTable>(new Action<zExpertsAndCompetitionMappngTamplateTable>(this.attach_zExpertsAndCompetitionMappngTamplateTables), new Action<zExpertsAndCompetitionMappngTamplateTable>(this.detach_zExpertsAndCompetitionMappngTamplateTables));
-			this._zFormCompetitionMappingTables = new EntitySet<zFormCompetitionMappingTable>(new Action<zFormCompetitionMappingTable>(this.attach_zFormCompetitionMappingTables), new Action<zFormCompetitionMappingTable>(this.detach_zFormCompetitionMappingTables));
-			this._zSectionTables = new EntitySet<zSectionTable>(new Action<zSectionTable>(this.attach_zSectionTables), new Action<zSectionTable>(this.detach_zSectionTables));
+			this._zActionsCompetitionsMappingTable = new EntitySet<zActionsCompetitionsMappingTable>(new Action<zActionsCompetitionsMappingTable>(this.attach_zActionsCompetitionsMappingTable), new Action<zActionsCompetitionsMappingTable>(this.detach_zActionsCompetitionsMappingTable));
+			this._zApplicationTable = new EntitySet<zApplicationTable>(new Action<zApplicationTable>(this.attach_zApplicationTable), new Action<zApplicationTable>(this.detach_zApplicationTable));
+			this._zConstantListTable = new EntitySet<zConstantListTable>(new Action<zConstantListTable>(this.attach_zConstantListTable), new Action<zConstantListTable>(this.detach_zConstantListTable));
+			this._zExpertsAndCompetitionMappngTamplateTable = new EntitySet<zExpertsAndCompetitionMappngTamplateTable>(new Action<zExpertsAndCompetitionMappngTamplateTable>(this.attach_zExpertsAndCompetitionMappngTamplateTable), new Action<zExpertsAndCompetitionMappngTamplateTable>(this.detach_zExpertsAndCompetitionMappngTamplateTable));
+			this._zFormCompetitionMappingTable = new EntitySet<zFormCompetitionMappingTable>(new Action<zFormCompetitionMappingTable>(this.attach_zFormCompetitionMappingTable), new Action<zFormCompetitionMappingTable>(this.detach_zFormCompetitionMappingTable));
+			this._zSectionTable = new EntitySet<zSectionTable>(new Action<zSectionTable>(this.attach_zSectionTable), new Action<zSectionTable>(this.detach_zSectionTable));
 			this._UsersTable = default(EntityRef<UsersTable>);
 			OnCreated();
 		}
@@ -23975,81 +23975,81 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zCompetitionsTable_zActionsCompetitionsMappingTable", Storage="_zActionsCompetitionsMappingTables", ThisKey="ID", OtherKey="FK_Competiton")]
-		public EntitySet<zActionsCompetitionsMappingTable> zActionsCompetitionsMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zCompetitionsTable_zActionsCompetitionsMappingTable", Storage="_zActionsCompetitionsMappingTable", ThisKey="ID", OtherKey="FK_Competiton")]
+		public EntitySet<zActionsCompetitionsMappingTable> zActionsCompetitionsMappingTable
 		{
 			get
 			{
-				return this._zActionsCompetitionsMappingTables;
+				return this._zActionsCompetitionsMappingTable;
 			}
 			set
 			{
-				this._zActionsCompetitionsMappingTables.Assign(value);
+				this._zActionsCompetitionsMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zCompetitionsTable_zApplicationTable", Storage="_zApplicationTables", ThisKey="ID", OtherKey="FK_CompetitionTable")]
-		public EntitySet<zApplicationTable> zApplicationTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zCompetitionsTable_zApplicationTable", Storage="_zApplicationTable", ThisKey="ID", OtherKey="FK_CompetitionTable")]
+		public EntitySet<zApplicationTable> zApplicationTable
 		{
 			get
 			{
-				return this._zApplicationTables;
+				return this._zApplicationTable;
 			}
 			set
 			{
-				this._zApplicationTables.Assign(value);
+				this._zApplicationTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zCompetitionsTable_zConstantListTable", Storage="_zConstantListTables", ThisKey="ID", OtherKey="FK_CompetitionTable")]
-		public EntitySet<zConstantListTable> zConstantListTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zCompetitionsTable_zConstantListTable", Storage="_zConstantListTable", ThisKey="ID", OtherKey="FK_CompetitionTable")]
+		public EntitySet<zConstantListTable> zConstantListTable
 		{
 			get
 			{
-				return this._zConstantListTables;
+				return this._zConstantListTable;
 			}
 			set
 			{
-				this._zConstantListTables.Assign(value);
+				this._zConstantListTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zCompetitionsTable_zExpertsAndCompetitionMappngTamplateTable", Storage="_zExpertsAndCompetitionMappngTamplateTables", ThisKey="ID", OtherKey="FK_CompetitionsTable")]
-		public EntitySet<zExpertsAndCompetitionMappngTamplateTable> zExpertsAndCompetitionMappngTamplateTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zCompetitionsTable_zExpertsAndCompetitionMappngTamplateTable", Storage="_zExpertsAndCompetitionMappngTamplateTable", ThisKey="ID", OtherKey="FK_CompetitionsTable")]
+		public EntitySet<zExpertsAndCompetitionMappngTamplateTable> zExpertsAndCompetitionMappngTamplateTable
 		{
 			get
 			{
-				return this._zExpertsAndCompetitionMappngTamplateTables;
+				return this._zExpertsAndCompetitionMappngTamplateTable;
 			}
 			set
 			{
-				this._zExpertsAndCompetitionMappngTamplateTables.Assign(value);
+				this._zExpertsAndCompetitionMappngTamplateTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zCompetitionsTable_zFormCompetitionMappingTable", Storage="_zFormCompetitionMappingTables", ThisKey="ID", OtherKey="FK_Competition")]
-		public EntitySet<zFormCompetitionMappingTable> zFormCompetitionMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zCompetitionsTable_zFormCompetitionMappingTable", Storage="_zFormCompetitionMappingTable", ThisKey="ID", OtherKey="FK_Competition")]
+		public EntitySet<zFormCompetitionMappingTable> zFormCompetitionMappingTable
 		{
 			get
 			{
-				return this._zFormCompetitionMappingTables;
+				return this._zFormCompetitionMappingTable;
 			}
 			set
 			{
-				this._zFormCompetitionMappingTables.Assign(value);
+				this._zFormCompetitionMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zCompetitionsTable_zSectionTable", Storage="_zSectionTables", ThisKey="ID", OtherKey="FK_CompetitionsTable")]
-		public EntitySet<zSectionTable> zSectionTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zCompetitionsTable_zSectionTable", Storage="_zSectionTable", ThisKey="ID", OtherKey="FK_CompetitionsTable")]
+		public EntitySet<zSectionTable> zSectionTable
 		{
 			get
 			{
-				return this._zSectionTables;
+				return this._zSectionTable;
 			}
 			set
 			{
-				this._zSectionTables.Assign(value);
+				this._zSectionTable.Assign(value);
 			}
 		}
 		
@@ -24070,12 +24070,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._UsersTable.Entity = null;
-						previousValue.zCompetitionsTables.Remove(this);
+						previousValue.zCompetitionsTable.Remove(this);
 					}
 					this._UsersTable.Entity = value;
 					if ((value != null))
 					{
-						value.zCompetitionsTables.Add(this);
+						value.zCompetitionsTable.Add(this);
 						this._FK_Curator = value.UsersTableID;
 					}
 					else
@@ -24107,73 +24107,73 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_zActionsCompetitionsMappingTables(zActionsCompetitionsMappingTable entity)
+		private void attach_zActionsCompetitionsMappingTable(zActionsCompetitionsMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zCompetitionsTable = this;
 		}
 		
-		private void detach_zActionsCompetitionsMappingTables(zActionsCompetitionsMappingTable entity)
+		private void detach_zActionsCompetitionsMappingTable(zActionsCompetitionsMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zCompetitionsTable = null;
 		}
 		
-		private void attach_zApplicationTables(zApplicationTable entity)
+		private void attach_zApplicationTable(zApplicationTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zCompetitionsTable = this;
 		}
 		
-		private void detach_zApplicationTables(zApplicationTable entity)
+		private void detach_zApplicationTable(zApplicationTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zCompetitionsTable = null;
 		}
 		
-		private void attach_zConstantListTables(zConstantListTable entity)
+		private void attach_zConstantListTable(zConstantListTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zCompetitionsTable = this;
 		}
 		
-		private void detach_zConstantListTables(zConstantListTable entity)
+		private void detach_zConstantListTable(zConstantListTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zCompetitionsTable = null;
 		}
 		
-		private void attach_zExpertsAndCompetitionMappngTamplateTables(zExpertsAndCompetitionMappngTamplateTable entity)
+		private void attach_zExpertsAndCompetitionMappngTamplateTable(zExpertsAndCompetitionMappngTamplateTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zCompetitionsTable = this;
 		}
 		
-		private void detach_zExpertsAndCompetitionMappngTamplateTables(zExpertsAndCompetitionMappngTamplateTable entity)
+		private void detach_zExpertsAndCompetitionMappngTamplateTable(zExpertsAndCompetitionMappngTamplateTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zCompetitionsTable = null;
 		}
 		
-		private void attach_zFormCompetitionMappingTables(zFormCompetitionMappingTable entity)
+		private void attach_zFormCompetitionMappingTable(zFormCompetitionMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zCompetitionsTable = this;
 		}
 		
-		private void detach_zFormCompetitionMappingTables(zFormCompetitionMappingTable entity)
+		private void detach_zFormCompetitionMappingTable(zFormCompetitionMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zCompetitionsTable = null;
 		}
 		
-		private void attach_zSectionTables(zSectionTable entity)
+		private void attach_zSectionTable(zSectionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zCompetitionsTable = this;
 		}
 		
-		private void detach_zSectionTables(zSectionTable entity)
+		private void detach_zSectionTable(zSectionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zCompetitionsTable = null;
@@ -24194,9 +24194,9 @@ namespace PersonalPages
 		
 		private int _FK_CompetitionTable;
 		
-		private EntitySet<zCollectedDataTable> _zCollectedDataTables;
+		private EntitySet<zCollectedDataTable> _zCollectedDataTable;
 		
-		private EntitySet<zColumnTable> _zColumnTables;
+		private EntitySet<zColumnTable> _zColumnTable;
 		
 		private EntityRef<zCompetitionsTable> _zCompetitionsTable;
 		
@@ -24216,8 +24216,8 @@ namespace PersonalPages
 		
 		public zConstantListTable()
 		{
-			this._zCollectedDataTables = new EntitySet<zCollectedDataTable>(new Action<zCollectedDataTable>(this.attach_zCollectedDataTables), new Action<zCollectedDataTable>(this.detach_zCollectedDataTables));
-			this._zColumnTables = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTables), new Action<zColumnTable>(this.detach_zColumnTables));
+			this._zCollectedDataTable = new EntitySet<zCollectedDataTable>(new Action<zCollectedDataTable>(this.attach_zCollectedDataTable), new Action<zCollectedDataTable>(this.detach_zCollectedDataTable));
+			this._zColumnTable = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTable), new Action<zColumnTable>(this.detach_zColumnTable));
 			this._zCompetitionsTable = default(EntityRef<zCompetitionsTable>);
 			OnCreated();
 		}
@@ -24306,29 +24306,29 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zConstantListTable_zCollectedDataTable", Storage="_zCollectedDataTables", ThisKey="ID", OtherKey="FK_ConstantListTable")]
-		public EntitySet<zCollectedDataTable> zCollectedDataTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zConstantListTable_zCollectedDataTable", Storage="_zCollectedDataTable", ThisKey="ID", OtherKey="FK_ConstantListTable")]
+		public EntitySet<zCollectedDataTable> zCollectedDataTable
 		{
 			get
 			{
-				return this._zCollectedDataTables;
+				return this._zCollectedDataTable;
 			}
 			set
 			{
-				this._zCollectedDataTables.Assign(value);
+				this._zCollectedDataTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zConstantListTable_zColumnTable", Storage="_zColumnTables", ThisKey="ID", OtherKey="FK_ConstantListsTable")]
-		public EntitySet<zColumnTable> zColumnTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zConstantListTable_zColumnTable", Storage="_zColumnTable", ThisKey="ID", OtherKey="FK_ConstantListsTable")]
+		public EntitySet<zColumnTable> zColumnTable
 		{
 			get
 			{
-				return this._zColumnTables;
+				return this._zColumnTable;
 			}
 			set
 			{
-				this._zColumnTables.Assign(value);
+				this._zColumnTable.Assign(value);
 			}
 		}
 		
@@ -24349,12 +24349,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zCompetitionsTable.Entity = null;
-						previousValue.zConstantListTables.Remove(this);
+						previousValue.zConstantListTable.Remove(this);
 					}
 					this._zCompetitionsTable.Entity = value;
 					if ((value != null))
 					{
-						value.zConstantListTables.Add(this);
+						value.zConstantListTable.Add(this);
 						this._FK_CompetitionTable = value.ID;
 					}
 					else
@@ -24386,25 +24386,25 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_zCollectedDataTables(zCollectedDataTable entity)
+		private void attach_zCollectedDataTable(zCollectedDataTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zConstantListTable = this;
 		}
 		
-		private void detach_zCollectedDataTables(zCollectedDataTable entity)
+		private void detach_zCollectedDataTable(zCollectedDataTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zConstantListTable = null;
 		}
 		
-		private void attach_zColumnTables(zColumnTable entity)
+		private void attach_zColumnTable(zColumnTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zConstantListTable = this;
 		}
 		
-		private void detach_zColumnTables(zColumnTable entity)
+		private void detach_zColumnTable(zColumnTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zConstantListTable = null;
@@ -24596,12 +24596,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zApplicationTable.Entity = null;
-						previousValue.zDocumentsTables.Remove(this);
+						previousValue.zDocumentsTable.Remove(this);
 					}
 					this._zApplicationTable.Entity = value;
 					if ((value != null))
 					{
-						value.zDocumentsTables.Add(this);
+						value.zDocumentsTable.Add(this);
 						this._FK_ApplicationTable = value.ID;
 					}
 					else
@@ -24646,11 +24646,11 @@ namespace PersonalPages
 		
 		private string _Name;
 		
-		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTables;
+		private EntitySet<CollectedBasicParametersTable> _CollectedBasicParametersTable;
 		
-		private EntitySet<FirstLevelSubdivisionTable> _FirstLevelSubdivisionTables;
+		private EntitySet<FirstLevelSubdivisionTable> _FirstLevelSubdivisionTable;
 		
-		private EntitySet<UsersTable> _UsersTables;
+		private EntitySet<UsersTable> _UsersTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -24666,9 +24666,9 @@ namespace PersonalPages
 		
 		public ZeroLevelSubdivisionTable()
 		{
-			this._CollectedBasicParametersTables = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTables), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTables));
-			this._FirstLevelSubdivisionTables = new EntitySet<FirstLevelSubdivisionTable>(new Action<FirstLevelSubdivisionTable>(this.attach_FirstLevelSubdivisionTables), new Action<FirstLevelSubdivisionTable>(this.detach_FirstLevelSubdivisionTables));
-			this._UsersTables = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTables), new Action<UsersTable>(this.detach_UsersTables));
+			this._CollectedBasicParametersTable = new EntitySet<CollectedBasicParametersTable>(new Action<CollectedBasicParametersTable>(this.attach_CollectedBasicParametersTable), new Action<CollectedBasicParametersTable>(this.detach_CollectedBasicParametersTable));
+			this._FirstLevelSubdivisionTable = new EntitySet<FirstLevelSubdivisionTable>(new Action<FirstLevelSubdivisionTable>(this.attach_FirstLevelSubdivisionTable), new Action<FirstLevelSubdivisionTable>(this.detach_FirstLevelSubdivisionTable));
+			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
 			OnCreated();
 		}
 		
@@ -24732,42 +24732,42 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ZeroLevelSubdivisionTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTables", ThisKey="ZeroLevelSubdivisionTableID", OtherKey="FK_ZeroLevelSubdivisionTable")]
-		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ZeroLevelSubdivisionTable_CollectedBasicParametersTable", Storage="_CollectedBasicParametersTable", ThisKey="ZeroLevelSubdivisionTableID", OtherKey="FK_ZeroLevelSubdivisionTable")]
+		public EntitySet<CollectedBasicParametersTable> CollectedBasicParametersTable
 		{
 			get
 			{
-				return this._CollectedBasicParametersTables;
+				return this._CollectedBasicParametersTable;
 			}
 			set
 			{
-				this._CollectedBasicParametersTables.Assign(value);
+				this._CollectedBasicParametersTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ZeroLevelSubdivisionTable_FirstLevelSubdivisionTable", Storage="_FirstLevelSubdivisionTables", ThisKey="ZeroLevelSubdivisionTableID", OtherKey="FK_ZeroLevelSubvisionTable")]
-		public EntitySet<FirstLevelSubdivisionTable> FirstLevelSubdivisionTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ZeroLevelSubdivisionTable_FirstLevelSubdivisionTable", Storage="_FirstLevelSubdivisionTable", ThisKey="ZeroLevelSubdivisionTableID", OtherKey="FK_ZeroLevelSubvisionTable")]
+		public EntitySet<FirstLevelSubdivisionTable> FirstLevelSubdivisionTable
 		{
 			get
 			{
-				return this._FirstLevelSubdivisionTables;
+				return this._FirstLevelSubdivisionTable;
 			}
 			set
 			{
-				this._FirstLevelSubdivisionTables.Assign(value);
+				this._FirstLevelSubdivisionTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ZeroLevelSubdivisionTable_UsersTable", Storage="_UsersTables", ThisKey="ZeroLevelSubdivisionTableID", OtherKey="FK_ZeroLevelSubdivisionTable")]
-		public EntitySet<UsersTable> UsersTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ZeroLevelSubdivisionTable_UsersTable", Storage="_UsersTable", ThisKey="ZeroLevelSubdivisionTableID", OtherKey="FK_ZeroLevelSubdivisionTable")]
+		public EntitySet<UsersTable> UsersTable
 		{
 			get
 			{
-				return this._UsersTables;
+				return this._UsersTable;
 			}
 			set
 			{
-				this._UsersTables.Assign(value);
+				this._UsersTable.Assign(value);
 			}
 		}
 		
@@ -24791,37 +24791,37 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void attach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ZeroLevelSubdivisionTable = this;
 		}
 		
-		private void detach_CollectedBasicParametersTables(CollectedBasicParametersTable entity)
+		private void detach_CollectedBasicParametersTable(CollectedBasicParametersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ZeroLevelSubdivisionTable = null;
 		}
 		
-		private void attach_FirstLevelSubdivisionTables(FirstLevelSubdivisionTable entity)
+		private void attach_FirstLevelSubdivisionTable(FirstLevelSubdivisionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ZeroLevelSubdivisionTable = this;
 		}
 		
-		private void detach_FirstLevelSubdivisionTables(FirstLevelSubdivisionTable entity)
+		private void detach_FirstLevelSubdivisionTable(FirstLevelSubdivisionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ZeroLevelSubdivisionTable = null;
 		}
 		
-		private void attach_UsersTables(UsersTable entity)
+		private void attach_UsersTable(UsersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ZeroLevelSubdivisionTable = this;
 		}
 		
-		private void detach_UsersTables(UsersTable entity)
+		private void detach_UsersTable(UsersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.ZeroLevelSubdivisionTable = null;
@@ -24972,12 +24972,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._UsersTable.Entity = null;
-						previousValue.zExpertAndExpertGroupMappingTables.Remove(this);
+						previousValue.zExpertAndExpertGroupMappingTable.Remove(this);
 					}
 					this._UsersTable.Entity = value;
 					if ((value != null))
 					{
-						value.zExpertAndExpertGroupMappingTables.Add(this);
+						value.zExpertAndExpertGroupMappingTable.Add(this);
 						this._FK_UsersTable = value.UsersTableID;
 					}
 					else
@@ -25006,12 +25006,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zExpertGroup.Entity = null;
-						previousValue.zExpertAndExpertGroupMappingTables.Remove(this);
+						previousValue.zExpertAndExpertGroupMappingTable.Remove(this);
 					}
 					this._zExpertGroup.Entity = value;
 					if ((value != null))
 					{
-						value.zExpertAndExpertGroupMappingTables.Add(this);
+						value.zExpertAndExpertGroupMappingTable.Add(this);
 						this._FK_ExpertGroupTable = value.ID;
 					}
 					else
@@ -25056,7 +25056,7 @@ namespace PersonalPages
 		
 		private string _Name;
 		
-		private EntitySet<zExpertAndExpertGroupMappingTable> _zExpertAndExpertGroupMappingTables;
+		private EntitySet<zExpertAndExpertGroupMappingTable> _zExpertAndExpertGroupMappingTable;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -25072,7 +25072,7 @@ namespace PersonalPages
 		
 		public zExpertGroup()
 		{
-			this._zExpertAndExpertGroupMappingTables = new EntitySet<zExpertAndExpertGroupMappingTable>(new Action<zExpertAndExpertGroupMappingTable>(this.attach_zExpertAndExpertGroupMappingTables), new Action<zExpertAndExpertGroupMappingTable>(this.detach_zExpertAndExpertGroupMappingTables));
+			this._zExpertAndExpertGroupMappingTable = new EntitySet<zExpertAndExpertGroupMappingTable>(new Action<zExpertAndExpertGroupMappingTable>(this.attach_zExpertAndExpertGroupMappingTable), new Action<zExpertAndExpertGroupMappingTable>(this.detach_zExpertAndExpertGroupMappingTable));
 			OnCreated();
 		}
 		
@@ -25136,16 +25136,16 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zExpertGroup_zExpertAndExpertGroupMappingTable", Storage="_zExpertAndExpertGroupMappingTables", ThisKey="ID", OtherKey="FK_ExpertGroupTable")]
-		public EntitySet<zExpertAndExpertGroupMappingTable> zExpertAndExpertGroupMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zExpertGroup_zExpertAndExpertGroupMappingTable", Storage="_zExpertAndExpertGroupMappingTable", ThisKey="ID", OtherKey="FK_ExpertGroupTable")]
+		public EntitySet<zExpertAndExpertGroupMappingTable> zExpertAndExpertGroupMappingTable
 		{
 			get
 			{
-				return this._zExpertAndExpertGroupMappingTables;
+				return this._zExpertAndExpertGroupMappingTable;
 			}
 			set
 			{
-				this._zExpertAndExpertGroupMappingTables.Assign(value);
+				this._zExpertAndExpertGroupMappingTable.Assign(value);
 			}
 		}
 		
@@ -25169,13 +25169,13 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_zExpertAndExpertGroupMappingTables(zExpertAndExpertGroupMappingTable entity)
+		private void attach_zExpertAndExpertGroupMappingTable(zExpertAndExpertGroupMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zExpertGroup = this;
 		}
 		
-		private void detach_zExpertAndExpertGroupMappingTables(zExpertAndExpertGroupMappingTable entity)
+		private void detach_zExpertAndExpertGroupMappingTable(zExpertAndExpertGroupMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zExpertGroup = null;
@@ -25183,7 +25183,7 @@ namespace PersonalPages
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.zExpertPoints")]
-	public partial class zExpertPoint : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class zExpertPoints : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -25198,7 +25198,7 @@ namespace PersonalPages
 		
 		private System.Nullable<bool> _Active;
 		
-		private EntitySet<zExpertPointsValue> _zExpertPointsValues;
+		private EntitySet<zExpertPointsValue> _zExpertPointsValue;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -25216,9 +25216,9 @@ namespace PersonalPages
     partial void OnActiveChanged();
     #endregion
 		
-		public zExpertPoint()
+		public zExpertPoints()
 		{
-			this._zExpertPointsValues = new EntitySet<zExpertPointsValue>(new Action<zExpertPointsValue>(this.attach_zExpertPointsValues), new Action<zExpertPointsValue>(this.detach_zExpertPointsValues));
+			this._zExpertPointsValue = new EntitySet<zExpertPointsValue>(new Action<zExpertPointsValue>(this.attach_zExpertPointsValue), new Action<zExpertPointsValue>(this.detach_zExpertPointsValue));
 			OnCreated();
 		}
 		
@@ -25322,16 +25322,16 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zExpertPoint_zExpertPointsValue", Storage="_zExpertPointsValues", ThisKey="ID", OtherKey="FK_ExpertPoints")]
-		public EntitySet<zExpertPointsValue> zExpertPointsValues
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zExpertPoints_zExpertPointsValue", Storage="_zExpertPointsValue", ThisKey="ID", OtherKey="FK_ExpertPoints")]
+		public EntitySet<zExpertPointsValue> zExpertPointsValue
 		{
 			get
 			{
-				return this._zExpertPointsValues;
+				return this._zExpertPointsValue;
 			}
 			set
 			{
-				this._zExpertPointsValues.Assign(value);
+				this._zExpertPointsValue.Assign(value);
 			}
 		}
 		
@@ -25355,16 +25355,16 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_zExpertPointsValues(zExpertPointsValue entity)
+		private void attach_zExpertPointsValue(zExpertPointsValue entity)
 		{
 			this.SendPropertyChanging();
-			entity.zExpertPoint = this;
+			entity.zExpertPoints = this;
 		}
 		
-		private void detach_zExpertPointsValues(zExpertPointsValue entity)
+		private void detach_zExpertPointsValue(zExpertPointsValue entity)
 		{
 			this.SendPropertyChanging();
-			entity.zExpertPoint = null;
+			entity.zExpertPoints = null;
 		}
 	}
 	
@@ -25396,7 +25396,7 @@ namespace PersonalPages
 		
 		private EntityRef<zApplicationTable> _zApplicationTable;
 		
-		private EntityRef<zExpertPoint> _zExpertPoint;
+		private EntityRef<zExpertPoints> _zExpertPoints;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -25426,7 +25426,7 @@ namespace PersonalPages
 		{
 			this._UsersTable = default(EntityRef<UsersTable>);
 			this._zApplicationTable = default(EntityRef<zApplicationTable>);
-			this._zExpertPoint = default(EntityRef<zExpertPoint>);
+			this._zExpertPoints = default(EntityRef<zExpertPoints>);
 			OnCreated();
 		}
 		
@@ -25505,7 +25505,7 @@ namespace PersonalPages
 			{
 				if ((this._FK_ExpertPoints != value))
 				{
-					if (this._zExpertPoint.HasLoadedOrAssignedValue)
+					if (this._zExpertPoints.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -25639,12 +25639,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._UsersTable.Entity = null;
-						previousValue.zExpertPointsValues.Remove(this);
+						previousValue.zExpertPointsValue.Remove(this);
 					}
 					this._UsersTable.Entity = value;
 					if ((value != null))
 					{
-						value.zExpertPointsValues.Add(this);
+						value.zExpertPointsValue.Add(this);
 						this._FK_ExpertsTable = value.UsersTableID;
 					}
 					else
@@ -25673,12 +25673,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zApplicationTable.Entity = null;
-						previousValue.zExpertPointsValues.Remove(this);
+						previousValue.zExpertPointsValue.Remove(this);
 					}
 					this._zApplicationTable.Entity = value;
 					if ((value != null))
 					{
-						value.zExpertPointsValues.Add(this);
+						value.zExpertPointsValue.Add(this);
 						this._FK_ApplicationTable = value.ID;
 					}
 					else
@@ -25690,36 +25690,36 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zExpertPoint_zExpertPointsValue", Storage="_zExpertPoint", ThisKey="FK_ExpertPoints", OtherKey="ID", IsForeignKey=true)]
-		public zExpertPoint zExpertPoint
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zExpertPoints_zExpertPointsValue", Storage="_zExpertPoints", ThisKey="FK_ExpertPoints", OtherKey="ID", IsForeignKey=true)]
+		public zExpertPoints zExpertPoints
 		{
 			get
 			{
-				return this._zExpertPoint.Entity;
+				return this._zExpertPoints.Entity;
 			}
 			set
 			{
-				zExpertPoint previousValue = this._zExpertPoint.Entity;
+				zExpertPoints previousValue = this._zExpertPoints.Entity;
 				if (((previousValue != value) 
-							|| (this._zExpertPoint.HasLoadedOrAssignedValue == false)))
+							|| (this._zExpertPoints.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._zExpertPoint.Entity = null;
-						previousValue.zExpertPointsValues.Remove(this);
+						this._zExpertPoints.Entity = null;
+						previousValue.zExpertPointsValue.Remove(this);
 					}
-					this._zExpertPoint.Entity = value;
+					this._zExpertPoints.Entity = value;
 					if ((value != null))
 					{
-						value.zExpertPointsValues.Add(this);
+						value.zExpertPointsValue.Add(this);
 						this._FK_ExpertPoints = value.ID;
 					}
 					else
 					{
 						this._FK_ExpertPoints = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("zExpertPoint");
+					this.SendPropertyChanged("zExpertPoints");
 				}
 			}
 		}
@@ -25889,12 +25889,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._UsersTable.Entity = null;
-						previousValue.zExpertsAndApplicationMappingTables.Remove(this);
+						previousValue.zExpertsAndApplicationMappingTable.Remove(this);
 					}
 					this._UsersTable.Entity = value;
 					if ((value != null))
 					{
-						value.zExpertsAndApplicationMappingTables.Add(this);
+						value.zExpertsAndApplicationMappingTable.Add(this);
 						this._FK_UsersTable = value.UsersTableID;
 					}
 					else
@@ -25923,12 +25923,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zApplicationTable.Entity = null;
-						previousValue.zExpertsAndApplicationMappingTables.Remove(this);
+						previousValue.zExpertsAndApplicationMappingTable.Remove(this);
 					}
 					this._zApplicationTable.Entity = value;
 					if ((value != null))
 					{
-						value.zExpertsAndApplicationMappingTables.Add(this);
+						value.zExpertsAndApplicationMappingTable.Add(this);
 						this._FK_ApplicationsTable = value.ID;
 					}
 					else
@@ -26098,12 +26098,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zCompetitionsTable.Entity = null;
-						previousValue.zExpertsAndCompetitionMappngTamplateTables.Remove(this);
+						previousValue.zExpertsAndCompetitionMappngTamplateTable.Remove(this);
 					}
 					this._zCompetitionsTable.Entity = value;
 					if ((value != null))
 					{
-						value.zExpertsAndCompetitionMappngTamplateTables.Add(this);
+						value.zExpertsAndCompetitionMappngTamplateTable.Add(this);
 						this._FK_CompetitionsTable = value.ID;
 					}
 					else
@@ -26280,12 +26280,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zCompetitionsTable.Entity = null;
-						previousValue.zFormCompetitionMappingTables.Remove(this);
+						previousValue.zFormCompetitionMappingTable.Remove(this);
 					}
 					this._zCompetitionsTable.Entity = value;
 					if ((value != null))
 					{
-						value.zFormCompetitionMappingTables.Add(this);
+						value.zFormCompetitionMappingTable.Add(this);
 						this._FK_Competition = value.ID;
 					}
 					else
@@ -26314,12 +26314,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zTemplateFormTable.Entity = null;
-						previousValue.zFormCompetitionMappingTables.Remove(this);
+						previousValue.zFormCompetitionMappingTable.Remove(this);
 					}
 					this._zTemplateFormTable.Entity = value;
 					if ((value != null))
 					{
-						value.zFormCompetitionMappingTables.Add(this);
+						value.zFormCompetitionMappingTable.Add(this);
 						this._FK_Form = value.ID;
 					}
 					else
@@ -26506,7 +26506,7 @@ namespace PersonalPages
 		
 		private System.Nullable<int> _FK_UsersTable;
 		
-		private EntitySet<zApplicationAndPartnersMappingTable> _zApplicationAndPartnersMappingTables;
+		private EntitySet<zApplicationAndPartnersMappingTable> _zApplicationAndPartnersMappingTable;
 		
 		private EntityRef<UsersTable> _UsersTable;
 		
@@ -26532,7 +26532,7 @@ namespace PersonalPages
 		
 		public zPartnersTable()
 		{
-			this._zApplicationAndPartnersMappingTables = new EntitySet<zApplicationAndPartnersMappingTable>(new Action<zApplicationAndPartnersMappingTable>(this.attach_zApplicationAndPartnersMappingTables), new Action<zApplicationAndPartnersMappingTable>(this.detach_zApplicationAndPartnersMappingTables));
+			this._zApplicationAndPartnersMappingTable = new EntitySet<zApplicationAndPartnersMappingTable>(new Action<zApplicationAndPartnersMappingTable>(this.attach_zApplicationAndPartnersMappingTable), new Action<zApplicationAndPartnersMappingTable>(this.detach_zApplicationAndPartnersMappingTable));
 			this._UsersTable = default(EntityRef<UsersTable>);
 			OnCreated();
 		}
@@ -26681,16 +26681,16 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zPartnersTable_zApplicationAndPartnersMappingTable", Storage="_zApplicationAndPartnersMappingTables", ThisKey="ID", OtherKey="FK_PartnersTable")]
-		public EntitySet<zApplicationAndPartnersMappingTable> zApplicationAndPartnersMappingTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zPartnersTable_zApplicationAndPartnersMappingTable", Storage="_zApplicationAndPartnersMappingTable", ThisKey="ID", OtherKey="FK_PartnersTable")]
+		public EntitySet<zApplicationAndPartnersMappingTable> zApplicationAndPartnersMappingTable
 		{
 			get
 			{
-				return this._zApplicationAndPartnersMappingTables;
+				return this._zApplicationAndPartnersMappingTable;
 			}
 			set
 			{
-				this._zApplicationAndPartnersMappingTables.Assign(value);
+				this._zApplicationAndPartnersMappingTable.Assign(value);
 			}
 		}
 		
@@ -26711,12 +26711,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._UsersTable.Entity = null;
-						previousValue.zPartnersTables.Remove(this);
+						previousValue.zPartnersTable.Remove(this);
 					}
 					this._UsersTable.Entity = value;
 					if ((value != null))
 					{
-						value.zPartnersTables.Add(this);
+						value.zPartnersTable.Add(this);
 						this._FK_UsersTable = value.UsersTableID;
 					}
 					else
@@ -26748,13 +26748,13 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_zApplicationAndPartnersMappingTables(zApplicationAndPartnersMappingTable entity)
+		private void attach_zApplicationAndPartnersMappingTable(zApplicationAndPartnersMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zPartnersTable = this;
 		}
 		
-		private void detach_zApplicationAndPartnersMappingTables(zApplicationAndPartnersMappingTable entity)
+		private void detach_zApplicationAndPartnersMappingTable(zApplicationAndPartnersMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zPartnersTable = null;
@@ -26781,9 +26781,9 @@ namespace PersonalPages
 		
 		private System.Nullable<int> _FK_BlockID;
 		
-		private EntitySet<zCollectedRowsTable> _zCollectedRowsTables;
+		private EntitySet<zCollectedRowsTable> _zCollectedRowsTable;
 		
-		private EntitySet<zColumnTable> _zColumnTables;
+		private EntitySet<zColumnTable> _zColumnTable;
 		
 		private EntityRef<zCompetitionsTable> _zCompetitionsTable;
 		
@@ -26811,8 +26811,8 @@ namespace PersonalPages
 		
 		public zSectionTable()
 		{
-			this._zCollectedRowsTables = new EntitySet<zCollectedRowsTable>(new Action<zCollectedRowsTable>(this.attach_zCollectedRowsTables), new Action<zCollectedRowsTable>(this.detach_zCollectedRowsTables));
-			this._zColumnTables = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTables), new Action<zColumnTable>(this.detach_zColumnTables));
+			this._zCollectedRowsTable = new EntitySet<zCollectedRowsTable>(new Action<zCollectedRowsTable>(this.attach_zCollectedRowsTable), new Action<zCollectedRowsTable>(this.detach_zCollectedRowsTable));
+			this._zColumnTable = new EntitySet<zColumnTable>(new Action<zColumnTable>(this.attach_zColumnTable), new Action<zColumnTable>(this.detach_zColumnTable));
 			this._zCompetitionsTable = default(EntityRef<zCompetitionsTable>);
 			this._zBlockTable = default(EntityRef<zBlockTable>);
 			OnCreated();
@@ -26966,29 +26966,29 @@ namespace PersonalPages
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zSectionTable_zCollectedRowsTable", Storage="_zCollectedRowsTables", ThisKey="ID", OtherKey="FK_SectionTable")]
-		public EntitySet<zCollectedRowsTable> zCollectedRowsTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zSectionTable_zCollectedRowsTable", Storage="_zCollectedRowsTable", ThisKey="ID", OtherKey="FK_SectionTable")]
+		public EntitySet<zCollectedRowsTable> zCollectedRowsTable
 		{
 			get
 			{
-				return this._zCollectedRowsTables;
+				return this._zCollectedRowsTable;
 			}
 			set
 			{
-				this._zCollectedRowsTables.Assign(value);
+				this._zCollectedRowsTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zSectionTable_zColumnTable", Storage="_zColumnTables", ThisKey="ID", OtherKey="FK_SectionTable")]
-		public EntitySet<zColumnTable> zColumnTables
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zSectionTable_zColumnTable", Storage="_zColumnTable", ThisKey="ID", OtherKey="FK_SectionTable")]
+		public EntitySet<zColumnTable> zColumnTable
 		{
 			get
 			{
-				return this._zColumnTables;
+				return this._zColumnTable;
 			}
 			set
 			{
-				this._zColumnTables.Assign(value);
+				this._zColumnTable.Assign(value);
 			}
 		}
 		
@@ -27009,12 +27009,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zCompetitionsTable.Entity = null;
-						previousValue.zSectionTables.Remove(this);
+						previousValue.zSectionTable.Remove(this);
 					}
 					this._zCompetitionsTable.Entity = value;
 					if ((value != null))
 					{
-						value.zSectionTables.Add(this);
+						value.zSectionTable.Add(this);
 						this._FK_CompetitionsTable = value.ID;
 					}
 					else
@@ -27043,12 +27043,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._zBlockTable.Entity = null;
-						previousValue.zSectionTables.Remove(this);
+						previousValue.zSectionTable.Remove(this);
 					}
 					this._zBlockTable.Entity = value;
 					if ((value != null))
 					{
-						value.zSectionTables.Add(this);
+						value.zSectionTable.Add(this);
 						this._FK_BlockID = value.ID;
 					}
 					else
@@ -27080,25 +27080,25 @@ namespace PersonalPages
 			}
 		}
 		
-		private void attach_zCollectedRowsTables(zCollectedRowsTable entity)
+		private void attach_zCollectedRowsTable(zCollectedRowsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zSectionTable = this;
 		}
 		
-		private void detach_zCollectedRowsTables(zCollectedRowsTable entity)
+		private void detach_zCollectedRowsTable(zCollectedRowsTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zSectionTable = null;
 		}
 		
-		private void attach_zColumnTables(zColumnTable entity)
+		private void attach_zColumnTable(zColumnTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zSectionTable = this;
 		}
 		
-		private void detach_zColumnTables(zColumnTable entity)
+		private void detach_zColumnTable(zColumnTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.zSectionTable = null;
@@ -27242,12 +27242,12 @@ namespace PersonalPages
 					if ((previousValue != null))
 					{
 						this._UsersTable.Entity = null;
-						previousValue.zTaskPRManualTables.Remove(this);
+						previousValue.zTaskPRManualTable.Remove(this);
 					}
 					this._UsersTable.Entity = value;
 					if ((value != null))
 					{
-						value.zTaskPRManualTables.Add(this);
+						value.zTaskPRManualTable.Add(this);
 						this._FK_UsersTable = value.UsersTableID;
 					}
 					else

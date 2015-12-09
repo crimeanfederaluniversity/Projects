@@ -14,14 +14,9 @@
                             <asp:Label ID="Name" runat="server"  Visible="true" Text='<%# Bind("Name") %>'  ></asp:Label> 
                                </ItemTemplate>
                     </asp:TemplateField> 
-                     <asp:TemplateField HeaderText="Расписание">
-                        <ItemTemplate>  
-                           <asp:Button ID="WatchButton" runat="server" CommandName="Select" Text="Скачать" Width="200px" CommandArgument='<%# Eval("WatchButton") %>' OnClick="WatchButtonClick" OnClientClick="Return"/>
-                        </ItemTemplate>
-                    </asp:TemplateField> 
                    <asp:TemplateField HeaderText="Ведомость">
                         <ItemTemplate>  
-                           <asp:Button ID="Assessment" runat="server" CommandName="Select" Text="Скачать" Width="200px" CommandArgument='<%# Eval("AssessmentButton") %>' OnClick="AssessmentButtonClick"/>
+                           <asp:Button ID="WatchButton" runat="server" CommandName="Select" Text="Скачать" Width="200px" CommandArgument='<%# Eval("WatchButton") %>' OnClick="WatchButtonClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>              
                       </Columns>    
@@ -34,7 +29,5 @@
         <br />
         </span>
         <asp:Button ID="Button1" runat="server" Height="28px" OnClick="Button1_Click" Text="Сохранить" Width="105px" />
-        <br />
-&nbsp;
  
     </asp:Content>
