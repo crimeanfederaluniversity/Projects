@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace PersonalPages
 {
@@ -32,12 +29,18 @@ namespace PersonalPages
         {
             if (student == null || user != null)
             {
-                if (user.AccessLevel == 9 || user.AccessLevel == 10)
+                /*if (user.AccessLevel == 9 || user.AccessLevel == 10)
                 {
                     Serialization UserSer = (Serialization)Session["UserID"];        
                     SubdomainRedirect subdomainRedirect = new SubdomainRedirect();
-                    Response.Redirect(subdomainRedirect.CreateLinkToSubdomain("http://admin.cfu-portal.ru", user.UsersTableID, 10));
+                    Response.Redirect(subdomainRedirect.CreateLinkToSubdomain("http://admin.cfu-portal.ru/Default.aspx", user.UsersTableID, 10));
                 }
+                if (user.AccessLevel == 5 || user.AccessLevel == 7)
+                {
+                    Serialization UserSer = (Serialization)Session["UserID"];
+                    SubdomainRedirect subdomainRedirect = new SubdomainRedirect();
+                    Response.Redirect(subdomainRedirect.CreateLinkToSubdomain("http://razvitie.cfu-portal.ru/Default.aspx", user.UsersTableID, 10));
+                }*/
                 FormsAuthentication.SetAuthCookie(user.Email, true);                               
                 Response.Redirect("UserMainPage.aspx");           
             }

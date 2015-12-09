@@ -91,7 +91,7 @@ namespace PersonalPages
             SubdomainRedirectAutologinTable currentSubdomain = (from a in kpiWeb.SubdomainRedirectAutologinTable
                 where a.Active == true
                       && a.PassCode == passCode
-                      && a.EndDate < DateTime.Now
+                      && a.EndDate > DateTime.Now
                 select a).FirstOrDefault();
             if (currentSubdomain != null)
             {
