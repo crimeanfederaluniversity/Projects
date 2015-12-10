@@ -30,11 +30,11 @@ namespace KPIWeb.AutomationDepartment
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
-
-            if (userTable.AccessLevel != 10)
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 1, 0, 0))
             {
-                Response.Redirect("~/AutomationDepartment.aspx");
-            }
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+            }           
             ////////////////////////////////////////////////////////
             /// 
             if (!Page.IsPostBack)

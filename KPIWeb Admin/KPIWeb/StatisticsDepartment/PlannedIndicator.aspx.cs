@@ -17,16 +17,17 @@ namespace KPIWeb
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            if ((userTable.AccessLevel != 10) && (userTable.AccessLevel != 9))
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 1, 2, 0))
             {
-                Response.Redirect("~/Default.aspx");
-            }
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+            }  
 
             if (!(Page.IsPostBack))
             {

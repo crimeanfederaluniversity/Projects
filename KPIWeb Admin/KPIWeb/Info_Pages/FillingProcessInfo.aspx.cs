@@ -45,21 +45,21 @@ namespace KPIWeb
                                                                                      on a.ThirdLevelParametrsID equals b.FK_ThirdLevelSubdivisionTable
                                                                                      where a.Active == true
                                                                                      && b.Active == true
-                                                                                     && b.AccessLevel == 0
+                                                                                 //    && b.AccessLevel == 0
                                                                                      select a).Distinct().Count().ToString();
                 TextBox2.Text += Environment.NewLine;
 
                 TextBox2.Text += "Всего пользователей: " + (from b in kPiDataContext.UsersTable
                                                             where
-                                                            b.AccessLevel == 0
-                                                            && b.Active == true
+                                                          //  b.AccessLevel == 0 && 
+                                                          b.Active == true
                                                             select b).Count().ToString();
                 TextBox2.Text += Environment.NewLine;
 
                 TextBox2.Text += "Всего пользователей активировавших аккаунты: " + (from b in kPiDataContext.UsersTable
                                                                                     where
-                                                                                    b.AccessLevel == 0
-                                                                                    && b.Active == true
+                                                                                    //b.AccessLevel == 0 && 
+                                                                                    b.Active == true
                                                                                     && b.Confirmed == true
                                                                                     select b).Count().ToString();
 

@@ -268,10 +268,16 @@ namespace KPIWeb
         {
             UsersTable responsibleProrector = (from a in _kPiDataContext.UsersTable
                 where a.Active == true
-                      && a.AccessLevel == 5
+                join c in _kPiDataContext.UsersAndUserGroupMappingTable
+                on a.UsersTableID equals c.FK_UserTable
+                where c.Active == true
+                && c.FK_GroupTable == 6
+                     
                 join b in _kPiDataContext.IndicatorsAndUsersMapping
                     on a.UsersTableID equals b.FK_UsresTable
                 where b.Active == true
+                                              
+	
                       && b.CanConfirm == true
                       && b.FK_IndicatorsTable == indicatorId
                       && a.UsersTableID != 12769
@@ -291,7 +297,10 @@ namespace KPIWeb
         {
             UsersTable responsibleProrector = (from a in _kPiDataContext.UsersTable
                                                where a.Active == true
-                                                     && a.AccessLevel == 5
+                                               join c in _kPiDataContext.UsersAndUserGroupMappingTable
+                                                on a.UsersTableID equals c.FK_UserTable
+                                               where c.Active == true
+                                               && c.FK_GroupTable == 6
                                                join b in _kPiDataContext.CalculatedParametrsAndUsersMapping
                                                    on a.UsersTableID equals b.FK_UsersTable
                                                where b.Active == true

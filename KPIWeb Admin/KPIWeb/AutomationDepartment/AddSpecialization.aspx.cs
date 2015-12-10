@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -14,18 +15,19 @@ namespace KPIWeb.AutomationDepartment
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
-            int userID = UserSer.Id;
+            int userId = UserSer.Id;
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             UsersTable userTable =
-                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userId select a).FirstOrDefault();
 
-            if (userTable.AccessLevel != 10)
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userId, 1, 0, 0))
             {
-                Response.Redirect("~/Default.aspx");
-            }
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+            }  
         }
 
         protected void Button1_Click(object sender, EventArgs e) //пока безо всяких проверок //окай

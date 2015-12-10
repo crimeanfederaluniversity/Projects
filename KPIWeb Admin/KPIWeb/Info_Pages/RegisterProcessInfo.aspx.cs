@@ -74,8 +74,11 @@ namespace KPIWeb
                     UsrCnt = 0;
                     Users = (from a in kPiDataContext.UsersTable
                              where a.Active == true
-                             && a.AccessLevel!=9
-                             && a.AccessLevel!=10
+                             join b in kPiDataContext.UsersAndUserGroupMappingTable
+                                on a.UsersTableID equals b.FK_UserTable
+                             where b.Active == true
+                             && (b.FK_GroupTable == 7 || b.FK_GroupTable == 8 || b.FK_GroupTable == 9)
+
                              && a.FK_ZeroLevelSubdivisionTable == zeroLevelItem.ZeroLevelSubdivisionTableID
                              && a.FK_FirstLevelSubdivisionTable == null
                              select a).ToList();
@@ -94,8 +97,11 @@ namespace KPIWeb
                     UsrCnt = (from a in kPiDataContext.UsersTable
                               where a.Active == true
                               && a.FK_ZeroLevelSubdivisionTable == zeroLevelItem.ZeroLevelSubdivisionTableID
-                              && a.AccessLevel != 9
-                              && a.AccessLevel != 10
+                              join b in kPiDataContext.UsersAndUserGroupMappingTable
+                              on a.UsersTableID equals b.FK_UserTable
+                              where b.Active == true
+                              && ( b.FK_GroupTable == 1 || b.FK_GroupTable == 2)
+	
                               select a).Count();
                     tmp2 = "";
                     if (UsrCnt > 0)

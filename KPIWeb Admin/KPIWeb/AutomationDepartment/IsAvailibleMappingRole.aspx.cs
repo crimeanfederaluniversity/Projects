@@ -17,7 +17,7 @@ namespace KPIWeb
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             int userID = UserSer.Id;
@@ -25,10 +25,11 @@ namespace KPIWeb
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            if (userTable.AccessLevel != 10)
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 1, 0, 0))
             {
-                Response.Redirect("~/Default.aspx");
-            }	
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+            } 
             ///////////////////////////////////////////////////////////////////////////////////////////////////
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             var vrCountry = (from a in kpiWebDataContext.BasicParametersTable

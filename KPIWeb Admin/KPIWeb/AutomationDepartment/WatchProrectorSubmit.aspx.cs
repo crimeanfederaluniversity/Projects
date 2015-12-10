@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics.Contracts;
 using System.Linq;
@@ -18,14 +19,15 @@ namespace KPIWeb.AutomationDepartment
             Serialization userSer = (Serialization)Session["UserID"];
             if (userSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userId = userSer.Id;
             UsersTable userTable = mainFunctions.GetUserById(userId);
-            if (userTable.AccessLevel != 10 && userTable.AccessLevel != 8)
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userId, 1, 4, 0))
             {
-                Response.Redirect("~/Default.aspx");
-            }
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+            }    
 
             if (!Page.IsPostBack)
             {

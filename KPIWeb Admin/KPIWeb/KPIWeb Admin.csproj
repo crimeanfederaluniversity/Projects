@@ -219,8 +219,6 @@
     <Content Include="filenotfound.htm" />
     <Content Include="Info_Pages\FillingProcessInfo.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Head\HeadMain.aspx" />
-    <Content Include="Head\HeadWatchResult.aspx" />
     <Content Include="MultiUser.aspx" />
     <Content Include="Info_Pages\OwnersProcessInfo.aspx" />
     <Content Include="packages.config" />
@@ -446,20 +444,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Head\HeadMain.aspx.cs">
-      <DependentUpon>HeadMain.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Head\HeadMain.aspx.designer.cs">
-      <DependentUpon>HeadMain.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Head\HeadWatchResult.aspx.cs">
-      <DependentUpon>HeadWatchResult.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Head\HeadWatchResult.aspx.designer.cs">
-      <DependentUpon>HeadWatchResult.aspx</DependentUpon>
-    </Compile>
     <Compile Include="KPIWeb.cs">
       <DependentUpon>KPIWeb.dbml</DependentUpon>
     </Compile>
@@ -600,6 +584,7 @@
     </Compile>
     <Compile Include="SubdomainRedirect.cs" />
     <Compile Include="Types\Role.cs" />
+    <Compile Include="UserRights.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -18,7 +18,7 @@ namespace KPIWeb.StatisticsDepartment
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             int userID = UserSer.Id;
@@ -28,10 +28,11 @@ namespace KPIWeb.StatisticsDepartment
 
             ViewState["User"] = userTable.Email;
 
-            if ((userTable.AccessLevel != 10)&&(userTable.AccessLevel != 9))
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 1, 2, 0))
             {
-                Response.Redirect("~/Default.aspx");
-            }
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+            } 
             if (!Page.IsPostBack)
             {              
                 List<ReportArchiveTable> ReportArchiveTable_ = (from item in kPiDataContext.ReportArchiveTable

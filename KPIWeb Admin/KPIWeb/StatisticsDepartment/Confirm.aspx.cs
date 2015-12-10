@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -16,16 +17,17 @@ namespace KPIWeb.StatisticsDepartment
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            if ((userTable.AccessLevel != 10) && (userTable.AccessLevel != 9))
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 1, 2, 0))
             {
-                Response.Redirect("~/Default.aspx");
-            }
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+            }  
 
             if (!IsPostBack)
             {
@@ -48,7 +50,10 @@ namespace KPIWeb.StatisticsDepartment
                 List<UsersTable> users =
                  (from item in kPiDataContext.UsersTable
                   where item.Active == true
-                  && item.AccessLevel == 5
+                  join b in kPiDataContext.UsersAndUserGroupMappingTable
+                  on item.UsersTableID equals b.FK_UserTable
+                  where b.Active == true
+                  && b.FK_GroupTable == 6
                   select item).OrderBy(mc => mc.Email).ToList();
 
                 //var dictionary = new Dictionary<int, string>();

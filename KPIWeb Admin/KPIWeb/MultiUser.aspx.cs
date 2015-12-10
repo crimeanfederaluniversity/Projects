@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -88,54 +89,18 @@ namespace KPIWeb
             {
                 FormsAuthentication.SetAuthCookie(user.Email, true);
             }
-
-            int accessLevel = (int)user.AccessLevel;
-            if (accessLevel == 10)
+            UserRights userRights = new UserRights();
+            if (userRights.CanUserSeeThisPage(user.UsersTableID, 1, 0, 0))
             {
                 Response.Redirect("~/AutomationDepartment/Main.aspx");
             }
-            else if (accessLevel == 9)
+            if (userRights.CanUserSeeThisPage(user.UsersTableID, 2, 0, 0))
             {
                 Response.Redirect("~/StatisticsDepartment/MonitoringMain.aspx");
-            }
-            else if (accessLevel == 5)
-            {
-                Response.Redirect("~/Rector/RectorMain.aspx");
-            }
-            else if (accessLevel == 3)
-            {
-                Response.Redirect("~/FinKadr/OtdelChooseReport.aspx");
-            }
-            else if (accessLevel == 2)
-            {
-                Response.Redirect("~/Decan/DecMain.aspx");
-            }
-            else if (accessLevel == 4)
-            {
-                Response.Redirect("~/Director/DMain.aspx");
-            }
-            else if (accessLevel == 7)
-            {
-                Response.Redirect("~/Rector/RMain.aspx");
-            }
-            else if (accessLevel == 8)
-            {
-                Response.Redirect("~/Head/HeadMain.aspx");
-            }
-            else if (accessLevel == 0)
-            {
-                Response.Redirect("~/Reports_/ChooseReport.aspx");
-            }
-            else if (accessLevel == 1)
-            {
-                Response.Redirect("~/Reports_/ChooseReport.aspx");
-            }
-            else //если входим сюда то что то не так) скорей всего пользователю не присвоен уровень в UsersTable
-            {
+            }        
                 FormsAuthentication.SignOut();
                 Session.Abandon();
-                Response.Redirect("~/Account/UserLogin.aspx");
-            }
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
         }
 
         protected void GoToMainClick(object sender, EventArgs e)

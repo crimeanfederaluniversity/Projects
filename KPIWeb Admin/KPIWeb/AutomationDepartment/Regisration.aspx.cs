@@ -156,7 +156,7 @@ namespace KPIWeb.AutomationDepartment
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Account/Login.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             int userID = UserSer.Id;
@@ -164,10 +164,11 @@ namespace KPIWeb.AutomationDepartment
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            if ((userTable.AccessLevel != 10) && (userTable.AccessLevel != 9))
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 1, 2, 0))
             {
-                Response.Redirect("~/Account/Login.aspx");
-            }
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+            } 
             ///////////////////////////////////////////////////проверили на админа
             if (!Page.IsPostBack)
             {
@@ -201,8 +202,8 @@ namespace KPIWeb.AutomationDepartment
                 /// записали академии в дроп даун
                 /// 
                 /// в зависимости от того кто вошел изменяем интерфейс
-                if (userTable.AccessLevel == 9)
-                {
+                if (userRights.CanUserSeeThisPage(userID, 0, 2, 0))
+                {                  
                     UserNameText.Enabled = false;
                     UserNameLabel.Enabled = false;
                     errorNoName.Enabled = false;
@@ -280,15 +281,13 @@ namespace KPIWeb.AutomationDepartment
                 DropDownList4.Visible = true;
                 Label24.Visible = true;
                 //////
-                if (userTable.AccessLevel == 10)
+                UserRights userRights = new UserRights();
+                if (userRights.CanUserSeeThisPage(userID, 1, 0, 0))
                 {
                     Gridview3.Visible = true;
                     Label27.Visible = true;
+                } 
 
-                }
-                else if (userTable.AccessLevel == 9)
-                {
-                }
             }
             else if ((DropDownList5.SelectedIndex == 2) || (DropDownList5.SelectedIndex == 3) || (DropDownList5.SelectedIndex == 4))
             {
@@ -452,8 +451,8 @@ namespace KPIWeb.AutomationDepartment
                     if (int.TryParse(DropDownList3.SelectedValue, out selectedValue) && selectedValue > 0)
                         user.FK_ThirdLevelSubdivisionTable = selectedValue;
 
-                    user.AccessLevel = 0; ///////НАДО ПРОДУМАТЬ
-                    user.AccessLevel = Convert.ToInt32(DropDownList5.Items[DropDownList5.SelectedIndex].Value);
+                  //  user.AccessLevel = 0; ///////НАДО ПРОДУМАТЬ
+                  //  user.AccessLevel = Convert.ToInt32(DropDownList5.Items[DropDownList5.SelectedIndex].Value);
 /*
                     if (DropDownList5.SelectedIndex == 2)
                     {

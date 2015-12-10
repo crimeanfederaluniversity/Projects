@@ -15,7 +15,7 @@ namespace KPIWeb.StatisticsDepartment
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Account/Login.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             int userID = UserSer.Id;
@@ -23,10 +23,11 @@ namespace KPIWeb.StatisticsDepartment
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            if (userTable.AccessLevel != 10)
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 1, 0, 0))
             {
-                Response.Redirect("~/Account/Login.aspx");
-            }							            
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+            }  						            
         }
 
         protected void Button1_Click(object sender, EventArgs e)

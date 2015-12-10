@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using PersonalPages;
 
 namespace KPIWeb.StatisticsDepartment
 {
@@ -11,21 +14,31 @@ namespace KPIWeb.StatisticsDepartment
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            SubdomainRedirect subdomainRedirect = new SubdomainRedirect();
+            string passCode = Request.Params[subdomainRedirect.PassCodeKeyName];
+            int userIdFromGet = subdomainRedirect.GetUserIdByPassCode(passCode);
+            if (userIdFromGet != 0)
+            {
+                Serialization UserSerId = new Serialization(userIdFromGet);
+                
+                Session["UserID"] = UserSerId;
+            }
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             int userID = UserSer.Id;
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
-
-            if (userTable.AccessLevel != 9)//только мониторинга отдел
+            FormsAuthentication.SetAuthCookie(userTable.Email, true);
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID,2,0,0))
             {
-                Response.Redirect("~/Default.aspx");
-            }
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+            }        
         }
 
         protected void Button5_Click(object sender, EventArgs e)

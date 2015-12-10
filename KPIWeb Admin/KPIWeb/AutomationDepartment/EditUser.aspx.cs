@@ -18,7 +18,7 @@ namespace KPIWeb.AutomationDepartment
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             int userID = UserSer.Id;
@@ -28,10 +28,11 @@ namespace KPIWeb.AutomationDepartment
 
             ViewState["User"] = userTable.Email;
 
-            if ((userTable.AccessLevel != 10)&&(userTable.AccessLevel != 9))
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 1, 2, 0))
             {
-                Response.Redirect("~/Default.aspx");
-            }
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+            } 
             ////////////////////////////////////////////////////////
 
             ViewState["Password"] = "112233";
@@ -119,7 +120,7 @@ namespace KPIWeb.AutomationDepartment
                                            where a.FifthLevelSubdivisionTableID == user.FK_FirstLevelSubdivisionTable
                                            select a.Name).FirstOrDefault();
 
-                    dataRow["Acceslvl"] = user.AccessLevel;
+                    dataRow["Acceslvl"] = "0";//user.AccessLevel;
 
                     dataRow["Zerolvl"] = (from a in zeroLevelSubdivisionTable
                                           where a.ZeroLevelSubdivisionTableID == user.FK_ZeroLevelSubdivisionTable
@@ -243,8 +244,8 @@ namespace KPIWeb.AutomationDepartment
                                             user.FK_FifthLevelSubdivisionTable = (from a in kPiDataContext.UsersTable
                                                                                   where a.UsersTableID == Convert.ToInt32(TextBoxFourthlvlId.Text)
                                                                                   select a.FK_FifthLevelSubdivisionTable).FirstOrDefault();
-                                        if (TextBoxAcceslvl.Text.Any())
-                                            user.AccessLevel = Convert.ToInt32(TextBoxAcceslvl.Text);
+                                        /*if (TextBoxAcceslvl.Text.Any())
+                                            user.AccessLevel = Convert.ToInt32(TextBoxAcceslvl.Text);*/
                                         if (TextBoxZerolvl.Text.Any())
                                             user.FK_ZeroLevelSubdivisionTable = (from a in kPiDataContext.UsersTable
                                                                                  where a.UsersTableID == Convert.ToInt32(TextBoxFourthlvlId.Text)
