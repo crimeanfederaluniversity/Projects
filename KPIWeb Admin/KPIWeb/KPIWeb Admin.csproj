@@ -228,6 +228,12 @@
     <Content Include="AutomationDepartment\RoleMapping.aspx" />
     <Content Include="AutomationDepartment\IsAvailibleMappingRole.aspx" />
     <Content Include="Info_Pages\RegisterProcessInfo.aspx" />
+    <Content Include="PersonalPagesAdmin\ChangeUserAccessLevel.aspx" />
+    <Content Include="PersonalPagesAdmin\CreateNewModule.aspx" />
+    <Content Include="PersonalPagesAdmin\CreatePersonalPage.aspx" />
+    <Content Include="PersonalPagesAdmin\EditPersonalPage.aspx" />
+    <Content Include="PersonalPagesAdmin\PersonalMainPage.aspx" />
+    <Content Include="PersonalPagesAdmin\UserChangePesonalPage.aspx" />
     <Content Include="Spinner.css" />
     <Content Include="StatisticsDepartment\PlannedIndicator.aspx" />
     <Content Include="StatisticsDepartment\AddSpecialization.aspx" />
@@ -476,6 +482,48 @@
     </Compile>
     <Compile Include="Info_Pages\RegisterProcessInfo.aspx.designer.cs">
       <DependentUpon>RegisterProcessInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\ChangeUserAccessLevel.aspx.cs">
+      <DependentUpon>ChangeUserAccessLevel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\ChangeUserAccessLevel.aspx.designer.cs">
+      <DependentUpon>ChangeUserAccessLevel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\CreateNewModule.aspx.cs">
+      <DependentUpon>CreateNewModule.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\CreateNewModule.aspx.designer.cs">
+      <DependentUpon>CreateNewModule.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\CreatePersonalPage.aspx.cs">
+      <DependentUpon>CreatePersonalPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\CreatePersonalPage.aspx.designer.cs">
+      <DependentUpon>CreatePersonalPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\EditPersonalPage.aspx.cs">
+      <DependentUpon>EditPersonalPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\EditPersonalPage.aspx.designer.cs">
+      <DependentUpon>EditPersonalPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\PersonalMainPage.aspx.cs">
+      <DependentUpon>PersonalMainPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\PersonalMainPage.aspx.designer.cs">
+      <DependentUpon>PersonalMainPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\UserChangePesonalPage.aspx.cs">
+      <DependentUpon>UserChangePesonalPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\UserChangePesonalPage.aspx.designer.cs">
+      <DependentUpon>UserChangePesonalPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="RectorSession.cs" />
     <Compile Include="Rector\ClassForCharts.cs" />

@@ -488,14 +488,6 @@
       <Association Name="IndicatorsTable_PlannedIndicator" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Projects" Member="Projects">
-    <Type Name="Projects">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="ProjectName" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Association Name="Projects_UserGroupTable" Member="UserGroupTable" ThisKey="Id" OtherKey="Fk_ProjectsTable" Type="UserGroupTable" />
-    </Type>
-  </Table>
   <Table Name="dbo.Rank_AddArticleCreateTable" Member="Rank_AddArticleCreateTable">
     <Type Name="Rank_AddArticleCreateTable">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -797,6 +789,7 @@
       <Column Name="Password" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="AccessLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FK_Group" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="StudentsTable_StudentsAndUserGroupMappingTable" Member="StudentsAndUserGroupMappingTable" ThisKey="StudentsTableID" OtherKey="FK_StudentTable" Type="StudentsAndUserGroupMappingTable" />
       <Association Name="FirstLevelSubdivisionTable_StudentsTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivision" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="SecondLevelSubdivisionTable_StudentsTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivision" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="SpecializationTable_StudentsTable" Member="SpecializationTable" ThisKey="FK_Specialisation" OtherKey="SpecializationTableID" Type="SpecializationTable" IsForeignKey="true" />
@@ -865,6 +858,7 @@
       <Column Name="AutoLogin" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="Fk_ProjectsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="UserGroupTable_UsersAndUserGroupMappingTable" Member="UsersAndUserGroupMappingTable" ThisKey="UserGroupID" OtherKey="FK_GroupTable" Type="UsersAndUserGroupMappingTable" />
+      <Association Name="UserGroupTable_StudentsAndUserGroupMappingTable" Member="StudentsAndUserGroupMappingTable" ThisKey="UserGroupID" OtherKey="FK_GroupUserTable" Type="StudentsAndUserGroupMappingTable" />
       <Association Name="Projects_UserGroupTable" Member="Projects" ThisKey="Fk_ProjectsTable" OtherKey="Id" Type="Projects" IsForeignKey="true" />
     </Type>
   </Table>
@@ -1219,6 +1213,25 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="UsersTable_zTaskPRManualTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StudentsAndUserGroupMappingTable" Member="StudentsAndUserGroupMappingTable">
+    <Type Name="StudentsAndUserGroupMappingTable">
+      <Column Name="StudentAndGroupID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_StudentTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_GroupUserTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="StudentsTable_StudentsAndUserGroupMappingTable" Member="StudentsTable" ThisKey="FK_StudentTable" OtherKey="StudentsTableID" Type="StudentsTable" IsForeignKey="true" />
+      <Association Name="UserGroupTable_StudentsAndUserGroupMappingTable" Member="UserGroupTable" ThisKey="FK_GroupUserTable" OtherKey="UserGroupID" Type="UserGroupTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Projects" Member="Projects">
+    <Type Name="Projects">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ProjectName" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="CreateButton" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Projects_UserGroupTable" Member="UserGroupTable" ThisKey="Id" OtherKey="Fk_ProjectsTable" Type="UserGroupTable" />
     </Type>
   </Table>
 </Database>

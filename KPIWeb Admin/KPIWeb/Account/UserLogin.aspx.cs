@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
 using System.Net;
+using System.Web.Security;
 
 namespace KPIWeb.Account
 {
@@ -25,7 +27,39 @@ namespace KPIWeb.Account
         {
             return false;
         }
+        public void Directions(UsersTable user)
+        {
+            if (user.Position == null)
+            {
+                FormsAuthentication.SetAuthCookie(user.Email, true);
+            }
+            else if (user.Position.Length > 2)
+            {
+                FormsAuthentication.SetAuthCookie(user.Position, true);
+            }
+            else
+            {
+                FormsAuthentication.SetAuthCookie(user.Email, true);
+            }
+            UserRights userRights = new UserRights();
+            if (userRights.CanUserSeeThisPage(user.UsersTableID, 1, 0, 0))
+            {
+                Response.Redirect("~/AutomationDepartment/Main.aspx");
+            }
 
+            if (userRights.CanUserSeeThisPage(user.UsersTableID, 0, 2, 0))
+            {
+                Response.Redirect("~/StatisticsDepartment/MonitoringMain.aspx");
+            }
+
+            if (userRights.CanUserSeeThisPage(user.UsersTableID, 19, 0, 0))
+            {
+                Response.Redirect("~/PersonalPagesAdmin/PersonalMainPage.aspx");
+            }
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+        }
         protected void Button1_Click(object sender, EventArgs e)
         {
             try
@@ -53,6 +87,7 @@ namespace KPIWeb.Account
                             Serialization UserSerId = new Serialization(user.UsersTableID);
                             Session["UserID"] = UserSerId;
                             Session["IsMaster"] = null;
+                            Directions(user);
                             Response.Redirect("~/Default.aspx");
                         }
                         else if (tryMaster((string)Password.Text, (int)userTmp.FK_FirstLevelSubdivisionTable))

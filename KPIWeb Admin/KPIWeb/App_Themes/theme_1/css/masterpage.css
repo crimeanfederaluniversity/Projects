@@ -410,48 +410,7 @@ input[type="text"] {
 margin:3px;
 }
 /*EDIT_TEXT*//*EDIT_TEXT*//*EDIT_TEXT*//*EDIT_TEXT*/
-/*CHECKBOX_STYLE*//*CHECKBOX_STYLE*//*CHECKBOX_STYLE*//*CHECKBOX_STYLE*/
-
-.checkbox_style input[type="checkbox"] {
-   display:none;
-}
-.checkbox_style  input[type="checkbox"] + label:before   {
-        display:inline-block;
-        content:url("http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/chb2.png");
-        border-radius:4px;
-        }
-
-.checkbox_style   input[type="checkbox"]:checked + label:before {
-         display:inline-block;
-         content:url("http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/chb_cheсked_2.png");  
-         border-radius:4px; 
-         }
-
-.checkbox_style  input[type="checkbox"]:hover + label:before   {
-        display:inline-block;
-        content:url("http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/chb_hov.png");
-        }
-
-.checkbox_style  input[type="checkbox"]:checked:hover + label:before   {
-        display:inline-block;
-        content:url("http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/chb_checked_hov_2.png");
-        }
-
-/*Disabled*//*Disabled*//*Disabled*//*Disabled*//*Disabled*//*Disabled*//*Disabled*/
-
-.checkbox_style  input[type="checkbox"]:disabled:checked + label:before   {
-        display:inline-block;
-        content:url("http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/chb_cheсked_2.png");
-        opacity:0.2;
-        }
-
-.checkbox_style  input[type="checkbox"]:disabled + label:before   {
-        display:inline-block;
-        content:url("http://212.110.152.173/Styles4KPIKFU/App_Themes/theme_1/css/images/chb2.png");
-        opacity:0.2;
-        }
-
- /*CHECKBOX_STYLE*//*CHECKBOX_STYLE*//*CHECKBOX_STYLE*//*CHECKBOX_STYLE*/
+ 
 label {
 font-family:'Times New Roman';
 font-size:initial;

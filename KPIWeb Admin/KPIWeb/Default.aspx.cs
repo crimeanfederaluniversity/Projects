@@ -14,34 +14,7 @@ namespace KPIWeb
     {
         UsersTable user;
 
-        public void Directions(UsersTable user)
-        {
-            if (user.Position == null)
-            {
-                FormsAuthentication.SetAuthCookie(user.Email, true);
-            }
-            else if (user.Position.Length > 2)
-            {
-                FormsAuthentication.SetAuthCookie(user.Position, true);
-            }
-            else
-            {
-                FormsAuthentication.SetAuthCookie(user.Email, true);
-            }
-            UserRights userRights = new UserRights();
-            if (userRights.CanUserSeeThisPage(user.UsersTableID, 1, 0, 0))
-            {
-                Response.Redirect("~/AutomationDepartment/Main.aspx");
-            }
-
-            if (userRights.CanUserSeeThisPage(user.UsersTableID, 0, 2, 0))
-            {
-                Response.Redirect("~/StatisticsDepartment/MonitoringMain.aspx");
-            }                   
-                FormsAuthentication.SignOut();
-                Session.Abandon();
-                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
-        }
+        
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -76,7 +49,7 @@ namespace KPIWeb
                 {
                     Response.Redirect("~/MultiUser.aspx");
                 }
-                Directions(user);
+              //  Directions(user);
                 
             }
             else
