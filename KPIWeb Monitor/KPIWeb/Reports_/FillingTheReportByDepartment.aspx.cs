@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace KPIWeb.DepartmentFilling
             Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
             if (paramSerialization == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             int ReportArchiveID = Convert.ToInt32(paramSerialization.ReportStr);
@@ -29,7 +30,7 @@ namespace KPIWeb.DepartmentFilling
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
@@ -37,9 +38,10 @@ namespace KPIWeb.DepartmentFilling
                       (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
             ViewState["login"] = (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a.Email).FirstOrDefault();
 
-            if (userTable.AccessLevel != 1)
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 9, 0, 0)) // 1
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }          
             ViewState["userTableID"] = (int)userTable.UsersTableID;
             #endregion
@@ -50,7 +52,7 @@ namespace KPIWeb.DepartmentFilling
                     Serialization modeSer = (Serialization)Session["mode"];
                     if (modeSer == null)
                     {
-                        Response.Redirect("~/Default.aspx");
+                        Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                     }
                     int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и утверждаем //4 зашел директор
                     ////////////////
@@ -224,7 +226,7 @@ namespace KPIWeb.DepartmentFilling
                     Serialization modeSer = (Serialization)Session["mode"];
                     if (modeSer == null)
                     {
-                        Response.Redirect("~/Default.aspx");
+                        Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                     }
                     int mode = modeSer.mode;
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -27,7 +28,7 @@ namespace KPIWeb.Director
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
@@ -36,7 +37,7 @@ namespace KPIWeb.Director
             Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
             if (paramSerialization == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             ReportArchiveTable CurrentReport = (from a in kPiDataContext.ReportArchiveTable
                                                 where a.ReportArchiveTableID == Convert.ToInt32(paramSerialization.ReportStr)
@@ -52,7 +53,7 @@ namespace KPIWeb.Director
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             int userID = UserSer.Id;
@@ -62,15 +63,16 @@ namespace KPIWeb.Director
             UsersTable userTable =
                 (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            if (userTable.AccessLevel != 4)
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 7, 0, 0))
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
             if (paramSerialization == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int ReportID = Convert.ToInt32(paramSerialization.ReportStr);
             int SecondLevel = paramSerialization.l2;
@@ -525,7 +527,7 @@ namespace KPIWeb.Director
         }
         protected void Button22_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Default.aspx");
+            Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
         }
 
         protected void Button23_Click(object sender, EventArgs e)
@@ -543,14 +545,14 @@ namespace KPIWeb.Director
                 Serialization UserSer = (Serialization)Session["UserID"];
                 if (UserSer == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
                 int userID = UserSer.Id;
                 //сессия пользователя жива здорова
                 Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
                 if (paramSerialization == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
                 //Номер отчета уже в сессии            
                 Serialization modeSer = new Serialization(4, null, null);

@@ -264,52 +264,7 @@ namespace KPIWeb
                         && b.FK_ReportArchiveTable == reportId
                         select  a).Distinct().ToList();
         }
-        public string GetResponsibleProrectorPositionForIndicator (int indicatorId)
-        {
-            UsersTable responsibleProrector = (from a in _kPiDataContext.UsersTable
-                where a.Active == true
-                      && a.AccessLevel == 5
-                join b in _kPiDataContext.IndicatorsAndUsersMapping
-                    on a.UsersTableID equals b.FK_UsresTable
-                where b.Active == true
-                      && b.CanConfirm == true
-                      && b.FK_IndicatorsTable == indicatorId
-                      && a.UsersTableID != 12769
-                      && a.UsersTableID != 12803
-                      && a.UsersTableID != 12806
-                select a).FirstOrDefault();
-            if (responsibleProrector == null)
-            {
-                return "Ответственный проректор не назначен";
-            }
-            else
-            {
-                return responsibleProrector.Position;
-            }
-        }
-        public string GetResponsibleProrectorPositionForCalculated(int calculatedId)
-        {
-            UsersTable responsibleProrector = (from a in _kPiDataContext.UsersTable
-                                               where a.Active == true
-                                                     && a.AccessLevel == 5
-                                               join b in _kPiDataContext.CalculatedParametrsAndUsersMapping
-                                                   on a.UsersTableID equals b.FK_UsersTable
-                                               where b.Active == true
-                                                     && b.CanConfirm == true
-                                                     && b.FK_CalculatedParametrsTable == calculatedId
-                                                     && a.UsersTableID != 12769
-                                                     && a.UsersTableID != 12803
-                                                     && a.UsersTableID != 12806
-                                               select a).FirstOrDefault();
-            if (responsibleProrector == null)
-            {
-                return "Ответственный проректор не назначен";
-            }
-            else
-            {
-                return responsibleProrector.Position;
-            }
-        }
+
         public CollectedIndocators GetCollectedIndicatorInReport(int indicatorsId, int reportId)
         {
             return (from a in _kPiDataContext.CollectedIndocators

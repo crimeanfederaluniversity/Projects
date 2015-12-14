@@ -103,7 +103,7 @@ namespace KPIWeb.Reports
             Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
             if (paramSerialization == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             int ReportArchiveID = Convert.ToInt32(paramSerialization.ReportStr);
@@ -114,7 +114,7 @@ namespace KPIWeb.Reports
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
@@ -123,11 +123,12 @@ namespace KPIWeb.Reports
             
             ViewState["login"] = (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a.Email).FirstOrDefault();
 
-            if ((userTable.AccessLevel != 0)&&(userTable.AccessLevel != 4))
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 7, 9, 0))
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
-            if (userTable.AccessLevel == 4)
+            if (userRights.CanUserSeeThisPage(userID, 7, 0, 0))
             {
                 userTable = (from a in kPiDataContext.UsersTable
                              where a.Active == true
@@ -148,7 +149,7 @@ namespace KPIWeb.Reports
                     Serialization modeSer = (Serialization)Session["mode"];
                     if (modeSer == null)
                     {
-                        Response.Redirect("~/Default.aspx");
+                        Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                     }
                     int mode = modeSer.mode; // 0 заполняем // 1 смотрим // 2 смотрим и утверждаем //4 зашел директор
                     ////////////////
@@ -733,13 +734,13 @@ namespace KPIWeb.Reports
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
             if (paramSerialization == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             if (ViewState["CollectedBasicParametersTable"] != null && ViewState["CurrentReportArchiveID"] != null)
@@ -766,7 +767,7 @@ namespace KPIWeb.Reports
                 Serialization modeSer = (Serialization)Session["mode"];
                 if (modeSer == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
                 int mode = modeSer.mode;
 
@@ -1025,7 +1026,7 @@ namespace KPIWeb.Reports
                 Serialization modeSer = (Serialization)Session["mode"];
                 if (modeSer == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
                 int mode = modeSer.mode;
 
@@ -1257,7 +1258,7 @@ namespace KPIWeb.Reports
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
@@ -1266,7 +1267,7 @@ namespace KPIWeb.Reports
             Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
             if (paramSerialization == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             ReportArchiveTable CurrentReport = (from a in kPiDataContext.ReportArchiveTable
                                                 where a.ReportArchiveTableID == Convert.ToInt32(paramSerialization.ReportStr)
@@ -1286,14 +1287,14 @@ namespace KPIWeb.Reports
             Serialization modeSer = (Serialization)Session["mode"];
             if (modeSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int mode = modeSer.mode;
             if (mode == 4)
             {
                 Response.Redirect("~/Director/DViewThird.aspx");
             }
-            Response.Redirect("~/Default.aspx");
+            Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
         }
         protected void Button3_Click(object sender, EventArgs e) // отправка на доработку и возвращение с доработки
         {
@@ -1301,14 +1302,14 @@ namespace KPIWeb.Reports
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
 
             Serialization modeSer = (Serialization)Session["mode"];
             if (modeSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int mode = modeSer.mode;
 

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using PersonalPages;
 
 namespace KPIWeb.Decan
 {
@@ -12,10 +14,18 @@ namespace KPIWeb.Decan
     {
       protected void Page_Load(object sender, EventArgs e)
         {
+            SubdomainRedirect subdomainRedirect = new SubdomainRedirect();
+            string passCode = Request.Params[subdomainRedirect.PassCodeKeyName];
+            int userIdFromGet = subdomainRedirect.GetUserIdByPassCode(passCode);
+            if (userIdFromGet != 0)
+            {
+                Serialization UserSerId = new Serialization(userIdFromGet);
+                Session["UserID"] = UserSerId;
+            }
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             int userID = UserSer.Id;
@@ -24,9 +34,10 @@ namespace KPIWeb.Decan
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
             UsersTable userTable =
                 (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
-            if (userTable.AccessLevel != 2)
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 8, 0, 0))
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             if (!Page.IsPostBack)
             {
@@ -294,7 +305,7 @@ namespace KPIWeb.Decan
 
         protected void Button22_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Default.aspx");
+            Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
         }
     }
     

@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.DynamicData;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using PersonalPages;
 
 namespace KPIWeb.Reports
 {
@@ -14,10 +15,19 @@ namespace KPIWeb.Reports
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            SubdomainRedirect subdomainRedirect = new SubdomainRedirect();
+            string passCode = Request.Params[subdomainRedirect.PassCodeKeyName];
+            int userIdFromGet = subdomainRedirect.GetUserIdByPassCode(passCode);
+            if (userIdFromGet != 0)
+            {
+                Serialization UserSerId = new Serialization(userIdFromGet);
+                Session["UserID"] = UserSerId;
+            }
+
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             int userID = UserSer.Id;
@@ -27,16 +37,18 @@ namespace KPIWeb.Reports
             UsersTable userTable =
                 (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            if ((userTable.AccessLevel != 0) && (userTable.AccessLevel!= 1))
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 9, 0, 0))
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             //////////////////////////////////////////////////////////////////////////
             if (!Page.IsPostBack)
             {
                 #region get user reports
                 List<ReportArchiveTable> reportsArchiveTablesTable = new List<ReportArchiveTable>();
-                if (userTable.AccessLevel != 1)
+                
+                if (!userRights.CanUserSeeThisPage(userID, 9, 0, 0)) // 1
                 {
                     reportsArchiveTablesTable = (
                         from a in kpiWebDataContext.UsersTable
@@ -389,12 +401,12 @@ namespace KPIWeb.Reports
                             }
                             else if (userLevel == 0)
                             {
-                                if (userTable.AccessLevel == 1)
+                                /*if (userTable.AccessLevel == 1) // не знаю что это
                                 {
                                     EditButton=0;                     
                                     ConfButton=0;
                                     ViewButton=0;
-                                }
+                                }*/
                             }    
                             else
                             {
@@ -505,7 +517,7 @@ namespace KPIWeb.Reports
                 Serialization UserSer = (Serialization)Session["UserID"];
                 if (UserSer == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
 
                 int userID = UserSer.Id;
@@ -534,7 +546,8 @@ namespace KPIWeb.Reports
 
                 LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0CR0: Пользователь " + currentUser.Email + " зашел на страницу редактирования отчета с ID = " + paramSerialization.ReportStr);
 
-                if (currentUser.AccessLevel == 1)
+                UserRights userRights = new UserRights();
+                if (!userRights.CanUserSeeThisPage(userID, 9, 0, 0)) // 1
                 {
                     Response.Redirect("~/Reports_/FillingTheReportByDepartment.aspx"); 
                 }
@@ -581,7 +594,7 @@ namespace KPIWeb.Reports
                  Serialization UserSer = (Serialization)Session["UserID"];
                  if (UserSer == null)
                     {
-                        Response.Redirect("~/Default.aspx");
+                        Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                     }
 
             int userID = UserSer.Id;    
@@ -595,17 +608,14 @@ namespace KPIWeb.Reports
                          select a).FirstOrDefault();
                 LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0CR1: Пользователь " + currentUser.Email + " зашел на страницу просмотра отчета с ID = " + paramSerialization.ReportStr);
 
-                if (currentUser.AccessLevel == 1)
-                {
-                    Response.Redirect("~/Reports_/FillingTheReportByDepartment.aspx");                    
-                }
-                else if (currentUser.AccessLevel == 0)
+                UserRights userRights = new UserRights();
+                if (!userRights.CanUserSeeThisPage(userID, 9, 0, 0))
                 {
                     Response.Redirect("~/Reports_/FillingTheReport.aspx");
                 }
                 else
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
             }
         }
@@ -625,17 +635,14 @@ namespace KPIWeb.Reports
 
                 LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0CR2: Пользователь " + currentUser.Email + " зашел на страницу просмотра и подтверждения отчета с ID = " + paramSerialization.ReportStr);
 
-                if (currentUser.AccessLevel == 1)
-                {
-                    Response.Redirect("~/Reports_/FillingTheReportByDepartment.aspx");
-                }
-                else if (currentUser.AccessLevel == 0)
+                UserRights userRights = new UserRights();
+                if (!userRights.CanUserSeeThisPage(currentUser.UsersTableID, 9, 0, 0))
                 {
                     Response.Redirect("~/Reports_/FillingTheReport.aspx");
                 }
                 else
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
             }
         }      

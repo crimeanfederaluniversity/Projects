@@ -209,19 +209,6 @@
     <Content Include="Decan\DecViewBasicParams.aspx" />
     <Content Include="Decan\DecViewReport.aspx" />
     <Content Include="DepartmentFilling\ChooseBasic.aspx" />
-    <Content Include="Rector\Documents.aspx" />
-    <Content Include="Rector\RAnalitics.aspx" />
-    <Content Include="Rector\RCalculate.aspx" />
-    <Content Include="Rector\RectorChooseReport.aspx" />
-    <Content Include="Rector\RectorMain.aspx" />
-    <Content Include="Rector\Result.aspx" />
-    <Content Include="Rector\RMain.aspx" />
-    <Content Include="Rector\RPlannedDynamics.aspx" />
-    <Content Include="Rector\RRating.aspx" />
-    <Content Include="Rector\RShowChart.aspx" />
-    <Content Include="Rector\RShowChartDetailed.aspx" />
-    <Content Include="Rector\RShowChartFaculty.aspx" />
-    <Content Include="Rector\ViewDocument.aspx" />
     <Content Include="Reports_\FillingTheReportByDepartment.aspx" />
     <Content Include="DepartmentFilling\Main.aspx" />
     <Content Include="Director\Checked.png" />
@@ -234,21 +221,14 @@
     <Content Include="Director\ViewBasicParams.aspx" />
     <Content Include="Error.htm" />
     <Content Include="filenotfound.htm" />
-    <Content Include="Info_Pages\FillingProcessInfo.aspx" />
-    <Content Include="FinKadr\OtdelChooseReport.aspx" />
-    <Content Include="FinKadr\OtdelResult.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Head\HeadMain.aspx" />
-    <Content Include="Head\HeadWatchResult.aspx" />
     <Content Include="MultiUser.aspx" />
-    <Content Include="Info_Pages\OwnersProcessInfo.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
     <Content Include="Account\PersonalInfo.aspx" />
-    <Content Include="Info_Pages\RegisterProcessInfo.aspx" />
     <Content Include="Spinner.css" />
     <Content Include="Reports_\Parametrs.aspx" />
     <Content Include="App_Themes\theme_1\css\images\Thumbs.db" />
@@ -262,18 +242,9 @@
     <None Include="Properties\PublishProfiles\home.pubxml" />
     <None Include="Properties\PublishProfiles\V_TEST1.pubxml" />
     <None Include="Properties\PublishProfiles\Web.pubxml" />
-    <Content Include="Rector\doc.pdf" />
-    <Content Include="Rector\docs\doc.pdf" />
-    <Content Include="Rector\docs\document.pdf" />
-    <Content Include="Rector\docs\приказ.pdf" />
-    <Content Include="Rector\docs\приложение.pdf" />
-    <Content Include="Rector\document.pdf" />
-    <Content Include="Rector\doc\1.pdf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Reports_\ChooseReport.aspx" />
-    <Content Include="Reports_\EditReport.aspx" />
     <Content Include="Reports_\FillingTheReport.aspx" />
-    <Content Include="Reports_\GenerateReport.aspx" />
     <Content Include="Reports_\SpecializationParametrs.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -368,7 +339,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="CalculateAbb.cs" />
     <Compile Include="CalculateIndicator.cs" />
-    <Compile Include="ChartItems.cs" />
     <Compile Include="CommonCode.cs" />
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
@@ -415,101 +385,6 @@
     </Compile>
     <Compile Include="MainFunctions.cs" />
     <Compile Include="ProrectorFunctions.cs" />
-    <Compile Include="RectorSession.cs" />
-    <Compile Include="Rector\ClassForCharts.cs" />
-    <Compile Include="Rector\Documents.aspx.cs">
-      <DependentUpon>Documents.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Rector\Documents.aspx.designer.cs">
-      <DependentUpon>Documents.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rector\ForRCalc.cs" />
-    <Compile Include="Rector\RAnalitics.aspx.cs">
-      <DependentUpon>RAnalitics.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Rector\RAnalitics.aspx.designer.cs">
-      <DependentUpon>RAnalitics.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rector\RCalculate.aspx.cs">
-      <DependentUpon>RCalculate.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Rector\RCalculate.aspx.designer.cs">
-      <DependentUpon>RCalculate.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rector\RectorChooseReport.aspx.cs">
-      <DependentUpon>RectorChooseReport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Rector\RectorChooseReport.aspx.designer.cs">
-      <DependentUpon>RectorChooseReport.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rector\RectorMain.aspx.cs">
-      <DependentUpon>RectorMain.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Rector\RectorMain.aspx.designer.cs">
-      <DependentUpon>RectorMain.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rector\Result.aspx.cs">
-      <DependentUpon>Result.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Rector\Result.aspx.designer.cs">
-      <DependentUpon>Result.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rector\RGetCalculated.cs" />
-    <Compile Include="Rector\RMain.aspx.cs">
-      <DependentUpon>RMain.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Rector\RMain.aspx.designer.cs">
-      <DependentUpon>RMain.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rector\RPlannedDynamics.aspx.cs">
-      <DependentUpon>RPlannedDynamics.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Rector\RPlannedDynamics.aspx.designer.cs">
-      <DependentUpon>RPlannedDynamics.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rector\RRating.aspx.cs">
-      <DependentUpon>RRating.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Rector\RRating.aspx.designer.cs">
-      <DependentUpon>RRating.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rector\RShowChart.aspx.cs">
-      <DependentUpon>RShowChart.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Rector\RShowChart.aspx.designer.cs">
-      <DependentUpon>RShowChart.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rector\RShowChartDetailed.aspx.cs">
-      <DependentUpon>RShowChartDetailed.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Rector\RShowChartDetailed.aspx.designer.cs">
-      <DependentUpon>RShowChartDetailed.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rector\RShowChartFaculty.aspx.cs">
-      <DependentUpon>RShowChartFaculty.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Rector\RShowChartFaculty.aspx.designer.cs">
-      <DependentUpon>RShowChartFaculty.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rector\ViewDocument.aspx.cs">
-      <DependentUpon>ViewDocument.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Rector\ViewDocument.aspx.designer.cs">
-      <DependentUpon>ViewDocument.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Reports_\FillingTheReportByDepartment.aspx.cs">
       <DependentUpon>FillingTheReportByDepartment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -573,43 +448,8 @@
     <Compile Include="Director\ViewBasicParams.aspx.designer.cs">
       <DependentUpon>ViewBasicParams.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Info_Pages\FillingProcessInfo.aspx.cs">
-      <DependentUpon>FillingProcessInfo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Info_Pages\FillingProcessInfo.aspx.designer.cs">
-      <DependentUpon>FillingProcessInfo.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="FinKadr\OtdelChooseReport.aspx.cs">
-      <DependentUpon>OtdelChooseReport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="FinKadr\OtdelChooseReport.aspx.designer.cs">
-      <DependentUpon>OtdelChooseReport.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="FinKadr\OtdelResult.aspx.cs">
-      <DependentUpon>OtdelResult.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="FinKadr\OtdelResult.aspx.designer.cs">
-      <DependentUpon>OtdelResult.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Head\HeadMain.aspx.cs">
-      <DependentUpon>HeadMain.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Head\HeadMain.aspx.designer.cs">
-      <DependentUpon>HeadMain.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Head\HeadWatchResult.aspx.cs">
-      <DependentUpon>HeadWatchResult.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Head\HeadWatchResult.aspx.designer.cs">
-      <DependentUpon>HeadWatchResult.aspx</DependentUpon>
     </Compile>
     <Compile Include="KPIWeb.cs">
       <DependentUpon>KPIWeb.dbml</DependentUpon>
@@ -637,22 +477,7 @@
     <Compile Include="MultiUser.aspx.designer.cs">
       <DependentUpon>MultiUser.aspx</DependentUpon>
     </Compile>
-    <Compile Include="OtdelSession.cs" />
-    <Compile Include="Info_Pages\OwnersProcessInfo.aspx.cs">
-      <DependentUpon>OwnersProcessInfo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Info_Pages\OwnersProcessInfo.aspx.designer.cs">
-      <DependentUpon>OwnersProcessInfo.aspx</DependentUpon>
-    </Compile>
     <Compile Include="PDFCreate.cs" />
-    <Compile Include="Info_Pages\RegisterProcessInfo.aspx.cs">
-      <DependentUpon>RegisterProcessInfo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Info_Pages\RegisterProcessInfo.aspx.designer.cs">
-      <DependentUpon>RegisterProcessInfo.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Reports_\FillingTheReportFunctions.cs" />
     <Compile Include="Polish.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -663,26 +488,12 @@
     <Compile Include="Reports_\ChooseReport.aspx.designer.cs">
       <DependentUpon>ChooseReport.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Reports_\EditReport.aspx.cs">
-      <DependentUpon>EditReport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports_\EditReport.aspx.designer.cs">
-      <DependentUpon>EditReport.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Reports_\FillingTheReport.aspx.cs">
       <DependentUpon>FillingTheReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Reports_\FillingTheReport.aspx.designer.cs">
       <DependentUpon>FillingTheReport.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Reports_\GenerateReport.aspx.cs">
-      <DependentUpon>GenerateReport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports_\GenerateReport.aspx.designer.cs">
-      <DependentUpon>GenerateReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports_\GridViewExportUtil.cs" />
     <Compile Include="Reports_\Parametrs.aspx.cs">
@@ -716,7 +527,9 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Account\Users.cs" />
+    <Compile Include="SubdomainRedirect.cs" />
     <Compile Include="Types\Role.cs" />
+    <Compile Include="UserRights.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

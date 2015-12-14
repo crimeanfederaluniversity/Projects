@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -15,7 +16,7 @@ namespace KPIWeb.Director
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
             ViewState["LocalUserID"] = userID;
@@ -24,16 +25,17 @@ namespace KPIWeb.Director
             UsersTable userTable =
                 (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            if (userTable.AccessLevel != 4)
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 7 ,0, 0))
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             if (!Page.IsPostBack)
             {
                 Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
                 if (paramSerialization == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
                 int ReportID = Convert.ToInt32(paramSerialization.ReportStr);
 
@@ -48,23 +50,8 @@ namespace KPIWeb.Director
                 List<string> columnNames = new List<string>();
                 List<bool> ToShow = new List<bool>();
 
-
-
-               // int additionalColumnCount = 0;
                 {
-                    List<SecondLevelSubdivisionTable> SecondLevelList = /*(from a in kpiWebDataContext.SecondLevelSubdivisionTable
-                                                                         where a.Active == true
-                                                                         && a.FK_FirstLevelSubdivisionTable == userTable.FK_FirstLevelSubdivisionTable
-                                                                         join b in kpiWebDataContext.UsersTable
-                                                                         on a.SecondLevelSubdivisionTableID equals b.FK_SecondLevelSubdivisionTable
-                                                                         join c in kpiWebDataContext.BasicParametrsAndUsersMapping
-                                                                         on b.UsersTableID equals c.FK_UsersTable
-                                                                         where
-                                                                         b.Active == true
-                                                                         && c.Active == true
-                                                                         && c.CanView == true
-                                                                         select a).Distinct().ToList();*/
-                                                                         (from a in kpiWebDataContext.SecondLevelSubdivisionTable
+                    List<SecondLevelSubdivisionTable> SecondLevelList = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
                                                                            where a.FK_FirstLevelSubdivisionTable == userTable.FK_FirstLevelSubdivisionTable
                                                                            join b in kpiWebDataContext.ReportArchiveAndLevelMappingTable
                                                                            on a.SecondLevelSubdivisionTableID equals b.FK_SecondLevelSubdivisionTable
@@ -166,7 +153,7 @@ namespace KPIWeb.Director
         }
         protected void Button22_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Default.aspx");
+            Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
         }
         protected void Button5_Click(object sender, EventArgs e)
         {

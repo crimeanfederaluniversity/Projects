@@ -94,7 +94,7 @@ namespace KPIWeb.Account
                                 EmailParams.EmailContent.Replace("#SiteName#", ConfigurationManager.AppSettings.Get("SiteName"))
                                 , null);
 
-                       // Response.Redirect("~/Default.aspx");  
+                       // Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));  
                     }
                 }
             }                       

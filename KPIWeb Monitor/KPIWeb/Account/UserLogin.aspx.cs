@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -17,7 +18,7 @@ namespace KPIWeb.Account
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer != null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
         }
 
@@ -120,6 +121,7 @@ namespace KPIWeb.Account
                         {
                             FailureText.Text = "Неверный адрес электронной почты или пароль.";
                             ErrorMessage.Visible = true;
+
                             // LogHandler.LogWriter.WriteLog(LogCategory.INFO, "Неудачная попытка авторизации " + user.Login);
                         }
                     }
