@@ -24,14 +24,16 @@
                 </ItemTemplate>
                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
             </asp:TemplateField>
-            <asp:TemplateField HeaderText="Просмотреть историю изменений">
+            <asp:TemplateField HeaderText="Изменение" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                 <ItemTemplate>
-                    <asp:Button ID="ChangeUserButton" runat="server" CommandName="Select" Text="Просмотреть" Width="200px" CommandArgument='<%# Eval("UsersTableId") %>' OnClick="ChangeUserButton" />
+                    <asp:Label ID="Name" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Name") %>'></asp:Label>
                 </ItemTemplate>
+                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
             </asp:TemplateField>
+           
             <asp:TemplateField HeaderText="Подтвердить изменения">
                 <ItemTemplate>
-                    <asp:Button ID="DeleteUserButton" runat="server" CommandName="Select" Text="Подтвердить" Width="200px" CommandArgument='<%# Eval("UsersTableId") %>' OnClick="DeleteUserButtonClick" />
+                    <asp:Button ID="ConfirmButtonClick" runat="server" Text="Подтвердить" Width="200px" CommandArgument='<%# Eval("ConfirmButtonClick") %>' OnClick="ConfirmButtonClick" />
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
