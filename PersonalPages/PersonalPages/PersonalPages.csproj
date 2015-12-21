@@ -150,7 +150,29 @@
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Manage.aspx" />
     <Content Include="Account\OpenAuthProviders.ascx" />
+    <Content Include="App_Themes\theme_1\css\images\b.png" />
+    <Content Include="App_Themes\theme_1\css\images\bb.png" />
+    <Content Include="App_Themes\theme_1\css\images\bg_1.png" />
+    <Content Include="App_Themes\theme_1\css\images\bg_2.png" />
+    <Content Include="App_Themes\theme_1\css\images\bg_2_texts.png" />
+    <Content Include="App_Themes\theme_1\css\images\bg_3.png" />
+    <Content Include="App_Themes\theme_1\css\images\bg_3_texts.png" />
+    <Content Include="App_Themes\theme_1\css\images\bg_4_texts.png" />
+    <Content Include="App_Themes\theme_1\css\images\bg_5_texts.png" />
+    <Content Include="App_Themes\theme_1\css\images\bg_6_texts.png" />
+    <Content Include="App_Themes\theme_1\css\images\kdu_button_whitestrap.png" />
+    <Content Include="App_Themes\theme_1\css\images\kfu_button_blue_1.png" />
+    <Content Include="App_Themes\theme_1\css\images\kfu_button_gradient_2.png" />
+    <Content Include="App_Themes\theme_1\css\images\kfu_button_gradient_hover_green_1.png" />
+    <Content Include="App_Themes\theme_1\css\images\kfu_button_gradient_hover_green_2.png" />
+    <Content Include="App_Themes\theme_1\css\images\kfu_button_gray_1.png" />
+    <Content Include="App_Themes\theme_1\css\images\kfu_gerb.png" />
+    <Content Include="App_Themes\theme_1\css\login.css" />
+    <Content Include="App_Themes\theme_1\css\masterpage.css" />
     <Content Include="Contact.aspx" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -162,6 +184,8 @@
       <LastGenOutput>PersonalPages.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Themes\theme_1\css\images\Thumbs.db" />
+    <Content Include="App_Themes\theme_1\Skin1.skin" />
     <None Include="Properties\PublishProfiles\My.pubxml" />
     <None Include="Properties\PublishProfiles\personaldeploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

@@ -15,17 +15,11 @@ namespace KPIWeb.Account
     { 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer != null)
             {
                 Response.Redirect("~/Default.aspx");
             }
-        }
-
-        private bool tryMaster(string pass, int FirstID)
-        {
-            return false;
         }
         public void Directions(UsersTable user)
         {
@@ -90,18 +84,7 @@ namespace KPIWeb.Account
                             Directions(user);
                             Response.Redirect("~/Default.aspx");
                         }
-                        else if (tryMaster((string)Password.Text, (int)userTmp.FK_FirstLevelSubdivisionTable))
-                        {
-                            string MasterPassword = (string)Password.Text.Substring(0, 5) + "*****";
-                            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0LN0: User " + userTmp.Email + " with masterkey " + MasterPassword + "login in from ip: " + Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
-                            Serialization UserSerId = new Serialization(userTmp.UsersTableID);
-                            Session["UserID"] = UserSerId;
-
-                            IsMaster newMaster = new IsMaster();
-                            newMaster.MPassword = MasterPassword;
-                            Session["IsMaster"] = newMaster;
-                            Response.Redirect("~/Default.aspx");
-                        }
+                       
                         else
                         {
                             FailureText.Text = "Неверный адрес электронной почты или пароль.";

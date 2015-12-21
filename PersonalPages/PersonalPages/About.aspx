@@ -1,5 +1,4 @@
 ﻿<%@ Page Title="About" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="About.aspx.cs" Inherits="PersonalPages.About" %>
-
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
    <h2><%: Title %></h2>
     <h3>Справочники:</h3>
@@ -9,8 +8,5 @@
     <p>&nbsp;</p>
     <div>          
         <br />
-      
-     
-    
  </div>
 </asp:Content>

@@ -33,10 +33,10 @@
         <asp:TextBox ID="Text4" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Courier New" Font-Size="X-Large" Text=""></asp:TextBox>
         <br />
         <br />
-        <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Отправить запрос на изменение данных" Width="278px" />
+        <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Отправить запрос на изменение данных" Width="612px" />
         <br />
         <br />
-        <asp:TextBox ID="Text12" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Courier New" Font-Size="X-Large" Text="Варианты написания Вашего имени (в Scopus, WebOfSince):"></asp:TextBox>
+        <asp:TextBox ID="Text12" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Courier New" Font-Size="X-Large" Text="Варианты написания Вашего имени (в Scopus, WebOfSince):" Width="824px"></asp:TextBox>
         <br />
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Height="52px" Width="307px">
                <Columns>    
@@ -58,9 +58,9 @@
                       </Columns>    
         </asp:GridView>
         <br />
-        &nbsp;<asp:Button ID="AddRowButton" runat="server" OnClick="AddRowButton_Click" Text="Добавить строку" Width="150px" />
+        &nbsp;<asp:Button ID="AddRowButton" runat="server" OnClick="AddRowButton_Click" Text="Добавить строку" Width="299px" />
         &nbsp;
-        <asp:Button ID="SaveFIOButton" runat="server" OnClick="SaveFIOButton_Click" Text="Сохранить" Width="150px" />
+        <asp:Button ID="SaveFIOButton" runat="server" OnClick="SaveFIOButton_Click" Text="Сохранить" Width="299px" />
         <br />
         <br />
         <br />

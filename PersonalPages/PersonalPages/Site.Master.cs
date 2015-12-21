@@ -75,7 +75,7 @@ namespace PersonalPages
         {
             FormsAuthentication.SignOut();
             Session.Abandon();
-            Response.Redirect("Login.aspx");
+            Response.Redirect("~/Default.aspx");
         }
     }
 

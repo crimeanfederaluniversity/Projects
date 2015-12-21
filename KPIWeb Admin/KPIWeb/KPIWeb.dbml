@@ -13,13 +13,13 @@
       <Association Name="RolesTable_BasicParametersAndRolesMappingTable" Member="RolesTable" ThisKey="FK_RolesTable" OtherKey="RolesTableID" Type="RolesTable" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.zTemplateFormTable" Member="zTemplateFormTable">
-    <Type Name="zTemplateFormTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.Projects" Member="Projects">
+    <Type Name="Projects">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FormName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Association Name="zTemplateFormTable_zFormCompetitionMappingTable" Member="zFormCompetitionMappingTable" ThisKey="ID" OtherKey="FK_Form" Type="zFormCompetitionMappingTable" />
+      <Column Name="ProjectName" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="CreateButton" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Projects_UserGroupTable" Member="UserGroupTable" ThisKey="Id" OtherKey="Fk_ProjectsTable" Type="UserGroupTable" />
     </Type>
   </Table>
   <Table Name="dbo.BasicParametersTable" Member="BasicParametersTable">
@@ -143,10 +143,10 @@
       <Association Name="FifthLevelSubdivisionTable_CollectedBasicParametersTable" Member="FifthLevelSubdivisionTable" ThisKey="FK_FifthLevelSubdivisionTable" OtherKey="FifthLevelSubdivisionTableID" Type="FifthLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="FirstLevelSubdivisionTable_CollectedBasicParametersTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="FourthLevelSubdivisionTable_CollectedBasicParametersTable" Member="FourthLevelSubdivisionTable" ThisKey="FK_FourthLevelSubdivisionTable" OtherKey="FourthLevelSubdivisionTableID" Type="FourthLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="UsersTable_CollectedBasicParametersTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
       <Association Name="ReportArchiveTable_CollectedBasicParametersTable" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
       <Association Name="SecondLevelSubdivisionTable_CollectedBasicParametersTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="ThirdLevelSubdivisionTable_CollectedBasicParametersTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
-      <Association Name="UsersTable_CollectedBasicParametersTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
       <Association Name="ZeroLevelSubdivisionTable_CollectedBasicParametersTable" Member="ZeroLevelSubdivisionTable" ThisKey="FK_ZeroLevelSubdivisionTable" OtherKey="ZeroLevelSubdivisionTableID" Type="ZeroLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
@@ -163,8 +163,8 @@
       <Column Name="Confirmed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="FK_ReportArchiveTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="CalculatedParametrs_CollectedCalculatedParametrs" Member="CalculatedParametrs" ThisKey="FK_CalculatedParametrs" OtherKey="CalculatedParametrsID" Type="CalculatedParametrs" IsForeignKey="true" />
-      <Association Name="ReportArchiveTable_CollectedCalculatedParametrs" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
       <Association Name="UsersTable_CollectedCalculatedParametrs" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
+      <Association Name="ReportArchiveTable_CollectedCalculatedParametrs" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CollectedIndicatorsForR" Member="CollectedIndicatorsForR">
@@ -202,8 +202,8 @@
       <Column Name="Confirmed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="FK_ReportArchiveTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="IndicatorsTable_CollectedIndocators" Member="IndicatorsTable" ThisKey="FK_Indicators" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
-      <Association Name="ReportArchiveTable_CollectedIndocators" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
       <Association Name="UsersTable_CollectedIndocators" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
+      <Association Name="ReportArchiveTable_CollectedIndocators" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CommetntForBasicInReport" Member="CommetntForBasicInReport">
@@ -231,8 +231,8 @@
       <Association Name="BasicParametersTable_ConfirmationHistory" Member="BasicParametersTable" ThisKey="FK_BasicParamTable" OtherKey="BasicParametersTableID" Type="BasicParametersTable" IsForeignKey="true" />
       <Association Name="CalculatedParametrs_ConfirmationHistory" Member="CalculatedParametrs" ThisKey="FK_CalculatedParamTable" OtherKey="CalculatedParametrsID" Type="CalculatedParametrs" IsForeignKey="true" />
       <Association Name="IndicatorsTable_ConfirmationHistory" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
-      <Association Name="ReportArchiveTable_ConfirmationHistory" Member="ReportArchiveTable" ThisKey="FK_ReportTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
       <Association Name="UsersTable_ConfirmationHistory" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
+      <Association Name="ReportArchiveTable_ConfirmationHistory" Member="ReportArchiveTable" ThisKey="FK_ReportTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ConnectGroup_And_Users" Member="ConnectGroup_And_Users">
@@ -332,8 +332,8 @@
       <Column Name="FK_FourthLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="FifthLevelSubdivisionTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="FifthLevelSubdivisionTableID" OtherKey="FK_FifthLevelSubdivisionTable" Type="CollectedBasicParametersTable" />
       <Association Name="FifthLevelSubdivisionTable_CollectedIndicatorsForR" Member="CollectedIndicatorsForR" ThisKey="FifthLevelSubdivisionTableID" OtherKey="FK_FifthLevelSubdivisionTable" Type="CollectedIndicatorsForR" />
-      <Association Name="FifthLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" Member="ReportArchiveAndLevelMappingTable" ThisKey="FifthLevelSubdivisionTableID" OtherKey="FK_FifthLevelSubdivisionTable" Type="ReportArchiveAndLevelMappingTable" />
       <Association Name="FifthLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="FifthLevelSubdivisionTableID" OtherKey="FK_FifthLevelSubdivisionTable" Type="UsersTable" />
+      <Association Name="FifthLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" Member="ReportArchiveAndLevelMappingTable" ThisKey="FifthLevelSubdivisionTableID" OtherKey="FK_FifthLevelSubdivisionTable" Type="ReportArchiveAndLevelMappingTable" />
       <Association Name="FourthLevelSubdivisionTable_FifthLevelSubdivisionTable" Member="FourthLevelSubdivisionTable" ThisKey="FK_FourthLevelSubdivisionTable" OtherKey="FourthLevelSubdivisionTableID" Type="FourthLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
@@ -346,11 +346,10 @@
       <Column Name="AbbRu" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="FirstLevelSubdivisionTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="CollectedBasicParametersTable" />
       <Association Name="FirstLevelSubdivisionTable_CollectedIndicatorsForR" Member="CollectedIndicatorsForR" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="CollectedIndicatorsForR" />
-      <Association Name="FirstLevelSubdivisionTable_Rank_StructureRaitings" Member="Rank_StructureRaitings" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevel" Type="Rank_StructureRaitings" />
+      <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="FirstLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" Member="ReportArchiveAndLevelMappingTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubmisionTableId" Type="ReportArchiveAndLevelMappingTable" />
       <Association Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="SecondLevelSubdivisionTable" />
       <Association Name="FirstLevelSubdivisionTable_StudentsTable" Member="StudentsTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivision" Type="StudentsTable" />
-      <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="ZeroLevelSubdivisionTable_FirstLevelSubdivisionTable" Member="ZeroLevelSubdivisionTable" ThisKey="FK_ZeroLevelSubvisionTable" OtherKey="ZeroLevelSubdivisionTableID" Type="ZeroLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
@@ -377,8 +376,8 @@
       <Association Name="FourthLevelSubdivisionTable_CollectedIndicatorsForR" Member="CollectedIndicatorsForR" ThisKey="FourthLevelSubdivisionTableID" OtherKey="FK_FourthLelevlSubdivisionTable" Type="CollectedIndicatorsForR" />
       <Association Name="FourthLevelSubdivisionTable_FifthLevelSubdivisionTable" Member="FifthLevelSubdivisionTable" ThisKey="FourthLevelSubdivisionTableID" OtherKey="FK_FourthLevelSubdivisionTable" Type="FifthLevelSubdivisionTable" />
       <Association Name="FourthLevelSubdivisionTable_FourthLevelParametrs" Member="FourthLevelParametrs" ThisKey="FourthLevelSubdivisionTableID" OtherKey="FourthLevelParametrsID" Type="FourthLevelParametrs" Cardinality="One" />
-      <Association Name="FourthLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" Member="ReportArchiveAndLevelMappingTable" ThisKey="FourthLevelSubdivisionTableID" OtherKey="FK_FourthLevelSubdivisionTable" Type="ReportArchiveAndLevelMappingTable" />
       <Association Name="FourthLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="FourthLevelSubdivisionTableID" OtherKey="FK_FourthLevelSubdivisionTable" Type="UsersTable" />
+      <Association Name="FourthLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" Member="ReportArchiveAndLevelMappingTable" ThisKey="FourthLevelSubdivisionTableID" OtherKey="FK_FourthLevelSubdivisionTable" Type="ReportArchiveAndLevelMappingTable" />
       <Association Name="SpecializationTable_FourthLevelSubdivisionTable" Member="SpecializationTable" ThisKey="FK_Specialization" OtherKey="SpecializationTableID" Type="SpecializationTable" IsForeignKey="true" />
       <Association Name="ThirdLevelSubdivisionTable_FourthLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
@@ -488,172 +487,6 @@
       <Association Name="IndicatorsTable_PlannedIndicator" Member="IndicatorsTable" ThisKey="FK_IndicatorsTable" OtherKey="IndicatorsTableID" Type="IndicatorsTable" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Rank_AddArticleCreateTable" Member="Rank_AddArticleCreateTable">
-    <Type Name="Rank_AddArticleCreateTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Column Name="DataType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_Articles" Member="Rank_Articles">
-    <Type Name="Rank_Articles">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
-      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="Complexity" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="FK_Parametrs" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Status" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Mark" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="File_Name" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Association Name="Rank_Articles_Rank_AutorsAndArticles" Member="Rank_AutorsAndArticles" ThisKey="ID" OtherKey="FK_Article" Type="Rank_AutorsAndArticles" />
-      <Association Name="Rank_Mark_Rank_Articles" Member="Rank_Mark" ThisKey="FK_Mark" OtherKey="ID" Type="Rank_Mark" IsForeignKey="true" />
-      <Association Name="Rank_Parametrs_Rank_Articles" Member="Rank_Parametrs" ThisKey="FK_Parametrs" OtherKey="ID" Type="Rank_Parametrs" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_ArticleValues" Member="Rank_ArticleValues">
-    <Type Name="Rank_ArticleValues">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_Article" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_AddArtTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Value" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_Autors" Member="Rank_Autors">
-    <Type Name="Rank_Autors">
-      <Column Name="ID_Autor" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
-      <Column Name="FK_Users" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Positions" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="SecondName" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Column Name="ThirdName" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Association Name="Rank_Autors_Rank_AutorsAndArticles" Member="Rank_AutorsAndArticles" ThisKey="ID_Autor" OtherKey="FK_Autors" Type="Rank_AutorsAndArticles" />
-      <Association Name="Rank_Autors_Rank_Collected_ParametrsValue" Member="Rank_Collected_ParametrsValue" ThisKey="ID_Autor" OtherKey="FK_Autor" Type="Rank_Collected_ParametrsValue" />
-      <Association Name="Rank_Autors_Rank_Raiting_History" Member="Rank_Raiting_History" ThisKey="ID_Autor" OtherKey="FK_Autor" Type="Rank_Raiting_History" />
-      <Association Name="Rank_Positions_Rank_Autors" Member="Rank_Positions" ThisKey="FK_Positions" OtherKey="ID" Type="Rank_Positions" IsForeignKey="true" />
-      <Association Name="UsersTable_Rank_Autors" Member="UsersTable" ThisKey="FK_Users" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_AutorsAndArticles" Member="Rank_AutorsAndArticles">
-    <Type Name="Rank_AutorsAndArticles">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_Autors" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Article" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Confirmed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_Param_Type" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Rank_Articles_Rank_AutorsAndArticles" Member="Rank_Articles" ThisKey="FK_Article" OtherKey="ID" Type="Rank_Articles" IsForeignKey="true" />
-      <Association Name="Rank_Autors_Rank_AutorsAndArticles" Member="Rank_Autors" ThisKey="FK_Autors" OtherKey="ID_Autor" Type="Rank_Autors" IsForeignKey="true" />
-      <Association Name="Rank_Param_Type_Rank_AutorsAndArticles" Member="Rank_Param_Type" ThisKey="FK_Param_Type" OtherKey="ID" Type="Rank_Param_Type" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_Collected_ParametrsValue" Member="Rank_Collected_ParametrsValue">
-    <Type Name="Rank_Collected_ParametrsValue">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_Parametrs" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Autor" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Value" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Status" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Rank_Autors_Rank_Collected_ParametrsValue" Member="Rank_Autors" ThisKey="FK_Autor" OtherKey="ID_Autor" Type="Rank_Autors" IsForeignKey="true" />
-      <Association Name="Rank_Parametrs_Rank_Collected_ParametrsValue" Member="Rank_Parametrs" ThisKey="FK_Parametrs" OtherKey="ID" Type="Rank_Parametrs" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_Connect_ParamType_Param" Member="Rank_Connect_ParamType_Param">
-    <Type Name="Rank_Connect_ParamType_Param">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_Param_Type" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Parametrs" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Rank_Param_Type_Rank_Connect_ParamType_Param" Member="Rank_Param_Type" ThisKey="FK_Param_Type" OtherKey="ID" Type="Rank_Param_Type" IsForeignKey="true" />
-      <Association Name="Rank_Parametrs_Rank_Connect_ParamType_Param" Member="Rank_Parametrs" ThisKey="FK_Parametrs" OtherKey="ID" Type="Rank_Parametrs" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_ConnectedParametrs_ArticleCreateTable" Member="Rank_ConnectedParametrs_ArticleCreateTable">
-    <Type Name="Rank_ConnectedParametrs_ArticleCreateTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_Parametrs" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_AddArticleCreateTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_Mark" Member="Rank_Mark">
-    <Type Name="Rank_Mark">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
-      <Column Name="Points" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Rank_Mark_Rank_Articles" Member="Rank_Articles" ThisKey="ID" OtherKey="FK_Mark" Type="Rank_Articles" />
-      <Association Name="Rank_Mark_Rank_Points" Member="Rank_Points" ThisKey="ID" OtherKey="FK_Mark" Type="Rank_Points" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_Param_Type" Member="Rank_Param_Type">
-    <Type Name="Rank_Param_Type">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Param_Name" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
-      <Column Name="Param_Value" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Association Name="Rank_Param_Type_Rank_AutorsAndArticles" Member="Rank_AutorsAndArticles" ThisKey="ID" OtherKey="FK_Param_Type" Type="Rank_AutorsAndArticles" />
-      <Association Name="Rank_Param_Type_Rank_Connect_ParamType_Param" Member="Rank_Connect_ParamType_Param" ThisKey="ID" OtherKey="FK_Param_Type" Type="Rank_Connect_ParamType_Param" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_Parametrs" Member="Rank_Parametrs">
-    <Type Name="Rank_Parametrs">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Column Name="Amount" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
-      <Column Name="Formula" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Association Name="Rank_Parametrs_Rank_Articles" Member="Rank_Articles" ThisKey="ID" OtherKey="FK_Parametrs" Type="Rank_Articles" />
-      <Association Name="Rank_Parametrs_Rank_Collected_ParametrsValue" Member="Rank_Collected_ParametrsValue" ThisKey="ID" OtherKey="FK_Parametrs" Type="Rank_Collected_ParametrsValue" />
-      <Association Name="Rank_Parametrs_Rank_Connect_ParamType_Param" Member="Rank_Connect_ParamType_Param" ThisKey="ID" OtherKey="FK_Parametrs" Type="Rank_Connect_ParamType_Param" />
-      <Association Name="Rank_Parametrs_Rank_Points" Member="Rank_Points" ThisKey="ID" OtherKey="FK_Parametrs" Type="Rank_Points" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_Points" Member="Rank_Points">
-    <Type Name="Rank_Points">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_Mark" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Parametrs" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Rank_Mark_Rank_Points" Member="Rank_Mark" ThisKey="FK_Mark" OtherKey="ID" Type="Rank_Mark" IsForeignKey="true" />
-      <Association Name="Rank_Parametrs_Rank_Points" Member="Rank_Parametrs" ThisKey="FK_Parametrs" OtherKey="ID" Type="Rank_Parametrs" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_Positions" Member="Rank_Positions">
-    <Type Name="Rank_Positions">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Position" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
-      <Association Name="Rank_Positions_Rank_Autors" Member="Rank_Autors" ThisKey="ID" OtherKey="FK_Positions" Type="Rank_Autors" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_Raiting_History" Member="Rank_Raiting_History">
-    <Type Name="Rank_Raiting_History">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_Autor" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Date_Save" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="Raiting_Value" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Association Name="Rank_Autors_Rank_Raiting_History" Member="Rank_Autors" ThisKey="FK_Autor" OtherKey="ID_Autor" Type="Rank_Autors" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_StructureRaitings" Member="Rank_StructureRaitings">
-    <Type Name="Rank_StructureRaitings">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="FK_FirstLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_SecondLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_ThirdLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Value" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Association Name="FirstLevelSubdivisionTable_Rank_StructureRaitings" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevel" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
-      <Association Name="SecondLevelSubdivisionTable_Rank_StructureRaitings" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevel" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
-      <Association Name="ThirdLevelSubdivisionTable_Rank_StructureRaitings" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevel" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.ReportArchiveAndBasicParametrsMappingTable" Member="ReportArchiveAndBasicParametrsMappingTable">
     <Type Name="ReportArchiveAndBasicParametrsMappingTable">
       <Column Name="ReportArchiveAndBasicParametrsMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -662,6 +495,53 @@
       <Column Name="FK_BasicParametrsTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="BasicParametersTable_ReportArchiveAndBasicParametrsMappingTable" Member="BasicParametersTable" ThisKey="FK_BasicParametrsTable" OtherKey="BasicParametersTableID" Type="BasicParametersTable" IsForeignKey="true" />
       <Association Name="ReportArchiveTable_ReportArchiveAndBasicParametrsMappingTable" Member="ReportArchiveTable" ThisKey="FK_ReportArchiveTable" OtherKey="ReportArchiveTableID" Type="ReportArchiveTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UsersTable" Member="UsersTable">
+    <Type Name="UsersTable">
+      <Column Name="UsersTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Login" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="FK_FirstLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_SecondLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_ThirdLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_FourthLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_FifthLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AccessLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_ZeroLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PassCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Confirmed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Position" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Surname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Patronimyc" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AcademicDegree" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AcademicRank" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Gender" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PublicInfo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Data_Status" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="UsersTable_BasicParametrsAndUsersMapping" Member="BasicParametrsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="BasicParametrsAndUsersMapping" />
+      <Association Name="UsersTable_CalculatedParametrsAndUsersMapping" Member="CalculatedParametrsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CalculatedParametrsAndUsersMapping" />
+      <Association Name="UsersTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedBasicParametersTable" />
+      <Association Name="UsersTable_CollectedCalculatedParametrs" Member="CollectedCalculatedParametrs" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedCalculatedParametrs" />
+      <Association Name="UsersTable_CollectedIndocators" Member="CollectedIndocators" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedIndocators" />
+      <Association Name="UsersTable_ConfirmationHistory" Member="ConfirmationHistory" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="ConfirmationHistory" />
+      <Association Name="UsersTable_ConnectGroup_And_Users" Member="ConnectGroup_And_Users" ThisKey="UsersTableID" OtherKey="FK_UserTable" Type="ConnectGroup_And_Users" />
+      <Association Name="UsersTable_IndicatorsAndUsersMapping" Member="IndicatorsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsresTable" Type="IndicatorsAndUsersMapping" />
+      <Association Name="UsersTable_MultiUser" Member="MultiUser" ThisKey="UsersTableID" OtherKey="FK_UserCanAccess" Type="MultiUser" />
+      <Association Name="UsersTable_MultiUser1" Member="MultiUser1" ThisKey="UsersTableID" OtherKey="FK_UserToAccess" Type="MultiUser" />
+      <Association Name="UsersTable_Personal_Documents" Member="Personal_Documents" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="Personal_Documents" />
+      <Association Name="UsersTable_TypeOfWritingFIO" Member="TypeOfWritingFIO" ThisKey="UsersTableID" OtherKey="FK_UserTableID" Type="TypeOfWritingFIO" />
+      <Association Name="UsersTable_UsersAndUserGroupMappingTable" Member="UsersAndUserGroupMappingTable" ThisKey="UsersTableID" OtherKey="FK_UserTable" Type="UsersAndUserGroupMappingTable" />
+      <Association Name="UsersTable_UserDataChangeHistory" Member="UserDataChangeHistory" ThisKey="UsersTableID" OtherKey="FK_User" Type="UserDataChangeHistory" />
+      <Association Name="FifthLevelSubdivisionTable_UsersTable" Member="FifthLevelSubdivisionTable" ThisKey="FK_FifthLevelSubdivisionTable" OtherKey="FifthLevelSubdivisionTableID" Type="FifthLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="FourthLevelSubdivisionTable_UsersTable" Member="FourthLevelSubdivisionTable" ThisKey="FK_FourthLevelSubdivisionTable" OtherKey="FourthLevelSubdivisionTableID" Type="FourthLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="ZeroLevelSubdivisionTable_UsersTable" Member="ZeroLevelSubdivisionTable" ThisKey="FK_ZeroLevelSubdivisionTable" OtherKey="ZeroLevelSubdivisionTableID" Type="ZeroLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ReportArchiveAndCalculatedParametrsMappingTable" Member="ReportArchiveAndCalculatedParametrsMappingTable">
@@ -751,11 +631,10 @@
       <Association Name="SecondLevelSubdivisionTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="CollectedBasicParametersTable" />
       <Association Name="SecondLevelSubdivisionTable_CollectedIndicatorsForR" Member="CollectedIndicatorsForR" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="CollectedIndicatorsForR" />
       <Association Name="SecondLevelSubdivisionTable_GroupsTable" Member="GroupsTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevel" Type="GroupsTable" />
-      <Association Name="SecondLevelSubdivisionTable_Rank_StructureRaitings" Member="Rank_StructureRaitings" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevel" Type="Rank_StructureRaitings" />
+      <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="SecondLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" Member="ReportArchiveAndLevelMappingTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="ReportArchiveAndLevelMappingTable" />
       <Association Name="SecondLevelSubdivisionTable_StudentsTable" Member="StudentsTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivision" Type="StudentsTable" />
       <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="ThirdLevelSubdivisionTable" />
-      <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
@@ -770,6 +649,16 @@
       <Association Name="SpecializationTable_FourthLevelSubdivisionTable" Member="FourthLevelSubdivisionTable" ThisKey="SpecializationTableID" OtherKey="FK_Specialization" Type="FourthLevelSubdivisionTable" />
       <Association Name="SpecializationTable_StudentsTable" Member="StudentsTable" ThisKey="SpecializationTableID" OtherKey="FK_Specialisation" Type="StudentsTable" />
       <Association Name="FieldOfExpertise_SpecializationTable" Member="FieldOfExpertise" ThisKey="FK_FieldOfExpertise" OtherKey="FieldOfExpertiseID" Type="FieldOfExpertise" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StudentsAndUserGroupMappingTable" Member="StudentsAndUserGroupMappingTable">
+    <Type Name="StudentsAndUserGroupMappingTable">
+      <Column Name="StudentAndGroupID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_StudentTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_GroupUserTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="StudentsTable_StudentsAndUserGroupMappingTable" Member="StudentsTable" ThisKey="FK_StudentTable" OtherKey="StudentsTableID" Type="StudentsTable" IsForeignKey="true" />
+      <Association Name="UserGroupTable_StudentsAndUserGroupMappingTable" Member="UserGroupTable" ThisKey="FK_GroupUserTable" OtherKey="UserGroupID" Type="UserGroupTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.StudentsTable" Member="StudentsTable">
@@ -789,7 +678,9 @@
       <Column Name="Password" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="AccessLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FK_Group" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Data_Status" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="StudentsTable_StudentsAndUserGroupMappingTable" Member="StudentsAndUserGroupMappingTable" ThisKey="StudentsTableID" OtherKey="FK_StudentTable" Type="StudentsAndUserGroupMappingTable" />
+      <Association Name="StudentsTable_StudentChangeDataHistoryTable" Member="StudentChangeDataHistoryTable" ThisKey="StudentsTableID" OtherKey="FK_StudentTable" Type="StudentChangeDataHistoryTable" />
       <Association Name="FirstLevelSubdivisionTable_StudentsTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivision" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="SecondLevelSubdivisionTable_StudentsTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivision" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="SpecializationTable_StudentsTable" Member="SpecializationTable" ThisKey="FK_Specialisation" OtherKey="SpecializationTableID" Type="SpecializationTable" IsForeignKey="true" />
@@ -833,10 +724,9 @@
       <Association Name="ThirdLevelSubdivisionTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="CollectedBasicParametersTable" />
       <Association Name="ThirdLevelSubdivisionTable_CollectedIndicatorsForR" Member="CollectedIndicatorsForR" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="CollectedIndicatorsForR" />
       <Association Name="ThirdLevelSubdivisionTable_FourthLevelSubdivisionTable" Member="FourthLevelSubdivisionTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="FourthLevelSubdivisionTable" />
-      <Association Name="ThirdLevelSubdivisionTable_Rank_StructureRaitings" Member="Rank_StructureRaitings" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevel" Type="Rank_StructureRaitings" />
+      <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="ThirdLevelSubdivisionTable_ReportArchiveAndLevelMappingTable" Member="ReportArchiveAndLevelMappingTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="ReportArchiveAndLevelMappingTable" />
       <Association Name="ThirdLevelSubdivisionTable_ThirdLevelParametrs" Member="ThirdLevelParametrs" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="ThirdLevelParametrsID" Type="ThirdLevelParametrs" Cardinality="One" />
-      <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
@@ -857,8 +747,8 @@
       <Column Name="URLtoGroupMain" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
       <Column Name="AutoLogin" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="Fk_ProjectsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="UserGroupTable_UsersAndUserGroupMappingTable" Member="UsersAndUserGroupMappingTable" ThisKey="UserGroupID" OtherKey="FK_GroupTable" Type="UsersAndUserGroupMappingTable" />
       <Association Name="UserGroupTable_StudentsAndUserGroupMappingTable" Member="StudentsAndUserGroupMappingTable" ThisKey="UserGroupID" OtherKey="FK_GroupUserTable" Type="StudentsAndUserGroupMappingTable" />
+      <Association Name="UserGroupTable_UsersAndUserGroupMappingTable" Member="UsersAndUserGroupMappingTable" ThisKey="UserGroupID" OtherKey="FK_GroupTable" Type="UsersAndUserGroupMappingTable" />
       <Association Name="Projects_UserGroupTable" Member="Projects" ThisKey="Fk_ProjectsTable" OtherKey="Id" Type="Projects" IsForeignKey="true" />
     </Type>
   </Table>
@@ -872,221 +762,6 @@
       <Association Name="UsersTable_UsersAndUserGroupMappingTable" Member="UsersTable" ThisKey="FK_UserTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.UsersTable" Member="UsersTable">
-    <Type Name="UsersTable">
-      <Column Name="UsersTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Login" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="FK_FirstLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_SecondLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_ThirdLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_FourthLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_FifthLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_ZeroLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PassCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Confirmed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Position" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="Surname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Patronimyc" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="AcademicDegree" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="AcademicRank" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Gender" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="PublicInfo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Association Name="UsersTable_BasicParametrsAndUsersMapping" Member="BasicParametrsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="BasicParametrsAndUsersMapping" />
-      <Association Name="UsersTable_CalculatedParametrsAndUsersMapping" Member="CalculatedParametrsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CalculatedParametrsAndUsersMapping" />
-      <Association Name="UsersTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedBasicParametersTable" />
-      <Association Name="UsersTable_CollectedCalculatedParametrs" Member="CollectedCalculatedParametrs" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedCalculatedParametrs" />
-      <Association Name="UsersTable_CollectedIndocators" Member="CollectedIndocators" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedIndocators" />
-      <Association Name="UsersTable_ConfirmationHistory" Member="ConfirmationHistory" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="ConfirmationHistory" />
-      <Association Name="UsersTable_ConnectGroup_And_Users" Member="ConnectGroup_And_Users" ThisKey="UsersTableID" OtherKey="FK_UserTable" Type="ConnectGroup_And_Users" />
-      <Association Name="UsersTable_IndicatorsAndUsersMapping" Member="IndicatorsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsresTable" Type="IndicatorsAndUsersMapping" />
-      <Association Name="UsersTable_MultiUser" Member="MultiUser" ThisKey="UsersTableID" OtherKey="FK_UserCanAccess" Type="MultiUser" />
-      <Association Name="UsersTable_MultiUser1" Member="MultiUser1" ThisKey="UsersTableID" OtherKey="FK_UserToAccess" Type="MultiUser" />
-      <Association Name="UsersTable_Personal_Documents" Member="Personal_Documents" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="Personal_Documents" />
-      <Association Name="UsersTable_Rank_Autors" Member="Rank_Autors" ThisKey="UsersTableID" OtherKey="FK_Users" Type="Rank_Autors" />
-      <Association Name="UsersTable_TypeOfWritingFIO" Member="TypeOfWritingFIO" ThisKey="UsersTableID" OtherKey="FK_UserTableID" Type="TypeOfWritingFIO" />
-      <Association Name="UsersTable_UsersAndUserGroupMappingTable" Member="UsersAndUserGroupMappingTable" ThisKey="UsersTableID" OtherKey="FK_UserTable" Type="UsersAndUserGroupMappingTable" />
-      <Association Name="UsersTable_zCompetitionsTable" Member="zCompetitionsTable" ThisKey="UsersTableID" OtherKey="FK_Curator" Type="zCompetitionsTable" />
-      <Association Name="UsersTable_zExpertAndExpertGroupMappingTable" Member="zExpertAndExpertGroupMappingTable" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="zExpertAndExpertGroupMappingTable" />
-      <Association Name="UsersTable_zExpertPointsValue" Member="zExpertPointsValue" ThisKey="UsersTableID" OtherKey="FK_ExpertsTable" Type="zExpertPointsValue" />
-      <Association Name="UsersTable_zExpertsAndApplicationMappingTable" Member="zExpertsAndApplicationMappingTable" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="zExpertsAndApplicationMappingTable" />
-      <Association Name="UsersTable_zPartnersTable" Member="zPartnersTable" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="zPartnersTable" />
-      <Association Name="UsersTable_zTaskPRManualTable" Member="zTaskPRManualTable" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="zTaskPRManualTable" />
-      <Association Name="FifthLevelSubdivisionTable_UsersTable" Member="FifthLevelSubdivisionTable" ThisKey="FK_FifthLevelSubdivisionTable" OtherKey="FifthLevelSubdivisionTableID" Type="FifthLevelSubdivisionTable" IsForeignKey="true" />
-      <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
-      <Association Name="FourthLevelSubdivisionTable_UsersTable" Member="FourthLevelSubdivisionTable" ThisKey="FK_FourthLevelSubdivisionTable" OtherKey="FourthLevelSubdivisionTableID" Type="FourthLevelSubdivisionTable" IsForeignKey="true" />
-      <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
-      <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
-      <Association Name="ZeroLevelSubdivisionTable_UsersTable" Member="ZeroLevelSubdivisionTable" ThisKey="FK_ZeroLevelSubdivisionTable" OtherKey="ZeroLevelSubdivisionTableID" Type="ZeroLevelSubdivisionTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zActionPRManualTable" Member="zActionPRManualTable">
-    <Type Name="zActionPRManualTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="ActionPR" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="zActionPRManualTable_zActionsCompetitionsMappingTable" Member="zActionsCompetitionsMappingTable" ThisKey="ID" OtherKey="FK_ActionPR" Type="zActionsCompetitionsMappingTable" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zActionsCompetitionsMappingTable" Member="zActionsCompetitionsMappingTable">
-    <Type Name="zActionsCompetitionsMappingTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FK_ActionPR" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Competiton" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="zActionPRManualTable_zActionsCompetitionsMappingTable" Member="zActionPRManualTable" ThisKey="FK_ActionPR" OtherKey="ID" Type="zActionPRManualTable" IsForeignKey="true" />
-      <Association Name="zCompetitionsTable_zActionsCompetitionsMappingTable" Member="zCompetitionsTable" ThisKey="FK_Competiton" OtherKey="ID" Type="zCompetitionsTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zApplicationAndPartnersMappingTable" Member="zApplicationAndPartnersMappingTable">
-    <Type Name="zApplicationAndPartnersMappingTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FK_PartnersTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Application" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="zApplicationTable_zApplicationAndPartnersMappingTable" Member="zApplicationTable" ThisKey="FK_Application" OtherKey="ID" Type="zApplicationTable" IsForeignKey="true" />
-      <Association Name="zPartnersTable_zApplicationAndPartnersMappingTable" Member="zPartnersTable" ThisKey="FK_PartnersTable" OtherKey="ID" Type="zPartnersTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zApplicationTable" Member="zApplicationTable">
-    <Type Name="zApplicationTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FK_CompetitionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="CretaDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="Sended" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="SendedDataTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="Accept" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="StartProjectDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="EndProjectDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Association Name="zApplicationTable_zApplicationAndPartnersMappingTable" Member="zApplicationAndPartnersMappingTable" ThisKey="ID" OtherKey="FK_Application" Type="zApplicationAndPartnersMappingTable" />
-      <Association Name="zApplicationTable_zCollectedRowsTable" Member="zCollectedRowsTable" ThisKey="ID" OtherKey="FK_ApplicationTable" Type="zCollectedRowsTable" />
-      <Association Name="zApplicationTable_zDocumentsTable" Member="zDocumentsTable" ThisKey="ID" OtherKey="FK_ApplicationTable" Type="zDocumentsTable" />
-      <Association Name="zApplicationTable_zExpertPointsValue" Member="zExpertPointsValue" ThisKey="ID" OtherKey="FK_ApplicationTable" Type="zExpertPointsValue" />
-      <Association Name="zApplicationTable_zExpertsAndApplicationMappingTable" Member="zExpertsAndApplicationMappingTable" ThisKey="ID" OtherKey="FK_ApplicationsTable" Type="zExpertsAndApplicationMappingTable" />
-      <Association Name="zCompetitionsTable_zApplicationTable" Member="zCompetitionsTable" ThisKey="FK_CompetitionTable" OtherKey="ID" Type="zCompetitionsTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zBlockTable" Member="zBlockTable">
-    <Type Name="zBlockTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="BlockName" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="zBlockTable_zSectionTable" Member="zSectionTable" ThisKey="ID" OtherKey="FK_BlockID" Type="zSectionTable" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zCollectedDataTable" Member="zCollectedDataTable">
-    <Type Name="zCollectedDataTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="LastChangeDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="FK_ColumnTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_CollectedRowsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_ConstantListTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ValueText" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="ValueDouble" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="ValueInt" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ValueBit" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="ValueFK_CollectedDataTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ValueDataTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="zCollectedDataTable_zCollectedDataTable" Member="zCollectedDataTable2" ThisKey="ID" OtherKey="ValueFK_CollectedDataTable" Type="zCollectedDataTable" />
-      <Association Name="zCollectedDataTable_zCollectedDataTable" Member="zCollectedDataTable1" ThisKey="ValueFK_CollectedDataTable" OtherKey="ID" Type="zCollectedDataTable" IsForeignKey="true" />
-      <Association Name="zCollectedRowsTable_zCollectedDataTable" Member="zCollectedRowsTable" ThisKey="FK_CollectedRowsTable" OtherKey="ID" Type="zCollectedRowsTable" IsForeignKey="true" />
-      <Association Name="zColumnTable_zCollectedDataTable" Member="zColumnTable" ThisKey="FK_ColumnTable" OtherKey="ID" Type="zColumnTable" IsForeignKey="true" />
-      <Association Name="zConstantListTable_zCollectedDataTable" Member="zConstantListTable" ThisKey="FK_ConstantListTable" OtherKey="ID" Type="zConstantListTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zCollectedRowsTable" Member="zCollectedRowsTable">
-    <Type Name="zCollectedRowsTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="FK_SectionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FK_ApplicationTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="zCollectedRowsTable_zCollectedDataTable" Member="zCollectedDataTable" ThisKey="ID" OtherKey="FK_CollectedRowsTable" Type="zCollectedDataTable" />
-      <Association Name="zApplicationTable_zCollectedRowsTable" Member="zApplicationTable" ThisKey="FK_ApplicationTable" OtherKey="ID" Type="zApplicationTable" IsForeignKey="true" />
-      <Association Name="zSectionTable_zCollectedRowsTable" Member="zSectionTable" ThisKey="FK_SectionTable" OtherKey="ID" Type="zSectionTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zColumnTable" Member="zColumnTable">
-    <Type Name="zColumnTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="FK_SectionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="DataType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FK_ColumnTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_ColumnConnectFromTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_ColumnConnectToTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_ConstantListsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="TotalUp" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="UniqueMark" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="SortBy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Visible" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="MaxValue" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="MinValue" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Association Name="zColumnTable_zCollectedDataTable" Member="zCollectedDataTable" ThisKey="ID" OtherKey="FK_ColumnTable" Type="zCollectedDataTable" />
-      <Association Name="zColumnTable_zColumnTable" Member="zColumnTable2" ThisKey="ID" OtherKey="FK_ColumnTable" Type="zColumnTable" />
-      <Association Name="zColumnTable_zColumnTable1" Member="zColumnTable4" ThisKey="ID" OtherKey="FK_ColumnConnectToTable" Type="zColumnTable" />
-      <Association Name="zColumnTable_zColumnTable2" Member="zColumnTable6" ThisKey="ID" OtherKey="FK_ColumnConnectFromTable" Type="zColumnTable" />
-      <Association Name="zColumnTable_zColumnTable" Member="zColumnTable1" ThisKey="FK_ColumnTable" OtherKey="ID" Type="zColumnTable" IsForeignKey="true" />
-      <Association Name="zColumnTable_zColumnTable1" Member="zColumnTable3" ThisKey="FK_ColumnConnectToTable" OtherKey="ID" Type="zColumnTable" IsForeignKey="true" />
-      <Association Name="zColumnTable_zColumnTable2" Member="zColumnTable5" ThisKey="FK_ColumnConnectFromTable" OtherKey="ID" Type="zColumnTable" IsForeignKey="true" />
-      <Association Name="zConstantListTable_zColumnTable" Member="zConstantListTable" ThisKey="FK_ConstantListsTable" OtherKey="ID" Type="zConstantListTable" IsForeignKey="true" />
-      <Association Name="zSectionTable_zColumnTable" Member="zSectionTable" ThisKey="FK_SectionTable" OtherKey="ID" Type="zSectionTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zCompetitionsTable" Member="zCompetitionsTable">
-    <Type Name="zCompetitionsTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="Number" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="OpenForApplications" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="TemplateDocName" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="TemplateDocWithoutMarksName" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="StartDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="EndDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="Budjet" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Sended" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_Curator" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="zCompetitionsTable_zActionsCompetitionsMappingTable" Member="zActionsCompetitionsMappingTable" ThisKey="ID" OtherKey="FK_Competiton" Type="zActionsCompetitionsMappingTable" />
-      <Association Name="zCompetitionsTable_zApplicationTable" Member="zApplicationTable" ThisKey="ID" OtherKey="FK_CompetitionTable" Type="zApplicationTable" />
-      <Association Name="zCompetitionsTable_zConstantListTable" Member="zConstantListTable" ThisKey="ID" OtherKey="FK_CompetitionTable" Type="zConstantListTable" />
-      <Association Name="zCompetitionsTable_zExpertsAndCompetitionMappngTamplateTable" Member="zExpertsAndCompetitionMappngTamplateTable" ThisKey="ID" OtherKey="FK_CompetitionsTable" Type="zExpertsAndCompetitionMappngTamplateTable" />
-      <Association Name="zCompetitionsTable_zFormCompetitionMappingTable" Member="zFormCompetitionMappingTable" ThisKey="ID" OtherKey="FK_Competition" Type="zFormCompetitionMappingTable" />
-      <Association Name="zCompetitionsTable_zSectionTable" Member="zSectionTable" ThisKey="ID" OtherKey="FK_CompetitionsTable" Type="zSectionTable" />
-      <Association Name="UsersTable_zCompetitionsTable" Member="UsersTable" ThisKey="FK_Curator" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zConstantListTable" Member="zConstantListTable">
-    <Type Name="zConstantListTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
-      <Column Name="FK_CompetitionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="zConstantListTable_zCollectedDataTable" Member="zCollectedDataTable" ThisKey="ID" OtherKey="FK_ConstantListTable" Type="zCollectedDataTable" />
-      <Association Name="zConstantListTable_zColumnTable" Member="zColumnTable" ThisKey="ID" OtherKey="FK_ConstantListsTable" Type="zColumnTable" />
-      <Association Name="zCompetitionsTable_zConstantListTable" Member="zCompetitionsTable" ThisKey="FK_CompetitionTable" OtherKey="ID" Type="zCompetitionsTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zDocumentsTable" Member="zDocumentsTable">
-    <Type Name="zDocumentsTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="FK_ApplicationTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="AddDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="LinkOut" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Association Name="zApplicationTable_zDocumentsTable" Member="zApplicationTable" ThisKey="FK_ApplicationTable" OtherKey="ID" Type="zApplicationTable" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.ZeroLevelSubdivisionTable" Member="ZeroLevelSubdivisionTable">
     <Type Name="ZeroLevelSubdivisionTable">
       <Column Name="ZeroLevelSubdivisionTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -1097,141 +772,32 @@
       <Association Name="ZeroLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="ZeroLevelSubdivisionTableID" OtherKey="FK_ZeroLevelSubdivisionTable" Type="UsersTable" />
     </Type>
   </Table>
-  <Table Name="dbo.zExpertAndExpertGroupMappingTable" Member="zExpertAndExpertGroupMappingTable">
-    <Type Name="zExpertAndExpertGroupMappingTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="FK_ExpertGroupTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="UsersTable_zExpertAndExpertGroupMappingTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
-      <Association Name="zExpertGroup_zExpertAndExpertGroupMappingTable" Member="zExpertGroup" ThisKey="FK_ExpertGroupTable" OtherKey="ID" Type="zExpertGroup" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zExpertGroup" Member="zExpertGroup">
-    <Type Name="zExpertGroup">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.UserDataChangeHistory" Member="UserDataChangeHistory">
+    <Type Name="UserDataChangeHistory">
+      <Column Name="UserChangeDataID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
-      <Association Name="zExpertGroup_zExpertAndExpertGroupMappingTable" Member="zExpertAndExpertGroupMappingTable" ThisKey="ID" OtherKey="FK_ExpertGroupTable" Type="zExpertAndExpertGroupMappingTable" />
+      <Column Name="FK_User" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ChangeDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="ID_Param_ToChange" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OldValue" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="NewValue" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="UsersTable_UserDataChangeHistory" Member="UsersTable" ThisKey="FK_User" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.zExpertPoints" Member="zExpertPoints">
-    <Type Name="zExpertPoints">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="MinValue" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="MaxValue" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="zExpertPoints_zExpertPointsValue" Member="zExpertPointsValue" ThisKey="ID" OtherKey="FK_ExpertPoints" Type="zExpertPointsValue" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zExpertPointsValue" Member="zExpertPointsValue">
-    <Type Name="zExpertPointsValue">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Value" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="FK_ApplicationTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_ExpertPoints" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="LastChangeDataTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="Sended" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="SendedDataTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_ExpertsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="UsersTable_zExpertPointsValue" Member="UsersTable" ThisKey="FK_ExpertsTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
-      <Association Name="zApplicationTable_zExpertPointsValue" Member="zApplicationTable" ThisKey="FK_ApplicationTable" OtherKey="ID" Type="zApplicationTable" IsForeignKey="true" />
-      <Association Name="zExpertPoints_zExpertPointsValue" Member="zExpertPoints" ThisKey="FK_ExpertPoints" OtherKey="ID" Type="zExpertPoints" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zExpertsAndApplicationMappingTable" Member="zExpertsAndApplicationMappingTable">
-    <Type Name="zExpertsAndApplicationMappingTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_ApplicationsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="UsersTable_zExpertsAndApplicationMappingTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
-      <Association Name="zApplicationTable_zExpertsAndApplicationMappingTable" Member="zApplicationTable" ThisKey="FK_ApplicationsTable" OtherKey="ID" Type="zApplicationTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zExpertsAndCompetitionMappngTamplateTable" Member="zExpertsAndCompetitionMappngTamplateTable">
-    <Type Name="zExpertsAndCompetitionMappngTamplateTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FK_CompetitionsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="zCompetitionsTable_zExpertsAndCompetitionMappngTamplateTable" Member="zCompetitionsTable" ThisKey="FK_CompetitionsTable" OtherKey="ID" Type="zCompetitionsTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zFormCompetitionMappingTable" Member="zFormCompetitionMappingTable">
-    <Type Name="zFormCompetitionMappingTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_Competition" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Form" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="zCompetitionsTable_zFormCompetitionMappingTable" Member="zCompetitionsTable" ThisKey="FK_Competition" OtherKey="ID" Type="zCompetitionsTable" IsForeignKey="true" />
-      <Association Name="zTemplateFormTable_zFormCompetitionMappingTable" Member="zTemplateFormTable" ThisKey="FK_Form" OtherKey="ID" Type="zTemplateFormTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zIndicatorManualTable" Member="zIndicatorManualTable">
-    <Type Name="zIndicatorManualTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IndicatorName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="IndicatorValue" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zPartnersTable" Member="zPartnersTable">
-    <Type Name="zPartnersTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Surname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Patronymic" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Role" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="zPartnersTable_zApplicationAndPartnersMappingTable" Member="zApplicationAndPartnersMappingTable" ThisKey="ID" OtherKey="FK_PartnersTable" Type="zApplicationAndPartnersMappingTable" />
-      <Association Name="UsersTable_zPartnersTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zSectionTable" Member="zSectionTable">
-    <Type Name="zSectionTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="FK_CompetitionsTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ColumnMaxCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_BlockID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="zSectionTable_zCollectedRowsTable" Member="zCollectedRowsTable" ThisKey="ID" OtherKey="FK_SectionTable" Type="zCollectedRowsTable" />
-      <Association Name="zSectionTable_zColumnTable" Member="zColumnTable" ThisKey="ID" OtherKey="FK_SectionTable" Type="zColumnTable" />
-      <Association Name="zCompetitionsTable_zSectionTable" Member="zCompetitionsTable" ThisKey="FK_CompetitionsTable" OtherKey="ID" Type="zCompetitionsTable" IsForeignKey="true" />
-      <Association Name="zBlockTable_zSectionTable" Member="zBlockTable" ThisKey="FK_BlockID" OtherKey="ID" Type="zBlockTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zTaskPRManualTable" Member="zTaskPRManualTable">
-    <Type Name="zTaskPRManualTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="TaskPR" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="FK_UsersTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="UsersTable_zTaskPRManualTable" Member="UsersTable" ThisKey="FK_UsersTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.StudentsAndUserGroupMappingTable" Member="StudentsAndUserGroupMappingTable">
-    <Type Name="StudentsAndUserGroupMappingTable">
-      <Column Name="StudentAndGroupID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+  <Table Name="dbo.StudentChangeDataHistoryTable" Member="StudentChangeDataHistoryTable">
+    <Type Name="StudentChangeDataHistoryTable">
+      <Column Name="StudentChangeDataID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="FK_StudentTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_GroupUserTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="StudentsTable_StudentsAndUserGroupMappingTable" Member="StudentsTable" ThisKey="FK_StudentTable" OtherKey="StudentsTableID" Type="StudentsTable" IsForeignKey="true" />
-      <Association Name="UserGroupTable_StudentsAndUserGroupMappingTable" Member="UserGroupTable" ThisKey="FK_GroupUserTable" OtherKey="UserGroupID" Type="UserGroupTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Projects" Member="Projects">
-    <Type Name="Projects">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ChangeDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="ProjectName" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="CreateButton" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="Projects_UserGroupTable" Member="UserGroupTable" ThisKey="Id" OtherKey="Fk_ProjectsTable" Type="UserGroupTable" />
+      <Column Name="ID_Param_ToChange" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OldValue" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="NewValue" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="StudentsTable_StudentChangeDataHistoryTable" Member="StudentsTable" ThisKey="FK_StudentTable" OtherKey="StudentsTableID" Type="StudentsTable" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

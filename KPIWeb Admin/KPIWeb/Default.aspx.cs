@@ -18,7 +18,7 @@ namespace KPIWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
             SubdomainRedirect subdomainRedirect = new SubdomainRedirect();
             string passCode = Request.Params[subdomainRedirect.PassCodeKeyName];
             int userIdFromGet = subdomainRedirect.GetUserIdByPassCode(passCode);
@@ -26,6 +26,10 @@ namespace KPIWeb
             {
                 Serialization UserSerId = new Serialization(userIdFromGet);
                 Session["UserID"] = UserSerId;
+                UsersTable user1 =
+                (from a in KPIWebDataContext.UsersTable where a.UsersTableID == userIdFromGet select a).FirstOrDefault();
+                if (user1 != null)
+                    FormsAuthentication.SetAuthCookie(user1.Email, true);
             }
             // автологин
             Serialization UserSer = (Serialization)Session["UserID"];
@@ -35,7 +39,7 @@ namespace KPIWeb
                 Session.Abandon();
                 Response.Redirect("http://cfu-portal.ru");
             }
-            KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
+            
             UsersTable user = (from usersTables in KPIWebDataContext.UsersTable
                                where usersTables.UsersTableID == UserSer.Id
                                select usersTables).FirstOrDefault();

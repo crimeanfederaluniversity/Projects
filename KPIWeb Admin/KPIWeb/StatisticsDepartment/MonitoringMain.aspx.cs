@@ -14,14 +14,18 @@ namespace KPIWeb.StatisticsDepartment
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             SubdomainRedirect subdomainRedirect = new SubdomainRedirect();
             string passCode = Request.Params[subdomainRedirect.PassCodeKeyName];
             int userIdFromGet = subdomainRedirect.GetUserIdByPassCode(passCode);
             if (userIdFromGet != 0)
             {
-                Serialization UserSerId = new Serialization(userIdFromGet);
-                
+                Serialization UserSerId = new Serialization(userIdFromGet);        
                 Session["UserID"] = UserSerId;
+                UsersTable user =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userIdFromGet select a).FirstOrDefault();
+                if (user != null)
+                    FormsAuthentication.SetAuthCookie(user.Email, true);
             }
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
@@ -30,7 +34,7 @@ namespace KPIWeb.StatisticsDepartment
             }
 
             int userID = UserSer.Id;
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
             FormsAuthentication.SetAuthCookie(userTable.Email, true);

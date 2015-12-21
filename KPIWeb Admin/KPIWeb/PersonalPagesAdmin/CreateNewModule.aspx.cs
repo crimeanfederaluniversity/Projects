@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -12,6 +13,18 @@ namespace KPIWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+            }
+            int userID = UserSer.Id;
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 19, 0, 0))
+            {
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+            } 
+
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add(new DataColumn("Id", typeof (string)));
             dataTable.Columns.Add(new DataColumn("ProjectName", typeof (string)));

@@ -162,10 +162,11 @@ button,
 input,
 select,
 textarea {
-  margin: 0;
   font-family: inherit;
   font-size: 100%;
-}
+    margin-left: 0;
+    margin-right: 0;
+    }
 
 button,
 input {
@@ -183,7 +184,7 @@ input[type="reset"],
 input[type="submit"] {
   cursor: pointer;
   -webkit-appearance: button;
-}
+    }
 
 button[disabled],
 html input[disabled] {
@@ -860,6 +861,9 @@ pre code {
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+    top: -185px;
+    left: 31px;
+    font-weight: 700;
 }
 
 .col-xs-1,
@@ -1678,7 +1682,6 @@ input[type="file"] {
 
 select[multiple],
 select[size] {
-  height: auto;
 }
 
 select optgroup {
@@ -1718,8 +1721,6 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .form-control {
   display: block;
-  width: 100%;
-  height: 34px;
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.428571429;

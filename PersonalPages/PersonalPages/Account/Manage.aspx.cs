@@ -122,11 +122,11 @@ namespace PersonalPages.Account
                     }
                     if (userTable.FK_SecondLevelSubdivisionTable == null)
                     {
-                        DropDownList2.SelectedItem.Text = " ";
+                        DropDownList2.SelectedItem.Text = "";
                     }
                     if (userTable.FK_ThirdLevelSubdivisionTable == null)
                     {
-                        DropDownList3.SelectedItem.Text =  " ";
+                        DropDownList3.SelectedItem.Text =  "";
                     }
                     
                         DataTable dataTable = new DataTable();
@@ -336,6 +336,39 @@ namespace PersonalPages.Account
             Response.Redirect("Manage.aspx");
         }
 
+        private void ChangeUserParam(UsersTable user,int paramIdToChange,string textMessage,string oldValue,string newValue)
+        {
+            PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
+            UserDataChangeHistory UserHistory = new UserDataChangeHistory();
+            UserHistory.Active = true;
+            UserHistory.ChangeDate = DateTime.Now;
+            UserHistory.FK_User = user.UsersTableID;
+            UserHistory.ID_Param_ToChange = paramIdToChange;//Имя
+            UserHistory.Name = textMessage;
+            UserHistory.OldValue = oldValue;
+            UserHistory.NewValue = newValue;
+            UserHistory.Status = 0;
+            PersonalPagesDB.UserDataChangeHistory.InsertOnSubmit(UserHistory);
+            PersonalPagesDB.SubmitChanges();
+        }
+
+        private void ChangeStudentParam(StudentsTable student, int paramIdToChange, string textMessage, string oldValue, string newValue)
+        {
+            PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
+            StudentChangeDataHistoryTable StudentHistory = new StudentChangeDataHistoryTable();
+            StudentHistory.Active = true;
+            StudentHistory.ChangeDate = DateTime.Now;
+            StudentHistory.FK_StudentTable = student.StudentsTableID;
+            StudentHistory.ID_Param_ToChange = paramIdToChange;
+            StudentHistory.Name = textMessage;
+            StudentHistory.OldValue = oldValue;
+            StudentHistory.NewValue = newValue;
+            StudentHistory.Status = 0;
+            PersonalPagesDB.StudentChangeDataHistoryTable.InsertOnSubmit(StudentHistory);
+            PersonalPagesDB.SubmitChanges();
+        }
+
+
         protected void Button3_Click(object sender, EventArgs e)
         {
             Serialization UserSer = (Serialization) Session["UserID"];
@@ -347,205 +380,109 @@ namespace PersonalPages.Account
             {                
                 if (Text1.Text != user.Name)
                 {
-                    UserDataChangeHistory UserHistory = new UserDataChangeHistory();
-                    UserHistory.Active = true;
-                    UserHistory.ChangeDate = DateTime.Now;
-                    UserHistory.FK_User = user.UsersTableID;
-                    UserHistory.ID_Param_ToChange = 1;//Имя
-                    user.Confirmed = false;
-                    UserHistory.Name = "Изменение имени с " + user.Name + " на " + Text1.Text;
-                    PersonalPagesDB.UserDataChangeHistory.InsertOnSubmit(UserHistory);
-                    PersonalPagesDB.SubmitChanges();
-                    
+                    if (!((Text1.Text == "") && (user.Name == null)))
+                    ChangeUserParam(user, 1, "Изменение имени" ,user.Name,Text1.Text);
                 }
                 if (Text2.Text != user.Surname)
                 {
-                    UserDataChangeHistory UserHistory = new UserDataChangeHistory();
-                    UserHistory.Active = true;
-                    UserHistory.ChangeDate = DateTime.Now;
-                    UserHistory.ID_Param_ToChange = 2;//Фамилия
-                    UserHistory.FK_User = user.UsersTableID;
-                    user.Confirmed = false;
-                    UserHistory.Name = "Изменение фамилии с " + user.Surname + " на " + Text2.Text;
-                    PersonalPagesDB.UserDataChangeHistory.InsertOnSubmit(UserHistory);
-                    PersonalPagesDB.SubmitChanges();
+                    if (!((Text2.Text == "") && (user.Surname == null)))
+                    ChangeUserParam(user, 2, "Изменение фамилии", user.Surname, Text2.Text);
                 }
                 if (Text3.Text != user.Patronimyc)
                 {
-                    UserDataChangeHistory UserHistory = new UserDataChangeHistory();
-                    UserHistory.Active = true;
-                    UserHistory.ChangeDate = DateTime.Now;
-                    UserHistory.FK_User = user.UsersTableID;
-                    UserHistory.ID_Param_ToChange = 3;//Отчество
-                    user.Confirmed = false;
-                    UserHistory.Name = "Изменение отчества с " + user.Patronimyc + " на " + Text3.Text;
-                    PersonalPagesDB.UserDataChangeHistory.InsertOnSubmit(UserHistory);
-                    PersonalPagesDB.SubmitChanges();
+                    if (!((Text3.Text == "") && (user.Patronimyc == null)))
+                    ChangeUserParam(user, 3, "Изменение отчества",user.Patronimyc , Text3.Text);          
                 }
                 if (Text4.Text != user.Email)
                 {
-                    UserDataChangeHistory UserHistory = new UserDataChangeHistory();
-                    UserHistory.Active = true;
-                    UserHistory.ChangeDate = DateTime.Now;
-                    UserHistory.FK_User = user.UsersTableID;
-                    UserHistory.ID_Param_ToChange = 4;//почта
-                    user.Confirmed = false;
-                    UserHistory.Name = "Изменение почтового адреса с" + user.Email + " на " + Text4.Text;
-                    PersonalPagesDB.UserDataChangeHistory.InsertOnSubmit(UserHistory);
-                    PersonalPagesDB.SubmitChanges();
+                    if (!((Text4.Text == "") && (user.Email == null)))
+                    ChangeUserParam(user, 4, "Изменение почтового адреса", user.Email, Text4.Text);  
                 }
+                if (user.FK_FirstLevelSubdivisionTable!=null)
                 if (DropDownList1.SelectedItem.Text != (from b in PersonalPagesDB.FirstLevelSubdivisionTable
                         where b.FirstLevelSubdivisionTableID == user.FK_FirstLevelSubdivisionTable
                         select b.Name).FirstOrDefault())
                 {
-                    UserDataChangeHistory UserHistory = new UserDataChangeHistory();
-                    UserHistory.Active = true;
-                    UserHistory.ChangeDate = DateTime.Now;
-                    UserHistory.FK_User = user.UsersTableID;
-                    user.Confirmed = false;
-                    UserHistory.ID_Param_ToChange = 5;//Академия
-                    UserHistory.Name = "Изменение академии с " + (from b in PersonalPagesDB.FirstLevelSubdivisionTable
+                    ChangeUserParam(user, 5,"Изменение академии", (from b in PersonalPagesDB.FirstLevelSubdivisionTable
                                                                   where b.FirstLevelSubdivisionTableID == user.FK_FirstLevelSubdivisionTable
-                                                                  select b.Name).FirstOrDefault() + " на " + DropDownList1.SelectedItem.Text;
-                    PersonalPagesDB.UserDataChangeHistory.InsertOnSubmit(UserHistory);
-                    PersonalPagesDB.SubmitChanges();
+                                                                       select b.Name).FirstOrDefault(), DropDownList1.SelectedItem.Text);
+
                 }
+                if (user.FK_SecondLevelSubdivisionTable != null)
                 if (DropDownList2.SelectedItem.Text != (from b in PersonalPagesDB.SecondLevelSubdivisionTable
                                                         where b.SecondLevelSubdivisionTableID == user.FK_SecondLevelSubdivisionTable
                                                         select b.Name).FirstOrDefault())
                 {
-                    UserDataChangeHistory UserHistory = new UserDataChangeHistory();
-                    UserHistory.Active = true;
-                    UserHistory.ChangeDate = DateTime.Now;
-                    UserHistory.FK_User = user.UsersTableID;
-                    user.Confirmed = false;
-                    UserHistory.ID_Param_ToChange = 6;//Факультет
-                    UserHistory.Name = "Изменение факультета с " + (from b in PersonalPagesDB.SecondLevelSubdivisionTable
+                    ChangeUserParam(user, 6, "Изменение факультета",(from b in PersonalPagesDB.SecondLevelSubdivisionTable
                                                         where b.SecondLevelSubdivisionTableID == user.FK_SecondLevelSubdivisionTable
-                                                        select b.Name).FirstOrDefault() + " на " + DropDownList2.SelectedItem.Text;
-                    PersonalPagesDB.UserDataChangeHistory.InsertOnSubmit(UserHistory);
-                    PersonalPagesDB.SubmitChanges();
+                                                                          select b.Name).FirstOrDefault() ,DropDownList2.SelectedItem.Text);
                 }
+                if (user.FK_ThirdLevelSubdivisionTable != null)
                 if (DropDownList3.SelectedItem.Text != (from b in PersonalPagesDB.ThirdLevelSubdivisionTable
                                                         where b.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
                                                         select b.Name).FirstOrDefault())
                 {
-                    UserDataChangeHistory UserHistory = new UserDataChangeHistory();
-                    UserHistory.Active = true;
-                    UserHistory.ChangeDate = DateTime.Now;
-                    UserHistory.FK_User = user.UsersTableID;
-                    user.Confirmed = false;
-                    UserHistory.ID_Param_ToChange = 7;//кафедра
-                    UserHistory.Name = "Изменение кафедры с " + (from b in PersonalPagesDB.ThirdLevelSubdivisionTable
+                    ChangeUserParam(user, 7, "Изменение кафедры" , (from b in PersonalPagesDB.ThirdLevelSubdivisionTable
                                                                     where b.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
-                                                                    select b.Name).FirstOrDefault() + " на " + DropDownList3.SelectedItem.Text;
-                    PersonalPagesDB.UserDataChangeHistory.InsertOnSubmit(UserHistory);
-                    PersonalPagesDB.SubmitChanges();
+                                                                       select b.Name).FirstOrDefault() , DropDownList3.SelectedItem.Text); 
                 }
-                user.Data_Status = false;
-                
+                user.Data_Status = false;               
             }
             else if (student != null) ////////Для студентов
-            {
-               
+            {        
                 if (Text1.Text != student.Name)
                 {
-                    StudentChangeDataHistoryTable StudentHistory = new StudentChangeDataHistoryTable();
-                    StudentHistory.Active = true;
-                    StudentHistory.ChangeDate = DateTime.Now;
-                    StudentHistory.FK_StudentTable = student.StudentsTableID;
-                    student.Data_Status= false;
-                    StudentHistory.ID_Param_ToChange = 1;//Имя
-                    StudentHistory.Name = "Изменение имени с " + student.Name + " на " + Text1.Text;
-                    PersonalPagesDB.StudentChangeDataHistoryTable.InsertOnSubmit(StudentHistory);
-                    PersonalPagesDB.SubmitChanges();
+                    if (!((Text1.Text == "") && (student.Name == null)))
+                    ChangeStudentParam(student, 1, "Изменение имени" , student.Name , Text1.Text);
                 }
                 if (Text2.Text != student.Surname)
                 {
-                    StudentChangeDataHistoryTable StudentHistory = new StudentChangeDataHistoryTable();
-                    StudentHistory.Active = true;
-                    StudentHistory.ChangeDate = DateTime.Now;
-                    StudentHistory.ID_Param_ToChange = 2;//Фамилия
-                    student.Data_Status = false;
-                    StudentHistory.FK_StudentTable = student.StudentsTableID;
-                    StudentHistory.Name = "Изменение фамилии с " + student.Surname + " на " + Text2.Text;
-                    PersonalPagesDB.StudentChangeDataHistoryTable.InsertOnSubmit(StudentHistory);
-                    PersonalPagesDB.SubmitChanges();
+                    if (!((Text2.Text == "") && (student.Surname == null)))
+                    ChangeStudentParam(student, 2, "Изменение фамилии" , student.Surname , Text2.Text);              
                 }
                 if (Text3.Text != student.Patronimyc)
                 {
-                    StudentChangeDataHistoryTable StudentHistory = new StudentChangeDataHistoryTable();
-                    StudentHistory.Active = true;
-                    StudentHistory.ChangeDate = DateTime.Now;
-                    StudentHistory.FK_StudentTable = student.StudentsTableID;
-                    StudentHistory.ID_Param_ToChange = 3;//Отчество
-                    student.Data_Status = false;
-                    StudentHistory.Name = "Изменение отчества с " + student.Patronimyc + " на " + Text3.Text;
-                    PersonalPagesDB.StudentChangeDataHistoryTable.InsertOnSubmit(StudentHistory);
-                    PersonalPagesDB.SubmitChanges();
+                    if (!((Text3.Text == "") && (student.Patronimyc == null)))
+                    ChangeStudentParam(student, 3, "Изменение отчества" , student.Patronimyc , Text3.Text);         
                 }
                 if (Text4.Text != student.Email)
                 {
-                    StudentChangeDataHistoryTable StudentHistory = new StudentChangeDataHistoryTable();
-                    StudentHistory.Active = true;
-                    StudentHistory.ChangeDate = DateTime.Now;
-                    StudentHistory.FK_StudentTable = student.StudentsTableID;
-                    StudentHistory.ID_Param_ToChange = 4;//почта
-                    StudentHistory.Name = "Изменение почтового адреса с" + student.Email + " на " + Text4.Text;
-                    PersonalPagesDB.StudentChangeDataHistoryTable.InsertOnSubmit(StudentHistory);
-                    PersonalPagesDB.SubmitChanges();
+                    if (!((Text4.Text == "") && (student.Email == null)))
+                    ChangeStudentParam(student, 4, "Изменение почтового адреса" , student.Email , Text4.Text);   
                 }
+                if (student.FK_FirstLevelSubdivision != null)
                 if (DropDownList1.SelectedItem.Text != (from b in PersonalPagesDB.FirstLevelSubdivisionTable
                                                         where b.FirstLevelSubdivisionTableID == student.FK_FirstLevelSubdivision
                                                         select b.Name).FirstOrDefault())
                 {
-                    StudentChangeDataHistoryTable StudentHistory = new StudentChangeDataHistoryTable();
-                    StudentHistory.Active = true;
-                    StudentHistory.ChangeDate = DateTime.Now;
-                    StudentHistory.FK_StudentTable = student.StudentsTableID;
-                    StudentHistory.ID_Param_ToChange = 5;//Академия
-                    student.Data_Status = false;
-                    StudentHistory.Name = "Изменение академии с " + (from b in PersonalPagesDB.FirstLevelSubdivisionTable
-                                                                  where b.FirstLevelSubdivisionTableID == student.FK_SecondLevelSubdivision
-                                                                  select b.Name).FirstOrDefault() + " на " + DropDownList1.SelectedItem.Text;
-                    PersonalPagesDB.StudentChangeDataHistoryTable.InsertOnSubmit(StudentHistory);
-                    PersonalPagesDB.SubmitChanges();
+                    ChangeStudentParam(student, 5,
+                        "Изменение академии" , (from b in PersonalPagesDB.FirstLevelSubdivisionTable
+                            where b.FirstLevelSubdivisionTableID == student.FK_SecondLevelSubdivision
+                                                   select b.Name).FirstOrDefault(), DropDownList1.SelectedItem.Text);
                 }
+                if (student.FK_SecondLevelSubdivision != null)
                 if (DropDownList2.SelectedItem.Text != (from b in PersonalPagesDB.SecondLevelSubdivisionTable
                                                         where b.SecondLevelSubdivisionTableID == student.FK_SecondLevelSubdivision
                                                         select b.Name).FirstOrDefault())
                 {
-                    StudentChangeDataHistoryTable StudentHistory = new StudentChangeDataHistoryTable();
-                    StudentHistory.Active = true;
-                    StudentHistory.ChangeDate = DateTime.Now;
-                    StudentHistory.FK_StudentTable = student.StudentsTableID;
-                    StudentHistory.ID_Param_ToChange = 6;//Факультет
-                    student.Data_Status = false;
-                    StudentHistory.Name = "Изменение факультета с " + (from b in PersonalPagesDB.SecondLevelSubdivisionTable
-                                                                       where b.SecondLevelSubdivisionTableID == student.FK_SecondLevelSubdivision
-                                                                    select b.Name).FirstOrDefault() + " на " + DropDownList2.SelectedItem.Text;
-                    PersonalPagesDB.StudentChangeDataHistoryTable.InsertOnSubmit(StudentHistory);
-                    PersonalPagesDB.SubmitChanges();
+                    ChangeStudentParam(student, 6,
+                        "Изменение факультета", (from b in PersonalPagesDB.SecondLevelSubdivisionTable
+                            where b.SecondLevelSubdivisionTableID == student.FK_SecondLevelSubdivision
+                                                     select b.Name).FirstOrDefault(), DropDownList2.SelectedItem.Text);       
                 }
+                if (student.FK_Group != null)
                 if (DropDownList3.SelectedItem.Text != (from b in PersonalPagesDB.ThirdLevelSubdivisionTable
                                                         where b.ThirdLevelSubdivisionTableID == student.FK_Group
                                                         select b.Name).FirstOrDefault())
                 {
-                    StudentChangeDataHistoryTable StudentHistory = new StudentChangeDataHistoryTable();
-                    StudentHistory.Active = true;
-                    StudentHistory.ChangeDate = DateTime.Now;
-                    StudentHistory.FK_StudentTable = student.StudentsTableID;
-                    StudentHistory.ID_Param_ToChange = 7;//Група
-                    student.Data_Status = false;
-                    StudentHistory.Name = "Изменение группы студента с " + (from b in PersonalPagesDB.ThirdLevelSubdivisionTable
-                                                                    where b.ThirdLevelSubdivisionTableID == student.FK_Group
-                                                                 select b.Name).FirstOrDefault() + " на " + DropDownList3.SelectedItem.Text;
-                    PersonalPagesDB.StudentChangeDataHistoryTable.InsertOnSubmit(StudentHistory);
-                    PersonalPagesDB.SubmitChanges();
+                    ChangeStudentParam(student, 7,
+                        "Изменение группы студента" , (from b in PersonalPagesDB.ThirdLevelSubdivisionTable
+                            where b.ThirdLevelSubdivisionTableID == student.FK_Group
+                                                          select b.Name).FirstOrDefault() , DropDownList3.SelectedItem.Text);     
                 }
-                
-            }
-            
+                student.Data_Status = false;
+            }   
+            PersonalPagesDB.SubmitChanges();
         }
     }
 }

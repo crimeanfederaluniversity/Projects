@@ -29,18 +29,6 @@ namespace PersonalPages
         {
             if (student == null || user != null)
             {
-                /*if (user.AccessLevel == 9 || user.AccessLevel == 10)
-                {
-                    Serialization UserSer = (Serialization)Session["UserID"];        
-                    SubdomainRedirect subdomainRedirect = new SubdomainRedirect();
-                    Response.Redirect(subdomainRedirect.CreateLinkToSubdomain("http://admin.cfu-portal.ru/Default.aspx", user.UsersTableID, 10));
-                }
-                if (user.AccessLevel == 5 || user.AccessLevel == 7)
-                {
-                    Serialization UserSer = (Serialization)Session["UserID"];
-                    SubdomainRedirect subdomainRedirect = new SubdomainRedirect();
-                    Response.Redirect(subdomainRedirect.CreateLinkToSubdomain("http://razvitie.cfu-portal.ru/Default.aspx", user.UsersTableID, 10));
-                }*/
                 FormsAuthentication.SetAuthCookie(user.Email, true);                               
                 Response.Redirect("UserMainPage.aspx");           
             }
@@ -63,8 +51,7 @@ namespace PersonalPages
                 Serialization UserSerId = new Serialization(userIdFromGet);
                 Session["UserID"] = UserSerId;
             }
-           
-
+        
             Serialization UserSer = (Serialization) Session["UserID"];
             if (UserSer == null)
             {
@@ -72,6 +59,7 @@ namespace PersonalPages
                 Session.Abandon();
                 Response.Redirect("~/Account/Login.aspx");
             }
+
             PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
             UsersTable user = (from usersTables in PersonalPagesDB.UsersTable
                 where usersTables.UsersTableID == UserSer.Id
