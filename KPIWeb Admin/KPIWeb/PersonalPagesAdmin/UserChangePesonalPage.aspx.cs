@@ -42,7 +42,9 @@ namespace KPIWeb.PersonalPagesAdmin
             dataTable.Columns.Add(new DataColumn("UsersTableId", typeof(int)));
             dataTable.Columns.Add(new DataColumn("Email", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("ChangeDate", typeof(string)));
             dataTable.Columns.Add(new DataColumn("ParamIdToChange", typeof(int)));
+            
             using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
             {
                 List<UserDataChangeHistory> UserHistory = 
@@ -66,7 +68,9 @@ namespace KPIWeb.PersonalPagesAdmin
                     dataRow["UsersTableId"] = user_.UsersTableID;
                     dataRow["Email"] = user_.Email;
                     dataRow["ParamIdToChange"] = user.ID_Param_ToChange;
-                    dataRow["Name"] = user.Name + " с " + user.OldValue + "на" + user.NewValue;
+                    dataRow["Name"] = user.Name + " с " + user.OldValue + " на " + user.NewValue;
+                    dataRow["ChangeDate"] = Convert.ToString(user.ChangeDate).Remove(10);
+                    
                     dataTable.Rows.Add(dataRow);
                 }
                 foreach (var stud in StudentHistory)
@@ -76,7 +80,8 @@ namespace KPIWeb.PersonalPagesAdmin
                     dataRow["UsersTableId"] = stud_.StudentsTableID;
                     dataRow["Email"] = stud_.Email;
                     dataRow["ParamIdToChange"] = stud.ID_Param_ToChange;
-                    dataRow["Name"] = stud.Name + " с " + stud.OldValue + "на" + stud.NewValue;
+                    dataRow["Name"] = stud.Name + " с " + stud.OldValue + " на " + stud.NewValue;
+                    dataRow["ChangeDate"] = Convert.ToString(stud.ChangeDate).Remove(10);
                     dataTable.Rows.Add(dataRow);             
                 }
                 GridView1.DataSource = dataTable;
@@ -203,12 +208,13 @@ namespace KPIWeb.PersonalPagesAdmin
                         if (userData != null)
                         {
                             userData.Status = 2;
+                            kPiDataContext.SubmitChanges();
                         }
                         else if (student != null)
                         {
-                            userData.Status = 2;
-                        }
-                        kPiDataContext.SubmitChanges();
+                            student.Status = 2;
+                            kPiDataContext.SubmitChanges();
+                        }                      
                     }
                     RefreshGrid();
                 }

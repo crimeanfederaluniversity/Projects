@@ -30,6 +30,12 @@
                 </ItemTemplate>
                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
             </asp:TemplateField>
+              <asp:TemplateField HeaderText="Дата" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                <ItemTemplate>
+                    <asp:TextBox ID="ChangeDate" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("ChangeDate") %>'></asp:TextBox>
+                </ItemTemplate>
+                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
+            </asp:TemplateField>
            
             <asp:TemplateField HeaderText="Подтвердить изменения">
                 <ItemTemplate>
