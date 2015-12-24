@@ -222,6 +222,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
+    <Content Include="StudentsTasks.aspx" />
     <Content Include="TeacherPage.aspx" />
     <Content Include="UserMainPage.aspx" />
     <Content Include="ViewSwitcher.ascx" />
@@ -309,6 +310,13 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="StudentsTasks.aspx.cs">
+      <DependentUpon>StudentsTasks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentsTasks.aspx.designer.cs">
+      <DependentUpon>StudentsTasks.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SubdomainRedirect.cs" />
     <Compile Include="TeacherPage.aspx.cs">
       <DependentUpon>TeacherPage.aspx</DependentUpon>

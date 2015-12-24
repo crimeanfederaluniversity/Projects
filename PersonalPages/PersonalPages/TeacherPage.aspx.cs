@@ -51,10 +51,10 @@ namespace PersonalPages
                     GridView1.DataBind();
                     }
          
-        protected void Button1_Click(object sender, EventArgs e)
+      /*  protected void Button1_Click(object sender, EventArgs e)
         {
             SaveFile();
-        }
+        }*/
         protected void WatchButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -68,7 +68,7 @@ namespace PersonalPages
           
         
 
-        protected void SaveFile()
+      /*  protected void SaveFile()
         {
           //  Rank_IDClass Article_ID = (Rank_IDClass)Session["ArticleID"];
          //   int IDarticle = (int)Article_ID.ArticleID;
@@ -93,6 +93,44 @@ namespace PersonalPages
             }
             usersDB.Personal_Documents.InsertOnSubmit(articleDoc);
             usersDB.SubmitChanges();
+        }*/
+        protected void SaveTask()
+        {
+            //  Rank_IDClass Article_ID = (Rank_IDClass)Session["ArticleID"];
+            //   int IDarticle = (int)Article_ID.ArticleID;
+            PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
+            TasksTable articleDoc = new TasksTable();
+            String path = Server.MapPath(@"~/PersonalPages/Documents/");
+
+            if (FileUpload3.PostedFiles.Count > 0)
+            {
+                string DBLinkCombine = "";
+                foreach (var file in FileUpload3.PostedFiles)
+                {
+                    file.SaveAs(path + articleDoc.ID.ToString() + "_" + file.FileName);
+                    DBLinkCombine += articleDoc.ID.ToString() + "_" + file.FileName;
+                    articleDoc.Task_FileName = DBLinkCombine;
+                    articleDoc.Active = true;
+                    articleDoc.Name = TextBox2.Text;
+                    articleDoc.FK_Group = (from a in usersDB.GroupsTable
+                                           where a.Name == TextBox1.Text
+                                               && a.Active == true
+                                           select a.ID).FirstOrDefault();
+                    articleDoc.Date = Convert.ToDateTime(TextBox3.Text);
+                }
+            }
+            usersDB.TasksTable.InsertOnSubmit(articleDoc);
+            usersDB.SubmitChanges();
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            SaveTask();
+        }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/UserMainPage.aspx");
         }      
     
     }
