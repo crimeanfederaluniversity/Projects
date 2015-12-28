@@ -76,10 +76,10 @@ namespace PersonalPages
             Personal_Documents articleDoc = (from a in usersDB.Personal_Documents where a.Active == true select a).FirstOrDefault();
             String path = Server.MapPath(@"~/PersonalPages/Documents/");
 
-            if (FileUpload2.PostedFiles.Count >0)
+            if (FileUpload3.PostedFiles.Count >0)
             {
                 string DBLinkCombine = "";
-                foreach (var file in FileUpload2.PostedFiles)
+                foreach (var file in FileUpload3.PostedFiles)
                 {
                         file.SaveAs(path + articleDoc.ID.ToString() + "_" + file.FileName);
                     DBLinkCombine += articleDoc.ID.ToString() + "_" + file.FileName;

@@ -1,7 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="TeacherPage.aspx.cs" Inherits="PersonalPages.TeacherPage" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" EnableEventValidation="false" CodeBehind="TeacherPage.aspx.cs" Inherits="PersonalPages.TeacherPage" %>
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-        <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Назад" />
+        <br />
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Назад" Width="304px" />
         <span style="font-size: x-large">
+        <br />
         <br />
         Страница преподавателя<br />
         </span><span style="font-size: large">Мои группы:</span><span style="font-size: x-large"><br />
@@ -37,6 +39,8 @@
         <asp:TextBox ID="TextBox3" runat="server" TextMode="Date" Width="244px"></asp:TextBox>
         <br />
         <br />
-        <asp:Button ID="Button2" runat="server" Height="32px" OnClick="Button2_Click" Text="Сохранить" Width="167px" OnClientClick="return confirm('Файл успешно добавлен'), true" />
+        <asp:Button ID="Button3" runat="server" OnClick="Button11_Click" Text="Сохранить" Width="304px" />
+        <br />
+        <br />
  
         </span></asp:Content>

@@ -186,6 +186,7 @@
     </Content>
     <Content Include="App_Themes\theme_1\css\images\Thumbs.db" />
     <Content Include="App_Themes\theme_1\Skin1.skin" />
+    <None Include="Properties\PublishProfiles\123.pubxml" />
     <None Include="Properties\PublishProfiles\My.pubxml" />
     <None Include="Properties\PublishProfiles\personaldeploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
