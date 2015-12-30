@@ -3,6 +3,10 @@
 
 
     
+        
+
+
+    
         <style type="text/css">
    .button_right 
    {
@@ -24,8 +28,8 @@
         top: 50px;
     }
     input[id$="Button1"] {
-        width: 360px;
-        height: 250px;
+        width: 100%;
+        height: 100%;
         background-image: none;
         position: absolute;
         top: 0;
@@ -47,8 +51,8 @@
         top: 0;
         left: 0;
            opacity: 0;
-        width: 360px;
-        height: 250px;
+        width: 100%;
+        height: 100%;
      
         position: absolute;
         z-index: 3;
@@ -61,8 +65,8 @@
 
      }
         input[id$="Button3"] {
-        width: 700px;
-        height: 100px;
+        width: 100%;
+        height: 100%;
         background-image: none;
         position: absolute;
         top: 0;
@@ -78,13 +82,32 @@
        opacity: 0;
 
      }
+        input[id$="Button6"] {
+        width: 100%;
+        height: 100%;
+        background-image: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0.3;
+        z-index: 3;   
+        background-color: aliceblue;
+            border-radius: 0;
+    }
+    
+   input[id$="Button6"]:hover {
 
+       background-image: none;
+       opacity: 0;
+
+     }
+  
        #div_1 {
-         top: 0;
+         top: 16%;
             left: 9.75%;
            position: absolute;
-              width: 360px;
-        height: 250px;
+              width: 31%;
+        height: 31%;
        
         background-image: url('http://sosnovskij.ru/wp-content/uploads/2012/05/seo-analysis-sajta.jpg');
         background-repeat: no-repeat;
@@ -94,12 +117,12 @@
            }
     
         #div_2 {
-            top: 0;
+            top: 16%;
             left: 62.5%;
            position: absolute;
            
-           width: 360px;
-        height: 250px;
+           width: 31%;
+        height: 31%;
             background-image: url('http://www.firestock.ru/wp-content/uploads/2014/04/Fotolia_53649479_Subscription_XL-700x524.jpg');
         background-repeat: no-repeat;
         background-size: 400px 300px;
@@ -107,11 +130,24 @@
             }
 
         #div_3 {
-         top: 40%;
+         top: 50%;
             left: 21%;
            position: absolute;
-              width: 700px;
-        height: 100px;
+                 width: 60%;
+        height: 13%;
+        background-image: url('http://2013download.com/images/2013/01/Forex-Trading-Volume.jpg');
+        background-repeat:repeat-x;
+      
+        background-size: 700px 100px;
+        background-position: -40px 0px;
+         
+           }
+             #div4_top_button {
+         top: 0%;
+            left: 21%;
+           position: absolute;
+              width: 60%;
+        height: 13%;
        
         background-image: url('http://2013download.com/images/2013/01/Forex-Trading-Volume.jpg');
         background-repeat:repeat-x;
@@ -127,11 +163,11 @@
             height: 800px;
             text-align: center;
               }
-        #insp1,#insp2,#insp3 {
+        #insp1,#insp2,#insp3,#insp4_top_button {
             z-index: 2;
             position: absolute;
-            width: 360px;
-            height: 100px;
+            width: 100%;
+            height: auto;
             text-align: center;
             padding-bottom: 2px;
             background-color: #ffffff;
@@ -145,12 +181,16 @@
             left: 0px;
             color: #000000;
         }
-        #insp2 { height: 140px;
-                 width: 360px;
+        #insp2 {height: 34%;
+                 width: auto;
         }
-         #insp3 { height: 34px;
-                 width: 700px;
+         #insp3,#insp4_top_button { 
+             height: auto;
+                 width: 100%;
         }
+         #insp3,#insp4_top_button text{
+             
+         }
         #ow {
             left: 0;
             top: 0;
@@ -182,6 +222,13 @@
             animation-iteration-count:1; 
             animation-fill-mode:both;
             }
+         .styleantext4 {
+            animation-name: anim_pad_text_ofbuttons4;
+            animation-duration: 0.3s;
+            animation-direction: initial;
+            animation-iteration-count:1; 
+            animation-fill-mode:both;
+            }
          .styleantext_r {
             animation-name: anim_pad_text_ofbuttons_r;
             animation-duration: 0.3s;
@@ -203,7 +250,13 @@
             animation-iteration-count:1; 
             animation-fill-mode:both;
             }
-
+          .styleantext_r4 {
+            animation-name: anim_pad_text_ofbuttons_r4;
+            animation-duration: 0.3s;
+            animation-direction:initial;
+            animation-iteration-count:1; 
+            animation-fill-mode:both;
+            }
 
        
         .dark {
@@ -248,6 +301,14 @@
             animation-fill-mode:both;
 
         }
+         .clickgo4 {
+             animation-name: clck4;
+            animation-duration: 0.3s;
+            animation-direction:initial;
+            animation-iteration-count:1; 
+            animation-fill-mode:both;
+
+        }
         .zindex4 {
             z-index: 4;
         }
@@ -280,6 +341,13 @@
            opacity:0.7;color: #ffffff;}      
     
     }
+         @keyframes clck4 {
+      0%{box-shadow: 0 0px 10px 2px #00ff00; 
+           opacity: 0;}
+       100%{box-shadow: 0 0px 60px 11px #00ffff;
+           opacity:0.7;color: #ffffff;}      
+    
+    }
         @keyframes darkbe{
                           0%{ background-color: #ffffff;opacity: 0;}
                           100%{ background-color: #000000;opacity: 0.8;}
@@ -298,7 +366,7 @@
         }
 
         100% {
-           margin-top: 70px;
+           margin-top: 15%;
              opacity: 1;
             background-color: aliceblue;
              box-shadow: 0 0px 10px 4px #0000ff;
@@ -312,7 +380,7 @@
         }
 
         100% {
-           margin-top: 55px;
+           margin-top: 15%;
              opacity: 1;
             background-color: aliceblue;
              box-shadow: 0 0px 10px 4px #00ff00;
@@ -326,7 +394,21 @@
         }
 
         100% {
-           margin-top: 30px;
+           margin-top: 4%;
+             opacity: 1;
+            background-color: aliceblue;
+             box-shadow: 0 0px 10px 4px #00ffff;
+        }
+    }
+             @keyframes anim_pad_text_ofbuttons4 {
+        0% {
+            margin-top: 0px;
+            opacity: 0.8;
+         background-color: #c0c0c0;
+        }
+
+        100% {
+           margin-top: 4%;
              opacity: 1;
             background-color: aliceblue;
              box-shadow: 0 0px 10px 4px #00ffff;
@@ -374,12 +456,31 @@
        
            }
     }
+           @keyframes anim_pad_text_ofbuttons_r4{
+
+     100%  {
+            margin-top: 0px;
+            opacity: 0.8;
+       
+        }
+
+        0% {
+           margin-top: 30px;
+           opacity: 1;
+       
+           }
+    }
 </style>
     <div id="ow"></div> 
     <div id="span_1">
-    
-        <br />
+        <div id="inspan_1">
+        <span id="div4_top_button">
+    <asp:Button ID="Button6" runat="server" Text="" />
+        <span id="insp4_top_button" > Место для длинного названия новой кнопки</span>
+            </span>
+     
     <span id="div_1">
+
         <asp:Button ID="Button1" runat="server" Text="" OnClick="Button1_Click" CssClass="" />
         <span id="insp1" >Анализ достижения плановых значений целевых показателей</span>
         </span>
@@ -393,9 +494,10 @@
         <asp:Button ID="Button3" runat="server" Text=""  OnClick="Button3_Click"  CssClass=""/>
             <span id="insp3" >Плановая динамика Целевых показателей</span>
     </span>
+            </div>
     </div>
  <script>
-     $("#div_2,#div_1,#div_3").addClass("zindex6");
+     $("#div_2,#div_1,#div_3,#div4_top_button").addClass("zindex6");
 
      //*******************************ПЕРВАЯ КНОПКА(ЛЕВАЯ(АНАЛИЗ ПОКАЗАТЕЛЕЙ))***
      $("#div_1").hover(
@@ -403,9 +505,10 @@
          function () {
              $("#div_2").addClass("zindex4");
              $("#div_3").addClass("zindex4");
+             $("#div4_top_button").addClass("zindex4");
              $("#div_2").removeClass("zindex6");
              $("#div_3").removeClass("zindex6");
-       
+             $("#div4_top_button").removeClass("zindex6");
 
              $("#ow").addClass("dark");
              $("#ow").removeClass("light");
@@ -416,8 +519,10 @@
          }, function () {
              $("#div_2").addClass("zindex6");
              $("#div_3").addClass("zindex6");
+             $("#div4_top_button").addClass("zindex6");
              $("#div_2").removeClass("zindex4");
              $("#div_3").removeClass("zindex4");
+             $("#div4_top_button").removeClass("zindex4");
              $("#ow").removeClass("dark");
              $("#ow").addClass("light");
         
@@ -442,12 +547,14 @@
              $("#div_1").removeClass("zindex6");
              $("#div_3").addClass("zindex4");
              $("#div_3").removeClass("zindex6");
-
+             $("#div4_top_button").addClass("zindex4");
+             $("#div4_top_button").removeClass("zindex6");
 
              $("#ow").addClass("dark");
              $("#ow").removeClass("light");
              $("#insp2").addClass("styleantext2");
              $("#insp2").removeClass("styleantext_r2");
+            
 
 
          }, function () {
@@ -455,8 +562,12 @@
              $("#div_1").removeClass("zindex4");
              $("#div_3").addClass("zindex6");
              $("#div_3").removeClass("zindex4");
+             $("#div4_top_button").addClass("zindex6");
+             $("#div4_top_button").removeClass("zindex4");
+
              $("#ow").removeClass("dark");
              $("#ow").addClass("light");
+           
 
              $("#insp2").removeClass("styleantext2");
              $("#insp2").addClass("styleantext_r2");
@@ -478,7 +589,8 @@
              $("#div_1").addClass("zindex4");
              $("#div_2").removeClass("zindex6");
              $("#div_1").removeClass("zindex6");
-
+             $("#div4_top_button").addClass("zindex4");
+             $("#div4_top_button").removeClass("zindex6");
 
              $("#ow").addClass("dark");
              $("#ow").removeClass("light");
@@ -491,6 +603,8 @@
              $("#div_2").removeClass("zindex4");
              $("#div_1").addClass("zindex6");
              $("#div_1").removeClass("zindex4");
+             $("#div4_top_button").addClass("zindex6");
+             $("#div4_top_button").removeClass("zindex4");
 
              $("#ow").removeClass("dark");
              $("#ow").addClass("light");
@@ -506,6 +620,47 @@
      );
      $("input[id$='Button3']").mouseleave(function () {
          $("input[id$='Button3']").removeClass("clickgo3");
+     }
+     );
+     //*******************************4 КНОПКА(ВЕРНЯЯ ЦЕНТРАЛЬНАЯ (БЕЗЫМЯННАЯ))***
+     $("#div4_top_button").hover(
+
+        function () {
+            $("#div_2").addClass("zindex4");
+            $("#div_1").addClass("zindex4");
+            $("#div_2").removeClass("zindex6");
+            $("#div_1").removeClass("zindex6");
+            $("#div_3").addClass("zindex4");
+            $("#div_3").removeClass("zindex6");
+
+            $("#ow").addClass("dark");
+            $("#ow").removeClass("light");
+            $("#insp4_top_button").addClass("styleantext4");
+            $("#insp4_top_button").removeClass("styleantext_r4");
+
+
+        }, function () {
+            $("#div_2").addClass("zindex6");
+            $("#div_2").removeClass("zindex4");
+            $("#div_1").addClass("zindex6");
+            $("#div_1").removeClass("zindex4");
+            $("#div_3").addClass("zindex6");
+            $("#div_3").removeClass("zindex4");
+
+            $("#ow").removeClass("dark");
+            $("#ow").addClass("light");
+
+            $("#insp4_top_button").removeClass("styleantext4");
+            $("#insp4_top_button").addClass("styleantext_r4");
+
+        });
+
+     $("input[id$='Button4']").mousedown(function () {
+         $("input[id$='Button4']").addClass("clickgo4");
+     }
+     );
+     $("input[id$='Button4']").mouseleave(function () {
+         $("input[id$='Button4']").removeClass("clickgo4");
      }
      );
  </script>
