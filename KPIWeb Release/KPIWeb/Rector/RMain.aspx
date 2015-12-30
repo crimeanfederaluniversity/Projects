@@ -181,8 +181,8 @@
             left: 0px;
             color: #000000;
         }
-        #insp2 {height: 34%;
-                 width: auto;
+        #insp2 {height: auto;
+                 width: 100%;
         }
          #insp3,#insp4_top_button { 
              height: auto;
