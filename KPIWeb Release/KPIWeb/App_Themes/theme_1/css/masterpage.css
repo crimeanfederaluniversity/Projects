@@ -413,7 +413,7 @@ margin:3px;
 /*CHECKBOX_STYLE*//*CHECKBOX_STYLE*//*CHECKBOX_STYLE*//*CHECKBOX_STYLE*/
 
 .checkbox_style input[type="checkbox"] {
-   display:none;
+   
 }
 .checkbox_style  input[type="checkbox"] + label:before   {
         display:inline-block;

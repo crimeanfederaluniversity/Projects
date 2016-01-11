@@ -225,10 +225,13 @@ namespace KPIWeb.Reports
                             dataRow["BasicParametersTableID"] = basicParam.BasicParametersTableID;
                             dataRow["Name"] = basicParam.Name;
 
-                            string comment_ = (from a in kPiDataContext.BasicParametrAdditional
+                            MainFunctions main = new MainFunctions();
+                            string comment_ = main.GetCommentForBasicInReport(basicParam.BasicParametersTableID, ReportArchiveID);
+                               /* 
+                                (from a in kPiDataContext.BasicParametrAdditional
                                                where a.BasicParametrAdditionalID == basicParam.BasicParametersTableID
                                                && a.Active == true
-                                               select a.Comment).FirstOrDefault();
+                                               select a.Comment).FirstOrDefault();*/
                             if (comment_ != null)
                             {
                                 if (comment_.Length > 3)
@@ -478,10 +481,13 @@ namespace KPIWeb.Reports
                                             dataRow["CurrentReportArchiveID"] = ReportArchiveID;
                                             dataRow["BasicParametersTableID"] = specBasicParam.BasicParametersTableID;
 
-                                            string comment_ = (from a in kPiDataContext.BasicParametrAdditional
+                                            MainFunctions main = new MainFunctions();
+                                            string comment_ = main.GetCommentForBasicInReport(specBasicParam.BasicParametersTableID, ReportArchiveID);
+
+                                           /* string comment_ = (from a in kPiDataContext.BasicParametrAdditional
                                                                where a.BasicParametrAdditionalID == specBasicParam.BasicParametersTableID
                                                                && a.Active == true
-                                                               select a.Comment).FirstOrDefault();
+                                                               select a.Comment).FirstOrDefault();*/
                                             if (comment_ != null)
                                             {
                                                 if (comment_.Length > 3)
