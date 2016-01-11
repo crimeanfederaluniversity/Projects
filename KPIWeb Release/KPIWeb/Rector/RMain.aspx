@@ -475,8 +475,8 @@
     <div id="span_1">
         <div id="inspan_1">
         <span id="div4_top_button">
-    <asp:Button ID="Button6" runat="server" Text="" />
-        <span id="insp4_top_button" > Место для длинного названия новой кнопки</span>
+    <asp:Button ID="Button6" runat="server" Text="" OnClick="Button6_Click" />
+        <span id="insp4_top_button" > Статистика</span>
             </span>
      
     <span id="div_1">
