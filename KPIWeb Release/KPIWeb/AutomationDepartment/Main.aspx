@@ -57,5 +57,9 @@
        <br />
        <asp:Button ID="Button15" runat="server" OnClick="Button15_Click" Text="Статусы рассчитываемых данных" Width="400px" />
        <br />
+       <br />
+       <asp:Button ID="Button16" runat="server" Height="37px" OnClick="Button16_Click" Text="Комментарий" Width="392px" />
+       <br />
+       <br />
         
 </asp:Content>

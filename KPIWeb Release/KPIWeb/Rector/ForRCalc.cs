@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.WebPages;
 
 
-
 namespace KPIWeb.Rector
 {
     public class ForRCalc

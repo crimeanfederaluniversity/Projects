@@ -49,6 +49,7 @@
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -65,10 +66,7 @@
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
       <Private>True</Private>
@@ -205,6 +203,7 @@
     <Content Include="AutomationDepartment\AddRole.aspx" />
     <Content Include="AutomationDepartment\AddSpecialization.aspx" />
     <Content Include="AutomationDepartment\AfterReportCalculation.aspx" />
+    <Content Include="AutomationDepartment\BasicParametrsComments.aspx" />
     <Content Include="AutomationDepartment\ChangeUser.aspx" />
     <Content Include="AutomationDepartment\ConnectUsers.aspx" />
     <Content Include="AutomationDepartment\EditUser.aspx" />
@@ -222,6 +221,7 @@
     <Content Include="Decan\DecViewBasicParams.aspx" />
     <Content Include="Decan\DecViewReport.aspx" />
     <Content Include="DepartmentFilling\ChooseBasic.aspx" />
+    <Content Include="Info_Pages\UserWithStructWithReport.aspx" />
     <Content Include="ProrectorReportFilling\ChooseAcademy.aspx" />
     <Content Include="ProrectorReportFilling\ChooseFaculty.aspx" />
     <Content Include="ProrectorReportFilling\ChooseReport.aspx" />
@@ -289,6 +289,7 @@
       <LastGenOutput>KPIWeb.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Fakes Include="Fakes\System.Web.WebPages.fakes" />
     <None Include="Properties\PublishProfiles\Export.pubxml" />
     <None Include="Properties\PublishProfiles\home.pubxml" />
     <None Include="Properties\PublishProfiles\V_TEST1.pubxml" />
@@ -423,6 +424,13 @@
     <Compile Include="AutomationDepartment\AfterReportCalculation.aspx.designer.cs">
       <DependentUpon>AfterReportCalculation.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AutomationDepartment\BasicParametrsComments.aspx.cs">
+      <DependentUpon>BasicParametrsComments.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutomationDepartment\BasicParametrsComments.aspx.designer.cs">
+      <DependentUpon>BasicParametrsComments.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AutomationDepartment\ChangeUser.aspx.cs">
       <DependentUpon>ChangeUser.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -532,6 +540,13 @@
     </Compile>
     <Compile Include="DepartmentFilling\ChooseBasic.aspx.designer.cs">
       <DependentUpon>ChooseBasic.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Info_Pages\UserWithStructWithReport.aspx.cs">
+      <DependentUpon>UserWithStructWithReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Info_Pages\UserWithStructWithReport.aspx.designer.cs">
+      <DependentUpon>UserWithStructWithReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="MainFunctions.cs" />
     <Compile Include="ProrectorFunctions.cs" />

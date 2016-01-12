@@ -129,7 +129,7 @@
              }
    </script>
     <br />
-    <asp:TreeView ID="TreeView1" runat="server"  ShowCheckBoxes="All" OnSelectedNodeChanged="TreeView1_SelectedNodeChanged" OnTreeNodeCheckChanged="TreeView1_TreeNodeCheckChanged"></asp:TreeView>
+    <asp:TreeView ID="TreeView1" runat="server"  ShowCheckBoxes="All" ></asp:TreeView>
 
 
 
