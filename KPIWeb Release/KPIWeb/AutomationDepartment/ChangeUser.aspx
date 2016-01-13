@@ -1,86 +1,20 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ChangeUser.aspx.cs" Inherits="KPIWeb.AutomationDepartment.ChangeUser" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="ChangeUser.aspx.cs" Inherits="KPIWeb.AutomationDepartment.ChangeUser" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-    <style type="text/css">
-        .auto-style1 {
-            font-size: 26pt;
-        }
-
-*,
-*:before,
-*:after {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-  * {
-    color: #000 !important;
-    text-shadow: none !important;
-    background: transparent !important;
-    box-shadow: none !important;
-  }
-  
-input[type="radio"],
-input[type="checkbox"] {
-  margin: 4px 0 0;
-  margin-top: 1px \9;
-  /* IE8-9 */
-
-  line-height: normal;
-}
-
-input[type="checkbox"],
-input[type="radio"] {
-  padding: 0;
-  box-sizing: border-box;
-}
-
-button,
-input,
-select[multiple],
-textarea {
-  background-image: none;
-}
-
-input,
-button,
-select,
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-}
-
-button,
-input {
-  line-height: normal;
-}
-
-button,
-input,
-select,
-textarea {
-  font-family: inherit;
-  font-size: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    }
-
-    </style>
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div class="auto-style1" style="height: 73px; width: 924px">
-    
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">  
+ 
         Изменение параметров доступа и заполнения целевых показателей пользователями<br />
+        Выберите шаблон<br />
+        <br />
     
-    </div>
+
+        <asp:DropDownList ID="DropDownList1" runat="server" Height="22px" Width="218px">
+        </asp:DropDownList>
+        <br />
+        <br />
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Применить шаблон" Width="218px" />
+        <br />
+    
+
         <br />
         <asp:Button ID="Button1" runat="server" Text="Сохранить изменения" Width="226px" OnClick="Button1_Click" />
         <br />
@@ -113,7 +47,7 @@ textarea {
         </asp:GridView>
     
      <br />
-    Рассчетные показатели<asp:GridView ID="CalcGrid" runat="server" AutoGenerateColumns="False" Width="242px">
+    Рассчетные показатели<asp:GridView ID="CalcGrid" runat="server" AutoGenerateColumns="False" Width="334px">
             <Columns>
             <asp:TemplateField HeaderText="Название">
                                     <ItemTemplate>
@@ -135,7 +69,7 @@ textarea {
         </asp:GridView>
     
         <br />
-    Целевые показатели<asp:GridView ID="IndicatorGrid" runat="server" AutoGenerateColumns="False" Width="242px">
+    Целевые показатели<asp:GridView ID="IndicatorGrid" runat="server" AutoGenerateColumns="False" Width="334px">
             <Columns>
             <asp:TemplateField HeaderText="Название">
                                     <ItemTemplate>
@@ -156,6 +90,5 @@ textarea {
             </Columns>
         </asp:GridView>
 
-    </form>
-</body>
-</html>
+
+</asp:Content>
