@@ -171,5 +171,10 @@ namespace KPIWeb.Rector
         protected void Button6_Click(object sender, EventArgs e)
         {
         }
+
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

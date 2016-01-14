@@ -11,12 +11,31 @@ namespace KPIWeb.Rector.Stats
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userID = UserSer.Id;
 
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+            UsersTable userTable =
+                (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+
+            if (userTable.AccessLevel != 7)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
         }
 
         protected void Button222_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Response.Redirect("~/Rector/Rstat.aspx");
+        }
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/RectorMain.aspx");
         }
     }
 }

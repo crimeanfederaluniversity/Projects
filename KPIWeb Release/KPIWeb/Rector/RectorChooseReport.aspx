@@ -74,7 +74,7 @@
 
         <asp:Label ID="PageName" runat="server" Text="PageName" Font-Size="20pt"></asp:Label>
         <br />
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" style="margin-top: 0px; position:relative">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" style="margin-top: 0px; position:relative" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
              <Columns>                
                  <asp:BoundField DataField="ReportArchiveID"   HeaderText="Current Report ID" Visible="false" />    
                  <asp:BoundField DataField="ReportName" HeaderText="Название отчёта" Visible="True" />          

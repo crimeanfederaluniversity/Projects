@@ -66,7 +66,10 @@
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
       <Private>True</Private>
@@ -232,6 +235,8 @@
     <Content Include="ProrectorReportFilling\Main.aspx" />
     <Content Include="ProrectorReportFilling\SpecParamCheckBoxes.aspx" />
     <Content Include="Rector\Rstat.aspx" />
+    <Content Include="Rector\Stats\Spo1och.aspx" />
+    <Content Include="Rector\Stats\Vpo1och.aspx" />
     <Content Include="Reports_\FillingTheReportByDepartment.aspx" />
     <Content Include="DepartmentFilling\Main.aspx" />
     <Content Include="Director\Checked.png" />
@@ -619,6 +624,20 @@
     </Compile>
     <Compile Include="Rector\Rstat.aspx.designer.cs">
       <DependentUpon>Rstat.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\Stats\Spo1och.aspx.cs">
+      <DependentUpon>Spo1och.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\Stats\Spo1och.aspx.designer.cs">
+      <DependentUpon>Spo1och.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\Stats\Vpo1och.aspx.cs">
+      <DependentUpon>Vpo1och.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\Stats\Vpo1och.aspx.designer.cs">
+      <DependentUpon>Vpo1och.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports_\FillingTheReportByDepartment.aspx.cs">
       <DependentUpon>FillingTheReportByDepartment.aspx</DependentUpon>
