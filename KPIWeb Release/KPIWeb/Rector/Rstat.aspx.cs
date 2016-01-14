@@ -18,5 +18,32 @@ namespace KPIWeb.Rector
         {
             Response.Redirect("~/Rector/RectorMain.aspx");
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/Stats/Vpo1och.aspx");
+        }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/Stats/Vpo1zaoch.aspx");
+        }
+
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/Stats/Vpo1zaoch.aspx");
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/Stats/Spo1och.aspx");
+        }
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/Stats/Vpo1zaoch.aspx");
+        }
+
+      
     }
 }
