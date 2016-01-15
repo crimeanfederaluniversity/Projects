@@ -94,6 +94,7 @@ background: linear-gradient(to bottom, #CEDCE7 0%, #596A72 100%) repeat scroll 0
                background: transparent linear-gradient(to bottom, #D7F2FF 0%, #8298AA  100%) repeat scroll 0% 0%;
             }
                       #all_menu_Wrapper span {
+            line-height: 28px;
             font-size:200%;
             font-weight:bold;
                     display: block;

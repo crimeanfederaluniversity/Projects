@@ -64,7 +64,7 @@ namespace KPIWeb.Rector.NewInt {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button25;
+        protected global::System.Web.UI.WebControls.LinkButton Button25;
         
         /// <summary>
         /// Button26 control.
@@ -73,7 +73,7 @@ namespace KPIWeb.Rector.NewInt {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button26;
+        protected global::System.Web.UI.WebControls.LinkButton Button26;
         
         /// <summary>
         /// Button27 control.
@@ -82,7 +82,7 @@ namespace KPIWeb.Rector.NewInt {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button27;
+        protected global::System.Web.UI.WebControls.LinkButton Button27;
         
         /// <summary>
         /// Button28 control.
@@ -91,6 +91,6 @@ namespace KPIWeb.Rector.NewInt {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button28;
+        protected global::System.Web.UI.WebControls.LinkButton Button28;
     }
 }
