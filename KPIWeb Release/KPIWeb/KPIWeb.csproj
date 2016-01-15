@@ -234,7 +234,11 @@
     <Content Include="ProrectorReportFilling\FillOnlyCheckBoxes.aspx" />
     <Content Include="ProrectorReportFilling\Main.aspx" />
     <Content Include="ProrectorReportFilling\SpecParamCheckBoxes.aspx" />
+    <Content Include="Rector\NewInt\CreationModern.aspx" />
+    <Content Include="Rector\NewInt\ModernAdd.aspx" />
+    <Content Include="Rector\NewInt\NetworkCommunication.aspx" />
     <Content Include="Rector\NewInt\RNmain.aspx" />
+    <Content Include="Rector\NewInt\SvedofResult.aspx" />
     <Content Include="Rector\Rstat.aspx" />
     <Content Include="Rector\Stats\Spo1och.aspx" />
     <Content Include="Rector\Stats\Vpo1och.aspx" />
@@ -619,12 +623,40 @@
     <Compile Include="ProrectorReportFilling\SpecParamCheckBoxes.aspx.designer.cs">
       <DependentUpon>SpecParamCheckBoxes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Rector\NewInt\CreationModern.aspx.cs">
+      <DependentUpon>CreationModern.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\NewInt\CreationModern.aspx.designer.cs">
+      <DependentUpon>CreationModern.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\NewInt\ModernAdd.aspx.cs">
+      <DependentUpon>ModernAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\NewInt\ModernAdd.aspx.designer.cs">
+      <DependentUpon>ModernAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\NewInt\NetworkCommunication.aspx.cs">
+      <DependentUpon>NetworkCommunication.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\NewInt\NetworkCommunication.aspx.designer.cs">
+      <DependentUpon>NetworkCommunication.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Rector\NewInt\RNmain.aspx.cs">
       <DependentUpon>RNmain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Rector\NewInt\RNmain.aspx.designer.cs">
       <DependentUpon>RNmain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\NewInt\SvedofResult.aspx.cs">
+      <DependentUpon>SvedofResult.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\NewInt\SvedofResult.aspx.designer.cs">
+      <DependentUpon>SvedofResult.aspx</DependentUpon>
     </Compile>
     <Compile Include="Rector\Rstat.aspx.cs">
       <DependentUpon>Rstat.aspx</DependentUpon>
@@ -1077,7 +1109,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>56928</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:56928/</IISUrl>
+          <IISUrl>http://localhost:56929/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
