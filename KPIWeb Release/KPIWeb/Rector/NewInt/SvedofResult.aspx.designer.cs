@@ -67,48 +67,48 @@ namespace KPIWeb.Rector.NewInt {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// Button6 control.
+        /// Button77 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Button6;
+        protected global::System.Web.UI.WebControls.LinkButton Button77;
         
         /// <summary>
-        /// Button7 control.
+        /// Button78 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Button7;
+        protected global::System.Web.UI.WebControls.LinkButton Button78;
         
         /// <summary>
-        /// Button8 control.
+        /// Button86 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Button8;
+        protected global::System.Web.UI.WebControls.LinkButton Button86;
         
         /// <summary>
-        /// Button9 control.
+        /// Button92 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Button9;
+        protected global::System.Web.UI.WebControls.LinkButton Button92;
         
         /// <summary>
-        /// Button10 control.
+        /// Button110 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Button10;
+        protected global::System.Web.UI.WebControls.LinkButton Button110;
     }
 }

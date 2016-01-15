@@ -19,33 +19,33 @@
     <div id="all_menu">
         <br />
         <div id="left_side">
-        <asp:LinkButton ID="Button6" runat="server" Text="Модернизация образовательной 
+        <asp:LinkButton ID="Button77" runat="server" Text="Модернизация образовательной 
 деятельности университета на базе
 современных образовательных технологий и с 
 учетом перспективной потребности 
 экономики причерноморского макрорегиона 
-в квалифицированных кадрах" />
+в квалифицированных кадрах" PostBackUrl="~/Rector/NewInt/ModernAdd.aspx" />
         <br />
-        <asp:LinkButton ID="Button7" runat="server" Text="Сетевое взаимодействие и повышение 
+        <asp:LinkButton ID="Button78" runat="server" Text="Сетевое взаимодействие и повышение 
 квалификации на базе партнерских 
-организаций" />
+организаций" PostBackUrl="~/Rector/NewInt/NetworkCommunication.aspx" />
         <br />
         </div>
         <div id="right_side">
-        <asp:LinkButton ID="Button8" runat="server" Text="Создание современного научно-
+        <asp:LinkButton ID="Button86" runat="server" Text="Создание современного научно-
 исследовательского и инновационного 
 комплекса университета, обеспечивающего 
 международный уровень исследований и 
 разработок для решения актуальных проблем 
-развития региона" />
+развития региона" PostBackUrl="~/Rector/NewInt/CreationModern.aspx" />
         <br />
-        <asp:LinkButton ID="Button9" runat="server" Text="Мотивация персонала и создание 
+        <asp:LinkButton ID="Button92" runat="server" Text="Мотивация персонала и создание 
 комфортных условий работы" />
         <br />
         </div>
      
    </div><div id="wrapapiu_bot_but">
-        <asp:LinkButton ID="Button10" runat="server" Text="Брендинг и маркетинг" />
+        <asp:LinkButton ID="Button110" runat="server" Text="Брендинг и маркетинг" />
        </div>
 </div>   
 

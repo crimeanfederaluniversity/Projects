@@ -234,6 +234,7 @@
     <Content Include="ProrectorReportFilling\FillOnlyCheckBoxes.aspx" />
     <Content Include="ProrectorReportFilling\Main.aspx" />
     <Content Include="ProrectorReportFilling\SpecParamCheckBoxes.aspx" />
+    <Content Include="Rector\NewInt\BrendMarket.aspx" />
     <Content Include="Rector\NewInt\CreationModern.aspx" />
     <Content Include="Rector\NewInt\GovTask.aspx" />
     <Content Include="Rector\NewInt\ModernAdd.aspx" />
@@ -626,6 +627,13 @@
     </Compile>
     <Compile Include="ProrectorReportFilling\SpecParamCheckBoxes.aspx.designer.cs">
       <DependentUpon>SpecParamCheckBoxes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\NewInt\BrendMarket.aspx.cs">
+      <DependentUpon>BrendMarket.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\NewInt\BrendMarket.aspx.designer.cs">
+      <DependentUpon>BrendMarket.aspx</DependentUpon>
     </Compile>
     <Compile Include="Rector\NewInt\CreationModern.aspx.cs">
       <DependentUpon>CreationModern.aspx</DependentUpon>
