@@ -15,5 +15,18 @@
     
     <div>
     
+        <asp:Label ID="Label1" runat="server" Text="Сведения о результатах реализации Программы развития"></asp:Label>
+    
+        <br />
+        <asp:Button ID="Button6" runat="server" Text="Button" />
+        <br />
+        <asp:Button ID="Button7" runat="server" Text="Button" />
+        <br />
+        <asp:Button ID="Button8" runat="server" Text="Button" />
+        <br />
+        <asp:Button ID="Button9" runat="server" Text="Button" />
+        <br />
+        <asp:Button ID="Button10" runat="server" Text="Button" />
+    
     </div>
    </asp:Content>

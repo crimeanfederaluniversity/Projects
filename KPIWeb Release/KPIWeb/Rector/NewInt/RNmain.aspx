@@ -80,7 +80,7 @@ background: linear-gradient(to bottom, #CEDCE7 0%, #596A72 100%) repeat scroll 0
             padding:20px;
             position:relative;
         
-             display:flex;
+             display:inline-flex;
         }
 
             #all_menu span {

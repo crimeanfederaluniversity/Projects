@@ -10,52 +10,43 @@
 namespace KPIWeb.Rector.NewInt {
     
     
-    public partial class SvedofResult {
+    public partial class CreationModern {
         
         /// <summary>
-        /// top_panel2 control.
+        /// top_panel22 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel top_panel2;
+        protected global::System.Web.UI.WebControls.Panel top_panel22;
         
         /// <summary>
-        /// GoBackButton control.
+        /// GoBackButton2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoBackButton;
+        protected global::System.Web.UI.WebControls.Button GoBackButton2;
         
         /// <summary>
-        /// GoForwardButton control.
+        /// GoForwardButton2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoForwardButton;
+        protected global::System.Web.UI.WebControls.Button GoForwardButton2;
         
         /// <summary>
-        /// Button4 control.
+        /// Button24 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button4;
-        
-        /// <summary>
-        /// Button5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button5;
+        protected global::System.Web.UI.WebControls.Button Button24;
         
         /// <summary>
         /// Label1 control.
@@ -67,48 +58,39 @@ namespace KPIWeb.Rector.NewInt {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// Button6 control.
+        /// Button25 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button6;
+        protected global::System.Web.UI.WebControls.Button Button25;
         
         /// <summary>
-        /// Button7 control.
+        /// Button26 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button7;
+        protected global::System.Web.UI.WebControls.Button Button26;
         
         /// <summary>
-        /// Button8 control.
+        /// Button27 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button8;
+        protected global::System.Web.UI.WebControls.Button Button27;
         
         /// <summary>
-        /// Button9 control.
+        /// Button28 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button9;
-        
-        /// <summary>
-        /// Button10 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button10;
+        protected global::System.Web.UI.WebControls.Button Button28;
     }
 }
