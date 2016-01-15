@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
 using System.IO;
+using System.Net;
+using iTextSharp.text;
 
 namespace KPIWeb.Rector
 {
-    public partial class ViewDocument : System.Web.UI.Page
+    public partial class ViewDocumentsSub : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
@@ -33,10 +36,20 @@ namespace KPIWeb.Rector
 
             if (!IsPostBack)
             {
-
-
-                //KPIWebDataContext kPiDataContext = new KPIWebDataContext();
-                List<DocumentTable> docs = (from a in kPiDataContext.DocumentTable where a.Active == true select a).ToList();
+               
+                HttpRequest q = Request;   
+                string tmpValue = q.QueryString["doctype"];
+                int doctype = 0;
+                if (tmpValue != null)
+                {
+                    tmpValue = q.QueryString["doctype"];
+                    doctype = Convert.ToInt32(tmpValue);
+                }
+                DocumentTypes currentDocType=
+                    (from a in kPiDataContext.DocumentTypes where a.DocumentTypeId == doctype select a).FirstOrDefault();
+                if (currentDocType!=null)
+                Label1.Text = currentDocType.TypeName;
+                List<DocumentTable> docs = (from a in kPiDataContext.DocumentTable where a.Active == true && a.DocumentType == doctype select a).ToList();
 
 
                 DataTable dataTable = new DataTable();
@@ -48,8 +61,7 @@ namespace KPIWeb.Rector
             }
         }
 
-      
-        protected void DeleteButtonClick(object sender, EventArgs e)
+        protected void OpenDocButtonClick(object sender, EventArgs e)
         {
             
             Button button = (Button)sender;
@@ -73,6 +85,12 @@ namespace KPIWeb.Rector
         {
             Response.Redirect("~/Rector/RectorMain.aspx");
         }
-     }
+
+        protected void GoBackButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Rector/ViewDocumentsMain.aspx");
+        }
+
+        
+    }
 }
-    

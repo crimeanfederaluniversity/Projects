@@ -66,10 +66,7 @@
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
       <Private>True</Private>
@@ -245,6 +242,9 @@
     <Content Include="Rector\Rstat.aspx" />
     <Content Include="Rector\Stats\Spo1och.aspx" />
     <Content Include="Rector\Stats\Vpo1och.aspx" />
+    <Content Include="Rector\ViewDocumentsMain.aspx" />
+    <Content Include="Rector\ViewDocumentsSub.aspx" />
+    <Content Include="Rector\ViewStruct.aspx" />
     <Content Include="Reports_\FillingTheReportByDepartment.aspx" />
     <Content Include="DepartmentFilling\Main.aspx" />
     <Content Include="Director\Checked.png" />
@@ -697,6 +697,27 @@
     </Compile>
     <Compile Include="Rector\Stats\Vpo1och.aspx.designer.cs">
       <DependentUpon>Vpo1och.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\ViewDocumentsMain.aspx.cs">
+      <DependentUpon>ViewDocumentsMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\ViewDocumentsMain.aspx.designer.cs">
+      <DependentUpon>ViewDocumentsMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\ViewDocumentsSub.aspx.cs">
+      <DependentUpon>ViewDocumentsSub.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\ViewDocumentsSub.aspx.designer.cs">
+      <DependentUpon>ViewDocumentsSub.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\ViewStruct.aspx.cs">
+      <DependentUpon>ViewStruct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\ViewStruct.aspx.designer.cs">
+      <DependentUpon>ViewStruct.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports_\FillingTheReportByDepartment.aspx.cs">
       <DependentUpon>FillingTheReportByDepartment.aspx</DependentUpon>

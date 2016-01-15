@@ -2,7 +2,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     
-        <style type="text/css">
+    <style type="text/css">
    .button_right 
    {
        float: right;
@@ -23,6 +23,9 @@
 
 
         <br />
+
+
+    <br />
 
 
     <h2><span style="font-size: 30px">Просмотр нормативных документов</span></h2>

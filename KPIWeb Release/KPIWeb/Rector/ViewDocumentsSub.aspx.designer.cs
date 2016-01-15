@@ -10,7 +10,7 @@
 namespace KPIWeb.Rector {
     
     
-    public partial class ViewDocument {
+    public partial class ViewDocumentsSub {
         
         /// <summary>
         /// top_panel2 элемент управления.
@@ -31,15 +31,6 @@ namespace KPIWeb.Rector {
         protected global::System.Web.UI.WebControls.Button GoBackButton;
         
         /// <summary>
-        /// GoForwardButton элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoForwardButton;
-        
-        /// <summary>
         /// Button2 элемент управления.
         /// </summary>
         /// <remarks>
@@ -49,13 +40,13 @@ namespace KPIWeb.Rector {
         protected global::System.Web.UI.WebControls.Button Button2;
         
         /// <summary>
-        /// Button5 элемент управления.
+        /// Label1 элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button5;
+        protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
         /// GridView1 элемент управления.
