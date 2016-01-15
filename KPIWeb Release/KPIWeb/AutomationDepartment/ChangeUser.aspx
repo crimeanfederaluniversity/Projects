@@ -47,7 +47,7 @@
         </asp:GridView>
     
      <br />
-    Рассчетные показатели<asp:GridView ID="CalcGrid" runat="server" AutoGenerateColumns="False" Width="334px">
+    Рассчетные показатели<asp:GridView ID="CalcGrid" runat="server" AutoGenerateColumns="False" >
             <Columns>
             <asp:TemplateField HeaderText="Название">
                                     <ItemTemplate>
@@ -69,7 +69,7 @@
         </asp:GridView>
     
         <br />
-    Целевые показатели<asp:GridView ID="IndicatorGrid" runat="server" AutoGenerateColumns="False" Width="334px">
+    Целевые показатели<asp:GridView ID="IndicatorGrid" runat="server" AutoGenerateColumns="False">
             <Columns>
             <asp:TemplateField HeaderText="Название">
                                     <ItemTemplate>

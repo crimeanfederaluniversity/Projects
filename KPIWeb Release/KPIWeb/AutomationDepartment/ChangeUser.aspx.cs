@@ -40,9 +40,6 @@ namespace KPIWeb.AutomationDepartment
             /// 
             if (!Page.IsPostBack)
             {
-                List<UsersTable> users = (from a in kPiDataContext.UsersTable
-                    where a.UsersTableID == 8132
-                    select a).ToList();
             
                 RefreshGridView();
                 RefreshDropdown();
@@ -82,36 +79,12 @@ namespace KPIWeb.AutomationDepartment
             List<BasicParametersTable> vrCountry = new List<BasicParametersTable>();
             List<CalculatedParametrs> calcParam = new List<CalculatedParametrs>();
             List<IndicatorsTable> Indicators = new List<IndicatorsTable>();
-            if (DropDownList1.SelectedIndex <1)
-            {
+
                  vrCountry = (from b in kpiWebDataContext.BasicParametersTable where b.Active == true select b).ToList();
                  calcParam = (from a in kpiWebDataContext.CalculatedParametrs where a.Active==true select a).ToList();
                  Indicators = (from c in kpiWebDataContext.IndicatorsTable where c.Active==true select c).ToList();
-            }
-            else
-            {
-                vrCountry = (from a in kpiWebDataContext.BasicParametersTable
-                    join b in kpiWebDataContext.BasicParametersAndRolesMappingTable on
-                        a.BasicParametersTableID equals b.FK_BasicParametersTable
-                    join c in kpiWebDataContext.RolesTable on b.FK_RolesTable equals c.RolesTableID
-                    where a.Active == true && b.Active == true && c.Active == true
-                          && c.RoleName == DropDownList1.SelectedItem.Text
-                    select a).ToList();
-                calcParam = (from a in kpiWebDataContext.CalculatedParametrs
-                             join b in kpiWebDataContext.CalculatedParametrsAndRolesMappingTable on
-                                 a.CalculatedParametrsID equals b.FK_CalculatedParametrs
-                             join c in kpiWebDataContext.RolesTable on b.FK_RolesTable equals c.RolesTableID
-                             where a.Active == true && b.Active == true && c.Active == true
-                                   && c.RoleName == DropDownList1.SelectedItem.Text
-                             select a).ToList();
-                Indicators = (from a in kpiWebDataContext.IndicatorsTable
-                              join b in kpiWebDataContext.IndicatorsAndRolesMappingTable on
-                                  a.IndicatorsTableID equals b.FK_Indicators
-                              join c in kpiWebDataContext.RolesTable on b.FK_RolesTable equals c.RolesTableID
-                              where a.Active == true && b.Active == true && c.Active == true
-                                    && c.RoleName == DropDownList1.SelectedItem.Text
-                              select a).ToList(); ;
-            }
+          
+            
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add(new DataColumn("VerifyChecked", typeof (bool)));
             dataTable.Columns.Add(new DataColumn("EditChecked", typeof (bool)));
@@ -132,8 +105,7 @@ namespace KPIWeb.AutomationDepartment
                      where a.FK_UsersTable == userToChangeId
                         && a.FK_ParametrsTable == obj.BasicParametersTableID
                         select a).FirstOrDefault();
-                if (DropDownList1.SelectedIndex < 1)
-             {
+
                 if (userAndBasicMapping != null)
                 {
                     dataRow["EditChecked"] = userAndBasicMapping.CanEdit;
@@ -147,20 +119,6 @@ namespace KPIWeb.AutomationDepartment
                     dataRow["VerifyChecked"] = false;
                 }
                 
-             }
-                else
-             {
-                 BasicParametersAndRolesMappingTable parametr =
-                     (from a in kpiWebDataContext.BasicParametersAndRolesMappingTable
-                      join
-                          b in kpiWebDataContext.RolesTable on a.FK_RolesTable equals b.RolesTableID
-                      where a.Active == true && b.Active == true && b.RoleName == DropDownList1.SelectedItem.Text
-                      && a.FK_BasicParametersTable == obj.BasicParametersTableID
-                      select a).FirstOrDefault();
-                    dataRow["EditChecked"] = parametr.CanEdit;
-                    dataRow["ViewChecked"] = parametr.CanView;
-                    dataRow["VerifyChecked"] = parametr.CanConfirm;
-             }
                 dataRow["BasicId"] = obj.BasicParametersTableID.ToString();
                 dataRow["Name"] = obj.Name;
                 dataTable.Rows.Add(dataRow);
@@ -194,8 +152,7 @@ namespace KPIWeb.AutomationDepartment
                         where a.FK_CalculatedParametrsTable == obj.CalculatedParametrsID
                               && a.FK_UsersTable == userToChangeId
                         select a).FirstOrDefault();
-                if (DropDownList1.SelectedIndex < 1)
-                {
+
                     if (userAndcalculatedparametrs != null)
                     {
                         dataRow["ViewChecked1"] = userAndcalculatedparametrs.CanView;
@@ -206,19 +163,8 @@ namespace KPIWeb.AutomationDepartment
                         dataRow["ViewChecked1"] = false;
                         dataRow["VerifyChecked1"] = false;
                     }
-                }
-                else
-                {
-                    CalculatedParametrsAndUsersMapping parametr =
-                     (from a in kpiWebDataContext.CalculatedParametrsAndUsersMapping
-                      join
-                          b in kpiWebDataContext.RolesTable on a.FK_CalculatedParametrsTable equals b.RolesTableID
-                      where a.Active == true && b.Active == true && b.RoleName == DropDownList1.SelectedItem.Text
-                      && a.FK_CalculatedParametrsTable == obj.CalculatedParametrsID
-                      select a).FirstOrDefault();
-                    dataRow["ViewChecked1"] = parametr.CanView;
-                    dataRow["VerifyChecked1"] = parametr.CanConfirm;
-                }
+
+
                 dataRow["CalcID"] = obj.CalculatedParametrsID.ToString();
                 dataRow["Name1"] = obj.Name;
                 calcTable.Rows.Add(dataRow);
@@ -239,8 +185,7 @@ namespace KPIWeb.AutomationDepartment
                         where a.FK_IndicatorsTable == obj.IndicatorsTableID
                               && a.FK_UsresTable == userToChangeId
                         select a).FirstOrDefault();
-                if (DropDownList1.SelectedIndex < 1)
-                {
+
                     if (userAndIndMapping != null)
                     {
                         dataRow["ViewChecked2"] = userAndIndMapping.CanView;
@@ -251,19 +196,7 @@ namespace KPIWeb.AutomationDepartment
                         dataRow["ViewChecked2"] = false;
                         dataRow["VerifyChecked2"] = false;
                     }
-                }
-                else 
-                {
-                    IndicatorsAndUsersMapping parametr =
-                     (from a in kpiWebDataContext.IndicatorsAndUsersMapping
-                      join
-                          b in kpiWebDataContext.RolesTable on a.FK_IndicatorsTable equals b.RolesTableID
-                      where a.Active == true && b.Active == true && b.RoleName == DropDownList1.SelectedItem.Text
-                      && a.FK_IndicatorsTable == obj.IndicatorsTableID
-                      select a).FirstOrDefault();
-                    dataRow["ViewChecked2"] = parametr.CanView;
-                    dataRow["VerifyChecked2"] = parametr.CanConfirm;
-                }
+
                 dataRow["IndID"] = obj.IndicatorsTableID.ToString();
                 dataRow["Name2"] = obj.Name;
                 indicatorTable.Rows.Add(dataRow);
@@ -275,11 +208,130 @@ namespace KPIWeb.AutomationDepartment
             #endregion
         }
 
-      /*  protected void Button1_Click(object sender, EventArgs e)
+
+        private void RefreshGridViewRole() // стягиваем с базы в грид с проставленными галочками основываясь на дроп дауне
         {
-            RefreshGridView();
-        }*/
-        
+            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+
+
+            List<BasicParametersTable> vrCountry = (from b in kpiWebDataContext.BasicParametersTable select b).ToList();
+
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add(new DataColumn("VerifyChecked", typeof(bool)));
+            dataTable.Columns.Add(new DataColumn("EditChecked", typeof(bool)));
+            dataTable.Columns.Add(new DataColumn("ViewChecked", typeof(bool)));
+            dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("BasicId", typeof(string)));
+            RolesTable role = (from a in kpiWebDataContext.RolesTable
+                               where a.RolesTableID == Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value)
+                               select a).FirstOrDefault();
+
+            #region
+            foreach (var obj in vrCountry)
+            {
+                DataRow dataRow = dataTable.NewRow();
+                BasicParametersAndRolesMappingTable roleAndBasicMapping =
+                    (from a in kpiWebDataContext.BasicParametersAndRolesMappingTable
+                     where a.FK_BasicParametersTable == obj.BasicParametersTableID
+                     && a.FK_RolesTable == Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value)
+                     select a).FirstOrDefault();
+                if (roleAndBasicMapping != null)
+                {
+                    dataRow["EditChecked"] = roleAndBasicMapping.CanEdit;
+                    dataRow["ViewChecked"] = roleAndBasicMapping.CanView;
+                    dataRow["VerifyChecked"] = roleAndBasicMapping.CanConfirm;
+                }
+                else
+                {
+                    dataRow["EditChecked"] = false;
+                    dataRow["ViewChecked"] = false;
+                    dataRow["VerifyChecked"] = false;
+                }
+                dataRow["BasicId"] = obj.BasicParametersTableID.ToString();
+                dataRow["Name"] = obj.Name;
+                dataTable.Rows.Add(dataRow);
+            }
+            ViewState["BasicRoleMapping"] = dataTable;
+            GridView1.DataSource = dataTable;
+            GridView1.DataBind();
+            #endregion
+
+            if ((bool)role.IsHead)
+            {
+                var calcParam = (from a in kpiWebDataContext.CalculatedParametrs select a);
+                var Indicators = (from c in kpiWebDataContext.IndicatorsTable select c);
+
+                DataTable calcTable = new DataTable();
+                calcTable.Columns.Add(new DataColumn("VerifyChecked1", typeof(bool)));
+                calcTable.Columns.Add(new DataColumn("ViewChecked1", typeof(bool)));
+                calcTable.Columns.Add(new DataColumn("Name1", typeof(string)));
+                calcTable.Columns.Add(new DataColumn("CalcID", typeof(string)));
+
+                DataTable indicatorTable = new DataTable();
+                indicatorTable.Columns.Add(new DataColumn("VerifyChecked2", typeof(bool)));
+                indicatorTable.Columns.Add(new DataColumn("ViewChecked2", typeof(bool)));
+                indicatorTable.Columns.Add(new DataColumn("Name2", typeof(string)));
+                indicatorTable.Columns.Add(new DataColumn("IndID", typeof(string)));
+
+
+                #region
+                foreach (var obj in calcParam)
+                {
+                    DataRow dataRow = calcTable.NewRow();
+                    CalculatedParametrsAndRolesMappingTable roleAndCalcMapping =
+                        (from a in kpiWebDataContext.CalculatedParametrsAndRolesMappingTable
+                         where a.FK_CalculatedParametrs == obj.CalculatedParametrsID
+                         && a.FK_RolesTable == Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value)
+                         select a).FirstOrDefault();
+                    if (roleAndCalcMapping != null)
+                    {
+                        dataRow["ViewChecked1"] = roleAndCalcMapping.CanView;
+                        dataRow["VerifyChecked1"] = roleAndCalcMapping.CanConfirm;
+                    }
+                    else
+                    {
+                        dataRow["ViewChecked1"] = false;
+                        dataRow["VerifyChecked1"] = false;
+                    }
+                    dataRow["CalcID"] = obj.CalculatedParametrsID.ToString();
+                    dataRow["Name1"] = obj.Name;
+                    calcTable.Rows.Add(dataRow);
+                }
+                CalcGrid.DataSource = calcTable;
+                CalcGrid.DataBind();
+                // ViewState["CalcRoleMapping"] = CalcGrid;
+                #endregion
+
+
+                #region
+                foreach (var obj in Indicators)
+                {
+                    DataRow dataRow = indicatorTable.NewRow();
+                    IndicatorsAndRolesMappingTable roleAndIndMapping =
+                        (from a in kpiWebDataContext.IndicatorsAndRolesMappingTable
+                         where a.FK_Indicators == obj.IndicatorsTableID
+                         && a.FK_RolesTable == Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value)
+                         select a).FirstOrDefault();
+                    if (roleAndIndMapping != null)
+                    {
+                        dataRow["ViewChecked2"] = roleAndIndMapping.CanView;
+                        dataRow["VerifyChecked2"] = roleAndIndMapping.CanConfirm;
+                    }
+                    else
+                    {
+                        dataRow["ViewChecked2"] = false;
+                        dataRow["VerifyChecked2"] = false;
+                    }
+                    dataRow["IndID"] = obj.IndicatorsTableID.ToString();
+                    dataRow["Name2"] = obj.Name;
+                    indicatorTable.Rows.Add(dataRow);
+                }
+                IndicatorGrid.DataSource = indicatorTable;
+                IndicatorGrid.DataBind();
+                // ViewState["IndRoleMapping"] = IndicatorGrid;
+                #endregion
+            }
+        }
         protected void Button1_Click(object sender, EventArgs e)
         {
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
@@ -395,8 +447,8 @@ namespace KPIWeb.AutomationDepartment
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-           
-            RefreshGridView();
+
+            RefreshGridViewRole();
         }
 
         /* protected void Button2_Click(object sender, EventArgs e)
