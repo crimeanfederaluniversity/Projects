@@ -22,11 +22,11 @@ namespace KPIWeb.PersonalPagesAdmin
                 Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
-            UserRights userRights = new UserRights();
-            if (!userRights.CanUserSeeThisPage(userID, 19, 0, 0))
-            {
-                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
-            } 
+           // UserRights userRights = new UserRights();
+           // if (!userRights.CanUserSeeThisPage(userID, 19, 0, 0))
+           // {
+            //    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+           // } 
             if(!Page.IsPostBack)
             {
                 RefreshGrid();
@@ -38,54 +38,81 @@ namespace KPIWeb.PersonalPagesAdmin
         }
         protected void RefreshGrid()
         {
-            DataTable dataTable = new DataTable();
-            dataTable.Columns.Add(new DataColumn("UsersTableId", typeof(int)));
-            dataTable.Columns.Add(new DataColumn("Email", typeof(string)));
-            dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
-            dataTable.Columns.Add(new DataColumn("ChangeDate", typeof(string)));
-            dataTable.Columns.Add(new DataColumn("ParamIdToChange", typeof(int)));
-            
-            using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
+            if (DropDownList1.SelectedIndex == 0)
             {
-                List<UserDataChangeHistory> UserHistory = 
-                    (from a in kpiWebDataContext.UserDataChangeHistory
-                                                                         join b in kpiWebDataContext.UsersTable on a.FK_User equals b.UsersTableID
-                                                                         where a.Active == true && a.Status == 0 && 
-                                                                         (b.Email.Contains(TextBox2.Text) || (TextBox2.Text.Length<2))
-                                                                         select a).ToList();
-                List<StudentChangeDataHistoryTable> StudentHistory =
-                    (from a in kpiWebDataContext.StudentChangeDataHistoryTable
-                                  join b in kpiWebDataContext.StudentsTable on a.FK_StudentTable
-                                  equals b.StudentsTableID
-                                  where a.Active == true && a.Status == 0
-                                      && (b.Email.Contains(TextBox2.Text) || (TextBox2.Text.Length<2))
-                                  select a).ToList();
+                DataTable dataTable1 = new DataTable();
+                dataTable1.Columns.Add(new DataColumn("UsersTableId", typeof(int)));
+                dataTable1.Columns.Add(new DataColumn("Email", typeof(string)));
+                dataTable1.Columns.Add(new DataColumn("Name", typeof(string)));
+                dataTable1.Columns.Add(new DataColumn("ChangeDate", typeof(string)));
+                dataTable1.Columns.Add(new DataColumn("ParamIdToChange", typeof(int)));
 
-                foreach (var user in UserHistory)
+                using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
                 {
-                    UsersTable user_ = (from a in kpiWebDataContext.UsersTable where a.Active==true && a.UsersTableID==user.FK_User select a).FirstOrDefault();
-                    DataRow dataRow = dataTable.NewRow();
-                    dataRow["UsersTableId"] = user_.UsersTableID;
-                    dataRow["Email"] = user_.Email;
-                    dataRow["ParamIdToChange"] = user.ID_Param_ToChange;
-                    dataRow["Name"] = user.Name + " с " + user.OldValue + " на " + user.NewValue;
-                    dataRow["ChangeDate"] = Convert.ToString(user.ChangeDate).Remove(10);
-                    
-                    dataTable.Rows.Add(dataRow);
+                    List<UserDataChangeHistory> UserHistory =
+                        (from a in kpiWebDataContext.UserDataChangeHistory
+                         join b in kpiWebDataContext.UsersTable on a.FK_User equals b.UsersTableID
+                         where a.Active == true && a.Status == 0 &&
+                               (b.Email.Contains(TextBox2.Text) || (TextBox2.Text.Length < 2))
+                         select a).ToList();
+
+                    foreach (var user in UserHistory)
+                    {
+                        UsersTable user_ =
+                            (from a in kpiWebDataContext.UsersTable
+                             where a.Active == true && a.UsersTableID == user.FK_User
+                             select a).FirstOrDefault();
+                        DataRow dataRow = dataTable1.NewRow();
+                        dataRow["UsersTableId"] = user_.UsersTableID;
+                        dataRow["Email"] = user_.Email;
+                        dataRow["ParamIdToChange"] = user.ID_Param_ToChange;
+                        dataRow["Name"] = user.Name + " с " + user.OldValue + " на " + user.NewValue;
+                        dataRow["ChangeDate"] = Convert.ToString(user.ChangeDate).Remove(10);
+
+                        dataTable1.Rows.Add(dataRow);
+                    }
+
+                    GridView1.DataSource = dataTable1;
+                    GridView1.DataBind();
                 }
-                foreach (var stud in StudentHistory)
+            }
+            if (DropDownList1.SelectedIndex == 1)
+            {
+                DataTable dataTable2 = new DataTable();
+                dataTable2.Columns.Add(new DataColumn("UsersTableId", typeof(int)));
+                dataTable2.Columns.Add(new DataColumn("Email", typeof(string)));
+                dataTable2.Columns.Add(new DataColumn("Name", typeof(string)));
+                dataTable2.Columns.Add(new DataColumn("ChangeDate", typeof(string)));
+                dataTable2.Columns.Add(new DataColumn("ParamIdToChange", typeof(int)));
+
+                using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
                 {
-                    StudentsTable stud_ = (from a in kpiWebDataContext.StudentsTable where a.Active == true && a.StudentsTableID == stud.FK_StudentTable select a).FirstOrDefault();
-                    DataRow dataRow = dataTable.NewRow();
-                    dataRow["UsersTableId"] = stud_.StudentsTableID;
-                    dataRow["Email"] = stud_.Email;
-                    dataRow["ParamIdToChange"] = stud.ID_Param_ToChange;
-                    dataRow["Name"] = stud.Name + " с " + stud.OldValue + " на " + stud.NewValue;
-                    dataRow["ChangeDate"] = Convert.ToString(stud.ChangeDate).Remove(10);
-                    dataTable.Rows.Add(dataRow);             
+
+                    List<StudentChangeDataHistoryTable> StudentHistory =
+                        (from a in kpiWebDataContext.StudentChangeDataHistoryTable
+                         join b in kpiWebDataContext.StudentsTable on a.FK_StudentTable
+                             equals b.StudentsTableID
+                         where a.Active == true && a.Status == 0
+                               && (b.Email.Contains(TextBox2.Text) || (TextBox2.Text.Length < 2))
+                         select a).ToList();
+
+                    foreach (var stud in StudentHistory)
+                    {
+                        StudentsTable stud_ =
+                            (from a in kpiWebDataContext.StudentsTable
+                             where a.Active == true && a.StudentsTableID == stud.FK_StudentTable
+                             select a).FirstOrDefault();
+                        DataRow dataRow = dataTable2.NewRow();
+                        dataRow["UsersTableId"] = stud_.StudentsTableID;
+                        dataRow["Email"] = stud_.Email;
+                        dataRow["ParamIdToChange"] = stud.ID_Param_ToChange;
+                        dataRow["Name"] = stud.Name + " с " + stud.OldValue + " на " + stud.NewValue;
+                        dataRow["ChangeDate"] = Convert.ToString(stud.ChangeDate).Remove(10);
+                        dataTable2.Rows.Add(dataRow);
+                    }
+                    GridView1.DataSource = dataTable2;
+                    GridView1.DataBind();
                 }
-                GridView1.DataSource = dataTable;
-                GridView1.DataBind();
             }
         }
         protected void ConfirmButtonClick(object sender, EventArgs e)
@@ -224,6 +251,11 @@ namespace KPIWeb.PersonalPagesAdmin
         protected void ChangeUserButton(object sender, EventArgs e)
         { 
         
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            RefreshGrid();
         }
     }
 }

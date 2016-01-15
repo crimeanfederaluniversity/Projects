@@ -2,6 +2,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <p>
         <span style="font-size: 30px">Заявки пользователей на изменение учетных данных:</span></p>
+    <p>
+        &nbsp;Выберите группу пользователей:
+        <br />
+        <span>&nbsp;<asp:DropDownList ID="DropDownList1" runat="server" Font-Size="Small" Height="16px"  Width="222px">
+            <asp:ListItem Selected="True" Value="0">Cотрудники</asp:ListItem>
+            <asp:ListItem Value="1">Обучающиеся</asp:ListItem>
+        </asp:DropDownList>
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Загрузить" />
+        </span></p>
     <div>
        &nbsp;
         <asp:Label ID="Label2" runat="server" Text="Ключевое слово"></asp:Label>

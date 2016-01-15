@@ -22,36 +22,63 @@ namespace KPIWeb.PersonalPagesAdmin
                 Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
-            UserRights userRights = new UserRights();
-            if (!userRights.CanUserSeeThisPage(userID, 19, 0, 0))
-            {
-                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
-            } 
+          //  UserRights userRights = new UserRights();
+          //  if (!userRights.CanUserSeeThisPage(userID, 19, 0, 0))
+          //  {
+          //      Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+          //  } 
             RefreshGrid();
         }
         private void RefreshGrid()
         {
-            DataTable dataTable = new DataTable();
-            dataTable.Columns.Add(new DataColumn("UsersTableId", typeof(string)));           
-            dataTable.Columns.Add(new DataColumn("Email", typeof(string)));         
- 
-            using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
+            if (DropDownList1.SelectedIndex == 0)
             {
-                List<UsersTable> users;
-                {
-                    users = (from a in kpiWebDataContext.UsersTable where a.Active == true select a).ToList();
-                }    
+                DataTable dataTable1 = new DataTable();
+                dataTable1.Columns.Add(new DataColumn("UsersTableId", typeof(string)));
+                dataTable1.Columns.Add(new DataColumn("Email", typeof(string)));
 
-                foreach (var user in users)
+                using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
                 {
-                    DataRow dataRow = dataTable.NewRow();
-                    dataRow["UsersTableId"] = user.UsersTableID;
-                    dataRow["Email"] = user.Email;
-                    dataTable.Rows.Add(dataRow);
+                    List<UsersTable> users;
+                    {
+                        users = (from a in kpiWebDataContext.UsersTable where a.Active == true select a).ToList();
+                    }
+
+                    foreach (var user in users)
+                    {
+                        DataRow dataRow = dataTable1.NewRow();
+                        dataRow["UsersTableId"] = user.UsersTableID;
+                        dataRow["Email"] = user.Email;
+                        dataTable1.Rows.Add(dataRow);
+                    }
+                    GridView1.DataSource = dataTable1;
+                    GridView1.DataBind();
                 }
-                GridView1.DataSource = dataTable;
+            }
+            if (DropDownList1.SelectedIndex == 1)
+            {
+                DataTable dataTable2 = new DataTable();
+                dataTable2.Columns.Add(new DataColumn("UsersTableId", typeof(string)));
+                dataTable2.Columns.Add(new DataColumn("Email", typeof(string)));
+                using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
+                {
+                    List<StudentsTable> students;
+                    {
+                        students = (from a in kpiWebDataContext.StudentsTable where a.Active == true select a).ToList();
+                    }
+
+                    foreach (var user in students)
+                    {
+                        DataRow dataRow = dataTable2.NewRow();
+                        dataRow["UsersTableId"] = user.StudentsTableID;
+                        dataRow["Email"] = user.Email;
+                        dataTable2.Rows.Add(dataRow);
+                    }
+                }
+                GridView1.DataSource = dataTable2;
                 GridView1.DataBind();
             }
+        
         }
 
         protected void ChangeUserButtonClick(object sender, EventArgs e)
@@ -124,6 +151,11 @@ namespace KPIWeb.PersonalPagesAdmin
                     GridView1.DataBind();
                 }
             }
+        }
+
+        protected void Button2_Click(object sender, System.EventArgs e)
+        {
+            RefreshGrid();
         }
     }
 }
