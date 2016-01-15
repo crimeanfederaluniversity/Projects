@@ -234,6 +234,7 @@
     <Content Include="ProrectorReportFilling\FillOnlyCheckBoxes.aspx" />
     <Content Include="ProrectorReportFilling\Main.aspx" />
     <Content Include="ProrectorReportFilling\SpecParamCheckBoxes.aspx" />
+    <Content Include="Rector\NewInt\RNmain.aspx" />
     <Content Include="Rector\Rstat.aspx" />
     <Content Include="Rector\Stats\Spo1och.aspx" />
     <Content Include="Rector\Stats\Vpo1och.aspx" />
@@ -617,6 +618,13 @@
     </Compile>
     <Compile Include="ProrectorReportFilling\SpecParamCheckBoxes.aspx.designer.cs">
       <DependentUpon>SpecParamCheckBoxes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\NewInt\RNmain.aspx.cs">
+      <DependentUpon>RNmain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\NewInt\RNmain.aspx.designer.cs">
+      <DependentUpon>RNmain.aspx</DependentUpon>
     </Compile>
     <Compile Include="Rector\Rstat.aspx.cs">
       <DependentUpon>Rstat.aspx</DependentUpon>
