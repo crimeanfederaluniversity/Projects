@@ -40,7 +40,7 @@
     #all_menu_Wrapper {
         display:block;
         text-align:center;  
-        padding:0 0 20px 0; background-color:#cecda0;
+        padding:0 0 10px 0; background-color:#cecda0;
     }
     #wrapper {
         margin-top:50px;
