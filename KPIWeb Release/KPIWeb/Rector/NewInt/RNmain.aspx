@@ -7,13 +7,13 @@
              <br />
         <br />
         
-        <asp:LinkButton ID="LinkButton1" runat="server">Статистические сведения о 
+        <asp:LinkButton ID="LinkButton1" runat="server" PostBackUrl="~/Rector/Rstat.aspx">Статистические сведения о 
 Крымском федеральном
 университете</asp:LinkButton>
         <br />
         <asp:LinkButton ID="LinkButton2" runat="server">Штатное расписание КФУ</asp:LinkButton>
         <br />
-        <asp:LinkButton ID="LinkButton3" runat="server">Государственное задание КФУ</asp:LinkButton>
+        <asp:LinkButton ID="LinkButton3" runat="server" PostBackUrl="~/Rector/NewInt/GovTask.aspx">Государственное задание КФУ</asp:LinkButton>
         <br />
         <br />
 
@@ -23,13 +23,13 @@
     
         <br />
         <br />
-        <asp:LinkButton ID="LinkButton4" runat="server">Сведения о результатах реализации
+        <asp:LinkButton ID="LinkButton4" runat="server" PostBackUrl="~/Rector/NewInt/SvedofResult.aspx">Сведения о результатах реализации
 Программы развития</asp:LinkButton>
         <br />
         <asp:LinkButton ID="LinkButton5" runat="server">Сведения о достижении целевых
 показателей Программы развития</asp:LinkButton>
         <br />
-        <asp:LinkButton ID="LinkButton6" runat="server">Сведения о расходовании средств
+        <asp:LinkButton ID="LinkButton6" runat="server" PostBackUrl="picforr1.png">Сведения о расходовании средств
 Программы развития КФУ</asp:LinkButton>
         <br />
         <asp:LinkButton ID="LinkButton7" runat="server">Сведения об участии структурных

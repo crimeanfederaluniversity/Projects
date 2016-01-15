@@ -92,7 +92,7 @@ p {
 			<div>
 				<!--5555555555 -->
 				<div>
-				<a href="spooch\2.2.1_itog.png">-Очное ИТОГ</a>
+				<a href="spooch\2.2.1itog.png">-Очное ИТОГ</a>
 				</div>
 			</div>
 			<!--444444444 -->
@@ -103,7 +103,7 @@ p {
 			<div>
 				<!--5555555555 -->
 				<div>
-				<a href="spozaoch\2.2.1itog.png">-Заочное ИТОГ</a>
+				<a href="spozaoch\2.2.1_itog.png">-Заочное ИТОГ</a>
 				</div>
 			</div>
 		</div>

@@ -235,8 +235,10 @@
     <Content Include="ProrectorReportFilling\Main.aspx" />
     <Content Include="ProrectorReportFilling\SpecParamCheckBoxes.aspx" />
     <Content Include="Rector\NewInt\CreationModern.aspx" />
+    <Content Include="Rector\NewInt\GovTask.aspx" />
     <Content Include="Rector\NewInt\ModernAdd.aspx" />
     <Content Include="Rector\NewInt\NetworkCommunication.aspx" />
+    <Content Include="Rector\NewInt\picforr1.png" />
     <Content Include="Rector\NewInt\RNmain.aspx" />
     <Content Include="Rector\NewInt\SvedofResult.aspx" />
     <Content Include="Rector\Rstat.aspx" />
@@ -304,6 +306,8 @@
     <None Include="Properties\PublishProfiles\home.pubxml" />
     <None Include="Properties\PublishProfiles\V_TEST1.pubxml" />
     <None Include="Properties\PublishProfiles\Web.pubxml" />
+    <Content Include="Rector\NewInt\science.pdf" />
+    <Content Include="Rector\NewInt\specpart.pdf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Reports_\ChooseReport.aspx" />
     <Content Include="Reports_\EditReport.aspx" />
@@ -629,6 +633,13 @@
     </Compile>
     <Compile Include="Rector\NewInt\CreationModern.aspx.designer.cs">
       <DependentUpon>CreationModern.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rector\NewInt\GovTask.aspx.cs">
+      <DependentUpon>GovTask.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\NewInt\GovTask.aspx.designer.cs">
+      <DependentUpon>GovTask.aspx</DependentUpon>
     </Compile>
     <Compile Include="Rector\NewInt\ModernAdd.aspx.cs">
       <DependentUpon>ModernAdd.aspx</DependentUpon>
