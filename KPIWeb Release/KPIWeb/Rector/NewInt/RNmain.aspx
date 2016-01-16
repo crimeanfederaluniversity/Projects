@@ -29,7 +29,7 @@
         <asp:LinkButton ID="LinkButton5" runat="server">Сведения о достижении целевых
 показателей Программы развития</asp:LinkButton>
         <br />
-        <asp:LinkButton ID="LinkButton6" runat="server" PostBackUrl="picforr1.png">Сведения о расходовании средств
+        <asp:LinkButton ID="LinkButton6" runat="server" PostBackUrl="~/Rector/NewInt/picforr1.png">Сведения о расходовании средств
 Программы развития КФУ</asp:LinkButton>
         <br />
         <asp:LinkButton ID="LinkButton7" runat="server">Сведения об участии структурных
