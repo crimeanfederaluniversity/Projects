@@ -231,6 +231,9 @@
     <Content Include="ProrectorReportFilling\FillOnlyCheckBoxes.aspx" />
     <Content Include="ProrectorReportFilling\Main.aspx" />
     <Content Include="ProrectorReportFilling\SpecParamCheckBoxes.aspx" />
+    <Content Include="Rector\fortable\ContextMenu.css" />
+    <Content Include="Rector\fortable\ContextMenu.js" />
+    <Content Include="Rector\fortable\jquery-1.7.2.js" />
     <Content Include="Rector\NewInt\BrendMarket.aspx" />
     <Content Include="Rector\NewInt\CreationModern.aspx" />
     <Content Include="Rector\NewInt\GovTask.aspx" />

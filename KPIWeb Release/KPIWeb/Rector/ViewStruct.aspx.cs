@@ -221,6 +221,16 @@ namespace KPIWeb.Rector
             TreeViewData treeViewData = arayParser.GetTreeViewData("dataarray.txt");
             TreeViewTable treeTableCreator  = new TreeViewTable();
             Label1.Text = treeTableCreator.CreateTreeViewTable(treeViewData);
+        }
+
+        protected void GoBackButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+
         }      
     }
 }

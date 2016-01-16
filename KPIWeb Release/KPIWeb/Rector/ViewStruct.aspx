@@ -1,6 +1,17 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ViewStruct.aspx.cs" Inherits="KPIWeb.Rector.ViewStruct" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+        <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
+        <div>    
+      <asp:Button ID="GoBackButton" runat="server" Text="Назад" Width="125px" OnClick="GoBackButton_Click" />
+      <asp:Button ID="Button2" runat="server" Text="На главную" Width="125px" OnClick="Button2_Click" />
+
+        </div>
+
+    </asp:Panel> 
+    
+    <br />
+    <h2>Штатное расписание</h2>
     <script type="text/javascript" src="fortable/jquery-1.7.2.js"></script> 
 <script>
     function showChildren(childrenTableName) {

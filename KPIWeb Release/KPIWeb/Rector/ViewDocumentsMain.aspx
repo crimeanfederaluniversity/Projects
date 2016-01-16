@@ -17,8 +17,8 @@
     </asp:Panel> 
     <br />
     <h2><span style="font-size: 30px">Просмотр нормативных документов</span></h2>
-
-    <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server" >           
+    <!--
+    <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server" Visible="False" Height="16px" Width="220px" >           
              <Columns>               
                             
                  <asp:TemplateField HeaderText="">
@@ -29,5 +29,17 @@
                       
                 </Columns>
        </asp:GridView>
+        -->
+    <br />
+
+    <asp:LinkButton ID="Button3" runat="server" Height="25px" Text="Постановление Правительства" Width="400px" CommandArgument="1" OnClick="ViewDocumentClick"/> 
+    <asp:LinkButton ID="Button4" runat="server" Height="25px" Text="Приказы по системе организации Программы развития" Width="400px" CommandArgument="2" OnClick="ViewDocumentClick"/>
+    <br />
+    <br />
+    <asp:LinkButton ID="Button5" runat="server" Height="25px" Text="Дорожная карта, положение" Width="400px" CommandArgument="3" OnClick="ViewDocumentClick"/>
+    <asp:LinkButton ID="Button7" runat="server" Height="25px" Text="Протоколы Координационного совета" Width="400px" CommandArgument="4" OnClick="ViewDocumentClick"/>
+    <br />
+    <br />
+    <asp:LinkButton ID="Button6" runat="server" Height="25px" Text="Приказы о реализации проектов Программы развития" Width="400px" CommandArgument="5" OnClick="ViewDocumentClick"/>
 
 </asp:Content>

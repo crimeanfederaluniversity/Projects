@@ -14744,6 +14744,8 @@ namespace KPIWeb
 		
 		private int _DocumentID;
 		
+		private System.Nullable<int> _DocumentNumber;
+		
 		private string _DocumentName;
 		
 		private string _DocumentLink;
@@ -14760,6 +14762,8 @@ namespace KPIWeb
     partial void OnCreated();
     partial void OnDocumentIDChanging(int value);
     partial void OnDocumentIDChanged();
+    partial void OnDocumentNumberChanging(System.Nullable<int> value);
+    partial void OnDocumentNumberChanged();
     partial void OnDocumentNameChanging(string value);
     partial void OnDocumentNameChanged();
     partial void OnDocumentLinkChanging(string value);
@@ -14792,6 +14796,26 @@ namespace KPIWeb
 					this._DocumentID = value;
 					this.SendPropertyChanged("DocumentID");
 					this.OnDocumentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocumentNumber", DbType="Int")]
+		public System.Nullable<int> DocumentNumber
+		{
+			get
+			{
+				return this._DocumentNumber;
+			}
+			set
+			{
+				if ((this._DocumentNumber != value))
+				{
+					this.OnDocumentNumberChanging(value);
+					this.SendPropertyChanging();
+					this._DocumentNumber = value;
+					this.SendPropertyChanged("DocumentNumber");
+					this.OnDocumentNumberChanged();
 				}
 			}
 		}

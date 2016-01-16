@@ -630,6 +630,7 @@
   <Table Name="dbo.DocumentTable" Member="DocumentTable">
     <Type Name="DocumentTable">
       <Column Name="DocumentID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DocumentNumber" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="DocumentName" Type="System.String" DbType="VarChar(2000)" CanBeNull="true" />
       <Column Name="DocumentLink" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />

@@ -49,7 +49,7 @@ namespace KPIWeb.Rector
                     (from a in kPiDataContext.DocumentTypes where a.DocumentTypeId == doctype select a).FirstOrDefault();
                 if (currentDocType!=null)
                 Label1.Text = currentDocType.TypeName;
-                List<DocumentTable> docs = (from a in kPiDataContext.DocumentTable where a.Active == true && a.DocumentType == doctype select a).ToList();
+                List<DocumentTable> docs = (from a in kPiDataContext.DocumentTable where a.Active == true && a.DocumentType == doctype select a).OrderBy(x => x.DocumentNumber).ToList();
 
 
                 DataTable dataTable = new DataTable();

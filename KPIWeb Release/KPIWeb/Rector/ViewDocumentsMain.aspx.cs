@@ -31,6 +31,7 @@ namespace KPIWeb.Rector
 
             if (!IsPostBack)
             {
+                /*
                 List<DocumentTypes> docsTypes = (from a in kPiDataContext.DocumentTypes where a.Active == true select a).ToList();
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("DocTypeName", typeof(string)));
@@ -45,7 +46,7 @@ namespace KPIWeb.Rector
                 }
 
                 GridView1.DataSource = dataTable;
-                GridView1.DataBind();
+                GridView1.DataBind();*/
             }
         }
 
