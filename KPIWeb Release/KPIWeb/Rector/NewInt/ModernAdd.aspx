@@ -20,19 +20,19 @@
              <div id="left_side">
         <asp:LinkButton ID="Button1" runat="server" Text="Создание новых конкурентоспособных
 
-образовательных программ" />
+образовательных программ" PostBackUrl="~/Rector/NewInt/ModernAddStuff/ModernAdd2.aspx" />
         <br />
                  </div>
            <div id="right_side">
-        <asp:LinkButton ID="Button2" runat="server" Text="Внедрение в образовательный процесс 
-современного учебного оборудования" />
+        <asp:HyperLink ID="Button2" runat="server" NavigateUrl="ModernAddStuff/VnedrObr.png">  Внедрение в образовательный процесс современного учебного оборудования </asp:HyperLink>
         <br />
                </div>   
 
     </div>
     <div id="wrapapiu_bot_but">
-        <asp:LinkButton ID="Button3" runat="server" Text="Развитие современных форм профориентационной работы" />
-        <br /></div>
+        <asp:HyperLink ID="Button3" runat="server" NavigateUrl="ModernAddStuff/Razvitie_1.png">  Развитие современных форм профориентационной работы </asp:HyperLink>
+        <br />
+    </div>
     
     </div>
     </div>

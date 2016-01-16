@@ -7,90 +7,72 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KPIWeb.Rector.NewInt {
+namespace KPIWeb.Rector.NewInt.ModernAddStuff {
     
     
-    public partial class CreationModern {
+    public partial class ModernAdd2 {
         
         /// <summary>
-        /// top_panel22 control.
+        /// top_panel1212 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel top_panel22;
+        protected global::System.Web.UI.WebControls.Panel top_panel1212;
         
         /// <summary>
-        /// GoBackButton2 control.
+        /// GoBackButton142 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoBackButton2;
+        protected global::System.Web.UI.WebControls.Button GoBackButton142;
         
         /// <summary>
-        /// GoForwardButton2 control.
+        /// GoForwardButton152 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoForwardButton2;
+        protected global::System.Web.UI.WebControls.Button GoForwardButton152;
         
         /// <summary>
-        /// Button24 control.
+        /// Button1264 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button24;
+        protected global::System.Web.UI.WebControls.Button Button1264;
         
         /// <summary>
-        /// Label1 control.
+        /// HyperLink1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.HyperLink HyperLink1;
         
         /// <summary>
-        /// Button25 control.
+        /// HyperLink2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink Button25;
+        protected global::System.Web.UI.WebControls.HyperLink HyperLink2;
         
         /// <summary>
-        /// Button26 control.
+        /// HyperLink3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink Button26;
-        
-        /// <summary>
-        /// Button27 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink Button27;
-        
-        /// <summary>
-        /// Button28 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink Button28;
+        protected global::System.Web.UI.WebControls.HyperLink HyperLink3;
     }
 }

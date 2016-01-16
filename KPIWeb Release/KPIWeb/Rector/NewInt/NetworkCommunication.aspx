@@ -16,22 +16,18 @@
         <asp:Label ID="Label1" runat="server" Text="Сетевое взаимодействие и повышение квалификации на базе партнерских организаций"></asp:Label>
           <div id="all_menu">
                 <div id="left_side">
-        <asp:LinkButton ID="Button125" runat="server" Text="Создание образовательных программ с
-
-
-
-использованием сетевой формы, в том числе 
-в рамках сети федеральных университетов" />
+                    <asp:HyperLink ID="Button125" runat="server" NavigateUrl="NetworkCommunicationStuff/ObrProg_1.png">  Создание образовательных программ с использованием сетевой формы, в том числе в рамках сети федеральных университетов </asp:HyperLink>
       </div>
                     <div id="right_side">
-        <asp:LinkButton ID="Button126" runat="server" Text="Стимулирование академической мобильности
-работников университета и обучающихся в 
-университете" /> <br />
+                         <asp:HyperLink ID="Button126" runat="server" NavigateUrl="NetworkCommunicationStuff/stimul_1.png"> Стимулирование академической мобильности работников университета и обучающихся в университете </asp:HyperLink>
+        <br />
        </div>
               </div>
                <div id="wrapapiu_bot_but">
                   
-        <asp:LinkButton ID="Button127" runat="server" Text="Повышение квалификации и профессиональная переподготовка работников университета" /></div>
+        <asp:HyperLink ID="Button127" runat="server" NavigateUrl="NetworkCommunicationStuff/Clenstvo_1.png"> Членство в ассоциациях и объединениях научно-образовательных организаций </asp:HyperLink>
+
+               </div>
                   <br /></div>  
     
     </div>
