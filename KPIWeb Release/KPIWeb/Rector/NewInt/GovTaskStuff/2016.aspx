@@ -26,15 +26,14 @@
         <asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="otchet_gz_2015_rep_spo.pdf">СПО</asp:HyperLink>
         <br />
         <asp:HyperLink ID="HyperLink5" runat="server" NavigateUrl="otchet_gz_2015_rep_aspirant.pdf">Аспирантура</asp:HyperLink>
-        <br />      </div>  
-        <div id="right_side">
-        <asp:HyperLink ID="HyperLink6" runat="server"NavigateUrl="otchet_gz_2015_rep_intern.pdf">Интернатура</asp:HyperLink>
+        <br />      </div>  <div id="right_side">
+        <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="otchet_gz_2015_rep_intern.pdf">Интернатура</asp:HyperLink>
         <br />
         <asp:HyperLink ID="HyperLink7" runat="server" NavigateUrl="otchet_gz_2015_rep_ordinator.pdf">Ординатура</asp:HyperLink>
         <br />
         <asp:HyperLink ID="HyperLink8" runat="server" NavigateUrl="otchet_gz_2015_rep_doctorant.pdf">Докторантура</asp:HyperLink>
         <br />
-        <asp:HyperLink ID="HyperLink9" runat="server" NavigateUrl="specnevosh.pdf">Специальности не вошедшие в ГЗ</asp:HyperLink>
+        <asp:HyperLink ID="HyperLink9" runat="server" NavigateUrl="specnevosh.pdf" >Специальности не вошедшие в ГЗ</asp:HyperLink>
         </div>      </div>  
     </div>    </div>  
     

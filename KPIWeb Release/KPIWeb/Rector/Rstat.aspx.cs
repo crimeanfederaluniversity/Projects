@@ -16,7 +16,7 @@ namespace KPIWeb.Rector
 
         protected void Button222_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Rector/RectorMain.aspx");
+            Response.Redirect("~/Default.aspx");
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -41,7 +41,7 @@ namespace KPIWeb.Rector
 
         protected void Button4_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Rector/RectorMain.aspx");
+            Response.Redirect("~/Default.aspx");
         }
 
       

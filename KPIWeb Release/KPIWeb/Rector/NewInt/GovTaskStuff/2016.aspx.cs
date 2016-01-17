@@ -16,12 +16,12 @@ namespace KPIWeb.Rector.NewInt.GovTaskStuff
 
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Response.Redirect("~/Rector/NewInt/GovTask.aspx");
         }
 
         protected void Button4_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Response.Redirect("~/Default.aspx");
         }
     }
 }
