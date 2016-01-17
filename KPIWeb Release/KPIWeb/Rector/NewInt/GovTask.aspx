@@ -28,8 +28,8 @@
     
 <style>
     .year {
-    text-align:left;
-    margin-left:10px;
+    text-align:center;
+   
     font-weight:bold;
     font-size:24px;
 
