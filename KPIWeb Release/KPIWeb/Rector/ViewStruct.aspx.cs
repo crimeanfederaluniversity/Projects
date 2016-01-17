@@ -11,7 +11,7 @@ namespace KPIWeb.Rector
 {
     public class TreeViewTable
     {
-        private int columncount = 11;
+        private int columncount = 10;
         private string tableNameTemplate = "tableTemplate";
         private int tableNameId= 0;
         private string CreateLine(int nameColumnCount, int deepness, TreeViewData treeViewData,string childTableId)
@@ -46,7 +46,7 @@ namespace KPIWeb.Rector
             tmpstr += "<td>" + treeViewData.treeViewDataValue2.Replace(" ", "") + "</td>";
             tmpstr += "<td>" + treeViewData.treeViewDataValue3.Replace(" ", "") + "</td>";
             tmpstr += "<td>" + treeViewData.treeViewDataValue4.Replace(" ", "") + "</td>";
-            tmpstr += "<td>" + treeViewData.treeViewDataValue5.Replace(" ", "") + "</td>";
+
             return tmpstr;
         }
 
@@ -93,7 +93,6 @@ namespace KPIWeb.Rector
             tmpList.Add(" ");
 
             tmpList.Add("Кол-во штатных единиц");
-            tmpList.Add("Из них занято");
             tmpList.Add("Должностной оклад");
             tmpList.Add("Месячный фонд");
             tmpList.Add("Годовой фонд");
@@ -181,7 +180,7 @@ namespace KPIWeb.Rector
             tmpTreeViewDate.treeViewDataValue2 = currentList[3];
             tmpTreeViewDate.treeViewDataValue3 = currentList[4];
             tmpTreeViewDate.treeViewDataValue4 = currentList[5];
-            tmpTreeViewDate.treeViewDataValue5 = currentList[6];
+            
 
             int currentCellDotCnt = DotCount(currentList[0]);
             currentCellId++;
