@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="GovTask.aspx.cs" Inherits="KPIWeb.Rector.NewInt.GovTask" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-  <div id="wrapper">
+    <div id="wrapper">
         <asp:Panel runat="server" ID="top_panel252" CssClass="top_panel" Height="40" Visible="true">    
                 <div>    
               <asp:Button ID="GoBackButton52" runat="server" OnClientClick="showLoadPanel()" OnClick="GoBackButton_Click" Text="Назад" Width="125px" />
@@ -14,15 +14,15 @@
   
           <div id="all_menu">    <div id="left_side">
        <p class="year">2015</p>
-        <asp:HyperLink ID="Button257" runat="server">Обучение</asp:HyperLink>
+        <asp:HyperLink ID="Button257" runat="server" NavigateUrl="GovTaskStuff/GovEducation.pdf">Обучение</asp:HyperLink>
     
-        <asp:HyperLink ID="Button258" runat="server">Наука</asp:HyperLink>
+        <asp:HyperLink ID="Button258" runat="server" NavigateUrl="GovTaskStuff/GovScience.pdf">Наука</asp:HyperLink>
  
     
-        <asp:HyperLink ID="Button255" runat="server" OnClick="Button255_Click">Специальная часть</asp:HyperLink>   </div>
+        <asp:HyperLink ID="Button255" runat="server" NavigateUrl="GovTaskStuff/GovSpecPart.pdf">Специальная часть</asp:HyperLink>   </div>
             <div id="right_side">
        <p class="year">2016</p>
-        <asp:HyperLink ID="Button256" runat="server" OnClick="Button256_Click">Плановые цифры</asp:HyperLink>
+        <asp:HyperLink ID="Button256" runat="server" NavigateUrl="GovTaskStuff/2016.aspx" >Плановые цифры</asp:HyperLink>
          </div> 
     </div>
     

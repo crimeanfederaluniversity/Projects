@@ -17,23 +17,24 @@
     <asp:Label ID="Label1" runat="server" Text="Государственное задание 2016"></asp:Label>
 
     <div id="all_menu">   <div id="left_side">
-        <asp:HyperLink ID="HyperLink1" runat="server">Бакалавры</asp:HyperLink>
+        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="otchet_gz_2015_rep_bakalavr.pdf">Бакалавры</asp:HyperLink>
         <br />
-        <asp:HyperLink ID="HyperLink2" runat="server">Специалисты</asp:HyperLink>
+        <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="otchet_gz_2015_rep_specialist.pdf">Специалисты</asp:HyperLink>
         <br />
-        <asp:HyperLink ID="HyperLink3" runat="server">Магистры</asp:HyperLink>
+        <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="otchet_gz_2015_rep_magistr.pdf">Магистры</asp:HyperLink>
         <br />
-        <asp:HyperLink ID="HyperLink4" runat="server">СПО</asp:HyperLink>
+        <asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="otchet_gz_2015_rep_spo.pdf">СПО</asp:HyperLink>
         <br />
-        <asp:HyperLink ID="HyperLink5" runat="server">Аспирантура</asp:HyperLink>
-        <br />      </div>  <div id="right_side">
-        <asp:HyperLink ID="HyperLink6" runat="server">Интернатура</asp:HyperLink>
+        <asp:HyperLink ID="HyperLink5" runat="server" NavigateUrl="otchet_gz_2015_rep_aspirant.pdf">Аспирантура</asp:HyperLink>
+        <br />      </div>  
+        <div id="right_side">
+        <asp:HyperLink ID="HyperLink6" runat="server"NavigateUrl="otchet_gz_2015_rep_intern.pdf">Интернатура</asp:HyperLink>
         <br />
-        <asp:HyperLink ID="HyperLink7" runat="server">Ординатура</asp:HyperLink>
+        <asp:HyperLink ID="HyperLink7" runat="server" NavigateUrl="otchet_gz_2015_rep_ordinator.pdf">Ординатура</asp:HyperLink>
         <br />
-        <asp:HyperLink ID="HyperLink8" runat="server">Докторантура</asp:HyperLink>
+        <asp:HyperLink ID="HyperLink8" runat="server" NavigateUrl="otchet_gz_2015_rep_doctorant.pdf">Докторантура</asp:HyperLink>
         <br />
-        <asp:HyperLink ID="HyperLink9" runat="server">Специальности не вошедшие в ГЗ</asp:HyperLink>
+        <asp:HyperLink ID="HyperLink9" runat="server" NavigateUrl="specnevosh.pdf">Специальности не вошедшие в ГЗ</asp:HyperLink>
         </div>      </div>  
     </div>    </div>  
     
