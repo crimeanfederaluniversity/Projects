@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="ModernAdd2.aspx.cs" Inherits="KPIWeb.Rector.NewInt.ModernAddStuff.ModernAdd2" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">   
-   
+           <div id="wrapper">  
             <asp:Panel runat="server" ID="top_panel1212" CssClass="top_panel" Height="40" Visible="true">    
                 <div>    
               <asp:Button ID="GoBackButton142" runat="server" OnClientClick="showLoadPanel()" OnClick="GoBackButton_Click" Text="Назад" Width="125px" />
@@ -10,15 +10,78 @@
                 </div>
 
             </asp:Panel>
-
-     <div>
+                    <div id="page_wrapper">   
+                         <div id="all_menu">
+      <div id="left_side">
+     
     
          <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="OOPmagistr_1.png">ООП Магистратуры </asp:HyperLink>
-         <br />
+       
          <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="OOPbakalavr_1.png">ООП Бакалавриата </asp:HyperLink>
-         <br />
+   
          <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="DopProf_1.png">Дополнительные профессиональные программы</asp:HyperLink>
     
+      
     </div>
+ 
+        
+    </div> </div></div>
+           <style>
+    #all_menu_Wrapper {
+        display:block;
+        text-align:center;  
+        padding:0 0 10px 0; background-color:#cecda0;
+    }
+    #wrapper {
+        margin-top:50px;
+    }
+    #all_menu {
+position: relative;
+padding: 0px 25%;
+display: flex;
+    }
+    #left_side {
+                    background-color:#86DB7A;
+            display:inline-block;
+            position:relative;
+              padding:0 20px 20px 20px;
+              width:100%;
+    }
+   
+     #all_menu span {
+            display:block;
+        text-align:center;
+
+        }
+             #left_side a,
+            #right_side a,
+              #all_menu_Wrapper a {
+display: block;
+line-height: 12px;
+color: #000;
+margin-top: 20px;
+padding: 20px 10px;
+text-align: center;
+
+background: linear-gradient(to bottom, #CEDCE7 0%, #596A72 100%) repeat scroll 0% 0%;
+        }
+    #wrapapiu_bot_but {
+      padding:0 20px;
+    }
+
+
+            #left_side a:hover,
+            #right_side a:hover,
+             #all_menu_Wrapper a:hover {
+               background: transparent linear-gradient(to bottom, #D7F2FF 0%, #8298AA  100%) repeat scroll 0% 0%;
+            }
+                      #all_menu_Wrapper span {
+            line-height: 28px;
+            font-size:200%;
+            font-weight:bold;
+                    display: block;
+padding: 10px;
+            }
+</style>
 
     </asp:Content>
