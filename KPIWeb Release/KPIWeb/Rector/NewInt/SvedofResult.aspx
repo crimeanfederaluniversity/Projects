@@ -42,7 +42,7 @@
         </div>
      
    </div><div id="wrapapiu_bot_but">
-        <asp:LinkButton ID="Button110" runat="server" Text="Брендинг и маркетинг" />
+         <asp:HyperLink ID="Button110" runat="server" NavigateUrl="BrendMarket.jpg">  Брендинг и маркетинг </asp:HyperLink>
        </div>
 </div>   
 
