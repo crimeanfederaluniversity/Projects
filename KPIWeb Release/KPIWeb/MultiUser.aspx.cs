@@ -116,7 +116,7 @@ namespace KPIWeb
             }
             else if (accessLevel == 7)
             {
-                Response.Redirect("~/Rector/RMain.aspx");
+                Response.Redirect("~/Rector/NewInt/RNmain.aspx");
             }
             else if (accessLevel == 8)
             {
