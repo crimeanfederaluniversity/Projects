@@ -11,7 +11,7 @@
 Крымском федеральном
 университете</asp:LinkButton>
         <br />
-        <asp:LinkButton ID="LinkButton2" runat="server">Штатное расписание КФУ</asp:LinkButton>
+        <asp:LinkButton ID="LinkButton2" runat="server" PostBackUrl="~/Rector/ViewStruct.aspx">Штатное расписание КФУ</asp:LinkButton>
         <br />
         <asp:LinkButton ID="LinkButton3" runat="server" PostBackUrl="~/Rector/NewInt/GovTask.aspx">Государственное задание КФУ</asp:LinkButton>
         <br />
@@ -26,19 +26,19 @@
         <asp:LinkButton ID="LinkButton4" runat="server" PostBackUrl="~/Rector/NewInt/SvedofResult.aspx">Сведения о результатах реализации
 Программы развития</asp:LinkButton>
         <br />
-        <asp:LinkButton ID="LinkButton5" runat="server">Сведения о достижении целевых
+        <asp:LinkButton ID="LinkButton5" runat="server" PostBackUrl="~/Rector/RAnalitics.aspx">Сведения о достижении целевых
 показателей Программы развития</asp:LinkButton>
         <br />
        <asp:HyperLink ID="LinkButton6" runat="server" NavigateUrl="picforr1.png">Сведения о расходовании средств
-Программы развития КФУ<</asp:HyperLink>
+Программы развития КФУ</asp:HyperLink>
                 
         <br />
-        <asp:LinkButton ID="LinkButton7" runat="server">Сведения об участии структурных
+        <asp:LinkButton ID="LinkButton7" runat="server" OnClick="LinkButton7_Click">Сведения об участии структурных
 подразделений в достижении 
 целевых показателей Программы 
 развития КФУ</asp:LinkButton>
         <br />
-        <asp:LinkButton ID="LinkButton8" runat="server">Нормативные документы</asp:LinkButton>
+        <asp:LinkButton ID="LinkButton8" runat="server" PostBackUrl="~/Rector/ViewDocumentsMain.aspx">Нормативные документы</asp:LinkButton>
     </div>
             </div>
     </div>

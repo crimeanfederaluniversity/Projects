@@ -16,22 +16,17 @@ namespace KPIWeb.Rector.NewInt
 
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
-        }
-
-        protected void GoForwardButton_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
+            Response.Redirect("~/Rector/NewInt/SvedofResult.aspx");
         }
 
         protected void Button4_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Response.Redirect("~/Default.aspx");
         }
 
         protected void Button5_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

@@ -5,7 +5,6 @@
     <asp:Panel runat="server" ID="top_panel22" CssClass="top_panel" Height="40" Visible="true">    
                 <div>    
               <asp:Button ID="GoBackButton2" runat="server" OnClientClick="showLoadPanel()" OnClick="GoBackButton_Click" Text="Назад" Width="125px" />
-              <asp:Button ID="GoForwardButton2" runat="server" OnClientClick="showLoadPanel()" OnClick="GoForwardButton_Click" Text="Вперед" Width="125px" />
                 &nbsp; &nbsp; <asp:Button ID="Button24" runat="server" OnClientClick="showLoadPanel()" OnClick="Button4_Click" Text="На главную" Width="125px" />
                     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                 </div>

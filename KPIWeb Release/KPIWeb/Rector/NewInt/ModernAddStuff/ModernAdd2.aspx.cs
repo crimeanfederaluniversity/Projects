@@ -16,17 +16,14 @@ namespace KPIWeb.Rector.NewInt.ModernAddStuff
 
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Response.Redirect("~/Rector/NewInt/ModernAdd.aspx");
         }
 
-        protected void GoForwardButton_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
 
         protected void Button4_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Response.Redirect("~/Default.aspx");
+            
         }
     }
 }

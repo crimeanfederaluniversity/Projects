@@ -1,7 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ViewDocumentsMain.aspx.cs" Inherits="KPIWeb.Rector.ViewDocumentsMain" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-          <div id="wrapper">  
-
+    
+    <style type="text/css">
+   .button_right 
+   {
+       float: right;
+       margin-right: 10px;
+   }     
+</style>
                 <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
         <div>    
       <asp:Button ID="GoBackButton" runat="server" Text="Назад" Width="125px" OnClick="GoBackButton_Click1" />
@@ -9,8 +15,8 @@
         </div>
 
     </asp:Panel> 
-    <div id="all_menu_Wrapper">
-     <asp:Label ID="Label1" runat="server" Text="Просмотр нормативных документов"></asp:Label>
+    <br />
+    
     <!--
     <asp:GridView ID="GridView1" AutoGenerateColumns="False" runat="server" Visible="False" Height="16px" Width="220px" >           
              <Columns>               
@@ -24,27 +30,45 @@
                 </Columns>
        </asp:GridView>
         -->
-         <div id="all_menu">
-       <div id="left_side">
+    <br />
 
-    <asp:LinkButton ID="Button3" runat="server"  Text="Постановление Правительства"  CommandArgument="1" OnClick="ViewDocumentClick"/> 
-    <asp:LinkButton ID="Button4" runat="server"  Text="Приказы по системе организации Программы развития"  CommandArgument="2" OnClick="ViewDocumentClick"/>
-  
-    <asp:LinkButton ID="Button5" runat="server" Text="Дорожная карта, положение"  CommandArgument="3" OnClick="ViewDocumentClick"/>
-           </div>
-              <div id="right_side">
-    <asp:LinkButton ID="Button7" runat="server"  Text="Протоколы Координационного совета" CommandArgument="4" OnClick="ViewDocumentClick"/>
+    
 
-    <asp:LinkButton ID="Button6" runat="server"  Text="Приказы о реализации проектов Программы развития" CommandArgument="5" OnClick="ViewDocumentClick"/>
-               </div>
-               </div> 
-               </div>
-               </div>
-      <style>
+    <br />
+    
+
+
+    
+    
+    
+    <div id="all_menu_Wrapper">
+        <asp:Label ID="Label1" runat="server" Text="Просмотр нормативных документов"></asp:Label>
+
+    <div id="all_menu">
+             <div id="left_side">
+        <asp:LinkButton ID="Button3" runat="server"  Text="Постановление Правительства"  CommandArgument="1" OnClick="ViewDocumentClick"/> 
+                  <br />
+         <asp:LinkButton ID="LinkButton1" runat="server"  Text="Приказы по системе организации Программы развития" CommandArgument="2" OnClick="ViewDocumentClick"/>
+               <br />  </div>
+           <div id="right_side">
+        <asp:LinkButton ID="Button5" runat="server" Text="Дорожная карта, положение"  CommandArgument="3" OnClick="ViewDocumentClick"/>
+                <br />
+    <asp:LinkButton ID="Button7" runat="server" Text="Протоколы Координационного совета"  CommandArgument="4" OnClick="ViewDocumentClick"/>
+       <br />
+               </div>   
+
+    </div>
+    <div id="wrapapiu_bot_but">
+        <asp:LinkButton ID="Button6" runat="server" Text="Приказы о реализации проектов Программы развития"  CommandArgument="5" OnClick="ViewDocumentClick"/>
+    </div>
+    
+    </div>
+
+ <style>
     #all_menu_Wrapper {
         display:block;
         text-align:center;  
-        padding:0 0 0 0; background-color:#cecda0;
+        padding:0 0 10px 0; background-color:#cecda0;
     }
     #wrapper {
         margin-top:50px;
@@ -52,7 +76,7 @@
     #all_menu {
          
             position:relative;
-         padding:0 0 0 0;
+         padding:0 0 20px 0;
              display:flex;
     }
     #left_side {
@@ -79,9 +103,9 @@
             #right_side a,
               #all_menu_Wrapper a {
 display: block;
-
+line-height: 12px;
 color: #000;
-margin-top: 20px;
+
 padding: 20px 10px;
 text-align: center;
 
@@ -101,8 +125,12 @@ background: linear-gradient(to bottom, #CEDCE7 0%, #596A72 100%) repeat scroll 0
             line-height: 28px;
             font-size:200%;
             font-weight:bold;
-            display: block;
-            padding: 10px;
+                    display: block;
+padding: 10px;
             }
-          </style>
+</style>
+    
+
+    
+
 </asp:Content>

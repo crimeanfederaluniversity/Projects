@@ -13,7 +13,6 @@ namespace KPIWeb.Account
     { 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer != null)
             {
