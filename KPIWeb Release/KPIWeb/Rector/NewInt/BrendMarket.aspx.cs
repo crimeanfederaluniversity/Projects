@@ -11,22 +11,30 @@ namespace KPIWeb.Rector.NewInt
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userID = UserSer.Id;
+            UsersTable userTable =
+                (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+            if (userTable.AccessLevel != 7)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
         }
 
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Response.Redirect("~/Default.aspx");
         }
 
-        protected void GoForwardButton_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
 
         protected void Button4_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Response.Redirect("~/Default.aspx");
         }
     }
 }

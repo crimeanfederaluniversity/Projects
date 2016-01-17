@@ -12,21 +12,19 @@ namespace KPIWeb.Rector
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
                 Response.Redirect("~/Default.aspx");
             }
-
             int userID = UserSer.Id;
-            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
-            var login =
-                     (from a in kPiDataContext.UsersTable
-                      where a.UsersTableID == userID
-                      select a.Email).FirstOrDefault();
-            LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0VD0: Prorector " + login + " pereshel na stranicy normativnih documentov");
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+            if (userTable.AccessLevel != 7)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
 
 
             if (!IsPostBack)
