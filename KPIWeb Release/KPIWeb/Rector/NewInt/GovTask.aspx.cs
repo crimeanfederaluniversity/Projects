@@ -31,7 +31,6 @@ namespace KPIWeb.Rector.NewInt
             Response.Redirect("~/Rector/NewInt/RNmain.aspx");
         }
 
-
         protected void Button4_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Default.aspx");

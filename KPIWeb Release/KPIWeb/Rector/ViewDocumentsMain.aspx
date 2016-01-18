@@ -46,7 +46,7 @@
 
     <div id="all_menu">
              <div id="left_side">
-        <asp:LinkButton ID="Button3" runat="server"  Text="Постановление Правительства"  CommandArgument="1" OnClick="ViewDocumentClick"/> 
+        <asp:LinkButton ID="Button3" runat="server"  Text="Постановления Правительства"  CommandArgument="1" OnClick="ViewDocumentClick"/> 
                   <br />
          <asp:LinkButton ID="LinkButton1" runat="server"  Text="Приказы по системе организации Программы развития" CommandArgument="2" OnClick="ViewDocumentClick"/>
                <br />  </div>

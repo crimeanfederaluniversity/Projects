@@ -10,7 +10,7 @@
         <br />
         <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Courier New" Font-Size="X-Large" Text="Логин: "></asp:Label>
         <br />
-        <asp:Label ID="Label2" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Courier New" Font-Size="X-Large" Text="Email: "></asp:Label>
+        <asp:Label ID="Label2" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Courier New" Font-Size="X-Large" Text="E-mail: "></asp:Label>
         <br />
         <asp:Label ID="Label3" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Courier New" Font-Size="X-Large" Text="Логин: "></asp:Label>
         <br />

@@ -11,7 +11,7 @@ namespace KPIWeb.Rector
 {
     public class TreeViewTable
     {
-        private int columncount = 10;
+        private int columncount = 7;
         private string tableNameTemplate = "tableTemplate";
         private int tableNameId= 0;
         private string CreateLine(int nameColumnCount, int deepness, TreeViewData treeViewData,string childTableId)
@@ -43,9 +43,7 @@ namespace KPIWeb.Rector
                     
                 }
             tmpstr += "<td>" + treeViewData.treeViewDataValue1.Replace(" ","") + "</td>";
-            tmpstr += "<td>" + treeViewData.treeViewDataValue2.Replace(" ", "") + "</td>";
-            tmpstr += "<td>" + treeViewData.treeViewDataValue3.Replace(" ", "") + "</td>";
-            tmpstr += "<td>" + treeViewData.treeViewDataValue4.Replace(" ", "") + "</td>";
+
 
             return tmpstr;
         }
@@ -177,11 +175,7 @@ namespace KPIWeb.Rector
             tmpTreeViewDate.treeViewDataChildren = new List<TreeViewData>();
             tmpTreeViewDate.treeViewName = currentList[1];
             tmpTreeViewDate.treeViewDataValue1 = currentList[2];
-            tmpTreeViewDate.treeViewDataValue2 = currentList[3];
-            tmpTreeViewDate.treeViewDataValue3 = currentList[4];
-            tmpTreeViewDate.treeViewDataValue4 = currentList[5];
-            
-
+          
             int currentCellDotCnt = DotCount(currentList[0]);
             currentCellId++;
 
