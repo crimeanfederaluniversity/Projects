@@ -35,8 +35,7 @@
 разработок для решения актуальных проблем 
 развития региона" PostBackUrl="~/Rector/NewInt/CreationModern.aspx" />
         <br />
-        <asp:LinkButton ID="Button92" runat="server" Text="Мотивация персонала и создание 
-комфортных условий работы" />
+             <asp:HyperLink ID="Button92" runat="server" NavigateUrl="Motivation2015_1.png">Мотивация персонала и создание</asp:HyperLink>
         <br />
         </div>
      
