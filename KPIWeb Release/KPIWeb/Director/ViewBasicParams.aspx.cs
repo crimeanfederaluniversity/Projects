@@ -134,12 +134,22 @@ namespace KPIWeb.Director
                     //узнали показатели кафедры(отчёт,разрешенияПользователя,Уровеньвводяшего,вводящийся показатель)          
                     foreach (BasicParametersTable basicParam in KafBasicParams) //пройдемся по показателям
                     {
+
                         //если этото параметр и эта кафедра дружат
                         ThirdLevelParametrs thirdParametrs =
                             (from a in kpiWebDataContext.ThirdLevelParametrs
                              where a.ThirdLevelParametrsID == ThirdLevel
                              select a).FirstOrDefault();
+
+                        BasicParametrsAndSubdivisionClassMappingTable onlytrueparam =
+                            (from a in kpiWebDataContext.BasicParametrsAndSubdivisionClassMappingTable
+                                where a.FK_BasicParametrsTable == basicParam.BasicParametersTableID
+                                      && a.FK_SubdivisionClassTable == thirdParametrs.FK_SubdivisionClassTable
+                                      && a.Active == true
+                                select a).FirstOrDefault();
+                        if (onlytrueparam==null) continue;
                         // узнали параметры специальности
+
                         BasicParametrAdditional basicParametrs =
                             (from a in kpiWebDataContext.BasicParametrAdditional
                              where
@@ -152,10 +162,8 @@ namespace KPIWeb.Director
                             DataRow dataRow = dataTable.NewRow();
                             dataRow["BasicParametersTableID"] = basicParam.BasicParametersTableID;
                             dataRow["Name"] = basicParam.Name;
-                            string comment_ = (from a in kpiWebDataContext.BasicParametrAdditional
-                                               where a.BasicParametrAdditionalID == basicParam.BasicParametersTableID
-                                               && a.Active == true
-                                               select a.Comment).FirstOrDefault();
+                            MainFunctions comment = new MainFunctions();
+                            string comment_ = comment.GetCommentForBasicInReport(basicParam.BasicParametersTableID, ReportID);
                             if (comment_ != null)
                             {
                                 if (comment_.Length > 3)
@@ -299,10 +307,8 @@ namespace KPIWeb.Director
                             {
                                 dataRow["Name"] = specBasicParam.Name;
                                 dataRow["BasicParametersTableID"] = specBasicParam.BasicParametersTableID;
-                                string comment_ = (from a in kpiWebDataContext.BasicParametrAdditional
-                                                   where a.BasicParametrAdditionalID == specBasicParam.BasicParametersTableID
-                                                   && a.Active == true
-                                                   select a.Comment).FirstOrDefault();
+                                MainFunctions comment = new MainFunctions();
+                                string comment_ = comment.GetCommentForBasicInReport(specBasicParam.BasicParametersTableID, ReportID);
                                 if (comment_ != null)
                                 {
                                     if (comment_.Length > 3)
@@ -394,10 +400,8 @@ namespace KPIWeb.Director
                             dataRow["BasicParametersTableID"] = currentBasic.BasicParametersTableID;
                             int i = 0;
 
-                            string comment_ = (from a in kpiWebDataContext.BasicParametrAdditional
-                                               where a.BasicParametrAdditionalID == currentBasic.BasicParametersTableID
-                                               && a.Active == true
-                                               select a.Comment).FirstOrDefault();
+                            MainFunctions comment = new MainFunctions();
+                            string comment_ = comment.GetCommentForBasicInReport(currentBasic.BasicParametersTableID, ReportID);
                             if (comment_ != null)
                             {
                                 if (comment_.Length > 3)

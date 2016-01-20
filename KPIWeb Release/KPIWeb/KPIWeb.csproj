@@ -66,10 +66,7 @@
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3-beta1\lib\net45\System.Web.WebPages.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3-beta1\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
       <Private>True</Private>
@@ -327,6 +324,7 @@
     <Fakes Include="Fakes\System.Web.WebPages.fakes" />
     <None Include="Properties\PublishProfiles\Export.pubxml" />
     <None Include="Properties\PublishProfiles\home.pubxml" />
+    <None Include="Properties\PublishProfiles\qwe.pubxml" />
     <None Include="Properties\PublishProfiles\V_TEST1.pubxml" />
     <None Include="Properties\PublishProfiles\Web.pubxml" />
     <Content Include="Rector\NewInt\science.pdf" />
@@ -763,6 +761,7 @@
     </Compile>
     <Compile Include="Rector\ViewStruct.aspx.cs">
       <DependentUpon>ViewStruct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Rector\ViewStruct.aspx.designer.cs">
       <DependentUpon>ViewStruct.aspx</DependentUpon>

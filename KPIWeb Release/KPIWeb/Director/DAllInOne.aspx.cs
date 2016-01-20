@@ -101,10 +101,8 @@ namespace KPIWeb.Director
                         DataRow dataRow = dataTable.NewRow();
                         dataRow["BasicParametersTableID"] = CurrentBasic.BasicParametersTableID;
                         dataRow["Name"] = CurrentBasic.Name;
-                        string comment_ = (from a in kpiWebDataContext.BasicParametrAdditional
-                                           where a.BasicParametrAdditionalID == CurrentBasic.BasicParametersTableID
-                                           && a.Active == true
-                                           select a.Comment).FirstOrDefault();
+                        MainFunctions comment = new MainFunctions();
+                        string comment_ = comment.GetCommentForBasicInReport(CurrentBasic.BasicParametersTableID, ReportID);
                         if (comment_ != null)
                         {
                             if (comment_.Length > 3)

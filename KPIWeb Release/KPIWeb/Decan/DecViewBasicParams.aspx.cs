@@ -107,10 +107,8 @@ namespace KPIWeb.Decan
                             DataRow dataRow = dataTable.NewRow();
                             dataRow["BasicParametersTableID"] = basicParam.BasicParametersTableID;
                             dataRow["Name"] = basicParam.Name;
-                            string comment_ = (from a in kpiWebDataContext.BasicParametrAdditional
-                                               where a.BasicParametrAdditionalID == basicParam.BasicParametersTableID
-                                               && a.Active == true
-                                               select a.Comment).FirstOrDefault();
+                            MainFunctions comment = new MainFunctions();
+                            string comment_ = comment.GetCommentForBasicInReport(basicParam.BasicParametersTableID, ReportID);
                             if (comment_ != null)
                             {
                                 if (comment_.Length > 3)
@@ -260,10 +258,8 @@ namespace KPIWeb.Decan
                                 //  basicNames.Add(specBasicParam.Name);
                                 dataRow["Name"] = specBasicParam.Name;
                                 dataRow["BasicParametersTableID"] = specBasicParam.BasicParametersTableID;
-                                string comment_ = (from a in kpiWebDataContext.BasicParametrAdditional
-                                                   where a.BasicParametrAdditionalID == specBasicParam.BasicParametersTableID
-                                                   && a.Active == true
-                                                   select a.Comment).FirstOrDefault();
+                                MainFunctions comment = new MainFunctions();
+                                string comment_ = comment.GetCommentForBasicInReport(specBasicParam.BasicParametersTableID, ReportID);
                                 if (comment_ != null)
                                 {
                                     if (comment_.Length > 3)
@@ -334,10 +330,8 @@ namespace KPIWeb.Decan
                             dataRow["BasicParametersTableID"] = currentBasic.BasicParametersTableID;
                             int i = 0;
 
-                            string comment_ = (from a in kpiWebDataContext.BasicParametrAdditional
-                                               where a.BasicParametrAdditionalID == currentBasic.BasicParametersTableID
-                                               && a.Active == true
-                                               select a.Comment).FirstOrDefault();
+                            MainFunctions comment = new MainFunctions();
+                            string comment_ = comment.GetCommentForBasicInReport(currentBasic.BasicParametersTableID, ReportID);
                             if (comment_ != null)
                             {
                                 if (comment_.Length > 3)
