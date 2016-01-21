@@ -185,7 +185,8 @@ namespace KPIWeb.AutomationDepartment
                         basicParamAdd.Calculated = (Convert.ToInt32(strArrf[7]) > 0) ? true : false;
                         basicParamAdd.SpecType = Convert.ToInt32(strArrf[8]);
                         basicParamAdd.DataType = Convert.ToInt32(strArrf[9]);
-                        basicParamAdd.Comment = strArrf[10];
+                       // MainFunctions mainFunctions = new MainFunctions();
+                       // basicParamAdd.Comment = strArrf[10];
                         kPiDataContext.BasicParametrAdditional.InsertOnSubmit(basicParamAdd);
                     }
                 }

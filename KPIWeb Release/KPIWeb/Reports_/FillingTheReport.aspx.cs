@@ -302,7 +302,7 @@ namespace KPIWeb.Reports
                             }
                         }
                         additionalColumnCount += 1;
-                        columnNames.Add("  ");
+                        columnNames.Add("Деканат");
                     }
                     /* columnNames.Add("Кафедра:\r\n" + (from a in kPiDataContext.ThirdLevelSubdivisionTable
                                                    where a.ThirdLevelSubdivisionTableID == user.FK_ThirdLevelSubdivisionTable
