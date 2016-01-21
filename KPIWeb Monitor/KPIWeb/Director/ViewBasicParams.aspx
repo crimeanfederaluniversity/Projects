@@ -24,12 +24,12 @@
     <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
         </h2>
      <br />
-    <asp:GridView ID="GridView1"  AutoGenerateColumns="False" runat="server">
+    <asp:GridView ID="GridView1"  AutoGenerateColumns="False" runat="server" Visible="false">
         <Columns>    
-             <asp:BoundField DataField="LevelName" HeaderText="Подразделение" Visible="true" />     
+             <asp:BoundField DataField="LevelName" HeaderText="Подразделение" Visible="false" />     
                 <asp:TemplateField  HeaderText="Редактировать" >
                     <ItemTemplate>
-                        <asp:Button ID="ProgressButton" runat="server"  OnClientClick="showLoadPanel()" CommandName="Select"  Visible="true" Text="Редактирвать" CommandArgument='<%# Eval("ID") %>' Width="200px"  
+                        <asp:Button ID="ProgressButton" runat="server"  OnClientClick="showLoadPanel()" CommandName="Select"  Visible="false" Text="Редактирвать" CommandArgument='<%# Eval("ID") %>' Width="200px"  
                         OnClick="Button1Click" />                                         
                     </ItemTemplate>
                 </asp:TemplateField>
