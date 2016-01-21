@@ -226,10 +226,8 @@ namespace KPIWeb.Reports
                             dataRow["BasicParametersTableID"] = basicParam.BasicParametersTableID;
                             dataRow["Name"] = basicParam.Name;
 
-                            string comment_ = (from a in kPiDataContext.BasicParametrAdditional
-                                               where a.BasicParametrAdditionalID == basicParam.BasicParametersTableID
-                                               && a.Active == true
-                                               select a.Comment).FirstOrDefault();
+                            MainFunctions comment = new MainFunctions();
+                            string comment_ = comment.GetCommentForBasicInReport(basicParam.BasicParametersTableID, ReportArchiveID);
                             if (comment_ != null)
                             {
                                 if (comment_.Length > 3)
@@ -479,10 +477,8 @@ namespace KPIWeb.Reports
                                             dataRow["CurrentReportArchiveID"] = ReportArchiveID;
                                             dataRow["BasicParametersTableID"] = specBasicParam.BasicParametersTableID;
 
-                                            string comment_ = (from a in kPiDataContext.BasicParametrAdditional
-                                                               where a.BasicParametrAdditionalID == specBasicParam.BasicParametersTableID
-                                                               && a.Active == true
-                                                               select a.Comment).FirstOrDefault();
+                                            MainFunctions comment = new MainFunctions();
+                                            string comment_ = comment.GetCommentForBasicInReport(specBasicParam.BasicParametersTableID, ReportArchiveID);
                                             if (comment_ != null)
                                             {
                                                 if (comment_.Length > 3)

@@ -53,6 +53,7 @@ namespace KPIWeb.Director
                                                               on a.ThirdLevelSubdivisionTableID equals b.FK_ThirdLevelSubdivisionTable
                                                           where b.Active == true
                                                           && b.FK_FirstLevelSubmisionTableId == userTable.FK_FirstLevelSubdivisionTable
+                                                          && b.FK_ReportArchiveTableId == Report.ReportArchiveTableID
                                                           select a).Distinct().ToList();
 
                 foreach (ThirdLevelSubdivisionTable CurrentThird in Third)

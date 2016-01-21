@@ -148,6 +148,13 @@ namespace KPIWeb.Director
                                       && a.Active == true
                                 select a).FirstOrDefault();
                         if (onlytrueparam==null) continue;
+                        BasicParametrsAndUsersMapping basiccanview =
+                            (from a in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                where a.FK_ParametrsTable == basicParam.BasicParametersTableID
+                                      && a.FK_UsersTable == userID && a.Active == true && a.CanView == true
+                                select a).FirstOrDefault();
+                        if(basiccanview == null) continue;
+
                         // узнали параметры специальности
 
                         BasicParametrAdditional basicParametrs =
@@ -237,6 +244,11 @@ namespace KPIWeb.Director
                                    && c.Active == true
                              select b).ToList();
                         //Получили показатели разрешенные пользователю в данном отчёте
+                        ThirdLevelParametrs thirdParametrs =
+                            (from a in kpiWebDataContext.ThirdLevelParametrs
+                             where a.ThirdLevelParametrsID == ThirdLevel
+                             select a).FirstOrDefault();
+
                         List<FourthLevelSubdivisionTable> Specialzations =
                             (from a in kpiWebDataContext.FourthLevelSubdivisionTable
                              where a.FK_ThirdLevelSubdivisionTable == ThirdLevel
@@ -264,6 +276,19 @@ namespace KPIWeb.Director
                                  select a).FirstOrDefault();
                             //узнали параметры базового показателя
                             int j = 0;
+                            BasicParametrsAndSubdivisionClassMappingTable onlytrueparam =
+                            (from a in kpiWebDataContext.BasicParametrsAndSubdivisionClassMappingTable
+                             where a.FK_BasicParametrsTable == specBasicParam.BasicParametersTableID
+                                   && a.FK_SubdivisionClassTable == thirdParametrs.FK_SubdivisionClassTable
+                                   && a.Active == true
+                             select a).FirstOrDefault();
+                            if (onlytrueparam == null) continue;
+                            BasicParametrsAndUsersMapping basiccanview =
+                                (from a in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                 where a.FK_ParametrsTable == specBasicParam.BasicParametersTableID
+                                       && a.FK_UsersTable == userID && a.Active == true && a.CanView == true
+                                 select a).FirstOrDefault();
+                            if (basiccanview == null) continue;
                             //если хоть одной специальности базовый показатель нужен то мы его выведем
                             foreach (FourthLevelSubdivisionTable spec in Specialzations)
                             {
@@ -282,6 +307,7 @@ namespace KPIWeb.Director
                                 // это для деления на магистров аспирантов итд
                                 {
                                     j++; //потом проверка и следовательно БП нуно выводить
+
                                     CollectedBasicParametersTable collectedBasicTmp =
                                         (from a in kpiWebDataContext.CollectedBasicParametersTable
                                          where
@@ -392,8 +418,20 @@ namespace KPIWeb.Director
                                                                      select a).Distinct().ToList();
                         foreach (BasicParametersTable currentBasic in KafBasicParams)
                         {
-
-
+      
+                         /*   BasicParametrsAndSubdivisionClassMappingTable onlytrueparam =
+                            (from a in kpiWebDataContext.BasicParametrsAndSubdivisionClassMappingTable
+                             where a.FK_BasicParametrsTable == currentBasic.BasicParametersTableID
+                                   && a.FK_SubdivisionClassTable == thirdParametrs.FK_SubdivisionClassTable
+                                   && a.Active == true
+                             select a).FirstOrDefault();*/
+                           // if (onlytrueparam == null) continue;
+                            BasicParametrsAndUsersMapping basiccanview =
+                                (from a in kpiWebDataContext.BasicParametrsAndUsersMapping
+                                 where a.FK_ParametrsTable == currentBasic.BasicParametersTableID
+                                       && a.FK_UsersTable == userID && a.Active == true && a.CanView == true
+                                 select a).FirstOrDefault();
+                            if (basiccanview == null) continue;
 
                             DataRow dataRow = dataTable.NewRow();
                             dataRow["Name"] = currentBasic.Name;

@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.DynamicData;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using iTextSharp.text;
 
 namespace KPIWeb.Reports
 {
@@ -475,6 +476,10 @@ namespace KPIWeb.Reports
                                 ConfButton = 0;
                                 EditButton = 0;
                             }
+                            if ((from a in kpiWebDataContext.ReportArchiveTable
+                                 where a.ReportArchiveTableID == ReportArchiveID && a.Sent==true
+                                 select a).FirstOrDefault() != null)
+                                EditButton++;
                     /////////////////////////////////////////////////////////
                         btnConfirm.Enabled = ConfButton>0?false:true;
                         btnEdit.Enabled = EditButton>0?false:true;
@@ -498,82 +503,93 @@ namespace KPIWeb.Reports
        
             }
         }
+
         protected void ButtonEditClick(object sender, EventArgs e)
         {            
-            Button button = (Button)sender;
-            {
-                Serialization UserSer = (Serialization)Session["UserID"];
-                if (UserSer == null)
+                Button button = (Button) sender;
                 {
-                    Response.Redirect("~/Default.aspx");
-                }
-
-                int userID = UserSer.Id;
-                KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-
-                UsersTable userTable =
-                    (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
-                ThirdLevelParametrs thirdParam = (from a in kpiWebDataContext.ThirdLevelParametrs
-                    where
-                        a.ThirdLevelParametrsID == userTable.FK_ThirdLevelSubdivisionTable
-                        && a.Active == true 
-                
-                    select a).FirstOrDefault();
-
-                
-
-                Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
-                Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчёта               
-                Serialization modeSer = new Serialization(0,null,null);
-                Session["mode"] = modeSer;
-
-                UsersTable currentUser =
-                        (from a in kpiWebDataContext.UsersTable
-                         where a.UsersTableID == (int)ViewState["LocalUserID"]
-                         select a).FirstOrDefault();
-
-                LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0CR0: Пользователь " + currentUser.Email + " зашел на страницу редактирования отчета с ID = " + paramSerialization.ReportStr);
-
-                if (currentUser.AccessLevel == 1)
-                {
-                    Response.Redirect("~/Reports_/FillingTheReportByDepartment.aspx"); 
-                }
-
-                if (thirdParam != null)
-                {
+                    KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
+                   
                     
-                    if (thirdParam.CanGraduate)
-                    {
-                        FourthLevelSubdivisionTable fourth =
-                        (from a in kpiWebDataContext.FourthLevelSubdivisionTable
-                         where a.Active == true
-                         && a.FK_ThirdLevelSubdivisionTable == thirdParam.ThirdLevelParametrsID
-                         select a).FirstOrDefault();
-                        if (fourth != null)
+                        Serialization UserSer = (Serialization) Session["UserID"];
+                        if (UserSer == null)
                         {
-                            Response.Redirect("~/Reports_/Parametrs.aspx");
+                            Response.Redirect("~/Default.aspx");
+                        }
+
+                        int userID = UserSer.Id;
+
+
+                        UsersTable userTable =
+                            (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a)
+                                .FirstOrDefault();
+                        ThirdLevelParametrs thirdParam = (from a in kpiWebDataContext.ThirdLevelParametrs
+                            where
+                                a.ThirdLevelParametrsID == userTable.FK_ThirdLevelSubdivisionTable
+                                && a.Active == true
+
+                            select a).FirstOrDefault();
+
+                        Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
+                        Session["ReportArchiveID"] = paramSerialization;
+                            // запомнили в сессии номер отчёта               
+                        Serialization modeSer = new Serialization(0, null, null);
+                        Session["mode"] = modeSer;
+
+                        UsersTable currentUser =
+                            (from a in kpiWebDataContext.UsersTable
+                                where a.UsersTableID == (int) ViewState["LocalUserID"]
+                                select a).FirstOrDefault();
+
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO,
+                            "0CR0: Пользователь " + currentUser.Email +
+                            " зашел на страницу редактирования отчета с ID = " +
+                            paramSerialization.ReportStr);
+
+                        if (currentUser.AccessLevel == 1)
+                        {
+                            Response.Redirect("~/Reports_/FillingTheReportByDepartment.aspx");
+                        }
+
+                        if (thirdParam != null)
+                        {
+
+                            if (thirdParam.CanGraduate)
+                            {
+                                FourthLevelSubdivisionTable fourth =
+                                    (from a in kpiWebDataContext.FourthLevelSubdivisionTable
+                                        where a.Active == true
+                                              && a.FK_ThirdLevelSubdivisionTable == thirdParam.ThirdLevelParametrsID
+                                        select a).FirstOrDefault();
+                                if (fourth != null)
+                                {
+                                    Response.Redirect("~/Reports_/Parametrs.aspx");
+                                }
+                                else
+                                {
+                                    Response.Redirect("~/Reports_/FillingTheReport.aspx");
+                                }
+
+                            }
+                            else
+                            {
+                                Response.Redirect("~/Reports_/FillingTheReport.aspx");
+                            }
                         }
                         else
                         {
                             Response.Redirect("~/Reports_/FillingTheReport.aspx");
                         }
-
                     }
-                    else
-                    {
-                       Response.Redirect("~/Reports_/FillingTheReport.aspx");
-                    }
-                }
-                else
-                {
-                    Response.Redirect("~/Reports_/FillingTheReport.aspx");
-                }
-            }
+                           
         }
+
         protected void ButtonViewClick(object sender, EventArgs e)
         {
+            
             Button button = (Button)sender;
             {
+                
                 Serialization paramSerialization = new Serialization(button.CommandArgument.ToString());
                 Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии номер отчёта        
                 Serialization modeSer = modeSer = new Serialization(1, null, null);
@@ -638,10 +654,12 @@ namespace KPIWeb.Reports
                     Response.Redirect("~/Default.aspx");
                 }
             }
-        }      
+        }
+
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            
+
+          
          
         }
     }
