@@ -221,6 +221,7 @@
     <Content Include="Decan\DecViewBasicParams.aspx" />
     <Content Include="Decan\DecViewReport.aspx" />
     <Content Include="DepartmentFilling\ChooseBasic.aspx" />
+    <Content Include="Director\ConfirmCheckBoxes.aspx" />
     <Content Include="Info_Pages\UserWithStructWithReport.aspx" />
     <Content Include="ProrectorReportFilling\ChooseAcademy.aspx" />
     <Content Include="ProrectorReportFilling\ChooseFaculty.aspx" />
@@ -588,6 +589,13 @@
     </Compile>
     <Compile Include="DepartmentFilling\ChooseBasic.aspx.designer.cs">
       <DependentUpon>ChooseBasic.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Director\ConfirmCheckBoxes.aspx.cs">
+      <DependentUpon>ConfirmCheckBoxes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Director\ConfirmCheckBoxes.aspx.designer.cs">
+      <DependentUpon>ConfirmCheckBoxes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Info_Pages\UserWithStructWithReport.aspx.cs">
       <DependentUpon>UserWithStructWithReport.aspx</DependentUpon>

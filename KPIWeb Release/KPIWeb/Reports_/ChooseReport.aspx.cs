@@ -162,9 +162,33 @@ namespace KPIWeb.Reports
                                                              && ((d.CanConfirm == true) || (d.CanEdit == true)) //
                                                              && (d.FK_UsersTable == userID) //
                                                              && a.Active == true
-                                                             && b.Active == true
+                                                            // && b.Active == true
                                                              && c.Calculated == false
                                                          select a).FirstOrDefault();
+
+                                List<UsersTable> usrTable =
+                                                                (from a in kpiWebDataContext.CollectedBasicParametersTable
+                                                                 join b in kpiWebDataContext.UsersTable
+                                                                     on a.FK_UsersTable equals b.UsersTableID
+                                                                 join c in kpiWebDataContext.BasicParametrAdditional
+                                                                     on a.FK_BasicParametersTable equals c.BasicParametrAdditionalID
+                                                                 join d in kpiWebDataContext.BasicParametrsAndUsersMapping //
+                                                                 on a.FK_BasicParametersTable equals d.FK_ParametrsTable //
+                                                                 where
+                                                                     a.FK_ReportArchiveTable == ReportRow.ReportArchiveTableID
+                                                                     && ((b.FK_ZeroLevelSubdivisionTable == l_0) || (l_0 == 0))
+                                                                     && ((b.FK_FirstLevelSubdivisionTable == l_1) || (l_1 == 0))
+                                                                     && ((b.FK_SecondLevelSubdivisionTable == l_2) || (l_2 == 0))
+                                                                     && ((b.FK_ThirdLevelSubdivisionTable == l_3) || (l_3 == 0))
+                                                                     && ((b.FK_FourthLevelSubdivisionTable == l_4) || (l_4 == 0))
+                                                                     && ((b.FK_FifthLevelSubdivisionTable == l_5) || (l_5 == 0))
+                                                                     && ((d.CanConfirm == true) || (d.CanEdit == true)) //
+                                                                  //   && (d.FK_UsersTable == userID) //
+                                                                     && a.Active == true
+                                                                     // && b.Active == true
+                                                                     && c.Calculated == false
+                                                                 select b).Distinct().ToList();
+
 
                    
 

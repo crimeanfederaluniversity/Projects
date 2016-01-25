@@ -437,7 +437,6 @@ namespace KPIWeb.Director
                             dataRow["Name"] = currentBasic.Name;
                             dataRow["BasicParametersTableID"] = currentBasic.BasicParametersTableID;
                             int i = 0;
-
                             MainFunctions comment = new MainFunctions();
                             string comment_ = comment.GetCommentForBasicInReport(currentBasic.BasicParametersTableID, ReportID);
                             if (comment_ != null)
@@ -455,10 +454,8 @@ namespace KPIWeb.Director
                             {
                                 dataRow["Comment"] = " ";
                             }
-
                             foreach (ThirdLevelSubdivisionTable currentThird in OnlyKafedras)
                             {
-
                                 CollectedBasicParametersTable curcollect = (from a in kpiWebDataContext.CollectedBasicParametersTable
                                                                             where a.FK_BasicParametersTable == currentBasic.BasicParametersTableID
                                                                             && a.FK_ThirdLevelSubdivisionTable == currentThird.ThirdLevelSubdivisionTableID
@@ -479,17 +476,11 @@ namespace KPIWeb.Director
                                         dataRow["Value" + i] = ((float)curcollect.CollectedValue).ToString("0");
                                     }
                                 }
-
-
-
                                 i++;
-
                             }
                             dataTable.Rows.Add(dataRow);
                         }
-
                     }
-
 
                     if ((DateTime)Report.EndDateTime < DateTime.Now)
                     {

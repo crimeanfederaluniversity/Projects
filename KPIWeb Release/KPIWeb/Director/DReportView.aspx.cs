@@ -162,6 +162,64 @@ namespace KPIWeb.Director
                     }
                     dataTable.Rows.Add(dataRow);
                 }
+
+                 List<FourthLevelSubdivisionTable> fourth = (from a in kpiWebDataContext.FourthLevelSubdivisionTable
+                        join b in kpiWebDataContext.ThirdLevelSubdivisionTable
+                            on a.FK_ThirdLevelSubdivisionTable equals b.ThirdLevelSubdivisionTableID
+                        join c in kpiWebDataContext.SecondLevelSubdivisionTable
+                            on b.FK_SecondLevelSubdivisionTable equals c.SecondLevelSubdivisionTableID
+                        join d in kpiWebDataContext.FirstLevelSubdivisionTable
+                            on c.FK_FirstLevelSubdivisionTable equals d.FirstLevelSubdivisionTableID
+                        where a.Active == true
+                              && b.Active == true
+                              && c.Active == true
+                              && d.Active == true
+                              && d.FirstLevelSubdivisionTableID == userTable.FK_FirstLevelSubdivisionTable
+                        select a).Distinct().ToList();
+               
+                if (fourth.Count > 0 && ReportID>6)
+                {
+
+                    CollectedBasicParametersTable collectedForCheckbox =
+                        (from a in kpiWebDataContext.CollectedBasicParametersTable
+                            where
+                                a.FK_FirstLevelSubdivisionTable == userTable.FK_FirstLevelSubdivisionTable
+                                && a.FK_ReportArchiveTable == ReportID
+                                && a.FK_BasicParametersTable == 3946
+                                && a.Active == true
+                                && a.CollectedValue == 1
+                            select a).FirstOrDefault();
+                    bool isFourthLevelParamIsOk = false;
+                    if (collectedForCheckbox == null)
+                    {
+                        isFourthLevelParamIsOk = false;
+                    }
+                    else
+                    {
+                        isFourthLevelParamIsOk = true;
+                    }
+                    if (!isFourthLevelParamIsOk)
+                    {
+                        canconfirm = false;
+                    }
+
+                    DataRow dataRow3 = dataTable.NewRow();
+                    dataRow3["StructName"] = "Параметры направлений подготовки";
+                    dataRow3["StructID"] = "100500";
+                    if (isFourthLevelParamIsOk)
+                    {
+                        dataRow3["Status"] = "Утверждено";
+                        dataRow3["Color"] = 3;
+                    }
+                    else
+                    {
+                        dataRow3["Status"] = "Не утверждено";
+                        dataRow3["Color"] = 2;
+                    }
+
+
+                    dataTable.Rows.Add(dataRow3);
+                }
                 Button1.Enabled = canconfirm;
                 
                 GridView1.DataSource = dataTable;
@@ -175,7 +233,12 @@ namespace KPIWeb.Director
             Button button = (Button)sender;
             {
                 Serialization paramSerialization = (Serialization)Session["ReportArchiveID"];
-                paramSerialization.l2 = Convert.ToInt32(button.CommandArgument.ToString());  
+                paramSerialization.l2 = Convert.ToInt32(button.CommandArgument.ToString());
+
+                if (paramSerialization.l2 == 100500)
+                {
+                    Response.Redirect("~/Director/ConfirmCheckBoxes.aspx");
+                }
                 Session["ReportArchiveID"] = paramSerialization; // запомнили в сессии второй уровень
                 Response.Redirect("~/Director/DViewThird.aspx");
             }

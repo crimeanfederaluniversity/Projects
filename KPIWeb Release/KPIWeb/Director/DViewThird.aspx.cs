@@ -235,9 +235,7 @@ namespace KPIWeb.Director
                          dataRow["Color"] = 1;
                          dataRow["Status"] = "Утверждено " + confirmedCafedras.ToString() + " из " + OnlyKafedras.Count.ToString();
                     }
-                   
-
-                    
+                
                     dataTable.Rows.Add(dataRow);
                 }
                 GridView1.DataSource = dataTable;
