@@ -500,11 +500,14 @@ namespace KPIWeb.Reports
                                 ConfButton = 0;
                                 EditButton = 0;
                             }
-                            if ((from a in kpiWebDataContext.ReportArchiveTable
-                                 where a.ReportArchiveTableID == ReportArchiveID && a.Sent==true
-                                 select a).FirstOrDefault() != null)
-                                EditButton++;
-                    /////////////////////////////////////////////////////////
+                        if ((from a in kpiWebDataContext.ReportArchiveTable
+                            where a.ReportArchiveTableID == ReportArchiveID && a.Sent == true
+                            select a).FirstOrDefault() != null)
+                        {
+                            ConfButton++;
+                            EditButton++;
+                        }
+                        /////////////////////////////////////////////////////////
                         btnConfirm.Enabled = ConfButton>0?false:true;
                         btnEdit.Enabled = EditButton>0?false:true;
                         btnView.Enabled = ViewButton > 0 ? false : true;

@@ -266,7 +266,7 @@ background-color:#FFFFFF}
 
                     <asp:TemplateField HeaderText="Подробнее">
                         <ItemTemplate>
-                            <asp:Button ID="ButtonEditReport" runat="server" CssClass="vbutton" OnClientClick="showLoadPanel()"  CommandName="Select" Text="Просмотреть и согласовать" Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonViewClick"/>
+                            <asp:Button ID="ButtonEditReport" runat="server" CssClass="vbutton" OnClientClick="showLoadPanel()"  CommandName="Select" Text='<%# Eval("ButtonName") %>' Width="200px" CommandArgument='<%# Eval("ReportArchiveID") %>' OnClick="ButtonViewClick"/>
                         </ItemTemplate>
                     </asp:TemplateField>
 

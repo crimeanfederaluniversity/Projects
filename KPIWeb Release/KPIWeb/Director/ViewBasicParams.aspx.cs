@@ -42,7 +42,21 @@ namespace KPIWeb.Director
                                                 where a.ReportArchiveTableID == Convert.ToInt32(paramSerialization.ReportStr)
                                                 select a).FirstOrDefault();
 
-            string filePath = PDFCreate.ExportPDF(GridviewCollectedBasicParameters, Widhts, " ", 3, colcnt, "Название отчета: " + CurrentReport.Name, "Ваш email адрес: " + userTable.Email, PDFCreate.StructLastName(userTable.UsersTableID));
+
+
+
+        
+            int SecondLevel = paramSerialization.l2;
+
+            SecondLevelSubdivisionTable Second = (from a in kPiDataContext.SecondLevelSubdivisionTable
+                                                  where a.SecondLevelSubdivisionTableID == SecondLevel
+                                                  select a).FirstOrDefault();
+
+
+
+
+
+            string filePath = PDFCreate.ExportPDF(GridviewCollectedBasicParameters, Widhts, " ", 3, colcnt, "Название отчета: " + CurrentReport.Name, "Ваш email адрес: " + userTable.Email, Second.Name);
             return filePath;
         }
 

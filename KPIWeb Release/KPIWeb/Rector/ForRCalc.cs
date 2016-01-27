@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.WebPages;
 
@@ -596,9 +597,16 @@ namespace KPIWeb.Rector
             string Name_ = "";
             float Value_ = 0;
             #region plannedIndicator
+
+
+            int tmpreportId = ReportID == 100500 ? 1 : ReportID;
+            ReportArchiveTable currentReport = (from a in kpiWebDataContext.ReportArchiveTable
+            where a.ReportArchiveTableID == tmpreportId 
+                select a).FirstOrDefault();
+
             PlannedIndicator plannedValue = (from a in kpiWebDataContext.PlannedIndicator
                                              where a.FK_IndicatorsTable == Indicator.IndicatorsTableID
-                                                   && a.Date > DateTime.Now
+                                                   && a.Date > currentReport.StartDateTime
                                              select a).OrderBy(x => x.Date).FirstOrDefault();
             if (plannedValue != null)
             {

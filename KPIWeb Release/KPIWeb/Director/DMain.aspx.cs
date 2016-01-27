@@ -68,6 +68,7 @@ namespace KPIWeb.Director
                 dataTable.Columns.Add(new DataColumn("StartDate", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("EndDate", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Status", typeof(string)));
+                dataTable.Columns.Add(new DataColumn("ButtonName", typeof(string)));
 
                 foreach (ReportArchiveTable ReportRow in reports)
                 {
@@ -110,7 +111,8 @@ namespace KPIWeb.Director
                     dataRow["ReportName"] = ReportRow.Name;
                     dataRow["StartDate"] = ReportRow.StartDateTime.ToString().Split(' ')[0];//только дата// время обрезается сплитом
                     dataRow["EndDate"] = ReportRow.EndDateTime.ToString().Split(' ')[0];
-
+                    string buttonName = "Просмотреть";
+                    
                     /*List<SecondLevelSubdivisionTable> Faculties = (from a in kpiWebDataContext.SecondLevelSubdivisionTable
                                                                    where a.FK_FirstLevelSubdivisionTable == userTable.FK_FirstLevelSubdivisionTable
                                                                    && a.Active == true
@@ -193,14 +195,17 @@ namespace KPIWeb.Director
                         if (allconf2 > (AllConfirmed / 2))
                         {
                             status = "Данные согласованы";
+                            buttonName = "Просмотреть";
                         }
                         else
                         {
                             status = "Данные ожидают согласования";
+                            buttonName = "Просмотреть и согласовать";
                         }                       
                     }
                     else if (AllConfirmed < All)
                     {
+                        buttonName = "Просмотреть";
                         if (AllConfirmed == 0)
                         {
                             status = "Готовы на 0%";
@@ -216,6 +221,7 @@ namespace KPIWeb.Director
                     }
                     //нужно определить статус данных                                     
                     dataRow["Status"] = status;
+                    dataRow["ButtonName"] = buttonName;
                     dataTable.Rows.Add(dataRow);
 
                     #endregion
