@@ -1,20 +1,17 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="PersonalPages.SiteMaster" %>
 
 <!DOCTYPE html>
-
 <html lang="ru">
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %> - КФУ-Портал</title>
-
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <link rel="stylesheet" href="App_Themes/theme_1/css/masterpage.css" type="text/css" />
-    
+    <link rel="stylesheet" href="App_Themes/theme_1/css/masterpage.css" type="text/css" />    
 </head>
 <body>
 <div id="divbg"></div>
@@ -39,8 +36,7 @@
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
-
-        <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar navbar-inverse navbar-fixed-top navbar">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -53,20 +49,18 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <!-- <li><a runat="server" href="~/">Стартовая старница</a></li>-->
-                       <li><a runat="server" href="~/About">Помощь</a></li>
-                        <li><a runat="server" href="~/Contact">Контакты</a></li>
+                       <li><a runat="server" href="~/About.aspx">Помощь</a></li>
+                        <li><a runat="server" href="~/Contact.aspx">Контакты</a></li>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
-                            <ul class="nav navbar-nav navbar-right">
-                            
-                                <li><a runat="server" href="~/Account/Login">Вход</a></li>
+                            <ul class="nav navbar-nav navbar-right">                            
+                                <li><a runat="server" href="~/Account/Login.aspx">Вход</a></li>
                             </ul>
                         </AnonymousTemplate>
                         <LoggedInTemplate>
-                            <ul class="nav navbar-nav navbar-right">
-                                 
-                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Мои учетные данные</a></li>
+                            <ul class="nav navbar-nav navbar-right">                                
+                                <li><a runat="server" href="~/Account/Manage.aspx" title="Manage your account">Мои учетные данные</a></li>
                                 <li>
                                     <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Выход" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
                                 </li>
@@ -74,18 +68,21 @@
                         </LoggedInTemplate>
                     </asp:LoginView>
                 </div>
-            </div>
+            </div>            
         </div>
-        <div class="container body-content">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+    
+        <div class="body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">              
                 <p>
                 </p>
             </asp:ContentPlaceHolder>
-            <hr />
+            </div> 
+        <div>
+                        <hr />
             <footer>
                 <p>&copy; <%: DateTime.Now.Year %> - КФУ-Портал</p>
-            </footer>
-        </div>
+            </footer>       
+            </div>       
     </form>
     <asp:Panel id="loading" runat="server" class="loading" Visible="false" >
    <asp:Panel id="gears" runat="server" >
@@ -94,15 +91,14 @@
        <asp:Panel runat="server" id="im2"  ></asp:Panel>
    </asp:Panel>
    </asp:Panel><!--GEARS PB-->
-
+            
   <asp:Panel id="loading_2" runat="server" class="loading_circle" Visible="false" >
        <asp:Panel id="bgpanel_of_circlebar" runat="server" >
-             <asp:Panel runat="server" id="im3_circle"  ></asp:Panel>
-          
+             <asp:Panel runat="server" id="im3_circle"  ></asp:Panel>          
              <asp:Panel  runat="server" id="im3_bg_circle" style="clip-path: url(#cclp)"  ></asp:Panel>
             	<svg width="0" height="0">
                  <defs>
-        <clipPath id="cclp">
+            <clipPath id="cclp">
             <circle cx="100" cy="20" r="20" />
             <circle cx="44" cy="44" r="20" />
             <circle cx="20" cy="100" r="20" />

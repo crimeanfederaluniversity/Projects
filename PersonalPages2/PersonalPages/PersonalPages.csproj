@@ -150,6 +150,9 @@
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Manage.aspx" />
     <Content Include="Account\OpenAuthProviders.ascx" />
+    <Content Include="App_Themes\theme_1\css\images\competitions_admin.png" />
+    <Content Include="App_Themes\theme_1\css\images\documentorotation.png" />
+    <Content Include="App_Themes\theme_1\css\images\Seminar.jpg" />
     <Content Include="App_Themes\theme_1\css\images\b.png" />
     <Content Include="App_Themes\theme_1\css\images\bb.png" />
     <Content Include="App_Themes\theme_1\css\images\bg_1.png" />
@@ -183,6 +186,39 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="MasterServises\AdminServices.aspx" />
+    <Content Include="MasterServises\CommunicationServices.aspx" />
+    <Content Include="MasterServises\ElectronicEducation.aspx" />
+    <Content Include="MasterServises\InfoServices.aspx" />
+    <Content Include="MasterServises\UserAsist.aspx" />
+    <Content Include="NewImages\CFU.png" />
+    <Content Include="NewImages\CFU_admin.png" />
+    <Content Include="NewImages\competitions.png" />
+    <Content Include="NewImages\competitions_admin.png" />
+    <Content Include="NewImages\documentorotation.png" />
+    <Content Include="NewImages\documentorotation_admin.png" />
+    <Content Include="NewImages\dukipr.png" />
+    <Content Include="NewImages\dukipr_admin.png" />
+    <Content Include="NewImages\lan.png" />
+    <Content Include="NewImages\lan_admin.png" />
+    <Content Include="NewImages\LC.png" />
+    <Content Include="NewImages\LC_admin.png" />
+    <Content Include="NewImages\libraries.png" />
+    <Content Include="NewImages\libraries_admin.png" />
+    <Content Include="NewImages\monitoring.png" />
+    <Content Include="NewImages\monitoring_admin.png" />
+    <Content Include="NewImages\progress.png" />
+    <Content Include="NewImages\progress_admin.png" />
+    <Content Include="NewImages\ratings.png" />
+    <Content Include="NewImages\ratings_admin.png" />
+    <Content Include="NewImages\sport_competition.png" />
+    <Content Include="NewImages\sport_competition_admin.png" />
+    <Content Include="NewImages\tasks.png" />
+    <Content Include="NewImages\tasks_admin.png" />
+    <Content Include="NewImages\videolessons.png" />
+    <Content Include="NewImages\videolessons_admin.png" />
+    <Content Include="NewImages\znanium.png" />
+    <Content Include="NewImages\znanium_admin.png" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -196,6 +232,7 @@
     <Content Include="App_Themes\theme_1\css\images\Thumbs.db" />
     <Content Include="App_Themes\theme_1\Skin1.skin" />
     <None Include="Properties\PublishProfiles\123.pubxml" />
+    <None Include="Properties\PublishProfiles\321.pubxml" />
     <None Include="Properties\PublishProfiles\My.pubxml" />
     <None Include="Properties\PublishProfiles\personaldeploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -242,6 +279,7 @@
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Site.Mobile.Master" />
+    <Content Include="Second.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -298,10 +336,52 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MasterServises\AdminServices.aspx.cs">
+      <DependentUpon>AdminServices.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterServises\AdminServices.aspx.designer.cs">
+      <DependentUpon>AdminServices.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterServises\CommunicationServices.aspx.cs">
+      <DependentUpon>CommunicationServices.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterServises\CommunicationServices.aspx.designer.cs">
+      <DependentUpon>CommunicationServices.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterServises\ElectronicEducation.aspx.cs">
+      <DependentUpon>ElectronicEducation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterServises\ElectronicEducation.aspx.designer.cs">
+      <DependentUpon>ElectronicEducation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterServises\InfoServices.aspx.cs">
+      <DependentUpon>InfoServices.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterServises\InfoServices.aspx.designer.cs">
+      <DependentUpon>InfoServices.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterServises\UserAsist.aspx.cs">
+      <DependentUpon>UserAsist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterServises\UserAsist.aspx.designer.cs">
+      <DependentUpon>UserAsist.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PersonalPages.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PersonalPages.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Second.Master.cs">
+      <DependentUpon>Second.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Second.Master.designer.cs">
+      <DependentUpon>Second.Master</DependentUpon>
     </Compile>
     <Compile Include="Serialization.cs" />
     <Compile Include="Site.Master.cs">

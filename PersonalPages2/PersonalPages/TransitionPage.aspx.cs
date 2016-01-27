@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
+
 
 namespace PersonalPages
 {
@@ -61,6 +57,9 @@ namespace PersonalPages
 
                 foreach (var name in userGroups)
                 {
+                    Label lb1 = new Label();
+                    lb1.Text = "&nbsp;&nbsp;";
+                    Panel1.Controls.Add(lb1);
                     ImageButton newBox = new ImageButton();
                     newBox.ImageUrl = name.ImageUrl;
                     newBox.ID = "box" + name.UserGroupID;
@@ -88,6 +87,9 @@ namespace PersonalPages
                                                    select a).Distinct().ToList();
                 foreach (var name in userGroups)
                 {
+                    Label lb1 = new Label();
+                    lb1.Text = "&nbsp;&nbsp;";
+                    Panel1.Controls.Add(lb1);
                     ImageButton newBox = new ImageButton();
                     newBox.ImageUrl = name.ImageUrl;
                     newBox.ID = "box" + name.UserGroupID;
