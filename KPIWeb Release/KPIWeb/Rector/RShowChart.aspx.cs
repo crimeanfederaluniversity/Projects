@@ -101,6 +101,7 @@ namespace KPIWeb.Rector
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
 
+
             }
         }       
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -116,7 +117,12 @@ namespace KPIWeb.Rector
                                  where ind.IndicatorsTableID == IndicatorsList[e.Row.RowIndex]
                                  select ind).FirstOrDefault();
 
-                        // ERROR != null
+                var prorectorfails =
+                     (from a in kPiDataContext.ProrectorIndicatorValues
+                            where a.FK_IndicatorsTable == indicator.IndicatorsTableID
+                            select a).FirstOrDefault(); // проректорские данные
+
+                // ERROR != null
 
                 string tooltip = indicator.Name;
                 if (tooltip.Count() > 124)
@@ -125,8 +131,50 @@ namespace KPIWeb.Rector
                 
                 string indID = DataBinder.Eval(e.Row.DataItem, "IndicatorID").ToString();
                 Chart chart = (Chart)e.Row.FindControl("Chart3");
+                Chart chart11 = (Chart)e.Row.FindControl("Chart11"); // проректорские данные чарт
                 Button button = (Button)e.Row.FindControl("Button7");
                 //chart.TempDirectory = "/app/tmp"; 
+
+
+                // проректорский chart
+                //=============================================
+                if (chart11 != null)
+                {
+
+                    // Формирую чарт
+                    //chart.Series["ValueSeries"].Color = Color.CornflowerBlue;   //Color.FromArgb(255, 100, 149, 0);
+                    //chart.Series["ValueSeries"].Color = Color.FromArgb(255, 100, 149, 237);
+                    chart11.Series["ValueSeries"].Color = Color.Tomato;
+                    chart11.ChartAreas["ChartArea1"].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount; // масштабирование разметки
+                    chart11.ChartAreas["ChartArea1"].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount; // -==--
+                    //chart.Series["TargetSeries"].Color = Color.FromArgb(122, 50, 255, 0);
+                    chart11.Series["TargetSeries"].Color = Color.FromArgb(75, 20, 30, 0);
+
+                    ChartItems chartItems = new ChartItems(); // класс для работы с чартом
+
+
+                    if (prorectorfails != null)
+                    {
+                        chartItems.AddChartItem("", prorectorfails.Value); // добавляем по оси X value
+
+                        if (prorectorfails.Value > 0 && prorectorfails.FK_ReportArchiveTable == reportId) // Отображать или нет проректорский график
+                        chart11.Visible = true;
+                    }
+                    // Привязываем класс с объектом к диаграмме
+                    chart11.DataSource = chartItems.GetDataSource();
+                    //chart.Series["ValueSeries"].XValueMember = "Name";
+                    chart11.Series["ValueSeries"].YValueMembers = "Value";
+
+                   // if (DataForChart.value != 0)
+                    {
+                        chart11.Series["ValueSeries"].Label = "#VALY " + indicator.Measure;
+                        chart11.Series["ValueSeries"].Font = new Font("Arial", 10f, FontStyle.Bold);
+                    }
+                    //=====================================================
+                    // end проректорский чарт
+
+
+                }
                 if (chart != null)
                 {
                     ChartOneValue DataForChart = forRCalc.IndicatorsForCFUOneIndicator(Convert.ToInt32(indID), reportId); // 1 индикатор в разрезе КФУ взятый по ID

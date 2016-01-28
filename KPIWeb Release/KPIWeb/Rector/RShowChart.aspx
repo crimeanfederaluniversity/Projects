@@ -102,6 +102,19 @@
                                     <asp:ChartArea Name="ChartArea1"></asp:ChartArea>
                                 </ChartAreas>
                             </asp:Chart>
+                            
+                                                        <asp:Chart ID="Chart11" runat="server" Width="950px" Height="200px" Visible="False">            
+                                <series>
+                                    <asp:Series Name="ValueSeries" ChartType="StackedBar">
+                                    </asp:Series>
+                                     <asp:Series Name="TargetSeries" ChartType="Bar">
+                                    </asp:Series>          
+                                    </series>
+                                <ChartAreas>
+                                    <asp:ChartArea Name="ChartArea1"></asp:ChartArea>
+                                </ChartAreas>
+                            </asp:Chart>
+
                         </div>
                     </ItemTemplate>
                 </asp:TemplateField>
