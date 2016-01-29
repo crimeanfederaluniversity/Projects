@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -17,7 +18,7 @@ namespace KPIWeb.Rector
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             int userID = UserSer.Id;

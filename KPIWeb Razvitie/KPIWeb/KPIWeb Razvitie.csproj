@@ -216,12 +216,10 @@
     <Content Include="ProrectorReportFilling\SpecParamCheckBoxes.aspx" />
     <Content Include="Error.htm" />
     <Content Include="filenotfound.htm" />
-    <Content Include="Info_Pages\FillingProcessInfo.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Head\HeadMain.aspx" />
     <Content Include="Head\HeadWatchResult.aspx" />
     <Content Include="MultiUser.aspx" />
-    <Content Include="Info_Pages\OwnersProcessInfo.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -229,14 +227,12 @@
     <Content Include="Account\Web.config" />
     <Content Include="Account\PersonalInfo.aspx" />
     <Content Include="Rector\RAnalitics.aspx" />
-    <Content Include="Rector\RCalculate.aspx" />
     <Content Include="Rector\RMain.aspx" />
     <Content Include="Rector\RPlannedDynamics.aspx" />
     <Content Include="Rector\RRating.aspx" />
     <Content Include="Rector\RShowChart.aspx" />
     <Content Include="Rector\RShowChartDetailed.aspx" />
     <Content Include="Rector\RShowChartFaculty.aspx" />
-    <Content Include="Info_Pages\RegisterProcessInfo.aspx" />
     <Content Include="Spinner.css" />
     <Content Include="Rector\RectorChooseReport.aspx" />
     <Content Include="Rector\RectorMain.aspx" />
@@ -430,13 +426,6 @@
     <Compile Include="ProrectorReportFilling\SpecParamCheckBoxes.aspx.designer.cs">
       <DependentUpon>SpecParamCheckBoxes.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Info_Pages\FillingProcessInfo.aspx.cs">
-      <DependentUpon>FillingProcessInfo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Info_Pages\FillingProcessInfo.aspx.designer.cs">
-      <DependentUpon>FillingProcessInfo.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -480,13 +469,6 @@
     <Compile Include="MultiUser.aspx.designer.cs">
       <DependentUpon>MultiUser.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Info_Pages\OwnersProcessInfo.aspx.cs">
-      <DependentUpon>OwnersProcessInfo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Info_Pages\OwnersProcessInfo.aspx.designer.cs">
-      <DependentUpon>OwnersProcessInfo.aspx</DependentUpon>
-    </Compile>
     <Compile Include="PDFCreate.cs" />
     <Compile Include="Rector\ClassForCharts.cs" />
     <Compile Include="Rector\ForRCalc.cs" />
@@ -496,13 +478,6 @@
     </Compile>
     <Compile Include="Rector\RAnalitics.aspx.designer.cs">
       <DependentUpon>RAnalitics.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rector\RCalculate.aspx.cs">
-      <DependentUpon>RCalculate.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Rector\RCalculate.aspx.designer.cs">
-      <DependentUpon>RCalculate.aspx</DependentUpon>
     </Compile>
     <Compile Include="Rector\RGetCalculated.cs" />
     <Compile Include="Rector\RMain.aspx.cs">
@@ -546,13 +521,6 @@
     </Compile>
     <Compile Include="Rector\RShowChartFaculty.aspx.designer.cs">
       <DependentUpon>RShowChartFaculty.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Info_Pages\RegisterProcessInfo.aspx.cs">
-      <DependentUpon>RegisterProcessInfo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Info_Pages\RegisterProcessInfo.aspx.designer.cs">
-      <DependentUpon>RegisterProcessInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Polish.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -604,6 +572,7 @@
     <Compile Include="Account\Users.cs" />
     <Compile Include="SubdomainRedirect.cs" />
     <Compile Include="Types\Role.cs" />
+    <Compile Include="UserRights.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

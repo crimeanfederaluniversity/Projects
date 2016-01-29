@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace KPIWeb.Rector
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             int userID = UserSer.Id;
@@ -34,7 +35,7 @@ namespace KPIWeb.Rector
             /*
              * if (userTable.AccessLevel != 3)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }*/
 
 
@@ -51,7 +52,7 @@ namespace KPIWeb.Rector
                 ParametrType paramType = (ParametrType)Session["paramType"];
                 if (paramType == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
 
                 if (paramType.paramType == 0) //смотрим индикацелевой показатель
@@ -114,7 +115,7 @@ namespace KPIWeb.Rector
                 ParametrType paramType = (ParametrType)Session["paramType"];
                 if (paramType == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
                 if (paramType.paramType == 0) //смотрим индцелевой показатель
                 {

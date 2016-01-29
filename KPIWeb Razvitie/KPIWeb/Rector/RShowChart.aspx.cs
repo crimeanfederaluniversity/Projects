@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace KPIWeb.Rector
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
 
@@ -26,15 +27,16 @@ namespace KPIWeb.Rector
             UsersTable userTable =
                 (from a in kPiDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            if (userTable.AccessLevel != 7)
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 5, 0, 0))
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             RectorChartSession RectorChart = (RectorChartSession)Session["RectorChart"];
             if (RectorChart == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             List<int> IndicatorsList = RectorChart.IndicatorsList;
             int reportId = RectorChart.reportId;
@@ -295,7 +297,7 @@ namespace KPIWeb.Rector
             RectorChartSession RectorChart = (RectorChartSession)Session["RectorChart"];
             if (RectorChart == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             RectorChart.reportId = Convert.ToInt32(RectorChooseReportDropDown.SelectedValue);
             Session["RectorChart"] = RectorChart;

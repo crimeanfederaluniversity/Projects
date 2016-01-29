@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -135,7 +136,7 @@ namespace KPIWeb.Rector
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
 
@@ -145,9 +146,10 @@ namespace KPIWeb.Rector
             ViewState["login"] =
                 (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a.Email).FirstOrDefault();
 
-            if (userTable_.AccessLevel != 5)
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 6, 0, 0))
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
 
@@ -182,7 +184,10 @@ namespace KPIWeb.Rector
                             {
                                  userToSend = (from a in kpiWebDataContext.UsersTable
                                     where a.FK_FirstLevelSubdivisionTable == structID
-                                          && a.AccessLevel == 4
+                                    join z in kpiWebDataContext.UsersAndUserGroupMappingTable
+                                    on a.UsersTableID equals z.FK_UserTable
+                                    where z.Active == true
+                                    && z.FK_GroupTable == 7
                                     select a).FirstOrDefault();
 
                                 FirstLevelSubdivisionTable tmpfirst = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
@@ -199,7 +204,10 @@ namespace KPIWeb.Rector
                                                 join b in kpiWebDataContext.SecondLevelSubdivisionTable
                                                 on a.FK_FirstLevelSubdivisionTable equals b.FK_FirstLevelSubdivisionTable
                                                 where b.SecondLevelSubdivisionTableID == structID
-                                                && a.AccessLevel == 4
+                                                join z in kpiWebDataContext.UsersAndUserGroupMappingTable
+                                                on a.UsersTableID equals z.FK_UserTable
+                                                where z.Active == true
+                                                && z.FK_GroupTable == 7
                                                 select a).FirstOrDefault();
 
                                 FirstLevelSubdivisionTable tmpfirst = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
@@ -225,7 +233,10 @@ namespace KPIWeb.Rector
                                                 join c in kpiWebDataContext.ThirdLevelSubdivisionTable
                                                 on b.SecondLevelSubdivisionTableID equals c.FK_SecondLevelSubdivisionTable
                                                 where c.ThirdLevelSubdivisionTableID == structID
-                                                && a.AccessLevel == 4                                              
+                                               join z in kpiWebDataContext.UsersAndUserGroupMappingTable
+                                                    on a.UsersTableID equals z.FK_UserTable
+                                               where z.Active == true
+                                               && z.FK_GroupTable == 7                                              
                                                 select a).FirstOrDefault();
 
                                 FirstLevelSubdivisionTable tmpfirst = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
@@ -290,7 +301,7 @@ namespace KPIWeb.Rector
                 RectorHistorySession rectorHistory = (RectorHistorySession) Session["rectorHistory"];
                 if (rectorHistory == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
                 ShowUnConfirmed unConfirmed = (ShowUnConfirmed) Session["unConfirmed"];
                 bool ShowUnconfirmed = true;
@@ -588,7 +599,10 @@ namespace KPIWeb.Rector
                         /// 
                         UsersTable director = (from a in kpiWebDataContext.UsersTable
                             where a.FK_FirstLevelSubdivisionTable == currentStruct.ObjStruct.Lv_1
-                                  && a.AccessLevel == 4
+                                               join z in kpiWebDataContext.UsersAndUserGroupMappingTable
+                                                 on a.UsersTableID equals z.FK_UserTable
+                                               where z.Active == true
+                                               && z.FK_GroupTable == 7
                                   && a.Active == true
                             select a).FirstOrDefault();
 
@@ -2030,7 +2044,7 @@ namespace KPIWeb.Rector
                 RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
                 if (rectorHistory == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
                 RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
                 int ParamType = CurrentRectorSession.sesParamType;
@@ -2062,7 +2076,7 @@ namespace KPIWeb.Rector
                 RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
                 if (rectorHistory == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
                 RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
                 ForRCalc.Struct mainStruct = CurrentRectorSession.sesStruct;
@@ -2120,7 +2134,7 @@ namespace KPIWeb.Rector
                 RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
                 if (rectorHistory == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
                 RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
                 ForRCalc.Struct mainStruct = CurrentRectorSession.sesStruct;
@@ -2148,7 +2162,7 @@ namespace KPIWeb.Rector
                 RectorHistorySession rectorHistory = (RectorHistorySession) Session["rectorHistory"];
                 if (rectorHistory == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
                 RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
                 ForRCalc.Struct mainStruct = CurrentRectorSession.sesStruct;
@@ -2173,7 +2187,7 @@ namespace KPIWeb.Rector
             RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
             if (rectorHistory == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             if (rectorHistory.CurrentSession == 0)
             {
@@ -2189,7 +2203,7 @@ namespace KPIWeb.Rector
             RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
             if (rectorHistory == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             if (rectorHistory.CurrentSession < rectorHistory.SessionCount) // есть куда переходить
             {
@@ -2239,7 +2253,7 @@ namespace KPIWeb.Rector
             RectorHistorySession rectorHistory_ = (RectorHistorySession)Session["rectorHistory"];
             if (rectorHistory_ == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             if (rectorHistory_.Visible == true)
@@ -2272,7 +2286,7 @@ namespace KPIWeb.Rector
             RectorHistorySession rectorHistory_ = (RectorHistorySession)Session["rectorHistory"];
             if (rectorHistory_ == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             if (rectorHistory_.Visible == true)
@@ -2345,7 +2359,7 @@ namespace KPIWeb.Rector
                     RectorHistorySession rectorHistory = (RectorHistorySession) Session["rectorHistory"];
                     if (rectorHistory == null)
                     {
-                        Response.Redirect("~/Default.aspx");
+                        Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                     }
                     RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];                        
                     int ReportID = CurrentRectorSession.sesReportID;
@@ -2385,7 +2399,7 @@ namespace KPIWeb.Rector
                 RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
                 if (rectorHistory == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
                 RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
                 
@@ -2473,7 +2487,7 @@ namespace KPIWeb.Rector
             RectorHistorySession rectorHistory = (RectorHistorySession) Session["rectorHistory"];
             if (rectorHistory == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];
             int ReportID = CurrentRectorSession.sesReportID;
@@ -2481,7 +2495,7 @@ namespace KPIWeb.Rector
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
 
@@ -2567,7 +2581,7 @@ namespace KPIWeb.Rector
                 RectorHistorySession rectorHistory = (RectorHistorySession)Session["rectorHistory"];
                 if (rectorHistory == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
 
                 RectorSession CurrentRectorSession = rectorHistory.RectorSession[rectorHistory.CurrentSession];

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Data;
@@ -89,21 +90,26 @@ namespace KPIWeb.Rector
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
 
             UsersTable userTable =
                 (from a in kpiWebDataContext.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
 
-            if (userTable.AccessLevel != 7)
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 5, 0, 0))
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
 
             List<UsersTable> ProrectorList = (from a in kpiWebDataContext.UsersTable
                                               where a.Active == true
-                                              && a.AccessLevel == 5
+                                              join z in kpiWebDataContext.UsersAndUserGroupMappingTable
+                                              on a.UsersTableID equals z.FK_UserTable
+                                              where 
+                                              z.Active == true
+                                              && z.FK_GroupTable == 6
                                               join b in kpiWebDataContext.IndicatorsAndUsersMapping
                                               on a.UsersTableID equals b.FK_UsresTable
                                               where b.Active == true
@@ -254,7 +260,7 @@ namespace KPIWeb.Rector
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
 

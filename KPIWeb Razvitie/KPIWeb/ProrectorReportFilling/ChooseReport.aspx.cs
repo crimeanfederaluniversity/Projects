@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -20,13 +21,14 @@ namespace KPIWeb.ProrectorReportFilling
             Serialization userSer = (Serialization)Session["UserID"];
             if (userSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }           
             int userId = userSer.Id;
             UsersTable userTable = mainFunctions.GetUserById(userId);
-            if (userTable.AccessLevel != 5)
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userId, 6, 0, 0))
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             ViewState["login"] = userTable.Email;
             if (!Page.IsPostBack)
@@ -109,7 +111,7 @@ namespace KPIWeb.ProrectorReportFilling
         }
         protected void Button2_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Default.aspx");
+            Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
         }
         protected void Button5_Click(object sender, EventArgs e)
         {
@@ -129,13 +131,14 @@ namespace KPIWeb.ProrectorReportFilling
                 Serialization userSer = (Serialization)Session["UserID"];
                 if (userSer == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
                 int userId = userSer.Id;
                 UsersTable userTable = mainFunctions.GetUserById(userId);
-                if (userTable.AccessLevel != 5)
+                UserRights userRights = new UserRights();
+                if (!userRights.CanUserSeeThisPage(userId, 6, 0, 0))
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
 
                 if (checkBoxesToShow.CanUserEditCheckBoxNetwork(userTable.UsersTableID))
@@ -155,7 +158,7 @@ namespace KPIWeb.ProrectorReportFilling
                 Serialization userSer = (Serialization)Session["UserID"];
                 if (userSer == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
                 int userId = userSer.Id;
                 int reportId = Convert.ToInt32(button.CommandArgument);
@@ -211,7 +214,7 @@ namespace KPIWeb.ProrectorReportFilling
                 Serialization userSer = (Serialization)Session["UserID"];
                 if (userSer == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
                 int userId = userSer.Id;
                 int reportId = Convert.ToInt32(button.CommandArgument);
@@ -268,13 +271,14 @@ namespace KPIWeb.ProrectorReportFilling
                 Serialization userSer = (Serialization)Session["UserID"];
                 if (userSer == null)
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
                 int userId = userSer.Id;
                 UsersTable userTable = mainFunctions.GetUserById(userId);
-                if (userTable.AccessLevel != 5)
+                UserRights userRights = new UserRights();
+                if (!userRights.CanUserSeeThisPage(userId, 6, 0, 0))
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                 }
 
                 Response.Redirect("FillingAllBasicsForAllStruct.aspx");

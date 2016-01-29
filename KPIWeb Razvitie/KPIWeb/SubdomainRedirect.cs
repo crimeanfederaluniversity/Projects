@@ -15,7 +15,7 @@ namespace PersonalPages
           Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userId = UserSer.Id;
          * УЗНАЛИ ID ПОЛЬЗОВАТЕЛЯ

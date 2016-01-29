@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -17,7 +18,7 @@ namespace KPIWeb.Account
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer != null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
         }
 
@@ -53,7 +54,7 @@ namespace KPIWeb.Account
                             Serialization UserSerId = new Serialization(user.UsersTableID);
                             Session["UserID"] = UserSerId;
                             Session["IsMaster"] = null;
-                            Response.Redirect("~/Default.aspx");
+                            Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                         }
                         else if (tryMaster((string)Password.Text, (int)userTmp.FK_FirstLevelSubdivisionTable))
                         {
@@ -65,7 +66,7 @@ namespace KPIWeb.Account
                             IsMaster newMaster = new IsMaster();
                             newMaster.MPassword = MasterPassword;
                             Session["IsMaster"] = newMaster;
-                            Response.Redirect("~/Default.aspx");
+                            Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
                         }
                         else
                         {

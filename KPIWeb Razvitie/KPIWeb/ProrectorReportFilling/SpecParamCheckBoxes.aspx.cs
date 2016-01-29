@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -20,19 +21,20 @@ namespace KPIWeb.ProrectorReportFilling
             Serialization userSer = (Serialization) Session["UserID"];
             if (userSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userId = userSer.Id;
             UsersTable userTable = mainFunctions.GetUserById(userId);
-            if (userTable.AccessLevel != 5)
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userId, 6, 0, 0))
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             ViewState["login"] = userTable.Email;
             Serialization mySession = (Serialization) Session["ProrectorFillingSession"];
             if (mySession == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int reportId = Convert.ToInt32(mySession.ReportArchiveID);
             int firstLevelId = Convert.ToInt32((mySession.l1));
@@ -138,7 +140,7 @@ namespace KPIWeb.ProrectorReportFilling
             Serialization userSer = (Serialization)Session["UserID"];
             if (userSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userId = userSer.Id;
             int rowIndex = 0;

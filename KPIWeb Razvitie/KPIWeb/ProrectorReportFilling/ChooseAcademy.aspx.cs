@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -21,19 +22,20 @@ namespace KPIWeb.ProrectorReportFilling
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
             UsersTable userTable = mainFunctions.GetUserById(userID);
-            if (userTable.AccessLevel != 5)
+            UserRights userRights = new UserRights();
+            if (!userRights.CanUserSeeThisPage(userID, 6, 0, 0))
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             ViewState["login"] = userTable.Email;
             Serialization mySession = (Serialization)Session["ProrectorFillingSession"];
             if (mySession == null)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int reportID = Convert.ToInt32(mySession.ReportArchiveID);
             ReportArchiveTable Report = mainFunctions.GetReportById(reportID);
@@ -74,7 +76,7 @@ namespace KPIWeb.ProrectorReportFilling
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Default.aspx");
+            Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
         }
 
         protected void Button5_Click(object sender, EventArgs e)
