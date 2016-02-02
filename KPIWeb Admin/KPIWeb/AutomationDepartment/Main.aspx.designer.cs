@@ -103,6 +103,15 @@ namespace KPIWeb.AutomationDepartment {
         protected global::System.Web.UI.WebControls.Button Button10;
         
         /// <summary>
+        /// Button16 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button16;
+        
+        /// <summary>
         /// Button12 элемент управления.
         /// </summary>
         /// <remarks>

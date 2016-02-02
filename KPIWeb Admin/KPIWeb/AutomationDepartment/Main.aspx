@@ -41,6 +41,10 @@
  
        <br />
        <br />
+       <asp:Button ID="Button16" runat="server" Height="50px" Width="400px" Text="Заявки на изменение доступа" OnClick="Button16_Click" />
+ 
+       <br />
+       <br />
        <asp:Button ID="Button12" runat="server" Height="50px" OnClick="Button12_Click" Text="Редактировать плановые  значения" Width="400px" />
  
        <br />
@@ -56,6 +60,7 @@
        <br />
        <br />
        <asp:Button ID="Button15" runat="server" OnClick="Button15_Click" Text="Статусы рассчитываемых данных" Width="400px" />
+       <br />
        <br />
         
 </asp:Content>

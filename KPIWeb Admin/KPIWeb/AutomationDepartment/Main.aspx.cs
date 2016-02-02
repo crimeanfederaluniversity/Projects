@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Web;
 using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using KPIWeb.Rector;
 using PersonalPages;
 
@@ -134,7 +130,12 @@ namespace KPIWeb.AutomationDepartment
 
         protected void Button15_Click(object sender, EventArgs e)
         {
-            Response.Redirect("WatchProrectorSubmit.aspx");
+            Response.Redirect("~/AutomationDepartment/WatchProrectorSubmit.aspx");
+        }
+
+        protected void Button16_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/AutomationDepartment/UsersChangeAccess.aspx");
         }
     }
 }
