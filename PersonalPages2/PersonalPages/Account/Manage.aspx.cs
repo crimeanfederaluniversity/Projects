@@ -510,6 +510,11 @@ namespace PersonalPages.Account
             PersonalPagesDB.SubmitChanges();
         }
 
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/ChangeAccess.aspx");
+        }
+
          
     }
 }

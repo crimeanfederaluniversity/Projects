@@ -9,6 +9,7 @@
 
         <h2>Ваши учетные данные:</h2>
           <asp:Label ID="Label2" Visible="False" runat="server" Text="Статус данных:"/>
+        <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Права доступа" Width="207px" />
         <br />
 &nbsp;E-mail:<br />
         <asp:TextBox ID="Text4" runat="server"  Text="" Height="20px" Width="300px"  ></asp:TextBox>

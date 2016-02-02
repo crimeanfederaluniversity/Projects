@@ -43,7 +43,7 @@ namespace PersonalPages
                         on z.UserGroupID equals c.FK_GroupTable
                     join d in usersDB.UsersTable
                         on c.FK_UserTable equals d.UsersTableID
-                    where a.Active == true && c.FK_UserTable == userID && z.Active == true && c.Active == true
+                     where a.Active == true && c.FK_UserTable == userID && z.Active == true && c.Active == true && c.Confirmed==true
                     select a).Distinct().ToList();
                 foreach (var name in userGroups)
                 {
@@ -79,7 +79,7 @@ namespace PersonalPages
                                                    on z.UserGroupID equals c.FK_GroupUserTable
                                                join d in usersDB.StudentsTable
                                                    on c.FK_StudentTable equals d.StudentsTableID
-                                               where a.Active == true && c.FK_StudentTable == userID && z.Active == true && c.Active == true
+                                         where a.Active == true && c.FK_StudentTable == userID && z.Active == true && c.Active == true
                                                select a).Distinct().ToList();
             if (userGroups.Count > 12)
             {
