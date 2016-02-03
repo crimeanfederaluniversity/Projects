@@ -13,7 +13,7 @@ namespace PersonalPages.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Serialization UserSer = (Serialization) Session["UserID"];
+            Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
                 Response.Redirect("~/Default.aspx");
@@ -28,6 +28,8 @@ namespace PersonalPages.Account
                 (from a in PersonalPagesDB.StudentsTable where a.StudentsTableID == userID select a).FirstOrDefault();
             if (userTable != null && studTable == null)
             {
+                Label12.Text = "Должность";
+                Label13.Text = "Ученая степень";
                 if (!IsPostBack)
                 {
                     if (userTable.Data_Status == false)
@@ -41,114 +43,31 @@ namespace PersonalPages.Account
                         Label2.Visible = true;
                         Label2.Text = "Учетные данные подтверждены!";
                     }
-                  
+
                     List<FirstLevelSubdivisionTable> First_stageList = (from item in PersonalPagesDB.FirstLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
                     List<SecondLevelSubdivisionTable> Second_stageList = (from item in PersonalPagesDB.SecondLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
                     List<ThirdLevelSubdivisionTable> Third_stageList = (from item in PersonalPagesDB.ThirdLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
-                     
-                    var dictionary = new Dictionary<int, string>();
-                    var dictionary2 = new Dictionary<int, string>();
-                    var dictionary3 = new Dictionary<int, string>();
 
+                    var dictionary = new Dictionary<int, string>();
+                    dictionary.Add(-1, "Выберите академию");
+                    var dictionary2 = new Dictionary<int, string>();
+                    dictionary2.Add(-1, "Выберите факультет");
+                    var dictionary3 = new Dictionary<int, string>();
+                    dictionary3.Add(-1, "Выберите кафедру");
                     if (userTable != null && studTable == null)
                     {
                         dictionary.Add(0, (from b in PersonalPagesDB.FirstLevelSubdivisionTable
                                            where b.FirstLevelSubdivisionTableID == userTable.FK_FirstLevelSubdivisionTable && b.Active == true
                                            select b.Name).FirstOrDefault());
                         dictionary2.Add(0, (from b in PersonalPagesDB.SecondLevelSubdivisionTable
-                                           where b.SecondLevelSubdivisionTableID == userTable.FK_SecondLevelSubdivisionTable && b.Active == true
-                                           select b.Name).FirstOrDefault());
+                                            where b.SecondLevelSubdivisionTableID == userTable.FK_SecondLevelSubdivisionTable && b.Active == true
+                                            select b.Name).FirstOrDefault());
                         dictionary3.Add(0, (from b in PersonalPagesDB.ThirdLevelSubdivisionTable
-                                           where b.ThirdLevelSubdivisionTableID == userTable.FK_ThirdLevelSubdivisionTable && b.Active == true
-                                           select b.Name).FirstOrDefault());
-                    }
-                   
-                   
-                        foreach (var item in First_stageList)
-                        { 
-                            dictionary.Add(item.FirstLevelSubdivisionTableID, item.Name);
+                                            where b.ThirdLevelSubdivisionTableID == userTable.FK_ThirdLevelSubdivisionTable && b.Active == true
+                                            select b.Name).FirstOrDefault());
 
-                        DropDownList1.DataTextField = "Value";
-                        DropDownList1.DataValueField = "Key";
-                        DropDownList1.DataSource = dictionary;
-                        DropDownList1.DataBind();
-                        }
-                        foreach (var item in Second_stageList)
-                        {
-                            dictionary2.Add(item.SecondLevelSubdivisionTableID, item.Name);
-
-                            DropDownList2.DataTextField = "Value";
-                            DropDownList2.DataValueField = "Key";
-                            DropDownList2.DataSource = dictionary2;
-                            DropDownList2.DataBind();
-                        }
-                        if (userTable != null && studTable == null)
-                        {
-                            foreach (var item in Third_stageList)
-                            {
-                                dictionary3.Add(item.ThirdLevelSubdivisionTableID, item.Name);
-
-                                DropDownList3.DataTextField = "Value";
-                                DropDownList3.DataValueField = "Key";
-                                DropDownList3.DataSource = dictionary3;
-                                DropDownList3.DataBind();
-                            }
-                            Text1.Text = userTable.Name;
-                            Text2.Text = userTable.Surname;
-                            Text3.Text = userTable.Patronimyc;
-                            Text4.Text = userTable.Email;
-                            Text5.Text = userTable.Position;
-
-                        }
-                                          
-                    if (userTable.FK_FirstLevelSubdivisionTable == null)
-                    {
-                        DropDownList1.SelectedItem.Text = "Выберите академию";
                     }
-                    if (userTable.FK_SecondLevelSubdivisionTable == null)
-                    {
-                        DropDownList2.SelectedItem.Text = "Выберите факультет";
-                    }
-                    if (userTable.FK_ThirdLevelSubdivisionTable == null)
-                    {
-                        DropDownList3.SelectedItem.Text =  "Выберите кафедру";
-                    }
-                    
-                        DataTable dataTable = new DataTable();
-                        dataTable.Columns.Add(new DataColumn("ID", typeof (string)));
-                        dataTable.Columns.Add(new DataColumn("FIO", typeof (string)));
-                        List<TypeOfWritingFIO> fio =
-                            (from a in PersonalPagesDB.TypeOfWritingFIO
-                                where a.FK_UserTableID == userID && a.Active == true
-                                select a).ToList();            
-                        GridView1.DataSource = fio;
-                        GridView1.DataBind();
-                }
-                
-            }
-            if (userTable == null && studTable != null)
-            {
-                if (studTable.Data_Status == false)
-                {
-                    Label2.Visible = true;
-                    Label2.Text = "Учетные данные ожидают утверждения!";
-                }
-                if (studTable.Data_Status == true)
-                {
-                    Label2.Visible = true;
-                    Label2.Text = "Учетные данные подтверждены!";
-                }
-                Label1.Visible = false;
-                List<FirstLevelSubdivisionTable> First_stageList = (from item in PersonalPagesDB.FirstLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
-                List<SecondLevelSubdivisionTable> Second_stageList = (from item in PersonalPagesDB.SecondLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
-                    var dictionary = new Dictionary<int, string>();
-                    var dictionary2 = new Dictionary<int, string>();
-                    dictionary.Add(0, (from b in PersonalPagesDB.FirstLevelSubdivisionTable
-                                       where b.FirstLevelSubdivisionTableID == studTable.FK_FirstLevelSubdivision && b.Active == true
-                                       select b.Name).FirstOrDefault());
-                    dictionary2.Add(0, (from b in PersonalPagesDB.SecondLevelSubdivisionTable
-                                        where b.SecondLevelSubdivisionTableID == studTable.FK_SecondLevelSubdivision && b.Active == true
-                                        select b.Name).FirstOrDefault());
+
                     foreach (var item in First_stageList)
                     {
                         dictionary.Add(item.FirstLevelSubdivisionTableID, item.Name);
@@ -167,30 +86,147 @@ namespace PersonalPages.Account
                         DropDownList2.DataSource = dictionary2;
                         DropDownList2.DataBind();
                     }
- 
-                GridView1.Visible = false;
-                SaveFIOButton.Visible = false;
-                AddRowButton.Visible = false;
-                Text1.Text = studTable.Name;
-                Text2.Text = studTable.Surname;
-                Text3.Text = studTable.Patronimyc;
-                Text4.Text = studTable.Email;
-                GroupsTable groupname = (from a in PersonalPagesDB.GroupsTable
-                    where a.Active == true
-                    join b in PersonalPagesDB.StudentsTable on a.ID equals b.FK_Group
-                    where a.ID == userID
-                    select a).FirstOrDefault();
-                Text5.Text = groupname.Name;
 
-                if (studTable.FirstLevelSubdivisionTable == null)
-                {
-                    DropDownList1.SelectedItem.Text = "Выберите академию";
+                    foreach (var item in Third_stageList)
+                    {
+                        dictionary3.Add(item.ThirdLevelSubdivisionTableID, item.Name);
+
+                        DropDownList3.DataTextField = "Value";
+                        DropDownList3.DataValueField = "Key";
+                        DropDownList3.DataSource = dictionary3;
+                        DropDownList3.DataBind();
+                    }
+                    Name.Text = userTable.Name;
+                    Surname.Text = userTable.Surname;
+                    Patronimyc.Text = userTable.Patronimyc;
+                    Email.Text = userTable.Email;
+                    DegreeYear.Text = userTable.AcademicDegree;
+                    PositionKurs.Text = userTable.Position;
+
+
+
+                    if (userTable.FK_FirstLevelSubdivisionTable == null)
+                    {
+                        DropDownList1.SelectedItem.Text = "Выберите значение";
+                    }
+                    if (userTable.FK_SecondLevelSubdivisionTable == null)
+                    {
+                        DropDownList2.SelectedItem.Text = "Выберите значение";
+                    }
+                    if (userTable.FK_ThirdLevelSubdivisionTable == null)
+                    {
+                        DropDownList3.SelectedItem.Text = "Выберите значение";
+                    }
+
+                    DataTable dataTable = new DataTable();
+                    dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
+                    dataTable.Columns.Add(new DataColumn("FIO", typeof(string)));
+                    List<TypeOfWritingFIO> fio =
+                        (from a in PersonalPagesDB.TypeOfWritingFIO
+                         where a.FK_UserTableID == userID && a.Active == true
+                         select a).ToList();
+                    GridView1.DataSource = fio;
+                    GridView1.DataBind();
                 }
-                if (studTable.SecondLevelSubdivisionTable == null)
+
+
+            }
+            if (userTable == null && studTable != null)
+            {
+                Label12.Text = "Курс";
+                Label13.Text = "Год поступления";
+                if (!IsPostBack)
                 {
-                    DropDownList2.SelectedItem.Text = "Выберите факультет";
+
+                    if (studTable.Data_Status == false)
+                    {
+                        Label2.Visible = true;
+                        Label2.Text = "Учетные данные ожидают утверждения!";
+                    }
+                    if (studTable.Data_Status == true)
+                    {
+                        Label2.Visible = true;
+                        Label2.Text = "Учетные данные подтверждены!";
+                    }
+                    Label1.Visible = false;
+
+                    List<FirstLevelSubdivisionTable> First_stageList = (from item in PersonalPagesDB.FirstLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
+                    List<SecondLevelSubdivisionTable> Second_stageList = (from item in PersonalPagesDB.SecondLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
+                    List<GroupsTable> studgroups = (from item in PersonalPagesDB.GroupsTable select item).OrderBy(mc => mc.Name).ToList();
+                    var dictionary = new Dictionary<int, string>();
+                    dictionary.Add(-1, "Выберите значение");
+                    var dictionary2 = new Dictionary<int, string>();
+                    dictionary2.Add(-1, "Выберите значение");
+                    var dictionary3 = new Dictionary<int, string>();
+                    dictionary3.Add(-1, "Выберите значение");
+                    if (userTable == null && studTable != null)
+                    {
+                        dictionary.Add(0, (from b in PersonalPagesDB.FirstLevelSubdivisionTable
+                                           where b.FirstLevelSubdivisionTableID == studTable.FK_FirstLevelSubdivision && b.Active == true
+                                           select b.Name).FirstOrDefault());
+                        dictionary2.Add(0, (from b in PersonalPagesDB.SecondLevelSubdivisionTable
+                                            where b.SecondLevelSubdivisionTableID == studTable.FK_SecondLevelSubdivision && b.Active == true
+                                            select b.Name).FirstOrDefault());
+                        dictionary3.Add(0, (from b in PersonalPagesDB.GroupsTable
+                                            where b.ID == studTable.FK_Group && b.Active == true
+                                            select b.Name).FirstOrDefault());
+                    }
+                    foreach (var item in First_stageList)
+                    {
+                        dictionary.Add(item.FirstLevelSubdivisionTableID, item.Name);
+
+                        DropDownList1.DataTextField = "Value";
+                        DropDownList1.DataValueField = "Key";
+                        DropDownList1.DataSource = dictionary;
+                        DropDownList1.DataBind();
+                    }
+                    foreach (var item in Second_stageList)
+                    {
+                        dictionary2.Add(item.SecondLevelSubdivisionTableID, item.Name);
+
+                        DropDownList2.DataTextField = "Value";
+                        DropDownList2.DataValueField = "Key";
+                        DropDownList2.DataSource = dictionary2;
+                        DropDownList2.DataBind();
+                    }
+                    foreach (var item in studgroups)
+                    {
+                        dictionary3.Add(item.ID, item.Name);
+
+                        DropDownList3.DataTextField = "Value";
+                        DropDownList3.DataValueField = "Key";
+                        DropDownList3.DataSource = dictionary3;
+                        DropDownList3.DataBind();
+                    }
+
+                    GridView1.Visible = false;
+                    SaveFIOButton.Visible = false;
+                    AddRowButton.Visible = false;
+                    Name.Text = studTable.Name;
+                    Surname.Text = studTable.Surname;
+                    Patronimyc.Text = studTable.Patronimyc;
+                    Email.Text = studTable.Email;
+                    GroupsTable groupname = (from a in PersonalPagesDB.GroupsTable
+                                             where a.Active == true
+                                             join b in PersonalPagesDB.StudentsTable on a.ID equals b.FK_Group
+                                             where a.ID == userID
+                                             select a).FirstOrDefault();
+                    DegreeYear.Text = studTable.YearOfEnter.ToString();
+                    PositionKurs.Text = studTable.Kurs.ToString();
+
+                    if (studTable.FirstLevelSubdivisionTable == null)
+                    {
+                        DropDownList1.SelectedItem.Text = "Выберите значение";
+                    }
+                    if (studTable.SecondLevelSubdivisionTable == null)
+                    {
+                        DropDownList2.SelectedItem.Text = "Выберите значение";
+                    }
+                    if (studTable.FK_Group == null)
+                    {
+                        DropDownList3.SelectedItem.Text = "Выберите значение";
+                    }
                 }
-                DropDownList3.Visible = false;
             }
         }
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -210,7 +246,7 @@ namespace PersonalPages.Account
                 {
                     var dictionary = new Dictionary<int, string>();
 
-                    dictionary.Add(-1, "Выберите академию");
+                    dictionary.Add(-1, "Выберите значение");
                     foreach (var item in second_stageList)
                         dictionary.Add(item.SecondLevelSubdivisionTableID, item.Name);
                     DropDownList2.Enabled = true;
@@ -223,7 +259,6 @@ namespace PersonalPages.Account
 
         }
 
-
         protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
         {
             DropDownList3.Items.Clear();
@@ -234,24 +269,65 @@ namespace PersonalPages.Account
 
             if (int.TryParse(DropDownList2.SelectedValue, out SelectedValue) && SelectedValue != -1)
             {
+                Serialization UserSer = (Serialization) Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+
+            int userID = UserSer.Id;
+            ViewState["ID"] = userID;
+ 
+            UsersTable userTable =
+                (from a in PersonalPagesDB.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+            StudentsTable studTable =
+                (from a in PersonalPagesDB.StudentsTable where a.StudentsTableID == userID select a).FirstOrDefault();
+            if (userTable != null && studTable == null)
+            {
+
                 List<ThirdLevelSubdivisionTable> third_stage = (from item in PersonalPagesDB.ThirdLevelSubdivisionTable
                                                                 where item.FK_SecondLevelSubdivisionTable == SelectedValue
                                                                 select item).OrderBy(mc => mc.ThirdLevelSubdivisionTableID).ToList();
-
                 if (third_stage != null && third_stage.Count() > 0)
                 {
                     var dictionary = new Dictionary<int, string>();
 
-                    dictionary.Add(-1, "Выберите факультет");
+                    dictionary.Add(-1, "Выберите значение");
 
                     foreach (var item in third_stage)
                         dictionary.Add(item.ThirdLevelSubdivisionTableID, item.Name);
+
                     DropDownList3.Enabled = true;
                     DropDownList3.DataTextField = "Value";
                     DropDownList3.DataValueField = "Key";
                     DropDownList3.DataSource = dictionary;
                     DropDownList3.DataBind();
                 }
+            }
+            if (userTable == null && studTable != null)
+            {
+
+                List<GroupsTable> group_stage = (from item in PersonalPagesDB.GroupsTable
+                                                                where item.FK_SecondLevel == SelectedValue
+                                                                select item).OrderBy(mc => mc.ID).ToList();
+                if (group_stage != null && group_stage.Count() > 0)
+                {
+                    var dictionary = new Dictionary<int, string>();
+
+                    dictionary.Add(-1, "Выберите значение");
+
+                    foreach (var item in group_stage)
+                        dictionary.Add(item.ID, item.Name);
+
+                    DropDownList3.Enabled = true;
+                    DropDownList3.DataTextField = "Value";
+                    DropDownList3.DataValueField = "Key";
+                    DropDownList3.DataSource = dictionary;
+                    DropDownList3.DataBind();
+                }
+            }
+
+               
             }
         }
 
@@ -393,7 +469,7 @@ namespace PersonalPages.Account
         }
 
 
-        protected void Button3_Click(object sender, EventArgs e)
+        protected void SendChange_Click(object sender, EventArgs e)
         {
             Serialization UserSer = (Serialization) Session["UserID"];
             int userID = UserSer.Id;
@@ -402,25 +478,25 @@ namespace PersonalPages.Account
             StudentsTable student =(from a in PersonalPagesDB.StudentsTable where a.Active == true && a.StudentsTableID == userID select a).FirstOrDefault();
             if (user != null)
             {                
-                if (Text1.Text != user.Name)
+                if (Name.Text != user.Name)
                 {
-                    if (!((Text1.Text == "") && (user.Name == null)))
-                    ChangeUserParam(user, 1, "Изменение имени" ,user.Name,Text1.Text);
+                    if (!((Name.Text == "") && (user.Name == null)))
+                        ChangeUserParam(user, 1, "Изменение имени", user.Name, Name.Text);
                 }
-                if (Text2.Text != user.Surname)
+                if (Surname.Text != user.Surname)
                 {
-                    if (!((Text2.Text == "") && (user.Surname == null)))
-                    ChangeUserParam(user, 2, "Изменение фамилии", user.Surname, Text2.Text);
+                    if (!((Surname.Text == "") && (user.Surname == null)))
+                        ChangeUserParam(user, 2, "Изменение фамилии", user.Surname, Surname.Text);
                 }
-                if (Text3.Text != user.Patronimyc)
+                if (Patronimyc.Text != user.Patronimyc)
                 {
-                    if (!((Text3.Text == "") && (user.Patronimyc == null)))
-                    ChangeUserParam(user, 3, "Изменение отчества",user.Patronimyc , Text3.Text);          
+                    if (!((Patronimyc.Text == "") && (user.Patronimyc == null)))
+                        ChangeUserParam(user, 3, "Изменение отчества", user.Patronimyc, Patronimyc.Text);          
                 }
-                if (Text4.Text != user.Email)
+                if (Email.Text != user.Email)
                 {
-                    if (!((Text4.Text == "") && (user.Email == null)))
-                    ChangeUserParam(user, 4, "Изменение почтового адреса", user.Email, Text4.Text);  
+                    if (!((Email.Text == "") && (user.Email == null)))
+                        ChangeUserParam(user, 4, "Изменение почтового адреса", user.Email, Email.Text);  
                 }
                 if (user.FK_FirstLevelSubdivisionTable!=null)
                 if (DropDownList1.SelectedItem.Text != (from b in PersonalPagesDB.FirstLevelSubdivisionTable
@@ -453,26 +529,26 @@ namespace PersonalPages.Account
                 user.Data_Status = false;               
             }
             else if (student != null) ////////Для студентов
-            {        
-                if (Text1.Text != student.Name)
+            {
+                if (Name.Text != student.Name)
                 {
-                    if (!((Text1.Text == "") && (student.Name == null)))
-                    ChangeStudentParam(student, 1, "Изменение имени" , student.Name , Text1.Text);
+                    if (!((Name.Text == "") && (student.Name == null)))
+                        ChangeStudentParam(student, 1, "Изменение имени", student.Name, Name.Text);
                 }
-                if (Text2.Text != student.Surname)
+                if (Surname.Text != student.Surname)
                 {
-                    if (!((Text2.Text == "") && (student.Surname == null)))
-                    ChangeStudentParam(student, 2, "Изменение фамилии" , student.Surname , Text2.Text);              
+                    if (!((Surname.Text == "") && (student.Surname == null)))
+                        ChangeStudentParam(student, 2, "Изменение фамилии", student.Surname, Surname.Text);              
                 }
-                if (Text3.Text != student.Patronimyc)
+                if (Patronimyc.Text != student.Patronimyc)
                 {
-                    if (!((Text3.Text == "") && (student.Patronimyc == null)))
-                    ChangeStudentParam(student, 3, "Изменение отчества" , student.Patronimyc , Text3.Text);         
+                    if (!((Patronimyc.Text == "") && (student.Patronimyc == null)))
+                        ChangeStudentParam(student, 3, "Изменение отчества", student.Patronimyc, Patronimyc.Text);         
                 }
-                if (Text4.Text != student.Email)
+                if (Email.Text != student.Email)
                 {
-                    if (!((Text4.Text == "") && (student.Email == null)))
-                    ChangeStudentParam(student, 4, "Изменение почтового адреса" , student.Email , Text4.Text);   
+                    if (!((Email.Text == "") && (student.Email == null)))
+                        ChangeStudentParam(student, 4, "Изменение почтового адреса", student.Email, Email.Text);   
                 }
                 if (student.FK_FirstLevelSubdivision != null)
                 if (DropDownList1.SelectedItem.Text != (from b in PersonalPagesDB.FirstLevelSubdivisionTable
@@ -494,16 +570,16 @@ namespace PersonalPages.Account
                             where b.SecondLevelSubdivisionTableID == student.FK_SecondLevelSubdivision
                                                      select b.Name).FirstOrDefault(), DropDownList2.SelectedItem.Text);       
                 }
-              /*  if (student.FK_Group != null)
-                if (DropDownList3.SelectedItem.Text != (from b in PersonalPagesDB.ThirdLevelSubdivisionTable
-                                                        where b.ThirdLevelSubdivisionTableID == student.FK_Group
+               if (student.FK_Group != null)
+                if (DropDownList3.SelectedItem.Text != (from b in PersonalPagesDB.GroupsTable
+                                                        where b.ID == student.FK_Group
                                                         select b.Name).FirstOrDefault())
                 {
                     ChangeStudentParam(student, 7,
-                        "Изменение группы студента" , (from b in PersonalPagesDB.ThirdLevelSubdivisionTable
-                            where b.ThirdLevelSubdivisionTableID == student.FK_Group
+                        "Изменение группы студента" , (from b in PersonalPagesDB.GroupsTable
+                            where b.ID == student.FK_Group
                                                           select b.Name).FirstOrDefault() , DropDownList3.SelectedItem.Text);     
-                }*/
+                }
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script","alert('Запрос на изменение учетных данных отправлен администратору системы. Для подтверждения информации пожалуйста предоставьте документы, подтверждающие изменения в кабинет 131 корпус А!');", true);
                 student.Data_Status = false;
             }   
