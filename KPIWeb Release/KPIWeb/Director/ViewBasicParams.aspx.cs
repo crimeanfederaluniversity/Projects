@@ -128,9 +128,6 @@ namespace KPIWeb.Director
                 if (ThirdLevel != 0)
                 {
                     //тут только деканат
-
-
-
                     #region
                     #region
                     List<BasicParametersTable> KafBasicParams = (from a in kpiWebDataContext.BasicParametersTable
@@ -433,13 +430,13 @@ namespace KPIWeb.Director
                         foreach (BasicParametersTable currentBasic in KafBasicParams)
                         {
       
-                         /*   BasicParametrsAndSubdivisionClassMappingTable onlytrueparam =
+                            BasicParametrsAndSubdivisionClassMappingTable onlytrueparam =
                             (from a in kpiWebDataContext.BasicParametrsAndSubdivisionClassMappingTable
                              where a.FK_BasicParametrsTable == currentBasic.BasicParametersTableID
-                                   && a.FK_SubdivisionClassTable == thirdParametrs.FK_SubdivisionClassTable
+                                   && a.FK_SubdivisionClassTable == 1 //грубо
                                    && a.Active == true
-                             select a).FirstOrDefault();*/
-                           // if (onlytrueparam == null) continue;
+                             select a).FirstOrDefault();
+                            if (onlytrueparam == null) continue;
                             BasicParametrsAndUsersMapping basiccanview =
                                 (from a in kpiWebDataContext.BasicParametrsAndUsersMapping
                                  where a.FK_ParametrsTable == currentBasic.BasicParametersTableID

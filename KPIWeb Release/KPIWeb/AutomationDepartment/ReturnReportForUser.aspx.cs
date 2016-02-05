@@ -47,9 +47,9 @@ namespace KPIWeb.AutomationDepartment
                 DropDownList1.DataBind();
 
                 var dictionary2 = new Dictionary<int, string>();
+                dictionary2.Add(2, "Отправить на утверждение");
                 dictionary2.Add(1, "Утвердить данные");
-                dictionary2.Add(0, "Разутвердить данные");
-
+                dictionary2.Add(0, "Разутвердить данные");               
                 DropDownList2.DataTextField = "Value";
                 DropDownList2.DataValueField = "Key";
                 DropDownList2.DataSource = dictionary2;
@@ -83,6 +83,8 @@ namespace KPIWeb.AutomationDepartment
                             item.Status = 0;
                         if (Convert.ToInt32(DropDownList2.SelectedItem.Value) == 1)
                             item.Status = 4;
+                        if (Convert.ToInt32(DropDownList2.SelectedItem.Value) == 2)
+                            item.Status = 3;
                     }
                     kPiDataContext.SubmitChanges();
 
@@ -91,9 +93,12 @@ namespace KPIWeb.AutomationDepartment
                     if( (Convert.ToInt32(DropDownList2.SelectedItem.Value) ) == 0 )
                         LogHandler.LogWriter.WriteLog(LogCategory.INFO,
                             "RRFU0: AdminUser " + ViewState["User"] + " Operation: \" RAZUTVERDIT' \" succes for user " + user.Email.ToString());
-                    else
+                    else if ((Convert.ToInt32(DropDownList2.SelectedItem.Value)) == 1)
                         LogHandler.LogWriter.WriteLog(LogCategory.INFO,
                             "RRFU1: AdminUser " + ViewState["User"] + " Operation: \" UTVERDIT'' \" succes for user " + user.Email.ToString());
+                    else if ((Convert.ToInt32(DropDownList2.SelectedItem.Value)) == 2)
+                        LogHandler.LogWriter.WriteLog(LogCategory.INFO,
+                            "RRFU1: AdminUser " + ViewState["User"] + " Operation: \" SENDTOCONFIRM'' \" succes for user " + user.Email.ToString());
                 }
                 else DisplayAlert("Данный email не относится к выбранному отчету");
             }

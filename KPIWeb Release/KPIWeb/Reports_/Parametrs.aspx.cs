@@ -96,6 +96,7 @@ namespace KPIWeb.Reports
                                               where
                                                   a.FK_ThirdLevelSubdivisionTable == userTable.FK_ThirdLevelSubdivisionTable &&
                                                   a.FK_Specialization == spec.SpecializationTableID
+                                                  && a.Active == true
                                               select a.FourthLevelSubdivisionTableID).FirstOrDefault();
 
                     dataRow["SpecNumber"] = spec.SpecializationNumber;
