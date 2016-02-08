@@ -7,10 +7,14 @@
     <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
          <br />
          <br />
+         Укажите Ваш телефон:<br />
+    <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
+         <br />
+         <br />
          Прикрепите файл с дизайном Вашей визитки:<br />
          <asp:FileUpload ID="FileUpload1" runat="server" />
          <br />
-    <asp:Button ID="Button1" runat="server" Text="Отправить заказ" Width="300px" />
+    <asp:Button ID="Button1" runat="server" Text="Отправить заказ " Width="300px" OnClick="Button1_Click" />
 
 
 </asp:Content>

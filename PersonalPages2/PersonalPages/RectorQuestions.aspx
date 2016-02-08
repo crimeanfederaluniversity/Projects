@@ -16,7 +16,7 @@
     <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
     <br />
     <br />
-    <asp:Button ID="Button1" runat="server" Text="Отправить обращение" Width="300px" />
+    <asp:Button ID="Button1" runat="server" Text="Отправить обращение" Width="300px" OnClick="Button1_Click" />
 
 
 </asp:Content>

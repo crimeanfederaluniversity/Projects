@@ -13,5 +13,35 @@ namespace PersonalPages
         {
 
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userID = UserSer.Id;
+            if (FileUpload1.HasFile) 
+            { 
+            PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
+            Aplications neworder = new Aplications();
+            neworder.Active = true;
+            neworder.FK_ApplicationType = 4;
+            neworder.FK_UserAdd = userID;
+            neworder.Date = DateTime.Now;
+            neworder.TelephoneNumber = TextBox5.Text;
+            neworder.Text = TextBox4.Text.ToString();
+            //String path = Server.MapPath("~/AplicationFiles"); 
+            //Directory.CreateDirectory(path + "\\\\" + userID.ToString());
+            //FileUpload1.PostedFile.SaveAs(path + "\\\\" + neworder.ID.ToString() + "\\\\" + FileUpload1.FileName);
+            //NewDocument(applicationId, FileUpload1.FileName);
+            //neworder.FileURL = 
+            usersDB.Aplications.InsertOnSubmit(neworder);
+            usersDB.SubmitChanges();
+            Response.Redirect("CardOrder.aspx");
+            }         
+        }
+       
     }
 }

@@ -11,7 +11,7 @@
     <asp:TextBox ID="TextBox3" runat="server" Width="192px"></asp:TextBox>
     <br />
     <br />
-    <asp:Button ID="Button1" runat="server" Text="Отправить заявку" Width="300px" />
+    <asp:Button ID="Button1" runat="server" Text="Отправить заявку" Width="300px" OnClick="Button1_Click" />
 
 
 </asp:Content>

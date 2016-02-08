@@ -9,5 +9,5 @@
     Прикрепите файл:<br />
     <asp:FileUpload ID="FileUpload1" runat="server" />
     <br />
-    <asp:Button ID="Button1" runat="server" Text="Отправить на печать" Width="300px" />
+    <asp:Button ID="Button1" runat="server" Text="Отправить на печать" Width="300px" OnClick="Button1_Click" />
 </asp:Content>
