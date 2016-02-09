@@ -146,10 +146,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="1CForm.aspx" />
     <Content Include="About.aspx" />
+    <Content Include="AcademicMobileRequest.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Manage.aspx" />
     <Content Include="Account\OpenAuthProviders.ascx" />
+    <Content Include="AllStudGroups.aspx" />
     <Content Include="App_Themes\theme_1\css\images\competitions_admin.png" />
     <Content Include="App_Themes\theme_1\css\images\documentorotation.png" />
     <Content Include="App_Themes\theme_1\css\images\Seminar.jpg" />
@@ -181,49 +184,100 @@
     <Content Include="App_Themes\theme_1\css\images\ratings.png" />
     <Content Include="App_Themes\theme_1\css\login.css" />
     <Content Include="App_Themes\theme_1\css\masterpage.css" />
+    <Content Include="CardOrder.aspx" />
+    <Content Include="ChangeAccess.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="CreateStudGroup.aspx" />
+    <Content Include="EquipmentWriteOff.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="ITDepartment.aspx" />
+    <Content Include="LearningIS.aspx" />
     <Content Include="MasterServises\AdminServices.aspx" />
     <Content Include="MasterServises\CommunicationServices.aspx" />
     <Content Include="MasterServises\ElectronicEducation.aspx" />
+    <Content Include="MasterServises\ErrorPage.aspx" />
     <Content Include="MasterServises\InfoServices.aspx" />
     <Content Include="MasterServises\UserAsist.aspx" />
+    <Content Include="Metodist.aspx" />
+    <Content Include="NewEquipmentOrder.aspx" />
+    <Content Include="NewImages\1c.png" />
+    <Content Include="NewImages\academy_mobility.png" />
+    <Content Include="NewImages\avtoaccess.png" />
+    <Content Include="NewImages\buying_technique.png" />
     <Content Include="NewImages\CFU.png" />
     <Content Include="NewImages\CFU_admin.png" />
     <Content Include="NewImages\competitions.png" />
     <Content Include="NewImages\competitions_admin.png" />
+    <Content Include="NewImages\competitions_expert.png" />
+    <Content Include="NewImages\competitions_kurator.png" />
+    <Content Include="NewImages\competitions_user.png" />
+    <Content Include="NewImages\confirmeed_center.png" />
+    <Content Include="NewImages\corpse_portal.png" />
+    <Content Include="NewImages\destroy_eq.png" />
     <Content Include="NewImages\documentorotation.png" />
     <Content Include="NewImages\documentorotation_admin.png" />
     <Content Include="NewImages\dukipr.png" />
     <Content Include="NewImages\dukipr_admin.png" />
+    <Content Include="NewImages\electic_course.png" />
+    <Content Include="NewImages\email.png" />
+    <Content Include="NewImages\identification_service.png" />
+    <Content Include="NewImages\indetefication.png" />
+    <Content Include="NewImages\invalid_prosperity.png" />
+    <Content Include="NewImages\kampus_card.png" />
     <Content Include="NewImages\lan.png" />
     <Content Include="NewImages\lan_admin.png" />
     <Content Include="NewImages\LC.png" />
     <Content Include="NewImages\LC_admin.png" />
     <Content Include="NewImages\libraries.png" />
     <Content Include="NewImages\libraries_admin.png" />
+    <Content Include="NewImages\mfu_service.png" />
     <Content Include="NewImages\monitoring.png" />
     <Content Include="NewImages\monitoring_admin.png" />
+    <Content Include="NewImages\monitoring_dekan.png" />
+    <Content Include="NewImages\monitoring_director_academy.png" />
+    <Content Include="NewImages\monitoring_user.png" />
+    <Content Include="NewImages\priem_krectoru.png" />
     <Content Include="NewImages\progress.png" />
+    <Content Include="NewImages\progressing_prorector.png" />
+    <Content Include="NewImages\progressing_rector.png" />
     <Content Include="NewImages\progress_admin.png" />
+    <Content Include="NewImages\qservice.png" />
     <Content Include="NewImages\ratings.png" />
     <Content Include="NewImages\ratings_admin.png" />
+    <Content Include="NewImages\rating_dekan.png" />
+    <Content Include="NewImages\rating_director_academy.png" />
+    <Content Include="NewImages\rating_kurator.png" />
+    <Content Include="NewImages\rating_user.png" />
+    <Content Include="NewImages\rating_zavkaf.png" />
+    <Content Include="NewImages\Razv-prorector.png" />
+    <Content Include="NewImages\Razv-Rector.png" />
+    <Content Include="NewImages\rector.png" />
+    <Content Include="NewImages\remotedataaccess.png" />
+    <Content Include="NewImages\schedule.png" />
     <Content Include="NewImages\sport_competition.png" />
     <Content Include="NewImages\sport_competition_admin.png" />
     <Content Include="NewImages\tasks.png" />
     <Content Include="NewImages\tasks_admin.png" />
+    <Content Include="NewImages\telephonedatasheet.png" />
+    <Content Include="NewImages\togatherlivinghouse.png" />
+    <Content Include="NewImages\unnamed.png" />
+    <Content Include="NewImages\videoconferense.png" />
+    <Content Include="NewImages\videolections.png" />
     <Content Include="NewImages\videolessons.png" />
     <Content Include="NewImages\videolessons_admin.png" />
+    <Content Include="NewImages\vizit_card.png" />
     <Content Include="NewImages\znanium.png" />
     <Content Include="NewImages\znanium_admin.png" />
+    <Content Include="NewWebСourse.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
+    <Content Include="PassAuto.aspx" />
     <Content Include="PersonalPages.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>PersonalPages.designer.cs</LastGenOutput>
@@ -231,6 +285,12 @@
     </Content>
     <Content Include="App_Themes\theme_1\css\images\Thumbs.db" />
     <Content Include="App_Themes\theme_1\Skin1.skin" />
+    <Content Include="PrintScanOrder.aspx" />
+    <Content Include="RectorQuestions.aspx" />
+    <Content Include="Third.master" />
+    <Content Include="Fourth.master" />
+    <Content Include="Fifth.master" />
+    <Content Include="Last.master" />
     <None Include="Properties\PublishProfiles\123.pubxml" />
     <None Include="Properties\PublishProfiles\321.pubxml" />
     <None Include="Properties\PublishProfiles\My.pubxml" />
@@ -280,14 +340,31 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Site.Mobile.Master" />
     <Content Include="Second.Master" />
+    <Content Include="Six.master" />
+    <Content Include="Seven.master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="1CForm.aspx.cs">
+      <DependentUpon>1CForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="1CForm.aspx.designer.cs">
+      <DependentUpon>1CForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AcademicMobileRequest.aspx.cs">
+      <DependentUpon>AcademicMobileRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AcademicMobileRequest.aspx.designer.cs">
+      <DependentUpon>AcademicMobileRequest.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Account\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -309,6 +386,13 @@
     <Compile Include="Account\OpenAuthProviders.ascx.designer.cs">
       <DependentUpon>OpenAuthProviders.ascx</DependentUpon>
     </Compile>
+    <Compile Include="AllStudGroups.aspx.cs">
+      <DependentUpon>AllStudGroups.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AllStudGroups.aspx.designer.cs">
+      <DependentUpon>AllStudGroups.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -319,12 +403,33 @@
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="CardOrder.aspx.cs">
+      <DependentUpon>CardOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CardOrder.aspx.designer.cs">
+      <DependentUpon>CardOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeAccess.aspx.cs">
+      <DependentUpon>ChangeAccess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChangeAccess.aspx.designer.cs">
+      <DependentUpon>ChangeAccess.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CreateStudGroup.aspx.cs">
+      <DependentUpon>CreateStudGroup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateStudGroup.aspx.designer.cs">
+      <DependentUpon>CreateStudGroup.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -333,8 +438,43 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="EquipmentWriteOff.aspx.cs">
+      <DependentUpon>EquipmentWriteOff.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EquipmentWriteOff.aspx.designer.cs">
+      <DependentUpon>EquipmentWriteOff.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Fifth.master.cs">
+      <DependentUpon>Fifth.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fifth.master.designer.cs">
+      <DependentUpon>Fifth.master</DependentUpon>
+    </Compile>
+    <Compile Include="Fourth.master.cs">
+      <DependentUpon>Fourth.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fourth.master.designer.cs">
+      <DependentUpon>Fourth.master</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="ITDepartment.aspx.cs">
+      <DependentUpon>ITDepartment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ITDepartment.aspx.designer.cs">
+      <DependentUpon>ITDepartment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LearningIS.aspx.cs">
+      <DependentUpon>LearningIS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LearningIS.aspx.designer.cs">
+      <DependentUpon>LearningIS.aspx</DependentUpon>
     </Compile>
     <Compile Include="MasterServises\AdminServices.aspx.cs">
       <DependentUpon>AdminServices.aspx</DependentUpon>
@@ -357,6 +497,13 @@
     <Compile Include="MasterServises\ElectronicEducation.aspx.designer.cs">
       <DependentUpon>ElectronicEducation.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MasterServises\ErrorPage.aspx.cs">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterServises\ErrorPage.aspx.designer.cs">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MasterServises\InfoServices.aspx.cs">
       <DependentUpon>InfoServices.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -370,6 +517,76 @@
     </Compile>
     <Compile Include="MasterServises\UserAsist.aspx.designer.cs">
       <DependentUpon>UserAsist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Last.master.cs">
+      <DependentUpon>Last.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Last.master.designer.cs">
+      <DependentUpon>Last.master</DependentUpon>
+    </Compile>
+    <Compile Include="Metodist.aspx.cs">
+      <DependentUpon>Metodist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Metodist.aspx.designer.cs">
+      <DependentUpon>Metodist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NewEquipmentOrder.aspx.cs">
+      <DependentUpon>NewEquipmentOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NewEquipmentOrder.aspx.designer.cs">
+      <DependentUpon>NewEquipmentOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NewWebСourse.aspx.cs">
+      <DependentUpon>NewWebСourse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NewWebСourse.aspx.designer.cs">
+      <DependentUpon>NewWebСourse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PassAuto.aspx.cs">
+      <DependentUpon>PassAuto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PassAuto.aspx.designer.cs">
+      <DependentUpon>PassAuto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PrintScanOrder.aspx.cs">
+      <DependentUpon>PrintScanOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PrintScanOrder.aspx.designer.cs">
+      <DependentUpon>PrintScanOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RectorQuestions.aspx.cs">
+      <DependentUpon>RectorQuestions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RectorQuestions.aspx.designer.cs">
+      <DependentUpon>RectorQuestions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Seven.master.cs">
+      <DependentUpon>Seven.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Seven.master.designer.cs">
+      <DependentUpon>Seven.master</DependentUpon>
+    </Compile>
+    <Compile Include="Six.master.cs">
+      <DependentUpon>Six.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Six.master.designer.cs">
+      <DependentUpon>Six.master</DependentUpon>
+    </Compile>
+    <Compile Include="Third.master.cs">
+      <DependentUpon>Third.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Third.master.designer.cs">
+      <DependentUpon>Third.master</DependentUpon>
     </Compile>
     <Compile Include="PersonalPages.designer.cs">
       <AutoGen>True</AutoGen>

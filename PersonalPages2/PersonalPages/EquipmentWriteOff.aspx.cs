@@ -32,6 +32,7 @@ namespace PersonalPages
             equipment.Text = order;
             usersDB.Aplications.InsertOnSubmit(equipment);
             usersDB.SubmitChanges();
+            Response.Redirect("~/UserMainPage.aspx");
         }
     }
 }

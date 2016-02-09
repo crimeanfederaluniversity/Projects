@@ -34,7 +34,7 @@ namespace PersonalPages
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка отправлена!');", true);
             usersDB.Aplications.InsertOnSubmit(newlerning);
             usersDB.SubmitChanges();
-            Response.Redirect("LearningIS.aspx");
+            Response.Redirect("~/UserMainPage.aspx");
         }
     }
 }

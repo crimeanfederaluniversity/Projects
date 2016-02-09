@@ -24,10 +24,8 @@ namespace PersonalPages.Account
             PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
             UsersTable userTable =
                 (from a in PersonalPagesDB.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
-            StudentsTable studTable =
-                (from a in PersonalPagesDB.StudentsTable where a.StudentsTableID == userID select a).FirstOrDefault();
-            if (userTable != null && studTable == null)
-            {
+        //    if (userTable != null && studTable == null)
+         //   {
                 Label12.Text = "Должность";
                 Label13.Text = "Ученая степень";
                 if (!IsPostBack)
@@ -54,7 +52,7 @@ namespace PersonalPages.Account
                     dictionary2.Add(-1, "Выберите факультет");
                     var dictionary3 = new Dictionary<int, string>();
                     dictionary3.Add(-1, "Выберите кафедру");
-                    if (userTable != null && studTable == null)
+                    if (userTable != null)
                     {
                         dictionary.Add(0, (from b in PersonalPagesDB.FirstLevelSubdivisionTable
                                            where b.FirstLevelSubdivisionTableID == userTable.FK_FirstLevelSubdivisionTable && b.Active == true
@@ -130,8 +128,8 @@ namespace PersonalPages.Account
                 }
 
 
-            }
-            if (userTable == null && studTable != null)
+       //     }
+        /*    if (userTable == null && studTable != null)
             {
                 Label12.Text = "Курс";
                 Label13.Text = "Год поступления";
@@ -227,7 +225,7 @@ namespace PersonalPages.Account
                         DropDownList3.SelectedItem.Text = "Выберите значение";
                     }
                 }
-            }
+            }*/
         }
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -279,10 +277,8 @@ namespace PersonalPages.Account
             ViewState["ID"] = userID;
  
             UsersTable userTable =
-                (from a in PersonalPagesDB.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
-            StudentsTable studTable =
-                (from a in PersonalPagesDB.StudentsTable where a.StudentsTableID == userID select a).FirstOrDefault();
-            if (userTable != null && studTable == null)
+                (from a in PersonalPagesDB.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();           
+            if (userTable != null)
             {
 
                 List<ThirdLevelSubdivisionTable> third_stage = (from item in PersonalPagesDB.ThirdLevelSubdivisionTable
@@ -304,7 +300,7 @@ namespace PersonalPages.Account
                     DropDownList3.DataBind();
                 }
             }
-            if (userTable == null && studTable != null)
+            if (userTable == null)
             {
 
                 List<GroupsTable> group_stage = (from item in PersonalPagesDB.GroupsTable
@@ -452,24 +448,10 @@ namespace PersonalPages.Account
             PersonalPagesDB.SubmitChanges();
         }
 
-        private void ChangeStudentParam(StudentsTable student, int paramIdToChange, string textMessage, string oldValue, string newValue)
-        {
-            PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
-            StudentChangeDataHistoryTable StudentHistory = new StudentChangeDataHistoryTable();
-            StudentHistory.Active = true;
-            StudentHistory.ChangeDate = DateTime.Now;
-            StudentHistory.FK_StudentTable = student.StudentsTableID;
-            StudentHistory.ID_Param_ToChange = paramIdToChange;
-            StudentHistory.Name = textMessage;
-            StudentHistory.OldValue = oldValue;
-            StudentHistory.NewValue = newValue;
-            StudentHistory.Status = 0;
-            PersonalPagesDB.StudentChangeDataHistoryTable.InsertOnSubmit(StudentHistory);
-            PersonalPagesDB.SubmitChanges();
-        }
+   
 
 
-        protected void SendChange_Click(object sender, EventArgs e)
+      /*  protected void SendChange_Click(object sender, EventArgs e)
         {
             Serialization UserSer = (Serialization) Session["UserID"];
             int userID = UserSer.Id;
@@ -584,7 +566,7 @@ namespace PersonalPages.Account
                 student.Data_Status = false;
             }   
             PersonalPagesDB.SubmitChanges();
-        }
+        }*/
 
         protected void Button4_Click(object sender, EventArgs e)
         {

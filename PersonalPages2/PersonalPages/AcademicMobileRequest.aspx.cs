@@ -27,32 +27,9 @@ namespace PersonalPages
             PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
             UsersTable userTable =
                (from a in PersonalPagesDB.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
-            StudentsTable studTable =
-                (from a in PersonalPagesDB.StudentsTable where a.StudentsTableID == userID select a).FirstOrDefault();
-                      
-
-                if (userTable == null && studTable != null)
-                {
-                Label3.Visible = true;
-                Label4.Visible = true;
-                Label5.Visible = true;
-                Label6.Visible = true;
-                Label10.Visible = true;
-                Label7.Visible = false;
-                TextBox7.Visible = true;
-                TextBox8.Visible = true;
-                TextBox9.Visible = true;
-                TextBox10.Visible = true;
-                TextBox13.Visible = true;
-                TextBox11.Visible = false;
- 
-                    Label2.Text = studTable.Surname;
-                    Label8.Text = studTable.Name;
-                    Label9.Text = studTable.Patronimyc;
-                  
-                    }              
+                                         
        
-                if (userTable != null && studTable == null)
+                if (userTable != null )
                 {
                     Label2.Text = userTable.Surname;
                     Label8.Text = userTable.Name;
@@ -68,8 +45,7 @@ namespace PersonalPages
                     TextBox9.Visible = false;
                     TextBox13.Visible = false;
                     TextBox10.Visible = false;
-                    TextBox11.Visible = true;
-     
+                    TextBox11.Visible = true;     
                 }
 
             }

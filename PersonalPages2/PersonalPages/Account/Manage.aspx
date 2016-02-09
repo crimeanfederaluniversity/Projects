@@ -82,7 +82,6 @@
         <asp:Button ID="SaveFIOButton" runat="server" OnClick="SaveFIOButton_Click" Text="Сохранить" Width="299px" />
         <br />
         <br />
-        <br />
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Сменить пароль" CssClass="form-control" />
         <br />
         <asp:Label ID="Label9" runat="server" Text="Текущий пароль" Visible="False"></asp:Label>

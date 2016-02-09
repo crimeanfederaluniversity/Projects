@@ -38,7 +38,7 @@ namespace PersonalPages
               Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка на печать отправлена!');", true);
                 usersDB.Aplications.InsertOnSubmit(newprint);
                 usersDB.SubmitChanges();
-                Response.Redirect("PrintScanOrder.aspx");
+                Response.Redirect("~/MasterServises/AdminServices.aspx");
             }
         }
     }

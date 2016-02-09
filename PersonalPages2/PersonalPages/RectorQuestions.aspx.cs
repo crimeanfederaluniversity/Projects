@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+
 
 namespace PersonalPages
 {
@@ -33,7 +33,8 @@ namespace PersonalPages
             newquestion.Text = question;
             usersDB.Aplications.InsertOnSubmit(newquestion);
             usersDB.SubmitChanges();
-            Response.Redirect("RectorQustions.aspx");
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ваш вопрос успешно отправлен!');", true);
+            Response.Redirect("~/MasterServises/AdminServices.aspx");
         }
     }
 }

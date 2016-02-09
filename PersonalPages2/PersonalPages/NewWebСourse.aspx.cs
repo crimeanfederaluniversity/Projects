@@ -39,7 +39,7 @@ namespace PersonalPages
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка на создание электронного курса отправлена!');", true);
             usersDB.Aplications.InsertOnSubmit(newcourse);
             usersDB.SubmitChanges();
-            Response.Redirect("NewWebCourse.aspx");
+            Response.Redirect("~/UserMainPage.aspx");
 
         }
     }

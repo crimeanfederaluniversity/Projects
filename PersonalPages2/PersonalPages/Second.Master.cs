@@ -39,10 +39,6 @@ namespace PersonalPages
             }
         }
 
-        protected void HomeClick(object sender, ImageClickEventArgs e)
-        {
-            Response.Redirect("~/UserMainPage.aspx");
-        }
 
     }
 }

@@ -13,15 +13,6 @@ namespace PersonalPages {
     public partial class Second {
         
         /// <summary>
-        /// ImageButton1 элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton1;
-        
-        /// <summary>
         /// SecondLevel элемент управления.
         /// </summary>
         /// <remarks>

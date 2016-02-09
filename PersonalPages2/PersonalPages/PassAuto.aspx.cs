@@ -26,7 +26,7 @@ namespace PersonalPages
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
             Aplications newpass = new Aplications();
             newpass.Active = true;
-            newpass.FK_ApplicationType = 4;
+            newpass.FK_ApplicationType = 3;
             newpass.FK_UserAdd = userID;
             newpass.Date = DateTime.Now;
             newpass.TelephoneNumber = TextBox3.Text; 
@@ -34,7 +34,8 @@ namespace PersonalPages
 
             usersDB.Aplications.InsertOnSubmit(newpass);
             usersDB.SubmitChanges();
-            Response.Redirect("PassAuto.aspx");
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ваш запрос на карту успешно отправлен!');", true);
+            Response.Redirect("~/MasterServises/AdminServices.aspx");
         }
     }
 }

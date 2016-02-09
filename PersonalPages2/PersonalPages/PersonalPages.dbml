@@ -1,5 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="TestRelease_" Class="PersonalPagesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=TestRelease_;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="MainDBConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Aplications" Member="Aplications">
+    <Type Name="Aplications">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_ApplicationType" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_UserAdd" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TelephoneNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="FileURL" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="ApplicationTypes_Aplications" Member="ApplicationTypes" ThisKey="FK_ApplicationType" OtherKey="ID" Type="ApplicationTypes" IsForeignKey="true" />
+      <Association Name="UsersTable_Aplications" Member="UsersTable" ThisKey="FK_UserAdd" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.zTemplateFormTable" Member="zTemplateFormTable">
+    <Type Name="zTemplateFormTable">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FormName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="zTemplateFormTable_zFormCompetitionMappingTable" Member="zFormCompetitionMappingTable" ThisKey="ID" OtherKey="FK_Form" Type="zFormCompetitionMappingTable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ApplicationTypes" Member="ApplicationTypes">
+    <Type Name="ApplicationTypes">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ApplicationType" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="FK_UserGroupTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="ApplicationTypes_Aplications" Member="Aplications" ThisKey="ID" OtherKey="FK_ApplicationType" Type="Aplications" />
+      <Association Name="UserGroupTable_ApplicationTypes" Member="UserGroupTable" ThisKey="FK_UserGroupTable" OtherKey="UserGroupID" Type="UserGroupTable" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.BasicParametersAndRolesMappingTable" Member="BasicParametersAndRolesMappingTable">
     <Type Name="BasicParametersAndRolesMappingTable">
       <Column Name="BasicParametersAndRolesMappingTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -11,15 +44,6 @@
       <Column Name="CanConfirm" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="BasicParametersTable_BasicParametersAndRolesMappingTable" Member="BasicParametersTable" ThisKey="FK_BasicParametersTable" OtherKey="BasicParametersTableID" Type="BasicParametersTable" IsForeignKey="true" />
       <Association Name="RolesTable_BasicParametersAndRolesMappingTable" Member="RolesTable" ThisKey="FK_RolesTable" OtherKey="RolesTableID" Type="RolesTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zTemplateFormTable" Member="zTemplateFormTable">
-    <Type Name="zTemplateFormTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FormName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Association Name="zTemplateFormTable_zFormCompetitionMappingTable" Member="zFormCompetitionMappingTable" ThisKey="ID" OtherKey="FK_Form" Type="zFormCompetitionMappingTable" />
     </Type>
   </Table>
   <Table Name="dbo.BasicParametersTable" Member="BasicParametersTable">
@@ -803,6 +827,7 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="FK_StudentTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FK_GroupUserTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Confirmed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="StudentsTable_StudentsAndUserGroupMappingTable" Member="StudentsTable" ThisKey="FK_StudentTable" OtherKey="StudentsTableID" Type="StudentsTable" IsForeignKey="true" />
       <Association Name="UserGroupTable_StudentsAndUserGroupMappingTable" Member="UserGroupTable" ThisKey="FK_GroupUserTable" OtherKey="UserGroupID" Type="UserGroupTable" IsForeignKey="true" />
     </Type>
@@ -920,6 +945,7 @@
       <Column Name="AutoLogin" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="Fk_ProjectsTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ImageUrl" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="UserGroupTable_ApplicationTypes" Member="ApplicationTypes" ThisKey="UserGroupID" OtherKey="FK_UserGroupTable" Type="ApplicationTypes" />
       <Association Name="UserGroupTable_StudentsAndUserGroupMappingTable" Member="StudentsAndUserGroupMappingTable" ThisKey="UserGroupID" OtherKey="FK_GroupUserTable" Type="StudentsAndUserGroupMappingTable" />
       <Association Name="UserGroupTable_UsersAndUserGroupMappingTable" Member="UsersAndUserGroupMappingTable" ThisKey="UserGroupID" OtherKey="FK_GroupTable" Type="UsersAndUserGroupMappingTable" />
       <Association Name="Projects_UserGroupTable" Member="Projects" ThisKey="Fk_ProjectsTable" OtherKey="Id" Type="Projects" IsForeignKey="true" />
@@ -931,6 +957,7 @@
       <Column Name="FK_UserTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FK_GroupTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Confirmed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="UserGroupTable_UsersAndUserGroupMappingTable" Member="UserGroupTable" ThisKey="FK_GroupTable" OtherKey="UserGroupID" Type="UserGroupTable" IsForeignKey="true" />
       <Association Name="UsersTable_UsersAndUserGroupMappingTable" Member="UsersTable" ThisKey="FK_UserTable" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
     </Type>
@@ -939,7 +966,6 @@
     <Type Name="UsersTable">
       <Column Name="UsersTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Login" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="FK_FirstLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -960,6 +986,7 @@
       <Column Name="Gender" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="PublicInfo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="Data_Status" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="UsersTable_Aplications" Member="Aplications" ThisKey="UsersTableID" OtherKey="FK_UserAdd" Type="Aplications" />
       <Association Name="UsersTable_BasicParametrsAndUsersMapping" Member="BasicParametrsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="BasicParametrsAndUsersMapping" />
       <Association Name="UsersTable_CalculatedParametrsAndUsersMapping" Member="CalculatedParametrsAndUsersMapping" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CalculatedParametrsAndUsersMapping" />
       <Association Name="UsersTable_CollectedBasicParametersTable" Member="CollectedBasicParametersTable" ThisKey="UsersTableID" OtherKey="FK_UsersTable" Type="CollectedBasicParametersTable" />

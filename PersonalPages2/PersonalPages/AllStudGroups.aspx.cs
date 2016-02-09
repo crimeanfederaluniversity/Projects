@@ -45,7 +45,7 @@ namespace PersonalPages
             if (button != null)
             {
                 Session["GroupID"] = button.CommandArgument;
-                Response.Redirect("CreateStudGroup.aspx");
+                Response.Redirect("~/CreateStudGroup.aspx");
             }
         }
 
@@ -62,20 +62,9 @@ namespace PersonalPages
                 {
                     groupdelete.Active = false;
                     PersonalPagesDB.SubmitChanges();
-                }
-                List<StudentsTable> studList = (from a in PersonalPagesDB.StudentsTable
-                                                where a.Active == true && a.FK_Group == Convert.ToInt32(button.CommandArgument)
-                                               select a).ToList();
-                if (studList != null)
-                {
-                    foreach (StudentsTable n in studList)
-                    {
-                        n.FK_Group = null;
-                        PersonalPagesDB.SubmitChanges();
-                    }
-                }              
+                }             
             }
-            Response.Redirect("AllStudGroups.aspx");
+            Response.Redirect("~/AllStudGroups.aspx");
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -97,12 +86,12 @@ namespace PersonalPages
                     select a.FK_SecondLevelSubdivisionTable).FirstOrDefault();
             PersonalPagesDB.GroupsTable.InsertOnSubmit(newgrouplist);
             PersonalPagesDB.SubmitChanges();
-            Response.Redirect("AllStudGroups.aspx");
+            Response.Redirect("~/AllStudGroups.aspx");
 
         }
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Metodist.aspx");
+            Response.Redirect("~/UserMainPage.aspx");
         }
     }
 }

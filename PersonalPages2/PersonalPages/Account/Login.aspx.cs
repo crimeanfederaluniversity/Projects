@@ -1,13 +1,7 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
+﻿
 using System;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Net;
-using System.IO;
+
 
 namespace PersonalPages.Account
 {
@@ -27,24 +21,17 @@ namespace PersonalPages.Account
                                            &&  usersTables.Active == true
                                            select usersTables).FirstOrDefault();
 
-                        StudentsTable student = (from studTables in usersDB.StudentsTable
+                       /* StudentsTable student = (from studTables in usersDB.StudentsTable
                                                  where studTables.Email == UserName.Text
                                             && (studTables.Password == Password.Text)
                                            && studTables.Active == true
-                                                 select studTables).FirstOrDefault();
+                                                 select studTables).FirstOrDefault();*/
 
-                        if (user != null && student == null)
+                        if (user != null)
                         {
                              
                             Serialization UserSerId = new Serialization(user.UsersTableID);
                             Session["UserID"] = UserSerId;
-                            Response.Redirect("~/Default.aspx");
-                        }
-
-                        if (user == null && student!= null)
-                        {
-                            Serialization StudSerId = new Serialization(student.StudentsTableID);
-                            Session["UserID"] = StudSerId;                      
                             Response.Redirect("~/Default.aspx");
                         }
                         else

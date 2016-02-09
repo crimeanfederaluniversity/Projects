@@ -26,15 +26,11 @@ namespace PersonalPages
                       && usersTables.Active == true
                 select usersTables).FirstOrDefault();
 
-            StudentsTable stud = (from usersTables in usersDB.StudentsTable
-                where usersTables.StudentsTableID == userID
-                      && usersTables.Active == true
-                select usersTables).FirstOrDefault();
             DataTable dataTable = new DataTable();
 
             dataTable.Columns.Add(new DataColumn("ProjectName", typeof (string)));
 
-            if (user != null && stud == null)
+            if (user != null )
             {
                 List<Projects> userGroups = (from a in usersDB.Projects
                     join z in usersDB.UserGroupTable on
@@ -45,6 +41,9 @@ namespace PersonalPages
                         on c.FK_UserTable equals d.UsersTableID
                      where a.Active == true && c.FK_UserTable == userID && z.Active == true && c.Active == true && c.Confirmed==true
                     select a).Distinct().ToList();
+                Label lb2 = new Label();
+                lb2.Text = "<br />";
+                Panel.Controls.Add(lb2);
                 foreach (var name in userGroups)
                 {
                     if (name.Id < 21 || name.Id > 25)
@@ -61,6 +60,7 @@ namespace PersonalPages
                     newBox.ID = "box" + name.Id;
                     newBox.Height = 130;
                     newBox.Width = 130;
+                    newBox.ToolTip = name.ProjectName;
                     newBox.AlternateText = Convert.ToString(name.Id);
                     newBox.Click += new ImageClickEventHandler(this.RedirectToSubdomain);
                     Panel.Controls.Add(newBox);
@@ -69,44 +69,7 @@ namespace PersonalPages
                     Panel.Controls.Add(lb);
                 }
                 }
-            }        
-      if ( user  == null && stud != null)
-        {
-            List<Projects> userGroups = (from a in usersDB.Projects
-                                         join z in usersDB.UserGroupTable on
-                                             a.Id equals z.Fk_ProjectsTable
-                                               join c in usersDB.StudentsAndUserGroupMappingTable
-                                                   on z.UserGroupID equals c.FK_GroupUserTable
-                                               join d in usersDB.StudentsTable
-                                                   on c.FK_StudentTable equals d.StudentsTableID
-                                         where a.Active == true && c.FK_StudentTable == userID && z.Active == true && c.Active == true
-                                               select a).Distinct().ToList();
-            if (userGroups.Count > 12)
-            {
-                Panel.Height = 470;
-            }
-            foreach (var name in userGroups)
-            {
-                if (name.Id < 21 || name.Id > 25)
-                {
-                    Label lb1 = new Label();
-                    lb1.Text = "&nbsp;&nbsp;";
-                    Panel.Controls.Add(lb1);
-                    ImageButton newBox = new ImageButton();
-                    newBox.ImageUrl = name.ImageUrl;
-                    newBox.ID = "box" + name.Id;
-                    newBox.Height = 130;
-                    newBox.Width = 130;
-                    newBox.AlternateText = Convert.ToString(name.Id);
-                    newBox.Click += new ImageClickEventHandler(this.RedirectToSubdomain);
-                    Panel.Controls.Add(newBox);
-                    Label lb = new Label();
-                    lb.Text = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                    Panel.Controls.Add(lb);
-                }
-            }
-
-        }
+            }                    
     }
        
              protected void RedirectToSubdomain(object sender, EventArgs e)
