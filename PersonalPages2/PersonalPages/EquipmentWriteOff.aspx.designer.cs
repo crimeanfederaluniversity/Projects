@@ -10,7 +10,7 @@
 namespace PersonalPages {
     
     
-    public partial class PrintScanOrder {
+    public partial class EquipmentWriteOff {
         
         /// <summary>
         /// TextBox4 элемент управления.
@@ -40,13 +40,13 @@ namespace PersonalPages {
         protected global::System.Web.UI.WebControls.TextBox TextBox6;
         
         /// <summary>
-        /// FileUpload1 элемент управления.
+        /// TextBox7 элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
+        protected global::System.Web.UI.WebControls.TextBox TextBox7;
         
         /// <summary>
         /// Button1 элемент управления.

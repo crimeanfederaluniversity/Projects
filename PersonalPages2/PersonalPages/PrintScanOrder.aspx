@@ -5,6 +5,12 @@
     Укажите необходимое количество копий:<br />
     <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
     <br />
+    Укажите формат печати:<br />
+    <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
+    <br />
+    Укажите необходимые страницы:<br />
+    <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
+    <br />
     <br />
     Прикрепите файл:<br />
     <asp:FileUpload ID="FileUpload1" runat="server" />

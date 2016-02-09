@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace PersonalPages
 {
-    public partial class PassAuto : System.Web.UI.Page
+    public partial class EquipmentWriteOff : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,19 +22,16 @@ namespace PersonalPages
                 Response.Redirect("~/Default.aspx");
             }
             int userID = UserSer.Id;
-            
+            string order = TextBox4.Text.ToString() + "/" + TextBox5.Text.ToString() + "/" + TextBox6.Text.ToString() + "/" + TextBox7.Text.ToString();
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-            Aplications newpass = new Aplications();
-            newpass.Active = true;
-            newpass.FK_ApplicationType = 4;
-            newpass.FK_UserAdd = userID;
-            newpass.Date = DateTime.Now;
-            newpass.TelephoneNumber = TextBox3.Text; 
-            newpass.Text = TextBox4.Text.ToString();
-
-            usersDB.Aplications.InsertOnSubmit(newpass);
+            Aplications equipment = new Aplications();
+            equipment.Active = true;
+            equipment.FK_ApplicationType = 9;
+            equipment.FK_UserAdd = userID;
+            equipment.Date = DateTime.Now;
+            equipment.Text = order;
+            usersDB.Aplications.InsertOnSubmit(equipment);
             usersDB.SubmitChanges();
-            Response.Redirect("PassAuto.aspx");
         }
     }
 }

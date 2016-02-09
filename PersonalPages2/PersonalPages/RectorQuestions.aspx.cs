@@ -22,7 +22,7 @@ namespace PersonalPages
                 Response.Redirect("~/Default.aspx");
             }
             int userID = UserSer.Id;
-            string question = TextBox1.Text.ToString() + "/" + TextBox1.Text.ToString();
+            string question = TextBox1.Text.ToString() + "/" + TextBox2.Text.ToString();
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
             Aplications newquestion = new Aplications();
             newquestion.Active = true;

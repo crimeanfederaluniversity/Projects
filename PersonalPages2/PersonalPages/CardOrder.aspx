@@ -14,7 +14,7 @@
          Прикрепите файл с дизайном Вашей визитки:<br />
          <asp:FileUpload ID="FileUpload1" runat="server" />
          <br />
-    <asp:Button ID="Button1" runat="server" Text="Отправить заказ " Width="300px" OnClick="Button1_Click" />
+    <asp:Button ID="Button1" runat="server" Text="Отправить запрос" Width="300px" OnClick="Button1_Click" />
 
 
 </asp:Content>
