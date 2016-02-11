@@ -604,14 +604,20 @@ namespace KPIWeb.Rector
             where a.ReportArchiveTableID == tmpreportId 
                 select a).FirstOrDefault();
 
-            PlannedIndicator plannedValue = (from a in kpiWebDataContext.PlannedIndicator
-                                             where a.FK_IndicatorsTable == Indicator.IndicatorsTableID
-                                                   && a.Date > currentReport.StartDateTime
-                                             select a).OrderBy(x => x.Date).FirstOrDefault();
-            if (plannedValue != null)
+
+            if (Indicator != null && currentReport != null)
             {
-                Planned_Value = (float)plannedValue.Value;
+                PlannedIndicator plannedValue = (from a in kpiWebDataContext.PlannedIndicator
+                    where a.FK_IndicatorsTable == Indicator.IndicatorsTableID
+                          && a.Date > currentReport.StartDateTime
+                    select a).OrderBy(x => x.Date).FirstOrDefault();
+
+                if (plannedValue != null)
+                {
+                    Planned_Value = (float)plannedValue.Value;
+                }
             }
+         
             #endregion
             #region Name
             if ((Academy == null) && (Faculty == null))
