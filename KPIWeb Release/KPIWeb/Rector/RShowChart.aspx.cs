@@ -117,10 +117,6 @@ namespace KPIWeb.Rector
                                  where ind.IndicatorsTableID == IndicatorsList[e.Row.RowIndex]
                                  select ind).FirstOrDefault();
 
-                var prorectorfails =
-                     (from a in kPiDataContext.ProrectorIndicatorValues
-                            where a.FK_IndicatorsTable == indicator.IndicatorsTableID
-                            select a).FirstOrDefault(); // проректорские данные
 
                 // ERROR != null
 
@@ -136,6 +132,41 @@ namespace KPIWeb.Rector
                 //chart.TempDirectory = "/app/tmp"; 
 
 
+                ChartOneValue DataForChart = forRCalc.IndicatorsForCFUOneIndicator(Convert.ToInt32(indID), reportId); // Данные по КФУ
+
+                var prorectorfails =
+                                    (from a in kPiDataContext.ProrectorIndicatorValues
+                                     where a.FK_IndicatorsTable == indicator.IndicatorsTableID
+                                     select a).FirstOrDefault(); // проректорские данные
+
+
+
+                // Мануальное масштабирование
+                var date = DataForChart.value;
+                var planned = DataForChart.planned;
+                var kfu = 0.0;
+                var pr = prorectorfails.Value;
+
+                if ( (date - planned) > 0) kfu = (float) date;
+                else kfu = (int) planned;
+
+                
+                double max = 100; // default;
+
+                if ( (kfu - pr) > 0)
+                {
+
+                    max = Math.Round( kfu + (kfu * 0.1),1); // 30% для полноты картины
+                }
+                else
+                {
+
+                    max = Math.Round( pr + (pr * 0.1),1);
+                }
+                //////////////////////////////
+
+
+
                 // проректорский chart
                 //=============================================
                 if (chart11 != null)
@@ -145,8 +176,15 @@ namespace KPIWeb.Rector
                     //chart.Series["ValueSeries"].Color = Color.CornflowerBlue;   //Color.FromArgb(255, 100, 149, 0);
                     //chart.Series["ValueSeries"].Color = Color.FromArgb(255, 100, 149, 237);
                     chart11.Series["ValueSeries"].Color = Color.Tomato;
+
+                    if (reportId == 7) // КОСТЫЛЬ ИСПРАВИТЬ 
+                    {
+                        chart11.ChartAreas["ChartArea1"].AxisY.Minimum = 0;
+                        chart11.ChartAreas["ChartArea1"].AxisY.Maximum = max;
+                    } 
                     chart11.ChartAreas["ChartArea1"].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount; // масштабирование разметки
-                    chart11.ChartAreas["ChartArea1"].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount; // -==--
+                    chart11.ChartAreas["ChartArea1"].AxisY.IntervalAutoMode= IntervalAutoMode.VariableCount;//scale; // IntervalAutoMode.VariableCount; // -==--
+
                     //chart.Series["TargetSeries"].Color = Color.FromArgb(122, 50, 255, 0);
                     chart11.Series["TargetSeries"].Color = Color.FromArgb(75, 20, 30, 0);
 
@@ -177,14 +215,23 @@ namespace KPIWeb.Rector
                 }
                 if (chart != null)
                 {
-                    ChartOneValue DataForChart = forRCalc.IndicatorsForCFUOneIndicator(Convert.ToInt32(indID), reportId); // 1 индикатор в разрезе КФУ взятый по ID
+                   // перенес на верх ChartOneValue DataForChart = forRCalc.IndicatorsForCFUOneIndicator(Convert.ToInt32(indID), reportId); // 1 индикатор в разрезе КФУ взятый по ID
 
                     // Формирую чарт
                     //chart.Series["ValueSeries"].Color = Color.CornflowerBlue;   //Color.FromArgb(255, 100, 149, 0);
                     //chart.Series["ValueSeries"].Color = Color.FromArgb(255, 100, 149, 237);
                     chart.Series["ValueSeries"].Color = Color.FromArgb(255, 100, 149, 237);
-                    chart.ChartAreas["ChartArea1"].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount; // масштабирование разметки
-                    chart.ChartAreas["ChartArea1"].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount; // -==--
+                    //chart.ChartAreas["ChartArea1"].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount; // масштабирование разметки
+
+                    if (reportId == 7) // КОСТЫЛЬ ИСПРАВИТЬ 
+                    {
+                        chart.ChartAreas["ChartArea1"].AxisY.Minimum = 0;
+                        chart.ChartAreas["ChartArea1"].AxisY.Maximum = max;
+                    }
+                    chart.ChartAreas["ChartArea1"].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
+                    chart.ChartAreas["ChartArea1"].AxisY.IntervalAutoMode = IntervalAutoMode.VariableCount;//scale; // -==--
+
+
                     //chart.Series["TargetSeries"].Color = Color.FromArgb(122, 50, 255, 0);
                     chart.Series["TargetSeries"].Color = Color.FromArgb(75, 20, 30, 0);
 
@@ -243,7 +290,7 @@ namespace KPIWeb.Rector
                         {
                             int tmp = Math.Round(DataForChart.value, 3).ToString().Count();
                             if (tmp > 3)
-                                RA.Width = 20*DataForChart.value/(500 - ((tmp - 3)*60));
+                                RA.Width = 20*DataForChart.value/(500 - ((tmp - 3)*60)); // БЫЛО *60!!
                             else
                             {
                                 RA.Width = 20*DataForChart.value/500;
@@ -253,7 +300,7 @@ namespace KPIWeb.Rector
                         {
                             int tmp = Math.Round(DataForChart.planned, 3).ToString().Count();
                             if (tmp > 3)
-                                RA.Width = 20*DataForChart.planned/(500 - ((tmp - 3)*60));
+                                RA.Width = 20*DataForChart.planned/(500 - ((tmp - 3)*60)); // БЫЛО *60!!
                             else
                             {
                                 RA.Width = 20*DataForChart.planned/500;
