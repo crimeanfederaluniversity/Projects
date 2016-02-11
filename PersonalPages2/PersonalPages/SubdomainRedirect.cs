@@ -1,38 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 
 namespace PersonalPages
 {
     public class SubdomainRedirect
     {
-        /* как пользоваться
-         * это сам переход
-          Serialization UserSer = (Serialization)Session["UserID"];
-            if (UserSer == null)
-            {
-                Response.Redirect("~/Default.aspx");
-            }
-            int userId = UserSer.Id;
-         * УЗНАЛИ ID ПОЛЬЗОВАТЕЛЯ
-            SubdomainRedirect subdomainRedirect = new SubdomainRedirect();
-            Response.Redirect(subdomainRedirect.CreateLinkToSubdomain("http://monitor.cfu-portal.ru", userId, 10));
-        */
-
-
-        /*
-            как пользоваться
-         * это в default
-            SubdomainRedirect subdomainRedirect = new SubdomainRedirect();
-            string passCode = Request.Params[subdomainRedirect.PassCodeKeyName];
-            int userIdFromGet = subdomainRedirect.GetUserIdByPassCode(passCode);
-            if (userIdFromGet != 0)
-            {
-                Serialization UserSerId = new Serialization(userIdFromGet);
-                Session["UserID"] = UserSerId;
-            }
-         */
         private string RandomString(int size)
         {
             StringBuilder builder = new StringBuilder();
@@ -56,6 +31,10 @@ namespace PersonalPages
             newRedirect.EndDate = endDateTime;
             personalPages.SubdomainRedirectAutologinTable.InsertOnSubmit(newRedirect);
             personalPages.SubmitChanges();
+
+            SubdomainRedirectAutologinTable findredirect = (from a in personalPages.SubdomainRedirectAutologinTable
+                where a.PassCode == myPassCode
+                select a).FirstOrDefault();
             return myPassCode;
         }
         public string CreateLinkToSubdomain(string subdomainLink, int userId, int timeToLive)
@@ -64,6 +43,7 @@ namespace PersonalPages
             DateTime endDateTime = dateTimeNow.AddSeconds(timeToLive);
             string tmpPassCode = CreateNewLineWithRandomString(51, endDateTime, userId);
             string link = subdomainLink + "?"+PassCodeKeyName + "=" + tmpPassCode;
+            Thread.Sleep(4000);
             return link;
             //генерируем шифр здоровенный
         }
