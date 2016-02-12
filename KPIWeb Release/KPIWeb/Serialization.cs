@@ -57,4 +57,10 @@ namespace KPIWeb
     {
         public string MPassword { get; set; }
     }
+    [Serializable]
+    public class Ramsi
+    {
+        public int IndicatorId { get; set; }
+        public int ReportId { get; set; }
+    }
 }
