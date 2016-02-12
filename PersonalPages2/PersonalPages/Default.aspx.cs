@@ -16,7 +16,7 @@ namespace PersonalPages
             if ( user != null)
             {
                 FormsAuthentication.SetAuthCookie(user.Email, true);                               
-                Response.Redirect("UserMainPage.aspx");           
+                Response.Redirect("~/UserMainPage.aspx");           
             }
             
             else //если входим сюда то что то не так) скорей всего пользователю не присвоен уровень в UsersTable

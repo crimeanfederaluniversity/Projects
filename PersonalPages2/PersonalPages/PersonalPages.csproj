@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -207,70 +208,41 @@
     <Content Include="NewImages\academy_mobility.png" />
     <Content Include="NewImages\avtoaccess.png" />
     <Content Include="NewImages\buying_technique.png" />
-    <Content Include="NewImages\CFU.png" />
-    <Content Include="NewImages\CFU_admin.png" />
-    <Content Include="NewImages\competitions.png" />
-    <Content Include="NewImages\competitions_admin.png" />
     <Content Include="NewImages\competitions_expert.png" />
     <Content Include="NewImages\competitions_kurator.png" />
     <Content Include="NewImages\competitions_user.png" />
     <Content Include="NewImages\confirmeed_center.png" />
     <Content Include="NewImages\corpse_portal.png" />
     <Content Include="NewImages\destroy_eq.png" />
-    <Content Include="NewImages\documentorotation.png" />
-    <Content Include="NewImages\documentorotation_admin.png" />
     <Content Include="NewImages\dukipr.png" />
     <Content Include="NewImages\dukipr_admin.png" />
     <Content Include="NewImages\electic_course.png" />
     <Content Include="NewImages\email.png" />
     <Content Include="NewImages\identification_service.png" />
-    <Content Include="NewImages\indetefication.png" />
+    <Content Include="NewImages\Indetefication.png" />
     <Content Include="NewImages\invalid_prosperity.png" />
     <Content Include="NewImages\kampus_card.png" />
-    <Content Include="NewImages\lan.png" />
-    <Content Include="NewImages\lan_admin.png" />
-    <Content Include="NewImages\LC.png" />
-    <Content Include="NewImages\LC_admin.png" />
-    <Content Include="NewImages\libraries.png" />
-    <Content Include="NewImages\libraries_admin.png" />
     <Content Include="NewImages\mfu_service.png" />
-    <Content Include="NewImages\monitoring.png" />
-    <Content Include="NewImages\monitoring_admin.png" />
     <Content Include="NewImages\monitoring_dekan.png" />
     <Content Include="NewImages\monitoring_director_academy.png" />
     <Content Include="NewImages\monitoring_user.png" />
     <Content Include="NewImages\priem_krectoru.png" />
-    <Content Include="NewImages\progress.png" />
     <Content Include="NewImages\progressing_prorector.png" />
     <Content Include="NewImages\progressing_rector.png" />
-    <Content Include="NewImages\progress_admin.png" />
     <Content Include="NewImages\qservice.png" />
-    <Content Include="NewImages\ratings.png" />
-    <Content Include="NewImages\ratings_admin.png" />
     <Content Include="NewImages\rating_dekan.png" />
     <Content Include="NewImages\rating_director_academy.png" />
     <Content Include="NewImages\rating_kurator.png" />
     <Content Include="NewImages\rating_user.png" />
     <Content Include="NewImages\rating_zavkaf.png" />
-    <Content Include="NewImages\Razv-prorector.png" />
-    <Content Include="NewImages\Razv-Rector.png" />
     <Content Include="NewImages\rector.png" />
     <Content Include="NewImages\remotedataaccess.png" />
     <Content Include="NewImages\schedule.png" />
-    <Content Include="NewImages\sport_competition.png" />
-    <Content Include="NewImages\sport_competition_admin.png" />
-    <Content Include="NewImages\tasks.png" />
-    <Content Include="NewImages\tasks_admin.png" />
     <Content Include="NewImages\telephonedatasheet.png" />
     <Content Include="NewImages\togatherlivinghouse.png" />
-    <Content Include="NewImages\unnamed.png" />
     <Content Include="NewImages\videoconferense.png" />
     <Content Include="NewImages\videolections.png" />
-    <Content Include="NewImages\videolessons.png" />
-    <Content Include="NewImages\videolessons_admin.png" />
     <Content Include="NewImages\vizit_card.png" />
-    <Content Include="NewImages\znanium.png" />
-    <Content Include="NewImages\znanium_admin.png" />
     <Content Include="NewWebСourse.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

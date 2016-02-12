@@ -37,7 +37,7 @@ namespace PersonalPages
             usersDB.Aplications.InsertOnSubmit(newquestion);
             usersDB.SubmitChanges();
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ваш запрос успешно отправлен, мы обязательно с Вами свяжемся!');", true);
-            Response.Redirect("~/Contact.aspx");
+            Response.Redirect("~/UserMainPage.aspx");
         }
     }
 }

@@ -11,12 +11,12 @@ namespace PersonalPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Response.Redirect("DocsImport.aspx");
+            Response.Redirect("~/DocsImport.aspx");
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("AllStudGroups.aspx");
+            Response.Redirect("~/AllStudGroups.aspx");
         }
     }
 }

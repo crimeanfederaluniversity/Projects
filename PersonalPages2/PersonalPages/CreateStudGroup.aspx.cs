@@ -91,7 +91,7 @@ namespace PersonalPages
                 var IdTmp = Session["GroupID"];
                 if (IdTmp == null)
                 {
-                    Response.Redirect("Main.aspx");
+                    Response.Redirect("~/Default.aspx");
                 }
                 int groupid = Convert.ToInt32(IdTmp);
 
@@ -106,7 +106,7 @@ namespace PersonalPages
                     PersonalPagesDB.SubmitChanges();
                 }
             }
-            Response.Redirect("CreateStudGroup.aspx");
+            Response.Redirect("~/CreateStudGroup.aspx");
 
         }
         protected void StudentAddButtonClick(object sender, EventArgs e)
@@ -117,7 +117,7 @@ namespace PersonalPages
                 var IdTmp = Session["GroupID"];
                 if (IdTmp == null)
                 {
-                    Response.Redirect("Main.aspx");
+                    Response.Redirect("~/Default.aspx");
                 }
                 int groupid = Convert.ToInt32(IdTmp);
 
@@ -140,11 +140,11 @@ namespace PersonalPages
                     }
                 }               
             }
-            Response.Redirect("CreateStudGroup.aspx");
+            Response.Redirect("~/CreateStudGroup.aspx");
         }
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("AllStudGroups.aspx");
+            Response.Redirect("~/AllStudGroups.aspx");
         }      
     }
 }

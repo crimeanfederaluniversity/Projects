@@ -6,365 +6,605 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\V\Desktop\Publish\main</_PublishTargetUrl>
+    <_PublishTargetUrl>E:\Site1</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
+    <File Include="1CForm.aspx">
+      <publishTime>02/12/2016 09:44:10</publishTime>
+    </File>
     <File Include="About.aspx">
-      <publishTime>12/21/2015 10:24:08</publishTime>
+      <publishTime>02/12/2016 09:44:10</publishTime>
+    </File>
+    <File Include="AcademicMobileRequest.aspx">
+      <publishTime>02/12/2016 09:44:10</publishTime>
     </File>
     <File Include="Account/Login.aspx">
-      <publishTime>12/21/2015 10:24:08</publishTime>
+      <publishTime>02/12/2016 09:44:10</publishTime>
     </File>
     <File Include="Account/Manage.aspx">
-      <publishTime>12/21/2015 12:46:44</publishTime>
+      <publishTime>02/12/2016 09:44:10</publishTime>
     </File>
     <File Include="Account/OpenAuthProviders.ascx">
-      <publishTime>12/21/2015 10:24:08</publishTime>
+      <publishTime>02/12/2016 09:44:10</publishTime>
     </File>
     <File Include="Account/Web.config">
-      <publishTime>12/21/2015 10:24:08</publishTime>
+      <publishTime>02/12/2016 09:44:10</publishTime>
+    </File>
+    <File Include="AllStudGroups.aspx">
+      <publishTime>02/12/2016 09:44:10</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/b.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/bb.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/bg_1.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/bg_2.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/bg_2_texts.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/bg_3.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/bg_3_texts.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/bg_4_texts.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/bg_5_texts.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/bg_6_texts.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
+    </File>
+    <File Include="App_Themes/theme_1/css/images/biblioclub.png">
+      <publishTime>02/12/2016 09:44:11</publishTime>
+    </File>
+    <File Include="App_Themes/theme_1/css/images/competitions.png">
+      <publishTime>02/12/2016 09:44:11</publishTime>
+    </File>
+    <File Include="App_Themes/theme_1/css/images/competitions_admin.png">
+      <publishTime>02/12/2016 09:44:11</publishTime>
+    </File>
+    <File Include="App_Themes/theme_1/css/images/documentorotation.png">
+      <publishTime>02/12/2016 09:44:11</publishTime>
+    </File>
+    <File Include="App_Themes/theme_1/css/images/images %281%29.jpg">
+      <publishTime>02/12/2016 09:44:11</publishTime>
+    </File>
+    <File Include="App_Themes/theme_1/css/images/images %282%29.jpg">
+      <publishTime>02/12/2016 09:44:11</publishTime>
+    </File>
+    <File Include="App_Themes/theme_1/css/images/images.jpg">
+      <publishTime>02/12/2016 09:44:11</publishTime>
+    </File>
+    <File Include="App_Themes/theme_1/css/images/images.png">
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/kdu_button_whitestrap.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/kfu_button_blue_1.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/kfu_button_gradient_2.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/kfu_button_gradient_hover_green_1.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/kfu_button_gradient_hover_green_2.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/kfu_button_gray_1.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/kfu_gerb.png">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
+    </File>
+    <File Include="App_Themes/theme_1/css/images/logo_biblioclub.png">
+      <publishTime>02/12/2016 09:44:11</publishTime>
+    </File>
+    <File Include="App_Themes/theme_1/css/images/monitoring.png">
+      <publishTime>02/12/2016 09:44:11</publishTime>
+    </File>
+    <File Include="App_Themes/theme_1/css/images/ratings.png">
+      <publishTime>02/12/2016 09:44:11</publishTime>
+    </File>
+    <File Include="App_Themes/theme_1/css/images/Seminar.jpg">
+      <publishTime>02/12/2016 09:44:10</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/images/Thumbs.db">
-      <publishTime>12/17/2015 02:13:07</publishTime>
+      <publishTime>02/12/2016 09:44:10</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/login.css">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/css/masterpage.css">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="App_Themes/theme_1/Skin1.skin">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:10</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
-      <publishTime>12/21/2015 10:25:14</publishTime>
+      <publishTime>02/12/2016 09:44:40</publishTime>
     </File>
     <File Include="bin/AspNet.ScriptManager.bootstrap.dll">
-      <publishTime>12/21/2015 10:25:14</publishTime>
+      <publishTime>02/12/2016 09:44:40</publishTime>
     </File>
     <File Include="bin/AspNet.ScriptManager.jQuery.dll">
-      <publishTime>12/21/2015 10:25:16</publishTime>
+      <publishTime>02/12/2016 09:44:40</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
-      <publishTime>12/21/2015 10:25:34</publishTime>
+      <publishTime>02/12/2016 09:44:48</publishTime>
     </File>
     <File Include="bin/EntityFramework.SqlServer.dll">
-      <publishTime>12/21/2015 10:25:34</publishTime>
+      <publishTime>02/12/2016 09:44:48</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.FriendlyUrls.dll">
-      <publishTime>12/21/2015 10:25:36</publishTime>
+      <publishTime>02/12/2016 09:44:50</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
-      <publishTime>12/21/2015 10:25:36</publishTime>
+      <publishTime>02/12/2016 09:44:50</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.EntityFramework.dll">
-      <publishTime>12/21/2015 10:25:36</publishTime>
+      <publishTime>02/12/2016 09:44:51</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Owin.dll">
-      <publishTime>12/21/2015 10:25:36</publishTime>
+      <publishTime>02/12/2016 09:44:51</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Web.Optimization.WebForms.dll">
-      <publishTime>12/21/2015 10:25:38</publishTime>
+      <publishTime>02/12/2016 09:44:53</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.dll">
-      <publishTime>12/21/2015 10:25:38</publishTime>
+      <publishTime>02/12/2016 09:44:53</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Host.SystemWeb.dll">
-      <publishTime>12/21/2015 10:25:40</publishTime>
+      <publishTime>02/12/2016 09:44:53</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.Cookies.dll">
-      <publishTime>12/21/2015 10:25:40</publishTime>
+      <publishTime>02/12/2016 09:44:54</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.dll">
-      <publishTime>12/21/2015 10:25:40</publishTime>
+      <publishTime>02/12/2016 09:44:54</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.Facebook.dll">
-      <publishTime>12/21/2015 10:25:40</publishTime>
+      <publishTime>02/12/2016 09:44:54</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.Google.dll">
-      <publishTime>12/21/2015 10:25:40</publishTime>
+      <publishTime>02/12/2016 09:44:54</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.MicrosoftAccount.dll">
-      <publishTime>12/21/2015 10:25:40</publishTime>
+      <publishTime>02/12/2016 09:44:55</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.OAuth.dll">
-      <publishTime>12/21/2015 10:25:40</publishTime>
+      <publishTime>02/12/2016 09:44:55</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.Twitter.dll">
-      <publishTime>12/21/2015 10:25:40</publishTime>
+      <publishTime>02/12/2016 09:44:55</publishTime>
     </File>
     <File Include="bin/Microsoft.ScriptManager.MSAjax.dll">
-      <publishTime>12/21/2015 10:25:38</publishTime>
+      <publishTime>02/12/2016 09:44:52</publishTime>
     </File>
     <File Include="bin/Microsoft.ScriptManager.WebForms.dll">
-      <publishTime>12/21/2015 10:25:38</publishTime>
+      <publishTime>02/12/2016 09:44:52</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
-      <publishTime>12/21/2015 10:25:40</publishTime>
+      <publishTime>02/12/2016 09:44:56</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
-      <publishTime>12/21/2015 10:25:44</publishTime>
+      <publishTime>02/12/2016 09:44:56</publishTime>
     </File>
     <File Include="bin/Owin.dll">
-      <publishTime>12/21/2015 10:25:44</publishTime>
+      <publishTime>02/12/2016 09:44:57</publishTime>
     </File>
     <File Include="bin/PersonalPages.dll">
-      <publishTime>12/24/2015 01:26:26</publishTime>
+      <publishTime>02/12/2016 10:32:21</publishTime>
     </File>
     <File Include="bin/ru/EntityFramework.resources.dll">
-      <publishTime>12/21/2015 10:25:34</publishTime>
+      <publishTime>02/12/2016 09:44:48</publishTime>
     </File>
     <File Include="bin/ru/EntityFramework.SqlServer.resources.dll">
-      <publishTime>12/21/2015 10:25:34</publishTime>
+      <publishTime>02/12/2016 09:44:48</publishTime>
     </File>
     <File Include="bin/ru/Microsoft.AspNet.FriendlyUrls.resources.dll">
-      <publishTime>12/21/2015 10:25:36</publishTime>
+      <publishTime>02/12/2016 09:44:50</publishTime>
     </File>
     <File Include="bin/ru/Microsoft.AspNet.Identity.Core.resources.dll">
-      <publishTime>12/21/2015 10:25:36</publishTime>
+      <publishTime>02/12/2016 09:44:50</publishTime>
     </File>
     <File Include="bin/ru/Microsoft.AspNet.Identity.EntityFramework.resources.dll">
-      <publishTime>12/21/2015 10:25:36</publishTime>
+      <publishTime>02/12/2016 09:44:51</publishTime>
     </File>
     <File Include="bin/ru/Microsoft.AspNet.Identity.Owin.resources.dll">
-      <publishTime>12/21/2015 10:25:36</publishTime>
+      <publishTime>02/12/2016 09:44:51</publishTime>
     </File>
     <File Include="bin/ru/Microsoft.Owin.Host.SystemWeb.resources.dll">
-      <publishTime>12/21/2015 10:25:40</publishTime>
+      <publishTime>02/12/2016 09:44:53</publishTime>
     </File>
     <File Include="bin/ru/Microsoft.Owin.resources.dll">
-      <publishTime>12/21/2015 10:25:38</publishTime>
+      <publishTime>02/12/2016 09:44:53</publishTime>
     </File>
     <File Include="bin/ru/Microsoft.Owin.Security.Facebook.resources.dll">
-      <publishTime>12/21/2015 10:25:40</publishTime>
+      <publishTime>02/12/2016 09:44:54</publishTime>
     </File>
     <File Include="bin/ru/Microsoft.Owin.Security.Google.resources.dll">
-      <publishTime>12/21/2015 10:25:40</publishTime>
+      <publishTime>02/12/2016 09:44:54</publishTime>
     </File>
     <File Include="bin/ru/Microsoft.Owin.Security.MicrosoftAccount.resources.dll">
-      <publishTime>12/21/2015 10:25:40</publishTime>
+      <publishTime>02/12/2016 09:44:55</publishTime>
     </File>
     <File Include="bin/ru/Microsoft.Owin.Security.resources.dll">
-      <publishTime>12/21/2015 10:25:40</publishTime>
+      <publishTime>02/12/2016 09:44:54</publishTime>
     </File>
     <File Include="bin/ru/Microsoft.Owin.Security.Twitter.resources.dll">
-      <publishTime>12/21/2015 10:25:40</publishTime>
+      <publishTime>02/12/2016 09:44:55</publishTime>
     </File>
     <File Include="bin/ru/System.Web.Optimization.resources.dll">
-      <publishTime>12/21/2015 10:25:38</publishTime>
+      <publishTime>02/12/2016 09:44:52</publishTime>
     </File>
     <File Include="bin/ru/System.Web.Providers.resources.dll">
-      <publishTime>12/21/2015 10:25:38</publishTime>
+      <publishTime>02/12/2016 09:44:51</publishTime>
     </File>
     <File Include="bin/System.Web.Optimization.dll">
-      <publishTime>12/21/2015 10:25:38</publishTime>
+      <publishTime>02/12/2016 09:44:52</publishTime>
     </File>
     <File Include="bin/System.Web.Providers.dll">
-      <publishTime>12/21/2015 10:25:38</publishTime>
+      <publishTime>02/12/2016 09:44:51</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
-      <publishTime>12/21/2015 10:25:46</publishTime>
+      <publishTime>02/12/2016 09:44:57</publishTime>
     </File>
     <File Include="Bundle.config">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
+    </File>
+    <File Include="CardOrder.aspx">
+      <publishTime>02/12/2016 09:44:11</publishTime>
+    </File>
+    <File Include="ChangeAccess.aspx">
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="Contact.aspx">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:11</publishTime>
+    </File>
+    <File Include="CreateStudGroup.aspx">
+      <publishTime>02/12/2016 09:44:12</publishTime>
     </File>
     <File Include="Default.aspx">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:12</publishTime>
+    </File>
+    <File Include="EquipmentWriteOff.aspx">
+      <publishTime>02/12/2016 09:44:12</publishTime>
     </File>
     <File Include="favicon.ico">
-      <publishTime>12/21/2015 10:24:28</publishTime>
+      <publishTime>02/12/2016 09:44:19</publishTime>
+    </File>
+    <File Include="Fifth.master">
+      <publishTime>02/12/2016 09:44:12</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.eot">
-      <publishTime>12/21/2015 10:24:28</publishTime>
+      <publishTime>02/12/2016 09:44:19</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.svg">
-      <publishTime>12/21/2015 10:24:28</publishTime>
+      <publishTime>02/12/2016 09:44:19</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.ttf">
-      <publishTime>12/21/2015 10:24:28</publishTime>
+      <publishTime>02/12/2016 09:44:19</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.woff">
-      <publishTime>12/21/2015 10:24:28</publishTime>
+      <publishTime>02/12/2016 09:44:19</publishTime>
+    </File>
+    <File Include="Fourth.master">
+      <publishTime>02/12/2016 09:44:12</publishTime>
     </File>
     <File Include="Global.asax">
-      <publishTime>12/21/2015 10:24:10</publishTime>
+      <publishTime>02/12/2016 09:44:12</publishTime>
+    </File>
+    <File Include="ITDepartment.aspx">
+      <publishTime>02/12/2016 09:44:12</publishTime>
+    </File>
+    <File Include="Last.master">
+      <publishTime>02/12/2016 09:44:12</publishTime>
+    </File>
+    <File Include="LearningIS.aspx">
+      <publishTime>02/12/2016 09:44:12</publishTime>
+    </File>
+    <File Include="MasterServises/AdminServices.aspx">
+      <publishTime>02/12/2016 09:44:12</publishTime>
+    </File>
+    <File Include="MasterServises/CommunicationServices.aspx">
+      <publishTime>02/12/2016 09:44:12</publishTime>
+    </File>
+    <File Include="MasterServises/ElectronicEducation.aspx">
+      <publishTime>02/12/2016 09:44:12</publishTime>
+    </File>
+    <File Include="MasterServises/ErrorPage.aspx">
+      <publishTime>02/12/2016 09:44:12</publishTime>
+    </File>
+    <File Include="MasterServises/InfoServices.aspx">
+      <publishTime>02/12/2016 09:44:12</publishTime>
+    </File>
+    <File Include="MasterServises/UserAsist.aspx">
+      <publishTime>02/12/2016 09:44:12</publishTime>
+    </File>
+    <File Include="Metodist.aspx">
+      <publishTime>02/12/2016 09:44:12</publishTime>
+    </File>
+    <File Include="NewEquipmentOrder.aspx">
+      <publishTime>02/12/2016 09:44:13</publishTime>
+    </File>
+    <File Include="NewImages/1c.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/academy_mobility.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/avtoaccess.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/buying_technique.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/competitions_expert.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/competitions_kurator.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/competitions_user.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/confirmeed_center.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/corpse_portal.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/destroy_eq.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/dukipr.png">
+      <publishTime>02/12/2016 10:02:15</publishTime>
+    </File>
+    <File Include="NewImages/dukipr_admin.png">
+      <publishTime>02/12/2016 10:02:15</publishTime>
+    </File>
+    <File Include="NewImages/electic_course.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/email.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/identification_service.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/Indetefication.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/invalid_prosperity.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/kampus_card.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/mfu_service.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/monitoring_dekan.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/monitoring_director_academy.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/monitoring_user.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/priem_krectoru.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/progressing_prorector.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/progressing_rector.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/qservice.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/rating_dekan.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/rating_director_academy.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/rating_kurator.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/rating_user.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/rating_zavkaf.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/rector.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/remotedataaccess.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/schedule.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/telephonedatasheet.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/togatherlivinghouse.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/videoconferense.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/videolections.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewImages/vizit_card.png">
+      <publishTime>02/12/2016 09:50:51</publishTime>
+    </File>
+    <File Include="NewWebСourse.aspx">
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>12/21/2015 10:24:28</publishTime>
+      <publishTime>02/12/2016 09:44:20</publishTime>
+    </File>
+    <File Include="PassAuto.aspx">
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="PersonalPages.dbml">
-      <publishTime>12/24/2015 01:25:43</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
+    </File>
+    <File Include="PrintScanOrder.aspx">
+      <publishTime>02/12/2016 09:44:14</publishTime>
+    </File>
+    <File Include="RectorQuestions.aspx">
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:15</publishTime>
     </File>
     <File Include="Scripts/bootstrap.min.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:15</publishTime>
     </File>
     <File Include="Scripts/jquery-1.10.2.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:15</publishTime>
     </File>
     <File Include="Scripts/jquery-1.10.2.min.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:15</publishTime>
     </File>
     <File Include="Scripts/jquery-1.10.2.min.map">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:15</publishTime>
     </File>
     <File Include="Scripts/modernizr-2.6.2.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:15</publishTime>
     </File>
     <File Include="Scripts/respond.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:15</publishTime>
     </File>
     <File Include="Scripts/respond.min.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:15</publishTime>
     </File>
     <File Include="Scripts/WebForms/DetailsView.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/Focus.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/GridView.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/Menu.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/MenuStandards.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/MSAjax/MicrosoftAjax.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/MSAjax/MicrosoftAjaxApplicationServices.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/MSAjax/MicrosoftAjaxComponentModel.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/MSAjax/MicrosoftAjaxCore.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/MSAjax/MicrosoftAjaxGlobalization.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/MSAjax/MicrosoftAjaxHistory.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/MSAjax/MicrosoftAjaxNetwork.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/MSAjax/MicrosoftAjaxSerialization.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/MSAjax/MicrosoftAjaxTimer.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/MSAjax/MicrosoftAjaxWebForms.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/MSAjax/MicrosoftAjaxWebServices.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/SmartNav.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/TreeView.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/WebForms.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/WebParts.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/WebForms/WebUIValidation.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:14</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>12/21/2015 10:24:18</publishTime>
+      <publishTime>02/12/2016 09:44:15</publishTime>
+    </File>
+    <File Include="Second.Master">
+      <publishTime>02/12/2016 09:44:17</publishTime>
+    </File>
+    <File Include="Seven.master">
+      <publishTime>02/12/2016 09:44:17</publishTime>
     </File>
     <File Include="Site.Master">
-      <publishTime>12/21/2015 10:24:26</publishTime>
+      <publishTime>02/12/2016 09:44:17</publishTime>
     </File>
     <File Include="Site.Mobile.Master">
-      <publishTime>12/21/2015 10:24:26</publishTime>
+      <publishTime>02/12/2016 09:44:17</publishTime>
+    </File>
+    <File Include="Six.master">
+      <publishTime>02/12/2016 09:44:17</publishTime>
     </File>
     <File Include="TeacherPage.aspx">
       <publishTime>12/24/2015 01:23:54</publishTime>
     </File>
+    <File Include="Third.master">
+      <publishTime>02/12/2016 09:44:18</publishTime>
+    </File>
+    <File Include="TransitionPage.aspx">
+      <publishTime>02/12/2016 09:44:18</publishTime>
+    </File>
     <File Include="UserMainPage.aspx">
-      <publishTime>12/21/2015 10:24:26</publishTime>
+      <publishTime>02/12/2016 09:44:18</publishTime>
     </File>
     <File Include="ViewSwitcher.ascx">
-      <publishTime>12/21/2015 10:24:26</publishTime>
+      <publishTime>02/12/2016 09:44:18</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/24/2015 01:18:08</publishTime>
+      <publishTime>02/12/2016 10:32:22</publishTime>
     </File>
   </ItemGroup>
 </Project>

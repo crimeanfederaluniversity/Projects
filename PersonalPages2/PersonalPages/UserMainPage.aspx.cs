@@ -118,7 +118,7 @@ namespace PersonalPages
                         Serialization GroupId = new Serialization(Convert.ToInt32(groupID.Fk_ProjectsTable));
                         Session["GroupID"] = GroupId;
                         }
-                        Response.Redirect("TransitionPage.aspx");
+                        Response.Redirect("~/TransitionPage.aspx");
                     }               
             }
         }

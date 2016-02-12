@@ -32,6 +32,7 @@ namespace PersonalPages
             equipment.Text = order;
             usersDB.Aplications.InsertOnSubmit(equipment);
             usersDB.SubmitChanges();
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ваша заявка на списание оборудования принята на рассмотрение!');", true);
             Response.Redirect("~/UserMainPage.aspx");
         }
     }

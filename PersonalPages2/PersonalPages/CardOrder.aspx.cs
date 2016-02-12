@@ -40,7 +40,7 @@ namespace PersonalPages
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Запрос отправлен!');", true);
             usersDB.Aplications.InsertOnSubmit(neworder);
             usersDB.SubmitChanges();            
-            Response.Redirect("CardOrder.aspx");
+            Response.Redirect("~/CardOrder.aspx");
                 
             }         
         }

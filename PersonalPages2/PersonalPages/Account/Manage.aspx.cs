@@ -347,7 +347,7 @@ namespace PersonalPages.Account
                     check.Active = false;
 
                     PersonalPagesDB.SubmitChanges();
-                    Response.Redirect("Manage.aspx");
+                    Response.Redirect("~/Manage.aspx");
 
                 }
             }
@@ -406,7 +406,7 @@ namespace PersonalPages.Account
             newRow.FK_UserTableID = userID;
             PersonalPagesDB.TypeOfWritingFIO.InsertOnSubmit(newRow);
             PersonalPagesDB.SubmitChanges();
-            Response.Redirect("Manage.aspx");
+            Response.Redirect("~/Manage.aspx");
         }
 
         protected void SaveFIOButton_Click(object sender, EventArgs e)
@@ -429,7 +429,7 @@ namespace PersonalPages.Account
                         
                     }
             }
-            Response.Redirect("Manage.aspx");
+            Response.Redirect("~/Manage.aspx");
         }
 
         private void ChangeUserParam(UsersTable user,int paramIdToChange,string textMessage,string oldValue,string newValue)

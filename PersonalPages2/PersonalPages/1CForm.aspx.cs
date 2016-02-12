@@ -34,6 +34,7 @@ namespace PersonalPages
             usersDB.Aplications.InsertOnSubmit(newquestion);
             usersDB.SubmitChanges();
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ваш запрос успешно отправлен!');", true);
+            Response.Redirect("~/UserMainPage.aspx");
         }
     }
 }

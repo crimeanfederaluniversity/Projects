@@ -67,47 +67,6 @@ namespace PersonalPages
             StudentsTable studTable =
                 (from a in PersonalPagesDB.StudentsTable where a.StudentsTableID == userID select a).FirstOrDefault();
 
-
-            if (userTable == null && studTable != null)
-            {
-                if (FileUpload1.HasFile && FileUpload2.HasFile && FileUpload3.HasFile && FileUpload4.HasFile && FileUpload5.HasFile && FileUpload6.HasFile && FileUpload7.HasFile)
-                {
-                    string aspirant = TextBox3.Text.ToString() + "/" + Calendar2.SelectedDate.ToString() + "/" + Calendar3.SelectedDate.ToString()
-                    + "/" + TextBox14.Text.ToString() + "/" + TextBox5.Text.ToString() + "/" + TextBox6.Text.ToString() + "/" + TextBox15.Text.ToString()
-                    + "/" + TextBox12.Text.ToString() + "/" + TextBox4.Text.ToString() + "/" + TextBox2.Text.ToString() + "/" + TextBox11.Text.ToString()
-                    + "/" + TextBox7.Text.ToString() + "/" + TextBox8.Text.ToString() + "/" + TextBox9.Text.ToString() + "/" + TextBox10.Text.ToString()
-                    + "/" + TextBox13.Text.ToString();
-                    PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-                    Aplications newacademrequest = new Aplications();
-                    newacademrequest.Active = true;
-                    newacademrequest.FK_ApplicationType = 1;
-                    newacademrequest.FK_UserAdd = userID;
-                    newacademrequest.Date = DateTime.Now;
-                    newacademrequest.TelephoneNumber = TextBox1.Text;
-                    newacademrequest.Text = aspirant;
-                    usersDB.Aplications.InsertOnSubmit(newacademrequest);
-                    usersDB.SubmitChanges();
-                    newacademrequest.FileURL = "~/AplicationFiles" + "\\\\" + newacademrequest.ID.ToString();
-                    String path = Server.MapPath("~/AplicationFiles");
-                    Directory.CreateDirectory(path + "\\\\" + userID.ToString());
-                    String newpath = Server.MapPath("~/AplicationFiles" + "\\\\" + userID.ToString());
-                    Directory.CreateDirectory(newpath + "\\\\" + newacademrequest.ID.ToString());
-                    FileUpload1.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload1.FileName);
-                    FileUpload2.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload2.FileName);
-                    FileUpload3.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload3.FileName);
-                    FileUpload4.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload4.FileName);
-                    FileUpload5.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload5.FileName);
-                    FileUpload6.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload6.FileName);
-                    FileUpload7.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload7.FileName);
-                    newacademrequest.FileURL = "~/AplicationFiles" + "\\\\" + DateTime.Now.ToString();
-                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка отправлена!');", true);
-                
-               }
-               else
-                {
-                   Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Вы прикрепили недостаточное количество документов!');", true);
-               }
-            }
             if (userTable != null && studTable == null)
             {
                 if (FileUpload1.HasFile && FileUpload2.HasFile && FileUpload3.HasFile && FileUpload4.HasFile && FileUpload5.HasFile && FileUpload6.HasFile && FileUpload7.HasFile)
@@ -147,6 +106,7 @@ namespace PersonalPages
                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Вы прикрепили недостаточное количество документов!');", true);
                }
             }
+            Response.Redirect("~/UserMainPage.aspx");
         }
 
       
