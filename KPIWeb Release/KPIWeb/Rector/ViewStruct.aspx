@@ -12,6 +12,11 @@
     
     <br />
     <h2>Штатное расписание</h2>
+        <br />
+        <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" Height="25px" Width="601px" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
+            <asp:ListItem Value="0">Штатаное расписание на 01.01.2016</asp:ListItem>
+            <asp:ListItem Selected="True" Value="1">Штатаное расписание на 10.02.2016</asp:ListItem>
+        </asp:DropDownList>
     <script type="text/javascript" src="fortable/jquery-1.7.2.js"></script> 
 <script>
     function showChildren(childrenTableName) {
@@ -74,6 +79,8 @@
     }
     td+td+td+td {text-align:left;}
 </style>
+
+        <br />
 
     <br />
     <br />

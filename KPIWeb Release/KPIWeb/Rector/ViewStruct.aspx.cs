@@ -225,10 +225,7 @@ namespace KPIWeb.Rector
                 Response.Redirect("~/Default.aspx");
             }
 
-            ArrayRawDataParser arayParser = new ArrayRawDataParser();
-            TreeViewData treeViewData = arayParser.GetTreeViewData("dataarray.txt");
-            TreeViewTable treeTableCreator  = new TreeViewTable();
-            Label1.Text = treeTableCreator.CreateTreeViewTable(treeViewData);
+            CreateTree();
         }
 
         protected void GoBackButton_Click(object sender, EventArgs e)
@@ -239,6 +236,24 @@ namespace KPIWeb.Rector
         protected void Button2_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Default.aspx");
-        }      
+        }
+
+        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CreateTree();
+        }
+
+        public void CreateTree()
+        {
+            ArrayRawDataParser arayParser = new ArrayRawDataParser();
+            TreeViewData treeViewData = new TreeViewData();
+            if (DropDownList1.SelectedIndex == 0)
+                treeViewData = arayParser.GetTreeViewData("dataarray.txt");
+            if (DropDownList1.SelectedIndex == 1)
+                treeViewData = arayParser.GetTreeViewData("dataarray10.02.2016.txt");
+            TreeViewTable treeTableCreator = new TreeViewTable();
+            Label1.Text = treeTableCreator.CreateTreeViewTable(treeViewData);
+        }
+
     }
 }
