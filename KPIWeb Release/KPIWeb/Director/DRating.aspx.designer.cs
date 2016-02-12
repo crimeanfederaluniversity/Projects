@@ -10,7 +10,7 @@
 namespace KPIWeb.Director {
     
     
-    public partial class DMain {
+    public partial class DRating {
         
         /// <summary>
         /// top_panel2 элемент управления.
@@ -31,15 +31,6 @@ namespace KPIWeb.Director {
         protected global::System.Web.UI.WebControls.Button GoBackButton;
         
         /// <summary>
-        /// GoForwardButton элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoForwardButton;
-        
-        /// <summary>
         /// Button22 элемент управления.
         /// </summary>
         /// <remarks>
@@ -47,6 +38,15 @@ namespace KPIWeb.Director {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button22;
+        
+        /// <summary>
+        /// RectorChooseReportDropDown элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList RectorChooseReportDropDown;
         
         /// <summary>
         /// Button5 элемент управления.
@@ -58,39 +58,30 @@ namespace KPIWeb.Director {
         protected global::System.Web.UI.WebControls.Button Button5;
         
         /// <summary>
-        /// Label1 элемент управления.
+        /// ReportTitle элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label ReportTitle;
         
         /// <summary>
-        /// GridView1 элемент управления.
+        /// PageFullName элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.WebControls.Label PageFullName;
         
         /// <summary>
-        /// Button23 элемент управления.
+        /// Grid элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button23;
-        
-        /// <summary>
-        /// Button24 элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически создаваемое поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button24;
+        protected global::System.Web.UI.WebControls.GridView Grid;
     }
 }

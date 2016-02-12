@@ -276,7 +276,10 @@ background-color:#FFFFFF}
 
 
     <br />
-<asp:Button ID="Button23" runat="server" OnClick="Button23_Click" Text="Параметры направлений подготовки" Visible="False" Width="748px" />
+<asp:Button ID="Button23" runat="server" OnClick="Button23_Click" Text="Параметры направлений подготовки" Visible="false" Width="748px" />
+    <br />
+<br />
+<asp:Button ID="Button24" runat="server" OnClick="Button24_Click" Text="Просмотреть сведения по достижению Целевых показателей" Width="749px" />
     <br />
 
 

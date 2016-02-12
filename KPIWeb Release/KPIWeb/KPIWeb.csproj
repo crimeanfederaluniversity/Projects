@@ -222,6 +222,8 @@
     <Content Include="Decan\DecViewReport.aspx" />
     <Content Include="DepartmentFilling\ChooseBasic.aspx" />
     <Content Include="Director\ConfirmCheckBoxes.aspx" />
+    <Content Include="Director\DDetailRating.aspx" />
+    <Content Include="Director\DRating.aspx" />
     <Content Include="Info_Pages\UserWithStructWithReport.aspx" />
     <Content Include="ProrectorReportFilling\ChooseAcademy.aspx" />
     <Content Include="ProrectorReportFilling\ChooseFaculty.aspx" />
@@ -596,6 +598,20 @@
     </Compile>
     <Compile Include="Director\ConfirmCheckBoxes.aspx.designer.cs">
       <DependentUpon>ConfirmCheckBoxes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Director\DDetailRating.aspx.cs">
+      <DependentUpon>DDetailRating.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Director\DDetailRating.aspx.designer.cs">
+      <DependentUpon>DDetailRating.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Director\DRating.aspx.cs">
+      <DependentUpon>DRating.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Director\DRating.aspx.designer.cs">
+      <DependentUpon>DRating.aspx</DependentUpon>
     </Compile>
     <Compile Include="Info_Pages\UserWithStructWithReport.aspx.cs">
       <DependentUpon>UserWithStructWithReport.aspx</DependentUpon>

@@ -278,5 +278,10 @@ namespace KPIWeb.Director
         {
             Response.Redirect("~/Director/DCheckedInfo.aspx");
         }
+
+        protected void Button24_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Director/DRating.aspx");
+        }
     }
 }
