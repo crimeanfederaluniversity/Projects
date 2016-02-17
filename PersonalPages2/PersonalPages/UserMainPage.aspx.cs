@@ -18,7 +18,7 @@ namespace PersonalPages
                 Response.Redirect("~/Default.aspx");
             }
             int userID = UserSer.Id;
-            // int userID = 12264;
+        
 
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
             UsersTable user = (from usersTables in usersDB.UsersTable
@@ -33,20 +33,18 @@ namespace PersonalPages
             if (user != null )
             {
                 List<Projects> userGroups = (from a in usersDB.Projects
-                    join z in usersDB.UserGroupTable on
-                        a.Id equals z.Fk_ProjectsTable
-                    join c in usersDB.UsersAndUserGroupMappingTable
-                        on z.UserGroupID equals c.FK_GroupTable
-                    join d in usersDB.UsersTable
-                        on c.FK_UserTable equals d.UsersTableID
-                     where a.Active == true && c.FK_UserTable == userID && z.Active == true && c.Active == true && c.Confirmed==true
+                    join z in usersDB.UserGroupTable on   a.Id equals z.Fk_ProjectsTable
+                    join c in usersDB.UsersAndUserGroupMappingTable  on z.UserGroupID equals c.FK_GroupTable
+                    join d in usersDB.UsersTable on c.FK_UserTable equals d.UsersTableID
+                     where a.Active == true && c.FK_UserTable == userID && z.Active == true && c.Active == true  && c.Confirmed==true
                     select a).Distinct().ToList();
+
                 Label lb2 = new Label();
                 lb2.Text = "<br />";
                 Panel.Controls.Add(lb2);
                 foreach (var name in userGroups)
                 {
-                    if (name.Id < 21 || name.Id > 25)
+                    if (name.Id < 8 || name.Id > 12)
                     { 
                     if (userGroups.Count > 6)
                     {
@@ -84,18 +82,13 @@ namespace PersonalPages
             {
                 int userId = UserSer.Id;
                 PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-                int vhod = (from a in usersDB.UserGroupTable
-                                             where a.Active == true  
-                                                  join b in usersDB.UsersAndUserGroupMappingTable
-                                                  on a.UserGroupID equals b.FK_GroupTable
-                            where b.Active == true && b.FK_UserTable == userId && a.Fk_ProjectsTable == Convert.ToInt32(button.AlternateText)
+                int vhod = (from a in usersDB.UserGroupTable  where a.Active == true  
+                                                  join b in usersDB.UsersAndUserGroupMappingTable on a.UserGroupID equals b.FK_GroupTable
+                                                  where b.Active == true && b.FK_UserTable == userId && a.Fk_ProjectsTable == Convert.ToInt32(button.AlternateText)
                                                   select a).Count();
                 if (vhod != null && vhod == 1)
                 {                   
-                        UserGroupTable autolog =
-                            (from a in usersDB.UserGroupTable
-                             where a.Fk_ProjectsTable == Convert.ToInt32(button.AlternateText)
-                                select a).FirstOrDefault();
+                        UserGroupTable autolog =  (from a in usersDB.UserGroupTable where a.Fk_ProjectsTable == Convert.ToInt32(button.AlternateText) select a).FirstOrDefault();
                 
                     if (autolog.AutoLogin == true)
                     {
@@ -110,8 +103,7 @@ namespace PersonalPages
 
                     if (vhod != null && vhod> 1)
                     {
-                        UserGroupTable groupID = (from a in usersDB.UserGroupTable
-                                                  where a.Active == true && a.Fk_ProjectsTable == Convert.ToInt32(button.AlternateText)
+                        UserGroupTable groupID = (from a in usersDB.UserGroupTable where a.Active == true && a.Fk_ProjectsTable == Convert.ToInt32(button.AlternateText)
                             select a).FirstOrDefault();
                         if (groupID!=null)
                         { 
@@ -122,5 +114,7 @@ namespace PersonalPages
                     }               
             }
         }
+
+             
     }
 }

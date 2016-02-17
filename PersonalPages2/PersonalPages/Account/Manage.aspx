@@ -55,7 +55,7 @@
         <br />
         <br />
         &nbsp;&nbsp;<asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Заявка на изменение прав доступа" Width="475px" />
-        &nbsp;<h3> &nbsp; <asp:Label ID="Label1" runat="server"   Text="Варианты написания Вашего имени в системах публикаций (Scopus, WebOfSince):" Width="965px" /></h3>
+        &nbsp;<h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:Label ID="Label1" runat="server"   Text="Варианты написания Вашего имени в системах публикаций (Scopus, WebOfSince):" Width="965px" /></h3>
         <br />
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Height="52px" Width="604px">
                <Columns>    

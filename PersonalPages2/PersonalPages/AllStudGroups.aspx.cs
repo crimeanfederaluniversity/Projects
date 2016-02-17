@@ -11,7 +11,7 @@ namespace PersonalPages
     public partial class AllStudGroups : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
+        {/*
             if (!Page.IsPostBack)
             {
                
@@ -64,7 +64,7 @@ namespace PersonalPages
                     PersonalPagesDB.SubmitChanges();
                 }             
             }
-            Response.Redirect("~/AllStudGroups.aspx");
+            Response.Redirect("~/AllStudGroups.aspx"); 
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -91,7 +91,7 @@ namespace PersonalPages
         }
         protected void GoBackButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/UserMainPage.aspx");
+            Response.Redirect("~/UserMainPage.aspx");*/
         }
     }
 }

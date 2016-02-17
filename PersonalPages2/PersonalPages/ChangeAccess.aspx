@@ -1,6 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ChangeAccess.aspx.cs" Inherits="PersonalPages.ChangeAccess" MasterPageFile="~/Site.Master"%>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
+    <h3>&nbsp;&nbsp; Заявка на получение прав доступа к информационным системам:</h3>
+    <br />
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
             <Columns>
             <asp:TemplateField HeaderText="ID">
@@ -20,6 +22,9 @@
             </asp:TemplateField>
                     </columns>
         </asp:GridView>
+    
+    <br />
+&nbsp;
     
     <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Отправить заявку" Width="282px" />
     

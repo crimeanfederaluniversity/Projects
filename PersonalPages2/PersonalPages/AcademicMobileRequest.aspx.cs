@@ -64,10 +64,9 @@ namespace PersonalPages
             PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
             UsersTable userTable =
                (from a in PersonalPagesDB.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
-            StudentsTable studTable =
-                (from a in PersonalPagesDB.StudentsTable where a.StudentsTableID == userID select a).FirstOrDefault();
+         
 
-            if (userTable != null && studTable == null)
+            if (userTable != null  )
             {
                 if (FileUpload1.HasFile && FileUpload2.HasFile && FileUpload3.HasFile && FileUpload4.HasFile && FileUpload5.HasFile && FileUpload6.HasFile && FileUpload7.HasFile)
                 {

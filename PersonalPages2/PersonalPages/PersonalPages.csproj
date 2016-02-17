@@ -191,10 +191,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="CreateStudGroup.aspx" />
     <Content Include="EquipmentWriteOff.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="ITDepartment.aspx" />
     <Content Include="LearningIS.aspx" />
     <Content Include="MasterServises\AdminServices.aspx" />
     <Content Include="MasterServises\CommunicationServices.aspx" />
@@ -250,11 +248,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
     <Content Include="PassAuto.aspx" />
-    <Content Include="PersonalPages.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>PersonalPages.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="App_Themes\theme_1\css\images\Thumbs.db" />
     <Content Include="App_Themes\theme_1\Skin1.skin" />
     <Content Include="PrintScanOrder.aspx" />
@@ -263,6 +256,11 @@
     <Content Include="Fourth.master" />
     <Content Include="Fifth.master" />
     <Content Include="Last.master" />
+    <Content Include="PersonalPages.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>PersonalPages.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Properties\PublishProfiles\123.pubxml" />
     <None Include="Properties\PublishProfiles\321.pubxml" />
     <None Include="Properties\PublishProfiles\My.pubxml" />
@@ -396,13 +394,6 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CreateStudGroup.aspx.cs">
-      <DependentUpon>CreateStudGroup.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CreateStudGroup.aspx.designer.cs">
-      <DependentUpon>CreateStudGroup.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -433,13 +424,6 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="ITDepartment.aspx.cs">
-      <DependentUpon>ITDepartment.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ITDepartment.aspx.designer.cs">
-      <DependentUpon>ITDepartment.aspx</DependentUpon>
     </Compile>
     <Compile Include="LearningIS.aspx.cs">
       <DependentUpon>LearningIS.aspx</DependentUpon>
@@ -525,6 +509,11 @@
     <Compile Include="PassAuto.aspx.designer.cs">
       <DependentUpon>PassAuto.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PersonalPages.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PersonalPages.dbml</DependentUpon>
+    </Compile>
     <Compile Include="PrintScanOrder.aspx.cs">
       <DependentUpon>PrintScanOrder.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -559,11 +548,6 @@
     </Compile>
     <Compile Include="Third.master.designer.cs">
       <DependentUpon>Third.master</DependentUpon>
-    </Compile>
-    <Compile Include="PersonalPages.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PersonalPages.dbml</DependentUpon>
     </Compile>
     <Compile Include="Second.Master.cs">
       <DependentUpon>Second.Master</DependentUpon>

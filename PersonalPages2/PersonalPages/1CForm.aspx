@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="1CForm.aspx.cs"  MasterPageFile="~/Site.Master" Inherits="PersonalPages._1CForm" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    
      <span style="font-size: large">Заявка на доступ в систему 1С
     </span>
      <br />

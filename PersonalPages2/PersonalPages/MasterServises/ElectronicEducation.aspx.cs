@@ -11,7 +11,7 @@ namespace PersonalPages.MasterServises
     {
             protected void Page_Load(object sender, EventArgs e)
         {
-            int gID = 23;
+            int gID = 10;
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {

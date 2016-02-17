@@ -26,7 +26,7 @@ namespace PersonalPages
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
             Aplications newquestion = new Aplications();
             newquestion.Active = true;
-            newquestion.FK_ApplicationType = 4;
+            newquestion.FK_ApplicationType = 2;
             newquestion.FK_UserAdd = userID;
             newquestion.Date = DateTime.Now;
             newquestion.TelephoneNumber = TextBox3.Text;

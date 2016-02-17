@@ -1,11 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AcademicMobileRequest.aspx.cs" Inherits="PersonalPages.AcademicMobileRequest" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h3> Заявка на академическую мобильность.<br />
+    <h3> &nbsp;&nbsp; Заявка на академическую мобильность.<br />
         </h3>
       
-         <h3>Анкета конкурсанта на участие в академической мобильности:</h3>
+         <h3>&nbsp;&nbsp; Анкета конкурсанта на участие в академической мобильности:</h3>
+    &nbsp;&nbsp;&nbsp;&nbsp;
     Название сети: 
     <br />
+    &nbsp;&nbsp;
     <asp:TextBox ID="TextBox3" runat="server"   Width="413px"></asp:TextBox>
   
          <style>
@@ -25,7 +27,7 @@
 	}
 </style>
 <table class="demo">
-	<caption>Срок академической мобильности:</caption>
+	<caption>Срок академической мобильности:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </caption>
 	<thead>
 	<tr>
 		<th>Начало</th>
@@ -42,44 +44,60 @@
 
     <br />
 
+    &nbsp;&nbsp;
+
     Партнерская организация(в порядке приоритетности):<br />
-&nbsp;<asp:TextBox ID="TextBox14" runat="server" TextMode="MultiLine" Width="801px" Height="40px"></asp:TextBox>
+&nbsp;&nbsp; <asp:TextBox ID="TextBox14" runat="server" TextMode="MultiLine" Width="801px" Height="40px"></asp:TextBox>
     <br />
     <br />
+    &nbsp;&nbsp;
     Обоснование целей и мотивирование реализации академической мобильности:<span style="color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none;"><br />
+    &nbsp;&nbsp;
     <asp:TextBox ID="TextBox5" runat="server" Height="40px" TextMode="MultiLine" Width="800px"></asp:TextBox>
     <br />
     <br />
+    &nbsp;&nbsp;
     Ожидаемые результаты академической и научной активности (участие в конференциях, публикации, сертификаты и т.д.):<br />
+    &nbsp;&nbsp;
     <asp:TextBox ID="TextBox6" runat="server" Height="40px" TextMode="MultiLine" Width="800px"></asp:TextBox>
     <br />
     <br />
+    &nbsp;&nbsp;
     План работы в принимающей организации(задача и период выполнения):&nbsp; <br />
+        &nbsp;&nbsp;
         <asp:TextBox ID="TextBox15" runat="server" Height="40px" TextMode="MultiLine" Width="800px"></asp:TextBox>
     <br />
     </span>
-    <h4>Персональные данные: </h4>
-&nbsp;<asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
+    <h4>&nbsp;&nbsp; Персональные данные: </h4>
+&nbsp;&nbsp; <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
     &nbsp;
                  <asp:Label ID="Label8" runat="server" Text="Label"></asp:Label>
 &nbsp;<asp:Label ID="Label9" runat="server" Text="Label"></asp:Label>
     &nbsp;<div class="wrapper">
-            <div class="left_block">Дата рождения:<br />
+            <div class="left_block">&nbsp;&nbsp;&nbsp; Дата рождения:<br />
+    &nbsp;
     <asp:TextBox ID="TextBox12" runat="server" Width="159px"></asp:TextBox>
     <br />
+    &nbsp;&nbsp;
     Контактный телефон:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <br />
+    &nbsp;
     <asp:TextBox ID="TextBox1" runat="server" Width="163px"></asp:TextBox>
     <br />
+    &nbsp;&nbsp;
     Электронный адрес:<br />
+    &nbsp;
     <asp:TextBox ID="TextBox4" runat="server" Width="162px"></asp:TextBox>
     <br />
+    &nbsp;&nbsp;
     Постоянный почтовый адрес(адрес регистрации):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <br />
+    &nbsp;
     <asp:TextBox ID="TextBox2" runat="server" Height="35px" TextMode="MultiLine" Width="473px"></asp:TextBox>
     <br />
-&nbsp;<asp:Label ID="Label7" runat="server" Text="Сфера научных интересов:"></asp:Label>
+&nbsp;&nbsp; <asp:Label ID="Label7" runat="server" Text="Сфера научных интересов:"></asp:Label>
     <br />
+    &nbsp;
     <asp:TextBox ID="TextBox11" runat="server" Height="35px" TextMode="MultiLine" Width="475px"></asp:TextBox>
             </div>
 <div class="right_block">
@@ -105,6 +123,7 @@
         
             </div>
 </div>
+    &nbsp; Примечание: Для отправки заявки необходимо прикрепить следующие документы:<br />
     <br />
 <table class="demo">
 	<thead>

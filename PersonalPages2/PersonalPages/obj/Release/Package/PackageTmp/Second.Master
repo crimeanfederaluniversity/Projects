@@ -2,13 +2,15 @@
     MasterPageFile="~/Site.Master" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
+      <link rel="stylesheet" href="App_Themes/theme_1/css/masterpage.css" type="text/css" /> 
     <div style="margin-top: 0px;">
             <div class="container;">
                         <h2>Добро пожаловать в личный кабинет пользователя!
                         </h2>
+                <div id="main">
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><asp:ImageButton ID="ImageButton1" Width="40" Height="40" runat="server" ImageUrl="~/NewImages/LC.png" OnClick="HomeClick" /> </li>
+                    <ul class="nav navbar-nav" >
+                        <li><a runat="server" style="background: yellow" href="~/UserMainPage.aspx">ПРИЛОЖЕНИЯ</a></li>                  
                        <li><a runat="server" href="~/MasterServises/AdminServices.aspx">АДМИНИСТРАТИВНЫЕ УСЛУГИ</a></li>
                         <li><a runat="server" href="~/MasterServises/CommunicationServices.aspx">КОММУНИКАЦИОННЫЕ СЕРВИСЫ</a></li>
                         <li><a runat="server" href="~/MasterServises/ElectronicEducation.aspx">ЭЛЕКТРОННОЕ ОБУЧЕНИЕ</a></li>
@@ -16,10 +18,12 @@
                         <li><a runat="server" href="~/MasterServises/UserAsist.aspx">ПОДДЕРЖКА ПОЛЬЗОВАТЕЛЕЙ</a></li>                                         
                     </ul>
                 </div>
+                    </div>
         </div>             
-        <asp:ContentPlaceHolder ID="SecondLevel" runat="server" >
-            
+        <asp:ContentPlaceHolder ID="SecondLevel" runat="server" >            
         </asp:ContentPlaceHolder>
     </div>
 </asp:Content>
+
+ 
 

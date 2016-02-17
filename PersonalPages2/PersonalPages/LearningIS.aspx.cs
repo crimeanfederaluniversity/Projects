@@ -26,7 +26,7 @@ namespace PersonalPages
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
             Aplications newlerning = new Aplications();
             newlerning.Active = true;
-            newlerning.FK_ApplicationType = 5;
+            newlerning.FK_ApplicationType =11;
             newlerning.FK_UserAdd = userID;
             newlerning.Date = DateTime.Now;
             newlerning.Text = TextBox1.Text;

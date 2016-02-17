@@ -2,6 +2,7 @@
     MasterPageFile="~/Site.Master" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
+      <link rel="stylesheet" href="App_Themes/theme_1/css/masterpage.css" type="text/css" /> 
     <div style="margin-top: 0px;">
             <div class="container;">
                         <h2>Добро пожаловать в личный кабинет пользователя!
