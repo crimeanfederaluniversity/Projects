@@ -39,10 +39,7 @@
  </div></div></div>
 <style>
       
-        #left_content{display: inline-block;width: 20%;}
-          #page_wrapper {
-            display: inline-block;width: 79%;
-        }
+   
 
     </style>
 </asp:Content>

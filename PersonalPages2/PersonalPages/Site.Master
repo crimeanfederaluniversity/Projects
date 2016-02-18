@@ -71,7 +71,7 @@
             </div>            
         </div>
     
-        <div class="body-content">
+        <div class="body-content top_margunov">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">              
                 <p>
                 </p>
