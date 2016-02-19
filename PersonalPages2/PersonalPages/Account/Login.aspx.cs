@@ -20,12 +20,7 @@ namespace PersonalPages.Account
                                             && (usersTables.Password == Password.Text)
                                            &&  usersTables.Active == true
                                            select usersTables).FirstOrDefault();
-
-                       /* StudentsTable student = (from studTables in usersDB.StudentsTable
-                                                 where studTables.Email == UserName.Text
-                                            && (studTables.Password == Password.Text)
-                                           && studTables.Active == true
-                                                 select studTables).FirstOrDefault();*/
+ 
 
                         if (user != null)
                         {

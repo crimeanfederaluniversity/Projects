@@ -14,30 +14,6 @@ namespace PersonalPages
 
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            Serialization UserSer = (Serialization)Session["UserID"];
-            if (UserSer == null)
-            {
-                Response.Redirect("~/Default.aspx");
-            }
-            int userID = UserSer.Id;
-            string question = TextBox1.Text.ToString();
-            PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-            Aplications newquestion = new Aplications();
-            newquestion.Active = true;
-            newquestion.FK_ApplicationType = 6;
-            newquestion.FK_UserAdd = userID;
-            newquestion.Date = DateTime.Now;
-            if (TextBox3!=null)
-            {
-                newquestion.TelephoneNumber = TextBox3.Text;
-            }          
-            newquestion.Text = question;
-            usersDB.Aplications.InsertOnSubmit(newquestion);
-            usersDB.SubmitChanges();
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ваш запрос успешно отправлен, мы обязательно с Вами свяжемся!');", true);
-            Response.Redirect("~/UserMainPage.aspx");
-        }
+        
     }
 }

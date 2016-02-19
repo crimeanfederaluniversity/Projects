@@ -19,34 +19,36 @@ namespace PersonalPages
             }
             int userID = UserSer.Id;
         
-
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-            UsersTable user = (from usersTables in usersDB.UsersTable
-                where usersTables.UsersTableID == userID
-                      && usersTables.Active == true
-                select usersTables).FirstOrDefault();
+            UsersTable user = (from usersTables in usersDB.UsersTable where usersTables.UsersTableID == userID
+                                             && usersTables.Active == true select usersTables).FirstOrDefault();
 
             DataTable dataTable = new DataTable();
-
             dataTable.Columns.Add(new DataColumn("ProjectName", typeof (string)));
 
             if (user != null )
             {
-                List<Projects> userGroups = (from a in usersDB.Projects
-                    join z in usersDB.UserGroupTable on   a.Id equals z.Fk_ProjectsTable
-                    join c in usersDB.UsersAndUserGroupMappingTable  on z.UserGroupID equals c.FK_GroupTable
-                    join d in usersDB.UsersTable on c.FK_UserTable equals d.UsersTableID
-                     where a.Active == true && c.FK_UserTable == userID && z.Active == true && c.Active == true  && c.Confirmed==true
-                    select a).Distinct().ToList();
+                List<UsersAndUserGroupMappingTable>  confirmed = (from c in usersDB.UsersAndUserGroupMappingTable  
+                    where c.Confirmed==true && c.Active == true && c.FK_UserTable == userID select c).Distinct().ToList();
+                List<Projects> allprojects = new List<Projects>();
+                foreach (var projectname in confirmed)
+                {
+                    Projects name = (from a in usersDB.Projects where a.Active == true
+                                     join z in usersDB.UserGroupTable on a.Id equals z.Fk_ProjectsTable 
+                                     where z.Active == true && z.UserGroupID == projectname.FK_GroupTable
+                    select a).FirstOrDefault();
+
+                    allprojects.Add(name);
+                }
 
                 Label lb2 = new Label();
                 lb2.Text = "<br />";
                 Panel.Controls.Add(lb2);
-                foreach (var name in userGroups)
+                foreach (var name in allprojects)
                 {
                     if (name.Id < 8 || name.Id > 12)
-                    { 
-                    if (userGroups.Count > 6)
+                    {
+                        if (allprojects.Count > 6)
                     {
                         Panel.Height = 470;
                     }
@@ -114,6 +116,21 @@ namespace PersonalPages
                     }               
             }
         }
+
+             protected void Button1_Click(object sender, EventArgs e)
+             {
+                 Response.Redirect("~/1CForm.aspx");
+             }
+
+             protected void Button2_Click(object sender, EventArgs e)
+             {
+                 Response.Redirect("~/CardOrder.aspx");
+             }
+
+             protected void Button3_Click(object sender, EventArgs e)
+             {
+                 Response.Redirect("~/EquipmentWriteOff.aspx");
+             }
 
              
     }

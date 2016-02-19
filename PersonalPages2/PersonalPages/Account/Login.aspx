@@ -12,7 +12,7 @@
     <div class="first_div_on_login">
         <div class="login_image_gerb"></div>
         <br />
-        <asp:Label ID="Label3" runat="server" Font-Size="18pt" Text="Пожалуйста,&nbsp;авторизуйтесь&nbsp;для&nbsp;начала&nbsp;работы"></asp:Label>
+        <asp:Label ID="Label3" runat="server" Font-Size="18pt" Text="Введите Ваш логин и пароль для входа в систему личных кабинетов КФУ"></asp:Label>
         <br />
         <br />
         <asp:Label ID="Label1" runat="server" Text="Адрес электронной почты"></asp:Label>
@@ -37,9 +37,5 @@
         <br />
         
  </div></div></div>
-<style>
-      
-   
-
-    </style>
+ 
 </asp:Content>

@@ -691,14 +691,12 @@ left:7%;
 }
 /*ANIMATION*//*ANIMATION*//*ANIMATION*//*ANIMATION*//*ANIMATION*//*ANIMATION*/
 
-
-
 /*ДОПОЛНИТЕЛЬНАЯ СЕКЦИЯ */
 .top_margunov {
    
     max-width: 1170px;
     margin:0 auto;
-     margin-top:70px;
+    margin-top:70px;
 }
 .content_centerer {
     margin: 0 auto;

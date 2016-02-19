@@ -44,7 +44,7 @@ namespace PersonalPages.MasterServises
                                                    join z in usersDB.Projects on
                                                    a.Fk_ProjectsTable equals z.Id
                                                    where a.Active == true && c.FK_UserTable == userID && z.Active == true && c.Active == true
-                                                   && a.Fk_ProjectsTable == gID
+                                                   && c.Confirmed == true  && a.Fk_ProjectsTable == gID
                                                    select a).Distinct().ToList();
                 Label lb2 = new Label();
                 lb2.Text = "<br />";

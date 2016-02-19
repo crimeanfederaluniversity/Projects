@@ -1,21 +1,21 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ChangeAccess.aspx.cs" Inherits="PersonalPages.ChangeAccess" MasterPageFile="~/Site.Master"%>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-    <h3>&nbsp;&nbsp; Заявка на получение прав доступа к информационным системам:</h3>
+    <h3>Изменения прав доступа к модулям системы личных кабинетов</h3>
     <br />
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
             <Columns>
-            <asp:TemplateField HeaderText="ID">
+            <asp:TemplateField HeaderText="ID" Visible ="false">
                                     <ItemTemplate>
                                         <asp:Label ID="ID" runat="server" Visible="True" Text='<%# Bind("ID") %>'></asp:Label>
                                     </ItemTemplate>
             </asp:TemplateField>
-                 <asp:TemplateField HeaderText="Name">
+                 <asp:TemplateField HeaderText="Название модуля в системе">
                                     <ItemTemplate>
                                         <asp:Label ID="Name" runat="server" Visible="True" Text='<%# Bind("Name") %>'></asp:Label>
                                     </ItemTemplate>
             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Доступ к системам">
+                            <asp:TemplateField HeaderText="Доступ">
                                     <ItemTemplate>
                                          <asp:CheckBox ID="EarlieAccess" Text=" " runat="server" Checked='<%# Bind("Access") %>'></asp:CheckBox>                          
                                     </ItemTemplate>

@@ -22,20 +22,26 @@ namespace PersonalPages
                 Response.Redirect("~/Default.aspx");
             }
             int userID = UserSer.Id;
-            
-            PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-            Aplications newpass = new Aplications();
-            newpass.Active = true;
-            newpass.FK_ApplicationType = 3;
-            newpass.FK_UserAdd = userID;
-            newpass.Date = DateTime.Now;
-            newpass.TelephoneNumber = TextBox3.Text; 
-            newpass.Text = TextBox4.Text.ToString();
 
-            usersDB.Aplications.InsertOnSubmit(newpass);
-            usersDB.SubmitChanges();
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ваш запрос на карту успешно отправлен!');", true);
-            Response.Redirect("~/MasterServises/AdminServices.aspx");
+            if (TextBox3.Text != null)
+            {
+                PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
+                Aplications newpass = new Aplications();
+                newpass.Active = true;
+                newpass.FK_ApplicationType = 3;
+                newpass.FK_UserAdd = userID;
+                newpass.Date = DateTime.Now;
+                newpass.TelephoneNumber = TextBox3.Text;
+                newpass.Text = TextBox4.Text.ToString();
+
+                usersDB.Aplications.InsertOnSubmit(newpass);
+                usersDB.SubmitChanges();
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ваш запрос отправлен!');", true);
+            }
+            else
+            {
+                Response.Redirect("~/MasterServises/AdminServices.aspx");
+            }
         }
     }
 }

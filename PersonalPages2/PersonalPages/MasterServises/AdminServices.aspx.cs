@@ -19,9 +19,6 @@ namespace PersonalPages.MasterServises
                 Response.Redirect("~/Default.aspx");
             }
             int userID = UserSer.Id;
-
-            // int userID = 12264;
-
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
             UsersTable user = (from usersTables in usersDB.UsersTable
                                where usersTables.UsersTableID == userID
@@ -41,7 +38,7 @@ namespace PersonalPages.MasterServises
                                                    on c.FK_UserTable equals d.UsersTableID
                                                    join z in usersDB.Projects on
                                                    a.Fk_ProjectsTable equals z.Id
-                                                   where a.Active == true && c.FK_UserTable == userID && z.Active == true && c.Active == true
+                                                   where a.Active == true && c.FK_UserTable == userID && z.Active == true && c.Active == true && c.Confirmed == true
                                                    && a.Fk_ProjectsTable == gID
                                                    select a).Distinct().ToList();
                 Label lb2 = new Label();

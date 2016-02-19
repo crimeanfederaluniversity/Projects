@@ -22,19 +22,26 @@ namespace PersonalPages
                 Response.Redirect("~/Default.aspx");
             }
             int userID = UserSer.Id;
-            string question = TextBox1.Text.ToString() + "/" + TextBox2.Text.ToString();
-            PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-            Aplications newquestion = new Aplications();
-            newquestion.Active = true;
-            newquestion.FK_ApplicationType = 2;
-            newquestion.FK_UserAdd = userID;
-            newquestion.Date = DateTime.Now;
-            newquestion.TelephoneNumber = TextBox3.Text;
-            newquestion.Text = question;
-            usersDB.Aplications.InsertOnSubmit(newquestion);
-            usersDB.SubmitChanges();
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ваш вопрос успешно отправлен!');", true);
-            Response.Redirect("~/MasterServises/AdminServices.aspx");
+            if (TextBox1.Text != null && TextBox2.Text != null)
+            {
+                string question = TextBox1.Text.ToString() + "/" + TextBox2.Text.ToString();
+                PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
+                Aplications newquestion = new Aplications();
+                newquestion.Active = true;
+                newquestion.FK_ApplicationType = 2;
+                newquestion.FK_UserAdd = userID;
+                newquestion.Date = DateTime.Now;
+                newquestion.TelephoneNumber = TextBox3.Text;
+                newquestion.Text = question;
+                usersDB.Aplications.InsertOnSubmit(newquestion);
+                usersDB.SubmitChanges();
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ваш вопрос отправлен на рассмотрение!');", true);
+            }
+            else
+            {
+                Response.Redirect("~/MasterServises/AdminServices.aspx");
+            }
+          
         }
     }
 }
