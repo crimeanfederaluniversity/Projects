@@ -1,80 +1,150 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ChancelerryDB_Release" Class="ChancelerryDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=ChancelerryDB_Release;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ChancelerryDB_ReleaseConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.CollectedFieldsValues" Member="CollectedFieldsValues">
-    <Type Name="CollectedFieldsValue">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ChncelerryDB_New_Release" Class="ChancelerryDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=ChncelerryDB_New_Release;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ChncelerryDB_New_ReleaseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CollectedCards" Member="CollectedCards">
+    <Type Name="CollectedCards">
+      <Column Name="collectedCardID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="fk_register" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="fk_field" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="number" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="instance" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="creationDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="value" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Association Name="User_CollectedFieldsValue" Member="User" ThisKey="fk_user" OtherKey="userID" Type="User" IsForeignKey="true" />
-      <Association Name="Field_CollectedFieldsValue" Member="Field" ThisKey="fk_field" OtherKey="fieldID" Type="Field" IsForeignKey="true" />
-      <Association Name="Register_CollectedFieldsValue" Member="Register" ThisKey="fk_register" OtherKey="registerID" Type="Register" IsForeignKey="true" />
+      <Association Name="CollectedCards_CollectedFieldsValues" Member="CollectedFieldsValues" ThisKey="collectedCardID" OtherKey="fk_collectedCard" Type="CollectedFieldsValues" />
+      <Association Name="Registers_CollectedCards" Member="Registers" ThisKey="fk_register" OtherKey="registerID" Type="Registers" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Users" Member="Users">
-    <Type Name="User">
+    <Type Name="Users">
       <Column Name="userID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="login" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="[group]" Member="group" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="User_CollectedFieldsValue" Member="CollectedFieldsValues" ThisKey="userID" OtherKey="fk_user" Type="CollectedFieldsValue" />
-      <Association Name="User_RegisterViewForm" Member="RegisterViewForms" ThisKey="userID" OtherKey="fk_user" Type="RegisterViewForm" />
+      <Column Name="email" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="login" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="struct" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="Users_CollectedFieldsValues" Member="CollectedFieldsValues" ThisKey="userID" OtherKey="fk_user" Type="CollectedFieldsValues" />
+      <Association Name="Users_Logs" Member="Logs" ThisKey="userID" OtherKey="fk_users" Type="Logs" />
+      <Association Name="Users_RegistersUsersMap" Member="RegistersUsersMap" ThisKey="userID" OtherKey="fk_user" Type="RegistersUsersMap" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CollectedFieldsValues" Member="CollectedFieldsValues">
+    <Type Name="CollectedFieldsValues">
+      <Column Name="collectedFieldValueID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="fk_collectedCard" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fk_field" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="createDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="version" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="instance" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="valueText" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="valueData" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="valueInt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="valueFloat" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="isDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="CollectedCards_CollectedFieldsValues" Member="CollectedCards" ThisKey="fk_collectedCard" OtherKey="collectedCardID" Type="CollectedCards" IsForeignKey="true" />
+      <Association Name="Users_CollectedFieldsValues" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Dictionarys" Member="Dictionarys">
+    <Type Name="Dictionarys">
+      <Column Name="dictionaryID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="Dictionarys_DictionarysValues" Member="DictionarysValues" ThisKey="dictionaryID" OtherKey="fk_dictionary" Type="DictionarysValues" />
+      <Association Name="Dictionarys_Fields" Member="Fields" ThisKey="dictionaryID" OtherKey="fk_dictionary" Type="Fields" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DictionarysValues" Member="DictionarysValues">
+    <Type Name="DictionarysValues">
+      <Column Name="dictionaryValueID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="value" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="fk_dictionary" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Dictionarys_DictionarysValues" Member="Dictionarys" ThisKey="fk_dictionary" OtherKey="dictionaryID" Type="Dictionarys" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Fields" Member="Fields">
-    <Type Name="Field">
+    <Type Name="Fields">
       <Column Name="fieldID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="description" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Field_CollectedFieldsValue" Member="CollectedFieldsValues" ThisKey="fieldID" OtherKey="fk_field" Type="CollectedFieldsValue" />
-      <Association Name="Field_Registers_Field" Member="Registers_Fields" ThisKey="fieldID" OtherKey="fk_field" Type="Registers_Field" />
-      <Association Name="Field_RegisterViewForm" Member="RegisterViewForms" ThisKey="fieldID" OtherKey="fk_field" Type="RegisterViewForm" />
+      <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="line" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="columnNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="height" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="width" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fk_fieldsGroup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="mandatory" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="multiple" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="fk_dictionary" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Fields_RegistersView" Member="RegistersView" ThisKey="fieldID" OtherKey="registerViewID" Type="RegistersView" Cardinality="One" />
+      <Association Name="Dictionarys_Fields" Member="Dictionarys" ThisKey="fk_dictionary" OtherKey="dictionaryID" Type="Dictionarys" IsForeignKey="true" />
+      <Association Name="FieldsGroups_Fields" Member="FieldsGroups" ThisKey="fk_fieldsGroup" OtherKey="fieldsGroupID" Type="FieldsGroups" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FieldsGroups" Member="FieldsGroups">
+    <Type Name="FieldsGroups">
+      <Column Name="fieldsGroupID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="fk_registerModel" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="line" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="multiple" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="FieldsGroups_Fields" Member="Fields" ThisKey="fieldsGroupID" OtherKey="fk_fieldsGroup" Type="Fields" />
+      <Association Name="RegistersModels_FieldsGroups" Member="RegistersModels" ThisKey="fk_registerModel" OtherKey="registerModelID" Type="RegistersModels" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Logs" Member="Logs">
+    <Type Name="Logs">
+      <Column Name="logID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="createDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="type" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="fk_users" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Users_Logs" Member="Users" ThisKey="fk_users" OtherKey="userID" Type="Users" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Registers" Member="Registers">
-    <Type Name="Register">
+    <Type Name="Registers">
       <Column Name="registerID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="Register_CollectedFieldsValue" Member="CollectedFieldsValues" ThisKey="registerID" OtherKey="fk_register" Type="CollectedFieldsValue" />
-      <Association Name="Register_Registers_Field" Member="Registers_Fields" ThisKey="registerID" OtherKey="fk_register" Type="Registers_Field" />
-      <Association Name="Register_RegisterViewForm" Member="RegisterViewForms" ThisKey="registerID" OtherKey="fk_register" Type="RegisterViewForm" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="fk_registersModel" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Registers_CollectedCards" Member="CollectedCards" ThisKey="registerID" OtherKey="fk_register" Type="CollectedCards" />
+      <Association Name="Registers_RegistersUsersMap" Member="RegistersUsersMap" ThisKey="registerID" OtherKey="fk_register" Type="RegistersUsersMap" />
+      <Association Name="RegistersModels_Registers" Member="RegistersModels" ThisKey="fk_registersModel" OtherKey="registerModelID" Type="RegistersModels" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Registers_Fields" Member="Registers_Fields">
-    <Type Name="Registers_Field">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.RegistersModels" Member="RegistersModels">
+    <Type Name="RegistersModels">
+      <Column Name="registerModelID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="fk_register" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="fk_field" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Field_Registers_Field" Member="Field" ThisKey="fk_field" OtherKey="fieldID" Type="Field" IsForeignKey="true" />
-      <Association Name="Register_Registers_Field" Member="Register" ThisKey="fk_register" OtherKey="registerID" Type="Register" IsForeignKey="true" />
+      <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="RegistersModels_FieldsGroups" Member="FieldsGroups" ThisKey="registerModelID" OtherKey="fk_registerModel" Type="FieldsGroups" />
+      <Association Name="RegistersModels_Registers" Member="Registers" ThisKey="registerModelID" OtherKey="fk_registersModel" Type="Registers" />
     </Type>
   </Table>
-  <Table Name="dbo.RegisterViewForm" Member="RegisterViewForms">
-    <Type Name="RegisterViewForm">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.RegistersUsersMap" Member="RegistersUsersMap">
+    <Type Name="RegistersUsersMap">
+      <Column Name="registersUsersMapID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="fk_register" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fk_register" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="canEdit" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="RegistersUsersMap_RegistersView" Member="RegistersView" ThisKey="registersUsersMapID" OtherKey="fk_registersUsersMap" Type="RegistersView" />
+      <Association Name="Registers_RegistersUsersMap" Member="Registers" ThisKey="fk_register" OtherKey="registerID" Type="Registers" IsForeignKey="true" />
+      <Association Name="Users_RegistersUsersMap" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RegistersView" Member="RegistersView">
+    <Type Name="RegistersView">
+      <Column Name="registerViewID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="fk_registersUsersMap" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="fk_field" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="isHide" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="height" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="width" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="mandatory" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="Field_RegisterViewForm" Member="Field" ThisKey="fk_field" OtherKey="fieldID" Type="Field" IsForeignKey="true" />
-      <Association Name="Register_RegisterViewForm" Member="Register" ThisKey="fk_register" OtherKey="registerID" Type="Register" IsForeignKey="true" />
-      <Association Name="User_RegisterViewForm" Member="User" ThisKey="fk_user" OtherKey="userID" Type="User" IsForeignKey="true" />
+      <Column Name="weight" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="Fields_RegistersView" Member="Fields" ThisKey="registerViewID" OtherKey="fieldID" Type="Fields" IsForeignKey="true" />
+      <Association Name="RegistersUsersMap_RegistersView" Member="RegistersUsersMap" ThisKey="fk_registersUsersMap" OtherKey="registersUsersMapID" Type="RegistersUsersMap" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

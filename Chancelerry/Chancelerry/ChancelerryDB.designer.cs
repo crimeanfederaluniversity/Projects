@@ -22,7 +22,7 @@ namespace Chancelerry
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="ChancelerryDB_Release")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="ChncelerryDB_New_Release")]
 	public partial class ChancelerryDBDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -30,28 +30,46 @@ namespace Chancelerry
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertCollectedFieldsValue(CollectedFieldsValue instance);
-    partial void UpdateCollectedFieldsValue(CollectedFieldsValue instance);
-    partial void DeleteCollectedFieldsValue(CollectedFieldsValue instance);
-    partial void InsertUser(User instance);
-    partial void UpdateUser(User instance);
-    partial void DeleteUser(User instance);
-    partial void InsertField(Field instance);
-    partial void UpdateField(Field instance);
-    partial void DeleteField(Field instance);
-    partial void InsertRegister(Register instance);
-    partial void UpdateRegister(Register instance);
-    partial void DeleteRegister(Register instance);
-    partial void InsertRegisters_Field(Registers_Field instance);
-    partial void UpdateRegisters_Field(Registers_Field instance);
-    partial void DeleteRegisters_Field(Registers_Field instance);
-    partial void InsertRegisterViewForm(RegisterViewForm instance);
-    partial void UpdateRegisterViewForm(RegisterViewForm instance);
-    partial void DeleteRegisterViewForm(RegisterViewForm instance);
+    partial void InsertCollectedCards(CollectedCards instance);
+    partial void UpdateCollectedCards(CollectedCards instance);
+    partial void DeleteCollectedCards(CollectedCards instance);
+    partial void InsertUsers(Users instance);
+    partial void UpdateUsers(Users instance);
+    partial void DeleteUsers(Users instance);
+    partial void InsertCollectedFieldsValues(CollectedFieldsValues instance);
+    partial void UpdateCollectedFieldsValues(CollectedFieldsValues instance);
+    partial void DeleteCollectedFieldsValues(CollectedFieldsValues instance);
+    partial void InsertDictionarys(Dictionarys instance);
+    partial void UpdateDictionarys(Dictionarys instance);
+    partial void DeleteDictionarys(Dictionarys instance);
+    partial void InsertDictionarysValues(DictionarysValues instance);
+    partial void UpdateDictionarysValues(DictionarysValues instance);
+    partial void DeleteDictionarysValues(DictionarysValues instance);
+    partial void InsertFields(Fields instance);
+    partial void UpdateFields(Fields instance);
+    partial void DeleteFields(Fields instance);
+    partial void InsertFieldsGroups(FieldsGroups instance);
+    partial void UpdateFieldsGroups(FieldsGroups instance);
+    partial void DeleteFieldsGroups(FieldsGroups instance);
+    partial void InsertLogs(Logs instance);
+    partial void UpdateLogs(Logs instance);
+    partial void DeleteLogs(Logs instance);
+    partial void InsertRegisters(Registers instance);
+    partial void UpdateRegisters(Registers instance);
+    partial void DeleteRegisters(Registers instance);
+    partial void InsertRegistersModels(RegistersModels instance);
+    partial void UpdateRegistersModels(RegistersModels instance);
+    partial void DeleteRegistersModels(RegistersModels instance);
+    partial void InsertRegistersUsersMap(RegistersUsersMap instance);
+    partial void UpdateRegistersUsersMap(RegistersUsersMap instance);
+    partial void DeleteRegistersUsersMap(RegistersUsersMap instance);
+    partial void InsertRegistersView(RegistersView instance);
+    partial void UpdateRegistersView(RegistersView instance);
+    partial void DeleteRegistersView(RegistersView instance);
     #endregion
 		
 		public ChancelerryDBDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["ChancelerryDB_ReleaseConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["ChncelerryDB_New_ReleaseConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -80,133 +98,154 @@ namespace Chancelerry
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<CollectedFieldsValue> CollectedFieldsValues
+		public System.Data.Linq.Table<CollectedCards> CollectedCards
 		{
 			get
 			{
-				return this.GetTable<CollectedFieldsValue>();
+				return this.GetTable<CollectedCards>();
 			}
 		}
 		
-		public System.Data.Linq.Table<User> Users
+		public System.Data.Linq.Table<Users> Users
 		{
 			get
 			{
-				return this.GetTable<User>();
+				return this.GetTable<Users>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Field> Fields
+		public System.Data.Linq.Table<CollectedFieldsValues> CollectedFieldsValues
 		{
 			get
 			{
-				return this.GetTable<Field>();
+				return this.GetTable<CollectedFieldsValues>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Register> Registers
+		public System.Data.Linq.Table<Dictionarys> Dictionarys
 		{
 			get
 			{
-				return this.GetTable<Register>();
+				return this.GetTable<Dictionarys>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Registers_Field> Registers_Fields
+		public System.Data.Linq.Table<DictionarysValues> DictionarysValues
 		{
 			get
 			{
-				return this.GetTable<Registers_Field>();
+				return this.GetTable<DictionarysValues>();
 			}
 		}
 		
-		public System.Data.Linq.Table<RegisterViewForm> RegisterViewForms
+		public System.Data.Linq.Table<Fields> Fields
 		{
 			get
 			{
-				return this.GetTable<RegisterViewForm>();
+				return this.GetTable<Fields>();
+			}
+		}
+		
+		public System.Data.Linq.Table<FieldsGroups> FieldsGroups
+		{
+			get
+			{
+				return this.GetTable<FieldsGroups>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Logs> Logs
+		{
+			get
+			{
+				return this.GetTable<Logs>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Registers> Registers
+		{
+			get
+			{
+				return this.GetTable<Registers>();
+			}
+		}
+		
+		public System.Data.Linq.Table<RegistersModels> RegistersModels
+		{
+			get
+			{
+				return this.GetTable<RegistersModels>();
+			}
+		}
+		
+		public System.Data.Linq.Table<RegistersUsersMap> RegistersUsersMap
+		{
+			get
+			{
+				return this.GetTable<RegistersUsersMap>();
+			}
+		}
+		
+		public System.Data.Linq.Table<RegistersView> RegistersView
+		{
+			get
+			{
+				return this.GetTable<RegistersView>();
 			}
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CollectedFieldsValues")]
-	public partial class CollectedFieldsValue : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CollectedCards")]
+	public partial class CollectedCards : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _id;
+		private int _collectedCardID;
 		
 		private bool _active;
 		
-		private int _fk_user;
-		
 		private int _fk_register;
 		
-		private int _fk_field;
+		private EntitySet<CollectedFieldsValues> _CollectedFieldsValues;
 		
-		private int _number;
-		
-		private int _instance;
-		
-		private System.DateTime _creationDate;
-		
-		private string _value;
-		
-		private EntityRef<User> _User;
-		
-		private EntityRef<Field> _Field;
-		
-		private EntityRef<Register> _Register;
+		private EntityRef<Registers> _Registers;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
+    partial void OncollectedCardIDChanging(int value);
+    partial void OncollectedCardIDChanged();
     partial void OnactiveChanging(bool value);
     partial void OnactiveChanged();
-    partial void Onfk_userChanging(int value);
-    partial void Onfk_userChanged();
     partial void Onfk_registerChanging(int value);
     partial void Onfk_registerChanged();
-    partial void Onfk_fieldChanging(int value);
-    partial void Onfk_fieldChanged();
-    partial void OnnumberChanging(int value);
-    partial void OnnumberChanged();
-    partial void OninstanceChanging(int value);
-    partial void OninstanceChanged();
-    partial void OncreationDateChanging(System.DateTime value);
-    partial void OncreationDateChanged();
-    partial void OnvalueChanging(string value);
-    partial void OnvalueChanged();
     #endregion
 		
-		public CollectedFieldsValue()
+		public CollectedCards()
 		{
-			this._User = default(EntityRef<User>);
-			this._Field = default(EntityRef<Field>);
-			this._Register = default(EntityRef<Register>);
+			this._CollectedFieldsValues = new EntitySet<CollectedFieldsValues>(new Action<CollectedFieldsValues>(this.attach_CollectedFieldsValues), new Action<CollectedFieldsValues>(this.detach_CollectedFieldsValues));
+			this._Registers = default(EntityRef<Registers>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_collectedCardID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int collectedCardID
 		{
 			get
 			{
-				return this._id;
+				return this._collectedCardID;
 			}
 			set
 			{
-				if ((this._id != value))
+				if ((this._collectedCardID != value))
 				{
-					this.OnidChanging(value);
+					this.OncollectedCardIDChanging(value);
 					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
+					this._collectedCardID = value;
+					this.SendPropertyChanged("collectedCardID");
+					this.OncollectedCardIDChanged();
 				}
 			}
 		}
@@ -231,30 +270,6 @@ namespace Chancelerry
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_user", DbType="Int NOT NULL")]
-		public int fk_user
-		{
-			get
-			{
-				return this._fk_user;
-			}
-			set
-			{
-				if ((this._fk_user != value))
-				{
-					if (this._User.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_userChanging(value);
-					this.SendPropertyChanging();
-					this._fk_user = value;
-					this.SendPropertyChanged("fk_user");
-					this.Onfk_userChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_register", DbType="Int NOT NULL")]
 		public int fk_register
 		{
@@ -266,7 +281,7 @@ namespace Chancelerry
 			{
 				if ((this._fk_register != value))
 				{
-					if (this._Register.HasLoadedOrAssignedValue)
+					if (this._Registers.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -279,208 +294,49 @@ namespace Chancelerry
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_field", DbType="Int NOT NULL")]
-		public int fk_field
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CollectedCards_CollectedFieldsValues", Storage="_CollectedFieldsValues", ThisKey="collectedCardID", OtherKey="fk_collectedCard")]
+		public EntitySet<CollectedFieldsValues> CollectedFieldsValues
 		{
 			get
 			{
-				return this._fk_field;
+				return this._CollectedFieldsValues;
 			}
 			set
 			{
-				if ((this._fk_field != value))
-				{
-					if (this._Field.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_fieldChanging(value);
-					this.SendPropertyChanging();
-					this._fk_field = value;
-					this.SendPropertyChanged("fk_field");
-					this.Onfk_fieldChanged();
-				}
+				this._CollectedFieldsValues.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_number", DbType="Int NOT NULL")]
-		public int number
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Registers_CollectedCards", Storage="_Registers", ThisKey="fk_register", OtherKey="registerID", IsForeignKey=true)]
+		public Registers Registers
 		{
 			get
 			{
-				return this._number;
+				return this._Registers.Entity;
 			}
 			set
 			{
-				if ((this._number != value))
-				{
-					this.OnnumberChanging(value);
-					this.SendPropertyChanging();
-					this._number = value;
-					this.SendPropertyChanged("number");
-					this.OnnumberChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_instance", DbType="Int NOT NULL")]
-		public int instance
-		{
-			get
-			{
-				return this._instance;
-			}
-			set
-			{
-				if ((this._instance != value))
-				{
-					this.OninstanceChanging(value);
-					this.SendPropertyChanging();
-					this._instance = value;
-					this.SendPropertyChanged("instance");
-					this.OninstanceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_creationDate", DbType="Date NOT NULL")]
-		public System.DateTime creationDate
-		{
-			get
-			{
-				return this._creationDate;
-			}
-			set
-			{
-				if ((this._creationDate != value))
-				{
-					this.OncreationDateChanging(value);
-					this.SendPropertyChanging();
-					this._creationDate = value;
-					this.SendPropertyChanged("creationDate");
-					this.OncreationDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_value", DbType="VarChar(50)")]
-		public string value
-		{
-			get
-			{
-				return this._value;
-			}
-			set
-			{
-				if ((this._value != value))
-				{
-					this.OnvalueChanging(value);
-					this.SendPropertyChanging();
-					this._value = value;
-					this.SendPropertyChanged("value");
-					this.OnvalueChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_CollectedFieldsValue", Storage="_User", ThisKey="fk_user", OtherKey="userID", IsForeignKey=true)]
-		public User User
-		{
-			get
-			{
-				return this._User.Entity;
-			}
-			set
-			{
-				User previousValue = this._User.Entity;
+				Registers previousValue = this._Registers.Entity;
 				if (((previousValue != value) 
-							|| (this._User.HasLoadedOrAssignedValue == false)))
+							|| (this._Registers.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._User.Entity = null;
-						previousValue.CollectedFieldsValues.Remove(this);
+						this._Registers.Entity = null;
+						previousValue.CollectedCards.Remove(this);
 					}
-					this._User.Entity = value;
+					this._Registers.Entity = value;
 					if ((value != null))
 					{
-						value.CollectedFieldsValues.Add(this);
-						this._fk_user = value.userID;
-					}
-					else
-					{
-						this._fk_user = default(int);
-					}
-					this.SendPropertyChanged("User");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Field_CollectedFieldsValue", Storage="_Field", ThisKey="fk_field", OtherKey="fieldID", IsForeignKey=true)]
-		public Field Field
-		{
-			get
-			{
-				return this._Field.Entity;
-			}
-			set
-			{
-				Field previousValue = this._Field.Entity;
-				if (((previousValue != value) 
-							|| (this._Field.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Field.Entity = null;
-						previousValue.CollectedFieldsValues.Remove(this);
-					}
-					this._Field.Entity = value;
-					if ((value != null))
-					{
-						value.CollectedFieldsValues.Add(this);
-						this._fk_field = value.fieldID;
-					}
-					else
-					{
-						this._fk_field = default(int);
-					}
-					this.SendPropertyChanged("Field");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Register_CollectedFieldsValue", Storage="_Register", ThisKey="fk_register", OtherKey="registerID", IsForeignKey=true)]
-		public Register Register
-		{
-			get
-			{
-				return this._Register.Entity;
-			}
-			set
-			{
-				Register previousValue = this._Register.Entity;
-				if (((previousValue != value) 
-							|| (this._Register.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Register.Entity = null;
-						previousValue.CollectedFieldsValues.Remove(this);
-					}
-					this._Register.Entity = value;
-					if ((value != null))
-					{
-						value.CollectedFieldsValues.Add(this);
+						value.CollectedCards.Add(this);
 						this._fk_register = value.registerID;
 					}
 					else
 					{
 						this._fk_register = default(int);
 					}
-					this.SendPropertyChanged("Register");
+					this.SendPropertyChanged("Registers");
 				}
 			}
 		}
@@ -504,10 +360,22 @@ namespace Chancelerry
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+		
+		private void attach_CollectedFieldsValues(CollectedFieldsValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.CollectedCards = this;
+		}
+		
+		private void detach_CollectedFieldsValues(CollectedFieldsValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.CollectedCards = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
-	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class Users : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -516,19 +384,21 @@ namespace Chancelerry
 		
 		private bool _active;
 		
-		private string _name;
+		private string _email;
 		
 		private string _login;
 		
 		private string _password;
 		
-		private string _email;
+		private string _struct;
 		
-		private System.Nullable<int> _group;
+		private string _name;
 		
-		private EntitySet<CollectedFieldsValue> _CollectedFieldsValues;
+		private EntitySet<CollectedFieldsValues> _CollectedFieldsValues;
 		
-		private EntitySet<RegisterViewForm> _RegisterViewForms;
+		private EntitySet<Logs> _Logs;
+		
+		private EntitySet<RegistersUsersMap> _RegistersUsersMap;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -538,22 +408,23 @@ namespace Chancelerry
     partial void OnuserIDChanged();
     partial void OnactiveChanging(bool value);
     partial void OnactiveChanged();
-    partial void OnnameChanging(string value);
-    partial void OnnameChanged();
+    partial void OnemailChanging(string value);
+    partial void OnemailChanged();
     partial void OnloginChanging(string value);
     partial void OnloginChanged();
     partial void OnpasswordChanging(string value);
     partial void OnpasswordChanged();
-    partial void OnemailChanging(string value);
-    partial void OnemailChanged();
-    partial void OngroupChanging(System.Nullable<int> value);
-    partial void OngroupChanged();
+    partial void OnstructChanging(string value);
+    partial void OnstructChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
     #endregion
 		
-		public User()
+		public Users()
 		{
-			this._CollectedFieldsValues = new EntitySet<CollectedFieldsValue>(new Action<CollectedFieldsValue>(this.attach_CollectedFieldsValues), new Action<CollectedFieldsValue>(this.detach_CollectedFieldsValues));
-			this._RegisterViewForms = new EntitySet<RegisterViewForm>(new Action<RegisterViewForm>(this.attach_RegisterViewForms), new Action<RegisterViewForm>(this.detach_RegisterViewForms));
+			this._CollectedFieldsValues = new EntitySet<CollectedFieldsValues>(new Action<CollectedFieldsValues>(this.attach_CollectedFieldsValues), new Action<CollectedFieldsValues>(this.detach_CollectedFieldsValues));
+			this._Logs = new EntitySet<Logs>(new Action<Logs>(this.attach_Logs), new Action<Logs>(this.detach_Logs));
+			this._RegistersUsersMap = new EntitySet<RegistersUsersMap>(new Action<RegistersUsersMap>(this.attach_RegistersUsersMap), new Action<RegistersUsersMap>(this.detach_RegistersUsersMap));
 			OnCreated();
 		}
 		
@@ -597,67 +468,7 @@ namespace Chancelerry
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(50)")]
-		public string name
-		{
-			get
-			{
-				return this._name;
-			}
-			set
-			{
-				if ((this._name != value))
-				{
-					this.OnnameChanging(value);
-					this.SendPropertyChanging();
-					this._name = value;
-					this.SendPropertyChanged("name");
-					this.OnnameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_login", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string login
-		{
-			get
-			{
-				return this._login;
-			}
-			set
-			{
-				if ((this._login != value))
-				{
-					this.OnloginChanging(value);
-					this.SendPropertyChanging();
-					this._login = value;
-					this.SendPropertyChanged("login");
-					this.OnloginChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_password", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string password
-		{
-			get
-			{
-				return this._password;
-			}
-			set
-			{
-				if ((this._password != value))
-				{
-					this.OnpasswordChanging(value);
-					this.SendPropertyChanging();
-					this._password = value;
-					this.SendPropertyChanged("password");
-					this.OnpasswordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_email", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_email", DbType="VarChar(200)")]
 		public string email
 		{
 			get
@@ -677,28 +488,88 @@ namespace Chancelerry
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[group]", Storage="_group", DbType="Int")]
-		public System.Nullable<int> group
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_login", DbType="VarChar(200)")]
+		public string login
 		{
 			get
 			{
-				return this._group;
+				return this._login;
 			}
 			set
 			{
-				if ((this._group != value))
+				if ((this._login != value))
 				{
-					this.OngroupChanging(value);
+					this.OnloginChanging(value);
 					this.SendPropertyChanging();
-					this._group = value;
-					this.SendPropertyChanged("group");
-					this.OngroupChanged();
+					this._login = value;
+					this.SendPropertyChanged("login");
+					this.OnloginChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_CollectedFieldsValue", Storage="_CollectedFieldsValues", ThisKey="userID", OtherKey="fk_user")]
-		public EntitySet<CollectedFieldsValue> CollectedFieldsValues
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_password", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string password
+		{
+			get
+			{
+				return this._password;
+			}
+			set
+			{
+				if ((this._password != value))
+				{
+					this.OnpasswordChanging(value);
+					this.SendPropertyChanging();
+					this._password = value;
+					this.SendPropertyChanged("password");
+					this.OnpasswordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="struct", Storage="_struct", DbType="VarChar(MAX)")]
+		public string @struct
+		{
+			get
+			{
+				return this._struct;
+			}
+			set
+			{
+				if ((this._struct != value))
+				{
+					this.OnstructChanging(value);
+					this.SendPropertyChanging();
+					this._struct = value;
+					this.SendPropertyChanged("@struct");
+					this.OnstructChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(MAX)")]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_CollectedFieldsValues", Storage="_CollectedFieldsValues", ThisKey="userID", OtherKey="fk_user")]
+		public EntitySet<CollectedFieldsValues> CollectedFieldsValues
 		{
 			get
 			{
@@ -710,16 +581,29 @@ namespace Chancelerry
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_RegisterViewForm", Storage="_RegisterViewForms", ThisKey="userID", OtherKey="fk_user")]
-		public EntitySet<RegisterViewForm> RegisterViewForms
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Logs", Storage="_Logs", ThisKey="userID", OtherKey="fk_users")]
+		public EntitySet<Logs> Logs
 		{
 			get
 			{
-				return this._RegisterViewForms;
+				return this._Logs;
 			}
 			set
 			{
-				this._RegisterViewForms.Assign(value);
+				this._Logs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_RegistersUsersMap", Storage="_RegistersUsersMap", ThisKey="userID", OtherKey="fk_user")]
+		public EntitySet<RegistersUsersMap> RegistersUsersMap
+		{
+			get
+			{
+				return this._RegistersUsersMap;
+			}
+			set
+			{
+				this._RegistersUsersMap.Assign(value);
 			}
 		}
 		
@@ -743,33 +627,842 @@ namespace Chancelerry
 			}
 		}
 		
-		private void attach_CollectedFieldsValues(CollectedFieldsValue entity)
+		private void attach_CollectedFieldsValues(CollectedFieldsValues entity)
 		{
 			this.SendPropertyChanging();
-			entity.User = this;
+			entity.Users = this;
 		}
 		
-		private void detach_CollectedFieldsValues(CollectedFieldsValue entity)
+		private void detach_CollectedFieldsValues(CollectedFieldsValues entity)
 		{
 			this.SendPropertyChanging();
-			entity.User = null;
+			entity.Users = null;
 		}
 		
-		private void attach_RegisterViewForms(RegisterViewForm entity)
+		private void attach_Logs(Logs entity)
 		{
 			this.SendPropertyChanging();
-			entity.User = this;
+			entity.Users = this;
 		}
 		
-		private void detach_RegisterViewForms(RegisterViewForm entity)
+		private void detach_Logs(Logs entity)
 		{
 			this.SendPropertyChanging();
-			entity.User = null;
+			entity.Users = null;
+		}
+		
+		private void attach_RegistersUsersMap(RegistersUsersMap entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = this;
+		}
+		
+		private void detach_RegistersUsersMap(RegistersUsersMap entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CollectedFieldsValues")]
+	public partial class CollectedFieldsValues : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _collectedFieldValueID;
+		
+		private bool _active;
+		
+		private int _fk_collectedCard;
+		
+		private int _fk_field;
+		
+		private int _fk_user;
+		
+		private System.DateTime _createDateTime;
+		
+		private int _version;
+		
+		private int _instance;
+		
+		private string _valueText;
+		
+		private string _valueData;
+		
+		private System.Nullable<int> _valueInt;
+		
+		private System.Nullable<double> _valueFloat;
+		
+		private bool _isDeleted;
+		
+		private EntityRef<CollectedCards> _CollectedCards;
+		
+		private EntityRef<Users> _Users;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OncollectedFieldValueIDChanging(int value);
+    partial void OncollectedFieldValueIDChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void Onfk_collectedCardChanging(int value);
+    partial void Onfk_collectedCardChanged();
+    partial void Onfk_fieldChanging(int value);
+    partial void Onfk_fieldChanged();
+    partial void Onfk_userChanging(int value);
+    partial void Onfk_userChanged();
+    partial void OncreateDateTimeChanging(System.DateTime value);
+    partial void OncreateDateTimeChanged();
+    partial void OnversionChanging(int value);
+    partial void OnversionChanged();
+    partial void OninstanceChanging(int value);
+    partial void OninstanceChanged();
+    partial void OnvalueTextChanging(string value);
+    partial void OnvalueTextChanged();
+    partial void OnvalueDataChanging(string value);
+    partial void OnvalueDataChanged();
+    partial void OnvalueIntChanging(System.Nullable<int> value);
+    partial void OnvalueIntChanged();
+    partial void OnvalueFloatChanging(System.Nullable<double> value);
+    partial void OnvalueFloatChanged();
+    partial void OnisDeletedChanging(bool value);
+    partial void OnisDeletedChanged();
+    #endregion
+		
+		public CollectedFieldsValues()
+		{
+			this._CollectedCards = default(EntityRef<CollectedCards>);
+			this._Users = default(EntityRef<Users>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_collectedFieldValueID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int collectedFieldValueID
+		{
+			get
+			{
+				return this._collectedFieldValueID;
+			}
+			set
+			{
+				if ((this._collectedFieldValueID != value))
+				{
+					this.OncollectedFieldValueIDChanging(value);
+					this.SendPropertyChanging();
+					this._collectedFieldValueID = value;
+					this.SendPropertyChanged("collectedFieldValueID");
+					this.OncollectedFieldValueIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_collectedCard", DbType="Int NOT NULL")]
+		public int fk_collectedCard
+		{
+			get
+			{
+				return this._fk_collectedCard;
+			}
+			set
+			{
+				if ((this._fk_collectedCard != value))
+				{
+					if (this._CollectedCards.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_collectedCardChanging(value);
+					this.SendPropertyChanging();
+					this._fk_collectedCard = value;
+					this.SendPropertyChanged("fk_collectedCard");
+					this.Onfk_collectedCardChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_field", DbType="Int NOT NULL")]
+		public int fk_field
+		{
+			get
+			{
+				return this._fk_field;
+			}
+			set
+			{
+				if ((this._fk_field != value))
+				{
+					this.Onfk_fieldChanging(value);
+					this.SendPropertyChanging();
+					this._fk_field = value;
+					this.SendPropertyChanged("fk_field");
+					this.Onfk_fieldChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_user", DbType="Int NOT NULL")]
+		public int fk_user
+		{
+			get
+			{
+				return this._fk_user;
+			}
+			set
+			{
+				if ((this._fk_user != value))
+				{
+					if (this._Users.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_userChanging(value);
+					this.SendPropertyChanging();
+					this._fk_user = value;
+					this.SendPropertyChanged("fk_user");
+					this.Onfk_userChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_createDateTime", DbType="DateTime NOT NULL")]
+		public System.DateTime createDateTime
+		{
+			get
+			{
+				return this._createDateTime;
+			}
+			set
+			{
+				if ((this._createDateTime != value))
+				{
+					this.OncreateDateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._createDateTime = value;
+					this.SendPropertyChanged("createDateTime");
+					this.OncreateDateTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_version", DbType="Int NOT NULL")]
+		public int version
+		{
+			get
+			{
+				return this._version;
+			}
+			set
+			{
+				if ((this._version != value))
+				{
+					this.OnversionChanging(value);
+					this.SendPropertyChanging();
+					this._version = value;
+					this.SendPropertyChanged("version");
+					this.OnversionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_instance", DbType="Int NOT NULL")]
+		public int instance
+		{
+			get
+			{
+				return this._instance;
+			}
+			set
+			{
+				if ((this._instance != value))
+				{
+					this.OninstanceChanging(value);
+					this.SendPropertyChanging();
+					this._instance = value;
+					this.SendPropertyChanged("instance");
+					this.OninstanceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_valueText", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string valueText
+		{
+			get
+			{
+				return this._valueText;
+			}
+			set
+			{
+				if ((this._valueText != value))
+				{
+					this.OnvalueTextChanging(value);
+					this.SendPropertyChanging();
+					this._valueText = value;
+					this.SendPropertyChanged("valueText");
+					this.OnvalueTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_valueData", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string valueData
+		{
+			get
+			{
+				return this._valueData;
+			}
+			set
+			{
+				if ((this._valueData != value))
+				{
+					this.OnvalueDataChanging(value);
+					this.SendPropertyChanging();
+					this._valueData = value;
+					this.SendPropertyChanged("valueData");
+					this.OnvalueDataChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_valueInt", DbType="Int")]
+		public System.Nullable<int> valueInt
+		{
+			get
+			{
+				return this._valueInt;
+			}
+			set
+			{
+				if ((this._valueInt != value))
+				{
+					this.OnvalueIntChanging(value);
+					this.SendPropertyChanging();
+					this._valueInt = value;
+					this.SendPropertyChanged("valueInt");
+					this.OnvalueIntChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_valueFloat", DbType="Float")]
+		public System.Nullable<double> valueFloat
+		{
+			get
+			{
+				return this._valueFloat;
+			}
+			set
+			{
+				if ((this._valueFloat != value))
+				{
+					this.OnvalueFloatChanging(value);
+					this.SendPropertyChanging();
+					this._valueFloat = value;
+					this.SendPropertyChanged("valueFloat");
+					this.OnvalueFloatChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_isDeleted", DbType="Bit NOT NULL")]
+		public bool isDeleted
+		{
+			get
+			{
+				return this._isDeleted;
+			}
+			set
+			{
+				if ((this._isDeleted != value))
+				{
+					this.OnisDeletedChanging(value);
+					this.SendPropertyChanging();
+					this._isDeleted = value;
+					this.SendPropertyChanged("isDeleted");
+					this.OnisDeletedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CollectedCards_CollectedFieldsValues", Storage="_CollectedCards", ThisKey="fk_collectedCard", OtherKey="collectedCardID", IsForeignKey=true)]
+		public CollectedCards CollectedCards
+		{
+			get
+			{
+				return this._CollectedCards.Entity;
+			}
+			set
+			{
+				CollectedCards previousValue = this._CollectedCards.Entity;
+				if (((previousValue != value) 
+							|| (this._CollectedCards.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CollectedCards.Entity = null;
+						previousValue.CollectedFieldsValues.Remove(this);
+					}
+					this._CollectedCards.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedFieldsValues.Add(this);
+						this._fk_collectedCard = value.collectedCardID;
+					}
+					else
+					{
+						this._fk_collectedCard = default(int);
+					}
+					this.SendPropertyChanged("CollectedCards");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_CollectedFieldsValues", Storage="_Users", ThisKey="fk_user", OtherKey="userID", IsForeignKey=true)]
+		public Users Users
+		{
+			get
+			{
+				return this._Users.Entity;
+			}
+			set
+			{
+				Users previousValue = this._Users.Entity;
+				if (((previousValue != value) 
+							|| (this._Users.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Users.Entity = null;
+						previousValue.CollectedFieldsValues.Remove(this);
+					}
+					this._Users.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedFieldsValues.Add(this);
+						this._fk_user = value.userID;
+					}
+					else
+					{
+						this._fk_user = default(int);
+					}
+					this.SendPropertyChanged("Users");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Dictionarys")]
+	public partial class Dictionarys : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _dictionaryID;
+		
+		private bool _active;
+		
+		private string _name;
+		
+		private string _description;
+		
+		private EntitySet<DictionarysValues> _DictionarysValues;
+		
+		private EntitySet<Fields> _Fields;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OndictionaryIDChanging(int value);
+    partial void OndictionaryIDChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void OndescriptionChanging(string value);
+    partial void OndescriptionChanged();
+    #endregion
+		
+		public Dictionarys()
+		{
+			this._DictionarysValues = new EntitySet<DictionarysValues>(new Action<DictionarysValues>(this.attach_DictionarysValues), new Action<DictionarysValues>(this.detach_DictionarysValues));
+			this._Fields = new EntitySet<Fields>(new Action<Fields>(this.attach_Fields), new Action<Fields>(this.detach_Fields));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dictionaryID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int dictionaryID
+		{
+			get
+			{
+				return this._dictionaryID;
+			}
+			set
+			{
+				if ((this._dictionaryID != value))
+				{
+					this.OndictionaryIDChanging(value);
+					this.SendPropertyChanging();
+					this._dictionaryID = value;
+					this.SendPropertyChanged("dictionaryID");
+					this.OndictionaryIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_description", DbType="VarChar(MAX)")]
+		public string description
+		{
+			get
+			{
+				return this._description;
+			}
+			set
+			{
+				if ((this._description != value))
+				{
+					this.OndescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._description = value;
+					this.SendPropertyChanged("description");
+					this.OndescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Dictionarys_DictionarysValues", Storage="_DictionarysValues", ThisKey="dictionaryID", OtherKey="fk_dictionary")]
+		public EntitySet<DictionarysValues> DictionarysValues
+		{
+			get
+			{
+				return this._DictionarysValues;
+			}
+			set
+			{
+				this._DictionarysValues.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Dictionarys_Fields", Storage="_Fields", ThisKey="dictionaryID", OtherKey="fk_dictionary")]
+		public EntitySet<Fields> Fields
+		{
+			get
+			{
+				return this._Fields;
+			}
+			set
+			{
+				this._Fields.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_DictionarysValues(DictionarysValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.Dictionarys = this;
+		}
+		
+		private void detach_DictionarysValues(DictionarysValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.Dictionarys = null;
+		}
+		
+		private void attach_Fields(Fields entity)
+		{
+			this.SendPropertyChanging();
+			entity.Dictionarys = this;
+		}
+		
+		private void detach_Fields(Fields entity)
+		{
+			this.SendPropertyChanging();
+			entity.Dictionarys = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DictionarysValues")]
+	public partial class DictionarysValues : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _dictionaryValueID;
+		
+		private bool _active;
+		
+		private string _value;
+		
+		private int _fk_dictionary;
+		
+		private EntityRef<Dictionarys> _Dictionarys;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OndictionaryValueIDChanging(int value);
+    partial void OndictionaryValueIDChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void OnvalueChanging(string value);
+    partial void OnvalueChanged();
+    partial void Onfk_dictionaryChanging(int value);
+    partial void Onfk_dictionaryChanged();
+    #endregion
+		
+		public DictionarysValues()
+		{
+			this._Dictionarys = default(EntityRef<Dictionarys>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dictionaryValueID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int dictionaryValueID
+		{
+			get
+			{
+				return this._dictionaryValueID;
+			}
+			set
+			{
+				if ((this._dictionaryValueID != value))
+				{
+					this.OndictionaryValueIDChanging(value);
+					this.SendPropertyChanging();
+					this._dictionaryValueID = value;
+					this.SendPropertyChanged("dictionaryValueID");
+					this.OndictionaryValueIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_value", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string value
+		{
+			get
+			{
+				return this._value;
+			}
+			set
+			{
+				if ((this._value != value))
+				{
+					this.OnvalueChanging(value);
+					this.SendPropertyChanging();
+					this._value = value;
+					this.SendPropertyChanged("value");
+					this.OnvalueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_dictionary", DbType="Int NOT NULL")]
+		public int fk_dictionary
+		{
+			get
+			{
+				return this._fk_dictionary;
+			}
+			set
+			{
+				if ((this._fk_dictionary != value))
+				{
+					if (this._Dictionarys.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_dictionaryChanging(value);
+					this.SendPropertyChanging();
+					this._fk_dictionary = value;
+					this.SendPropertyChanged("fk_dictionary");
+					this.Onfk_dictionaryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Dictionarys_DictionarysValues", Storage="_Dictionarys", ThisKey="fk_dictionary", OtherKey="dictionaryID", IsForeignKey=true)]
+		public Dictionarys Dictionarys
+		{
+			get
+			{
+				return this._Dictionarys.Entity;
+			}
+			set
+			{
+				Dictionarys previousValue = this._Dictionarys.Entity;
+				if (((previousValue != value) 
+							|| (this._Dictionarys.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Dictionarys.Entity = null;
+						previousValue.DictionarysValues.Remove(this);
+					}
+					this._Dictionarys.Entity = value;
+					if ((value != null))
+					{
+						value.DictionarysValues.Add(this);
+						this._fk_dictionary = value.dictionaryID;
+					}
+					else
+					{
+						this._fk_dictionary = default(int);
+					}
+					this.SendPropertyChanged("Dictionarys");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Fields")]
-	public partial class Field : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class Fields : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -782,13 +1475,29 @@ namespace Chancelerry
 		
 		private string _description;
 		
-		private int _type;
+		private string _type;
 		
-		private EntitySet<CollectedFieldsValue> _CollectedFieldsValues;
+		private int _line;
 		
-		private EntitySet<Registers_Field> _Registers_Fields;
+		private int _columnNumber;
 		
-		private EntitySet<RegisterViewForm> _RegisterViewForms;
+		private int _height;
+		
+		private int _width;
+		
+		private int _fk_fieldsGroup;
+		
+		private bool _mandatory;
+		
+		private System.Nullable<bool> _multiple;
+		
+		private System.Nullable<int> _fk_dictionary;
+		
+		private EntityRef<RegistersView> _RegistersView;
+		
+		private EntityRef<Dictionarys> _Dictionarys;
+		
+		private EntityRef<FieldsGroups> _FieldsGroups;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -802,15 +1511,31 @@ namespace Chancelerry
     partial void OnnameChanged();
     partial void OndescriptionChanging(string value);
     partial void OndescriptionChanged();
-    partial void OntypeChanging(int value);
+    partial void OntypeChanging(string value);
     partial void OntypeChanged();
+    partial void OnlineChanging(int value);
+    partial void OnlineChanged();
+    partial void OncolumnNumberChanging(int value);
+    partial void OncolumnNumberChanged();
+    partial void OnheightChanging(int value);
+    partial void OnheightChanged();
+    partial void OnwidthChanging(int value);
+    partial void OnwidthChanged();
+    partial void Onfk_fieldsGroupChanging(int value);
+    partial void Onfk_fieldsGroupChanged();
+    partial void OnmandatoryChanging(bool value);
+    partial void OnmandatoryChanged();
+    partial void OnmultipleChanging(System.Nullable<bool> value);
+    partial void OnmultipleChanged();
+    partial void Onfk_dictionaryChanging(System.Nullable<int> value);
+    partial void Onfk_dictionaryChanged();
     #endregion
 		
-		public Field()
+		public Fields()
 		{
-			this._CollectedFieldsValues = new EntitySet<CollectedFieldsValue>(new Action<CollectedFieldsValue>(this.attach_CollectedFieldsValues), new Action<CollectedFieldsValue>(this.detach_CollectedFieldsValues));
-			this._Registers_Fields = new EntitySet<Registers_Field>(new Action<Registers_Field>(this.attach_Registers_Fields), new Action<Registers_Field>(this.detach_Registers_Fields));
-			this._RegisterViewForms = new EntitySet<RegisterViewForm>(new Action<RegisterViewForm>(this.attach_RegisterViewForms), new Action<RegisterViewForm>(this.detach_RegisterViewForms));
+			this._RegistersView = default(EntityRef<RegistersView>);
+			this._Dictionarys = default(EntityRef<Dictionarys>);
+			this._FieldsGroups = default(EntityRef<FieldsGroups>);
 			OnCreated();
 		}
 		
@@ -854,7 +1579,7 @@ namespace Chancelerry
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
 		public string name
 		{
 			get
@@ -874,7 +1599,7 @@ namespace Chancelerry
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_description", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_description", DbType="VarChar(MAX)")]
 		public string description
 		{
 			get
@@ -894,8 +1619,8 @@ namespace Chancelerry
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type", DbType="Int NOT NULL")]
-		public int type
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string type
 		{
 			get
 			{
@@ -914,702 +1639,42 @@ namespace Chancelerry
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Field_CollectedFieldsValue", Storage="_CollectedFieldsValues", ThisKey="fieldID", OtherKey="fk_field")]
-		public EntitySet<CollectedFieldsValue> CollectedFieldsValues
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_line", DbType="Int NOT NULL")]
+		public int line
 		{
 			get
 			{
-				return this._CollectedFieldsValues;
+				return this._line;
 			}
 			set
 			{
-				this._CollectedFieldsValues.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Field_Registers_Field", Storage="_Registers_Fields", ThisKey="fieldID", OtherKey="fk_field")]
-		public EntitySet<Registers_Field> Registers_Fields
-		{
-			get
-			{
-				return this._Registers_Fields;
-			}
-			set
-			{
-				this._Registers_Fields.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Field_RegisterViewForm", Storage="_RegisterViewForms", ThisKey="fieldID", OtherKey="fk_field")]
-		public EntitySet<RegisterViewForm> RegisterViewForms
-		{
-			get
-			{
-				return this._RegisterViewForms;
-			}
-			set
-			{
-				this._RegisterViewForms.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_CollectedFieldsValues(CollectedFieldsValue entity)
-		{
-			this.SendPropertyChanging();
-			entity.Field = this;
-		}
-		
-		private void detach_CollectedFieldsValues(CollectedFieldsValue entity)
-		{
-			this.SendPropertyChanging();
-			entity.Field = null;
-		}
-		
-		private void attach_Registers_Fields(Registers_Field entity)
-		{
-			this.SendPropertyChanging();
-			entity.Field = this;
-		}
-		
-		private void detach_Registers_Fields(Registers_Field entity)
-		{
-			this.SendPropertyChanging();
-			entity.Field = null;
-		}
-		
-		private void attach_RegisterViewForms(RegisterViewForm entity)
-		{
-			this.SendPropertyChanging();
-			entity.Field = this;
-		}
-		
-		private void detach_RegisterViewForms(RegisterViewForm entity)
-		{
-			this.SendPropertyChanging();
-			entity.Field = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Registers")]
-	public partial class Register : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _registerID;
-		
-		private bool _active;
-		
-		private string _name;
-		
-		private EntitySet<CollectedFieldsValue> _CollectedFieldsValues;
-		
-		private EntitySet<Registers_Field> _Registers_Fields;
-		
-		private EntitySet<RegisterViewForm> _RegisterViewForms;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnregisterIDChanging(int value);
-    partial void OnregisterIDChanged();
-    partial void OnactiveChanging(bool value);
-    partial void OnactiveChanged();
-    partial void OnnameChanging(string value);
-    partial void OnnameChanged();
-    #endregion
-		
-		public Register()
-		{
-			this._CollectedFieldsValues = new EntitySet<CollectedFieldsValue>(new Action<CollectedFieldsValue>(this.attach_CollectedFieldsValues), new Action<CollectedFieldsValue>(this.detach_CollectedFieldsValues));
-			this._Registers_Fields = new EntitySet<Registers_Field>(new Action<Registers_Field>(this.attach_Registers_Fields), new Action<Registers_Field>(this.detach_Registers_Fields));
-			this._RegisterViewForms = new EntitySet<RegisterViewForm>(new Action<RegisterViewForm>(this.attach_RegisterViewForms), new Action<RegisterViewForm>(this.detach_RegisterViewForms));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_registerID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int registerID
-		{
-			get
-			{
-				return this._registerID;
-			}
-			set
-			{
-				if ((this._registerID != value))
+				if ((this._line != value))
 				{
-					this.OnregisterIDChanging(value);
+					this.OnlineChanging(value);
 					this.SendPropertyChanging();
-					this._registerID = value;
-					this.SendPropertyChanged("registerID");
-					this.OnregisterIDChanged();
+					this._line = value;
+					this.SendPropertyChanged("line");
+					this.OnlineChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
-		public bool active
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_columnNumber", DbType="Int NOT NULL")]
+		public int columnNumber
 		{
 			get
 			{
-				return this._active;
+				return this._columnNumber;
 			}
 			set
 			{
-				if ((this._active != value))
+				if ((this._columnNumber != value))
 				{
-					this.OnactiveChanging(value);
+					this.OncolumnNumberChanging(value);
 					this.SendPropertyChanging();
-					this._active = value;
-					this.SendPropertyChanged("active");
-					this.OnactiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string name
-		{
-			get
-			{
-				return this._name;
-			}
-			set
-			{
-				if ((this._name != value))
-				{
-					this.OnnameChanging(value);
-					this.SendPropertyChanging();
-					this._name = value;
-					this.SendPropertyChanged("name");
-					this.OnnameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Register_CollectedFieldsValue", Storage="_CollectedFieldsValues", ThisKey="registerID", OtherKey="fk_register")]
-		public EntitySet<CollectedFieldsValue> CollectedFieldsValues
-		{
-			get
-			{
-				return this._CollectedFieldsValues;
-			}
-			set
-			{
-				this._CollectedFieldsValues.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Register_Registers_Field", Storage="_Registers_Fields", ThisKey="registerID", OtherKey="fk_register")]
-		public EntitySet<Registers_Field> Registers_Fields
-		{
-			get
-			{
-				return this._Registers_Fields;
-			}
-			set
-			{
-				this._Registers_Fields.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Register_RegisterViewForm", Storage="_RegisterViewForms", ThisKey="registerID", OtherKey="fk_register")]
-		public EntitySet<RegisterViewForm> RegisterViewForms
-		{
-			get
-			{
-				return this._RegisterViewForms;
-			}
-			set
-			{
-				this._RegisterViewForms.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_CollectedFieldsValues(CollectedFieldsValue entity)
-		{
-			this.SendPropertyChanging();
-			entity.Register = this;
-		}
-		
-		private void detach_CollectedFieldsValues(CollectedFieldsValue entity)
-		{
-			this.SendPropertyChanging();
-			entity.Register = null;
-		}
-		
-		private void attach_Registers_Fields(Registers_Field entity)
-		{
-			this.SendPropertyChanging();
-			entity.Register = this;
-		}
-		
-		private void detach_Registers_Fields(Registers_Field entity)
-		{
-			this.SendPropertyChanging();
-			entity.Register = null;
-		}
-		
-		private void attach_RegisterViewForms(RegisterViewForm entity)
-		{
-			this.SendPropertyChanging();
-			entity.Register = this;
-		}
-		
-		private void detach_RegisterViewForms(RegisterViewForm entity)
-		{
-			this.SendPropertyChanging();
-			entity.Register = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Registers_Fields")]
-	public partial class Registers_Field : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private bool _active;
-		
-		private int _fk_register;
-		
-		private int _fk_field;
-		
-		private EntityRef<Field> _Field;
-		
-		private EntityRef<Register> _Register;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnactiveChanging(bool value);
-    partial void OnactiveChanged();
-    partial void Onfk_registerChanging(int value);
-    partial void Onfk_registerChanged();
-    partial void Onfk_fieldChanging(int value);
-    partial void Onfk_fieldChanged();
-    #endregion
-		
-		public Registers_Field()
-		{
-			this._Field = default(EntityRef<Field>);
-			this._Register = default(EntityRef<Register>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
-		public bool active
-		{
-			get
-			{
-				return this._active;
-			}
-			set
-			{
-				if ((this._active != value))
-				{
-					this.OnactiveChanging(value);
-					this.SendPropertyChanging();
-					this._active = value;
-					this.SendPropertyChanged("active");
-					this.OnactiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_register", DbType="Int NOT NULL")]
-		public int fk_register
-		{
-			get
-			{
-				return this._fk_register;
-			}
-			set
-			{
-				if ((this._fk_register != value))
-				{
-					if (this._Register.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_registerChanging(value);
-					this.SendPropertyChanging();
-					this._fk_register = value;
-					this.SendPropertyChanged("fk_register");
-					this.Onfk_registerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_field", DbType="Int NOT NULL")]
-		public int fk_field
-		{
-			get
-			{
-				return this._fk_field;
-			}
-			set
-			{
-				if ((this._fk_field != value))
-				{
-					if (this._Field.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_fieldChanging(value);
-					this.SendPropertyChanging();
-					this._fk_field = value;
-					this.SendPropertyChanged("fk_field");
-					this.Onfk_fieldChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Field_Registers_Field", Storage="_Field", ThisKey="fk_field", OtherKey="fieldID", IsForeignKey=true)]
-		public Field Field
-		{
-			get
-			{
-				return this._Field.Entity;
-			}
-			set
-			{
-				Field previousValue = this._Field.Entity;
-				if (((previousValue != value) 
-							|| (this._Field.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Field.Entity = null;
-						previousValue.Registers_Fields.Remove(this);
-					}
-					this._Field.Entity = value;
-					if ((value != null))
-					{
-						value.Registers_Fields.Add(this);
-						this._fk_field = value.fieldID;
-					}
-					else
-					{
-						this._fk_field = default(int);
-					}
-					this.SendPropertyChanged("Field");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Register_Registers_Field", Storage="_Register", ThisKey="fk_register", OtherKey="registerID", IsForeignKey=true)]
-		public Register Register
-		{
-			get
-			{
-				return this._Register.Entity;
-			}
-			set
-			{
-				Register previousValue = this._Register.Entity;
-				if (((previousValue != value) 
-							|| (this._Register.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Register.Entity = null;
-						previousValue.Registers_Fields.Remove(this);
-					}
-					this._Register.Entity = value;
-					if ((value != null))
-					{
-						value.Registers_Fields.Add(this);
-						this._fk_register = value.registerID;
-					}
-					else
-					{
-						this._fk_register = default(int);
-					}
-					this.SendPropertyChanged("Register");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RegisterViewForm")]
-	public partial class RegisterViewForm : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private bool _active;
-		
-		private int _fk_register;
-		
-		private int _fk_user;
-		
-		private int _fk_field;
-		
-		private bool _isHide;
-		
-		private int _height;
-		
-		private int _width;
-		
-		private bool _mandatory;
-		
-		private EntityRef<Field> _Field;
-		
-		private EntityRef<Register> _Register;
-		
-		private EntityRef<User> _User;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnactiveChanging(bool value);
-    partial void OnactiveChanged();
-    partial void Onfk_registerChanging(int value);
-    partial void Onfk_registerChanged();
-    partial void Onfk_userChanging(int value);
-    partial void Onfk_userChanged();
-    partial void Onfk_fieldChanging(int value);
-    partial void Onfk_fieldChanged();
-    partial void OnisHideChanging(bool value);
-    partial void OnisHideChanged();
-    partial void OnheightChanging(int value);
-    partial void OnheightChanged();
-    partial void OnwidthChanging(int value);
-    partial void OnwidthChanged();
-    partial void OnmandatoryChanging(bool value);
-    partial void OnmandatoryChanged();
-    #endregion
-		
-		public RegisterViewForm()
-		{
-			this._Field = default(EntityRef<Field>);
-			this._Register = default(EntityRef<Register>);
-			this._User = default(EntityRef<User>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
-		public bool active
-		{
-			get
-			{
-				return this._active;
-			}
-			set
-			{
-				if ((this._active != value))
-				{
-					this.OnactiveChanging(value);
-					this.SendPropertyChanging();
-					this._active = value;
-					this.SendPropertyChanged("active");
-					this.OnactiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_register", DbType="Int NOT NULL")]
-		public int fk_register
-		{
-			get
-			{
-				return this._fk_register;
-			}
-			set
-			{
-				if ((this._fk_register != value))
-				{
-					if (this._Register.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_registerChanging(value);
-					this.SendPropertyChanging();
-					this._fk_register = value;
-					this.SendPropertyChanged("fk_register");
-					this.Onfk_registerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_user", DbType="Int NOT NULL")]
-		public int fk_user
-		{
-			get
-			{
-				return this._fk_user;
-			}
-			set
-			{
-				if ((this._fk_user != value))
-				{
-					if (this._User.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_userChanging(value);
-					this.SendPropertyChanging();
-					this._fk_user = value;
-					this.SendPropertyChanged("fk_user");
-					this.Onfk_userChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_field", DbType="Int NOT NULL")]
-		public int fk_field
-		{
-			get
-			{
-				return this._fk_field;
-			}
-			set
-			{
-				if ((this._fk_field != value))
-				{
-					if (this._Field.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_fieldChanging(value);
-					this.SendPropertyChanging();
-					this._fk_field = value;
-					this.SendPropertyChanged("fk_field");
-					this.Onfk_fieldChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_isHide", DbType="Bit NOT NULL")]
-		public bool isHide
-		{
-			get
-			{
-				return this._isHide;
-			}
-			set
-			{
-				if ((this._isHide != value))
-				{
-					this.OnisHideChanging(value);
-					this.SendPropertyChanging();
-					this._isHide = value;
-					this.SendPropertyChanged("isHide");
-					this.OnisHideChanged();
+					this._columnNumber = value;
+					this.SendPropertyChanged("columnNumber");
+					this.OncolumnNumberChanged();
 				}
 			}
 		}
@@ -1654,6 +1719,30 @@ namespace Chancelerry
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_fieldsGroup", DbType="Int NOT NULL")]
+		public int fk_fieldsGroup
+		{
+			get
+			{
+				return this._fk_fieldsGroup;
+			}
+			set
+			{
+				if ((this._fk_fieldsGroup != value))
+				{
+					if (this._FieldsGroups.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_fieldsGroupChanging(value);
+					this.SendPropertyChanging();
+					this._fk_fieldsGroup = value;
+					this.SendPropertyChanged("fk_fieldsGroup");
+					this.Onfk_fieldsGroupChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mandatory", DbType="Bit NOT NULL")]
 		public bool mandatory
 		{
@@ -1674,104 +1763,1522 @@ namespace Chancelerry
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Field_RegisterViewForm", Storage="_Field", ThisKey="fk_field", OtherKey="fieldID", IsForeignKey=true)]
-		public Field Field
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_multiple", DbType="Bit")]
+		public System.Nullable<bool> multiple
 		{
 			get
 			{
-				return this._Field.Entity;
+				return this._multiple;
 			}
 			set
 			{
-				Field previousValue = this._Field.Entity;
-				if (((previousValue != value) 
-							|| (this._Field.HasLoadedOrAssignedValue == false)))
+				if ((this._multiple != value))
 				{
+					this.OnmultipleChanging(value);
 					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Field.Entity = null;
-						previousValue.RegisterViewForms.Remove(this);
-					}
-					this._Field.Entity = value;
-					if ((value != null))
-					{
-						value.RegisterViewForms.Add(this);
-						this._fk_field = value.fieldID;
-					}
-					else
-					{
-						this._fk_field = default(int);
-					}
-					this.SendPropertyChanged("Field");
+					this._multiple = value;
+					this.SendPropertyChanged("multiple");
+					this.OnmultipleChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Register_RegisterViewForm", Storage="_Register", ThisKey="fk_register", OtherKey="registerID", IsForeignKey=true)]
-		public Register Register
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_dictionary", DbType="Int")]
+		public System.Nullable<int> fk_dictionary
 		{
 			get
 			{
-				return this._Register.Entity;
+				return this._fk_dictionary;
 			}
 			set
 			{
-				Register previousValue = this._Register.Entity;
+				if ((this._fk_dictionary != value))
+				{
+					if (this._Dictionarys.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_dictionaryChanging(value);
+					this.SendPropertyChanging();
+					this._fk_dictionary = value;
+					this.SendPropertyChanged("fk_dictionary");
+					this.Onfk_dictionaryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fields_RegistersView", Storage="_RegistersView", ThisKey="fieldID", OtherKey="registerViewID", IsUnique=true, IsForeignKey=false)]
+		public RegistersView RegistersView
+		{
+			get
+			{
+				return this._RegistersView.Entity;
+			}
+			set
+			{
+				RegistersView previousValue = this._RegistersView.Entity;
 				if (((previousValue != value) 
-							|| (this._Register.HasLoadedOrAssignedValue == false)))
+							|| (this._RegistersView.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Register.Entity = null;
-						previousValue.RegisterViewForms.Remove(this);
+						this._RegistersView.Entity = null;
+						previousValue.Fields = null;
 					}
-					this._Register.Entity = value;
+					this._RegistersView.Entity = value;
 					if ((value != null))
 					{
-						value.RegisterViewForms.Add(this);
+						value.Fields = this;
+					}
+					this.SendPropertyChanged("RegistersView");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Dictionarys_Fields", Storage="_Dictionarys", ThisKey="fk_dictionary", OtherKey="dictionaryID", IsForeignKey=true)]
+		public Dictionarys Dictionarys
+		{
+			get
+			{
+				return this._Dictionarys.Entity;
+			}
+			set
+			{
+				Dictionarys previousValue = this._Dictionarys.Entity;
+				if (((previousValue != value) 
+							|| (this._Dictionarys.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Dictionarys.Entity = null;
+						previousValue.Fields.Remove(this);
+					}
+					this._Dictionarys.Entity = value;
+					if ((value != null))
+					{
+						value.Fields.Add(this);
+						this._fk_dictionary = value.dictionaryID;
+					}
+					else
+					{
+						this._fk_dictionary = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Dictionarys");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldsGroups_Fields", Storage="_FieldsGroups", ThisKey="fk_fieldsGroup", OtherKey="fieldsGroupID", IsForeignKey=true)]
+		public FieldsGroups FieldsGroups
+		{
+			get
+			{
+				return this._FieldsGroups.Entity;
+			}
+			set
+			{
+				FieldsGroups previousValue = this._FieldsGroups.Entity;
+				if (((previousValue != value) 
+							|| (this._FieldsGroups.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FieldsGroups.Entity = null;
+						previousValue.Fields.Remove(this);
+					}
+					this._FieldsGroups.Entity = value;
+					if ((value != null))
+					{
+						value.Fields.Add(this);
+						this._fk_fieldsGroup = value.fieldsGroupID;
+					}
+					else
+					{
+						this._fk_fieldsGroup = default(int);
+					}
+					this.SendPropertyChanged("FieldsGroups");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FieldsGroups")]
+	public partial class FieldsGroups : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _fieldsGroupID;
+		
+		private bool _active;
+		
+		private string _name;
+		
+		private int _fk_registerModel;
+		
+		private int _line;
+		
+		private bool _multiple;
+		
+		private EntitySet<Fields> _Fields;
+		
+		private EntityRef<RegistersModels> _RegistersModels;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnfieldsGroupIDChanging(int value);
+    partial void OnfieldsGroupIDChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void Onfk_registerModelChanging(int value);
+    partial void Onfk_registerModelChanged();
+    partial void OnlineChanging(int value);
+    partial void OnlineChanged();
+    partial void OnmultipleChanging(bool value);
+    partial void OnmultipleChanged();
+    #endregion
+		
+		public FieldsGroups()
+		{
+			this._Fields = new EntitySet<Fields>(new Action<Fields>(this.attach_Fields), new Action<Fields>(this.detach_Fields));
+			this._RegistersModels = default(EntityRef<RegistersModels>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fieldsGroupID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int fieldsGroupID
+		{
+			get
+			{
+				return this._fieldsGroupID;
+			}
+			set
+			{
+				if ((this._fieldsGroupID != value))
+				{
+					this.OnfieldsGroupIDChanging(value);
+					this.SendPropertyChanging();
+					this._fieldsGroupID = value;
+					this.SendPropertyChanged("fieldsGroupID");
+					this.OnfieldsGroupIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_registerModel", DbType="Int NOT NULL")]
+		public int fk_registerModel
+		{
+			get
+			{
+				return this._fk_registerModel;
+			}
+			set
+			{
+				if ((this._fk_registerModel != value))
+				{
+					if (this._RegistersModels.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_registerModelChanging(value);
+					this.SendPropertyChanging();
+					this._fk_registerModel = value;
+					this.SendPropertyChanged("fk_registerModel");
+					this.Onfk_registerModelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_line", DbType="Int NOT NULL")]
+		public int line
+		{
+			get
+			{
+				return this._line;
+			}
+			set
+			{
+				if ((this._line != value))
+				{
+					this.OnlineChanging(value);
+					this.SendPropertyChanging();
+					this._line = value;
+					this.SendPropertyChanged("line");
+					this.OnlineChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_multiple", DbType="Bit NOT NULL")]
+		public bool multiple
+		{
+			get
+			{
+				return this._multiple;
+			}
+			set
+			{
+				if ((this._multiple != value))
+				{
+					this.OnmultipleChanging(value);
+					this.SendPropertyChanging();
+					this._multiple = value;
+					this.SendPropertyChanged("multiple");
+					this.OnmultipleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FieldsGroups_Fields", Storage="_Fields", ThisKey="fieldsGroupID", OtherKey="fk_fieldsGroup")]
+		public EntitySet<Fields> Fields
+		{
+			get
+			{
+				return this._Fields;
+			}
+			set
+			{
+				this._Fields.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RegistersModels_FieldsGroups", Storage="_RegistersModels", ThisKey="fk_registerModel", OtherKey="registerModelID", IsForeignKey=true)]
+		public RegistersModels RegistersModels
+		{
+			get
+			{
+				return this._RegistersModels.Entity;
+			}
+			set
+			{
+				RegistersModels previousValue = this._RegistersModels.Entity;
+				if (((previousValue != value) 
+							|| (this._RegistersModels.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._RegistersModels.Entity = null;
+						previousValue.FieldsGroups.Remove(this);
+					}
+					this._RegistersModels.Entity = value;
+					if ((value != null))
+					{
+						value.FieldsGroups.Add(this);
+						this._fk_registerModel = value.registerModelID;
+					}
+					else
+					{
+						this._fk_registerModel = default(int);
+					}
+					this.SendPropertyChanged("RegistersModels");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Fields(Fields entity)
+		{
+			this.SendPropertyChanging();
+			entity.FieldsGroups = this;
+		}
+		
+		private void detach_Fields(Fields entity)
+		{
+			this.SendPropertyChanging();
+			entity.FieldsGroups = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Logs")]
+	public partial class Logs : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _logID;
+		
+		private System.Nullable<bool> _active;
+		
+		private System.Nullable<System.DateTime> _createDateTime;
+		
+		private System.Nullable<int> _type;
+		
+		private string _description;
+		
+		private System.Nullable<int> _fk_users;
+		
+		private EntityRef<Users> _Users;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnlogIDChanging(int value);
+    partial void OnlogIDChanged();
+    partial void OnactiveChanging(System.Nullable<bool> value);
+    partial void OnactiveChanged();
+    partial void OncreateDateTimeChanging(System.Nullable<System.DateTime> value);
+    partial void OncreateDateTimeChanged();
+    partial void OntypeChanging(System.Nullable<int> value);
+    partial void OntypeChanged();
+    partial void OndescriptionChanging(string value);
+    partial void OndescriptionChanged();
+    partial void Onfk_usersChanging(System.Nullable<int> value);
+    partial void Onfk_usersChanged();
+    #endregion
+		
+		public Logs()
+		{
+			this._Users = default(EntityRef<Users>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_logID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int logID
+		{
+			get
+			{
+				return this._logID;
+			}
+			set
+			{
+				if ((this._logID != value))
+				{
+					this.OnlogIDChanging(value);
+					this.SendPropertyChanging();
+					this._logID = value;
+					this.SendPropertyChanged("logID");
+					this.OnlogIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit")]
+		public System.Nullable<bool> active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_createDateTime", DbType="DateTime")]
+		public System.Nullable<System.DateTime> createDateTime
+		{
+			get
+			{
+				return this._createDateTime;
+			}
+			set
+			{
+				if ((this._createDateTime != value))
+				{
+					this.OncreateDateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._createDateTime = value;
+					this.SendPropertyChanged("createDateTime");
+					this.OncreateDateTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type", DbType="Int")]
+		public System.Nullable<int> type
+		{
+			get
+			{
+				return this._type;
+			}
+			set
+			{
+				if ((this._type != value))
+				{
+					this.OntypeChanging(value);
+					this.SendPropertyChanging();
+					this._type = value;
+					this.SendPropertyChanged("type");
+					this.OntypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_description", DbType="VarChar(MAX)")]
+		public string description
+		{
+			get
+			{
+				return this._description;
+			}
+			set
+			{
+				if ((this._description != value))
+				{
+					this.OndescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._description = value;
+					this.SendPropertyChanged("description");
+					this.OndescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_users", DbType="Int")]
+		public System.Nullable<int> fk_users
+		{
+			get
+			{
+				return this._fk_users;
+			}
+			set
+			{
+				if ((this._fk_users != value))
+				{
+					if (this._Users.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_usersChanging(value);
+					this.SendPropertyChanging();
+					this._fk_users = value;
+					this.SendPropertyChanged("fk_users");
+					this.Onfk_usersChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Logs", Storage="_Users", ThisKey="fk_users", OtherKey="userID", IsForeignKey=true)]
+		public Users Users
+		{
+			get
+			{
+				return this._Users.Entity;
+			}
+			set
+			{
+				Users previousValue = this._Users.Entity;
+				if (((previousValue != value) 
+							|| (this._Users.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Users.Entity = null;
+						previousValue.Logs.Remove(this);
+					}
+					this._Users.Entity = value;
+					if ((value != null))
+					{
+						value.Logs.Add(this);
+						this._fk_users = value.userID;
+					}
+					else
+					{
+						this._fk_users = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Users");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Registers")]
+	public partial class Registers : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _registerID;
+		
+		private bool _active;
+		
+		private string _name;
+		
+		private int _fk_registersModel;
+		
+		private EntitySet<CollectedCards> _CollectedCards;
+		
+		private EntitySet<RegistersUsersMap> _RegistersUsersMap;
+		
+		private EntityRef<RegistersModels> _RegistersModels;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnregisterIDChanging(int value);
+    partial void OnregisterIDChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void Onfk_registersModelChanging(int value);
+    partial void Onfk_registersModelChanged();
+    #endregion
+		
+		public Registers()
+		{
+			this._CollectedCards = new EntitySet<CollectedCards>(new Action<CollectedCards>(this.attach_CollectedCards), new Action<CollectedCards>(this.detach_CollectedCards));
+			this._RegistersUsersMap = new EntitySet<RegistersUsersMap>(new Action<RegistersUsersMap>(this.attach_RegistersUsersMap), new Action<RegistersUsersMap>(this.detach_RegistersUsersMap));
+			this._RegistersModels = default(EntityRef<RegistersModels>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_registerID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int registerID
+		{
+			get
+			{
+				return this._registerID;
+			}
+			set
+			{
+				if ((this._registerID != value))
+				{
+					this.OnregisterIDChanging(value);
+					this.SendPropertyChanging();
+					this._registerID = value;
+					this.SendPropertyChanged("registerID");
+					this.OnregisterIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(MAX)")]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_registersModel", DbType="Int NOT NULL")]
+		public int fk_registersModel
+		{
+			get
+			{
+				return this._fk_registersModel;
+			}
+			set
+			{
+				if ((this._fk_registersModel != value))
+				{
+					if (this._RegistersModels.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_registersModelChanging(value);
+					this.SendPropertyChanging();
+					this._fk_registersModel = value;
+					this.SendPropertyChanged("fk_registersModel");
+					this.Onfk_registersModelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Registers_CollectedCards", Storage="_CollectedCards", ThisKey="registerID", OtherKey="fk_register")]
+		public EntitySet<CollectedCards> CollectedCards
+		{
+			get
+			{
+				return this._CollectedCards;
+			}
+			set
+			{
+				this._CollectedCards.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Registers_RegistersUsersMap", Storage="_RegistersUsersMap", ThisKey="registerID", OtherKey="fk_register")]
+		public EntitySet<RegistersUsersMap> RegistersUsersMap
+		{
+			get
+			{
+				return this._RegistersUsersMap;
+			}
+			set
+			{
+				this._RegistersUsersMap.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RegistersModels_Registers", Storage="_RegistersModels", ThisKey="fk_registersModel", OtherKey="registerModelID", IsForeignKey=true)]
+		public RegistersModels RegistersModels
+		{
+			get
+			{
+				return this._RegistersModels.Entity;
+			}
+			set
+			{
+				RegistersModels previousValue = this._RegistersModels.Entity;
+				if (((previousValue != value) 
+							|| (this._RegistersModels.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._RegistersModels.Entity = null;
+						previousValue.Registers.Remove(this);
+					}
+					this._RegistersModels.Entity = value;
+					if ((value != null))
+					{
+						value.Registers.Add(this);
+						this._fk_registersModel = value.registerModelID;
+					}
+					else
+					{
+						this._fk_registersModel = default(int);
+					}
+					this.SendPropertyChanged("RegistersModels");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_CollectedCards(CollectedCards entity)
+		{
+			this.SendPropertyChanging();
+			entity.Registers = this;
+		}
+		
+		private void detach_CollectedCards(CollectedCards entity)
+		{
+			this.SendPropertyChanging();
+			entity.Registers = null;
+		}
+		
+		private void attach_RegistersUsersMap(RegistersUsersMap entity)
+		{
+			this.SendPropertyChanging();
+			entity.Registers = this;
+		}
+		
+		private void detach_RegistersUsersMap(RegistersUsersMap entity)
+		{
+			this.SendPropertyChanging();
+			entity.Registers = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RegistersModels")]
+	public partial class RegistersModels : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _registerModelID;
+		
+		private bool _active;
+		
+		private string _name;
+		
+		private EntitySet<FieldsGroups> _FieldsGroups;
+		
+		private EntitySet<Registers> _Registers;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnregisterModelIDChanging(int value);
+    partial void OnregisterModelIDChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    #endregion
+		
+		public RegistersModels()
+		{
+			this._FieldsGroups = new EntitySet<FieldsGroups>(new Action<FieldsGroups>(this.attach_FieldsGroups), new Action<FieldsGroups>(this.detach_FieldsGroups));
+			this._Registers = new EntitySet<Registers>(new Action<Registers>(this.attach_Registers), new Action<Registers>(this.detach_Registers));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_registerModelID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int registerModelID
+		{
+			get
+			{
+				return this._registerModelID;
+			}
+			set
+			{
+				if ((this._registerModelID != value))
+				{
+					this.OnregisterModelIDChanging(value);
+					this.SendPropertyChanging();
+					this._registerModelID = value;
+					this.SendPropertyChanged("registerModelID");
+					this.OnregisterModelIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RegistersModels_FieldsGroups", Storage="_FieldsGroups", ThisKey="registerModelID", OtherKey="fk_registerModel")]
+		public EntitySet<FieldsGroups> FieldsGroups
+		{
+			get
+			{
+				return this._FieldsGroups;
+			}
+			set
+			{
+				this._FieldsGroups.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RegistersModels_Registers", Storage="_Registers", ThisKey="registerModelID", OtherKey="fk_registersModel")]
+		public EntitySet<Registers> Registers
+		{
+			get
+			{
+				return this._Registers;
+			}
+			set
+			{
+				this._Registers.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_FieldsGroups(FieldsGroups entity)
+		{
+			this.SendPropertyChanging();
+			entity.RegistersModels = this;
+		}
+		
+		private void detach_FieldsGroups(FieldsGroups entity)
+		{
+			this.SendPropertyChanging();
+			entity.RegistersModels = null;
+		}
+		
+		private void attach_Registers(Registers entity)
+		{
+			this.SendPropertyChanging();
+			entity.RegistersModels = this;
+		}
+		
+		private void detach_Registers(Registers entity)
+		{
+			this.SendPropertyChanging();
+			entity.RegistersModels = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RegistersUsersMap")]
+	public partial class RegistersUsersMap : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _registersUsersMapID;
+		
+		private bool _active;
+		
+		private int _fk_user;
+		
+		private int _fk_register;
+		
+		private bool _canEdit;
+		
+		private EntitySet<RegistersView> _RegistersView;
+		
+		private EntityRef<Registers> _Registers;
+		
+		private EntityRef<Users> _Users;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnregistersUsersMapIDChanging(int value);
+    partial void OnregistersUsersMapIDChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void Onfk_userChanging(int value);
+    partial void Onfk_userChanged();
+    partial void Onfk_registerChanging(int value);
+    partial void Onfk_registerChanged();
+    partial void OncanEditChanging(bool value);
+    partial void OncanEditChanged();
+    #endregion
+		
+		public RegistersUsersMap()
+		{
+			this._RegistersView = new EntitySet<RegistersView>(new Action<RegistersView>(this.attach_RegistersView), new Action<RegistersView>(this.detach_RegistersView));
+			this._Registers = default(EntityRef<Registers>);
+			this._Users = default(EntityRef<Users>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_registersUsersMapID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int registersUsersMapID
+		{
+			get
+			{
+				return this._registersUsersMapID;
+			}
+			set
+			{
+				if ((this._registersUsersMapID != value))
+				{
+					this.OnregistersUsersMapIDChanging(value);
+					this.SendPropertyChanging();
+					this._registersUsersMapID = value;
+					this.SendPropertyChanged("registersUsersMapID");
+					this.OnregistersUsersMapIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_user", DbType="Int NOT NULL")]
+		public int fk_user
+		{
+			get
+			{
+				return this._fk_user;
+			}
+			set
+			{
+				if ((this._fk_user != value))
+				{
+					if (this._Users.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_userChanging(value);
+					this.SendPropertyChanging();
+					this._fk_user = value;
+					this.SendPropertyChanged("fk_user");
+					this.Onfk_userChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_register", DbType="Int NOT NULL")]
+		public int fk_register
+		{
+			get
+			{
+				return this._fk_register;
+			}
+			set
+			{
+				if ((this._fk_register != value))
+				{
+					if (this._Registers.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_registerChanging(value);
+					this.SendPropertyChanging();
+					this._fk_register = value;
+					this.SendPropertyChanged("fk_register");
+					this.Onfk_registerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_canEdit", DbType="Bit NOT NULL")]
+		public bool canEdit
+		{
+			get
+			{
+				return this._canEdit;
+			}
+			set
+			{
+				if ((this._canEdit != value))
+				{
+					this.OncanEditChanging(value);
+					this.SendPropertyChanging();
+					this._canEdit = value;
+					this.SendPropertyChanged("canEdit");
+					this.OncanEditChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RegistersUsersMap_RegistersView", Storage="_RegistersView", ThisKey="registersUsersMapID", OtherKey="fk_registersUsersMap")]
+		public EntitySet<RegistersView> RegistersView
+		{
+			get
+			{
+				return this._RegistersView;
+			}
+			set
+			{
+				this._RegistersView.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Registers_RegistersUsersMap", Storage="_Registers", ThisKey="fk_register", OtherKey="registerID", IsForeignKey=true)]
+		public Registers Registers
+		{
+			get
+			{
+				return this._Registers.Entity;
+			}
+			set
+			{
+				Registers previousValue = this._Registers.Entity;
+				if (((previousValue != value) 
+							|| (this._Registers.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Registers.Entity = null;
+						previousValue.RegistersUsersMap.Remove(this);
+					}
+					this._Registers.Entity = value;
+					if ((value != null))
+					{
+						value.RegistersUsersMap.Add(this);
 						this._fk_register = value.registerID;
 					}
 					else
 					{
 						this._fk_register = default(int);
 					}
-					this.SendPropertyChanged("Register");
+					this.SendPropertyChanged("Registers");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_RegisterViewForm", Storage="_User", ThisKey="fk_user", OtherKey="userID", IsForeignKey=true)]
-		public User User
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_RegistersUsersMap", Storage="_Users", ThisKey="fk_user", OtherKey="userID", IsForeignKey=true)]
+		public Users Users
 		{
 			get
 			{
-				return this._User.Entity;
+				return this._Users.Entity;
 			}
 			set
 			{
-				User previousValue = this._User.Entity;
+				Users previousValue = this._Users.Entity;
 				if (((previousValue != value) 
-							|| (this._User.HasLoadedOrAssignedValue == false)))
+							|| (this._Users.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._User.Entity = null;
-						previousValue.RegisterViewForms.Remove(this);
+						this._Users.Entity = null;
+						previousValue.RegistersUsersMap.Remove(this);
 					}
-					this._User.Entity = value;
+					this._Users.Entity = value;
 					if ((value != null))
 					{
-						value.RegisterViewForms.Add(this);
+						value.RegistersUsersMap.Add(this);
 						this._fk_user = value.userID;
 					}
 					else
 					{
 						this._fk_user = default(int);
 					}
-					this.SendPropertyChanged("User");
+					this.SendPropertyChanged("Users");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_RegistersView(RegistersView entity)
+		{
+			this.SendPropertyChanging();
+			entity.RegistersUsersMap = this;
+		}
+		
+		private void detach_RegistersView(RegistersView entity)
+		{
+			this.SendPropertyChanging();
+			entity.RegistersUsersMap = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RegistersView")]
+	public partial class RegistersView : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _registerViewID;
+		
+		private bool _active;
+		
+		private int _fk_registersUsersMap;
+		
+		private int _fk_field;
+		
+		private double _weight;
+		
+		private EntityRef<Fields> _Fields;
+		
+		private EntityRef<RegistersUsersMap> _RegistersUsersMap;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnregisterViewIDChanging(int value);
+    partial void OnregisterViewIDChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void Onfk_registersUsersMapChanging(int value);
+    partial void Onfk_registersUsersMapChanged();
+    partial void Onfk_fieldChanging(int value);
+    partial void Onfk_fieldChanged();
+    partial void OnweightChanging(double value);
+    partial void OnweightChanged();
+    #endregion
+		
+		public RegistersView()
+		{
+			this._Fields = default(EntityRef<Fields>);
+			this._RegistersUsersMap = default(EntityRef<RegistersUsersMap>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_registerViewID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int registerViewID
+		{
+			get
+			{
+				return this._registerViewID;
+			}
+			set
+			{
+				if ((this._registerViewID != value))
+				{
+					if (this._Fields.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnregisterViewIDChanging(value);
+					this.SendPropertyChanging();
+					this._registerViewID = value;
+					this.SendPropertyChanged("registerViewID");
+					this.OnregisterViewIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_registersUsersMap", DbType="Int NOT NULL")]
+		public int fk_registersUsersMap
+		{
+			get
+			{
+				return this._fk_registersUsersMap;
+			}
+			set
+			{
+				if ((this._fk_registersUsersMap != value))
+				{
+					if (this._RegistersUsersMap.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_registersUsersMapChanging(value);
+					this.SendPropertyChanging();
+					this._fk_registersUsersMap = value;
+					this.SendPropertyChanged("fk_registersUsersMap");
+					this.Onfk_registersUsersMapChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_field", DbType="Int NOT NULL")]
+		public int fk_field
+		{
+			get
+			{
+				return this._fk_field;
+			}
+			set
+			{
+				if ((this._fk_field != value))
+				{
+					this.Onfk_fieldChanging(value);
+					this.SendPropertyChanging();
+					this._fk_field = value;
+					this.SendPropertyChanged("fk_field");
+					this.Onfk_fieldChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_weight", DbType="Float NOT NULL")]
+		public double weight
+		{
+			get
+			{
+				return this._weight;
+			}
+			set
+			{
+				if ((this._weight != value))
+				{
+					this.OnweightChanging(value);
+					this.SendPropertyChanging();
+					this._weight = value;
+					this.SendPropertyChanged("weight");
+					this.OnweightChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fields_RegistersView", Storage="_Fields", ThisKey="registerViewID", OtherKey="fieldID", IsForeignKey=true)]
+		public Fields Fields
+		{
+			get
+			{
+				return this._Fields.Entity;
+			}
+			set
+			{
+				Fields previousValue = this._Fields.Entity;
+				if (((previousValue != value) 
+							|| (this._Fields.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Fields.Entity = null;
+						previousValue.RegistersView = null;
+					}
+					this._Fields.Entity = value;
+					if ((value != null))
+					{
+						value.RegistersView = this;
+						this._registerViewID = value.fieldID;
+					}
+					else
+					{
+						this._registerViewID = default(int);
+					}
+					this.SendPropertyChanged("Fields");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="RegistersUsersMap_RegistersView", Storage="_RegistersUsersMap", ThisKey="fk_registersUsersMap", OtherKey="registersUsersMapID", IsForeignKey=true)]
+		public RegistersUsersMap RegistersUsersMap
+		{
+			get
+			{
+				return this._RegistersUsersMap.Entity;
+			}
+			set
+			{
+				RegistersUsersMap previousValue = this._RegistersUsersMap.Entity;
+				if (((previousValue != value) 
+							|| (this._RegistersUsersMap.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._RegistersUsersMap.Entity = null;
+						previousValue.RegistersView.Remove(this);
+					}
+					this._RegistersUsersMap.Entity = value;
+					if ((value != null))
+					{
+						value.RegistersView.Add(this);
+						this._fk_registersUsersMap = value.registersUsersMapID;
+					}
+					else
+					{
+						this._fk_registersUsersMap = default(int);
+					}
+					this.SendPropertyChanged("RegistersUsersMap");
 				}
 			}
 		}
