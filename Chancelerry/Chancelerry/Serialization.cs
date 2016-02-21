@@ -8,6 +8,7 @@ namespace Chancelerry
     [Serializable]
     public class Serialization
     {
+
     }
 
 
