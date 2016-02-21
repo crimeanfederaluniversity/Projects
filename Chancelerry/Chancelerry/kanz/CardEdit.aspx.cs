@@ -11,7 +11,8 @@ namespace Chancelerry.kanz
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            CardCreateView cardCreateView = new CardCreateView();
+            cardMainDiv.Controls.Add(cardCreateView.CreateViewByRegisterModel(1));
         }
     }
 }
