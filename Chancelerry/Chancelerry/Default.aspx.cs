@@ -8,12 +8,12 @@ using System.Web.UI.WebControls;
 using Chancelerry.Models;
 
 namespace Chancelerry
-{
+{ 
     public partial class _Default : Page
     {
        
 
-        public void Directions(User user)
+        public void Directions(Users user)
         {
                FormsAuthentication.SetAuthCookie(user.name, true);
                Response.Redirect("~/kanz/Dashboard.aspx"); 
@@ -21,7 +21,7 @@ namespace Chancelerry
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            var UserSer = Session["UserID"];
+            var UserSer = Session["userID"];
 
             if (UserSer == null)
             {

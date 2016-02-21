@@ -31,7 +31,7 @@ namespace Chancelerry.Account
 
                 if (user != null)
                 {
-                    Session["UserID"] = user.userID;
+                    Session["userID"] = user.userID;
                     Response.Redirect("~/Default.aspx");
                 }
                 else
