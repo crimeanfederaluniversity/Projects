@@ -2,167 +2,167 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 22.625" name="ChancelerryDB">
   <DataContextMoniker Name="/ChancelerryDBDataContext" />
   <nestedChildShapes>
-    <classShape Id="e979e8c9-7024-4da1-ba80-06adf366afb7" absoluteBounds="3.75, 18, 2, 1.3862939453125023">
+    <classShape Id="9022ed9c-1305-4f87-8d12-d5526ef6baa8" absoluteBounds="3.75, 18, 2, 1.3862939453125023">
       <DataClassMoniker Name="/ChancelerryDBDataContext/CollectedCards" />
       <nestedChildShapes>
-        <elementListCompartment Id="8a057f76-3530-4e8b-bc9a-c03d5eeda5ba" absoluteBounds="3.765, 18.46, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="d0071b0b-2b4e-42d0-9877-a55bee39bd7f" absoluteBounds="3.765, 18.46, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="467cab9f-79ae-48a8-ba78-46e974368ab2" absoluteBounds="0.75, 4.5, 2, 2.1554996744791666">
+    <classShape Id="3563c88d-0b96-465a-b814-13c16ae0bf70" absoluteBounds="0.75, 4.5, 2, 2.1554996744791666">
       <DataClassMoniker Name="/ChancelerryDBDataContext/Users" />
       <nestedChildShapes>
-        <elementListCompartment Id="c6115c2a-b4f0-4485-b2ba-c8afe3f2823b" absoluteBounds="0.765, 4.96, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="37776b71-7d0f-4ca5-b06f-1f1eac64bd55" absoluteBounds="0.765, 4.96, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="64d5e05b-13c5-4751-8649-6969af9e148b" absoluteBounds="6.5, 4, 2, 3.3093082682291666">
+    <classShape Id="a03378ed-fae9-494b-b561-17ae692dd41a" absoluteBounds="6.5, 4, 2, 3.3093082682291666">
       <DataClassMoniker Name="/ChancelerryDBDataContext/CollectedFieldsValues" />
       <nestedChildShapes>
-        <elementListCompartment Id="52353079-25e2-40f1-a482-11dd16e62b76" absoluteBounds="6.515, 4.46, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="3210b421-b14d-4f60-a268-1514412d8c2b" absoluteBounds="6.515, 4.46, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="5c303d78-330e-4fed-8491-e7a4496c7798" absoluteBounds="0.75, 12.75, 2, 1.5785953776041666">
+    <classShape Id="a3b93aa4-306b-4dea-bdc1-fcda88524879" absoluteBounds="0.75, 12.75, 2, 1.5785953776041666">
       <DataClassMoniker Name="/ChancelerryDBDataContext/Dictionarys" />
       <nestedChildShapes>
-        <elementListCompartment Id="5934c0b8-0e21-48d6-b187-b3e4a2afccd1" absoluteBounds="0.765, 13.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="6507b580-854d-4e0b-b4cf-63909e7e10e5" absoluteBounds="0.765, 13.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="5c136543-457a-4ab6-b90d-1851fa1010c4" absoluteBounds="3.5, 20.75, 2, 1.5785953776041666">
+    <classShape Id="43e37505-1b75-4bfb-b100-659e677a6fbc" absoluteBounds="3.5, 20.75, 2, 1.5785953776041666">
       <DataClassMoniker Name="/ChancelerryDBDataContext/DictionarysValues" />
       <nestedChildShapes>
-        <elementListCompartment Id="43ba8f75-4f0d-4e7a-b2c2-f8c085ed21b6" absoluteBounds="3.515, 21.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="d30898fb-77bd-48ef-a3f4-e68d22dc7549" absoluteBounds="3.515, 21.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="656c3cf9-fc49-4871-a578-5d30f4c9be83" absoluteBounds="3.5, 13.125, 2, 3.3093082682291666">
+    <classShape Id="bc493233-44a1-4ef3-a23c-bb2110d7745b" absoluteBounds="3.5, 13.125, 2, 3.3093082682291666">
       <DataClassMoniker Name="/ChancelerryDBDataContext/Fields" />
       <nestedChildShapes>
-        <elementListCompartment Id="b7f01f05-2002-4ba7-933c-0853157438e8" absoluteBounds="3.515, 13.585, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="57d394b0-03b1-4d5d-9e47-812a542e7f6e" absoluteBounds="3.515, 13.585, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="67156c22-f072-42be-bc13-8436728977c7" absoluteBounds="0.75, 15, 2, 1.9631982421874987">
+    <classShape Id="2c1751cc-aeed-429b-91e4-6c6d9fac145d" absoluteBounds="0.75, 15, 2, 1.9631982421874987">
       <DataClassMoniker Name="/ChancelerryDBDataContext/FieldsGroups" />
       <nestedChildShapes>
-        <elementListCompartment Id="75391781-5ace-4a6d-917f-eaa4a91417d9" absoluteBounds="0.765, 15.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="75aa6dca-95f8-4e05-9d40-73fd1de04f5a" absoluteBounds="0.765, 15.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="53a7602f-5fa5-4c74-8c17-b0e31f800dbf" absoluteBounds="3.5, 7.125, 2, 1.9631982421875005">
+    <classShape Id="89061289-7502-4b0e-85b7-bbfbaa50f441" absoluteBounds="3.5, 7.125, 2, 1.9631982421875005">
       <DataClassMoniker Name="/ChancelerryDBDataContext/Logs" />
       <nestedChildShapes>
-        <elementListCompartment Id="6faf26e4-3833-4626-8bee-443ca72d2886" absoluteBounds="3.515, 7.585, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="43f02043-429a-4934-8fb4-aed5c5ec2771" absoluteBounds="3.515, 7.585, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="ad62c22a-6033-40d0-ae32-f830d8d68719" absoluteBounds="0.75, 1.875, 2, 1.5785953776041664">
+    <classShape Id="d66e2cc0-2136-45c8-a01f-6181067031d5" absoluteBounds="0.75, 1.875, 2, 1.5785953776041664">
       <DataClassMoniker Name="/ChancelerryDBDataContext/Registers" />
       <nestedChildShapes>
-        <elementListCompartment Id="dc366baa-4084-49ce-b09c-87ee36bf484f" absoluteBounds="0.765, 2.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="99616a57-c631-42ca-a6fe-daf1d2c2c3d8" absoluteBounds="0.765, 2.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="f3d717f7-61c4-49ff-ad53-1ac1ea113b1a" absoluteBounds="1.5, 10, 2, 1.3862939453124987">
+    <classShape Id="94dc4aa4-08a8-4ee5-bcc6-856450d71210" absoluteBounds="1.5, 10, 2, 1.3862939453124987">
       <DataClassMoniker Name="/ChancelerryDBDataContext/RegistersModels" />
       <nestedChildShapes>
-        <elementListCompartment Id="c56b326b-42df-4273-bb06-4a22032a8ba5" absoluteBounds="1.5150000000000001, 10.46, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="4867ffb7-8dcf-48ab-8c04-f002b3a38d3a" absoluteBounds="1.5150000000000001, 10.46, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="e28366d6-c7be-41ed-bccd-9c08b4055b24" absoluteBounds="3.5, 3.75, 2, 1.7708968098958327">
+    <classShape Id="dde9703f-4795-4bbd-acf0-09eb311e9ffc" absoluteBounds="3.5, 3.75, 2, 1.7708968098958327">
       <DataClassMoniker Name="/ChancelerryDBDataContext/RegistersUsersMap" />
       <nestedChildShapes>
-        <elementListCompartment Id="2fedbc2d-2295-4ef4-a97f-eb0a38d1bd91" absoluteBounds="3.515, 4.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="ade3185a-0cb6-4f50-a5b8-3ce351ab1cbe" absoluteBounds="3.515, 4.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="3ebbf48f-eb1f-44b9-b4cc-f187ed394c14" absoluteBounds="6.25, 0.75, 2, 1.7708968098958327">
+    <classShape Id="e730507f-0970-4208-b850-99b3e59921a2" absoluteBounds="6.25, 0.75, 2, 1.7708968098958327">
       <DataClassMoniker Name="/ChancelerryDBDataContext/RegistersView" />
       <nestedChildShapes>
-        <elementListCompartment Id="d87c036e-cf0e-4284-958e-a85fb0abe2cb" absoluteBounds="6.265, 1.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="7484eaed-4e40-4aa4-9858-8fab88fb3239" absoluteBounds="6.265, 1.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <associationConnector edgePoints="[(5.65625 : 18); (5.65625 : 6.32294840494792); (6.26041666666667 : 6.32294840494792 : JumpStart); (6.42708333333333 : 6.32294840494792 : JumpEnd); (6.5 : 6.32294840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ChancelerryDBDataContext/CollectedCards/CollectedCards_CollectedFieldsValues" />
       <nodes>
-        <classShapeMoniker Id="e979e8c9-7024-4da1-ba80-06adf366afb7" />
-        <classShapeMoniker Id="64d5e05b-13c5-4751-8649-6969af9e148b" />
+        <classShapeMoniker Id="9022ed9c-1305-4f87-8d12-d5526ef6baa8" />
+        <classShapeMoniker Id="a03378ed-fae9-494b-b561-17ae692dd41a" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(2.75 : 5.89067260742187); (3.04166916666667 : 5.89067260742187 : JumpStart); (3.20833583333333 : 5.89067260742187 : JumpEnd); (5.54166416666667 : 5.89067260742187 : JumpStart); (5.70833083333333 : 5.89067260742187 : JumpEnd); (6.26041666666667 : 5.89067260742187 : JumpStart); (6.42708333333333 : 5.89067260742187 : JumpEnd); (6.5 : 5.89067260742187)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ChancelerryDBDataContext/Users/Users_CollectedFieldsValues" />
       <nodes>
-        <classShapeMoniker Id="467cab9f-79ae-48a8-ba78-46e974368ab2" />
-        <classShapeMoniker Id="64d5e05b-13c5-4751-8649-6969af9e148b" />
+        <classShapeMoniker Id="3563c88d-0b96-465a-b814-13c16ae0bf70" />
+        <classShapeMoniker Id="a03378ed-fae9-494b-b561-17ae692dd41a" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(2.75 : 14.3285953776042); (3.125 : 14.7035953776042); (3.125 : 21.5392976888021); (3.5 : 21.5392976888021)]" fixedFrom="NotFixed" fixedTo="Algorithm">
       <AssociationMoniker Name="/ChancelerryDBDataContext/Dictionarys/Dictionarys_DictionarysValues" />
       <nodes>
-        <classShapeMoniker Id="5c303d78-330e-4fed-8491-e7a4496c7798" />
-        <classShapeMoniker Id="5c136543-457a-4ab6-b90d-1851fa1010c4" />
+        <classShapeMoniker Id="a3b93aa4-306b-4dea-bdc1-fcda88524879" />
+        <classShapeMoniker Id="43e37505-1b75-4bfb-b100-659e677a6fbc" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(2.75 : 13.6955451888021); (3.19791666666667 : 13.6955451888021 : JumpStart); (3.36458333333333 : 13.6955451888021 : JumpEnd); (3.5 : 13.6955451888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ChancelerryDBDataContext/Dictionarys/Dictionarys_Fields" />
       <nodes>
-        <classShapeMoniker Id="5c303d78-330e-4fed-8491-e7a4496c7798" />
-        <classShapeMoniker Id="656c3cf9-fc49-4871-a578-5d30f4c9be83" />
+        <classShapeMoniker Id="a3b93aa4-306b-4dea-bdc1-fcda88524879" />
+        <classShapeMoniker Id="bc493233-44a1-4ef3-a23c-bb2110d7745b" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(2.75 : 15.7171541341146); (3.04166666666667 : 15.7171541341146 : JumpStart); (3.36458333333333 : 15.7171541341146 : JumpEnd); (3.5 : 15.7171541341146)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ChancelerryDBDataContext/FieldsGroups/FieldsGroups_Fields" />
       <nodes>
-        <classShapeMoniker Id="67156c22-f072-42be-bc13-8436728977c7" />
-        <classShapeMoniker Id="656c3cf9-fc49-4871-a578-5d30f4c9be83" />
+        <classShapeMoniker Id="2c1751cc-aeed-429b-91e4-6c6d9fac145d" />
+        <classShapeMoniker Id="bc493233-44a1-4ef3-a23c-bb2110d7745b" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(1.75 : 6.65549967447917); (1.75 : 8.10659912109375); (3.04166916666667 : 8.10659912109375 : JumpStart); (3.20833583333333 : 8.10659912109375 : JumpEnd); (3.5 : 8.10659912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ChancelerryDBDataContext/Users/Users_Logs" />
       <nodes>
-        <classShapeMoniker Id="467cab9f-79ae-48a8-ba78-46e974368ab2" />
-        <classShapeMoniker Id="53a7602f-5fa5-4c74-8c17-b0e31f800dbf" />
+        <classShapeMoniker Id="3563c88d-0b96-465a-b814-13c16ae0bf70" />
+        <classShapeMoniker Id="89061289-7502-4b0e-85b7-bbfbaa50f441" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(2.75 : 2.66429768880208); (4.41666666666667 : 2.66429768880208 : JumpStart); (4.58333333333333 : 2.66429768880208 : JumpEnd); (4.94791916666667 : 2.66429768880208 : JumpStart); (5.11458583333333 : 2.66429768880208 : JumpEnd); (5.6249975 : 2.66429768880208); (5.6249975 : 18)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ChancelerryDBDataContext/Registers/Registers_CollectedCards" />
       <nodes>
-        <classShapeMoniker Id="ad62c22a-6033-40d0-ae32-f830d8d68719" />
-        <classShapeMoniker Id="e979e8c9-7024-4da1-ba80-06adf366afb7" />
+        <classShapeMoniker Id="d66e2cc0-2136-45c8-a01f-6181067031d5" />
+        <classShapeMoniker Id="9022ed9c-1305-4f87-8d12-d5526ef6baa8" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(3.28125 : 11.3862939453125); (3.28125 : 16.371428688151); (3.20833333333333 : 16.371428688151 : JumpStart); (3.04166666666667 : 16.371428688151 : JumpEnd); (2.75 : 16.371428688151)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ChancelerryDBDataContext/RegistersModels/RegistersModels_FieldsGroups" />
       <nodes>
-        <classShapeMoniker Id="f3d717f7-61c4-49ff-ad53-1ac1ea113b1a" />
-        <classShapeMoniker Id="67156c22-f072-42be-bc13-8436728977c7" />
+        <classShapeMoniker Id="94dc4aa4-08a8-4ee5-bcc6-856450d71210" />
+        <classShapeMoniker Id="2c1751cc-aeed-429b-91e4-6c6d9fac145d" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(3.1250025 : 10); (3.1250025 : 3.09019903320312); (2.75 : 3.09019903320312)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ChancelerryDBDataContext/RegistersModels/RegistersModels_Registers" />
       <nodes>
-        <classShapeMoniker Id="f3d717f7-61c4-49ff-ad53-1ac1ea113b1a" />
-        <classShapeMoniker Id="ad62c22a-6033-40d0-ae32-f830d8d68719" />
+        <classShapeMoniker Id="94dc4aa4-08a8-4ee5-bcc6-856450d71210" />
+        <classShapeMoniker Id="d66e2cc0-2136-45c8-a01f-6181067031d5" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(2.75 : 2.23839634440104); (4.5 : 2.23839634440104); (4.5 : 3.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ChancelerryDBDataContext/Registers/Registers_RegistersUsersMap" />
       <nodes>
-        <classShapeMoniker Id="ad62c22a-6033-40d0-ae32-f830d8d68719" />
-        <classShapeMoniker Id="e28366d6-c7be-41ed-bccd-9c08b4055b24" />
+        <classShapeMoniker Id="d66e2cc0-2136-45c8-a01f-6181067031d5" />
+        <classShapeMoniker Id="dde9703f-4795-4bbd-acf0-09eb311e9ffc" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(2.75 : 5.01044840494792); (3.04166916666667 : 5.01044840494792 : JumpStart); (3.20833583333333 : 5.01044840494792 : JumpEnd); (3.5 : 5.01044840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ChancelerryDBDataContext/Users/Users_RegistersUsersMap" />
       <nodes>
-        <classShapeMoniker Id="467cab9f-79ae-48a8-ba78-46e974368ab2" />
-        <classShapeMoniker Id="e28366d6-c7be-41ed-bccd-9c08b4055b24" />
+        <classShapeMoniker Id="3563c88d-0b96-465a-b814-13c16ae0bf70" />
+        <classShapeMoniker Id="dde9703f-4795-4bbd-acf0-09eb311e9ffc" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(5.5 : 14.7796541341146); (5.54166416666667 : 14.7796541341146 : JumpStart); (5.73958333333333 : 14.7796541341146 : JumpEnd); (6.34375 : 14.7796541341146); (6.34375 : 2.52089680989583)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ChancelerryDBDataContext/Fields/Fields_RegistersView" />
       <nodes>
-        <classShapeMoniker Id="656c3cf9-fc49-4871-a578-5d30f4c9be83" />
-        <classShapeMoniker Id="3ebbf48f-eb1f-44b9-b4cc-f187ed394c14" />
+        <classShapeMoniker Id="bc493233-44a1-4ef3-a23c-bb2110d7745b" />
+        <classShapeMoniker Id="e730507f-0970-4208-b850-99b3e59921a2" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(5.0312525 : 3.75); (5.0312525 : 1.49419817220052); (6.25 : 1.49419817220052)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ChancelerryDBDataContext/RegistersUsersMap/RegistersUsersMap_RegistersView" />
       <nodes>
-        <classShapeMoniker Id="e28366d6-c7be-41ed-bccd-9c08b4055b24" />
-        <classShapeMoniker Id="3ebbf48f-eb1f-44b9-b4cc-f187ed394c14" />
+        <classShapeMoniker Id="dde9703f-4795-4bbd-acf0-09eb311e9ffc" />
+        <classShapeMoniker Id="e730507f-0970-4208-b850-99b3e59921a2" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>
