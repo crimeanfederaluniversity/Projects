@@ -4,6 +4,10 @@
     <asp:Button ID="Button1" runat="server" Text="Добавить" />
 
 
-    <asp:GridView ID="DataGridView" runat="server" AutoGenerateColumns="False"/>
+    <br />
+    <asp:Label ID="RegisterNameLabel" runat="server" Text="Label"></asp:Label>
+
+
+    <asp:GridView ID="GridViewData" runat="server" AutoGenerateColumns="False"/>
 
 </asp:Content>
