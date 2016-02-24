@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
+using System.Web.Providers.Entities;
 using System.Web.UI.WebControls;
 using Chancelerry;
 using Chancelerry.kanz;
@@ -10,7 +12,6 @@ namespace Chancelerry.kanz
 {
     public class CardCommonFunctions
     {
-
         private ChancelerryDBDataContext chancDb = new ChancelerryDBDataContext();
         public RegistersModels GetRegisterModelById(int registerModelId)
         {
@@ -88,47 +89,203 @@ namespace Chancelerry.kanz
                 select a).OrderByDescending(mc => mc.version).FirstOrDefault();
             if (tmp == null) return 0;
             return tmp.version;
-        }   
-    }
+        }
 
-    public class DataTypes
-    {
-        public string GetDataTypeName(int type)
+        public int GetMaxValueByFieldRegister(int fieldId, int registerId)
         {
-            switch (type)
+            List<CollectedFieldsValues> values = (from a in chancDb.CollectedFieldsValues
+                where a.active
+                      && a.fk_field == fieldId
+                join b in chancDb.CollectedCards
+                    on a.fk_collectedCard equals b.collectedCardID
+                where b.active == true
+                      && b.fk_register == registerId
+                select a).Distinct().ToList();
+            List<int> valuesAsInt = new List<int>();
+            foreach (CollectedFieldsValues currentValue in values)
             {
-                case 0:
-                    return "bit";
-                case 1:
-                    return "int";
-                case 2:
-                    return "float";
-                case 3:
-                    return "date";
-                case 4:
-                    return "singleLineText";
-                case 5:
-                    return "multiLineText";
+                int tmpValue = 0;
+                Int32.TryParse(currentValue.valueText, out tmpValue);
+                valuesAsInt.Add(tmpValue);
             }
-            return "error";
+            List<int> valuesSortedList =
+                (from a in valuesAsInt select a).Distinct().OrderByDescending(mc => mc).ToList();
+
+            if (valuesSortedList.Any()) return valuesSortedList[0];
+            return 0;
+        }
+        public ListItem[] GetDictionaryValues(int dictionaryId)
+        {
+            
+            List<string> valuesList = (from a in chancDb.DictionarysValues
+                where a.active == true
+                      && a.fk_dictionary == dictionaryId
+                select a.value).ToList();
+            ListItem[] resultItems = new ListItem[valuesList.Count];
+            for (int i = 0; i < valuesList.Count; i++)
+            {
+                resultItems[i]= new ListItem(valuesList[i]);
+            }
+            return resultItems;
         }
     }
+    public class DataTypes
+    {
+        private CardCommonFunctions _common = new CardCommonFunctions();
+        public RangeValidator GetRangeValidator(string rangeValidatorId, string fieldToValidateId,string type)
+        {
+            RangeValidator fieldRangeValidator = new RangeValidator();
+            fieldRangeValidator.ID = rangeValidatorId;
+            fieldRangeValidator.ControlToValidate = fieldToValidateId;
+            fieldRangeValidator.ForeColor = Color.Red;
+            switch (type)
+            {
+                case "bit": //bit
+                    {
+                        fieldRangeValidator.MinimumValue = 0.ToString();
+                        fieldRangeValidator.MaximumValue = 1.ToString();
+                        fieldRangeValidator.Type = ValidationDataType.Integer;
+                        fieldRangeValidator.ErrorMessage = "Только 0 или 1";
+                        break;
+                    }
+                case "int": //int
+                    {
+                        fieldRangeValidator.MinimumValue = int.MinValue.ToString();
+                        fieldRangeValidator.MaximumValue = int.MaxValue.ToString();
+                        fieldRangeValidator.Type = ValidationDataType.Integer;
+                        fieldRangeValidator.ErrorMessage = "Только целочисленное значение";
+                        break;
+                    }
+                case "float": //double
+                    {
+                        //fieldRangeValidator.MinimumValue = double.MinValue.ToString();
+                        //fieldRangeValidator.MaximumValue = double.MaxValue.ToString();
+                        fieldRangeValidator.Type = ValidationDataType.Double;
+                        fieldRangeValidator.ErrorMessage = "Только числовое значение";
+                        break;
+                    }
+                case "date": //date
+                {
+                    fieldRangeValidator.MinimumValue = "1/1/1990";
+                    fieldRangeValidator.MaximumValue = "1/1/2090";
+                        fieldRangeValidator.Type = ValidationDataType.Date;
+                        fieldRangeValidator.ErrorMessage = "Только дата";
+                        break;
+                    }
+                case "singleLineText": //text
+                    {
+                        //fieldRangeValidator.MinimumValue = double.MinValue.ToString();
+                        //fieldRangeValidator.MaximumValue = double.MaxValue.ToString();
+                        //fieldRangeValidator.ErrorMessage = "Только текст";
+                        fieldRangeValidator.Enabled = false;
+                        fieldRangeValidator.Type = ValidationDataType.String;
+                        break;
+                    }
+                case "multiLineText": //text
+                    {
+                        //fieldRangeValidator.MinimumValue = double.MinValue.ToString();
+                        //fieldRangeValidator.MaximumValue = double.MaxValue.ToString();
+                        //fieldRangeValidator.ErrorMessage = "Только текст";
+                        fieldRangeValidator.Enabled = false;
+                        fieldRangeValidator.Type = ValidationDataType.String;
+                        break;
+                    }
+            }
+            return fieldRangeValidator;
+        }
+        public TextBox GetTextBox(string type)
+        {
+            TextBox textBoxToReturn = new TextBox();
+            switch (type)
+            {
+                case "bit": //bit
+                    {
+                        break;
+                    }
+                case "int": //int
+                    {
+                        break;
+                    }
+                case "float": //double
+                    {
+                        
+                        break;
+                    }
+                case "date": //date
+                    {
+                        textBoxToReturn.TextMode = TextBoxMode.Date;
+                        break;
+                    }
+                case "singleLineText": //text
+                    {
+                        textBoxToReturn.TextMode = TextBoxMode.SingleLine;
+                        break;
+                    }
+                case "multiLineText": //text
+                    {
+                        textBoxToReturn.TextMode = TextBoxMode.MultiLine;
+                        break;
+                    }
+                case "singleLineTextWithUniqueCheck": //text
+                    {
+                        textBoxToReturn.TextMode = TextBoxMode.SingleLine;
+                        break;
+                    }
+                case "autoIncrement": //Автоинкремент
+                    {
+                        //textBoxToReturn.TextMode = TextBoxMode.SingleLine;
+                        break;
+                    }
+                case "autoDate": // АвтоДата
+                    {
+                        //textBoxToReturn.TextMode = TextBoxMode.SingleLine;
+                        textBoxToReturn.TextMode = TextBoxMode.Date;
+                        break;
+                    }
 
+            }
+            return textBoxToReturn;
+        }
+
+        public bool IsFieldAutoFill(string type)
+        {
+            if (type == "autoIncrement" || type == "autoDate") return true;
+            return false;
+        }
+
+        public string GetAutoValue(string type,int fieldId,int registerId)
+        {
+            if (type == "autoDate")
+            {
+                return DateTime.Now.ToString("u").Split(' ')[0];
+            }
+            if (type == "autoIncrement")
+            {
+                int tmp = _common.GetMaxValueByFieldRegister(fieldId, registerId);
+                return (tmp + 1).ToString();
+            }
+            return "";
+        }
+    }
     public class CardCreateView
     {
         private CardCommonFunctions _common = new CardCommonFunctions();
+        private DataTypes _dataTypes = new DataTypes();
+        private CardCreateEdit _cardCreateEdit = new CardCreateEdit();
         private int _cardId;
         private int _nextVersion;
         private int _registerId;
         private int _version;
+        private int textBoxesIdsCounter = 0;
         public List<TextBox> allFieldsInCard;
-
+        
         private void RefreshPage()
         {
             HttpContext.Current.Response.Redirect("CardEdit.aspx", true);
         }
         private void AddInstanceButtonClick(object sender, EventArgs e)
         {
+            _cardId = _cardCreateEdit.SaveCard(_registerId, _cardId, allFieldsInCard);
             ImageButton thisButton = (ImageButton) sender;
             string commandArgument = thisButton.CommandArgument;
             int groupId = Convert.ToInt32(commandArgument);
@@ -142,7 +299,6 @@ namespace Chancelerry.kanz
                 cardCreateEdit.CreateNewFieldValueInCard(_cardId,1,currentField.fieldID,lastVersion+1,newInstance,"",false);
             }
             RefreshPage();
-            //CreateViewByRegisterAndCard(_registerId, _cardId, _version);
         }
         private void DelInstanceButtonClick(object sender, EventArgs e)
         {
@@ -179,35 +335,77 @@ namespace Chancelerry.kanz
             Table lineTable = new Table();
             //в таблице две строки и сколько угодно колонок, каджая колонка один филд
             TableRow tableRow1 = new TableRow(); //названия филдов
-            TableRow tableRow2 = new TableRow(); //сам филд
-                                                 //нашли все филды в лайне
+            TableRow tableRow2 = new TableRow(); //сам филд  //нашли все филды в лайне            
             foreach (Fields currentField in fieldsInLine)
             {
-                TableCell tableCell1 = new TableCell();
-                TableCell tableCell2 = new TableCell();
-
-                Label currentFieldTitle = new Label();
-                if (currentField.mandatory)
-                {
-                    currentFieldTitle.Text = currentField.name + "*";
-                }
-                else
-                {
-                    currentFieldTitle.Text = currentField.name;
-                }
-                tableCell1.Controls.Add(currentFieldTitle);
-
-                TextBox currentFieldTextBox = new TextBox();
+                TableCell tableCell1 = new TableCell(); //заголовок
+                TableCell tableCell2 = new TableCell(); //само поле
+                int fieldId = ++textBoxesIdsCounter;                                
+                //создадим само поле
+                TextBox currentFieldTextBox = _dataTypes.GetTextBox(currentField.type);
                 currentFieldTextBox.ReadOnly = _readonly;
                 currentFieldTextBox.Style["Height"] = currentField.height + "px";
                 currentFieldTextBox.Style["Width"] = currentField.width + "px";
                 currentFieldTextBox.Attributes.Add("_myFieldId", currentField.fieldID.ToString());
                 currentFieldTextBox.Attributes.Add("_myCollectedFieldInstance", instance.ToString());
                 currentFieldTextBox.Attributes.Add("_myCollectedFieldId", _common.GetCollectedValueIdByCardVersionInstance(currentField.fieldID, cardId, version, instance).ToString());
+                currentFieldTextBox.ID = "TextBox" + fieldId;
+                //создаем название поля и mandatory валидатор
+                Label currentFieldTitle = new Label();
+                currentFieldTitle.ID = "Title" + fieldId;
+                #region mandatory
+                if (currentField.mandatory)
+                {
+                    currentFieldTitle.Text = currentField.name + "*";
+                    RequiredFieldValidator currentFieldRequiredFieldValidator = new RequiredFieldValidator();
+                    currentFieldRequiredFieldValidator.ID = "RequiredValidator" + fieldId;
+                    currentFieldRequiredFieldValidator.ControlToValidate = currentFieldTextBox.ID;
+                    currentFieldRequiredFieldValidator.ErrorMessage = " Обязательно";
+                    currentFieldRequiredFieldValidator.ForeColor = Color.Red;
+                    tableCell1.Controls.Add(currentFieldTitle);
+                    tableCell1.Controls.Add(currentFieldRequiredFieldValidator);                    
+                }
+                else
+                {
+                    currentFieldTitle.Text = currentField.name;
+                    tableCell1.Controls.Add(currentFieldTitle);
+                }
+                #endregion
+                tableCell1.Controls.Add(_dataTypes.GetRangeValidator("RangeValidator" + fieldId, currentFieldTextBox.ID,currentField.type));
                 if (cardId != 0)
+                {
                     currentFieldTextBox.Text = _common.GetFieldValueByCardVersionInstance(currentField.fieldID, cardId, version, instance);
-                allFieldsInCard.Add(currentFieldTextBox);
-                tableCell2.Controls.Add(currentFieldTextBox);
+                }
+                else if (_dataTypes.IsFieldAutoFill(currentField.type))
+                {
+                    currentFieldTextBox.Text = _dataTypes.GetAutoValue(currentField.type,currentField.fieldID,_registerId);
+                    //currentFieldTextBox.Text = "123";
+                }
+                #region dropdown
+                if (currentField.fk_dictionary != null && !_readonly) // создаем выпадающий список
+                {
+                    currentFieldTextBox.Style["display"] = "none";
+                    DropDownList dicrionaryDropDownList = new DropDownList();
+                    dicrionaryDropDownList.Style["Height"] = currentField.height + "px";
+                    dicrionaryDropDownList.Style["Width"] = currentField.width + "px";
+                    dicrionaryDropDownList.ID = "DictionaryDropDown" + fieldId;
+                    dicrionaryDropDownList.Attributes.Add("onchange", "document.getElementById('MainContent_" + currentFieldTextBox.ID + "').value=document.getElementById('MainContent_" + dicrionaryDropDownList.ID + "').value;");                    
+                    int dictionaryId = currentField.fk_dictionary ?? 0;
+                    dicrionaryDropDownList.Items.AddRange(_common.GetDictionaryValues(dictionaryId));
+                    if (currentFieldTextBox.Text.Any())
+                    {
+                        dicrionaryDropDownList.SelectedValue = currentFieldTextBox.Text;
+                        if (dicrionaryDropDownList.SelectedValue != currentFieldTextBox.Text) // значение в нашем списке отсутствует
+                        {
+                            dicrionaryDropDownList.Items.Add(currentFieldTextBox.Text);
+                            dicrionaryDropDownList.SelectedValue = currentFieldTextBox.Text;
+                        }
+                    }                
+                    tableCell2.Controls.Add(dicrionaryDropDownList);
+                }
+                #endregion
+                allFieldsInCard.Add(currentFieldTextBox); //запоминаем какие textbox у нас на карте
+                tableCell2.Controls.Add(currentFieldTextBox);  
                 leftPadding += leftPaddingSpaceBetween + currentField.width;
                 tableRow1.Cells.Add(tableCell1);
                 tableRow2.Cells.Add(tableCell2);
@@ -231,11 +429,13 @@ namespace Chancelerry.kanz
         public Panel CreateViewByRegisterAndCard(int registerId, int cardId , int version, bool _readonly)
         {
             _cardId = cardId;
+            _registerId = registerId;
             _nextVersion = _common.GetLastVersionByCard(cardId);
 
             allFieldsInCard = new List<TextBox>(); // будем запоминать все поля чтобы потом сохранять
             int leftPaddingSpaceBetween = 5; // отступы между полями
             Panel cardMainPanel = new Panel(); // основная панель
+            cardMainPanel.Style.Add("border", "1px solid DimGray;");
             Registers currentRegister = _common.GetRegisterById(registerId); // текущий реестр
             RegistersModels currentRegisterModel = _common.GetRegisterModelById(currentRegister.fk_registersModel);
             // модель реестра
@@ -265,6 +465,11 @@ namespace Chancelerry.kanz
                 foreach (int currentInstance in instancesList)
                 {
                     Table instanceTable = new Table();
+                    if (instancesCount > 1)
+                    {
+                        instanceTable.Style.Add("border", "1px solid DarkGray ;");
+                        instanceTable.Style.Add("width", "100% ;");
+                    }
                     TableRow instanceRow = new TableRow();
                     TableCell instanceCell = new TableCell();
                     TableCell delInstanceCell = new TableCell();
@@ -277,8 +482,10 @@ namespace Chancelerry.kanz
                     foreach (int currentFieldsline in linesToShow)
                     {
                         List<Fields> fieldsInLine = GetFieldsByLineSortedByColumn(currentFieldsline, fieldToShow);
-                        instanceCell.Controls.Add(CreateLineTable(fieldsInLine, leftPaddingSpaceBetween, cardId, version,
-                            currentInstance,_readonly));
+                        Table tableToAdd = CreateLineTable(fieldsInLine, leftPaddingSpaceBetween, cardId, version,
+                            currentInstance, _readonly);
+
+                        instanceCell.Controls.Add(tableToAdd);
                     }
                     instanceRow.Cells.Add(instanceCell);
                     if (instancesCount > 1 && !_readonly)
@@ -289,6 +496,7 @@ namespace Chancelerry.kanz
                         delGroupButton.Width = 20;
                         
                         delGroupButton.CommandArgument = currentFieldGroup.fieldsGroupID+"_"+ currentInstance;
+                        delGroupButton.CausesValidation = false;
                         delGroupButton.Click += DelInstanceButtonClick;
                         delInstanceCell.Controls.Add(delGroupButton);
                         instanceRow.Cells.Add(delInstanceCell);
@@ -304,6 +512,7 @@ namespace Chancelerry.kanz
                     addGroupButton.Height = 20;
                     addGroupButton.Width = 20;
                     addGroupButton.CommandArgument = currentFieldGroup.fieldsGroupID.ToString();
+                    addGroupButton.CausesValidation = false;
                     addGroupButton.Click += AddInstanceButtonClick;
                     cardMainPanel.Controls.Add(addGroupButton);
                 }
@@ -312,13 +521,11 @@ namespace Chancelerry.kanz
 
         }
     }
-
     public class CardCreateEdit
     {
         private int _userId = 1;
         private ChancelerryDBDataContext chancDb = new ChancelerryDBDataContext();
         private CardCommonFunctions _common = new CardCommonFunctions();
-
         public int CreateNewCardInRegister(int registerId)
         {
             CollectedCards newCard = new CollectedCards();
@@ -328,7 +535,6 @@ namespace Chancelerry.kanz
             chancDb.SubmitChanges();
             return newCard.collectedCardID;
         }
-
         public int CreateNewFieldValueInCard(int cardId, int userId, int fieldId, int version, int instance,
             string textValue,bool isDeleted)
         {
@@ -346,14 +552,13 @@ namespace Chancelerry.kanz
             chancDb.SubmitChanges();
             return newField.collectedFieldValueID;
         }
-
-        public void SaveCard(int registerId, int cardId, List<TextBox> fieldsToSave)
+        public int SaveCard(int registerId, int cardId, List<TextBox> fieldsToSave)
         {
             if (cardId == 0)
                 cardId = CreateNewCardInRegister(registerId);
             SaveFieldsValues(fieldsToSave, cardId);
+            return cardId;
         }
-
         public void SaveFieldsValues(List<TextBox> fieldsToSave, int cardId)
         {
             int lastVersion = _common.GetLastVersionByCard(cardId);
