@@ -14,7 +14,6 @@ namespace Chancelerry.kanz
         public class DataOne
         {
             public string textValue { get; set; }
-
             public int instance { get; set; }
             public int version { get; set; }
 
@@ -43,30 +42,26 @@ namespace Chancelerry.kanz
             
             if (register != null)
             {
-                var regName = register.name;
-                var regModel = register.fk_registersModel;
-
-                RegisterNameLabel.Text = regName;
-
+                RegisterNameLabel.Text = register.name;
+       
                 TableActions ta = new TableActions();
 
                 // Достаем поля для данного реестра и пользователя на основе RegisterView и прав пользователя RegistersUsersMap c сортировкой по весу
-                var fieldsName = (from regUsrMap in dataContext.RegistersUsersMap
-                              join regView in dataContext.RegistersView on regUsrMap.registersUsersMapID equals regView.fk_registersUsersMap
-                              join _fields in dataContext.Fields on regView.fk_field equals _fields.fieldID
-                              where regUsrMap.fk_user == Convert.ToInt32(userID) && regUsrMap.fk_register == register.registerID
-                              select _fields.name).ToList();
+                var fieldsAll = (from regUsrMap in dataContext.RegistersUsersMap
+                                 join regView in dataContext.RegistersView on regUsrMap.registersUsersMapID equals regView.fk_registersUsersMap
+                                 join _fields in dataContext.Fields on regView.fk_field equals _fields.fieldID
+                                 where regUsrMap.fk_user == Convert.ToInt32(userID) && regUsrMap.fk_register == register.registerID
+                                 select new { _fields.name, _fields.fieldID, regView.weight}).OrderBy(w=>w.weight).ToList();
 
-                var fieldsId = (from regUsrMap in dataContext.RegistersUsersMap
-                                  join regView in dataContext.RegistersView on regUsrMap.registersUsersMapID equals regView.fk_registersUsersMap
-                                  join _fields in dataContext.Fields on regView.fk_field equals _fields.fieldID
-                                  where regUsrMap.fk_user == Convert.ToInt32(userID) && regUsrMap.fk_register == register.registerID
-                                  select _fields.fieldID).ToList();
+                var fieldsName = (from f in fieldsAll select f.name).ToList();
+                var fieldsId = (from f in fieldsAll select f.fieldID).ToList();
+
 
 
                 // Заголовки
                 dataTable.Rows.Add(ta.AddHeaderRoFromList(fieldsName));
 
+                // Карточки этого реестра
                 var cards = (from card in dataContext.CollectedCards
                     join r in dataContext.Registers on card.fk_register equals r.registerID
                     where r.registerID == Convert.ToInt32(regId)
@@ -98,14 +93,6 @@ namespace Chancelerry.kanz
                                                    instance = a.instance,
                                                    version = a.version,
                                                    deleted = a.isDeleted }).ToList();
-
-                // сортируем по Inst
-                //var sortbyInst = query.OrderByDescending(inst => inst.instance).ThenByDescending(ver=>ver.version);
-
-                // Узнаем количество Inst'ансов (максимальный инстанс)
-               // var instMax = (from m in sortbyInst select m.instance).FirstOrDefault();
-
-               // var instanceFilter = (from f in query where !f.deleted select new DataOne() { instance = f.instance, version = f.version, textValue = f.textValue, deleted = f.deleted}).OrderByDescending(ver=>ver.version).ToList(); // Список всех инстансов данного поля, которые не удалены.
 
                 // Получаем список всех инстансов для данного поля
                 var instances = (from f in query
