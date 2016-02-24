@@ -10,33 +10,32 @@ namespace Chancelerry.kanz
     public partial class CardEdit : System.Web.UI.Page
     {
         private List<TextBox> createdFields;
-        private int _userId = 1;
-        private int _registerId = 1;
-        private int _cardId = 0;
-        private int _version = 100;
-
+        private int _userId;//= 1;
+        private int _registerId;// = 1;
+        private int _cardId;// = 0;
+        private int _version;// = int.MaxValue;
+        private bool _canEdit;
         private void UpdateSessionValues()
         {
-            var userIdSes =     Session["userId"];
-            var registerIdSes = Session["registerId"];
+            var userIdSes =     Session["userID"];
+            var registerIdSes = Session["registerID"];
             var versionSes =    Session["version"];
-            var cardIdSes =     Session["cardId"];
+            var cardIdSes =     Session["cardID"];
+            var _canEditSes =   Session["canEdit"];
+            _canEdit = true;
+            if (_canEditSes != null)
+                _canEdit = (bool)_canEditSes;
 
-            if (userIdSes != null)
+            if (userIdSes != null && registerIdSes != null && versionSes != null && cardIdSes != null)
             {
                 _userId = (int)userIdSes;
+                _registerId = (int)registerIdSes; 
+                _version = (int)versionSes;
+                _cardId = (int)cardIdSes;
             }
-            if (registerIdSes != null)
+            else
             {
-                _registerId = (int)registerIdSes;
-            }
-            if (versionSes != null)
-            {
-                _cardId = (int)versionSes;
-            }
-            if (cardIdSes != null)
-            {
-                _version = (int)cardIdSes;
+                Response.Redirect("Dashboard.aspx");
             }
         }
 
@@ -44,7 +43,9 @@ namespace Chancelerry.kanz
         {
             UpdateSessionValues();
             CardCreateView cardCreateView = new CardCreateView();
-            cardMainDiv.Controls.Add(cardCreateView.CreateViewByRegisterAndCard(_registerId, _cardId, _version, false));
+            
+            var canEditSession =   Session["userID"];
+            cardMainDiv.Controls.Add(cardCreateView.CreateViewByRegisterAndCard(_registerId, _cardId, _version, !_canEdit));
             createdFields = cardCreateView.allFieldsInCard;
         }
 
@@ -53,6 +54,7 @@ namespace Chancelerry.kanz
             UpdateSessionValues();
             CardCreateEdit cardCreateEdit = new CardCreateEdit();
             cardCreateEdit.SaveCard(_registerId, _cardId, createdFields);
+            Response.Redirect("RegisterView.aspx");
         }
     }
 }

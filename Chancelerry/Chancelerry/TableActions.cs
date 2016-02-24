@@ -17,17 +17,22 @@ namespace Chancelerry
 
         private void RedirectToEdit(object sender, EventArgs e)
         {
+            
             ImageButton thisButton = (ImageButton)sender;
-            string commandArgument = thisButton.CommandArgument;
-            HttpContext.Current.Session["cardID"] = commandArgument; // ВАГЕ ОЛОЛОЛОЛ
+            int currentCardId = Convert.ToInt32(thisButton.Attributes["_cardID"]);
+            HttpContext.Current.Session["cardID"] = currentCardId; 
+            HttpContext.Current.Session["version"] = 100500;
+            HttpContext.Current.Session["canEdit"] = true;
             HttpContext.Current.Response.Redirect("~/kanz/CardEdit.aspx", true);
         }
 
         private void RedirectToView(object sender, EventArgs e)
         {
             ImageButton thisButton = (ImageButton)sender;
-            string commandArgument = thisButton.CommandArgument;
-            HttpContext.Current.Session["cardID"] = commandArgument; // ВАГЕ ОЛОЛОЛОЛ
+            int currentCardId = Convert.ToInt32(thisButton.Attributes["_cardID"]);
+            HttpContext.Current.Session["cardID"] = currentCardId;
+            HttpContext.Current.Session["version"] = 100500;
+            HttpContext.Current.Session["canEdit"] = false;
             HttpContext.Current.Response.Redirect("~/kanz/CardEdit.aspx", true);
         }
 

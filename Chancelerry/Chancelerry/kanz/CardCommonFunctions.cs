@@ -34,7 +34,7 @@ namespace Chancelerry.kanz
         }
         public Registers GetRegisterById(int registerId)
         {
-            return (from a in chancDb.Registers where a.active select a).FirstOrDefault();
+            return (from a in chancDb.Registers where a.active && a.registerID == registerId select a).FirstOrDefault();
         }
         public string GetFieldValueByCardVersionInstance(int fieldId, int cardId, int version, int instance)
         {
@@ -90,7 +90,6 @@ namespace Chancelerry.kanz
             if (tmp == null) return 0;
             return tmp.version;
         }
-
         public int GetMaxValueByFieldRegister(int fieldId, int registerId)
         {
             List<CollectedFieldsValues> values = (from a in chancDb.CollectedFieldsValues
@@ -166,7 +165,7 @@ namespace Chancelerry.kanz
                     }
                 case "date": //date
                 {
-                    fieldRangeValidator.MinimumValue = "1/1/1990";
+                    fieldRangeValidator.MinimumValue = "1/1/1900";
                     fieldRangeValidator.MaximumValue = "1/1/2090";
                         fieldRangeValidator.Type = ValidationDataType.Date;
                         fieldRangeValidator.ErrorMessage = "Только дата";
@@ -188,6 +187,27 @@ namespace Chancelerry.kanz
                         //fieldRangeValidator.ErrorMessage = "Только текст";
                         fieldRangeValidator.Enabled = false;
                         fieldRangeValidator.Type = ValidationDataType.String;
+                        break;
+                    }
+                case "autoIncrement": //int
+                    {
+                        fieldRangeValidator.MinimumValue = int.MinValue.ToString();
+                        fieldRangeValidator.MaximumValue = int.MaxValue.ToString();
+                        fieldRangeValidator.Type = ValidationDataType.Integer;
+                        fieldRangeValidator.ErrorMessage = "Только целочисленное значение";
+                        break;
+                    }
+                case "autoDate": //date
+                    {
+                        fieldRangeValidator.MinimumValue = "1/1/1900";
+                        fieldRangeValidator.MaximumValue = "1/1/2090";
+                        fieldRangeValidator.Type = ValidationDataType.Date;
+                        fieldRangeValidator.ErrorMessage = "Только дата";
+                        break;
+                    }
+                default:
+                    {
+                        fieldRangeValidator.Enabled = false;
                         break;
                     }
             }
@@ -246,13 +266,11 @@ namespace Chancelerry.kanz
             }
             return textBoxToReturn;
         }
-
         public bool IsFieldAutoFill(string type)
         {
             if (type == "autoIncrement" || type == "autoDate") return true;
             return false;
         }
-
         public string GetAutoValue(string type,int fieldId,int registerId)
         {
             if (type == "autoDate")
@@ -277,8 +295,7 @@ namespace Chancelerry.kanz
         private int _registerId;
         private int _version;
         private int textBoxesIdsCounter = 0;
-        public List<TextBox> allFieldsInCard;
-        
+        public List<TextBox> allFieldsInCard;       
         private void RefreshPage()
         {
             HttpContext.Current.Response.Redirect("CardEdit.aspx", true);
@@ -286,6 +303,7 @@ namespace Chancelerry.kanz
         private void AddInstanceButtonClick(object sender, EventArgs e)
         {
             _cardId = _cardCreateEdit.SaveCard(_registerId, _cardId, allFieldsInCard);
+            HttpContext.Current.Session["cardID"]= _cardId;
             ImageButton thisButton = (ImageButton) sender;
             string commandArgument = thisButton.CommandArgument;
             int groupId = Convert.ToInt32(commandArgument);

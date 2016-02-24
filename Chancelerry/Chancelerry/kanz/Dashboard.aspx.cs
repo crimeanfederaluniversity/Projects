@@ -45,6 +45,7 @@ namespace Chancelerry.kanz
             coluButtonField.HeaderText = "Реестры документов";
             coluButtonField.ButtonType = ButtonType.Link;
             coluButtonField.CommandName = "Link";
+            
             GridViewRegisters.Columns.Add(coluButtonField);
 
             DataBind();
