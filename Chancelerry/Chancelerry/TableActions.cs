@@ -17,7 +17,15 @@ namespace Chancelerry
 
         private void RedirectToEdit(object sender, EventArgs e)
         {
-            Button thisButton = (Button)sender;
+            ImageButton thisButton = (ImageButton)sender;
+            string commandArgument = thisButton.CommandArgument;
+            HttpContext.Current.Session["cardID"] = commandArgument; // ВАГЕ ОЛОЛОЛОЛ
+            HttpContext.Current.Response.Redirect("~/kanz/CardEdit.aspx", true);
+        }
+
+        private void RedirectToView(object sender, EventArgs e)
+        {
+            ImageButton thisButton = (ImageButton)sender;
             string commandArgument = thisButton.CommandArgument;
             HttpContext.Current.Session["cardID"] = commandArgument; // ВАГЕ ОЛОЛОЛОЛ
             HttpContext.Current.Response.Redirect("~/kanz/CardEdit.aspx", true);
@@ -38,14 +46,21 @@ namespace Chancelerry
 
             TableCell cell = new TableCell();
 
-            Button button = new Button();
-            button.Text = "Редактировать";
-            button.Attributes.Add("_cardID", cardID.ToString());
-            button.Click += RedirectToEdit;
+            ImageButton buttonEdit = new ImageButton();
+            buttonEdit.ImageUrl= "http://img.stockfresh.com/files/d/dvarg/x/61/2294589_46721166.jpg";
+            buttonEdit.Attributes.Add("_cardID", cardID.ToString());
+            buttonEdit.Click += RedirectToEdit;
+
+            ImageButton buttonView = new ImageButton();
+            buttonView.ImageUrl = "http://www.iggintel.com/site/iguard_global_intelligence_inc/assets/images/icon-observer-v2.png";
+            buttonView.Attributes.Add("_cardID", cardID.ToString());
+            buttonView.Click += RedirectToView;
 
 
             row.Cells.Add(cell);
-            cell.Controls.Add(button);
+
+            cell.Controls.Add(buttonEdit);
+            cell.Controls.Add(buttonView);
 
             row.Controls.Add(cell);
 
