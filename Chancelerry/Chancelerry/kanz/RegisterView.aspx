@@ -6,8 +6,9 @@
 
     <br />
     <asp:Label ID="RegisterNameLabel" runat="server" Text="Label"></asp:Label>
-
-
-    <asp:GridView ID="GridViewData" runat="server" AutoGenerateColumns="False"/>
+    
+    <asp:Table ID="dataTable" runat="server" Width="100%" >
+         
+</asp:Table>  
 
 </asp:Content>
