@@ -104,12 +104,13 @@ namespace Chancelerry.kanz
                 {
                     // Забираем максимальное значение(версия) textValue каждого инстанса
                     fieldValue.Append(
-                        k.ToString() + ") " + (from vv in query where vv.instance == instance select vv).OrderByDescending(v => v.version)
+                        k.ToString() + ") " + (from vv in query where vv.instance == instance && !vv.deleted select vv).OrderByDescending(v => v.version)
                             .FirstOrDefault()?.textValue + "<br>"); //если не null за писываем в поле
                     k++;
                 }
                 // Добавляем значения в Row каждого поля
                 cardRow.Add(fieldValue.ToString());
+
             }
         }
     }

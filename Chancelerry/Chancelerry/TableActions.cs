@@ -24,11 +24,9 @@ namespace Chancelerry
             {
                 TableCell cel = new TableCell();
                 cel.BorderStyle = BorderStyle.Solid;
-                var asd = elm;
                 cel.Text = elm;
                 row.Cells.Add(cel);
             }
-
             return row;
         }
         public TableRow AddRowFromList(List<int> list)
