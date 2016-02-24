@@ -73,7 +73,7 @@ namespace Chancelerry.kanz
                 {
                     List<string> cardRow = new List<string>();
                     GetValue(fieldsId, dataContext, card, cardRow); // функция добавления значения Row для каждой карточки и поля
-                    dataTable.Rows.Add(ta.AddRowFromList(cardRow)); // Добавляем в таблицу Row
+                    dataTable.Rows.Add(ta.AddRowFromList(cardRow,card)); // Добавляем в таблицу Row
                 }
 
               }

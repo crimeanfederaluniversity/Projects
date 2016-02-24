@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Web;
+using System.Web.Providers.Entities;
 using System.Web.UI.WebControls;
 
 namespace Chancelerry
@@ -14,8 +15,15 @@ namespace Chancelerry
         private List<DateTime> dateList;
         private List<float> floatList;
 
+        private void RedirectToEdit(object sender, EventArgs e)
+        {
+            Button thisButton = (Button)sender;
+            string commandArgument = thisButton.CommandArgument;
+            HttpContext.Current.Session["cardID"] = commandArgument; // ВАГЕ ОЛОЛОЛОЛ
+            HttpContext.Current.Response.Redirect("~/kanz/CardEdit.aspx", true);
+        }
 
-        public TableRow AddRowFromList(List<string> list)
+        public TableRow AddRowFromList(List<string> list, int cardID)
         {
             TableRow row = new TableRow();
             row.BorderStyle = BorderStyle.Solid;
@@ -27,6 +35,20 @@ namespace Chancelerry
                 cel.Text = elm;
                 row.Cells.Add(cel);
             }
+
+            TableCell cell = new TableCell();
+
+            Button button = new Button();
+            button.Text = "Редактировать";
+            button.Attributes.Add("_cardID", cardID.ToString());
+            button.Click += RedirectToEdit;
+
+
+            row.Cells.Add(cell);
+            cell.Controls.Add(button);
+
+            row.Controls.Add(cell);
+
             return row;
         }
         public TableRow AddRowFromList(List<int> list)
