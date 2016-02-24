@@ -94,12 +94,18 @@ namespace Chancelerry.kanz
                                                    version = a.version,
                                                    deleted = a.isDeleted }).ToList();
 
-                // Получаем список всех инстансов для данного поля
+               //var instanceFilter = (from f in query where !f.deleted select new DataOne() { instance = f.instance, version = f.version, textValue = f.textValue, deleted = f.deleted }).OrderByDescending(ver => ver.version).ToList();
+
+                // Список всех удаленных инстансов
+                var delInst = (from ins in query where ins.deleted select ins.instance).ToList();
+
+                // Получаем список всех инстансов для данного поля исключая удаленные
                 var instances = (from f in query
                     where !f.deleted
-                    select f.instance).Distinct().ToList();
+                    select f.instance).Distinct().ToList().Except(delInst.Distinct()).ToList();
 
-                var k = 1;
+                var k = 1; // переменная для отображения порядкового номера инстанса
+
                 foreach (var instance in instances)
                 {
                     // Забираем максимальное значение(версия) textValue каждого инстанса
