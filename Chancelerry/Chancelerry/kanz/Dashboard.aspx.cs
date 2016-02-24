@@ -24,11 +24,11 @@ namespace Chancelerry.kanz
 
             ChancelerryDBDataContext dataContext = new ChancelerryDBDataContext();
 
-            // Забираем только прикрепленные регистры в  RegUsrMap для данного пользователя и проверяем на активность в Registers.
+            // Забираем только прикрепленные реестры в  RegUsrMap для данного пользователя и проверяем на активность в Registers.
             var registers = (from rum in dataContext.RegistersUsersMap  
-                join reg in dataContext.Registers on rum.fk_user equals (int)userID
+                             join reg in dataContext.Registers on rum.fk_user equals (int)userID
                              where reg.active && rum.active
-                select new {reg.registerID, reg.name}).ToList();
+                             select new {reg.registerID, reg.name}).ToList();
 
             GridViewRegisters.DataSource = (from r in dataContext.Registers select r).ToList();
 
@@ -64,6 +64,7 @@ namespace Chancelerry.kanz
                                          where reg.active && rum.active
                                          select new { reg.registerID, reg.name }).ToList();
 
+                        // CommandArgument - номер строки.
                     Session["registerID"] = registers[Convert.ToInt32(e.CommandArgument)].registerID;
                     Response.Redirect("RegisterView.aspx");
                 }
