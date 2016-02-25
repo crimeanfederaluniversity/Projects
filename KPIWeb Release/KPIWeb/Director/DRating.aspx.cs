@@ -116,7 +116,7 @@ namespace KPIWeb.Director
             FirstLevelSubdivisionTable Academy = (from a in kpiWebDataContext.FirstLevelSubdivisionTable
                                                   where a.Active == true
                                                   join b in kpiWebDataContext.UsersTable
-                                                  on a.FirstLevelSubdivisionTableID equals b.FK_FifthLevelSubdivisionTable
+                                                  on a.FirstLevelSubdivisionTableID equals b.FK_FirstLevelSubdivisionTable
                                                   where b.UsersTableID == userID && b.Active == true
                                                   select a).FirstOrDefault();
 
