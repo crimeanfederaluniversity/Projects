@@ -9,7 +9,7 @@
      <asp:TextBox ID="TextBox1" runat="server" Height="25px" Width="300px"></asp:TextBox>
 
      <br />
-     Опишите, чем вызвана необходимость открытия доступа<br />
+     Роль пользователя в системе<br />
      <asp:TextBox ID="TextBox2" TextMode="MultiLine" runat="server" Height="40px" Width="800px"></asp:TextBox>
      <br />
      <br />
