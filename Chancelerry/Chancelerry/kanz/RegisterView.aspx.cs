@@ -11,14 +11,6 @@ namespace Chancelerry.kanz
     public partial class RegisterView : System.Web.UI.Page
     {
 
-        public class DataOne
-        {
-            public string textValue { get; set; }
-            public int instance { get; set; }
-            public int version { get; set; }
-            public bool deleted { get; set; }
-
-        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,6 +19,10 @@ namespace Chancelerry.kanz
             if (userID == null)
             {
                 Response.Redirect("~/Default.aspx");
+            }
+            else
+            {
+                ViewState["userID"] = userID;
             }
 
             /////////////////////////////////////////////////////////////////////
@@ -40,11 +36,15 @@ namespace Chancelerry.kanz
                  where r.registerID == Convert.ToInt32(regId)
                  select r).FirstOrDefault();
 
-            
-            if (register != null)
+
+            if (!Page.IsPostBack)
             {
-                RegisterNameLabel.Text = register.name;
-                ta.RefreshTable(dataContext, userID, register, regId, dataTable);
+                if (register != null)
+                {
+                    RegisterNameLabel.Text = register.name;
+                    ta.RefreshTable(dataContext, userID, register, regId, dataTable, new List<TableActions.SearchValues>());
+                    TableActions.DTable = dataTable;
+                }
             }
         }
 
@@ -56,5 +56,49 @@ namespace Chancelerry.kanz
             Session["version"] = 100500;
             Response.Redirect("CardEdit.aspx");
         }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Search();
+        }
+
+        private void Search()
+        {
+            Table table = TableActions.DTable;
+            List<TableActions.SearchValues> searchList = new List<TableActions.SearchValues>();
+        
+            // Проходимся по таблице и ищем "поисковые" TextBox'ы 
+            foreach (TableRow tr in table.Rows)
+            {
+                foreach (Control c in from TableCell tc in tr.Cells from Control c in tc.Controls where c.GetType() == typeof (TextBox) select c)
+                {
+                    var tbox = (TextBox) c;
+                    // Делаем запрос, и если  в этом текстбохе в Text что-то есть
+                    if (Request.Form[((TextBox) c).UniqueID].Any())
+                    {
+                        // добавляем объект поиска со значениями id поля (берем из аттрибута TextBox'а и само значение Text)
+                        searchList.Add(new TableActions.SearchValues()
+                        {
+                            fieldId = Convert.ToInt32(tbox.Attributes["_fieldID4search"]),
+                            value = Request.Form[((TextBox) c).UniqueID]
+                        });
+                    }
+                }
+            }
+
+
+            var regId = Session["registerID"];
+            ChancelerryDBDataContext dataContext = new ChancelerryDBDataContext();
+            TableActions ta = new TableActions();
+
+            var register =
+                (from r in dataContext.Registers
+                    where r.registerID == Convert.ToInt32(regId)
+                    select r).FirstOrDefault();
+
+            ta.RefreshTable(dataContext, Convert.ToInt32(ViewState["userID"]), register, regId, dataTable,
+                searchList);
+        }
     }
+    
 }

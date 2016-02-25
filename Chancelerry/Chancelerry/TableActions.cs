@@ -16,6 +16,24 @@ namespace Chancelerry
         private List<int> intList;
         private List<DateTime> dateList;
         private List<float> floatList;
+        public static List<TextBox> SearchBoxsData = new List<TextBox>();
+        public static Table DTable { get; set; }
+
+        protected class DataOne
+        {
+            public string textValue { get; set; }
+            public int instance { get; set; }
+            public int version { get; set; }
+            public bool deleted { get; set; }
+
+        }
+
+        public class SearchValues
+        {
+            public int fieldId { get; set; }
+            public string value { get; set; }
+     
+        }
 
         private void RedirectToEdit(object sender, EventArgs e)
         {
@@ -90,38 +108,6 @@ namespace Chancelerry
 
             return row;
         }
-        public TableRow AddRowFromList(List<DateTime> list)
-        {
-            TableRow row = new TableRow();
-            row.BorderStyle = BorderStyle.Solid;
-
-            foreach (var elm in list)
-            {
-                TableCell cel = new TableCell();
-                cel.BorderStyle = BorderStyle.Solid;
-                var asd = elm;
-                cel.Text = elm.ToShortDateString();
-                row.Cells.Add(cel);
-            }
-
-            return row;
-        }
-        public TableRow AddRowFromList(List<float> list)
-        {
-            TableRow row = new TableRow();
-            row.BorderStyle = BorderStyle.Solid;
-
-            foreach (var elm in list)
-            {
-                TableCell cel = new TableCell();
-                cel.BorderStyle = BorderStyle.Solid;
-                var asd = elm;
-                cel.Text = elm.ToString();
-                row.Cells.Add(cel);
-            }
-
-            return row;
-        }
 
         public TableHeaderRow AddHeaderRoFromList(List<string> list)
         {
@@ -154,12 +140,15 @@ namespace Chancelerry
                 TableCell cell = new TableCell();
 
                 TextBox tb = new TextBox();
-                tb.Attributes.Add("_fieldID4search", fieldID.ToString());
+                tb.Attributes.Add("_fieldID4search", elm.ToString());
+                tb.ID = "searchTb" + elm.ToString();
                 cell.Controls.Add(tb);
+
+                SearchBoxsData.Add(tb);
 
                 ImageButton btnSrch = new ImageButton();
                 btnSrch.ImageUrl = "http://rus-linux.net/MyLDP/mm/inkscape/foto/aigtool-lupa.png";
-                btnSrch.Attributes.Add("_fieldID4search", fieldID.ToString());
+                btnSrch.Attributes.Add("_fieldID4search22", elm.ToString());
                 //buttonView.Click += RedirectToView;
                 cell.Controls.Add(btnSrch);
 
@@ -169,9 +158,10 @@ namespace Chancelerry
             return row;
         }
 
-        public void RefreshTable(ChancelerryDBDataContext dataContext, object userID, Registers register, object regId, Table dataTable)
+        public void RefreshTable(ChancelerryDBDataContext dataContext, object userID, Registers register, object regId, Table dataTable, List<SearchValues> searchList)
         {
             dataTable.Rows.Clear();
+            bool addToTable = true;
 
             // Достаем поля для данного реестра и пользователя на основе RegisterView и прав пользователя RegistersUsersMap c сортировкой по весу
             var fieldsAll = (from regUsrMap in dataContext.RegistersUsersMap
@@ -207,20 +197,67 @@ namespace Chancelerry
 
                 foreach (var field in fieldsId) // проходим по каждому полю в карточке card
                 {
-                    StringBuilder fieldValue = new StringBuilder();
-                    // результирующее значение Cell со всеми инстансами для добавления в Row
+                    addToTable = true;
+                    StringBuilder fieldInstancesValue = new StringBuilder();
+                    List<DataOne> query = new List<DataOne>();
 
+                    // Если в поисковом листе что-то есть
+                    if (searchList.Any())
+                    {
+                        // Получаем объект из поискового листа для данного поля с Id = fieldId
+                        var searchObj = (from a in searchList where a.fieldId == field select a).FirstOrDefault();
+
+                        // Если данное поле с Id = fieldId есть в поисковом листе
+                        if (searchObj != null)
+                        {
+                            // Получаем объект данного поля с поисковым фильтром // сотношение поля и  карточки в collected (получаем поле с его инстансами и версией)
+                            query = (from a in dataContext.CollectedFieldsValues
+                                     where a.fk_field == field && a.fk_collectedCard == card && a.valueText.Contains(searchObj.value)
+                                     select new DataOne()
+                                     {
+                                         textValue = a.valueText,
+                                         instance = a.instance,
+                                         version = a.version,
+                                         deleted = a.isDeleted
+                                     }).ToList();
+
+                            // Если объект поля с поисковым фильтром НЕ существует
+                            if (!query.Any())
+                            {
+                                // Определяем флаг добавления этого Row как false, выходим с итерации.
+                                addToTable = false;
+                                break;
+                            }
+                        }
+                        // Если поля с Id = fieldId НЕТ в поисковом листе,
+                        else
+                        {
+                            // Получаем объект данного поля // сотношение поля и  карточки в collected (получаем поле с его инстансами и версией)
+                            query = (from a in dataContext.CollectedFieldsValues
+                                     where a.fk_field == field && a.fk_collectedCard == card
+                                     select new DataOne()
+                                     {
+                                         textValue = a.valueText,
+                                         instance = a.instance,
+                                         version = a.version,
+                                         deleted = a.isDeleted
+                                     }).ToList();
+                        }
+                    }
+                    // Если поисковой лист отсутствует
+                    else
+                    { 
                     // сотношение поля и  карточки в collected (получаем поле с его инстансами и версией)
-                    var query = (from a in dataContext.CollectedFieldsValues
+                        query = (from a in dataContext.CollectedFieldsValues
                                  where a.fk_field == field && a.fk_collectedCard == card
-                                 select new RegisterView.DataOne()
+                                 select new DataOne()
                                  {
                                      textValue = a.valueText,
                                      instance = a.instance,
                                      version = a.version,
                                      deleted = a.isDeleted
                                  }).ToList();
-
+                       }
                     //var instanceFilter = (from f in query where !f.deleted select new DataOne() { instance = f.instance, version = f.version, textValue = f.textValue, deleted = f.deleted }).OrderByDescending(ver => ver.version).ToList();
 
                     // Список всех удаленных инстансов
@@ -236,7 +273,7 @@ namespace Chancelerry
                     foreach (var instance in instances)
                     {
                         // Забираем максимальное значение(версия) textValue каждого инстанса
-                        fieldValue.Append(
+                        fieldInstancesValue.Append(
                             k.ToString() + ") " +
                             (from vv in query
                              where vv.instance == instance && !vv.deleted
@@ -245,10 +282,12 @@ namespace Chancelerry
                         k++;
                     }
                     // Добавляем значения в Row каждого поля
-                    cardRow.Add(fieldValue.ToString());
+                    cardRow.Add(fieldInstancesValue.ToString());
                 }
 
+                if (addToTable)
                 dataTable.Rows.Add(AddRowFromList(cardRow, card)); // Добавляем в таблицу Row
+
             }
         }
 
