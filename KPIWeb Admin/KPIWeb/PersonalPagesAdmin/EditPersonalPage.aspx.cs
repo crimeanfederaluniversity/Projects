@@ -22,17 +22,11 @@ namespace KPIWeb.PersonalPagesAdmin
                 Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
             }
             int userID = UserSer.Id;
-          //  UserRights userRights = new UserRights();
-          //  if (!userRights.CanUserSeeThisPage(userID, 19, 0, 0))
-          //  {
-          //      Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
-          //  } 
+
             RefreshGrid();
         }
         private void RefreshGrid()
-        {
-            if (DropDownList1.SelectedIndex == 0)
-            {
+        { 
                 DataTable dataTable1 = new DataTable();
                 dataTable1.Columns.Add(new DataColumn("UsersTableId", typeof(string)));
                 dataTable1.Columns.Add(new DataColumn("Email", typeof(string)));
@@ -53,32 +47,7 @@ namespace KPIWeb.PersonalPagesAdmin
                     }
                     GridView1.DataSource = dataTable1;
                     GridView1.DataBind();
-                }
-            }
-            if (DropDownList1.SelectedIndex == 1)
-            {
-                DataTable dataTable2 = new DataTable();
-                dataTable2.Columns.Add(new DataColumn("UsersTableId", typeof(string)));
-                dataTable2.Columns.Add(new DataColumn("Email", typeof(string)));
-                using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
-                {
-                    List<StudentsTable> students;
-                    {
-                        students = (from a in kpiWebDataContext.StudentsTable where a.Active == true select a).ToList();
-                    }
-
-                    foreach (var user in students)
-                    {
-                        DataRow dataRow = dataTable2.NewRow();
-                        dataRow["UsersTableId"] = user.StudentsTableID;
-                        dataRow["Email"] = user.Email;
-                        dataTable2.Rows.Add(dataRow);
-                    }
-                }
-                GridView1.DataSource = dataTable2;
-                GridView1.DataBind();
-            }
-        
+                }                                 
         }
 
         protected void ChangeUserButtonClick(object sender, EventArgs e)
@@ -155,7 +124,8 @@ namespace KPIWeb.PersonalPagesAdmin
 
         protected void Button2_Click(object sender, System.EventArgs e)
         {
-            RefreshGrid();
+            Response.Redirect("~/PersonalPagesAdmin/PersonalMainPage.aspx");
         }
+ 
     }
 }

@@ -15,4 +15,6 @@
     <asp:Button ID="Button4" runat="server" Height="50px" Text="Редактирование модулей" Width="500px" OnClick="Button4_Click" />
     <br />
     <br />
+    <asp:Button ID="Button5" runat="server" Height="50px" OnClick="Button5_Click" Text="Заявки пользователей" Width="500px" />
+    <br />
 </asp:Content>

@@ -13,6 +13,15 @@ namespace KPIWeb.PersonalPagesAdmin {
     public partial class ChangeUserAccessLevel {
         
         /// <summary>
+        /// Button2 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button2;
+        
+        /// <summary>
         /// CheckBoxList1 элемент управления.
         /// </summary>
         /// <remarks>

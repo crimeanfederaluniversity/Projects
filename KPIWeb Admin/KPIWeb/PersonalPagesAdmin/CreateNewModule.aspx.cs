@@ -68,37 +68,10 @@ namespace KPIWeb
             kPiDataContext.UserGroupTable.InsertOnSubmit(newmodule);
             kPiDataContext.SubmitChanges();
 
-            if (CheckBox1.Checked == true)
-            {
-                List<StudentsTable> allstudent =
-                    (from a in kPiDataContext.StudentsTable where a.Active == true select a).ToList();
-                foreach (StudentsTable n in allstudent)
-                {
-                    StudentsAndUserGroupMappingTable newstudentaccess = new StudentsAndUserGroupMappingTable();
-                    newstudentaccess.Active = true;
-                    newstudentaccess.FK_GroupUserTable = newmodule.UserGroupID;
-                    newstudentaccess.FK_StudentTable = n.StudentsTableID;
-                    kPiDataContext.StudentsAndUserGroupMappingTable.InsertOnSubmit(newstudentaccess);
-                    kPiDataContext.SubmitChanges();
-                }
-            }
-            if (CheckBox2.Checked == true)
-            {
-                List<UsersTable> alluser =
-                    (from a in kPiDataContext.UsersTable where a.Active == true select a).ToList();
-                foreach (UsersTable n in alluser)
-                {
-                    UsersAndUserGroupMappingTable newuseraccess = new UsersAndUserGroupMappingTable();
-                    newuseraccess.Active = true;
-                    newuseraccess.FK_GroupTable = newmodule.UserGroupID;
-                    newuseraccess.FK_UserTable = n.UsersTableID;
-                    kPiDataContext.UsersAndUserGroupMappingTable.InsertOnSubmit(newuseraccess);
-                    kPiDataContext.SubmitChanges();
-
-                }
-            }
+            
+            
             Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script",
-                "alert('Модуль добавлен для выбранной группы пользователей!');", true);
+                "alert('Модуль добавлен!');", true);
         }
 
         protected void DeleteButtonClick(object sender, EventArgs e)
@@ -117,5 +90,10 @@ namespace KPIWeb
                     }
                 }
             }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/PersonalPagesAdmin/PersonalMainPage.aspx");
+        }
         }
     }

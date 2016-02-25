@@ -1,22 +1,17 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserChangePesonalPage.aspx.cs" Inherits="KPIWeb.PersonalPagesAdmin.UserChangePesonalPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <p>
-        <span style="font-size: 30px">Заявки пользователей на изменение учетных данных:</span></p>
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Назад" />
+    </p>
     <p>
-        &nbsp;Выберите группу пользователей:
-        <br />
-        <span>&nbsp;<asp:DropDownList ID="DropDownList1" runat="server" Font-Size="Small" Height="16px"  Width="222px">
-            <asp:ListItem Selected="True" Value="0">Cотрудники</asp:ListItem>
-            <asp:ListItem Value="1">Обучающиеся</asp:ListItem>
-        </asp:DropDownList>
-        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Загрузить" />
-        </span></p>
+        <span style="font-size: 20px">Заявки пользователей на изменение учетных данных:</span></p>
     <div>
        &nbsp;
         <asp:Label ID="Label2" runat="server" Text="Ключевое слово"></asp:Label>
 &nbsp;<asp:TextBox ID="TextBox2" runat="server" Height="21px" Width="251px"></asp:TextBox>
         <asp:Button ID="Button1" runat="server" Text="Поиск" OnClick="Button1_Click" Width="173px" />
-        &nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;<asp:CheckBox ID="CheckBox2" runat="server" Checked="True" Text="Предохранитель" />
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
     <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server"  >
@@ -48,7 +43,7 @@
            
             <asp:TemplateField HeaderText="Подтвердить изменения">
                 <ItemTemplate>
-                    <asp:Button ID="ConfirmButtonClick" runat="server" Text="Подтвердить" Width="200px" CommandArgument='<%# Eval("ParamIdToChange") %>' OnClick="ConfirmButtonClick" />
+                    <asp:Button ID="ConfirmButtonClick" runat="server" Text="Подтвердить" Width="200px" CommandArgument='<%# Eval("ParamIdToChange") %>'  OnClick="ConfirmButtonClick" />
                 </ItemTemplate>
             </asp:TemplateField>
 
@@ -59,5 +54,4 @@
             </asp:TemplateField>
         </Columns>
     </asp:GridView>
-    <asp:CheckBox ID="CheckBox2" runat="server" Checked="True" Text="Предохранитель" />
     </asp:Content>

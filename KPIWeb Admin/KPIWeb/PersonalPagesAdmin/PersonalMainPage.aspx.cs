@@ -64,5 +64,10 @@ namespace KPIWeb.PersonalPagesAdmin
         {
             Response.Redirect("~/PersonalPagesAdmin/CreateNewModule.aspx");
         }
+
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/PersonalPagesAdmin/UserApplications.aspx");
+        }
     }
 }
