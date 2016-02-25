@@ -72,5 +72,10 @@ namespace Chancelerry.kanz
                     break;
             }
         }
+
+        protected void DictionaryEdit_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ChooseDictionary.aspx");
+        }
     }
 }

@@ -219,9 +219,11 @@
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="kanz\CardEdit.aspx" />
+    <Content Include="kanz\ChooseDictionary.aspx" />
     <Content Include="kanz\Dashboard.aspx" />
     <Content Include="kanz\icons\addButtonIcon.jpg" />
     <Content Include="kanz\icons\delButtonIcon.jpg" />
+    <Content Include="kanz\icons\saveButtonIcon.jpg" />
     <Content Include="kanz\RegisterView.aspx" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
@@ -419,6 +421,13 @@
     </Compile>
     <Compile Include="kanz\CardEdit.aspx.designer.cs">
       <DependentUpon>CardEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="kanz\ChooseDictionary.aspx.cs">
+      <DependentUpon>ChooseDictionary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="kanz\ChooseDictionary.aspx.designer.cs">
+      <DependentUpon>ChooseDictionary.aspx</DependentUpon>
     </Compile>
     <Compile Include="kanz\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>

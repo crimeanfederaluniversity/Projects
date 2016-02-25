@@ -10,24 +10,33 @@
 namespace Chancelerry.kanz {
     
     
-    public partial class Dashboard {
+    public partial class ChooseDictionary {
         
         /// <summary>
-        /// GridViewRegisters control.
+        /// DictionarysList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridViewRegisters;
+        protected global::System.Web.UI.WebControls.DropDownList DictionarysList;
         
         /// <summary>
-        /// DictionaryEdit control.
+        /// divForTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button DictionaryEdit;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divForTable;
+        
+        /// <summary>
+        /// AddValue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton AddValue;
     }
 }
