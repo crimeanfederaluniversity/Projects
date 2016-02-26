@@ -44,14 +44,14 @@ namespace Chancelerry.kanz
                     var all = (from a in dataContext.Fields
                                join b in dataContext.RegistersView on a.fieldID equals b.fk_field
                                join c in dataContext.RegistersUsersMap on b.fk_registersUsersMap equals c.registersUsersMapID
-                               where c.fk_user == (int)Session["userID"] && c.fk_register == (int)Session["registerID"]
+                               where c.fk_register == (int)Session["registerID"]
                                select new {a.fieldID, a.name, b.weight});
 
                     // Уже прикрученные поля к этому пользователю
                     var userView = (from a in dataContext.Fields
                         join b in dataContext.RegistersView on a.fieldID equals b.fk_field
                         join c in dataContext.RegistersUsersMap on b.fk_registersUsersMap equals c.registersUsersMapID
-                        where c.fk_register == 1 && c.fk_user == 1 && b.active
+                        where c.fk_register == (int)Session["registerID"] && c.fk_user == (int)Session["userID"] && b.active
                         select a.fieldID).ToList();
 
                     var allCross = new List<ViewFieldData>();
