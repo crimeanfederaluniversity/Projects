@@ -155,7 +155,7 @@ namespace Chancelerry.kanz
                     }
                 }
             }
-            Response.Redirect("TableSettings.aspx");
+            Response.Redirect("RegisterView.aspx");
         }
     }
 }
