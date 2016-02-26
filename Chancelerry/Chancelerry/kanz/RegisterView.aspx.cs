@@ -120,6 +120,12 @@ namespace Chancelerry.kanz
         {
             Response.Redirect("TableSettings.aspx");
         }
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            Session["searchList"] = new List<TableActions.SearchValues>();
+            Response.Redirect("RegisterView.aspx");
+        }
     }
     
 }

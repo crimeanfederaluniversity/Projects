@@ -10,6 +10,8 @@
     <br />
     <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Поиск" OnClientClick="showLoadingScreen"/>
 
+    <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Очистить поиск" />
+
     <br />
     <asp:Label ID="RegisterNameLabel" runat="server" Text="Label"></asp:Label>
     

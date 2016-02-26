@@ -71,6 +71,7 @@ namespace Chancelerry.kanz
 
                         // CommandArgument - номер строки.
                     Session["registerID"] = registers[Convert.ToInt32(e.CommandArgument)].registerID;
+                    Session["searchList"] = new List<TableActions.SearchValues>();
                     Response.Redirect("RegisterView.aspx");
                 }
                     break;

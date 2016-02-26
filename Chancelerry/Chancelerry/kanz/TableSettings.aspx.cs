@@ -31,7 +31,7 @@ namespace Chancelerry.kanz
             
             if (!Page.IsPostBack)
             {
-
+                Session["searchList"] = new List<TableActions.SearchValues>();
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("fieldId", typeof (int)));
                 dataTable.Columns.Add(new DataColumn("fieldName", typeof (string)));
@@ -40,7 +40,7 @@ namespace Chancelerry.kanz
 
                 using (ChancelerryDBDataContext dataContext = new ChancelerryDBDataContext())
                 {
-                    // Все возможные поля для таблицы в данном реестре и для данного пользователя
+                    // Все возможные поля для таблицы в данном реестре
                     var all = (from a in dataContext.Fields
                                join b in dataContext.RegistersView on a.fieldID equals b.fk_field
                                join c in dataContext.RegistersUsersMap on b.fk_registersUsersMap equals c.registersUsersMapID
