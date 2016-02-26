@@ -37,3 +37,134 @@ input[type="select"] {
         padding: 0;
     }
 }
+
+
+/*
+    GLOBAL
+ */
+
+html, body {
+    background: #E7E4DB;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    color: #441C11;
+}
+
+hr {
+    border-top: 1px solid #70463A;
+}
+
+.navbar {
+    background: #70463A;
+}
+
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-nav > li > a {
+    color: white;
+}
+
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: #441C11;
+}
+
+.custom-th {
+    text-align: center;
+    color: white;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    background: #70463A;
+    border: 1px dashed;
+}
+
+.custom-th td {
+    padding: 5px;
+}
+
+/*
+    LOGIN
+ */
+
+.col-md-8 {
+    width: 100%;
+}
+
+
+/*
+    DASHBOARD
+ */
+
+#MainContent_GridViewRegisters {
+    background: none;
+    margin: 30px 25%;
+    border-collapse: collapse;
+    width: 50%;
+}
+
+#MainContent_RegisterNameLabel,
+#MainContent_GridViewRegisters th {
+    color: #EBAD0E;
+    text-align: center;
+    font-size: 20px;
+    border:none;
+    border-bottom: 2px solid #70463A;
+    text-transform: uppercase;
+}
+
+/*
+    REGISTER VIEW
+ */
+
+#MainContent_RegisterNameLabel {
+    display: block;
+    font: bold 20px sans-serif;
+    margin: 10px 25%;
+    border: none;
+}
+
+#MainContent_dataTable {
+    background: white;
+}
+
+#MainContent_GridViewRegisters {
+    background: white;
+}
+
+#MainContent_dataTable tr {
+    border-width: 1px;
+}
+
+#MainContent_GridViewRegisters td {
+    border-size: 5px;
+    padding: 10px 0;
+    padding-left: 10px;
+    border: 1px solid;
+}
+
+#MainContent_dataTable td {
+    border-color: black;
+    border-width: 1px;
+}
+
+/*
+    CardEdit
+ */
+
+#MainContent_cardMainDiv {
+    background: white;
+}
+
+#MainContent_cardMainDiv legend {
+    text-align: center;
+    width: 100%;
+    border-bottom: 1px dashed;
+}
+
+fieldset table {
+    margin-bottom: 20px;
+}

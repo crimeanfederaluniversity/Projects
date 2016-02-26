@@ -144,7 +144,7 @@ namespace Chancelerry.kanz
                         fieldRangeValidator.MinimumValue = 0.ToString();
                         fieldRangeValidator.MaximumValue = 1.ToString();
                         fieldRangeValidator.Type = ValidationDataType.Integer;
-                        fieldRangeValidator.ErrorMessage = "Только 0 или 1";
+                        fieldRangeValidator.ErrorMessage = "!";
                         break;
                     }
                 case "int": //int
@@ -152,7 +152,7 @@ namespace Chancelerry.kanz
                         fieldRangeValidator.MinimumValue = int.MinValue.ToString();
                         fieldRangeValidator.MaximumValue = int.MaxValue.ToString();
                         fieldRangeValidator.Type = ValidationDataType.Integer;
-                        fieldRangeValidator.ErrorMessage = "Только целочисленное значение";
+                        fieldRangeValidator.ErrorMessage = "!";
                         break;
                     }
                 case "float": //double
@@ -160,7 +160,7 @@ namespace Chancelerry.kanz
                         //fieldRangeValidator.MinimumValue = double.MinValue.ToString();
                         //fieldRangeValidator.MaximumValue = double.MaxValue.ToString();
                         fieldRangeValidator.Type = ValidationDataType.Double;
-                        fieldRangeValidator.ErrorMessage = "Только числовое значение";
+                        fieldRangeValidator.ErrorMessage = "!";
                         break;
                     }
                 case "date": //date
@@ -168,7 +168,7 @@ namespace Chancelerry.kanz
                     fieldRangeValidator.MinimumValue = "1/1/1900";
                     fieldRangeValidator.MaximumValue = "1/1/2090";
                         fieldRangeValidator.Type = ValidationDataType.Date;
-                        fieldRangeValidator.ErrorMessage = "Только дата";
+                        fieldRangeValidator.ErrorMessage = "!";
                         break;
                     }
                 case "singleLineText": //text
@@ -194,7 +194,7 @@ namespace Chancelerry.kanz
                         fieldRangeValidator.MinimumValue = int.MinValue.ToString();
                         fieldRangeValidator.MaximumValue = int.MaxValue.ToString();
                         fieldRangeValidator.Type = ValidationDataType.Integer;
-                        fieldRangeValidator.ErrorMessage = "Только целочисленное значение";
+                        fieldRangeValidator.ErrorMessage = "!";
                         break;
                     }
                 case "autoDate": //date
@@ -202,7 +202,7 @@ namespace Chancelerry.kanz
                         fieldRangeValidator.MinimumValue = "1/1/1900";
                         fieldRangeValidator.MaximumValue = "1/1/2090";
                         fieldRangeValidator.Type = ValidationDataType.Date;
-                        fieldRangeValidator.ErrorMessage = "Только дата";
+                        fieldRangeValidator.ErrorMessage = "!";
                         break;
                     }
                 default:
@@ -378,7 +378,7 @@ namespace Chancelerry.kanz
                     RequiredFieldValidator currentFieldRequiredFieldValidator = new RequiredFieldValidator();
                     currentFieldRequiredFieldValidator.ID = "RequiredValidator" + fieldId;
                     currentFieldRequiredFieldValidator.ControlToValidate = currentFieldTextBox.ID;
-                    currentFieldRequiredFieldValidator.ErrorMessage = " Обязательно";
+                    currentFieldRequiredFieldValidator.ErrorMessage = "!";
                     currentFieldRequiredFieldValidator.ForeColor = Color.Red;
                     tableCell1.Controls.Add(currentFieldTitle);
                     tableCell1.Controls.Add(currentFieldRequiredFieldValidator);                    
