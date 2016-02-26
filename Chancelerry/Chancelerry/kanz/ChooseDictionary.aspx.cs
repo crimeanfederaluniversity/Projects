@@ -140,6 +140,5 @@ namespace Chancelerry.kanz
             divForTable.Controls.Add(CreateTable(Convert.ToInt32(DictionarysList.SelectedValue)));
         }
 
-
     }
 }

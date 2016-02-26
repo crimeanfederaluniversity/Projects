@@ -9,4 +9,7 @@
     <asp:Button ID="DictionaryEdit" runat="server" Text="Редактирование справочников" Width="263px" OnClick="DictionaryEdit_Click" />
     
 
+    <br />
+        
+
 </asp:Content>

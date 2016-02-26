@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 22.625" name="ChancelerryDB">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12.125, 22.625" name="ChancelerryDB">
   <DataContextMoniker Name="/ChancelerryDBDataContext" />
   <nestedChildShapes>
     <classShape Id="9022ed9c-1305-4f87-8d12-d5526ef6baa8" absoluteBounds="3.75, 18, 2, 1.3862939453125023">
@@ -74,95 +74,108 @@
         <elementListCompartment Id="7484eaed-4e40-4aa4-9858-8fab88fb3239" absoluteBounds="6.265, 1.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.65625 : 18); (5.65625 : 6.32294840494792); (6.26041666666667 : 6.32294840494792 : JumpStart); (6.42708333333333 : 6.32294840494792 : JumpEnd); (6.5 : 6.32294840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.65625 : 18); (5.65625 : 6.32294840494792); (6.5 : 6.32294840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ChancelerryDBDataContext/CollectedCards/CollectedCards_CollectedFieldsValues" />
       <nodes>
         <classShapeMoniker Id="9022ed9c-1305-4f87-8d12-d5526ef6baa8" />
         <classShapeMoniker Id="a03378ed-fae9-494b-b561-17ae692dd41a" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 5.89067260742187); (3.04166916666667 : 5.89067260742187 : JumpStart); (3.20833583333333 : 5.89067260742187 : JumpEnd); (5.54166416666667 : 5.89067260742187 : JumpStart); (5.70833083333333 : 5.89067260742187 : JumpEnd); (6.26041666666667 : 5.89067260742187 : JumpStart); (6.42708333333333 : 5.89067260742187 : JumpEnd); (6.5 : 5.89067260742187)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 5.89067260742187); (3.04166916666667 : 5.89067260742187 : JumpStart); (3.20833583333333 : 5.89067260742187 : JumpEnd); (5.54166416666667 : 5.89067260742187 : JumpStart); (5.70833083333333 : 5.89067260742187 : JumpEnd); (6.26041666666667 : 5.89067260742187 : JumpStart); (6.42708333333333 : 5.89067260742187 : JumpEnd); (6.5 : 5.89067260742187)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ChancelerryDBDataContext/Users/Users_CollectedFieldsValues" />
       <nodes>
         <classShapeMoniker Id="3563c88d-0b96-465a-b814-13c16ae0bf70" />
         <classShapeMoniker Id="a03378ed-fae9-494b-b561-17ae692dd41a" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 14.3285953776042); (3.125 : 14.7035953776042); (3.125 : 21.5392976888021); (3.5 : 21.5392976888021)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 14.3285953776042); (3.125 : 14.7035953776042); (3.125 : 21.5392976888021); (3.5 : 21.5392976888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ChancelerryDBDataContext/Dictionarys/Dictionarys_DictionarysValues" />
       <nodes>
         <classShapeMoniker Id="a3b93aa4-306b-4dea-bdc1-fcda88524879" />
         <classShapeMoniker Id="43e37505-1b75-4bfb-b100-659e677a6fbc" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 13.6955451888021); (3.19791666666667 : 13.6955451888021 : JumpStart); (3.36458333333333 : 13.6955451888021 : JumpEnd); (3.5 : 13.6955451888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 13.6955451888021); (3.19791666666667 : 13.6955451888021 : JumpStart); (3.36458333333333 : 13.6955451888021 : JumpEnd); (3.5 : 13.6955451888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ChancelerryDBDataContext/Dictionarys/Dictionarys_Fields" />
       <nodes>
         <classShapeMoniker Id="a3b93aa4-306b-4dea-bdc1-fcda88524879" />
         <classShapeMoniker Id="bc493233-44a1-4ef3-a23c-bb2110d7745b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 15.7171541341146); (3.04166666666667 : 15.7171541341146 : JumpStart); (3.36458333333333 : 15.7171541341146 : JumpEnd); (3.5 : 15.7171541341146)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 15.7171541341146); (3.04166666666667 : 15.7171541341146 : JumpStart); (3.20833333333333 : 15.7171541341146 : JumpEnd); (3.5 : 15.7171541341146)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ChancelerryDBDataContext/FieldsGroups/FieldsGroups_Fields" />
       <nodes>
         <classShapeMoniker Id="2c1751cc-aeed-429b-91e4-6c6d9fac145d" />
         <classShapeMoniker Id="bc493233-44a1-4ef3-a23c-bb2110d7745b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 6.65549967447917); (1.75 : 8.10659912109375); (3.04166916666667 : 8.10659912109375 : JumpStart); (3.20833583333333 : 8.10659912109375 : JumpEnd); (3.5 : 8.10659912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.75 : 6.65549967447917); (1.75 : 8.10659912109375); (3.04166916666667 : 8.10659912109375 : JumpStart); (3.20833583333333 : 8.10659912109375 : JumpEnd); (3.5 : 8.10659912109375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ChancelerryDBDataContext/Users/Users_Logs" />
       <nodes>
         <classShapeMoniker Id="3563c88d-0b96-465a-b814-13c16ae0bf70" />
         <classShapeMoniker Id="89061289-7502-4b0e-85b7-bbfbaa50f441" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 2.66429768880208); (4.41666666666667 : 2.66429768880208 : JumpStart); (4.58333333333333 : 2.66429768880208 : JumpEnd); (4.94791916666667 : 2.66429768880208 : JumpStart); (5.11458583333333 : 2.66429768880208 : JumpEnd); (5.6249975 : 2.66429768880208); (5.6249975 : 18)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 2.45134701660156); (4.94791916666667 : 2.45134701660156 : JumpStart); (5.11458583333333 : 2.45134701660156 : JumpEnd); (5.6249975 : 2.45134701660156); (5.6249975 : 18)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ChancelerryDBDataContext/Registers/Registers_CollectedCards" />
       <nodes>
         <classShapeMoniker Id="d66e2cc0-2136-45c8-a01f-6181067031d5" />
         <classShapeMoniker Id="9022ed9c-1305-4f87-8d12-d5526ef6baa8" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(3.28125 : 11.3862939453125); (3.28125 : 16.371428688151); (3.20833333333333 : 16.371428688151 : JumpStart); (3.04166666666667 : 16.371428688151 : JumpEnd); (2.75 : 16.371428688151)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.28125 : 11.3862939453125); (3.28125 : 16.371428688151); (3.20833333333333 : 16.371428688151 : JumpStart); (3.04166666666667 : 16.371428688151 : JumpEnd); (2.75 : 16.371428688151)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ChancelerryDBDataContext/RegistersModels/RegistersModels_FieldsGroups" />
       <nodes>
         <classShapeMoniker Id="94dc4aa4-08a8-4ee5-bcc6-856450d71210" />
         <classShapeMoniker Id="2c1751cc-aeed-429b-91e4-6c6d9fac145d" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(3.1250025 : 10); (3.1250025 : 3.09019903320312); (2.75 : 3.09019903320312)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.1250025 : 10); (3.1250025 : 3.09019903320312); (2.75 : 3.09019903320312)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ChancelerryDBDataContext/RegistersModels/RegistersModels_Registers" />
       <nodes>
         <classShapeMoniker Id="94dc4aa4-08a8-4ee5-bcc6-856450d71210" />
         <classShapeMoniker Id="d66e2cc0-2136-45c8-a01f-6181067031d5" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 2.23839634440104); (4.5 : 2.23839634440104); (4.5 : 3.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 2.77077302490234); (4.23437375 : 2.77077302490234); (4.23437375 : 3.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ChancelerryDBDataContext/Registers/Registers_RegistersUsersMap" />
       <nodes>
         <classShapeMoniker Id="d66e2cc0-2136-45c8-a01f-6181067031d5" />
         <classShapeMoniker Id="dde9703f-4795-4bbd-acf0-09eb311e9ffc" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 5.01044840494792); (3.04166916666667 : 5.01044840494792 : JumpStart); (3.20833583333333 : 5.01044840494792 : JumpEnd); (3.5 : 5.01044840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 5.01044840494792); (3.04166916666667 : 5.01044840494792 : JumpStart); (3.20833583333333 : 5.01044840494792 : JumpEnd); (3.5 : 5.01044840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ChancelerryDBDataContext/Users/Users_RegistersUsersMap" />
       <nodes>
         <classShapeMoniker Id="3563c88d-0b96-465a-b814-13c16ae0bf70" />
         <classShapeMoniker Id="dde9703f-4795-4bbd-acf0-09eb311e9ffc" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 14.7796541341146); (5.54166416666667 : 14.7796541341146 : JumpStart); (5.73958333333333 : 14.7796541341146 : JumpEnd); (6.34375 : 14.7796541341146); (6.34375 : 2.52089680989583)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 14.7796541341146); (5.54166416666667 : 14.7796541341146 : JumpStart); (5.73958333333333 : 14.7796541341146 : JumpEnd); (6.34375 : 14.7796541341146); (6.34375 : 2.52089680989583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ChancelerryDBDataContext/Fields/Fields_RegistersView" />
       <nodes>
         <classShapeMoniker Id="bc493233-44a1-4ef3-a23c-bb2110d7745b" />
         <classShapeMoniker Id="e730507f-0970-4208-b850-99b3e59921a2" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.0312525 : 3.75); (5.0312525 : 1.49419817220052); (6.25 : 1.49419817220052)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.0312525 : 3.75); (5.0312525 : 1.49419817220052); (6.25 : 1.49419817220052)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ChancelerryDBDataContext/RegistersUsersMap/RegistersUsersMap_RegistersView" />
       <nodes>
         <classShapeMoniker Id="dde9703f-4795-4bbd-acf0-09eb311e9ffc" />
         <classShapeMoniker Id="e730507f-0970-4208-b850-99b3e59921a2" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="6a8c275d-5711-4b18-b0d9-6c0eda12288c" absoluteBounds="9.875, 2.5, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/ChancelerryDBDataContext/Struct" />
+      <nestedChildShapes>
+        <elementListCompartment Id="26490531-5289-4761-b411-5ce6d2e40715" absoluteBounds="9.89, 2.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(10.5774234637921 : 4.07859537760417); (10.5774234637921 : 4.32859537760417); (11.1867468474559 : 4.32859537760417); (11.1867468474559 : 4.07859537760417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/ChancelerryDBDataContext/Struct/Struct_Struct" />
+      <nodes>
+        <classShapeMoniker Id="6a8c275d-5711-4b18-b0d9-6c0eda12288c" />
+        <classShapeMoniker Id="6a8c275d-5711-4b18-b0d9-6c0eda12288c" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

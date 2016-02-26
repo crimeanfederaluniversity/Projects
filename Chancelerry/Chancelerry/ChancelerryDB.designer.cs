@@ -22,7 +22,7 @@ namespace Chancelerry
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="ChncelerryDB_New_Release")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="ChancelerryDB")]
 	public partial class ChancelerryDBDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -66,6 +66,9 @@ namespace Chancelerry
     partial void InsertRegistersView(RegistersView instance);
     partial void UpdateRegistersView(RegistersView instance);
     partial void DeleteRegistersView(RegistersView instance);
+    partial void InsertStruct(Struct instance);
+    partial void UpdateStruct(Struct instance);
+    partial void DeleteStruct(Struct instance);
     #endregion
 		
 		public ChancelerryDBDataContext() : 
@@ -191,6 +194,14 @@ namespace Chancelerry
 			get
 			{
 				return this.GetTable<RegistersView>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Struct> Struct
+		{
+			get
+			{
+				return this.GetTable<Struct>();
 			}
 		}
 	}
@@ -3301,6 +3312,209 @@ namespace Chancelerry
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Struct")]
+	public partial class Struct : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _structID;
+		
+		private bool _active;
+		
+		private string _name;
+		
+		private System.Nullable<int> _fk_parent;
+		
+		private EntitySet<Struct> _Struct2;
+		
+		private EntityRef<Struct> _Struct1;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnstructIDChanging(int value);
+    partial void OnstructIDChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void Onfk_parentChanging(System.Nullable<int> value);
+    partial void Onfk_parentChanged();
+    #endregion
+		
+		public Struct()
+		{
+			this._Struct2 = new EntitySet<Struct>(new Action<Struct>(this.attach_Struct2), new Action<Struct>(this.detach_Struct2));
+			this._Struct1 = default(EntityRef<Struct>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_structID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int structID
+		{
+			get
+			{
+				return this._structID;
+			}
+			set
+			{
+				if ((this._structID != value))
+				{
+					this.OnstructIDChanging(value);
+					this.SendPropertyChanging();
+					this._structID = value;
+					this.SendPropertyChanged("structID");
+					this.OnstructIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_parent", DbType="Int")]
+		public System.Nullable<int> fk_parent
+		{
+			get
+			{
+				return this._fk_parent;
+			}
+			set
+			{
+				if ((this._fk_parent != value))
+				{
+					if (this._Struct1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_parentChanging(value);
+					this.SendPropertyChanging();
+					this._fk_parent = value;
+					this.SendPropertyChanged("fk_parent");
+					this.Onfk_parentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Struct_Struct", Storage="_Struct2", ThisKey="structID", OtherKey="fk_parent")]
+		public EntitySet<Struct> Struct2
+		{
+			get
+			{
+				return this._Struct2;
+			}
+			set
+			{
+				this._Struct2.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Struct_Struct", Storage="_Struct1", ThisKey="fk_parent", OtherKey="structID", IsForeignKey=true)]
+		public Struct Struct1
+		{
+			get
+			{
+				return this._Struct1.Entity;
+			}
+			set
+			{
+				Struct previousValue = this._Struct1.Entity;
+				if (((previousValue != value) 
+							|| (this._Struct1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Struct1.Entity = null;
+						previousValue.Struct2.Remove(this);
+					}
+					this._Struct1.Entity = value;
+					if ((value != null))
+					{
+						value.Struct2.Add(this);
+						this._fk_parent = value.structID;
+					}
+					else
+					{
+						this._fk_parent = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Struct1");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Struct2(Struct entity)
+		{
+			this.SendPropertyChanging();
+			entity.Struct1 = this;
+		}
+		
+		private void detach_Struct2(Struct entity)
+		{
+			this.SendPropertyChanging();
+			entity.Struct1 = null;
 		}
 	}
 }

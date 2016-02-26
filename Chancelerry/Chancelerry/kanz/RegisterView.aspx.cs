@@ -37,15 +37,14 @@ namespace Chancelerry.kanz
                  select r).FirstOrDefault();
 
 
-            if (!Page.IsPostBack)
-            {
+        
                 if (register != null)
                 {
                     RegisterNameLabel.Text = register.name;
                     ta.RefreshTable(dataContext, userID, register, regId, dataTable, new List<TableActions.SearchValues>());
                     TableActions.DTable = dataTable;
                 }
-            }
+           
         }
 
 

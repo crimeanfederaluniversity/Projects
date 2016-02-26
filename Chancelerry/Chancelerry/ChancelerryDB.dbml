@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ChncelerryDB_New_Release" Class="ChancelerryDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=ChncelerryDB_New_Release;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ChncelerryDB_New_ReleaseConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ChancelerryDB" Class="ChancelerryDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=ChancelerryDB;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ChncelerryDB_New_ReleaseConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.CollectedCards" Member="CollectedCards">
     <Type Name="CollectedCards">
       <Column Name="collectedCardID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -145,6 +145,16 @@
       <Column Name="weight" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Association Name="Fields_RegistersView" Member="Fields" ThisKey="registerViewID" OtherKey="fieldID" Type="Fields" IsForeignKey="true" />
       <Association Name="RegistersUsersMap_RegistersView" Member="RegistersUsersMap" ThisKey="fk_registersUsersMap" OtherKey="registersUsersMapID" Type="RegistersUsersMap" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Struct" Member="Struct">
+    <Type Name="Struct">
+      <Column Name="structID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="fk_parent" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Struct_Struct" Member="Struct2" ThisKey="structID" OtherKey="fk_parent" Type="Struct" />
+      <Association Name="Struct_Struct" Member="Struct1" ThisKey="fk_parent" OtherKey="structID" Type="Struct" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

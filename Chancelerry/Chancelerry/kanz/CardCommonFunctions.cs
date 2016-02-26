@@ -114,8 +114,7 @@ namespace Chancelerry.kanz
             return 0;
         }
         public ListItem[] GetDictionaryValues(int dictionaryId)
-        {
-            
+        {         
             List<string> valuesList = (from a in chancDb.DictionarysValues
                 where a.active == true
                       && a.fk_dictionary == dictionaryId
@@ -126,6 +125,43 @@ namespace Chancelerry.kanz
                 resultItems[i]= new ListItem(valuesList[i]);
             }
             return resultItems;
+        }
+        private TreeNode RecursiveGetTreeNode(int parentId,List<Struct> structList ,string fieldId)
+        {
+
+            TreeNode nodeToReturn=new TreeNode();
+            nodeToReturn.SelectAction = TreeNodeSelectAction.Select;
+           // nodeToReturn.NavigateUrl = "javascript:return false;";
+            
+            nodeToReturn.Value = (from a in structList
+                                      where a.structID == parentId
+                                      select a.name).FirstOrDefault();
+                nodeToReturn.Text = (from a in structList
+                                     where a.structID == parentId
+                                     select a.name).FirstOrDefault();
+
+            
+            List<Struct> children = (from a in structList
+                where a.fk_parent == parentId
+                select a).ToList();
+            foreach (Struct currentStruct in children)
+            {
+                nodeToReturn.ChildNodes.Add(RecursiveGetTreeNode(currentStruct.structID, structList, fieldId));
+            }
+
+            return nodeToReturn;
+        }
+        public TreeNode GetStructTreeViewNode(string fieldId)
+        {
+            TreeNode nodeToReturn = new TreeNode();
+             nodeToReturn.SelectAction = TreeNodeSelectAction.Select;
+            
+            List<Struct> outStruct = (from a in chancDb.Struct
+                where a.active == true
+                select a).ToList();
+            nodeToReturn = RecursiveGetTreeNode(2, outStruct, fieldId);
+
+            return nodeToReturn;
         }
     }
     public class DataTypes
@@ -295,7 +331,7 @@ namespace Chancelerry.kanz
         private int _registerId;
         private int _version;
         private int textBoxesIdsCounter = 0;
-        public List<TextBox> allFieldsInCard;       
+        public List<TextBox> allFieldsInCard;
         private void RefreshPage()
         {
             HttpContext.Current.Response.Redirect("CardEdit.aspx", true);
@@ -420,6 +456,67 @@ namespace Chancelerry.kanz
                         }
                     }                
                     tableCell2.Controls.Add(dicrionaryDropDownList);
+                }
+                #endregion
+                #region tree
+                if (currentField.type == "fullStruct")
+                {
+                   ImageButton structButton = new ImageButton();
+                    structButton.ImageUrl = "~/kanz/icons/treeButtonIcon.jpg";
+                    structButton.Height = 20;
+                    structButton.Width = 20;
+                    structButton.CausesValidation = false;
+                    structButton.OnClientClick = "document.getElementById('MainContent_treeViewPanel" + fieldId + "').style.visibility = 'visible'; return false;";
+                    tableCell2.Controls.Add(structButton);
+
+
+                    Button okButton = new Button();
+                    okButton.CausesValidation = false;
+                    okButton.Text = "Ok";
+                    okButton.Style.Add("float","bottom");
+                    okButton.Style.Add("width","100%");
+                    okButton.Style.Add("heigth","50px");
+                    okButton.OnClientClick = "document.getElementById('MainContent_treeViewPanel" + fieldId + "').style.visibility = 'hidden'; return false;";
+
+                    Button cancelButton = new Button();
+                    cancelButton.CausesValidation = false;
+                    cancelButton.Text = "Отмена";
+                    cancelButton.Style.Add("float", "bottom");
+                    cancelButton.Style.Add("width", "100%");
+                    cancelButton.Style.Add("heigth", "50px");
+                    cancelButton.OnClientClick = "document.getElementById('MainContent_treeViewPanel" + fieldId + "').style.visibility = 'hidden'; return false;";
+
+                    Panel treeViewPanel = new Panel();
+                    treeViewPanel.ID = "treeViewPanel"+fieldId;
+                    treeViewPanel.Style.Add("top", "50%");
+                    treeViewPanel.Style.Add("left", "50%");
+                    treeViewPanel.Style.Add("margin", "-250px 0px 0px -470px");
+
+                    treeViewPanel.Style.Add("border", "1px solid black");
+                    treeViewPanel.Style.Add("z-index", "21");
+                    treeViewPanel.Style.Add("position", "fixed");
+                    treeViewPanel.Style.Add("background-color", "white");
+                    treeViewPanel.Style.Add("visibility", "hidden");
+                    treeViewPanel.Style.Add("height", "500px");
+                    treeViewPanel.Style.Add("width", "940px");
+
+
+                    Panel scrollPanel = new Panel();
+                    scrollPanel.ID = "treeViewScrollPanel" + fieldId;
+                    scrollPanel.Style.Add("overflow", "scroll");
+                    scrollPanel.Style.Add("height", "100%");
+
+                    TreeView strucTreeView = new TreeView();
+                    strucTreeView.ID = "treeView" + fieldId;
+                    //strucTreeView.SelectedNodeChanged += treeViewClick;
+                    //strucTreeView.ShowCheckBoxes = TreeNodeTypes.All;
+                    strucTreeView.Nodes.Add(_common.GetStructTreeViewNode("MainContent_" + currentFieldTextBox.ID));
+                    
+                    scrollPanel.Controls.Add(strucTreeView);
+                    treeViewPanel.Controls.Add(scrollPanel);
+                    treeViewPanel.Controls.Add(okButton);
+                    treeViewPanel.Controls.Add(cancelButton);
+                    tableCell2.Controls.Add(treeViewPanel);                   
                 }
                 #endregion
                 allFieldsInCard.Add(currentFieldTextBox); //запоминаем какие textbox у нас на карте

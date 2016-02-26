@@ -224,6 +224,7 @@
     <Content Include="kanz\icons\addButtonIcon.jpg" />
     <Content Include="kanz\icons\delButtonIcon.jpg" />
     <Content Include="kanz\icons\saveButtonIcon.jpg" />
+    <Content Include="kanz\icons\treeButtonIcon.jpg" />
     <Content Include="kanz\RegisterView.aspx" />
     <Content Include="kanz\TableSettings.aspx" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
