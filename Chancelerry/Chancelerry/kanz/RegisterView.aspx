@@ -5,6 +5,9 @@
     <asp:Button ID="Button1" runat="server" Text="Добавить" Width="362px" OnClick="Button1_Click" OnClientClick="showLoadingScreen"/>
 
     <br />
+    <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Настройка страницы" />
+
+    <br />
     <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Поиск" OnClientClick="showLoadingScreen"/>
 
     <br />

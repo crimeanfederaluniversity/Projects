@@ -99,6 +99,11 @@ namespace Chancelerry.kanz
             ta.RefreshTable(dataContext, Convert.ToInt32(ViewState["userID"]), register, regId, dataTable,
                 searchList);
         }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("TableSettings.aspx");
+        }
     }
     
 }

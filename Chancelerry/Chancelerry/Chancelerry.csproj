@@ -225,6 +225,7 @@
     <Content Include="kanz\icons\delButtonIcon.jpg" />
     <Content Include="kanz\icons\saveButtonIcon.jpg" />
     <Content Include="kanz\RegisterView.aspx" />
+    <Content Include="kanz\TableSettings.aspx" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -444,6 +445,13 @@
     <Compile Include="kanz\RegisterView.aspx.designer.cs">
       <DependentUpon>RegisterView.aspx</DependentUpon>
     </Compile>
+    <Compile Include="kanz\TableSettings.aspx.cs">
+      <DependentUpon>TableSettings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="kanz\TableSettings.aspx.designer.cs">
+      <DependentUpon>TableSettings.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization.cs" />
@@ -462,7 +470,7 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="TableActions.cs" />
+    <Compile Include="kanz\TableActions.cs" />
     <Compile Include="View.aspx.cs">
       <DependentUpon>View.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
