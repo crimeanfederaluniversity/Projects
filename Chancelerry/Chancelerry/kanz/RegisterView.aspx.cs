@@ -11,6 +11,13 @@ namespace Chancelerry.kanz
     public partial class RegisterView : System.Web.UI.Page
     {
 
+        private void RedirectToEdit(object sender, EventArgs e)
+        {
+
+            ImageButton thisButton = (ImageButton)sender;
+            int currentCardId = Convert.ToInt32(thisButton.Attributes["_cardID"]);
+            HttpContext.Current.Response.Redirect("https://www.ya.ru/", true);
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -37,14 +44,32 @@ namespace Chancelerry.kanz
                  select r).FirstOrDefault();
 
 
-        
                 if (register != null)
                 {
-                    RegisterNameLabel.Text = register.name;
-                    ta.RefreshTable(dataContext, userID, register, regId, dataTable, new List<TableActions.SearchValues>());
-                    TableActions.DTable = dataTable;
+                    var searchList = (List<TableActions.SearchValues>) Session["searchList"];
+
+                    // если в сессии нет searchList то отрисовываем всю таблицу
+                    if (searchList == null)
+                    {
+                        RegisterNameLabel.Text = register.name;
+                        ta.RefreshTable(dataContext, userID, register, regId, dataTable,
+                            new List<TableActions.SearchValues>());
+                        TableActions.DTable = dataTable;
+
+                    }
+                    // если в сессии есть searchList то запускаем  ta.RefreshTable c параметром
+                    else
+                    {
+
+                        RegisterNameLabel.Text = register.name;
+                        ta.RefreshTable(dataContext, Convert.ToInt32(ViewState["userID"]), register, regId, dataTable,
+                            searchList);
+
+                        TableActions.DTable = dataTable;
+
+                    }
                 }
-           
+
         }
 
 
@@ -85,18 +110,10 @@ namespace Chancelerry.kanz
                 }
             }
 
+            // По сессии передаем searchList и перезагружаем страницу
+            Session["searchList"] = searchList;
 
-            var regId = Session["registerID"];
-            ChancelerryDBDataContext dataContext = new ChancelerryDBDataContext();
-            TableActions ta = new TableActions();
-
-            var register =
-                (from r in dataContext.Registers
-                    where r.registerID == Convert.ToInt32(regId)
-                    select r).FirstOrDefault();
-
-            ta.RefreshTable(dataContext, Convert.ToInt32(ViewState["userID"]), register, regId, dataTable,
-                searchList);
+            Response.Redirect("RegisterView.aspx");
         }
 
         protected void Button3_Click(object sender, EventArgs e)
