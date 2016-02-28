@@ -206,13 +206,15 @@ namespace Chancelerry
                             where r.registerID == Convert.ToInt32(regId) && card.active
                             select card.collectedCardID).ToList();
 
-            HttpContext.Current.Session["pageCount"] = (int)Math.Floor((double)cardsAll.Count/10)+1; // количество страниц таблицы
+            HttpContext.Current.Session["pageCount"] = (int)Math.Floor((double)cardsAll.Count / 10) + 1; // количество страниц таблицы
 
-            var cards = cardsAll.Skip((int)HttpContext.Current.Session["pageCntrl"] * 10).Take(10); // первые 10 каждой страницы
+            // Смотрим, если есть текст поиска то идем по всей базе..... если нет то только первые 10 элементов на странице 
+            var cardsToShow = searchList.Any() ? cardsAll : cardsAll.Skip((int)HttpContext.Current.Session["pageCntrl"] * 10).Take(10).ToList();  
+
 
 
             // по всем карточкам
-            foreach (var card in cards)
+            foreach (var card in cardsToShow)
             {
                 List<string> cardRow = new List<string>();
 
