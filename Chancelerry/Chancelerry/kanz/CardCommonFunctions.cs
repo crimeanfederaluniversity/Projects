@@ -118,11 +118,12 @@ namespace Chancelerry.kanz
             List<string> valuesList = (from a in chancDb.DictionarysValues
                 where a.active == true
                       && a.fk_dictionary == dictionaryId
-                select a.value).ToList();
-            ListItem[] resultItems = new ListItem[valuesList.Count];
+                select a.value).OrderBy(mc=>mc).ToList();
+            ListItem[] resultItems = new ListItem[valuesList.Count+1];
+            resultItems[0] = new ListItem("");
             for (int i = 0; i < valuesList.Count; i++)
             {
-                resultItems[i]= new ListItem(valuesList[i]);
+                resultItems[i+1]= new ListItem(valuesList[i]);
             }
             return resultItems;
         }
@@ -400,6 +401,7 @@ namespace Chancelerry.kanz
                 currentFieldTextBox.ReadOnly = _readonly;
                 currentFieldTextBox.Style["Height"] = currentField.height + "px";
                 currentFieldTextBox.Style["Width"] = currentField.width + "px";
+                currentFieldTextBox.Style["max-width"] = currentField.width + "px";
                 currentFieldTextBox.Attributes.Add("_myFieldId", currentField.fieldID.ToString());
                 currentFieldTextBox.Attributes.Add("_myCollectedFieldInstance", instance.ToString());
                 currentFieldTextBox.Attributes.Add("_myCollectedFieldId", _common.GetCollectedValueIdByCardVersionInstance(currentField.fieldID, cardId, version, instance).ToString());
@@ -438,7 +440,19 @@ namespace Chancelerry.kanz
                 #region dropdown
                 if (currentField.fk_dictionary != null && !_readonly) // создаем выпадающий список
                 {
-                    currentFieldTextBox.Style["display"] = "none";
+                    if (currentField.type == "singleLineWithDDText")
+                    {
+                        currentFieldTextBox.Style["Height"] = currentField.height + "px";
+                        currentFieldTextBox.Style["Width"] = currentField.width + "px";
+                        currentFieldTextBox.Style["max-width"] = currentField.width + "px";
+                        currentFieldTextBox.Style["display"] = "block";
+                    }
+                    else
+                    {
+                        currentFieldTextBox.Style["display"] = "none";
+
+                    }
+                    
                     DropDownList dicrionaryDropDownList = new DropDownList();
                     dicrionaryDropDownList.Style["Height"] = currentField.height + "px";
                     dicrionaryDropDownList.Style["Width"] = currentField.width + "px";

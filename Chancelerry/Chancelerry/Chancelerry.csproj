@@ -218,6 +218,7 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="kanz\Admin.aspx" />
     <Content Include="kanz\CardEdit.aspx" />
     <Content Include="kanz\ChooseDictionary.aspx" />
     <Content Include="kanz\Dashboard.aspx" />
@@ -416,6 +417,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="kanz\Admin.aspx.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="kanz\Admin.aspx.designer.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
     </Compile>
     <Compile Include="kanz\CardCommonFunctions.cs" />
     <Compile Include="kanz\CardEdit.aspx.cs">
