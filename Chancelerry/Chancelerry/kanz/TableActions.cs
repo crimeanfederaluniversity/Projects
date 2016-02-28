@@ -56,6 +56,28 @@ namespace Chancelerry
             HttpContext.Current.Response.Redirect("~/kanz/CardEdit.aspx", true);
         }
 
+        private void DeleteCard(object sender, EventArgs e)
+        {
+            ImageButton thisButton = (ImageButton)sender;
+            int currentCardId = Convert.ToInt32(thisButton.Attributes["_cardID"]);
+            HttpContext.Current.Session["cardID"] = currentCardId;
+
+            ChancelerryDBDataContext dataContext = new ChancelerryDBDataContext();
+
+            var card = (from c in dataContext.CollectedCards
+                        where
+                            c.fk_register == (int) HttpContext.Current.Session["registerID"] &&
+                            c.collectedCardID == currentCardId
+                       select c).FirstOrDefault();
+
+            if (card != null)
+                card.active = false;
+
+            dataContext.SubmitChanges();
+
+            HttpContext.Current.Response.Redirect("~/kanz/RegisterView.aspx", true);
+        }
+
         public TableRow AddRowFromList(List<string> list, int cardID)
         {
             TableRow row = new TableRow();
@@ -81,11 +103,17 @@ namespace Chancelerry
             buttonView.Attributes.Add("_cardID", cardID.ToString());
             buttonView.Click += RedirectToView;
 
+            ImageButton buttonDelete = new ImageButton();
+            buttonDelete.ImageUrl = "http://zarabotok-na-klikakh.ru/wp-content/uploads/2015/04/stilist.jpg";
+            buttonDelete.Attributes.Add("_cardID", cardID.ToString());
+            buttonDelete.Click += DeleteCard;
+
 
             row.Cells.Add(cell);
 
             cell.Controls.Add(buttonEdit);
             cell.Controls.Add(buttonView);
+            cell.Controls.Add(buttonDelete);
 
             row.Controls.Add(cell);
 
@@ -144,13 +172,6 @@ namespace Chancelerry
                 cell.Controls.Add(tb);
 
                 SearchBoxsData.Add(tb);
-
-                ImageButton btnSrch = new ImageButton();
-                btnSrch.ImageUrl = "http://rus-linux.net/MyLDP/mm/inkscape/foto/aigtool-lupa.png";
-                btnSrch.Attributes.Add("_fieldID4search22", elm.ToString());
-                //buttonView.Click += RedirectToView;
-                cell.Controls.Add(btnSrch);
-
                 row.Cells.Add(cell);
             }
 
@@ -180,10 +201,14 @@ namespace Chancelerry
             dataTable.Rows.Add(AddHeaderRoFromList(fieldsName));
 
             // Карточки этого реестра
-            var cards = (from card in dataContext.CollectedCards
-                         join r in dataContext.Registers on card.fk_register equals r.registerID
-                         where r.registerID == Convert.ToInt32(regId) && card.active
-                         select card.collectedCardID).ToList().Skip((int)HttpContext.Current.Session["pageCntrl"] * 10).Take(10); // первые 10 каждой страницы
+            var cardsAll = (from card in dataContext.CollectedCards
+                            join r in dataContext.Registers on card.fk_register equals r.registerID
+                            where r.registerID == Convert.ToInt32(regId) && card.active
+                            select card.collectedCardID).ToList();
+
+            HttpContext.Current.Session["pageCount"] = (int)Math.Floor((double)cardsAll.Count/10)+1; // количество страниц таблицы
+
+            var cards = cardsAll.Skip((int)HttpContext.Current.Session["pageCntrl"] * 10).Take(10); // первые 10 каждой страницы
 
 
             // по всем карточкам

@@ -48,7 +48,6 @@ namespace Chancelerry.kanz
                 {
 
                 RegisterNameLabel.Text = register.name;
-                PageNumberLabel.Text = "Текущаяя страница: " + ((int)Session["pageCntrl"] + 1).ToString();
 
                 var searchList = (List<TableActions.SearchValues>) Session["searchList"];
 
@@ -70,6 +69,8 @@ namespace Chancelerry.kanz
 
                     }
                 }
+
+            PageNumberLabel.Text = "Текущаяя страница: " + ((int)Session["pageCntrl"] + 1).ToString() + " из: "+ (int)Session["pageCount"];
 
         }
 
