@@ -46,12 +46,15 @@ namespace Chancelerry.kanz
 
                 if (register != null)
                 {
-                    var searchList = (List<TableActions.SearchValues>) Session["searchList"];
 
-                    // если в сессии нет searchList то отрисовываем всю таблицу
-                    if (searchList == null)
+                RegisterNameLabel.Text = register.name;
+                PageNumberLabel.Text = "Текущаяя страница: " + ((int)Session["pageCntrl"] + 1).ToString();
+
+                var searchList = (List<TableActions.SearchValues>) Session["searchList"];
+
+                // если в сессии нет searchList то отрисовываем всю таблицу
+                if (searchList == null)
                     {
-                        RegisterNameLabel.Text = register.name;
                         ta.RefreshTable(dataContext, userID, register, regId, dataTable,
                             new List<TableActions.SearchValues>());
                         TableActions.DTable = dataTable;
@@ -60,8 +63,6 @@ namespace Chancelerry.kanz
                     // если в сессии есть searchList то запускаем  ta.RefreshTable c параметром
                     else
                     {
-
-                        RegisterNameLabel.Text = register.name;
                         ta.RefreshTable(dataContext, Convert.ToInt32(ViewState["userID"]), register, regId, dataTable,
                             searchList);
 
@@ -73,6 +74,10 @@ namespace Chancelerry.kanz
         }
 
 
+        protected void Page_Unload(object sender, EventArgs e)
+        {
+           // Session["pageCntrl"] = 0;
+        }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
@@ -125,6 +130,21 @@ namespace Chancelerry.kanz
         {
             Session["searchList"] = new List<TableActions.SearchValues>();
             Response.Redirect("RegisterView.aspx");
+        }
+
+        protected void Button6_Click(object sender, EventArgs e)
+        {
+            Session["pageCntrl"] = (int)Session["pageCntrl"]+1;
+            Response.Redirect("RegisterView.aspx");
+        }
+
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            if ((int) Session["pageCntrl"] > 0)
+            {
+                Session["pageCntrl"] = (int) Session["pageCntrl"] - 1;
+                Response.Redirect("RegisterView.aspx");
+            }
         }
     }
     

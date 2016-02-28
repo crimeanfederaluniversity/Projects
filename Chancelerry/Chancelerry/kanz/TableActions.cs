@@ -165,7 +165,7 @@ namespace Chancelerry
             // Достаем поля для данного реестра и пользователя на основе RegisterView и прав пользователя RegistersUsersMap c сортировкой по весу
             var fieldsAll = (from regUsrMap in dataContext.RegistersUsersMap
                              join regView in dataContext.RegistersView on regUsrMap.registersUsersMapID equals regView.fk_registersUsersMap
-                             join _fields in dataContext.Fields on regView.fk_field equals _fields.fieldID
+                             join _fields in dataContext.Fields.OrderByDescending(n => n.fieldID == 1) on regView.fk_field equals _fields.fieldID
                              where regUsrMap.fk_user == Convert.ToInt32(userID) && regUsrMap.fk_register == register.registerID && regView.active
                              select new { _fields.name, _fields.fieldID, regView.weight }).OrderBy(w => w.weight).ToList();
 
@@ -182,8 +182,8 @@ namespace Chancelerry
             // Карточки этого реестра
             var cards = (from card in dataContext.CollectedCards
                          join r in dataContext.Registers on card.fk_register equals r.registerID
-                         where r.registerID == Convert.ToInt32(regId)
-                         select card.collectedCardID).ToList();
+                         where r.registerID == Convert.ToInt32(regId) && card.active
+                         select card.collectedCardID).ToList().Skip((int)HttpContext.Current.Session["pageCntrl"] * 10).Take(10); // первые 10 каждой страницы
 
 
             // по всем карточкам

@@ -13,6 +13,11 @@
     <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Очистить поиск" />
 
     <br />
+    <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Назад" Width="61px" />
+    <asp:Button ID="Button6" runat="server" OnClick="Button6_Click" Text="Вперёд" />
+    <asp:Label ID="PageNumberLabel" runat="server" Text="Label"></asp:Label>
+
+    <br />
     <asp:Label ID="RegisterNameLabel" runat="server" Text="Label"></asp:Label>
     
     <asp:Table ID="dataTable" runat="server" Width="100%" >

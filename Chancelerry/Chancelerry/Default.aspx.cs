@@ -37,6 +37,7 @@ namespace Chancelerry
 
             if (user != null)
             {
+                Session["pageCntrl"] = 0;
                 Directions(user);
             }
 
