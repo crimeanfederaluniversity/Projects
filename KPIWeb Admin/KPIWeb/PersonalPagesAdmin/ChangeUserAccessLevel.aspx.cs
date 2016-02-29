@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -14,44 +16,73 @@ namespace KPIWeb.PersonalPagesAdmin
         protected void Page_Load(object sender, EventArgs e)
         {
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
-            Serialization UserSer = (Serialization)Session["UserID"];
-            if (UserSer == null)
-            {
-                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
-            }
-            int userID = UserSer.Id;
-            UserRights userRights = new UserRights();
-            if (!userRights.CanUserSeeThisPage(userID, 19, 0, 0))
-            {
-                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
-            } 
-
-
+            /*   Serialization UserSer = (Serialization)Session["UserID"];
+               if (UserSer == null)
+               {
+                   Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+               }
+               int userID = UserSer.Id;
+               UserRights userRights = new UserRights();
+               if (!userRights.CanUserSeeThisPage(userID, 19, 0, 0))
+               {
+                   Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
+               } 
+               */
             Serialization ser = (Serialization)Session["userIdforChange"];
             if (ser == null)
             {
-                Response.Redirect("Default.aspx");
+                Response.Redirect("~/Default.aspx");
             }
             int userToChangeId = ser.Id;
-            KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-            List<UserGroupTable> allgroups = (from a in kpiWebDataContext.UserGroupTable
-                                              where a.Active == true
-                                              join b in kpiWebDataContext.Projects
-                                                  on a.Fk_ProjectsTable equals b.Id
-                                              where b.Active == true
-                                              select a).ToList();
-            foreach (UserGroupTable n in allgroups)
+            if (!Page.IsPostBack)
+            { 
+            RefreshGrid();
+            }
+        }
+        private void RefreshGrid()
+        {
+            Serialization ser = (Serialization)Session["userIdforChange"];
+            if (ser == null)
             {
-                ListItem TmpItem = new ListItem();
-                TmpItem.Text = n.UserGroupName;
-                TmpItem.Value = n.UserGroupID.ToString();
-                if ((from a in kpiWebDataContext.UsersAndUserGroupMappingTable
-                     where a.FK_GroupTable == n.UserGroupID
-                           && a.FK_UserTable == userToChangeId
-                           && a.Active == true
-                     select a).Any())
-                    TmpItem.Selected = true;
-                CheckBoxList1.Items.Add(TmpItem);
+                Response.Redirect("~/Default.aspx");
+            }
+            int userToChangeId = ser.Id;
+            DataTable dataTable1 = new DataTable();
+            dataTable1.Columns.Add(new DataColumn("UsersTableId", typeof(string)));
+            dataTable1.Columns.Add(new DataColumn("Name", typeof(string)));
+            dataTable1.Columns.Add(new DataColumn("CheckedBox", typeof(bool)));
+
+            using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
+            {
+                List<UserGroupTable> groups;
+                {
+                    groups = (from a in kpiWebDataContext.UserGroupTable where a.Active==true
+                              select a).ToList();
+                }
+
+                foreach (var gro in groups)
+                {
+                    DataRow dataRow = dataTable1.NewRow();
+                    dataRow["UsersTableId"] = gro.UserGroupID;
+                    dataRow["Name"] = gro.UserGroupName;
+                    UsersAndUserGroupMappingTable check = (from a in kpiWebDataContext.UsersAndUserGroupMappingTable
+                                  join b in kpiWebDataContext.UsersTable on a.FK_UserTable equals b.UsersTableID
+                                  join c in kpiWebDataContext.UserGroupTable on a.FK_GroupTable equals c.UserGroupID
+                                  where
+                                  a.Active == true && b.UsersTableID == userToChangeId && c.UserGroupID==gro.UserGroupID
+                                  select a).FirstOrDefault();
+                    if (check == null || check.Confirmed == false)
+                    {
+                        dataRow["CheckedBox"] = false;
+                    }
+                    else
+                    {
+                        dataRow["CheckedBox"] = true;
+                    }                    
+                    dataTable1.Rows.Add(dataRow);
+                }
+                GridView1.DataSource = dataTable1;
+                GridView1.DataBind();
             }
         }
         protected void Button1_Click(object sender, EventArgs e)
@@ -59,50 +90,54 @@ namespace KPIWeb.PersonalPagesAdmin
             Serialization ser = (Serialization)Session["userIdforChange"];
             if (ser == null)
             {
-                Response.Redirect("Default.aspx");
+                Response.Redirect("~/Default.aspx");
             }
             int userToChangeId = ser.Id;
             KPIWebDataContext kpiWebDataContext = new KPIWebDataContext();
-            foreach (ListItem n in CheckBoxList1.Items)
+            for (int i = 0; i < GridView1.Rows.Count; i++)
             {
-                UsersAndUserGroupMappingTable useraccess =
-                    (from a in kpiWebDataContext.UsersAndUserGroupMappingTable
-                     where a.FK_GroupTable == Convert.ToInt32(n.Value)
-                     select a).FirstOrDefault();
-                if (useraccess != null)
+                CheckBox canEdit = (CheckBox)GridView1.Rows[i].FindControl("CheckedBox");
+                Label label = (Label)GridView1.Rows[i].FindControl("UsersTableId");
+
+                if (canEdit.Checked == true)
                 {
-                    if (n.Selected == false)
+                    UsersAndUserGroupMappingTable userAcc =
+                    (from a in kpiWebDataContext.UsersAndUserGroupMappingTable
+                     where a.FK_GroupTable == Convert.ToInt32(label.Text) && a.FK_UserTable == userToChangeId
+                     select a).FirstOrDefault();
+                    if (userAcc != null)
                     {
-                        useraccess.Active = false;
+                        userAcc.Confirmed = true;
+                        userAcc.Active = true;
                         kpiWebDataContext.SubmitChanges();
                     }
-                    if (n.Selected == true)
+                    else
                     {
-                        useraccess.Active = true;
+                        UsersAndUserGroupMappingTable userGroup = new UsersAndUserGroupMappingTable();
+                        userGroup.FK_GroupTable = Convert.ToInt32(label.Text);
+                        userGroup.FK_UserTable = userToChangeId;
+                        userGroup.Active = true;
+                        userGroup.Confirmed = true;
+                        kpiWebDataContext.UsersAndUserGroupMappingTable.InsertOnSubmit(userGroup);
                         kpiWebDataContext.SubmitChanges();
                     }
                 }
                 else
                 {
-                    UsersAndUserGroupMappingTable newuseraccess = new UsersAndUserGroupMappingTable();
-                    if (n.Selected == false)
+                    UsersAndUserGroupMappingTable userAcc =
+                      (from a in kpiWebDataContext.UsersAndUserGroupMappingTable
+                       where a.FK_GroupTable == Convert.ToInt32(label.Text) && a.FK_UserTable == userToChangeId
+                       select a).FirstOrDefault();
+                    if (userAcc != null)
                     {
-                        newuseraccess.Active = false;
+                        userAcc.Confirmed = false;
+                        userAcc.Active = true;
+                        kpiWebDataContext.SubmitChanges();
                     }
-                    if (n.Selected == true)
-                    {
-                        newuseraccess.Active = true;
-                    }
-                    newuseraccess.FK_GroupTable = Convert.ToInt32(n.Value);
-                    newuseraccess.FK_UserTable = userToChangeId;
-                    kpiWebDataContext.UsersAndUserGroupMappingTable.InsertOnSubmit(newuseraccess);
-                    kpiWebDataContext.SubmitChanges();
-
-                }
-
+                }               
             }
+            RefreshGrid();
         }
-
         protected void Button2_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/PersonalPagesAdmin/EditPersonalPage.aspx");

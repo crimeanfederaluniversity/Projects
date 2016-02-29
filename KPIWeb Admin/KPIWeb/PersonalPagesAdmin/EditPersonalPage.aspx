@@ -19,11 +19,9 @@
          
     
     </div>
-         
-    
+            
         <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server"  >           
-             <Columns>               
-                           
+             <Columns>                                         
                  <asp:TemplateField HeaderText="ID пользователя" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="UsersTableId" runat="server" Text='<%# Bind("UsersTableId") %>'  Visible="True"></asp:Label>
@@ -33,22 +31,43 @@
                 
                     <asp:TemplateField HeaderText="Адрес почты" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
-                            <asp:TextBox ID="Email" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Email") %>'></asp:TextBox>
+                            <asp:Label ID="Email" style="text-align:center"  runat="server" Text='<%# Bind("Email") %>'></asp:Label>
                         </ItemTemplate>
                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
-                                              
-                 <asp:TemplateField HeaderText="Изменить права доступа">
+                 <asp:TemplateField HeaderText="Имя" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
                         <ItemTemplate>
-                            <asp:Button ID="ChangeUserButton" runat="server" CommandName="Select" Text="Изменить" Width="200px" CommandArgument='<%# Eval("UsersTableId") %>' OnClick="ChangeUserButtonClick" />
+                            <asp:Label ID="Name" style="text-align:center" runat="server" Text='<%# Bind("Name") %>'></asp:Label>
+                        </ItemTemplate>
+                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
+                    </asp:TemplateField> 
+                 <asp:TemplateField HeaderText="Фамилия" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                        <ItemTemplate>
+                            <asp:Label ID="SecondName" style="text-align:center"  runat="server" Text='<%# Bind("SecondName") %>'></asp:Label>
+                        </ItemTemplate>
+                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
+                    </asp:TemplateField>   
+                 <asp:TemplateField HeaderText="Запрос на модуль" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                        <ItemTemplate>
+                            <asp:Label ID="Module" style="text-align:center" runat="server" Text='<%# Bind("Module") %>'></asp:Label>
+                        </ItemTemplate>
+                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
+                    </asp:TemplateField>                                             
+                 <asp:TemplateField HeaderText="Добавить права доступа">
+                        <ItemTemplate>
+                            <asp:Button ID="ChangeUserButton" runat="server" CommandName="Select" Text="Подтвердить" Width="200px" CommandArgument='<%# Eval("AddUserAccess") %>' OnClick="ChangeUserButtonClick" />
                         </ItemTemplate>
                     </asp:TemplateField>                
-                 <asp:TemplateField HeaderText="Удалить пользователя">
+                 <asp:TemplateField HeaderText="Отказать в доступе">
                         <ItemTemplate>
-                            <asp:Button ID="DeleteUserButton" runat="server" CommandName="Select" Text="Удалить" Width="200px" CommandArgument='<%# Eval("UsersTableId") %>' OnClick="DeleteUserButtonClick" />
+                            <asp:Button ID="DeleteUserButton" runat="server" CommandName="Select" Text="Отклонить" Width="200px" CommandArgument='<%# Eval("DeleteUserAccess") %>' OnClick="DeleteUserButtonClick" />
                         </ItemTemplate>
-                    </asp:TemplateField>   
-                                                 
+                    </asp:TemplateField>         
+                 <asp:TemplateField HeaderText="Просмотр общих сведений">
+                        <ItemTemplate>
+                            <asp:Button ID="UserCheck" runat="server" CommandName="Select" Text="Права доступа" Width="200px" CommandArgument='<%# Eval("UserCheck") %>' OnClick="UserCheckButtonClick" />
+                        </ItemTemplate>
+                    </asp:TemplateField>                                            
                 </Columns>
        </asp:GridView>
     
