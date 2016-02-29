@@ -107,6 +107,7 @@ namespace Chancelerry
             buttonDelete.ImageUrl = "http://zarabotok-na-klikakh.ru/wp-content/uploads/2015/04/stilist.jpg";
             buttonDelete.Attributes.Add("_cardID", cardID.ToString());
             buttonDelete.Click += DeleteCard;
+            buttonDelete.OnClientClick = "return confirm('Вы уверены, что хотите удалить?');";
 
 
             row.Cells.Add(cell);
