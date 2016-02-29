@@ -5,10 +5,12 @@
     
 
     <br />
-    <asp:Button ID="DictionaryEdit" runat="server" Text="Редактирование справочников" Width="263px" OnClick="DictionaryEdit_Click" OnClientClick="showLoadingScreen()"/>
+    <asp:Button ID="DictionaryEdit" runat="server" Text="Редактирование справочников" Width="263px" OnClick="DictionaryEdit_Click"/>
     
 
     <br />
         
-
+    <script>
+        window.onbeforeunload = showLoadingScreen;
+    </script>
 </asp:Content>

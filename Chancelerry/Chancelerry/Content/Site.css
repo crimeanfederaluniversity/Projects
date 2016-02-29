@@ -228,11 +228,16 @@ hr {
     border-width: 1px;
 }
 
+#MainContent_dataTable td,
 #MainContent_GridViewRegisters td {
     border-size: 5px;
-    padding: 10px 0;
-    padding-left: 10px;
+    padding: 5px 10px 5px 10px;
     border: 1px solid;
+}
+
+#MainContent_dataTable td > input[type="text"] {
+    width: 100%;
+    max-width: 100%;
 }
 
 #MainContent_dataTable td {
