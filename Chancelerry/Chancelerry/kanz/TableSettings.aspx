@@ -38,5 +38,5 @@
                     </Columns>
     </asp:GridView>
     <br />
-    <asp:Button ID="Button1" runat="server" Text="Сохранить" OnClick="Button1_Click" OnClientClick="showLoadingScreen()" CssClass="right-button"/>
+    <asp:Button ID="Button1" runat="server" Text="Сохранить" OnClick="Button1_Click" OnClientClick="showLoadingScreen()" CssClass="centered-button"/>
 </asp:Content>

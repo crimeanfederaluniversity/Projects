@@ -86,7 +86,7 @@ hr {
     padding: 5px;
 }
 
-.right-button {
+.centered-button {
     margin: 0 25%;
     width: 50%;
 }
@@ -195,7 +195,7 @@ hr {
 
 #MainContent_GridViewRegisters {
     background: none;
-    margin: 30px 25%;
+    margin: 30px 25% 0px 25%;
     border-collapse: collapse;
     width: 50%;
 }
