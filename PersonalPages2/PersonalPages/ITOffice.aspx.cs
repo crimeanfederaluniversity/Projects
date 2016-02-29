@@ -24,15 +24,16 @@ namespace PersonalPages
             int userID = UserSer.Id;
 
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-            Aplications newlerning = new Aplications();
-            newlerning.Active = true;
-            newlerning.FK_ApplicationType = 6;
-            newlerning.FK_UserAdd = userID;
-            newlerning.Date = DateTime.Now;
-            newlerning.Text = TextBox1.Text;
-            newlerning.TelephoneNumber = TextBox3.Text;
+            Aplications newquestion = new Aplications();
+            newquestion.Active = true;
+            newquestion.FK_ApplicationType = 6;
+            newquestion.FK_UserAdd = userID;
+            newquestion.Date = DateTime.Now;
+            newquestion.Text = TextBox1.Text;
+            newquestion.Confirmed = 0;
+            newquestion.TelephoneNumber = TextBox3.Text;
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка отправлена!');", true);
-            usersDB.Aplications.InsertOnSubmit(newlerning);
+            usersDB.Aplications.InsertOnSubmit(newquestion);
             usersDB.SubmitChanges();
             Response.Redirect("~/UserMainPage.aspx");
         }

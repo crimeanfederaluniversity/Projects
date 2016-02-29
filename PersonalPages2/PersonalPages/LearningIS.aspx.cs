@@ -30,6 +30,7 @@ namespace PersonalPages
             newlerning.FK_UserAdd = userID;
             newlerning.Date = DateTime.Now;
             newlerning.Text = TextBox1.Text;
+            newlerning.Confirmed = 0;
             newlerning.TelephoneNumber = TextBox3.Text;
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка отправлена!');", true);
             usersDB.Aplications.InsertOnSubmit(newlerning);

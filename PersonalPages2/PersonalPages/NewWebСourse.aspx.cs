@@ -23,7 +23,7 @@ namespace PersonalPages
                 Response.Redirect("~/Default.aspx");
             }
             int userID = UserSer.Id;
-            string print = TextBox1.Text.ToString() + "/" + TextBox2.Text.ToString() + "/" + TextBox4.Text.ToString();
+            string print = "Название курса:" + TextBox1.Text.ToString() + " " + "Руководитель курса:" + TextBox2.Text.ToString() + " " + "Преподаватель курса:" + TextBox4.Text.ToString();
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
             Aplications newcourse = new Aplications();
             newcourse.Active = true;
@@ -31,6 +31,7 @@ namespace PersonalPages
             newcourse.FK_UserAdd = userID;
             newcourse.Date = DateTime.Now;
             newcourse.Text = print;
+            newcourse.Confirmed = 0;
             newcourse.TelephoneNumber = TextBox3.Text;
             String path = Server.MapPath("~/AplicationFiles");
             Directory.CreateDirectory(path + "\\\\" + userID.ToString());

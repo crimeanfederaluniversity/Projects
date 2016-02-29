@@ -14,7 +14,6 @@ namespace PersonalPages
         {
 
         }
-
         protected void Button1_Click(object sender, EventArgs e)
         {
              Serialization UserSer = (Serialization)Session["UserID"];
@@ -23,7 +22,7 @@ namespace PersonalPages
                 Response.Redirect("~/Default.aspx");
             }
             int userID = UserSer.Id;
-            string print = TextBox4.Text.ToString() + "/" + TextBox5.Text.ToString() + "/" + TextBox6.Text.ToString();
+            string print = "Количество копий:" + TextBox4.Text.ToString() + " " + "Формат печати:" + TextBox5.Text.ToString() + " " + "Cтраницы для печати:" + TextBox6.Text.ToString();
                 PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
                 Aplications newprint = new Aplications();
                 newprint.Active = true;
@@ -31,6 +30,7 @@ namespace PersonalPages
                 newprint.FK_UserAdd = userID;
                 newprint.Date = DateTime.Now;
                 newprint.Text = print;
+                newprint.Confirmed = 0;
               String path = Server.MapPath("~/AplicationFiles"); 
               Directory.CreateDirectory(path + "\\\\" + userID.ToString());
               FileUpload1.PostedFile.SaveAs(path +"\\\\" + userID.ToString()  + "\\\\" + FileUpload1.FileName);        

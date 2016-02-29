@@ -56,6 +56,7 @@ namespace PersonalPages
             newquestion.Date = DateTime.Now;
             newquestion.TelephoneNumber = TextBox1.Text;
             newquestion.Text = question;
+            newquestion.Confirmed = 0;
             usersDB.Aplications.InsertOnSubmit(newquestion);
             usersDB.SubmitChanges();
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ваш запрос успешно отправлен!');", true);

@@ -22,7 +22,8 @@ namespace PersonalPages
                 Response.Redirect("~/Default.aspx");
             }
             int userID = UserSer.Id;
-            string order = TextBox4.Text.ToString() + "/" + TextBox5.Text.ToString() + "/" + TextBox6.Text.ToString() + "/" + TextBox7.Text.ToString();
+            string order = "Название оборудования:" + TextBox4.Text.ToString() + " " + "Инвентарный номер:" + TextBox5.Text.ToString() + " " +
+            "Ответственный:" + " " + TextBox6.Text.ToString() +   "Причина списания:" + TextBox7.Text.ToString();
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
             Aplication equipment = new Aplication();
             equipment.Active = true;
@@ -30,6 +31,7 @@ namespace PersonalPages
             equipment.FK_UserAdd = userID;
             equipment.Date = DateTime.Now;
             equipment.Text = order;
+            equipment.Confirmed = 0;
             usersDB.Aplications.InsertOnSubmit(equipment);
             usersDB.SubmitChanges();
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ваша заявка на списание оборудования принята на рассмотрение!');", true);

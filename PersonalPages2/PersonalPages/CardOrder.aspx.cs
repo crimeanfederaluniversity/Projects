@@ -33,10 +33,11 @@ namespace PersonalPages
             neworder.Date = DateTime.Now;
             neworder.TelephoneNumber = TextBox5.Text;
             neworder.Text = TextBox4.Text.ToString();
-            String path = Server.MapPath("~/AplicationFiles"); 
+            neworder.Confirmed = 0;
+            String path = Server.MapPath("http://cfu-portal.ru/AplicationFiles"); 
             Directory.CreateDirectory(path + "\\\\" + userID.ToString());
             FileUpload1.PostedFile.SaveAs(path +"\\\\" + userID.ToString()  + "\\\\" + FileUpload1.FileName);        
-            neworder.FileURL = "~/AplicationFiles" + "\\\\" +  userID.ToString()  + "\\\\" + FileUpload1.FileName;
+            neworder.FileURL = "/AplicationFiles" + "\\\\" +  userID.ToString()  + "\\\\" + FileUpload1.FileName;
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Запрос отправлен!');", true);
             usersDB.Aplications.InsertOnSubmit(neworder);
             usersDB.SubmitChanges();            

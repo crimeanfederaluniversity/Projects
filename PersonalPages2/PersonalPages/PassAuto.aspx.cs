@@ -33,7 +33,7 @@ namespace PersonalPages
                 newpass.Date = DateTime.Now;
                 newpass.TelephoneNumber = TextBox3.Text;
                 newpass.Text = TextBox4.Text.ToString();
-
+                newpass.Confirmed = 0;
                 usersDB.Aplications.InsertOnSubmit(newpass);
                 usersDB.SubmitChanges();
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Ваш запрос отправлен!');", true);

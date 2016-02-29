@@ -22,7 +22,7 @@ namespace PersonalPages
                 Response.Redirect("~/Default.aspx");
             }
             int userID = UserSer.Id;
-            string order = TextBox4.Text.ToString() + "/" + TextBox5.Text.ToString() + "/" + TextBox6.Text.ToString() + "/" + TextBox7.Text.ToString();
+            string order = "Необходимая техника или расходные материалы:" + TextBox4.Text.ToString() + " " + "Цель использования:" + TextBox5.Text.ToString() + " " + "Кто будет использовать:" + TextBox6.Text.ToString() + " " + "Получатель (ответственный):" + TextBox7.Text.ToString();
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
             Aplications newequipment = new Aplications();
             newequipment.Active = true;
@@ -30,6 +30,7 @@ namespace PersonalPages
             newequipment.FK_UserAdd = userID;
             newequipment.Date = DateTime.Now;
             newequipment.Text = order;
+            newequipment.Confirmed = 0;
             usersDB.Aplications.InsertOnSubmit(newequipment);
             usersDB.SubmitChanges();
             Response.Redirect("~/UserMainPage.aspx");

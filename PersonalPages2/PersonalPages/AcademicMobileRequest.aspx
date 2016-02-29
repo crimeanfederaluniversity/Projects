@@ -70,9 +70,6 @@
     <br />
     <asp:TextBox ID="TextBox1" runat="server" Width="163px"></asp:TextBox>
     <br />
-                Электронный адрес:<br />
-    <asp:TextBox ID="TextBox4" runat="server" Width="162px"></asp:TextBox>
-    <br />
                 Постоянный почтовый адрес(адрес регистрации):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <br />
     <asp:TextBox ID="TextBox2" runat="server" Height="35px" TextMode="MultiLine" Width="473px"></asp:TextBox>
