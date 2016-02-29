@@ -127,32 +127,36 @@ namespace Chancelerry.kanz
             }
             return resultItems;
         }
-        private TreeNode RecursiveGetTreeNode(int parentId,List<Struct> structList ,string fieldId)
+        private TreeNode RecursiveGetTreeNode(int parentId,List<Struct> structList ,string fieldId,string panelId,string backValue,bool fullStruct)
         {
 
             TreeNode nodeToReturn=new TreeNode();
             nodeToReturn.SelectAction = TreeNodeSelectAction.Select;
-           // nodeToReturn.NavigateUrl = "javascript:return false;";
-            
-            nodeToReturn.Value = (from a in structList
-                                      where a.structID == parentId
-                                      select a.name).FirstOrDefault();
+            string value = (from a in structList
+                            where a.structID == parentId
+                            select a.name).FirstOrDefault();
+            if (backValue.Length > 2 && fullStruct)
+            {
+                value = backValue + ", " + value;
+            }
+
+            nodeToReturn.Value = value;
                 nodeToReturn.Text = (from a in structList
                                      where a.structID == parentId
                                      select a.name).FirstOrDefault();
+            nodeToReturn.NavigateUrl = "javascript:putValueAndClose('" + nodeToReturn.Value + "','" + fieldId + "','"+ panelId + "')";
 
-            
             List<Struct> children = (from a in structList
                 where a.fk_parent == parentId
                 select a).ToList();
             foreach (Struct currentStruct in children)
             {
-                nodeToReturn.ChildNodes.Add(RecursiveGetTreeNode(currentStruct.structID, structList, fieldId));
+                nodeToReturn.ChildNodes.Add(RecursiveGetTreeNode(currentStruct.structID, structList, fieldId, panelId, value , fullStruct));
             }
 
             return nodeToReturn;
         }
-        public TreeNode GetStructTreeViewNode(string fieldId)
+        public TreeNode GetStructTreeViewNode(string fieldId,string panelId,bool fullStruct)
         {
             TreeNode nodeToReturn = new TreeNode();
              nodeToReturn.SelectAction = TreeNodeSelectAction.Select;
@@ -160,7 +164,7 @@ namespace Chancelerry.kanz
             List<Struct> outStruct = (from a in chancDb.Struct
                 where a.active == true
                 select a).ToList();
-            nodeToReturn = RecursiveGetTreeNode(2, outStruct, fieldId);
+            nodeToReturn = RecursiveGetTreeNode(2, outStruct, fieldId,panelId, "",fullStruct);
 
             return nodeToReturn;
         }
@@ -473,8 +477,9 @@ namespace Chancelerry.kanz
                 }
                 #endregion
                 #region tree
-                if (currentField.type == "fullStruct")
+                if (currentField.type == "fullStruct" || currentField.type == "onlyLastStruct")
                 {
+                    bool fullStruct = currentField.type == "fullStruct";
                    ImageButton structButton = new ImageButton();
                     structButton.ImageUrl = "~/kanz/icons/treeButtonIcon.jpg";
                     structButton.Height = 20;
@@ -482,15 +487,6 @@ namespace Chancelerry.kanz
                     structButton.CausesValidation = false;
                     structButton.OnClientClick = "document.getElementById('MainContent_treeViewPanel" + fieldId + "').style.visibility = 'visible'; return false;";
                     tableCell2.Controls.Add(structButton);
-
-
-                    Button okButton = new Button();
-                    okButton.CausesValidation = false;
-                    okButton.Text = "Ok";
-                    okButton.Style.Add("float","bottom");
-                    okButton.Style.Add("width","100%");
-                    okButton.Style.Add("heigth","50px");
-                    okButton.OnClientClick = "document.getElementById('MainContent_treeViewPanel" + fieldId + "').style.visibility = 'hidden'; return false;";
 
                     Button cancelButton = new Button();
                     cancelButton.CausesValidation = false;
@@ -524,11 +520,11 @@ namespace Chancelerry.kanz
                     strucTreeView.ID = "treeView" + fieldId;
                     //strucTreeView.SelectedNodeChanged += treeViewClick;
                     //strucTreeView.ShowCheckBoxes = TreeNodeTypes.All;
-                    strucTreeView.Nodes.Add(_common.GetStructTreeViewNode("MainContent_" + currentFieldTextBox.ID));
+                    strucTreeView.Nodes.Add(_common.GetStructTreeViewNode("MainContent_" + currentFieldTextBox.ID, "MainContent_"+ treeViewPanel.ID,fullStruct));
                     
                     scrollPanel.Controls.Add(strucTreeView);
                     treeViewPanel.Controls.Add(scrollPanel);
-                    treeViewPanel.Controls.Add(okButton);
+                    //treeViewPanel.Controls.Add(okButton);
                     treeViewPanel.Controls.Add(cancelButton);
                     tableCell2.Controls.Add(treeViewPanel);                   
                 }

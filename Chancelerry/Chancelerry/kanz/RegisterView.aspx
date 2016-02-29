@@ -1,10 +1,16 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RegisterView.aspx.cs" Inherits="Chancelerry.kanz.RegisterView" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     
-    <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Поиск" OnClientClick="showLoadingScreen"/>
-
-    <br />
-
+    <script>
+        function runScript(e)
+        {
+            if (e.keyCode == 13 || e.which == 13)
+            {
+                document.getElementById('MainContent_Button2').focus();
+                return false;
+            }
+        }
+        </script>
     <asp:Button ID="Button1" runat="server" Text="Добавить" Width="362px" OnClick="Button1_Click" OnClientClick="showLoadingScreen"/>
 
     <br />

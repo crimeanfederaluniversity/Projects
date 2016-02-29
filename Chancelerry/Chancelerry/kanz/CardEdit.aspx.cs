@@ -47,6 +47,10 @@ namespace Chancelerry.kanz
             Session["searchList"] = new List<TableActions.SearchValues>(); // сессия поиска 
             var canEditSession =   Session["userID"];
             cardMainDiv.Controls.Add(cardCreateView.CreateViewByRegisterAndCard(_registerId, _cardId, _version, !_canEdit));
+            if (!_canEdit)
+            {
+                CreateButton.Visible = false;
+            }
             createdFields = cardCreateView.allFieldsInCard;
         }
 
