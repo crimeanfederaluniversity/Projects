@@ -228,20 +228,31 @@
     <Content Include="AutomationDepartment\RoleMapping.aspx" />
     <Content Include="AutomationDepartment\IsAvailibleMappingRole.aspx" />
     <Content Include="Info_Pages\RegisterProcessInfo.aspx" />
+    <Content Include="PersonalPagesAdmin\AcademicMobileApplications.aspx" />
+    <Content Include="PersonalPagesAdmin\AutoPassApplications.aspx" />
+    <Content Include="PersonalPagesAdmin\CardOrderApplications.aspx" />
     <Content Include="PersonalPagesAdmin\ChangeUserAccessLevel.aspx" />
     <Content Include="PersonalPagesAdmin\CreateNewModule.aspx" />
     <Content Include="PersonalPagesAdmin\CreatePersonalPage.aspx" />
     <Content Include="PersonalPagesAdmin\EditPersonalPage.aspx" />
+    <Content Include="PersonalPagesAdmin\EquipmentWritoffApplications.aspx" />
+    <Content Include="PersonalPagesAdmin\ITOfficeApplications.aspx" />
+    <Content Include="PersonalPagesAdmin\New1CUserApplications.aspx" />
+    <Content Include="PersonalPagesAdmin\NewEquipmentApplications.aspx" />
+    <Content Include="PersonalPagesAdmin\NewWebCourseApplications.aspx" />
     <Content Include="PersonalPagesAdmin\PersonalMainPage.aspx" />
+    <Content Include="PersonalPagesAdmin\PrintApplications.aspx" />
+    <Content Include="PersonalPagesAdmin\RectorApplications.aspx" />
+    <Content Include="PersonalPagesAdmin\UserAccessChange.aspx" />
     <Content Include="PersonalPagesAdmin\UserChangePesonalPage.aspx" />
     <Content Include="Spinner.css" />
-    <Content Include="StatisticsDepartment\PlannedIndicator.aspx" />
-    <Content Include="StatisticsDepartment\AddSpecialization.aspx" />
-    <Content Include="StatisticsDepartment\Confirm.aspx" />
-    <Content Include="StatisticsDepartment\Document.aspx" />
-    <Content Include="StatisticsDepartment\FastStructure.aspx" />
-    <Content Include="StatisticsDepartment\Manual.aspx" />
-    <Content Include="StatisticsDepartment\MonitoringMain.aspx" />
+    <Content Include="Scripts\StatisticsDepartment\PlannedIndicator.aspx" />
+    <Content Include="Scripts\StatisticsDepartment\AddSpecialization.aspx" />
+    <Content Include="Scripts\StatisticsDepartment\Confirm.aspx" />
+    <Content Include="Scripts\StatisticsDepartment\Document.aspx" />
+    <Content Include="Scripts\StatisticsDepartment\FastStructure.aspx" />
+    <Content Include="Scripts\StatisticsDepartment\Manual.aspx" />
+    <Content Include="Scripts\StatisticsDepartment\MonitoringMain.aspx" />
     <Content Include="App_Themes\theme_1\css\images\Thumbs.db" />
     <Content Include="App_Themes\theme_1\Skin1.skin" />
     <Content Include="KPIWeb.dbml">
@@ -288,11 +299,11 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
-    <Content Include="StatisticsDepartment\BasicParametrs.aspx" />
-    <Content Include="StatisticsDepartment\Indicators.aspx" />
-    <Content Include="StatisticsDepartment\ReportFilling.aspx" />
-    <Content Include="StatisticsDepartment\ReportViewer.aspx" />
-    <Content Include="StatisticsDepartment\StastisticsHomePage.aspx" />
+    <Content Include="Scripts\StatisticsDepartment\BasicParametrs.aspx" />
+    <Content Include="Scripts\StatisticsDepartment\Indicators.aspx" />
+    <Content Include="Scripts\StatisticsDepartment\ReportFilling.aspx" />
+    <Content Include="Scripts\StatisticsDepartment\ReportViewer.aspx" />
+    <Content Include="Scripts\StatisticsDepartment\StastisticsHomePage.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -483,6 +494,27 @@
     <Compile Include="Info_Pages\RegisterProcessInfo.aspx.designer.cs">
       <DependentUpon>RegisterProcessInfo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PersonalPagesAdmin\AcademicMobileApplications.aspx.cs">
+      <DependentUpon>AcademicMobileApplications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\AcademicMobileApplications.aspx.designer.cs">
+      <DependentUpon>AcademicMobileApplications.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\AutoPassApplications.aspx.cs">
+      <DependentUpon>AutoPassApplications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\AutoPassApplications.aspx.designer.cs">
+      <DependentUpon>AutoPassApplications.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\CardOrderApplications.aspx.cs">
+      <DependentUpon>CardOrderApplications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\CardOrderApplications.aspx.designer.cs">
+      <DependentUpon>CardOrderApplications.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PersonalPagesAdmin\ChangeUserAccessLevel.aspx.cs">
       <DependentUpon>ChangeUserAccessLevel.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -511,12 +543,68 @@
     <Compile Include="PersonalPagesAdmin\EditPersonalPage.aspx.designer.cs">
       <DependentUpon>EditPersonalPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PersonalPagesAdmin\EquipmentWritoffApplications.aspx.cs">
+      <DependentUpon>EquipmentWritoffApplications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\EquipmentWritoffApplications.aspx.designer.cs">
+      <DependentUpon>EquipmentWritoffApplications.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\ITOfficeApplications.aspx.cs">
+      <DependentUpon>ITOfficeApplications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\ITOfficeApplications.aspx.designer.cs">
+      <DependentUpon>ITOfficeApplications.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\New1CUserApplications.aspx.cs">
+      <DependentUpon>New1CUserApplications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\New1CUserApplications.aspx.designer.cs">
+      <DependentUpon>New1CUserApplications.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\NewEquipmentApplications.aspx.cs">
+      <DependentUpon>NewEquipmentApplications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\NewEquipmentApplications.aspx.designer.cs">
+      <DependentUpon>NewEquipmentApplications.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\NewWebCourseApplications.aspx.cs">
+      <DependentUpon>NewWebCourseApplications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\NewWebCourseApplications.aspx.designer.cs">
+      <DependentUpon>NewWebCourseApplications.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PersonalPagesAdmin\PersonalMainPage.aspx.cs">
       <DependentUpon>PersonalMainPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PersonalPagesAdmin\PersonalMainPage.aspx.designer.cs">
       <DependentUpon>PersonalMainPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\PrintApplications.aspx.cs">
+      <DependentUpon>PrintApplications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\PrintApplications.aspx.designer.cs">
+      <DependentUpon>PrintApplications.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\RectorApplications.aspx.cs">
+      <DependentUpon>RectorApplications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\RectorApplications.aspx.designer.cs">
+      <DependentUpon>RectorApplications.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\UserAccessChange.aspx.cs">
+      <DependentUpon>UserAccessChange.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonalPagesAdmin\UserAccessChange.aspx.designer.cs">
+      <DependentUpon>UserAccessChange.aspx</DependentUpon>
     </Compile>
     <Compile Include="PersonalPagesAdmin\UserChangePesonalPage.aspx.cs">
       <DependentUpon>UserChangePesonalPage.aspx</DependentUpon>
@@ -528,11 +616,11 @@
     <Compile Include="RectorSession.cs" />
     <Compile Include="Rector\ClassForCharts.cs" />
     <Compile Include="Rector\ForRCalc.cs" />
-    <Compile Include="StatisticsDepartment\PlannedIndicator.aspx.cs">
+    <Compile Include="Scripts\StatisticsDepartment\PlannedIndicator.aspx.cs">
       <DependentUpon>PlannedIndicator.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StatisticsDepartment\PlannedIndicator.aspx.designer.cs">
+    <Compile Include="Scripts\StatisticsDepartment\PlannedIndicator.aspx.designer.cs">
       <DependentUpon>PlannedIndicator.aspx</DependentUpon>
     </Compile>
     <Compile Include="Polish.cs" />
@@ -553,81 +641,81 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="StatisticsDepartment\AddSpecialization.aspx.cs">
+    <Compile Include="Scripts\StatisticsDepartment\AddSpecialization.aspx.cs">
       <DependentUpon>AddSpecialization.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StatisticsDepartment\AddSpecialization.aspx.designer.cs">
+    <Compile Include="Scripts\StatisticsDepartment\AddSpecialization.aspx.designer.cs">
       <DependentUpon>AddSpecialization.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StatisticsDepartment\BasicParametrs.aspx.cs">
+    <Compile Include="Scripts\StatisticsDepartment\BasicParametrs.aspx.cs">
       <DependentUpon>BasicParametrs.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StatisticsDepartment\BasicParametrs.aspx.designer.cs">
+    <Compile Include="Scripts\StatisticsDepartment\BasicParametrs.aspx.designer.cs">
       <DependentUpon>BasicParametrs.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StatisticsDepartment\Confirm.aspx.cs">
+    <Compile Include="Scripts\StatisticsDepartment\Confirm.aspx.cs">
       <DependentUpon>Confirm.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StatisticsDepartment\Confirm.aspx.designer.cs">
+    <Compile Include="Scripts\StatisticsDepartment\Confirm.aspx.designer.cs">
       <DependentUpon>Confirm.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StatisticsDepartment\Document.aspx.cs">
+    <Compile Include="Scripts\StatisticsDepartment\Document.aspx.cs">
       <DependentUpon>Document.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StatisticsDepartment\Document.aspx.designer.cs">
+    <Compile Include="Scripts\StatisticsDepartment\Document.aspx.designer.cs">
       <DependentUpon>Document.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StatisticsDepartment\FastStructure.aspx.cs">
+    <Compile Include="Scripts\StatisticsDepartment\FastStructure.aspx.cs">
       <DependentUpon>FastStructure.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StatisticsDepartment\FastStructure.aspx.designer.cs">
+    <Compile Include="Scripts\StatisticsDepartment\FastStructure.aspx.designer.cs">
       <DependentUpon>FastStructure.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StatisticsDepartment\Indicators.aspx.cs">
+    <Compile Include="Scripts\StatisticsDepartment\Indicators.aspx.cs">
       <DependentUpon>Indicators.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StatisticsDepartment\Indicators.aspx.designer.cs">
+    <Compile Include="Scripts\StatisticsDepartment\Indicators.aspx.designer.cs">
       <DependentUpon>Indicators.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StatisticsDepartment\Manual.aspx.cs">
+    <Compile Include="Scripts\StatisticsDepartment\Manual.aspx.cs">
       <DependentUpon>Manual.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StatisticsDepartment\Manual.aspx.designer.cs">
+    <Compile Include="Scripts\StatisticsDepartment\Manual.aspx.designer.cs">
       <DependentUpon>Manual.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StatisticsDepartment\MonitoringMain.aspx.cs">
+    <Compile Include="Scripts\StatisticsDepartment\MonitoringMain.aspx.cs">
       <DependentUpon>MonitoringMain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StatisticsDepartment\MonitoringMain.aspx.designer.cs">
+    <Compile Include="Scripts\StatisticsDepartment\MonitoringMain.aspx.designer.cs">
       <DependentUpon>MonitoringMain.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StatisticsDepartment\ReportFilling.aspx.cs">
+    <Compile Include="Scripts\StatisticsDepartment\ReportFilling.aspx.cs">
       <DependentUpon>ReportFilling.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StatisticsDepartment\ReportFilling.aspx.designer.cs">
+    <Compile Include="Scripts\StatisticsDepartment\ReportFilling.aspx.designer.cs">
       <DependentUpon>ReportFilling.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StatisticsDepartment\ReportViewer.aspx.cs">
+    <Compile Include="Scripts\StatisticsDepartment\ReportViewer.aspx.cs">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StatisticsDepartment\ReportViewer.aspx.designer.cs">
+    <Compile Include="Scripts\StatisticsDepartment\ReportViewer.aspx.designer.cs">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StatisticsDepartment\StastisticsHomePage.aspx.cs">
+    <Compile Include="Scripts\StatisticsDepartment\StastisticsHomePage.aspx.cs">
       <DependentUpon>StastisticsHomePage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StatisticsDepartment\StastisticsHomePage.aspx.designer.cs">
+    <Compile Include="Scripts\StatisticsDepartment\StastisticsHomePage.aspx.designer.cs">
       <DependentUpon>StastisticsHomePage.aspx</DependentUpon>
     </Compile>
     <Compile Include="SubdomainRedirect.cs" />
