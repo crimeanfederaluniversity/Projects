@@ -461,7 +461,10 @@ namespace Chancelerry.kanz
                     dicrionaryDropDownList.Style["Height"] = currentField.height + "px";
                     dicrionaryDropDownList.Style["Width"] = currentField.width + "px";
                     dicrionaryDropDownList.ID = "DictionaryDropDown" + fieldId;
-                    dicrionaryDropDownList.Attributes.Add("onchange", "document.getElementById('MainContent_" + currentFieldTextBox.ID + "').value=document.getElementById('MainContent_" + dicrionaryDropDownList.ID + "').value;");                    
+                    dicrionaryDropDownList.Attributes.Add("onchange", "if(document.getElementById('MainContent_" + dicrionaryDropDownList.ID + "').value=='')" +
+                                                                      "{document.getElementById('MainContent_" + currentFieldTextBox.ID + "').style.visibility = 'visible';} " +
+                                                                      "else {document.getElementById('MainContent_" + currentFieldTextBox.ID + "').style.visibility = 'hidden';}" +
+                                                                      "document.getElementById('MainContent_" + currentFieldTextBox.ID + "').value=document.getElementById('MainContent_" + dicrionaryDropDownList.ID + "').value;");                    
                     int dictionaryId = currentField.fk_dictionary ?? 0;
                     dicrionaryDropDownList.Items.AddRange(_common.GetDictionaryValues(dictionaryId));
                     if (currentFieldTextBox.Text.Any())
@@ -518,6 +521,8 @@ namespace Chancelerry.kanz
 
                     TreeView strucTreeView = new TreeView();
                     strucTreeView.ID = "treeView" + fieldId;
+                    scrollPanel.CssClass = "custom-tree";
+                    strucTreeView.CssClass = "custom-tree";
                     //strucTreeView.SelectedNodeChanged += treeViewClick;
                     //strucTreeView.ShowCheckBoxes = TreeNodeTypes.All;
                     strucTreeView.Nodes.Add(_common.GetStructTreeViewNode("MainContent_" + currentFieldTextBox.ID, "MainContent_"+ treeViewPanel.ID,fullStruct));
