@@ -147,6 +147,18 @@ namespace Chancelerry.kanz
                 Response.Redirect("RegisterView.aspx");
             }
         }
+
+        protected void Button7_Click(object sender, EventArgs e)
+        {
+            Session["pageCntrl"] = 0;
+            Response.Redirect("RegisterView.aspx");
+        }
+
+        protected void Button8_Click(object sender, EventArgs e)
+        {
+            Session["pageCntrl"] = (int)Session["pageCount"]-1;
+            Response.Redirect("RegisterView.aspx");
+        }
     }
     
 }
