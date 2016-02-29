@@ -12,7 +12,6 @@ namespace KPIWeb.PersonalPagesAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
@@ -29,14 +28,12 @@ namespace KPIWeb.PersonalPagesAdmin
             dataTable.Columns.Add(new DataColumn("Date", typeof(string)));
             dataTable.Columns.Add(new DataColumn("FIO", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Text", typeof(string)));
-            dataTable.Columns.Add(new DataColumn("Text2", typeof(string)));
-            dataTable.Columns.Add(new DataColumn("TelephonNumber", typeof(string)));
 
             using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
             {
                 List<Aplication> rectorapp;
                 {
-                    rectorapp = (from a in kpiWebDataContext.Aplications where a.Active == true && a.FK_ApplicationType == 10 select a).ToList();
+                    rectorapp = (from a in kpiWebDataContext.Aplications where a.Confirmed == 0 && a.Active == true && a.FK_ApplicationType == 10 select a).ToList();
                 }
                 foreach (var app in rectorapp)
                 {
@@ -45,19 +42,15 @@ namespace KPIWeb.PersonalPagesAdmin
                     dataRow["ID"] = app.ID;
                     dataRow["Date"] = app.Date;
                     dataRow["FIO"] = fio.Email;
-                    dataRow["Coursename"] = app.Text.IndexOf('/');
-                    dataRow["Teacher"] = app.Text;
-                    dataRow["FileURL"] = app.FileURL;
+                    dataRow["Text"] = app.Text;           
                     dataTable.Rows.Add(dataRow);
                 }
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
             }
         }
-
-        protected void YesButtonClick(object sender, EventArgs e)
+        protected void FileButtonClick(object sender, EventArgs e)
         {
-
             Button button = (Button)sender;
             {
                 using (KPIWebDataContext kPiDataContext = new KPIWebDataContext())
@@ -65,18 +58,30 @@ namespace KPIWeb.PersonalPagesAdmin
                     Aplication app = (from a in kPiDataContext.Aplications
                                       where a.ID == Convert.ToInt32(button.CommandArgument)
                                       select a).FirstOrDefault();
-
+                    if (app.FileURL != null)
+                    {
+                        Response.Redirect("http://cfu-portal.ru/" + app.FileURL);
+                    }
+                }
+            }
+        }
+        protected void YesButtonClick(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            {
+                using (KPIWebDataContext kPiDataContext = new KPIWebDataContext())
+                {
+                    Aplication app = (from a in kPiDataContext.Aplications
+                                      where a.ID == Convert.ToInt32(button.CommandArgument)
+                                      select a).FirstOrDefault();
                     app.Confirmed = 1;
                     kPiDataContext.SubmitChanges();
                 }
                 RefreshGrid();
-
             }
-
         }
         protected void NoButtonClick(object sender, EventArgs e)
         {
-
             Button button = (Button)sender;
             {
                 using (KPIWebDataContext kPiDataContext = new KPIWebDataContext())
@@ -84,14 +89,11 @@ namespace KPIWeb.PersonalPagesAdmin
                     Aplication app = (from a in kPiDataContext.Aplications
                                       where a.ID == Convert.ToInt32(button.CommandArgument)
                                       select a).FirstOrDefault();
-
                     app.Confirmed = 2;
                     kPiDataContext.SubmitChanges();
                 }
                 RefreshGrid();
-
             }
-
         }
     }
 }

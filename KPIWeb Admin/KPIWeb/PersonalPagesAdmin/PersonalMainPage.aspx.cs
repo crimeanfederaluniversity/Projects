@@ -67,7 +67,52 @@ namespace KPIWeb.PersonalPagesAdmin
 
         protected void Button5_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/PersonalPagesAdmin/UserApplications.aspx");
+            Response.Redirect("~/PersonalPagesAdmin/AcademicMobileApplications.aspx");
+        }
+
+        protected void Button6_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/PersonalPagesAdmin/AutoPassApplications.aspx");
+        }
+
+        protected void Button7_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/PersonalPagesAdmin/CardOrderApplications.aspx");
+        }
+
+        protected void Button8_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/PersonalPagesAdmin/EquipmentWritOffApplications.aspx");
+        }
+
+        protected void Button9_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/PersonalPagesAdmin/ITOfficeApplications.aspx");
+        }
+
+        protected void Button10_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/PersonalPagesAdmin/New1CUserApplications.aspx");
+        }
+
+        protected void Button11_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/PersonalPagesAdmin/NewEquipmentApplications.aspx");
+        }
+
+        protected void Button12_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/PersonalPagesAdmin/NewWebCourseApplications.aspx");
+        }
+
+        protected void Button13_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/PersonalPagesAdmin/PrintApplications.aspx");
+        }
+
+        protected void Button14_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/PersonalPagesAdmin/RectorApplications.aspx");
         }
     }
 }

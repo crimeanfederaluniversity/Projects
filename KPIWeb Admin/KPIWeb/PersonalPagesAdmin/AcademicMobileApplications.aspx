@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AcademicMobileApplications.aspx.cs" Inherits="KPIWeb.PersonalPagesAdmin.AcademicMobileApplications" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="AcademicMobileApplications.aspx.cs" Inherits="KPIWeb.PersonalPagesAdmin.AcademicMobileApplications" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <p>
         <span style="font-size: 20px">Заявки пользователей на академическую мобильность:</span></p>
@@ -43,12 +43,12 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Принять">
                     <ItemTemplate>
-                        <asp:Button ID="YesButton" runat="server" CommandArgument='<%# Eval("ID") %>' CommandName="Select" OnClick="DeleteButtonClick" Text="Принять" Width="200px" />
+                        <asp:Button ID="YesButton" runat="server" CommandArgument='<%# Eval("ID") %>' CommandName="Select" OnClick="YesButtonClick" Text="Принять" Width="200px" />
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Отказать">
                     <ItemTemplate>
-                        <asp:Button ID="NoButton" runat="server" CommandArgument='<%# Eval("ID") %>' CommandName="Select" OnClick="DeleteButtonClick" Text="Отказать" Width="200px" />
+                        <asp:Button ID="NoButton" runat="server" CommandArgument='<%# Eval("ID") %>' CommandName="Select" OnClick="NoButtonClick" Text="Отказать" Width="200px" />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

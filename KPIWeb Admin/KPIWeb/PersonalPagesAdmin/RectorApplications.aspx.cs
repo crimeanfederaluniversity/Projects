@@ -36,7 +36,7 @@ namespace KPIWeb.PersonalPagesAdmin
                 {
                     List<Aplication> rectorapp;
                     {
-                        rectorapp = (from a in kpiWebDataContext.Aplications where a.Active == true && a.FK_ApplicationType == 2 select a).ToList();
+                        rectorapp = (from a in kpiWebDataContext.Aplications where a.Confirmed == 0 && a.Active == true && a.FK_ApplicationType == 2 select a).ToList();
                     }
                     foreach (var app in rectorapp)
                     {
@@ -45,7 +45,7 @@ namespace KPIWeb.PersonalPagesAdmin
                         dataRow["ID"] = app.ID;
                         dataRow["Date"] = app.Date;
                         dataRow["FIO"] = fio.Email;
-                        dataRow["Text"] = app.Text.IndexOf('/'); 
+                        dataRow["Text"] = app.Text; 
                         dataRow["Text2"] = app.Text;
                         dataRow["TelephonNumber"] = app.TelephoneNumber;        
                         dataTable.Rows.Add(dataRow);

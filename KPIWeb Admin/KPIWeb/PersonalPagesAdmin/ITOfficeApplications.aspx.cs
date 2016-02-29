@@ -35,7 +35,7 @@ namespace KPIWeb.PersonalPagesAdmin
             {
                 List<Aplication> rectorapp;
                 {
-                    rectorapp = (from a in kpiWebDataContext.Aplications where a.Active == true && a.FK_ApplicationType == 6 select a).ToList();
+                    rectorapp = (from a in kpiWebDataContext.Aplications where a.Confirmed==0 && a.Active == true && a.FK_ApplicationType == 6 select a).ToList();
                 }
                 foreach (var app in rectorapp)
                 {

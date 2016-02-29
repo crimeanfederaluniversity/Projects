@@ -28,16 +28,14 @@ namespace KPIWeb.PersonalPagesAdmin
             dataTable.Columns.Add(new DataColumn("Date", typeof(string)));
             dataTable.Columns.Add(new DataColumn("FIO", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Text", typeof(string)));
-            dataTable.Columns.Add(new DataColumn("Text2", typeof(string)));
-            dataTable.Columns.Add(new DataColumn("Text3", typeof(string)));
-            dataTable.Columns.Add(new DataColumn("Text4", typeof(string)));
+            
             dataTable.Columns.Add(new DataColumn("TelephonNumber", typeof(string)));
 
             using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
             {
                 List<Aplication> rectorapp;
                 {
-                    rectorapp = (from a in kpiWebDataContext.Aplications where a.Active == true && a.FK_ApplicationType == 9 select a).ToList();
+                    rectorapp = (from a in kpiWebDataContext.Aplications where a.Confirmed == 0 &&  a.Active == true && a.FK_ApplicationType == 9 select a).ToList();
                 }
                 foreach (var app in rectorapp)
                 {
@@ -46,10 +44,7 @@ namespace KPIWeb.PersonalPagesAdmin
                     dataRow["ID"] = app.ID;
                     dataRow["Date"] = app.Date;
                     dataRow["FIO"] = fio.Email;
-                    dataRow["Text"] = app.Text.IndexOf('/');
-                    dataRow["Text2"] = app.Text;
-                    dataRow["Text3"] = app.Text.IndexOf('/');
-                    dataRow["Text4"] = app.Text;
+                    dataRow["Text"] = app.Text;     
                     dataRow["TelephonNumber"] = app.TelephoneNumber;
                     dataTable.Rows.Add(dataRow);
                 }

@@ -34,7 +34,7 @@ namespace KPIWeb.PersonalPagesAdmin
             {
                 List<Aplication> autoapp;
                 {
-                    autoapp = (from a in kpiWebDataContext.Aplications where a.Active == true && a.FK_ApplicationType==3 select a).ToList();
+                    autoapp = (from a in kpiWebDataContext.Aplications where a.Confirmed==0 && a.Active == true && a.FK_ApplicationType==3 select a).ToList();
                 }
 
                 foreach (var app in autoapp)
@@ -56,7 +56,6 @@ namespace KPIWeb.PersonalPagesAdmin
 
         protected void YesButtonClick(object sender, EventArgs e)
         {
-
             Button button = (Button)sender;
             {
                 using (KPIWebDataContext kPiDataContext = new KPIWebDataContext())
@@ -64,12 +63,10 @@ namespace KPIWeb.PersonalPagesAdmin
                     Aplication app =  (from a in kPiDataContext.Aplications
                                             where a.ID == Convert.ToInt32(button.CommandArgument)
                                             select a).FirstOrDefault();
-
                     app.Confirmed = 1;
                     kPiDataContext.SubmitChanges();                 
                 }
                 RefreshGrid();
-
             }
 
         }

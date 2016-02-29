@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -28,15 +29,14 @@ namespace KPIWeb.PersonalPagesAdmin
             dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Date", typeof(string)));
             dataTable.Columns.Add(new DataColumn("FIO", typeof(string)));
-            dataTable.Columns.Add(new DataColumn("Text", typeof(string)));
-            dataTable.Columns.Add(new DataColumn("FileURL", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("Text", typeof(string)));          
             dataTable.Columns.Add(new DataColumn("TelephonNumber", typeof(string)));
 
             using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
             {
                 List<Aplication> rectorapp;
                 {
-                    rectorapp = (from a in kpiWebDataContext.Aplications where a.Active == true && a.FK_ApplicationType == 4 select a).ToList();
+                    rectorapp = (from a in kpiWebDataContext.Aplications where a.Confirmed == 0 &&  a.Active == true && a.FK_ApplicationType == 4 select a).ToList();
                 }
                 foreach (var app in rectorapp)
                 {
@@ -45,8 +45,7 @@ namespace KPIWeb.PersonalPagesAdmin
                     dataRow["ID"] = app.ID;
                     dataRow["Date"] = app.Date;
                     dataRow["FIO"] = fio.Email;
-                    dataRow["Text"] = app.Text;
-                    dataRow["FileURL"] = app.FileURL;
+                    dataRow["Text"] = app.Text;        
                     dataRow["TelephonNumber"] = app.TelephoneNumber;
                     dataTable.Rows.Add(dataRow);
                 }
@@ -54,7 +53,25 @@ namespace KPIWeb.PersonalPagesAdmin
                 GridView1.DataBind();
             }
         }
+        protected void FileButtonClick(object sender, EventArgs e)
+        {
 
+            Button button = (Button)sender;
+            {
+                using (KPIWebDataContext kPiDataContext = new KPIWebDataContext())
+                {
+                    Aplication app = (from a in kPiDataContext.Aplications
+                                      where a.ID == Convert.ToInt32(button.CommandArgument)
+                                      select a).FirstOrDefault();
+                  
+                    if ( app.FileURL!=null)
+                    {
+                         Response.Redirect("http://cfu-portal.ru/"+ app.FileURL);                     
+                    }
+                }
+            }
+
+        }
         protected void YesButtonClick(object sender, EventArgs e)
         {
 

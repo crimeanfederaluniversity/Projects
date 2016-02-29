@@ -11,6 +11,45 @@ namespace KPIWeb.PersonalPagesAdmin
 {
     public partial class CreatePersonalPage : System.Web.UI.Page
     {
+
+        public void ChangeView()
+        {
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            if (DropDownList4.SelectedIndex == 0)
+            {
+                Label5.Text = "Должность";
+                Label6.Text = "Ученая степень";
+                List<ThirdLevelSubdivisionTable> Third_stageList = (from item in kPiDataContext.ThirdLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
+                var dictionary3 = new Dictionary<int, string>();
+                dictionary3.Add(-1, "Выберите кафедру");
+                foreach (var item in Third_stageList)
+                {
+                    dictionary3.Add(item.ThirdLevelSubdivisionTableID, item.Name);
+
+                    DropDownList3.DataTextField = "Value";
+                    DropDownList3.DataValueField = "Key";
+                    DropDownList3.DataSource = dictionary3;
+                    DropDownList3.DataBind();
+                }
+            }
+            else
+            {
+                Label5.Text = "Курс";
+                Label6.Text = "Год поступления";
+                List<StudentGroupsTable> Third_stageList = (from item in kPiDataContext.StudentGroupsTable select item).OrderBy(mc => mc.Name).ToList();
+                var dictionary3 = new Dictionary<int, string>();
+                dictionary3.Add(-1, "Выберите группу");
+                foreach (var item in Third_stageList)
+                {
+                    dictionary3.Add(item.ID, item.Name);
+
+                    DropDownList3.DataTextField = "Value";
+                    DropDownList3.DataValueField = "Key";
+                    DropDownList3.DataSource = dictionary3;
+                    DropDownList3.DataBind();
+                }
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             Serialization UserSer = (Serialization)Session["UserID"];
@@ -26,7 +65,8 @@ namespace KPIWeb.PersonalPagesAdmin
             }
 
             if (!(Page.IsPostBack))
-            {KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            {
+                KPIWebDataContext kPiDataContext = new KPIWebDataContext();
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add(new DataColumn("ID", typeof(int)));
                 dataTable.Columns.Add(new DataColumn("Access", typeof(bool)));
@@ -43,41 +83,8 @@ namespace KPIWeb.PersonalPagesAdmin
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
 
-                
-                if (DropDownList4.SelectedIndex == 0)
-                {
-                    Label5.Text = "Должность";
-                    Label6.Text = "Ученая степень";
-                    List<ThirdLevelSubdivisionTable> Third_stageList = (from item in kPiDataContext.ThirdLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
-                    var dictionary3 = new Dictionary<int, string>();
-                    dictionary3.Add(-1, "Выберите кафедру");
-                    foreach (var item in Third_stageList)
-                    {
-                        dictionary3.Add(item.ThirdLevelSubdivisionTableID, item.Name);
+                ChangeView();
 
-                        DropDownList3.DataTextField = "Value";
-                        DropDownList3.DataValueField = "Key";
-                        DropDownList3.DataSource = dictionary3;
-                        DropDownList3.DataBind();
-                    }
-                }
-                else
-                {
-                    Label5.Text = "Курс";
-                    Label6.Text = "Год поступления";
-                    List<StudentGroupsTable> Third_stageList = (from item in kPiDataContext.StudentGroupsTable select item).OrderBy(mc => mc.Name).ToList();
-                    var dictionary3 = new Dictionary<int, string>();
-                    dictionary3.Add(-1, "Выберите группу");
-                    foreach (var item in Third_stageList)
-                    {
-                        dictionary3.Add(item.ID, item.Name);
-
-                        DropDownList3.DataTextField = "Value";
-                        DropDownList3.DataValueField = "Key";
-                        DropDownList3.DataSource = dictionary3;
-                        DropDownList3.DataBind();
-                    }
-                }
 
 
                 List<FirstLevelSubdivisionTable> First_stageList = (from item in kPiDataContext.FirstLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
@@ -108,69 +115,69 @@ namespace KPIWeb.PersonalPagesAdmin
                     DropDownList2.DataSource = dictionary2;
                     DropDownList2.DataBind();
                 }
- 
+
 
             }
         }
 
-        protected void Button1_Click(object sender, EventArgs e) 
-{ 
-    KPIWebDataContext kPiDataContext = new KPIWebDataContext(); 
-    if ((from a in kPiDataContext.UsersTable where a.Email == EmailText.Text && a.Active == true select a) .ToList().Count > 0) 
-{ 
-    Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script", "alert('Введенный адрес электронной почты уже зарегестрирован, введите другой');", true); 
-} 
-else 
-{ 
-    UsersTable user = new UsersTable(); 
-    user.Active = true; 
-    user.Surname = Surname.Text; 
-    user.Name = Name.Text; 
-    user.Patronimyc = Patronimyc.Text;
-    user.FK_FirstLevelSubdivisionTable = Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value);
-    user.FK_SecondLevelSubdivisionTable = Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value);
-    user.Data_Status = true; 
-    user.Email = EmailText.Text;
-    user.Login = "";
-    user.Password = "";
-    if (DropDownList4.SelectedIndex == 0) 
-{ 
-    user.AccessLevel = 0; 
-    user.Position = Textbox1.Text; 
-    user.AcademicDegree = Textbox2.Text;
-    user.FK_ThirdLevelSubdivisionTable = Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value);
-} 
-    else 
-{
-    user.AccessLevel = Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value); 
-    user.Kurs = Convert.ToInt32(Textbox1.Text); 
-    user.YearEnter = Convert.ToInt32(Textbox2.Text);
-    user.FK_StudentGroup = Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value);
-        
-} 
-    kPiDataContext.UsersTable.InsertOnSubmit(user); 
-    kPiDataContext.SubmitChanges();
-    for (int i = 1; i < GridView1.Rows.Count; i++)
-    {
-        CheckBox confirmed = (CheckBox)GridView1.Rows[i].FindControl("Access");
-        Label label = (Label)GridView1.Rows[i].FindControl("ID");
-        if (confirmed.Checked == true)
+        protected void Button1_Click(object sender, EventArgs e)
         {
-            UsersAndUserGroupMappingTable newuseraccess = new UsersAndUserGroupMappingTable();
-            newuseraccess.Active = true;
-            newuseraccess.FK_GroupTable = Convert.ToInt32(label.Text);
-            newuseraccess.FK_UserTable = user.UsersTableID;
-            kPiDataContext.UsersAndUserGroupMappingTable.InsertOnSubmit(newuseraccess);
-            kPiDataContext.SubmitChanges();
+            KPIWebDataContext kPiDataContext = new KPIWebDataContext();
+            if ((from a in kPiDataContext.UsersTable where a.Email == EmailText.Text && a.Active == true select a).ToList().Count > 0)
+            {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Введенный адрес электронной почты уже зарегестрирован, введите другой');", true);
+            }
+            else
+            {
+                UsersTable user = new UsersTable();
+                user.Active = true;
+                user.Surname = Surname.Text;
+                user.Name = Name.Text;
+                user.Patronimyc = Patronimyc.Text;
+                user.FK_FirstLevelSubdivisionTable = Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value);
+                user.FK_SecondLevelSubdivisionTable = Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value);
+                user.Data_Status = true;
+                user.Email = EmailText.Text;
+                user.Login = "";
+                user.Password = "";
+                if (DropDownList4.SelectedIndex == 0)
+                {
+                    user.AccessLevel = 0;
+                    user.Position = Textbox1.Text;
+                    user.AcademicDegree = Textbox2.Text;
+                    user.FK_ThirdLevelSubdivisionTable = Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value);
+                }
+                else
+                {
+                    user.AccessLevel = Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value);
+                    user.Kurs = Convert.ToInt32(Textbox1.Text);
+                    user.YearEnter = Convert.ToInt32(Textbox2.Text);
+                    user.FK_StudentGroup = Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value);
+
+                }
+                kPiDataContext.UsersTable.InsertOnSubmit(user);
+                kPiDataContext.SubmitChanges();
+                for (int i = 1; i < GridView1.Rows.Count; i++)
+                {
+                    CheckBox confirmed = (CheckBox)GridView1.Rows[i].FindControl("Access");
+                    Label label = (Label)GridView1.Rows[i].FindControl("ID");
+                    if (confirmed.Checked == true)
+                    {
+                        UsersAndUserGroupMappingTable newuseraccess = new UsersAndUserGroupMappingTable();
+                        newuseraccess.Active = true;
+                        newuseraccess.FK_GroupTable = Convert.ToInt32(label.Text);
+                        newuseraccess.FK_UserTable = user.UsersTableID;
+                        kPiDataContext.UsersAndUserGroupMappingTable.InsertOnSubmit(newuseraccess);
+                        kPiDataContext.SubmitChanges();
+                    }
+                }
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Пользователь добавлен!');", true);
+            }
         }
-    }
-    Page.ClientScript.RegisterClientScriptBlock(typeof (Page), "Script","alert('Пользователь добавлен!');", true); 
-} 
-}
 
         protected void DropDownList4_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            ChangeView();
         }
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -279,6 +286,6 @@ else
         {
             Response.Redirect("~/PersonalPagesAdmin/PersonalMainPage.aspx");
         }
-} 
+    }
 
-} 
+}
