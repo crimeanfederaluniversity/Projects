@@ -94,17 +94,17 @@ namespace Chancelerry
             TableCell cell = new TableCell();
 
             ImageButton buttonEdit = new ImageButton();
-            buttonEdit.ImageUrl= "http://img.stockfresh.com/files/d/dvarg/x/61/2294589_46721166.jpg";
+            buttonEdit.ImageUrl= "https://www.librarything.com/pics/edit-pencil.gif";
             buttonEdit.Attributes.Add("_cardID", cardID.ToString());
             buttonEdit.Click += RedirectToEdit;
 
             ImageButton buttonView = new ImageButton();
-            buttonView.ImageUrl = "http://www.iggintel.com/site/iguard_global_intelligence_inc/assets/images/icon-observer-v2.png";
+            buttonView.ImageUrl = "https://www.epactnetwork.com/images/icons/icon-view.png";
             buttonView.Attributes.Add("_cardID", cardID.ToString());
             buttonView.Click += RedirectToView;
 
             ImageButton buttonDelete = new ImageButton();
-            buttonDelete.ImageUrl = "http://zarabotok-na-klikakh.ru/wp-content/uploads/2015/04/stilist.jpg";
+            buttonDelete.ImageUrl = "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR7zWvsxCGa_Qazr5f8YoI_VBF-XSi7gMkZYb2qqJMKKYMvOHapPw";
             buttonDelete.Attributes.Add("_cardID", cardID.ToString());
             buttonDelete.Click += DeleteCard;
             buttonDelete.OnClientClick = "return confirm('Вы уверены, что хотите удалить?');";
