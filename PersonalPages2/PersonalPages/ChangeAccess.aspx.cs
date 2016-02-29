@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web.UI.WebControls;
+using System.Web.UI;
 
 namespace PersonalPages
 {
@@ -11,7 +12,10 @@ namespace PersonalPages
 
              protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Page.IsPostBack)
+            {
             GridApdate();
+            }
         }
         protected void GridApdate()
         {
@@ -62,53 +66,21 @@ namespace PersonalPages
             int userToChangeId = ser.Id;
             PersonalPagesDataContext kpiWebDataContext = new PersonalPagesDataContext();
 
-            for (int i = 1; i < GridView1.Rows.Count; i++)
+            for (int i = 0; i < GridView1.Rows.Count; i++)
             {
-                CheckBox confirmed = (CheckBox)GridView1.Rows[i].FindControl("Access");
+                CheckBox confirmed = (CheckBox)GridView1.Rows[i].FindControl("EarlieAccess");
                 Label label = (Label)GridView1.Rows[i].FindControl("ID");
-                UsersAndUserGroupMappingTable checkedgroups = (from a in kpiWebDataContext.UsersAndUserGroupMappingTable
-                     where a.FK_UserTable == userToChangeId && a.UserAndGroupID == Convert.ToInt32(label.Text)
-                     select a).FirstOrDefault();
-                if (checkedgroups.FK_GroupTable != null)
+
+                if (confirmed.Checked == true)
                 {
-                    if (checkedgroups.Active == true && confirmed.Checked == false)
+                    UsersAndUserGroupMappingTable checkedgroup = (from a in kpiWebDataContext.UsersAndUserGroupMappingTable
+                                                                  where a.FK_UserTable == userToChangeId && a.FK_GroupTable == Convert.ToInt32(label.Text)
+                                                                  select a).FirstOrDefault();
+                    if (checkedgroup != null)
                     {
-                        UserGroupTable name = (from a in kpiWebDataContext.UserGroupTable
-                                               where a.UserGroupID == checkedgroups.FK_GroupTable
-                                               select a).FirstOrDefault();
-                        checkedgroups.Active = false;
-                        checkedgroups.Confirmed = false;
-                        kpiWebDataContext.SubmitChanges();
-                        Aplications newkillaccess = new Aplications();
-                        newkillaccess.Active = true;
-                        newkillaccess.FK_ApplicationType = 12;
-                        newkillaccess.FK_UserAdd = userToChangeId;
-                        newkillaccess.Date = DateTime.Now;
-                        newkillaccess.Text = "Закрыть доступ к " + name.UserGroupName.ToString();
-                        kpiWebDataContext.Aplications.InsertOnSubmit(newkillaccess);
-                        kpiWebDataContext.SubmitChanges();
+                        checkedgroup.Active = true;
                     }
-                    if (checkedgroups.Active == false && confirmed.Checked == true)
-                    {
-                        UserGroupTable name = (from a in kpiWebDataContext.UserGroupTable
-                                               where a.UserGroupID == checkedgroups.FK_GroupTable
-                                               select a).FirstOrDefault();
-                        checkedgroups.Active = true;
-                        checkedgroups.Confirmed = false;
-                        kpiWebDataContext.SubmitChanges();
-                        Aplications newkillaccess = new Aplications();
-                        newkillaccess.Active = true;
-                        newkillaccess.FK_ApplicationType = 12;
-                        newkillaccess.FK_UserAdd = userToChangeId;
-                        newkillaccess.Date = DateTime.Now;
-                        newkillaccess.Text = "Открыть доступ к " + name.UserGroupName.ToString();
-                        kpiWebDataContext.Aplications.InsertOnSubmit(newkillaccess);
-                        kpiWebDataContext.SubmitChanges();
-                    }
-                }
-                else
-                {
-                    if (confirmed.Checked == true)
+                    else
                     {
                         UsersAndUserGroupMappingTable usergroup = new UsersAndUserGroupMappingTable();
                         usergroup.FK_UserTable = userToChangeId;
@@ -117,25 +89,24 @@ namespace PersonalPages
                         usergroup.Confirmed = false;
                         kpiWebDataContext.UsersAndUserGroupMappingTable.InsertOnSubmit(usergroup);
                         kpiWebDataContext.SubmitChanges();
-                        UserGroupTable name = (from a in kpiWebDataContext.UserGroupTable
-                                               where a.UserGroupID == usergroup.FK_GroupTable
-                                               select a).FirstOrDefault();
-                        Aplications newkillaccess = new Aplications();
-                        newkillaccess.Active = true;
-                        newkillaccess.FK_ApplicationType = 12;
-                        newkillaccess.FK_UserAdd = userToChangeId;
-                        newkillaccess.Date = DateTime.Now;
-                        newkillaccess.Text = "Открыть доступ к " + name.UserGroupName.ToString();
-                        kpiWebDataContext.Aplications.InsertOnSubmit(newkillaccess);
-                        kpiWebDataContext.SubmitChanges();
-                    }
-                    else
-                    {
-                        continue;
                     }
                 }
+                else
+                {
+                    UsersAndUserGroupMappingTable checkedgroup = (from a in kpiWebDataContext.UsersAndUserGroupMappingTable
+                                                                  where a.FK_UserTable == userToChangeId && a.FK_GroupTable == Convert.ToInt32(label.Text)
+                                                                  select a).FirstOrDefault();
+                    if (checkedgroup != null)
+                    {
+                        checkedgroup.Active = false;
+                        checkedgroup.Confirmed = false;
+                        kpiWebDataContext.SubmitChanges();
+                    }
+
+                }
             }
-            Response.Redirect("~/Default.aspx");
+            GridApdate();
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка на изменение прав успешно отправлена!');", true);
         }
 
 

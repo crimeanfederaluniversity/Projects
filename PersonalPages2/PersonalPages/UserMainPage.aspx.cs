@@ -102,7 +102,6 @@ namespace PersonalPages
                         Response.Redirect(autolog.URLtoGroupMain);
                     }                
                     }
-
                     if (vhod != null && vhod> 1)
                     {
                         UserGroupTable groupID = (from a in usersDB.UserGroupTable where a.Active == true && a.Fk_ProjectsTable == Convert.ToInt32(button.AlternateText)
@@ -121,7 +120,6 @@ namespace PersonalPages
              {
                  Response.Redirect("~/1CForm.aspx");
              }
-
              protected void Button2_Click(object sender, EventArgs e)
              {
                  Response.Redirect("~/CardOrder.aspx");
@@ -130,8 +128,6 @@ namespace PersonalPages
              protected void Button3_Click(object sender, EventArgs e)
              {
                  Response.Redirect("~/EquipmentWriteOff.aspx");
-             }
-
-             
+             }             
     }
 }

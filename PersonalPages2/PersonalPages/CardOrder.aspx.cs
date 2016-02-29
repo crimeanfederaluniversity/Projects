@@ -26,7 +26,7 @@ namespace PersonalPages
             if (FileUpload1.HasFile) 
             { 
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-            Aplications neworder = new Aplications();
+            Aplication neworder = new Aplication();
             neworder.Active = true;
             neworder.FK_ApplicationType = 4;
             neworder.FK_UserAdd = userID;

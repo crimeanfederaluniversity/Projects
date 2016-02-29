@@ -11,7 +11,32 @@ namespace PersonalPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Serialization UserSer = (Serialization)Session["UserID"];
+            if (UserSer == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userID = UserSer.Id;
+            PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
+            Aplication aplication = (from a in usersDB.Aplications where a.Active == true select a).FirstOrDefault();
+            if (aplication.Confirmed == 0)
+            {
+                Label1.Visible = true;
+                Label1.Text="Ваша заявка находится на рассмотрении";
+                Button1.Text = "Подать новую заявку";
+            }
+            if (aplication.Confirmed == 1)
+            {
+                Label1.Visible = true;
+                Label1.Text = "Ваша заявка отклонена";
+                Button1.Text = "Подать новую заявку";
+            }
+            if (aplication.Confirmed == 2)
+            {
+                Label1.Visible = true;
+                Button1.Text = "Подать новую заявку";
+                Label1.Text = "Ваша заявка выполнена";
+            }
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -24,7 +49,7 @@ namespace PersonalPages
             int userID = UserSer.Id;
             string question = TextBox2.Text.ToString();
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-            Aplications newquestion = new Aplications();
+            Aplication newquestion = new Aplication();
             newquestion.Active = true;
             newquestion.FK_ApplicationType = 7;
             newquestion.FK_UserAdd = userID;

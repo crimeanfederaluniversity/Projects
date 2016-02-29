@@ -75,7 +75,7 @@ namespace PersonalPages
                  + "/" + TextBox12.Text.ToString() + "/" + TextBox4.Text.ToString() + "/" + TextBox2.Text.ToString() + "/" + TextBox11.Text.ToString();
 
                     PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-                    Aplications newacademrequest = new Aplications();
+                    Aplication newacademrequest = new Aplication();
                     newacademrequest.Active = true;
                     newacademrequest.FK_ApplicationType = 1;
                     newacademrequest.FK_UserAdd = userID;

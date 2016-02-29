@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AcademicMobileRequest.aspx.cs" Inherits="PersonalPages.AcademicMobileRequest" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h3>Заявка на академическую мобильность.<br />
+    <h3>Заявка на академическую мобильность. <br />
         </h3>
       
          <h3>Анкета конкурсанта на участие в академической мобильности:</h3>

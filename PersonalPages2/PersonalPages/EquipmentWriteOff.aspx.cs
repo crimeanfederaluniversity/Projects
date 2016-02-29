@@ -24,7 +24,7 @@ namespace PersonalPages
             int userID = UserSer.Id;
             string order = TextBox4.Text.ToString() + "/" + TextBox5.Text.ToString() + "/" + TextBox6.Text.ToString() + "/" + TextBox7.Text.ToString();
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-            Aplications equipment = new Aplications();
+            Aplication equipment = new Aplication();
             equipment.Active = true;
             equipment.FK_ApplicationType = 9;
             equipment.FK_UserAdd = userID;
