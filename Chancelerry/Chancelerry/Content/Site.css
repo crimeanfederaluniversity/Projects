@@ -86,6 +86,14 @@ hr {
     padding: 5px;
 }
 
+/*TREES*/
+
+.custom-tree table {
+    margin-bottom: 0px;
+    width:auto;
+    background: none;
+}
+
 
 /*LOADING-SCREEN*/
 
