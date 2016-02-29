@@ -23,18 +23,13 @@
                     </ItemTemplate>
                     <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                 </asp:TemplateField>
-              <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" HeaderText="По вопросу" Visible="True">
+              <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" HeaderText="Описание обращения" Visible="True">
                     <ItemTemplate>
                         <asp:Label ID="Text" runat="server" BorderWidth="0" style="text-align:center" Text='<%# Bind("Text") %>'></asp:Label>
                     </ItemTemplate>
                     <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                 </asp:TemplateField>
-                <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" HeaderText="Руководители, к которым обращались" Visible="True">
-                    <ItemTemplate>
-                        <asp:Label ID="Text2" runat="server" BorderWidth="0" style="text-align:center" Text='<%# Bind("Text2") %>'></asp:Label>
-                    </ItemTemplate>
-                    <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-                </asp:TemplateField>
+             
                 <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" HeaderText="Телефон" Visible="True">
                     <ItemTemplate>
                         <asp:Label ID="TelephonNumber" runat="server" BorderWidth="0" style="text-align:center" Text='<%# Bind("TelephonNumber") %>'></asp:Label>

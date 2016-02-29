@@ -29,7 +29,7 @@ namespace KPIWeb.PersonalPagesAdmin
                 dataTable.Columns.Add(new DataColumn("Date", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("FIO", typeof(string)));
                 dataTable.Columns.Add(new DataColumn("Text", typeof(string)));
-                dataTable.Columns.Add(new DataColumn("Text2", typeof(string)));
+              
                 dataTable.Columns.Add(new DataColumn("TelephonNumber", typeof(string)));
 
                 using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
@@ -46,7 +46,7 @@ namespace KPIWeb.PersonalPagesAdmin
                         dataRow["Date"] = app.Date;
                         dataRow["FIO"] = fio.Email;
                         dataRow["Text"] = app.Text; 
-                        dataRow["Text2"] = app.Text;
+         
                         dataRow["TelephonNumber"] = app.TelephoneNumber;        
                         dataTable.Rows.Add(dataRow);
                     }
