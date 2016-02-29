@@ -112,9 +112,9 @@ namespace Chancelerry
         public TableHeaderRow AddHeaderRoFromList(List<string> list)
         {
             TableHeaderRow row = new TableHeaderRow();
-            row.BackColor = Color.Aqua;
-            row.BorderStyle = BorderStyle.Inset;
-
+            //row.BackColor = Color.Aqua;
+            //row.BorderStyle = BorderStyle.Inset;
+            row.CssClass = "custom-th";
             foreach (var elm in list)
             {
                 TableCell cel = new TableCell();
