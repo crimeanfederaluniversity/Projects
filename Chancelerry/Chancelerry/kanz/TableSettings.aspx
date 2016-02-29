@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="TableSettings.aspx.cs" Inherits="Chancelerry.kanz.TableSettings" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server">           
+    <asp:Label class="header" Text="Настройка Страницы" runat="server" />
+    <asp:GridView ID="GridView1" class="settings-table" AutoGenerateColumns="false" runat="server">           
              <Columns>               
                            
                  <asp:TemplateField HeaderText="ID" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "False" >
@@ -37,6 +38,5 @@
                     </Columns>
     </asp:GridView>
     <br />
-    <asp:Button ID="Button1" runat="server" Text="Сохранить" OnClick="Button1_Click" />
-    -
+    <asp:Button ID="Button1" runat="server" Text="Сохранить" OnClick="Button1_Click" OnClientClick="showLoadingScreen()" CssClass="right-button"/>
 </asp:Content>

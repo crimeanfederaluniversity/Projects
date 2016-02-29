@@ -86,6 +86,11 @@ hr {
     padding: 5px;
 }
 
+.right-button {
+    margin: 0 25%;
+    width: 50%;
+}
+
 /*TREES*/
 
 .custom-tree table {
@@ -195,6 +200,7 @@ hr {
     width: 50%;
 }
 
+.header,
 #MainContent_RegisterNameLabel,
 #MainContent_GridViewRegisters th {
     color: #EBAD0E;
@@ -209,6 +215,7 @@ hr {
     REGISTER VIEW
  */
 
+.header,
 #MainContent_RegisterNameLabel {
     display: block;
     font: bold 20px sans-serif;
@@ -265,4 +272,28 @@ fieldset table {
     margin-bottom: 30px;
     width: 100%;
     background: #DEDEDE;
+}
+
+/*
+    TableSettings
+*/
+
+.settings-table {
+    width: 50%;
+    margin: 0 25%;
+    background: white;
+}
+
+.settings-table th {
+    text-align: center;
+    background: #70463A;
+    color: white;
+}
+
+.settings-table input[type="text"] {
+    width: 100%;
+}
+
+.settings-table input[type="checkbox"] {
+    margin-left: 30px;
 }
