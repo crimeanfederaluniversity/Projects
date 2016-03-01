@@ -25,6 +25,7 @@ namespace Chancelerry
             public int instance { get; set; }
             public int version { get; set; }
             public bool deleted { get; set; }
+            public int id { get; set; }
 
         }
 
@@ -204,11 +205,25 @@ namespace Chancelerry
             // Заголовки
             dataTable.Rows.Add(AddHeaderRoFromList(fieldsName));
 
-            // Карточки этого реестра
-            var cardsAll = (from card in dataContext.CollectedCards
+            // Карточки этого реестра + номера документов по которым фильтровать
+            var cardsAllFull = (from card in dataContext.CollectedCards
                             join r in dataContext.Registers on card.fk_register equals r.registerID
-                            where r.registerID == Convert.ToInt32(regId) && card.active
-                            select card.collectedCardID).ToList();
+                            join collected in dataContext.CollectedFieldsValues on card.collectedCardID equals collected.fk_collectedCard
+                            join field in dataContext.Fields on collected.fk_field equals field.fieldID
+                            where r.registerID == (int)HttpContext.Current.Session["registerID"] && 
+                                  card.active && 
+                                  field.type == "autoIncrement"
+                           select new DataOne(){ id = card.collectedCardID, textValue = collected.valueText}).ToList(); // LOG !!! {try catch в каком поле ошибка}
+
+            // добавляем в version конвертированное значение номера документа из string в int для дальнейшего фильтра
+            foreach (var itm in cardsAllFull)
+            {
+                itm.version = Convert.ToInt32(itm.textValue); // LOG !!! {try catch в каком поле ошибка}
+            }
+
+            // фильтруем по номерам документов и достаем только ID'шники карточек
+            var cardsAll = (from a in cardsAllFull select a).OrderByDescending(n => n.version).ToList().Select(card => card.id).ToList(); // LOG !!! {try catch в каком поле ошибка}
+
 
             HttpContext.Current.Session["pageCount"] = (int)Math.Floor((double)cardsAll.Count / 10) + 1; // количество страниц таблицы
 
