@@ -41,6 +41,13 @@ namespace Chancelerry.kanz
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            var userID = Session["userID"];
+
+            if (userID == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+
             UpdateSessionValues();
             CardCreateView cardCreateView = new CardCreateView();
 

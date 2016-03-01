@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -15,7 +16,6 @@ namespace Chancelerry.kanz
             public int id { get; set; }
             public string name { get; set; }
             public double weight { get; set; }
-
             public bool isAdd { get; set; }
         }
 
@@ -26,9 +26,7 @@ namespace Chancelerry.kanz
             {
                 Response.Redirect("~/Default.aspx");
             }
-
-            ///////////////////////////////////////////
-            
+            ///////////////////////////////////////////         
             if (!Page.IsPostBack)
             {
                 Session["searchList"] = new List<TableActions.SearchValues>();
@@ -40,6 +38,55 @@ namespace Chancelerry.kanz
 
                 using (ChancelerryDBDataContext dataContext = new ChancelerryDBDataContext())
                 {
+                    //кусок Ваге // создаем для пользователя все связи к выбранному регистру если их нет
+                    List<Fields> allFieldsInTable = (from a in dataContext.Fields
+                        join b in dataContext.FieldsGroups
+                            on a.fk_fieldsGroup equals b.fieldsGroupID
+                        join c in dataContext.RegistersModels
+                            on b.fk_registerModel equals c.registerModelID
+                        join d in dataContext.Registers
+                            on c.registerModelID equals d.fk_registersModel
+                        where a.active == true
+                              && b.active == true
+                              && c.active == true
+                              && d.active == true
+                              && d.registerID == (int) Session["registerID"]
+                        select a).Distinct().ToList();
+                    List<Fields> allFieldsWithUser = (from a in dataContext.Fields
+                                                      join b in dataContext.RegistersView on a.fieldID equals b.fk_field
+                                                      join c in dataContext.RegistersUsersMap on b.fk_registersUsersMap equals c.registersUsersMapID
+                                                      where
+                                                      a.active == true                         
+                                                      && c.active == true
+                                                      && c.fk_register == (int)Session["registerID"]
+                                                      && c.fk_user == (int)Session["userID"]
+                                                      select a).ToList();
+                    RegistersUsersMap registerUserMap = (from a in dataContext.RegistersUsersMap
+                                                         where a.active
+                                                               && a.fk_user == (int)Session["userID"]
+                                                               && a.fk_register == (int)Session["registerID"]
+                                                         select a).FirstOrDefault();
+
+
+                    foreach (Fields currentField in allFieldsInTable)
+                    {
+                        if (allFieldsWithUser.Contains(currentField))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            RegistersView registersView = new RegistersView();
+                            registersView.active = true;
+                            registersView.fk_registersUsersMap = registerUserMap.registersUsersMapID;
+                            registersView.fk_field = currentField.fieldID;
+                            registersView.weight = 0;
+                            dataContext.RegistersView.InsertOnSubmit(registersView);
+                            dataContext.SubmitChanges();
+                        }
+                    }
+                   
+                    // Кусок Ваге окончен :)
                     // Все возможные поля для таблицы в данном реестре
                     var all = (from a in dataContext.Fields
                                join b in dataContext.RegistersView on a.fieldID equals b.fk_field

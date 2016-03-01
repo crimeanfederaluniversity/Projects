@@ -337,6 +337,7 @@ namespace Chancelerry.kanz
         private int _version;
         private int textBoxesIdsCounter = 0;
         public List<TextBox> allFieldsInCard;
+        public Dictionary<string, TextBox> addCntTextBoxes = new Dictionary<string, TextBox>();
         private void RefreshPage()
         {
             HttpContext.Current.Response.Redirect("CardEdit.aspx", true);
@@ -347,15 +348,25 @@ namespace Chancelerry.kanz
             HttpContext.Current.Session["cardID"]= _cardId;
             ImageButton thisButton = (ImageButton) sender;
             string commandArgument = thisButton.CommandArgument;
+            TextBox cnt;
+            addCntTextBoxes.TryGetValue(commandArgument, out cnt);
+            int newRowsCnt = 1;
+            if (cnt!=null)
+                Int32.TryParse(cnt.Text, out newRowsCnt);
             int groupId = Convert.ToInt32(commandArgument);
             int lastInstance = _common.GetLastInstanceByGroupCard(groupId, _cardId);
             int newInstance = lastInstance + 1;
             int lastVersion = _common.GetLastVersionByCard(_cardId);
             CardCreateEdit cardCreateEdit = new CardCreateEdit();
             List<Fields> fieldsToCreate = _common.GetFieldsInFieldGroupOrderByLine(groupId);
-            foreach (Fields currentField in fieldsToCreate)
+            for (int i=0;i< newRowsCnt;i++)
             {
-                cardCreateEdit.CreateNewFieldValueInCard(_cardId,1,currentField.fieldID,lastVersion+1,newInstance,"",false);
+                foreach (Fields currentField in fieldsToCreate)
+                {
+                    cardCreateEdit.CreateNewFieldValueInCard(_cardId, 1, currentField.fieldID, lastVersion + 1,
+                        newInstance, "", false);
+                }
+                newInstance++;
             }
             RefreshPage();
         }
@@ -482,6 +493,7 @@ namespace Chancelerry.kanz
                 #region tree
                 if (currentField.type == "fullStruct" || currentField.type == "onlyLastStruct")
                 {
+                    currentFieldTextBox.TextMode = TextBoxMode.MultiLine;
                     bool fullStruct = currentField.type == "fullStruct";
                    ImageButton structButton = new ImageButton();
                     structButton.ImageUrl = "~/kanz/icons/treeButtonIcon.jpg";
@@ -637,6 +649,13 @@ namespace Chancelerry.kanz
                 cardMainPanel.Controls.Add(groupPanel);
                 if (currentFieldGroup.multiple && !_readonly)
                 {
+                    TextBox inputCnt = new TextBox();
+                    inputCnt.TextMode =TextBoxMode.SingleLine;
+                    inputCnt.Width = 20;
+                    inputCnt.Height = 20;
+                    inputCnt.Text = "1";
+                    inputCnt.ID = currentFieldGroup.fieldsGroupID.ToString() + "cnt";
+                    
                     ImageButton addGroupButton = new ImageButton();
                     addGroupButton.ImageUrl = "~/kanz/icons/addButtonIcon.jpg";
                     addGroupButton.Height = 20;
@@ -644,6 +663,10 @@ namespace Chancelerry.kanz
                     addGroupButton.CommandArgument = currentFieldGroup.fieldsGroupID.ToString();
                     addGroupButton.CausesValidation = false;
                     addGroupButton.Click += AddInstanceButtonClick;
+
+                    addCntTextBoxes.Add(addGroupButton.CommandArgument, inputCnt);
+
+                    cardMainPanel.Controls.Add(inputCnt);
                     cardMainPanel.Controls.Add(addGroupButton);
                 }
             }

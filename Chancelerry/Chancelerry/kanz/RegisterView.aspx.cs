@@ -82,6 +82,7 @@ namespace Chancelerry.kanz
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            Session["canEdit"] = true;
             Session["cardID"] = 0;
             Session["version"] = 100500;
             Response.Redirect("CardEdit.aspx");

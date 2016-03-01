@@ -47,7 +47,7 @@ namespace Chancelerry.kanz
         {
             string wholeFile = File.ReadAllText("c:\\1\\1.txt");
             string[] rows = wholeFile.Split('%');
-             foreach (string currentRow in rows)
+            foreach (string currentRow in rows)
             {
                 //char[] charsToTrim1 = { ' ', '\r', '\n', '\t',};
                 int cardId = addCard(5);
@@ -135,6 +135,37 @@ namespace Chancelerry.kanz
                     i++;
                 }
 
+            }
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            string wholeFile = File.ReadAllText("c:\\1\\2.txt");
+            string[] rows = wholeFile.Split('%');
+            foreach (string currentRow in rows)
+            {
+                int cardId = addCard(4);
+                string[] fields = currentRow.Split('#');
+                int i = 0;
+                foreach (string currentField in fields)
+                {
+                    if (i == 0)
+                    {
+                        createFieldValue(cardId, 1, currentField.Trim(), 0);
+                    }
+                    if (i == 1)
+                    {
+                        createFieldValue(cardId, 4, currentField.Trim(), 0);
+                    }
+                    if (i == 2)
+                    {
+                        createFieldValue(cardId, 6, currentField.Trim(), 0);
+                    }
+                    if (i == 3)
+                    {
+                        createFieldValue(cardId, 4, currentField.Trim(), 0);
+                    }
+                }
             }
         }
     }
