@@ -299,17 +299,31 @@ namespace Chancelerry
 
                     var k = 1; // переменная для отображения порядкового номера инстанса
 
-                    foreach (var instance in instances)
+                    // Если инстанс 1 то отображаем без 1) и br
+                    if (instances.Count <= 1)
                     {
-                        // Забираем максимальное значение(версия) textValue каждого инстанса
                         fieldInstancesValue.Append(
-                            k.ToString() + ") " +
-                            (from vv in query
-                             where vv.instance == instance && !vv.deleted
-                             select vv).OrderByDescending(v => v.version)
-                                       .FirstOrDefault()?.textValue + "<br>"); //если не null за писываем в поле
-                        k++;
+                                (from vv in query
+                                 where vv.instance == instances[0] && !vv.deleted
+                                 select vv).OrderByDescending(v => v.version)
+                                          .FirstOrDefault()?.textValue);
                     }
+                    else
+                    {
+                        foreach (var instance in instances)
+                        {
+                            // Забираем максимальное значение(версия) textValue каждого инстанса
+                            fieldInstancesValue.Append(
+                                k.ToString() + ") " +
+                                (from vv in query
+                                 where vv.instance == instance && !vv.deleted
+                                 select vv).OrderByDescending(v => v.version)
+                                          .FirstOrDefault()?.textValue + "<br>"); //если не null за писываем в поле
+                            k++;
+                        }
+                    }
+
+
                     // Добавляем значения в Row каждого поля
                     cardRow.Add(fieldInstancesValue.ToString());
                 }
