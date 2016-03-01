@@ -52,7 +52,7 @@ namespace Chancelerry.kanz
                             TableActions.DTable = dataTable;
 
 
-                    string page_info = "Текущаяя страница: " + ((int)Session["pageCntrl"] + 1).ToString() + " из: " + (int)Session["pageCount"];
+                    string page_info = "Cтраница: " + ((int)Session["pageCntrl"] + 1).ToString() + "/" + (int)Session["pageCount"] +". Всего: "+(int)Session["cardsCount"];
                     PageNumberLabel.Text = page_info;
                     BottomPageNumberLabel.Text = page_info;
                 

@@ -270,10 +270,11 @@ namespace Chancelerry
 
             
             HttpContext.Current.Session["pageCount"] = (int)Math.Floor((double)cardsToShow.Count / 10) + 1; // количество страниц таблицы
+            HttpContext.Current.Session["cardsCount"] = cardsToShow.Count;
 
 
             // Отрисовка //
-      
+
             // по всем карточкам
             foreach (var card in cardsToShow.Skip((int)HttpContext.Current.Session["pageCntrl"] * 10).Take(10).ToList())
             {
