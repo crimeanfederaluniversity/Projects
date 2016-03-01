@@ -195,11 +195,9 @@ namespace Chancelerry
             return row;
         }
 
-        public void RefreshTable(ChancelerryDBDataContext dataContext, object userID, Registers register, object regId, Table dataTable, List<SearchValues> searchList)
+        public void RefreshTable(ChancelerryDBDataContext dataContext, object userID, Registers register, object regId, Table dataTable, Dictionary<int, string> searchList)
         {
             dataTable.Rows.Clear();
-            bool addToTable = true;
-            var cardsToRender = new List<RenderCards>();
 
             // Достаем поля для данного реестра и пользователя на основе RegisterView и прав пользователя RegistersUsersMap c сортировкой по весу
             var fieldsAll = (from regUsrMap in dataContext.RegistersUsersMap
@@ -220,10 +218,9 @@ namespace Chancelerry
 
             // Карточки этого реестра + номера документов по которым фильтровать
             var cardsAllFull = (from card in dataContext.CollectedCards
-                            join r in dataContext.Registers on card.fk_register equals r.registerID
                             join collected in dataContext.CollectedFieldsValues on card.collectedCardID equals collected.fk_collectedCard
                             join field in dataContext.Fields on collected.fk_field equals field.fieldID
-                            where r.registerID == (int)HttpContext.Current.Session["registerID"] && 
+                            where card.fk_register == (int)HttpContext.Current.Session["registerID"] && 
                                   card.active && 
                                   field.type == "autoIncrement"
                            select new DataOne(){ id = card.collectedCardID, textValue = collected.valueText}).ToList(); // LOG !!! {try catch в каком поле ошибка}
@@ -233,61 +230,61 @@ namespace Chancelerry
             {
                 int tmp = 0; // V
                 Int32.TryParse(itm.textValue, out tmp); //V
-                itm.version = tmp;//Convert.ToInt32(itm.textValue); // LOG !!! {try catch в каком поле ошибка}
+                itm.version = tmp;
             }
 
-            // фильтруем по номерам документов и достаем только ID'шники карточек
-            var cardsAll = (from a in cardsAllFull select a).OrderByDescending(n => n.version).ToList().Select(card => card.id).ToList(); // LOG !!! {try catch в каком поле ошибка}
+            List<int> cardsToShow = new List<int>(); // сюда будем складывать карточки которые нужно показать
 
+            if (searchList != null) //если фильтры есть
+            {
+                bool isFirst = true;
+                foreach (int currentKey in searchList.Keys) // проходимся по каждому фильтру
+                {
+                    int fieldId = currentKey;
+                    string fieldValue = "";
+                    searchList.TryGetValue(fieldId, out fieldValue);  //достаем айдишник нашего филда
+
+                    List<int> cardsWithValue = (from a in dataContext.CollectedFieldsValues
+                                                where a.active == true && a.fk_field == fieldId && a.valueText.Contains(fieldValue)
+                                                join b in dataContext.CollectedCards on a.fk_collectedCard equals b.collectedCardID
+                                                where b.active == true
+                                                select a.fk_collectedCard).Distinct().ToList(); // находим все карточки которые соответсвтуют
+                    List<int> tmpList;
+                    if (isFirst)
+                    {
+                        tmpList = cardsWithValue;
+                    }
+                    else
+                    {
+                        tmpList = (from a in cardsWithValue join b in cardsToShow on a equals b select a).Distinct().ToList();
+                    }
+                    isFirst = false;
+                    cardsToShow = tmpList;
+                }
+            }
+            else // если фильтров нет, показываем все карточки 
+            {
+                // фильтруем по номерам документов и достаем только ID'шники карточек
+                cardsToShow = (from a in cardsAllFull select a).OrderByDescending(n => n.version).ToList().Select(card => card.id).Distinct().ToList();
+            }
 
             
-
-            var searchText = (from a in searchList select a.value).ToList(); // лист текстовых поисковых запросов без fieldID
-
-            // Смотрим, если есть текст поиска то идем по всей базе..... если нет то только первые 10 элементов на странице 
-            List<int> cardsToShow = new List<int>();
-
-            if (searchList.Count > 1)
-            {
-                var k = 0;
-
-                foreach (var itm in searchText)
-                {
-                    cardsToShow.AddRange( (from a in dataContext.CollectedFieldsValues
-                                     join b in dataContext.CollectedCards on a.fk_collectedCard equals b.collectedCardID
-                                     where a.valueText.Contains(searchText[k]) && b.fk_register == (int)HttpContext.Current.Session["registerID"]
-                                     select b.collectedCardID).ToList());
-                    k++;
-                }
-                
-            }
-            else if (searchList.Any())
-                cardsToShow = (from a in dataContext.CollectedFieldsValues
-                    join b in dataContext.CollectedCards on a.fk_collectedCard equals b.collectedCardID
-                    where a.valueText.Contains(searchText[0])  && b.fk_register == (int)HttpContext.Current.Session["registerID"]
-                               select b.collectedCardID).ToList();
-            else
-                cardsToShow = cardsAll;//.Skip((int) HttpContext.Current.Session["pageCntrl"]*10).Take(10).ToList();
-
             HttpContext.Current.Session["pageCount"] = (int)Math.Floor((double)cardsToShow.Count / 10) + 1; // количество страниц таблицы
 
+
+            // Отрисовка //
+      
             // по всем карточкам
             foreach (var card in cardsToShow.Skip((int)HttpContext.Current.Session["pageCntrl"] * 10).Take(10).ToList())
             {
                 List<string> cardRow = new List<string>();
 
-                // GetValue(fieldsId, dataContext, card, cardRow); // функция добавления значения Row для каждой карточки и поля
-
-
                 foreach (var field in fieldsId) // проходим по каждому полю в карточке card
                 {
-                    addToTable = true;
-                    StringBuilder fieldInstancesValue = new StringBuilder();
-                    List<DataOne> query = new List<DataOne>();
+                    StringBuilder fieldInstancesValue = new StringBuilder(); // сюда записываем все инстансы
 
-                    { 
-                    // сотношение поля и  карточки в collected (получаем поле с его инстансами и версией)
-                        query = (from a in dataContext.CollectedFieldsValues
+                        // сотношение поля и  карточки в collected (получаем поле с его инстансами и версией)
+                       var query = (from a in dataContext.CollectedFieldsValues
                                  where a.fk_field == field && a.fk_collectedCard == card
                                  select new DataOne()
                                  {
@@ -296,8 +293,6 @@ namespace Chancelerry
                                      version = a.version,
                                      deleted = a.isDeleted
                                  }).ToList();
-                       }
-                    //var instanceFilter = (from f in query where !f.deleted select new DataOne() { instance = f.instance, version = f.version, textValue = f.textValue, deleted = f.deleted }).OrderByDescending(ver => ver.version).ToList();
 
                     // Список всех удаленных инстансов
                     var delInst = (from ins in query where ins.deleted select ins.instance).ToList();
@@ -338,7 +333,6 @@ namespace Chancelerry
                     cardRow.Add(fieldInstancesValue.ToString());
                 }
 
-                if (addToTable)
                     dataTable.Rows.Add(AddRowFromList(cardRow, card)); // Добавляем в таблицу Row
             }
             

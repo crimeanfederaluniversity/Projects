@@ -173,6 +173,7 @@ namespace Chancelerry.kanz
         {     
 
             List<int> cardsToShow = new List<int>(); // сюда будем складывать карточки которые нужно показать
+
             if (searchList != null) //если фильтры есть
             { 
                 bool isFirst = true;
@@ -181,6 +182,7 @@ namespace Chancelerry.kanz
                     int fieldId = currentKey;
                     string fieldValue = "";
                     searchList.TryGetValue(fieldId, out fieldValue);  //достаем айдишник нашего филда
+
                     List<int> cardsWithValue = (from a in chancDb.CollectedFieldsValues
                                                 where a.active == true && a.fk_field == fieldId && a.valueText.Contains(fieldValue)
                                                 join b in chancDb.CollectedCards on a.fk_collectedCard equals b.collectedCardID
@@ -206,6 +208,8 @@ namespace Chancelerry.kanz
                                 && a.fk_register == registerId
                               select a.collectedCardID).Distinct().ToList();
             }
+
+
             Dictionary<int, string> allFields = (from a in chancDb.RegistersUsersMap
                                                  join b in chancDb.RegistersView
                                                  on a.registersUsersMapID equals b.fk_registersUsersMap

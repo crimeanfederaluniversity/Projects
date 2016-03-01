@@ -46,48 +46,17 @@ namespace Chancelerry.kanz
 
                 if (register != null)
                 {
-                RegisterNameLabel.Text = register.name;
-                var searchList = (List<TableActions.SearchValues>) Session["searchList"];
-                bool vVersion = true;
-                if (vVersion)
-                {
-                    Dictionary<int, string> vSearchList = (Dictionary<int, string>)Session["vSearchList"];
-                    CardCommonFunctions cardCommonFunctions = new CardCommonFunctions();
-                    int sum = cardCommonFunctions.FastSearch(vSearchList, register.registerID, Convert.ToInt32(userID), dataTable);
-                    Button5.Visible = false;
-                    Button6.Visible = false;
-                    Button7.Visible = false;
-                    Button8.Visible = false;
-                    BottomButton9.Visible = false;
-                    BottomButton10.Visible = false;
-                    BottomButton11.Visible = false;
-                    BottomButton12.Visible = false;
-                    string page_info = "Всего записей " + sum;
-                    PageNumberLabel.Text = page_info;
-                    BottomPageNumberLabel.Text = page_info;
-                    TableActions.DTable = dataTable;
-                }
-                else
-                {
-                    // если в сессии нет searchList то отрисовываем всю таблицу
-                    if (searchList == null)
-                    {
-                        ta.RefreshTable(dataContext, userID, register, regId, dataTable,
-                            new List<TableActions.SearchValues>());
-                        TableActions.DTable = dataTable;
-                    }
-                    // если в сессии есть searchList то запускаем  ta.RefreshTable c параметром
-                    else
-                    {
-                        ta.RefreshTable(dataContext, Convert.ToInt32(ViewState["userID"]), register, regId, dataTable,
-                            searchList);
-                        TableActions.DTable = dataTable;
-                    }
+                    RegisterNameLabel.Text = register.name;
+
+                    ta.RefreshTable(dataContext, Convert.ToInt32(ViewState["userID"]), register, regId, dataTable,(Dictionary<int, string>)Session["vSearchList"]);
+                            TableActions.DTable = dataTable;
+
+
                     string page_info = "Текущаяя страница: " + ((int)Session["pageCntrl"] + 1).ToString() + " из: " + (int)Session["pageCount"];
                     PageNumberLabel.Text = page_info;
                     BottomPageNumberLabel.Text = page_info;
+                
                 }
-            }
         }
         protected void Page_Unload(object sender, EventArgs e)
         {
@@ -123,17 +92,20 @@ namespace Chancelerry.kanz
                     {
                         // добавляем объект поиска со значениями id поля (берем из аттрибута TextBox'а и само значение Text)
                         vSearchDict.Add(Convert.ToInt32(tbox.Attributes["_fieldID4search"]), Request.Form[((TextBox)c).UniqueID]);
+
+                        /*
                         searchList.Add(new TableActions.SearchValues()
                         {
                             fieldId = Convert.ToInt32(tbox.Attributes["_fieldID4search"]),
                             value = Request.Form[((TextBox) c).UniqueID]
                         });
+                        */
                     }
                 }
             }
 
             // По сессии передаем searchList и перезагружаем страницу
-            Session["searchList"] = searchList;
+            //Session["searchList"] = searchList;
             Session["vSearchList"] = vSearchDict;
             Response.Redirect("RegisterView.aspx");
         }
