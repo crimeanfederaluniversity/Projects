@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EquipmentWriteOff.aspx.cs" Inherits="PersonalPages.EquipmentWriteOff" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h3>Заявка на cписание оборудования:</h3>
+    <asp:Label ID="Label1" runat="server" Text="Label" Visible="false"></asp:Label>
     <br />Название оборудования:<br />
     <asp:TextBox ID="TextBox4" runat="server" Width="400px"></asp:TextBox>
     <br />Инвентарный номер:<br />

@@ -12,7 +12,30 @@ namespace PersonalPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            RefreshGridView();
+            if (!Page.IsPostBack)
+            {
+                PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
+                Aplication aplication = (from a in usersDB.Aplications where a.Active == true && a.FK_ApplicationType == 7 select a).FirstOrDefault();
+                if (aplication.Confirmed == 0)
+                {
+                    Label11.Visible = true;
+                    Label11.Text = "Ваша заявка находится на рассмотрении";
+                    Button2.Text = "Подать новую заявку";
+                }
+                if (aplication.Confirmed == 1)
+                {
+                    Label11.Visible = true;
+                    Label11.Text = "Ваша заявка отклонена";
+                    Button2.Text = "Подать новую заявку";
+                }
+                if (aplication.Confirmed == 2)
+                {
+                    Label11.Visible = true;
+                    Button2.Text = "Подать новую заявку";
+                    Label11.Text = "Ваша заявка принята";
+                }
+                RefreshGridView();
+            }            
         }
         
         private void RefreshGridView()
@@ -27,8 +50,7 @@ namespace PersonalPages
             PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
             UsersTable userTable =
                (from a in PersonalPagesDB.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
-                                         
-       
+                                           
                 if (userTable != null )
                 {
                     Label2.Text = userTable.Surname;
@@ -47,7 +69,6 @@ namespace PersonalPages
                     TextBox10.Visible = false;
                     TextBox11.Visible = true;     
                 }
-
             }
  
 

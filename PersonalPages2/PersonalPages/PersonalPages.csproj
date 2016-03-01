@@ -203,7 +203,13 @@
     <Content Include="Metodist.aspx" />
     <Content Include="NewEquipmentOrder.aspx" />
     <Content Include="NewImages\1c.png" />
+    <Content Include="NewImages\1cadm.png" />
     <Content Include="NewImages\academy_mobility.png" />
+    <Content Include="NewImages\ADMIN_EDUC.png" />
+    <Content Include="NewImages\ADMIN_ELECT_CURSE.png" />
+    <Content Include="NewImages\ADM_PRINSERVICES.png" />
+    <Content Include="NewImages\ADM_VISIT.png" />
+    <Content Include="NewImages\AKMOB.png" />
     <Content Include="NewImages\avtoaccess.png" />
     <Content Include="NewImages\buying_technique.png" />
     <Content Include="NewImages\competitions_expert.png" />

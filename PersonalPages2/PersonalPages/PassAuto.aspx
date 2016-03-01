@@ -1,7 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PassAuto.aspx.cs" Inherits="PersonalPages.PassAuto" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
   
-     <h3>Для того, чтобы заказать автомобильный пропуск, пожалуйста, заполните данную форму:</h3>
+     <h3>Для того, чтобы заказать автомобильный пропуск, пожалуйста, заполните данную форму:</h3>   
+         <asp:Label ID="Label1" runat="server" Text="Label" Visible="false"></asp:Label>
+
+
+     <br />
 
 
      Укажите госномер Вашего транспортного средства:<br />

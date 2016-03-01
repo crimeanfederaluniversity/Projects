@@ -1,6 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PrintScanOrder.aspx.cs" Inherits="PersonalPages.PrintScanOrder" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h3>Для того, чтобы заказать печать файлов, пожалуйста, заполните форму:</h3>
+    <h3>
+        <asp:Label ID="Label1" runat="server" Text="Label" Visible="false"></asp:Label>       
+        </h3>
     <br />
     Укажите необходимое количество копий:<br />
     <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>

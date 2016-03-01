@@ -2,7 +2,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h3>Для того, чтобы обратиться с вопросом к ректору,пожалуйста, заполните данную форму:</h3>
 
-
+    <asp:Label ID="Label1" runat="server" Text="Label" Visible="false"></asp:Label>
+    <br />
     <br />
     Опишите Ваше обращение к ректору:<br />
     &nbsp;<asp:TextBox ID="TextBox1" runat="server" Height="40px" TextMode="MultiLine" Width="800px"></asp:TextBox>

@@ -1,6 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NewEquipmentOrder.aspx.cs" Inherits="PersonalPages.NewEquipmentOrder" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h3>Заявка на приобретение техники и расходных материалов:</h3>
+    <h3>Заявка на приобретение техники и расходных материалов:&nbsp;&nbsp;</h3>
+    <h3>
+        <asp:Label ID="Label1" runat="server" Text="Label" Visible="false"></asp:Label>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </h3>
     Необходимая техника или расходные материалы:<br />
     <asp:TextBox ID="TextBox4" runat="server" Width="400px"></asp:TextBox>
     <br />Цель использования:<br />

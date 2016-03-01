@@ -11,7 +11,30 @@ namespace PersonalPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
+            if (!Page.IsPostBack)
+            {
+                PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
+                Aplication aplication = (from a in usersDB.Aplications where a.Active == true && a.FK_ApplicationType == 3 select a).FirstOrDefault();
+                if (aplication.Confirmed == 0)
+                {
+                    Label1.Visible = true;
+                    Label1.Text = "Ваша заявка находится на рассмотрении";
+                    Button1.Text = "Подать новую заявку";
+                }
+                if (aplication.Confirmed == 1)
+                {
+                    Label1.Visible = true;
+                    Label1.Text = "Ваша заявка отклонена";
+                    Button1.Text = "Подать новую заявку";
+                }
+                if (aplication.Confirmed == 2)
+                {
+                    Label1.Visible = true;
+                    Button1.Text = "Подать новую заявку";
+                    Label1.Text = "Ваша заявка принята";
+                }
+            }
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -26,7 +49,7 @@ namespace PersonalPages
             if (TextBox3.Text != null)
             {
                 PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-                Aplications newpass = new Aplications();
+                Aplication newpass = new Aplication();
                 newpass.Active = true;
                 newpass.FK_ApplicationType = 3;
                 newpass.FK_UserAdd = userID;

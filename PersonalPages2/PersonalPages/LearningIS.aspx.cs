@@ -24,7 +24,7 @@ namespace PersonalPages
             int userID = UserSer.Id;
             
             PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-            Aplications newlerning = new Aplications();
+            Aplication newlerning = new Aplication();
             newlerning.Active = true;
             newlerning.FK_ApplicationType =11;
             newlerning.FK_UserAdd = userID;

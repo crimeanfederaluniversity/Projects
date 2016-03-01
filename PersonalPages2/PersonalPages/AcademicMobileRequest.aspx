@@ -1,9 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AcademicMobileRequest.aspx.cs" Inherits="PersonalPages.AcademicMobileRequest" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h3>Заявка на академическую мобильность. <br />
+    <h3>Заявка на академическую мобильность. 
+        </h3>
+    <h3>
+             <asp:Label ID="Label11" runat="server" Text="Label" Visible="false"></asp:Label>
+        <br />
         </h3>
       
-         <h3>Анкета конкурсанта на участие в академической мобильности:</h3>
+         <h3>Анкета конкурсанта на участие в академической мобильности:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             </h3>
     Название сети: 
     <br />
     <asp:TextBox ID="TextBox3" runat="server"   Width="600px"></asp:TextBox>

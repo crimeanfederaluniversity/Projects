@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
          <h3>Для того, чтобы заказать печать визиток, пожалуйста, заполните форму:</h3>
 
+         <asp:Label ID="Label1" runat="server" Text="Label" Visible="false"></asp:Label>       
          <br />
          Укажите необходимое количество:<br />
     <asp:TextBox ID="TextBox4" runat="server" Height="25px" Width="200px"></asp:TextBox>

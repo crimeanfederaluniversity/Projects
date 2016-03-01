@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="LearningIS.aspx.cs" Inherits="PersonalPages.LearningIS" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h3>Заявка на обучение работе с ИС:</h3>
+    <asp:Label ID="Label1" runat="server" Text="Label" Visible="false"></asp:Label>
     <br />Наименование информационной системы:<br />
     <asp:TextBox ID="TextBox1" runat="server" Height="20px" TextMode="MultiLine" Width="603px"></asp:TextBox>
     <br />
