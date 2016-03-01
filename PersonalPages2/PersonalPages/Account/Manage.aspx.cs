@@ -322,13 +322,10 @@ namespace PersonalPages.Account
             Label9.Visible = true;
             Label10.Visible = true;
             Label11.Visible = true;
-
             TextBox1.Visible = true;
             TextBox2.Visible = true;
             TextBox3.Visible = true;
-
             Button2.Visible = true;
-
             SetFocus(Button2);
         }
 
@@ -362,7 +359,6 @@ namespace PersonalPages.Account
             {
                 Response.Redirect("~/Default.aspx");
             }
-
             int userID = UserSer.Id;
             TypeOfWritingFIO newRow = new TypeOfWritingFIO();
             newRow.Active = true;
@@ -387,8 +383,7 @@ namespace PersonalPages.Account
                         {
                             newfio.FIO = FIOText.Text;
                             PersonalPagesDB.SubmitChanges();
-                        }
-                        
+                        }                      
                     }
             }
             Response.Redirect("~/Account/Manage.aspx");
