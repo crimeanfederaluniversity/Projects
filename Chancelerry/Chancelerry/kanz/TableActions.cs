@@ -36,6 +36,12 @@ namespace Chancelerry
      
         }
 
+        public class RenderCards
+        {
+            public int cardId { get; set; }
+            public List<string> cardToRender { get; set; } 
+        }
+
         private void RedirectToEdit(object sender, EventArgs e)
         {
             
@@ -187,6 +193,7 @@ namespace Chancelerry
         {
             dataTable.Rows.Clear();
             bool addToTable = true;
+            var cardsToRender = new List<RenderCards>();
 
             // Достаем поля для данного реестра и пользователя на основе RegisterView и прав пользователя RegistersUsersMap c сортировкой по весу
             var fieldsAll = (from regUsrMap in dataContext.RegistersUsersMap
@@ -225,15 +232,39 @@ namespace Chancelerry
             var cardsAll = (from a in cardsAllFull select a).OrderByDescending(n => n.version).ToList().Select(card => card.id).ToList(); // LOG !!! {try catch в каком поле ошибка}
 
 
-            HttpContext.Current.Session["pageCount"] = (int)Math.Floor((double)cardsAll.Count / 10) + 1; // количество страниц таблицы
+            
+
+            var searchText = (from a in searchList select a.value).ToList(); // лист текстовых поисковых запросов без fieldID
 
             // Смотрим, если есть текст поиска то идем по всей базе..... если нет то только первые 10 элементов на странице 
-            var cardsToShow = searchList.Any() ? cardsAll : cardsAll.Skip((int)HttpContext.Current.Session["pageCntrl"] * 10).Take(10).ToList();  
+            List<int> cardsToShow = new List<int>();
 
+            if (searchList.Count > 1)
+            {
+                var k = 0;
 
+                foreach (var itm in searchText)
+                {
+                    cardsToShow.AddRange( (from a in dataContext.CollectedFieldsValues
+                                     join b in dataContext.CollectedCards on a.fk_collectedCard equals b.collectedCardID
+                                     where a.valueText.Contains(searchText[k]) && b.fk_register == (int)HttpContext.Current.Session["registerID"]
+                                     select b.collectedCardID).ToList());
+                    k++;
+                }
+                
+            }
+            else if (searchList.Any())
+                cardsToShow = (from a in dataContext.CollectedFieldsValues
+                    join b in dataContext.CollectedCards on a.fk_collectedCard equals b.collectedCardID
+                    where a.valueText.Contains(searchText[0])  && b.fk_register == (int)HttpContext.Current.Session["registerID"]
+                               select b.collectedCardID).ToList();
+            else
+                cardsToShow = cardsAll;//.Skip((int) HttpContext.Current.Session["pageCntrl"]*10).Take(10).ToList();
+
+            HttpContext.Current.Session["pageCount"] = (int)Math.Floor((double)cardsToShow.Count / 10) + 1; // количество страниц таблицы
 
             // по всем карточкам
-            foreach (var card in cardsToShow)
+            foreach (var card in cardsToShow.Skip((int)HttpContext.Current.Session["pageCntrl"] * 10).Take(10).ToList())
             {
                 List<string> cardRow = new List<string>();
 
@@ -246,51 +277,6 @@ namespace Chancelerry
                     StringBuilder fieldInstancesValue = new StringBuilder();
                     List<DataOne> query = new List<DataOne>();
 
-                    // Если в поисковом листе что-то есть
-                    if (searchList.Any())
-                    {
-                        // Получаем объект из поискового листа для данного поля с Id = fieldId
-                        var searchObj = (from a in searchList where a.fieldId == field select a).FirstOrDefault();
-
-                        // Если данное поле с Id = fieldId есть в поисковом листе
-                        if (searchObj != null)
-                        {
-                            // Получаем объект данного поля с поисковым фильтром // сотношение поля и  карточки в collected (получаем поле с его инстансами и версией)
-                            query = (from a in dataContext.CollectedFieldsValues
-                                     where a.fk_field == field && a.fk_collectedCard == card && a.valueText.Contains(searchObj.value)
-                                     select new DataOne()
-                                     {
-                                         textValue = a.valueText,
-                                         instance = a.instance,
-                                         version = a.version,
-                                         deleted = a.isDeleted
-                                     }).ToList();
-
-                            // Если объект поля с поисковым фильтром НЕ существует
-                            if (!query.Any())
-                            {
-                                // Определяем флаг добавления этого Row как false чтобы не отрисовывать его в таблице, выходим с итерации.
-                                addToTable = false;
-                                break;
-                            }
-                        }
-                        // Если поля с Id = fieldId НЕТ в поисковом листе,
-                        else
-                        {
-                            // Получаем объект данного поля // сотношение поля и  карточки в collected (получаем поле с его инстансами и версией)
-                            query = (from a in dataContext.CollectedFieldsValues
-                                     where a.fk_field == field && a.fk_collectedCard == card
-                                     select new DataOne()
-                                     {
-                                         textValue = a.valueText,
-                                         instance = a.instance,
-                                         version = a.version,
-                                         deleted = a.isDeleted
-                                     }).ToList();
-                        }
-                    }
-                    // Если поисковой лист отсутствует
-                    else
                     { 
                     // сотношение поля и  карточки в collected (получаем поле с его инстансами и версией)
                         query = (from a in dataContext.CollectedFieldsValues
@@ -345,9 +331,10 @@ namespace Chancelerry
                 }
 
                 if (addToTable)
-                dataTable.Rows.Add(AddRowFromList(cardRow, card)); // Добавляем в таблицу Row
-
+                    dataTable.Rows.Add(AddRowFromList(cardRow, card)); // Добавляем в таблицу Row
             }
+            
+
         }
 
 
