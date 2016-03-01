@@ -59,6 +59,19 @@ hr {
     border-top: 1px solid #70463A;
 }
 
+.center {
+    margin: 0 25%;
+    width: 50%;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
 .navbar {
     background: #70463A;
 }
@@ -91,7 +104,7 @@ hr {
     width: 50%;
 }
 
-/*TREES*/
+/* trees */
 
 .custom-tree table {
     margin-bottom: 0px;
@@ -100,7 +113,7 @@ hr {
 }
 
 
-/*LOADING-SCREEN*/
+/* loading-screen */
 
 .overlay {
     position:absolute;
@@ -252,6 +265,28 @@ hr {
     border-width: 1px;
 }
 
+.edit-panel {
+    text-align: left;
+}
+
+/*search*/
+
+#MainContent_SearchPanel {
+    background: #E7E4DB;
+    border: 1px solid black;
+    border-radius:2px;
+    padding: 10px;
+    position: absolute;
+}
+
+/*pagination*/
+
+.pagination {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 /*
     CardEdit
  */
@@ -276,7 +311,7 @@ fieldset table {
 
 /*
     TableSettings
-*/
+ */
 
 .settings-table {
     width: 50%;

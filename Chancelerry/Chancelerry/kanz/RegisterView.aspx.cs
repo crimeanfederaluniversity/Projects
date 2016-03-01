@@ -70,7 +70,9 @@ namespace Chancelerry.kanz
                     }
                 }
 
-            PageNumberLabel.Text = "Текущаяя страница: " + ((int)Session["pageCntrl"] + 1).ToString() + " из: "+ (int)Session["pageCount"];
+            string page_info = "Текущаяя страница: " + ((int)Session["pageCntrl"] + 1).ToString() + " из: " + (int)Session["pageCount"];
+            PageNumberLabel.Text = page_info;
+            BottomPageNumberLabel.Text = page_info;
 
         }
 

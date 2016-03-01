@@ -172,6 +172,7 @@ namespace Chancelerry
                 tb.ID = "searchTb" + elm.ToString();
                 tb.Attributes.Add("onkeypress", "return runScript(event);");
                 tb.Attributes.Add("onkeydown", "return runScript(event);");
+                tb.Attributes.Add("class", "search-field");
                 cell.Controls.Add(tb);
 
                 SearchBoxsData.Add(tb);
