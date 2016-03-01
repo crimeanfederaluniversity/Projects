@@ -59,19 +59,24 @@
 
     <script>
         $(function () {
-            $(".search-field").focusin(function () {
+
+            $(".container").click(function (e) {
+                var $target = $(e.target);
+
+                if (!$target.closest(".search-field").length) {
+                    var search_field = document.getElementById("MainContent_SearchPanel");
+                    search_field.classList.add("hidden");
+                }
+            });
+
+            $(".search-field").focus(function () {
                 var $clicker = $(this);
                 var position = $clicker.position();
 
                 var search_field = document.getElementById("MainContent_SearchPanel");
                 search_field.classList.remove("hidden");
                 search_field.style.top = 35 + position.top + "px";
-                search_field.style.left = position.left - search_field.clientWidth / 2 + "px" ;
-            });
-
-            $(".search-field").focusout(function () {
-                var search_field = document.getElementById("MainContent_SearchPanel");
-                search_field.classList.add("hidden");
+                search_field.style.left = position.left - search_field.clientWidth / 2 + "px";
             });
         })
     </script>
