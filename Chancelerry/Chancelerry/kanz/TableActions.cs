@@ -101,17 +101,23 @@ namespace Chancelerry
             TableCell cell = new TableCell();
 
             ImageButton buttonEdit = new ImageButton();
-            buttonEdit.ImageUrl= "https://www.librarything.com/pics/edit-pencil.gif";
+            buttonEdit.ImageUrl= "~/kanz/icons/editaddButtonIcon.gif";
+            buttonEdit.Height = 20;
+            buttonEdit.Width = 20;
             buttonEdit.Attributes.Add("_cardID", cardID.ToString());
             buttonEdit.Click += RedirectToEdit;
 
             ImageButton buttonView = new ImageButton();
-            buttonView.ImageUrl = "https://www.epactnetwork.com/images/icons/icon-view.png";
+            buttonView.Height = 20;
+            buttonView.Width = 20;
+            buttonView.ImageUrl = "~/kanz/icons/viewButtonIcon.png";
             buttonView.Attributes.Add("_cardID", cardID.ToString());
             buttonView.Click += RedirectToView;
 
             ImageButton buttonDelete = new ImageButton();
-            buttonDelete.ImageUrl = "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR7zWvsxCGa_Qazr5f8YoI_VBF-XSi7gMkZYb2qqJMKKYMvOHapPw";
+            buttonDelete.Height = 20;
+            buttonDelete.Width = 20;
+            buttonDelete.ImageUrl = "~/kanz/icons/delButtonIcon.jpg";
             buttonDelete.Attributes.Add("_cardID", cardID.ToString());
             buttonDelete.Click += DeleteCard;
             buttonDelete.OnClientClick = "return confirm('Вы уверены, что хотите удалить?');";
@@ -225,7 +231,9 @@ namespace Chancelerry
             // добавляем в version конвертированное значение номера документа из string в int для дальнейшего фильтра
             foreach (var itm in cardsAllFull)
             {
-                itm.version = Convert.ToInt32(itm.textValue); // LOG !!! {try catch в каком поле ошибка}
+                int tmp = 0; // V
+                Int32.TryParse(itm.textValue, out tmp); //V
+                itm.version = tmp;//Convert.ToInt32(itm.textValue); // LOG !!! {try catch в каком поле ошибка}
             }
 
             // фильтруем по номерам документов и достаем только ID'шники карточек

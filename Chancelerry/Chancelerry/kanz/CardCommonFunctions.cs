@@ -12,6 +12,7 @@ namespace Chancelerry.kanz
 {
     public class CardCommonFunctions
     {
+        private TableActions ta = new TableActions();
         private ChancelerryDBDataContext chancDb = new ChancelerryDBDataContext();
         public RegistersModels GetRegisterModelById(int registerModelId)
         {
@@ -168,6 +169,76 @@ namespace Chancelerry.kanz
 
             return nodeToReturn;
         }
+        public int FastSearch(Dictionary<int, string> searchList,int registerId,int userId,Table vTable)
+        {     
+
+            List<int> cardsToShow = new List<int>(); // сюда будем складывать карточки которые нужно показать
+            if (searchList != null) //если фильтры есть
+            { 
+                bool isFirst = true;
+                foreach (int currentKey in searchList.Keys) // проходимся по каждому фильтру
+                {
+                    int fieldId = currentKey;
+                    string fieldValue = "";
+                    searchList.TryGetValue(fieldId, out fieldValue);  //достаем айдишник нашего филда
+                    List<int> cardsWithValue = (from a in chancDb.CollectedFieldsValues
+                                                where a.active == true && a.fk_field == fieldId && a.valueText.Contains(fieldValue)
+                                                join b in chancDb.CollectedCards on a.fk_collectedCard equals b.collectedCardID
+                                                where b.active == true
+                                                select a.fk_collectedCard).Distinct().ToList(); // находим все карточки которые соответсвтуют
+                    List<int> tmpList;
+                    if (isFirst)
+                    {
+                        tmpList = cardsWithValue;
+                    }
+                    else
+                    {
+                        tmpList = (from a in cardsWithValue join b in cardsToShow on a equals b select a).Distinct().ToList();
+                    }
+                    isFirst = false;
+                    cardsToShow = tmpList;
+                }
+            }
+            else // если фильтров нет, показываем все карточки 
+            {
+                cardsToShow = (from a in chancDb.CollectedCards
+                               where a.active == true 
+                                && a.fk_register == registerId
+                              select a.collectedCardID).Distinct().ToList();
+            }
+            Dictionary<int, string> allFields = (from a in chancDb.RegistersUsersMap
+                                                 join b in chancDb.RegistersView
+                                                 on a.registersUsersMapID equals b.fk_registersUsersMap
+                                                 join c in chancDb.Fields
+                                                 on b.fk_field equals c.fieldID
+                                                 where
+                                                 a.fk_user == userId
+                                                 && a.fk_register == registerId
+                                                 && b.active
+                                                 select new { c.name, c.fieldID, b.weight }).OrderBy(w => w.weight).ToDictionary(t => t.fieldID, t => t.name);
+
+            List<CollectedFieldsValues> allValues = (from a in chancDb.CollectedFieldsValues
+                                                      where cardsToShow.Contains(a.fk_collectedCard)
+                                                      && allFields.Keys.Contains(a.fk_field)
+                                                      select a).ToList();
+
+            vTable.Rows.Add(ta.AddSearchHeaderRoFromList(allFields.Keys.ToList()));
+            vTable.Rows.Add(ta.AddHeaderRoFromList(allFields.Values.ToList()));
+
+            foreach (int currentCard in cardsToShow)
+            {
+                TableRow vRow = new TableRow();
+                List<string> rowList = new List<string>();
+                foreach(int currentField in allFields.Keys)
+                {
+                    string currentFieldValue = (from a in allValues where a.fk_field == currentField && a.fk_collectedCard == currentCard select a.valueText).FirstOrDefault();
+                    rowList.Add(currentFieldValue);
+                }
+                vTable.Rows.Add(ta.AddRowFromList(rowList, currentCard));
+            }
+            return cardsToShow.Count();
+        }
+
     }
     public class DataTypes
     {
@@ -738,5 +809,8 @@ namespace Chancelerry.kanz
                 }
             }
         }
+
+
+       
     }
 }
