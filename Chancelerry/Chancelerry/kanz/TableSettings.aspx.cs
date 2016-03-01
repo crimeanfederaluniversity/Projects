@@ -58,6 +58,7 @@ namespace Chancelerry.kanz
                                                       where
                                                       a.active == true                         
                                                       && c.active == true
+                                                     // && b.active == tr
                                                       && c.fk_register == (int)Session["registerID"]
                                                       && c.fk_user == (int)Session["userID"]
                                                       select a).ToList();
@@ -67,7 +68,7 @@ namespace Chancelerry.kanz
                                                                && a.fk_register == (int)Session["registerID"]
                                                          select a).FirstOrDefault();
 
-
+                    /*
                     foreach (Fields currentField in allFieldsInTable)
                     {
                         if (allFieldsWithUser.Contains(currentField))
@@ -85,56 +86,79 @@ namespace Chancelerry.kanz
                             dataContext.SubmitChanges();
                         }
                     }
-                   
+
                     // Кусок Ваге окончен :)
                     // Все возможные поля для таблицы в данном реестре
-                    var all = (from a in dataContext.Fields
-                               join b in dataContext.RegistersView on a.fieldID equals b.fk_field
-                               join c in dataContext.RegistersUsersMap on b.fk_registersUsersMap equals c.registersUsersMapID
-                               where c.fk_register == (int)Session["registerID"]
-                               select new {a.fieldID, a.name, b.weight});
+                      var all = (from a in dataContext.Fields
+                                 join b in dataContext.RegistersView on a.fieldID equals b.fk_field
+                                 join c in dataContext.RegistersUsersMap on b.fk_registersUsersMap equals c.registersUsersMapID
+                                 where c.fk_register == (int)Session["registerID"]
+                                 select new {a.fieldID, a.name, b.weight}).Distinct();
 
-                    // Уже прикрученные поля к этому пользователю
-                    var userView = (from a in dataContext.Fields
-                        join b in dataContext.RegistersView on a.fieldID equals b.fk_field
-                        join c in dataContext.RegistersUsersMap on b.fk_registersUsersMap equals c.registersUsersMapID
-                        where c.fk_register == (int)Session["registerID"] && c.fk_user == (int)Session["userID"] && b.active
-                        select a.fieldID).ToList();
+                      // Уже прикрученные поля к этому пользователю
+                      var userView = (from a in dataContext.Fields
+                          join b in dataContext.RegistersView on a.fieldID equals b.fk_field
+                          join c in dataContext.RegistersUsersMap on b.fk_registersUsersMap equals c.registersUsersMapID
+                          where c.fk_register == (int)Session["registerID"] && c.fk_user == (int)Session["userID"] && b.active
+                          select a.fieldID).Distinct().ToList();
 
-                    var allCross = new List<ViewFieldData>();
+                      var allCross = new List<ViewFieldData>();
 
-                    // Проходим по всем полям
-                    foreach (var qwe in all)
-                    {
-                        // Если это поле прикручено к таблице этого реестра и этому пользователю в ТАБЛИЦЕ RegisterView, то отмечаем его с галочкой Checked true
-                        allCross.Add(userView.Contains(qwe.fieldID)
-                            ? new ViewFieldData()
-                            {
-                                id = qwe.fieldID,
-                                name = qwe.name,
-                                weight = qwe.weight,
-                                isAdd = true
-                            }
-                            // если нет то с галочкой UnChecked false
-                            : new ViewFieldData()
-                            {
-                                id = qwe.fieldID,
-                                name = qwe.name,
-                                weight = qwe.weight,
-                                isAdd = false
-                            });
-                    }
+                      // Проходим по всем полям
+                      foreach (var qwe in all)
+                      {
+                          // Если это поле прикручено к таблице этого реестра и этому пользователю в ТАБЛИЦЕ RegisterView, то отмечаем его с галочкой Checked true
+                          allCross.Add(userView.Contains(qwe.fieldID)
+                              ? new ViewFieldData()
+                              {
+                                  id = qwe.fieldID,
+                                  name = qwe.name,
+                                  weight = qwe.weight,
+                                  isAdd = true
+                              }
+                              // если нет то с галочкой UnChecked false
+                              : new ViewFieldData()
+                              {
+                                  id = qwe.fieldID,
+                                  name = qwe.name,
+                                  weight = qwe.weight,
+                                  isAdd = false
+                              });
+                      }
+                      
+                      // Проходим по allCross, добавляем дааные из него в таблицу
 
-                    // Проходим по allCross, добавляем дааные из него в таблицу
-                    foreach (var item in allCross)
+                      foreach (var item in allCross)
+                      {
+                          DataRow dataRow = dataTable.NewRow();
+                          dataRow["fieldId"] = item.id;
+                          dataRow["fieldName"] = item.name;
+                          dataRow["fieldWeight"] = item.weight;
+                          dataRow["fieldIsAdd"] = item.isAdd;
+                          dataTable.Rows.Add(dataRow);
+                      }
+                      */
+
+                    foreach (var item in allFieldsWithUser)
                     {
                         DataRow dataRow = dataTable.NewRow();
-                        dataRow["fieldId"] = item.id;
+                        dataRow["fieldId"] = item.fieldID;
                         dataRow["fieldName"] = item.name;
-                        dataRow["fieldWeight"] = item.weight;
-                        dataRow["fieldIsAdd"] = item.isAdd;
+                        dataRow["fieldWeight"] = (from a in dataContext.RegistersView
+                            where
+                                a.fk_registersUsersMap == registerUserMap.registersUsersMapID &&
+                                a.fk_field == item.fieldID
+                            //&& a.active == true
+                            select a.weight).FirstOrDefault();
+                        dataRow["fieldIsAdd"] = (from a in dataContext.RegistersView
+                                                 where
+                                                     a.fk_registersUsersMap == registerUserMap.registersUsersMapID &&
+                                                     a.fk_field == item.fieldID
+                                                 //&& a.active == true
+                                                 select a.active).FirstOrDefault();
                         dataTable.Rows.Add(dataRow);
                     }
+
                     GridView1.DataSource = dataTable;
                     ViewState["Gridview1"] = dataTable;
                     GridView1.DataBind();

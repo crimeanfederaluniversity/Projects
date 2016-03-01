@@ -50,7 +50,7 @@ namespace Chancelerry.kanz
             foreach (string currentRow in rows)
             {
                 //char[] charsToTrim1 = { ' ', '\r', '\n', '\t',};
-                int cardId = addCard(5);
+                int cardId = addCard(-1);
 
                 string[] fields = currentRow.Split('#');
                 int i = 0;
@@ -71,7 +71,9 @@ namespace Chancelerry.kanz
                     }
                     if (i==3)
                     {
-                        createFieldValue(cardId, 43, currentField.Trim(), 0);
+
+                        string date = currentField[7].ToString() + currentField[8].ToString()+currentField[9].ToString()+currentField[10].ToString()+"-"+ currentField[4].ToString()+ currentField[5].ToString()+"-"+ currentField[1].ToString()+ currentField[2].ToString();
+                        createFieldValue(cardId, 43, date, 0);
                     }
                     if (i==4)
                     {
@@ -93,7 +95,6 @@ namespace Chancelerry.kanz
                                 int b = 0;
                                 foreach (string currentStruct in structs)
                                 {
-
                                     string newTmp = currentStruct.Replace("\"\"", "\"");
                                     createFieldValue(cardId, 46, newTmp, b);
                                     b++;
@@ -162,6 +163,46 @@ namespace Chancelerry.kanz
                         createFieldValue(cardId, 6, currentField.Trim(), 0);
                     }
                     if (i == 3)
+                    {
+                        createFieldValue(cardId, 4, currentField.Trim(), 0);
+                    }
+                    if (i == 4)
+                    {
+                        createFieldValue(cardId, 4, currentField.Trim(), 0);
+                    }
+                    if (i == 5)
+                    {
+                        createFieldValue(cardId, 6, currentField.Trim(), 0);
+                    }
+                    if (i == 6)
+                    {
+                        createFieldValue(cardId, 4, currentField.Trim(), 0);
+                    }
+                    if (i == 7)
+                    {
+                        createFieldValue(cardId, 1, currentField.Trim(), 0);
+                    }
+                    if (i == 8)
+                    {
+                        createFieldValue(cardId, 4, currentField.Trim(), 0);
+                    }
+                    if (i == 9)
+                    {
+                        createFieldValue(cardId, 6, currentField.Trim(), 0);
+                    }
+                    if (i == 10)
+                    {
+                        createFieldValue(cardId, 4, currentField.Trim(), 0);
+                    }
+                    if (i == 10)
+                    {
+                        createFieldValue(cardId, 4, currentField.Trim(), 0);
+                    }
+                    if (i == 12)
+                    {
+                        createFieldValue(cardId, 6, currentField.Trim(), 0);
+                    }
+                    if (i == 13)
                     {
                         createFieldValue(cardId, 4, currentField.Trim(), 0);
                     }
