@@ -192,16 +192,6 @@ hr {
   }
 }
 
-
-/*
-    LOGIN
- */
-
-.col-md-8 {
-    width: 100%;
-}
-
-
 /*
     DASHBOARD
  */
@@ -273,11 +263,33 @@ hr {
 
 #MainContent_SearchPanel {
     background: #E7E4DB;
-    border: 1px solid black;
+    //border: 1px solid black;
     border-radius:2px;
     padding: 10px;
     position: absolute;
+    width: 200px;
+    -webkit-box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 1);
+    -moz-box-shadow:    0px 0px 11px 0px rgba(0, 0, 0, 1);
+    box-shadow:         0px 0px 11px 0px rgba(0, 0, 0, 1);
 }
+
+/*#MainContent_SearchPanel:before {
+    border-style: solid;
+    border-width: 0 10px 15px 10px;
+    border-color: transparent transparent #E7E4DB transparent;
+	content: ' ';
+	position: absolute;
+	left: 139px;
+    top: -14px;
+    height: 0;
+    width: 0;
+}*/
+
+/*.search-field {
+    padding-left: 20px; 
+	background: url('../kanz/icons/searchField.png') no-repeat 5px 6px;
+    background-size: 10px 10px
+}*/
 
 /*pagination*/
 
