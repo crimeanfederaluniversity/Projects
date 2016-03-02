@@ -10,7 +10,8 @@ namespace Chancelerry.kanz
 {
     public partial class RegisterView : System.Web.UI.Page
     {
-
+        bool vVersion = true;
+        int page = 0;
         private void RedirectToEdit(object sender, EventArgs e)
         {
 
@@ -44,19 +45,46 @@ namespace Chancelerry.kanz
                  select r).FirstOrDefault();
 
 
-                if (register != null)
+            if (register != null)
+            {
+                RegisterNameLabel.Text = register.name;
+
+
+                if (vVersion)
                 {
-                    RegisterNameLabel.Text = register.name;
+                    int size = 100;
+                    if (Request.QueryString["page"] != null)
+                        Int32.TryParse(Request.QueryString["page"], out page);
 
-                    ta.RefreshTable(dataContext, Convert.ToInt32(ViewState["userID"]), register, regId, dataTable,(Dictionary<int, string>)Session["vSearchList"]);
-                            TableActions.DTable = dataTable;
+                    Dictionary<int, string> vSearchList = (Dictionary<int, string>)Session["vSearchList"];
+                    CardCommonFunctions cardCommonFunctions = new CardCommonFunctions();
 
-
-                    string page_info = "Cтраница: " + ((int)Session["pageCntrl"] + 1).ToString() + "/" + (int)Session["pageCount"] +". Всего: "+(int)Session["cardsCount"];
+                    string sum = cardCommonFunctions.FastSearch(vSearchList, register.registerID, Convert.ToInt32(userID), dataTable, page * size, (page + 1) * size);
+                    Button5.Visible = true;
+                    Button6.Visible = true;
+                    Button7.Visible = false;
+                    Button8.Visible = false;
+                    BottomButton9.Visible = false;
+                    BottomButton10.Visible = true;
+                    BottomButton11.Visible = true;
+                    BottomButton12.Visible = false;
+                    string page_info = sum;
                     PageNumberLabel.Text = page_info;
                     BottomPageNumberLabel.Text = page_info;
-                
+
                 }
+                else
+                {
+                    ta.RefreshTable(dataContext, Convert.ToInt32(ViewState["userID"]), register, regId, dataTable, (Dictionary<int, string>)Session["vSearchList"]);
+                    TableActions.DTable = dataTable;
+
+
+                    string page_info = "Cтраница: " + ((int)Session["pageCntrl"] + 1).ToString() + "/" + (int)Session["pageCount"] + ". Всего: " + (int)Session["cardsCount"];
+                    PageNumberLabel.Text = page_info;
+                    BottomPageNumberLabel.Text = page_info;
+
+                }
+            }
         }
         protected void Page_Unload(object sender, EventArgs e)
         {
@@ -79,6 +107,10 @@ namespace Chancelerry.kanz
         private void Search()
         {
             Table table = TableActions.DTable;
+            if (vVersion)
+            {
+                table = dataTable;
+            }
             List<TableActions.SearchValues> searchList = new List<TableActions.SearchValues>();
             Dictionary<int,string> vSearchDict = new Dictionary<int, string>();
             // Проходимся по таблице и ищем "поисковые" TextBox'ы 
@@ -117,18 +149,30 @@ namespace Chancelerry.kanz
 
         protected void Button4_Click(object sender, EventArgs e)
         {
+            Session["vSearchList"] = null;
             Session["searchList"] = new List<TableActions.SearchValues>();
             Response.Redirect("RegisterView.aspx");
         }
 
         protected void Button6_Click(object sender, EventArgs e)
         {
+            if (vVersion)
+            {
+                Response.Redirect("RegisterView.aspx?page=" + (page + 1));
+            }
             Session["pageCntrl"] = (int)Session["pageCntrl"]+1;
             Response.Redirect("RegisterView.aspx");
         }
 
         protected void Button5_Click(object sender, EventArgs e)
         {
+            if (vVersion)
+            {
+                if (page > 0)
+                {
+                    Response.Redirect("RegisterView.aspx?page=" + (page - 1));
+                }
+            }
             if ((int) Session["pageCntrl"] > 0)
             {
                 Session["pageCntrl"] = (int) Session["pageCntrl"] - 1;
@@ -138,12 +182,23 @@ namespace Chancelerry.kanz
 
         protected void Button7_Click(object sender, EventArgs e)
         {
+            if (vVersion)
+            {
+                Response.Redirect("RegisterView.aspx?page=0");
+            }
             Session["pageCntrl"] = 0;
             Response.Redirect("RegisterView.aspx");
         }
 
         protected void Button8_Click(object sender, EventArgs e)
         {
+            if (vVersion)
+            {
+                if (page > 0)
+                {
+                    Response.Redirect("RegisterView.aspx?page=" + (page - 1));
+                }
+            }
             Session["pageCntrl"] = (int)Session["pageCount"]-1;
             Response.Redirect("RegisterView.aspx");
         }

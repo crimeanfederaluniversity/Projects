@@ -198,14 +198,12 @@ namespace Chancelerry
         public void RefreshTable(ChancelerryDBDataContext dataContext, object userID, Registers register, object regId, Table dataTable, Dictionary<int, string> searchList)
         {
             dataTable.Rows.Clear();
-
             // Достаем поля для данного реестра и пользователя на основе RegisterView и прав пользователя RegistersUsersMap c сортировкой по весу
             var fieldsAll = (from regUsrMap in dataContext.RegistersUsersMap
                              join regView in dataContext.RegistersView on regUsrMap.registersUsersMapID equals regView.fk_registersUsersMap
                              join _fields in dataContext.Fields.OrderByDescending(n => n.fieldID == 1) on regView.fk_field equals _fields.fieldID
                              where regUsrMap.fk_user == Convert.ToInt32(userID) && regUsrMap.fk_register == register.registerID && regView.active
                              select new { _fields.name, _fields.fieldID, regView.weight }).OrderBy(w => w.weight).ToList();
-
             var fieldsName = (from f in fieldsAll select f.name).ToList();
             var fieldsId = (from f in fieldsAll select f.fieldID).ToList();
 

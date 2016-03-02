@@ -169,13 +169,36 @@ namespace Chancelerry.kanz
 
             return nodeToReturn;
         }
-        public int FastSearch(Dictionary<int, string> searchList,int registerId,int userId,Table vTable)
-        {     
+
+        public TableHeaderRow AddSearchHeaderRoFromListWithData(List<int> fieldID,Dictionary<int,string> searchData)
+        {
+            TableHeaderRow row = new TableHeaderRow();
+            row.BorderStyle = BorderStyle.Inset;
+            foreach (int elm in fieldID)
+            {
+                TableCell cell = new TableCell();
+                TextBox tb = new TextBox();
+                string tmp = "";
+                if (searchData!=null) searchData.TryGetValue(elm, out tmp);
+                tb.Attributes.Add("_fieldID4search", elm.ToString());
+                tb.ID = "searchTb" + elm.ToString();
+                tb.Text = tmp;
+                tb.Attributes.Add("onkeypress", "return runScript(event);");
+                tb.Attributes.Add("onkeydown", "return runScript(event);");
+                tb.Attributes.Add("class", "search-field");
+                cell.Controls.Add(tb);
+                row.Cells.Add(cell);
+            }
+            return row;
+        }
+
+        public string FastSearch(Dictionary<int, string> searchList, int registerId, int userId, Table vTable, int lineFrom, int lineTo)
+        {
 
             List<int> cardsToShow = new List<int>(); // сюда будем складывать карточки которые нужно показать
 
             if (searchList != null) //если фильтры есть
-            { 
+            {
                 bool isFirst = true;
                 foreach (int currentKey in searchList.Keys) // проходимся по каждому фильтру
                 {
@@ -186,7 +209,8 @@ namespace Chancelerry.kanz
                     List<int> cardsWithValue = (from a in chancDb.CollectedFieldsValues
                                                 where a.active == true && a.fk_field == fieldId && a.valueText.Contains(fieldValue)
                                                 join b in chancDb.CollectedCards on a.fk_collectedCard equals b.collectedCardID
-                                                where b.active == true
+                                                
+                                                where b.active == true && b.fk_register == registerId
                                                 select a.fk_collectedCard).Distinct().ToList(); // находим все карточки которые соответсвтуют
                     List<int> tmpList;
                     if (isFirst)
@@ -204,11 +228,45 @@ namespace Chancelerry.kanz
             else // если фильтров нет, показываем все карточки 
             {
                 cardsToShow = (from a in chancDb.CollectedCards
-                               where a.active == true 
+                               where a.active == true
                                 && a.fk_register == registerId
-                              select a.collectedCardID).Distinct().ToList();
+                               select a.collectedCardID).Distinct().ToList();
             }
+            int idFieldId = (from a in chancDb.Fields
+                             join b in chancDb.FieldsGroups
+                             on a.fk_fieldsGroup equals b.fieldsGroupID
+                             join c in chancDb.RegistersModels
+                             on b.fk_registerModel equals c.registerModelID
+                             join d in chancDb.Registers
+                             on c.registerModelID equals d.fk_registersModel
+                             where d.registerID == registerId
+                             && a.type == "autoIncrement"
+                             select a.fieldID).FirstOrDefault();
 
+            List<CollectedFieldsValues> collectedIds = (from a in chancDb.CollectedFieldsValues
+                                                        where cardsToShow.Contains(a.fk_collectedCard)
+                                                        && a.fk_field == idFieldId
+                                                        select a).ToList();
+            Dictionary<int, int> toSort = new Dictionary<int, int>();
+            List<int> sortedCardsToShow = new List<int>();
+            foreach (int current in cardsToShow)
+            {
+                int tmp = 0;
+                Int32.TryParse((from a in collectedIds where a.fk_collectedCard == current select a).OrderByDescending(mc => mc.version).FirstOrDefault().valueText, out tmp);
+                toSort.Add(current, tmp);
+            }
+            sortedCardsToShow = (from a in toSort select a).OrderByDescending(mc => mc.Value).Select(mc => mc.Key).ToList();
+            List<int> sortedCutedCardsToShow = new List<int>();
+            
+                if (lineTo > sortedCardsToShow.Count())
+                { 
+                lineTo = sortedCardsToShow.Count();
+                }
+            if (sortedCardsToShow.Count > 0)
+                for (int i = lineFrom;i< lineTo;i++)
+            {
+                sortedCutedCardsToShow.Add(sortedCardsToShow[i]);
+            }
 
             Dictionary<int, string> allFields = (from a in chancDb.RegistersUsersMap
                                                  join b in chancDb.RegistersView
@@ -222,25 +280,44 @@ namespace Chancelerry.kanz
                                                  select new { c.name, c.fieldID, b.weight }).OrderBy(w => w.weight).ToDictionary(t => t.fieldID, t => t.name);
 
             List<CollectedFieldsValues> allValues = (from a in chancDb.CollectedFieldsValues
-                                                      where cardsToShow.Contains(a.fk_collectedCard)
+                                                      where sortedCutedCardsToShow.Contains(a.fk_collectedCard)
                                                       && allFields.Keys.Contains(a.fk_field)
                                                       select a).ToList();
 
-            vTable.Rows.Add(ta.AddSearchHeaderRoFromList(allFields.Keys.ToList()));
+            vTable.Rows.Add(AddSearchHeaderRoFromListWithData(allFields.Keys.ToList(), searchList));
             vTable.Rows.Add(ta.AddHeaderRoFromList(allFields.Values.ToList()));
 
-            foreach (int currentCard in cardsToShow)
+            foreach (int currentCard in sortedCutedCardsToShow)
             {
                 TableRow vRow = new TableRow();
                 List<string> rowList = new List<string>();
                 foreach(int currentField in allFields.Keys)
                 {
-                    string currentFieldValue = (from a in allValues where a.fk_field == currentField && a.fk_collectedCard == currentCard select a.valueText).FirstOrDefault();
-                    rowList.Add(currentFieldValue);
+                    List<CollectedFieldsValues> collectedFields = (from a in allValues where a.fk_field == currentField && a.fk_collectedCard == currentCard select a).ToList();
+                    int maxInstance = (from a in collectedFields select a.instance).OrderByDescending(mc => mc).FirstOrDefault();
+                    string value="";
+                    for (int i=0;i< maxInstance+1;i++)
+                    {
+                        CollectedFieldsValues tmp2 = (from a in collectedFields where a.instance == i select a).OrderByDescending(mc => mc.version).FirstOrDefault();
+                        if (tmp2 == null)
+                            continue;
+                        if (tmp2.isDeleted)
+                            continue;
+                        if (maxInstance > 0)
+                        {
+                            value += i + 1 + ")" + tmp2.valueText + "<br />";
+                        }
+                        else
+                        {
+                            value = tmp2.valueText;
+                        }
+                    }
+                    //string currentFieldValue = (from a in allValues where a.fk_field == currentField && a.fk_collectedCard == currentCard select a.valueText).FirstOrDefault();
+                    rowList.Add(value);
                 }
                 vTable.Rows.Add(ta.AddRowFromList(rowList, currentCard));
             }
-            return cardsToShow.Count();
+            return "Всего:" + sortedCardsToShow.Count() + "  " + "Показано с "+ (lineFrom+1)+ " по "+(lineTo);
         }
 
     }
