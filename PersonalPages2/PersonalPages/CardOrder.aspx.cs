@@ -16,7 +16,7 @@ namespace PersonalPages
             if (!Page.IsPostBack)
             {
                 PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-                Aplication aplication = (from a in usersDB.Aplications where a.Active == true && a.FK_ApplicationType == 4 select a).FirstOrDefault();
+                Aplications aplication = (from a in usersDB.Aplications where a.Active == true && a.FK_ApplicationType == 4 select a).FirstOrDefault();
                 if (aplication.Confirmed == 0)
                 {
                     Label1.Visible = true;
@@ -47,24 +47,31 @@ namespace PersonalPages
             }
             int userID = UserSer.Id;
             if (FileUpload1.HasFile) 
-            { 
-            PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-            Aplication neworder = new Aplication();
-            neworder.Active = true;
-            neworder.FK_ApplicationType = 4;
-            neworder.FK_UserAdd = userID;
-            neworder.Date = DateTime.Now;
-            neworder.TelephoneNumber = TextBox5.Text;
-            neworder.Text = TextBox4.Text.ToString();
-            neworder.Confirmed = 0;
-            String path = Server.MapPath("http://cfu-portal.ru/AplicationFiles"); 
-            Directory.CreateDirectory(path + "\\\\" + userID.ToString());
-            FileUpload1.PostedFile.SaveAs(path +"\\\\" + userID.ToString()  + "\\\\" + FileUpload1.FileName);        
-            neworder.FileURL = "/AplicationFiles" + "\\\\" +  userID.ToString()  + "\\\\" + FileUpload1.FileName;
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Запрос отправлен!');", true);
-            usersDB.Aplications.InsertOnSubmit(neworder);
-            usersDB.SubmitChanges();            
-            Response.Redirect("~/CardOrder.aspx");              
+            {
+                if (TextBox5.Text != null && TextBox4.Text != null)
+                {
+                    PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
+                    Aplications neworder = new Aplications();
+                    neworder.Active = true;
+                    neworder.FK_ApplicationType = 4;
+                    neworder.FK_UserAdd = userID;
+                    neworder.Date = DateTime.Now;
+                    neworder.TelephoneNumber = TextBox5.Text;
+                    neworder.Text = TextBox4.Text.ToString();
+                    neworder.Confirmed = 0;
+                    String path = Server.MapPath("http://cfu-portal.ru/AplicationFiles");
+                    Directory.CreateDirectory(path + "\\\\" + userID.ToString());
+                    FileUpload1.PostedFile.SaveAs(path + "\\\\" + userID.ToString() + "\\\\" + FileUpload1.FileName);
+                    neworder.FileURL = "/AplicationFiles" + "\\\\" + userID.ToString() + "\\\\" + FileUpload1.FileName;
+                    usersDB.Aplications.InsertOnSubmit(neworder);
+                    usersDB.SubmitChanges();
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Запрос отправлен!');", true);
+                }
+                else
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Не все поля заполнены!');", true);
+                }
+                       
             }         
         }
        

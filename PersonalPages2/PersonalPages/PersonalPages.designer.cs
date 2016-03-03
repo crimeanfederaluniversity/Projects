@@ -51,9 +51,6 @@ namespace PersonalPages
     partial void InsertManualTable(ManualTable instance);
     partial void UpdateManualTable(ManualTable instance);
     partial void DeleteManualTable(ManualTable instance);
-    partial void InsertAplications(Aplications instance);
-    partial void UpdateAplications(Aplications instance);
-    partial void DeleteAplications(Aplications instance);
     partial void InsertApplictionTypes(ApplictionTypes instance);
     partial void UpdateApplictionTypes(ApplictionTypes instance);
     partial void DeleteApplictionTypes(ApplictionTypes instance);
@@ -66,9 +63,6 @@ namespace PersonalPages
     partial void InsertTypeOfWritingFIO(TypeOfWritingFIO instance);
     partial void UpdateTypeOfWritingFIO(TypeOfWritingFIO instance);
     partial void DeleteTypeOfWritingFIO(TypeOfWritingFIO instance);
-    partial void InsertUsersTable(UsersTable instance);
-    partial void UpdateUsersTable(UsersTable instance);
-    partial void DeleteUsersTable(UsersTable instance);
     partial void InsertProjects(Projects instance);
     partial void UpdateProjects(Projects instance);
     partial void DeleteProjects(Projects instance);
@@ -78,6 +72,12 @@ namespace PersonalPages
     partial void InsertSpecializationTable(SpecializationTable instance);
     partial void UpdateSpecializationTable(SpecializationTable instance);
     partial void DeleteSpecializationTable(SpecializationTable instance);
+    partial void InsertUsersTable(UsersTable instance);
+    partial void UpdateUsersTable(UsersTable instance);
+    partial void DeleteUsersTable(UsersTable instance);
+    partial void InsertAplications(Aplications instance);
+    partial void UpdateAplications(Aplications instance);
+    partial void DeleteAplications(Aplications instance);
     #endregion
 		
 		public PersonalPagesDataContext() : 
@@ -166,14 +166,6 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<Aplications> Aplications
-		{
-			get
-			{
-				return this.GetTable<Aplications>();
-			}
-		}
-		
 		public System.Data.Linq.Table<ApplictionTypes> ApplictionTypes
 		{
 			get
@@ -206,14 +198,6 @@ namespace PersonalPages
 			}
 		}
 		
-		public System.Data.Linq.Table<UsersTable> UsersTable
-		{
-			get
-			{
-				return this.GetTable<UsersTable>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Projects> Projects
 		{
 			get
@@ -237,6 +221,22 @@ namespace PersonalPages
 				return this.GetTable<SpecializationTable>();
 			}
 		}
+		
+		public System.Data.Linq.Table<UsersTable> UsersTable
+		{
+			get
+			{
+				return this.GetTable<UsersTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Aplications> Aplications
+		{
+			get
+			{
+				return this.GetTable<Aplications>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FirstLevelSubdivisionTable")]
@@ -257,6 +257,8 @@ namespace PersonalPages
 		
 		private EntitySet<SecondLevelSubdivisionTable> _SecondLevelSubdivisionTable;
 		
+		private EntitySet<UsersTable> _UsersTable;
+		
     #region Определения метода расширяемости
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -276,6 +278,7 @@ namespace PersonalPages
 		public FirstLevelSubdivisionTable()
 		{
 			this._SecondLevelSubdivisionTable = new EntitySet<SecondLevelSubdivisionTable>(new Action<SecondLevelSubdivisionTable>(this.attach_SecondLevelSubdivisionTable), new Action<SecondLevelSubdivisionTable>(this.detach_SecondLevelSubdivisionTable));
+			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
 			OnCreated();
 		}
 		
@@ -392,6 +395,19 @@ namespace PersonalPages
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_UsersTable", Storage="_UsersTable", ThisKey="FirstLevelSubdivisionTableID", OtherKey="FK_FirstLevelSubdivisionTable")]
+		public EntitySet<UsersTable> UsersTable
+		{
+			get
+			{
+				return this._UsersTable;
+			}
+			set
+			{
+				this._UsersTable.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -419,6 +435,18 @@ namespace PersonalPages
 		}
 		
 		private void detach_SecondLevelSubdivisionTable(SecondLevelSubdivisionTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.FirstLevelSubdivisionTable = null;
+		}
+		
+		private void attach_UsersTable(UsersTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.FirstLevelSubdivisionTable = this;
+		}
+		
+		private void detach_UsersTable(UsersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.FirstLevelSubdivisionTable = null;
@@ -1281,6 +1309,8 @@ namespace PersonalPages
 		
 		private int _FK_SecondLevelSubdivisionTable;
 		
+		private EntitySet<UsersTable> _UsersTable;
+		
 		private EntityRef<SecondLevelSubdivisionTable> _SecondLevelSubdivisionTable;
 		
     #region Определения метода расширяемости
@@ -1299,6 +1329,7 @@ namespace PersonalPages
 		
 		public ThirdLevelSubdivisionTable()
 		{
+			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
 			this._SecondLevelSubdivisionTable = default(EntityRef<SecondLevelSubdivisionTable>);
 			OnCreated();
 		}
@@ -1387,6 +1418,19 @@ namespace PersonalPages
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_UsersTable", Storage="_UsersTable", ThisKey="ThirdLevelSubdivisionTableID", OtherKey="FK_ThirdLevelSubdivisionTable")]
+		public EntitySet<UsersTable> UsersTable
+		{
+			get
+			{
+				return this._UsersTable;
+			}
+			set
+			{
+				this._UsersTable.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable", Storage="_SecondLevelSubdivisionTable", ThisKey="FK_SecondLevelSubdivisionTable", OtherKey="SecondLevelSubdivisionTableID", IsForeignKey=true)]
 		public SecondLevelSubdivisionTable SecondLevelSubdivisionTable
 		{
@@ -1440,6 +1484,18 @@ namespace PersonalPages
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+		
+		private void attach_UsersTable(UsersTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.ThirdLevelSubdivisionTable = this;
+		}
+		
+		private void detach_UsersTable(UsersTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.ThirdLevelSubdivisionTable = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SecondLevelSubdivisionTable")]
@@ -1459,6 +1515,8 @@ namespace PersonalPages
 		private EntitySet<ThirdLevelSubdivisionTable> _ThirdLevelSubdivisionTable;
 		
 		private EntitySet<StudentGroupsTable> _StudentGroupsTable;
+		
+		private EntitySet<UsersTable> _UsersTable;
 		
 		private EntityRef<FirstLevelSubdivisionTable> _FirstLevelSubdivisionTable;
 		
@@ -1480,6 +1538,7 @@ namespace PersonalPages
 		{
 			this._ThirdLevelSubdivisionTable = new EntitySet<ThirdLevelSubdivisionTable>(new Action<ThirdLevelSubdivisionTable>(this.attach_ThirdLevelSubdivisionTable), new Action<ThirdLevelSubdivisionTable>(this.detach_ThirdLevelSubdivisionTable));
 			this._StudentGroupsTable = new EntitySet<StudentGroupsTable>(new Action<StudentGroupsTable>(this.attach_StudentGroupsTable), new Action<StudentGroupsTable>(this.detach_StudentGroupsTable));
+			this._UsersTable = new EntitySet<UsersTable>(new Action<UsersTable>(this.attach_UsersTable), new Action<UsersTable>(this.detach_UsersTable));
 			this._FirstLevelSubdivisionTable = default(EntityRef<FirstLevelSubdivisionTable>);
 			OnCreated();
 		}
@@ -1594,6 +1653,19 @@ namespace PersonalPages
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_UsersTable", Storage="_UsersTable", ThisKey="SecondLevelSubdivisionTableID", OtherKey="FK_SecondLevelSubdivisionTable")]
+		public EntitySet<UsersTable> UsersTable
+		{
+			get
+			{
+				return this._UsersTable;
+			}
+			set
+			{
+				this._UsersTable.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable", Storage="_FirstLevelSubdivisionTable", ThisKey="FK_FirstLevelSubdivisionTable", OtherKey="FirstLevelSubdivisionTableID", IsForeignKey=true)]
 		public FirstLevelSubdivisionTable FirstLevelSubdivisionTable
 		{
@@ -1667,6 +1739,18 @@ namespace PersonalPages
 		}
 		
 		private void detach_StudentGroupsTable(StudentGroupsTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.SecondLevelSubdivisionTable = null;
+		}
+		
+		private void attach_UsersTable(UsersTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.SecondLevelSubdivisionTable = this;
+		}
+		
+		private void detach_UsersTable(UsersTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.SecondLevelSubdivisionTable = null;
@@ -1782,318 +1866,6 @@ namespace PersonalPages
 					this._ManualLink = value;
 					this.SendPropertyChanged("ManualLink");
 					this.OnManualLinkChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Aplications")]
-	public partial class Aplications : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private System.Nullable<bool> _Active;
-		
-		private System.Nullable<int> _FK_ApplicationType;
-		
-		private System.Nullable<int> _FK_UserAdd;
-		
-		private System.Nullable<System.DateTime> _Date;
-		
-		private string _TelephoneNumber;
-		
-		private string _Text;
-		
-		private string _FileURL;
-		
-		private EntityRef<ApplictionTypes> _ApplictionTypes;
-		
-		private EntityRef<UsersTable> _UsersTable;
-		
-    #region Определения метода расширяемости
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnActiveChanging(System.Nullable<bool> value);
-    partial void OnActiveChanged();
-    partial void OnFK_ApplicationTypeChanging(System.Nullable<int> value);
-    partial void OnFK_ApplicationTypeChanged();
-    partial void OnFK_UserAddChanging(System.Nullable<int> value);
-    partial void OnFK_UserAddChanged();
-    partial void OnDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnDateChanged();
-    partial void OnTelephoneNumberChanging(string value);
-    partial void OnTelephoneNumberChanged();
-    partial void OnTextChanging(string value);
-    partial void OnTextChanged();
-    partial void OnFileURLChanging(string value);
-    partial void OnFileURLChanged();
-    #endregion
-		
-		public Aplications()
-		{
-			this._ApplictionTypes = default(EntityRef<ApplictionTypes>);
-			this._UsersTable = default(EntityRef<UsersTable>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
-		public System.Nullable<bool> Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ApplicationType", DbType="Int")]
-		public System.Nullable<int> FK_ApplicationType
-		{
-			get
-			{
-				return this._FK_ApplicationType;
-			}
-			set
-			{
-				if ((this._FK_ApplicationType != value))
-				{
-					if (this._ApplictionTypes.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_ApplicationTypeChanging(value);
-					this.SendPropertyChanging();
-					this._FK_ApplicationType = value;
-					this.SendPropertyChanged("FK_ApplicationType");
-					this.OnFK_ApplicationTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_UserAdd", DbType="Int")]
-		public System.Nullable<int> FK_UserAdd
-		{
-			get
-			{
-				return this._FK_UserAdd;
-			}
-			set
-			{
-				if ((this._FK_UserAdd != value))
-				{
-					if (this._UsersTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_UserAddChanging(value);
-					this.SendPropertyChanging();
-					this._FK_UserAdd = value;
-					this.SendPropertyChanged("FK_UserAdd");
-					this.OnFK_UserAddChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime")]
-		public System.Nullable<System.DateTime> Date
-		{
-			get
-			{
-				return this._Date;
-			}
-			set
-			{
-				if ((this._Date != value))
-				{
-					this.OnDateChanging(value);
-					this.SendPropertyChanging();
-					this._Date = value;
-					this.SendPropertyChanged("Date");
-					this.OnDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TelephoneNumber", DbType="NVarChar(50)")]
-		public string TelephoneNumber
-		{
-			get
-			{
-				return this._TelephoneNumber;
-			}
-			set
-			{
-				if ((this._TelephoneNumber != value))
-				{
-					this.OnTelephoneNumberChanging(value);
-					this.SendPropertyChanging();
-					this._TelephoneNumber = value;
-					this.SendPropertyChanged("TelephoneNumber");
-					this.OnTelephoneNumberChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(MAX)")]
-		public string Text
-		{
-			get
-			{
-				return this._Text;
-			}
-			set
-			{
-				if ((this._Text != value))
-				{
-					this.OnTextChanging(value);
-					this.SendPropertyChanging();
-					this._Text = value;
-					this.SendPropertyChanged("Text");
-					this.OnTextChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileURL", DbType="NVarChar(MAX)")]
-		public string FileURL
-		{
-			get
-			{
-				return this._FileURL;
-			}
-			set
-			{
-				if ((this._FileURL != value))
-				{
-					this.OnFileURLChanging(value);
-					this.SendPropertyChanging();
-					this._FileURL = value;
-					this.SendPropertyChanged("FileURL");
-					this.OnFileURLChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ApplictionTypes_Aplications", Storage="_ApplictionTypes", ThisKey="FK_ApplicationType", OtherKey="ID", IsForeignKey=true)]
-		public ApplictionTypes ApplictionTypes
-		{
-			get
-			{
-				return this._ApplictionTypes.Entity;
-			}
-			set
-			{
-				ApplictionTypes previousValue = this._ApplictionTypes.Entity;
-				if (((previousValue != value) 
-							|| (this._ApplictionTypes.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._ApplictionTypes.Entity = null;
-						previousValue.Aplications.Remove(this);
-					}
-					this._ApplictionTypes.Entity = value;
-					if ((value != null))
-					{
-						value.Aplications.Add(this);
-						this._FK_ApplicationType = value.ID;
-					}
-					else
-					{
-						this._FK_ApplicationType = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("ApplictionTypes");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_Aplications", Storage="_UsersTable", ThisKey="FK_UserAdd", OtherKey="UsersTableID", IsForeignKey=true)]
-		public UsersTable UsersTable
-		{
-			get
-			{
-				return this._UsersTable.Entity;
-			}
-			set
-			{
-				UsersTable previousValue = this._UsersTable.Entity;
-				if (((previousValue != value) 
-							|| (this._UsersTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UsersTable.Entity = null;
-						previousValue.Aplications.Remove(this);
-					}
-					this._UsersTable.Entity = value;
-					if ((value != null))
-					{
-						value.Aplications.Add(this);
-						this._FK_UserAdd = value.UsersTableID;
-					}
-					else
-					{
-						this._FK_UserAdd = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("UsersTable");
 				}
 			}
 		}
@@ -2895,866 +2667,6 @@ namespace PersonalPages
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UsersTable")]
-	public partial class UsersTable : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _UsersTableID;
-		
-		private bool _Active;
-		
-		private string _Login;
-		
-		private string _Password;
-		
-		private string _Email;
-		
-		private System.Nullable<int> _FK_FirstLevelSubdivisionTable;
-		
-		private System.Nullable<int> _FK_SecondLevelSubdivisionTable;
-		
-		private System.Nullable<int> _FK_ThirdLevelSubdivisionTable;
-		
-		private System.Nullable<int> _FK_FourthLevelSubdivisionTable;
-		
-		private System.Nullable<int> _FK_FifthLevelSubdivisionTable;
-		
-		private System.Nullable<int> _AccessLevel;
-		
-		private System.Nullable<int> _FK_ZeroLevelSubdivisionTable;
-		
-		private string _PassCode;
-		
-		private System.Nullable<bool> _Confirmed;
-		
-		private string _Position;
-		
-		private string _Surname;
-		
-		private string _Name;
-		
-		private string _Patronimyc;
-		
-		private string _AcademicDegree;
-		
-		private string _AcademicRank;
-		
-		private System.Nullable<bool> _Data_Status;
-		
-		private System.Nullable<int> _Kurs;
-		
-		private System.Nullable<int> _YearEnter;
-		
-		private System.Nullable<int> _FK_Specialization;
-		
-		private System.Nullable<int> _FK_StudentGroup;
-		
-		private EntitySet<UserDataChangeHistory> _UserDataChangeHistory;
-		
-		private EntitySet<UsersAndUserGroupMappingTable1> _UsersAndUserGroupMappingTable1;
-		
-		private EntitySet<Aplications> _Aplications;
-		
-		private EntitySet<UsersAndUserGroupMappingTable> _UsersAndUserGroupMappingTable;
-		
-		private EntitySet<TypeOfWritingFIO> _TypeOfWritingFIO;
-		
-		private EntityRef<StudentGroupsTable> _StudentGroupsTable;
-		
-		private EntityRef<SpecializationTable> _SpecializationTable;
-		
-    #region Определения метода расширяемости
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnUsersTableIDChanging(int value);
-    partial void OnUsersTableIDChanged();
-    partial void OnActiveChanging(bool value);
-    partial void OnActiveChanged();
-    partial void OnLoginChanging(string value);
-    partial void OnLoginChanged();
-    partial void OnPasswordChanging(string value);
-    partial void OnPasswordChanged();
-    partial void OnEmailChanging(string value);
-    partial void OnEmailChanged();
-    partial void OnFK_FirstLevelSubdivisionTableChanging(System.Nullable<int> value);
-    partial void OnFK_FirstLevelSubdivisionTableChanged();
-    partial void OnFK_SecondLevelSubdivisionTableChanging(System.Nullable<int> value);
-    partial void OnFK_SecondLevelSubdivisionTableChanged();
-    partial void OnFK_ThirdLevelSubdivisionTableChanging(System.Nullable<int> value);
-    partial void OnFK_ThirdLevelSubdivisionTableChanged();
-    partial void OnFK_FourthLevelSubdivisionTableChanging(System.Nullable<int> value);
-    partial void OnFK_FourthLevelSubdivisionTableChanged();
-    partial void OnFK_FifthLevelSubdivisionTableChanging(System.Nullable<int> value);
-    partial void OnFK_FifthLevelSubdivisionTableChanged();
-    partial void OnAccessLevelChanging(System.Nullable<int> value);
-    partial void OnAccessLevelChanged();
-    partial void OnFK_ZeroLevelSubdivisionTableChanging(System.Nullable<int> value);
-    partial void OnFK_ZeroLevelSubdivisionTableChanged();
-    partial void OnPassCodeChanging(string value);
-    partial void OnPassCodeChanged();
-    partial void OnConfirmedChanging(System.Nullable<bool> value);
-    partial void OnConfirmedChanged();
-    partial void OnPositionChanging(string value);
-    partial void OnPositionChanged();
-    partial void OnSurnameChanging(string value);
-    partial void OnSurnameChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnPatronimycChanging(string value);
-    partial void OnPatronimycChanged();
-    partial void OnAcademicDegreeChanging(string value);
-    partial void OnAcademicDegreeChanged();
-    partial void OnAcademicRankChanging(string value);
-    partial void OnAcademicRankChanged();
-    partial void OnData_StatusChanging(System.Nullable<bool> value);
-    partial void OnData_StatusChanged();
-    partial void OnKursChanging(System.Nullable<int> value);
-    partial void OnKursChanged();
-    partial void OnYearEnterChanging(System.Nullable<int> value);
-    partial void OnYearEnterChanged();
-    partial void OnFK_SpecializationChanging(System.Nullable<int> value);
-    partial void OnFK_SpecializationChanged();
-    partial void OnFK_StudentGroupChanging(System.Nullable<int> value);
-    partial void OnFK_StudentGroupChanged();
-    #endregion
-		
-		public UsersTable()
-		{
-			this._UserDataChangeHistory = new EntitySet<UserDataChangeHistory>(new Action<UserDataChangeHistory>(this.attach_UserDataChangeHistory), new Action<UserDataChangeHistory>(this.detach_UserDataChangeHistory));
-			this._UsersAndUserGroupMappingTable1 = new EntitySet<UsersAndUserGroupMappingTable1>(new Action<UsersAndUserGroupMappingTable1>(this.attach_UsersAndUserGroupMappingTable1), new Action<UsersAndUserGroupMappingTable1>(this.detach_UsersAndUserGroupMappingTable1));
-			this._Aplications = new EntitySet<Aplications>(new Action<Aplications>(this.attach_Aplications), new Action<Aplications>(this.detach_Aplications));
-			this._UsersAndUserGroupMappingTable = new EntitySet<UsersAndUserGroupMappingTable>(new Action<UsersAndUserGroupMappingTable>(this.attach_UsersAndUserGroupMappingTable), new Action<UsersAndUserGroupMappingTable>(this.detach_UsersAndUserGroupMappingTable));
-			this._TypeOfWritingFIO = new EntitySet<TypeOfWritingFIO>(new Action<TypeOfWritingFIO>(this.attach_TypeOfWritingFIO), new Action<TypeOfWritingFIO>(this.detach_TypeOfWritingFIO));
-			this._StudentGroupsTable = default(EntityRef<StudentGroupsTable>);
-			this._SpecializationTable = default(EntityRef<SpecializationTable>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UsersTableID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int UsersTableID
-		{
-			get
-			{
-				return this._UsersTableID;
-			}
-			set
-			{
-				if ((this._UsersTableID != value))
-				{
-					this.OnUsersTableIDChanging(value);
-					this.SendPropertyChanging();
-					this._UsersTableID = value;
-					this.SendPropertyChanged("UsersTableID");
-					this.OnUsersTableIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
-		public bool Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Login", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Login
-		{
-			get
-			{
-				return this._Login;
-			}
-			set
-			{
-				if ((this._Login != value))
-				{
-					this.OnLoginChanging(value);
-					this.SendPropertyChanging();
-					this._Login = value;
-					this.SendPropertyChanged("Login");
-					this.OnLoginChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Password
-		{
-			get
-			{
-				return this._Password;
-			}
-			set
-			{
-				if ((this._Password != value))
-				{
-					this.OnPasswordChanging(value);
-					this.SendPropertyChanging();
-					this._Password = value;
-					this.SendPropertyChanged("Password");
-					this.OnPasswordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string Email
-		{
-			get
-			{
-				return this._Email;
-			}
-			set
-			{
-				if ((this._Email != value))
-				{
-					this.OnEmailChanging(value);
-					this.SendPropertyChanging();
-					this._Email = value;
-					this.SendPropertyChanged("Email");
-					this.OnEmailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FirstLevelSubdivisionTable", DbType="Int")]
-		public System.Nullable<int> FK_FirstLevelSubdivisionTable
-		{
-			get
-			{
-				return this._FK_FirstLevelSubdivisionTable;
-			}
-			set
-			{
-				if ((this._FK_FirstLevelSubdivisionTable != value))
-				{
-					this.OnFK_FirstLevelSubdivisionTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_FirstLevelSubdivisionTable = value;
-					this.SendPropertyChanged("FK_FirstLevelSubdivisionTable");
-					this.OnFK_FirstLevelSubdivisionTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_SecondLevelSubdivisionTable", DbType="Int")]
-		public System.Nullable<int> FK_SecondLevelSubdivisionTable
-		{
-			get
-			{
-				return this._FK_SecondLevelSubdivisionTable;
-			}
-			set
-			{
-				if ((this._FK_SecondLevelSubdivisionTable != value))
-				{
-					this.OnFK_SecondLevelSubdivisionTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_SecondLevelSubdivisionTable = value;
-					this.SendPropertyChanged("FK_SecondLevelSubdivisionTable");
-					this.OnFK_SecondLevelSubdivisionTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ThirdLevelSubdivisionTable", DbType="Int")]
-		public System.Nullable<int> FK_ThirdLevelSubdivisionTable
-		{
-			get
-			{
-				return this._FK_ThirdLevelSubdivisionTable;
-			}
-			set
-			{
-				if ((this._FK_ThirdLevelSubdivisionTable != value))
-				{
-					this.OnFK_ThirdLevelSubdivisionTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_ThirdLevelSubdivisionTable = value;
-					this.SendPropertyChanged("FK_ThirdLevelSubdivisionTable");
-					this.OnFK_ThirdLevelSubdivisionTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FourthLevelSubdivisionTable", DbType="Int")]
-		public System.Nullable<int> FK_FourthLevelSubdivisionTable
-		{
-			get
-			{
-				return this._FK_FourthLevelSubdivisionTable;
-			}
-			set
-			{
-				if ((this._FK_FourthLevelSubdivisionTable != value))
-				{
-					this.OnFK_FourthLevelSubdivisionTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_FourthLevelSubdivisionTable = value;
-					this.SendPropertyChanged("FK_FourthLevelSubdivisionTable");
-					this.OnFK_FourthLevelSubdivisionTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FifthLevelSubdivisionTable", DbType="Int")]
-		public System.Nullable<int> FK_FifthLevelSubdivisionTable
-		{
-			get
-			{
-				return this._FK_FifthLevelSubdivisionTable;
-			}
-			set
-			{
-				if ((this._FK_FifthLevelSubdivisionTable != value))
-				{
-					this.OnFK_FifthLevelSubdivisionTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_FifthLevelSubdivisionTable = value;
-					this.SendPropertyChanged("FK_FifthLevelSubdivisionTable");
-					this.OnFK_FifthLevelSubdivisionTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccessLevel", DbType="Int")]
-		public System.Nullable<int> AccessLevel
-		{
-			get
-			{
-				return this._AccessLevel;
-			}
-			set
-			{
-				if ((this._AccessLevel != value))
-				{
-					this.OnAccessLevelChanging(value);
-					this.SendPropertyChanging();
-					this._AccessLevel = value;
-					this.SendPropertyChanged("AccessLevel");
-					this.OnAccessLevelChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ZeroLevelSubdivisionTable", DbType="Int")]
-		public System.Nullable<int> FK_ZeroLevelSubdivisionTable
-		{
-			get
-			{
-				return this._FK_ZeroLevelSubdivisionTable;
-			}
-			set
-			{
-				if ((this._FK_ZeroLevelSubdivisionTable != value))
-				{
-					this.OnFK_ZeroLevelSubdivisionTableChanging(value);
-					this.SendPropertyChanging();
-					this._FK_ZeroLevelSubdivisionTable = value;
-					this.SendPropertyChanged("FK_ZeroLevelSubdivisionTable");
-					this.OnFK_ZeroLevelSubdivisionTableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PassCode", DbType="VarChar(50)")]
-		public string PassCode
-		{
-			get
-			{
-				return this._PassCode;
-			}
-			set
-			{
-				if ((this._PassCode != value))
-				{
-					this.OnPassCodeChanging(value);
-					this.SendPropertyChanging();
-					this._PassCode = value;
-					this.SendPropertyChanged("PassCode");
-					this.OnPassCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Confirmed", DbType="Bit")]
-		public System.Nullable<bool> Confirmed
-		{
-			get
-			{
-				return this._Confirmed;
-			}
-			set
-			{
-				if ((this._Confirmed != value))
-				{
-					this.OnConfirmedChanging(value);
-					this.SendPropertyChanging();
-					this._Confirmed = value;
-					this.SendPropertyChanged("Confirmed");
-					this.OnConfirmedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Position", DbType="VarChar(500)")]
-		public string Position
-		{
-			get
-			{
-				return this._Position;
-			}
-			set
-			{
-				if ((this._Position != value))
-				{
-					this.OnPositionChanging(value);
-					this.SendPropertyChanging();
-					this._Position = value;
-					this.SendPropertyChanged("Position");
-					this.OnPositionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Surname", DbType="NVarChar(50)")]
-		public string Surname
-		{
-			get
-			{
-				return this._Surname;
-			}
-			set
-			{
-				if ((this._Surname != value))
-				{
-					this.OnSurnameChanging(value);
-					this.SendPropertyChanging();
-					this._Surname = value;
-					this.SendPropertyChanged("Surname");
-					this.OnSurnameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50)")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Patronimyc", DbType="NVarChar(50)")]
-		public string Patronimyc
-		{
-			get
-			{
-				return this._Patronimyc;
-			}
-			set
-			{
-				if ((this._Patronimyc != value))
-				{
-					this.OnPatronimycChanging(value);
-					this.SendPropertyChanging();
-					this._Patronimyc = value;
-					this.SendPropertyChanged("Patronimyc");
-					this.OnPatronimycChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AcademicDegree", DbType="NVarChar(50)")]
-		public string AcademicDegree
-		{
-			get
-			{
-				return this._AcademicDegree;
-			}
-			set
-			{
-				if ((this._AcademicDegree != value))
-				{
-					this.OnAcademicDegreeChanging(value);
-					this.SendPropertyChanging();
-					this._AcademicDegree = value;
-					this.SendPropertyChanged("AcademicDegree");
-					this.OnAcademicDegreeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AcademicRank", DbType="NVarChar(50)")]
-		public string AcademicRank
-		{
-			get
-			{
-				return this._AcademicRank;
-			}
-			set
-			{
-				if ((this._AcademicRank != value))
-				{
-					this.OnAcademicRankChanging(value);
-					this.SendPropertyChanging();
-					this._AcademicRank = value;
-					this.SendPropertyChanged("AcademicRank");
-					this.OnAcademicRankChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Data_Status", DbType="Bit")]
-		public System.Nullable<bool> Data_Status
-		{
-			get
-			{
-				return this._Data_Status;
-			}
-			set
-			{
-				if ((this._Data_Status != value))
-				{
-					this.OnData_StatusChanging(value);
-					this.SendPropertyChanging();
-					this._Data_Status = value;
-					this.SendPropertyChanged("Data_Status");
-					this.OnData_StatusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Kurs", DbType="Int")]
-		public System.Nullable<int> Kurs
-		{
-			get
-			{
-				return this._Kurs;
-			}
-			set
-			{
-				if ((this._Kurs != value))
-				{
-					this.OnKursChanging(value);
-					this.SendPropertyChanging();
-					this._Kurs = value;
-					this.SendPropertyChanged("Kurs");
-					this.OnKursChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_YearEnter", DbType="Int")]
-		public System.Nullable<int> YearEnter
-		{
-			get
-			{
-				return this._YearEnter;
-			}
-			set
-			{
-				if ((this._YearEnter != value))
-				{
-					this.OnYearEnterChanging(value);
-					this.SendPropertyChanging();
-					this._YearEnter = value;
-					this.SendPropertyChanged("YearEnter");
-					this.OnYearEnterChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Specialization", DbType="Int")]
-		public System.Nullable<int> FK_Specialization
-		{
-			get
-			{
-				return this._FK_Specialization;
-			}
-			set
-			{
-				if ((this._FK_Specialization != value))
-				{
-					if (this._SpecializationTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_SpecializationChanging(value);
-					this.SendPropertyChanging();
-					this._FK_Specialization = value;
-					this.SendPropertyChanged("FK_Specialization");
-					this.OnFK_SpecializationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_StudentGroup", DbType="Int")]
-		public System.Nullable<int> FK_StudentGroup
-		{
-			get
-			{
-				return this._FK_StudentGroup;
-			}
-			set
-			{
-				if ((this._FK_StudentGroup != value))
-				{
-					if (this._StudentGroupsTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_StudentGroupChanging(value);
-					this.SendPropertyChanging();
-					this._FK_StudentGroup = value;
-					this.SendPropertyChanged("FK_StudentGroup");
-					this.OnFK_StudentGroupChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_UserDataChangeHistory", Storage="_UserDataChangeHistory", ThisKey="UsersTableID", OtherKey="FK_User")]
-		public EntitySet<UserDataChangeHistory> UserDataChangeHistory
-		{
-			get
-			{
-				return this._UserDataChangeHistory;
-			}
-			set
-			{
-				this._UserDataChangeHistory.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_UsersAndUserGroupMappingTable1", Storage="_UsersAndUserGroupMappingTable1", ThisKey="UsersTableID", OtherKey="FK_UserTable")]
-		public EntitySet<UsersAndUserGroupMappingTable1> UsersAndUserGroupMappingTable1
-		{
-			get
-			{
-				return this._UsersAndUserGroupMappingTable1;
-			}
-			set
-			{
-				this._UsersAndUserGroupMappingTable1.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_Aplications", Storage="_Aplications", ThisKey="UsersTableID", OtherKey="FK_UserAdd")]
-		public EntitySet<Aplications> Aplications
-		{
-			get
-			{
-				return this._Aplications;
-			}
-			set
-			{
-				this._Aplications.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_UsersAndUserGroupMappingTable", Storage="_UsersAndUserGroupMappingTable", ThisKey="UsersTableID", OtherKey="FK_UserTable")]
-		public EntitySet<UsersAndUserGroupMappingTable> UsersAndUserGroupMappingTable
-		{
-			get
-			{
-				return this._UsersAndUserGroupMappingTable;
-			}
-			set
-			{
-				this._UsersAndUserGroupMappingTable.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_TypeOfWritingFIO", Storage="_TypeOfWritingFIO", ThisKey="UsersTableID", OtherKey="FK_UserTableID")]
-		public EntitySet<TypeOfWritingFIO> TypeOfWritingFIO
-		{
-			get
-			{
-				return this._TypeOfWritingFIO;
-			}
-			set
-			{
-				this._TypeOfWritingFIO.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="StudentGroupsTable_UsersTable", Storage="_StudentGroupsTable", ThisKey="FK_StudentGroup", OtherKey="ID", IsForeignKey=true)]
-		public StudentGroupsTable StudentGroupsTable
-		{
-			get
-			{
-				return this._StudentGroupsTable.Entity;
-			}
-			set
-			{
-				StudentGroupsTable previousValue = this._StudentGroupsTable.Entity;
-				if (((previousValue != value) 
-							|| (this._StudentGroupsTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._StudentGroupsTable.Entity = null;
-						previousValue.UsersTable.Remove(this);
-					}
-					this._StudentGroupsTable.Entity = value;
-					if ((value != null))
-					{
-						value.UsersTable.Add(this);
-						this._FK_StudentGroup = value.ID;
-					}
-					else
-					{
-						this._FK_StudentGroup = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("StudentGroupsTable");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SpecializationTable_UsersTable", Storage="_SpecializationTable", ThisKey="FK_Specialization", OtherKey="SpecializationTableID", IsForeignKey=true)]
-		public SpecializationTable SpecializationTable
-		{
-			get
-			{
-				return this._SpecializationTable.Entity;
-			}
-			set
-			{
-				SpecializationTable previousValue = this._SpecializationTable.Entity;
-				if (((previousValue != value) 
-							|| (this._SpecializationTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._SpecializationTable.Entity = null;
-						previousValue.UsersTable.Remove(this);
-					}
-					this._SpecializationTable.Entity = value;
-					if ((value != null))
-					{
-						value.UsersTable.Add(this);
-						this._FK_Specialization = value.SpecializationTableID;
-					}
-					else
-					{
-						this._FK_Specialization = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("SpecializationTable");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_UserDataChangeHistory(UserDataChangeHistory entity)
-		{
-			this.SendPropertyChanging();
-			entity.UsersTable = this;
-		}
-		
-		private void detach_UserDataChangeHistory(UserDataChangeHistory entity)
-		{
-			this.SendPropertyChanging();
-			entity.UsersTable = null;
-		}
-		
-		private void attach_UsersAndUserGroupMappingTable1(UsersAndUserGroupMappingTable1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.UsersTable = this;
-		}
-		
-		private void detach_UsersAndUserGroupMappingTable1(UsersAndUserGroupMappingTable1 entity)
-		{
-			this.SendPropertyChanging();
-			entity.UsersTable = null;
-		}
-		
-		private void attach_Aplications(Aplications entity)
-		{
-			this.SendPropertyChanging();
-			entity.UsersTable = this;
-		}
-		
-		private void detach_Aplications(Aplications entity)
-		{
-			this.SendPropertyChanging();
-			entity.UsersTable = null;
-		}
-		
-		private void attach_UsersAndUserGroupMappingTable(UsersAndUserGroupMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.UsersTable = this;
-		}
-		
-		private void detach_UsersAndUserGroupMappingTable(UsersAndUserGroupMappingTable entity)
-		{
-			this.SendPropertyChanging();
-			entity.UsersTable = null;
-		}
-		
-		private void attach_TypeOfWritingFIO(TypeOfWritingFIO entity)
-		{
-			this.SendPropertyChanging();
-			entity.UsersTable = this;
-		}
-		
-		private void detach_TypeOfWritingFIO(TypeOfWritingFIO entity)
-		{
-			this.SendPropertyChanging();
-			entity.UsersTable = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Projects")]
 	public partial class Projects : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -4327,6 +3239,1325 @@ namespace PersonalPages
 		{
 			this.SendPropertyChanging();
 			entity.SpecializationTable = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UsersTable")]
+	public partial class UsersTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _UsersTableID;
+		
+		private bool _Active;
+		
+		private string _Login;
+		
+		private string _Password;
+		
+		private string _Email;
+		
+		private System.Nullable<int> _FK_FirstLevelSubdivisionTable;
+		
+		private System.Nullable<int> _FK_SecondLevelSubdivisionTable;
+		
+		private System.Nullable<int> _FK_ThirdLevelSubdivisionTable;
+		
+		private System.Nullable<int> _FK_FourthLevelSubdivisionTable;
+		
+		private System.Nullable<int> _FK_FifthLevelSubdivisionTable;
+		
+		private System.Nullable<int> _AccessLevel;
+		
+		private System.Nullable<int> _FK_ZeroLevelSubdivisionTable;
+		
+		private string _PassCode;
+		
+		private System.Nullable<bool> _Confirmed;
+		
+		private string _Position;
+		
+		private string _Surname;
+		
+		private string _Name;
+		
+		private string _Patronimyc;
+		
+		private string _AcademicDegree;
+		
+		private string _AcademicRank;
+		
+		private System.Nullable<bool> _Data_Status;
+		
+		private System.Nullable<int> _Kurs;
+		
+		private System.Nullable<int> _YearEnter;
+		
+		private System.Nullable<int> _FK_Specialization;
+		
+		private System.Nullable<int> _FK_StudentGroup;
+		
+		private EntitySet<UserDataChangeHistory> _UserDataChangeHistory;
+		
+		private EntitySet<UsersAndUserGroupMappingTable1> _UsersAndUserGroupMappingTable1;
+		
+		private EntitySet<UsersAndUserGroupMappingTable> _UsersAndUserGroupMappingTable;
+		
+		private EntitySet<TypeOfWritingFIO> _TypeOfWritingFIO;
+		
+		private EntitySet<Aplications> _Aplications;
+		
+		private EntityRef<FirstLevelSubdivisionTable> _FirstLevelSubdivisionTable;
+		
+		private EntityRef<SecondLevelSubdivisionTable> _SecondLevelSubdivisionTable;
+		
+		private EntityRef<SpecializationTable> _SpecializationTable;
+		
+		private EntityRef<StudentGroupsTable> _StudentGroupsTable;
+		
+		private EntityRef<ThirdLevelSubdivisionTable> _ThirdLevelSubdivisionTable;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnUsersTableIDChanging(int value);
+    partial void OnUsersTableIDChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnLoginChanging(string value);
+    partial void OnLoginChanged();
+    partial void OnPasswordChanging(string value);
+    partial void OnPasswordChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
+    partial void OnFK_FirstLevelSubdivisionTableChanging(System.Nullable<int> value);
+    partial void OnFK_FirstLevelSubdivisionTableChanged();
+    partial void OnFK_SecondLevelSubdivisionTableChanging(System.Nullable<int> value);
+    partial void OnFK_SecondLevelSubdivisionTableChanged();
+    partial void OnFK_ThirdLevelSubdivisionTableChanging(System.Nullable<int> value);
+    partial void OnFK_ThirdLevelSubdivisionTableChanged();
+    partial void OnFK_FourthLevelSubdivisionTableChanging(System.Nullable<int> value);
+    partial void OnFK_FourthLevelSubdivisionTableChanged();
+    partial void OnFK_FifthLevelSubdivisionTableChanging(System.Nullable<int> value);
+    partial void OnFK_FifthLevelSubdivisionTableChanged();
+    partial void OnAccessLevelChanging(System.Nullable<int> value);
+    partial void OnAccessLevelChanged();
+    partial void OnFK_ZeroLevelSubdivisionTableChanging(System.Nullable<int> value);
+    partial void OnFK_ZeroLevelSubdivisionTableChanged();
+    partial void OnPassCodeChanging(string value);
+    partial void OnPassCodeChanged();
+    partial void OnConfirmedChanging(System.Nullable<bool> value);
+    partial void OnConfirmedChanged();
+    partial void OnPositionChanging(string value);
+    partial void OnPositionChanged();
+    partial void OnSurnameChanging(string value);
+    partial void OnSurnameChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnPatronimycChanging(string value);
+    partial void OnPatronimycChanged();
+    partial void OnAcademicDegreeChanging(string value);
+    partial void OnAcademicDegreeChanged();
+    partial void OnAcademicRankChanging(string value);
+    partial void OnAcademicRankChanged();
+    partial void OnData_StatusChanging(System.Nullable<bool> value);
+    partial void OnData_StatusChanged();
+    partial void OnKursChanging(System.Nullable<int> value);
+    partial void OnKursChanged();
+    partial void OnYearEnterChanging(System.Nullable<int> value);
+    partial void OnYearEnterChanged();
+    partial void OnFK_SpecializationChanging(System.Nullable<int> value);
+    partial void OnFK_SpecializationChanged();
+    partial void OnFK_StudentGroupChanging(System.Nullable<int> value);
+    partial void OnFK_StudentGroupChanged();
+    #endregion
+		
+		public UsersTable()
+		{
+			this._UserDataChangeHistory = new EntitySet<UserDataChangeHistory>(new Action<UserDataChangeHistory>(this.attach_UserDataChangeHistory), new Action<UserDataChangeHistory>(this.detach_UserDataChangeHistory));
+			this._UsersAndUserGroupMappingTable1 = new EntitySet<UsersAndUserGroupMappingTable1>(new Action<UsersAndUserGroupMappingTable1>(this.attach_UsersAndUserGroupMappingTable1), new Action<UsersAndUserGroupMappingTable1>(this.detach_UsersAndUserGroupMappingTable1));
+			this._UsersAndUserGroupMappingTable = new EntitySet<UsersAndUserGroupMappingTable>(new Action<UsersAndUserGroupMappingTable>(this.attach_UsersAndUserGroupMappingTable), new Action<UsersAndUserGroupMappingTable>(this.detach_UsersAndUserGroupMappingTable));
+			this._TypeOfWritingFIO = new EntitySet<TypeOfWritingFIO>(new Action<TypeOfWritingFIO>(this.attach_TypeOfWritingFIO), new Action<TypeOfWritingFIO>(this.detach_TypeOfWritingFIO));
+			this._Aplications = new EntitySet<Aplications>(new Action<Aplications>(this.attach_Aplications), new Action<Aplications>(this.detach_Aplications));
+			this._FirstLevelSubdivisionTable = default(EntityRef<FirstLevelSubdivisionTable>);
+			this._SecondLevelSubdivisionTable = default(EntityRef<SecondLevelSubdivisionTable>);
+			this._SpecializationTable = default(EntityRef<SpecializationTable>);
+			this._StudentGroupsTable = default(EntityRef<StudentGroupsTable>);
+			this._ThirdLevelSubdivisionTable = default(EntityRef<ThirdLevelSubdivisionTable>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UsersTableID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int UsersTableID
+		{
+			get
+			{
+				return this._UsersTableID;
+			}
+			set
+			{
+				if ((this._UsersTableID != value))
+				{
+					this.OnUsersTableIDChanging(value);
+					this.SendPropertyChanging();
+					this._UsersTableID = value;
+					this.SendPropertyChanged("UsersTableID");
+					this.OnUsersTableIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Login", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Login
+		{
+			get
+			{
+				return this._Login;
+			}
+			set
+			{
+				if ((this._Login != value))
+				{
+					this.OnLoginChanging(value);
+					this.SendPropertyChanging();
+					this._Login = value;
+					this.SendPropertyChanged("Login");
+					this.OnLoginChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Password
+		{
+			get
+			{
+				return this._Password;
+			}
+			set
+			{
+				if ((this._Password != value))
+				{
+					this.OnPasswordChanging(value);
+					this.SendPropertyChanging();
+					this._Password = value;
+					this.SendPropertyChanged("Password");
+					this.OnPasswordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this.OnEmailChanging(value);
+					this.SendPropertyChanging();
+					this._Email = value;
+					this.SendPropertyChanged("Email");
+					this.OnEmailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FirstLevelSubdivisionTable", DbType="Int")]
+		public System.Nullable<int> FK_FirstLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FK_FirstLevelSubdivisionTable;
+			}
+			set
+			{
+				if ((this._FK_FirstLevelSubdivisionTable != value))
+				{
+					if (this._FirstLevelSubdivisionTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_FirstLevelSubdivisionTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_FirstLevelSubdivisionTable = value;
+					this.SendPropertyChanged("FK_FirstLevelSubdivisionTable");
+					this.OnFK_FirstLevelSubdivisionTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_SecondLevelSubdivisionTable", DbType="Int")]
+		public System.Nullable<int> FK_SecondLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FK_SecondLevelSubdivisionTable;
+			}
+			set
+			{
+				if ((this._FK_SecondLevelSubdivisionTable != value))
+				{
+					if (this._SecondLevelSubdivisionTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_SecondLevelSubdivisionTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_SecondLevelSubdivisionTable = value;
+					this.SendPropertyChanged("FK_SecondLevelSubdivisionTable");
+					this.OnFK_SecondLevelSubdivisionTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ThirdLevelSubdivisionTable", DbType="Int")]
+		public System.Nullable<int> FK_ThirdLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FK_ThirdLevelSubdivisionTable;
+			}
+			set
+			{
+				if ((this._FK_ThirdLevelSubdivisionTable != value))
+				{
+					if (this._ThirdLevelSubdivisionTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_ThirdLevelSubdivisionTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_ThirdLevelSubdivisionTable = value;
+					this.SendPropertyChanged("FK_ThirdLevelSubdivisionTable");
+					this.OnFK_ThirdLevelSubdivisionTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FourthLevelSubdivisionTable", DbType="Int")]
+		public System.Nullable<int> FK_FourthLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FK_FourthLevelSubdivisionTable;
+			}
+			set
+			{
+				if ((this._FK_FourthLevelSubdivisionTable != value))
+				{
+					this.OnFK_FourthLevelSubdivisionTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_FourthLevelSubdivisionTable = value;
+					this.SendPropertyChanged("FK_FourthLevelSubdivisionTable");
+					this.OnFK_FourthLevelSubdivisionTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_FifthLevelSubdivisionTable", DbType="Int")]
+		public System.Nullable<int> FK_FifthLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FK_FifthLevelSubdivisionTable;
+			}
+			set
+			{
+				if ((this._FK_FifthLevelSubdivisionTable != value))
+				{
+					this.OnFK_FifthLevelSubdivisionTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_FifthLevelSubdivisionTable = value;
+					this.SendPropertyChanged("FK_FifthLevelSubdivisionTable");
+					this.OnFK_FifthLevelSubdivisionTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccessLevel", DbType="Int")]
+		public System.Nullable<int> AccessLevel
+		{
+			get
+			{
+				return this._AccessLevel;
+			}
+			set
+			{
+				if ((this._AccessLevel != value))
+				{
+					this.OnAccessLevelChanging(value);
+					this.SendPropertyChanging();
+					this._AccessLevel = value;
+					this.SendPropertyChanged("AccessLevel");
+					this.OnAccessLevelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ZeroLevelSubdivisionTable", DbType="Int")]
+		public System.Nullable<int> FK_ZeroLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FK_ZeroLevelSubdivisionTable;
+			}
+			set
+			{
+				if ((this._FK_ZeroLevelSubdivisionTable != value))
+				{
+					this.OnFK_ZeroLevelSubdivisionTableChanging(value);
+					this.SendPropertyChanging();
+					this._FK_ZeroLevelSubdivisionTable = value;
+					this.SendPropertyChanged("FK_ZeroLevelSubdivisionTable");
+					this.OnFK_ZeroLevelSubdivisionTableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PassCode", DbType="VarChar(50)")]
+		public string PassCode
+		{
+			get
+			{
+				return this._PassCode;
+			}
+			set
+			{
+				if ((this._PassCode != value))
+				{
+					this.OnPassCodeChanging(value);
+					this.SendPropertyChanging();
+					this._PassCode = value;
+					this.SendPropertyChanged("PassCode");
+					this.OnPassCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Confirmed", DbType="Bit")]
+		public System.Nullable<bool> Confirmed
+		{
+			get
+			{
+				return this._Confirmed;
+			}
+			set
+			{
+				if ((this._Confirmed != value))
+				{
+					this.OnConfirmedChanging(value);
+					this.SendPropertyChanging();
+					this._Confirmed = value;
+					this.SendPropertyChanged("Confirmed");
+					this.OnConfirmedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Position", DbType="VarChar(500)")]
+		public string Position
+		{
+			get
+			{
+				return this._Position;
+			}
+			set
+			{
+				if ((this._Position != value))
+				{
+					this.OnPositionChanging(value);
+					this.SendPropertyChanging();
+					this._Position = value;
+					this.SendPropertyChanged("Position");
+					this.OnPositionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Surname", DbType="NVarChar(50)")]
+		public string Surname
+		{
+			get
+			{
+				return this._Surname;
+			}
+			set
+			{
+				if ((this._Surname != value))
+				{
+					this.OnSurnameChanging(value);
+					this.SendPropertyChanging();
+					this._Surname = value;
+					this.SendPropertyChanged("Surname");
+					this.OnSurnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Patronimyc", DbType="NVarChar(50)")]
+		public string Patronimyc
+		{
+			get
+			{
+				return this._Patronimyc;
+			}
+			set
+			{
+				if ((this._Patronimyc != value))
+				{
+					this.OnPatronimycChanging(value);
+					this.SendPropertyChanging();
+					this._Patronimyc = value;
+					this.SendPropertyChanged("Patronimyc");
+					this.OnPatronimycChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AcademicDegree", DbType="NVarChar(50)")]
+		public string AcademicDegree
+		{
+			get
+			{
+				return this._AcademicDegree;
+			}
+			set
+			{
+				if ((this._AcademicDegree != value))
+				{
+					this.OnAcademicDegreeChanging(value);
+					this.SendPropertyChanging();
+					this._AcademicDegree = value;
+					this.SendPropertyChanged("AcademicDegree");
+					this.OnAcademicDegreeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AcademicRank", DbType="NVarChar(50)")]
+		public string AcademicRank
+		{
+			get
+			{
+				return this._AcademicRank;
+			}
+			set
+			{
+				if ((this._AcademicRank != value))
+				{
+					this.OnAcademicRankChanging(value);
+					this.SendPropertyChanging();
+					this._AcademicRank = value;
+					this.SendPropertyChanged("AcademicRank");
+					this.OnAcademicRankChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Data_Status", DbType="Bit")]
+		public System.Nullable<bool> Data_Status
+		{
+			get
+			{
+				return this._Data_Status;
+			}
+			set
+			{
+				if ((this._Data_Status != value))
+				{
+					this.OnData_StatusChanging(value);
+					this.SendPropertyChanging();
+					this._Data_Status = value;
+					this.SendPropertyChanged("Data_Status");
+					this.OnData_StatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Kurs", DbType="Int")]
+		public System.Nullable<int> Kurs
+		{
+			get
+			{
+				return this._Kurs;
+			}
+			set
+			{
+				if ((this._Kurs != value))
+				{
+					this.OnKursChanging(value);
+					this.SendPropertyChanging();
+					this._Kurs = value;
+					this.SendPropertyChanged("Kurs");
+					this.OnKursChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_YearEnter", DbType="Int")]
+		public System.Nullable<int> YearEnter
+		{
+			get
+			{
+				return this._YearEnter;
+			}
+			set
+			{
+				if ((this._YearEnter != value))
+				{
+					this.OnYearEnterChanging(value);
+					this.SendPropertyChanging();
+					this._YearEnter = value;
+					this.SendPropertyChanged("YearEnter");
+					this.OnYearEnterChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_Specialization", DbType="Int")]
+		public System.Nullable<int> FK_Specialization
+		{
+			get
+			{
+				return this._FK_Specialization;
+			}
+			set
+			{
+				if ((this._FK_Specialization != value))
+				{
+					if (this._SpecializationTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_SpecializationChanging(value);
+					this.SendPropertyChanging();
+					this._FK_Specialization = value;
+					this.SendPropertyChanged("FK_Specialization");
+					this.OnFK_SpecializationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_StudentGroup", DbType="Int")]
+		public System.Nullable<int> FK_StudentGroup
+		{
+			get
+			{
+				return this._FK_StudentGroup;
+			}
+			set
+			{
+				if ((this._FK_StudentGroup != value))
+				{
+					if (this._StudentGroupsTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_StudentGroupChanging(value);
+					this.SendPropertyChanging();
+					this._FK_StudentGroup = value;
+					this.SendPropertyChanged("FK_StudentGroup");
+					this.OnFK_StudentGroupChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_UserDataChangeHistory", Storage="_UserDataChangeHistory", ThisKey="UsersTableID", OtherKey="FK_User")]
+		public EntitySet<UserDataChangeHistory> UserDataChangeHistory
+		{
+			get
+			{
+				return this._UserDataChangeHistory;
+			}
+			set
+			{
+				this._UserDataChangeHistory.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_UsersAndUserGroupMappingTable1", Storage="_UsersAndUserGroupMappingTable1", ThisKey="UsersTableID", OtherKey="FK_UserTable")]
+		public EntitySet<UsersAndUserGroupMappingTable1> UsersAndUserGroupMappingTable1
+		{
+			get
+			{
+				return this._UsersAndUserGroupMappingTable1;
+			}
+			set
+			{
+				this._UsersAndUserGroupMappingTable1.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_UsersAndUserGroupMappingTable", Storage="_UsersAndUserGroupMappingTable", ThisKey="UsersTableID", OtherKey="FK_UserTable")]
+		public EntitySet<UsersAndUserGroupMappingTable> UsersAndUserGroupMappingTable
+		{
+			get
+			{
+				return this._UsersAndUserGroupMappingTable;
+			}
+			set
+			{
+				this._UsersAndUserGroupMappingTable.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_TypeOfWritingFIO", Storage="_TypeOfWritingFIO", ThisKey="UsersTableID", OtherKey="FK_UserTableID")]
+		public EntitySet<TypeOfWritingFIO> TypeOfWritingFIO
+		{
+			get
+			{
+				return this._TypeOfWritingFIO;
+			}
+			set
+			{
+				this._TypeOfWritingFIO.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_Aplications", Storage="_Aplications", ThisKey="UsersTableID", OtherKey="FK_UserAdd")]
+		public EntitySet<Aplications> Aplications
+		{
+			get
+			{
+				return this._Aplications;
+			}
+			set
+			{
+				this._Aplications.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FirstLevelSubdivisionTable_UsersTable", Storage="_FirstLevelSubdivisionTable", ThisKey="FK_FirstLevelSubdivisionTable", OtherKey="FirstLevelSubdivisionTableID", IsForeignKey=true)]
+		public FirstLevelSubdivisionTable FirstLevelSubdivisionTable
+		{
+			get
+			{
+				return this._FirstLevelSubdivisionTable.Entity;
+			}
+			set
+			{
+				FirstLevelSubdivisionTable previousValue = this._FirstLevelSubdivisionTable.Entity;
+				if (((previousValue != value) 
+							|| (this._FirstLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FirstLevelSubdivisionTable.Entity = null;
+						previousValue.UsersTable.Remove(this);
+					}
+					this._FirstLevelSubdivisionTable.Entity = value;
+					if ((value != null))
+					{
+						value.UsersTable.Add(this);
+						this._FK_FirstLevelSubdivisionTable = value.FirstLevelSubdivisionTableID;
+					}
+					else
+					{
+						this._FK_FirstLevelSubdivisionTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("FirstLevelSubdivisionTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SecondLevelSubdivisionTable_UsersTable", Storage="_SecondLevelSubdivisionTable", ThisKey="FK_SecondLevelSubdivisionTable", OtherKey="SecondLevelSubdivisionTableID", IsForeignKey=true)]
+		public SecondLevelSubdivisionTable SecondLevelSubdivisionTable
+		{
+			get
+			{
+				return this._SecondLevelSubdivisionTable.Entity;
+			}
+			set
+			{
+				SecondLevelSubdivisionTable previousValue = this._SecondLevelSubdivisionTable.Entity;
+				if (((previousValue != value) 
+							|| (this._SecondLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._SecondLevelSubdivisionTable.Entity = null;
+						previousValue.UsersTable.Remove(this);
+					}
+					this._SecondLevelSubdivisionTable.Entity = value;
+					if ((value != null))
+					{
+						value.UsersTable.Add(this);
+						this._FK_SecondLevelSubdivisionTable = value.SecondLevelSubdivisionTableID;
+					}
+					else
+					{
+						this._FK_SecondLevelSubdivisionTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("SecondLevelSubdivisionTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SpecializationTable_UsersTable", Storage="_SpecializationTable", ThisKey="FK_Specialization", OtherKey="SpecializationTableID", IsForeignKey=true)]
+		public SpecializationTable SpecializationTable
+		{
+			get
+			{
+				return this._SpecializationTable.Entity;
+			}
+			set
+			{
+				SpecializationTable previousValue = this._SpecializationTable.Entity;
+				if (((previousValue != value) 
+							|| (this._SpecializationTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._SpecializationTable.Entity = null;
+						previousValue.UsersTable.Remove(this);
+					}
+					this._SpecializationTable.Entity = value;
+					if ((value != null))
+					{
+						value.UsersTable.Add(this);
+						this._FK_Specialization = value.SpecializationTableID;
+					}
+					else
+					{
+						this._FK_Specialization = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("SpecializationTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="StudentGroupsTable_UsersTable", Storage="_StudentGroupsTable", ThisKey="FK_StudentGroup", OtherKey="ID", IsForeignKey=true)]
+		public StudentGroupsTable StudentGroupsTable
+		{
+			get
+			{
+				return this._StudentGroupsTable.Entity;
+			}
+			set
+			{
+				StudentGroupsTable previousValue = this._StudentGroupsTable.Entity;
+				if (((previousValue != value) 
+							|| (this._StudentGroupsTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._StudentGroupsTable.Entity = null;
+						previousValue.UsersTable.Remove(this);
+					}
+					this._StudentGroupsTable.Entity = value;
+					if ((value != null))
+					{
+						value.UsersTable.Add(this);
+						this._FK_StudentGroup = value.ID;
+					}
+					else
+					{
+						this._FK_StudentGroup = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("StudentGroupsTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ThirdLevelSubdivisionTable_UsersTable", Storage="_ThirdLevelSubdivisionTable", ThisKey="FK_ThirdLevelSubdivisionTable", OtherKey="ThirdLevelSubdivisionTableID", IsForeignKey=true)]
+		public ThirdLevelSubdivisionTable ThirdLevelSubdivisionTable
+		{
+			get
+			{
+				return this._ThirdLevelSubdivisionTable.Entity;
+			}
+			set
+			{
+				ThirdLevelSubdivisionTable previousValue = this._ThirdLevelSubdivisionTable.Entity;
+				if (((previousValue != value) 
+							|| (this._ThirdLevelSubdivisionTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ThirdLevelSubdivisionTable.Entity = null;
+						previousValue.UsersTable.Remove(this);
+					}
+					this._ThirdLevelSubdivisionTable.Entity = value;
+					if ((value != null))
+					{
+						value.UsersTable.Add(this);
+						this._FK_ThirdLevelSubdivisionTable = value.ThirdLevelSubdivisionTableID;
+					}
+					else
+					{
+						this._FK_ThirdLevelSubdivisionTable = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("ThirdLevelSubdivisionTable");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_UserDataChangeHistory(UserDataChangeHistory entity)
+		{
+			this.SendPropertyChanging();
+			entity.UsersTable = this;
+		}
+		
+		private void detach_UserDataChangeHistory(UserDataChangeHistory entity)
+		{
+			this.SendPropertyChanging();
+			entity.UsersTable = null;
+		}
+		
+		private void attach_UsersAndUserGroupMappingTable1(UsersAndUserGroupMappingTable1 entity)
+		{
+			this.SendPropertyChanging();
+			entity.UsersTable = this;
+		}
+		
+		private void detach_UsersAndUserGroupMappingTable1(UsersAndUserGroupMappingTable1 entity)
+		{
+			this.SendPropertyChanging();
+			entity.UsersTable = null;
+		}
+		
+		private void attach_UsersAndUserGroupMappingTable(UsersAndUserGroupMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.UsersTable = this;
+		}
+		
+		private void detach_UsersAndUserGroupMappingTable(UsersAndUserGroupMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.UsersTable = null;
+		}
+		
+		private void attach_TypeOfWritingFIO(TypeOfWritingFIO entity)
+		{
+			this.SendPropertyChanging();
+			entity.UsersTable = this;
+		}
+		
+		private void detach_TypeOfWritingFIO(TypeOfWritingFIO entity)
+		{
+			this.SendPropertyChanging();
+			entity.UsersTable = null;
+		}
+		
+		private void attach_Aplications(Aplications entity)
+		{
+			this.SendPropertyChanging();
+			entity.UsersTable = this;
+		}
+		
+		private void detach_Aplications(Aplications entity)
+		{
+			this.SendPropertyChanging();
+			entity.UsersTable = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Aplications")]
+	public partial class Aplications : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private System.Nullable<bool> _Active;
+		
+		private System.Nullable<int> _FK_ApplicationType;
+		
+		private System.Nullable<int> _FK_UserAdd;
+		
+		private System.Nullable<System.DateTime> _Date;
+		
+		private string _TelephoneNumber;
+		
+		private string _Text;
+		
+		private string _FileURL;
+		
+		private System.Nullable<int> _Confirmed;
+		
+		private EntityRef<ApplictionTypes> _ApplictionTypes;
+		
+		private EntityRef<UsersTable> _UsersTable;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnFK_ApplicationTypeChanging(System.Nullable<int> value);
+    partial void OnFK_ApplicationTypeChanged();
+    partial void OnFK_UserAddChanging(System.Nullable<int> value);
+    partial void OnFK_UserAddChanged();
+    partial void OnDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateChanged();
+    partial void OnTelephoneNumberChanging(string value);
+    partial void OnTelephoneNumberChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
+    partial void OnFileURLChanging(string value);
+    partial void OnFileURLChanged();
+    partial void OnConfirmedChanging(System.Nullable<int> value);
+    partial void OnConfirmedChanged();
+    #endregion
+		
+		public Aplications()
+		{
+			this._ApplictionTypes = default(EntityRef<ApplictionTypes>);
+			this._UsersTable = default(EntityRef<UsersTable>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_ApplicationType", DbType="Int")]
+		public System.Nullable<int> FK_ApplicationType
+		{
+			get
+			{
+				return this._FK_ApplicationType;
+			}
+			set
+			{
+				if ((this._FK_ApplicationType != value))
+				{
+					if (this._ApplictionTypes.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_ApplicationTypeChanging(value);
+					this.SendPropertyChanging();
+					this._FK_ApplicationType = value;
+					this.SendPropertyChanged("FK_ApplicationType");
+					this.OnFK_ApplicationTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_UserAdd", DbType="Int")]
+		public System.Nullable<int> FK_UserAdd
+		{
+			get
+			{
+				return this._FK_UserAdd;
+			}
+			set
+			{
+				if ((this._FK_UserAdd != value))
+				{
+					if (this._UsersTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_UserAddChanging(value);
+					this.SendPropertyChanging();
+					this._FK_UserAdd = value;
+					this.SendPropertyChanged("FK_UserAdd");
+					this.OnFK_UserAddChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this.OnDateChanging(value);
+					this.SendPropertyChanging();
+					this._Date = value;
+					this.SendPropertyChanged("Date");
+					this.OnDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TelephoneNumber", DbType="NVarChar(50)")]
+		public string TelephoneNumber
+		{
+			get
+			{
+				return this._TelephoneNumber;
+			}
+			set
+			{
+				if ((this._TelephoneNumber != value))
+				{
+					this.OnTelephoneNumberChanging(value);
+					this.SendPropertyChanging();
+					this._TelephoneNumber = value;
+					this.SendPropertyChanged("TelephoneNumber");
+					this.OnTelephoneNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(MAX)")]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileURL", DbType="NVarChar(MAX)")]
+		public string FileURL
+		{
+			get
+			{
+				return this._FileURL;
+			}
+			set
+			{
+				if ((this._FileURL != value))
+				{
+					this.OnFileURLChanging(value);
+					this.SendPropertyChanging();
+					this._FileURL = value;
+					this.SendPropertyChanged("FileURL");
+					this.OnFileURLChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Confirmed", DbType="Int")]
+		public System.Nullable<int> Confirmed
+		{
+			get
+			{
+				return this._Confirmed;
+			}
+			set
+			{
+				if ((this._Confirmed != value))
+				{
+					this.OnConfirmedChanging(value);
+					this.SendPropertyChanging();
+					this._Confirmed = value;
+					this.SendPropertyChanged("Confirmed");
+					this.OnConfirmedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ApplictionTypes_Aplications", Storage="_ApplictionTypes", ThisKey="FK_ApplicationType", OtherKey="ID", IsForeignKey=true)]
+		public ApplictionTypes ApplictionTypes
+		{
+			get
+			{
+				return this._ApplictionTypes.Entity;
+			}
+			set
+			{
+				ApplictionTypes previousValue = this._ApplictionTypes.Entity;
+				if (((previousValue != value) 
+							|| (this._ApplictionTypes.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ApplictionTypes.Entity = null;
+						previousValue.Aplications.Remove(this);
+					}
+					this._ApplictionTypes.Entity = value;
+					if ((value != null))
+					{
+						value.Aplications.Add(this);
+						this._FK_ApplicationType = value.ID;
+					}
+					else
+					{
+						this._FK_ApplicationType = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("ApplictionTypes");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_Aplications", Storage="_UsersTable", ThisKey="FK_UserAdd", OtherKey="UsersTableID", IsForeignKey=true)]
+		public UsersTable UsersTable
+		{
+			get
+			{
+				return this._UsersTable.Entity;
+			}
+			set
+			{
+				UsersTable previousValue = this._UsersTable.Entity;
+				if (((previousValue != value) 
+							|| (this._UsersTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._UsersTable.Entity = null;
+						previousValue.Aplications.Remove(this);
+					}
+					this._UsersTable.Entity = value;
+					if ((value != null))
+					{
+						value.Aplications.Add(this);
+						this._FK_UserAdd = value.UsersTableID;
+					}
+					else
+					{
+						this._FK_UserAdd = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("UsersTable");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

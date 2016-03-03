@@ -16,7 +16,7 @@ namespace PersonalPages
             if (!Page.IsPostBack)
             {
                 PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-                Aplication aplication = (from a in usersDB.Aplications where a.Active == true && a.FK_ApplicationType == 5 select a).FirstOrDefault();
+                Aplications aplication = (from a in usersDB.Aplications where a.Active == true && a.FK_ApplicationType == 5 select a).FirstOrDefault();
                 if (aplication.Confirmed == 0)
                 {
                     Label1.Visible = true;
@@ -45,23 +45,30 @@ namespace PersonalPages
                 Response.Redirect("~/Default.aspx");
             }
             int userID = UserSer.Id;
-            string print = "Количество копий:" + TextBox4.Text.ToString() + " " + "Формат печати:" + TextBox5.Text.ToString() + " " + "Cтраницы для печати:" + TextBox6.Text.ToString();
+            if (TextBox5.Text != null && TextBox4.Text != null && TextBox6.Text != null)
+            {
+                string print = "Количество копий:" + TextBox4.Text.ToString() + " " + "Формат печати:" + TextBox5.Text.ToString() + " " + "Cтраницы для печати:" + TextBox6.Text.ToString();
                 PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-                Aplication newprint = new Aplication();
+                Aplications newprint = new Aplications();
                 newprint.Active = true;
                 newprint.FK_ApplicationType = 5;
                 newprint.FK_UserAdd = userID;
                 newprint.Date = DateTime.Now;
                 newprint.Text = print;
                 newprint.Confirmed = 0;
-              String path = Server.MapPath("~/AplicationFiles"); 
-              Directory.CreateDirectory(path + "\\\\" + userID.ToString());
-              FileUpload1.PostedFile.SaveAs(path +"\\\\" + userID.ToString()  + "\\\\" + FileUpload1.FileName);        
-              newprint.FileURL = "~/AplicationFiles" + "\\\\" +  userID.ToString()  + "\\\\" + FileUpload1.FileName;
-              Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка на печать отправлена!');", true);
+                String path = Server.MapPath("~/AplicationFiles");
+                Directory.CreateDirectory(path + "\\\\" + userID.ToString());
+                FileUpload1.PostedFile.SaveAs(path + "\\\\" + userID.ToString() + "\\\\" + FileUpload1.FileName);
+                newprint.FileURL = "~/AplicationFiles" + "\\\\" + userID.ToString() + "\\\\" + FileUpload1.FileName;
                 usersDB.Aplications.InsertOnSubmit(newprint);
                 usersDB.SubmitChanges();
-                Response.Redirect("~/MasterServises/AdminServices.aspx");
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка на печать отправлена!');", true);
+
+            }
+            else
+            {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Не все поля заполнены!');", true);
+            }
             }
         }
     }

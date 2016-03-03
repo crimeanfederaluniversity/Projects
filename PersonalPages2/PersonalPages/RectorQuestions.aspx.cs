@@ -15,7 +15,7 @@ namespace PersonalPages
             if (!Page.IsPostBack)
             {
                 PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-                Aplication aplication = (from a in usersDB.Aplications where a.Active == true && a.FK_ApplicationType == 2
+                Aplications aplication = (from a in usersDB.Aplications where a.Active == true && a.FK_ApplicationType == 2
                                          select a).FirstOrDefault();
                 if (aplication.Confirmed == 0)
                 {
@@ -50,7 +50,7 @@ namespace PersonalPages
             {
                 string question = "Oбращение к ректору:" + TextBox1.Text.ToString() + " " + "Pуководители, к которым обращались по данному вопросу:" + TextBox2.Text.ToString();
                 PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-                Aplication newquestion = new Aplication();
+                Aplications newquestion = new Aplications();
                 newquestion.Active = true;
                 newquestion.FK_ApplicationType = 2;
                 newquestion.FK_UserAdd = userID;
@@ -64,7 +64,7 @@ namespace PersonalPages
             }
             else
             {
-                Response.Redirect("~/MasterServises/AdminServices.aspx");
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Не все поля заполнены!');", true);
             }
           
         }

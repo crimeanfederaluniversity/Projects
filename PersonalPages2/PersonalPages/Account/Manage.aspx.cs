@@ -21,7 +21,16 @@ namespace PersonalPages.Account
             int userID = UserSer.Id;
             ViewState["ID"] = userID;
             PersonalPagesDataContext PersonalPagesDB = new PersonalPagesDataContext();
+            List<UserDataChangeHistory> userDataStatus = (from a in PersonalPagesDB.UserDataChangeHistory
+                                                          where a.Active == true && a.FK_User == userID && a.Status == 0
+                                                          select a).ToList();
             UsersTable userTable = (from a in PersonalPagesDB.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
+            if(userDataStatus==null)
+            {
+                userTable.Data_Status = true;
+                PersonalPagesDB.SubmitChanges();
+            }
+            
             if (!IsPostBack)
             {    
               if (userTable != null)
@@ -39,13 +48,41 @@ namespace PersonalPages.Account
                     {
                         Label2.Visible = true;
                         Label2.Text = "Запрос на изменение учетных данных отправлен администратору системы. Для утверждения данных, пожалуйста, предоставьте документы, подтверждающие изменения в кабинет 131 корпус А!";
-
                     }
                     if (userTable.Data_Status == true)
                     {
                         Label2.Visible = true;
                         Label2.Text = "Ваши учетные данные утверждены!";
                     }
+                    if (userTable.FK_FirstLevelSubdivisionTable != null)
+                    {
+                        FirstLevelSubdivisionTable academy = (from b in PersonalPagesDB.FirstLevelSubdivisionTable
+                                                              where b.FirstLevelSubdivisionTableID == userTable.FK_FirstLevelSubdivisionTable && b.Active == true
+                                                              select b).FirstOrDefault();
+                        if (academy != null)
+                        {
+                            Label20.Text = academy.Name.ToString();
+                        }
+                        else
+                        { Label20.Text = "Нет привязки к академии"; }
+                    }
+                    else { Label20.Text = "Нет привязки к академии"; }
+                    if (userTable.FK_SecondLevelSubdivisionTable != null)
+                    {
+                        SecondLevelSubdivisionTable faculty = (from b in PersonalPagesDB.SecondLevelSubdivisionTable
+                                                               where b.SecondLevelSubdivisionTableID == userTable.FK_SecondLevelSubdivisionTable && b.Active == true
+                                                               select b).FirstOrDefault();
+                        if (faculty != null)
+                        {
+                            Label21.Text = faculty.Name.ToString();
+                        }
+                        else
+                        {
+                            Label21.Text = "Нет пирвязки к факультету";
+                        }
+
+                    }
+                    else { Label21.Text = "Нет пирвязки к факультету"; }
                     List<FirstLevelSubdivisionTable> First_stageList = (from item in PersonalPagesDB.FirstLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
                     List<SecondLevelSubdivisionTable> Second_stageList = (from item in PersonalPagesDB.SecondLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
 
@@ -78,22 +115,18 @@ namespace PersonalPages.Account
                         Label19.Text = userTable.AcademicDegree;
                         DegreeYear.Text = userTable.AcademicDegree;
                         PositionKurs.Text = userTable.Position;
-                        if(userTable.FK_FirstLevelSubdivisionTable != null)
-                        { Label20.Text = (from b in PersonalPagesDB.FirstLevelSubdivisionTable
-                                                   where b.FirstLevelSubdivisionTableID == userTable.FK_FirstLevelSubdivisionTable && b.Active == true
-                                                   select b.Name).FirstOrDefault().ToString(); }
-                        else  { Label20.Text = ""; }
-                        if(userTable.FK_SecondLevelSubdivisionTable != null)
-                        {  Label21.Text = (from b in PersonalPagesDB.SecondLevelSubdivisionTable
-                                                    where b.SecondLevelSubdivisionTableID == userTable.FK_SecondLevelSubdivisionTable && b.Active == true
-                                                    select b.Name).FirstOrDefault().ToString(); }  
-                        else  {  Label21.Text = ""; }
+                      
                          if(userTable.FK_ThirdLevelSubdivisionTable != null)
-                        { Label22.Text = (from b in PersonalPagesDB.ThirdLevelSubdivisionTable
+                        { ThirdLevelSubdivisionTable name = (from b in PersonalPagesDB.ThirdLevelSubdivisionTable
                                                     where b.ThirdLevelSubdivisionTableID == userTable.FK_ThirdLevelSubdivisionTable && b.Active == true
-                                                    select b.Name).FirstOrDefault().ToString();  }  
-                         else { Label22.Text = ""; }
-                                   
+                                                    select b).FirstOrDefault();   
+                         if (name != null)
+                                {
+                                    Label22.Text = name.Name.ToString();
+                                }
+                                else { Label22.Text = "Нет привязки к кафедре"; }
+                            }
+                            else { Label22.Text = "Нет привязки к кафедре"; }
                             List<ThirdLevelSubdivisionTable> Third_stageList = (from item in PersonalPagesDB.ThirdLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
 
                             var dictionary3 = new Dictionary<int, string>();
@@ -130,27 +163,18 @@ namespace PersonalPages.Account
                         Label18.Text = userTable.Kurs.ToString(); ;
                         Label19.Text = userTable.YearEnter.ToString(); ;
                         DegreeYear.Text = userTable.AcademicDegree;
-                        PositionKurs.Text = userTable.Position;        
-                           
-                            if (userTable.FK_FirstLevelSubdivisionTable != null)
-                            {
-                                Label20.Text = (from b in PersonalPagesDB.FirstLevelSubdivisionTable
-                                                where b.FirstLevelSubdivisionTableID == userTable.FK_FirstLevelSubdivisionTable && b.Active == true
-                                                select b.Name).FirstOrDefault().ToString();
-                            }
-                            else { Label20.Text = ""; }
-                            if (userTable.FK_SecondLevelSubdivisionTable != null)
-                            {
-                                Label21.Text = (from b in PersonalPagesDB.SecondLevelSubdivisionTable
-                                                where b.SecondLevelSubdivisionTableID == userTable.FK_SecondLevelSubdivisionTable && b.Active == true
-                                                select b.Name).FirstOrDefault().ToString();
-                            }
-                            else { Label21.Text = ""; }
+                        PositionKurs.Text = userTable.Position;                                                           
                             if (userTable.FK_StudentGroup != null)
-                            {
-                               // Label22.Text = (from b in PersonalPagesDB.StudentGroupsTable  where b.ID == userTable.FK_StudentGroup && b.Active == true  select b.Name).FirstOrDefault().ToString();
+                            {   StudentGroupsTable name = (from b in PersonalPagesDB.StudentGroupsTable
+                                                where b.ID == userTable.FK_StudentGroup  && b.Active == true 
+                                                select b).FirstOrDefault();
+                                if (name != null)
+                                {
+                                    Label22.Text = name.Name.ToString();
+                                }
+                                else { Label22.Text = "Нет привязки к группе"; }
                             }
-                            else { Label22.Text = ""; }
+                            else { Label22.Text = "Нет привязки к группе"; }
 
                             List<StudentGroupsTable> Third_stageList = (from item in PersonalPagesDB.StudentGroupsTable select item).OrderBy(mc => mc.Name).ToList();
 
@@ -311,7 +335,7 @@ namespace PersonalPages.Account
                     check.Active = false;
 
                     PersonalPagesDB.SubmitChanges();
-                    Response.Redirect("~/Accont/Manage.aspx");
+                    Response.Redirect("~/Account/Manage.aspx");
 
                 }
             }
@@ -492,8 +516,7 @@ namespace PersonalPages.Account
                                                         where b.ID == user.FK_StudentGroup
                                                         select b.Name).FirstOrDefault())
                 {
-                    ChangeUserParam(user, 7,
-                        "Изменение группы студента" , (from b in PersonalPagesDB.StudentGroupsTable
+                    ChangeUserParam(user, 12,"Изменение группы студента" , (from b in PersonalPagesDB.StudentGroupsTable
                                                        where b.ID == user.FK_StudentGroup
                                                           select b.Name).FirstOrDefault() , DropDownList3.SelectedItem.Text);     
                 }      

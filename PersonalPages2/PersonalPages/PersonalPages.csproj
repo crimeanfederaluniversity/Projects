@@ -193,6 +193,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="EquipmentWriteOff.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="ITOffice.aspx" />
     <Content Include="LearningIS.aspx" />
     <Content Include="MasterServises\AdminServices.aspx" />
     <Content Include="MasterServises\CommunicationServices.aspx" />
@@ -430,6 +431,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="ITOffice.aspx.cs">
+      <DependentUpon>ITOffice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ITOffice.aspx.designer.cs">
+      <DependentUpon>ITOffice.aspx</DependentUpon>
     </Compile>
     <Compile Include="LearningIS.aspx.cs">
       <DependentUpon>LearningIS.aspx</DependentUpon>

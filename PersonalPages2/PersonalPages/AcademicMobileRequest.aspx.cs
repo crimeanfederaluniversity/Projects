@@ -15,7 +15,7 @@ namespace PersonalPages
             if (!Page.IsPostBack)
             {
                 PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-                Aplication aplication = (from a in usersDB.Aplications where a.Active == true && a.FK_ApplicationType == 7 select a).FirstOrDefault();
+                Aplications aplication = (from a in usersDB.Aplications where a.Active == true && a.FK_ApplicationType == 7 select a).FirstOrDefault();
                 if (aplication.Confirmed == 0)
                 {
                     Label11.Visible = true;
@@ -88,11 +88,11 @@ namespace PersonalPages
 
             if (userTable != null )
             {
-             //   if (FileUpload1.HasFile && FileUpload2.HasFile && FileUpload3.HasFile && FileUpload4.HasFile && FileUpload5.HasFile && FileUpload6.HasFile && FileUpload7.HasFile)
-              //  {
+                if (FileUpload1.HasFile && FileUpload2.HasFile && FileUpload3.HasFile && FileUpload4.HasFile && FileUpload5.HasFile && FileUpload6.HasFile && FileUpload7.HasFile)
+                {
                     if (userTable.AccessLevel == 11 || userTable.AccessLevel == 12 || userTable.AccessLevel == 13 || userTable.AccessLevel == 14)
                     {
-                        string aspirant = "Название сети:" + TextBox3.Text.ToString() + "Срок академической мобильности c " + Calendar2.SelectedDate.ToString() + " до " + Calendar3.SelectedDate.ToString()
+                        string aspirant = "Название сети:" + TextBox3.Text.ToString() + "Срок академической мобильности c " + Calendar2.SelectedDate.ToString().Split(' ')[0] + " до " + Calendar3.SelectedDate.ToString().Split(' ')[0]
                      + " " + "Партнерская организация(в порядке приоритетности):" + TextBox14.Text.ToString() + " " + "Обоснование целей и мотивирование реализации академической мобильности:" + TextBox5.Text.ToString()
                      + "  " + "Ожидаемые результаты академической и научной активности (участие в конференциях, публикации, сертификаты и т.д.):" + TextBox6.Text.ToString() + " " + "План работы в принимающей организации(задача и период выполнения): " + TextBox15.Text.ToString()
                      + "*" + "Дата рождения:" + TextBox12.Text.ToString() + " " + "Постоянный почтовый адрес(адрес регистрации):" + TextBox2.Text.ToString() + " " + "Уровень образования:" + TextBox7.Text.ToString() + " " + "Напрвление подготовки:" + TextBox8.Text.ToString() + " "
@@ -114,7 +114,7 @@ namespace PersonalPages
                         Directory.CreateDirectory(path + "\\\\" + userID.ToString());
                         String newpath = Server.MapPath("~/AplicationFiles" + "\\\\" + userID.ToString());
                         Directory.CreateDirectory(newpath + "\\\\" + newacademrequest.ID.ToString());
-                        /*
+                        
                         FileUpload1.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload1.FileName);
                         FileUpload2.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload2.FileName);
                         FileUpload3.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload3.FileName);
@@ -122,13 +122,13 @@ namespace PersonalPages
                         FileUpload5.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload5.FileName);
                         FileUpload6.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload6.FileName);
                         FileUpload7.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload7.FileName);
-                        */
+                        
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка отправлена!');", true);
 
                     }
                     else
                     {
-                        string rabotnik = "Название сети:" + TextBox3.Text.ToString() + "Срок академической мобильности c " + Calendar2.SelectedDate.ToString() + " до " + Calendar3.SelectedDate.ToString()
+                        string rabotnik = "Название сети:" + TextBox3.Text.ToString() + "Срок академической мобильности c " + Calendar2.SelectedDate.ToString().Split(' ')[0] + " до " + Calendar3.SelectedDate.ToString().Split(' ')[0]
                      + " " + "Партнерская организация(в порядке приоритетности):" + TextBox14.Text.ToString() + " " + "Обоснование целей и мотивирование реализации академической мобильности:" + TextBox5.Text.ToString()
                      + "  " + "Ожидаемые результаты академической и научной активности (участие в конференциях, публикации, сертификаты и т.д.):" + TextBox6.Text.ToString() + " " + "План работы в принимающей организации(задача и период выполнения): " + TextBox15.Text.ToString()
                      + "*" + "Дата рождения:" + TextBox12.Text.ToString() + " " + "Постоянный почтовый адрес(адрес регистрации):" + TextBox2.Text.ToString() + " " + "Сфера научных интересов:" + TextBox11.Text.ToString();
@@ -149,7 +149,7 @@ namespace PersonalPages
                         Directory.CreateDirectory(path + "\\\\" + userID.ToString());
                         String newpath = Server.MapPath("~/AplicationFiles" + "\\\\" + userID.ToString());
                         Directory.CreateDirectory(newpath + "\\\\" + newacademrequest.ID.ToString());
-                        /*
+                        
                         FileUpload1.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload1.FileName);
                         FileUpload2.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload2.FileName);
                         FileUpload3.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload3.FileName);
@@ -157,14 +157,14 @@ namespace PersonalPages
                         FileUpload5.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload5.FileName);
                         FileUpload6.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload6.FileName);
                         FileUpload7.PostedFile.SaveAs(newpath + "\\\\" + newacademrequest.ID.ToString() + "\\\\" + FileUpload7.FileName);
-                        */
+                        
                         Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка отправлена!');", true);
                     }
-             //  }
+               }
             
-               // else{ Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Вы прикрепили недостаточное количество документов!');", true); }
+                else{ Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Вы прикрепили недостаточное количество документов!');", true); }
             }
-            Response.Redirect("~/UserMainPage.aspx");
+            
         }
 
       

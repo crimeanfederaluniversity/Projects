@@ -8,6 +8,7 @@
       <Column Name="FK_ZeroLevelSubvisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="AbbRu" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="SecondLevelSubdivisionTable" />
+      <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="UsersTable" />
     </Type>
   </Table>
   <Table Name="dbo.UserGroupTable" Member="UserGroupTable">
@@ -55,6 +56,7 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="FK_SecondLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
@@ -66,6 +68,7 @@
       <Column Name="FK_FirstLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="ThirdLevelSubdivisionTable" />
       <Association Name="SecondLevelSubdivisionTable_StudentGroupsTable" Member="StudentGroupsTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevel" Type="StudentGroupsTable" />
+      <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
@@ -75,20 +78,6 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="ManualName" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Column Name="ManualLink" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Aplications" Member="Aplications">
-    <Type Name="Aplications">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_ApplicationType" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_UserAdd" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="TelephoneNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Text" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="FileURL" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Association Name="ApplictionTypes_Aplications" Member="ApplictionTypes" ThisKey="FK_ApplicationType" OtherKey="ID" Type="ApplictionTypes" IsForeignKey="true" />
-      <Association Name="UsersTable_Aplications" Member="UsersTable" ThisKey="FK_UserAdd" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ApplictionTypes" Member="ApplictionTypes">
@@ -130,6 +119,36 @@
       <Association Name="UsersTable_TypeOfWritingFIO" Member="UsersTable" ThisKey="FK_UserTableID" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Projects" Member="Projects">
+    <Type Name="Projects">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ProjectName" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="ImageUrl" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="CreateButton" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Projects_UserGroupTable" Member="UserGroupTable" ThisKey="Id" OtherKey="Fk_ProjectsTable" Type="UserGroupTable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StudentGroupsTable" Member="StudentGroupsTable">
+    <Type Name="StudentGroupsTable">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FK_SecondLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="StudentGroupsTable_UsersTable" Member="UsersTable" ThisKey="ID" OtherKey="FK_StudentGroup" Type="UsersTable" />
+      <Association Name="SecondLevelSubdivisionTable_StudentGroupsTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevel" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SpecializationTable" Member="SpecializationTable">
+    <Type Name="SpecializationTable">
+      <Column Name="SpecializationTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="SpecializationNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FK_FieldOfExpertise" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="SpecializationTable_UsersTable" Member="UsersTable" ThisKey="SpecializationTableID" OtherKey="FK_Specialization" Type="UsersTable" />
+    </Type>
+  </Table>
   <Table Name="dbo.UsersTable" Member="UsersTable">
     <Type Name="UsersTable">
       <Column Name="UsersTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -159,41 +178,29 @@
       <Column Name="FK_StudentGroup" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="UsersTable_UserDataChangeHistory" Member="UserDataChangeHistory" ThisKey="UsersTableID" OtherKey="FK_User" Type="UserDataChangeHistory" />
       <Association Name="UsersTable_UsersAndUserGroupMappingTable1" Member="UsersAndUserGroupMappingTable1" ThisKey="UsersTableID" OtherKey="FK_UserTable" Type="UsersAndUserGroupMappingTable1" />
-      <Association Name="UsersTable_Aplications" Member="Aplications" ThisKey="UsersTableID" OtherKey="FK_UserAdd" Type="Aplications" />
       <Association Name="UsersTable_UsersAndUserGroupMappingTable" Member="UsersAndUserGroupMappingTable" ThisKey="UsersTableID" OtherKey="FK_UserTable" Type="UsersAndUserGroupMappingTable" />
       <Association Name="UsersTable_TypeOfWritingFIO" Member="TypeOfWritingFIO" ThisKey="UsersTableID" OtherKey="FK_UserTableID" Type="TypeOfWritingFIO" />
-      <Association Name="StudentGroupsTable_UsersTable" Member="StudentGroupsTable" ThisKey="FK_StudentGroup" OtherKey="ID" Type="StudentGroupsTable" IsForeignKey="true" />
+      <Association Name="UsersTable_Aplications" Member="Aplications" ThisKey="UsersTableID" OtherKey="FK_UserAdd" Type="Aplications" />
+      <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="SpecializationTable_UsersTable" Member="SpecializationTable" ThisKey="FK_Specialization" OtherKey="SpecializationTableID" Type="SpecializationTable" IsForeignKey="true" />
+      <Association Name="StudentGroupsTable_UsersTable" Member="StudentGroupsTable" ThisKey="FK_StudentGroup" OtherKey="ID" Type="StudentGroupsTable" IsForeignKey="true" />
+      <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Projects" Member="Projects">
-    <Type Name="Projects">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="ProjectName" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="ImageUrl" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="CreateButton" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="Projects_UserGroupTable" Member="UserGroupTable" ThisKey="Id" OtherKey="Fk_ProjectsTable" Type="UserGroupTable" />
-    </Type>
-  </Table>
-  <Table Name="dbo.StudentGroupsTable" Member="StudentGroupsTable">
-    <Type Name="StudentGroupsTable">
+  <Table Name="dbo.Aplications" Member="Aplications">
+    <Type Name="Aplications">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="FK_SecondLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="StudentGroupsTable_UsersTable" Member="UsersTable" ThisKey="ID" OtherKey="FK_StudentGroup" Type="UsersTable" />
-      <Association Name="SecondLevelSubdivisionTable_StudentGroupsTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevel" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.SpecializationTable" Member="SpecializationTable">
-    <Type Name="SpecializationTable">
-      <Column Name="SpecializationTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
-      <Column Name="SpecializationNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="FK_FieldOfExpertise" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="SpecializationTable_UsersTable" Member="UsersTable" ThisKey="SpecializationTableID" OtherKey="FK_Specialization" Type="UsersTable" />
+      <Column Name="FK_ApplicationType" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_UserAdd" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TelephoneNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="FileURL" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Confirmed" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="ApplictionTypes_Aplications" Member="ApplictionTypes" ThisKey="FK_ApplicationType" OtherKey="ID" Type="ApplictionTypes" IsForeignKey="true" />
+      <Association Name="UsersTable_Aplications" Member="UsersTable" ThisKey="FK_UserAdd" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

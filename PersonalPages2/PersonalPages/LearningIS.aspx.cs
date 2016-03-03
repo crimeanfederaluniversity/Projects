@@ -22,20 +22,26 @@ namespace PersonalPages
                 Response.Redirect("~/Default.aspx");
             }
             int userID = UserSer.Id;
-            
-            PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-            Aplication newlerning = new Aplication();
-            newlerning.Active = true;
-            newlerning.FK_ApplicationType =11;
-            newlerning.FK_UserAdd = userID;
-            newlerning.Date = DateTime.Now;
-            newlerning.Text = TextBox1.Text;
-            newlerning.Confirmed = 0;
-            newlerning.TelephoneNumber = TextBox3.Text;
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка отправлена!');", true);
-            usersDB.Aplications.InsertOnSubmit(newlerning);
-            usersDB.SubmitChanges();
-            Response.Redirect("~/UserMainPage.aspx");
+            if (TextBox1.Text != null)
+            {
+                PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
+                Aplications newlerning = new Aplications();
+                newlerning.Active = true;
+                newlerning.FK_ApplicationType = 11;
+                newlerning.FK_UserAdd = userID;
+                newlerning.Date = DateTime.Now;
+                newlerning.Text = TextBox1.Text;
+                newlerning.Confirmed = 0;
+                newlerning.TelephoneNumber = TextBox3.Text;
+
+                usersDB.Aplications.InsertOnSubmit(newlerning);
+                usersDB.SubmitChanges();
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка отправлена!');", true);
+            }
+            else
+            {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Не все поля заполнены!');", true);
+            }
         }
     }
 }

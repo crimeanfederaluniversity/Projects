@@ -15,7 +15,7 @@ namespace PersonalPages
             if (!Page.IsPostBack)
             {
                 PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-                Aplication aplication = (from a in usersDB.Aplications where a.Active == true && a.FK_ApplicationType == 3 select a).FirstOrDefault();
+                Aplications aplication = (from a in usersDB.Aplications where a.Active == true && a.FK_ApplicationType == 3 select a).FirstOrDefault();
                 if (aplication.Confirmed == 0)
                 {
                     Label1.Visible = true;
@@ -49,7 +49,7 @@ namespace PersonalPages
             if (TextBox3.Text != null)
             {
                 PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-                Aplication newpass = new Aplication();
+                Aplications newpass = new Aplications();
                 newpass.Active = true;
                 newpass.FK_ApplicationType = 3;
                 newpass.FK_UserAdd = userID;
@@ -63,7 +63,7 @@ namespace PersonalPages
             }
             else
             {
-                Response.Redirect("~/MasterServises/AdminServices.aspx");
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Не все поля заполнены!');", true);
             }
         }
     }

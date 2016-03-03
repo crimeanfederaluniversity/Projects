@@ -15,7 +15,7 @@ namespace PersonalPages
             if (!Page.IsPostBack)
             {
                 PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-                Aplication aplication = (from a in usersDB.Aplications where a.Active == true && a.FK_ApplicationType == 8 select a).FirstOrDefault();
+                Aplications aplication = (from a in usersDB.Aplications where a.Active == true && a.FK_ApplicationType == 8 select a).FirstOrDefault();
                 if (aplication.Confirmed == 0)
                 {
                     Label1.Visible = true;
@@ -45,18 +45,25 @@ namespace PersonalPages
                 Response.Redirect("~/Default.aspx");
             }
             int userID = UserSer.Id;
-            string order = "Необходимая техника или расходные материалы:" + TextBox4.Text.ToString() + " " + "Цель использования:" + TextBox5.Text.ToString() + " " + "Кто будет использовать:" + TextBox6.Text.ToString() + " " + "Получатель (ответственный):" + TextBox7.Text.ToString();
-            PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
-            Aplication newequipment = new Aplication();
-            newequipment.Active = true;
-            newequipment.FK_ApplicationType = 8;
-            newequipment.FK_UserAdd = userID;
-            newequipment.Date = DateTime.Now;
-            newequipment.Text = order;
-            newequipment.Confirmed = 0;
-            usersDB.Aplications.InsertOnSubmit(newequipment);
-            usersDB.SubmitChanges();
-            Response.Redirect("~/UserMainPage.aspx");
+            if (TextBox5.Text != null && TextBox4.Text != null && TextBox6.Text != null && TextBox7.Text != null)
+            {
+                string order = "Необходимая техника или расходные материалы:" + TextBox4.Text.ToString() + " " + "Цель использования:" + TextBox5.Text.ToString() + " " + "Кто будет использовать:" + TextBox6.Text.ToString() + " " + "Получатель (ответственный):" + TextBox7.Text.ToString();
+                PersonalPagesDataContext usersDB = new PersonalPagesDataContext();
+                Aplications newequipment = new Aplications();
+                newequipment.Active = true;
+                newequipment.FK_ApplicationType = 8;
+                newequipment.FK_UserAdd = userID;
+                newequipment.Date = DateTime.Now;
+                newequipment.Text = order;
+                newequipment.Confirmed = 0;
+                usersDB.Aplications.InsertOnSubmit(newequipment);
+                usersDB.SubmitChanges();
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Заявка отправлена!');", true);
+            }
+            else
+            {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Не все поля заполнены!');", true);
+            }
         }
     }
 }
