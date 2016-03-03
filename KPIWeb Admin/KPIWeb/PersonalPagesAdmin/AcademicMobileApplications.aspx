@@ -7,7 +7,7 @@
             <Columns>
                 <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" HeaderText="Номер заявки" Visible="True">
                     <ItemTemplate>
-                        <asp:Label ID="UsersTableId" runat="server" Text='<%# Bind("ID") %>' Visible="True"></asp:Label>
+                        <asp:Label ID="ID" runat="server" Text='<%# Bind("ID") %>' Visible="True"></asp:Label>
                     </ItemTemplate>
                     <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                 </asp:TemplateField>
@@ -23,6 +23,12 @@
                     </ItemTemplate>
                     <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                 </asp:TemplateField>
+                  <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" HeaderText="Персональные данные" Visible="True">
+                    <ItemTemplate>
+                        <asp:Label ID="Text2" runat="server" BorderWidth="0" style="text-align:center" Text='<%# Bind("Text2") %>'></asp:Label>
+                    </ItemTemplate>
+                    <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                </asp:TemplateField>
                 <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" HeaderText="Анкета" Visible="True">
                     <ItemTemplate>
                         <asp:Label ID="Text" runat="server" BorderWidth="0" style="text-align:center" Text='<%# Bind("Text") %>'></asp:Label>
@@ -31,7 +37,7 @@
                 </asp:TemplateField>
             <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" HeaderText="Документы" Visible="True">
                     <ItemTemplate>
-                        <asp:Label ID="Text" runat="server" BorderWidth="0" style="text-align:center" Text='<%# Bind("FileURL") %>'></asp:Label>
+                        <asp:Label ID="FileURL" runat="server" BorderWidth="0" style="text-align:center" Text='<%# Bind("FileURL") %>'></asp:Label>
                     </ItemTemplate>
                     <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                 </asp:TemplateField>
@@ -43,12 +49,12 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Принять">
                     <ItemTemplate>
-                        <asp:Button ID="YesButton" runat="server" CommandArgument='<%# Eval("ID") %>' CommandName="Select" OnClick="YesButtonClick" Text="Принять" Width="200px" />
+                        <asp:Button ID="YesButton" runat="server"  CommandName="Select" OnClick="YesButtonClick" CommandArgument='<%# Eval("ID") %>' Text="Принять" Width="150px" />
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Отказать">
                     <ItemTemplate>
-                        <asp:Button ID="NoButton" runat="server" CommandArgument='<%# Eval("ID") %>' CommandName="Select" OnClick="NoButtonClick" Text="Отказать" Width="200px" />
+                        <asp:Button ID="NoButton" runat="server"  CommandName="Select" OnClick="NoButtonClick" CommandArgument='<%# Eval("ID") %>' Text="Отказать" Width="150px" />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

@@ -37,8 +37,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Принять">
                     <ItemTemplate>
-                        <asp:Button ID="YesButton" runat="server" CommandName="Select"  CommandArgument='<%# Eval("ID") %>'  Text="Принять" Width="200px" OnClick="YesButtonClick" />
-                    
+                        <asp:Button ID="YesButton" runat="server" CommandName="Select"  CommandArgument='<%# Eval("ID") %>'  Text="Принять" Width="200px" OnClick="YesButtonClick" />                  
                     </ItemTemplate>
                 </asp:TemplateField>
                    <asp:TemplateField HeaderText="Отказать">

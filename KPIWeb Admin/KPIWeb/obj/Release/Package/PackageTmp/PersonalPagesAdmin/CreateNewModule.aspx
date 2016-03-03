@@ -1,7 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CreateNewModule.aspx.cs" Inherits="KPIWeb.CreateNewModule" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <p>
-        <span style="font-size: 30px">Редактирование модулей в системе личных кабинетов:</span></p>
+        <asp:Button ID="Button2" runat="server" Text="Назад" OnClick="Button2_Click" />
+    </p>
+    <p>
+        <span style="font-size: 20px">Активные модули:</span></p>
     <p>
         <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server">
              <Columns>                                          
@@ -28,21 +31,13 @@
          </p>
     <br />
     <p>
-        Добавить новый модуль</p>
+        <span style="font-size: 20px">Создать новый модуль:</span></p>
     <p>
         Название для пользователей (название кнопки):<asp:TextBox ID="ModuleName" CssClass="form-control" runat="server" Height="40px" Width="400px"></asp:TextBox>
          </p>
     <p>
          Cсылка на модуль:<asp:TextBox ID="ModuleLink" CssClass="form-control" runat="server" Height="40px" Width="400px"></asp:TextBox>
          </p>
-    <p>
-         Выберите кому будет доступен новый модуль:</p>
-    <p>
-         <asp:CheckBox ID="CheckBox1" runat="server" Text="Студенты" />
-    </p>
-    <p>
-         <asp:CheckBox ID="CheckBox2" runat="server" Text="Сотрудники " />
-    </p>
     <p>
              <asp:Button ID="Button1" runat="server" CssClass="form-control" OnClientClick="showLoadPanel()" Text="Создать модуль" Height="40px" Width="400px" OnClick="Button1_Click" />
          </p>

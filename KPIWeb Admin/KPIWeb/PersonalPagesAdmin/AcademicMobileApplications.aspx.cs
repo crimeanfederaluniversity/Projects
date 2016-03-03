@@ -12,16 +12,13 @@ namespace KPIWeb.PersonalPagesAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
             Serialization UserSer = (Serialization)Session["UserID"];
             if (UserSer == null)
             {
                 Response.Redirect("~/PersonalPagesAdmin/PersonalMainPage.aspx");
             }
             int userID = UserSer.Id;
-
-            RefreshGrid();
+            if(!Page.IsPostBack) RefreshGrid();
         }
         private void RefreshGrid()
         {
@@ -30,6 +27,7 @@ namespace KPIWeb.PersonalPagesAdmin
             dataTable.Columns.Add(new DataColumn("Date", typeof(string)));
             dataTable.Columns.Add(new DataColumn("FIO", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Text", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("Text2", typeof(string)));
             dataTable.Columns.Add(new DataColumn("FileURL", typeof(string)));
             dataTable.Columns.Add(new DataColumn("TelephonNumber", typeof(string)));
 
@@ -46,7 +44,8 @@ namespace KPIWeb.PersonalPagesAdmin
                     dataRow["ID"] = app.ID;
                     dataRow["Date"] = app.Date;
                     dataRow["FIO"] = fio.Email;
-                    dataRow["Text"] = app.Text;
+                    dataRow["Text"] = app.Text.ToString().IndexOf("*");
+                    dataRow["Text2"] = app.Text.Split('*')[1];
                     dataRow["FileURL"] = app.FileURL;
                     dataRow["TelephonNumber"] = app.TelephoneNumber;
                     dataTable.Rows.Add(dataRow);
@@ -58,7 +57,6 @@ namespace KPIWeb.PersonalPagesAdmin
 
         protected void YesButtonClick(object sender, EventArgs e)
         {
-
             Button button = (Button)sender;
             {
                 using (KPIWebDataContext kPiDataContext = new KPIWebDataContext())
@@ -66,18 +64,14 @@ namespace KPIWeb.PersonalPagesAdmin
                     Aplication app = (from a in kPiDataContext.Aplications
                                       where a.ID == Convert.ToInt32(button.CommandArgument)
                                       select a).FirstOrDefault();
-
                     app.Confirmed = 1;
                     kPiDataContext.SubmitChanges();
                 }
                 RefreshGrid();
-
             }
-
         }
         protected void NoButtonClick(object sender, EventArgs e)
         {
-
             Button button = (Button)sender;
             {
                 using (KPIWebDataContext kPiDataContext = new KPIWebDataContext())
@@ -85,15 +79,11 @@ namespace KPIWeb.PersonalPagesAdmin
                     Aplication app = (from a in kPiDataContext.Aplications
                                       where a.ID == Convert.ToInt32(button.CommandArgument)
                                       select a).FirstOrDefault();
-
                     app.Confirmed = 2;
                     kPiDataContext.SubmitChanges();
                 }
                 RefreshGrid();
-
             }
-
         }
-
     }
 }

@@ -1,15 +1,19 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="EditPersonalPage.aspx.cs" Inherits="KPIWeb.PersonalPagesAdmin.EditPersonalPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <p>
-        <span style="font-size: 30px">Редактирование прав доступа пользователей к модулям:</span></p>
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Назад" />
+    </p>
+    <p>
+        <span style="font-size: 20px">Редактирование прав доступа пользователей к модулям:</span></p>
 
     <div>
        &nbsp;
         <asp:Label ID="Label2" runat="server" Text="Ключевое слово"></asp:Label>
 &nbsp;<asp:TextBox ID="TextBox2" runat="server" Height="21px" Width="251px"></asp:TextBox>
         <asp:Button ID="Button1" runat="server" Text="Поиск" OnClick="Button1_Click" Width="173px" />
-        &nbsp;&nbsp;<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;<asp:CheckBox ID="CheckBox2" runat="server" Checked="True" Text="Предохранитель" />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <br />
          
@@ -48,7 +52,6 @@
                 </Columns>
        </asp:GridView>
     
-        <asp:CheckBox ID="CheckBox2" runat="server" Checked="True" Text="Предохранитель" />
     <p>
         &nbsp;</p>
     <p>
