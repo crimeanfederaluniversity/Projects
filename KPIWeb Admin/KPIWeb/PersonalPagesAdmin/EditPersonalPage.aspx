@@ -35,13 +35,13 @@
                         </ItemTemplate>
                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
-                 <asp:TemplateField HeaderText="Имя" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                 <asp:TemplateField HeaderText="Имя" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "False">
                         <ItemTemplate>
                             <asp:Label ID="Name" style="text-align:center" runat="server" Text='<%# Bind("Name") %>'></asp:Label>
                         </ItemTemplate>
                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
-                 <asp:TemplateField HeaderText="Фамилия" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+                 <asp:TemplateField HeaderText="Фамилия" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "False">
                         <ItemTemplate>
                             <asp:Label ID="SecondName" style="text-align:center"  runat="server" Text='<%# Bind("SecondName") %>'></asp:Label>
                         </ItemTemplate>

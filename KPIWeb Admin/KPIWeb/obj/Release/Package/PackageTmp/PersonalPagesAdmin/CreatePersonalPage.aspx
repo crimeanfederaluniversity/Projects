@@ -7,7 +7,7 @@
         <br />
         Регистрация нового пользователя в системе:</span><br />
         Выберите статус пользователя<br />
-        <asp:DropDownList ID="DropDownList4" runat="server" Height="40px" Width="400px" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged">
+        <asp:DropDownList ID="DropDownList4" runat="server" Height="40px" Width="400px" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged" AutoPostBack="True">
             <asp:ListItem Value="0">Сотрудник КФУ</asp:ListItem>
             <asp:ListItem Value="11" Selected="True">Студент бакалавриата</asp:ListItem>
             <asp:ListItem Value="12">Студент специалитета</asp:ListItem>

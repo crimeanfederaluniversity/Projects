@@ -62,7 +62,6 @@ namespace KPIWeb.AutomationDepartment
             dataTable.Columns.Add(new DataColumn("SaveUserButton", typeof(string)));
             dataTable.Columns.Add(new DataColumn("ChangeUserButton", typeof(string)));
 
-
             using (KPIWebDataContext kpiWebDataContext = new KPIWebDataContext())
             {
                 List<UsersTable> users;

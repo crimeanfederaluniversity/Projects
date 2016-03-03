@@ -13,9 +13,6 @@ namespace KPIWeb
     public partial class _Default : Page
     {
         UsersTable user;
-
-        
-
         protected void Page_Load(object sender, EventArgs e)
         {
             KPIWebDataContext KPIWebDataContext = new KPIWebDataContext();
@@ -37,30 +34,26 @@ namespace KPIWeb
             {
                 FormsAuthentication.SignOut();
                 Session.Abandon();
-                Response.Redirect("http://cfu-portal.ru");
+              
+               Response.Redirect("http://preview2.cfu-portal.ru");
             }
-            
-            UsersTable user = (from usersTables in KPIWebDataContext.UsersTable
-                               where usersTables.UsersTableID == UserSer.Id
-                               select usersTables).FirstOrDefault();
+         
+                UsersTable user = (from usersTables in KPIWebDataContext.UsersTable
+                                   where usersTables.UsersTableID == UserSer.Id
+                                   select usersTables).FirstOrDefault();
+      
             if (user != null)
             {
-                List<MultiUser> MultiuserList = (from a in KPIWebDataContext.MultiUser
-                                                 where a.Active == true
-                                                 && a.FK_UserCanAccess == user.UsersTableID
-                                                 select a).ToList();
-                if (MultiuserList.Count()>0)
-                {
-                    Response.Redirect("~/MultiUser.aspx");
-                }
-              //  Directions(user);
-                
+                List<UsersAndUserGroupMappingTable> admin = (from a in KPIWebDataContext.UsersAndUserGroupMappingTable
+                                                             where a.FK_GroupTable == 19 && a.FK_UserTable == user.UsersTableID && a.Active == true && a.Confirmed == true 
+                                                             select a).ToList();
+                Response.Redirect("~/PersonalPagesAdmin/PersonalMainPage.aspx");
             }
             else
             {
                 FormsAuthentication.SignOut();
                 Session.Abandon();
-                Response.Redirect("http://cfu-portal.ru");
+                Response.Redirect("http://preview2.cfu-portal.ru");
             }
         }
     }

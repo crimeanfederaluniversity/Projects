@@ -16,13 +16,7 @@ namespace KPIWeb.PersonalPagesAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-          /*  Serialization UserSer = (Serialization)Session["UserID"];
-            if (UserSer == null)
-            {
-                Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
-            }
-            int userID = UserSer.Id;
-            */
+     
             RefreshGrid();
         }
         private void RefreshGrid()
@@ -97,7 +91,7 @@ namespace KPIWeb.PersonalPagesAdmin
                              select a).FirstOrDefault();
                         user.Active = false;
                         kPiDataContext.SubmitChanges();
-                       // LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU2: AdminUser " + ViewState["User"] + "DELETE user: " + user.Email + " from ip: " + Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
+                       
                     }
                     RefreshGrid();
 
@@ -122,7 +116,7 @@ namespace KPIWeb.PersonalPagesAdmin
                              select a).FirstOrDefault();
                         user.Confirmed = true;
                         kPiDataContext.SubmitChanges();
-                        // LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0EU2: AdminUser " + ViewState["User"] + "DELETE user: " + user.Email + " from ip: " + Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
+                         
                     }
                     RefreshGrid();
                 }

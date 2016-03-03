@@ -16,18 +16,7 @@ namespace KPIWeb.PersonalPagesAdmin
         protected void Page_Load(object sender, EventArgs e)
         {
             KPIWebDataContext kPiDataContext = new KPIWebDataContext();
-            /*   Serialization UserSer = (Serialization)Session["UserID"];
-               if (UserSer == null)
-               {
-                   Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
-               }
-               int userID = UserSer.Id;
-               UserRights userRights = new UserRights();
-               if (!userRights.CanUserSeeThisPage(userID, 19, 0, 0))
-               {
-                   Response.Redirect(ConfigurationManager.AppSettings.Get("MainSiteName"));
-               } 
-               */
+          
             Serialization ser = (Serialization)Session["userIdforChange"];
             if (ser == null)
             {

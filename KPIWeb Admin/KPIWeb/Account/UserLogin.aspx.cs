@@ -12,7 +12,7 @@ using System.Web.Security;
 namespace KPIWeb.Account
 {
     public partial class UserLogin : System.Web.UI.Page
-    { 
+    {
         protected void Page_Load(object sender, EventArgs e)
         {
             Serialization UserSer = (Serialization)Session["UserID"];
@@ -84,7 +84,7 @@ namespace KPIWeb.Account
                             Directions(user);
                             Response.Redirect("~/Default.aspx");
                         }
-                       
+
                         else
                         {
                             FailureText.Text = "Неверный адрес электронной почты или пароль.";

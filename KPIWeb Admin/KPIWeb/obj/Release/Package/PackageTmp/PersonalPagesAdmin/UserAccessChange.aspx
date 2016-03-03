@@ -1,40 +1,48 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserAccessChange.aspx.cs" Inherits="KPIWeb.PersonalPagesAdmin.UserAccessChange" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <p>
-        <span style="font-size: 20px">Заявки пользователей на изменение прав доступа к модулям:</span></p>
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Назад" />
+    </p>
+    <p>
+        <span>Редактирование прав доступа пользователей к модулям:</span></p>
     <div>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;
+        <asp:Label ID="Label2" runat="server" Text="Ключевое слово"></asp:Label>
+        &nbsp;<asp:TextBox ID="TextBox2" runat="server" Height="21px" Width="251px"></asp:TextBox>
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Поиск" Width="173px" />
+        &nbsp;&nbsp;&nbsp;<asp:CheckBox ID="CheckBox2" runat="server" Checked="True" Text="Предохранитель" />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <br />
     </div>
-    <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server"  >
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
         <Columns>
-            <asp:TemplateField HeaderText="ID заявки" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "false" >
+            <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" HeaderText="ID пользователя" Visible="True">
                 <ItemTemplate>
-                    <asp:Label ID="ApplicationId" runat="server" Text='<%# Bind("UserAndGroupID") %>'  Visible="false"></asp:Label>
+                    <asp:Label ID="UsersTableId" runat="server" Text='<%# Bind("UsersTableId") %>' Visible="True"></asp:Label>
                 </ItemTemplate>
-                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
+                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
             </asp:TemplateField>
-            <asp:TemplateField HeaderText="Адрес почты отправителя" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True">
+            <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" HeaderText="Адрес почты" Visible="True">
                 <ItemTemplate>
-                    <asp:TextBox ID="Email" style="text-align:center" BorderWidth="0" runat="server" Text='<%# Bind("Email") %>'></asp:TextBox>
+                    <asp:TextBox ID="Email" runat="server" BorderWidth="0" style="text-align:center" Text='<%# Bind("Email") %>'></asp:TextBox>
                 </ItemTemplate>
-                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
+                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
             </asp:TemplateField>
-            <asp:TemplateField HeaderText="Дата заявки" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+            <asp:TemplateField HeaderText="Изменить права доступа">
                 <ItemTemplate>
-                    <asp:Label ID="Date" runat="server" Text='<%# Bind("Date") %>'  Visible="True"></asp:Label>
-                </ItemTemplate>
-                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
-            </asp:TemplateField>                   
-            <asp:TemplateField HeaderText="Просмотреть">
-                <ItemTemplate>
-                    <asp:Button ID="ConfirmButton" runat="server" CommandName="Select" Text="Просмотреть" Width="200px" CommandArgument='<%# Eval("UserAndGroupID") %>' OnClick="ConfirmButtonClick" />
+                    <asp:Button ID="ChangeUserButton" runat="server" CommandArgument='<%# Eval("UsersTableId") %>' CommandName="Select" OnClick="ChangeUserButtonClick" Text="Изменить" Width="200px" />
                 </ItemTemplate>
             </asp:TemplateField>
-        
+            <asp:TemplateField HeaderText="Удалить пользователя">
+                <ItemTemplate>
+                    <asp:Button ID="DeleteUserButton" runat="server" CommandArgument='<%# Eval("UsersTableId") %>' CommandName="Select" OnClick="DeleteUserButtonClick" Text="Удалить" Width="200px" />
+                </ItemTemplate>
+            </asp:TemplateField>
         </Columns>
     </asp:GridView>
+    <p>
+        &nbsp;</p>
     <p>
         &nbsp;</p>
 </asp:Content>

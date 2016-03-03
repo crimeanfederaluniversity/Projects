@@ -134,8 +134,14 @@ namespace KPIWeb.PersonalPagesAdmin
                 user.Surname = Surname.Text;
                 user.Name = Name.Text;
                 user.Patronimyc = Patronimyc.Text;
-                user.FK_FirstLevelSubdivisionTable = Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value);
-                user.FK_SecondLevelSubdivisionTable = Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value);
+                if (Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value) != -1)
+                {
+                    user.FK_FirstLevelSubdivisionTable = Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value);
+                }
+                if (Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value) != -1)
+                {
+                    user.FK_SecondLevelSubdivisionTable = Convert.ToInt32(DropDownList2.Items[DropDownList2.SelectedIndex].Value);
+                }
                 user.Data_Status = true;
                 user.Email = EmailText.Text;
                 user.Login = "";
@@ -145,15 +151,20 @@ namespace KPIWeb.PersonalPagesAdmin
                     user.AccessLevel = 0;
                     user.Position = Textbox1.Text;
                     user.AcademicDegree = Textbox2.Text;
-                    user.FK_ThirdLevelSubdivisionTable = Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value);
+                    if (Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value) != -1)
+                    {
+                        user.FK_ThirdLevelSubdivisionTable = Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value);
+                    }
                 }
                 else
                 {
                     user.AccessLevel = Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value);
                     user.Kurs = Convert.ToInt32(Textbox1.Text);
                     user.YearEnter = Convert.ToInt32(Textbox2.Text);
-                    user.FK_StudentGroup = Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value);
-
+                    if (Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value) != -1)
+                    {
+                        user.FK_StudentGroup = Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value);
+                    }
                 }
                 kPiDataContext.UsersTable.InsertOnSubmit(user);
                 kPiDataContext.SubmitChanges();
@@ -165,6 +176,7 @@ namespace KPIWeb.PersonalPagesAdmin
                     {
                         UsersAndUserGroupMappingTable newuseraccess = new UsersAndUserGroupMappingTable();
                         newuseraccess.Active = true;
+                        newuseraccess.Confirmed = true;
                         newuseraccess.FK_GroupTable = Convert.ToInt32(label.Text);
                         newuseraccess.FK_UserTable = user.UsersTableID;
                         kPiDataContext.UsersAndUserGroupMappingTable.InsertOnSubmit(newuseraccess);
