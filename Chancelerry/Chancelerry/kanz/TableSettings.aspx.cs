@@ -68,7 +68,7 @@ namespace Chancelerry.kanz
                                                                && a.fk_register == (int)Session["registerID"]
                                                          select a).FirstOrDefault();
 
-                    /*
+                    
                     foreach (Fields currentField in allFieldsInTable)
                     {
                         if (allFieldsWithUser.Contains(currentField))
@@ -86,7 +86,7 @@ namespace Chancelerry.kanz
                             dataContext.SubmitChanges();
                         }
                     }
-
+                    /*
                     // Кусок Ваге окончен :)
                     // Все возможные поля для таблицы в данном реестре
                       var all = (from a in dataContext.Fields

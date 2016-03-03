@@ -39,6 +39,7 @@ namespace Chancelerry.kanz
         }
         public string GetFieldValueByCardVersionInstance(int fieldId, int cardId, int version, int instance)
         {
+            CardCreateEdit cardCreateEdit = new CardCreateEdit();
             CollectedFieldsValues currentCollectedFieldsValues = (from a in chancDb.CollectedFieldsValues
                 where a.active
                       && a.fk_field == fieldId
@@ -46,6 +47,24 @@ namespace Chancelerry.kanz
                       && a.instance == instance
                       && a.version <= version
                 select a).OrderByDescending(ver => ver.version).FirstOrDefault();
+            if (currentCollectedFieldsValues == null)
+            {
+                int userId = 1;
+                var sesUserId = HttpContext.Current.Session["userID"];
+                if (sesUserId != null)
+                {
+                    Int32.TryParse(sesUserId.ToString(), out userId);
+                }
+
+                cardCreateEdit.CreateNewFieldValueInCard(cardId, userId, fieldId, version, instance, "", false);
+                currentCollectedFieldsValues = (from a in chancDb.CollectedFieldsValues
+                                                where a.active
+                                                      && a.fk_field == fieldId
+                                                      && a.fk_collectedCard == cardId
+                                                      && a.instance == instance
+                                                      && a.version <= version
+                                                select a).OrderByDescending(ver => ver.version).FirstOrDefault();
+            }
             return currentCollectedFieldsValues.valueText;
         }
         public int GetCollectedValueIdByCardVersionInstance(int fieldId, int cardId, int version, int instance)
@@ -169,7 +188,6 @@ namespace Chancelerry.kanz
 
             return nodeToReturn;
         }
-
         public TableHeaderRow AddSearchHeaderRoFromListWithData(List<int> fieldID,Dictionary<int,string> searchData)
         {
             TableHeaderRow row = new TableHeaderRow();
@@ -191,12 +209,9 @@ namespace Chancelerry.kanz
             }
             return row;
         }
-
         public string FastSearch(Dictionary<int, string> searchList, int registerId, int userId, Table vTable, int lineFrom, int lineTo)
         {
-
             List<int> cardsToShow = new List<int>(); // сюда будем складывать карточки которые нужно показать
-
             if (searchList != null) //если фильтры есть
             {
                 bool isFirst = true;
@@ -205,7 +220,6 @@ namespace Chancelerry.kanz
                     int fieldId = currentKey;
                     string fieldValue = "";
                     searchList.TryGetValue(fieldId, out fieldValue);  //достаем айдишник нашего филда
-
                     List<int> cardsWithValue = (from a in chancDb.CollectedFieldsValues
                                                 where a.active == true && a.fk_field == fieldId && a.valueText.Contains(fieldValue)
                                                 join b in chancDb.CollectedCards on a.fk_collectedCard equals b.collectedCardID
@@ -243,16 +257,33 @@ namespace Chancelerry.kanz
                              && a.type == "autoIncrement"
                              select a.fieldID).FirstOrDefault();
 
-            List<CollectedFieldsValues> collectedIds = (from a in chancDb.CollectedFieldsValues
-                                                        where cardsToShow.Contains(a.fk_collectedCard)
-                                                        && a.fk_field == idFieldId
-                                                        select a).ToList();
+            
+
+            List<CollectedFieldsValues> collectedIdstmp = (from a in chancDb.CollectedFieldsValues
+                                                            // where cardsToShow.Contains(a.fk_collectedCard)
+                                                        where a.fk_field == idFieldId
+                                                        select a).ToList();//ToList();
+
+            /*List<CollectedFieldsValues> collectedIds2 = (from a in chancDb.CollectedFieldsValues
+                                                         where cardsToShow.Contains(a.fk_collectedCard)
+                                                        where a.fk_field == idFieldId
+                                                        select a).ToList();*/
+
+            List<CollectedFieldsValues> collectedIds =
+                (from a in collectedIdstmp where cardsToShow.Contains(a.fk_collectedCard) select a).ToList();
+
             Dictionary<int, int> toSort = new Dictionary<int, int>();
             List<int> sortedCardsToShow = new List<int>();
             foreach (int current in cardsToShow)
             {
                 int tmp = 0;
-                Int32.TryParse((from a in collectedIds where a.fk_collectedCard == current select a).OrderByDescending(mc => mc.version).FirstOrDefault().valueText, out tmp);
+                var collectedValue =
+                    (from a in collectedIds where a.fk_collectedCard == current select a).OrderByDescending(
+                        mc => mc.version).FirstOrDefault();
+                if (collectedValue != null)
+                {
+                    Int32.TryParse(collectedValue.valueText, out tmp);
+                }
                 toSort.Add(current, tmp);
             }
             sortedCardsToShow = (from a in toSort select a).OrderByDescending(mc => mc.Value).Select(mc => mc.Key).ToList();
@@ -267,7 +298,6 @@ namespace Chancelerry.kanz
             {
                 sortedCutedCardsToShow.Add(sortedCardsToShow[i]);
             }
-
             Dictionary<int, string> allFields = (from a in chancDb.RegistersUsersMap
                                                  join b in chancDb.RegistersView
                                                  on a.registersUsersMapID equals b.fk_registersUsersMap
@@ -319,7 +349,6 @@ namespace Chancelerry.kanz
             }
             return "Всего:" + sortedCardsToShow.Count() + "  " + "Показано с "+ (lineFrom+1)+ " по "+(lineTo);
         }
-
     }
     public class DataTypes
     {
@@ -426,7 +455,9 @@ namespace Chancelerry.kanz
                     }
                 case "date": //date
                     {
-                        textBoxToReturn.TextMode = TextBoxMode.Date;
+                        textBoxToReturn.Attributes.Add("onfocus", "this.select();lcs(this)");
+                        textBoxToReturn.Attributes.Add("onclick", "event.cancelBubble=true;this.select();lcs(this)");               
+                        //textBoxToReturn.TextMode = TextBoxMode.Date;
                         break;
                     }
                 case "singleLineText": //text
@@ -451,8 +482,10 @@ namespace Chancelerry.kanz
                     }
                 case "autoDate": // АвтоДата
                     {
+                        textBoxToReturn.Attributes.Add("onfocus", "this.select();lcs(this)");
+                        textBoxToReturn.Attributes.Add("onclick", "event.cancelBubble=true;this.select();lcs(this)");
                         //textBoxToReturn.TextMode = TextBoxMode.SingleLine;
-                        textBoxToReturn.TextMode = TextBoxMode.Date;
+                        //textBoxToReturn.TextMode = TextBoxMode.Date;
                         break;
                     }
 
@@ -462,6 +495,11 @@ namespace Chancelerry.kanz
         public bool IsFieldAutoFill(string type)
         {
             if (type == "autoIncrement" || type == "autoDate") return true;
+            return false;
+        }
+        public bool IsFieldDate(string type)
+        {
+            if (type == "date" || type == "autoDate") return true;
             return false;
         }
         public string GetAutoValue(string type,int fieldId,int registerId)
@@ -511,11 +549,20 @@ namespace Chancelerry.kanz
             int lastVersion = _common.GetLastVersionByCard(_cardId);
             CardCreateEdit cardCreateEdit = new CardCreateEdit();
             List<Fields> fieldsToCreate = _common.GetFieldsInFieldGroupOrderByLine(groupId);
+
+            int userId = 1;
+            var sesUserId = HttpContext.Current.Session["userID"];
+            if (sesUserId != null)
+            {
+                Int32.TryParse(sesUserId.ToString(), out userId);
+            }
+
             for (int i=0;i< newRowsCnt;i++)
             {
                 foreach (Fields currentField in fieldsToCreate)
                 {
-                    cardCreateEdit.CreateNewFieldValueInCard(_cardId, 1, currentField.fieldID, lastVersion + 1,
+
+                    cardCreateEdit.CreateNewFieldValueInCard(_cardId, userId, currentField.fieldID, lastVersion + 1,
                         newInstance, "", false);
                 }
                 newInstance++;
@@ -532,13 +579,20 @@ namespace Chancelerry.kanz
             int lastVersion = _common.GetLastVersionByCard(_cardId);
             CardCreateEdit cardCreateEdit = new CardCreateEdit();
             List<Fields> fieldsToDel = _common.GetFieldsInFieldGroupOrderByLine(groupId);
+
+            int userId = 1;
+            var sesUserId = HttpContext.Current.Session["userID"];
+            if (sesUserId != null)
+            {
+                Int32.TryParse(sesUserId.ToString(), out userId);
+            }
+
             foreach (Fields currentField in fieldsToDel)
             {
-                cardCreateEdit.CreateNewFieldValueInCard(_cardId, 1, currentField.fieldID, lastVersion + 1, instance, "",true);
+
+                cardCreateEdit.CreateNewFieldValueInCard(_cardId, userId, currentField.fieldID, lastVersion + 1, instance, "",true);
             }
             RefreshPage();
-
-
         }
         public List<Fields> GetFieldsByLineSortedByColumn(int line, List<Fields> sourseFieldsList)
         {
@@ -698,6 +752,8 @@ namespace Chancelerry.kanz
                     tableCell2.Controls.Add(treeViewPanel);                   
                 }
                 #endregion
+
+
                 allFieldsInCard.Add(currentFieldTextBox); //запоминаем какие textbox у нас на карте
                 tableCell2.Controls.Add(currentFieldTextBox);  
                 leftPadding += leftPaddingSpaceBetween + currentField.width;
@@ -708,6 +764,7 @@ namespace Chancelerry.kanz
             lineTable.Rows.Add(tableRow2);
             return lineTable;
         }
+       // public string 
         private List<int> GetInstancesListByGroupAndVersion(int cardId,int groupId,int version)
         {
             List<CollectedFieldsValues> collectedValues = _common.GetCollectedFieldsByCardVersionGroup(cardId, groupId, version);
@@ -825,10 +882,73 @@ namespace Chancelerry.kanz
             return cardMainPanel;
 
         }
+        public Panel GetPrintVersion(int registerId, int cardId , int version ) // версия для печати
+        {
+            Panel panelToReturn = new Panel();
+            Registers currentRegister = _common.GetRegisterById(registerId); // текущий реестр
+            List<FieldsGroups> fieldGroupsToShow = _common.GetFieldsGroupsInRegisterModelOrderByLine(currentRegister.fk_registersModel);
+            foreach (FieldsGroups currentFieldGroup in fieldGroupsToShow)
+            {
+                List<int> instancesList = GetInstancesListByGroupAndVersion(cardId, currentFieldGroup.fieldsGroupID,
+                    version);
+                foreach (int currentInstance in instancesList)
+                {
+                    bool addThisInstance = false;
+                    Table instanceTable = new Table();
+                    TableRow instanceRow = new TableRow();
+                    TableCell instanceCell = new TableCell();
+                    List<Fields> fieldToShow = _common.GetFieldsInFieldGroupOrderByLine(currentFieldGroup.fieldsGroupID);
+                    List<int> linesToShow = GetDistinctedSordetLinesFromFieldsList(fieldToShow);
+                    Table lineTable = new Table();
+                    lineTable.Width = 800;
+                    foreach (int currentFieldsline in linesToShow)
+                    {
+                        
+                        TableRow tableRow1 = new TableRow();
+                        TableRow tableRow2 = new TableRow();
+                        List<Fields> fieldsInLine = GetFieldsByLineSortedByColumn(currentFieldsline, fieldToShow);
+                        foreach (Fields currentField in fieldsInLine)
+                        {
+                            TableCell tableCell1 = new TableCell(); //заголовок
+                            Label cell1 = new Label();
+                            cell1.Text = currentField.name;
+                            tableCell1.Controls.Add(cell1);
+                            TableCell tableCell2 = new TableCell(); //само поле
+                            Label cell2 = new Label();
+                            cell2.Text = _common.GetFieldValueByCardVersionInstance(currentField.fieldID, cardId,
+                                version, currentInstance);
+                            if (cell2.Text != "")
+                            {
+                                addThisInstance = true;
+                                tableCell2.Controls.Add(cell2);
+                                tableRow1.Cells.Add(tableCell1);
+                                tableRow2.Cells.Add(tableCell2);
+                            }
+                        }
+                        lineTable.Rows.Add(tableRow1);
+                        lineTable.Rows.Add(tableRow2);
+                    }
+
+                    if (addThisInstance)
+                    {
+                        Label hrLabel = new Label();
+                        hrLabel.Text = "<hr>";
+                        panelToReturn.Controls.Add(hrLabel);
+                        instanceCell.Controls.Add(lineTable);
+                        instanceRow.Cells.Add(instanceCell);
+                        instanceTable.Rows.Add(instanceRow);
+                        panelToReturn.Controls.Add(instanceTable);
+                    }
+                }
+                
+            }
+
+            return panelToReturn;
+        }
     }
     public class CardCreateEdit
     {
-        private int _userId = 1;
+      //  private int _userId = 1;
         private ChancelerryDBDataContext chancDb = new ChancelerryDBDataContext();
         private CardCommonFunctions _common = new CardCommonFunctions();
         public int CreateNewCardInRegister(int registerId)
@@ -869,13 +989,19 @@ namespace Chancelerry.kanz
             int lastVersion = _common.GetLastVersionByCard(cardId);
             foreach (TextBox currentField in fieldsToSave)
             {
+                int userId = 1;
+                var sesUserId = HttpContext.Current.Session["userID"];
+                if (sesUserId != null)
+                {
+                    Int32.TryParse(sesUserId.ToString(), out userId);
+                }
 
                 int currentFieldId = Convert.ToInt32(currentField.Attributes["_myFieldId"]);
                 int currentCollectedFieldId = Convert.ToInt32(currentField.Attributes["_myCollectedFieldId"]);
                 int currentCollectedFieldInstance = Convert.ToInt32(currentField.Attributes["_myCollectedFieldInstance"]);
                 if (currentCollectedFieldId == 0) // нет предыдушего значения
                 {
-                    CreateNewFieldValueInCard(cardId, _userId, currentFieldId, lastVersion + 1,
+                    CreateNewFieldValueInCard(cardId, userId, currentFieldId, lastVersion + 1,
                         currentCollectedFieldInstance, currentField.Text,false);
                 }
                 else
@@ -884,14 +1010,11 @@ namespace Chancelerry.kanz
                         currentCollectedFieldInstance);
                     if (value != currentField.Text)
                     {
-                        CreateNewFieldValueInCard(cardId, _userId, currentFieldId, lastVersion + 1,
+                        CreateNewFieldValueInCard(cardId, userId, currentFieldId, lastVersion + 1,
                             currentCollectedFieldInstance, currentField.Text, false);
                     }
                 }
             }
-        }
-
-
-       
+        }       
     }
 }

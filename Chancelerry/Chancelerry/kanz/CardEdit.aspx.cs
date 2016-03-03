@@ -54,8 +54,10 @@ namespace Chancelerry.kanz
             Session["searchList"] = new List<TableActions.SearchValues>(); // сессия поиска 
             var canEditSession =   Session["userID"];
             cardMainDiv.Controls.Add(cardCreateView.CreateViewByRegisterAndCard(_registerId, _cardId, _version, !_canEdit));
+           // cardPrintDiv.Controls.Add(cardCreateView.GetPrintVersion(_registerId,_cardId, _version));
             if (!_canEdit)
             {
+                LinkButton1.Visible = true;
                 CreateButton.Visible = false;
             }
             createdFields = cardCreateView.allFieldsInCard;
@@ -67,6 +69,11 @@ namespace Chancelerry.kanz
             CardCreateEdit cardCreateEdit = new CardCreateEdit();
             cardCreateEdit.SaveCard(_registerId, _cardId, createdFields);
             Response.Redirect("RegisterView.aspx");
+        }
+
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Print.aspx");
         }
     }
 }

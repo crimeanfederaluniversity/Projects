@@ -221,6 +221,7 @@
     <Content Include="BlankPage.Master" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="kanz\Admin.aspx" />
+    <Content Include="kanz\calendar_ru.js" />
     <Content Include="kanz\CardEdit.aspx" />
     <Content Include="kanz\ChooseDictionary.aspx" />
     <Content Include="kanz\Dashboard.aspx" />
@@ -231,6 +232,7 @@
     <Content Include="kanz\icons\saveButtonIcon.jpg" />
     <Content Include="kanz\icons\treeButtonIcon.jpg" />
     <Content Include="kanz\icons\viewButtonIcon.png" />
+    <Content Include="kanz\Print.aspx" />
     <Content Include="kanz\RegisterView.aspx" />
     <Content Include="kanz\TableSettings.aspx" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
@@ -458,6 +460,13 @@
     </Compile>
     <Compile Include="kanz\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="kanz\Print.aspx.cs">
+      <DependentUpon>Print.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="kanz\Print.aspx.designer.cs">
+      <DependentUpon>Print.aspx</DependentUpon>
     </Compile>
     <Compile Include="kanz\RegisterView.aspx.cs">
       <DependentUpon>RegisterView.aspx</DependentUpon>
