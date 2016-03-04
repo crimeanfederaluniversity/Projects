@@ -5,4 +5,8 @@
     <br />
     <br />
     <asp:Button ID="Button2" runat="server" Height="22px" OnClick="Button2_Click" Text="TryAddIncoming" Width="232px"  />
+    <br />
+    <br />
+    <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="makeCardIds" Width="230px" />
+    <br />
 </asp:Content>

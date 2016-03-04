@@ -316,5 +316,44 @@ namespace Chancelerry.kanz
 
             }
         }
+
+
+        public int GetFieldIdForCard(CollectedCards card)
+        {
+            ChancelerryDBDataContext chancDB = new ChancelerryDBDataContext();
+            int valueToreturn = 0;
+            Fields mainFieldInRegister = (from a in chancDB.Fields
+                join b in chancDB.FieldsGroups
+                    on a.fk_fieldsGroup equals b.fieldsGroupID
+                join c in chancDB.RegistersModels
+                    on b.fk_registerModel equals c.registerModelID
+                join d in chancDB.Registers
+                    on c.registerModelID equals d.fk_registersModel
+                where d.registerID == card.fk_register
+                      && (a.type == "autoIncrementReadonly" || a.type == "autoIncrement")
+                select a).FirstOrDefault();
+            if (mainFieldInRegister != null)
+            {
+                CollectedFieldsValues collectedId = (from a in chancDB.CollectedFieldsValues
+                    where a.fk_field == mainFieldInRegister.fieldID
+                          && a.fk_collectedCard == card.collectedCardID
+                    select a).OrderByDescending(mc => mc.version).FirstOrDefault();
+                if (collectedId != null)
+                {
+                    Int32.TryParse(collectedId.valueText, out valueToreturn);
+                }
+            }
+            return valueToreturn;
+        }
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            ChancelerryDBDataContext chancDB = new ChancelerryDBDataContext();
+            List<CollectedCards> collectedCards = (from a in chancDB.CollectedCards select a).ToList();
+            foreach (CollectedCards currentCard in collectedCards)
+            {
+                currentCard.mainFieldId = GetFieldIdForCard(currentCard);
+            }
+            chancDB.SubmitChanges();
+        }
     }
 }

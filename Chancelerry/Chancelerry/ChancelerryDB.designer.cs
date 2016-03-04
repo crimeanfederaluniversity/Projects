@@ -30,9 +30,6 @@ namespace Chancelerry
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertCollectedCards(CollectedCards instance);
-    partial void UpdateCollectedCards(CollectedCards instance);
-    partial void DeleteCollectedCards(CollectedCards instance);
     partial void InsertUsers(Users instance);
     partial void UpdateUsers(Users instance);
     partial void DeleteUsers(Users instance);
@@ -69,6 +66,9 @@ namespace Chancelerry
     partial void InsertStruct(Struct instance);
     partial void UpdateStruct(Struct instance);
     partial void DeleteStruct(Struct instance);
+    partial void InsertCollectedCards(CollectedCards instance);
+    partial void UpdateCollectedCards(CollectedCards instance);
+    partial void DeleteCollectedCards(CollectedCards instance);
     #endregion
 		
 		public ChancelerryDBDataContext() : 
@@ -99,14 +99,6 @@ namespace Chancelerry
 				base(connection, mappingSource)
 		{
 			OnCreated();
-		}
-		
-		public System.Data.Linq.Table<CollectedCards> CollectedCards
-		{
-			get
-			{
-				return this.GetTable<CollectedCards>();
-			}
 		}
 		
 		public System.Data.Linq.Table<Users> Users
@@ -204,184 +196,13 @@ namespace Chancelerry
 				return this.GetTable<Struct>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CollectedCards")]
-	public partial class CollectedCards : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _collectedCardID;
-		
-		private bool _active;
-		
-		private int _fk_register;
-		
-		private EntitySet<CollectedFieldsValues> _CollectedFieldsValues;
-		
-		private EntityRef<Registers> _Registers;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OncollectedCardIDChanging(int value);
-    partial void OncollectedCardIDChanged();
-    partial void OnactiveChanging(bool value);
-    partial void OnactiveChanged();
-    partial void Onfk_registerChanging(int value);
-    partial void Onfk_registerChanged();
-    #endregion
-		
-		public CollectedCards()
-		{
-			this._CollectedFieldsValues = new EntitySet<CollectedFieldsValues>(new Action<CollectedFieldsValues>(this.attach_CollectedFieldsValues), new Action<CollectedFieldsValues>(this.detach_CollectedFieldsValues));
-			this._Registers = default(EntityRef<Registers>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_collectedCardID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int collectedCardID
+		public System.Data.Linq.Table<CollectedCards> CollectedCards
 		{
 			get
 			{
-				return this._collectedCardID;
+				return this.GetTable<CollectedCards>();
 			}
-			set
-			{
-				if ((this._collectedCardID != value))
-				{
-					this.OncollectedCardIDChanging(value);
-					this.SendPropertyChanging();
-					this._collectedCardID = value;
-					this.SendPropertyChanged("collectedCardID");
-					this.OncollectedCardIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
-		public bool active
-		{
-			get
-			{
-				return this._active;
-			}
-			set
-			{
-				if ((this._active != value))
-				{
-					this.OnactiveChanging(value);
-					this.SendPropertyChanging();
-					this._active = value;
-					this.SendPropertyChanged("active");
-					this.OnactiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_register", DbType="Int NOT NULL")]
-		public int fk_register
-		{
-			get
-			{
-				return this._fk_register;
-			}
-			set
-			{
-				if ((this._fk_register != value))
-				{
-					if (this._Registers.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_registerChanging(value);
-					this.SendPropertyChanging();
-					this._fk_register = value;
-					this.SendPropertyChanged("fk_register");
-					this.Onfk_registerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CollectedCards_CollectedFieldsValues", Storage="_CollectedFieldsValues", ThisKey="collectedCardID", OtherKey="fk_collectedCard")]
-		public EntitySet<CollectedFieldsValues> CollectedFieldsValues
-		{
-			get
-			{
-				return this._CollectedFieldsValues;
-			}
-			set
-			{
-				this._CollectedFieldsValues.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Registers_CollectedCards", Storage="_Registers", ThisKey="fk_register", OtherKey="registerID", IsForeignKey=true)]
-		public Registers Registers
-		{
-			get
-			{
-				return this._Registers.Entity;
-			}
-			set
-			{
-				Registers previousValue = this._Registers.Entity;
-				if (((previousValue != value) 
-							|| (this._Registers.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Registers.Entity = null;
-						previousValue.CollectedCards.Remove(this);
-					}
-					this._Registers.Entity = value;
-					if ((value != null))
-					{
-						value.CollectedCards.Add(this);
-						this._fk_register = value.registerID;
-					}
-					else
-					{
-						this._fk_register = default(int);
-					}
-					this.SendPropertyChanged("Registers");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_CollectedFieldsValues(CollectedFieldsValues entity)
-		{
-			this.SendPropertyChanging();
-			entity.CollectedCards = this;
-		}
-		
-		private void detach_CollectedFieldsValues(CollectedFieldsValues entity)
-		{
-			this.SendPropertyChanging();
-			entity.CollectedCards = null;
 		}
 	}
 	
@@ -707,9 +528,9 @@ namespace Chancelerry
 		
 		private bool _isDeleted;
 		
-		private EntityRef<CollectedCards> _CollectedCards;
-		
 		private EntityRef<Users> _Users;
+		
+		private EntityRef<CollectedCards> _CollectedCards;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -745,8 +566,8 @@ namespace Chancelerry
 		
 		public CollectedFieldsValues()
 		{
-			this._CollectedCards = default(EntityRef<CollectedCards>);
 			this._Users = default(EntityRef<Users>);
+			this._CollectedCards = default(EntityRef<CollectedCards>);
 			OnCreated();
 		}
 		
@@ -1018,40 +839,6 @@ namespace Chancelerry
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CollectedCards_CollectedFieldsValues", Storage="_CollectedCards", ThisKey="fk_collectedCard", OtherKey="collectedCardID", IsForeignKey=true)]
-		public CollectedCards CollectedCards
-		{
-			get
-			{
-				return this._CollectedCards.Entity;
-			}
-			set
-			{
-				CollectedCards previousValue = this._CollectedCards.Entity;
-				if (((previousValue != value) 
-							|| (this._CollectedCards.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._CollectedCards.Entity = null;
-						previousValue.CollectedFieldsValues.Remove(this);
-					}
-					this._CollectedCards.Entity = value;
-					if ((value != null))
-					{
-						value.CollectedFieldsValues.Add(this);
-						this._fk_collectedCard = value.collectedCardID;
-					}
-					else
-					{
-						this._fk_collectedCard = default(int);
-					}
-					this.SendPropertyChanged("CollectedCards");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_CollectedFieldsValues", Storage="_Users", ThisKey="fk_user", OtherKey="userID", IsForeignKey=true)]
 		public Users Users
 		{
@@ -1082,6 +869,40 @@ namespace Chancelerry
 						this._fk_user = default(int);
 					}
 					this.SendPropertyChanged("Users");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CollectedCards_CollectedFieldsValues", Storage="_CollectedCards", ThisKey="fk_collectedCard", OtherKey="collectedCardID", IsForeignKey=true)]
+		public CollectedCards CollectedCards
+		{
+			get
+			{
+				return this._CollectedCards.Entity;
+			}
+			set
+			{
+				CollectedCards previousValue = this._CollectedCards.Entity;
+				if (((previousValue != value) 
+							|| (this._CollectedCards.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CollectedCards.Entity = null;
+						previousValue.CollectedFieldsValues.Remove(this);
+					}
+					this._CollectedCards.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedFieldsValues.Add(this);
+						this._fk_collectedCard = value.collectedCardID;
+					}
+					else
+					{
+						this._fk_collectedCard = default(int);
+					}
+					this.SendPropertyChanged("CollectedCards");
 				}
 			}
 		}
@@ -2424,9 +2245,9 @@ namespace Chancelerry
 		
 		private int _fk_registersModel;
 		
-		private EntitySet<CollectedCards> _CollectedCards;
-		
 		private EntitySet<RegistersUsersMap> _RegistersUsersMap;
+		
+		private EntitySet<CollectedCards> _CollectedCards;
 		
 		private EntityRef<RegistersModels> _RegistersModels;
 		
@@ -2446,8 +2267,8 @@ namespace Chancelerry
 		
 		public Registers()
 		{
-			this._CollectedCards = new EntitySet<CollectedCards>(new Action<CollectedCards>(this.attach_CollectedCards), new Action<CollectedCards>(this.detach_CollectedCards));
 			this._RegistersUsersMap = new EntitySet<RegistersUsersMap>(new Action<RegistersUsersMap>(this.attach_RegistersUsersMap), new Action<RegistersUsersMap>(this.detach_RegistersUsersMap));
+			this._CollectedCards = new EntitySet<CollectedCards>(new Action<CollectedCards>(this.attach_CollectedCards), new Action<CollectedCards>(this.detach_CollectedCards));
 			this._RegistersModels = default(EntityRef<RegistersModels>);
 			OnCreated();
 		}
@@ -2536,19 +2357,6 @@ namespace Chancelerry
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Registers_CollectedCards", Storage="_CollectedCards", ThisKey="registerID", OtherKey="fk_register")]
-		public EntitySet<CollectedCards> CollectedCards
-		{
-			get
-			{
-				return this._CollectedCards;
-			}
-			set
-			{
-				this._CollectedCards.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Registers_RegistersUsersMap", Storage="_RegistersUsersMap", ThisKey="registerID", OtherKey="fk_register")]
 		public EntitySet<RegistersUsersMap> RegistersUsersMap
 		{
@@ -2559,6 +2367,19 @@ namespace Chancelerry
 			set
 			{
 				this._RegistersUsersMap.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Registers_CollectedCards", Storage="_CollectedCards", ThisKey="registerID", OtherKey="fk_register")]
+		public EntitySet<CollectedCards> CollectedCards
+		{
+			get
+			{
+				return this._CollectedCards;
+			}
+			set
+			{
+				this._CollectedCards.Assign(value);
 			}
 		}
 		
@@ -2616,18 +2437,6 @@ namespace Chancelerry
 			}
 		}
 		
-		private void attach_CollectedCards(CollectedCards entity)
-		{
-			this.SendPropertyChanging();
-			entity.Registers = this;
-		}
-		
-		private void detach_CollectedCards(CollectedCards entity)
-		{
-			this.SendPropertyChanging();
-			entity.Registers = null;
-		}
-		
 		private void attach_RegistersUsersMap(RegistersUsersMap entity)
 		{
 			this.SendPropertyChanging();
@@ -2635,6 +2444,18 @@ namespace Chancelerry
 		}
 		
 		private void detach_RegistersUsersMap(RegistersUsersMap entity)
+		{
+			this.SendPropertyChanging();
+			entity.Registers = null;
+		}
+		
+		private void attach_CollectedCards(CollectedCards entity)
+		{
+			this.SendPropertyChanging();
+			entity.Registers = this;
+		}
+		
+		private void detach_CollectedCards(CollectedCards entity)
 		{
 			this.SendPropertyChanging();
 			entity.Registers = null;
@@ -3515,6 +3336,209 @@ namespace Chancelerry
 		{
 			this.SendPropertyChanging();
 			entity.Struct1 = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CollectedCards")]
+	public partial class CollectedCards : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _collectedCardID;
+		
+		private bool _active;
+		
+		private int _fk_register;
+		
+		private System.Nullable<int> _mainFieldId;
+		
+		private EntitySet<CollectedFieldsValues> _CollectedFieldsValues;
+		
+		private EntityRef<Registers> _Registers;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OncollectedCardIDChanging(int value);
+    partial void OncollectedCardIDChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void Onfk_registerChanging(int value);
+    partial void Onfk_registerChanged();
+    partial void OnmainFieldIdChanging(System.Nullable<int> value);
+    partial void OnmainFieldIdChanged();
+    #endregion
+		
+		public CollectedCards()
+		{
+			this._CollectedFieldsValues = new EntitySet<CollectedFieldsValues>(new Action<CollectedFieldsValues>(this.attach_CollectedFieldsValues), new Action<CollectedFieldsValues>(this.detach_CollectedFieldsValues));
+			this._Registers = default(EntityRef<Registers>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_collectedCardID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int collectedCardID
+		{
+			get
+			{
+				return this._collectedCardID;
+			}
+			set
+			{
+				if ((this._collectedCardID != value))
+				{
+					this.OncollectedCardIDChanging(value);
+					this.SendPropertyChanging();
+					this._collectedCardID = value;
+					this.SendPropertyChanged("collectedCardID");
+					this.OncollectedCardIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_register", DbType="Int NOT NULL")]
+		public int fk_register
+		{
+			get
+			{
+				return this._fk_register;
+			}
+			set
+			{
+				if ((this._fk_register != value))
+				{
+					if (this._Registers.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_registerChanging(value);
+					this.SendPropertyChanging();
+					this._fk_register = value;
+					this.SendPropertyChanged("fk_register");
+					this.Onfk_registerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mainFieldId", DbType="Int")]
+		public System.Nullable<int> mainFieldId
+		{
+			get
+			{
+				return this._mainFieldId;
+			}
+			set
+			{
+				if ((this._mainFieldId != value))
+				{
+					this.OnmainFieldIdChanging(value);
+					this.SendPropertyChanging();
+					this._mainFieldId = value;
+					this.SendPropertyChanged("mainFieldId");
+					this.OnmainFieldIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CollectedCards_CollectedFieldsValues", Storage="_CollectedFieldsValues", ThisKey="collectedCardID", OtherKey="fk_collectedCard")]
+		public EntitySet<CollectedFieldsValues> CollectedFieldsValues
+		{
+			get
+			{
+				return this._CollectedFieldsValues;
+			}
+			set
+			{
+				this._CollectedFieldsValues.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Registers_CollectedCards", Storage="_Registers", ThisKey="fk_register", OtherKey="registerID", IsForeignKey=true)]
+		public Registers Registers
+		{
+			get
+			{
+				return this._Registers.Entity;
+			}
+			set
+			{
+				Registers previousValue = this._Registers.Entity;
+				if (((previousValue != value) 
+							|| (this._Registers.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Registers.Entity = null;
+						previousValue.CollectedCards.Remove(this);
+					}
+					this._Registers.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedCards.Add(this);
+						this._fk_register = value.registerID;
+					}
+					else
+					{
+						this._fk_register = default(int);
+					}
+					this.SendPropertyChanged("Registers");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_CollectedFieldsValues(CollectedFieldsValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.CollectedCards = this;
+		}
+		
+		private void detach_CollectedFieldsValues(CollectedFieldsValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.CollectedCards = null;
 		}
 	}
 }

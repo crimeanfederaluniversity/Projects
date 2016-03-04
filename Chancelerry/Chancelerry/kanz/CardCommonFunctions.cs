@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Providers.Entities;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using Chancelerry;
 using Chancelerry.kanz;
@@ -209,9 +211,18 @@ namespace Chancelerry.kanz
             }
             return row;
         }
-        public string FastSearch(Dictionary<int, string> searchList, int registerId, int userId, Table vTable, int lineFrom, int lineTo)
+        public CollectedCards GetCollevtedCardByCollevtedField(int collectedFieldId)
         {
-            List<int> cardsToShow = new List<int>(); // сюда будем складывать карточки которые нужно показать
+            CollectedCards cardToReturn = (from a in chancDb.CollectedCards
+                join b in chancDb.CollectedFieldsValues
+                    on a.collectedCardID equals b.fk_collectedCard
+                where b.collectedFieldValueID == collectedFieldId
+                select a).FirstOrDefault();
+            return cardToReturn;
+        }
+        public  List<int> GetCardsToShow(Dictionary<int, string> searchList,int registerId)
+        {
+            List<int> cardsToShow = new List<int>();
             if (searchList != null) //если фильтры есть
             {
                 bool isFirst = true;
@@ -219,13 +230,16 @@ namespace Chancelerry.kanz
                 {
                     int fieldId = currentKey;
                     string fieldValue = "";
-                    searchList.TryGetValue(fieldId, out fieldValue);  //достаем айдишник нашего филда
+                    searchList.TryGetValue(fieldId, out fieldValue); //достаем айдишник нашего филда
                     List<int> cardsWithValue = (from a in chancDb.CollectedFieldsValues
                                                 where a.active == true && a.fk_field == fieldId && a.valueText.Contains(fieldValue)
                                                 join b in chancDb.CollectedCards on a.fk_collectedCard equals b.collectedCardID
-                                                
+
                                                 where b.active == true && b.fk_register == registerId
-                                                select a.fk_collectedCard).Distinct().ToList(); // находим все карточки которые соответсвтуют
+                                                select b).Distinct()
+                        .OrderByDescending(uc => uc.mainFieldId)
+                        .Select(vk => vk.collectedCardID)
+                        .ToList(); // находим все карточки которые соответсвтуют
                     List<int> tmpList;
                     if (isFirst)
                     {
@@ -233,7 +247,8 @@ namespace Chancelerry.kanz
                     }
                     else
                     {
-                        tmpList = (from a in cardsWithValue join b in cardsToShow on a equals b select a).Distinct().ToList();
+                        tmpList =
+                            (from a in cardsWithValue join b in cardsToShow on a equals b select a).Distinct().ToList();
                     }
                     isFirst = false;
                     cardsToShow = tmpList;
@@ -243,9 +258,18 @@ namespace Chancelerry.kanz
             {
                 cardsToShow = (from a in chancDb.CollectedCards
                                where a.active == true
-                                && a.fk_register == registerId
-                               select a.collectedCardID).Distinct().ToList();
+                                     && a.fk_register == registerId
+                                     && a.mainFieldId != null
+                               /////////////// ПЛОХО
+                               select a).OrderByDescending(uc => (int) uc.mainFieldId).Select(vk => vk.collectedCardID).ToList();
             }
+            return cardsToShow;
+        } 
+        public string FastSearch(Dictionary<int, string> searchList, int registerId, int userId, Table vTable, int lineFrom, int lineTo)
+        {
+            List<int> cardsToShow = GetCardsToShow(searchList, registerId);
+
+            /*
             int idFieldId = (from a in chancDb.Fields
                              join b in chancDb.FieldsGroups
                              on a.fk_fieldsGroup equals b.fieldsGroupID
@@ -254,7 +278,7 @@ namespace Chancelerry.kanz
                              join d in chancDb.Registers
                              on c.registerModelID equals d.fk_registersModel
                              where d.registerID == registerId
-                             && a.type == "autoIncrement"
+                             && ( a.type == "autoIncrement" || a.type == "autoIncrementReadonly")
                              select a.fieldID).FirstOrDefault();
 
             
@@ -263,41 +287,48 @@ namespace Chancelerry.kanz
                                                             // where cardsToShow.Contains(a.fk_collectedCard)
                                                         where a.fk_field == idFieldId
                                                         select a).ToList();//ToList();
-
+*/
             /*List<CollectedFieldsValues> collectedIds2 = (from a in chancDb.CollectedFieldsValues
                                                          where cardsToShow.Contains(a.fk_collectedCard)
                                                         where a.fk_field == idFieldId
                                                         select a).ToList();*/
+            /*
+                        List<CollectedFieldsValues> collectedIds =
+                            (from a in collectedIdstmp where cardsToShow.Contains(a.fk_collectedCard) select a).ToList();
 
-            List<CollectedFieldsValues> collectedIds =
-                (from a in collectedIdstmp where cardsToShow.Contains(a.fk_collectedCard) select a).ToList();
+                        Dictionary<int, int> toSort = new Dictionary<int, int>();
+                        List<int> sortedCardsToShow = new List<int>();
 
-            Dictionary<int, int> toSort = new Dictionary<int, int>();
-            List<int> sortedCardsToShow = new List<int>();
-            foreach (int current in cardsToShow)
-            {
-                int tmp = 0;
-                var collectedValue =
-                    (from a in collectedIds where a.fk_collectedCard == current select a).OrderByDescending(
-                        mc => mc.version).FirstOrDefault();
-                if (collectedValue != null)
-                {
-                    Int32.TryParse(collectedValue.valueText, out tmp);
-                }
-                toSort.Add(current, tmp);
-            }
-            sortedCardsToShow = (from a in toSort select a).OrderByDescending(mc => mc.Value).Select(mc => mc.Key).ToList();
-            List<int> sortedCutedCardsToShow = new List<int>();
-            
-                if (lineTo > sortedCardsToShow.Count())
-                { 
-                lineTo = sortedCardsToShow.Count();
-                }
-            if (sortedCardsToShow.Count > 0)
-                for (int i = lineFrom;i< lineTo;i++)
-            {
-                sortedCutedCardsToShow.Add(sortedCardsToShow[i]);
-            }
+                        foreach (int current in cardsToShow)
+                        {
+                            int tmp = 0;
+                            var collectedValue =
+                                (from a in collectedIds where a.fk_collectedCard == current select a).OrderByDescending(
+                                    mc => mc.version).FirstOrDefault();
+                            if (collectedValue != null)
+                            {
+                                Int32.TryParse(collectedValue.valueText, out tmp);
+                            }
+                            toSort.Add(current, tmp);
+                        }
+                        sortedCardsToShow = (from a in toSort select a).OrderByDescending(mc => mc.Value).Select(mc => mc.Key).ToList();
+                        */
+            List<int> sortedCardsToShow = cardsToShow;
+                        List<int> sortedCutedCardsToShow = new List<int>();
+
+                            if (lineTo > sortedCardsToShow.Count())
+                            { 
+                            lineTo = sortedCardsToShow.Count();
+                            }
+                        if (sortedCardsToShow.Count > 0)
+                            for (int i = lineFrom;i< lineTo;i++)
+                        {
+                            sortedCutedCardsToShow.Add(sortedCardsToShow[i]);
+                        }
+                        
+
+           // List<int> sortedCutedCardsToShow = new List<int>();
+
             Dictionary<int, string> allFields = (from a in chancDb.RegistersUsersMap
                                                  join b in chancDb.RegistersView
                                                  on a.registersUsersMapID equals b.fk_registersUsersMap
@@ -355,10 +386,12 @@ namespace Chancelerry.kanz
         private CardCommonFunctions _common = new CardCommonFunctions();
         public RangeValidator GetRangeValidator(string rangeValidatorId, string fieldToValidateId,string type)
         {
+            
             RangeValidator fieldRangeValidator = new RangeValidator();
             fieldRangeValidator.ID = rangeValidatorId;
             fieldRangeValidator.ControlToValidate = fieldToValidateId;
             fieldRangeValidator.ForeColor = Color.Red;
+            fieldRangeValidator.Enabled = false;
             switch (type)
             {
                 case "bit": //bit
@@ -367,6 +400,7 @@ namespace Chancelerry.kanz
                         fieldRangeValidator.MaximumValue = 1.ToString();
                         fieldRangeValidator.Type = ValidationDataType.Integer;
                         fieldRangeValidator.ErrorMessage = "!";
+                        fieldRangeValidator.Enabled = true;
                         break;
                     }
                 case "int": //int
@@ -375,6 +409,7 @@ namespace Chancelerry.kanz
                         fieldRangeValidator.MaximumValue = int.MaxValue.ToString();
                         fieldRangeValidator.Type = ValidationDataType.Integer;
                         fieldRangeValidator.ErrorMessage = "!";
+                        fieldRangeValidator.Enabled = true;
                         break;
                     }
                 case "float": //double
@@ -383,6 +418,7 @@ namespace Chancelerry.kanz
                         //fieldRangeValidator.MaximumValue = double.MaxValue.ToString();
                         fieldRangeValidator.Type = ValidationDataType.Double;
                         fieldRangeValidator.ErrorMessage = "!";
+                        fieldRangeValidator.Enabled = true;
                         break;
                     }
                 case "date": //date
@@ -391,6 +427,7 @@ namespace Chancelerry.kanz
                     fieldRangeValidator.MaximumValue = "1/1/2090";
                         fieldRangeValidator.Type = ValidationDataType.Date;
                         fieldRangeValidator.ErrorMessage = "!";
+                        fieldRangeValidator.Enabled = true;
                         break;
                     }
                 case "singleLineText": //text
@@ -400,6 +437,7 @@ namespace Chancelerry.kanz
                         //fieldRangeValidator.ErrorMessage = "Только текст";
                         fieldRangeValidator.Enabled = false;
                         fieldRangeValidator.Type = ValidationDataType.String;
+                        //fieldRangeValidator.Enabled = true;
                         break;
                     }
                 case "multiLineText": //text
@@ -409,6 +447,7 @@ namespace Chancelerry.kanz
                         //fieldRangeValidator.ErrorMessage = "Только текст";
                         fieldRangeValidator.Enabled = false;
                         fieldRangeValidator.Type = ValidationDataType.String;
+                        //fieldRangeValidator.Enabled = true;
                         break;
                     }
                 case "autoIncrement": //int
@@ -417,6 +456,16 @@ namespace Chancelerry.kanz
                         fieldRangeValidator.MaximumValue = int.MaxValue.ToString();
                         fieldRangeValidator.Type = ValidationDataType.Integer;
                         fieldRangeValidator.ErrorMessage = "!";
+                        fieldRangeValidator.Enabled = true;
+                        break;
+                    }
+                case "autoIncrementReadonly": //int
+                    {
+                        fieldRangeValidator.MinimumValue = int.MinValue.ToString();
+                        fieldRangeValidator.MaximumValue = int.MaxValue.ToString();
+                        fieldRangeValidator.Type = ValidationDataType.Integer;
+                        fieldRangeValidator.ErrorMessage = "!";
+                        fieldRangeValidator.Enabled = true;
                         break;
                     }
                 case "autoDate": //date
@@ -425,11 +474,12 @@ namespace Chancelerry.kanz
                         fieldRangeValidator.MaximumValue = "1/1/2090";
                         fieldRangeValidator.Type = ValidationDataType.Date;
                         fieldRangeValidator.ErrorMessage = "!";
+                        fieldRangeValidator.Enabled = true;
                         break;
                     }
                 default:
                     {
-                        fieldRangeValidator.Enabled = false;
+                        
                         break;
                     }
             }
@@ -478,6 +528,15 @@ namespace Chancelerry.kanz
                 case "autoIncrement": //Автоинкремент
                     {
                         //textBoxToReturn.TextMode = TextBoxMode.SingleLine;
+                        textBoxToReturn.Attributes.Add("iamfieldid", "1");
+                        break;
+                    }
+                case "autoIncrementReadonly": //Автоинкремент
+                {
+
+                        textBoxToReturn.Attributes.Add("iamfieldid","1");
+                    textBoxToReturn.Enabled = true;
+                        //textBoxToReturn.BackColor = Color.Aqua;
                         break;
                     }
                 case "autoDate": // АвтоДата
@@ -488,13 +547,18 @@ namespace Chancelerry.kanz
                         //textBoxToReturn.TextMode = TextBoxMode.Date;
                         break;
                     }
+                case "fileAttach": // АвтоДата
+                {
+                    textBoxToReturn.Visible = false;
+                        break;
+                    }
 
             }
             return textBoxToReturn;
         }
         public bool IsFieldAutoFill(string type)
         {
-            if (type == "autoIncrement" || type == "autoDate") return true;
+            if (type == "autoIncrement" || type == "autoDate" || type == "autoIncrementReadonly") return true;
             return false;
         }
         public bool IsFieldDate(string type)
@@ -513,6 +577,11 @@ namespace Chancelerry.kanz
                 int tmp = _common.GetMaxValueByFieldRegister(fieldId, registerId);
                 return (tmp + 1).ToString();
             }
+            if (type == "autoIncrementReadonly")
+            {
+                int tmp = _common.GetMaxValueByFieldRegister(fieldId, registerId);
+                return (tmp + 1).ToString();
+            }
             return "";
         }
     }
@@ -527,6 +596,7 @@ namespace Chancelerry.kanz
         private int _version;
         private int textBoxesIdsCounter = 0;
         public List<TextBox> allFieldsInCard;
+        public List<FileUpload> allFileUploadsInCard; 
         public Dictionary<string, TextBox> addCntTextBoxes = new Dictionary<string, TextBox>();
         private void RefreshPage()
         {
@@ -534,7 +604,7 @@ namespace Chancelerry.kanz
         }
         private void AddInstanceButtonClick(object sender, EventArgs e)
         {
-            _cardId = _cardCreateEdit.SaveCard(_registerId, _cardId, allFieldsInCard);
+            _cardId = _cardCreateEdit.SaveCard(_registerId, _cardId, allFieldsInCard,allFileUploadsInCard);
             HttpContext.Current.Session["cardID"]= _cardId;
             ImageButton thisButton = (ImageButton) sender;
             string commandArgument = thisButton.CommandArgument;
@@ -605,6 +675,24 @@ namespace Chancelerry.kanz
         {
             return (from a in sourseFieldsList select a.line).Distinct().OrderBy(li => li).ToList();
         }
+        public void OpenDocument(object sender, EventArgs e)
+        {
+            LinkButton thisButton = (LinkButton)sender;
+            int currentFieldId = Convert.ToInt32(thisButton.Attributes["_myFieldId"]);
+            int currentCollectedFieldId = Convert.ToInt32(thisButton.Attributes["_myCollectedFieldId"]);
+            int currentCollectedFieldInstance = Convert.ToInt32(thisButton.Attributes["_myCollectedFieldInstance"]);
+            CollectedCards card = _common.GetCollevtedCardByCollevtedField(currentCollectedFieldId);
+            string path = HttpContext.Current.Server.MapPath("~/kanz/attachedDocs/" + card.collectedCardID + "/" + currentCollectedFieldId + "/"+ thisButton.Text);
+           // HttpContext.Current.Response.Redirect(path);
+            System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
+            response.ClearContent();
+            response.Clear();
+            response.ContentType = "text/plain";
+            response.AddHeader("Content-Disposition", "attachment; filename=" + thisButton.Text + ";");
+            response.TransmitFile(path);
+            response.Flush();
+            response.End();
+        }
         public Table CreateLineTable(List<Fields> fieldsInLine,int leftPaddingSpaceBetween,int cardId, int version,int instance, bool _readonly)
         {
             int leftPadding = leftPaddingSpaceBetween;
@@ -617,145 +705,201 @@ namespace Chancelerry.kanz
                 TableCell tableCell1 = new TableCell(); //заголовок
                 TableCell tableCell2 = new TableCell(); //само поле
                 int fieldId = ++textBoxesIdsCounter;                                
-                //создадим само поле
-                TextBox currentFieldTextBox = _dataTypes.GetTextBox(currentField.type);
-                currentFieldTextBox.ReadOnly = _readonly;
-                currentFieldTextBox.Style["Height"] = currentField.height + "px";
-                currentFieldTextBox.Style["Width"] = currentField.width + "px";
-                currentFieldTextBox.Style["max-width"] = currentField.width + "px";
-                currentFieldTextBox.Attributes.Add("_myFieldId", currentField.fieldID.ToString());
-                currentFieldTextBox.Attributes.Add("_myCollectedFieldInstance", instance.ToString());
-                currentFieldTextBox.Attributes.Add("_myCollectedFieldId", _common.GetCollectedValueIdByCardVersionInstance(currentField.fieldID, cardId, version, instance).ToString());
-                currentFieldTextBox.ID = "TextBox" + fieldId;
-                //создаем название поля и mandatory валидатор
-                Label currentFieldTitle = new Label();
-                currentFieldTitle.ID = "Title" + fieldId;
-                #region mandatory
-                if (currentField.mandatory)
-                {
-                    currentFieldTitle.Text = currentField.name + "*";
-                    RequiredFieldValidator currentFieldRequiredFieldValidator = new RequiredFieldValidator();
-                    currentFieldRequiredFieldValidator.ID = "RequiredValidator" + fieldId;
-                    currentFieldRequiredFieldValidator.ControlToValidate = currentFieldTextBox.ID;
-                    currentFieldRequiredFieldValidator.ErrorMessage = "!";
-                    currentFieldRequiredFieldValidator.ForeColor = Color.Red;
-                    tableCell1.Controls.Add(currentFieldTitle);
-                    tableCell1.Controls.Add(currentFieldRequiredFieldValidator);                    
-                }
-                else
-                {
+               
+                if (currentField.type == "fileAttach") //если файлаплоад то текстовое поле вообще не нужно
+                {               
+                    LinkButton linkToFile = new LinkButton();
+                    linkToFile.Click += OpenDocument;
+                    linkToFile.Attributes.Add("_myFieldId", currentField.fieldID.ToString());
+                    linkToFile.Attributes.Add("_myCollectedFieldInstance", instance.ToString());
+                    linkToFile.Attributes.Add("_myCollectedFieldId", _common.GetCollectedValueIdByCardVersionInstance(currentField.fieldID, cardId, version, instance).ToString());
+
+                    FileUpload fileUpload = new FileUpload();
+                    fileUpload.Style["Height"] = currentField.height + "px";
+                    fileUpload.Style["Width"] = currentField.width + "px";
+                    fileUpload.Style["max-width"] = currentField.width + "px";
+                    fileUpload.Attributes.Add("_myFieldId", currentField.fieldID.ToString());
+                    fileUpload.Attributes.Add("_myCollectedFieldInstance", instance.ToString());
+                    fileUpload.Attributes.Add("_myCollectedFieldId", _common.GetCollectedValueIdByCardVersionInstance(currentField.fieldID, cardId, version, instance).ToString());
+                    fileUpload.ID = "FileUpload" + fieldId;
+                    fileUpload.AllowMultiple = false;
+                    fileUpload.ValidateRequestMode=ValidateRequestMode.Disabled;
+                    Label currentFieldTitle = new Label();
+                    currentFieldTitle.ID = "Title" + fieldId;
                     currentFieldTitle.Text = currentField.name;
+                    
                     tableCell1.Controls.Add(currentFieldTitle);
-                }
-                #endregion
-                tableCell1.Controls.Add(_dataTypes.GetRangeValidator("RangeValidator" + fieldId, currentFieldTextBox.ID,currentField.type));
-                if (cardId != 0)
-                {
-                    currentFieldTextBox.Text = _common.GetFieldValueByCardVersionInstance(currentField.fieldID, cardId, version, instance);
-                }
-                else if (_dataTypes.IsFieldAutoFill(currentField.type))
-                {
-                    currentFieldTextBox.Text = _dataTypes.GetAutoValue(currentField.type,currentField.fieldID,_registerId);
-                    //currentFieldTextBox.Text = "123";
-                }
-                #region dropdown
-                if (currentField.fk_dictionary != null && !_readonly) // создаем выпадающий список
-                {
-                    if (currentField.type == "singleLineWithDDText")
+                    //tableCell1.Controls.Add(_dataTypes.GetRangeValidator("RangeValidator" + fieldId, fileUpload.ID, currentField.type));
+                    if (cardId != 0)
                     {
-                        currentFieldTextBox.Style["Height"] = currentField.height + "px";
-                        currentFieldTextBox.Style["Width"] = currentField.width + "px";
-                        currentFieldTextBox.Style["max-width"] = currentField.width + "px";
-                        currentFieldTextBox.Style["display"] = "block";
+                        string tmp = _common.GetFieldValueByCardVersionInstance(currentField.fieldID, cardId, version,
+                            instance);
+                        if (tmp.Length > 3)
+                        {
+                            linkToFile.Text = tmp;
+                            tableCell2.Controls.Add(linkToFile);
+                        }
+                        else
+                        {
+                            allFileUploadsInCard.Add(fileUpload); // запоминаем файлаплоады
+                            tableCell2.Controls.Add(fileUpload);
+                        }
                     }
                     else
                     {
-                        currentFieldTextBox.Style["display"] = "none";
-
+                        allFileUploadsInCard.Add(fileUpload); // запоминаем файлаплоады
+                        tableCell2.Controls.Add(fileUpload);
+                    }
+                }
+                else
+                {
+                    //создадим само поле
+                    TextBox currentFieldTextBox = _dataTypes.GetTextBox(currentField.type);
+                    if (currentField.type == "autoIncrementReadonly")
+                    {
+                        currentFieldTextBox.ReadOnly = true;
+                    }
+                    else
+                    {
+                        currentFieldTextBox.ReadOnly = _readonly;
                     }
                     
-                    DropDownList dicrionaryDropDownList = new DropDownList();
-                    dicrionaryDropDownList.Style["Height"] = currentField.height + "px";
-                    dicrionaryDropDownList.Style["Width"] = currentField.width + "px";
-                    dicrionaryDropDownList.ID = "DictionaryDropDown" + fieldId;
-                    dicrionaryDropDownList.Attributes.Add("onchange", "if(document.getElementById('MainContent_" + dicrionaryDropDownList.ID + "').value=='')" +
-                                                                      "{document.getElementById('MainContent_" + currentFieldTextBox.ID + "').style.visibility = 'visible';} " +
-                                                                      "else {document.getElementById('MainContent_" + currentFieldTextBox.ID + "').style.visibility = 'hidden';}" +
-                                                                      "document.getElementById('MainContent_" + currentFieldTextBox.ID + "').value=document.getElementById('MainContent_" + dicrionaryDropDownList.ID + "').value;");                    
-                    int dictionaryId = currentField.fk_dictionary ?? 0;
-                    dicrionaryDropDownList.Items.AddRange(_common.GetDictionaryValues(dictionaryId));
-                    if (currentFieldTextBox.Text.Any())
+                    currentFieldTextBox.Style["Height"] = currentField.height + "px";
+                    currentFieldTextBox.Style["Width"] = currentField.width + "px";
+                    currentFieldTextBox.Style["max-width"] = currentField.width + "px";
+                    currentFieldTextBox.Attributes.Add("_myFieldId", currentField.fieldID.ToString());
+                    currentFieldTextBox.Attributes.Add("_myCollectedFieldInstance", instance.ToString());
+                    currentFieldTextBox.Attributes.Add("_myCollectedFieldId", _common.GetCollectedValueIdByCardVersionInstance(currentField.fieldID, cardId, version, instance).ToString());
+                    currentFieldTextBox.ID = "TextBox" + fieldId;
+                    //создаем название поля и mandatory валидатор
+                    Label currentFieldTitle = new Label();
+                    currentFieldTitle.ID = "Title" + fieldId;
+                    #region mandatory
+                    if (currentField.mandatory)
                     {
-                        dicrionaryDropDownList.SelectedValue = currentFieldTextBox.Text;
-                        if (dicrionaryDropDownList.SelectedValue != currentFieldTextBox.Text) // значение в нашем списке отсутствует
+                        currentFieldTitle.Text = currentField.name + "*";
+                        RequiredFieldValidator currentFieldRequiredFieldValidator = new RequiredFieldValidator();
+                        currentFieldRequiredFieldValidator.ID = "RequiredValidator" + fieldId;
+                        currentFieldRequiredFieldValidator.ControlToValidate = currentFieldTextBox.ID;
+                        currentFieldRequiredFieldValidator.ErrorMessage = "!";
+                        currentFieldRequiredFieldValidator.ForeColor = Color.Red;
+                        tableCell1.Controls.Add(currentFieldTitle);
+                        tableCell1.Controls.Add(currentFieldRequiredFieldValidator);
+                    }
+                    else
+                    {
+                        currentFieldTitle.Text = currentField.name;
+                        tableCell1.Controls.Add(currentFieldTitle);
+                    }
+                    #endregion
+                    if (cardId != 0)
+                    {
+                        currentFieldTextBox.Text = _common.GetFieldValueByCardVersionInstance(currentField.fieldID, cardId, version, instance);
+                    }
+                    else if (_dataTypes.IsFieldAutoFill(currentField.type))
+                    {
+                        currentFieldTextBox.Text = _dataTypes.GetAutoValue(currentField.type, currentField.fieldID, _registerId);
+                    }
+                    #region dropdown
+                    if (currentField.fk_dictionary != null && !_readonly) // создаем выпадающий список
+                    {
+                        if (currentField.type == "singleLineWithDDText")
                         {
-                            dicrionaryDropDownList.Items.Add(currentFieldTextBox.Text);
-                            dicrionaryDropDownList.SelectedValue = currentFieldTextBox.Text;
+                            currentFieldTextBox.Style["Height"] = currentField.height + "px";
+                            currentFieldTextBox.Style["Width"] = currentField.width + "px";
+                            currentFieldTextBox.Style["max-width"] = currentField.width + "px";
+                            currentFieldTextBox.Style["display"] = "block";
                         }
-                    }                
-                    tableCell2.Controls.Add(dicrionaryDropDownList);
+                        else
+                        {
+                            currentFieldTextBox.Style["display"] = "none";
+
+                        }
+
+                        DropDownList dicrionaryDropDownList = new DropDownList();
+                        dicrionaryDropDownList.Style["Height"] = currentField.height + "px";
+                        dicrionaryDropDownList.Style["Width"] = currentField.width + "px";
+                        dicrionaryDropDownList.ID = "DictionaryDropDown" + fieldId;
+                        dicrionaryDropDownList.Attributes.Add("onchange", "if(document.getElementById('MainContent_" + dicrionaryDropDownList.ID + "').value=='')" +
+                                                                          "{document.getElementById('MainContent_" + currentFieldTextBox.ID + "').style.visibility = 'visible';} " +
+                                                                          "else {document.getElementById('MainContent_" + currentFieldTextBox.ID + "').style.visibility = 'hidden';}" +
+                                                                          "document.getElementById('MainContent_" + currentFieldTextBox.ID + "').value=document.getElementById('MainContent_" + dicrionaryDropDownList.ID + "').value;");
+                        int dictionaryId = currentField.fk_dictionary ?? 0;
+                        dicrionaryDropDownList.Items.AddRange(_common.GetDictionaryValues(dictionaryId));
+                        if (currentFieldTextBox.Text.Any())
+                        {
+                            dicrionaryDropDownList.SelectedValue = currentFieldTextBox.Text;
+                            if (dicrionaryDropDownList.SelectedValue != currentFieldTextBox.Text) // значение в нашем списке отсутствует
+                            {
+                                dicrionaryDropDownList.Items.Add(currentFieldTextBox.Text);
+                                dicrionaryDropDownList.SelectedValue = currentFieldTextBox.Text;
+                            }
+                        }
+                        tableCell2.Controls.Add(dicrionaryDropDownList);
+                    }
+                    #endregion
+                    #region tree
+                    if (currentField.type == "fullStruct" || currentField.type == "onlyLastStruct")
+                    {
+                        currentFieldTextBox.TextMode = TextBoxMode.MultiLine;
+                        bool fullStruct = currentField.type == "fullStruct";
+                        ImageButton structButton = new ImageButton();
+                        structButton.ImageUrl = "~/kanz/icons/treeButtonIcon.jpg";
+                        structButton.Height = 20;
+                        structButton.Width = 20;
+                        structButton.CausesValidation = false;
+                        structButton.OnClientClick = "document.getElementById('MainContent_treeViewPanel" + fieldId + "').style.visibility = 'visible'; return false;";
+                        tableCell2.Controls.Add(structButton);
+
+                        Button cancelButton = new Button();
+                        cancelButton.CausesValidation = false;
+                        cancelButton.Text = "Отмена";
+                        cancelButton.Style.Add("float", "bottom");
+                        cancelButton.Style.Add("width", "100%");
+                        cancelButton.Style.Add("heigth", "50px");
+                        cancelButton.OnClientClick = "document.getElementById('MainContent_treeViewPanel" + fieldId + "').style.visibility = 'hidden'; return false;";
+
+                        Panel treeViewPanel = new Panel();
+                        treeViewPanel.ID = "treeViewPanel" + fieldId;
+                        treeViewPanel.Style.Add("top", "50%");
+                        treeViewPanel.Style.Add("left", "50%");
+                        treeViewPanel.Style.Add("margin", "-250px 0px 0px -470px");
+
+                        treeViewPanel.Style.Add("border", "1px solid black");
+                        treeViewPanel.Style.Add("z-index", "21");
+                        treeViewPanel.Style.Add("position", "fixed");
+                        treeViewPanel.Style.Add("background-color", "white");
+                        treeViewPanel.Style.Add("visibility", "hidden");
+                        treeViewPanel.Style.Add("height", "500px");
+                        treeViewPanel.Style.Add("width", "940px");
+
+
+                        Panel scrollPanel = new Panel();
+                        scrollPanel.ID = "treeViewScrollPanel" + fieldId;
+                        scrollPanel.Style.Add("overflow", "scroll");
+                        scrollPanel.Style.Add("height", "100%");
+
+                        TreeView strucTreeView = new TreeView();
+                        strucTreeView.ID = "treeView" + fieldId;
+                        scrollPanel.CssClass = "custom-tree";
+                        strucTreeView.CssClass = "custom-tree";
+                        //strucTreeView.SelectedNodeChanged += treeViewClick;
+                        //strucTreeView.ShowCheckBoxes = TreeNodeTypes.All;
+                        strucTreeView.Nodes.Add(_common.GetStructTreeViewNode("MainContent_" + currentFieldTextBox.ID, "MainContent_" + treeViewPanel.ID, fullStruct));
+
+                        scrollPanel.Controls.Add(strucTreeView);
+                        treeViewPanel.Controls.Add(scrollPanel);
+                        //treeViewPanel.Controls.Add(okButton);
+                        treeViewPanel.Controls.Add(cancelButton);
+                        tableCell2.Controls.Add(treeViewPanel);
+                    }
+                    #endregion
+                    tableCell1.Controls.Add(_dataTypes.GetRangeValidator("RangeValidator" + fieldId, currentFieldTextBox.ID, currentField.type));
+                    allFieldsInCard.Add(currentFieldTextBox); //запоминаем какие textbox у нас на карте
+                    tableCell2.Controls.Add(currentFieldTextBox);
                 }
-                #endregion
-                #region tree
-                if (currentField.type == "fullStruct" || currentField.type == "onlyLastStruct")
-                {
-                    currentFieldTextBox.TextMode = TextBoxMode.MultiLine;
-                    bool fullStruct = currentField.type == "fullStruct";
-                   ImageButton structButton = new ImageButton();
-                    structButton.ImageUrl = "~/kanz/icons/treeButtonIcon.jpg";
-                    structButton.Height = 20;
-                    structButton.Width = 20;
-                    structButton.CausesValidation = false;
-                    structButton.OnClientClick = "document.getElementById('MainContent_treeViewPanel" + fieldId + "').style.visibility = 'visible'; return false;";
-                    tableCell2.Controls.Add(structButton);
-
-                    Button cancelButton = new Button();
-                    cancelButton.CausesValidation = false;
-                    cancelButton.Text = "Отмена";
-                    cancelButton.Style.Add("float", "bottom");
-                    cancelButton.Style.Add("width", "100%");
-                    cancelButton.Style.Add("heigth", "50px");
-                    cancelButton.OnClientClick = "document.getElementById('MainContent_treeViewPanel" + fieldId + "').style.visibility = 'hidden'; return false;";
-
-                    Panel treeViewPanel = new Panel();
-                    treeViewPanel.ID = "treeViewPanel"+fieldId;
-                    treeViewPanel.Style.Add("top", "50%");
-                    treeViewPanel.Style.Add("left", "50%");
-                    treeViewPanel.Style.Add("margin", "-250px 0px 0px -470px");
-
-                    treeViewPanel.Style.Add("border", "1px solid black");
-                    treeViewPanel.Style.Add("z-index", "21");
-                    treeViewPanel.Style.Add("position", "fixed");
-                    treeViewPanel.Style.Add("background-color", "white");
-                    treeViewPanel.Style.Add("visibility", "hidden");
-                    treeViewPanel.Style.Add("height", "500px");
-                    treeViewPanel.Style.Add("width", "940px");
-
-
-                    Panel scrollPanel = new Panel();
-                    scrollPanel.ID = "treeViewScrollPanel" + fieldId;
-                    scrollPanel.Style.Add("overflow", "scroll");
-                    scrollPanel.Style.Add("height", "100%");
-
-                    TreeView strucTreeView = new TreeView();
-                    strucTreeView.ID = "treeView" + fieldId;
-                    scrollPanel.CssClass = "custom-tree";
-                    strucTreeView.CssClass = "custom-tree";
-                    //strucTreeView.SelectedNodeChanged += treeViewClick;
-                    //strucTreeView.ShowCheckBoxes = TreeNodeTypes.All;
-                    strucTreeView.Nodes.Add(_common.GetStructTreeViewNode("MainContent_" + currentFieldTextBox.ID, "MainContent_"+ treeViewPanel.ID,fullStruct));
-                    
-                    scrollPanel.Controls.Add(strucTreeView);
-                    treeViewPanel.Controls.Add(scrollPanel);
-                    //treeViewPanel.Controls.Add(okButton);
-                    treeViewPanel.Controls.Add(cancelButton);
-                    tableCell2.Controls.Add(treeViewPanel);                   
-                }
-                #endregion
-
-
-                allFieldsInCard.Add(currentFieldTextBox); //запоминаем какие textbox у нас на карте
-                tableCell2.Controls.Add(currentFieldTextBox);  
+                
+               
                 leftPadding += leftPaddingSpaceBetween + currentField.width;
                 tableRow1.Cells.Add(tableCell1);
                 tableRow2.Cells.Add(tableCell2);
@@ -784,6 +928,7 @@ namespace Chancelerry.kanz
             _nextVersion = _common.GetLastVersionByCard(cardId);
 
             allFieldsInCard = new List<TextBox>(); // будем запоминать все поля чтобы потом сохранять
+            allFileUploadsInCard = new List<FileUpload>();
             int leftPaddingSpaceBetween = 5; // отступы между полями
             Panel cardMainPanel = new Panel(); // основная панель
             cardMainPanel.Style.Add("border", "1px solid DimGray;");
@@ -951,13 +1096,15 @@ namespace Chancelerry.kanz
       //  private int _userId = 1;
         private ChancelerryDBDataContext chancDb = new ChancelerryDBDataContext();
         private CardCommonFunctions _common = new CardCommonFunctions();
-        public int CreateNewCardInRegister(int registerId)
+        public int CreateNewCardInRegister(int registerId,int fieldId)
         {
             CollectedCards newCard = new CollectedCards();
             newCard.fk_register = registerId;
+            newCard.mainFieldId = fieldId;
             newCard.active = true;
             chancDb.CollectedCards.InsertOnSubmit(newCard);
             chancDb.SubmitChanges();
+            
             return newCard.collectedCardID;
         }
         public int CreateNewFieldValueInCard(int cardId, int userId, int fieldId, int version, int instance,
@@ -977,16 +1124,79 @@ namespace Chancelerry.kanz
             chancDb.SubmitChanges();
             return newField.collectedFieldValueID;
         }
-        public int SaveCard(int registerId, int cardId, List<TextBox> fieldsToSave)
+        public int SaveCard(int registerId, int cardId, List<TextBox> fieldsToSave , List<FileUpload> filesToSave)
         {
+            int mainfieldId = 0;
+            foreach (TextBox currentTextBox in fieldsToSave)
+            {
+                if (currentTextBox.Attributes["iamfieldid"]!=null)
+                {   if (currentTextBox.Attributes["iamfieldid"] == "1")
+                {
+                    Int32.TryParse(currentTextBox.Text, out mainfieldId);
+                }
+                }
+            }
+
             if (cardId == 0)
-                cardId = CreateNewCardInRegister(registerId);
-            SaveFieldsValues(fieldsToSave, cardId);
+                cardId = CreateNewCardInRegister(registerId, mainfieldId);
+            SaveFieldsValues(fieldsToSave, filesToSave, cardId);
             return cardId;
         }
-        public void SaveFieldsValues(List<TextBox> fieldsToSave, int cardId)
+        public void SaveFieldsValues(List<TextBox> fieldsToSave,List<FileUpload> filesToSave, int cardId)
         {
             int lastVersion = _common.GetLastVersionByCard(cardId);
+            #region fileUpload
+            foreach (FileUpload currentFileUpload in filesToSave)
+            {
+                if (currentFileUpload.HasFile)
+                {
+                    try
+                    {
+                        int userId = 1;
+                        var sesUserId = HttpContext.Current.Session["userID"];
+                        if (sesUserId != null)
+                        {
+                            Int32.TryParse(sesUserId.ToString(), out userId);
+                        }
+
+                      //  string filename = Path.GetFileName(currentFileUpload.FileName);
+                        /*string cardFolder = HttpContext.Current.Server.MapPath("~/kanz/attachedDocs/"+ cardId);
+                        if (!Directory.Exists(cardFolder))
+                        {
+                            Directory.CreateDirectory(cardFolder);
+                        }
+                        */
+                        int currentFieldId = Convert.ToInt32(currentFileUpload.Attributes["_myFieldId"]);
+                        int currentCollectedFieldId = Convert.ToInt32(currentFileUpload.Attributes["_myCollectedFieldId"]);
+                        int currentCollectedFieldInstance = Convert.ToInt32(currentFileUpload.Attributes["_myCollectedFieldInstance"]);
+                        if (currentCollectedFieldId == 0) // нет предыдушего значения
+                        {
+                            currentCollectedFieldId = CreateNewFieldValueInCard(cardId, userId, currentFieldId,
+                                lastVersion + 1,
+                                currentCollectedFieldInstance, currentFileUpload.FileName, false);
+                        }
+                        else
+                        {
+                            currentCollectedFieldId =  CreateNewFieldValueInCard(cardId, userId, currentFieldId, lastVersion + 1,
+                                    currentCollectedFieldInstance, currentFileUpload.FileName, false);
+                        }
+                        string fieldFolder = HttpContext.Current.Server.MapPath("~/kanz/attachedDocs/" + cardId + "/" + currentCollectedFieldId + "/");
+
+                        if (!Directory.Exists(fieldFolder))
+                        {
+                            Directory.CreateDirectory(fieldFolder);
+                        }
+                        
+                        currentFileUpload.SaveAs(fieldFolder + currentFileUpload.FileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        break;
+                    }
+                }
+            }
+            #endregion
+            #region fieldValues
             foreach (TextBox currentField in fieldsToSave)
             {
                 int userId = 1;
@@ -1015,6 +1225,7 @@ namespace Chancelerry.kanz
                     }
                 }
             }
+            #endregion
         }       
     }
 }

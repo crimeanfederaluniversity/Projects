@@ -10,6 +10,7 @@ namespace Chancelerry.kanz
     public partial class CardEdit : System.Web.UI.Page
     {
         private List<TextBox> createdFields;
+        private List<FileUpload> createdFileUploads;
         private int _userId;//= 1;
         private int _registerId;// = 1;
         private int _cardId;// = 0;
@@ -61,13 +62,14 @@ namespace Chancelerry.kanz
                 CreateButton.Visible = false;
             }
             createdFields = cardCreateView.allFieldsInCard;
+            createdFileUploads = cardCreateView.allFileUploadsInCard;
         }
 
         protected void CreateButton_Click(object sender, EventArgs e)
         {
             UpdateSessionValues();
             CardCreateEdit cardCreateEdit = new CardCreateEdit();
-            cardCreateEdit.SaveCard(_registerId, _cardId, createdFields);
+            cardCreateEdit.SaveCard(_registerId, _cardId, createdFields, createdFileUploads);
             Response.Redirect("RegisterView.aspx");
         }
 

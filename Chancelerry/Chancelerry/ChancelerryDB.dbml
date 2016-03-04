@@ -1,14 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ChancelerryDB" Class="ChancelerryDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=ChancelerryDB;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ChncelerryDB_New_ReleaseConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.CollectedCards" Member="CollectedCards">
-    <Type Name="CollectedCards">
-      <Column Name="collectedCardID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="fk_register" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="CollectedCards_CollectedFieldsValues" Member="CollectedFieldsValues" ThisKey="collectedCardID" OtherKey="fk_collectedCard" Type="CollectedFieldsValues" />
-      <Association Name="Registers_CollectedCards" Member="Registers" ThisKey="fk_register" OtherKey="registerID" Type="Registers" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Users" Member="Users">
     <Type Name="Users">
       <Column Name="userID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -38,8 +29,8 @@
       <Column Name="valueInt" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="valueFloat" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="isDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="CollectedCards_CollectedFieldsValues" Member="CollectedCards" ThisKey="fk_collectedCard" OtherKey="collectedCardID" Type="CollectedCards" IsForeignKey="true" />
       <Association Name="Users_CollectedFieldsValues" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
+      <Association Name="CollectedCards_CollectedFieldsValues" Member="CollectedCards" ThisKey="fk_collectedCard" OtherKey="collectedCardID" Type="CollectedCards" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Dictionarys" Member="Dictionarys">
@@ -110,8 +101,8 @@
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="fk_registersModel" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Registers_CollectedCards" Member="CollectedCards" ThisKey="registerID" OtherKey="fk_register" Type="CollectedCards" />
       <Association Name="Registers_RegistersUsersMap" Member="RegistersUsersMap" ThisKey="registerID" OtherKey="fk_register" Type="RegistersUsersMap" />
+      <Association Name="Registers_CollectedCards" Member="CollectedCards" ThisKey="registerID" OtherKey="fk_register" Type="CollectedCards" />
       <Association Name="RegistersModels_Registers" Member="RegistersModels" ThisKey="fk_registersModel" OtherKey="registerModelID" Type="RegistersModels" IsForeignKey="true" />
     </Type>
   </Table>
@@ -155,6 +146,16 @@
       <Column Name="fk_parent" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Struct_Struct" Member="Struct2" ThisKey="structID" OtherKey="fk_parent" Type="Struct" />
       <Association Name="Struct_Struct" Member="Struct1" ThisKey="fk_parent" OtherKey="structID" Type="Struct" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CollectedCards" Member="CollectedCards">
+    <Type Name="CollectedCards">
+      <Column Name="collectedCardID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="fk_register" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="mainFieldId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="CollectedCards_CollectedFieldsValues" Member="CollectedFieldsValues" ThisKey="collectedCardID" OtherKey="fk_collectedCard" Type="CollectedFieldsValues" />
+      <Association Name="Registers_CollectedCards" Member="Registers" ThisKey="fk_register" OtherKey="registerID" Type="Registers" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
