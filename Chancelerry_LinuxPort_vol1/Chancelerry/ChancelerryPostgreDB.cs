@@ -5,7 +5,7 @@
 // | |_| | |_) | |  | |  __/ || (_| | |
 // |____/|_.__/|_|  |_|\___|\__\__,_|_|
 //
-// Auto-generated from ChancelerryDB on 2016-03-02 14:36:05Z.
+// Auto-generated from ChancelerryDB on 2016-03-05 12:46:50Z.
 // Please visit http://code.google.com/p/dblinq2007/ for more information.
 //
 using System;
@@ -19,7 +19,6 @@ using System.Data;
 #endif  // MONO_STRICT
 	using System.Data.Linq.Mapping;
 using System.Diagnostics;
-
 
 public partial class ChancelerryDb : DataContext
 {
@@ -206,6 +205,10 @@ public partial class CollectedCards : System.ComponentModel.INotifyPropertyChang
 	
 	private int _fkRegister;
 	
+	private System.Nullable<int> _maInFieldID;
+	
+	private EntitySet<CollectedFieldsValues> _collectedFieldsValues;
+	
 	private EntityRef<Registers> _registers = new EntityRef<Registers>();
 	
 	#region Extensibility Method Declarations
@@ -222,11 +225,16 @@ public partial class CollectedCards : System.ComponentModel.INotifyPropertyChang
 		partial void OnFkRegisterChanged();
 		
 		partial void OnFkRegisterChanging(int value);
+		
+		partial void OnMaInFieldIDChanged();
+		
+		partial void OnMaInFieldIDChanging(System.Nullable<int> value);
 		#endregion
 	
 	
 	public CollectedCards()
 	{
+		_collectedFieldsValues = new EntitySet<CollectedFieldsValues>(new Action<CollectedFieldsValues>(this.CollectedFieldsValues_Attach), new Action<CollectedFieldsValues>(this.CollectedFieldsValues_Detach));
 		this.OnCreated();
 	}
 	
@@ -293,6 +301,43 @@ public partial class CollectedCards : System.ComponentModel.INotifyPropertyChang
 		}
 	}
 	
+	[Column(Storage="_maInFieldID", Name="mainfieldid", DbType="integer(32,0)", AutoSync=AutoSync.Never)]
+	[DebuggerNonUserCode()]
+	public System.Nullable<int> MaInFieldID
+	{
+		get
+		{
+			return this._maInFieldID;
+		}
+		set
+		{
+			if ((_maInFieldID != value))
+			{
+				this.OnMaInFieldIDChanging(value);
+				this.SendPropertyChanging();
+				this._maInFieldID = value;
+				this.SendPropertyChanged("MaInFieldID");
+				this.OnMaInFieldIDChanged();
+			}
+		}
+	}
+	
+	#region Children
+	[Association(Storage="_collectedFieldsValues", OtherKey="FkCollectedCard", ThisKey="CollectedCardID", Name="fk_collectedfieldsvalues_fields")]
+	[DebuggerNonUserCode()]
+	public EntitySet<CollectedFieldsValues> CollectedFieldsValues
+	{
+		get
+		{
+			return this._collectedFieldsValues;
+		}
+		set
+		{
+			this._collectedFieldsValues = value;
+		}
+	}
+	#endregion
+	
 	#region Parents
 	[Association(Storage="_registers", OtherKey="RegisterID", ThisKey="FkRegister", Name="fk_collectedcards_collectedcards", IsForeignKey=true)]
 	[DebuggerNonUserCode()]
@@ -349,6 +394,20 @@ public partial class CollectedCards : System.ComponentModel.INotifyPropertyChang
 			h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
 		}
 	}
+	
+	#region Attachment handlers
+	private void CollectedFieldsValues_Attach(CollectedFieldsValues entity)
+	{
+		this.SendPropertyChanging();
+		entity.CollectedCards = this;
+	}
+	
+	private void CollectedFieldsValues_Detach(CollectedFieldsValues entity)
+	{
+		this.SendPropertyChanging();
+		entity.CollectedCards = null;
+	}
+	#endregion
 }
 
 [Table(Name="public.CollectedFieldsValues")]
@@ -382,6 +441,12 @@ public partial class CollectedFieldsValues : System.ComponentModel.INotifyProper
 	private string _valueText;
 	
 	private int _version;
+	
+	private EntityRef<CollectedCards> _collectedCards = new EntityRef<CollectedCards>();
+	
+	private EntityRef<Fields> _fields = new EntityRef<Fields>();
+	
+	private EntityRef<Users> _users = new EntityRef<Users>();
 	
 	#region Extensibility Method Declarations
 		partial void OnCreated();
@@ -719,6 +784,107 @@ public partial class CollectedFieldsValues : System.ComponentModel.INotifyProper
 			}
 		}
 	}
+	
+	#region Parents
+	[Association(Storage="_collectedCards", OtherKey="CollectedCardID", ThisKey="FkCollectedCard", Name="fk_collectedfieldsvalues_fields", IsForeignKey=true)]
+	[DebuggerNonUserCode()]
+	public CollectedCards CollectedCards
+	{
+		get
+		{
+			return this._collectedCards.Entity;
+		}
+		set
+		{
+			if (((this._collectedCards.Entity == value) 
+						== false))
+			{
+				if ((this._collectedCards.Entity != null))
+				{
+					CollectedCards previousCollectedCards = this._collectedCards.Entity;
+					this._collectedCards.Entity = null;
+					previousCollectedCards.CollectedFieldsValues.Remove(this);
+				}
+				this._collectedCards.Entity = value;
+				if ((value != null))
+				{
+					value.CollectedFieldsValues.Add(this);
+					_fkCollectedCard = value.CollectedCardID;
+				}
+				else
+				{
+					_fkCollectedCard = default(int);
+				}
+			}
+		}
+	}
+	
+	[Association(Storage="_fields", OtherKey="FieldID", ThisKey="FkField", Name="fk_collectedfieldsvalues_fields1", IsForeignKey=true)]
+	[DebuggerNonUserCode()]
+	public Fields Fields
+	{
+		get
+		{
+			return this._fields.Entity;
+		}
+		set
+		{
+			if (((this._fields.Entity == value) 
+						== false))
+			{
+				if ((this._fields.Entity != null))
+				{
+					Fields previousFields = this._fields.Entity;
+					this._fields.Entity = null;
+					previousFields.CollectedFieldsValues.Remove(this);
+				}
+				this._fields.Entity = value;
+				if ((value != null))
+				{
+					value.CollectedFieldsValues.Add(this);
+					_fkField = value.FieldID;
+				}
+				else
+				{
+					_fkField = default(int);
+				}
+			}
+		}
+	}
+	
+	[Association(Storage="_users", OtherKey="UserID", ThisKey="FkUser", Name="fk_collectedfieldsvalues_users", IsForeignKey=true)]
+	[DebuggerNonUserCode()]
+	public Users Users
+	{
+		get
+		{
+			return this._users.Entity;
+		}
+		set
+		{
+			if (((this._users.Entity == value) 
+						== false))
+			{
+				if ((this._users.Entity != null))
+				{
+					Users previousUsers = this._users.Entity;
+					this._users.Entity = null;
+					previousUsers.CollectedFieldsValues.Remove(this);
+				}
+				this._users.Entity = value;
+				if ((value != null))
+				{
+					value.CollectedFieldsValues.Add(this);
+					_fkUser = value.UserID;
+				}
+				else
+				{
+					_fkUser = default(int);
+				}
+			}
+		}
+	}
+	#endregion
 	
 	public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
 	
@@ -1171,6 +1337,8 @@ public partial class Fields : System.ComponentModel.INotifyPropertyChanging, Sys
 	
 	private int _width;
 	
+	private EntitySet<CollectedFieldsValues> _collectedFieldsValues;
+	
 	private EntitySet<RegistersView> _registersView;
 	
 	private EntityRef<FieldsGroups> _fieldsGroups = new EntityRef<FieldsGroups>();
@@ -1236,6 +1404,7 @@ public partial class Fields : System.ComponentModel.INotifyPropertyChanging, Sys
 	
 	public Fields()
 	{
+		_collectedFieldsValues = new EntitySet<CollectedFieldsValues>(new Action<CollectedFieldsValues>(this.CollectedFieldsValues_Attach), new Action<CollectedFieldsValues>(this.CollectedFieldsValues_Detach));
 		_registersView = new EntitySet<RegistersView>(new Action<RegistersView>(this.RegistersView_Attach), new Action<RegistersView>(this.RegistersView_Detach));
 		this.OnCreated();
 	}
@@ -1517,6 +1686,20 @@ public partial class Fields : System.ComponentModel.INotifyPropertyChanging, Sys
 	}
 	
 	#region Children
+	[Association(Storage="_collectedFieldsValues", OtherKey="FkField", ThisKey="FieldID", Name="fk_collectedfieldsvalues_fields1")]
+	[DebuggerNonUserCode()]
+	public EntitySet<CollectedFieldsValues> CollectedFieldsValues
+	{
+		get
+		{
+			return this._collectedFieldsValues;
+		}
+		set
+		{
+			this._collectedFieldsValues = value;
+		}
+	}
+	
 	[Association(Storage="_registersView", OtherKey="FkField", ThisKey="FieldID", Name="fk_registersview_fields")]
 	[DebuggerNonUserCode()]
 	public EntitySet<RegistersView> RegistersView
@@ -1623,6 +1806,18 @@ public partial class Fields : System.ComponentModel.INotifyPropertyChanging, Sys
 	}
 	
 	#region Attachment handlers
+	private void CollectedFieldsValues_Attach(CollectedFieldsValues entity)
+	{
+		this.SendPropertyChanging();
+		entity.Fields = this;
+	}
+	
+	private void CollectedFieldsValues_Detach(CollectedFieldsValues entity)
+	{
+		this.SendPropertyChanging();
+		entity.Fields = null;
+	}
+	
 	private void RegistersView_Attach(RegistersView entity)
 	{
 		this.SendPropertyChanging();
@@ -3148,7 +3343,7 @@ public partial class Struct : System.ComponentModel.INotifyPropertyChanging, Sys
 		this.OnCreated();
 	}
 	
-	[Column(Storage="_active", Name="active", DbType="bit(1)", AutoSync=AutoSync.Never, CanBeNull=false)]
+	[Column(Storage="_active", Name="active", DbType="boolean", AutoSync=AutoSync.Never, CanBeNull=false)]
 	[DebuggerNonUserCode()]
 	public bool Active
 	{
@@ -3341,6 +3536,8 @@ public partial class Users : System.ComponentModel.INotifyPropertyChanging, Syst
 	
 	private int _userID;
 	
+	private EntitySet<CollectedFieldsValues> _collectedFieldsValues;
+	
 	private EntitySet<Logs> _logs;
 	
 	private EntitySet<RegistersUsersMap> _registersUsersMap;
@@ -3380,6 +3577,7 @@ public partial class Users : System.ComponentModel.INotifyPropertyChanging, Syst
 	
 	public Users()
 	{
+		_collectedFieldsValues = new EntitySet<CollectedFieldsValues>(new Action<CollectedFieldsValues>(this.CollectedFieldsValues_Attach), new Action<CollectedFieldsValues>(this.CollectedFieldsValues_Detach));
 		_logs = new EntitySet<Logs>(new Action<Logs>(this.Logs_Attach), new Action<Logs>(this.Logs_Detach));
 		_registersUsersMap = new EntitySet<RegistersUsersMap>(new Action<RegistersUsersMap>(this.RegistersUsersMap_Attach), new Action<RegistersUsersMap>(this.RegistersUsersMap_Detach));
 		this.OnCreated();
@@ -3538,6 +3736,20 @@ public partial class Users : System.ComponentModel.INotifyPropertyChanging, Syst
 	}
 	
 	#region Children
+	[Association(Storage="_collectedFieldsValues", OtherKey="FkUser", ThisKey="UserID", Name="fk_collectedfieldsvalues_users")]
+	[DebuggerNonUserCode()]
+	public EntitySet<CollectedFieldsValues> CollectedFieldsValues
+	{
+		get
+		{
+			return this._collectedFieldsValues;
+		}
+		set
+		{
+			this._collectedFieldsValues = value;
+		}
+	}
+	
 	[Association(Storage="_logs", OtherKey="FkUsers", ThisKey="UserID", Name="fk_logs_users")]
 	[DebuggerNonUserCode()]
 	public EntitySet<Logs> Logs
@@ -3590,6 +3802,18 @@ public partial class Users : System.ComponentModel.INotifyPropertyChanging, Syst
 	}
 	
 	#region Attachment handlers
+	private void CollectedFieldsValues_Attach(CollectedFieldsValues entity)
+	{
+		this.SendPropertyChanging();
+		entity.Users = this;
+	}
+	
+	private void CollectedFieldsValues_Detach(CollectedFieldsValues entity)
+	{
+		this.SendPropertyChanging();
+		entity.Users = null;
+	}
+	
 	private void Logs_Attach(Logs entity)
 	{
 		this.SendPropertyChanging();

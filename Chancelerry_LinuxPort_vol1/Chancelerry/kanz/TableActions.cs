@@ -176,30 +176,28 @@ namespace Chancelerry
             return row;
         }
 
-        public TableHeaderRow AddSearchHeaderRoFromList(List<int> fieldID)
+        public TableHeaderRow AddSearchHeaderRoFromList(List<int> FieldID, Dictionary<int, string> searchData)
         {
 
             // Поиск
 
             TableHeaderRow row = new TableHeaderRow();
             row.BorderStyle = BorderStyle.Inset;
-
-            foreach (var elm in fieldID)
+            foreach (int elm in FieldID)
             {
                 TableCell cell = new TableCell();
-
                 TextBox tb = new TextBox();
-                tb.Attributes.Add("_fieldID4search", elm.ToString());
+                string tmp = "";
+                if (searchData != null) searchData.TryGetValue(elm, out tmp);
+                tb.Attributes.Add("_FieldID4search", elm.ToString());
                 tb.ID = "searchTb" + elm.ToString();
+                tb.Text = tmp;
                 tb.Attributes.Add("onkeypress", "return runScript(event);");
                 tb.Attributes.Add("onkeydown", "return runScript(event);");
                 tb.Attributes.Add("class", "search-field");
                 cell.Controls.Add(tb);
-
-                SearchBoxsData.Add(tb);
                 row.Cells.Add(cell);
             }
-
             return row;
         }
         
@@ -219,7 +217,7 @@ namespace Chancelerry
 
 
             // Поиск
-            dataTable.Rows.Add(AddSearchHeaderRoFromList(fieldsId));
+            dataTable.Rows.Add(AddSearchHeaderRoFromList(fieldsId,searchList));
 
             // Заголовки
             dataTable.Rows.Add(AddHeaderRoFromList(fieldsName));
@@ -244,41 +242,48 @@ namespace Chancelerry
             }
 
             List<int> cardsToShow = new List<int>(); // сюда будем складывать карточки которые нужно показать
+                                                     /*
+                                                     if (searchList != null) //если фильтры есть
+                                                     {
+                                                         bool isFirst = true;
+                                                         foreach (int currentKey in searchList.Keys) // проходимся по каждому фильтру
+                                                         {
+                                                             int fieldId = currentKey;
+                                                             string fieldValue = "";
+                                                             searchList.TryGetValue(fieldId, out fieldValue);  //достаем айдишник нашего филда
 
-            if (searchList != null) //если фильтры есть
-            {
-                bool isFirst = true;
-                foreach (int currentKey in searchList.Keys) // проходимся по каждому фильтру
-                {
-                    int fieldId = currentKey;
-                    string fieldValue = "";
-                    searchList.TryGetValue(fieldId, out fieldValue);  //достаем айдишник нашего филда
+                                                             List<int> cardsWithValue = (from a in dataContext.CollectedFieldsValues
+                                                                                         where a.active == true && a.fk_field == fieldId && a.valueText.Contains(fieldValue)
+                                                                                         join b in dataContext.CollectedCards on a.fk_collectedCard equals b.collectedCardID
+                                                                                         where b.active == true
+                                                                                         select a.fk_collectedCard).Distinct().ToList(); // находим все карточки которые соответсвтуют
+                                                             List<int> tmpList;
+                                                             if (isFirst)
+                                                             {
+                                                                 tmpList = cardsWithValue;
+                                                             }
+                                                             else
+                                                             {
+                                                                 tmpList = (from a in cardsWithValue join b in cardsToShow on a equals b select a).Distinct().ToList();
+                                                             }
+                                                             isFirst = false;
+                                                             cardsToShow = tmpList;
+                                                         }
+                                                     }
+                                                     else // если фильтров нет, показываем все карточки 
+                                                     {
+                                                         // фильтруем по номерам документов и достаем только ID'шники карточек
+                                                         cardsToShow = (from a in cardsAllFull select a).OrderByDescending(n => n.version).ToList().Select(card => card.id).Distinct().ToList();
+                                                     }
+                                                     */
 
-                    List<int> cardsWithValue = (from a in dataContext.CollectedFieldsValues
-                                                where a.Active == true && a.FkField == fieldId && a.ValueText.Contains(fieldValue)
-                                                join b in dataContext.CollectedCards on a.FkCollectedCard equals b.CollectedCardID
-                                                where b.Active == true
-                                                select a.FkCollectedCard).Distinct().ToList(); // находим все карточки которые соответсвтуют
-                    List<int> tmpList;
-                    if (isFirst)
-                    {
-                        tmpList = cardsWithValue;
-                    }
-                    else
-                    {
-                        tmpList = (from a in cardsWithValue join b in cardsToShow on a equals b select a).Distinct().ToList();
-                    }
-                    isFirst = false;
-                    cardsToShow = tmpList;
-                }
-            }
-            else // если фильтров нет, показываем все карточки 
-            {
-                // фильтруем по номерам документов и достаем только ID'шники карточек
-                cardsToShow = (from a in cardsAllFull select a).OrderByDescending(n => n.version).ToList().Select(card => card.id).Distinct().ToList();
-            }
 
-            
+            //ВАГЕКОД НАЧАЛО
+            CardCommonFunctions ccf = new CardCommonFunctions();
+            cardsToShow = ccf.GetCardsToShow(searchList, (int)HttpContext.Current.Session["registerID"]);
+            //ВАГЕКОД КОНЕЦ
+
+
             HttpContext.Current.Session["pageCount"] = (int)Math.Floor((double)cardsToShow.Count / 10) + 1; // количество страниц таблицы
             HttpContext.Current.Session["cardsCount"] = cardsToShow.Count;
 

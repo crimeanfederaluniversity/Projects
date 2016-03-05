@@ -258,6 +258,7 @@
     <Content Include="kanz\icons\saveButtonIcon.jpg" />
     <Content Include="kanz\icons\treeButtonIcon.jpg" />
     <Content Include="kanz\icons\viewButtonIcon.png" />
+    <Content Include="kanz\Print.aspx" />
     <Content Include="kanz\RegisterView.aspx" />
     <Content Include="kanz\TableSettings.aspx" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
@@ -479,6 +480,13 @@
     </Compile>
     <Compile Include="kanz\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="kanz\Print.aspx.cs">
+      <DependentUpon>Print.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="kanz\Print.aspx.designer.cs">
+      <DependentUpon>Print.aspx</DependentUpon>
     </Compile>
     <Compile Include="kanz\RegisterView.aspx.cs">
       <DependentUpon>RegisterView.aspx</DependentUpon>

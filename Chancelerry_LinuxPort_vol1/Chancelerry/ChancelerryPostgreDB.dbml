@@ -3,13 +3,18 @@
   <Table Name="public.CollectedCards" Member="CollectedCards">
     <Type Name="CollectedCards">
       <Association Name="fk_collectedcards_collectedcards" Member="Registers" Storage="_registers" Type="Registers" ThisKey="FkRegister" OtherKey="RegisterID" IsForeignKey="true" />
+      <Association Name="fk_collectedfieldsvalues_fields" Member="CollectedFieldsValues" Storage="_collectedFieldsValues" Type="CollectedFieldsValues" ThisKey="CollectedCardID" OtherKey="FkCollectedCard" DeleteRule="NO ACTION" />
       <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
       <Column Name="collectedcardid" Member="CollectedCardID" Storage="_collectedCardID" Type="System.Int32" DbType="integer(32,0)" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" Expression="nextval('collectedcards_collectedcardid_seq')" />
       <Column Name="fk_register" Member="FkRegister" Storage="_fkRegister" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="mainfieldid" Member="MaInFieldID" Storage="_maInFieldID" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="public.CollectedFieldsValues" Member="CollectedFieldsValues">
     <Type Name="CollectedFieldsValues">
+      <Association Name="fk_collectedfieldsvalues_fields" Member="CollectedCards" Storage="_collectedCards" Type="CollectedCards" ThisKey="FkCollectedCard" OtherKey="CollectedCardID" IsForeignKey="true" />
+      <Association Name="fk_collectedfieldsvalues_fields1" Member="Fields" Storage="_fields" Type="Fields" ThisKey="FkField" OtherKey="FieldID" IsForeignKey="true" />
+      <Association Name="fk_collectedfieldsvalues_users" Member="Users" Storage="_users" Type="Users" ThisKey="FkUser" OtherKey="UserID" IsForeignKey="true" />
       <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
       <Column Name="collectedfieldvalueid" Member="CollectedFieldValueID" Storage="_collectedFieldValueID" Type="System.Int32" DbType="integer(32,0)" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" Expression="nextval('collectedfieldsvalues_collectedfieldvalueid_seq')" />
       <Column Name="createdatetime" Member="CreateDateTime" Storage="_createDateTime" Type="System.DateTime" DbType="timestamp without time zone" IsDbGenerated="false" CanBeNull="false" />
@@ -46,6 +51,7 @@
   </Table>
   <Table Name="public.Fields" Member="Fields">
     <Type Name="Fields">
+      <Association Name="fk_collectedfieldsvalues_fields1" Member="CollectedFieldsValues" Storage="_collectedFieldsValues" Type="CollectedFieldsValues" ThisKey="FieldID" OtherKey="FkField" DeleteRule="NO ACTION" />
       <Association Name="fk_fields_fields" Member="FieldsGroups" Storage="_fieldsGroups" Type="FieldsGroups" ThisKey="FkFieldsGroup" OtherKey="FieldsGroupID" IsForeignKey="true" />
       <Association Name="fk_fields_dictionarys" Member="DictionaryS" Storage="_dictionaryS" Type="Dictionarys" ThisKey="FkDictionary" OtherKey="DictionaryID" IsForeignKey="true" />
       <Association Name="fk_registersview_fields" Member="RegistersView" Storage="_registersView" Type="RegistersView" ThisKey="FieldID" OtherKey="FkField" DeleteRule="NO ACTION" />
@@ -134,7 +140,7 @@
     <Type Name="Struct">
       <Association Name="fk_struct_struct" Member="FkParentSTRuCt" Storage="_fkParentStrUCt" Type="Struct" ThisKey="FkParent" OtherKey="STRuCtID" IsForeignKey="true" />
       <Association Name="fk_struct_struct" Member="STRuCt" Storage="_strUCt" Type="Struct" ThisKey="STRuCtID" OtherKey="FkParent" DeleteRule="NO ACTION" />
-      <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="bit(1)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
       <Column Name="fk_parent" Member="FkParent" Storage="_fkParent" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="true" />
       <Column Name="name" Member="Name" Storage="_name" Type="System.String" DbType="character varying(200)" IsDbGenerated="false" CanBeNull="false" />
       <Column Name="structid" Member="STRuCtID" Storage="_strUCtID" Type="System.Int32" DbType="integer(32,0)" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" Expression="nextval('struct_structid_seq')" />
@@ -142,6 +148,7 @@
   </Table>
   <Table Name="public.Users" Member="Users">
     <Type Name="Users">
+      <Association Name="fk_collectedfieldsvalues_users" Member="CollectedFieldsValues" Storage="_collectedFieldsValues" Type="CollectedFieldsValues" ThisKey="UserID" OtherKey="FkUser" DeleteRule="NO ACTION" />
       <Association Name="fk_logs_users" Member="Logs" Storage="_logs" Type="Logs" ThisKey="UserID" OtherKey="FkUsers" DeleteRule="NO ACTION" />
       <Association Name="fk_registersusersmap_users" Member="RegistersUsersMap" Storage="_registersUsersMap" Type="RegistersUsersMap" ThisKey="UserID" OtherKey="FkUser" DeleteRule="NO ACTION" />
       <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
