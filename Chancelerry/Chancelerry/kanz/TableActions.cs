@@ -273,7 +273,13 @@ namespace Chancelerry
             cardsToShow = ccf.GetCardsToShow(searchList, (int) HttpContext.Current.Session["registerID"]);
             //ВАГЕКОД КОНЕЦ
 
-
+            // SIVAS OPTIMIZATION START
+            List<CollectedFieldsValues> collectedFiltered = new List<CollectedFieldsValues>();
+            foreach (var c in cardsToShow.Skip((int)HttpContext.Current.Session["pageCntrl"] * 10).Take(10))
+            {
+                collectedFiltered.AddRange(((from a in dataContext.CollectedFieldsValues where a.fk_collectedCard == c select a).ToList()));
+            }
+            // SIVAS OPTIMIZATION END
 
             HttpContext.Current.Session["pageCount"] = (int)Math.Floor((double)cardsToShow.Count / 10) + 1; // количество страниц таблицы
             HttpContext.Current.Session["cardsCount"] = cardsToShow.Count;
@@ -291,8 +297,8 @@ namespace Chancelerry
                     StringBuilder fieldInstancesValue = new StringBuilder(); // сюда записываем все инстансы
 
                         // сотношение поля и  карточки в collected (получаем поле с его инстансами и версией)
-                       var query = (from a in dataContext.CollectedFieldsValues
-                                 where a.fk_field == field && a.fk_collectedCard == card
+                       var query = (from a in collectedFiltered
+                                    where a.fk_field == field && a.fk_collectedCard == card
                                  select new DataOne()
                                  {
                                      textValue = a.valueText,
