@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ChooseDictionary.aspx.cs" Inherits="Chancelerry.kanz.ChooseDictionary" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    
+    <link href="../Content/Site.css" rel="stylesheet" />
     <br />
     Выберите справочник
     <asp:DropDownList ID="DictionarysList" runat="server" AutoPostBack="True" Height="20px" OnSelectedIndexChanged="DictionarysList_SelectedIndexChanged" Width="263px"></asp:DropDownList>

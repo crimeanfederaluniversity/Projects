@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RegisterView.aspx.cs" Inherits="Chancelerry.kanz.RegisterView" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    
+    <link href="../Content/Site.css" rel="stylesheet" />
     <script>
         function runScript(e)
         {
@@ -15,13 +15,13 @@
     <br />
 
     <asp:Panel runat="server" CssClass="edit-panel" Height="30px">
-        <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Очистить поиск" OnClientClick="showLoadingScreen()"/>
-        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Поиск" OnClientClick="showLoadingScreen()"/>
+        <%--<asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Очистить поиск" OnClientClick="showLoadingScreen()"/>
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Поиск" OnClientClick="showLoadingScreen()"/>--%>
         <asp:Button ID="Button1" runat="server" CssClass="float-left" Text="Добавить" Width="362px" OnClick="Button1_Click" OnClientClick="showLoadingScreen()"/>
         <asp:Button ID="Button3" runat="server" CssClass="float-right" OnClick="Button3_Click" Text="Настройка страницы" OnClientClick="showLoadingScreen()"/>
     </asp:Panel>
 
-    <asp:Panel ID="SearchPanel" runat="server" CssClass="hidden">
+    <asp:Panel ID="SearchPanel" runat="server">
         <asp:Button ID="Button44" runat="server" OnClick="Button4_Click" Text="Очистить поиск" OnClientClick="showLoadingScreen()"/>
         <asp:Button ID="Button22" runat="server" OnClick="Button2_Click" Text="Поиск" OnClientClick="showLoadingScreen()"/>
     </asp:Panel>

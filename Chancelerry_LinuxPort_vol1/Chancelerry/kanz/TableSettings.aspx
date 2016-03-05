@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="TableSettings.aspx.cs" Inherits="Chancelerry.kanz.TableSettings" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <link href="../Content/Site.css" rel="stylesheet" />
+
     <asp:Label class="header" Text="Настройка Страницы" runat="server" />
     <asp:GridView ID="GridView1" class="settings-table" AutoGenerateColumns="false" runat="server">           
              <Columns>               
