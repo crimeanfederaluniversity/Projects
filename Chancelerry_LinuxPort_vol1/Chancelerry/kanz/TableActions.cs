@@ -283,6 +283,14 @@ namespace Chancelerry
             cardsToShow = ccf.GetCardsToShow(searchList, (int)HttpContext.Current.Session["registerID"]);
             //ВАГЕКОД КОНЕЦ
 
+            // SIVAS OPTIMIZATION START
+            List<CollectedFieldsValues> collectedFiltered = new List<CollectedFieldsValues>();
+            foreach (var c in cardsToShow.Skip((int)HttpContext.Current.Session["pageCntrl"] * 10).Take(10)) // берем id'шники цже отфильтрованных крточек по ID
+            {
+                // добавляем сами карточки в лист, для дальнейшеq работы только с ними а не по всему dataContext.CollectedFieldsValues :)
+                collectedFiltered.AddRange(((from a in dataContext.CollectedFieldsValues where a.FkCollectedCard == c select a).ToList()));
+            }
+            // SIVAS OPTIMIZATION END
 
             HttpContext.Current.Session["pageCount"] = (int)Math.Floor((double)cardsToShow.Count / 10) + 1; // количество страниц таблицы
             HttpContext.Current.Session["cardsCount"] = cardsToShow.Count;
@@ -300,8 +308,8 @@ namespace Chancelerry
                     StringBuilder fieldInstancesValue = new StringBuilder(); // сюда записываем все инстансы
 
                         // сотношение поля и  карточки в collected (получаем поле с его инстансами и версией)
-                       List<DataOne> query = (from a in dataContext.CollectedFieldsValues
-                                 where a.FkField == field && a.FkCollectedCard == card
+                       List<DataOne> query = (from a in collectedFiltered // // SIVAS OPTIMIZATION before: dataContext.CollectedFieldsValues
+                                              where a.FkField == field && a.FkCollectedCard == card
                                  select new DataOne()
                                  {
                                      textValue = a.ValueText,

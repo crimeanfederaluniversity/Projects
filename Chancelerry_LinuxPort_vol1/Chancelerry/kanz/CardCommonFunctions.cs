@@ -240,15 +240,18 @@ namespace Chancelerry.kanz
                     int fieldId = currentKey;
                     string fieldValue = "";
                     searchList.TryGetValue(fieldId, out fieldValue); //достаем айдишник нашего филда
-                    List<int> cardsWithValue = (from a in chancDb.CollectedFieldsValues
+                    // PORT
+                    List<CollectedCards> collectedcardsWithValue = (from a in chancDb.CollectedFieldsValues
                                                 where a.Active == true && a.FkField == fieldId && a.ValueText == fieldValue
                                                 join b in chancDb.CollectedCards on a.FkCollectedCard equals b.CollectedCardID
 
                                                 where b.Active == true && b.FkRegister == registerId
-                                                select b).Distinct()
-                        .OrderByDescending(uc => uc.MaInFieldID)
+                                                select b).Distinct().ToList();
+                    List<int> cardsWithValue =
+                        collectedcardsWithValue.OrderByDescending(uc => uc.MaInFieldID)
                         .Select(vk => vk.CollectedCardID)
                         .ToList(); // находим все карточки которые соответсвтуют
+                    // PORT
                     List<int> tmpList;
                     if (isFirst)
                     {
