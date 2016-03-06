@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<Database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="ChancelerryDB" Class="ChancelerryDb" BaseType="DbLinq.Data.Linq.DataContext" Provider="PostgreSql" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="public.CollectedCards" Member="CollectedCards">
+    <Type Name="CollectedCards">
+      <Association Name="fk_collectedcards_collectedcards" Member="Registers" Storage="_registers" Type="Registers" ThisKey="FkRegister" OtherKey="RegisterID" IsForeignKey="true" />
+      <Association Name="fk_collectedfieldsvalues_fields" Member="CollectedFieldsValues" Storage="_collectedFieldsValues" Type="CollectedFieldsValues" ThisKey="CollectedCardID" OtherKey="FkCollectedCard" DeleteRule="NO ACTION" />
+      <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="collectedcardid" Member="CollectedCardID" Storage="_collectedCardID" Type="System.Int32" DbType="integer(32,0)" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" Expression="nextval('collectedcards_collectedcardid_seq')" />
+      <Column Name="fk_register" Member="FkRegister" Storage="_fkRegister" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="mainfieldid" Member="MaInFieldID" Storage="_maInFieldID" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="public.CollectedFieldsValues" Member="CollectedFieldsValues">
+    <Type Name="CollectedFieldsValues">
+      <Association Name="fk_collectedfieldsvalues_fields" Member="CollectedCards" Storage="_collectedCards" Type="CollectedCards" ThisKey="FkCollectedCard" OtherKey="CollectedCardID" IsForeignKey="true" />
+      <Association Name="fk_collectedfieldsvalues_fields1" Member="Fields" Storage="_fields" Type="Fields" ThisKey="FkField" OtherKey="FieldID" IsForeignKey="true" />
+      <Association Name="fk_collectedfieldsvalues_users" Member="Users" Storage="_users" Type="Users" ThisKey="FkUser" OtherKey="UserID" IsForeignKey="true" />
+      <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="collectedfieldvalueid" Member="CollectedFieldValueID" Storage="_collectedFieldValueID" Type="System.Int32" DbType="integer(32,0)" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" Expression="nextval('collectedfieldsvalues_collectedfieldvalueid_seq')" />
+      <Column Name="createdatetime" Member="CreateDateTime" Storage="_createDateTime" Type="System.DateTime" DbType="timestamp without time zone" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="fk_collectedcard" Member="FkCollectedCard" Storage="_fkCollectedCard" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="fk_field" Member="FkField" Storage="_fkField" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="fk_user" Member="FkUser" Storage="_fkUser" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="instance" Member="Instance" Storage="_instance" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="isdeleted" Member="IsDeleted" Storage="_isDeleted" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="valuedata" Member="ValueData" Storage="_valueData" Type="System.String" DbType="text" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="valuefloat" Member="ValueFloat" Storage="_valueFloat" Type="System.Double" DbType="double precision" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="valueint" Member="ValueInt" Storage="_valueInt" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="valuetext" Member="ValueText" Storage="_valueText" Type="System.String" DbType="text" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="version" Member="Version" Storage="_version" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="public.Dictionarys" Member="Dictionarys">
+    <Type Name="Dictionarys">
+      <Association Name="fk_dictionarysvalues_dictionarys" Member="DictionarySValues" Storage="_dictionarySvAlues" Type="DictionarysValues" ThisKey="DictionaryID" OtherKey="FkDictionary" DeleteRule="NO ACTION" />
+      <Association Name="fk_fields_dictionarys" Member="Fields" Storage="_fields" Type="Fields" ThisKey="DictionaryID" OtherKey="FkDictionary" DeleteRule="NO ACTION" />
+      <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="description" Member="Description" Storage="_description" Type="System.String" DbType="text" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="dictionaryid" Member="DictionaryID" Storage="_dictionaryID" Type="System.Int32" DbType="integer(32,0)" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" Expression="nextval('dictionarys_dictionaryid_seq')" />
+      <Column Name="name" Member="Name" Storage="_name" Type="System.String" DbType="character varying(200)" IsDbGenerated="false" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="public.DictionarysValues" Member="DictionarysValues">
+    <Type Name="DictionarysValues">
+      <Association Name="fk_dictionarysvalues_dictionarys" Member="DictionaryS" Storage="_dictionaryS" Type="Dictionarys" ThisKey="FkDictionary" OtherKey="DictionaryID" IsForeignKey="true" />
+      <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="dictionaryvalueid" Member="DictionaryValueID" Storage="_dictionaryValueID" Type="System.Int32" DbType="integer(32,0)" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" Expression="nextval('dictionarysvalues_dictionaryvalueid_seq')" />
+      <Column Name="fk_dictionary" Member="FkDictionary" Storage="_fkDictionary" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="value" Member="Value" Storage="_value" Type="System.String" DbType="text" IsDbGenerated="false" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="public.Fields" Member="Fields">
+    <Type Name="Fields">
+      <Association Name="fk_collectedfieldsvalues_fields1" Member="CollectedFieldsValues" Storage="_collectedFieldsValues" Type="CollectedFieldsValues" ThisKey="FieldID" OtherKey="FkField" DeleteRule="NO ACTION" />
+      <Association Name="fk_fields_fields" Member="FieldsGroups" Storage="_fieldsGroups" Type="FieldsGroups" ThisKey="FkFieldsGroup" OtherKey="FieldsGroupID" IsForeignKey="true" />
+      <Association Name="fk_fields_dictionarys" Member="DictionaryS" Storage="_dictionaryS" Type="Dictionarys" ThisKey="FkDictionary" OtherKey="DictionaryID" IsForeignKey="true" />
+      <Association Name="fk_registersview_fields" Member="RegistersView" Storage="_registersView" Type="RegistersView" ThisKey="FieldID" OtherKey="FkField" DeleteRule="NO ACTION" />
+      <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="columnnumber" Member="ColumnNumber" Storage="_columnNumber" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="description" Member="Description" Storage="_description" Type="System.String" DbType="text" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="fieldid" Member="FieldID" Storage="_fieldID" Type="System.Int32" DbType="integer(32,0)" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" Expression="nextval('fields_fieldid_seq')" />
+      <Column Name="fk_dictionary" Member="FkDictionary" Storage="_fkDictionary" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="fk_fieldsgroup" Member="FkFieldsGroup" Storage="_fkFieldsGroup" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="height" Member="Height" Storage="_height" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="line" Member="Line" Storage="_line" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="mandatory" Member="Mandatory" Storage="_mandatory" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="multiple" Member="Multiple" Storage="_multiple" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="name" Member="Name" Storage="_name" Type="System.String" DbType="character varying(200)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="type" Member="Type" Storage="_type" Type="System.String" DbType="character varying(50)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="width" Member="Width" Storage="_width" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="public.FieldsGroups" Member="FieldsGroups">
+    <Type Name="FieldsGroups">
+      <Association Name="fk_fields_fields" Member="Fields" Storage="_fields" Type="Fields" ThisKey="FieldsGroupID" OtherKey="FkFieldsGroup" DeleteRule="NO ACTION" />
+      <Association Name="fk_fieldsgroups_registersmodels" Member="RegistersModels" Storage="_registersModels" Type="RegistersModels" ThisKey="FkRegisterModel" OtherKey="RegisterModelID" IsForeignKey="true" />
+      <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="fieldsgroupid" Member="FieldsGroupID" Storage="_fieldsGroupID" Type="System.Int32" DbType="integer(32,0)" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" Expression="nextval('fieldsgroups_fieldsgroupid_seq')" />
+      <Column Name="fk_registermodel" Member="FkRegisterModel" Storage="_fkRegisterModel" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="line" Member="Line" Storage="_line" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="multiple" Member="Multiple" Storage="_multiple" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="name" Member="Name" Storage="_name" Type="System.String" DbType="character varying(200)" IsDbGenerated="false" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="public.Logs" Member="Logs">
+    <Type Name="Logs">
+      <Association Name="fk_logs_users" Member="Users" Storage="_users" Type="Users" ThisKey="FkUsers" OtherKey="UserID" IsForeignKey="true" />
+      <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="createdatetime" Member="CreateDateTime" Storage="_createDateTime" Type="System.DateTime" DbType="timestamp without time zone" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="description" Member="Description" Storage="_description" Type="System.String" DbType="text" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="fk_users" Member="FkUsers" Storage="_fkUsers" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="logid" Member="LogID" Storage="_logID" Type="System.Int32" DbType="integer(32,0)" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" Expression="nextval('logs_logid_seq')" />
+      <Column Name="type" Member="Type" Storage="_type" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="public.Registers" Member="Registers">
+    <Type Name="Registers">
+      <Association Name="fk_collectedcards_collectedcards" Member="CollectedCards" Storage="_collectedCards" Type="CollectedCards" ThisKey="RegisterID" OtherKey="FkRegister" DeleteRule="NO ACTION" />
+      <Association Name="fk_registers_registersmodels" Member="RegistersModels" Storage="_registersModels" Type="RegistersModels" ThisKey="FkRegistersModel" OtherKey="RegisterModelID" IsForeignKey="true" />
+      <Association Name="fk_registersusersmap_registers" Member="RegistersUsersMap" Storage="_registersUsersMap" Type="RegistersUsersMap" ThisKey="RegisterID" OtherKey="FkRegister" DeleteRule="NO ACTION" />
+      <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="fk_registersmodel" Member="FkRegistersModel" Storage="_fkRegistersModel" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="name" Member="Name" Storage="_name" Type="System.String" DbType="text" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="registerid" Member="RegisterID" Storage="_registerID" Type="System.Int32" DbType="integer(32,0)" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" Expression="nextval('registers_registerid_seq')" />
+    </Type>
+  </Table>
+  <Table Name="public.RegistersModels" Member="RegistersModels">
+    <Type Name="RegistersModels">
+      <Association Name="fk_fieldsgroups_registersmodels" Member="FieldsGroups" Storage="_fieldsGroups" Type="FieldsGroups" ThisKey="RegisterModelID" OtherKey="FkRegisterModel" DeleteRule="NO ACTION" />
+      <Association Name="fk_registers_registersmodels" Member="Registers" Storage="_registers" Type="Registers" ThisKey="RegisterModelID" OtherKey="FkRegistersModel" DeleteRule="NO ACTION" />
+      <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="name" Member="Name" Storage="_name" Type="System.String" DbType="character varying(200)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="registermodelid" Member="RegisterModelID" Storage="_registerModelID" Type="System.Int32" DbType="integer(32,0)" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" Expression="nextval('registersmodels_registermodelid_seq')" />
+    </Type>
+  </Table>
+  <Table Name="public.RegistersUsersMap" Member="RegistersUsersMap">
+    <Type Name="RegistersUsersMap">
+      <Association Name="fk_registersusersmap_users" Member="Users" Storage="_users" Type="Users" ThisKey="FkUser" OtherKey="UserID" IsForeignKey="true" />
+      <Association Name="fk_registersusersmap_registers" Member="Registers" Storage="_registers" Type="Registers" ThisKey="FkRegister" OtherKey="RegisterID" IsForeignKey="true" />
+      <Association Name="fk_registersview_registersusersmap" Member="RegistersView" Storage="_registersView" Type="RegistersView" ThisKey="RegistersUsersMapID" OtherKey="FkRegistersUsersMap" DeleteRule="NO ACTION" />
+      <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="canedit" Member="CanEdit" Storage="_canEdit" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="fk_register" Member="FkRegister" Storage="_fkRegister" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="fk_user" Member="FkUser" Storage="_fkUser" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="registersusersmapid" Member="RegistersUsersMapID" Storage="_registersUsersMapID" Type="System.Int32" DbType="integer(32,0)" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" Expression="nextval('registersusersmap_registersusersmapid_seq')" />
+    </Type>
+  </Table>
+  <Table Name="public.RegistersView" Member="RegistersView">
+    <Type Name="RegistersView">
+      <Association Name="fk_registersview_registersusersmap" Member="RegistersUsersMap" Storage="_registersUsersMap" Type="RegistersUsersMap" ThisKey="FkRegistersUsersMap" OtherKey="RegistersUsersMapID" IsForeignKey="true" />
+      <Association Name="fk_registersview_fields" Member="Fields" Storage="_fields" Type="Fields" ThisKey="FkField" OtherKey="FieldID" IsForeignKey="true" />
+      <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="fk_field" Member="FkField" Storage="_fkField" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="fk_registersusersmap" Member="FkRegistersUsersMap" Storage="_fkRegistersUsersMap" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="registerviewid" Member="RegisterViewID" Storage="_registerViewID" Type="System.Int32" DbType="integer(32,0)" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" Expression="nextval('registersview_registerviewid_seq')" />
+      <Column Name="weight" Member="Weight" Storage="_weight" Type="System.Double" DbType="double precision" IsDbGenerated="false" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="public.Struct" Member="Struct">
+    <Type Name="Struct">
+      <Association Name="fk_struct_struct" Member="FkParentSTRuCt" Storage="_fkParentStrUCt" Type="Struct" ThisKey="FkParent" OtherKey="STRuCtID" IsForeignKey="true" />
+      <Association Name="fk_struct_struct" Member="STRuCt" Storage="_strUCt" Type="Struct" ThisKey="STRuCtID" OtherKey="FkParent" DeleteRule="NO ACTION" />
+      <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="fk_parent" Member="FkParent" Storage="_fkParent" Type="System.Int32" DbType="integer(32,0)" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="name" Member="Name" Storage="_name" Type="System.String" DbType="character varying(200)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="structid" Member="STRuCtID" Storage="_strUCtID" Type="System.Int32" DbType="integer(32,0)" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" Expression="nextval('struct_structid_seq')" />
+    </Type>
+  </Table>
+  <Table Name="public.Users" Member="Users">
+    <Type Name="Users">
+      <Association Name="fk_collectedfieldsvalues_users" Member="CollectedFieldsValues" Storage="_collectedFieldsValues" Type="CollectedFieldsValues" ThisKey="UserID" OtherKey="FkUser" DeleteRule="NO ACTION" />
+      <Association Name="fk_logs_users" Member="Logs" Storage="_logs" Type="Logs" ThisKey="UserID" OtherKey="FkUsers" DeleteRule="NO ACTION" />
+      <Association Name="fk_registersusersmap_users" Member="RegistersUsersMap" Storage="_registersUsersMap" Type="RegistersUsersMap" ThisKey="UserID" OtherKey="FkUser" DeleteRule="NO ACTION" />
+      <Column Name="active" Member="Active" Storage="_active" Type="System.Boolean" DbType="boolean" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="email" Member="Email" Storage="_email" Type="System.String" DbType="character varying(200)" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="login" Member="Login" Storage="_login" Type="System.String" DbType="character varying(200)" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="name" Member="Name" Storage="_name" Type="System.String" DbType="text" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="password" Member="Password" Storage="_password" Type="System.String" DbType="character varying(200)" IsDbGenerated="false" CanBeNull="false" />
+      <Column Name="struct" Member="STRuCt" Storage="_strUCt" Type="System.String" DbType="text" IsDbGenerated="false" CanBeNull="true" />
+      <Column Name="userid" Member="UserID" Storage="_userID" Type="System.Int32" DbType="integer(32,0)" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" Expression="nextval('users_userid_seq')" />
+    </Type>
+  </Table>
+</Database>
