@@ -20,7 +20,7 @@ namespace Chancelerry
         private List<float> floatList;
         public static List<TextBox> SearchBoxsData = new List<TextBox>();
         public static Table DTable { get; set; }
-
+        private int rowsOnPage = 10;
         protected class DataOne
         {
             public string textValue { get; set; }
@@ -285,21 +285,21 @@ namespace Chancelerry
 
             // SIVAS OPTIMIZATION START
             List<CollectedFieldsValues> collectedFiltered = new List<CollectedFieldsValues>();
-            foreach (var c in cardsToShow.Skip((int)HttpContext.Current.Session["pageCntrl"] * 10).Take(10)) // берем id'шники цже отфильтрованных крточек по ID
+            foreach (var c in cardsToShow.Skip((int)HttpContext.Current.Session["pageCntrl"] * rowsOnPage).Take(rowsOnPage)) // берем id'шники цже отфильтрованных крточек по ID
             {
                 // добавляем сами карточки в лист, для дальнейшеq работы только с ними а не по всему dataContext.CollectedFieldsValues :)
                 collectedFiltered.AddRange(((from a in dataContext.CollectedFieldsValues where a.FkCollectedCard == c select a).ToList()));
             }
             // SIVAS OPTIMIZATION END
 
-            HttpContext.Current.Session["pageCount"] = (int)Math.Floor((double)cardsToShow.Count / 10) + 1; // количество страниц таблицы
+            HttpContext.Current.Session["pageCount"] = (int)Math.Floor((double)cardsToShow.Count / rowsOnPage) + 1; // количество страниц таблицы
             HttpContext.Current.Session["cardsCount"] = cardsToShow.Count;
 
 
             // Отрисовка //
 
             // по всем карточкам
-            foreach (var card in cardsToShow.Skip((int)HttpContext.Current.Session["pageCntrl"] * 10).Take(10).ToList())
+            foreach (var card in cardsToShow.Skip((int)HttpContext.Current.Session["pageCntrl"] * rowsOnPage).Take(rowsOnPage).ToList())
             {
                 List<string> cardRow = new List<string>();
 
