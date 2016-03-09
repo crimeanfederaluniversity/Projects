@@ -834,10 +834,10 @@ namespace Chancelerry.kanz
                         dicrionaryDropDownList.Style["Height"] = currentField.Height + "px";
                         dicrionaryDropDownList.Style["Width"] = currentField.Width + "px";
                         dicrionaryDropDownList.ID = "DictionaryDropDown" + fieldId;
-                        dicrionaryDropDownList.Attributes.Add("onchange", "if(document.getElementById('ctl00_MainContent_" + dicrionaryDropDownList.ID + "').Value=='')" +
+                        dicrionaryDropDownList.Attributes.Add("onchange", "if(document.getElementById('ctl00_MainContent_" + dicrionaryDropDownList.ID + "').value=='')" +
                                                                           "{document.getElementById('ctl00_MainContent_" + currentFieldTextBox.ID + "').style.visibility = 'visible';} " +
                                                                           "else {document.getElementById('ctl00_MainContent_" + currentFieldTextBox.ID + "').style.visibility = 'hidden';}" +
-                                                                          "document.getElementById('ctl00_MainContent_" + currentFieldTextBox.ID + "').Value=document.getElementById('ctl00_MainContent_" + dicrionaryDropDownList.ID + "').Value;");
+                                                                          "document.getElementById('ctl00_MainContent_" + currentFieldTextBox.ID + "').value=document.getElementById('ctl00_MainContent_" + dicrionaryDropDownList.ID + "').value;");
                         int dictionaryId = currentField.FkDictionary ?? 0;
                         dicrionaryDropDownList.Items.AddRange(_common.GetDictionaryValues(dictionaryId));
                         if (currentFieldTextBox.Text.Any())
