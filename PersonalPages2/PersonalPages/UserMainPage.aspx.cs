@@ -44,9 +44,13 @@ namespace PersonalPages
                 Label lb2 = new Label();
                 lb2.Text = "<br />";
                 Panel.Controls.Add(lb2);
-                foreach (var name in allprojects)
+                if (allprojects != null)
+                { 
+                foreach (var names in allprojects)
                 {
-                    if (name.Id < 8 || name.Id > 12)
+                        if (names!=null)
+                        { 
+                    if (names.Id < 8 || names.Id > 12)
                     {
                         if (allprojects.Count > 6)
                     {
@@ -56,21 +60,23 @@ namespace PersonalPages
                     lb1.Text = "&nbsp;&nbsp;";
                     Panel.Controls.Add(lb1);
                     ImageButton newBox = new ImageButton();
-                    newBox.ImageUrl = name.ImageUrl;
-                    newBox.ID = "box" + name.Id;
+                    newBox.ImageUrl = names.ImageUrl;
+                    newBox.ID = "box" + names.Id;
                     newBox.Height = 130;
                     newBox.Width = 130;
-                    newBox.ToolTip = name.ProjectName;
-                    newBox.AlternateText = Convert.ToString(name.Id);
+                    newBox.ToolTip = names.ProjectName;
+                    newBox.AlternateText = Convert.ToString(names.Id);
                     newBox.Click += new ImageClickEventHandler(this.RedirectToSubdomain);
                     Panel.Controls.Add(newBox);
                     Label lb = new Label();
                     lb.Text = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                     Panel.Controls.Add(lb);
+                            }
+                        }
                 }
-                }
-            }                    
-    }
+            }
+            }
+        }
        
              protected void RedirectToSubdomain(object sender, EventArgs e)
         {

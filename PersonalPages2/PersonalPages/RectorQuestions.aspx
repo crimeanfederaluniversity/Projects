@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RectorQuestions.aspx.cs" Inherits="PersonalPages.RectorQustions" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h3>Для того, чтобы обратиться с вопросом к ректору,пожалуйста, заполните данную форму:</h3>
 

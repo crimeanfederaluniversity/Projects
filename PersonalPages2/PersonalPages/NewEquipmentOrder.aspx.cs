@@ -19,20 +19,20 @@ namespace PersonalPages
                 if (aplication.Confirmed == 0)
                 {
                     Label1.Visible = true;
-                    Label1.Text = "Ваша заявка находится на рассмотрении";
+                    Label1.Text = "Ваша заявка находится на рассмотрении, в случае необходимости Вы можете подать новую";
                     Button1.Text = "Подать новую заявку";
                 }
                 if (aplication.Confirmed == 1)
                 {
                     Label1.Visible = true;
-                    Label1.Text = "Ваша заявка отклонена";
+                    Label1.Text = "Ваша заявка отклонена, в случае необходимости Вы можете подать новую";
                     Button1.Text = "Подать новую заявку";
                 }
                 if (aplication.Confirmed == 2)
                 {
                     Label1.Visible = true;
                     Button1.Text = "Подать новую заявку";
-                    Label1.Text = "Ваша заявка принята";
+                    Label1.Text = "Ваша заявка принята, в случае необходимости Вы можете подать новую";
                 }
             }
         }
