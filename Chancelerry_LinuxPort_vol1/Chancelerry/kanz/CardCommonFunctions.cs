@@ -1124,13 +1124,15 @@ namespace Chancelerry.kanz
         public int CreateNewFieldValueInCard(int cardId, int userId, int fieldId, int Version, int Instance,
             string textValue, bool IsDeleted)
         {
+            int lastVersion = _common.GetLastVersionByCard(cardId); // FORPORT
             CollectedFieldsValues newField = new CollectedFieldsValues();
             newField.Active = true;
             newField.FkCollectedCard = cardId;
             newField.FkField = fieldId;
             newField.FkUser = userId;
             newField.CreateDateTime = DateTime.Now;
-            newField.Version = Version;
+            newField.Version = lastVersion + 1;   // FORPOR
+
             newField.Instance = Instance;
             newField.ValueText = textValue;
             newField.IsDeleted = IsDeleted;
