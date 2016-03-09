@@ -359,7 +359,12 @@ namespace Chancelerry.kanz
                     string value="";
                     for (int i=0;i< maxInstance+1;i++)
                     {
-                        CollectedFieldsValues tmp2 = (from a in collectedFields where a.instance == i select a).OrderByDescending(mc => mc.version).FirstOrDefault();
+                       List<CollectedFieldsValues> tmp3 = (from a in collectedFields where a.instance == i  select a).OrderByDescending(mc => mc.version).ToList();
+                        CollectedFieldsValues tmp2 = null;
+                        if (tmp3.Count > 0)
+                        {
+                            tmp2 = (from a in tmp3 where a.valueText.Length > 0 select a).FirstOrDefault() ;
+                        }
                         if (tmp2 == null)
                             continue;
                         if (tmp2.isDeleted)
@@ -1110,13 +1115,15 @@ namespace Chancelerry.kanz
         public int CreateNewFieldValueInCard(int cardId, int userId, int fieldId, int version, int instance,
             string textValue,bool isDeleted)
         {
+            int lastVersion = _common.GetLastVersionByCard(cardId); // FORPORT
             CollectedFieldsValues newField = new CollectedFieldsValues();
             newField.active = true;
             newField.fk_collectedCard = cardId;
             newField.fk_field = fieldId;
             newField.fk_user = userId;
             newField.createDateTime = DateTime.Now;
-            newField.version = version;
+            newField.version = lastVersion+1;   // FORPORT  // все 100500 поменять 200500 в проекте
+            
             newField.instance = instance;
             newField.valueText = textValue;
             newField.isDeleted = isDeleted;
