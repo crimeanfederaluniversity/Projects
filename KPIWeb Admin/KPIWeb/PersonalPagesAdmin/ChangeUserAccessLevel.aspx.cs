@@ -127,10 +127,7 @@ namespace KPIWeb.PersonalPagesAdmin
             }
             RefreshGrid();
         }
-        protected void Button2_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/PersonalPagesAdmin/EditPersonalPage.aspx");
-        }
+       
     }
 }
 

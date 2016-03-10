@@ -6,7 +6,7 @@
     <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Регистрация пользователей" Width="500px" Height="50px" />
     <br />
     <br />
-    <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Редактирование прав доступа" Height="50px" Width="500px" />
+    <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="База пользователей" Height="50px" Width="500px" />
     <br />
     <br />
     <asp:Button ID="Button5" runat="server" Height="50px" Text="Заявки пользователей на  доступ к модулям" Width="500px" OnClick="Button5_Click" />
