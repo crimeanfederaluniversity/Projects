@@ -24,7 +24,7 @@
 
     <asp:Panel ID="SearchPanel" runat="server">
         <asp:Button ID="Button44" runat="server" OnClick="Button4_Click" Text="Очистить поиск" OnClientClick="showLoadingScreen()"/>
-        <asp:Button ID="Button22" runat="server" OnClick="Button2_Click" Text="Поиск" OnClientClick="showLoadingScreen()"/>
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Поиск" OnClientClick="showLoadingScreen()"/>
     </asp:Panel>
 
     <br />
