@@ -17,7 +17,7 @@
     <script>
         function loadPage () {
             
-            var tableElem = document.getElementById('MainContent_cardMainDiv');
+            var tableElem = document.getElementById('ctl00_MainContent_cardMainDiv');
             if (tableElem == null) {
                 return false;
             }
