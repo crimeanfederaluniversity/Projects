@@ -105,7 +105,7 @@ namespace Chancelerry.kanz
         {
             Session["canEdit"] = true;
             Session["cardID"] = 0;
-            Session["version"] = 100500;
+            Session["version"] = 200500;
             Response.Redirect("CardEdit.aspx");
         }
 

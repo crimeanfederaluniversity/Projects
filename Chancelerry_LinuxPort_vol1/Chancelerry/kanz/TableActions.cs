@@ -53,7 +53,7 @@ namespace Chancelerry
             ImageButton thisButton = (ImageButton)sender;
             int currentCardId = Convert.ToInt32(thisButton.Attributes["_cardID"]);
             HttpContext.Current.Session["cardID"] = currentCardId; 
-            HttpContext.Current.Session["version"] = 100500;
+            HttpContext.Current.Session["version"] = 200500;
             HttpContext.Current.Session["canEdit"] = true;
             HttpContext.Current.Response.Redirect("~/kanz/CardEdit.aspx", true);
         }
@@ -63,7 +63,7 @@ namespace Chancelerry
             ImageButton thisButton = (ImageButton)sender;
             int currentCardId = Convert.ToInt32(thisButton.Attributes["_cardID"]);
             HttpContext.Current.Session["cardID"] = currentCardId;
-            HttpContext.Current.Session["version"] = 100500;
+            HttpContext.Current.Session["version"] = 200500;
             HttpContext.Current.Session["canEdit"] = false;
             HttpContext.Current.Response.Redirect("~/kanz/CardEdit.aspx", true);
         }
