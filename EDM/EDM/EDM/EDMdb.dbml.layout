@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.25, 8.5" name="EDMdb">
+  <DataContextMoniker Name="/EDMdbDataContext" />
+  <nestedChildShapes>
+    <classShape Id="3cb414c2-c5aa-4f06-a170-e1fb06bd8868" absoluteBounds="9, 4.125, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/EDMdbDataContext/Documents" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ab00122a-b9ce-435d-9dab-62301c1e3527" absoluteBounds="9.015, 4.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9f39d6e4-2080-4e94-b489-76d75cb69464" absoluteBounds="0.75, 3.875, 2, 2.155499674479167">
+      <DataClassMoniker Name="/EDMdbDataContext/Users" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f04fd7c6-916f-4d04-98db-1ea9ea529a29" absoluteBounds="0.765, 4.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="54edc2ff-3247-4c97-be39-73fe0f8a04fe" absoluteBounds="6.25, 0.75, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/EDMdbDataContext/Participants" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a67b35a3-15f7-49c9-b29b-e38c9dd39342" absoluteBounds="6.265, 1.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1c55f016-2b50-483f-aa5b-509ae47fbd49" absoluteBounds="3.5, 4, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/EDMdbDataContext/Processes" />
+      <nestedChildShapes>
+        <elementListCompartment Id="22e9eeb0-3d2f-49c5-adc5-1a0e622dc36a" absoluteBounds="3.515, 4.46, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8b993391-3e51-45a8-b114-715645268401" absoluteBounds="6.25, 4, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/EDMdbDataContext/ProcessVersions" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d8e20470-d911-4ccd-8182-d3ffb3a09bc9" absoluteBounds="6.265, 4.46, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="06b07eeb-5b1f-48b4-8f02-4b949a500cd1" absoluteBounds="9, 1.25, 2, 1.9631982421875">
+      <DataClassMoniker Name="/EDMdbDataContext/Steps" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f8ee5a0a-1629-48f2-bc14-6fe64b389f53" absoluteBounds="9.015, 1.71, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(1.75 : 3.875); (1.75 : 1.92390055338542); (6.25 : 1.92390055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/EDMdbDataContext/Users/Users_Participants" />
+      <nodes>
+        <classShapeMoniker Id="9f39d6e4-2080-4e94-b489-76d75cb69464" />
+        <classShapeMoniker Id="54edc2ff-3247-4c97-be39-73fe0f8a04fe" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.5 : 4); (4.5 : 2.54210333007812); (6.25 : 2.54210333007812)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/EDMdbDataContext/Processes/Processes_Participants" />
+      <nodes>
+        <classShapeMoniker Id="1c55f016-2b50-483f-aa5b-509ae47fbd49" />
+        <classShapeMoniker Id="54edc2ff-3247-4c97-be39-73fe0f8a04fe" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 4.88544840494792); (3.5 : 4.88544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/EDMdbDataContext/Users/Users_Processes" />
+      <nodes>
+        <classShapeMoniker Id="9f39d6e4-2080-4e94-b489-76d75cb69464" />
+        <classShapeMoniker Id="1c55f016-2b50-483f-aa5b-509ae47fbd49" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 4.91429768880208); (9 : 4.91429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/EDMdbDataContext/ProcessVersions/ProcessVersions_Documents" />
+      <nodes>
+        <classShapeMoniker Id="8b993391-3e51-45a8-b114-715645268401" />
+        <classShapeMoniker Id="3cb414c2-c5aa-4f06-a170-e1fb06bd8868" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 4.88544840494792); (6.25 : 4.88544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/EDMdbDataContext/Processes/Processes_ProcessVersions" />
+      <nodes>
+        <classShapeMoniker Id="1c55f016-2b50-483f-aa5b-509ae47fbd49" />
+        <classShapeMoniker Id="8b993391-3e51-45a8-b114-715645268401" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 2.17390055338542); (9 : 2.17390055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/EDMdbDataContext/Participants/Participants_Steps" />
+      <nodes>
+        <classShapeMoniker Id="54edc2ff-3247-4c97-be39-73fe0f8a04fe" />
+        <classShapeMoniker Id="06b07eeb-5b1f-48b4-8f02-4b949a500cd1" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 4); (8.625 : 3.625); (8.625 : 2.72480139778646); (9 : 2.72480139778646)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+      <AssociationMoniker Name="/EDMdbDataContext/ProcessVersions/ProcessVersions_Steps" />
+      <nodes>
+        <classShapeMoniker Id="8b993391-3e51-45a8-b114-715645268401" />
+        <classShapeMoniker Id="06b07eeb-5b1f-48b4-8f02-4b949a500cd1" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
