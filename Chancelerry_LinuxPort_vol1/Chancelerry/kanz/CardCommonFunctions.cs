@@ -808,11 +808,16 @@ namespace Chancelerry.kanz
                     #endregion
                     if (cardId != 0)
                     {
-                        currentFieldTextBox.Text = _common.GetFieldValueByCardVersionInstance(currentField.FieldID, cardId, Version, Instance);
+                        currentFieldTextBox.Text = _common.GetFieldValueByCardVersionInstance(currentField.FieldID, cardId, Version, Instance).Trim();
                     }
                     else if (_dataTypes.IsFieldAutoFill(currentField.Type))
                     {
-                        currentFieldTextBox.Text = _dataTypes.GetAutoValue(currentField.Type, currentField.FieldID, _registerId);
+                        currentFieldTextBox.Text = _dataTypes.GetAutoValue(currentField.Type, currentField.FieldID,
+                            _registerId).Trim();
+                    }
+                    else
+                    {
+                        currentFieldTextBox.Text = "";
                     }
                     #region dropdown
                     if (currentField.FkDictionary != null && !_readonly) // создаем выпадающий список
