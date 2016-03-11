@@ -41,9 +41,12 @@
     <Type Name="Processes">
       <Column Name="processID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="fk_initiator" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="startDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="endDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="Processes_Participants" Member="Participants" ThisKey="processID" OtherKey="fk_process" Type="Participants" />
       <Association Name="Processes_ProcessVersions" Member="ProcessVersions" ThisKey="processID" OtherKey="fk_process" Type="ProcessVersions" />
       <Association Name="Users_Processes" Member="Users" ThisKey="fk_initiator" OtherKey="userID" Type="Users" IsForeignKey="true" />
@@ -56,6 +59,7 @@
       <Column Name="fk_process" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="version" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="comment" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="status" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Association Name="ProcessVersions_Documents" Member="Documents" ThisKey="processVersionID" OtherKey="fk_processVersion" Type="Documents" />
       <Association Name="ProcessVersions_Steps" Member="Steps" ThisKey="processVersionID" OtherKey="fk_processVersion" Type="Steps" />
       <Association Name="Processes_ProcessVersions" Member="Processes" ThisKey="fk_process" OtherKey="processID" Type="Processes" IsForeignKey="true" />

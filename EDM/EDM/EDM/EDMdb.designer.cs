@@ -916,11 +916,17 @@ namespace EDM
 		
 		private bool _active;
 		
+		private string _name;
+		
 		private string _type;
 		
 		private int _fk_initiator;
 		
 		private int _status;
+		
+		private System.Nullable<System.DateTime> _startDate;
+		
+		private System.Nullable<System.DateTime> _endDate;
 		
 		private EntitySet<Participants> _Participants;
 		
@@ -936,12 +942,18 @@ namespace EDM
     partial void OnprocessIDChanged();
     partial void OnactiveChanging(bool value);
     partial void OnactiveChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
     partial void OntypeChanging(string value);
     partial void OntypeChanged();
     partial void Onfk_initiatorChanging(int value);
     partial void Onfk_initiatorChanged();
     partial void OnstatusChanging(int value);
     partial void OnstatusChanged();
+    partial void OnstartDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnstartDateChanged();
+    partial void OnendDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnendDateChanged();
     #endregion
 		
 		public Processes()
@@ -988,6 +1000,26 @@ namespace EDM
 					this._active = value;
 					this.SendPropertyChanged("active");
 					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(50)")]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
 				}
 			}
 		}
@@ -1052,6 +1084,46 @@ namespace EDM
 					this._status = value;
 					this.SendPropertyChanged("status");
 					this.OnstatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_startDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> startDate
+		{
+			get
+			{
+				return this._startDate;
+			}
+			set
+			{
+				if ((this._startDate != value))
+				{
+					this.OnstartDateChanging(value);
+					this.SendPropertyChanging();
+					this._startDate = value;
+					this.SendPropertyChanged("startDate");
+					this.OnstartDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_endDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> endDate
+		{
+			get
+			{
+				return this._endDate;
+			}
+			set
+			{
+				if ((this._endDate != value))
+				{
+					this.OnendDateChanging(value);
+					this.SendPropertyChanging();
+					this._endDate = value;
+					this.SendPropertyChanged("endDate");
+					this.OnendDateChanged();
 				}
 			}
 		}
@@ -1177,6 +1249,8 @@ namespace EDM
 		
 		private string _comment;
 		
+		private string _status;
+		
 		private EntitySet<Documents> _Documents;
 		
 		private EntitySet<Steps> _Steps;
@@ -1197,6 +1271,8 @@ namespace EDM
     partial void OnversionChanged();
     partial void OncommentChanging(string value);
     partial void OncommentChanged();
+    partial void OnstatusChanging(string value);
+    partial void OnstatusChanged();
     #endregion
 		
 		public ProcessVersions()
@@ -1307,6 +1383,26 @@ namespace EDM
 					this._comment = value;
 					this.SendPropertyChanged("comment");
 					this.OncommentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_status", DbType="VarChar(MAX)")]
+		public string status
+		{
+			get
+			{
+				return this._status;
+			}
+			set
+			{
+				if ((this._status != value))
+				{
+					this.OnstatusChanging(value);
+					this.SendPropertyChanging();
+					this._status = value;
+					this.SendPropertyChanged("status");
+					this.OnstatusChanged();
 				}
 			}
 		}

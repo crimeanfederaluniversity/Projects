@@ -11,7 +11,30 @@ namespace EDM.edm
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            var userId = Session["userID"];
+            if (userId == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            /////////////////////////////////////////////////////////////////////
+        }
 
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Session["direction"] = 1;
+            Response.Redirect("Dashboard.aspx");
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Session["direction"] = 0;
+            Response.Redirect("Dashboard.aspx");
+        }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            Session["direction"] = 2;
+            Response.Redirect("Dashboard.aspx");
         }
     }
 }
