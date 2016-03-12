@@ -2,13 +2,24 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <br />
     <script src="calendar_ru.js" type="text/javascript"> </script>
-    
+  
+      <style type="text/css">
+          .noFirstColumn td:first-child
+          {
+           display:none;
+          }
+          .noFirstColumn th:first-child
+          {
+           display:none;
+          }
+      </style>
+
     <div id="createNewProcessDiv" runat="server" >
     <table>
         <tr>
 		   <th>Тип согласования</th>
-            <th>Название</th>
-            <th>Кол-во согласующих</th>
+            <th>Название <asp:RequiredFieldValidator runat="server" ControlToValidate="ProcessNameTextBox" ErrorMessage="!" ForeColor="red"/> </th>
+            <th>Кол-во согласующих <asp:RequiredFieldValidator runat="server" ControlToValidate="ParticipantsCountTextBox" ErrorMessage="!" ForeColor="red"/></th>
             <th>Создать</th>
             
         </tr>
@@ -19,12 +30,16 @@
                 <asp:ListItem Value="serial">Последовательное согласование</asp:ListItem>
                 <asp:ListItem Value="review">Рецензия</asp:ListItem>
             </asp:DropDownList>
+		       
+
             </td>
             <td>
                 <asp:TextBox ID="ProcessNameTextBox"  runat="server"></asp:TextBox>
+                
             </td>
             <td>
                 <asp:TextBox ID="ParticipantsCountTextBox" TextMode="Number" runat="server"></asp:TextBox>
+                
             </td>
             
             <td>
@@ -36,8 +51,19 @@
 
     <br/>
     
+    
+ 
+
     <div runat="server" id="existingProcessTitleDiv">
         <asp:Label ID="ProcessIdLabel" runat="server" Text=""></asp:Label>
+    </div>
+    
+    <br/>
+        <div runat="server" id="commentForVersionDiv">
+         Комментарий
+            <br />
+        <asp:TextBox ID="commentForVersionTextBox" runat="server" Height="70px" Width="600px" TextMode="MultiLine"></asp:TextBox>
+         <asp:RequiredFieldValidator runat="server" ControlToValidate="commentForVersionTextBox" ErrorMessage="!" ForeColor="red"/> 
     </div>
     
     <br/>

@@ -11,7 +11,6 @@ namespace EDM.edm
     public class ProcessMainFucntions
     {
         EDMdbDataContext _edmDb = new EDMdbDataContext();
-
         public void KillParticipant(int participantId)
         {
             Participants participantToKill =
@@ -19,7 +18,6 @@ namespace EDM.edm
             participantToKill.active = false;
             _edmDb.SubmitChanges();
         }
-
         public List<ProcessEdit.Participant> ParticipantsList = new List<ProcessEdit.Participant>();
         public int CreateNewParticipent(int processId, int userId , int queue ,DateTime endDate)
         {
@@ -37,6 +35,20 @@ namespace EDM.edm
             _edmDb.SubmitChanges();
             return newParticipant.participantID;
 
+        }
+        public bool WithQueueByProcess(int processId)
+        {
+            Processes currentProc = GetProcessById(processId);
+            if (currentProc.type == "serial")
+                return true;
+            return false;
+        }
+        public string GetCommentForLastVersion(int processId)
+        {
+            ProcessVersions currentVersion = GetLastVersionInProcess(processId);
+            if (currentVersion!=null)
+            return GetLastVersionInProcess(processId).comment;
+            return "";
         }
         public List<Users> GetUsersBySearch(string searchValue)
         {
@@ -162,7 +174,7 @@ namespace EDM.edm
                 return "";
             return currentProcess.name;
         }
-        public List<ProcessEdit.Participant> GetParticipantsInProcess(int processId)
+        public List<ProcessEdit.Participant> GetParticipantsListInProcess(int processId)
         {
             List <ProcessEdit.Participant> listToReturn = new List<ProcessEdit.Participant>();
 
@@ -184,6 +196,18 @@ namespace EDM.edm
 
             return listToReturn;
         }
+        public List<Participants> GetParticipantsInProcess(int processId)
+        {
+            // List <ProcessEdit.Participant> listToReturn = new List<ProcessEdit.Participant>();
+
+            List<Participants> participants =
+                (from a in _edmDb.Participants where a.active == true && a.fk_process == processId select a).OrderBy(
+                    mc => mc.queue).ToList();
+            return participants;
+
+
+
+        }
         public ProcessVersions GetLastVersionInProcess(int processId)
         {
             return
@@ -196,30 +220,26 @@ namespace EDM.edm
                 where a.fk_processVersion == processVersionId
                       && a.active == true
                 select a).ToList();
-        } 
-        public List<ProcessEdit.DocumentsClass> GetDocumentsInProcess(int processId)
+        }
+        public Users GetUserById(int userId)
         {
-            List<ProcessEdit.DocumentsClass> listToReturn = new List<ProcessEdit.DocumentsClass>();
-            ProcessVersions currentVersion = GetLastVersionInProcess(processId);
-            if (currentVersion != null)
-            {
-                List<Documents> documentsInCurrentVersion = GetDocumentsInProcessVersion(currentVersion.processVersionID);
-                foreach (Documents currentDocument in documentsInCurrentVersion)
-                {
-                    ProcessEdit.DocumentsClass newDocClass = new ProcessEdit.DocumentsClass();
-
-                    newDocClass.LinkButtonToDocument = new LinkButton();
-                    newDocClass.LinkButtonToDocument.Text = currentDocument.documentName;
-                    newDocClass.LinkButtonToDocument.CommandArgument = currentDocument.documentID.ToString();
-                    newDocClass.DocumentId = currentDocument.documentID;
-                    newDocClass.DocumentCommentTextBox = new TextBox();
-                    newDocClass.DocumentCommentTextBox.Text = currentDocument.documentComment;
-
-                    listToReturn.Add(newDocClass);
-                }
-            }
-            return listToReturn;
-        } 
+            return (from a in _edmDb.Users where a.userID == userId select a).FirstOrDefault();
+        }
+        public void KillDocument(int docId)
+        {
+            Documents docToKill =
+                (from a in _edmDb.Documents where a.documentID == docId select a).FirstOrDefault();
+            docToKill.active = false;
+            _edmDb.SubmitChanges();
+        }
+        public void SetDocumentToVersion(int documentId, int newVersion)
+        {
+            Documents doc = (from a in _edmDb.Documents
+                where a.documentID == documentId
+                select a).FirstOrDefault();
+            doc.fk_processVersion = newVersion;
+            _edmDb.SubmitChanges();
+        }
         public int CreateNewProcessVersion(int processId,string comment, int version, string status)
         {
             ProcessVersions newVersion = new ProcessVersions();
