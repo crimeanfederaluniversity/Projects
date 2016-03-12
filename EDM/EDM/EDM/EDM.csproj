@@ -408,6 +408,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EDMdb.dbml</DependentUpon>
     </Compile>
+    <Compile Include="edm\Approvment.cs" />
     <Compile Include="edm\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
