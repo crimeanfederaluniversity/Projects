@@ -132,7 +132,7 @@ namespace EDM.edm
                             var lastStepUser = lastStep.fk_participent;
 
                             var lastUserQueue = (from a in dataContext.Participants
-                                                 where a.active && a.fk_process == proc.processID && a.fk_user == lastStepUser
+                                                 where a.active && a.fk_process == proc.processID && a.participantID == lastStepUser
                                                  select a.queue).FirstOrDefault();
 
                             if (lastUserQueue + 1 == userQueue)
@@ -287,7 +287,7 @@ namespace EDM.edm
                 ButtonField coluButtonField = new ButtonField();
                 coluButtonField.Text = "Редактировать";
                 coluButtonField.ButtonType = ButtonType.Button;
-                coluButtonField.CommandName = "EditP";
+                coluButtonField.CommandName = "ButtonR0";
                 gridView.Columns.Add(coluButtonField);
 
                 ButtonField coluButtonField2 = new ButtonField();
