@@ -71,7 +71,7 @@ namespace EDM.edm
                                            select a.participantID).FirstOrDefault();// id-шник этого пользователя в участниках процесса
 
                     var versionMax =
-                        (from a in dataContext.ProcessVersions where a.fk_process == proc.processID select a)
+                        (from a in dataContext.ProcessVersions where a.active && a.fk_process == proc.processID select a)
                             .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
 
                     // если очередь == 0 то это либо || либо --. но первый в очереди
@@ -79,14 +79,6 @@ namespace EDM.edm
                     {
                         if (proc.type.Equals("serial"))
                         {
-                            /*int procMaxVersion =
-                                (from a in dataContext.ProcessVersions
-                                 where a.fk_process == proc.processID && a.active
-                                 select a).OrderByDescending(v => v.version)
-                                    .Select(v => v.processVersionID)
-                                    .FirstOrDefault();
-                                    */
-
                             var step4Proc =
                                 (from a in dataContext.Steps
                                  where a.active && a.fk_processVersion == versionMax
