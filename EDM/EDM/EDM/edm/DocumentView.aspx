@@ -11,13 +11,17 @@
     <asp:GridView ID="docGridView" runat="server" AutoGenerateColumns="False">
     </asp:GridView>
     
+    <br />
+    
     <asp:Label ID="LabelComment" runat="server" Text="Label"></asp:Label>
 
     <br />
 
     <asp:Button ID="ApproveButton" runat="server" Text="Согласовать" OnClick="ApproveButton_Click" />
         <br />
-    <asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine"></asp:TextBox>
+        <br />
+    <asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine" Height="54px" Width="160px"></asp:TextBox>
+    <br />
     <br />
     <asp:Button ID="RejectButton" runat="server" Text="Отправить на доработку" OnClick="RejectButton_Click" />
     

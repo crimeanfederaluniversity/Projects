@@ -22,10 +22,16 @@ namespace EDM.edm
                         where a.active && a.fk_user == user && a.fk_process == proc
                         select a.participantID).FirstOrDefault();
 
+        
+                ProcessVersions procVer =
+                    (from b in dataContext.ProcessVersions where b.active && b.processVersionID == procVersion select b)
+                        .FirstOrDefault();
+
                 step.active = true;
                 step.fk_processVersion = procVersion;
                 step.fk_participent = fkParticipant;
                 step.stepResult = 1;
+                if (procVer != null) { procVer.status = "Утвержден пользователем: "+ (from a in dataContext.Users where a.userID == user select a.name).FirstOrDefault()+" "+ DateTime.Now.ToShortDateString(); } else throw new Exception("Не возможно присвоить версии процесса в статус 1. Скорее всего он не существует");
                 step.date = DateTime.Now;
 
                 dataContext.Steps.InsertOnSubmit(step);
@@ -64,7 +70,7 @@ namespace EDM.edm
                 step.fk_participent = fkParticipant;
                 step.comment = comment;
                 step.stepResult = -2;
-                if (process != null && procVer != null) { process.status = -2; procVer.status="Возвращен на доработку";} else throw new Exception("Не возможно вернуть процесс в статус -2. Скорее всего он не существует");
+                if (process != null && procVer != null) { process.status = -2; procVer.status="Возвращен на доработку пользователем: " + (from a in dataContext.Users where a.userID == user select a.name).FirstOrDefault() + " " + DateTime.Now.ToShortTimeString();  } else throw new Exception("Не возможно вернуть процесс в статус -2. Скорее всего он не существует");
                 step.date = DateTime.Now;
 
 
