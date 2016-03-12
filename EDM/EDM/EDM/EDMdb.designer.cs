@@ -143,6 +143,8 @@ namespace EDM
 		
 		private int _fk_processVersion;
 		
+		private string _documentComment;
+		
 		private EntityRef<ProcessVersions> _ProcessVersions;
 		
     #region Extensibility Method Definitions
@@ -157,6 +159,8 @@ namespace EDM
     partial void OnactiveChanged();
     partial void Onfk_processVersionChanging(int value);
     partial void Onfk_processVersionChanged();
+    partial void OndocumentCommentChanging(string value);
+    partial void OndocumentCommentChanged();
     #endregion
 		
 		public Documents()
@@ -245,6 +249,26 @@ namespace EDM
 					this._fk_processVersion = value;
 					this.SendPropertyChanged("fk_processVersion");
 					this.Onfk_processVersionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_documentComment", DbType="VarChar(MAX)")]
+		public string documentComment
+		{
+			get
+			{
+				return this._documentComment;
+			}
+			set
+			{
+				if ((this._documentComment != value))
+				{
+					this.OndocumentCommentChanging(value);
+					this.SendPropertyChanging();
+					this._documentComment = value;
+					this.SendPropertyChanged("documentComment");
+					this.OndocumentCommentChanged();
 				}
 			}
 		}
@@ -1530,6 +1554,8 @@ namespace EDM
 		
 		private System.Nullable<int> _stepResult;
 		
+		private System.Nullable<System.DateTime> _date;
+		
 		private EntityRef<Participants> _Participants;
 		
 		private EntityRef<ProcessVersions> _ProcessVersions;
@@ -1550,6 +1576,8 @@ namespace EDM
     partial void OncommentChanged();
     partial void OnstepResultChanging(System.Nullable<int> value);
     partial void OnstepResultChanged();
+    partial void OndateChanging(System.Nullable<System.DateTime> value);
+    partial void OndateChanged();
     #endregion
 		
 		public Steps()
@@ -1683,6 +1711,26 @@ namespace EDM
 					this._stepResult = value;
 					this.SendPropertyChanged("stepResult");
 					this.OnstepResultChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> date
+		{
+			get
+			{
+				return this._date;
+			}
+			set
+			{
+				if ((this._date != value))
+				{
+					this.OndateChanging(value);
+					this.SendPropertyChanging();
+					this._date = value;
+					this.SendPropertyChanged("date");
+					this.OndateChanged();
 				}
 			}
 		}

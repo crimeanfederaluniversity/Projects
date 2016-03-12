@@ -6,6 +6,7 @@
       <Column Name="documentName" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="fk_processVersion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="documentComment" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Association Name="ProcessVersions_Documents" Member="ProcessVersions" ThisKey="fk_processVersion" OtherKey="processVersionID" Type="ProcessVersions" IsForeignKey="true" />
     </Type>
   </Table>
@@ -73,6 +74,7 @@
       <Column Name="fk_participent" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="comment" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="stepResult" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="Participants_Steps" Member="Participants" ThisKey="fk_participent" OtherKey="participantID" Type="Participants" IsForeignKey="true" />
       <Association Name="ProcessVersions_Steps" Member="ProcessVersions" ThisKey="fk_processVersion" OtherKey="processVersionID" Type="ProcessVersions" IsForeignKey="true" />
     </Type>
