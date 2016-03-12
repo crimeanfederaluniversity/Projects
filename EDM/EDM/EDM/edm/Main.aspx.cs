@@ -39,6 +39,7 @@ namespace EDM.edm
 
         protected void Button4_Click(object sender, EventArgs e)
         {
+            Session["processID"] = 0;
             Response.Redirect("ProcessEdit.aspx");
         }
     }

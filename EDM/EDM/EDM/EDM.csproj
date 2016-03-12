@@ -203,6 +203,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="edm\calendar_ru.js" />
     <Content Include="edm\Dashboard.aspx" />
     <Content Include="edm\DocumentView.aspx" />
     <Content Include="edm\Main.aspx" />
@@ -437,6 +438,7 @@
     <Compile Include="edm\ProcessEdit.aspx.designer.cs">
       <DependentUpon>ProcessEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="edm\processEdit.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
