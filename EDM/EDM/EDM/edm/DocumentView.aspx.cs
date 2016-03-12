@@ -20,7 +20,7 @@ namespace EDM.edm
 
             if (!Page.IsPostBack)
             {
-    
+
                 int proc;
                 int.TryParse(Session["processID"].ToString(), out proc);
 
@@ -42,8 +42,8 @@ namespace EDM.edm
 
                 LabelComment.Text =
                     (from a in dataContext.ProcessVersions
-                        where a.active && a.processVersionID == procMaxVersion
-                        select a.comment).FirstOrDefault();
+                     where a.active && a.processVersionID == procMaxVersion
+                     select a.comment).FirstOrDefault();
 
                 RefreshGrid(dataContext, procMaxVersion);
 
@@ -91,7 +91,7 @@ namespace EDM.edm
                     (from a in dataContext.ProcessVersions where a.fk_process == proc && a.active select a)
                         .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
 
-            approve.AddApprove(userId,procMaxVersion,this);
+            approve.AddApprove(userId, procMaxVersion, this);
 
         }
 

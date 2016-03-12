@@ -439,6 +439,7 @@
       <DependentUpon>ProcessEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="edm\processEdit.cs" />
+    <Compile Include="edm\TableActions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

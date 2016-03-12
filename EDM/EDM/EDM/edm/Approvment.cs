@@ -13,10 +13,18 @@ namespace EDM.edm
             using (EDMdbDataContext dataContext = new EDMdbDataContext())
             {
                 Steps step = new Steps();
+                var proc =
+                    (from a in dataContext.ProcessVersions
+                        where a.active && a.processVersionID == procVersion
+                        select a.fk_process).FirstOrDefault();
+                var fkParticipant =
+                    (from a in dataContext.Participants
+                        where a.active && a.fk_user == user && a.fk_process == proc
+                        select a.participantID).FirstOrDefault();
 
                 step.active = true;
                 step.fk_processVersion = procVersion;
-                step.fk_participent = user;
+                step.fk_participent = fkParticipant;
                 step.stepResult = 1;
                 step.date = DateTime.Now;
 
@@ -38,6 +46,10 @@ namespace EDM.edm
                         (from v in dataContext.ProcessVersions
                          where v.active && v.processVersionID == procVersion
                          select v.fk_process).FirstOrDefault();
+                var fkParticipant =
+                    (from a in dataContext.Participants
+                     where a.active && a.fk_user == user && a.fk_process == procId
+                     select a.participantID).FirstOrDefault();
 
                 Steps step = new Steps();
                 Processes process =
@@ -49,7 +61,7 @@ namespace EDM.edm
 
                 step.active = true;
                 step.fk_processVersion = procVersion;
-                step.fk_participent = user;
+                step.fk_participent = fkParticipant;
                 step.comment = comment;
                 step.stepResult = -2;
                 if (process != null && procVer != null) { process.status = -2; procVer.status="Возвращен на доработку";} else throw new Exception("Не возможно вернуть процесс в статус -2. Скорее всего он не существует");

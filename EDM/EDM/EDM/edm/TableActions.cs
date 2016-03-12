@@ -1,13 +1,10 @@
-п»їusing System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace EDM.edm
 {
-    public partial class Dashboard : System.Web.UI.Page
+    public class TableActions
     {
         public class DataOne
         {
@@ -21,33 +18,26 @@ namespace EDM.edm
             public string Type { get; set; }
             public int Version { get; set; }
         }
-        protected void Page_Load(object sender, EventArgs e)
+
+        private Dashboard _dashboard;
+        private DocumentView _docView;
+
+        public TableActions(Dashboard dashboard)
         {
-            var userId = Session["userID"];
-            if (userId == null)
-            {
-                Response.Redirect("~/Default.aspx");
-            }
-            /////////////////////////////////////////////////////////////////////
-
-            if (!Page.IsPostBack)
-            {
-                int userID;
-                int direction;
-                int.TryParse(Session["userID"].ToString(), out userID);
-                int.TryParse(Session["direction"].ToString(), out direction);
-
-                RenderGrid(dashGridView, FillingGrid(direction, userID), direction);
-
-            }
+            _dashboard = dashboard;
         }
 
-        private static List<DataOne> FillingGrid(int direction, int userID)
+        public TableActions(DocumentView docView)
+        {
+            _docView = docView;
+        }
+
+        public static List<DataOne> FillingDashGrid(int direction, int userID)
         {
             EDMdbDataContext dataContext = new EDMdbDataContext();
             List<DataOne> dataOneSource = new List<DataOne>();
 
-            #region Р’С…РѕРґСЏС€РёРµ
+            #region Входяшие
 
             if (direction == 1)
             {
@@ -55,44 +45,43 @@ namespace EDM.edm
                     (from a in dataContext.Participants where a.active && a.fk_user == userID select a.fk_process).Distinct().ToList();
 
                 var procesesToUser = (from p in userIsParticipant
-                                      join proc in dataContext.Processes on p equals proc.processID
-                                      where proc.active && proc.status == 0
-                                      select proc).OrderByDescending(startD => startD.startDate).ToList();
+                    join proc in dataContext.Processes on p equals proc.processID
+                    where proc.active && proc.status == 0
+                    select proc).OrderByDescending(startD => startD.startDate).ToList();
 
 
                 foreach (var proc in procesesToUser)
                 {
                     var userQueue = (from a in dataContext.Participants
-                                     where a.fk_process == proc.processID && a.fk_user == userID && a.active
-                                     select a.queue).FirstOrDefault(); // РѕС‡РµСЂРµРґСЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+                        where a.fk_process == proc.processID && a.fk_user == userID && a.active
+                        select a.queue).FirstOrDefault(); // очередь пользователя
 
                     var userParticipant = (from a in dataContext.Participants
-                                           where a.active && a.fk_process == proc.processID && a.fk_user == userID
-                                           select a.participantID).FirstOrDefault();// id-С€РЅРёРє СЌС‚РѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РІ СѓС‡Р°СЃС‚РЅРёРєР°С… РїСЂРѕС†РµСЃСЃР°
+                        where a.active && a.fk_process == proc.processID && a.fk_user == userID
+                        select a.participantID).FirstOrDefault();// id-шник этого пользователя в участниках процесса
 
                     var versionMax =
                         (from a in dataContext.ProcessVersions where a.fk_process == proc.processID select a)
                             .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
 
-                    // РµСЃР»Рё РѕС‡РµСЂРµРґСЊ == 0 С‚Рѕ СЌС‚Рѕ Р»РёР±Рѕ || Р»РёР±Рѕ --. РЅРѕ РїРµСЂРІС‹Р№ РІ РѕС‡РµСЂРµРґРё
+                    // если очередь == 0 то это либо || либо --. но первый в очереди
                     if (userQueue == 0)
                     {
                         if (proc.type.Equals("serial"))
                         {
-                            /*int procMaxVersion =
+                            int procMaxVersion =
                                 (from a in dataContext.ProcessVersions
-                                 where a.fk_process == proc.processID && a.active
-                                 select a).OrderByDescending(v => v.version)
+                                    where a.fk_process == proc.processID && a.active
+                                    select a).OrderByDescending(v => v.version)
                                     .Select(v => v.processVersionID)
                                     .FirstOrDefault();
-                                    */
 
                             var step4Proc =
                                 (from a in dataContext.Steps
-                                 where a.active && a.fk_processVersion == versionMax
-                                 select a).FirstOrDefault();
+                                    where a.active && a.fk_processVersion == procMaxVersion
+                                    select a).FirstOrDefault();
 
-                            // РµСЃР»Рё Step РґР»СЏ -- РїСЂРѕС†РµСЃСЃР° РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚, Р·РЅР°С‡РёС‚ СЌС‚Рѕ РїРµСЂРІС‹Р№ РІ РѕС‡РµСЂРµРґРё Рё РѕРЅ РµС‰Рµ РЅРµ СЃРѕРіР»Р°СЃРѕРІР°Р»
+                            // если Step для -- процесса не существует, значит это первый в очереди и он еще не согласовал
                             if (step4Proc == null)
                             {
                                 //addToShow
@@ -104,16 +93,16 @@ namespace EDM.edm
                                     Status = proc.status
                                 });
                             }
-
+                            
                         }
                         else
                         {
                             var step4UserParticipant = (from a in dataContext.Steps
-                                                        where
-                                                            a.active && a.fk_participent == userParticipant && a.fk_processVersion == versionMax
-                                                        select a).FirstOrDefault();
+                                where
+                                    a.active && a.fk_participent == userParticipant && a.fk_processVersion == versionMax
+                                select a).FirstOrDefault();
 
-                            // РµСЃР»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ СѓР¶Рµ СЃРѕРіР»Р°СЃРѕРІР°Р» (РІ ||) С‚Рѕ РЅРµ РѕС‚РѕР±СЂР°Р¶Р°С‚СЊ
+                            // если пользователь уже согласовал (в ||) то не отображать
                             if (step4UserParticipant == null)
                             {
                                 //addToShow
@@ -130,7 +119,7 @@ namespace EDM.edm
                     }
                     else
                     {
-                        // РµСЃР»Рё РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕРµ (queue > 0)
+                        // если последовательное (queue > 0)
 
                         var lastStep =
                             (from a in dataContext.Steps where a.active && a.fk_processVersion == versionMax select a).OrderByDescending(d => d.date).FirstOrDefault();
@@ -140,8 +129,8 @@ namespace EDM.edm
                             var lastStepUser = lastStep.fk_participent;
 
                             var lastUserQueue = (from a in dataContext.Participants
-                                                 where a.active && a.fk_process == proc.processID && a.fk_user == lastStepUser
-                                                 select a.queue).FirstOrDefault();
+                                where a.active && a.fk_process == proc.processID && a.fk_user == lastStepUser
+                                select a.queue).FirstOrDefault();
 
                             if (lastUserQueue + 1 == userQueue)
                             {
@@ -161,9 +150,9 @@ namespace EDM.edm
                 }
             }
 
-            #endregion Р’С…РѕРґСЏС€РёРµ
+            #endregion Входяшие
 
-            #region РСЃС…РѕРґСЏС‰РёРµ
+            #region Исходящие
 
             if (direction == 0)
             {
@@ -185,12 +174,12 @@ namespace EDM.edm
                 }
             }
 
-            #endregion РСЃС…РѕРґСЏС‰РёРµ
+            #endregion Исходящие
 
             return dataOneSource;
         }
 
-        public void RenderGrid(GridView gridView, List<DataOne> dataOneSource, int direction)
+        public void RenderDashGrid(GridView gridView, List<DataOne> dataOneSource, int direction)
         {
             EDMdbDataContext dataContext = new EDMdbDataContext();
 
@@ -200,7 +189,7 @@ namespace EDM.edm
                 {
                     itm.Initiator =
                         (from a in dataContext.Users where a.userID == itm.InitiatorId select a.name).FirstOrDefault();
-
+                   
                 }
                 gridView.DataSource = dataOneSource;
 
@@ -213,29 +202,29 @@ namespace EDM.edm
 
                 BoundField boundField2 = new BoundField();
                 boundField2.DataField = "Name";
-                boundField2.HeaderText = "РќР°Р·РІР°РЅРёРµ РїСЂРѕС†РµСЃСЃР°";
+                boundField2.HeaderText = "Название процесса";
                 boundField2.Visible = true;
                 gridView.Columns.Add(boundField2);
 
                 BoundField boundField3 = new BoundField();
                 boundField3.DataField = "Initiator";
-                boundField3.HeaderText = "РРЅРёС†РёР°С‚РѕСЂ";
+                boundField3.HeaderText = "Инициатор";
                 boundField3.Visible = true;
                 gridView.Columns.Add(boundField3);
 
                 /* BoundField boundField4 = new BoundField();
-                 boundField4.DataField = "Status";
-                 boundField4.HeaderText = "РЎС‚Р°С‚СѓСЃ";
-                 boundField4.Visible = true;
-                 gridView.Columns.Add(boundField4);
-                 */
+                boundField4.DataField = "Status";
+                boundField4.HeaderText = "Статус";
+                boundField4.Visible = true;
+                gridView.Columns.Add(boundField4);
+                */
                 ButtonField coluButtonField = new ButtonField();
-                coluButtonField.Text = "РџРѕРґСЂРѕР±РЅРµРµ";
+                coluButtonField.Text = "Подробнее";
                 coluButtonField.ButtonType = ButtonType.Button;
                 coluButtonField.CommandName = "ButtonR1";
                 gridView.Columns.Add(coluButtonField);
 
-                DataBind();
+                _dashboard.DataBind();
             }
 
             if (direction == 0)
@@ -245,24 +234,24 @@ namespace EDM.edm
                     switch (itm.Status)
                     {
                         case -2:
-                            {
-                                itm.Status4All = "Р’РѕР·РІСЂР°С‰РµРЅ РЅР° РґРѕСЂР°Р±РѕС‚РєСѓ";
-                            }
+                        {
+                            itm.Status4All = "Возвращен на доработку";
+                        }
                             break;
                         case -1:
-                            {
-                                itm.Status4All = "РЎРѕР·РґР°РЅ, Р¶РґРµС‚ Р·Р°РїСѓСЃРєР°";
-                            }
+                        {
+                            itm.Status4All = "Создан, ждет запуска";
+                        }
                             break;
                         case 0:
-                            {
-                                itm.Status4All = "Р’ РїСЂРѕС†РµСЃСЃРµ";
-                            }
+                        {
+                            itm.Status4All = "В процессе";
+                        }
                             break;
                         case 1:
-                            {
-                                itm.Status4All = "РЎРѕРіР»Р°СЃРѕРІР°РЅ";
-                            }
+                        {
+                            itm.Status4All = "Согласован";
+                        }
                             break;
                     }
                 }
@@ -276,62 +265,55 @@ namespace EDM.edm
 
                 BoundField boundField2 = new BoundField();
                 boundField2.DataField = "Name";
-                boundField2.HeaderText = "РќР°Р·РІР°РЅРёРµ РїСЂРѕС†РµСЃСЃР°";
+                boundField2.HeaderText = "Название процесса";
                 boundField2.Visible = true;
                 gridView.Columns.Add(boundField2);
 
                 BoundField boundField3 = new BoundField();
                 boundField3.DataField = "Status4All";
-                boundField3.HeaderText = "РћР±С‰РёР№ СЃС‚Р°С‚СѓСЃ";
+                boundField3.HeaderText = "Общий статус";
                 boundField3.Visible = true;
                 gridView.Columns.Add(boundField3);
 
                 BoundField boundField4 = new BoundField();
                 boundField4.DataField = "Status4Init";
-                boundField4.HeaderText = "РўРµРєСѓС‰РёР№ СЃС‚Р°С‚СѓСЃ";
+                boundField4.HeaderText = "Текущий статус";
                 boundField4.Visible = true;
                 gridView.Columns.Add(boundField4);
 
                 ButtonField coluButtonField = new ButtonField();
-                coluButtonField.Text = "РџРѕРґСЂРѕР±РЅРµРµ";
+                coluButtonField.Text = "Подробнее";
                 coluButtonField.ButtonType = ButtonType.Button;
                 coluButtonField.CommandName = "ButtonR0";
                 gridView.Columns.Add(coluButtonField);
 
-                DataBind();
+                _dashboard.DataBind();
             }
         }
 
-        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+        public void RenderDocGrid(GridView docGridView, EDMdbDataContext dataContext, int procMaxVersion)
         {
-            // 0 - РёСЃС…РѕРґСЏС‰РёРµ
-            // 1 - РІС…РѕРґСЏС‰РёРµ
-            // 2 - Р°СЂС…РёРІ
+            List<Documents> documents =
+                (from d in dataContext.Documents where d.fk_processVersion == procMaxVersion && d.active select d)
+                    .ToList();
 
-            int idProcess = Convert.ToInt32(dashGridView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[0].Text);
+            docGridView.DataSource = documents;
 
-            switch (e.CommandName)
+            BoundField boundField = new BoundField();
+            boundField.DataField = "documentID";
+            boundField.HeaderText = "ID";
+            boundField.Visible = true;
+            docGridView.Columns.Add(boundField);
 
-            {
-                case "ButtonR1":
-                    {
-                        Session["processID"] = idProcess;
-                        Response.Redirect("DocumentView.aspx");
-                    }
-                    break;
-                case "ButtonR0":
-                    {
-                        Session["processID"] = idProcess;
-                        Response.Redirect("ProcessEdit.aspx");
-                    }
-                    break;
-                case "ButtonR2":
-                    {
-                        // do smth
-                    }
-                    break;
 
-            }
+            ButtonField coluButtonField = new ButtonField();
+            coluButtonField.HeaderText = "Название документа";
+            coluButtonField.DataTextField = "documentName";
+            coluButtonField.ButtonType = ButtonType.Link;
+            coluButtonField.CommandName = "Open";
+
+            docGridView.Columns.Add(coluButtonField);
+            _docView.DataBind();
         }
     }
 }

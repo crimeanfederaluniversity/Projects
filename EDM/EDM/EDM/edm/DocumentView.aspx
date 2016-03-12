@@ -19,6 +19,6 @@
         <br />
     <asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine"></asp:TextBox>
     <br />
-    <asp:Button ID="RejectButton" runat="server"  Text="Отправить на доработку" OnClick="RejectButton_Click" />
+    <asp:Button ID="RejectButton" runat="server" Text="Отправить на доработку" OnClick="RejectButton_Click" />
     
 </asp:Content>
