@@ -140,7 +140,7 @@ namespace EDM.edm
             ProcessVersions currentVersion = main.GetLastVersionInProcess(processId);
             if (currentVersion != null)
             {
-                List<Documents> documentsInCurrentVersion = main.GetDocumentsInProcessVersion(currentVersion.processVersionID);
+                List<Documents> documentsInCurrentVersion = main.GetDocumentsInProcessVersion(currentVersion.processVersionID,true);
                 foreach (Documents currentDocument in documentsInCurrentVersion)
                 {
                     DocumentsClass newDocClass = new ProcessEdit.DocumentsClass();
@@ -351,8 +351,9 @@ namespace EDM.edm
 
             TableRow addNewRow = new TableRow();
             TableCell addNewRowCell = new TableCell();
-            addNewRowCell.ColumnSpan = 2;
+            //addNewRowCell.ColumnSpan = 2;
             addNewRowCell.Controls.Add(addRowToParticipantButton);
+            addNewRow.Cells.Add(new TableCell());
             addNewRow.Cells.Add(addNewRowCell);
             participantsTable.Rows.Add(addNewRow);
             if (!withQueu)
@@ -558,7 +559,7 @@ namespace EDM.edm
             int lastVesion = 0;
             if (lastProcessVerson != null)
             {
-                lastVesion = lastProcessVerson.processVersionID+1;
+                lastVesion = lastProcessVerson.version+1;
             }
             int processVersionId = main.CreateNewProcessVersion(processId, commentForVersionTextBox.Text, lastVesion, "Новая версия процесса");
 
@@ -607,8 +608,13 @@ namespace EDM.edm
             {
                 ParticipantsList = new List<Participant>();
                 DocumentsList = new List<DocumentsClass>();
-                int processId = 0;
-                Int32.TryParse(HttpContext.Current.Session["processID"].ToString(), out processId);
+                int processId = -1;
+                var procIdStr = HttpContext.Current.Session["processID"];
+                if(procIdStr == null)
+                    Response.Redirect("Dashboard.aspx");
+                Int32.TryParse(procIdStr.ToString(), out processId);
+                if (processId <0)
+                    Response.Redirect("Dashboard.aspx");
                 if (processId != 0)
                 {
                     int i = 0;

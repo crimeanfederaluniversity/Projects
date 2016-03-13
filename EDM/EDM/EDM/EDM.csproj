@@ -208,6 +208,7 @@
     <Content Include="edm\DocumentView.aspx" />
     <Content Include="edm\Main.aspx" />
     <Content Include="edm\ProcessEdit.aspx" />
+    <Content Include="edm\ProcessHistory.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -425,6 +426,7 @@
       <DependentUpon>DocumentView.aspx</DependentUpon>
     </Compile>
     <Compile Include="edm\EmailFuncs.cs" />
+    <Compile Include="edm\History.cs" />
     <Compile Include="edm\Main.aspx.cs">
       <DependentUpon>Main.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -440,6 +442,13 @@
       <DependentUpon>ProcessEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="edm\processEdit.cs" />
+    <Compile Include="edm\ProcessHistory.aspx.cs">
+      <DependentUpon>ProcessHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="edm\ProcessHistory.aspx.designer.cs">
+      <DependentUpon>ProcessHistory.aspx</DependentUpon>
+    </Compile>
     <Compile Include="edm\TableActions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

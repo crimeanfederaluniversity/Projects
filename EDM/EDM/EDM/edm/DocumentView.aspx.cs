@@ -77,7 +77,7 @@ namespace EDM.edm
 
             BoundField boundField = new BoundField();
             boundField.DataField = "documentID";
-            boundField.HeaderText = "ID";
+            boundField.HeaderText = "ИН";
             boundField.Visible = true;
             docGridView.Columns.Add(boundField);
 
@@ -85,12 +85,16 @@ namespace EDM.edm
             ButtonField coluButtonField = new ButtonField();
             coluButtonField.HeaderText = "Название документа";
             coluButtonField.DataTextField = "documentName";
-            coluButtonField.ButtonType = ButtonType.Link;
-            coluButtonField.CommandName = "Open";
-
+            coluButtonField.ButtonType = ButtonType.Link;      
+            coluButtonField.CommandName = "openDocument";     
+            
+              
             docGridView.Columns.Add(coluButtonField);
             DataBind();
         }
+
+
+
 
         protected void ApproveButton_Click(object sender, EventArgs e)
         {
@@ -129,6 +133,45 @@ namespace EDM.edm
                     .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
 
             approve.RejectApprove(userId, procMaxVersion, CommentTextBox.Text, this);
+        }
+
+        protected void docGridView_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "openDocument")
+            {
+                    int rowId = -1;
+                    GridView grid = (GridView) sender;
+                    Int32.TryParse(e.CommandArgument.ToString(), out rowId);
+                    if (rowId<0) return;
+
+                    GridViewRow row = grid.Rows[rowId];
+                    DataControlFieldCell field1 = (DataControlFieldCell) row.Controls[0];
+                    DataControlFieldCell field2 = (DataControlFieldCell) row.Controls[1];
+                    Control contr = (Control) field2.Controls[0];
+                    int docId = -1;
+                    Int32.TryParse(field1.Text, out docId);
+                    if (docId < 0) return;
+
+                    int procId=-1;
+                    int.TryParse(Session["processID"].ToString(), out procId);
+                    if (procId < 0) return;
+                    EDMdbDataContext edmDb = new EDMdbDataContext();
+                    string fileName =
+                     (from a in edmDb.Documents where a.documentID == docId select a.documentName).FirstOrDefault();
+                    if (fileName==null)
+                    return;
+                    
+                    string path = HttpContext.Current.Server.MapPath("~/edm/documents/" + procId+"/"+ docId +"/"+ fileName);
+
+                    System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
+                    response.ClearContent();
+                    response.Clear();
+                    response.ContentType = "text/plain";
+                    response.AddHeader("Content-Disposition", "attachment; filename=" + fileName + ";");
+                    response.TransmitFile(path);
+                    response.Flush();
+                    response.End();                  
+            }
         }
     }
 }

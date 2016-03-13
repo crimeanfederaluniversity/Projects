@@ -8,7 +8,7 @@
     <br />
    
     
-    <asp:GridView ID="docGridView" runat="server" AutoGenerateColumns="False">
+    <asp:GridView ID="docGridView" runat="server" AutoGenerateColumns="False" OnRowCommand="docGridView_RowCommand">
     </asp:GridView>
     
     <br />

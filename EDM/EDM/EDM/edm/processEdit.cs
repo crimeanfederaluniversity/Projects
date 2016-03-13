@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Providers.Entities;
 using System.Web.UI.HtmlControls;
@@ -36,6 +37,21 @@ namespace EDM.edm
             return newParticipant.participantID;
 
         }
+
+        public List<Steps> GetStepsInProcessVersion(int processVersoinId)
+        {
+            return
+                (from a in _edmDb.Steps where a.active == true && a.fk_processVersion == processVersoinId select a)
+                    .ToList();
+        } 
+
+        public List<ProcessVersions> GetProcessVersionsInProcess(int processId)
+        {
+            return (from a in _edmDb.ProcessVersions
+                where a.active == true
+                      && a.fk_process == processId
+                select a).ToList();
+        } 
         public bool WithQueueByProcess(int processId)
         {
             Processes currentProc = GetProcessById(processId);
@@ -79,6 +95,7 @@ namespace EDM.edm
             newProcess.fk_initiator = userId;
             newProcess.type = type;
             newProcess.name = name;
+            newProcess.status = -1;
             _edmDb.Processes.InsertOnSubmit(newProcess);
             _edmDb.SubmitChanges();
             return newProcess.processID;
@@ -214,11 +231,17 @@ namespace EDM.edm
                 (from a in _edmDb.ProcessVersions where a.active == true && a.fk_process == processId select a)
                     .OrderByDescending(mc => mc.version).FirstOrDefault();
         }
-        public List<Documents> GetDocumentsInProcessVersion(int processVersionId)
+
+        public Participants GetParticipantById(int participantId)
+        {
+            return (from a in _edmDb.Participants where a.participantID == participantId select a).FirstOrDefault();
+        }
+
+        public List<Documents> GetDocumentsInProcessVersion(int processVersionId,bool onlyActive)
         {
             return (from a in _edmDb.Documents
                 where a.fk_processVersion == processVersionId
-                      && a.active == true
+                      && (a.active == true || !onlyActive)
                 select a).ToList();
         }
         public Users GetUserById(int userId)
