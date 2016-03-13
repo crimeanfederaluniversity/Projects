@@ -129,7 +129,7 @@ namespace EDM.edm
                             throw new Exception("Статус процесса равен не 0");
                         }
 
-                        if (procVer != null) procVer.status = "Процесс согласован всеми участниками"; else throw new Exception("Не возможно вернуть процесс в статус 1. Скорее всего он не существует");
+                        if (procVer != null) procVer.status = "Согласовано / "+ DateTime.Now.ToShortDateString(); else throw new Exception("Не возможно вернуть процесс в статус 1. Скорее всего он не существует");
                         proces.status = 1;
                         dataContext.SubmitChanges();
 
