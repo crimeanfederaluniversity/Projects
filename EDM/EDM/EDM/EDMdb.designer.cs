@@ -36,6 +36,15 @@ namespace EDM
     partial void InsertUsers(Users instance);
     partial void UpdateUsers(Users instance);
     partial void DeleteUsers(Users instance);
+    partial void InsertEmailBots(EmailBots instance);
+    partial void UpdateEmailBots(EmailBots instance);
+    partial void DeleteEmailBots(EmailBots instance);
+    partial void InsertEmailCopies(EmailCopies instance);
+    partial void UpdateEmailCopies(EmailCopies instance);
+    partial void DeleteEmailCopies(EmailCopies instance);
+    partial void InsertEmailTemplates(EmailTemplates instance);
+    partial void UpdateEmailTemplates(EmailTemplates instance);
+    partial void DeleteEmailTemplates(EmailTemplates instance);
     partial void InsertParticipants(Participants instance);
     partial void UpdateParticipants(Participants instance);
     partial void DeleteParticipants(Participants instance);
@@ -93,6 +102,30 @@ namespace EDM
 			get
 			{
 				return this.GetTable<Users>();
+			}
+		}
+		
+		public System.Data.Linq.Table<EmailBots> EmailBots
+		{
+			get
+			{
+				return this.GetTable<EmailBots>();
+			}
+		}
+		
+		public System.Data.Linq.Table<EmailCopies> EmailCopies
+		{
+			get
+			{
+				return this.GetTable<EmailCopies>();
+			}
+		}
+		
+		public System.Data.Linq.Table<EmailTemplates> EmailTemplates
+		{
+			get
+			{
+				return this.GetTable<EmailTemplates>();
 			}
 		}
 		
@@ -587,6 +620,648 @@ namespace EDM
 		{
 			this.SendPropertyChanging();
 			entity.Users = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EmailBots")]
+	public partial class EmailBots : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _email;
+		
+		private string _smtpName;
+		
+		private int _port;
+		
+		private string _password;
+		
+		private long _sendOk;
+		
+		private long _sendError;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnemailChanging(string value);
+    partial void OnemailChanged();
+    partial void OnsmtpNameChanging(string value);
+    partial void OnsmtpNameChanged();
+    partial void OnportChanging(int value);
+    partial void OnportChanged();
+    partial void OnpasswordChanging(string value);
+    partial void OnpasswordChanged();
+    partial void OnsendOkChanging(long value);
+    partial void OnsendOkChanged();
+    partial void OnsendErrorChanging(long value);
+    partial void OnsendErrorChanged();
+    #endregion
+		
+		public EmailBots()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_email", DbType="VarChar(500) NOT NULL", CanBeNull=false)]
+		public string email
+		{
+			get
+			{
+				return this._email;
+			}
+			set
+			{
+				if ((this._email != value))
+				{
+					this.OnemailChanging(value);
+					this.SendPropertyChanging();
+					this._email = value;
+					this.SendPropertyChanged("email");
+					this.OnemailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_smtpName", DbType="VarChar(500) NOT NULL", CanBeNull=false)]
+		public string smtpName
+		{
+			get
+			{
+				return this._smtpName;
+			}
+			set
+			{
+				if ((this._smtpName != value))
+				{
+					this.OnsmtpNameChanging(value);
+					this.SendPropertyChanging();
+					this._smtpName = value;
+					this.SendPropertyChanged("smtpName");
+					this.OnsmtpNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_port", DbType="Int NOT NULL")]
+		public int port
+		{
+			get
+			{
+				return this._port;
+			}
+			set
+			{
+				if ((this._port != value))
+				{
+					this.OnportChanging(value);
+					this.SendPropertyChanging();
+					this._port = value;
+					this.SendPropertyChanged("port");
+					this.OnportChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_password", DbType="VarChar(500) NOT NULL", CanBeNull=false)]
+		public string password
+		{
+			get
+			{
+				return this._password;
+			}
+			set
+			{
+				if ((this._password != value))
+				{
+					this.OnpasswordChanging(value);
+					this.SendPropertyChanging();
+					this._password = value;
+					this.SendPropertyChanged("password");
+					this.OnpasswordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sendOk", DbType="BigInt NOT NULL")]
+		public long sendOk
+		{
+			get
+			{
+				return this._sendOk;
+			}
+			set
+			{
+				if ((this._sendOk != value))
+				{
+					this.OnsendOkChanging(value);
+					this.SendPropertyChanging();
+					this._sendOk = value;
+					this.SendPropertyChanged("sendOk");
+					this.OnsendOkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sendError", DbType="BigInt NOT NULL")]
+		public long sendError
+		{
+			get
+			{
+				return this._sendError;
+			}
+			set
+			{
+				if ((this._sendError != value))
+				{
+					this.OnsendErrorChanging(value);
+					this.SendPropertyChanging();
+					this._sendError = value;
+					this.SendPropertyChanged("sendError");
+					this.OnsendErrorChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EmailCopies")]
+	public partial class EmailCopies : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _emailTo;
+		
+		private string _emailFrom;
+		
+		private string _emailTitle;
+		
+		private string _emailContent;
+		
+		private string _emailAttachment;
+		
+		private System.DateTime _sendDateTime;
+		
+		private bool _sendOk;
+		
+		private string _errorMessage;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnemailToChanging(string value);
+    partial void OnemailToChanged();
+    partial void OnemailFromChanging(string value);
+    partial void OnemailFromChanged();
+    partial void OnemailTitleChanging(string value);
+    partial void OnemailTitleChanged();
+    partial void OnemailContentChanging(string value);
+    partial void OnemailContentChanged();
+    partial void OnemailAttachmentChanging(string value);
+    partial void OnemailAttachmentChanged();
+    partial void OnsendDateTimeChanging(System.DateTime value);
+    partial void OnsendDateTimeChanged();
+    partial void OnsendOkChanging(bool value);
+    partial void OnsendOkChanged();
+    partial void OnerrorMessageChanging(string value);
+    partial void OnerrorMessageChanged();
+    #endregion
+		
+		public EmailCopies()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_emailTo", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string emailTo
+		{
+			get
+			{
+				return this._emailTo;
+			}
+			set
+			{
+				if ((this._emailTo != value))
+				{
+					this.OnemailToChanging(value);
+					this.SendPropertyChanging();
+					this._emailTo = value;
+					this.SendPropertyChanged("emailTo");
+					this.OnemailToChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_emailFrom", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string emailFrom
+		{
+			get
+			{
+				return this._emailFrom;
+			}
+			set
+			{
+				if ((this._emailFrom != value))
+				{
+					this.OnemailFromChanging(value);
+					this.SendPropertyChanging();
+					this._emailFrom = value;
+					this.SendPropertyChanged("emailFrom");
+					this.OnemailFromChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_emailTitle", DbType="VarChar(MAX)")]
+		public string emailTitle
+		{
+			get
+			{
+				return this._emailTitle;
+			}
+			set
+			{
+				if ((this._emailTitle != value))
+				{
+					this.OnemailTitleChanging(value);
+					this.SendPropertyChanging();
+					this._emailTitle = value;
+					this.SendPropertyChanged("emailTitle");
+					this.OnemailTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_emailContent", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string emailContent
+		{
+			get
+			{
+				return this._emailContent;
+			}
+			set
+			{
+				if ((this._emailContent != value))
+				{
+					this.OnemailContentChanging(value);
+					this.SendPropertyChanging();
+					this._emailContent = value;
+					this.SendPropertyChanged("emailContent");
+					this.OnemailContentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_emailAttachment", DbType="VarChar(MAX)")]
+		public string emailAttachment
+		{
+			get
+			{
+				return this._emailAttachment;
+			}
+			set
+			{
+				if ((this._emailAttachment != value))
+				{
+					this.OnemailAttachmentChanging(value);
+					this.SendPropertyChanging();
+					this._emailAttachment = value;
+					this.SendPropertyChanged("emailAttachment");
+					this.OnemailAttachmentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sendDateTime", DbType="DateTime NOT NULL")]
+		public System.DateTime sendDateTime
+		{
+			get
+			{
+				return this._sendDateTime;
+			}
+			set
+			{
+				if ((this._sendDateTime != value))
+				{
+					this.OnsendDateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._sendDateTime = value;
+					this.SendPropertyChanged("sendDateTime");
+					this.OnsendDateTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sendOk", DbType="Bit NOT NULL")]
+		public bool sendOk
+		{
+			get
+			{
+				return this._sendOk;
+			}
+			set
+			{
+				if ((this._sendOk != value))
+				{
+					this.OnsendOkChanging(value);
+					this.SendPropertyChanging();
+					this._sendOk = value;
+					this.SendPropertyChanged("sendOk");
+					this.OnsendOkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_errorMessage", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string errorMessage
+		{
+			get
+			{
+				return this._errorMessage;
+			}
+			set
+			{
+				if ((this._errorMessage != value))
+				{
+					this.OnerrorMessageChanging(value);
+					this.SendPropertyChanging();
+					this._errorMessage = value;
+					this.SendPropertyChanged("errorMessage");
+					this.OnerrorMessageChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EmailTemplates")]
+	public partial class EmailTemplates : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private bool _active;
+		
+		private string _name;
+		
+		private string _emailTitle;
+		
+		private string _emailContent;
+		
+		private string _comment;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void OnemailTitleChanging(string value);
+    partial void OnemailTitleChanged();
+    partial void OnemailContentChanging(string value);
+    partial void OnemailContentChanged();
+    partial void OncommentChanging(string value);
+    partial void OncommentChanged();
+    #endregion
+		
+		public EmailTemplates()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(500) NOT NULL", CanBeNull=false)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_emailTitle", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string emailTitle
+		{
+			get
+			{
+				return this._emailTitle;
+			}
+			set
+			{
+				if ((this._emailTitle != value))
+				{
+					this.OnemailTitleChanging(value);
+					this.SendPropertyChanging();
+					this._emailTitle = value;
+					this.SendPropertyChanged("emailTitle");
+					this.OnemailTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_emailContent", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string emailContent
+		{
+			get
+			{
+				return this._emailContent;
+			}
+			set
+			{
+				if ((this._emailContent != value))
+				{
+					this.OnemailContentChanging(value);
+					this.SendPropertyChanging();
+					this._emailContent = value;
+					this.SendPropertyChanged("emailContent");
+					this.OnemailContentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_comment", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string comment
+		{
+			get
+			{
+				return this._comment;
+			}
+			set
+			{
+				if ((this._comment != value))
+				{
+					this.OncommentChanging(value);
+					this.SendPropertyChanging();
+					this._comment = value;
+					this.SendPropertyChanged("comment");
+					this.OncommentChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
