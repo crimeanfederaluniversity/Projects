@@ -353,7 +353,8 @@ namespace EDM.edm
                     break;
                 case "HistoryP":
                 {
-
+                    Session["processID"] = idProcess;
+                    Response.Redirect("ProcessHistory.aspx");
                 }
                     break;
                 case "StartP":
@@ -361,13 +362,12 @@ namespace EDM.edm
                     Processes process =
                         (from a in dataContext.Processes where a.active && a.processID == idProcess select a)
                             .FirstOrDefault();
-                    if (process != null)
+                    if (process != null && process.status == -1)
                     {
                         process.status = 0;
                         dataContext.SubmitChanges();
                         Response.Redirect("Dashboard.aspx");
                     }
-                    else if (process.status == 0) Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> confirm('Процесс уже запущен!');</script>");
                         else Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> confirm('Ошибка запуска процесса!');</script>");
                     }
                     break;
