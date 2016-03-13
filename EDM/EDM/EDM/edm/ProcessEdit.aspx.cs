@@ -29,6 +29,7 @@ namespace EDM.edm
             public RequiredFieldValidator ParticipantEndDateValidator { get; set; }
 
         }
+
         public class DocumentsClass
         {
             public int DocumentId { get; set; }
@@ -36,6 +37,19 @@ namespace EDM.edm
             public FileUpload DocumentFileUpload { get; set; }
             public TextBox DocumentCommentTextBox { get; set; }
         }
+
+
+        public void RefreshQueueInParticipantsList(bool withQueue)
+        {           
+            int i = 0;
+            foreach (Participant participant in ParticipantsList)
+            {
+                participant.ParticipantQueueTextBox.Text = i.ToString();
+                if (withQueue)
+                i++;
+            }
+        }
+
         public Participant CreateParticipant(int rowId,int participientId,string queue,string endDate,string userId, string userName)
         {
             Participant newParticipant = new Participant();
@@ -132,6 +146,7 @@ namespace EDM.edm
         public void AddParticipentRow(object sender, EventArgs e)
         {
             ParticipantsList.Add(CreateParticipant(ParticipantsList.Count,0, "", "", "", ""));
+            
             Refersh();
         }
         public List<DocumentsClass> GetDocumentsInProcess(int processId)
@@ -153,6 +168,7 @@ namespace EDM.edm
                     
                     newDocClass.DocumentId = currentDocument.documentID;
                     newDocClass.DocumentCommentTextBox = new TextBox();
+                    newDocClass.DocumentCommentTextBox.ID = "docComment" + currentDocument.documentID;
                     newDocClass.DocumentCommentTextBox.Text = currentDocument.documentComment;
 
                     listToReturn.Add(newDocClass);
@@ -291,7 +307,7 @@ namespace EDM.edm
                     TableCell queueCell = new TableCell();
                     if (!withQueu)
                         ParticipantsList[i].ParticipantQueueTextBox.Text = 0.ToString();
-
+                    ParticipantsList[i].ParticipantQueueTextBox.Attributes.Add("readonly","true");
                     queueCell.Controls.Add(ParticipantsList[i].ParticipantQueueTextBox);
                     queueCell.Controls.Add(ParticipantsList[i].ParticipantQueueValidator);
                     participantRow.Cells.Add(queueCell);
@@ -413,6 +429,14 @@ namespace EDM.edm
                         
 
                     cell2.Controls.Add(currentDocument.DocumentCommentTextBox);
+                    RequiredFieldValidator documentCommentRequiere = new RequiredFieldValidator();
+                    documentCommentRequiere.ID = "require" + currentDocument.DocumentCommentTextBox.ID;
+                    documentCommentRequiere.ControlToValidate = currentDocument.DocumentCommentTextBox.ID;
+                    documentCommentRequiere.ErrorMessage = "!";
+                    documentCommentRequiere.ForeColor = Color.Red;
+                    cell2.Controls.Add(documentCommentRequiere);
+
+
 
                     Button DeleteRowButton = new Button();
                     DeleteRowButton.CausesValidation = false;
@@ -448,15 +472,29 @@ namespace EDM.edm
         }
         public void Refersh()
         {
+
+            
             int processId = 0;
             Int32.TryParse(HttpContext.Current.Session["processID"].ToString(), out processId);
             if (processId != 0)
             {
+                bool withQueue = main.WithQueueByProcess(processId);
+                RefreshQueueInParticipantsList(withQueue);
+                Processes currentProcess = main.GetProcessById(processId);
+                if (currentProcess.status >= 0)
+                {
+                    SaveAllDiv.Visible = false;
+                    SaveAllButton.Enabled = false;
+                }
+                else
+                {
+                    SaveAllDiv.Visible = true;
+                }
                 createNewProcessDiv.Visible = false;
                 existingProcessTitleDiv.Visible = true;
                 ParticipantsDiv.Visible = true;
                 documentsDiv.Visible = true;
-                SaveAllDiv.Visible = true;
+                
                 commentForVersionDiv.Visible = true;
 
                 ProcessIdLabel.Text = main.GetProcessNameById(processId);
@@ -524,12 +562,14 @@ namespace EDM.edm
             #region do documents
             List<DocumentsClass> documentsToAdd;
             List<DocumentsClass> documentsToUpdateVersion = new List<DocumentsClass>();
+            List<DocumentsClass> documentsToUpdateComment = new List<DocumentsClass>();
             List<DocumentsClass> oldDocuments = GetDocumentsInProcess(processId);
 
             if (oldDocuments.Count>0)
             {                
                 documentsToAdd = (from a in DocumentsList where a.DocumentFileUpload!=null select a).ToList();
-                documentsToUpdateVersion = (from a in oldDocuments join b in DocumentsList on a.DocumentId equals b.DocumentId select a).ToList();
+                documentsToUpdateVersion = (from a in oldDocuments join b in DocumentsList on a.DocumentId equals b.DocumentId select a).OrderBy(mc=>mc.DocumentId).ToList();
+                documentsToUpdateComment = (from a in oldDocuments join b in DocumentsList on a.DocumentId equals b.DocumentId select b).OrderBy(mc => mc.DocumentId).ToList();
                 List<DocumentsClass>  documentsToDelete = oldDocuments.Except(documentsToUpdateVersion).ToList();
                 foreach (DocumentsClass docToDel in documentsToDelete)
                 {
@@ -563,9 +603,12 @@ namespace EDM.edm
             }
             int processVersionId = main.CreateNewProcessVersion(processId, commentForVersionTextBox.Text, lastVesion, "Новая версия процесса");
 
+            int iii = 0;
             foreach (DocumentsClass document in documentsToUpdateVersion)
             {
-                main.SetDocumentToVersion(document.DocumentId, processVersionId);
+
+                main.SetDocumentToVersion(document.DocumentId, processVersionId, documentsToUpdateComment[iii].DocumentCommentTextBox.Text);
+                iii++;
             }
             
 
@@ -605,7 +648,7 @@ namespace EDM.edm
 
 
 
-            Response.Redirect("~/Default.aspx");
+            Response.Redirect("Dashboard.aspx");
         }
         public void Page_Load(object sender, EventArgs e)
         {
@@ -629,6 +672,7 @@ namespace EDM.edm
                         ParticipantsList.Add(CreateParticipant(i, participant.participantID,participant.queue.ToString(),participant.dateEnd.ToString(),participant.fk_user.ToString(), user.name+" "+user.@struct));
                         i++;
                     }
+                    
                     DocumentsList = GetDocumentsInProcess(processId);
                     commentForVersionTextBox.Text = main.GetCommentForLastVersion(processId);
                 }

@@ -166,8 +166,16 @@ namespace EDM.edm
 
                     TableCell stepResultCell = new TableCell();
                     stepResultCell.Text = step.stepResult.ToString();
-                    processVersionStepRow.Cells.Add(stepResultCell);
+                    if (step.stepResult == -2)
+                    {
+                        stepResultCell.Text = "Отказано";
+                    }
 
+                    if (step.stepResult == 1)
+                    {
+                        stepResultCell.Text = "Согласовано";
+                    }
+                    processVersionStepRow.Cells.Add(stepResultCell);
                     TableCell stepCommentCell = new TableCell();
                     stepCommentCell.Text = step.comment.ToString();
                     processVersionStepRow.Cells.Add(stepCommentCell);

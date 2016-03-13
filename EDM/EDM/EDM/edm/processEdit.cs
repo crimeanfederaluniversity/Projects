@@ -255,12 +255,13 @@ namespace EDM.edm
             docToKill.active = false;
             _edmDb.SubmitChanges();
         }
-        public void SetDocumentToVersion(int documentId, int newVersion)
+        public void SetDocumentToVersion(int documentId, int newVersion, string newComment)
         {
             Documents doc = (from a in _edmDb.Documents
                 where a.documentID == documentId
                 select a).FirstOrDefault();
             doc.fk_processVersion = newVersion;
+            doc.documentComment = newComment;
             _edmDb.SubmitChanges();
         }
         public int CreateNewProcessVersion(int processId,string comment, int version, string status)

@@ -19,7 +19,9 @@
         <tr>
 		   <th>Тип согласования</th>
             <th>Название <asp:RequiredFieldValidator runat="server" ControlToValidate="ProcessNameTextBox" ErrorMessage="!" ForeColor="red"/> </th>
-            <th>Кол-во согласующих <asp:RequiredFieldValidator runat="server" ControlToValidate="ParticipantsCountTextBox" ErrorMessage="!" ForeColor="red"/></th>
+            <th>Кол-во согласующих
+                <asp:RangeValidator runat="server" ControlToValidate="ParticipantsCountTextBox" ErrorMessage="!" ForeColor="red" Type="Integer" MinimumValue="1" MaximumValue="10"/>
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="ParticipantsCountTextBox" ErrorMessage="!" ForeColor="red"/></th>
             <th>Создать</th>
             
         </tr>
