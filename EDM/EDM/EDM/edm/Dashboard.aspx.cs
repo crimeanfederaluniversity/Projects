@@ -193,6 +193,8 @@ namespace EDM.edm
 
             if (direction == 1)
             {
+                Label1.Text = "Входящие";
+
                 foreach (var itm in dataOneSource)
                 {
                     itm.Initiator =
@@ -238,6 +240,8 @@ namespace EDM.edm
 
             if (direction == 0)
             {
+                Label1.Text = "Инициированные согласования";
+
                 foreach (var itm in dataOneSource)
                 {
                     switch (itm.Status)
@@ -384,6 +388,8 @@ namespace EDM.edm
                     break;
                 case "StartP":
                 {
+                    EmailFuncs ef= new EmailFuncs();
+
                     Processes process =
                         (from a in dataContext.Processes where a.active && a.processID == idProcess select a)
                             .FirstOrDefault();
@@ -391,6 +397,9 @@ namespace EDM.edm
                     {
                         process.status = 0;
                         dataContext.SubmitChanges();
+                        
+                        ef.StartProcess(idProcess);
+
                         Response.Redirect("Dashboard.aspx");
                     }
                         else Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Ошибка запуска процесса!');</script>");

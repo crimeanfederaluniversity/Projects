@@ -48,18 +48,18 @@ namespace EDM.edm
                 emailCopy.errorMessage = ex.ToString();
                 dataContext.EmailCopies.InsertOnSubmit(emailCopy);
                 dataContext.SubmitChanges();
-                throw new Exception(ex.Message);
             }
-                emailCopy.emailFrom = from;
-                emailCopy.emailTo = mailto;
-                emailCopy.emailTitle = caption;
-                emailCopy.emailContent = message;
-                emailCopy.emailAttachment = attachFile;
-                emailCopy.sendOk = true;
-                emailCopy.sendDateTime = DateTime.Now;
-                dataContext.EmailCopies.InsertOnSubmit(emailCopy);
+            EmailCopies emailCopy2 = new EmailCopies();
+            emailCopy2.emailFrom = from;
+            emailCopy2.emailTo = mailto;
+            emailCopy2.emailTitle = caption;
+            emailCopy2.emailContent = message;
+            emailCopy2.emailAttachment = attachFile;
+            emailCopy2.sendOk = true;
+            emailCopy2.sendDateTime = DateTime.Now;
+            dataContext.EmailCopies.InsertOnSubmit(emailCopy2);
 
-                dataContext.SubmitChanges();
+            dataContext.SubmitChanges();
 
 
             return 0;
@@ -87,7 +87,9 @@ namespace EDM.edm
 
             foreach (var ems in emails)
             {
-                if (SendMailProcess(ems.smtpName, 587, ems.email, ems.password, emailto, caption, messageBuilder.ToString(), attachFile) == 1)
+                if (
+                    SendMailProcess(ems.smtpName, 587, ems.email, ems.password, emailto, caption,
+                        messageBuilder.ToString(), attachFile) == 1)
                 {
                     ems.sendOk++;
                     break;
@@ -100,5 +102,83 @@ namespace EDM.edm
 
             return errors;
         }
+
+        public void StartProcess(int procId)
+        {
+            EDMdbDataContext dc = new EDMdbDataContext();
+
+            var initiatorEmail =
+                (from a in dc.Processes
+                    where a.active && a.processID == procId
+                    join b in dc.Users on a.fk_initiator equals b.userID
+                    select b.email).FirstOrDefault();
+
+            EmailTemplates etmpInit =
+                (from i in dc.EmailTemplates where i.active && i.name == "youStartedProcess" select i).FirstOrDefault();
+            SendEmail(initiatorEmail, etmpInit.emailTitle, etmpInit.emailContent, null);
+
+
+            var participantsZero =
+                (from a in dc.Participants where a.active && a.fk_process == procId && a.queue == 0 select a.fk_user)
+                    .ToList();
+
+            if (participantsZero.Any())
+            {
+                foreach (var usrId in participantsZero)
+                {
+                    var userEmail =
+                        (from a in dc.Users where a.active && a.userID == usrId select a.email).FirstOrDefault();
+                    EmailTemplates etmp =
+                        (from i in dc.EmailTemplates where i.active && i.name == "yourStep" select i).FirstOrDefault();
+                    SendEmail(userEmail, etmp.emailTitle, etmp.emailContent, null);
+                }
+            }
+            else
+            {
+                // LOG
+            }
+
+        }
+
+        public void ApproveProcess(int procId)
+        {
+            EDMdbDataContext dc = new EDMdbDataContext();
+
+            var initiatorEmail =
+                (from a in dc.Processes
+                    where a.active && a.processID == procId
+                    join b in dc.Users on a.fk_initiator equals b.userID
+                    select b.email).FirstOrDefault();
+
+            EmailTemplates etmpInit =
+                (from i in dc.EmailTemplates where i.active && i.name == "yourProcessApproved" select i).FirstOrDefault();
+            SendEmail(initiatorEmail, etmpInit.emailTitle, etmpInit.emailContent, null);
+        }
+
+        public void RejectProcess(int procId)
+        {
+            EDMdbDataContext dc = new EDMdbDataContext();
+
+            var initiatorEmail =
+                (from a in dc.Processes
+                 where a.active && a.processID == procId
+                 join b in dc.Users on a.fk_initiator equals b.userID
+                 select b.email).FirstOrDefault();
+
+            EmailTemplates etmpInit =
+                (from i in dc.EmailTemplates where i.active && i.name == "yourProcessCameBack" select i).FirstOrDefault();
+            SendEmail(initiatorEmail, etmpInit.emailTitle, etmpInit.emailContent, null);
+        }
+
+        public void StepApprove(int procId, int userId)
+        {
+            //// не вижу смысла так спамить :)
+        }
+
+        public void StepReject(int procId, int userId)
+        {
+            //// не вижу смысла так спамить :)
+        }
+
     }
 }

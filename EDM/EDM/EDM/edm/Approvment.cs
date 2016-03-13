@@ -78,6 +78,8 @@ namespace EDM.edm
 
             using (EDMdbDataContext dataContext = new EDMdbDataContext())
             {
+                EmailFuncs ef = new EmailFuncs();
+
                 int procId =
                          (from v in dataContext.ProcessVersions
                           where v.active && v.processVersionID == procVersion
@@ -116,7 +118,7 @@ namespace EDM.edm
                         proces.status = 1;
                         dataContext.SubmitChanges();
 
-                        // Можно добавить рассылку Email-ов об успешном согласовании
+                        ef.ApproveProcess(procId);// Можно добавить рассылку Email-ов об успешном согласовании
 
                     }
                     else
@@ -154,7 +156,8 @@ namespace EDM.edm
                             {
                                 proc.status = -2;
                                 procVer.status = "Возвращено на доработку " + (from a in dataContext.Users where a.userID == user select a.name).FirstOrDefault() + " / " + DateTime.Now.ToShortDateString();
-                                }
+                                ef.RejectProcess(procId);// EMAIL
+                             }
                             else throw new Exception("Не возможно вернуть процесс в статус -2. Скорее всего он не существует");
                         }
                             break;
