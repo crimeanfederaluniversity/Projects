@@ -19,6 +19,7 @@ namespace EDM.edm
             public string Status4Init { get; set; }
             public string Status4All { get; set; }
             public string Type { get; set; }
+            public string TypeRus { get; set; }
             public int Version { get; set; }
         }
 
@@ -262,6 +263,25 @@ namespace EDM.edm
                         }
                             break;
                     }
+
+                    switch (itm.Type)
+                    {
+                        case "parallel":
+                        {
+                            itm.TypeRus = "Параллельное согласование";
+                        }
+                            break;
+                        case "serial":
+                        {
+                            itm.TypeRus = "Последовательное согласование";
+                        }
+                            break;
+                        case "review":
+                        {
+                            itm.TypeRus = "Рецензия";
+                        }
+                            break;
+                    }
                 }
                 gridView.DataSource = dataOneSource;
 
@@ -278,7 +298,7 @@ namespace EDM.edm
                 gridView.Columns.Add(boundField2);
 
                 BoundField boundField22 = new BoundField();
-                boundField22.DataField = "Type";
+                boundField22.DataField = "TypeRus";
                 boundField22.HeaderText = "Тип процесса";
                 boundField22.Visible = true;
                 gridView.Columns.Add(boundField22);
