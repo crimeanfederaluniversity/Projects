@@ -394,11 +394,20 @@ namespace EDM.edm
             {
                 if (e.Row.RowType == DataControlRowType.DataRow)
                 {
-                    int id = e.Row.RowIndex;
-                    Button btnDel = (Button) e.Row.Cells[8].Controls[0];
-                    Button btnStart = (Button)e.Row.Cells[7].Controls[0];
-                        btnDel.OnClientClick = "javascript: if (confirm('Вы уверены что хотите удалить?') == true) {__doPostBack('ctl00$MainContent$dashGridView','DeleteP$"+id+"')} else return false";
-                        btnStart.OnClientClick = "javascript: if (confirm('Вы уверены что хотите запустить процесс согласования?') == true) {__doPostBack('ctl00$MainContent$dashGridView','StartP$" + id + "')} else return false";
+                    int direction;
+                    int.TryParse(Session["direction"].ToString(), out direction);
+                    if (direction == 0)
+                    {
+                        int id = e.Row.RowIndex;
+                        Button btnDel = (Button) e.Row.Cells[8].Controls[0];
+                        Button btnStart = (Button) e.Row.Cells[7].Controls[0];
+                        btnDel.OnClientClick =
+                            "javascript: if (confirm('Вы уверены что хотите удалить?') == true) {__doPostBack('ctl00$MainContent$dashGridView','DeleteP$" +
+                            id + "')} else return false";
+                        btnStart.OnClientClick =
+                            "javascript: if (confirm('Вы уверены что хотите запустить процесс согласования?') == true) {__doPostBack('ctl00$MainContent$dashGridView','StartP$" +
+                            id + "')} else return false";
+                    }
                 }
             }
 
