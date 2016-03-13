@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="ProcessEdit.aspx.cs" Inherits="EDM.edm.ProcessEdit" %>
+﻿<%@ Page Title="Создание и редактирование согласования" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="ProcessEdit.aspx.cs" Inherits="EDM.edm.ProcessEdit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <br />
     <script src="calendar_ru.js" type="text/javascript"> </script>

@@ -35,6 +35,7 @@ namespace EDM.Account
 
         protected void Page_Load()
         {
+            Response.Redirect("~/Default.aspx");
             var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
             HasPhoneNumber = String.IsNullOrEmpty(manager.GetPhoneNumber(User.Identity.GetUserId()));
