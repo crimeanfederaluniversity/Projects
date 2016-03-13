@@ -14,8 +14,8 @@
           }
       </style>
 
-    <div id="createNewProcessDiv" runat="server" >
-    <table>
+    <div id="createNewProcessDiv" runat="server" class="row" >
+    <table class="table table-striped edm-table edm-PocessEdit-table centered-block">
         <tr>
 		   <th>Тип согласования</th>
             <th>Название <asp:RequiredFieldValidator runat="server" ControlToValidate="ProcessNameTextBox" ErrorMessage="!" ForeColor="red"/> </th>
@@ -27,7 +27,7 @@
         </tr>
         <tr>
 		   <td>
-            <asp:DropDownList ID="ProcessTypeDropDown" runat="server" AutoPostBack="False">
+            <asp:DropDownList ID="ProcessTypeDropDown" runat="server" AutoPostBack="False" CssClass="form-control">
                 <asp:ListItem Value="parallel">Параллельное согласование</asp:ListItem>
                 <asp:ListItem Value="serial">Последовательное согласование</asp:ListItem>
                 <asp:ListItem Value="review">Рецензия</asp:ListItem>
@@ -36,16 +36,16 @@
 
             </td>
             <td>
-                <asp:TextBox ID="ProcessNameTextBox"  runat="server"></asp:TextBox>
+                <asp:TextBox ID="ProcessNameTextBox"  runat="server" CssClass="form-control"></asp:TextBox>
                 
             </td>
             <td>
-                <asp:TextBox ID="ParticipantsCountTextBox" TextMode="Number" runat="server"></asp:TextBox>
+                <asp:TextBox ID="ParticipantsCountTextBox" TextMode="Number" runat="server" CssClass="form-control"></asp:TextBox>
                 
             </td>
             
             <td>
-                <asp:Button ID="CreateProcessButton" runat="server" OnClick="CreateNewProcess" Text="Создать" />
+                <asp:Button ID="CreateProcessButton" runat="server" OnClick="CreateNewProcess" Text="Создать" CssClass="btn btn-warning" />
             </td>           
         </tr>
         </table>

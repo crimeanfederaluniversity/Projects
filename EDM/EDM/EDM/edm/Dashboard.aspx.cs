@@ -229,6 +229,7 @@ namespace EDM.edm
                 coluButtonField.Text = "Подробнее";
                 coluButtonField.ButtonType = ButtonType.Button;
                 coluButtonField.CommandName = "ButtonR1";
+                coluButtonField.ControlStyle.CssClass = "btn btn-default";
                 gridView.Columns.Add(coluButtonField);
 
                 DataBind();
@@ -298,23 +299,27 @@ namespace EDM.edm
                 coluButtonField.Text = "Редактировать";
                 coluButtonField.ButtonType = ButtonType.Button;
                 coluButtonField.CommandName = "ButtonR0";
+                coluButtonField.ControlStyle.CssClass = "btn btn-default";
                 gridView.Columns.Add(coluButtonField);
 
                 ButtonField coluButtonField2 = new ButtonField();
                 coluButtonField2.Text = "История";
                 coluButtonField2.ButtonType = ButtonType.Button;
                 coluButtonField2.CommandName = "HistoryP";
+                coluButtonField2.ControlStyle.CssClass = "btn btn-default";
                 gridView.Columns.Add(coluButtonField2);
 
                 ButtonField coluButtonField3 = new ButtonField();
                 coluButtonField3.Text = "Запустить";
                 coluButtonField3.ButtonType = ButtonType.Button;
                 coluButtonField3.CommandName = "StartP";
+                coluButtonField3.ControlStyle.CssClass = "btn btn-success";
                 gridView.Columns.Add(coluButtonField3);
 
                 ButtonField coluButtonField4 = new ButtonField();
                 coluButtonField4.Text = "Удалить";
                 coluButtonField4.ButtonType = ButtonType.Button;
+                coluButtonField4.ControlStyle.CssClass = "btn btn-danger";
                 coluButtonField4.CommandName = "DeleteP";
                 gridView.Columns.Add(coluButtonField4);
 
