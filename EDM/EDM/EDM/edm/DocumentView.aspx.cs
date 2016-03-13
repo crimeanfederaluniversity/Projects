@@ -34,11 +34,29 @@ namespace EDM.edm
                     ApproveButton.Enabled = false;
                     RejectButton.Enabled = false;
                 }
+                if (
+                    (from a in dataContext.Processes where a.active && a.processID == proc select a.type).FirstOrDefault
+                        () == "review")
+                {
+                    RejectButton.Enabled = false;
+                    RejectButton.Visible = false;
+
+                    ApproveButton.Text = "Отправить комментарий";
+                }
                 //
+
+                int userID;
+                int.TryParse(Session["userID"].ToString(), out userID);
 
                 int procMaxVersion =
                     (from a in dataContext.ProcessVersions where a.fk_process == proc && a.active select a)
                         .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
+
+                ProcessVersions procVer =
+                    (from b in dataContext.ProcessVersions where b.active && b.processVersionID == procMaxVersion select b)
+                        .FirstOrDefault();
+                if (procVer != null) { procVer.status = "В работе " + (from a in dataContext.Users where a.userID == userID select a.name).FirstOrDefault() + "/ " + DateTime.Now.ToShortDateString(); } else throw new Exception("Не возможно присвоить версии процесса в статус. Скорее всего он не существует");
+                dataContext.SubmitChanges();
 
                 LabelComment.Text =
                     (from a in dataContext.ProcessVersions
@@ -91,7 +109,7 @@ namespace EDM.edm
                     (from a in dataContext.ProcessVersions where a.fk_process == proc && a.active select a)
                         .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
 
-            approve.AddApprove(userId, procMaxVersion, this);
+            approve.AddApprove(userId, procMaxVersion, CommentTextBox.Text, this);
 
         }
 

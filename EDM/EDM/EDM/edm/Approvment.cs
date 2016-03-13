@@ -8,30 +8,41 @@ namespace EDM.edm
 {
     public class Approvment
     {
-        public void AddApprove(int user, int procVersion, Page pg)
+        public void AddApprove(int user, int procVersion, string comment, Page pg)
         {
             using (EDMdbDataContext dataContext = new EDMdbDataContext())
             {
                 Steps step = new Steps();
-                var proc =
+                var procId =
                     (from a in dataContext.ProcessVersions
                         where a.active && a.processVersionID == procVersion
                         select a.fk_process).FirstOrDefault();
                 var fkParticipant =
                     (from a in dataContext.Participants
-                        where a.active && a.fk_user == user && a.fk_process == proc
-                        select a.participantID).FirstOrDefault();
+                        where a.active && a.fk_user == user && a.fk_process == procId
+                     select a.participantID).FirstOrDefault();
+                var proc =
+                    (from a in dataContext.Processes where a.active && a.processID == procId select a).FirstOrDefault();
 
-        
+                if (proc == null) throw new Exception("Процесс не найден");
+
                 ProcessVersions procVer =
                     (from b in dataContext.ProcessVersions where b.active && b.processVersionID == procVersion select b)
                         .FirstOrDefault();
-
                 step.active = true;
                 step.fk_processVersion = procVersion;
                 step.fk_participent = fkParticipant;
+                step.comment = comment;
                 step.stepResult = 1;
-                if (procVer != null) { procVer.status = "Утвержден пользователем: "+ (from a in dataContext.Users where a.userID == user select a.name).FirstOrDefault()+" "+ DateTime.Now.ToShortDateString(); } else throw new Exception("Не возможно присвоить версии процесса в статус 1. Скорее всего он не существует");
+                if (proc.type.Equals("review"))
+                {
+                    //ПЕРЕНЕСТИ в CheckApprove()
+                    int participantCount = (from a in dataContext.Participants where a.active && a.fk_process == proc.processID select a).Count();
+                    int stepsCount =(from a in dataContext.Steps where a.active && a.fk_processVersion == procVersion select a).Count();
+                    if (procVer != null) { procVer.status = "Обработано "+stepsCount+1 +" рецензентами из "+participantCount+"/ " + " " + DateTime.Now.ToShortDateString() ; } else throw new Exception("Не возможно присвоить версии процесса в статус 1. Скорее всего он не существует");
+                }
+                else //ПЕРЕНЕСТИ в CheckApprove()
+                if (procVer != null) { procVer.status = "Согласовано "+ (from a in dataContext.Users where a.userID == user select a.name).FirstOrDefault()+"/ "+ DateTime.Now.ToShortDateString(); } else throw new Exception("Не возможно присвоить версии процесса в статус 1. Скорее всего он не существует");
                 step.date = DateTime.Now;
 
                 dataContext.Steps.InsertOnSubmit(step);
@@ -70,7 +81,8 @@ namespace EDM.edm
                 step.fk_participent = fkParticipant;
                 step.comment = comment;
                 step.stepResult = -2;
-                if (process != null && procVer != null) { process.status = -2; procVer.status="Возвращен на доработку пользователем: " + (from a in dataContext.Users where a.userID == user select a.name).FirstOrDefault() + " " + DateTime.Now.ToShortTimeString();  } else throw new Exception("Не возможно вернуть процесс в статус -2. Скорее всего он не существует");
+                //ПЕРЕНЕСТИ в CheckApprove()
+                if (process != null && procVer != null) { process.status = -2; procVer.status="Возвращено на доработку " + (from a in dataContext.Users where a.userID == user select a.name).FirstOrDefault() + "/ " + DateTime.Now.ToShortDateString();  } else throw new Exception("Не возможно вернуть процесс в статус -2. Скорее всего он не существует");
                 step.date = DateTime.Now;
 
 
@@ -130,6 +142,7 @@ namespace EDM.edm
                     }
 
                 }
+                
 
 
 
