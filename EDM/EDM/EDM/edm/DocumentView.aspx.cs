@@ -83,13 +83,18 @@ namespace EDM.edm
 
 
             ButtonField coluButtonField = new ButtonField();
-            coluButtonField.HeaderText = "Название документа";
+            coluButtonField.HeaderText = "Документ";
             coluButtonField.DataTextField = "documentName";
             coluButtonField.ButtonType = ButtonType.Link;      
-            coluButtonField.CommandName = "openDocument";     
-            
-              
+            coluButtonField.CommandName = "openDocument"; 
             docGridView.Columns.Add(coluButtonField);
+
+            BoundField boundField2 = new BoundField();
+            boundField2.DataField = "documentComment";
+            boundField2.HeaderText = "Примечание автора";
+            boundField2.Visible = true;
+            docGridView.Columns.Add(boundField2);
+
             DataBind();
         }
 
@@ -98,7 +103,9 @@ namespace EDM.edm
 
         protected void ApproveButton_Click(object sender, EventArgs e)
         {
-            int proc;
+            if (CommentTextBox.Text.Any())
+            {
+                int proc;
             int userId;
 
             int.TryParse(Session["userID"].ToString(), out userId);
@@ -113,26 +120,38 @@ namespace EDM.edm
                         .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
 
             approve.AddApprove(userId, procMaxVersion, CommentTextBox.Text, this);
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Отсутствует комментарий к процессу. Пожалуйста заполните!');</script>");
+            }
 
         }
 
         protected void RejectButton_Click(object sender, EventArgs e)
         {
-            int proc;
-            int userId;
+            if (CommentTextBox.Text.Any())
+            {
+                int proc;
+                int userId;
 
-            int.TryParse(Session["userID"].ToString(), out userId);
-            int.TryParse(Session["processID"].ToString(), out proc);
+                int.TryParse(Session["userID"].ToString(), out userId);
+                int.TryParse(Session["processID"].ToString(), out proc);
 
-            Approvment approve = new Approvment();
+                Approvment approve = new Approvment();
 
-            EDMdbDataContext dataContext = new EDMdbDataContext();
+                EDMdbDataContext dataContext = new EDMdbDataContext();
 
-            int procMaxVersion =
-                (from a in dataContext.ProcessVersions where a.fk_process == proc && a.active select a)
-                    .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
+                int procMaxVersion =
+                    (from a in dataContext.ProcessVersions where a.fk_process == proc && a.active select a)
+                        .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
 
-            approve.RejectApprove(userId, procMaxVersion, CommentTextBox.Text, this);
+                approve.RejectApprove(userId, procMaxVersion, CommentTextBox.Text, this);
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Отсутствует комментарий к процессу. Пожалуйста заполните!');</script>");
+            }
         }
 
         protected void docGridView_RowCommand(object sender, GridViewCommandEventArgs e)

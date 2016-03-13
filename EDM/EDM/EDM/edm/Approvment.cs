@@ -26,9 +26,6 @@ namespace EDM.edm
 
                 if (proc == null) throw new Exception("Процесс не найден");
 
-                ProcessVersions procVer =
-                    (from b in dataContext.ProcessVersions where b.active && b.processVersionID == procVersion select b)
-                        .FirstOrDefault();
                 step.active = true;
                 step.fk_processVersion = procVersion;
                 step.fk_participent = fkParticipant;
@@ -42,8 +39,6 @@ namespace EDM.edm
             }
 
             CheckApprove(procVersion,1,user);
-
-            pg.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> confirm('Согласованно!');</script>");
             HttpContext.Current.Response.Redirect("Dashboard.aspx");
         }
 
@@ -61,12 +56,6 @@ namespace EDM.edm
                      select a.participantID).FirstOrDefault();
 
                 Steps step = new Steps();
-                Processes process =
-                    (from a in dataContext.Processes where a.active && a.processID == procId select a).FirstOrDefault();
-
-                ProcessVersions procVer =
-                    (from b in dataContext.ProcessVersions where b.active && b.processVersionID == procVersion select b)
-                        .FirstOrDefault();
 
                 step.active = true;
                 step.fk_processVersion = procVersion;
@@ -75,13 +64,11 @@ namespace EDM.edm
                 step.stepResult = -2;
                 step.date = DateTime.Now;
 
-
                 dataContext.Steps.InsertOnSubmit(step);
                 dataContext.SubmitChanges();
             }
-            CheckApprove(procVersion, -2, user);
 
-            pg.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> confirm('Отправленно на доработку!');</script>");
+            CheckApprove(procVersion, -2, user);
             HttpContext.Current.Response.Redirect("Dashboard.aspx");
 
         }

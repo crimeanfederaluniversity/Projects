@@ -21,12 +21,12 @@
             
         <%--<asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine" Height="54px" Width="160px"></asp:TextBox>--%>
             <div class="input-group-lg">
-                <asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine" cssClass="form-control" ></asp:TextBox>
+                <asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine"  cssClass="form-control" ></asp:TextBox>
                 <br />
                 <br />
                 <div class="btn-group float-right">
-                    <asp:Button ID="RejectButton" runat="server" Text="Отправить на доработку" OnClick="RejectButton_Click" CssClass="btn btn-default"/>
-                    <asp:Button ID="ApproveButton" runat="server" Text="Согласовать" OnClick="ApproveButton_Click" CssClass="btn btn-success" />
+                    <asp:Button ID="RejectButton" runat="server" Text="Отправить на доработку" OnClientClick="javascript: return confirm('Вы уверены что хотите отправить на доработку?');" OnClick="RejectButton_Click" CssClass="btn btn-default"/>
+                    <asp:Button ID="ApproveButton" runat="server" Text="Согласовать" OnClientClick="javascript: return confirm('Вы уверены что хотите согласовать процесс?');" OnClick="ApproveButton_Click" CssClass="btn btn-success" />
                 </div>
             </div>
         </div>

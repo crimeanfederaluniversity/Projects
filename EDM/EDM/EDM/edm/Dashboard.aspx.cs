@@ -393,7 +393,7 @@ namespace EDM.edm
                         dataContext.SubmitChanges();
                         Response.Redirect("Dashboard.aspx");
                     }
-                        else Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> confirm('Ошибка запуска процесса!');</script>");
+                        else Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Ошибка запуска процесса!');</script>");
                     }
                     break;
                 case "DeleteP":
@@ -407,7 +407,7 @@ namespace EDM.edm
                     dataContext.SubmitChanges();
                         Response.Redirect("Dashboard.aspx");
                         }
-                        else Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> confirm('Ошибка удаления процесса!');</script>");
+                        else Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Ошибка удаления процесса!');</script>");
                     }
                     break;
             }
