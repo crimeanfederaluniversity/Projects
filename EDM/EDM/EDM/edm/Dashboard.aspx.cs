@@ -21,6 +21,7 @@ namespace EDM.edm
             public string Type { get; set; }
             public int Version { get; set; }
         }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             var userId = Session["userID"];
@@ -52,23 +53,24 @@ namespace EDM.edm
             if (direction == 1)
             {
                 var userIsParticipant =
-                    (from a in dataContext.Participants where a.active && a.fk_user == userID select a.fk_process).Distinct().ToList();
+                    (from a in dataContext.Participants where a.active && a.fk_user == userID select a.fk_process)
+                        .Distinct().ToList();
 
                 var procesesToUser = (from p in userIsParticipant
-                                      join proc in dataContext.Processes on p equals proc.processID
-                                      where proc.active && proc.status == 0
-                                      select proc).OrderByDescending(startD => startD.startDate).ToList();
+                    join proc in dataContext.Processes on p equals proc.processID
+                    where proc.active && proc.status == 0
+                    select proc).OrderByDescending(startD => startD.startDate).ToList();
 
 
                 foreach (var proc in procesesToUser)
                 {
                     var userQueue = (from a in dataContext.Participants
-                                     where a.fk_process == proc.processID && a.fk_user == userID && a.active
-                                     select a.queue).FirstOrDefault(); // очередь пользователя
+                        where a.fk_process == proc.processID && a.fk_user == userID && a.active
+                        select a.queue).FirstOrDefault(); // очередь пользователя
 
                     var userParticipant = (from a in dataContext.Participants
-                                           where a.active && a.fk_process == proc.processID && a.fk_user == userID
-                                           select a.participantID).FirstOrDefault();// id-шник этого пользователя в участниках процесса
+                        where a.active && a.fk_process == proc.processID && a.fk_user == userID
+                        select a.participantID).FirstOrDefault(); // id-шник этого пользователя в участниках процесса
 
                     var versionMax =
                         (from a in dataContext.ProcessVersions where a.active && a.fk_process == proc.processID select a)
@@ -81,8 +83,8 @@ namespace EDM.edm
                         {
                             var step4Proc =
                                 (from a in dataContext.Steps
-                                 where a.active && a.fk_processVersion == versionMax
-                                 select a).FirstOrDefault();
+                                    where a.active && a.fk_processVersion == versionMax
+                                    select a).FirstOrDefault();
 
                             // если Step для -- процесса не существует, значит это первый в очереди и он еще не согласовал
                             if (step4Proc == null)
@@ -101,9 +103,9 @@ namespace EDM.edm
                         else
                         {
                             var step4UserParticipant = (from a in dataContext.Steps
-                                                        where
-                                                            a.active && a.fk_participent == userParticipant && a.fk_processVersion == versionMax
-                                                        select a).FirstOrDefault();
+                                where
+                                    a.active && a.fk_participent == userParticipant && a.fk_processVersion == versionMax
+                                select a).FirstOrDefault();
 
                             // если пользователь уже согласовал (в ||) то не отображать
                             if (step4UserParticipant == null)
@@ -125,15 +127,16 @@ namespace EDM.edm
                         // если последовательное (queue > 0)
 
                         var lastStep =
-                            (from a in dataContext.Steps where a.active && a.fk_processVersion == versionMax select a).OrderByDescending(d => d.date).FirstOrDefault();
+                            (from a in dataContext.Steps where a.active && a.fk_processVersion == versionMax select a)
+                                .OrderByDescending(d => d.date).FirstOrDefault();
 
                         if (lastStep != null)
                         {
                             var lastStepUser = lastStep.fk_participent;
 
                             var lastUserQueue = (from a in dataContext.Participants
-                                                 where a.active && a.fk_process == proc.processID && a.participantID == lastStepUser
-                                                 select a.queue).FirstOrDefault();
+                                where a.active && a.fk_process == proc.processID && a.participantID == lastStepUser
+                                select a.queue).FirstOrDefault();
 
                             if (lastUserQueue + 1 == userQueue)
                             {
@@ -172,7 +175,8 @@ namespace EDM.edm
                         Status4Init =
                             (from a in dataContext.ProcessVersions where a.fk_process == proc.processID select a)
                                 .OrderByDescending(v => v.version).Select(s => s.status).FirstOrDefault(),
-                        Status = proc.status
+                        Status = proc.status,
+                        Type = proc.type
                     });
                 }
             }
@@ -237,24 +241,24 @@ namespace EDM.edm
                     switch (itm.Status)
                     {
                         case -2:
-                            {
-                                itm.Status4All = "Возвращен на доработку";
-                            }
+                        {
+                            itm.Status4All = "Возвращен на доработку";
+                        }
                             break;
                         case -1:
-                            {
-                                itm.Status4All = "Создан, ждет запуска";
-                            }
+                        {
+                            itm.Status4All = "Создан, ждет запуска";
+                        }
                             break;
                         case 0:
-                            {
-                                itm.Status4All = "В процессе";
-                            }
+                        {
+                            itm.Status4All = "В процессе";
+                        }
                             break;
                         case 1:
-                            {
-                                itm.Status4All = "Согласован";
-                            }
+                        {
+                            itm.Status4All = "Согласован";
+                        }
                             break;
                     }
                 }
@@ -271,6 +275,12 @@ namespace EDM.edm
                 boundField2.HeaderText = "Название процесса";
                 boundField2.Visible = true;
                 gridView.Columns.Add(boundField2);
+
+                BoundField boundField22 = new BoundField();
+                boundField22.DataField = "Type";
+                boundField22.HeaderText = "Тип процесса";
+                boundField22.Visible = true;
+                gridView.Columns.Add(boundField22);
 
                 BoundField boundField3 = new BoundField();
                 boundField3.DataField = "Status4All";
@@ -318,30 +328,84 @@ namespace EDM.edm
             // 1 - входящие
             // 2 - архив
 
+            EDMdbDataContext dataContext = new EDMdbDataContext();
             int idProcess = Convert.ToInt32(dashGridView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[0].Text);
 
             switch (e.CommandName)
 
             {
                 case "ButtonR1":
-                    {
-                        Session["processID"] = idProcess;
-                        Response.Redirect("DocumentView.aspx");
-                    }
+                {
+                    Session["processID"] = idProcess;
+                    Response.Redirect("DocumentView.aspx");
+                }
                     break;
                 case "ButtonR0":
-                    {
-                        Session["processID"] = idProcess;
-                        Response.Redirect("ProcessEdit.aspx");
-                    }
+                {
+                    Session["processID"] = idProcess;
+                    Response.Redirect("ProcessEdit.aspx");
+                }
                     break;
                 case "ButtonR2":
+                {
+                    // do smth
+                }
+                    break;
+                case "HistoryP":
+                {
+
+                }
+                    break;
+                case "StartP":
+                {
+                    Processes process =
+                        (from a in dataContext.Processes where a.active && a.processID == idProcess select a)
+                            .FirstOrDefault();
+                    if (process != null)
                     {
-                        // do smth
+                        process.status = 0;
+                        dataContext.SubmitChanges();
+                        Response.Redirect("Dashboard.aspx");
+                    }
+                    else if (process.status == 0) Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> confirm('Процесс уже запущен!');</script>");
+                        else Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> confirm('Ошибка запуска процесса!');</script>");
                     }
                     break;
-
+                case "DeleteP":
+                {
+                    Processes process =
+                        (from a in dataContext.Processes where a.active && a.processID == idProcess select a)
+                            .FirstOrDefault();
+                        if (process != null)
+                        {
+                            process.active = false;
+                    dataContext.SubmitChanges();
+                        Response.Redirect("Dashboard.aspx");
+                        }
+                        else Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> confirm('Ошибка удаления процесса!');</script>");
+                    }
+                    break;
             }
         }
+
+        protected void dashGridView_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                if (e.Row.RowType == DataControlRowType.DataRow)
+                {
+                    int id = e.Row.RowIndex;
+                    Button btnDel = (Button) e.Row.Cells[8].Controls[0];
+                    Button btnStart = (Button)e.Row.Cells[7].Controls[0];
+                        btnDel.OnClientClick = "javascript: if (confirm('Вы уверены что хотите удалить?') == true) {__doPostBack('ctl00$MainContent$dashGridView','DeleteP$"+id+"')} else return false";
+                        btnStart.OnClientClick = "javascript: if (confirm('Вы уверены что хотите запустить процесс согласования?') == true) {__doPostBack('ctl00$MainContent$dashGridView','StartP$" + id + "')} else return false";
+                }
+            }
+
+        }
+
+
+
+
     }
 }
