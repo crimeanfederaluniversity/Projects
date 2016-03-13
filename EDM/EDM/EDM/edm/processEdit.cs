@@ -265,6 +265,10 @@ namespace EDM.edm
         }
         public int CreateNewProcessVersion(int processId,string comment, int version, string status)
         {
+
+            Processes currentProcess = GetProcessById(processId);
+            currentProcess.status = -1;
+
             ProcessVersions newVersion = new ProcessVersions();
             newVersion.active = true;
             newVersion.comment = comment;

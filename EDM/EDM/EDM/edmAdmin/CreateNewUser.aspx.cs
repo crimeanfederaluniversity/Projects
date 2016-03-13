@@ -13,5 +13,23 @@ namespace EDM.edmAdmin
         {
 
         }
+
+        protected void AddUserButton_Click(object sender, EventArgs e)
+        {
+            if (PasswordTextBox.Text == PasswordConfirmTextBox.Text)
+            {
+                EDMdbDataContext edmDb = new EDMdbDataContext();
+                Users newUser = new Users();
+                newUser.active = true;
+                newUser.name = NameTextBox.Text;
+                newUser.email = EmailTextBox.Text;
+                newUser.login = LoginTextBox.Text;
+                newUser.@struct = StructTextBox.Text;
+                newUser.password = PasswordTextBox.Text;
+                edmDb.Users.InsertOnSubmit(newUser);
+                edmDb.SubmitChanges();
+                Response.Redirect("AdminMain.aspx");
+            }
+        }
     }
 }

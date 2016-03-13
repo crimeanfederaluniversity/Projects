@@ -16,7 +16,7 @@ namespace EDM.edmAdmin
 
         protected void NewUserButton_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("CreateNewUser.aspx");
         }
     }
 }
