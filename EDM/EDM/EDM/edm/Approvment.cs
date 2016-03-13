@@ -34,15 +34,6 @@ namespace EDM.edm
                 step.fk_participent = fkParticipant;
                 step.comment = comment;
                 step.stepResult = 1;
-                if (proc.type.Equals("review"))
-                {
-                    //ПЕРЕНЕСТИ в CheckApprove()
-                    int participantCount = (from a in dataContext.Participants where a.active && a.fk_process == proc.processID select a).Count();
-                    int stepsCount =(from a in dataContext.Steps where a.active && a.fk_processVersion == procVersion select a).Count();
-                    if (procVer != null) { procVer.status = "Обработано "+stepsCount+1 +" рецензентами из "+participantCount+"/ " + " " + DateTime.Now.ToShortDateString() ; } else throw new Exception("Не возможно присвоить версии процесса в статус 1. Скорее всего он не существует");
-                }
-                else //ПЕРЕНЕСТИ в CheckApprove()
-                if (procVer != null) { procVer.status = "Согласовано "+ (from a in dataContext.Users where a.userID == user select a.name).FirstOrDefault()+"/ "+ DateTime.Now.ToShortDateString(); } else throw new Exception("Не возможно присвоить версии процесса в статус 1. Скорее всего он не существует");
                 step.date = DateTime.Now;
 
                 dataContext.Steps.InsertOnSubmit(step);
@@ -50,9 +41,10 @@ namespace EDM.edm
 
             }
 
-            CheckApprove(procVersion);
+            CheckApprove(procVersion,1,user);
 
-            pg.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Согласованно!');</script>");
+            pg.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> confirm('Согласованно!');</script>");
+            HttpContext.Current.Response.Redirect("Dashboard.aspx");
         }
 
         public void RejectApprove(int user, int procVersion, string comment, Page pg)
@@ -81,18 +73,20 @@ namespace EDM.edm
                 step.fk_participent = fkParticipant;
                 step.comment = comment;
                 step.stepResult = -2;
-                //ПЕРЕНЕСТИ в CheckApprove()
-                if (process != null && procVer != null) { process.status = -2; procVer.status="Возвращено на доработку " + (from a in dataContext.Users where a.userID == user select a.name).FirstOrDefault() + "/ " + DateTime.Now.ToShortDateString();  } else throw new Exception("Не возможно вернуть процесс в статус -2. Скорее всего он не существует");
                 step.date = DateTime.Now;
 
 
                 dataContext.Steps.InsertOnSubmit(step);
                 dataContext.SubmitChanges();
             }
-            pg.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Отправленно на доработку!');</script>");
+            CheckApprove(procVersion, -2, user);
+
+            pg.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> confirm('Отправленно на доработку!');</script>");
+            HttpContext.Current.Response.Redirect("Dashboard.aspx");
+
         }
 
-        private void CheckApprove(int procVersion)
+        private void CheckApprove(int procVersion, int appType, int user)
         {
 
             using (EDMdbDataContext dataContext = new EDMdbDataContext())
@@ -101,6 +95,8 @@ namespace EDM.edm
                          (from v in dataContext.ProcessVersions
                           where v.active && v.processVersionID == procVersion
                           select v.fk_process).FirstOrDefault();
+                var proc =
+                    (from a in dataContext.Processes where a.active && a.processID == procId select a).FirstOrDefault();
 
                 ProcessVersions procVer = 
                             (from b in dataContext.ProcessVersions
@@ -142,9 +138,42 @@ namespace EDM.edm
                     }
 
                 }
-                
+                else
+                {
+                    switch (appType)
+                    {
+                        case 1:
+                        {
+                            if (proc.type.Equals("review"))
+                            {
+                                int participantCount = (from a in dataContext.Participants
+                                                        where a.active && a.fk_process == proc.processID
+                                                        select a).Count();
+
+                                if (procVer != null) procVer.status = "Обработано " + stepsCount + " рецензентами из " + participantCount + " / " + " " + DateTime.Now.ToShortDateString();
+                                    else throw new Exception("Не возможно присвоить версии процесса в статус 1. Скорее всего он не существует");
+                                }
+
+                            else if (procVer != null) procVer.status = "Согласовано " + (from a in dataContext.Users where a.userID == user select a.name).FirstOrDefault() + " / " + DateTime.Now.ToShortDateString();
+                                    else throw new Exception("Не возможно присвоить версии процесса в статус 1. Скорее всего он не существует");
+                            }
+                            break;
 
 
+
+                        case -2:
+                        {
+                            if (proc != null && procVer != null)
+                            {
+                                proc.status = -2;
+                                procVer.status = "Возвращено на доработку " + (from a in dataContext.Users where a.userID == user select a.name).FirstOrDefault() + " / " + DateTime.Now.ToShortDateString();
+                                }
+                            else throw new Exception("Не возможно вернуть процесс в статус -2. Скорее всего он не существует");
+                        }
+                            break;
+                    }
+                }
+                dataContext.SubmitChanges();
 
             }
         }
