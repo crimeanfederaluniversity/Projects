@@ -70,35 +70,35 @@ namespace EDM.edm
             #region headers
 
             TableHeaderRow historyTableHeaderRow = new TableHeaderRow();
-            TableCell cell1 = new TableCell();
+            TableHeaderCell cell1 = new TableHeaderCell();
             cell1.Text = "Версия процесса";
             historyTableHeaderRow.Cells.Add(cell1);
 
-            TableCell cell2 = new TableCell();
+            TableHeaderCell cell2 = new TableHeaderCell();
             cell2.Text = "Комментарий к версии процесса";
             historyTableHeaderRow.Cells.Add(cell2);
 
-            TableCell cell3 = new TableCell();
+            TableHeaderCell cell3 = new TableHeaderCell();
             cell3.Text = "Статус";
             historyTableHeaderRow.Cells.Add(cell3);
 
-            TableCell cell4 = new TableCell();
+            TableHeaderCell cell4 = new TableHeaderCell();
             cell4.Text = "Документы";
             historyTableHeaderRow.Cells.Add(cell4);
 
-            TableCell cell5 = new TableCell();
+            TableHeaderCell cell5 = new TableHeaderCell();
             cell5.Text = "Пользователь";
             historyTableHeaderRow.Cells.Add(cell5);
 
-            TableCell cell6 = new TableCell();
+            TableHeaderCell cell6 = new TableHeaderCell();
             cell6.Text = "Дата";
             historyTableHeaderRow.Cells.Add(cell6);
 
-            TableCell cell7 = new TableCell();
+            TableHeaderCell cell7 = new TableHeaderCell();
             cell7.Text = "Результат";
             historyTableHeaderRow.Cells.Add(cell7);
 
-            TableCell cell8 = new TableCell();
+            TableHeaderCell cell8 = new TableHeaderCell();
             cell8.Text = "Комментарий";
             historyTableHeaderRow.Cells.Add(cell8);
 
@@ -187,6 +187,7 @@ namespace EDM.edm
                 
             }
             historyTable.BorderWidth = 1;
+            historyTable.CssClass = "table edm-table edm-history-table centered-block";
             
             historyTableDiv.Controls.Add(historyTable);
         }

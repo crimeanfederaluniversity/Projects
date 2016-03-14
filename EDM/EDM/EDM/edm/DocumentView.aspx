@@ -13,15 +13,19 @@
             </asp:GridView>
     
             <br />
+
+            <div class="edm-document-view-comment-block">
     
-            <asp:Label ID="LabelComment" runat="server" Text="Label"></asp:Label>
+                <asp:Label ID="LabelComment" runat="server" Text="Label"></asp:Label>
+
+            </div>
 
             <br />
             <br />
             
         <%--<asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine" Height="54px" Width="160px"></asp:TextBox>--%>
             <div class="input-group-lg">
-                <asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine"  cssClass="form-control" ></asp:TextBox>
+                <asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine"  cssClass="form-control" Height="100px" ></asp:TextBox>
                 <br />
                 <br />
                 <div class="btn-group float-right">

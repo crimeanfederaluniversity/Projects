@@ -195,6 +195,7 @@ namespace EDM.edm
                     newDocClass.DocumentCommentTextBox = new TextBox();
                     newDocClass.DocumentCommentTextBox.ID = "docComment" + currentDocument.documentID;
                     newDocClass.DocumentCommentTextBox.Text = currentDocument.documentComment;
+                    newDocClass.DocumentCommentTextBox.CssClass = "form-control form-inline";
 
                     listToReturn.Add(newDocClass);
                 }
@@ -258,6 +259,7 @@ namespace EDM.edm
 
                                              "document.getElementById('MainContent_ParticipentNameTextBox" + rowId.ToString() + "').value = '" + user.name +" " +user.@struct+ "'; " +
                                              "document.getElementById('MainContent_chooseUserPanel" + rowId + "').style.visibility = 'hidden';  return false; ";
+                //chooseButton.CssClass = "btn btn-default float-right";
                 cell4.Controls.Add(chooseButton);
                 userRow.Cells.Add(cell4);
                 tableToReturn.Rows.Add(userRow);
@@ -374,6 +376,8 @@ namespace EDM.edm
                                                     rowId.ToString() +
                                                     "').style.visibility = 'visible'; return false; ";
                     participentCell.Controls.Add(GetFiexdPanel(rowId));
+                    openPunelButton.CssClass = "btn btn-sm btn-default";
+                    participentCell.Controls.Add(GetFiexdPanel(i));
                     participentCell.Controls.Add(openPunelButton);
                     participantRow.Cells.Add(participentCell);
 
@@ -385,9 +389,12 @@ namespace EDM.edm
                     deleteParticipentButton.CommandArgument = rowId.ToString();
                     deleteParticipentButton.ID = "deleteParticipentButton"+ rowId.ToString();
                     deleteParticipentButton.Click +=  DeleteParticipentRow;
-                    
+                    deleteParticipentButton.CssClass = "btn btn-sm btn-danger";
                     deleteParticipentCell.Controls.Add(deleteParticipentButton);
                     participantRow.Cells.Add(deleteParticipentCell);
+
+                    participantsTable.CssClass = "centered-block";
+
 
                     participantsTable.Rows.Add(participantRow);
                 }
@@ -398,22 +405,24 @@ namespace EDM.edm
             addRowToParticipantButton.CausesValidation = false;
             addRowToParticipantButton.Text = "Добавить согласующего";
             addRowToParticipantButton.ID = "addRowToParticipantButton";
+            addRowToParticipantButton.CssClass = "btn btn-default float-right";
             addRowToParticipantButton.Click += AddParticipentRow;
 
             TableRow addNewRow = new TableRow();
             TableCell addNewRowCell = new TableCell();
-            //addNewRowCell.ColumnSpan = 2;
+            addNewRowCell.ColumnSpan = 3;
             addNewRowCell.Controls.Add(addRowToParticipantButton);
             addNewRow.Cells.Add(new TableCell());
             addNewRow.Cells.Add(addNewRowCell);
             participantsTable.Rows.Add(addNewRow);
             if (!withQueu)
-                participantsTable.CssClass = "noFirstColumn";
+                participantsTable.CssClass = "noFirstColumn centered-block";
                 return participantsTable;
         }
         public Table GetDocumentsTable()
         {
             Table tableToReturn = new Table();
+            // tableToReturn.Style["width"] = "70%";
 
             if (DocumentsList.Count != 0)
             {
@@ -478,6 +487,7 @@ namespace EDM.edm
                     DeleteRowButton.Text = "Удалить";
                     DeleteRowButton.CommandArgument = rowId.ToString();
                     DeleteRowButton.ID = "DeleteRowButton"+rowId;
+                    DeleteRowButton.CssClass = "btn btn-sm btn-danger float-right";
                     DeleteRowButton.Click += DeleteDocumentRow;
 
                     cell3.Controls.Add(DeleteRowButton);
@@ -495,6 +505,7 @@ namespace EDM.edm
             addRowToDocButton.ID = "addRowToDocButton";
             addRowToDocButton.Text = "Добавить документ";
             addRowToDocButton.Click += AddDocumentRow;
+            addRowToDocButton.CssClass = "btn btn-default float-right";
 
             TableRow addNewRow = new TableRow();
             TableCell addNewRowCell = new TableCell();
@@ -502,6 +513,8 @@ namespace EDM.edm
             addNewRowCell.Controls.Add(addRowToDocButton);
             addNewRow.Cells.Add(addNewRowCell);
             tableToReturn.Rows.Add(addNewRow);
+
+            tableToReturn.CssClass = "centered-block";
 
             return tableToReturn;
         }

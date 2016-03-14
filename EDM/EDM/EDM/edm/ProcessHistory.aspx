@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="История согласования" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProcessHistory.aspx.cs" Inherits="EDM.edm.ProcessHistory" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     
-      <style type="text/css">
+      <%--<style type="text/css">
    TABLE {
     border-collapse: collapse; /* Убираем двойные линии между ячейками */
     width: 300px; /* Ширина таблицы */
@@ -17,7 +17,7 @@
     vertical-align: bottom; /* Выравнивание по нижнему краю */
     padding: 0; /* Убираем поля вокруг текста */
    }
-  </style>
+  </style>--%>
 
     <div runat="server" id="TitleDiv">
         <br/>
@@ -35,6 +35,6 @@
         <br/>
     </div>
     
-    <div runat="server" id="historyTableDiv">
+    <div runat="server" id="historyTableDiv" class="centered-block">
 </div>
 </asp:Content>

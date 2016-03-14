@@ -54,36 +54,41 @@
     <br/>
     
     
- 
+     <div class="row">
+         <div class="edm-proccess-edit-content centered-block">
 
-    <div runat="server" id="existingProcessTitleDiv">
-        <asp:Label ID="ProcessIdLabel" runat="server" Text=""></asp:Label>
-    </div>
+        <div runat="server" id="existingProcessTitleDiv" class="header">
+            <asp:Label ID="ProcessIdLabel" runat="server" Text=""></asp:Label>
+        </div>
     
-    <br/>
-        <div runat="server" id="commentForVersionDiv">
-         Комментарий
+        <br/>
+        <div runat="server" id="commentForVersionDiv" class="input-group-lg">
+             Комментарий
             <br />
-        <asp:TextBox ID="commentForVersionTextBox" runat="server" Height="70px" Width="600px" TextMode="MultiLine"></asp:TextBox>
-         <asp:RequiredFieldValidator runat="server" ControlToValidate="commentForVersionTextBox" ErrorMessage="!" ForeColor="red"/> 
-    </div>
-    
-    <br/>
-
-    <div runat="server" id="ParticipantsDiv"> 
-    
-    </div>
-    
-    <br/>
-    
-    <div runat="server" id ="documentsDiv">
+            <asp:TextBox ID="commentForVersionTextBox" runat="server" Height="100px" TextMode="MultiLine" CssClass="form-control"></asp:TextBox>
+             <asp:RequiredFieldValidator runat="server" ControlToValidate="commentForVersionTextBox" ErrorMessage="!" ForeColor="red"/> 
         </div>
     
-    <br/>
+        <br/>
 
-    <div runat="server" id="SaveAllDiv">
-        <asp:Button ID="SaveAllButton"  runat="server" Text="Сохранить" OnClick="SaveAllButton_Click" />
+        <div runat="server" id="ParticipantsDiv"> 
+    
         </div>
+    
+        <br/>
+    
+        <div runat="server" id ="documentsDiv" class="edm-process-edit-document-div">
+            </div>
+    
+        <br/>
+
+        <div runat="server" id="SaveAllDiv">
+            <asp:Button ID="SaveAllButton"  runat="server" Text="Сохранить" OnClick="SaveAllButton_Click" CssClass="btn btn-success float-right" />
+            </div>
+
+        </div>
+
+    </div>
    
 
 </asp:Content>

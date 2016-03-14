@@ -91,6 +91,10 @@ hr {
     color: #441C11;
 }
 
+.form-inline {
+    display: inline;
+}
+
 
 /* loading-screen */
 
@@ -219,9 +223,20 @@ hr {
     right: 0;
 }
 
+.edm-main-content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 0 5em;
+}
+
 /* Process Edit */
 
 .edm-PocessEdit-table {
+    width: 70%;
+}
+
+.edm-process-edit-document-div > table {
     width: 70%;
 }
 
@@ -235,4 +250,28 @@ hr {
 .edm-document-view-content {
     width: 70%;
     display: inline-block;
+}
+
+.edm-document-view-comment-block {
+    background: white;
+    padding: 20px 10px 15px 10px;
+}
+
+.edm-document-view-comment-block span {
+    padding: 20px 10px 15px 10px;
+}
+
+
+/* ProcessHistory */
+
+.edm-history-table {
+    width: 90%;
+}
+
+.edm-history-table tbody > tr > td {
+    border: 1px solid black;
+}
+
+.edm-proccess-edit-content {
+    width: 70%;
 }
