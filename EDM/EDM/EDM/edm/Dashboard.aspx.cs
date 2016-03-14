@@ -484,17 +484,26 @@ namespace EDM.edm
 
                     #region Входящие
 
-                    int processId;
-                    int.TryParse(e.Row.Cells[0].Text, out processId);
-
-                    var isNew =
-                        (from a in dc.Participants
-                            where a.active && a.fk_process == processId && a.fk_user == userId
-                            select a.isNew).FirstOrDefault();
-
-                    if (isNew != null && isNew == true)
+                    if (direction == 1)
                     {
-                        e.Row.ForeColor = Color.RoyalBlue;
+                        int processId;
+                        DateTime date;
+                        int.TryParse(e.Row.Cells[0].Text, out processId);
+                        DateTime.TryParse(e.Row.Cells[3].Text, out date);
+
+                        if ((date.Day - DateTime.Now.Day) == 0)
+                        {
+                            e.Row.Cells[3].ForeColor = Color.Red;
+                        }
+                        var isNew =
+                            (from a in dc.Participants
+                                where a.active && a.fk_process == processId && a.fk_user == userId
+                                select a.isNew).FirstOrDefault();
+
+                        if (isNew != null && isNew == true)
+                        {
+                            e.Row.ForeColor = Color.RoyalBlue;
+                        }
                     }
 
                     #endregion Входящие
