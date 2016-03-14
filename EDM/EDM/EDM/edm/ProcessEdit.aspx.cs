@@ -68,7 +68,7 @@ namespace EDM.edm
             endDateValidate.ErrorMessage = "!";
             endDateValidate.ForeColor = Color.Red;
             newParticipant.ParticipantEndDateValidator = endDateValidate;
-
+            
             newParticipant.ParticipantQueueTextBox = new TextBox();
             if (queue.Length > 0) newParticipant.ParticipantQueueTextBox.Text = queue;
             newParticipant.ParticipantQueueTextBox.Text = rowId.ToString();
@@ -125,11 +125,25 @@ namespace EDM.edm
             int rowId = 0;
             Button delButton = (Button)sender;
             Int32.TryParse(delButton.CommandArgument, out rowId);
-            if (rowId < ParticipantsList.Count)
+            //if (rowId < ParticipantsList.Count)
+            //{
+            foreach (Participant currentParticipant in ParticipantsList)
             {
-                Participant participantToDel = ParticipantsList[rowId];
-                ParticipantsList.Remove(participantToDel);
+                int newRow = -1;
+                string tmpstr = currentParticipant.ParticipantNameTextBox.ID.Replace("ParticipentNameTextBox", "");
+                Int32.TryParse(tmpstr, out newRow);
+                if (newRow == rowId)
+                {
+                    ParticipantsList.Remove(currentParticipant);
+                    Refersh();
+                    return;
             }
+        }
+
+                
+
+
+            //}
             Refersh();
         }
         public void AddDocumentRow(object sender, EventArgs e)
@@ -145,8 +159,6 @@ namespace EDM.edm
         }
         public void AddParticipentRow(object sender, EventArgs e)
         {
-
-
             int rowId = 0;
             if (ParticipantsList.Count > 0)
             {
@@ -296,6 +308,8 @@ namespace EDM.edm
             {
                 TableHeaderRow tableHeaderRow = new TableHeaderRow();
 
+
+
                 TableHeaderCell tableQueueHeaderCell = new TableHeaderCell();
                 tableQueueHeaderCell.Text = "Очередь";
                 tableHeaderRow.Cells.Add(tableQueueHeaderCell);
@@ -320,6 +334,10 @@ namespace EDM.edm
                     TableCell queueCell = new TableCell();
                     if (!withQueu)
                         ParticipantsList[i].ParticipantQueueTextBox.Text = 0.ToString();
+
+
+
+
                     ParticipantsList[i].ParticipantQueueTextBox.Attributes.Add("readonly","true");
                     queueCell.Controls.Add(ParticipantsList[i].ParticipantQueueTextBox);
                     queueCell.Controls.Add(ParticipantsList[i].ParticipantQueueValidator);
@@ -342,11 +360,20 @@ namespace EDM.edm
 
 
                     Button openPunelButton = new Button();
+
+
+                    int rowId = i;
+                    string tmpstr = ParticipantsList[i].ParticipantNameTextBox.ID.Replace("ParticipentNameTextBox", "");
+                    Int32.TryParse(tmpstr, out rowId);
+                   // rowId++;
+
+
+
                     openPunelButton.Text = "Выбрать";
                     openPunelButton.OnClientClick = "document.getElementById('MainContent_chooseUserPanel" +
-                                                    i.ToString() +
+                                                    rowId.ToString() +
                                                     "').style.visibility = 'visible'; return false; ";
-                    participentCell.Controls.Add(GetFiexdPanel(i));
+                    participentCell.Controls.Add(GetFiexdPanel(rowId));
                     participentCell.Controls.Add(openPunelButton);
                     participantRow.Cells.Add(participentCell);
 
@@ -355,22 +382,17 @@ namespace EDM.edm
                     Button deleteParticipentButton = new Button();
                     deleteParticipentButton.CausesValidation = false;
                     deleteParticipentButton.Text = "Удалить";
-                    deleteParticipentButton.CommandArgument = i.ToString();
-                    deleteParticipentButton.ID = "deleteParticipentButton"+ i.ToString();
+                    deleteParticipentButton.CommandArgument = rowId.ToString();
+                    deleteParticipentButton.ID = "deleteParticipentButton"+ rowId.ToString();
                     deleteParticipentButton.Click +=  DeleteParticipentRow;
                     
                     deleteParticipentCell.Controls.Add(deleteParticipentButton);
                     participantRow.Cells.Add(deleteParticipentCell);
 
-
-
-
                     participantsTable.Rows.Add(participantRow);
                 }
 
             }
-
-
 
             Button addRowToParticipantButton = new Button();
             addRowToParticipantButton.CausesValidation = false;
