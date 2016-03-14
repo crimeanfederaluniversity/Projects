@@ -438,7 +438,12 @@ namespace EDM.edm
                 if (e.Row.RowType == DataControlRowType.DataRow)
                 {
                     int direction;
+                    int userId;
                     int.TryParse(Session["direction"].ToString(), out direction);
+                    int.TryParse(Session["userID"].ToString(), out userId);
+                    EDMdbDataContext dc = new EDMdbDataContext();
+
+                    #region Исходящие
                     if (direction == 0)
                     {
                         int id = e.Row.RowIndex;
@@ -468,6 +473,24 @@ namespace EDM.edm
                             e.Row.ForeColor = Color.DarkRed;
                         }
                     }
+                    #endregion Исходящие
+
+                    #region Входящие
+
+                    int processId;
+                    int.TryParse(e.Row.Cells[0].Text, out processId);
+
+                    var isNew =
+                        (from a in dc.Participants
+                            where a.active && a.fk_process == processId && a.fk_user == userId
+                            select a.isNew).FirstOrDefault();
+
+                    if (isNew != null && isNew == true)
+                    {
+                        e.Row.ForeColor = Color.RoyalBlue;
+                    }
+
+                    #endregion Входящие
                 }
             }
 

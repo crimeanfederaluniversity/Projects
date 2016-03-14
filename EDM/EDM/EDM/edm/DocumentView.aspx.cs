@@ -26,6 +26,7 @@ namespace EDM.edm
 
                 EDMdbDataContext dataContext = new EDMdbDataContext();
 
+                
                 // отображать или нет кнопки
                 if (
                     (from a in dataContext.Processes where a.active && a.processID == proc select a.status)
@@ -61,6 +62,21 @@ namespace EDM.edm
                     (from a in dataContext.ProcessVersions
                      where a.active && a.processVersionID == procMaxVersion
                      select a.comment).FirstOrDefault();
+
+                //// isNew
+
+                Participants part =
+                    (from a in dataContext.Participants
+                        where a.active && a.fk_user == userID && a.fk_process == proc
+                        select a).FirstOrDefault();
+
+                if ( part!= null && part.isNew == true)
+                {
+                    part.isNew = false;
+                    dataContext.SubmitChanges();
+                }
+                
+                /////
 
                 RefreshGrid(dataContext, procMaxVersion);
 

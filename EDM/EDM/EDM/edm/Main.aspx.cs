@@ -17,6 +17,24 @@ namespace EDM.edm
                 Response.Redirect("~/Default.aspx");
             }
             /////////////////////////////////////////////////////////////////////
+
+            if (!Page.IsPostBack)
+            {
+                EDMdbDataContext dataContext = new EDMdbDataContext();
+
+                var userIsNewParticipant =
+                    (from a in dataContext.Participants where a.active && a.fk_user == (int)userId && a.isNew==true select a.fk_process)
+                        .Distinct().ToList();
+
+                var newProcessCount = (from p in userIsNewParticipant
+                                      join proc in dataContext.Processes on p equals proc.processID
+                                      where proc.active && proc.status == 0
+                                      select proc).Count();
+                if (newProcessCount > 0)
+                {
+                    Button2.Text += " ("+ newProcessCount+ ")";
+                } 
+            }
         }
 
         protected void Button2_Click(object sender, EventArgs e)

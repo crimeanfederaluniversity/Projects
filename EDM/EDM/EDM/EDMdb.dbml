@@ -19,8 +19,10 @@
       <Column Name="password" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="struct" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="fk_struct" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Users_Participants" Member="Participants" ThisKey="userID" OtherKey="fk_user" Type="Participants" />
       <Association Name="Users_Processes" Member="Processes" ThisKey="userID" OtherKey="fk_initiator" Type="Processes" />
+      <Association Name="Struct_Users" Member="Struct1" ThisKey="fk_struct" OtherKey="structID" Type="Struct" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.EmailBots" Member="EmailBots">
@@ -67,6 +69,7 @@
       <Column Name="status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="fk_process" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="queue" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="isNew" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="Participants_Steps" Member="Steps" ThisKey="participantID" OtherKey="fk_participent" Type="Steps" />
       <Association Name="Users_Participants" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
       <Association Name="Processes_Participants" Member="Processes" ThisKey="fk_process" OtherKey="processID" Type="Processes" IsForeignKey="true" />
@@ -111,6 +114,17 @@
       <Column Name="date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="Participants_Steps" Member="Participants" ThisKey="fk_participent" OtherKey="participantID" Type="Participants" IsForeignKey="true" />
       <Association Name="ProcessVersions_Steps" Member="ProcessVersions" ThisKey="fk_processVersion" OtherKey="processVersionID" Type="ProcessVersions" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Struct" Member="Struct">
+    <Type Name="Struct">
+      <Column Name="structID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="fk_parent" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Struct_Users" Member="Users" ThisKey="structID" OtherKey="fk_struct" Type="Users" />
+      <Association Name="Struct_Struct" Member="Struct2" ThisKey="structID" OtherKey="fk_parent" Type="Struct" />
+      <Association Name="Struct_Struct" Member="Struct1" ThisKey="fk_parent" OtherKey="structID" Type="Struct" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
