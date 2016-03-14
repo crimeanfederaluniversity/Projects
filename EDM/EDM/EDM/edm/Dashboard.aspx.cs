@@ -21,6 +21,7 @@ namespace EDM.edm
             public string Type { get; set; }
             public string TypeRus { get; set; }
             public int Version { get; set; }
+            public string EndDate { get; set; }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -73,6 +74,10 @@ namespace EDM.edm
                         where a.active && a.fk_process == proc.processID && a.fk_user == userID
                         select a.participantID).FirstOrDefault(); // id-шник этого пользователя в участниках процесса
 
+                    var userParticipantEndDate = (from a in dataContext.Participants
+                                           where a.active && a.fk_process == proc.processID && a.fk_user == userID
+                                           select a.dateEnd).FirstOrDefault();
+
                     var versionMax =
                         (from a in dataContext.ProcessVersions where a.active && a.fk_process == proc.processID select a)
                             .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
@@ -96,7 +101,8 @@ namespace EDM.edm
                                     Id = proc.processID,
                                     Name = proc.name,
                                     InitiatorId = proc.fk_initiator,
-                                    Status = proc.status
+                                    Status = proc.status,
+                                    EndDate = userParticipantEndDate.ToShortDateString()
                                 });
                             }
 
@@ -117,7 +123,8 @@ namespace EDM.edm
                                     Id = proc.processID,
                                     Name = proc.name,
                                     InitiatorId = proc.fk_initiator,
-                                    Status = proc.status
+                                    Status = proc.status,
+                                    EndDate = userParticipantEndDate.ToShortDateString()
                                 });
                             }
                         }
@@ -147,7 +154,8 @@ namespace EDM.edm
                                     Id = proc.processID,
                                     Name = proc.name,
                                     InitiatorId = proc.fk_initiator,
-                                    Status = proc.status
+                                    Status = proc.status,
+                                    EndDate = userParticipantEndDate.ToShortDateString()
                                 });
                             }
 
@@ -222,12 +230,12 @@ namespace EDM.edm
                 boundField3.Visible = true;
                 gridView.Columns.Add(boundField3);
 
-                /* BoundField boundField4 = new BoundField();
-                 boundField4.DataField = "Status";
-                 boundField4.HeaderText = "Статус";
+                BoundField boundField4 = new BoundField();
+                 boundField4.DataField = "EndDate";
+                 boundField4.HeaderText = "Срок";
                  boundField4.Visible = true;
                  gridView.Columns.Add(boundField4);
-                 */
+                 
                 ButtonField coluButtonField = new ButtonField();
                 coluButtonField.Text = "Подробнее";
                 coluButtonField.ButtonType = ButtonType.Button;
