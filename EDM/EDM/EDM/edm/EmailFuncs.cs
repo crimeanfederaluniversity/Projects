@@ -190,5 +190,36 @@ namespace EDM.edm
             //// не вижу смысла так спамить :)
         }
 
+        public void AutoAccept()
+        {
+            EDMdbDataContext dc = new EDMdbDataContext();
+            Approvment approve = new Approvment();
+
+            var participantProcessDebt =
+                (from a in dc.Participants where a.active && a.dateEnd < DateTime.Now
+                    join b in dc.Processes on a.fk_process equals b.processID
+                    where b.active && b.status == 0
+                 select new {a.fk_user, a.fk_process}).ToList();
+
+            EmailTemplates etmp =
+                (from i in dc.EmailTemplates where i.active && i.name == "yourStepAutoSubmitted" select i).FirstOrDefault();
+
+            foreach (var userProc in participantProcessDebt)
+            {
+                var userEmail =
+                    (from a in dc.Users where a.active && a.userID == userProc.fk_user select a.email).FirstOrDefault();
+
+                if (userEmail != null)
+                SendEmail(userEmail, etmp.emailTitle, etmp.emailContent, null);
+
+                int procMaxVersion =
+                    (from a in dc.ProcessVersions where a.fk_process == userProc.fk_process && a.active select a)
+                        .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
+
+                approve.AddApprove(userProc.fk_user, procMaxVersion, "Процесс согласован автоматически / "+DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
+
+            }
+
+        }
     }
 }

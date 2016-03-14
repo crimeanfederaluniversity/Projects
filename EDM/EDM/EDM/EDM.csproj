@@ -205,6 +205,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="edmAdmin\AdminMain.aspx" />
     <Content Include="edmAdmin\CreateNewUser.aspx" />
+    <Content Include="edm\AutoAccept.aspx" />
     <Content Include="edm\calendar_ru.js" />
     <Content Include="edm\Dashboard.aspx" />
     <Content Include="edm\DocumentView.aspx" />
@@ -430,6 +431,13 @@
       <DependentUpon>EDMdb.dbml</DependentUpon>
     </Compile>
     <Compile Include="edm\Approvment.cs" />
+    <Compile Include="edm\AutoAccept.aspx.cs">
+      <DependentUpon>AutoAccept.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="edm\AutoAccept.aspx.designer.cs">
+      <DependentUpon>AutoAccept.aspx</DependentUpon>
+    </Compile>
     <Compile Include="edm\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

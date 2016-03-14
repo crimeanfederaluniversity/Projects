@@ -121,7 +121,7 @@ namespace EDM.edm
         {
             if (CommentTextBox.Text.Any())
             {
-                int proc;
+            int proc;
             int userId;
 
             int.TryParse(Session["userID"].ToString(), out userId);
@@ -135,7 +135,8 @@ namespace EDM.edm
                     (from a in dataContext.ProcessVersions where a.fk_process == proc && a.active select a)
                         .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
 
-            approve.AddApprove(userId, procMaxVersion, CommentTextBox.Text, this);
+            approve.AddApprove(userId, procMaxVersion, CommentTextBox.Text);
+            HttpContext.Current.Response.Redirect("Dashboard.aspx");
             }
             else
             {
@@ -162,7 +163,8 @@ namespace EDM.edm
                     (from a in dataContext.ProcessVersions where a.fk_process == proc && a.active select a)
                         .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
 
-                approve.RejectApprove(userId, procMaxVersion, CommentTextBox.Text, this);
+                approve.RejectApprove(userId, procMaxVersion, CommentTextBox.Text);
+                HttpContext.Current.Response.Redirect("Dashboard.aspx");
             }
             else
             {

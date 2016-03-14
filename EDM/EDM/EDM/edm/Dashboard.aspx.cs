@@ -540,7 +540,7 @@ namespace EDM.edm
                         int.TryParse(e.Row.Cells[0].Text, out processId);
                         DateTime.TryParse(e.Row.Cells[3].Text, out date);
 
-                        if ((date.Day - DateTime.Now.Day) == 0)
+                        if (date.Day <= DateTime.Now.Day && date.Month <= DateTime.Now.Month && date.Year<= DateTime.Now.Year)
                         {
                             e.Row.Cells[3].ForeColor = Color.Red;
                         }

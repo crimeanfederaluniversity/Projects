@@ -8,7 +8,7 @@ namespace EDM.edm
 {
     public class Approvment
     {
-        public void AddApprove(int user, int procVersion, string comment, Page pg)
+        public void AddApprove(int user, int procVersion, string comment)
         {
             using (EDMdbDataContext dataContext = new EDMdbDataContext())
             {
@@ -59,10 +59,9 @@ namespace EDM.edm
             }
 
             CheckApprove(procVersion,1,user);
-            HttpContext.Current.Response.Redirect("Dashboard.aspx");
         }
 
-        public void RejectApprove(int user, int procVersion, string comment, Page pg)
+        public void RejectApprove(int user, int procVersion, string comment)
         {
             using (EDMdbDataContext dataContext = new EDMdbDataContext())
             {
@@ -89,7 +88,6 @@ namespace EDM.edm
             }
 
             CheckApprove(procVersion, -2, user);
-            HttpContext.Current.Response.Redirect("Dashboard.aspx");
 
         }
 
