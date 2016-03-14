@@ -189,7 +189,7 @@ namespace EDM.edm
 
         public void ContinueApprove(int procId)
         {
-            // после создания новой версии ()
+            // Вызывать после создания новой версии ()
 
             using (EDMdbDataContext dc = new EDMdbDataContext())
             {

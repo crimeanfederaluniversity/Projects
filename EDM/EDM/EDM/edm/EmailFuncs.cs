@@ -106,6 +106,12 @@ namespace EDM.edm
         public void StartProcess(int procId)
         {
             EDMdbDataContext dc = new EDMdbDataContext();
+            int currentQueue = 0;
+            int procMaxVersion =
+                (from a in dc.ProcessVersions where a.fk_process == procId && a.active select a)
+                    .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
+            var steps = (from a in dc.Steps where a.active && a.fk_processVersion == procMaxVersion select a).ToList(); // для AutoAccept()
+
 
             var initiatorEmail =
                 (from a in dc.Processes
@@ -117,9 +123,16 @@ namespace EDM.edm
                 (from i in dc.EmailTemplates where i.active && i.name == "youStartedProcess" select i).FirstOrDefault();
             SendEmail(initiatorEmail, etmpInit.emailTitle, etmpInit.emailContent, null);
 
+            if (steps.Count > 0) // для AutoAccept()
+            {       
+                    currentQueue = (from a in dc.Participants // ПРОТЕСТИТЬ
+                    where a.active && a.fk_process == procId
+                    join b in steps on a.participantID equals b.fk_participent
+                    select a).OrderByDescending(q => q.queue).Select(q => q.queue).FirstOrDefault();
+            }
 
             var participantsZero =
-                (from a in dc.Participants where a.active && a.fk_process == procId && a.queue == 0 select a.fk_user)
+                (from a in dc.Participants where a.active && a.fk_process == procId && a.queue == currentQueue select a.fk_user)
                     .ToList();
 
             if (participantsZero.Any())
