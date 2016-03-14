@@ -206,7 +206,7 @@ namespace EDM.edm
 
                 BoundField boundField = new BoundField();
                 boundField.DataField = "Id";
-                boundField.HeaderText = "ID";
+                boundField.HeaderText = "ИН";
                 boundField.Visible = true;
                 gridView.Columns.Add(boundField);
 
@@ -291,7 +291,7 @@ namespace EDM.edm
 
                 BoundField boundField = new BoundField();
                 boundField.DataField = "Id";
-                boundField.HeaderText = "ID";
+                boundField.HeaderText = "ИН";
                 boundField.Visible = true;
                 gridView.Columns.Add(boundField);
 
