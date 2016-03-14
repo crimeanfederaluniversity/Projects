@@ -195,7 +195,7 @@ namespace EDM.edm
             {
                 List<Steps> stepsOld;
 
-                var procVersions = (from a in dc.ProcessVersions where a.active && a.fk_process == procId select a).ToList();
+                var procVersions = (from a in dc.ProcessVersions where a.active && a.fk_process == procId select a).OrderByDescending(i=>i.processVersionID).ToList();
 
                  stepsOld = (from a in dc.Steps where a.active && a.fk_processVersion == procVersions[procVersions.Count].processVersionID
                              select a).ToList();
@@ -204,17 +204,20 @@ namespace EDM.edm
 
                     foreach (var participant in participantsNew)
                     {
-                        Steps step = new Steps();
+                        if ((from a in stepsOld where a.fk_participent == participant.participantID select a.stepResult).FirstOrDefault() == 1)
+                        { 
+                            Steps step = new Steps();
 
-                        step.active = true;
-                        step.fk_processVersion = procVersions[procVersions.Count].processVersionID;
-                        step.fk_participent = participant.participantID;
-                        step.comment = (from a in stepsOld where a.fk_participent == participant.participantID select a.comment).FirstOrDefault();
-                        step.stepResult = (from a in stepsOld where a.fk_participent == participant.participantID select a.stepResult).FirstOrDefault();
-                        step.date = (from a in stepsOld where a.fk_participent == participant.participantID select a.date).FirstOrDefault();
+                            step.active = true;
+                            step.fk_processVersion = procVersions[procVersions.Count].processVersionID;
+                            step.fk_participent = participant.participantID;
+                            step.comment = (from a in stepsOld where a.fk_participent == participant.participantID select a.comment).FirstOrDefault();
+                            step.stepResult = 1;
+                            step.date = (from a in stepsOld where a.fk_participent == participant.participantID select a.date).FirstOrDefault();
 
-                        dc.Steps.InsertOnSubmit(step);
-                        dc.SubmitChanges();
+                            dc.Steps.InsertOnSubmit(step);
+                            dc.SubmitChanges();
+                          }
                   }
 
             }
