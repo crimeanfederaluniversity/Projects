@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -172,7 +173,7 @@ namespace EDM.edm
             if (direction == 0)
             {
                 var allProcessInitByUser =
-                    (from a in dataContext.Processes where a.active && a.fk_initiator == userID select a).ToList();
+                    (from a in dataContext.Processes where a.active && a.fk_initiator == userID select a).OrderByDescending(i => i.processID).ToList();
 
                 foreach (var proc in allProcessInitByUser)
                 {
@@ -449,6 +450,23 @@ namespace EDM.edm
                         btnStart.OnClientClick =
                             "javascript: if (confirm('Вы уверены что хотите запустить процесс согласования?') == true) {__doPostBack('ctl00$MainContent$dashGridView','StartP$" +
                             id + "')} else return false";
+
+                        if (e.Row.Cells[3].Text.Equals("Создан, ждет запуска"))
+                        {
+                            e.Row.ForeColor = Color.Chocolate;
+                        }
+                        if (e.Row.Cells[3].Text.Equals("В процессе"))
+                        {
+                            //
+                        }
+                        if (e.Row.Cells[3].Text.Equals("Согласован"))
+                        {
+                            e.Row.ForeColor = Color.Green;
+                        }
+                        if (e.Row.Cells[3].Text.Equals("Возвращен на доработку"))
+                        {
+                            e.Row.ForeColor = Color.DarkRed;
+                        }
                     }
                 }
             }
