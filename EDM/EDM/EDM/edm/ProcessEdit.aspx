@@ -13,6 +13,16 @@
            display:none;
           }
       </style>
+    
+    
+    <script>
+        function putValueAndClose(panelId, userNameField, userIdField,userName,userId) {
+            document.getElementById(userNameField).value = userName;
+            document.getElementById(userIdField).value = userId;
+            document.getElementById(panelId).style.visibility = 'hidden';
+        }
+    </script>
+    
 
     <div id="createNewProcessDiv" runat="server" class="row" >
     <table class="table table-striped edm-table edm-PocessEdit-table centered-block">

@@ -45,9 +45,6 @@ namespace EDM
     partial void InsertEmailTemplates(EmailTemplates instance);
     partial void UpdateEmailTemplates(EmailTemplates instance);
     partial void DeleteEmailTemplates(EmailTemplates instance);
-    partial void InsertParticipants(Participants instance);
-    partial void UpdateParticipants(Participants instance);
-    partial void DeleteParticipants(Participants instance);
     partial void InsertProcesses(Processes instance);
     partial void UpdateProcesses(Processes instance);
     partial void DeleteProcesses(Processes instance);
@@ -57,6 +54,12 @@ namespace EDM
     partial void InsertSteps(Steps instance);
     partial void UpdateSteps(Steps instance);
     partial void DeleteSteps(Steps instance);
+    partial void InsertStruct(Struct instance);
+    partial void UpdateStruct(Struct instance);
+    partial void DeleteStruct(Struct instance);
+    partial void InsertParticipants(Participants instance);
+    partial void UpdateParticipants(Participants instance);
+    partial void DeleteParticipants(Participants instance);
     #endregion
 		
 		public EDMdbDataContext() : 
@@ -129,14 +132,6 @@ namespace EDM
 			}
 		}
 		
-		public System.Data.Linq.Table<Participants> Participants
-		{
-			get
-			{
-				return this.GetTable<Participants>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Processes> Processes
 		{
 			get
@@ -158,6 +153,22 @@ namespace EDM
 			get
 			{
 				return this.GetTable<Steps>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Struct> Struct
+		{
+			get
+			{
+				return this.GetTable<Struct>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Participants> Participants
+		{
+			get
+			{
+				return this.GetTable<Participants>();
 			}
 		}
 	}
@@ -381,9 +392,13 @@ namespace EDM
 		
 		private string _struct;
 		
-		private EntitySet<Participants> _Participants;
+		private System.Nullable<int> _fk_struct;
 		
 		private EntitySet<Processes> _Processes;
+		
+		private EntitySet<Participants> _Participants;
+		
+		private EntityRef<Struct> _Struct1;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -403,12 +418,15 @@ namespace EDM
     partial void OnnameChanged();
     partial void OnstructChanging(string value);
     partial void OnstructChanged();
+    partial void Onfk_structChanging(System.Nullable<int> value);
+    partial void Onfk_structChanged();
     #endregion
 		
 		public Users()
 		{
-			this._Participants = new EntitySet<Participants>(new Action<Participants>(this.attach_Participants), new Action<Participants>(this.detach_Participants));
 			this._Processes = new EntitySet<Processes>(new Action<Processes>(this.attach_Processes), new Action<Processes>(this.detach_Processes));
+			this._Participants = new EntitySet<Participants>(new Action<Participants>(this.attach_Participants), new Action<Participants>(this.detach_Participants));
+			this._Struct1 = default(EntityRef<Struct>);
 			OnCreated();
 		}
 		
@@ -552,16 +570,27 @@ namespace EDM
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Participants", Storage="_Participants", ThisKey="userID", OtherKey="fk_user")]
-		public EntitySet<Participants> Participants
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_struct", DbType="Int")]
+		public System.Nullable<int> fk_struct
 		{
 			get
 			{
-				return this._Participants;
+				return this._fk_struct;
 			}
 			set
 			{
-				this._Participants.Assign(value);
+				if ((this._fk_struct != value))
+				{
+					if (this._Struct1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_structChanging(value);
+					this.SendPropertyChanging();
+					this._fk_struct = value;
+					this.SendPropertyChanged("fk_struct");
+					this.Onfk_structChanged();
+				}
 			}
 		}
 		
@@ -575,6 +604,53 @@ namespace EDM
 			set
 			{
 				this._Processes.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Participants", Storage="_Participants", ThisKey="userID", OtherKey="fk_user")]
+		public EntitySet<Participants> Participants
+		{
+			get
+			{
+				return this._Participants;
+			}
+			set
+			{
+				this._Participants.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Struct_Users", Storage="_Struct1", ThisKey="fk_struct", OtherKey="structID", IsForeignKey=true)]
+		public Struct Struct1
+		{
+			get
+			{
+				return this._Struct1.Entity;
+			}
+			set
+			{
+				Struct previousValue = this._Struct1.Entity;
+				if (((previousValue != value) 
+							|| (this._Struct1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Struct1.Entity = null;
+						previousValue.Users.Remove(this);
+					}
+					this._Struct1.Entity = value;
+					if ((value != null))
+					{
+						value.Users.Add(this);
+						this._fk_struct = value.structID;
+					}
+					else
+					{
+						this._fk_struct = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Struct1");
+				}
 			}
 		}
 		
@@ -598,18 +674,6 @@ namespace EDM
 			}
 		}
 		
-		private void attach_Participants(Participants entity)
-		{
-			this.SendPropertyChanging();
-			entity.Users = this;
-		}
-		
-		private void detach_Participants(Participants entity)
-		{
-			this.SendPropertyChanging();
-			entity.Users = null;
-		}
-		
 		private void attach_Processes(Processes entity)
 		{
 			this.SendPropertyChanging();
@@ -617,6 +681,18 @@ namespace EDM
 		}
 		
 		private void detach_Processes(Processes entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = null;
+		}
+		
+		private void attach_Participants(Participants entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = this;
+		}
+		
+		private void detach_Participants(Participants entity)
 		{
 			this.SendPropertyChanging();
 			entity.Users = null;
@@ -1265,346 +1341,6 @@ namespace EDM
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Participants")]
-	public partial class Participants : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _participantID;
-		
-		private bool _active;
-		
-		private int _fk_user;
-		
-		private System.Nullable<System.DateTime> _dateStart;
-		
-		private System.DateTime _dateEnd;
-		
-		private int _status;
-		
-		private int _fk_process;
-		
-		private int _queue;
-		
-		private EntitySet<Steps> _Steps;
-		
-		private EntityRef<Users> _Users;
-		
-		private EntityRef<Processes> _Processes;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnparticipantIDChanging(int value);
-    partial void OnparticipantIDChanged();
-    partial void OnactiveChanging(bool value);
-    partial void OnactiveChanged();
-    partial void Onfk_userChanging(int value);
-    partial void Onfk_userChanged();
-    partial void OndateStartChanging(System.Nullable<System.DateTime> value);
-    partial void OndateStartChanged();
-    partial void OndateEndChanging(System.DateTime value);
-    partial void OndateEndChanged();
-    partial void OnstatusChanging(int value);
-    partial void OnstatusChanged();
-    partial void Onfk_processChanging(int value);
-    partial void Onfk_processChanged();
-    partial void OnqueueChanging(int value);
-    partial void OnqueueChanged();
-    #endregion
-		
-		public Participants()
-		{
-			this._Steps = new EntitySet<Steps>(new Action<Steps>(this.attach_Steps), new Action<Steps>(this.detach_Steps));
-			this._Users = default(EntityRef<Users>);
-			this._Processes = default(EntityRef<Processes>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_participantID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int participantID
-		{
-			get
-			{
-				return this._participantID;
-			}
-			set
-			{
-				if ((this._participantID != value))
-				{
-					this.OnparticipantIDChanging(value);
-					this.SendPropertyChanging();
-					this._participantID = value;
-					this.SendPropertyChanged("participantID");
-					this.OnparticipantIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
-		public bool active
-		{
-			get
-			{
-				return this._active;
-			}
-			set
-			{
-				if ((this._active != value))
-				{
-					this.OnactiveChanging(value);
-					this.SendPropertyChanging();
-					this._active = value;
-					this.SendPropertyChanged("active");
-					this.OnactiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_user", DbType="Int NOT NULL")]
-		public int fk_user
-		{
-			get
-			{
-				return this._fk_user;
-			}
-			set
-			{
-				if ((this._fk_user != value))
-				{
-					if (this._Users.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_userChanging(value);
-					this.SendPropertyChanging();
-					this._fk_user = value;
-					this.SendPropertyChanged("fk_user");
-					this.Onfk_userChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dateStart", DbType="DateTime")]
-		public System.Nullable<System.DateTime> dateStart
-		{
-			get
-			{
-				return this._dateStart;
-			}
-			set
-			{
-				if ((this._dateStart != value))
-				{
-					this.OndateStartChanging(value);
-					this.SendPropertyChanging();
-					this._dateStart = value;
-					this.SendPropertyChanged("dateStart");
-					this.OndateStartChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dateEnd", DbType="DateTime NOT NULL")]
-		public System.DateTime dateEnd
-		{
-			get
-			{
-				return this._dateEnd;
-			}
-			set
-			{
-				if ((this._dateEnd != value))
-				{
-					this.OndateEndChanging(value);
-					this.SendPropertyChanging();
-					this._dateEnd = value;
-					this.SendPropertyChanged("dateEnd");
-					this.OndateEndChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_status", DbType="Int NOT NULL")]
-		public int status
-		{
-			get
-			{
-				return this._status;
-			}
-			set
-			{
-				if ((this._status != value))
-				{
-					this.OnstatusChanging(value);
-					this.SendPropertyChanging();
-					this._status = value;
-					this.SendPropertyChanged("status");
-					this.OnstatusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_process", DbType="Int NOT NULL")]
-		public int fk_process
-		{
-			get
-			{
-				return this._fk_process;
-			}
-			set
-			{
-				if ((this._fk_process != value))
-				{
-					if (this._Processes.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_processChanging(value);
-					this.SendPropertyChanging();
-					this._fk_process = value;
-					this.SendPropertyChanged("fk_process");
-					this.Onfk_processChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_queue", DbType="Int NOT NULL")]
-		public int queue
-		{
-			get
-			{
-				return this._queue;
-			}
-			set
-			{
-				if ((this._queue != value))
-				{
-					this.OnqueueChanging(value);
-					this.SendPropertyChanging();
-					this._queue = value;
-					this.SendPropertyChanged("queue");
-					this.OnqueueChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Participants_Steps", Storage="_Steps", ThisKey="participantID", OtherKey="fk_participent")]
-		public EntitySet<Steps> Steps
-		{
-			get
-			{
-				return this._Steps;
-			}
-			set
-			{
-				this._Steps.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Participants", Storage="_Users", ThisKey="fk_user", OtherKey="userID", IsForeignKey=true)]
-		public Users Users
-		{
-			get
-			{
-				return this._Users.Entity;
-			}
-			set
-			{
-				Users previousValue = this._Users.Entity;
-				if (((previousValue != value) 
-							|| (this._Users.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Users.Entity = null;
-						previousValue.Participants.Remove(this);
-					}
-					this._Users.Entity = value;
-					if ((value != null))
-					{
-						value.Participants.Add(this);
-						this._fk_user = value.userID;
-					}
-					else
-					{
-						this._fk_user = default(int);
-					}
-					this.SendPropertyChanged("Users");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_Participants", Storage="_Processes", ThisKey="fk_process", OtherKey="processID", IsForeignKey=true)]
-		public Processes Processes
-		{
-			get
-			{
-				return this._Processes.Entity;
-			}
-			set
-			{
-				Processes previousValue = this._Processes.Entity;
-				if (((previousValue != value) 
-							|| (this._Processes.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Processes.Entity = null;
-						previousValue.Participants.Remove(this);
-					}
-					this._Processes.Entity = value;
-					if ((value != null))
-					{
-						value.Participants.Add(this);
-						this._fk_process = value.processID;
-					}
-					else
-					{
-						this._fk_process = default(int);
-					}
-					this.SendPropertyChanged("Processes");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Steps(Steps entity)
-		{
-			this.SendPropertyChanging();
-			entity.Participants = this;
-		}
-		
-		private void detach_Steps(Steps entity)
-		{
-			this.SendPropertyChanging();
-			entity.Participants = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Processes")]
 	public partial class Processes : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1627,9 +1363,9 @@ namespace EDM
 		
 		private System.Nullable<System.DateTime> _endDate;
 		
-		private EntitySet<Participants> _Participants;
-		
 		private EntitySet<ProcessVersions> _ProcessVersions;
+		
+		private EntitySet<Participants> _Participants;
 		
 		private EntityRef<Users> _Users;
 		
@@ -1657,8 +1393,8 @@ namespace EDM
 		
 		public Processes()
 		{
-			this._Participants = new EntitySet<Participants>(new Action<Participants>(this.attach_Participants), new Action<Participants>(this.detach_Participants));
 			this._ProcessVersions = new EntitySet<ProcessVersions>(new Action<ProcessVersions>(this.attach_ProcessVersions), new Action<ProcessVersions>(this.detach_ProcessVersions));
+			this._Participants = new EntitySet<Participants>(new Action<Participants>(this.attach_Participants), new Action<Participants>(this.detach_Participants));
 			this._Users = default(EntityRef<Users>);
 			OnCreated();
 		}
@@ -1827,19 +1563,6 @@ namespace EDM
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_Participants", Storage="_Participants", ThisKey="processID", OtherKey="fk_process")]
-		public EntitySet<Participants> Participants
-		{
-			get
-			{
-				return this._Participants;
-			}
-			set
-			{
-				this._Participants.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_ProcessVersions", Storage="_ProcessVersions", ThisKey="processID", OtherKey="fk_process")]
 		public EntitySet<ProcessVersions> ProcessVersions
 		{
@@ -1850,6 +1573,19 @@ namespace EDM
 			set
 			{
 				this._ProcessVersions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_Participants", Storage="_Participants", ThisKey="processID", OtherKey="fk_process")]
+		public EntitySet<Participants> Participants
+		{
+			get
+			{
+				return this._Participants;
+			}
+			set
+			{
+				this._Participants.Assign(value);
 			}
 		}
 		
@@ -1907,18 +1643,6 @@ namespace EDM
 			}
 		}
 		
-		private void attach_Participants(Participants entity)
-		{
-			this.SendPropertyChanging();
-			entity.Processes = this;
-		}
-		
-		private void detach_Participants(Participants entity)
-		{
-			this.SendPropertyChanging();
-			entity.Processes = null;
-		}
-		
 		private void attach_ProcessVersions(ProcessVersions entity)
 		{
 			this.SendPropertyChanging();
@@ -1926,6 +1650,18 @@ namespace EDM
 		}
 		
 		private void detach_ProcessVersions(ProcessVersions entity)
+		{
+			this.SendPropertyChanging();
+			entity.Processes = null;
+		}
+		
+		private void attach_Participants(Participants entity)
+		{
+			this.SendPropertyChanging();
+			entity.Processes = this;
+		}
+		
+		private void detach_Participants(Participants entity)
 		{
 			this.SendPropertyChanging();
 			entity.Processes = null;
@@ -2231,9 +1967,9 @@ namespace EDM
 		
 		private System.Nullable<System.DateTime> _date;
 		
-		private EntityRef<Participants> _Participants;
-		
 		private EntityRef<ProcessVersions> _ProcessVersions;
+		
+		private EntityRef<Participants> _Participants;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2257,8 +1993,8 @@ namespace EDM
 		
 		public Steps()
 		{
-			this._Participants = default(EntityRef<Participants>);
 			this._ProcessVersions = default(EntityRef<ProcessVersions>);
+			this._Participants = default(EntityRef<Participants>);
 			OnCreated();
 		}
 		
@@ -2410,40 +2146,6 @@ namespace EDM
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Participants_Steps", Storage="_Participants", ThisKey="fk_participent", OtherKey="participantID", IsForeignKey=true)]
-		public Participants Participants
-		{
-			get
-			{
-				return this._Participants.Entity;
-			}
-			set
-			{
-				Participants previousValue = this._Participants.Entity;
-				if (((previousValue != value) 
-							|| (this._Participants.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Participants.Entity = null;
-						previousValue.Steps.Remove(this);
-					}
-					this._Participants.Entity = value;
-					if ((value != null))
-					{
-						value.Steps.Add(this);
-						this._fk_participent = value.participantID;
-					}
-					else
-					{
-						this._fk_participent = default(int);
-					}
-					this.SendPropertyChanged("Participants");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessVersions_Steps", Storage="_ProcessVersions", ThisKey="fk_processVersion", OtherKey="processVersionID", IsForeignKey=true)]
 		public ProcessVersions ProcessVersions
 		{
@@ -2478,6 +2180,40 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Participants_Steps", Storage="_Participants", ThisKey="fk_participent", OtherKey="participantID", IsForeignKey=true)]
+		public Participants Participants
+		{
+			get
+			{
+				return this._Participants.Entity;
+			}
+			set
+			{
+				Participants previousValue = this._Participants.Entity;
+				if (((previousValue != value) 
+							|| (this._Participants.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Participants.Entity = null;
+						previousValue.Steps.Remove(this);
+					}
+					this._Participants.Entity = value;
+					if ((value != null))
+					{
+						value.Steps.Add(this);
+						this._fk_participent = value.participantID;
+					}
+					else
+					{
+						this._fk_participent = default(int);
+					}
+					this.SendPropertyChanged("Participants");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2496,6 +2232,601 @@ namespace EDM
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Struct")]
+	public partial class Struct : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _structID;
+		
+		private bool _active;
+		
+		private string _name;
+		
+		private System.Nullable<int> _fk_parent;
+		
+		private EntitySet<Users> _Users;
+		
+		private EntitySet<Struct> _Struct2;
+		
+		private EntityRef<Struct> _Struct1;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnstructIDChanging(int value);
+    partial void OnstructIDChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void Onfk_parentChanging(System.Nullable<int> value);
+    partial void Onfk_parentChanged();
+    #endregion
+		
+		public Struct()
+		{
+			this._Users = new EntitySet<Users>(new Action<Users>(this.attach_Users), new Action<Users>(this.detach_Users));
+			this._Struct2 = new EntitySet<Struct>(new Action<Struct>(this.attach_Struct2), new Action<Struct>(this.detach_Struct2));
+			this._Struct1 = default(EntityRef<Struct>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_structID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int structID
+		{
+			get
+			{
+				return this._structID;
+			}
+			set
+			{
+				if ((this._structID != value))
+				{
+					this.OnstructIDChanging(value);
+					this.SendPropertyChanging();
+					this._structID = value;
+					this.SendPropertyChanged("structID");
+					this.OnstructIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_parent", DbType="Int")]
+		public System.Nullable<int> fk_parent
+		{
+			get
+			{
+				return this._fk_parent;
+			}
+			set
+			{
+				if ((this._fk_parent != value))
+				{
+					if (this._Struct1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_parentChanging(value);
+					this.SendPropertyChanging();
+					this._fk_parent = value;
+					this.SendPropertyChanged("fk_parent");
+					this.Onfk_parentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Struct_Users", Storage="_Users", ThisKey="structID", OtherKey="fk_struct")]
+		public EntitySet<Users> Users
+		{
+			get
+			{
+				return this._Users;
+			}
+			set
+			{
+				this._Users.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Struct_Struct", Storage="_Struct2", ThisKey="structID", OtherKey="fk_parent")]
+		public EntitySet<Struct> Struct2
+		{
+			get
+			{
+				return this._Struct2;
+			}
+			set
+			{
+				this._Struct2.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Struct_Struct", Storage="_Struct1", ThisKey="fk_parent", OtherKey="structID", IsForeignKey=true)]
+		public Struct Struct1
+		{
+			get
+			{
+				return this._Struct1.Entity;
+			}
+			set
+			{
+				Struct previousValue = this._Struct1.Entity;
+				if (((previousValue != value) 
+							|| (this._Struct1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Struct1.Entity = null;
+						previousValue.Struct2.Remove(this);
+					}
+					this._Struct1.Entity = value;
+					if ((value != null))
+					{
+						value.Struct2.Add(this);
+						this._fk_parent = value.structID;
+					}
+					else
+					{
+						this._fk_parent = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Struct1");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Users(Users entity)
+		{
+			this.SendPropertyChanging();
+			entity.Struct1 = this;
+		}
+		
+		private void detach_Users(Users entity)
+		{
+			this.SendPropertyChanging();
+			entity.Struct1 = null;
+		}
+		
+		private void attach_Struct2(Struct entity)
+		{
+			this.SendPropertyChanging();
+			entity.Struct1 = this;
+		}
+		
+		private void detach_Struct2(Struct entity)
+		{
+			this.SendPropertyChanging();
+			entity.Struct1 = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Participants")]
+	public partial class Participants : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _participantID;
+		
+		private bool _active;
+		
+		private int _fk_user;
+		
+		private System.Nullable<System.DateTime> _dateStart;
+		
+		private System.DateTime _dateEnd;
+		
+		private int _status;
+		
+		private int _fk_process;
+		
+		private int _queue;
+		
+		private System.Nullable<bool> _isNew;
+		
+		private EntitySet<Steps> _Steps;
+		
+		private EntityRef<Processes> _Processes;
+		
+		private EntityRef<Users> _Users;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnparticipantIDChanging(int value);
+    partial void OnparticipantIDChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void Onfk_userChanging(int value);
+    partial void Onfk_userChanged();
+    partial void OndateStartChanging(System.Nullable<System.DateTime> value);
+    partial void OndateStartChanged();
+    partial void OndateEndChanging(System.DateTime value);
+    partial void OndateEndChanged();
+    partial void OnstatusChanging(int value);
+    partial void OnstatusChanged();
+    partial void Onfk_processChanging(int value);
+    partial void Onfk_processChanged();
+    partial void OnqueueChanging(int value);
+    partial void OnqueueChanged();
+    partial void OnisNewChanging(System.Nullable<bool> value);
+    partial void OnisNewChanged();
+    #endregion
+		
+		public Participants()
+		{
+			this._Steps = new EntitySet<Steps>(new Action<Steps>(this.attach_Steps), new Action<Steps>(this.detach_Steps));
+			this._Processes = default(EntityRef<Processes>);
+			this._Users = default(EntityRef<Users>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_participantID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int participantID
+		{
+			get
+			{
+				return this._participantID;
+			}
+			set
+			{
+				if ((this._participantID != value))
+				{
+					this.OnparticipantIDChanging(value);
+					this.SendPropertyChanging();
+					this._participantID = value;
+					this.SendPropertyChanged("participantID");
+					this.OnparticipantIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_user", DbType="Int NOT NULL")]
+		public int fk_user
+		{
+			get
+			{
+				return this._fk_user;
+			}
+			set
+			{
+				if ((this._fk_user != value))
+				{
+					if (this._Users.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_userChanging(value);
+					this.SendPropertyChanging();
+					this._fk_user = value;
+					this.SendPropertyChanged("fk_user");
+					this.Onfk_userChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dateStart", DbType="DateTime")]
+		public System.Nullable<System.DateTime> dateStart
+		{
+			get
+			{
+				return this._dateStart;
+			}
+			set
+			{
+				if ((this._dateStart != value))
+				{
+					this.OndateStartChanging(value);
+					this.SendPropertyChanging();
+					this._dateStart = value;
+					this.SendPropertyChanged("dateStart");
+					this.OndateStartChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dateEnd", DbType="DateTime NOT NULL")]
+		public System.DateTime dateEnd
+		{
+			get
+			{
+				return this._dateEnd;
+			}
+			set
+			{
+				if ((this._dateEnd != value))
+				{
+					this.OndateEndChanging(value);
+					this.SendPropertyChanging();
+					this._dateEnd = value;
+					this.SendPropertyChanged("dateEnd");
+					this.OndateEndChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_status", DbType="Int NOT NULL")]
+		public int status
+		{
+			get
+			{
+				return this._status;
+			}
+			set
+			{
+				if ((this._status != value))
+				{
+					this.OnstatusChanging(value);
+					this.SendPropertyChanging();
+					this._status = value;
+					this.SendPropertyChanged("status");
+					this.OnstatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_process", DbType="Int NOT NULL")]
+		public int fk_process
+		{
+			get
+			{
+				return this._fk_process;
+			}
+			set
+			{
+				if ((this._fk_process != value))
+				{
+					if (this._Processes.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_processChanging(value);
+					this.SendPropertyChanging();
+					this._fk_process = value;
+					this.SendPropertyChanged("fk_process");
+					this.Onfk_processChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_queue", DbType="Int NOT NULL")]
+		public int queue
+		{
+			get
+			{
+				return this._queue;
+			}
+			set
+			{
+				if ((this._queue != value))
+				{
+					this.OnqueueChanging(value);
+					this.SendPropertyChanging();
+					this._queue = value;
+					this.SendPropertyChanged("queue");
+					this.OnqueueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_isNew", DbType="Bit")]
+		public System.Nullable<bool> isNew
+		{
+			get
+			{
+				return this._isNew;
+			}
+			set
+			{
+				if ((this._isNew != value))
+				{
+					this.OnisNewChanging(value);
+					this.SendPropertyChanging();
+					this._isNew = value;
+					this.SendPropertyChanged("isNew");
+					this.OnisNewChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Participants_Steps", Storage="_Steps", ThisKey="participantID", OtherKey="fk_participent")]
+		public EntitySet<Steps> Steps
+		{
+			get
+			{
+				return this._Steps;
+			}
+			set
+			{
+				this._Steps.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_Participants", Storage="_Processes", ThisKey="fk_process", OtherKey="processID", IsForeignKey=true)]
+		public Processes Processes
+		{
+			get
+			{
+				return this._Processes.Entity;
+			}
+			set
+			{
+				Processes previousValue = this._Processes.Entity;
+				if (((previousValue != value) 
+							|| (this._Processes.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Processes.Entity = null;
+						previousValue.Participants.Remove(this);
+					}
+					this._Processes.Entity = value;
+					if ((value != null))
+					{
+						value.Participants.Add(this);
+						this._fk_process = value.processID;
+					}
+					else
+					{
+						this._fk_process = default(int);
+					}
+					this.SendPropertyChanged("Processes");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Participants", Storage="_Users", ThisKey="fk_user", OtherKey="userID", IsForeignKey=true)]
+		public Users Users
+		{
+			get
+			{
+				return this._Users.Entity;
+			}
+			set
+			{
+				Users previousValue = this._Users.Entity;
+				if (((previousValue != value) 
+							|| (this._Users.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Users.Entity = null;
+						previousValue.Participants.Remove(this);
+					}
+					this._Users.Entity = value;
+					if ((value != null))
+					{
+						value.Participants.Add(this);
+						this._fk_user = value.userID;
+					}
+					else
+					{
+						this._fk_user = default(int);
+					}
+					this.SendPropertyChanged("Users");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Steps(Steps entity)
+		{
+			this.SendPropertyChanging();
+			entity.Participants = this;
+		}
+		
+		private void detach_Steps(Steps entity)
+		{
+			this.SendPropertyChanging();
+			entity.Participants = null;
 		}
 	}
 }

@@ -218,8 +218,75 @@ namespace EDM.edm
         #endregion
         ProcessMainFucntions main = new ProcessMainFucntions();
         #region views
+
+
+        private TreeNode RecursiveGetTreeNode(int parentId, List<Struct> structList, string panelId, string userNameField,string userIdField, string backValue, bool fullStruct)
+        {
+            TreeNode nodeToReturn = new TreeNode();
+            nodeToReturn.SelectAction = TreeNodeSelectAction.None;
+            string value = (from a in structList
+                            where a.structID == parentId
+                            select a.name).FirstOrDefault();
+            if (backValue.Length > 2 && fullStruct)
+            {
+                value = backValue + ", " + value;
+            }
+
+            nodeToReturn.Value = value;
+            nodeToReturn.Text = (from a in structList
+                                 where a.structID == parentId
+                                 select a.name).FirstOrDefault();
+
+            List<Users> usersInStruct = main.GetUsersInStruct(parentId);
+            foreach (Users user in usersInStruct)
+            {
+                TreeNode userNode = new TreeNode();
+                userNode.SelectAction = TreeNodeSelectAction.Select;
+                userNode.Value = user.name;
+                userNode.Text = "<font  color='blue'>"+user.name+"</font>";
+                userNode.NavigateUrl = "javascript:putValueAndClose('" + panelId + "','" + userNameField + "','" + userIdField + "','" + user.name + "','" + user.userID + "')";
+                nodeToReturn.ChildNodes.Add(userNode);
+            }
+
+            List<Struct> children = (from a in structList
+                                     where a.fk_parent == parentId
+                                     select a).ToList();
+            foreach (Struct currentStruct in children)
+            {
+                nodeToReturn.ChildNodes.Add(RecursiveGetTreeNode(currentStruct.structID, structList, panelId, userNameField, userIdField, value, fullStruct));
+            }
+
+            return nodeToReturn;
+        }
+
+        public TreeNode GetStructTreeViewNode(string panelId, string userNameField, string userIdField, bool fullStruct)
+        {
+            
+            TreeNode nodeToReturn = new TreeNode();
+            nodeToReturn.SelectAction = TreeNodeSelectAction.Select;
+
+            EDMdbDataContext _edm = new EDMdbDataContext();
+            List<Struct> outStruct = (from a in _edm.Struct
+                                      where a.active == true
+                                      select a).ToList();
+
+            nodeToReturn = RecursiveGetTreeNode(2, outStruct, panelId, userNameField, userIdField, "", fullStruct);
+
+            return nodeToReturn;
+        }
+
+        public TreeView GetTreeViewWithPepole(int rowId)
+        {
+            TreeView strucTreeView = new TreeView();
+            strucTreeView.ID = "treeView" + rowId;
+            strucTreeView.Nodes.Add(GetStructTreeViewNode("MainContent_chooseUserPanel" + rowId, "MainContent_ParticipentNameTextBox" + rowId, "MainContent_ParticipentIdTextBox"+rowId, false));
+            strucTreeView.ExpandAll();
+            return strucTreeView;
+        }
+
         public Table GetSearchResults(string searchText, int rowId)
         {
+
             Table tableToReturn = new Table();
             TableHeaderRow headerRow = new TableHeaderRow();
             TableHeaderCell headercell1 = new TableHeaderCell();
@@ -265,6 +332,7 @@ namespace EDM.edm
                 tableToReturn.Rows.Add(userRow);
             }
             return tableToReturn;
+
         }
         public Panel GetFiexdPanel(int rowId)
         {
@@ -287,8 +355,8 @@ namespace EDM.edm
             scrollPanel.Style.Add("overflow", "scroll");
             scrollPanel.Style.Add("height", "100%");
 
-            scrollPanel.Controls.Add(GetSearchResults("", rowId));
-
+           //scrollPanel.Controls.Add(GetSearchResults("", rowId));
+            scrollPanel.Controls.Add(GetTreeViewWithPepole(rowId));
             panelToReturn.Controls.Add(scrollPanel);
             return panelToReturn;
         }
@@ -377,7 +445,7 @@ namespace EDM.edm
                                                     "').style.visibility = 'visible'; return false; ";
                     participentCell.Controls.Add(GetFiexdPanel(rowId));
                     openPunelButton.CssClass = "btn btn-sm btn-default";
-                    participentCell.Controls.Add(GetFiexdPanel(i));
+                    //participentCell.Controls.Add(GetFiexdPanel(rowId));
                     participentCell.Controls.Add(openPunelButton);
                     participantRow.Cells.Add(participentCell);
 
@@ -577,8 +645,40 @@ namespace EDM.edm
         protected void SaveAllButton_Click(object sender, EventArgs e)
         {
             int processId = 0;
-            Int32.TryParse(HttpContext.Current.Session["processID"].ToString(), out processId);          
+            Int32.TryParse(HttpContext.Current.Session["processID"].ToString(), out processId);
+            int tmp = (from a in ParticipantsList
+                join b in ParticipantsList
+                    on a.ParticipantTextBox.Text equals b.ParticipantTextBox.Text
+                select a).Count();
+            if (tmp > 2)
+            {
+                int error = 1;
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Согласующие дублируются!');</script>");
+                return;
+            }
+            {
+                int userId = 1;
+                var sesUserId = HttpContext.Current.Session["userID"];
+                if (sesUserId != null)
+                {
+                    Int32.TryParse(sesUserId.ToString(), out userId);
+                }
+
+                if ((from a in ParticipantsList where a.ParticipantTextBox.Text == userId.ToString() select a).Count() >
+                    0)
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Вы не можете быть согласующим!');</script>");
+                    return;
+                }
+
+            }
+
             #region do participants
+
+
+
+
+
             List<Participant> participantsToAdd;
             List<Participant> oldParticipants = main.GetParticipantsListInProcess(processId);
             if (oldParticipants.Count > 0)
@@ -657,7 +757,9 @@ namespace EDM.edm
                 main.SetDocumentToVersion(document.DocumentId, processVersionId, documentsToUpdateComment[iii].DocumentCommentTextBox.Text);
                 iii++;
             }
-            
+
+            main.MakeAllParticipantsIsNew(processId);
+            //List<Participant> oldParticipants = main.GetParticipantsListInProcess(processId);
 
             foreach (DocumentsClass document in documentsToAdd)
             {
@@ -691,10 +793,10 @@ namespace EDM.edm
                 }
             }
 
-            
 
 
 
+            Session["direction"] = 0;
             Response.Redirect("Dashboard.aspx");
         }
         public void Page_Load(object sender, EventArgs e)

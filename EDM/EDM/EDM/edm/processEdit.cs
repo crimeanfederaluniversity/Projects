@@ -38,6 +38,26 @@ namespace EDM.edm
 
         }
 
+
+        public List<Users> GetUsersInStruct(int structId)
+        {
+            return (from a in _edmDb.Users
+                where a.fk_struct == structId
+                select a).ToList();
+        }
+
+        public void MakeAllParticipantsIsNew(int processId)
+        {
+            List<Participants> participants = (from a in _edmDb.Participants
+                where a.active == true
+                      && a.fk_process == processId
+                select a).ToList();
+            foreach (Participants participant in participants)
+            {
+                participant.isNew = true;
+            }
+            _edmDb.SubmitChanges();
+        }
         public List<Steps> GetStepsInProcessVersion(int processVersoinId)
         {
             return
