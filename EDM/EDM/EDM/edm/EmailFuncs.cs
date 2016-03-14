@@ -161,9 +161,9 @@ namespace EDM.edm
 
             var initiatorEmail =
                 (from a in dc.Processes
-                 where a.active && a.processID == procId
-                 join b in dc.Users on a.fk_initiator equals b.userID
-                 select b.email).FirstOrDefault();
+                    where a.active && a.processID == procId
+                    join b in dc.Users on a.fk_initiator equals b.userID
+                    select b.email).FirstOrDefault();
 
             EmailTemplates etmpInit =
                 (from i in dc.EmailTemplates where i.active && i.name == "yourProcessCameBack" select i).FirstOrDefault();
@@ -172,8 +172,18 @@ namespace EDM.edm
 
         public void StepApprove(int procId, int userId)
         {
-            //// не вижу смысла так спамить :)
+            EDMdbDataContext dc = new EDMdbDataContext();
+
+            // Отправка следующему для serial
+            var userEmail =
+                (from a in dc.Users where a.active && a.userID == userId select a.email).FirstOrDefault();
+
+            EmailTemplates etmp =
+                (from i in dc.EmailTemplates where i.active && i.name == "yourStep" select i).FirstOrDefault();
+
+            SendEmail(userEmail, etmp.emailTitle, etmp.emailContent, null);
         }
+    
 
         public void StepReject(int procId, int userId)
         {

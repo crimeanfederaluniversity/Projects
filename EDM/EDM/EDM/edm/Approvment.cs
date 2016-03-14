@@ -12,6 +12,7 @@ namespace EDM.edm
         {
             using (EDMdbDataContext dataContext = new EDMdbDataContext())
             {
+                EmailFuncs ef = new EmailFuncs();
                 Steps step = new Steps();
                 var procId =
                     (from a in dataContext.ProcessVersions
@@ -35,6 +36,25 @@ namespace EDM.edm
 
                 dataContext.Steps.InsertOnSubmit(step);
                 dataContext.SubmitChanges();
+
+                // Отправка уведомления только для помледовательного
+                if (proc.type == "serial")
+                {
+                    var currentParticipantQueue =
+                        (from a in dataContext.Participants
+                            where a.active && a.participantID == fkParticipant
+                            select a.queue).FirstOrDefault();
+
+                    var nextParticipant = (from a in dataContext.Participants
+                        where a.active && a.fk_process == procId && a.queue == currentParticipantQueue + 1
+                        select a).FirstOrDefault();
+
+                    if (nextParticipant != null)
+                    {
+                        var usrId = nextParticipant.fk_user;
+                        ef.StepApprove(procId, usrId);
+                    }
+                }
 
             }
 
