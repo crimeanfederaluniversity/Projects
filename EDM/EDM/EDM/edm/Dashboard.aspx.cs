@@ -81,7 +81,7 @@ namespace EDM.edm
                 var procesesToUser = (from p in userIsParticipant
                     join proc in dataContext.Processes on p equals proc.processID
                     where proc.active && proc.status == 0
-                    select proc).OrderByDescending(startD => startD.startDate).ToList();
+                    select proc).OrderByDescending(id => id.processID).ToList();
 
 
                 foreach (var proc in procesesToUser)
@@ -552,6 +552,7 @@ namespace EDM.edm
                         if (isNew != null && isNew == true)
                         {
                             e.Row.ForeColor = Color.RoyalBlue;
+                            e.Row.Font.Bold = true;
                         }
                     }
 
