@@ -145,7 +145,20 @@ namespace EDM.edm
         }
         public void AddParticipentRow(object sender, EventArgs e)
         {
-            ParticipantsList.Add(CreateParticipant(ParticipantsList.Count,0, "", "", "", ""));
+
+
+            int rowId = 0;
+            if (ParticipantsList.Count > 0)
+            {
+                string tmpstr = ParticipantsList[ParticipantsList.Count - 1].ParticipantNameTextBox.ID.Replace("ParticipentNameTextBox", "");
+                Int32.TryParse(tmpstr, out rowId);
+                rowId++;
+            }
+            else
+            {
+                rowId = 0;
+            }
+            ParticipantsList.Add(CreateParticipant(rowId, 0, "", "", "", ""));
             
             Refersh();
         }
@@ -472,8 +485,7 @@ namespace EDM.edm
         }
         public void Refersh()
         {
-
-            
+        
             int processId = 0;
             Int32.TryParse(HttpContext.Current.Session["processID"].ToString(), out processId);
             if (processId != 0)
