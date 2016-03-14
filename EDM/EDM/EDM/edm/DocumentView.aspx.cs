@@ -26,8 +26,8 @@ namespace EDM.edm
 
                 EDMdbDataContext dataContext = new EDMdbDataContext();
 
-                
-                // отображать или нет кнопки
+
+                #region отображать или нет кнопки
                 if (
                     (from a in dataContext.Processes where a.active && a.processID == proc select a.status)
                         .FirstOrDefault() == 1) // Изменить статус для согласованного
@@ -44,7 +44,7 @@ namespace EDM.edm
 
                     ApproveButton.Text = "Отправить комментарий";
                 }
-                //
+                #endregion
 
                 int userID;
                 int.TryParse(Session["userID"].ToString(), out userID);
@@ -63,7 +63,7 @@ namespace EDM.edm
                      where a.active && a.processVersionID == procMaxVersion
                      select a.comment).FirstOrDefault();
 
-                //// isNew
+                #region isNew
 
                 Participants part =
                     (from a in dataContext.Participants
@@ -75,8 +75,8 @@ namespace EDM.edm
                     part.isNew = false;
                     dataContext.SubmitChanges();
                 }
-                
-                /////
+
+                #endregion
 
                 RefreshGrid(dataContext, procMaxVersion);
 

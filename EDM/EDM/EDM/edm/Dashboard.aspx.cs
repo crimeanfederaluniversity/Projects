@@ -200,6 +200,7 @@ namespace EDM.edm
         {
             EDMdbDataContext dataContext = new EDMdbDataContext();
 
+            #region Входящие
             if (direction == 1)
             {
                 Label1.Text = "Входящие";
@@ -246,11 +247,14 @@ namespace EDM.edm
 
                 DataBind();
             }
+            #endregion
 
+            #region Исходящие
             if (direction == 0)
             {
                 Label1.Text = "Инициированные согласования";
 
+            #region ЦАП
                 foreach (var itm in dataOneSource)
                 {
                     switch (itm.Status)
@@ -296,6 +300,8 @@ namespace EDM.edm
                             break;
                     }
                 }
+                #endregion
+
                 gridView.DataSource = dataOneSource;
 
                 BoundField boundField = new BoundField();
@@ -358,6 +364,7 @@ namespace EDM.edm
 
                 DataBind();
             }
+            #endregion
         }
 
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
