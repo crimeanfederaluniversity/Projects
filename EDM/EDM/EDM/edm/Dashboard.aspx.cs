@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,7 @@ namespace EDM.edm
 {
     public partial class Dashboard : System.Web.UI.Page
     {
+        [Serializable]
         public class DataOne
         {
             public int Id { get; set; }
@@ -41,12 +43,29 @@ namespace EDM.edm
                 int.TryParse(Session["userID"].ToString(), out userID);
                 int.TryParse(Session["direction"].ToString(), out direction);
 
+                #region Кнопки управления
+                EDMdbDataContext dataContext = new EDMdbDataContext();
+
+                var userIsNewParticipant =
+                    (from a in dataContext.Participants where a.active && a.fk_user == (int)userId && a.isNew == true select a.fk_process)
+                        .Distinct().ToList();
+
+                var newProcessCount = (from p in userIsNewParticipant
+                                       join proc in dataContext.Processes on p equals proc.processID
+                                       where proc.active && proc.status == 0
+                                       select proc).Count();
+                if (newProcessCount > 0)
+                {
+                    Button2.Text += " (" + newProcessCount + ")";
+                }
+                #endregion
+
                 RenderGrid(dashGridView, FillingGrid(direction, userID), direction);
 
             }
         }
 
-        private static List<DataOne> FillingGrid(int direction, int userID)
+        private  List<DataOne> FillingGrid(int direction, int userID)
         {
             EDMdbDataContext dataContext = new EDMdbDataContext();
             List<DataOne> dataOneSource = new List<DataOne>();
@@ -193,6 +212,8 @@ namespace EDM.edm
 
             #endregion Исходящие
 
+            ViewState["dataOneSource"] = dataOneSource;
+
             return dataOneSource;
         }
 
@@ -204,6 +225,10 @@ namespace EDM.edm
             if (direction == 1)
             {
                 Label1.Text = "Входящие";
+                Button2.BackColor = Color.WhiteSmoke;
+                Button2.BorderStyle = BorderStyle.Inset;
+                Button2.BorderWidth = 2;
+                Button2.BorderColor = Color.OrangeRed;
 
                 foreach (var itm in dataOneSource)
                 {
@@ -253,8 +278,12 @@ namespace EDM.edm
             if (direction == 0)
             {
                 Label1.Text = "Инициированные согласования";
+                Button1.BackColor = Color.WhiteSmoke;
+                Button1.BorderStyle = BorderStyle.Inset;
+                Button1.BorderWidth = 2;
+                Button1.BorderColor = Color.OrangeRed;
 
-            #region ЦАП
+                #region ЦАП
                 foreach (var itm in dataOneSource)
                 {
                     switch (itm.Status)
@@ -365,6 +394,18 @@ namespace EDM.edm
                 DataBind();
             }
             #endregion
+
+            #region Архив
+
+            if (direction == 2)
+            {
+                Label1.Text = "Архив";
+                Button3.BackColor = Color.WhiteSmoke;
+                Button3.BorderStyle = BorderStyle.Inset;
+                Button3.BorderWidth = 2;
+                Button3.BorderColor = Color.OrangeRed;
+            }
+            #endregion
         }
 
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -374,68 +415,76 @@ namespace EDM.edm
             // 2 - архив
 
             EDMdbDataContext dataContext = new EDMdbDataContext();
-            int idProcess = Convert.ToInt32(dashGridView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[0].Text);
 
-            switch (e.CommandName)
 
-            {
-                case "ButtonR1":
-                {
-                    Session["processID"] = idProcess;
-                    Response.Redirect("DocumentView.aspx");
-                }
-                    break;
-                case "ButtonR0":
-                {
-                    Session["processID"] = idProcess;
-                    Response.Redirect("ProcessEdit.aspx");
-                }
-                    break;
-                case "ButtonR2":
-                {
-                    // do smth
-                }
-                    break;
-                case "HistoryP":
-                {
-                    Session["processID"] = idProcess;
-                    Response.Redirect("ProcessHistory.aspx");
-                }
-                    break;
-                case "StartP":
-                {
-                    EmailFuncs ef= new EmailFuncs();
 
-                    Processes process =
-                        (from a in dataContext.Processes where a.active && a.processID == idProcess select a)
-                            .FirstOrDefault();
-                    if (process != null && process.status == -1)
+           int  idProcess = Convert.ToInt32(dashGridView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[0].Text);
+
+                switch (e.CommandName)
+
+                {
+                    case "ButtonR1":
                     {
-                        process.status = 0;
-                        dataContext.SubmitChanges();
-                        
-                        ef.StartProcess(idProcess);
+                        Session["processID"] = idProcess;
+                        Response.Redirect("DocumentView.aspx");
+                    }
+                        break;
+                    case "ButtonR0":
+                    {
+                        Session["processID"] = idProcess;
+                        Response.Redirect("ProcessEdit.aspx");
+                    }
+                        break;
+                    case "ButtonR2":
+                    {
+                        // do smth
+                    }
+                        break;
+                    case "HistoryP":
+                    {
+                        Session["processID"] = idProcess;
+                        Response.Redirect("ProcessHistory.aspx");
+                    }
+                        break;
+                    case "StartP":
+                    {
+                        EmailFuncs ef = new EmailFuncs();
 
-                        Response.Redirect("Dashboard.aspx");
+                        Processes process =
+                            (from a in dataContext.Processes where a.active && a.processID == idProcess select a)
+                                .FirstOrDefault();
+                        if (process != null && process.status == -1)
+                        {
+                            process.status = 0;
+                            dataContext.SubmitChanges();
+
+                            ef.StartProcess(idProcess);
+
+                            Response.Redirect("Dashboard.aspx");
+                        }
+                        else
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert",
+                                "<script> alert('Ошибка запуска процесса!');</script>");
                     }
-                        else Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Ошибка запуска процесса!');</script>");
-                    }
-                    break;
-                case "DeleteP":
-                {
-                    Processes process =
-                        (from a in dataContext.Processes where a.active && a.processID == idProcess select a)
-                            .FirstOrDefault();
+                        break;
+                    case "DeleteP":
+                    {
+                        Processes process =
+                            (from a in dataContext.Processes where a.active && a.processID == idProcess select a)
+                                .FirstOrDefault();
                         if (process != null)
                         {
                             process.active = false;
-                    dataContext.SubmitChanges();
-                        Response.Redirect("Dashboard.aspx");
+                            dataContext.SubmitChanges();
+                            Response.Redirect("Dashboard.aspx");
                         }
-                        else Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Ошибка удаления процесса!');</script>");
+                        else
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert",
+                                "<script> alert('Ошибка удаления процесса!');</script>");
                     }
-                    break;
-            }
+                        break;
+                }
+            Session["indexStart"] = false;
         }
 
         protected void dashGridView_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -513,7 +562,37 @@ namespace EDM.edm
         }
 
 
+         protected void Button2_Click(object sender, EventArgs e)
+        {
+            Session["direction"] = 1;
+            Response.Redirect("Dashboard.aspx");
+        }
 
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Session["direction"] = 0;
+            Response.Redirect("Dashboard.aspx");
+        }
 
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            Session["direction"] = 2;
+            Response.Redirect("Dashboard.aspx");
+        }
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            Session["processID"] = 0;
+            Response.Redirect("ProcessEdit.aspx");
+        }
+
+        protected void dashGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+
+            dashGridView.PageIndex = e.NewPageIndex;
+            dashGridView.DataSource = ViewState["dataOneSource"];
+            dashGridView.DataBind();
+
+        }
     }
 }

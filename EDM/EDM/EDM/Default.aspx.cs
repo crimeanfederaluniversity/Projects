@@ -14,7 +14,8 @@ namespace EDM
         public void Directions(Users user)
         {
             FormsAuthentication.SetAuthCookie(user.name, true);
-            Response.Redirect("~/edm/Main.aspx");
+            Session["direction"] = 0;
+            Response.Redirect("~/edm/Dashboard.aspx");
         }
         protected void Page_Load(object sender, EventArgs e)
         {
