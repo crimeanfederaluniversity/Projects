@@ -617,7 +617,8 @@ namespace EDM.edm
                 commentForVersionDiv.Visible = true;
 
                 ProcessIdLabel.Text = main.GetProcessNameById(processId);
-
+                ProcessIdLabel.Style.Add("word-wrap", "break-word");
+                
                 ParticipantsDiv.Controls.Clear();
                 ParticipantsDiv.Controls.Add(GetNewParticipantsTable());
                 documentsDiv.Controls.Clear();
@@ -780,7 +781,7 @@ namespace EDM.edm
                 iii++;
             }
 
-            main.MakeAllParticipantsIsNew(processId);
+            
             //List<Participant> oldParticipants = main.GetParticipantsListInProcess(processId);
 
             foreach (DocumentsClass document in documentsToAdd)

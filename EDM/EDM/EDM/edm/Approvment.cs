@@ -191,11 +191,14 @@ namespace EDM.edm
         {
             // Вызывать после создания новой версии ()
 
+
             using (EDMdbDataContext dc = new EDMdbDataContext())
             {
                 List<Steps> stepsOld;
 
-                var procVersions = (from a in dc.ProcessVersions where a.active && a.fk_process == procId select a).OrderByDescending(i=>i.processVersionID).ToList();
+                var procVersions =
+                    (from a in dc.ProcessVersions where a.active && a.fk_process == procId select a).OrderByDescending(
+                        i => i.processVersionID).ToList();
 
                 if (procVersions.Count > 1)
                 {
@@ -205,16 +208,15 @@ namespace EDM.edm
                         where a.active && a.fk_processVersion == procVersions[1].processVersionID
                         select a).ToList();
 
-                    var participantsNew =
+                    List<Participants> participantsNew =
                         (from a in dc.Participants where a.active && a.fk_process == procId select a).ToList();
 
-                    foreach (var participant in participantsNew)
+                    foreach (Participants participant in participantsNew)
                     {
-                        if (
-                            (from a in stepsOld where a.fk_participent == participant.participantID select a.stepResult)
+                        if ((from a in stepsOld where a.fk_participent == participant.participantID select a.stepResult)
                                 .FirstOrDefault() != null)
-                            if (
-                                (from a in stepsOld
+                        {
+                            if ((from a in stepsOld
                                     where a.fk_participent == participant.participantID
                                     select a.stepResult).FirstOrDefault() == 1)
                             {
@@ -237,6 +239,17 @@ namespace EDM.edm
                                 dc.Steps.InsertOnSubmit(step);
                                 dc.SubmitChanges();
                             }
+                            else
+                            {
+                                participant.isNew = true;
+                                dc.SubmitChanges();
+                            }
+                        }
+                        else
+                        {
+                            participant.isNew = true;
+                            dc.SubmitChanges();
+                        }
                     }
                 }
             }

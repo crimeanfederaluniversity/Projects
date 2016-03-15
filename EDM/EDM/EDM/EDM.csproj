@@ -227,6 +227,7 @@
       <LastGenOutput>EDMdb.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Properties\PublishProfiles\123.pubxml" />
     <None Include="Properties\PublishProfiles\newprof.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
