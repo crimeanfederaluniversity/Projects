@@ -197,7 +197,7 @@ namespace EDM.edm
 
                 var procVersions = (from a in dc.ProcessVersions where a.active && a.fk_process == procId select a).OrderByDescending(i=>i.processVersionID).ToList();
 
-                if (procVersions.Count > 0)
+                if (procVersions.Count > 1)
                 {
                     var ss = procVersions[1].processVersionID;
 

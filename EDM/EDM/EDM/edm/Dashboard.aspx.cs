@@ -554,10 +554,10 @@ namespace EDM.edm
                         Button btnStart = (Button) e.Row.Cells[7].Controls[0];
                         btnDel.OnClientClick =
                             "javascript: if (confirm('Вы уверены что хотите удалить?') == true) {__doPostBack('ctl00$MainContent$dashGridView','DeleteP$" +
-                            id + "')} else return false";
+                            id + "'); showSimpleLoadingScreen(); } else return false";
                         btnStart.OnClientClick =
                             "javascript: if (confirm('Вы уверены что хотите запустить процесс согласования?') == true) {__doPostBack('ctl00$MainContent$dashGridView','StartP$" +
-                            id + "')} else return false";
+                            id + "'); showSimpleLoadingScreen(); } else return false";
 
                         if (e.Row.Cells[3].Text.Equals("Создан, ждет запуска"))
                         {

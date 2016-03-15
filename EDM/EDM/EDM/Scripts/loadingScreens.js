@@ -1,6 +1,7 @@
 ﻿// SIMPLE LOADING SCREEN
 
 function showSimpleLoadingScreen() {
+    window.scrollTo(0, 0);  //
     var over = document.createElement("div");
     over.id = "Loader";
     over.classList.add("overlay");
@@ -29,7 +30,7 @@ function removeSimpleLoadingScreen() {
 // LOADING SCREEN WITH TEXT
 
 function showLoadingScreenWithText(text) {
-
+    window.scrollTo(0, 0);  //
     var over = document.createElement("div");
     over.id = "TextedLoader";
     over.classList.add("overlay");

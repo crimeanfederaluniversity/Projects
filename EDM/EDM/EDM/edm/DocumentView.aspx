@@ -15,22 +15,22 @@
             <br />
 
   
-    
-                <asp:TextBox ID="LabelComment" TextMode="MultiLine" runat="server" Height="200px" Width="600px" Text="Label" CssClass="edm-document-view-comment-block"></asp:TextBox>
+                    Комментарий инициатора согласования  
+                <asp:TextBox ID="LabelComment" TextMode="MultiLine" runat="server" ReadOnly="True" Height="300px" Width="600px" Text="Label" CssClass="edm-document-view-comment-block"></asp:TextBox>
 
            
 
             <br />
             <br />
             
-        <%--<asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine" Height="54px" Width="160px"></asp:TextBox>--%>
+        <%--<asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine" Height="54px" Width="160px"></asp:TextBox>--%> 
             <div class="input-group-lg">
                 <asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine"  cssClass="form-control" Height="100px" ></asp:TextBox>
                 <br />
                 <br />
                 <div class="btn-group float-right">
-                    <asp:Button ID="RejectButton" runat="server" Text="Отправить на доработку" OnClientClick="javascript: return confirm('Вы уверены что хотите отправить на доработку?');" OnClick="RejectButton_Click" CssClass="btn btn-default"/>
-                    <asp:Button ID="ApproveButton" runat="server" Text="Согласовать" OnClientClick="javascript: return confirm('Вы уверены что хотите согласовать процесс?');" OnClick="ApproveButton_Click" CssClass="btn btn-success" />
+                    <asp:Button ID="RejectButton" runat="server" Text="Отправить на доработку" OnClientClick="javascript: if ( confirm('Вы уверены что хотите отправить на доработку?') == true ) {showSimpleLoadingScreen();} else return false;" OnClick="RejectButton_Click" CssClass="btn btn-default"/>
+                    <asp:Button ID="ApproveButton" runat="server" Text="Согласовать" OnClientClick="javascript: if ( confirm('Вы уверены что хотите согласовать процесс?') == true ) {showSimpleLoadingScreen();} else return false;" OnClick="ApproveButton_Click" CssClass="btn btn-success" />
                 </div>
             </div>
         </div>
