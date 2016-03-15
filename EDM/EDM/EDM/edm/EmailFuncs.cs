@@ -128,10 +128,10 @@ namespace EDM.edm
             if (steps.Count > 0) // для AutoAccept() ContinueAccept
             {       
                     currentQueue = (from a in dc.Participants // ПРОТЕСТИТЬ
-                    where a.active && a.fk_process == procId
+                    where a.active && a.fk_process == procId && a.isNew == true
                     join b in dc.Steps on a.participantID equals b.fk_participent
                     where b.active && b.fk_processVersion == procMaxVersion
-                    select a).OrderByDescending(q => q.queue).Select(q => q.queue).FirstOrDefault()+1;
+                    select a).OrderByDescending(q => q.queue).Select(q => q.queue).FirstOrDefault();
             }
 
             var participantsZero =
