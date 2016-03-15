@@ -69,7 +69,7 @@
             </td>
             
             <td>
-                <asp:Button ID="CreateProcessButton" runat="server" OnClick="CreateNewProcess" Text="Создать" CssClass="btn btn-warning" />
+                <asp:Button ID="CreateProcessButton" runat="server" OnClick="CreateNewProcess" Text="Создать" CssClass="btn btn-warning" OnClientClick="showSimpleLoadingScreen()"/>
             </td>           
         </tr>
         </table>
@@ -80,7 +80,7 @@
     
      <div class="row">
          <div class="edm-proccess-edit-content centered-block">
-
+             
         <div runat="server" id="existingProcessTitleDiv" class="header">
             <asp:Label ID="ProcessIdLabel" runat="server" Text=""></asp:Label>
         </div>
@@ -107,7 +107,7 @@
         <br/>
 
         <div runat="server" id="SaveAllDiv">
-            <asp:Button ID="SaveAllButton"  runat="server" Text="Сохранить" OnClick="SaveAllButton_Click" CssClass="btn btn-success float-right" />
+            <asp:Button ID="SaveAllButton"  runat="server" Text="Сохранить" OnClick="SaveAllButton_Click" OnClientClick="showLoadingScreenWithText('Подождите, происходит сохранение')" CssClass="btn btn-success float-right" />
             </div>
 
         </div>
