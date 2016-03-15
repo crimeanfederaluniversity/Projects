@@ -29,8 +29,8 @@
                 <br />
                 <br />
                 <div class="btn-group float-right">
-                    <asp:Button ID="RejectButton" runat="server" Text="Отправить на доработку" OnClientClick="javascript: if ( confirm('Вы уверены что хотите отправить на доработку?') == true ) {showSimpleLoadingScreen();} else return false;" OnClick="RejectButton_Click" CssClass="btn btn-default"/>
-                    <asp:Button ID="ApproveButton" runat="server" Text="Согласовать" OnClientClick="javascript: if ( confirm('Вы уверены что хотите согласовать процесс?') == true ) {showSimpleLoadingScreen();} else return false;" OnClick="ApproveButton_Click" CssClass="btn btn-success" />
+                    <asp:Button ID="RejectButton" runat="server" Text="Отправить на доработку" OnClientClick="javascript: if ( confirm('Вы уверены что хотите отправить на доработку?') == true ) {showLoadingScreenWithText('Возвращаем на доработку. Дождитесь завершения процесса!');} else return false;" OnClick="RejectButton_Click" CssClass="btn btn-default"/>
+                    <asp:Button ID="ApproveButton" runat="server" Text="Согласовать" OnClientClick="javascript: if ( confirm('Вы уверены что хотите согласовать процесс?') == true ) {showLoadingScreenWithText('Утверждаем процесс. Дождитесь завершения!');} else return false;" OnClick="ApproveButton_Click" CssClass="btn btn-success" />
                 </div>
             </div>
         </div>

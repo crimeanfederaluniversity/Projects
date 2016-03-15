@@ -557,7 +557,7 @@ namespace EDM.edm
                             id + "'); showSimpleLoadingScreen(); } else return false";
                         btnStart.OnClientClick =
                             "javascript: if (confirm('Вы уверены что хотите запустить процесс согласования?') == true) {__doPostBack('ctl00$MainContent$dashGridView','StartP$" +
-                            id + "'); showSimpleLoadingScreen(); } else return false";
+                            id + "'); showLoadingScreenWithText('Запускаем процесс. Пожалуйста дождитесь завершения!'); } else return false";
 
                         if (e.Row.Cells[3].Text.Equals("Создан, ждет запуска"))
                         {
