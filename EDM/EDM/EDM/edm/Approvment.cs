@@ -191,6 +191,45 @@ namespace EDM.edm
         {
             // Вызывать после создания новой версии ()
 
+            EDMdbDataContext dc = new EDMdbDataContext();
+            List<ProcessVersions> procVersions = 
+                (from a in dc.ProcessVersions where a.active && a.fk_process == procId select a).OrderBy(i => i.processVersionID).ToList();
+
+            if (procVersions.Count <2)
+                return;
+            List<Steps> stepsOld  = (from a in dc.Steps
+                        where a.active && a.fk_processVersion == procVersions[procVersions.Count - 2].processVersionID
+                        select a).ToList();
+
+            List<Participants> participantsNew = (from a in dc.Participants where a.active && a.fk_process == procId select a).ToList();
+
+            foreach (var participant in participantsNew)
+            {
+                int? step_result = (from a in stepsOld
+                    where
+                        a.fk_participent == participant.participantID &&
+                        a.fk_processVersion == procVersions[procVersions.Count - 2].processVersionID
+                    select a.stepResult).LastOrDefault();
+
+                if (step_result != null)
+                {
+                    if (step_result == 1)
+                    {
+                        Steps step = new Steps();
+                        step.active = true;
+                        step.fk_processVersion = procVersions[procVersions.Count - 1].processVersionID;
+                        step.fk_participent = participant.participantID;
+                        step.comment =(from a in stepsOld where a.fk_participent == participant.participantID select a.comment).FirstOrDefault();
+                        step.stepResult = 1;
+                        step.date = (from a in stepsOld where a.fk_participent == participant.participantID select a.date).FirstOrDefault();
+                        dc.Steps.InsertOnSubmit(step);
+                        dc.SubmitChanges();
+                    }
+                }
+            }
+            /*
+
+
             using (EDMdbDataContext dc = new EDMdbDataContext())
             {
                 List<Steps> stepsOld;
@@ -210,7 +249,7 @@ namespace EDM.edm
                             Steps step = new Steps();
 
                             step.active = true;
-                            step.fk_processVersion = procVersions[procVersions.Count].processVersionID;
+                            step.fk_processVersion = procVersions[procVersions.Count-1].processVersionID;
                             step.fk_participent = participant.participantID;
                             step.comment = (from a in stepsOld where a.fk_participent == participant.participantID select a.comment).FirstOrDefault();
                             step.stepResult = 1;
@@ -221,7 +260,7 @@ namespace EDM.edm
                           }
                   }
 
-            }
+            }*/
         }
     }
 }
