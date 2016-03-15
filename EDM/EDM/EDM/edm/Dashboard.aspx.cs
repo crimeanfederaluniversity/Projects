@@ -97,8 +97,8 @@ namespace EDM.edm
 
                     #endregion
 
-                    RenderGrid(dashGridView, FillingGrid(direction, userID), direction);
                 }
+                RenderGrid(dashGridView, FillingGrid(direction, userID), direction);
             }
         }
 
