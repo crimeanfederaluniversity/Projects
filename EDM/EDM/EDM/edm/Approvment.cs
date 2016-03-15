@@ -197,13 +197,14 @@ namespace EDM.edm
 
                 var procVersions = (from a in dc.ProcessVersions where a.active && a.fk_process == procId select a).OrderByDescending(i=>i.processVersionID).ToList();
 
-                 stepsOld = (from a in dc.Steps where a.active && a.fk_processVersion == procVersions[procVersions.Count].processVersionID
+                 stepsOld = (from a in dc.Steps where a.active && a.fk_processVersion == procVersions[procVersions.Count-1].processVersionID
                              select a).ToList();
 
                 var participantsNew = (from a in dc.Participants where a.active && a.fk_process == procId select a).ToList();
 
                     foreach (var participant in participantsNew)
                     {
+                        if  ((from a in stepsOld where a.fk_participent == participant.participantID select a.stepResult).FirstOrDefault()!=null)
                         if ((from a in stepsOld where a.fk_participent == participant.participantID select a.stepResult).FirstOrDefault() == 1)
                         { 
                             Steps step = new Steps();

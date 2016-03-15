@@ -20,7 +20,7 @@ namespace EDM.edm
             _edmDb.SubmitChanges();
         }
         public List<ProcessEdit.Participant> ParticipantsList = new List<ProcessEdit.Participant>();
-        public int CreateNewParticipent(int processId, int userId , int queue ,DateTime endDate)
+        public int CreateNewParticipent(int processId, int userId , int queue ,DateTime? endDate)
         {
             Participants newParticipant = new Participants();
             newParticipant.active = true;

@@ -65,6 +65,15 @@ namespace EDM.edm
             }
         }
 
+
+        public string NullableDateTimeToText(DateTime? date)
+        {
+            if (date == null)
+                return "";
+            DateTime newDate;
+            DateTime.TryParse(date.ToString(), out newDate);
+            return newDate.ToShortDateString();
+        }
         private  List<DataOne> FillingGrid(int direction, int userID)
         {
             EDMdbDataContext dataContext = new EDMdbDataContext();
@@ -122,7 +131,7 @@ namespace EDM.edm
                                     Name = proc.name,
                                     InitiatorId = proc.fk_initiator,
                                     Status = proc.status,
-                                    EndDate = userParticipantEndDate.ToShortDateString()
+                                    EndDate = NullableDateTimeToText(userParticipantEndDate)//userParticipantEndDate.ToShortDateString()
                                 });
                             }
 
@@ -144,7 +153,7 @@ namespace EDM.edm
                                     Name = proc.name,
                                     InitiatorId = proc.fk_initiator,
                                     Status = proc.status,
-                                    EndDate = userParticipantEndDate.ToShortDateString()
+                                    EndDate = NullableDateTimeToText(userParticipantEndDate)//userParticipantEndDate.ToShortDateString()
                                 });
                             }
                         }
@@ -175,7 +184,7 @@ namespace EDM.edm
                                     Name = proc.name,
                                     InitiatorId = proc.fk_initiator,
                                     Status = proc.status,
-                                    EndDate = userParticipantEndDate.ToShortDateString()
+                                    EndDate = NullableDateTimeToText(userParticipantEndDate)//userParticipantEndDate.ToShortDateString()
                                 });
                             }
 

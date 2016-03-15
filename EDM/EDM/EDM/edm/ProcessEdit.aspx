@@ -23,15 +23,29 @@
         }
     </script>
     
+    <asp:ValidationSummary 
+            ID="ValidationSummary1" 
+            runat="server" 
+            HeaderText="Заполните все поля с восклицательным знаком" 
+            ShowMessageBox="true" 
+            DisplayMode="SingleParagraph" 
+            ShowSummary="False"
+            
+            Width="450"
+            ForeColor="Red"
+            Font-Size="X-Large"
+            Font-Italic="true"
+            />
+
 
     <div id="createNewProcessDiv" runat="server" class="row" >
     <table class="table table-striped edm-table edm-PocessEdit-table centered-block">
         <tr>
 		   <th>Тип согласования</th>
-            <th>Название <asp:RequiredFieldValidator runat="server" ControlToValidate="ProcessNameTextBox" ErrorMessage="!" ForeColor="red"/> </th>
+            <th>Название <asp:RequiredFieldValidator runat="server" SetFocusOnError="True" ControlToValidate="ProcessNameTextBox" ErrorMessage="!" ForeColor="red"/> </th>
             <th>Кол-во согласующих
-                <asp:RangeValidator runat="server" ControlToValidate="ParticipantsCountTextBox" ErrorMessage="!" ForeColor="red" Type="Integer" MinimumValue="1" MaximumValue="10"/>
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="ParticipantsCountTextBox" ErrorMessage="!" ForeColor="red"/></th>
+                <asp:RangeValidator runat="server" ControlToValidate="ParticipantsCountTextBox" SetFocusOnError="True" ErrorMessage="!" ForeColor="red" Type="Integer" MinimumValue="1" MaximumValue="10"/>
+                <asp:RequiredFieldValidator runat="server" SetFocusOnError="True" ControlToValidate="ParticipantsCountTextBox" ErrorMessage="!" ForeColor="red"/></th>
             <th>Создать</th>
             
         </tr>
@@ -76,7 +90,7 @@
              Комментарий
             <br />
             <asp:TextBox ID="commentForVersionTextBox" runat="server" Height="100px" TextMode="MultiLine" CssClass="form-control"></asp:TextBox>
-             <asp:RequiredFieldValidator runat="server" ControlToValidate="commentForVersionTextBox" ErrorMessage="!" ForeColor="red"/> 
+             <asp:RequiredFieldValidator runat="server" SetFocusOnError="True" ControlToValidate="commentForVersionTextBox" ErrorMessage="!" ForeColor="red"/> 
         </div>
     
         <br/>

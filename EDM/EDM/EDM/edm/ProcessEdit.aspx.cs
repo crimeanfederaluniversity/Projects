@@ -416,7 +416,7 @@ namespace EDM.edm
                     TableCell endDateCell = new TableCell();
                     //ParticipantsList[i].ParticipantEndDateTextBox.ID = "ParticipentEndDateTextBox" + i;
                     endDateCell.Controls.Add(ParticipantsList[i].ParticipantEndDateTextBox);
-                    endDateCell.Controls.Add(ParticipantsList[i].ParticipantEndDateValidator);
+                    //endDateCell.Controls.Add(ParticipantsList[i].ParticipantEndDateValidator);
 
                     participantRow.Cells.Add(endDateCell);
 
@@ -541,13 +541,13 @@ namespace EDM.edm
                         
 
                     cell2.Controls.Add(currentDocument.DocumentCommentTextBox);
-                    RequiredFieldValidator documentCommentRequiere = new RequiredFieldValidator();
+                   /* RequiredFieldValidator documentCommentRequiere = new RequiredFieldValidator();
                     documentCommentRequiere.ID = "require" + currentDocument.DocumentCommentTextBox.ID;
                     documentCommentRequiere.ControlToValidate = currentDocument.DocumentCommentTextBox.ID;
                     documentCommentRequiere.ErrorMessage = "!";
                     documentCommentRequiere.ForeColor = Color.Red;
                     cell2.Controls.Add(documentCommentRequiere);
-
+                    */
 
 
                     Button DeleteRowButton = new Button();
@@ -650,7 +650,7 @@ namespace EDM.edm
                 join b in ParticipantsList
                     on a.ParticipantTextBox.Text equals b.ParticipantTextBox.Text
                 select a).Count();
-            if (tmp > 2)
+            if (tmp > 4)
             {
                 int error = 1;
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Согласующие дублируются!');</script>");
@@ -672,6 +672,12 @@ namespace EDM.edm
                 }
 
             }
+            if (DocumentsList.Count < 1)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Не прикреплен документ!');</script>");
+                return;
+            }
+
 
             #region do participants
 
@@ -709,6 +715,10 @@ namespace EDM.edm
             #region do documents
             List<DocumentsClass> documentsToAdd;
             List<DocumentsClass> documentsToUpdateVersion = new List<DocumentsClass>();
+
+
+           
+
             List<DocumentsClass> documentsToUpdateComment = new List<DocumentsClass>();
             List<DocumentsClass> oldDocuments = GetDocumentsInProcess(processId);
 
@@ -733,13 +743,18 @@ namespace EDM.edm
             {              
                 int userId = 0;
                 int queue = 0;
-                DateTime endDateTime = DateTime.Now;
+                DateTime endDateTime = DateTime.MinValue;
                 
                 Int32.TryParse(currentParticipant.ParticipantTextBox.Text, out userId);
                 Int32.TryParse(currentParticipant.ParticipantQueueTextBox.Text, out queue);
+
                 DateTime.TryParse(currentParticipant.ParticipantEndDateTextBox.Text, out endDateTime);
 
-                main.CreateNewParticipent(processId, userId, queue, endDateTime);
+                DateTime? nullEndDateTime = endDateTime;
+
+                if (nullEndDateTime.Value.Year < DateTime.Now.Year - 100)
+                    nullEndDateTime = null;
+                main.CreateNewParticipent(processId, userId, queue, nullEndDateTime);
             }
 
             ProcessVersions lastProcessVerson = main.GetLastVersionInProcess(processId);
@@ -749,6 +764,9 @@ namespace EDM.edm
                 lastVesion = lastProcessVerson.version+1;
             }
             int processVersionId = main.CreateNewProcessVersion(processId, commentForVersionTextBox.Text, lastVesion, "Новая версия процесса");
+
+            Approvment approvment = new Approvment();
+            approvment.ContinueApprove(processId);
 
             int iii = 0;
             foreach (DocumentsClass document in documentsToUpdateVersion)
