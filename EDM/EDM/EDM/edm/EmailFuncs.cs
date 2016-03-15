@@ -127,7 +127,8 @@ namespace EDM.edm
             {       
                     currentQueue = (from a in dc.Participants // ПРОТЕСТИТЬ
                     where a.active && a.fk_process == procId
-                    join b in steps on a.participantID equals b.fk_participent
+                    join b in dc.Steps on a.participantID equals b.fk_participent
+                    where b.active && b.fk_processVersion == procMaxVersion
                     select a).OrderByDescending(q => q.queue).Select(q => q.queue).FirstOrDefault();
             }
 

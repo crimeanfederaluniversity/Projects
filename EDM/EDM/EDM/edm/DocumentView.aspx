@@ -14,11 +14,11 @@
     
             <br />
 
-            <div class="edm-document-view-comment-block">
+  
     
-                <asp:Label ID="LabelComment" runat="server" Text="Label"></asp:Label>
+                <asp:TextBox ID="LabelComment" TextMode="MultiLine" runat="server" Height="200px" Width="600px" Text="Label" CssClass="edm-document-view-comment-block"></asp:TextBox>
 
-            </div>
+           
 
             <br />
             <br />
