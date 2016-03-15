@@ -378,6 +378,8 @@ namespace EDM.edm
 
                 gridView.DataSource = dataOneSource;
 
+ 
+
                 BoundField boundField = new BoundField();
                 boundField.DataField = "Id";
                 boundField.HeaderText = "ИН";
@@ -422,6 +424,9 @@ namespace EDM.edm
                 coluButtonField2.ControlStyle.CssClass = "btn btn-default";
                 gridView.Columns.Add(coluButtonField2);
 
+                
+
+
                 ButtonField coluButtonField3 = new ButtonField();
                 coluButtonField3.Text = "Запустить";
                 
@@ -431,12 +436,21 @@ namespace EDM.edm
                 coluButtonField3.ControlStyle.CssClass = "btn btn-success";
                 gridView.Columns.Add(coluButtonField3);
 
+                ButtonField printButton = new ButtonField();
+                printButton.Text = "Печать листа согласования";
+                printButton.ButtonType = ButtonType.Button;
+                printButton.CommandName = "ButtonPrintLis";
+                printButton.ControlStyle.CssClass = "btn btn-default";
+                gridView.Columns.Add(printButton);
+
                 ButtonField coluButtonField4 = new ButtonField();
                 coluButtonField4.Text = "Удалить";
                 coluButtonField4.ButtonType = ButtonType.Button;
                 coluButtonField4.ControlStyle.CssClass = "btn btn-danger";
                 coluButtonField4.CommandName = "DeleteP";
                 gridView.Columns.Add(coluButtonField4);
+
+              
 
                 DataBind();
             }
@@ -470,7 +484,14 @@ namespace EDM.edm
                 switch (e.CommandName)
 
                 {
-                    case "ButtonR1":
+
+                case "ButtonPrintLis":
+                    {
+                        Session["processID"] = idProcess;
+                        Response.Redirect("PrintList.aspx");
+                    }
+                    break;
+                case "ButtonR1":
                     {
                         Session["processID"] = idProcess;
                         Response.Redirect("DocumentView.aspx");
@@ -550,7 +571,8 @@ namespace EDM.edm
                     #region Исходящие
                     if (direction == 0)
                     {
-                        Button btnDel = (Button) e.Row.Cells[8].Controls[0];
+                        Button btnDel = (Button) e.Row.Cells[9].Controls[0];
+                        Button printButton = (Button)e.Row.Cells[8].Controls[0];
                         Button btnStart = (Button) e.Row.Cells[7].Controls[0];
                         Button btnHistory = (Button)e.Row.Cells[6].Controls[0];
                         Button btneEit = (Button)e.Row.Cells[5].Controls[0];
@@ -567,6 +589,8 @@ namespace EDM.edm
                         btneEit.OnClientClick = "javascript: __doPostBack('ctl00$MainContent$dashGridView','ButtonR0$" +
                             id + "'); showSimpleLoadingScreen(); ";
 
+                        printButton.Enabled = false;
+
                         if (e.Row.Cells[3].Text.Equals("Создан, ждет запуска"))
                         {
                             e.Row.ForeColor = Color.Chocolate;
@@ -579,6 +603,7 @@ namespace EDM.edm
                         }
                         if (e.Row.Cells[3].Text.Equals("Согласован"))
                         {
+                            printButton.Enabled = true;
                             btneEit.Enabled = false;
                             btnStart.Enabled = false;
                             //btneEit.Visible = false;
