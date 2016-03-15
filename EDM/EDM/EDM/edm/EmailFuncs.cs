@@ -38,6 +38,7 @@ namespace EDM.edm
             }
             catch (Exception ex)
             {
+                /*
                 emailCopy.emailFrom = from;
                 emailCopy.emailTo = mailto;
                 emailCopy.emailTitle = caption;
@@ -48,6 +49,7 @@ namespace EDM.edm
                 emailCopy.errorMessage = ex.ToString();
                 dataContext.EmailCopies.InsertOnSubmit(emailCopy);
                 dataContext.SubmitChanges();
+            */
             }
             EmailCopies emailCopy2 = new EmailCopies();
             emailCopy2.emailFrom = from;
