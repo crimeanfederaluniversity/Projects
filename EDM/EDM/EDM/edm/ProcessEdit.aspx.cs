@@ -458,6 +458,7 @@ namespace EDM.edm
                     deleteParticipentButton.ID = "deleteParticipentButton"+ rowId.ToString();
                     deleteParticipentButton.Click +=  DeleteParticipentRow;
                     deleteParticipentButton.CssClass = "btn btn-sm btn-danger";
+                    deleteParticipentButton.OnClientClick = "showSimpleLoadingScreen()";
                     deleteParticipentCell.Controls.Add(deleteParticipentButton);
                     participantRow.Cells.Add(deleteParticipentCell);
 
@@ -475,6 +476,7 @@ namespace EDM.edm
             addRowToParticipantButton.ID = "addRowToParticipantButton";
             addRowToParticipantButton.CssClass = "btn btn-default float-right";
             addRowToParticipantButton.Click += AddParticipentRow;
+            addRowToParticipantButton.OnClientClick = "showSimpleLoadingScreen()";
 
             TableRow addNewRow = new TableRow();
             TableCell addNewRowCell = new TableCell();
@@ -555,6 +557,7 @@ namespace EDM.edm
                     DeleteRowButton.Text = "Удалить";
                     DeleteRowButton.CommandArgument = rowId.ToString();
                     DeleteRowButton.ID = "DeleteRowButton"+rowId;
+                    DeleteRowButton.OnClientClick = "showSimpleLoadingScreen()";
                     DeleteRowButton.CssClass = "btn btn-sm btn-danger float-right";
                     DeleteRowButton.Click += DeleteDocumentRow;
 
@@ -573,6 +576,7 @@ namespace EDM.edm
             addRowToDocButton.ID = "addRowToDocButton";
             addRowToDocButton.Text = "Добавить документ";
             addRowToDocButton.Click += AddDocumentRow;
+            addRowToDocButton.OnClientClick = "showSimpleLoadingScreen()";
             addRowToDocButton.CssClass = "btn btn-default float-right";
 
             TableRow addNewRow = new TableRow();

@@ -16,6 +16,8 @@
     
     
     <script>
+
+
         function putValueAndClose(panelId, userNameField, userIdField,userName,userId) {
             document.getElementById(userNameField).value = userName;
             document.getElementById(userIdField).value = userId;
@@ -27,13 +29,13 @@
             ID="ValidationSummary1" 
             runat="server" 
             HeaderText="Заполните все поля с восклицательным знаком" 
-            ShowMessageBox="true" 
+            ShowMessageBox="False" 
             DisplayMode="SingleParagraph" 
-            ShowSummary="False"
+            ShowSummary="True"
+            EnableClientScript="True"
             
-            Width="450"
+            Width="1000"
             ForeColor="Red"
-            Font-Size="X-Large"
             Font-Italic="true"
             />
 
@@ -69,7 +71,7 @@
             </td>
             
             <td>
-                <asp:Button ID="CreateProcessButton" runat="server" OnClick="CreateNewProcess" Text="Создать" CssClass="btn btn-warning" OnClientClick="showSimpleLoadingScreen()"/>
+                <asp:Button ID="CreateProcessButton" runat="server" OnClick="CreateNewProcess" Text="Создать" CssClass="btn btn-warning" OnClientClick="javascript:Page_ClientValidate(); if (Page_IsValid==true) {showSimpleLoadingScreen()}"/>
             </td>           
         </tr>
         </table>
@@ -107,7 +109,8 @@
         <br/>
 
         <div runat="server" id="SaveAllDiv">
-            <asp:Button ID="SaveAllButton"  runat="server" Text="Сохранить" OnClick="SaveAllButton_Click" OnClientClick="showLoadingScreenWithText('Подождите, происходит сохранение')" CssClass="btn btn-success float-right" />
+           <!-- javascript:Page_ClientValidate(); if (Page_IsValid==true) { this.disabled=true; } -->
+            <asp:Button ID="SaveAllButton"  runat="server" Text="Сохранить" OnClick="SaveAllButton_Click" OnClientClick="javascript:Page_ClientValidate(); if (Page_IsValid==true) { showLoadingScreenWithText('Подождите, происходит сохранение'); }" CssClass="btn btn-success float-right" />
             </div>
 
         </div>

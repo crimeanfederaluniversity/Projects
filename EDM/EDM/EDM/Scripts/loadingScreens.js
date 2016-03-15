@@ -29,6 +29,7 @@ function removeSimpleLoadingScreen() {
 // LOADING SCREEN WITH TEXT
 
 function showLoadingScreenWithText(text) {
+
     var over = document.createElement("div");
     over.id = "TextedLoader";
     over.classList.add("overlay");

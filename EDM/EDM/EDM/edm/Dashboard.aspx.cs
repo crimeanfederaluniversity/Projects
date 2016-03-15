@@ -425,6 +425,7 @@ namespace EDM.edm
 
                 ButtonField coluButtonField3 = new ButtonField();
                 coluButtonField3.Text = "Запустить";
+                
                 coluButtonField3.ButtonType = ButtonType.Button;
                 coluButtonField3.CommandName = "StartP";
                 coluButtonField3.ControlStyle.CssClass = "btn btn-success";
