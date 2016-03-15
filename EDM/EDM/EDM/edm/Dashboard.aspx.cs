@@ -60,7 +60,6 @@ namespace EDM.edm
 
                     foreach (var proc in newProcess)
                     {
-
                         var currentQueue = (from a in dataContext.Participants
                             where a.active && a.fk_process == proc.processID && a.fk_user == (int) userId
                             select a.queue).FirstOrDefault();
