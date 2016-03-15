@@ -191,5 +191,10 @@ namespace EDM.edm
             
             historyTableDiv.Controls.Add(historyTable);
         }
+
+        protected void goBackButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Dashboard.aspx");
+        }
     }
 }

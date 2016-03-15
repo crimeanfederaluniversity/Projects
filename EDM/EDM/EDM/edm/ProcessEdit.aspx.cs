@@ -281,6 +281,10 @@ namespace EDM.edm
             strucTreeView.ID = "treeView" + rowId;
             strucTreeView.Nodes.Add(GetStructTreeViewNode("MainContent_chooseUserPanel" + rowId, "MainContent_ParticipentNameTextBox" + rowId, "MainContent_ParticipentIdTextBox"+rowId, false));
             strucTreeView.ExpandAll();
+            foreach(TreeNode node in strucTreeView.Nodes[0].ChildNodes)
+            {
+                node.CollapseAll();
+            }
             return strucTreeView;
         }
 
@@ -758,8 +762,11 @@ namespace EDM.edm
                 DateTime? nullEndDateTime = endDateTime;
 
                 if (nullEndDateTime.Value.Year < DateTime.Now.Year - 100)
-                    nullEndDateTime = null;
-                main.CreateNewParticipent(processId, userId, queue, nullEndDateTime);
+                {
+                    endDateTime = DateTime.Now;
+                    endDateTime = endDateTime.AddHours(5);
+                }
+                main.CreateNewParticipent(processId, userId, queue, endDateTime);
             }
 
             ProcessVersions lastProcessVerson = main.GetLastVersionInProcess(processId);
@@ -850,6 +857,11 @@ namespace EDM.edm
                 }
             }
             Refersh();
+        }
+
+        protected void goBackButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/edm/Dashboard.aspx");
         }
     }
 }

@@ -25,6 +25,7 @@ namespace EDM.edm
             public string TypeRus { get; set; }
             public int Version { get; set; }
             public string EndDate { get; set; }
+            public string TimeLeft { get; set; }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -110,6 +111,35 @@ namespace EDM.edm
             DateTime.TryParse(date.ToString(), out newDate);
             return newDate.ToShortDateString();
         }
+
+        public string GetTimeBeforeEnd(DateTime endDate)
+        {
+            DateTime dateNow = DateTime.Now;
+            double hours = ((endDate - DateTime.Now).TotalHours);
+            if (hours < 1)
+            {
+                return "Менее часа";
+            }
+            int hoursRownd = (int)Math.Round(hours);
+            if (hoursRownd < 24)
+            {
+                if (hoursRownd == 1 || hoursRownd == 21  )
+                    return hoursRownd + " час";
+                if (hoursRownd == 2 || hoursRownd == 3 || hoursRownd == 4 || hoursRownd == 22 || hoursRownd == 23 || hoursRownd == 24)
+                    return hoursRownd + " часа";
+     
+                    return hoursRownd + " часов";
+            }
+            else {
+                int days = (int)Math.Round((double)(hoursRownd / 24));
+                if (days == 1 || days == 21)
+                    return days + " день";
+                if (days == 2 || days == 3 || days == 4 || days == 22 || days == 23 || days == 24)
+                    return days + " дня";
+                return days + " дней";
+            }
+            return "";
+        }
         private  List<DataOne> FillingGrid(int direction, int userID)
         {
             EDMdbDataContext dataContext = new EDMdbDataContext();
@@ -161,13 +191,16 @@ namespace EDM.edm
                             if (step4Proc == null)
                             {
                                 //addToShow
+                                DateTime date = Convert.ToDateTime(userParticipantEndDate.ToString());
+                               // var hours = (DateTime.Now - date).TotalHours;
                                 dataOneSource.Add(new DataOne()
                                 {
                                     Id = proc.processID,
                                     Name = proc.name,
                                     InitiatorId = proc.fk_initiator,
                                     Status = proc.status,
-                                    EndDate = NullableDateTimeToText(userParticipantEndDate)//userParticipantEndDate.ToShortDateString()
+                                    EndDate = NullableDateTimeToText(userParticipantEndDate)
+                                    ,TimeLeft = GetTimeBeforeEnd(date)//hours + " часов"
                                 });
                             }
 
@@ -183,6 +216,8 @@ namespace EDM.edm
                             if (step4UserParticipant == null)
                             {
                                 //addToShow
+                                DateTime date = Convert.ToDateTime(userParticipantEndDate.ToString());
+                                //var hours = (DateTime.Now - date).TotalHours;
                                 dataOneSource.Add(new DataOne()
                                 {
                                     Id = proc.processID,
@@ -190,6 +225,7 @@ namespace EDM.edm
                                     InitiatorId = proc.fk_initiator,
                                     Status = proc.status,
                                     EndDate = NullableDateTimeToText(userParticipantEndDate)//userParticipantEndDate.ToShortDateString()
+                                    , TimeLeft = GetTimeBeforeEnd(date)
                                 });
                             }
                         }
@@ -214,6 +250,8 @@ namespace EDM.edm
                             if (lastUserQueue + 1 == userQueue)
                             {
                                 //addToShow
+                                DateTime date = Convert.ToDateTime(userParticipantEndDate.ToString());
+                                //var hours = (DateTime.Now - date).TotalHours;
                                 dataOneSource.Add(new DataOne()
                                 {
                                     Id = proc.processID,
@@ -221,6 +259,8 @@ namespace EDM.edm
                                     InitiatorId = proc.fk_initiator,
                                     Status = proc.status,
                                     EndDate = NullableDateTimeToText(userParticipantEndDate)//userParticipantEndDate.ToShortDateString()
+                                    , TimeLeft = GetTimeBeforeEnd(date)
+
                                 });
                             }
 
@@ -307,7 +347,13 @@ namespace EDM.edm
                  boundField4.HeaderText = "Срок";
                  boundField4.Visible = true;
                  gridView.Columns.Add(boundField4);
-                 
+                
+                BoundField boundField5 = new BoundField();
+                boundField5.DataField = "TimeLeft";
+                boundField5.HeaderText = "Осталось";
+                boundField5.Visible = true;
+                gridView.Columns.Add(boundField5);
+                
                 ButtonField coluButtonField = new ButtonField();
                 coluButtonField.Text = "Подробнее";
                 coluButtonField.ButtonType = ButtonType.Button;
@@ -626,7 +672,7 @@ namespace EDM.edm
                         int.TryParse(e.Row.Cells[0].Text, out processId);
                         DateTime.TryParse(e.Row.Cells[3].Text, out date);
 
-                        Button btnMore = (Button)e.Row.Cells[4].Controls[0];
+                        Button btnMore = (Button)e.Row.Cells[5].Controls[0];
                         btnMore.OnClientClick = "javascript: __doPostBack('ctl00$MainContent$dashGridView','ButtonR1$" +
                             id + "'); showSimpleLoadingScreen(); ";
 
@@ -684,6 +730,11 @@ namespace EDM.edm
             dashGridView.DataSource = ViewState["dataOneSource"];
             dashGridView.DataBind();
 
+        }
+
+        protected void goBackButton_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

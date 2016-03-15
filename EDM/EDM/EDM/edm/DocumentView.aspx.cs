@@ -210,5 +210,10 @@ namespace EDM.edm
                     response.End();                  
             }
         }
+
+        protected void goBackButton_Click(object sender, EventArgs e)
+        {
+            HttpContext.Current.Response.Redirect("Dashboard.aspx");
+        }
     }
 }

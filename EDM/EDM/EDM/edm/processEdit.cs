@@ -44,6 +44,7 @@ namespace EDM.edm
         {
             return (from a in _edmDb.Users
                 where a.fk_struct == structId
+                && a.active == true
                 select a).ToList();
         }
 
