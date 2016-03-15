@@ -213,28 +213,18 @@ namespace EDM.edm
 
                     foreach (Participants participant in participantsNew)
                     {
-                        if ((from a in stepsOld where a.fk_participent == participant.participantID select a.stepResult)
-                                .FirstOrDefault() != null)
+                        if ((from a in stepsOld where a.fk_participent == participant.participantID select a.stepResult).FirstOrDefault() != null)
                         {
-                            if ((from a in stepsOld
-                                    where a.fk_participent == participant.participantID
-                                    select a.stepResult).FirstOrDefault() == 1)
+                            if ((from a in stepsOld where a.fk_participent == participant.participantID select a.stepResult).FirstOrDefault() == 1)
                             {
                                 Steps step = new Steps();
 
                                 step.active = true;
-                                var sss = procVersions[0].processVersionID;
                                 step.fk_processVersion = procVersions[0].processVersionID;
                                 step.fk_participent = participant.participantID;
-                                step.comment =
-                                    (from a in stepsOld
-                                        where a.fk_participent == participant.participantID
-                                        select a.comment).FirstOrDefault();
+                                step.comment = (from a in stepsOld where a.fk_participent == participant.participantID select a.comment).FirstOrDefault();
                                 step.stepResult = 1;
-                                step.date =
-                                    (from a in stepsOld
-                                        where a.fk_participent == participant.participantID
-                                        select a.date).FirstOrDefault();
+                                step.date = (from a in stepsOld where a.fk_participent == participant.participantID select a.date).FirstOrDefault();
 
                                 dc.Steps.InsertOnSubmit(step);
                                 dc.SubmitChanges();

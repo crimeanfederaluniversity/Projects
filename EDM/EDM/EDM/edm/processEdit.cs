@@ -30,6 +30,7 @@ namespace EDM.edm
             newParticipant.status = 0;
             newParticipant.fk_process = processId;
             newParticipant.queue = queue;
+            newParticipant.isNew = true; // 
             
             
             _edmDb.Participants.InsertOnSubmit(newParticipant);
