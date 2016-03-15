@@ -544,20 +544,28 @@ namespace EDM.edm
                     int userId;
                     int.TryParse(Session["direction"].ToString(), out direction);
                     int.TryParse(Session["userID"].ToString(), out userId);
+                    int id = e.Row.RowIndex;
                     EDMdbDataContext dc = new EDMdbDataContext();
 
                     #region Исходящие
                     if (direction == 0)
                     {
-                        int id = e.Row.RowIndex;
                         Button btnDel = (Button) e.Row.Cells[8].Controls[0];
                         Button btnStart = (Button) e.Row.Cells[7].Controls[0];
+                        Button btnHistory = (Button)e.Row.Cells[6].Controls[0];
+                        Button btneEit = (Button)e.Row.Cells[5].Controls[0];
                         btnDel.OnClientClick =
                             "javascript: if (confirm('Вы уверены что хотите удалить?') == true) {__doPostBack('ctl00$MainContent$dashGridView','DeleteP$" +
                             id + "'); showSimpleLoadingScreen(); } else return false";
                         btnStart.OnClientClick =
                             "javascript: if (confirm('Вы уверены что хотите запустить процесс согласования?') == true) {__doPostBack('ctl00$MainContent$dashGridView','StartP$" +
                             id + "'); showLoadingScreenWithText('Запускаем процесс. Пожалуйста дождитесь завершения!'); } else return false";
+
+                        btnHistory.OnClientClick = "javascript: __doPostBack('ctl00$MainContent$dashGridView','HistoryP$" +
+                            id + "'); showSimpleLoadingScreen(); ";
+
+                        btneEit.OnClientClick = "javascript: __doPostBack('ctl00$MainContent$dashGridView','ButtonR0$" +
+                            id + "'); showSimpleLoadingScreen(); ";
 
                         if (e.Row.Cells[3].Text.Equals("Создан, ждет запуска"))
                         {
@@ -586,6 +594,10 @@ namespace EDM.edm
                         DateTime date;
                         int.TryParse(e.Row.Cells[0].Text, out processId);
                         DateTime.TryParse(e.Row.Cells[3].Text, out date);
+
+                        Button btnMore = (Button)e.Row.Cells[4].Controls[0];
+                        btnMore.OnClientClick = "javascript: __doPostBack('ctl00$MainContent$dashGridView','ButtonR1$" +
+                            id + "'); showSimpleLoadingScreen(); ";
 
                         if (date.Day <= DateTime.Now.Day && date.Month <= DateTime.Now.Month && date.Year<= DateTime.Now.Year)
                         {
