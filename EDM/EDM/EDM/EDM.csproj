@@ -210,6 +210,7 @@
     <Content Include="edm\Dashboard.aspx" />
     <Content Include="edm\DocumentView.aspx" />
     <Content Include="edm\Main.aspx" />
+    <Content Include="edm\PrintList.aspx" />
     <Content Include="edm\ProcessEdit.aspx" />
     <Content Include="edm\ProcessHistory.aspx" />
     <Content Include="Error.html" />
@@ -462,6 +463,13 @@
     </Compile>
     <Compile Include="edm\Main.aspx.designer.cs">
       <DependentUpon>Main.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="edm\PrintList.aspx.cs">
+      <DependentUpon>PrintList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="edm\PrintList.aspx.designer.cs">
+      <DependentUpon>PrintList.aspx</DependentUpon>
     </Compile>
     <Compile Include="edm\ProcessEdit.aspx.cs">
       <DependentUpon>ProcessEdit.aspx</DependentUpon>

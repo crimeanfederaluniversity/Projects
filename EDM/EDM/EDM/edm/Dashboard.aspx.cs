@@ -426,6 +426,7 @@ namespace EDM.edm
                 coluButtonField3.Text = "Запустить";
                 
                 coluButtonField3.ButtonType = ButtonType.Button;
+                
                 coluButtonField3.CommandName = "StartP";
                 coluButtonField3.ControlStyle.CssClass = "btn btn-success";
                 gridView.Columns.Add(coluButtonField3);
@@ -572,14 +573,20 @@ namespace EDM.edm
                         }
                         if (e.Row.Cells[3].Text.Equals("В процессе"))
                         {
+                            btneEit.Enabled = false;
+                            btnStart.Enabled = false;
                             //
                         }
                         if (e.Row.Cells[3].Text.Equals("Согласован"))
                         {
+                            btneEit.Enabled = false;
+                            btnStart.Enabled = false;
+                            //btneEit.Visible = false;
                             e.Row.ForeColor = Color.Green;
                         }
                         if (e.Row.Cells[3].Text.Equals("Возвращен на доработку"))
                         {
+                            btnStart.Enabled = false;
                             e.Row.ForeColor = Color.DarkRed;
                         }
                     }
