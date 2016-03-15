@@ -43,17 +43,51 @@ namespace EDM.edm
                 int.TryParse(Session["userID"].ToString(), out userID);
                 int.TryParse(Session["direction"].ToString(), out direction);
 
-                #region Кнопки управления
+                #region Кнопка Входящие()
                 EDMdbDataContext dataContext = new EDMdbDataContext();
 
                 var userIsNewParticipant =
                     (from a in dataContext.Participants where a.active && a.fk_user == (int)userId && a.isNew == true select a.fk_process)
                         .Distinct().ToList();
 
-                var newProcessCount = (from p in userIsNewParticipant
+                var newProcess = (from p in userIsNewParticipant
                                        join proc in dataContext.Processes on p equals proc.processID
                                        where proc.active && proc.status == 0
-                                       select proc).Count();
+                                       select proc).ToList();
+                int newProcessCount = 0;
+
+                foreach (var proc in newProcess)
+                {
+
+                    var currentQueue = (from a in dataContext.Participants
+                        where a.active && a.fk_process == proc.processID && a.fk_user == (int) userId
+                        select a.queue).FirstOrDefault();
+
+                    if ( (currentQueue == 0))
+                    {
+                        newProcessCount++;
+                    }
+                    else
+                    {
+                        int procMaxVersion =
+                            (from a in dataContext.ProcessVersions
+                                where a.fk_process == proc.processID && a.active
+                                select a)
+                                .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
+
+                        var stepsCount =
+                            (from a in dataContext.Steps
+                                where a.fk_processVersion == procMaxVersion && a.active
+                                select a).Count();
+
+                        if (currentQueue == stepsCount)
+                        {
+                            newProcessCount++;
+                        }
+                    }
+
+                }
+
                 if (newProcessCount > 0)
                 {
                     Button2.Text += " (" + newProcessCount + ")";
