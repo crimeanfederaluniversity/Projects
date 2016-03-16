@@ -598,7 +598,6 @@ namespace EDM.edm
                     }
                         break;
                 }
-            Session["indexStart"] = false;
         }
 
         protected void dashGridView_RowDataBound(object sender, GridViewRowEventArgs e)
