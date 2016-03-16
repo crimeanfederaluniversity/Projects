@@ -13,8 +13,8 @@ namespace EDM.edm
     public partial class ProcessEdit : System.Web.UI.Page
     {
         #region static
-        public static List<Participant> ParticipantsList = new List<Participant>();  // Осторожно с ним  // обнуляю его в pageload 
-        public static List<DocumentsClass> DocumentsList = new List<DocumentsClass>(); // и с ним осторожно
+        public List<Participant> ParticipantsList = new List<Participant>();  // Осторожно с ним  // обнуляю его в pageload 
+        public List<DocumentsClass> DocumentsList = new List<DocumentsClass>(); // и с ним осторожно
         public class Participant
         {
             public int ParticipantId { get; set; }
@@ -596,7 +596,9 @@ namespace EDM.edm
         }
         public void Refersh()
         {
-        
+             Session["ParticipantsList"] = ParticipantsList;
+             Session["DocumentsList"] = DocumentsList;
+
             int processId = 0;
             Int32.TryParse(HttpContext.Current.Session["processID"].ToString(), out processId);
             if (processId != 0)
@@ -831,6 +833,11 @@ namespace EDM.edm
         }
         public void Page_Load(object sender, EventArgs e)
         {
+            ParticipantsList = (List<Participant>) Session["ParticipantsList"];
+            DocumentsList = (List<DocumentsClass>) Session["DocumentsList"];
+
+
+
             if (!Page.IsPostBack)
             {
                 ParticipantsList = new List<Participant>();
