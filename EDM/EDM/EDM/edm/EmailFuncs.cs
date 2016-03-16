@@ -242,7 +242,7 @@ namespace EDM.edm
                 (from a in dc.Participants where a.active && a.dateEnd < DateTime.Now
                     join b in dc.Processes on a.fk_process equals b.processID
                     where b.active && b.status == 0
-                 select new {a.fk_user, a.fk_process}).ToList();
+                 select new {a.fk_user, a.fk_process, a.participantID}).ToList();
 
             EmailTemplates etmp =
                 (from i in dc.EmailTemplates where i.active && i.name == "yourStepAutoSubmitted" select i).FirstOrDefault();
@@ -267,6 +267,13 @@ namespace EDM.edm
                     (from a in dc.ProcessVersions where a.fk_process == userProc.fk_process && a.active select a)
                         .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
 
+                // Проверить есть ли запись в Step для этого пользователя. Значит он утвердил/отказал уже если нет, то Автоапрувим.
+                var stepExsist = (from a in dc.Steps
+                    where
+                        a.fk_participent == userProc.participantID && a.fk_processVersion == procMaxVersion && a.active
+                    select a).FirstOrDefault();
+
+                if (stepExsist == null)
                 approve.AddApprove(userProc.fk_user, procMaxVersion, "Процесс согласован автоматически / "+DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
 
             }
