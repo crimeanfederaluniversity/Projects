@@ -249,32 +249,40 @@ namespace EDM.edm
 
             foreach (var userProc in participantProcessDebt)
             {
-                string processName = "";
-                Processes process = (from a in dc.Processes where a.processID == userProc.fk_process select a).FirstOrDefault();
-                if (process != null)
-                {
-                    processName = process.name;
-                }
-
-                var userEmail =
-                    (from a in dc.Users where a.active && a.userID == userProc.fk_user select a.email).FirstOrDefault();
-
-                if (userEmail != null)
-                SendEmail(userEmail, etmp.emailTitle, etmp.emailContent.Replace("#processName#", processName), null);
-
 
                 int procMaxVersion =
                     (from a in dc.ProcessVersions where a.fk_process == userProc.fk_process && a.active select a)
-                        .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
+                     .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
 
                 // Проверить есть ли запись в Step для этого пользователя. Значит он утвердил/отказал уже если нет, то Автоапрувим.
                 var stepExsist = (from a in dc.Steps
-                    where
-                        a.fk_participent == userProc.participantID && a.fk_processVersion == procMaxVersion && a.active
-                    select a).FirstOrDefault();
+                                  where
+                                      a.fk_participent == userProc.participantID && a.fk_processVersion == procMaxVersion && a.active
+                                  select a).FirstOrDefault();
 
                 if (stepExsist == null)
-                approve.AddApprove(userProc.fk_user, procMaxVersion, "Процесс согласован автоматически / "+DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
+                {
+                    string processName = "";
+                    Processes process =
+                        (from a in dc.Processes where a.processID == userProc.fk_process select a).FirstOrDefault();
+                    if (process != null)
+                    {
+                        processName = process.name;
+                    }
+
+                    var userEmail =
+                        (from a in dc.Users where a.active && a.userID == userProc.fk_user select a.email)
+                            .FirstOrDefault();
+
+                    if (userEmail != null)
+                        SendEmail(userEmail, etmp.emailTitle, etmp.emailContent.Replace("#processName#", processName),
+                            null);
+
+
+                    approve.AddApprove(userProc.fk_user, procMaxVersion,
+                        "Процесс согласован автоматически / " + DateTime.Now.ToShortDateString() + " " +
+                        DateTime.Now.ToShortTimeString());
+                }
 
             }
 
