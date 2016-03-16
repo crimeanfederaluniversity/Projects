@@ -244,8 +244,6 @@ namespace EDM.edm
                     where b.active && b.status == 0
                  select new {a.fk_user, a.fk_process, a.participantID}).ToList();
 
-            EmailTemplates etmp =
-                (from i in dc.EmailTemplates where i.active && i.name == "yourStepAutoSubmitted" select i).FirstOrDefault();
 
             foreach (var userProc in participantProcessDebt)
             {
@@ -263,6 +261,8 @@ namespace EDM.edm
                 if (stepExsist == null)
                 {
                     string processName = "";
+                    EmailTemplates etmp = (from i in dc.EmailTemplates where i.active && i.name == "yourStepAutoSubmitted" select i).FirstOrDefault();
+
                     Processes process =
                         (from a in dc.Processes where a.processID == userProc.fk_process select a).FirstOrDefault();
                     if (process != null)
