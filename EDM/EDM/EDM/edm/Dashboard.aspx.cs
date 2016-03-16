@@ -21,10 +21,12 @@ namespace EDM.edm
             public int Status { get; set; }
             public string Status4Init { get; set; }
             public string Status4All { get; set; }
+            public string StatusParticipant { get; set; }
             public string Type { get; set; }
             public string TypeRus { get; set; }
             public int Version { get; set; }
             public string EndDate { get; set; }
+            public DateTime? ParticipantApproveDate { get; set; }
             public string TimeLeft { get; set; }
         }
 
@@ -297,7 +299,31 @@ namespace EDM.edm
 
             #endregion Исходящие
 
-            ViewState["dataOneSource"] = dataOneSource;
+            #region Архив
+
+            if (direction == 2)
+            {
+                var archive = (from a in dataContext.Participants where a.active && a.fk_user == userID
+                                          join b in dataContext.ProcessVersions on a.fk_process equals b.fk_process where b.active
+                                          join c in dataContext.Steps on a.participantID equals c.fk_participent where c.fk_processVersion == b.processVersionID && c.active
+                                          select new DataOne() {Id = b.fk_process,
+                                                                Version = b.version,
+                                                                Name = (from p in dataContext.Processes where p.active && p.processID == b.fk_process select p.name).FirstOrDefault(),
+                                                                Initiator = (from p in dataContext.Processes where p.active && p.processID == b.fk_process
+                                                                             join u in dataContext.Users on p.fk_initiator equals u.userID select u.name).FirstOrDefault(),
+                                                                StatusParticipant = (c.stepResult == 1) ? "Согласован" : "Отклонен",
+                                                                Status4All = b.status,
+                                                                ParticipantApproveDate = c.date}
+                                          ).OrderByDescending(d=>d.ParticipantApproveDate).ToList();
+
+                dataOneSource.AddRange(archive);
+
+
+               }
+
+            #endregion Архив
+
+                ViewState["dataOneSource"] = dataOneSource;
 
             return dataOneSource;
         }
@@ -511,6 +537,59 @@ namespace EDM.edm
                 Button3.BorderStyle = BorderStyle.Inset;
                 Button3.BorderWidth = 2;
                 Button3.BorderColor = Color.OrangeRed;
+
+                gridView.DataSource = dataOneSource;
+
+                BoundField boundField0 = new BoundField();
+                boundField0.DataField = "Id";
+                boundField0.HeaderText = "ИН";
+                boundField0.Visible = true;
+                gridView.Columns.Add(boundField0);
+
+                BoundField boundField1 = new BoundField();
+                boundField1.DataField = "Version";
+                boundField1.HeaderText = "Версия";
+                boundField1.Visible = true;
+                gridView.Columns.Add(boundField1);
+
+                BoundField boundField2 = new BoundField();
+                boundField2.DataField = "Name";
+                boundField2.HeaderText = "Название процесса";
+                boundField2.Visible = true;
+                gridView.Columns.Add(boundField2);
+
+                BoundField boundField3 = new BoundField();
+                boundField3.DataField = "Initiator";
+                boundField3.HeaderText = "Инициатор";
+                boundField3.Visible = true;
+                gridView.Columns.Add(boundField3);
+
+                BoundField boundField4 = new BoundField();
+                boundField4.DataField = "StatusParticipant";
+                boundField4.HeaderText = "Статус участника";
+                boundField4.Visible = true;
+                gridView.Columns.Add(boundField4);
+
+                BoundField boundField45 = new BoundField();
+                boundField45.DataField = "Status4All";
+                boundField45.HeaderText = "Общий статус";
+                boundField45.Visible = true;
+                gridView.Columns.Add(boundField45);
+
+                BoundField boundField5 = new BoundField();
+                boundField5.DataField = "ParticipantApproveDate";
+                boundField5.HeaderText = "Дата";
+                boundField5.Visible = true;
+                gridView.Columns.Add(boundField5);
+
+                ButtonField coluButtonField = new ButtonField();
+                coluButtonField.Text = "История";
+                coluButtonField.ButtonType = ButtonType.Button;
+                coluButtonField.CommandName = "History";
+                coluButtonField.ControlStyle.CssClass = "btn btn-default";
+                gridView.Columns.Add(coluButtonField);
+
+                DataBind();
             }
             #endregion
         }
@@ -557,9 +636,17 @@ namespace EDM.edm
                     case "HistoryP":
                     {
                         Session["processID"] = idProcess;
+                        Session["archiveVersion"] = -1;
                         Response.Redirect("ProcessHistory.aspx");
                     }
-                        break;
+                       break;
+                    case "History":
+                    {
+                        Session["processID"] = idProcess;
+                        Session["archiveVersion"] = Convert.ToInt32(dashGridView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[1].Text);
+                        Response.Redirect("ProcessHistory.aspx");
+                    }
+                    break;
                     case "StartP":
                     {
                         EmailFuncs ef = new EmailFuncs();

@@ -247,7 +247,6 @@ namespace EDM.edm
 
             foreach (var userProc in participantProcessDebt)
             {
-
                 int procMaxVersion =
                     (from a in dc.ProcessVersions where a.fk_process == userProc.fk_process && a.active select a)
                      .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();

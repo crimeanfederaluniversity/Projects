@@ -50,10 +50,13 @@ namespace EDM.edm
         protected void Page_Load(object sender, EventArgs e)
         {
             int processId = -1;
+            int archiveVersion = -1;
+
             var procIdStr = HttpContext.Current.Session["processID"];
             if (procIdStr == null)
                 Response.Redirect("Dashboard.aspx");
             Int32.TryParse(procIdStr.ToString(), out processId);
+            int.TryParse(HttpContext.Current.Session["archiveVersion"].ToString(), out archiveVersion);
             if (processId < 0)
                 Response.Redirect("Dashboard.aspx");
 
@@ -105,8 +108,19 @@ namespace EDM.edm
             historyTable.Rows.Add(historyTableHeaderRow);
 
             #endregion
+            List<ProcessVersions> versionsInProcess = new List<ProcessVersions>();
 
-            List<ProcessVersions> versionsInProcess = _main.GetProcessVersionsInProcess(processId);
+            if (archiveVersion != -1)
+            {
+                EDMdbDataContext dc = new EDMdbDataContext();
+
+                versionsInProcess = (from a in dc.ProcessVersions
+                                     where a.active && a.fk_process == processId && a.version == archiveVersion
+                                     select a).ToList();
+            }
+            else
+            versionsInProcess = _main.GetProcessVersionsInProcess(processId);
+
             foreach (ProcessVersions currentVersion in versionsInProcess)
             {
                 TableRow processVersionRow = new TableRow();
