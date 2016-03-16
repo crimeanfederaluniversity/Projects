@@ -193,8 +193,10 @@ namespace EDM.edm
                             if (step4Proc == null)
                             {
                                 //addToShow
-                                DateTime date = Convert.ToDateTime(userParticipantEndDate.ToString());
-                               // var hours = (DateTime.Now - date).TotalHours;
+                                DateTime date;
+                                //= Convert.ToDateTime(userParticipantEndDate.ToString());
+                                DateTime.TryParse(userParticipantEndDate.ToString(), out date);
+                                // var hours = (DateTime.Now - date).TotalHours;
                                 dataOneSource.Add(new DataOne()
                                 {
                                     Id = proc.processID,
@@ -218,7 +220,9 @@ namespace EDM.edm
                             if (step4UserParticipant == null)
                             {
                                 //addToShow
-                                DateTime date = Convert.ToDateTime(userParticipantEndDate.ToString());
+                                DateTime date;
+                                //= Convert.ToDateTime(userParticipantEndDate.ToString());
+                                DateTime.TryParse(userParticipantEndDate.ToString(), out date);
                                 //var hours = (DateTime.Now - date).TotalHours;
                                 dataOneSource.Add(new DataOne()
                                 {
@@ -252,7 +256,9 @@ namespace EDM.edm
                             if (lastUserQueue + 1 == userQueue)
                             {
                                 //addToShow
-                                DateTime date = Convert.ToDateTime(userParticipantEndDate.ToString());
+                                DateTime date;
+                                //= Convert.ToDateTime(userParticipantEndDate.ToString());
+                                DateTime.TryParse(userParticipantEndDate.ToString(), out date);
                                 //var hours = (DateTime.Now - date).TotalHours;
                                 dataOneSource.Add(new DataOne()
                                 {
