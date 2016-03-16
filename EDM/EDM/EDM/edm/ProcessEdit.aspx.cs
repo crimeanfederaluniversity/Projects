@@ -29,7 +29,6 @@ namespace EDM.edm
             public RequiredFieldValidator ParticipantEndDateValidator { get; set; }
 
         }
-
         public class DocumentsClass
         {
             public int DocumentId { get; set; }
@@ -37,8 +36,6 @@ namespace EDM.edm
             public FileUpload DocumentFileUpload { get; set; }
             public TextBox DocumentCommentTextBox { get; set; }
         }
-
-
         public void RefreshQueueInParticipantsList(bool withQueue)
         {           
             int i = 0;
@@ -49,7 +46,6 @@ namespace EDM.edm
                 i++;
             }
         }
-
         public Participant CreateParticipant(int rowId,int participientId,string queue,string endDate,string userId, string userName)
         {
             Participant newParticipant = new Participant();
@@ -218,8 +214,6 @@ namespace EDM.edm
         #endregion
         ProcessMainFucntions main = new ProcessMainFucntions();
         #region views
-
-
         private TreeNode RecursiveGetTreeNode(int parentId, List<Struct> structList, string panelId, string userNameField,string userIdField, string backValue, bool fullStruct)
         {
             TreeNode nodeToReturn = new TreeNode();
@@ -258,7 +252,6 @@ namespace EDM.edm
 
             return nodeToReturn;
         }
-
         public TreeNode GetStructTreeViewNode(string panelId, string userNameField, string userIdField, bool fullStruct)
         {
             
@@ -274,7 +267,6 @@ namespace EDM.edm
 
             return nodeToReturn;
         }
-
         public TreeView GetTreeViewWithPepole(int rowId)
         {
             TreeView strucTreeView = new TreeView();
@@ -287,7 +279,6 @@ namespace EDM.edm
             }
             return strucTreeView;
         }
-
         public Table GetSearchResults(string searchText, int rowId)
         {
 
@@ -531,8 +522,17 @@ namespace EDM.edm
                         documentRequiere.ControlToValidate = currentDocument.DocumentFileUpload.ID;
                         documentRequiere.ErrorMessage = "!";
                         documentRequiere.ForeColor = Color.Red;
+
+                        RegularExpressionValidator documentFormat = new RegularExpressionValidator();
+                        documentFormat.ID = "regular" + currentDocument.DocumentFileUpload.ID;
+                        documentFormat.ControlToValidate = currentDocument.DocumentFileUpload.ID;
+                        documentFormat.ErrorMessage = "Только pdf, rtf, doc.";
+                        documentFormat.ValidationExpression = "(.*\\.([Pp][Dd][Ff])|.*\\.([Dd][Oo][Cc])|.*\\.([Rr][Tt][Ff])$)";
+
+
                         cell1.Controls.Add(currentDocument.DocumentFileUpload);
                         cell1.Controls.Add(documentRequiere);
+                        cell1.Controls.Add(documentFormat);
                     }
 
                     if (currentDocument.LinkButtonToDocument != null)
@@ -689,6 +689,21 @@ namespace EDM.edm
                 return;
             }
 
+            foreach(Participant currentParticipant in ParticipantsList)
+            {
+                DateTime endDateTime = DateTime.MinValue;
+                DateTime.TryParse(currentParticipant.ParticipantEndDateTextBox.Text, out endDateTime);
+                if (endDateTime.Year < DateTime.Now.Year - 100)
+                {
+
+                }
+                else if (endDateTime < DateTime.Now.AddHours(24))
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('До окончания срока согласования менее 24 часов!');</script>");
+                    return;
+                }
+            }
+
 
             #region do participants
 
@@ -766,7 +781,7 @@ namespace EDM.edm
                 if (nullEndDateTime.Value.Year < DateTime.Now.Year - 100)
                 {
                     endDateTime = DateTime.Now;
-                    endDateTime = endDateTime.AddHours(5);
+                    endDateTime = endDateTime.AddHours(24);
                 }
                 main.CreateNewParticipent(processId, userId, queue, endDateTime);
             }
@@ -865,7 +880,6 @@ namespace EDM.edm
             }
             Refersh();
         }
-
         protected void goBackButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/edm/Dashboard.aspx");
