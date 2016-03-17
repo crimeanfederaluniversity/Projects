@@ -27,25 +27,6 @@ namespace EDM.edm
                 EDMdbDataContext dataContext = new EDMdbDataContext();
 
 
-                #region отображать или нет кнопки
-                if (
-                    (from a in dataContext.Processes where a.active && a.processID == proc select a.status)
-                        .FirstOrDefault() == 1) // Изменить статус для согласованного
-                {
-                    ApproveButton.Enabled = false;
-                    RejectButton.Enabled = false;
-                }
-                if (
-                    (from a in dataContext.Processes where a.active && a.processID == proc select a.type).FirstOrDefault
-                        () == "review")
-                {
-                    RejectButton.Enabled = false;
-                    RejectButton.Visible = false;
-
-                    ApproveButton.Text = "Отправить комментарий";
-                }
-                #endregion
-
                 int userID;
                 int.TryParse(Session["userID"].ToString(), out userID);
                 int procMaxVersion =
@@ -74,6 +55,38 @@ namespace EDM.edm
                 {
                     part.isNew = false;
                     dataContext.SubmitChanges();
+                }
+
+                #endregion
+
+                #region отображать или нет кнопки
+                if (
+                    (from a in dataContext.Processes where a.active && a.processID == proc select a.status)
+                        .FirstOrDefault() == 1) // Изменить статус для согласованного
+                {
+                    ApproveButton.Enabled = false;
+                    RejectButton.Enabled = false;
+                }
+                if (
+                    (from a in dataContext.Processes where a.active && a.processID == proc select a.type).FirstOrDefault
+                        () == "review")
+                {
+                    RejectButton.Enabled = false;
+                    RejectButton.Visible = false;
+
+                    ApproveButton.Text = "Отправить комментарий";
+                }
+
+                string prevComent = string.Empty;
+                var steps = (from a in dataContext.Participants where a.active && a.fk_user == userID && a.fk_process == proc
+                             join b in dataContext.Steps on a.participantID equals b.fk_participent where b.active
+                             select b).OrderByDescending(v=>v.fk_processVersion).ToList();
+
+                if (steps.Any())
+                {
+                    prevComent = steps[steps.Count - 1].comment;
+                    ButtonPrevComment.Visible = true;
+                    LabelPrevComment.Text = prevComent;
                 }
 
                 #endregion
@@ -214,6 +227,25 @@ namespace EDM.edm
         protected void goBackButton_Click(object sender, EventArgs e)
         {
             HttpContext.Current.Response.Redirect("Dashboard.aspx");
+        }
+
+        protected void ButtonPrevComment_Click(object sender, EventArgs e)
+        {
+            bool isPrevCommentShow;
+            bool.TryParse(Session["isPrevCommentShow"].ToString(), out isPrevCommentShow);
+
+            if (isPrevCommentShow)
+            {
+                LabelPrevComment.Visible = true;
+                ButtonPrevComment.Text = "Скрыть Ваш комментарий из предыдущей версии процесса";
+                Session["isPrevCommentShow"] = false;
+            }
+            else
+            {
+                LabelPrevComment.Visible = false;
+                ButtonPrevComment.Text = "Показать Ваш комментарий из предыдущей версии процесса";
+                Session["isPrevCommentShow"] = true;
+            }
         }
     }
 }

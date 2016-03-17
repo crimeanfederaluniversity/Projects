@@ -67,6 +67,24 @@ namespace EDM.edm {
         protected global::System.Web.UI.WebControls.TextBox LabelComment;
         
         /// <summary>
+        /// LabelPrevComment элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox LabelPrevComment;
+        
+        /// <summary>
+        /// ButtonPrevComment элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonPrevComment;
+        
+        /// <summary>
         /// CommentTextBox элемент управления.
         /// </summary>
         /// <remarks>

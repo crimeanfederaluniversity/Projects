@@ -16,6 +16,7 @@ namespace EDM
             FormsAuthentication.SetAuthCookie(user.name, true);
             Session["direction"] = 0;
             Session["archiveVersion"] = -1;
+            Session["isPrevCommentShow"] = true;
             Response.Redirect("~/edm/Dashboard.aspx");
         }
         protected void Page_Load(object sender, EventArgs e)

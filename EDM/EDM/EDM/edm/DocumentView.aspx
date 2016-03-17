@@ -42,6 +42,7 @@
   
                     Комментарий инициатора согласования  
                 <asp:TextBox ID="LabelComment" TextMode="MultiLine" runat="server" ReadOnly="True" Height="300px" Width="600px" Text="Label" CssClass="edm-document-view-comment-block"></asp:TextBox>
+            
 
            
 
@@ -50,7 +51,12 @@
             
         <%--<asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine" Height="54px" Width="160px"></asp:TextBox>--%> 
             <div class="input-group-lg">
-                <asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine"  cssClass="form-control" Height="100px" ></asp:TextBox>
+                <asp:TextBox ID="LabelPrevComment"  runat="server" ReadOnly="True" TextMode="MultiLine" Visible="false" cssClass="form-control" Height="100px" Text="Label" ></asp:TextBox>
+
+                <br />
+                <asp:Button ID="ButtonPrevComment" runat="server" Text="Показать Ваш комментарий из предыдущей версии процесса" OnClientClick="javascript:showSimpleLoadingScreen()" Visible="False" Width="100%" OnClick="ButtonPrevComment_Click"/>
+
+                <asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine"  cssClass="form-control"  Height="100px" ></asp:TextBox>
                 <br />
                 <br />
                 <div class="btn-group float-right">
