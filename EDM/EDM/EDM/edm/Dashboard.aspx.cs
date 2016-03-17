@@ -759,12 +759,11 @@ namespace EDM.edm
                             {
                                 if (e.Row.Cells[2].Text.Equals("Последовательное согласование"))
                                 {
-                                    partStat.Append("| " + part.Name + " |\t | " + part.StatusParticipant + " |\t | " +
-                                                    (part.Queue + 1)+ " |" + Environment.NewLine);
+                                    partStat.Append((part.Queue + 1) +". "+ part.Name + "\t [" + part.StatusParticipant + "]"+ Environment.NewLine);
                                 }
                                 else
                                 {
-                                    partStat.Append("| " + part.Name + " |\t | " + part.StatusParticipant + " |"+ Environment.NewLine);
+                                    partStat.Append(part.Name + "\t [" + part.StatusParticipant + "]"+ Environment.NewLine);
                                 }
                             }
 
