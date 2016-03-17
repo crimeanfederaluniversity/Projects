@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -28,6 +29,7 @@ namespace EDM.edm
             public string EndDate { get; set; }
             public DateTime? ParticipantApproveDate { get; set; }
             public string TimeLeft { get; set; }
+            public int Queue { get; set; }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -733,6 +735,43 @@ namespace EDM.edm
 
                         printButton.Enabled = false;
 
+                        if (!e.Row.Cells[3].Text.Equals("Согласован"))
+                        {
+                            #region Tooltip Кто просматривал
+
+                            int procId;
+                            int.TryParse(e.Row.Cells[0].Text, out procId);
+                            StringBuilder partStat = new StringBuilder();
+                            //partStat.Append("| Имя участника |" + "\t" + "| Статус документа|" + "\t" + "| Очередь |"+Environment.NewLine);
+
+                            var participantsStatus = (from a in dc.Participants
+                                where a.active && a.fk_process == procId
+                                join b in dc.Users on a.fk_user equals b.userID
+                                where b.active
+                                select new DataOne()
+                                {
+                                    Name = b.name,
+                                    StatusParticipant = (a.isNew == true) ? "Не заходил" : "Просмотрел",
+                                    Queue = a.queue
+                                }).OrderBy(q => q.Queue).ToList();
+
+                            foreach (var part in participantsStatus)
+                            {
+                                if (e.Row.Cells[2].Text.Equals("Последовательное согласование"))
+                                {
+                                    partStat.Append("| " + part.Name + " |\t | " + part.StatusParticipant + " |\t | " +
+                                                    (part.Queue + 1)+ " |" + Environment.NewLine);
+                                }
+                                else
+                                {
+                                    partStat.Append("| " + part.Name + " |\t | " + part.StatusParticipant + " |"+ Environment.NewLine);
+                                }
+                            }
+
+                            btnHistory.ToolTip = partStat.ToString();
+
+                            #endregion
+                        }
                         if (e.Row.Cells[3].Text.Equals("Создан, ждет запуска"))
                         {
                             e.Row.ForeColor = Color.Chocolate;

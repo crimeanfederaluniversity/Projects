@@ -41,7 +41,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <asp:Button runat="server" OnClick="LogIn" Text="Вход" CssClass="btn btn-default" />
+                            <asp:Button runat="server" OnClick="LogIn" Text="Вход" CssClass="btn btn-default" OnClientClick="javascript:Page_ClientValidate(); if (Page_IsValid==true) { showLoadingScreenWithText('Проверка аккаунта'); }" />
                         </div>
                     </div>
                 </div>

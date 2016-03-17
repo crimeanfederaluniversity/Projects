@@ -136,7 +136,7 @@
 
         <div runat="server" id="SaveAllDiv">
            <!-- javascript:Page_ClientValidate(); if (Page_IsValid==true) { this.disabled=true; } -->
-            <asp:Button ID="SaveAllButton"  runat="server" Text="Сохранить" OnClick="SaveAllButton_Click" OnClientClick="javascript:Page_ClientValidate(); if (Page_IsValid==true) { showLoadingScreenWithText('Подождите, происходит сохранение'); }" CssClass="btn btn-success float-right" />
+            <asp:Button ID="SaveAllButton"  runat="server" Text="Сохранить" OnClick="SaveAllButton_Click" OnClientClick="javascript:Page_ClientValidate(); if (Page_IsValid==true) { showLoadingScreenWithText('Подождите, идет процесс сохранение'); }" CssClass="btn btn-success float-right" />
             </div>
 
         </div>
