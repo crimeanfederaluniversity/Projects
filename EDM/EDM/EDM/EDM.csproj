@@ -465,6 +465,7 @@
     <Compile Include="edm\Main.aspx.designer.cs">
       <DependentUpon>Main.aspx</DependentUpon>
     </Compile>
+    <Compile Include="edm\OtherFuncs.cs" />
     <Compile Include="edm\PrintList.aspx.cs">
       <DependentUpon>PrintList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
