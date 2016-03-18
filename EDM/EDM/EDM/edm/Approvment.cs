@@ -263,11 +263,11 @@ namespace EDM.edm
                         (from a in dataContext.EmailTemplates where a.active && a.name == "youFinishedApprove" select a)
                             .FirstOrDefault();
 
-                    //SendEmail(userEmail, etmp.emailTitle, etmp.emailContent.Replace("#processName#", processName), null)
+                    // Зменить email
                     ef.SendEmail("sivas111@ya.ru", etmp.emailTitle,
                         etmp.emailContent.Replace("#processName#",
                             (from a in dataContext.Processes where a.active && a.processID == procId select a.name)
-                                .FirstOrDefault()), null);
+                                .FirstOrDefault()), null); // Добавить attached 
                 }
                 else
                 {

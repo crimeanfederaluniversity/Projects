@@ -14,11 +14,9 @@
     padding-top:5px;
     font-weight:bold;
 }
-
-   
    #coomentEndP{
 	width : 900px;
-	height : 672px;
+	height : 372px;
 	position : fixed; 
 	z-index : 50;
 	top : 20%; 
@@ -38,19 +36,22 @@
         &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="goForwardButton" Enabled="true" CausesValidation="false"  CssClass="btn btn-default" runat="server" Text="Вперед" Width="150" Height="30" OnClientClick="history.forward ()"/>
     </div>
 </asp:Panel>
-    
-<div id="coomentEndP" style="visibility: hidden" >
-	<asp:Panel runat="server" ID="comment_panel"  Visible="true">   
-        <asp:Label ID="Label2" runat="server" Text="Оставьте свой комментарий к процессу" Font-Bold="True" ></asp:Label>
-        <div id="loop"style="visibility: hidden; height: 0px; width: 0px"  >
-        <asp:TextBox ID="textBoxId"  runat="server" ></asp:TextBox>
+
+    <div id="coomentEndP" style="visibility: hidden; background-color: blanchedalmond">
+        <asp:Panel runat="server" ID="comment_panel" Visible="true">
+            <asp:Label ID="Label2" runat="server" Text="Оставьте свой комментарий к процессу" Font-Bold="True"></asp:Label>
+            <div id="loop"style="visibility: hidden; height: 0px; width: 0px">
+                <asp:TextBox ID="textBoxId" runat="server"></asp:TextBox>
             </div>
-        <br />
-        <br />
-        <asp:TextBox ID="commentTextBox" TextMode="MultiLine" Height ="570" Width="885px" runat="server"></asp:TextBox>
-        <asp:Button ID="Button5" runat="server" Text="Утвердить" OnClientClick="showSimpleLoadingScreen()" OnClick="Button5_Click" />
-</asp:Panel>
-</div>
+            <br/>
+            <br/>
+            <asp:TextBox ID="commentTextBox" TextMode="MultiLine" placeholder="Комментарий..." Height="270" Width="885px" runat="server"></asp:TextBox>
+            <br/>
+            <div>
+            <asp:Button ID="Button5" runat="server" Text="Утвердить" OnClientClick="showSimpleLoadingScreen()" OnClick="Button5_Click"/>
+           </div>
+        </asp:Panel>
+    </div>
 
     
     
