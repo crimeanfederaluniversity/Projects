@@ -36,6 +36,9 @@ namespace EDM
     partial void InsertUsers(Users instance);
     partial void UpdateUsers(Users instance);
     partial void DeleteUsers(Users instance);
+    partial void InsertDocumentsInStep(DocumentsInStep instance);
+    partial void UpdateDocumentsInStep(DocumentsInStep instance);
+    partial void DeleteDocumentsInStep(DocumentsInStep instance);
     partial void InsertEmailBots(EmailBots instance);
     partial void UpdateEmailBots(EmailBots instance);
     partial void DeleteEmailBots(EmailBots instance);
@@ -51,6 +54,12 @@ namespace EDM
     partial void InsertProcesses(Processes instance);
     partial void UpdateProcesses(Processes instance);
     partial void DeleteProcesses(Processes instance);
+    partial void InsertProcessTemplate(ProcessTemplate instance);
+    partial void UpdateProcessTemplate(ProcessTemplate instance);
+    partial void DeleteProcessTemplate(ProcessTemplate instance);
+    partial void InsertProcessTemplateParticipant(ProcessTemplateParticipant instance);
+    partial void UpdateProcessTemplateParticipant(ProcessTemplateParticipant instance);
+    partial void DeleteProcessTemplateParticipant(ProcessTemplateParticipant instance);
     partial void InsertProcessVersions(ProcessVersions instance);
     partial void UpdateProcessVersions(ProcessVersions instance);
     partial void DeleteProcessVersions(ProcessVersions instance);
@@ -108,6 +117,14 @@ namespace EDM
 			}
 		}
 		
+		public System.Data.Linq.Table<DocumentsInStep> DocumentsInStep
+		{
+			get
+			{
+				return this.GetTable<DocumentsInStep>();
+			}
+		}
+		
 		public System.Data.Linq.Table<EmailBots> EmailBots
 		{
 			get
@@ -145,6 +162,22 @@ namespace EDM
 			get
 			{
 				return this.GetTable<Processes>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ProcessTemplate> ProcessTemplate
+		{
+			get
+			{
+				return this.GetTable<ProcessTemplate>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ProcessTemplateParticipant> ProcessTemplateParticipant
+		{
+			get
+			{
+				return this.GetTable<ProcessTemplateParticipant>();
 			}
 		}
 		
@@ -394,9 +427,15 @@ namespace EDM
 		
 		private System.Nullable<int> _fk_struct;
 		
+		private bool _canInitiate;
+		
+		private bool _canCreateTemplate;
+		
 		private EntitySet<Participants> _Participants;
 		
 		private EntitySet<Processes> _Processes;
+		
+		private EntitySet<ProcessTemplate> _ProcessTemplate;
 		
 		private EntityRef<Struct> _Struct1;
 		
@@ -420,12 +459,17 @@ namespace EDM
     partial void OnstructChanged();
     partial void Onfk_structChanging(System.Nullable<int> value);
     partial void Onfk_structChanged();
+    partial void OncanInitiateChanging(bool value);
+    partial void OncanInitiateChanged();
+    partial void OncanCreateTemplateChanging(bool value);
+    partial void OncanCreateTemplateChanged();
     #endregion
 		
 		public Users()
 		{
 			this._Participants = new EntitySet<Participants>(new Action<Participants>(this.attach_Participants), new Action<Participants>(this.detach_Participants));
 			this._Processes = new EntitySet<Processes>(new Action<Processes>(this.attach_Processes), new Action<Processes>(this.detach_Processes));
+			this._ProcessTemplate = new EntitySet<ProcessTemplate>(new Action<ProcessTemplate>(this.attach_ProcessTemplate), new Action<ProcessTemplate>(this.detach_ProcessTemplate));
 			this._Struct1 = default(EntityRef<Struct>);
 			OnCreated();
 		}
@@ -594,6 +638,46 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_canInitiate", DbType="Bit NOT NULL")]
+		public bool canInitiate
+		{
+			get
+			{
+				return this._canInitiate;
+			}
+			set
+			{
+				if ((this._canInitiate != value))
+				{
+					this.OncanInitiateChanging(value);
+					this.SendPropertyChanging();
+					this._canInitiate = value;
+					this.SendPropertyChanged("canInitiate");
+					this.OncanInitiateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_canCreateTemplate", DbType="Bit NOT NULL")]
+		public bool canCreateTemplate
+		{
+			get
+			{
+				return this._canCreateTemplate;
+			}
+			set
+			{
+				if ((this._canCreateTemplate != value))
+				{
+					this.OncanCreateTemplateChanging(value);
+					this.SendPropertyChanging();
+					this._canCreateTemplate = value;
+					this.SendPropertyChanged("canCreateTemplate");
+					this.OncanCreateTemplateChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Participants", Storage="_Participants", ThisKey="userID", OtherKey="fk_user")]
 		public EntitySet<Participants> Participants
 		{
@@ -617,6 +701,19 @@ namespace EDM
 			set
 			{
 				this._Processes.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_ProcessTemplate", Storage="_ProcessTemplate", ThisKey="userID", OtherKey="fk_owner")]
+		public EntitySet<ProcessTemplate> ProcessTemplate
+		{
+			get
+			{
+				return this._ProcessTemplate;
+			}
+			set
+			{
+				this._ProcessTemplate.Assign(value);
 			}
 		}
 		
@@ -696,6 +793,217 @@ namespace EDM
 		{
 			this.SendPropertyChanging();
 			entity.Users = null;
+		}
+		
+		private void attach_ProcessTemplate(ProcessTemplate entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = this;
+		}
+		
+		private void detach_ProcessTemplate(ProcessTemplate entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DocumentsInStep")]
+	public partial class DocumentsInStep : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _documentsInStepId;
+		
+		private string _documentName;
+		
+		private bool _active;
+		
+		private int _fk_step;
+		
+		private string _documentComment;
+		
+		private EntityRef<Steps> _Steps;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OndocumentsInStepIdChanging(int value);
+    partial void OndocumentsInStepIdChanged();
+    partial void OndocumentNameChanging(string value);
+    partial void OndocumentNameChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void Onfk_stepChanging(int value);
+    partial void Onfk_stepChanged();
+    partial void OndocumentCommentChanging(string value);
+    partial void OndocumentCommentChanged();
+    #endregion
+		
+		public DocumentsInStep()
+		{
+			this._Steps = default(EntityRef<Steps>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_documentsInStepId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int documentsInStepId
+		{
+			get
+			{
+				return this._documentsInStepId;
+			}
+			set
+			{
+				if ((this._documentsInStepId != value))
+				{
+					this.OndocumentsInStepIdChanging(value);
+					this.SendPropertyChanging();
+					this._documentsInStepId = value;
+					this.SendPropertyChanged("documentsInStepId");
+					this.OndocumentsInStepIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_documentName", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string documentName
+		{
+			get
+			{
+				return this._documentName;
+			}
+			set
+			{
+				if ((this._documentName != value))
+				{
+					this.OndocumentNameChanging(value);
+					this.SendPropertyChanging();
+					this._documentName = value;
+					this.SendPropertyChanged("documentName");
+					this.OndocumentNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_step", DbType="Int NOT NULL")]
+		public int fk_step
+		{
+			get
+			{
+				return this._fk_step;
+			}
+			set
+			{
+				if ((this._fk_step != value))
+				{
+					if (this._Steps.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_stepChanging(value);
+					this.SendPropertyChanging();
+					this._fk_step = value;
+					this.SendPropertyChanged("fk_step");
+					this.Onfk_stepChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_documentComment", DbType="VarChar(MAX)")]
+		public string documentComment
+		{
+			get
+			{
+				return this._documentComment;
+			}
+			set
+			{
+				if ((this._documentComment != value))
+				{
+					this.OndocumentCommentChanging(value);
+					this.SendPropertyChanging();
+					this._documentComment = value;
+					this.SendPropertyChanged("documentComment");
+					this.OndocumentCommentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Steps_DocumentsInStep", Storage="_Steps", ThisKey="fk_step", OtherKey="stepID", IsForeignKey=true)]
+		public Steps Steps
+		{
+			get
+			{
+				return this._Steps.Entity;
+			}
+			set
+			{
+				Steps previousValue = this._Steps.Entity;
+				if (((previousValue != value) 
+							|| (this._Steps.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Steps.Entity = null;
+						previousValue.DocumentsInStep.Remove(this);
+					}
+					this._Steps.Entity = value;
+					if ((value != null))
+					{
+						value.DocumentsInStep.Add(this);
+						this._fk_step = value.stepID;
+					}
+					else
+					{
+						this._fk_step = default(int);
+					}
+					this.SendPropertyChanged("Steps");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -1727,6 +2035,8 @@ namespace EDM
 		
 		private System.Nullable<System.DateTime> _endDate;
 		
+		private string _endComment;
+		
 		private EntitySet<Participants> _Participants;
 		
 		private EntitySet<ProcessVersions> _ProcessVersions;
@@ -1753,6 +2063,8 @@ namespace EDM
     partial void OnstartDateChanged();
     partial void OnendDateChanging(System.Nullable<System.DateTime> value);
     partial void OnendDateChanged();
+    partial void OnendCommentChanging(string value);
+    partial void OnendCommentChanged();
     #endregion
 		
 		public Processes()
@@ -1927,6 +2239,26 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_endComment", DbType="VarChar(MAX)")]
+		public string endComment
+		{
+			get
+			{
+				return this._endComment;
+			}
+			set
+			{
+				if ((this._endComment != value))
+				{
+					this.OnendCommentChanging(value);
+					this.SendPropertyChanging();
+					this._endComment = value;
+					this.SendPropertyChanged("endComment");
+					this.OnendCommentChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_Participants", Storage="_Participants", ThisKey="processID", OtherKey="fk_process")]
 		public EntitySet<Participants> Participants
 		{
@@ -2029,6 +2361,480 @@ namespace EDM
 		{
 			this.SendPropertyChanging();
 			entity.Processes = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ProcessTemplate")]
+	public partial class ProcessTemplate : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _processTemplateId;
+		
+		private bool _active;
+		
+		private int _fk_owner;
+		
+		private string _name;
+		
+		private string _title;
+		
+		private string _content_;
+		
+		private string _type;
+		
+		private EntitySet<ProcessTemplateParticipant> _ProcessTemplateParticipant;
+		
+		private EntityRef<Users> _Users;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnprocessTemplateIdChanging(int value);
+    partial void OnprocessTemplateIdChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void Onfk_ownerChanging(int value);
+    partial void Onfk_ownerChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void OntitleChanging(string value);
+    partial void OntitleChanged();
+    partial void Oncontent_Changing(string value);
+    partial void Oncontent_Changed();
+    partial void OntypeChanging(string value);
+    partial void OntypeChanged();
+    #endregion
+		
+		public ProcessTemplate()
+		{
+			this._ProcessTemplateParticipant = new EntitySet<ProcessTemplateParticipant>(new Action<ProcessTemplateParticipant>(this.attach_ProcessTemplateParticipant), new Action<ProcessTemplateParticipant>(this.detach_ProcessTemplateParticipant));
+			this._Users = default(EntityRef<Users>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_processTemplateId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int processTemplateId
+		{
+			get
+			{
+				return this._processTemplateId;
+			}
+			set
+			{
+				if ((this._processTemplateId != value))
+				{
+					this.OnprocessTemplateIdChanging(value);
+					this.SendPropertyChanging();
+					this._processTemplateId = value;
+					this.SendPropertyChanged("processTemplateId");
+					this.OnprocessTemplateIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_owner", DbType="Int NOT NULL")]
+		public int fk_owner
+		{
+			get
+			{
+				return this._fk_owner;
+			}
+			set
+			{
+				if ((this._fk_owner != value))
+				{
+					if (this._Users.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_ownerChanging(value);
+					this.SendPropertyChanging();
+					this._fk_owner = value;
+					this.SendPropertyChanged("fk_owner");
+					this.Onfk_ownerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_title", DbType="VarChar(200)")]
+		public string title
+		{
+			get
+			{
+				return this._title;
+			}
+			set
+			{
+				if ((this._title != value))
+				{
+					this.OntitleChanging(value);
+					this.SendPropertyChanging();
+					this._title = value;
+					this.SendPropertyChanged("title");
+					this.OntitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_content_", DbType="VarChar(MAX)")]
+		public string content_
+		{
+			get
+			{
+				return this._content_;
+			}
+			set
+			{
+				if ((this._content_ != value))
+				{
+					this.Oncontent_Changing(value);
+					this.SendPropertyChanging();
+					this._content_ = value;
+					this.SendPropertyChanged("content_");
+					this.Oncontent_Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type", DbType="VarChar(50)")]
+		public string type
+		{
+			get
+			{
+				return this._type;
+			}
+			set
+			{
+				if ((this._type != value))
+				{
+					this.OntypeChanging(value);
+					this.SendPropertyChanging();
+					this._type = value;
+					this.SendPropertyChanged("type");
+					this.OntypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessTemplate_ProcessTemplateParticipant", Storage="_ProcessTemplateParticipant", ThisKey="processTemplateId", OtherKey="fk_user")]
+		public EntitySet<ProcessTemplateParticipant> ProcessTemplateParticipant
+		{
+			get
+			{
+				return this._ProcessTemplateParticipant;
+			}
+			set
+			{
+				this._ProcessTemplateParticipant.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_ProcessTemplate", Storage="_Users", ThisKey="fk_owner", OtherKey="userID", IsForeignKey=true)]
+		public Users Users
+		{
+			get
+			{
+				return this._Users.Entity;
+			}
+			set
+			{
+				Users previousValue = this._Users.Entity;
+				if (((previousValue != value) 
+							|| (this._Users.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Users.Entity = null;
+						previousValue.ProcessTemplate.Remove(this);
+					}
+					this._Users.Entity = value;
+					if ((value != null))
+					{
+						value.ProcessTemplate.Add(this);
+						this._fk_owner = value.userID;
+					}
+					else
+					{
+						this._fk_owner = default(int);
+					}
+					this.SendPropertyChanged("Users");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_ProcessTemplateParticipant(ProcessTemplateParticipant entity)
+		{
+			this.SendPropertyChanging();
+			entity.ProcessTemplate = this;
+		}
+		
+		private void detach_ProcessTemplateParticipant(ProcessTemplateParticipant entity)
+		{
+			this.SendPropertyChanging();
+			entity.ProcessTemplate = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ProcessTemplateParticipant")]
+	public partial class ProcessTemplateParticipant : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _processTemplateParticipantId;
+		
+		private bool _active;
+		
+		private int _fk_user;
+		
+		private int _queue;
+		
+		private System.Nullable<System.DateTime> _endDate;
+		
+		private EntityRef<ProcessTemplate> _ProcessTemplate;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnprocessTemplateParticipantIdChanging(int value);
+    partial void OnprocessTemplateParticipantIdChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void Onfk_userChanging(int value);
+    partial void Onfk_userChanged();
+    partial void OnqueueChanging(int value);
+    partial void OnqueueChanged();
+    partial void OnendDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnendDateChanged();
+    #endregion
+		
+		public ProcessTemplateParticipant()
+		{
+			this._ProcessTemplate = default(EntityRef<ProcessTemplate>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_processTemplateParticipantId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int processTemplateParticipantId
+		{
+			get
+			{
+				return this._processTemplateParticipantId;
+			}
+			set
+			{
+				if ((this._processTemplateParticipantId != value))
+				{
+					this.OnprocessTemplateParticipantIdChanging(value);
+					this.SendPropertyChanging();
+					this._processTemplateParticipantId = value;
+					this.SendPropertyChanged("processTemplateParticipantId");
+					this.OnprocessTemplateParticipantIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_user", DbType="Int NOT NULL")]
+		public int fk_user
+		{
+			get
+			{
+				return this._fk_user;
+			}
+			set
+			{
+				if ((this._fk_user != value))
+				{
+					if (this._ProcessTemplate.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_userChanging(value);
+					this.SendPropertyChanging();
+					this._fk_user = value;
+					this.SendPropertyChanged("fk_user");
+					this.Onfk_userChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_queue", DbType="Int NOT NULL")]
+		public int queue
+		{
+			get
+			{
+				return this._queue;
+			}
+			set
+			{
+				if ((this._queue != value))
+				{
+					this.OnqueueChanging(value);
+					this.SendPropertyChanging();
+					this._queue = value;
+					this.SendPropertyChanged("queue");
+					this.OnqueueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_endDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> endDate
+		{
+			get
+			{
+				return this._endDate;
+			}
+			set
+			{
+				if ((this._endDate != value))
+				{
+					this.OnendDateChanging(value);
+					this.SendPropertyChanging();
+					this._endDate = value;
+					this.SendPropertyChanged("endDate");
+					this.OnendDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessTemplate_ProcessTemplateParticipant", Storage="_ProcessTemplate", ThisKey="fk_user", OtherKey="processTemplateId", IsForeignKey=true)]
+		public ProcessTemplate ProcessTemplate
+		{
+			get
+			{
+				return this._ProcessTemplate.Entity;
+			}
+			set
+			{
+				ProcessTemplate previousValue = this._ProcessTemplate.Entity;
+				if (((previousValue != value) 
+							|| (this._ProcessTemplate.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ProcessTemplate.Entity = null;
+						previousValue.ProcessTemplateParticipant.Remove(this);
+					}
+					this._ProcessTemplate.Entity = value;
+					if ((value != null))
+					{
+						value.ProcessTemplateParticipant.Add(this);
+						this._fk_user = value.processTemplateId;
+					}
+					else
+					{
+						this._fk_user = default(int);
+					}
+					this.SendPropertyChanged("ProcessTemplate");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -2331,6 +3137,8 @@ namespace EDM
 		
 		private System.Nullable<System.DateTime> _date;
 		
+		private EntitySet<DocumentsInStep> _DocumentsInStep;
+		
 		private EntityRef<Participants> _Participants;
 		
 		private EntityRef<ProcessVersions> _ProcessVersions;
@@ -2357,6 +3165,7 @@ namespace EDM
 		
 		public Steps()
 		{
+			this._DocumentsInStep = new EntitySet<DocumentsInStep>(new Action<DocumentsInStep>(this.attach_DocumentsInStep), new Action<DocumentsInStep>(this.detach_DocumentsInStep));
 			this._Participants = default(EntityRef<Participants>);
 			this._ProcessVersions = default(EntityRef<ProcessVersions>);
 			OnCreated();
@@ -2510,6 +3319,19 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Steps_DocumentsInStep", Storage="_DocumentsInStep", ThisKey="stepID", OtherKey="fk_step")]
+		public EntitySet<DocumentsInStep> DocumentsInStep
+		{
+			get
+			{
+				return this._DocumentsInStep;
+			}
+			set
+			{
+				this._DocumentsInStep.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Participants_Steps", Storage="_Participants", ThisKey="fk_participent", OtherKey="participantID", IsForeignKey=true)]
 		public Participants Participants
 		{
@@ -2596,6 +3418,18 @@ namespace EDM
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_DocumentsInStep(DocumentsInStep entity)
+		{
+			this.SendPropertyChanging();
+			entity.Steps = this;
+		}
+		
+		private void detach_DocumentsInStep(DocumentsInStep entity)
+		{
+			this.SendPropertyChanging();
+			entity.Steps = null;
 		}
 	}
 	

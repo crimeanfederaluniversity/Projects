@@ -186,7 +186,6 @@ namespace EDM.edm
             }
         }
 
-
         public void ContinueApprove(int procId)
         {
             // Вызывать после создания новой версии ()
@@ -241,6 +240,38 @@ namespace EDM.edm
                             dc.SubmitChanges();
                         }
                     }
+                }
+            }
+        }
+
+        public void FinishApprove(int procId, string comment)
+        {
+            EmailFuncs ef = new EmailFuncs();
+
+            using (EDMdbDataContext dataContext = new EDMdbDataContext())
+            {
+                Processes procToFinish = (from p in dataContext.Processes where p.active && p.processID == procId select p).FirstOrDefault();
+
+                if (procToFinish != null)
+                {
+                    procToFinish.status = 10;
+                    procToFinish.endComment = comment;
+                    procToFinish.endDate = DateTime.Now;
+                    dataContext.SubmitChanges();
+
+                    EmailTemplates etmp =
+                        (from a in dataContext.EmailTemplates where a.active && a.name == "youFinishedApprove" select a)
+                            .FirstOrDefault();
+
+                    //SendEmail(userEmail, etmp.emailTitle, etmp.emailContent.Replace("#processName#", processName), null)
+                    ef.SendEmail("sivas111@ya.ru", etmp.emailTitle,
+                        etmp.emailContent.Replace("#processName#",
+                            (from a in dataContext.Processes where a.active && a.processID == procId select a.name)
+                                .FirstOrDefault()), null);
+                }
+                else
+                {
+                    throw new Exception("Ошибка утверждения процесса № "+ procId); //LOG
                 }
             }
         }

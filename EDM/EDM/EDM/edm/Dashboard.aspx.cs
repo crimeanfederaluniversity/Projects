@@ -48,14 +48,34 @@ namespace EDM.edm
                 int.TryParse(Session["userID"].ToString(), out userID);
                 int.TryParse(Session["direction"].ToString(), out direction);
 
-                Button2.Text += Notification(userId);
+                Button1.Text += Notification(userId)[0];
+                Button2.Text += Notification(userId)[1];
                 RenderGrid(dashGridView, FillingGrid(direction, userID), direction);
             }
         }
 
-        private string Notification(object userId)
+        private List<string> Notification(object userId)
         {
+            List<string> notifications = new List<string>()
+            {
+                string.Empty,
+                string.Empty
+            };
+
             EDMdbDataContext dataContext = new EDMdbDataContext();
+
+            #region Исходящие
+
+            int userNotFinishedProcessesCount =
+                (from a in dataContext.Processes
+                    where a.active && a.fk_initiator == (int) userId && a.status == 1
+                    select a).Count();
+            if (userNotFinishedProcessesCount > 0)
+            notifications[0] = " (" + userNotFinishedProcessesCount + ")";
+
+            #endregion Исходящие
+
+            #region Входящие
 
             var userIsNewParticipant =
                 (from a in dataContext.Participants
@@ -103,13 +123,13 @@ namespace EDM.edm
 
                 if (newProcessCount > 0)
                 {
-                    return " (" + newProcessCount + ")";
+                    notifications[1] = " (" + newProcessCount + ")";
                 }
             }
+            #endregion Входящие
 
-            return string.Empty;
+            return notifications;
         }
-
 
         public string NullableDateTimeToText(DateTime? date)
         {
@@ -434,7 +454,12 @@ namespace EDM.edm
                             break;
                         case 1:
                         {
-                            itm.Status4All = "Согласован";
+                            itm.Status4All = "Согласован, ждет утверждения";
+                        }
+                            break;
+                        case 10:
+                        {
+                            itm.Status4All = "Согласован и Утвержден";
                         }
                             break;
                     }
@@ -735,7 +760,18 @@ namespace EDM.edm
 
                         printButton.Enabled = false;
 
-                        if (!e.Row.Cells[3].Text.Equals("Согласован"))
+                        if (e.Row.Cells[3].Text.Equals("Согласован и Утвержден"))
+                        {
+                            btnStart.Enabled = false;
+                            printButton.Enabled = true;
+                            btneEit.Enabled = false;
+                            e.Row.ForeColor = Color.Green;
+                        }
+                        if (e.Row.Cells[3].Text.Equals("Создан, ждет запуска"))
+                        {
+                            e.Row.ForeColor = Color.Chocolate;
+                        }
+                        if (e.Row.Cells[3].Text.Equals("В процессе"))
                         {
                             #region Tooltip Кто просматривал
 
@@ -745,49 +781,48 @@ namespace EDM.edm
                             //partStat.Append("| Имя участника |" + "\t" + "| Статус документа|" + "\t" + "| Очередь |"+Environment.NewLine);
 
                             var participantsStatus = (from a in dc.Participants
-                                where a.active && a.fk_process == procId
-                                join b in dc.Users on a.fk_user equals b.userID
-                                where b.active
-                                select new DataOne()
-                                {
-                                    Name = b.name,
-                                    StatusParticipant = (a.isNew == true) ? "Не заходил" : "Просмотрел",
-                                    Queue = a.queue
-                                }).OrderBy(q => q.Queue).ToList();
+                                                      where a.active && a.fk_process == procId
+                                                      join b in dc.Users on a.fk_user equals b.userID
+                                                      where b.active
+                                                      select new DataOne()
+                                                      {
+                                                          Name = b.name,
+                                                          StatusParticipant = (a.isNew == true) ? "Не заходил" : "Просмотрел",
+                                                          Queue = a.queue
+                                                      }).OrderBy(q => q.Queue).ToList();
 
                             foreach (var part in participantsStatus)
                             {
                                 if (e.Row.Cells[2].Text.Equals("Последовательное согласование"))
                                 {
-                                    partStat.Append((part.Queue + 1) +". "+ part.Name + "\t [" + part.StatusParticipant + "]"+ Environment.NewLine);
+                                    partStat.Append((part.Queue + 1) + ". " + part.Name + "\t [" + part.StatusParticipant + "]" + Environment.NewLine);
                                 }
                                 else
                                 {
-                                    partStat.Append(part.Name + "\t [" + part.StatusParticipant + "]"+ Environment.NewLine);
+                                    partStat.Append(part.Name + "\t [" + part.StatusParticipant + "]" + Environment.NewLine);
                                 }
                             }
 
                             btnHistory.ToolTip = partStat.ToString();
 
                             #endregion
-                        }
-                        if (e.Row.Cells[3].Text.Equals("Создан, ждет запуска"))
-                        {
-                            e.Row.ForeColor = Color.Chocolate;
-                        }
-                        if (e.Row.Cells[3].Text.Equals("В процессе"))
-                        {
+
                             btneEit.Enabled = false;
                             btnStart.Enabled = false;
                             //
                         }
-                        if (e.Row.Cells[3].Text.Equals("Согласован"))
+                        if (e.Row.Cells[3].Text.Equals("Согласован, ждет утверждения"))
                         {
-                            printButton.Enabled = true;
+                           
+                            btnStart.Text = "Завершить";
                             btneEit.Enabled = false;
-                            btnStart.Enabled = false;
-                            //btneEit.Visible = false;
-                            e.Row.ForeColor = Color.Green;
+                            e.Row.Font.Bold = true;
+                            e.Row.ForeColor = Color.LightSeaGreen;
+
+                            btnStart.OnClientClick =
+                            "javascript: {document.getElementById('coomentEndP').style.visibility='visible'; " +
+                            "document.getElementById('MainContent_textBoxId').value ='" + e.Row.Cells[0].Text + "'; " +
+                            "return false;}";
                         }
                         if (e.Row.Cells[3].Text.Equals("Возвращен на доработку"))
                         {
@@ -869,6 +904,16 @@ namespace EDM.edm
         protected void goBackButton_Click(object sender, EventArgs e)
         {
             
+        }
+
+
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            EmailFuncs ef = new EmailFuncs();
+            Approvment ap = new Approvment();
+
+            ap.FinishApprove(Convert.ToInt32(textBoxId.Text), commentTextBox.Text);
+            Response.Redirect("Dashboard.aspx");
         }
     }
 }

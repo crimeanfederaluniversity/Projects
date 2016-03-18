@@ -14,17 +14,43 @@
     padding-top:5px;
     font-weight:bold;
 }
-   .button_right 
-   {
-       float:right
-   }     
+
+   
+   #coomentEndP{
+	width : 900px;
+	height : 672px;
+	position : fixed; 
+	z-index : 50;
+	top : 20%; 
+	left : 30%;	
+
+	border : 2px solid;
+	border-radius: 10px;
+	
+	padding: 5px;
+}
+    
 </style> 
+
 <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="false">    
     <div>          
         &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="goBackButton" CausesValidation="false"  runat="server" Enabled="true" CssClass="btn btn-default" Text="Назад" Width="150" Height="30" OnClientClick="history.back ()" OnClick="goBackButton_Click" />
         &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="goForwardButton" Enabled="true" CausesValidation="false"  CssClass="btn btn-default" runat="server" Text="Вперед" Width="150" Height="30" OnClientClick="history.forward ()"/>
     </div>
 </asp:Panel>
+    
+<div id="coomentEndP" style="visibility: hidden" >
+	<asp:Panel runat="server" ID="comment_panel"  Visible="true">   
+        <asp:Label ID="Label2" runat="server" Text="Оставьте свой комментарий к процессу" Font-Bold="True" ></asp:Label>
+        <div id="loop"style="visibility: hidden; height: 0px; width: 0px"  >
+        <asp:TextBox ID="textBoxId"  runat="server" ></asp:TextBox>
+            </div>
+        <br />
+        <br />
+        <asp:TextBox ID="commentTextBox" TextMode="MultiLine" Height ="570" Width="885px" runat="server"></asp:TextBox>
+        <asp:Button ID="Button5" runat="server" Text="Утвердить" OnClientClick="showSimpleLoadingScreen()" OnClick="Button5_Click" />
+</asp:Panel>
+</div>
 
     
     
