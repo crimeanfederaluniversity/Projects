@@ -8,8 +8,9 @@ namespace EDM.edm
 {
     public class Approvment
     {
-        public void AddApprove(int user, int procVersion, string comment)
+        public int AddApprove(int user, int procVersion, string comment)
         {
+            int stepId = 0;
             using (EDMdbDataContext dataContext = new EDMdbDataContext())
             {
                 EmailFuncs ef = new EmailFuncs();
@@ -36,7 +37,7 @@ namespace EDM.edm
 
                 dataContext.Steps.InsertOnSubmit(step);
                 dataContext.SubmitChanges();
-
+                stepId = step.stepID;
                 // Отправка уведомления только для помледовательного
                 if (proc.type == "serial")
                 {
@@ -59,10 +60,12 @@ namespace EDM.edm
             }
 
             CheckApprove(procVersion,1,user);
+            return stepId;
         }
 
-        public void RejectApprove(int user, int procVersion, string comment)
+        public int RejectApprove(int user, int procVersion, string comment)
         {
+            int stepId = 0;
             using (EDMdbDataContext dataContext = new EDMdbDataContext())
             {
                 int procId =
@@ -82,13 +85,14 @@ namespace EDM.edm
                 step.comment = comment;
                 step.stepResult = -2;
                 step.date = DateTime.Now;
-
+                
                 dataContext.Steps.InsertOnSubmit(step);
                 dataContext.SubmitChanges();
+                stepId = step.stepID;
             }
 
             CheckApprove(procVersion, -2, user);
-
+            return stepId;
         }
 
         private void CheckApprove(int procVersion, int appType, int user)

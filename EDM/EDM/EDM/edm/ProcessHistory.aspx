@@ -26,24 +26,6 @@
 </asp:Panel>
 <br />
 <br />
-      <%--<style type="text/css">
-   TABLE {
-    border-collapse: collapse; /* Убираем двойные линии между ячейками */
-    width: 300px; /* Ширина таблицы */
-   }
-   TH, TD {
-    border: 1px solid black; /* Параметры рамки */
-    text-align: center; /* Выравнивание по центру */
-    padding: 4px; /* Поля вокруг текста */
-   }
-   TH {
-    background: #fc0; /* Цвет фона ячейки */
-    height: 40px; /* Высота ячеек */
-    vertical-align: bottom; /* Выравнивание по нижнему краю */
-    padding: 0; /* Убираем поля вокруг текста */
-   }
-  </style>--%>
-
     <div runat="server" id="TitleDiv">
         <br/>
         <asp:Label ID="InitiatorLabel" runat="server" Text=""></asp:Label>

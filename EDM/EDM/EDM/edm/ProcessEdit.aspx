@@ -43,6 +43,29 @@
     
     <script>
 
+        function noTemplateValidation()
+        {
+            if (document.getElementById('MainContent_ProcessNameTextBox').value.length < 1)
+            {
+                alert('Введите название нового согласования');
+                return false;
+            }
+            if (document.getElementById('MainContent_ParticipantsCountTextBox').value.length < 1)
+            {
+                alert('Не заполнено значение количества согласующих');
+                return false;
+            }
+            return true;
+        }
+
+        function withTemplateValidation()
+        {
+            if (document.getElementById('MainContent_ProcessNameT').value.length < 1) {
+                alert('Введите название нового согласования');
+                return false;
+            }
+            return true;
+        }
 
         function putValueAndClose(panelId, userNameField, userIdField,userName,userId) {
             document.getElementById(userNameField).value = userName;
@@ -51,32 +74,25 @@
         }
     </script>
     
-    <asp:ValidationSummary 
-            ID="ValidationSummary1" 
-            runat="server" 
-            HeaderText="Заполните все поля с восклицательным знаком" 
-            ShowMessageBox="False" 
-            DisplayMode="SingleParagraph" 
-            ShowSummary="True"
-            EnableClientScript="True"
-            
-            Width="1000"
-            ForeColor="Red"
-            Font-Italic="true"
-            />
-
+  
 
     <div id="createNewProcessDiv" runat="server" class="row" >
     <table class="table table-striped edm-table edm-PocessEdit-table centered-block">
+        <tr >
+		    <td colspan="4">
+               Согласование без шаблона
+            </td>
+        </tr>
+
         <tr>
 		   <th>Тип согласования</th>
-            <th>Название <asp:RequiredFieldValidator runat="server" SetFocusOnError="True" ControlToValidate="ProcessNameTextBox" ErrorMessage="!" ForeColor="red"/> </th>
+            <th>Название  </th>
             <th>Кол-во согласующих
-                <asp:RangeValidator runat="server" ControlToValidate="ParticipantsCountTextBox" SetFocusOnError="True" ErrorMessage="!" ForeColor="red" Type="Integer" MinimumValue="1" MaximumValue="10"/>
-                <asp:RequiredFieldValidator runat="server" SetFocusOnError="True" ControlToValidate="ParticipantsCountTextBox" ErrorMessage="!" ForeColor="red"/></th>
+            </th>
             <th>Создать</th>
             
         </tr>
+
         <tr>
 		   <td>
             <asp:DropDownList ID="ProcessTypeDropDown" runat="server" AutoPostBack="False" CssClass="form-control">
@@ -97,9 +113,43 @@
             </td>
             
             <td>
-                <asp:Button ID="CreateProcessButton" runat="server" OnClick="CreateNewProcess" Text="Создать" CssClass="btn btn-warning" OnClientClick="javascript:Page_ClientValidate(); if (Page_IsValid==true) {showSimpleLoadingScreen()}"/>
+                <asp:Button ID="CreateProcessButton" runat="server" OnClick="CreateNewProcess" Text="Создать" CssClass="btn btn-warning" OnClientClick="javascript:if(noTemplateValidation()){showSimpleLoadingScreen()} else return false;"/>
             </td>           
         </tr>
+        
+        <tr >
+		    <td colspan="4">
+               Согласование с шаблоном
+            </td>
+        </tr>
+         
+        <tr>
+		   <th colspan="2">Шаблон</th>
+            <th>Название </th>
+            <th>Создать</th>        
+        </tr>
+        
+        <tr>
+            
+		   <td colspan="2">
+            <asp:DropDownList ID="TemplatesDropDownList" runat="server" AutoPostBack="False" CssClass="form-control">
+            </asp:DropDownList>
+		       
+
+            </td>
+            <td>
+                <asp:TextBox ID="ProcessNameT"  runat="server" CssClass="form-control"></asp:TextBox>
+                
+            </td>
+            
+            <td>
+                <asp:Button ID="CreateNewProcessByTemplate" runat="server" OnClick="CreateNewTemplateProcess" Text="Создать" CssClass="btn btn-warning" OnClientClick="javascript:if(withTemplateValidation()){showSimpleLoadingScreen()} else return false;"/>
+            </td>   
+                  
+        </tr>
+        
+        
+
         </table>
     </div>
 

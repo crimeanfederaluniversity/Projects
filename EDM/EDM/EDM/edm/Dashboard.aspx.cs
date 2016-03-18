@@ -807,5 +807,10 @@ namespace EDM.edm
             ap.FinishApprove(Convert.ToInt32(textBoxId.Text), commentTextBox.Text);
             Response.Redirect("Dashboard.aspx");
         }
+
+        protected void GoToTemplatesButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("TemplatesList.aspx");
+        }
     }
 }

@@ -12,9 +12,8 @@ namespace EDM.edm
 {
     public partial class ProcessEdit : System.Web.UI.Page
     {
-        #region static
-        public List<Participant> ParticipantsList = new List<Participant>();  // Осторожно с ним  // обнуляю его в pageload 
-        public List<DocumentsClass> DocumentsList = new List<DocumentsClass>(); // и с ним осторожно
+        public List<Participant> ParticipantsList = new List<Participant>();  
+        public List<DocumentsClass> DocumentsList = new List<DocumentsClass>(); 
         public class Participant
         {
             public int ParticipantId { get; set; }
@@ -211,7 +210,6 @@ namespace EDM.edm
             response.Flush();
             response.End();
         }
-        #endregion
         ProcessMainFucntions main = new ProcessMainFucntions();
         #region views
         private TreeNode RecursiveGetTreeNode(int parentId, List<Struct> structList, string panelId, string userNameField,string userIdField, string backValue, bool fullStruct)
@@ -358,8 +356,7 @@ namespace EDM.edm
         public Table GetNewParticipantsTable()
         {
             int processId = 0;
-            
-
+           
             Table participantsTable = new Table();
             Int32.TryParse(HttpContext.Current.Session["processID"].ToString(), out processId);
             if (processId == 0)
@@ -372,8 +369,6 @@ namespace EDM.edm
             if (participantsCount != 0)
             {
                 TableHeaderRow tableHeaderRow = new TableHeaderRow();
-
-
 
                 TableHeaderCell tableQueueHeaderCell = new TableHeaderCell();
                 tableQueueHeaderCell.Text = "Очередь";
@@ -400,39 +395,27 @@ namespace EDM.edm
                     if (!withQueu)
                         ParticipantsList[i].ParticipantQueueTextBox.Text = 0.ToString();
 
-
-
-
                     ParticipantsList[i].ParticipantQueueTextBox.Attributes.Add("readonly","true");
                     queueCell.Controls.Add(ParticipantsList[i].ParticipantQueueTextBox);
                     queueCell.Controls.Add(ParticipantsList[i].ParticipantQueueValidator);
                     participantRow.Cells.Add(queueCell);
 
                     TableCell endDateCell = new TableCell();
-                    //ParticipantsList[i].ParticipantEndDateTextBox.ID = "ParticipentEndDateTextBox" + i;
                     endDateCell.Controls.Add(ParticipantsList[i].ParticipantEndDateTextBox);
-                    //endDateCell.Controls.Add(ParticipantsList[i].ParticipantEndDateValidator);
 
                     participantRow.Cells.Add(endDateCell);
 
                     TableCell participentCell = new TableCell();
-                    //ParticipantsList[i].ParticipantTextBox.Visible = true;
-                    //ParticipantsList[i].ParticipantTextBox.ID = "ParticipentIdTextBox" + i;
                     participentCell.Controls.Add(ParticipantsList[i].ParticipantTextBox);
                     participentCell.Controls.Add(ParticipantsList[i].ParticipantUserValidator);
                     participentCell.Controls.Add(ParticipantsList[i].ParticipantNameTextBox);
                     participentCell.Controls.Add(ParticipantsList[i].ParticipantUserNameValidator);
 
-
                     Button openPunelButton = new Button();
-
 
                     int rowId = i;
                     string tmpstr = ParticipantsList[i].ParticipantNameTextBox.ID.Replace("ParticipentNameTextBox", "");
                     Int32.TryParse(tmpstr, out rowId);
-                   // rowId++;
-
-
 
                     openPunelButton.Text = "Выбрать";
                     openPunelButton.OnClientClick = "document.getElementById('MainContent_chooseUserPanel" +
@@ -440,7 +423,6 @@ namespace EDM.edm
                                                     "').style.visibility = 'visible'; return false; ";
                     participentCell.Controls.Add(GetFiexdPanel(rowId));
                     openPunelButton.CssClass = "btn btn-sm btn-default";
-                    //participentCell.Controls.Add(GetFiexdPanel(rowId));
                     participentCell.Controls.Add(openPunelButton);
                     participantRow.Cells.Add(participentCell);
 
@@ -458,7 +440,6 @@ namespace EDM.edm
                     participantRow.Cells.Add(deleteParticipentCell);
 
                     participantsTable.CssClass = "centered-block";
-
 
                     participantsTable.Rows.Add(participantRow);
                 }
@@ -855,6 +836,16 @@ namespace EDM.edm
 
             if (!Page.IsPostBack)
             {
+                List<ProcessTemplate> templates = main.GetAllProcessTemplates();
+
+                foreach (ProcessTemplate template in templates)
+                {
+                    ListItem newListItem = new ListItem();
+                    newListItem.Text = template.name;
+                    newListItem.Value = template.processTemplateId.ToString();
+                    TemplatesDropDownList.Items.Add(newListItem);
+                }
+
                 ParticipantsList = new List<Participant>();
                 DocumentsList = new List<DocumentsClass>();
                 int processId = -1;
@@ -880,6 +871,27 @@ namespace EDM.edm
             }
             Refersh();
         }
+
+
+        protected void CreateNewTemplateProcess(object sender, EventArgs e)
+        {
+            int processId = main.CreateProcessByType(ProcessTypeDropDown.SelectedValue, (int)HttpContext.Current.Session["userID"], ProcessNameT.Text);
+            HttpContext.Current.Session["processID"] = processId;
+            int participantsCount = 0;
+            Int32.TryParse(ParticipantsCountTextBox.Text, out participantsCount);
+
+            int templateId = Convert.ToInt32(TemplatesDropDownList.SelectedValue);
+
+            List<ProcessTemplateParticipant> allParticipants = main.GetProcessTemplateParticipantsInTemplate(templateId);
+            int i = 0;
+            foreach (ProcessTemplateParticipant templateParticipant in allParticipants)
+            {
+                ParticipantsList.Add(CreateParticipant(i, 0, templateParticipant.queue.ToString(), "", templateParticipant.fk_user.ToString(),main.GetUserById(templateParticipant.fk_user).name));
+                i++;
+            }        
+            Refersh();
+        }
+
         protected void goBackButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/edm/Dashboard.aspx");

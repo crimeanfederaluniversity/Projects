@@ -25,6 +25,7 @@
       <Association Name="Users_Participants" Member="Participants" ThisKey="userID" OtherKey="fk_user" Type="Participants" />
       <Association Name="Users_Processes" Member="Processes" ThisKey="userID" OtherKey="fk_initiator" Type="Processes" />
       <Association Name="Users_ProcessTemplate" Member="ProcessTemplate" ThisKey="userID" OtherKey="fk_owner" Type="ProcessTemplate" />
+      <Association Name="Users_ProcessTemplateParticipant" Member="ProcessTemplateParticipant" ThisKey="userID" OtherKey="fk_user" Type="ProcessTemplateParticipant" />
       <Association Name="Struct_Users" Member="Struct1" ThisKey="fk_struct" OtherKey="structID" Type="Struct" IsForeignKey="true" />
     </Type>
   </Table>
@@ -113,7 +114,7 @@
       <Column Name="title" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Column Name="content_" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Association Name="ProcessTemplate_ProcessTemplateParticipant" Member="ProcessTemplateParticipant" ThisKey="processTemplateId" OtherKey="fk_user" Type="ProcessTemplateParticipant" />
+      <Association Name="ProcessTemplate_ProcessTemplateParticipant" Member="ProcessTemplateParticipant" ThisKey="processTemplateId" OtherKey="fk_template" Type="ProcessTemplateParticipant" />
       <Association Name="Users_ProcessTemplate" Member="Users" ThisKey="fk_owner" OtherKey="userID" Type="Users" IsForeignKey="true" />
     </Type>
   </Table>
@@ -124,7 +125,9 @@
       <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="queue" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="endDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="ProcessTemplate_ProcessTemplateParticipant" Member="ProcessTemplate" ThisKey="fk_user" OtherKey="processTemplateId" Type="ProcessTemplate" IsForeignKey="true" />
+      <Column Name="fk_template" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ProcessTemplate_ProcessTemplateParticipant" Member="ProcessTemplate" ThisKey="fk_template" OtherKey="processTemplateId" Type="ProcessTemplate" IsForeignKey="true" />
+      <Association Name="Users_ProcessTemplateParticipant" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ProcessVersions" Member="ProcessVersions">

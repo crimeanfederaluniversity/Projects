@@ -105,6 +105,10 @@ namespace EDM.edm
             cell8.Text = "Комментарий";
             historyTableHeaderRow.Cells.Add(cell8);
 
+            TableHeaderCell cell9 = new TableHeaderCell();
+            cell9.Text = "Прикрепленный файл";
+            historyTableHeaderRow.Cells.Add(cell9);
+
             historyTable.Rows.Add(historyTableHeaderRow);
 
             #endregion
@@ -189,10 +193,27 @@ namespace EDM.edm
                     {
                         stepResultCell.Text = "Согласовано";
                     }
+
+
+
                     processVersionStepRow.Cells.Add(stepResultCell);
                     TableCell stepCommentCell = new TableCell();
                     stepCommentCell.Text = step.comment.ToString();
                     processVersionStepRow.Cells.Add(stepCommentCell);
+
+                    DocumentsInStep doc = _main.GetDocumentInStep(step.stepID);
+
+                    if (doc != null)
+                    {
+                        TableCell linkButtonCell = new TableCell();
+                        LinkButton linkButton = new LinkButton();
+                        linkButton.Text = doc.documentName;
+                        linkButton.CommandArgument = currentVersion.fk_process+ "stepsDocs/" + doc.documentsInStepId.ToString();
+                        linkButton.Click += GetDocumentClick;
+                        linkButtonCell.Controls.Add(linkButton);
+                        
+                        processVersionStepRow.Cells.Add(linkButtonCell);
+                    }
 
                     historyTable.Rows.Add(processVersionStepRow);
                 }
@@ -205,7 +226,19 @@ namespace EDM.edm
             
             historyTableDiv.Controls.Add(historyTable);
         }
-
+        public void GetDocumentClick(object sender, EventArgs e)
+        {
+            LinkButton thisButton = (LinkButton)sender;
+            string path = HttpContext.Current.Server.MapPath("~/edm/documents/" + thisButton.CommandArgument + "/" + thisButton.Text);
+            System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
+            response.ClearContent();
+            response.Clear();
+            response.ContentType = "text/plain";
+            response.AddHeader("Content-Disposition", "attachment; filename=" + thisButton.Text + ";");
+            response.TransmitFile(path);
+            response.Flush();
+            response.End();
+        }
         protected void goBackButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("Dashboard.aspx");

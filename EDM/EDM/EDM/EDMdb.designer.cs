@@ -437,6 +437,8 @@ namespace EDM
 		
 		private EntitySet<ProcessTemplate> _ProcessTemplate;
 		
+		private EntitySet<ProcessTemplateParticipant> _ProcessTemplateParticipant;
+		
 		private EntityRef<Struct> _Struct1;
 		
     #region Extensibility Method Definitions
@@ -470,6 +472,7 @@ namespace EDM
 			this._Participants = new EntitySet<Participants>(new Action<Participants>(this.attach_Participants), new Action<Participants>(this.detach_Participants));
 			this._Processes = new EntitySet<Processes>(new Action<Processes>(this.attach_Processes), new Action<Processes>(this.detach_Processes));
 			this._ProcessTemplate = new EntitySet<ProcessTemplate>(new Action<ProcessTemplate>(this.attach_ProcessTemplate), new Action<ProcessTemplate>(this.detach_ProcessTemplate));
+			this._ProcessTemplateParticipant = new EntitySet<ProcessTemplateParticipant>(new Action<ProcessTemplateParticipant>(this.attach_ProcessTemplateParticipant), new Action<ProcessTemplateParticipant>(this.detach_ProcessTemplateParticipant));
 			this._Struct1 = default(EntityRef<Struct>);
 			OnCreated();
 		}
@@ -717,6 +720,19 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_ProcessTemplateParticipant", Storage="_ProcessTemplateParticipant", ThisKey="userID", OtherKey="fk_user")]
+		public EntitySet<ProcessTemplateParticipant> ProcessTemplateParticipant
+		{
+			get
+			{
+				return this._ProcessTemplateParticipant;
+			}
+			set
+			{
+				this._ProcessTemplateParticipant.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Struct_Users", Storage="_Struct1", ThisKey="fk_struct", OtherKey="structID", IsForeignKey=true)]
 		public Struct Struct1
 		{
@@ -802,6 +818,18 @@ namespace EDM
 		}
 		
 		private void detach_ProcessTemplate(ProcessTemplate entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = null;
+		}
+		
+		private void attach_ProcessTemplateParticipant(ProcessTemplateParticipant entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = this;
+		}
+		
+		private void detach_ProcessTemplateParticipant(ProcessTemplateParticipant entity)
 		{
 			this.SendPropertyChanging();
 			entity.Users = null;
@@ -2559,7 +2587,7 @@ namespace EDM
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessTemplate_ProcessTemplateParticipant", Storage="_ProcessTemplateParticipant", ThisKey="processTemplateId", OtherKey="fk_user")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessTemplate_ProcessTemplateParticipant", Storage="_ProcessTemplateParticipant", ThisKey="processTemplateId", OtherKey="fk_template")]
 		public EntitySet<ProcessTemplateParticipant> ProcessTemplateParticipant
 		{
 			get
@@ -2655,7 +2683,11 @@ namespace EDM
 		
 		private System.Nullable<System.DateTime> _endDate;
 		
+		private int _fk_template;
+		
 		private EntityRef<ProcessTemplate> _ProcessTemplate;
+		
+		private EntityRef<Users> _Users;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2671,11 +2703,14 @@ namespace EDM
     partial void OnqueueChanged();
     partial void OnendDateChanging(System.Nullable<System.DateTime> value);
     partial void OnendDateChanged();
+    partial void Onfk_templateChanging(int value);
+    partial void Onfk_templateChanged();
     #endregion
 		
 		public ProcessTemplateParticipant()
 		{
 			this._ProcessTemplate = default(EntityRef<ProcessTemplate>);
+			this._Users = default(EntityRef<Users>);
 			OnCreated();
 		}
 		
@@ -2730,7 +2765,7 @@ namespace EDM
 			{
 				if ((this._fk_user != value))
 				{
-					if (this._ProcessTemplate.HasLoadedOrAssignedValue)
+					if (this._Users.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -2783,7 +2818,31 @@ namespace EDM
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessTemplate_ProcessTemplateParticipant", Storage="_ProcessTemplate", ThisKey="fk_user", OtherKey="processTemplateId", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_template", DbType="Int NOT NULL")]
+		public int fk_template
+		{
+			get
+			{
+				return this._fk_template;
+			}
+			set
+			{
+				if ((this._fk_template != value))
+				{
+					if (this._ProcessTemplate.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_templateChanging(value);
+					this.SendPropertyChanging();
+					this._fk_template = value;
+					this.SendPropertyChanged("fk_template");
+					this.Onfk_templateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessTemplate_ProcessTemplateParticipant", Storage="_ProcessTemplate", ThisKey="fk_template", OtherKey="processTemplateId", IsForeignKey=true)]
 		public ProcessTemplate ProcessTemplate
 		{
 			get
@@ -2806,13 +2865,47 @@ namespace EDM
 					if ((value != null))
 					{
 						value.ProcessTemplateParticipant.Add(this);
-						this._fk_user = value.processTemplateId;
+						this._fk_template = value.processTemplateId;
+					}
+					else
+					{
+						this._fk_template = default(int);
+					}
+					this.SendPropertyChanged("ProcessTemplate");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_ProcessTemplateParticipant", Storage="_Users", ThisKey="fk_user", OtherKey="userID", IsForeignKey=true)]
+		public Users Users
+		{
+			get
+			{
+				return this._Users.Entity;
+			}
+			set
+			{
+				Users previousValue = this._Users.Entity;
+				if (((previousValue != value) 
+							|| (this._Users.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Users.Entity = null;
+						previousValue.ProcessTemplateParticipant.Remove(this);
+					}
+					this._Users.Entity = value;
+					if ((value != null))
+					{
+						value.ProcessTemplateParticipant.Add(this);
+						this._fk_user = value.userID;
 					}
 					else
 					{
 						this._fk_user = default(int);
 					}
-					this.SendPropertyChanged("ProcessTemplate");
+					this.SendPropertyChanged("Users");
 				}
 			}
 		}

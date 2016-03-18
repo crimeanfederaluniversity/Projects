@@ -27,16 +27,21 @@
 	
 	padding: 5px;
 }
-    
+         .button_right 
+   {
+       float:right
+   } 
 </style> 
 
-<asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="false">    
+<asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="True">    
     <div>          
         &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="goBackButton" CausesValidation="false"  runat="server" Enabled="true" CssClass="btn btn-default" Text="Назад" Width="150" Height="30" OnClientClick="history.back ()" OnClick="goBackButton_Click" />
         &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="goForwardButton" Enabled="true" CausesValidation="false"  CssClass="btn btn-default" runat="server" Text="Вперед" Width="150" Height="30" OnClientClick="history.forward ()"/>
-    </div>
-</asp:Panel>
+ <asp:Button ID="GoToTemplatesButton" Enabled="true"  CausesValidation="false"  CssClass="btn btn-default button_right" runat="server" Text="Мои шаблоны" Width="150" Height="30" OnClick="GoToTemplatesButton_Click" />
 
+           </div>
+</asp:Panel>
+    <br/><br/>
     <div id="coomentEndP" style="visibility: hidden; background-color: blanchedalmond">
         <asp:Panel runat="server" ID="comment_panel" Visible="true">
             <asp:Label ID="Label2" runat="server" Text="Оставьте свой комментарий к процессу" Font-Bold="True"></asp:Label>

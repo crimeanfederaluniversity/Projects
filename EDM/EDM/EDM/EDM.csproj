@@ -207,12 +207,14 @@
     <Content Include="edmAdmin\CreateNewUser.aspx" />
     <Content Include="edm\AutoAccept.aspx" />
     <Content Include="edm\calendar_ru.js" />
+    <Content Include="edm\CreateEditTemplate.aspx" />
     <Content Include="edm\Dashboard.aspx" />
     <Content Include="edm\DocumentView.aspx" />
     <Content Include="edm\Main.aspx" />
     <Content Include="edm\PrintList.aspx" />
     <Content Include="edm\ProcessEdit.aspx" />
     <Content Include="edm\ProcessHistory.aspx" />
+    <Content Include="edm\TemplatesList.aspx" />
     <Content Include="Error.html" />
     <Content Include="filenotfound.htm" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -442,6 +444,13 @@
     <Compile Include="edm\AutoAccept.aspx.designer.cs">
       <DependentUpon>AutoAccept.aspx</DependentUpon>
     </Compile>
+    <Compile Include="edm\CreateEditTemplate.aspx.cs">
+      <DependentUpon>CreateEditTemplate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="edm\CreateEditTemplate.aspx.designer.cs">
+      <DependentUpon>CreateEditTemplate.aspx</DependentUpon>
+    </Compile>
     <Compile Include="edm\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -489,6 +498,13 @@
       <DependentUpon>ProcessHistory.aspx</DependentUpon>
     </Compile>
     <Compile Include="edm\TableActions.cs" />
+    <Compile Include="edm\TemplatesList.aspx.cs">
+      <DependentUpon>TemplatesList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="edm\TemplatesList.aspx.designer.cs">
+      <DependentUpon>TemplatesList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

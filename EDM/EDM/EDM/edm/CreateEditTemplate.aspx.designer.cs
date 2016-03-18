@@ -10,7 +10,7 @@
 namespace EDM.edm {
     
     
-    public partial class Dashboard {
+    public partial class CreateEditTamplate {
         
         /// <summary>
         /// top_panel2 control.
@@ -40,111 +40,66 @@ namespace EDM.edm {
         protected global::System.Web.UI.WebControls.Button goForwardButton;
         
         /// <summary>
-        /// GoToTemplatesButton control.
+        /// mainDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoToTemplatesButton;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mainDiv;
         
         /// <summary>
-        /// comment_panel control.
+        /// AprrovalTypeLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel comment_panel;
+        protected global::System.Web.UI.WebControls.Label AprrovalTypeLabel;
         
         /// <summary>
-        /// Label2 control.
+        /// TemplateNameTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.TextBox TemplateNameTextBox;
         
         /// <summary>
-        /// textBoxId control.
+        /// TemplateTitleTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxId;
+        protected global::System.Web.UI.WebControls.TextBox TemplateTitleTextBox;
         
         /// <summary>
-        /// commentTextBox control.
+        /// TemplateContentTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox commentTextBox;
+        protected global::System.Web.UI.WebControls.TextBox TemplateContentTextBox;
         
         /// <summary>
-        /// Button5 control.
+        /// participantsDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button5;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl participantsDiv;
         
         /// <summary>
-        /// Label1 control.
+        /// SaveAllButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-        
-        /// <summary>
-        /// Button4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button4;
-        
-        /// <summary>
-        /// Button1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
-        
-        /// <summary>
-        /// Button2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
-        
-        /// <summary>
-        /// Button3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button3;
-        
-        /// <summary>
-        /// dashGridView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dashGridView;
+        protected global::System.Web.UI.WebControls.Button SaveAllButton;
     }
 }

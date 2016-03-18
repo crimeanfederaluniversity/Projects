@@ -19,6 +19,15 @@ namespace EDM.edm
             participantToKill.active = false;
             _edmDb.SubmitChanges();
         }
+
+        public void KillParticipantTemplate(int participantTemplateId)
+        {
+            ProcessTemplateParticipant participantToKill =
+                (from a in _edmDb.ProcessTemplateParticipant where a.processTemplateParticipantId == participantTemplateId select a).FirstOrDefault();
+            participantToKill.active = false;
+            _edmDb.SubmitChanges();
+        }
+
         public List<ProcessEdit.Participant> ParticipantsList = new List<ProcessEdit.Participant>();
         public int CreateNewParticipent(int processId, int userId , int queue ,DateTime? endDate)
         {
@@ -39,6 +48,47 @@ namespace EDM.edm
 
         }
 
+        public List<ProcessTemplateParticipant> GetProcessTemplateParticipantsInTemplate(int templateId)
+        {
+            return
+                (from a in _edmDb.ProcessTemplateParticipant
+                    where a.active == true && a.fk_template == templateId
+                    select a).OrderByDescending(mc => mc.queue).ToList();
+        }
+
+        public List<ProcessTemplate> GetAllProcessTemplates()
+        {
+            return (from a in _edmDb.ProcessTemplate where a.active == true select a).ToList();
+        } 
+
+        public int CreateNewTemplateParticipent(int templateId, int userId, int queue)
+        {
+            ProcessTemplateParticipant newParticipant = new ProcessTemplateParticipant();
+            newParticipant.active = true;
+            newParticipant.fk_user = userId;
+            newParticipant.fk_template = templateId;
+            newParticipant.queue = queue;
+
+            _edmDb.ProcessTemplateParticipant.InsertOnSubmit(newParticipant);
+            _edmDb.SubmitChanges();
+            return newParticipant.processTemplateParticipantId;
+
+        }
+
+        public void SetTemplateParams(string name, string title, string content,int templateId)
+        {
+            ProcessTemplate currentTemplate = GetProcessTemplateById(templateId);
+            currentTemplate.content_ = content;
+            currentTemplate.name = name;
+            currentTemplate.title = title;
+            _edmDb.SubmitChanges();
+        }
+
+        public ProcessTemplate GetProcessTemplateById(int templateId)
+        {
+            return (from a in _edmDb.ProcessTemplate where a.processTemplateId == templateId select a).FirstOrDefault();
+
+        }
 
         public List<Users> GetUsersInStruct(int structId)
         {
@@ -73,13 +123,18 @@ namespace EDM.edm
                 where a.active == true
                       && a.fk_process == processId
                 select a).ToList();
-        } 
+        }
+
+        public bool WithQueueuByType(string type)
+        {
+            if (type == "serial")
+                return true;
+            return false;
+        }
         public bool WithQueueByProcess(int processId)
         {
             Processes currentProc = GetProcessById(processId);
-            if (currentProc.type == "serial")
-                return true;
-            return false;
+            return WithQueueuByType(currentProc.type);
         }
         public string GetCommentForLastVersion(int processId)
         {
@@ -235,6 +290,29 @@ namespace EDM.edm
 
             return listToReturn;
         }
+
+        public List<ProcessEdit.Participant> GetParticipantsInTempolate(int templateId)
+        {
+
+            List<ProcessEdit.Participant> listToReturn = new List<ProcessEdit.Participant>();
+
+            List<ProcessTemplateParticipant> templateParticipants =
+                (from a in _edmDb.ProcessTemplateParticipant where a.active == true && a.fk_template == templateId select a).OrderBy(
+                    mc => mc.queue).ToList();
+            foreach (ProcessTemplateParticipant templateParticipant in templateParticipants)
+            {
+                ProcessEdit.Participant newParticipant = new ProcessEdit.Participant();
+                newParticipant.ParticipantQueueTextBox = new TextBox();
+                newParticipant.ParticipantQueueTextBox.Text = templateParticipant.queue.ToString();
+                newParticipant.ParticipantTextBox = new TextBox();
+                newParticipant.ParticipantTextBox.Text = templateParticipant.fk_user.ToString();
+                newParticipant.ParticipantId = templateParticipant.processTemplateParticipantId;
+                listToReturn.Add(newParticipant);
+            }
+
+            return listToReturn;
+        } 
+
         public List<Participants> GetParticipantsInProcess(int processId)
         {
             // List <ProcessEdit.Participant> listToReturn = new List<ProcessEdit.Participant>();
@@ -266,6 +344,17 @@ namespace EDM.edm
                       && (a.active == true || !onlyActive)
                 select a).ToList();
         }
+
+
+        public DocumentsInStep GetDocumentInStep(int stepid)
+        {
+            return (from a in _edmDb.DocumentsInStep
+                    where a.fk_step == stepid
+                          && a.active == true 
+                    select a).FirstOrDefault();
+        }
+
+
         public Users GetUserById(int userId)
         {
             return (from a in _edmDb.Users where a.userID == userId select a).FirstOrDefault();
@@ -312,6 +401,17 @@ namespace EDM.edm
             _edmDb.Documents.InsertOnSubmit(newDocument);
             _edmDb.SubmitChanges();
             return newDocument.documentID;
+        }
+        public int CreateNewStepDocument(string docName, int stepId, string docComment)
+        {
+            DocumentsInStep newDocument = new DocumentsInStep();
+            newDocument.active = true;
+            newDocument.documentName = docName;
+            newDocument.fk_step = stepId;
+            newDocument.documentComment = docComment;
+            _edmDb.DocumentsInStep.InsertOnSubmit(newDocument);
+            _edmDb.SubmitChanges();
+            return newDocument.documentsInStepId;
         }
     }
 }

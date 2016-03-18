@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -148,8 +149,30 @@ namespace EDM.edm
                     (from a in dataContext.ProcessVersions where a.fk_process == proc && a.active select a)
                         .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
 
-            approve.AddApprove(userId, procMaxVersion, CommentTextBox.Text);
-            HttpContext.Current.Response.Redirect("Dashboard.aspx");
+            int stepId = approve.AddApprove(userId, procMaxVersion, CommentTextBox.Text);
+
+                if (AddStepFileFileUpload.HasFile)
+                {
+                    try
+                    {
+                        ProcessMainFucntions main = new ProcessMainFucntions();
+                        int docId = main.CreateNewStepDocument(AddStepFileFileUpload.FileName, stepId, "");
+
+                        string directoryToSave =
+                            HttpContext.Current.Server.MapPath("~/edm/documents/" + proc + "stepsDocs/" + docId + "/");
+                        if (!Directory.Exists(directoryToSave))
+                        {
+                            Directory.CreateDirectory(directoryToSave);
+                        }
+                        AddStepFileFileUpload.SaveAs(directoryToSave + AddStepFileFileUpload.FileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        HttpContext.Current.Response.Redirect("Dashboard.aspx"); //LOG
+                    }
+                }
+
+                HttpContext.Current.Response.Redirect("Dashboard.aspx");
             }
             else
             {
@@ -176,7 +199,32 @@ namespace EDM.edm
                     (from a in dataContext.ProcessVersions where a.fk_process == proc && a.active select a)
                         .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
 
-                approve.RejectApprove(userId, procMaxVersion, CommentTextBox.Text);
+                int stepId = approve.RejectApprove(userId, procMaxVersion, CommentTextBox.Text);
+
+
+                if (AddStepFileFileUpload.HasFile)
+                {
+                    try
+                    {
+                        ProcessMainFucntions main = new ProcessMainFucntions();
+                        int docId = main.CreateNewStepDocument(AddStepFileFileUpload.FileName, stepId, "");
+
+                        string directoryToSave =
+                            HttpContext.Current.Server.MapPath("~/edm/documents/" + proc + "stepsDocs/" + docId + "/");
+                        if (!Directory.Exists(directoryToSave))
+                        {
+                            Directory.CreateDirectory(directoryToSave);
+                        }
+                        AddStepFileFileUpload.SaveAs(directoryToSave + AddStepFileFileUpload.FileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        HttpContext.Current.Response.Redirect("Dashboard.aspx"); //LOG
+                    }
+                }
+
+
+
                 HttpContext.Current.Response.Redirect("Dashboard.aspx");
             }
             else
@@ -184,7 +232,7 @@ namespace EDM.edm
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Отсутствует комментарий к процессу. Пожалуйста заполните!');</script>");
             }
         }
-
+        
         protected void docGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "openDocument")

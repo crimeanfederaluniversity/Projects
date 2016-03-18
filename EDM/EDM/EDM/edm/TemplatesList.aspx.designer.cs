@@ -10,7 +10,7 @@
 namespace EDM.edm {
     
     
-    public partial class DocumentView {
+    public partial class TamplatesList {
         
         /// <summary>
         /// top_panel2 control.
@@ -40,84 +40,39 @@ namespace EDM.edm {
         protected global::System.Web.UI.WebControls.Button goForwardButton;
         
         /// <summary>
-        /// Label1 control.
+        /// mainDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mainDiv;
         
         /// <summary>
-        /// docGridView control.
+        /// ProcessTypeDropDown control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView docGridView;
+        protected global::System.Web.UI.WebControls.DropDownList ProcessTypeDropDown;
         
         /// <summary>
-        /// LabelComment control.
+        /// NewTemplateNameTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox LabelComment;
+        protected global::System.Web.UI.WebControls.TextBox NewTemplateNameTextBox;
         
         /// <summary>
-        /// LabelPrevComment control.
+        /// CreateTemplateButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox LabelPrevComment;
-        
-        /// <summary>
-        /// ButtonPrevComment control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonPrevComment;
-        
-        /// <summary>
-        /// CommentTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CommentTextBox;
-        
-        /// <summary>
-        /// AddStepFileFileUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload AddStepFileFileUpload;
-        
-        /// <summary>
-        /// RejectButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button RejectButton;
-        
-        /// <summary>
-        /// ApproveButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ApproveButton;
+        protected global::System.Web.UI.WebControls.Button CreateTemplateButton;
     }
 }
