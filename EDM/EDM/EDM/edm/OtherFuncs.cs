@@ -124,5 +124,9 @@ namespace EDM.edm
             return "";
         }
 
+        public List<int> GetSlaves(int bossId)
+        {
+            return null;
+        } 
     }
 }

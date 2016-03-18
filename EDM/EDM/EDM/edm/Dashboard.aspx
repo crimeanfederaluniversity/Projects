@@ -77,7 +77,7 @@
             <asp:Button ID="Button3" runat="server" Text="Архив" OnClick="Button3_Click" CssClass="btn btn-default col-sm-3" OnClientClick="showSimpleLoadingScreen()"/>
         </div>
             <br />
-    <asp:GridView ID="dashGridView" runat="server" AutoGenerateColumns="False" OnRowCommand="GridView1_RowCommand" OnRowDataBound="dashGridView_RowDataBound" CssClass="table table-striped edm-table" AllowPaging="True" PageSize="50" OnPageIndexChanging="dashGridView_PageIndexChanging"> 
+    <asp:GridView ID="dashGridView" runat="server" AutoGenerateColumns="False" OnRowCommand="dashGridView_RowCommand" OnRowDataBound="dashGridView_RowDataBound" CssClass="table table-striped edm-table" AllowPaging="True" PageSize="50" OnPageIndexChanging="dashGridView_PageIndexChanging"> 
     <PagerSettings Mode="Numeric" />
 	<PagerStyle BackColor="#FFCC66" ForeColor="#444" HorizontalAlign="Center" />
     </asp:GridView>

@@ -311,6 +311,13 @@ namespace EDM.edm
                 coluButtonField.ControlStyle.CssClass = "btn btn-default";
                 gridView.Columns.Add(coluButtonField);
 
+                ButtonField coluButtonField2 = new ButtonField();
+                coluButtonField2.Text = "Доп.Согласование";
+                coluButtonField2.ButtonType = ButtonType.Button;
+                coluButtonField2.CommandName = "SubApprove";
+                coluButtonField2.ControlStyle.CssClass = "btn btn-default";
+                gridView.Columns.Add(coluButtonField2);
+
                 DataBind();
             }
             #endregion
@@ -523,7 +530,7 @@ namespace EDM.edm
             #endregion
         }
 
-        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void dashGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             // 0 - исходящие
             // 1 - входящие
@@ -576,7 +583,14 @@ namespace EDM.edm
                         Response.Redirect("ProcessHistory.aspx");
                     }
                     break;
-                    case "StartP":
+                    case "SubApprove":
+                    {
+                        Session["processID"] = idProcess;
+                        //Session["SubApprove"];
+                        Response.Redirect("ProcessEdit.aspx");
+                    }
+                        break;
+                case "StartP": 
                     {
                         EmailFuncs ef = new EmailFuncs();
 
@@ -801,7 +815,6 @@ namespace EDM.edm
 
         protected void Button5_Click(object sender, EventArgs e)
         {
-            EmailFuncs ef = new EmailFuncs();
             Approvment ap = new Approvment();
 
             ap.FinishApprove(Convert.ToInt32(textBoxId.Text), commentTextBox.Text);
