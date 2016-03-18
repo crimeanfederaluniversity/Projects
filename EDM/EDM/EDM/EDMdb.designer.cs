@@ -2065,9 +2065,15 @@ namespace EDM
 		
 		private string _endComment;
 		
+		private System.Nullable<int> _fk_parentProcess;
+		
 		private EntitySet<Participants> _Participants;
 		
+		private EntitySet<Processes> _Processes2;
+		
 		private EntitySet<ProcessVersions> _ProcessVersions;
+		
+		private EntityRef<Processes> _Processes1;
 		
 		private EntityRef<Users> _Users;
 		
@@ -2093,12 +2099,16 @@ namespace EDM
     partial void OnendDateChanged();
     partial void OnendCommentChanging(string value);
     partial void OnendCommentChanged();
+    partial void Onfk_parentProcessChanging(System.Nullable<int> value);
+    partial void Onfk_parentProcessChanged();
     #endregion
 		
 		public Processes()
 		{
 			this._Participants = new EntitySet<Participants>(new Action<Participants>(this.attach_Participants), new Action<Participants>(this.detach_Participants));
+			this._Processes2 = new EntitySet<Processes>(new Action<Processes>(this.attach_Processes2), new Action<Processes>(this.detach_Processes2));
 			this._ProcessVersions = new EntitySet<ProcessVersions>(new Action<ProcessVersions>(this.attach_ProcessVersions), new Action<ProcessVersions>(this.detach_ProcessVersions));
+			this._Processes1 = default(EntityRef<Processes>);
 			this._Users = default(EntityRef<Users>);
 			OnCreated();
 		}
@@ -2287,6 +2297,30 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_parentProcess", DbType="Int")]
+		public System.Nullable<int> fk_parentProcess
+		{
+			get
+			{
+				return this._fk_parentProcess;
+			}
+			set
+			{
+				if ((this._fk_parentProcess != value))
+				{
+					if (this._Processes1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_parentProcessChanging(value);
+					this.SendPropertyChanging();
+					this._fk_parentProcess = value;
+					this.SendPropertyChanged("fk_parentProcess");
+					this.Onfk_parentProcessChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_Participants", Storage="_Participants", ThisKey="processID", OtherKey="fk_process")]
 		public EntitySet<Participants> Participants
 		{
@@ -2300,6 +2334,19 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_Processes", Storage="_Processes2", ThisKey="processID", OtherKey="fk_parentProcess")]
+		public EntitySet<Processes> Processes2
+		{
+			get
+			{
+				return this._Processes2;
+			}
+			set
+			{
+				this._Processes2.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_ProcessVersions", Storage="_ProcessVersions", ThisKey="processID", OtherKey="fk_process")]
 		public EntitySet<ProcessVersions> ProcessVersions
 		{
@@ -2310,6 +2357,40 @@ namespace EDM
 			set
 			{
 				this._ProcessVersions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_Processes", Storage="_Processes1", ThisKey="fk_parentProcess", OtherKey="processID", IsForeignKey=true)]
+		public Processes Processes1
+		{
+			get
+			{
+				return this._Processes1.Entity;
+			}
+			set
+			{
+				Processes previousValue = this._Processes1.Entity;
+				if (((previousValue != value) 
+							|| (this._Processes1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Processes1.Entity = null;
+						previousValue.Processes2.Remove(this);
+					}
+					this._Processes1.Entity = value;
+					if ((value != null))
+					{
+						value.Processes2.Add(this);
+						this._fk_parentProcess = value.processID;
+					}
+					else
+					{
+						this._fk_parentProcess = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Processes1");
+				}
 			}
 		}
 		
@@ -2377,6 +2458,18 @@ namespace EDM
 		{
 			this.SendPropertyChanging();
 			entity.Processes = null;
+		}
+		
+		private void attach_Processes2(Processes entity)
+		{
+			this.SendPropertyChanging();
+			entity.Processes1 = this;
+		}
+		
+		private void detach_Processes2(Processes entity)
+		{
+			this.SendPropertyChanging();
+			entity.Processes1 = null;
 		}
 		
 		private void attach_ProcessVersions(ProcessVersions entity)

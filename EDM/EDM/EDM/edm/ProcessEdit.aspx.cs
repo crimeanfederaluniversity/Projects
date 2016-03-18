@@ -871,8 +871,6 @@ namespace EDM.edm
             }
             Refersh();
         }
-
-
         protected void CreateNewTemplateProcess(object sender, EventArgs e)
         {
             int processId = main.CreateProcessByType(ProcessTypeDropDown.SelectedValue, (int)HttpContext.Current.Session["userID"], ProcessNameT.Text);
