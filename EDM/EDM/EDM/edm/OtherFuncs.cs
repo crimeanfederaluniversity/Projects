@@ -97,7 +97,6 @@ namespace EDM.edm
 
         public string GetTimeBeforeEnd(DateTime endDate)
         {
-            DateTime dateNow = DateTime.Now;
             double hours = ((endDate - DateTime.Now).TotalHours);
             if (hours < 1)
             {
@@ -126,7 +125,76 @@ namespace EDM.edm
 
         public List<int> GetSlaves(int bossId)
         {
+            EDMdbDataContext dc = new EDMdbDataContext();
+            List<int> slavesStructId = new List<int>();
+
+            /*var boss = (from a in dc.Users where a.active && a.userID == 11  select a.fk_struct).FirstOrDefault();
+
+            if (boss != null)
+            {*/
+               // int bossStuctId = (int)boss;
+
+
+            var sss = RecursiveSlaves(11, ref slavesStructId);
             return null;
-        } 
+           // }
+        
+
+            return new List<int>() {-1};
+        }
+
+        public List<int> GetSlaves(int bossId, ref List<int> slavesStructId)
+        {
+            EDMdbDataContext dc = new EDMdbDataContext();
+            List<int> result = new List<int>();
+
+            var bossStuctId = (from a in dc.Users where a.active && a.userID == bossId select a.fk_struct).FirstOrDefault();
+
+            if (bossStuctId != null)
+            {
+                var slavesByStuct =
+                    (from a in dc.Struct where a.active && a.fk_parent == bossStuctId select a).ToList();
+
+                if (slavesByStuct.Any())
+                {
+                    slavesStructId.AddRange((slavesByStuct.Select(id => id.structID)));
+
+                    foreach (var slave in slavesByStuct)
+                        GetSlaves(slave.structID, ref slavesStructId);
+                }
+                else
+                {
+                    foreach (var itm in slavesStructId)
+                        result.AddRange((from a in dc.Users where a.active && a.fk_struct == itm select a.userID).ToList());
+
+                    return result;
+                }
+            }
+ 
+            return new List<int>() { -1 }; // LOG
+        }
+
+        private List<int> RecursiveSlaves(int bossStructId, ref List<int> slavesStructId)
+        {
+            EDMdbDataContext dc = new EDMdbDataContext();
+            List<int> result = new List<int>();
+
+            var slaves = (from a in dc.Struct where a.active && a.fk_parent == bossStructId select a).ToList();
+
+            if (slaves.Any())
+            {
+                slavesStructId.AddRange(slaves.Select(id => id.structID));
+
+                foreach (var slave in slaves)
+                {
+                    RecursiveSlaves(slave.structID, ref slavesStructId);
+                }
+            }
+            foreach (var itm in slavesStructId)
+                result.AddRange((from a in dc.Users where a.active && a.fk_struct == itm select a.userID).ToList());
+
+            return result;
+
+        }
     }
 }
