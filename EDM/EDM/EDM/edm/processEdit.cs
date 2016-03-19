@@ -340,9 +340,19 @@ namespace EDM.edm
         public List<Documents> GetDocumentsInProcessVersion(int processVersionId,bool onlyActive)
         {
             return (from a in _edmDb.Documents
+                                         join b in _edmDb.ProcVersionDocsMap
+                                             on a.documentID equals b.fk_documents
+                                         where b.active == true
+                                               && a.active == true
+                                               && b.fk_processVersion == processVersionId
+                                         select a).ToList();
+
+            /*
+            return (from a in _edmDb.Documents
                 where a.fk_processVersion == processVersionId
                       && (a.active == true || !onlyActive)
                 select a).ToList();
+                */
         }
 
 
@@ -359,21 +369,45 @@ namespace EDM.edm
         {
             return (from a in _edmDb.Users where a.userID == userId select a).FirstOrDefault();
         }
-        public void KillDocument(int docId)
+        public void KillDocument(int docId,int versionId)
         {
-            Documents docToKill =
+            /*Documents docToKill =
                 (from a in _edmDb.Documents where a.documentID == docId select a).FirstOrDefault();
-            docToKill.active = false;
+            docToKill.active = false;*/
+            ProcVersionDocsMap procVersionToKill = (from a in _edmDb.ProcVersionDocsMap
+                where a.fk_processVersion == versionId
+                      && a.fk_documents == docId
+                select a).FirstOrDefault();
+            procVersionToKill.active = false;
             _edmDb.SubmitChanges();
         }
-        public void SetDocumentToVersion(int documentId, int newVersion, string newComment)
+
+        public string GetDocumentComment(int docId, int versionId)
         {
+            return (from a in _edmDb.ProcVersionDocsMap
+                where a.fk_processVersion == versionId
+                      && a.fk_documents == docId
+                select a.documentComment).FirstOrDefault();
+        }
+
+        public void SetDocumentToVersion(int documentId, int newVersion, string newComment) // раньше меняли просто фк, но теперь есть таблица связи поэтому создадим новую связь
+        {
+
+            ProcVersionDocsMap newDocMap = new ProcVersionDocsMap();
+            newDocMap.active = true;
+            newDocMap.fk_processVersion = newVersion;
+            newDocMap.fk_documents = documentId;
+            newDocMap.documentComment = newComment;
+            _edmDb.ProcVersionDocsMap.InsertOnSubmit(newDocMap);
+            _edmDb.SubmitChanges();
+            /*
             Documents doc = (from a in _edmDb.Documents
                 where a.documentID == documentId
                 select a).FirstOrDefault();
             doc.fk_processVersion = newVersion;
             doc.documentComment = newComment;
             _edmDb.SubmitChanges();
+            */
         }
         public int CreateNewProcessVersion(int processId,string comment, int version, string status)
         {
@@ -396,10 +430,17 @@ namespace EDM.edm
             Documents newDocument = new Documents();
             newDocument.active = true;
             newDocument.documentName = docName;
-            newDocument.fk_processVersion = processVersion;
-            newDocument.documentComment = docComment; 
             _edmDb.Documents.InsertOnSubmit(newDocument);
             _edmDb.SubmitChanges();
+
+            ProcVersionDocsMap newDocsMap = new ProcVersionDocsMap();
+            newDocsMap.active = true;
+            newDocsMap.fk_processVersion = processVersion;
+            newDocsMap.documentComment = docComment;
+            newDocsMap.fk_documents = newDocument.documentID;
+            _edmDb.ProcVersionDocsMap.InsertOnSubmit(newDocsMap);
+            _edmDb.SubmitChanges();
+
             return newDocument.documentID;
         }
         public int CreateNewStepDocument(string docName, int stepId, string docComment)

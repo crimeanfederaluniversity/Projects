@@ -63,6 +63,9 @@ namespace EDM
     partial void InsertProcessVersions(ProcessVersions instance);
     partial void UpdateProcessVersions(ProcessVersions instance);
     partial void DeleteProcessVersions(ProcessVersions instance);
+    partial void InsertProcVersionDocsMap(ProcVersionDocsMap instance);
+    partial void UpdateProcVersionDocsMap(ProcVersionDocsMap instance);
+    partial void DeleteProcVersionDocsMap(ProcVersionDocsMap instance);
     partial void InsertSteps(Steps instance);
     partial void UpdateSteps(Steps instance);
     partial void DeleteSteps(Steps instance);
@@ -189,6 +192,14 @@ namespace EDM
 			}
 		}
 		
+		public System.Data.Linq.Table<ProcVersionDocsMap> ProcVersionDocsMap
+		{
+			get
+			{
+				return this.GetTable<ProcVersionDocsMap>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Steps> Steps
 		{
 			get
@@ -218,11 +229,7 @@ namespace EDM
 		
 		private bool _active;
 		
-		private int _fk_processVersion;
-		
-		private string _documentComment;
-		
-		private EntityRef<ProcessVersions> _ProcessVersions;
+		private EntitySet<ProcVersionDocsMap> _ProcVersionDocsMap;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -234,15 +241,11 @@ namespace EDM
     partial void OndocumentNameChanged();
     partial void OnactiveChanging(bool value);
     partial void OnactiveChanged();
-    partial void Onfk_processVersionChanging(int value);
-    partial void Onfk_processVersionChanged();
-    partial void OndocumentCommentChanging(string value);
-    partial void OndocumentCommentChanged();
     #endregion
 		
 		public Documents()
 		{
-			this._ProcessVersions = default(EntityRef<ProcessVersions>);
+			this._ProcVersionDocsMap = new EntitySet<ProcVersionDocsMap>(new Action<ProcVersionDocsMap>(this.attach_ProcVersionDocsMap), new Action<ProcVersionDocsMap>(this.detach_ProcVersionDocsMap));
 			OnCreated();
 		}
 		
@@ -306,81 +309,16 @@ namespace EDM
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_processVersion", DbType="Int NOT NULL")]
-		public int fk_processVersion
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Documents_ProcVersionDocsMap", Storage="_ProcVersionDocsMap", ThisKey="documentID", OtherKey="fk_documents")]
+		public EntitySet<ProcVersionDocsMap> ProcVersionDocsMap
 		{
 			get
 			{
-				return this._fk_processVersion;
+				return this._ProcVersionDocsMap;
 			}
 			set
 			{
-				if ((this._fk_processVersion != value))
-				{
-					if (this._ProcessVersions.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_processVersionChanging(value);
-					this.SendPropertyChanging();
-					this._fk_processVersion = value;
-					this.SendPropertyChanged("fk_processVersion");
-					this.Onfk_processVersionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_documentComment", DbType="VarChar(MAX)")]
-		public string documentComment
-		{
-			get
-			{
-				return this._documentComment;
-			}
-			set
-			{
-				if ((this._documentComment != value))
-				{
-					this.OndocumentCommentChanging(value);
-					this.SendPropertyChanging();
-					this._documentComment = value;
-					this.SendPropertyChanged("documentComment");
-					this.OndocumentCommentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessVersions_Documents", Storage="_ProcessVersions", ThisKey="fk_processVersion", OtherKey="processVersionID", IsForeignKey=true)]
-		public ProcessVersions ProcessVersions
-		{
-			get
-			{
-				return this._ProcessVersions.Entity;
-			}
-			set
-			{
-				ProcessVersions previousValue = this._ProcessVersions.Entity;
-				if (((previousValue != value) 
-							|| (this._ProcessVersions.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._ProcessVersions.Entity = null;
-						previousValue.Documents.Remove(this);
-					}
-					this._ProcessVersions.Entity = value;
-					if ((value != null))
-					{
-						value.Documents.Add(this);
-						this._fk_processVersion = value.processVersionID;
-					}
-					else
-					{
-						this._fk_processVersion = default(int);
-					}
-					this.SendPropertyChanged("ProcessVersions");
-				}
+				this._ProcVersionDocsMap.Assign(value);
 			}
 		}
 		
@@ -402,6 +340,18 @@ namespace EDM
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_ProcVersionDocsMap(ProcVersionDocsMap entity)
+		{
+			this.SendPropertyChanging();
+			entity.Documents = this;
+		}
+		
+		private void detach_ProcVersionDocsMap(ProcVersionDocsMap entity)
+		{
+			this.SendPropertyChanging();
+			entity.Documents = null;
 		}
 	}
 	
@@ -3042,7 +2992,7 @@ namespace EDM
 		
 		private string _status;
 		
-		private EntitySet<Documents> _Documents;
+		private EntitySet<ProcVersionDocsMap> _ProcVersionDocsMap;
 		
 		private EntitySet<Steps> _Steps;
 		
@@ -3068,7 +3018,7 @@ namespace EDM
 		
 		public ProcessVersions()
 		{
-			this._Documents = new EntitySet<Documents>(new Action<Documents>(this.attach_Documents), new Action<Documents>(this.detach_Documents));
+			this._ProcVersionDocsMap = new EntitySet<ProcVersionDocsMap>(new Action<ProcVersionDocsMap>(this.attach_ProcVersionDocsMap), new Action<ProcVersionDocsMap>(this.detach_ProcVersionDocsMap));
 			this._Steps = new EntitySet<Steps>(new Action<Steps>(this.attach_Steps), new Action<Steps>(this.detach_Steps));
 			this._Processes = default(EntityRef<Processes>);
 			OnCreated();
@@ -3198,16 +3148,16 @@ namespace EDM
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessVersions_Documents", Storage="_Documents", ThisKey="processVersionID", OtherKey="fk_processVersion")]
-		public EntitySet<Documents> Documents
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessVersions_ProcVersionDocsMap", Storage="_ProcVersionDocsMap", ThisKey="processVersionID", OtherKey="fk_documents")]
+		public EntitySet<ProcVersionDocsMap> ProcVersionDocsMap
 		{
 			get
 			{
-				return this._Documents;
+				return this._ProcVersionDocsMap;
 			}
 			set
 			{
-				this._Documents.Assign(value);
+				this._ProcVersionDocsMap.Assign(value);
 			}
 		}
 		
@@ -3278,13 +3228,13 @@ namespace EDM
 			}
 		}
 		
-		private void attach_Documents(Documents entity)
+		private void attach_ProcVersionDocsMap(ProcVersionDocsMap entity)
 		{
 			this.SendPropertyChanging();
 			entity.ProcessVersions = this;
 		}
 		
-		private void detach_Documents(Documents entity)
+		private void detach_ProcVersionDocsMap(ProcVersionDocsMap entity)
 		{
 			this.SendPropertyChanging();
 			entity.ProcessVersions = null;
@@ -3300,6 +3250,242 @@ namespace EDM
 		{
 			this.SendPropertyChanging();
 			entity.ProcessVersions = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ProcVersionDocsMap")]
+	public partial class ProcVersionDocsMap : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ProcVersionDocsMapId;
+		
+		private int _fk_processVersion;
+		
+		private int _fk_documents;
+		
+		private bool _active;
+		
+		private string _documentComment;
+		
+		private EntityRef<Documents> _Documents;
+		
+		private EntityRef<ProcessVersions> _ProcessVersions;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnProcVersionDocsMapIdChanging(int value);
+    partial void OnProcVersionDocsMapIdChanged();
+    partial void Onfk_processVersionChanging(int value);
+    partial void Onfk_processVersionChanged();
+    partial void Onfk_documentsChanging(int value);
+    partial void Onfk_documentsChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void OndocumentCommentChanging(string value);
+    partial void OndocumentCommentChanged();
+    #endregion
+		
+		public ProcVersionDocsMap()
+		{
+			this._Documents = default(EntityRef<Documents>);
+			this._ProcessVersions = default(EntityRef<ProcessVersions>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProcVersionDocsMapId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ProcVersionDocsMapId
+		{
+			get
+			{
+				return this._ProcVersionDocsMapId;
+			}
+			set
+			{
+				if ((this._ProcVersionDocsMapId != value))
+				{
+					this.OnProcVersionDocsMapIdChanging(value);
+					this.SendPropertyChanging();
+					this._ProcVersionDocsMapId = value;
+					this.SendPropertyChanged("ProcVersionDocsMapId");
+					this.OnProcVersionDocsMapIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_processVersion", DbType="Int NOT NULL")]
+		public int fk_processVersion
+		{
+			get
+			{
+				return this._fk_processVersion;
+			}
+			set
+			{
+				if ((this._fk_processVersion != value))
+				{
+					this.Onfk_processVersionChanging(value);
+					this.SendPropertyChanging();
+					this._fk_processVersion = value;
+					this.SendPropertyChanged("fk_processVersion");
+					this.Onfk_processVersionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_documents", DbType="Int NOT NULL")]
+		public int fk_documents
+		{
+			get
+			{
+				return this._fk_documents;
+			}
+			set
+			{
+				if ((this._fk_documents != value))
+				{
+					if ((this._Documents.HasLoadedOrAssignedValue || this._ProcessVersions.HasLoadedOrAssignedValue))
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_documentsChanging(value);
+					this.SendPropertyChanging();
+					this._fk_documents = value;
+					this.SendPropertyChanged("fk_documents");
+					this.Onfk_documentsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_documentComment", DbType="VarChar(200)")]
+		public string documentComment
+		{
+			get
+			{
+				return this._documentComment;
+			}
+			set
+			{
+				if ((this._documentComment != value))
+				{
+					this.OndocumentCommentChanging(value);
+					this.SendPropertyChanging();
+					this._documentComment = value;
+					this.SendPropertyChanged("documentComment");
+					this.OndocumentCommentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Documents_ProcVersionDocsMap", Storage="_Documents", ThisKey="fk_documents", OtherKey="documentID", IsForeignKey=true)]
+		public Documents Documents
+		{
+			get
+			{
+				return this._Documents.Entity;
+			}
+			set
+			{
+				Documents previousValue = this._Documents.Entity;
+				if (((previousValue != value) 
+							|| (this._Documents.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Documents.Entity = null;
+						previousValue.ProcVersionDocsMap.Remove(this);
+					}
+					this._Documents.Entity = value;
+					if ((value != null))
+					{
+						value.ProcVersionDocsMap.Add(this);
+						this._fk_documents = value.documentID;
+					}
+					else
+					{
+						this._fk_documents = default(int);
+					}
+					this.SendPropertyChanged("Documents");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessVersions_ProcVersionDocsMap", Storage="_ProcessVersions", ThisKey="fk_documents", OtherKey="processVersionID", IsForeignKey=true)]
+		public ProcessVersions ProcessVersions
+		{
+			get
+			{
+				return this._ProcessVersions.Entity;
+			}
+			set
+			{
+				ProcessVersions previousValue = this._ProcessVersions.Entity;
+				if (((previousValue != value) 
+							|| (this._ProcessVersions.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ProcessVersions.Entity = null;
+						previousValue.ProcVersionDocsMap.Remove(this);
+					}
+					this._ProcessVersions.Entity = value;
+					if ((value != null))
+					{
+						value.ProcVersionDocsMap.Add(this);
+						this._fk_documents = value.processVersionID;
+					}
+					else
+					{
+						this._fk_documents = default(int);
+					}
+					this.SendPropertyChanged("ProcessVersions");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	

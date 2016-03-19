@@ -99,9 +99,26 @@ namespace EDM.edm
 
         private void RefreshGrid(EDMdbDataContext dataContext, int procMaxVersion)
         {
-            List<Documents> documents =
+          /*  List<Documents> documents =
                 (from d in dataContext.Documents where d.fk_processVersion == procMaxVersion && d.active select d)
                     .ToList();
+                    */
+
+          /*  List<Documents> documents = (from a in dataContext.Documents
+                join b in dataContext.ProcVersionDocsMap
+                    on a.documentID equals b.fk_documents
+                where b.active == true
+                      && a.active == true
+                      && b.fk_processVersion == procMaxVersion
+                select a).ToList();
+                */
+           var documents = (from a in dataContext.Documents
+                         join b in dataContext.ProcVersionDocsMap
+                             on a.documentID equals b.fk_documents
+                         where b.active == true
+                               && a.active == true
+                               && b.fk_processVersion == procMaxVersion
+                         select new {a.documentID,a.documentName,b.documentComment}).ToList();
 
             docGridView.DataSource = documents;
 

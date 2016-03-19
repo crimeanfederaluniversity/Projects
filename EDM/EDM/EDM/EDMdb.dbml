@@ -5,9 +5,7 @@
       <Column Name="documentID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="documentName" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="fk_processVersion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="documentComment" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Association Name="ProcessVersions_Documents" Member="ProcessVersions" ThisKey="fk_processVersion" OtherKey="processVersionID" Type="ProcessVersions" IsForeignKey="true" />
+      <Association Name="Documents_ProcVersionDocsMap" Member="ProcVersionDocsMap" ThisKey="documentID" OtherKey="fk_documents" Type="ProcVersionDocsMap" />
     </Type>
   </Table>
   <Table Name="dbo.Users" Member="Users">
@@ -141,9 +139,20 @@
       <Column Name="version" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="comment" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="status" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Association Name="ProcessVersions_Documents" Member="Documents" ThisKey="processVersionID" OtherKey="fk_processVersion" Type="Documents" />
+      <Association Name="ProcessVersions_ProcVersionDocsMap" Member="ProcVersionDocsMap" ThisKey="processVersionID" OtherKey="fk_documents" Type="ProcVersionDocsMap" />
       <Association Name="ProcessVersions_Steps" Member="Steps" ThisKey="processVersionID" OtherKey="fk_processVersion" Type="Steps" />
       <Association Name="Processes_ProcessVersions" Member="Processes" ThisKey="fk_process" OtherKey="processID" Type="Processes" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProcVersionDocsMap" Member="ProcVersionDocsMap">
+    <Type Name="ProcVersionDocsMap">
+      <Column Name="ProcVersionDocsMapId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="fk_processVersion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fk_documents" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="documentComment" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Association Name="Documents_ProcVersionDocsMap" Member="Documents" ThisKey="fk_documents" OtherKey="documentID" Type="Documents" IsForeignKey="true" />
+      <Association Name="ProcessVersions_ProcVersionDocsMap" Member="ProcessVersions" ThisKey="fk_documents" OtherKey="processVersionID" Type="ProcessVersions" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Steps" Member="Steps">

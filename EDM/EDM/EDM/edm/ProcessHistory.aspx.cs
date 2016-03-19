@@ -24,7 +24,7 @@ namespace EDM.edm
                     TableRow docTableRow = new TableRow();
                     TableCell docLinkCell = new TableCell();
                     TableCell docCommentTableCell = new TableCell();
-                    docCommentTableCell.Text = document.documentComment;
+                    docCommentTableCell.Text = _main.GetDocumentComment(document.documentID, processVersionId);// document.documentComment;
                     LinkButton newLinkButton = new LinkButton();
 
                     // newLinkButton.LinkButtonToDocument.ID = "linkButton" + currentDocument.documentID;
@@ -159,6 +159,7 @@ namespace EDM.edm
                     processVersionRow.Cells.Add(new TableCell());
                     processVersionRow.Cells.Add(new TableCell());
                     processVersionRow.Cells.Add(new TableCell());
+                    processVersionRow.Cells.Add(new TableCell());
                     historyTable.Rows.Add(processVersionRow);
                 }
 
@@ -202,18 +203,24 @@ namespace EDM.edm
                     processVersionStepRow.Cells.Add(stepCommentCell);
 
                     DocumentsInStep doc = _main.GetDocumentInStep(step.stepID);
-
+                    TableCell linkButtonCell = new TableCell();
                     if (doc != null)
                     {
-                        TableCell linkButtonCell = new TableCell();
+
                         LinkButton linkButton = new LinkButton();
                         linkButton.Text = doc.documentName;
-                        linkButton.CommandArgument = currentVersion.fk_process+ "stepsDocs/" + doc.documentsInStepId.ToString();
+                        linkButton.CommandArgument = currentVersion.fk_process + "stepsDocs/" +
+                                                     doc.documentsInStepId.ToString();
                         linkButton.Click += GetDocumentClick;
                         linkButtonCell.Controls.Add(linkButton);
-                        
-                        processVersionStepRow.Cells.Add(linkButtonCell);
+
+
                     }
+                    else
+                    {
+                        linkButtonCell.Text = "Документов нет";
+                    }
+                    processVersionStepRow.Cells.Add(linkButtonCell);
 
                     historyTable.Rows.Add(processVersionStepRow);
                 }

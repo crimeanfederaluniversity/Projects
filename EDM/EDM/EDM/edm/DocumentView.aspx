@@ -50,14 +50,17 @@
             <br />
             
         <%--<asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine" Height="54px" Width="160px"></asp:TextBox>--%> 
-            Ваш комментарий<div class="input-group-lg">
+            Ваш комментарий 
+            <asp:RequiredFieldValidator runat="server" SetFocusOnError="True" ControlToValidate="CommentTextBox" ErrorMessage="Введите комментарий!" ForeColor="red"/>
+            <div class="input-group-lg">
                 <br />
                 <asp:TextBox ID="LabelPrevComment"  runat="server" ReadOnly="True" TextMode="MultiLine" Visible="false" cssClass="form-control" Height="100px" Text="Label" ></asp:TextBox>
 
                 <br />
-                <asp:Button ID="ButtonPrevComment" runat="server" Text="Показать Ваш комментарий из предыдущей версии процесса" OnClientClick="javascript:showSimpleLoadingScreen()" Visible="False" Width="100%" OnClick="ButtonPrevComment_Click"/>
+                <asp:Button ID="ButtonPrevComment" runat="server" Text="Показать Ваш комментарий из предыдущей версии процесса" OnClientClick="javascript:showSimpleLoadingScreen()" CausesValidation="False" Visible="False" Width="100%" OnClick="ButtonPrevComment_Click"/>
 
                 <asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine"  cssClass="form-control"  Height="100px" ></asp:TextBox>
+
                 <br />
 
                 Прикрепление документа(не обязательно)
@@ -66,8 +69,8 @@
 
                 <div class="btn-group float-right">
                     <br />
-                    <asp:Button ID="RejectButton" runat="server" Text="Отправить на доработку" OnClientClick="javascript: if ( confirm('Вы уверены что хотите отправить на доработку?') == true ) {showLoadingScreenWithText('Возвращаем на доработку. Дождитесь завершения процесса!');} else return false;" OnClick="RejectButton_Click" CssClass="btn btn-default"/>
-                    <asp:Button ID="ApproveButton" runat="server" Text="Согласовать" OnClientClick="javascript: if ( confirm('Вы уверены что хотите согласовать процесс?') == true ) {showLoadingScreenWithText('Утверждаем процесс. Дождитесь завершения!');} else return false;" OnClick="ApproveButton_Click" CssClass="btn btn-success" />
+                    <asp:Button ID="RejectButton" runat="server" Text="Отправить на доработку" OnClientClick="javascript:Page_ClientValidate(); if (Page_IsValid==true) if ( confirm('Вы уверены что хотите отправить на доработку?') == true ) {showLoadingScreenWithText('Возвращаем на доработку. Дождитесь завершения процесса!');} else return false;" OnClick="RejectButton_Click" CssClass="btn btn-default"/>
+                    <asp:Button ID="ApproveButton" runat="server" Text="Согласовать" OnClientClick="javascript:Page_ClientValidate(); if (Page_IsValid==true) if ( confirm('Вы уверены что хотите согласовать процесс?') == true ) {showLoadingScreenWithText('Утверждаем процесс. Дождитесь завершения!');} else return false;" OnClick="ApproveButton_Click" CssClass="btn btn-success" />
                 </div>
             </div>
         </div>

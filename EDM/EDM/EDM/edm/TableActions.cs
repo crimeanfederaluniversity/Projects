@@ -293,9 +293,20 @@ namespace EDM.edm
 
         public void RenderDocGrid(GridView docGridView, EDMdbDataContext dataContext, int procMaxVersion)
         {
+            /*
             List<Documents> documents =
                 (from d in dataContext.Documents where d.fk_processVersion == procMaxVersion && d.active select d)
                     .ToList();
+                    */
+
+            List<Documents> documents = (from a in dataContext.Documents
+                                         join b in dataContext.ProcVersionDocsMap
+                                             on a.documentID equals b.fk_documents
+                                         where b.active == true
+                                               && a.active == true
+                                               && b.fk_processVersion == procMaxVersion
+                                         select a).ToList();
+
 
             docGridView.DataSource = documents;
 

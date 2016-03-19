@@ -12,6 +12,12 @@ namespace EDM.edm
 {
     public partial class ProcessEdit : System.Web.UI.Page
     {
+        ProcessMainFucntions main = new ProcessMainFucntions();
+        protected void goBackButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/edm/Dashboard.aspx");
+        }
+        #region dataStorage
         public List<Participant> ParticipantsList = new List<Participant>();  
         public List<DocumentsClass> DocumentsList = new List<DocumentsClass>(); 
         public class Participant
@@ -35,78 +41,25 @@ namespace EDM.edm
             public FileUpload DocumentFileUpload { get; set; }
             public TextBox DocumentCommentTextBox { get; set; }
         }
-        public void RefreshQueueInParticipantsList(bool withQueue)
-        {           
-            int i = 0;
-            foreach (Participant participant in ParticipantsList)
-            {
-                participant.ParticipantQueueTextBox.Text = i.ToString();
-                if (withQueue)
-                i++;
-            }
-        }
-        public Participant CreateParticipant(int rowId,int participientId,string queue,string endDate,string userId, string userName)
+        #endregion
+        #region dynamicButtonClicks
+        public void GetDocumentClick(object sender, EventArgs e)
         {
-            Participant newParticipant = new Participant();
-
-            if (participientId != 0)
-                newParticipant.ParticipantId = participientId;
-
-            newParticipant.ParticipantEndDateTextBox = new TextBox();
-            if (endDate.Length > 0) newParticipant.ParticipantEndDateTextBox.Text = endDate;
-            newParticipant.ParticipantEndDateTextBox.Attributes.Add("onfocus", "this.select();lcs(this)");
-            newParticipant.ParticipantEndDateTextBox.Attributes.Add("onclick", "event.cancelBubble=true;this.select();lcs(this)");
-            newParticipant.ParticipantEndDateTextBox.ID = "ParticipentEndDateTextBox" + rowId;
-            RequiredFieldValidator endDateValidate = new RequiredFieldValidator();
-            endDateValidate.ID = "RequiredValidator" + newParticipant.ParticipantEndDateTextBox.ID;
-            endDateValidate.ControlToValidate = newParticipant.ParticipantEndDateTextBox.ID;
-            endDateValidate.ErrorMessage = "!";
-            endDateValidate.ForeColor = Color.Red;
-            newParticipant.ParticipantEndDateValidator = endDateValidate;
-            
-            newParticipant.ParticipantQueueTextBox = new TextBox();
-            if (queue.Length > 0) newParticipant.ParticipantQueueTextBox.Text = queue;
-            newParticipant.ParticipantQueueTextBox.Text = rowId.ToString();
-            newParticipant.ParticipantQueueTextBox.ID= "Queue" + rowId;
-            RequiredFieldValidator queueDateValidate = new RequiredFieldValidator();
-            queueDateValidate.ID = "RequiredValidator" + newParticipant.ParticipantQueueTextBox.ID;
-            queueDateValidate.ControlToValidate = newParticipant.ParticipantQueueTextBox.ID;
-            queueDateValidate.ErrorMessage = "!";
-            queueDateValidate.ForeColor = Color.Red;
-            newParticipant.ParticipantQueueValidator = queueDateValidate;
-
-            newParticipant.ParticipantTextBox = new TextBox();
-            if (userId.Length > 0) newParticipant.ParticipantTextBox.Text = userId;
-            newParticipant.ParticipantTextBox.ID = "ParticipentIdTextBox" + rowId;
-            newParticipant.ParticipantTextBox.Attributes.Add("readonly","true");
-            newParticipant.ParticipantTextBox.Style.Add("display", "none");
-            //newParticipant.ParticipantTextBox.ReadOnly = true;
-            //newParticipant.ParticipantTextBox.Visible = false;
-            RequiredFieldValidator userValidate = new RequiredFieldValidator();
-            userValidate.ID = "RequiredValidator" + newParticipant.ParticipantTextBox.ID;
-            userValidate.ControlToValidate = newParticipant.ParticipantTextBox.ID;
-            userValidate.ErrorMessage = "!";
-            userValidate.ForeColor = Color.Red;
-            newParticipant.ParticipantUserValidator = userValidate;
-
-
-            newParticipant.ParticipantNameTextBox = new TextBox();
-            if (userName.Length > 0) newParticipant.ParticipantNameTextBox.Text = userName;
-            newParticipant.ParticipantNameTextBox.ID = "ParticipentNameTextBox" + rowId;
-            newParticipant.ParticipantNameTextBox.Attributes.Add("readonly", "true");
-            RequiredFieldValidator userNameValidate = new RequiredFieldValidator();
-            userNameValidate.ID = "RequiredValidator" + newParticipant.ParticipantNameTextBox.ID;
-            userNameValidate.ControlToValidate = newParticipant.ParticipantNameTextBox.ID;
-            userNameValidate.ErrorMessage = "!";
-            userNameValidate.ForeColor = Color.Red;
-            newParticipant.ParticipantUserNameValidator = userNameValidate;
-
-            return newParticipant;
+            LinkButton thisButton = (LinkButton)sender;
+            string path = HttpContext.Current.Server.MapPath("~/edm/documents/" + thisButton.CommandArgument + "/" + thisButton.Text);
+            System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
+            response.ClearContent();
+            response.Clear();
+            response.ContentType = "text/plain";
+            response.AddHeader("Content-Disposition", "attachment; filename=" + thisButton.Text + ";");
+            response.TransmitFile(path);
+            response.Flush();
+            response.End();
         }
         public void DeleteDocumentRow(object sender, EventArgs e)
         {
             int rowId = 0;
-            Button delButton = (Button) sender;
+            Button delButton = (Button)sender;
             Int32.TryParse(delButton.CommandArgument, out rowId);
             if (rowId < DocumentsList.Count)
             {
@@ -132,10 +85,10 @@ namespace EDM.edm
                     ParticipantsList.Remove(currentParticipant);
                     Refersh();
                     return;
+                }
             }
-        }
 
-                
+
 
 
             //}
@@ -166,53 +119,12 @@ namespace EDM.edm
                 rowId = 0;
             }
             ParticipantsList.Add(CreateParticipant(rowId, 0, "", "", "", ""));
-            
+
             Refersh();
-        }
-        public List<DocumentsClass> GetDocumentsInProcess(int processId)
-        {
-            List<ProcessEdit.DocumentsClass> listToReturn = new List<ProcessEdit.DocumentsClass>();
-            ProcessVersions currentVersion = main.GetLastVersionInProcess(processId);
-            if (currentVersion != null)
-            {
-                List<Documents> documentsInCurrentVersion = main.GetDocumentsInProcessVersion(currentVersion.processVersionID,true);
-                foreach (Documents currentDocument in documentsInCurrentVersion)
-                {
-                    DocumentsClass newDocClass = new ProcessEdit.DocumentsClass();
-
-                    newDocClass.LinkButtonToDocument = new LinkButton();
-                    newDocClass.LinkButtonToDocument.ID = "linkButton" + currentDocument.documentID;
-                    newDocClass.LinkButtonToDocument.Text = currentDocument.documentName;
-                    newDocClass.LinkButtonToDocument.CommandArgument = processId+"/"+ currentDocument.documentID;
-                    newDocClass.LinkButtonToDocument.Click += GetDocumentClick;
-                    
-                    newDocClass.DocumentId = currentDocument.documentID;
-                    newDocClass.DocumentCommentTextBox = new TextBox();
-                    newDocClass.DocumentCommentTextBox.ID = "docComment" + currentDocument.documentID;
-                    newDocClass.DocumentCommentTextBox.Text = currentDocument.documentComment;
-                    newDocClass.DocumentCommentTextBox.CssClass = "form-control form-inline";
-
-                    listToReturn.Add(newDocClass);
-                }
-            }
-            return listToReturn;
-        }
-        public void GetDocumentClick(object sender, EventArgs e)
-        {
-            LinkButton thisButton = (LinkButton)sender;
-            string path = HttpContext.Current.Server.MapPath("~/edm/documents/" + thisButton.CommandArgument+"/"+ thisButton.Text);
-            System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
-            response.ClearContent();
-            response.Clear();
-            response.ContentType = "text/plain";
-            response.AddHeader("Content-Disposition", "attachment; filename=" + thisButton.Text + ";");
-            response.TransmitFile(path);
-            response.Flush();
-            response.End();
-        }
-        ProcessMainFucntions main = new ProcessMainFucntions();
+       }
+        #endregion
         #region views
-        private TreeNode RecursiveGetTreeNode(int parentId, List<Struct> structList, string panelId, string userNameField,string userIdField, string backValue, bool fullStruct)
+        private TreeNode RecursiveGetTreeNode(int parentId, List<Struct> structList, string panelId, string userNameField, string userIdField, string backValue, bool fullStruct)
         {
             TreeNode nodeToReturn = new TreeNode();
             nodeToReturn.SelectAction = TreeNodeSelectAction.None;
@@ -235,7 +147,7 @@ namespace EDM.edm
                 TreeNode userNode = new TreeNode();
                 userNode.SelectAction = TreeNodeSelectAction.Select;
                 userNode.Value = user.name;
-                userNode.Text = "<font  color='blue'>"+user.name+"</font>";
+                userNode.Text = "<font  color='blue'>" + user.name + "</font>";
                 userNode.NavigateUrl = "javascript:putValueAndClose('" + panelId + "','" + userNameField + "','" + userIdField + "','" + user.name + "','" + user.userID + "')";
                 nodeToReturn.ChildNodes.Add(userNode);
             }
@@ -252,7 +164,7 @@ namespace EDM.edm
         }
         public TreeNode GetStructTreeViewNode(string panelId, string userNameField, string userIdField, bool fullStruct)
         {
-            
+
             TreeNode nodeToReturn = new TreeNode();
             nodeToReturn.SelectAction = TreeNodeSelectAction.Select;
 
@@ -269,9 +181,9 @@ namespace EDM.edm
         {
             TreeView strucTreeView = new TreeView();
             strucTreeView.ID = "treeView" + rowId;
-            strucTreeView.Nodes.Add(GetStructTreeViewNode("MainContent_chooseUserPanel" + rowId, "MainContent_ParticipentNameTextBox" + rowId, "MainContent_ParticipentIdTextBox"+rowId, false));
+            strucTreeView.Nodes.Add(GetStructTreeViewNode("MainContent_chooseUserPanel" + rowId, "MainContent_ParticipentNameTextBox" + rowId, "MainContent_ParticipentIdTextBox" + rowId, false));
             strucTreeView.ExpandAll();
-            foreach(TreeNode node in strucTreeView.Nodes[0].ChildNodes)
+            foreach (TreeNode node in strucTreeView.Nodes[0].ChildNodes)
             {
                 node.CollapseAll();
             }
@@ -317,7 +229,7 @@ namespace EDM.edm
                 chooseButton.Text = "Выбрать";
                 chooseButton.OnClientClick = "document.getElementById('MainContent_ParticipentIdTextBox" + rowId.ToString() + "').value = " + user.userID + "; " +
 
-                                             "document.getElementById('MainContent_ParticipentNameTextBox" + rowId.ToString() + "').value = '" + user.name +" " +user.@struct+ "'; " +
+                                             "document.getElementById('MainContent_ParticipentNameTextBox" + rowId.ToString() + "').value = '" + user.name + " " + user.@struct + "'; " +
                                              "document.getElementById('MainContent_chooseUserPanel" + rowId + "').style.visibility = 'hidden';  return false; ";
                 //chooseButton.CssClass = "btn btn-default float-right";
                 cell4.Controls.Add(chooseButton);
@@ -348,7 +260,7 @@ namespace EDM.edm
             scrollPanel.Style.Add("overflow", "scroll");
             scrollPanel.Style.Add("height", "100%");
 
-           //scrollPanel.Controls.Add(GetSearchResults("", rowId));
+            //scrollPanel.Controls.Add(GetSearchResults("", rowId));
             scrollPanel.Controls.Add(GetTreeViewWithPepole(rowId));
             panelToReturn.Controls.Add(scrollPanel);
             return panelToReturn;
@@ -356,7 +268,7 @@ namespace EDM.edm
         public Table GetNewParticipantsTable()
         {
             int processId = 0;
-           
+
             Table participantsTable = new Table();
             Int32.TryParse(HttpContext.Current.Session["processID"].ToString(), out processId);
             if (processId == 0)
@@ -395,7 +307,7 @@ namespace EDM.edm
                     if (!withQueu)
                         ParticipantsList[i].ParticipantQueueTextBox.Text = 0.ToString();
 
-                    ParticipantsList[i].ParticipantQueueTextBox.Attributes.Add("readonly","true");
+                    ParticipantsList[i].ParticipantQueueTextBox.Attributes.Add("readonly", "true");
                     queueCell.Controls.Add(ParticipantsList[i].ParticipantQueueTextBox);
                     queueCell.Controls.Add(ParticipantsList[i].ParticipantQueueValidator);
                     participantRow.Cells.Add(queueCell);
@@ -432,8 +344,8 @@ namespace EDM.edm
                     deleteParticipentButton.CausesValidation = false;
                     deleteParticipentButton.Text = "Удалить";
                     deleteParticipentButton.CommandArgument = rowId.ToString();
-                    deleteParticipentButton.ID = "deleteParticipentButton"+ rowId.ToString();
-                    deleteParticipentButton.Click +=  DeleteParticipentRow;
+                    deleteParticipentButton.ID = "deleteParticipentButton" + rowId.ToString();
+                    deleteParticipentButton.Click += DeleteParticipentRow;
                     deleteParticipentButton.CssClass = "btn btn-sm btn-danger";
                     deleteParticipentButton.OnClientClick = "showSimpleLoadingScreen()";
                     deleteParticipentCell.Controls.Add(deleteParticipentButton);
@@ -463,7 +375,7 @@ namespace EDM.edm
             participantsTable.Rows.Add(addNewRow);
             if (!withQueu)
                 participantsTable.CssClass = "noFirstColumn centered-block";
-                return participantsTable;
+            return participantsTable;
         }
         public Table GetDocumentsTable()
         {
@@ -497,7 +409,7 @@ namespace EDM.edm
 
                     if (currentDocument.DocumentFileUpload != null)
                     {
-                        
+
                         RequiredFieldValidator documentRequiere = new RequiredFieldValidator();
                         documentRequiere.ID = "require" + currentDocument.DocumentFileUpload.ID;
                         documentRequiere.ControlToValidate = currentDocument.DocumentFileUpload.ID;
@@ -525,23 +437,23 @@ namespace EDM.edm
                         newLinkButton.Click += GetDocumentClick;
                         cell1.Controls.Add(newLinkButton);
                     }
-                        
+
 
                     cell2.Controls.Add(currentDocument.DocumentCommentTextBox);
-                   /* RequiredFieldValidator documentCommentRequiere = new RequiredFieldValidator();
-                    documentCommentRequiere.ID = "require" + currentDocument.DocumentCommentTextBox.ID;
-                    documentCommentRequiere.ControlToValidate = currentDocument.DocumentCommentTextBox.ID;
-                    documentCommentRequiere.ErrorMessage = "!";
-                    documentCommentRequiere.ForeColor = Color.Red;
-                    cell2.Controls.Add(documentCommentRequiere);
-                    */
+                    /* RequiredFieldValidator documentCommentRequiere = new RequiredFieldValidator();
+                     documentCommentRequiere.ID = "require" + currentDocument.DocumentCommentTextBox.ID;
+                     documentCommentRequiere.ControlToValidate = currentDocument.DocumentCommentTextBox.ID;
+                     documentCommentRequiere.ErrorMessage = "!";
+                     documentCommentRequiere.ForeColor = Color.Red;
+                     cell2.Controls.Add(documentCommentRequiere);
+                     */
 
 
                     Button DeleteRowButton = new Button();
                     DeleteRowButton.CausesValidation = false;
                     DeleteRowButton.Text = "Удалить";
                     DeleteRowButton.CommandArgument = rowId.ToString();
-                    DeleteRowButton.ID = "DeleteRowButton"+rowId;
+                    DeleteRowButton.ID = "DeleteRowButton" + rowId;
                     DeleteRowButton.OnClientClick = "showSimpleLoadingScreen()";
                     DeleteRowButton.CssClass = "btn btn-sm btn-danger float-right";
                     DeleteRowButton.Click += DeleteDocumentRow;
@@ -577,8 +489,8 @@ namespace EDM.edm
         }
         public void Refersh()
         {
-             Session["ParticipantsList"] = ParticipantsList;
-             Session["DocumentsList"] = DocumentsList;
+            Session["ParticipantsList"] = ParticipantsList;
+            Session["DocumentsList"] = DocumentsList;
 
             int processId = 0;
             Int32.TryParse(HttpContext.Current.Session["processID"].ToString(), out processId);
@@ -600,12 +512,12 @@ namespace EDM.edm
                 existingProcessTitleDiv.Visible = true;
                 ParticipantsDiv.Visible = true;
                 documentsDiv.Visible = true;
-                
+
                 commentForVersionDiv.Visible = true;
 
                 ProcessIdLabel.Text = main.GetProcessNameById(processId);
                 ProcessIdLabel.Style.Add("word-wrap", "break-word");
-                
+
                 ParticipantsDiv.Controls.Clear();
                 ParticipantsDiv.Controls.Add(GetNewParticipantsTable());
                 documentsDiv.Controls.Clear();
@@ -621,6 +533,65 @@ namespace EDM.edm
             }
         }
         #endregion
+        #region Creatings        
+        public Participant CreateParticipant(int rowId, int participientId, string queue, string endDate, string userId, string userName)
+        {
+            Participant newParticipant = new Participant();
+
+            if (participientId != 0)
+                newParticipant.ParticipantId = participientId;
+
+            newParticipant.ParticipantEndDateTextBox = new TextBox();
+            if (endDate.Length > 0) newParticipant.ParticipantEndDateTextBox.Text = endDate;
+            newParticipant.ParticipantEndDateTextBox.Attributes.Add("onfocus", "this.select();lcs(this)");
+            newParticipant.ParticipantEndDateTextBox.Attributes.Add("onclick", "event.cancelBubble=true;this.select();lcs(this)");
+            newParticipant.ParticipantEndDateTextBox.ID = "ParticipentEndDateTextBox" + rowId;
+            RequiredFieldValidator endDateValidate = new RequiredFieldValidator();
+            endDateValidate.ID = "RequiredValidator" + newParticipant.ParticipantEndDateTextBox.ID;
+            endDateValidate.ControlToValidate = newParticipant.ParticipantEndDateTextBox.ID;
+            endDateValidate.ErrorMessage = "!";
+            endDateValidate.ForeColor = Color.Red;
+            newParticipant.ParticipantEndDateValidator = endDateValidate;
+
+            newParticipant.ParticipantQueueTextBox = new TextBox();
+            if (queue.Length > 0) newParticipant.ParticipantQueueTextBox.Text = queue;
+            newParticipant.ParticipantQueueTextBox.Text = rowId.ToString();
+            newParticipant.ParticipantQueueTextBox.ID = "Queue" + rowId;
+            RequiredFieldValidator queueDateValidate = new RequiredFieldValidator();
+            queueDateValidate.ID = "RequiredValidator" + newParticipant.ParticipantQueueTextBox.ID;
+            queueDateValidate.ControlToValidate = newParticipant.ParticipantQueueTextBox.ID;
+            queueDateValidate.ErrorMessage = "!";
+            queueDateValidate.ForeColor = Color.Red;
+            newParticipant.ParticipantQueueValidator = queueDateValidate;
+
+            newParticipant.ParticipantTextBox = new TextBox();
+            if (userId.Length > 0) newParticipant.ParticipantTextBox.Text = userId;
+            newParticipant.ParticipantTextBox.ID = "ParticipentIdTextBox" + rowId;
+            newParticipant.ParticipantTextBox.Attributes.Add("readonly", "true");
+            newParticipant.ParticipantTextBox.Style.Add("display", "none");
+            //newParticipant.ParticipantTextBox.ReadOnly = true;
+            //newParticipant.ParticipantTextBox.Visible = false;
+            RequiredFieldValidator userValidate = new RequiredFieldValidator();
+            userValidate.ID = "RequiredValidator" + newParticipant.ParticipantTextBox.ID;
+            userValidate.ControlToValidate = newParticipant.ParticipantTextBox.ID;
+            userValidate.ErrorMessage = "!";
+            userValidate.ForeColor = Color.Red;
+            newParticipant.ParticipantUserValidator = userValidate;
+
+
+            newParticipant.ParticipantNameTextBox = new TextBox();
+            if (userName.Length > 0) newParticipant.ParticipantNameTextBox.Text = userName;
+            newParticipant.ParticipantNameTextBox.ID = "ParticipentNameTextBox" + rowId;
+            newParticipant.ParticipantNameTextBox.Attributes.Add("readonly", "true");
+            RequiredFieldValidator userNameValidate = new RequiredFieldValidator();
+            userNameValidate.ID = "RequiredValidator" + newParticipant.ParticipantNameTextBox.ID;
+            userNameValidate.ControlToValidate = newParticipant.ParticipantNameTextBox.ID;
+            userNameValidate.ErrorMessage = "!";
+            userNameValidate.ForeColor = Color.Red;
+            newParticipant.ParticipantUserNameValidator = userNameValidate;
+
+            return newParticipant;
+        }
         public void CreateNewProcess(object sender, EventArgs e)
         {
             int processId = main.CreateProcessByType(ProcessTypeDropDown.SelectedValue, (int)HttpContext.Current.Session["userID"], ProcessNameTextBox.Text);
@@ -630,10 +601,71 @@ namespace EDM.edm
 
             for (int i = 0; i < participantsCount; i++)
             {
-                ParticipantsList.Add(CreateParticipant(i,0, "", "", "", ""));
+                ParticipantsList.Add(CreateParticipant(i, 0, "", "", "", ""));
             }
             Refersh();
         }
+        protected void CreateNewTemplateProcess(object sender, EventArgs e)
+        {
+            int processId = main.CreateProcessByType(ProcessTypeDropDown.SelectedValue, (int)HttpContext.Current.Session["userID"], ProcessNameT.Text);
+            HttpContext.Current.Session["processID"] = processId;
+            int participantsCount = 0;
+            Int32.TryParse(ParticipantsCountTextBox.Text, out participantsCount);
+
+            int templateId = Convert.ToInt32(TemplatesDropDownList.SelectedValue);
+
+            List<ProcessTemplateParticipant> allParticipants = main.GetProcessTemplateParticipantsInTemplate(templateId);
+            int i = 0;
+            foreach (ProcessTemplateParticipant templateParticipant in allParticipants)
+            {
+                ParticipantsList.Add(CreateParticipant(i, 0, templateParticipant.queue.ToString(), "", templateParticipant.fk_user.ToString(), main.GetUserById(templateParticipant.fk_user).name));
+                i++;
+            }
+            Refersh();
+        }
+
+
+        #endregion
+        public void RefreshQueueInParticipantsList(bool withQueue)
+        {           
+            int i = 0;
+            foreach (Participant participant in ParticipantsList)
+            {
+                participant.ParticipantQueueTextBox.Text = i.ToString();
+                if (withQueue)
+                i++;
+            }
+        }
+        public List<DocumentsClass> GetDocumentsInProcess(int processId)
+        {
+            List<ProcessEdit.DocumentsClass> listToReturn = new List<ProcessEdit.DocumentsClass>();
+            ProcessVersions currentVersion = main.GetLastVersionInProcess(processId);
+            if (currentVersion != null)
+            {
+                List<Documents> documentsInCurrentVersion = main.GetDocumentsInProcessVersion(currentVersion.processVersionID,true);
+                foreach (Documents currentDocument in documentsInCurrentVersion)
+                {
+                    DocumentsClass newDocClass = new ProcessEdit.DocumentsClass();
+
+                    newDocClass.LinkButtonToDocument = new LinkButton();
+                    newDocClass.LinkButtonToDocument.ID = "linkButton" + currentDocument.documentID;
+                    newDocClass.LinkButtonToDocument.Text = currentDocument.documentName;
+                    newDocClass.LinkButtonToDocument.CommandArgument = processId+"/"+ currentDocument.documentID;
+                    newDocClass.LinkButtonToDocument.Click += GetDocumentClick;
+                    
+                    newDocClass.DocumentId = currentDocument.documentID;
+                    newDocClass.DocumentCommentTextBox = new TextBox();
+                    newDocClass.DocumentCommentTextBox.ID = "docComment" + currentDocument.documentID;
+                    newDocClass.DocumentCommentTextBox.Text = main.GetDocumentComment(currentDocument.documentID,
+                        currentVersion.processVersionID);
+                     //   currentDocument.documentComment;
+                    newDocClass.DocumentCommentTextBox.CssClass = "form-control form-inline";
+
+                    listToReturn.Add(newDocClass);
+                }
+            }
+            return listToReturn;
+        }                 
         protected void SaveAllButton_Click(object sender, EventArgs e)
         {
             int processId = 0;
@@ -724,7 +756,12 @@ namespace EDM.edm
             List<DocumentsClass> documentsToUpdateVersion = new List<DocumentsClass>();
 
 
-           
+            ProcessVersions lastProcessVerson = main.GetLastVersionInProcess(processId);
+            int newVersion = 0;
+            if (lastProcessVerson != null)
+            {
+                newVersion = lastProcessVerson.version + 1;
+            }
 
             List<DocumentsClass> documentsToUpdateComment = new List<DocumentsClass>();
             List<DocumentsClass> oldDocuments = GetDocumentsInProcess(processId);
@@ -737,7 +774,7 @@ namespace EDM.edm
                 List<DocumentsClass>  documentsToDelete = oldDocuments.Except(documentsToUpdateVersion).ToList();
                 foreach (DocumentsClass docToDel in documentsToDelete)
                 {
-                    main.KillDocument(docToDel.DocumentId);
+                  //  main.KillDocument(docToDel.DocumentId, lastProcessVerson.processVersionID);
                 }
             }
             else
@@ -767,13 +804,8 @@ namespace EDM.edm
                 main.CreateNewParticipent(processId, userId, queue, endDateTime);
             }
 
-            ProcessVersions lastProcessVerson = main.GetLastVersionInProcess(processId);
-            int lastVesion = 0;
-            if (lastProcessVerson != null)
-            {
-                lastVesion = lastProcessVerson.version+1;
-            }
-            int processVersionId = main.CreateNewProcessVersion(processId, commentForVersionTextBox.Text, lastVesion, "Новая версия процесса");
+           
+            int processVersionId = main.CreateNewProcessVersion(processId, commentForVersionTextBox.Text, newVersion, "Новая версия процесса");
 
             Approvment approvment = new Approvment();
             approvment.ContinueApprove(processId);
@@ -832,8 +864,6 @@ namespace EDM.edm
             ParticipantsList = (List<Participant>) Session["ParticipantsList"];
             DocumentsList = (List<DocumentsClass>) Session["DocumentsList"];
 
-
-
             if (!Page.IsPostBack)
             {
                 List<ProcessTemplate> templates = main.GetAllProcessTemplates();
@@ -870,29 +900,6 @@ namespace EDM.edm
                 }
             }
             Refersh();
-        }
-        protected void CreateNewTemplateProcess(object sender, EventArgs e)
-        {
-            int processId = main.CreateProcessByType(ProcessTypeDropDown.SelectedValue, (int)HttpContext.Current.Session["userID"], ProcessNameT.Text);
-            HttpContext.Current.Session["processID"] = processId;
-            int participantsCount = 0;
-            Int32.TryParse(ParticipantsCountTextBox.Text, out participantsCount);
-
-            int templateId = Convert.ToInt32(TemplatesDropDownList.SelectedValue);
-
-            List<ProcessTemplateParticipant> allParticipants = main.GetProcessTemplateParticipantsInTemplate(templateId);
-            int i = 0;
-            foreach (ProcessTemplateParticipant templateParticipant in allParticipants)
-            {
-                ParticipantsList.Add(CreateParticipant(i, 0, templateParticipant.queue.ToString(), "", templateParticipant.fk_user.ToString(),main.GetUserById(templateParticipant.fk_user).name));
-                i++;
-            }        
-            Refersh();
-        }
-
-        protected void goBackButton_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/edm/Dashboard.aspx");
-        }
+        }       
     }
 }

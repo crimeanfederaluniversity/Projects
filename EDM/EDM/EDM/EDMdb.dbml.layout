@@ -1,181 +1,194 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 17, 13.375" name="EDMdb">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 17, 13.875" name="EDMdb">
   <DataContextMoniker Name="/EDMdbDataContext" />
   <nestedChildShapes>
-    <classShape Id="c50b9cec-5c3a-4744-812f-f8ac9afaf3cf" absoluteBounds="9, 10.375, 2, 1.7708968098958344">
+    <classShape Id="5b6f895b-8ab6-4601-bc3c-02a3d729bacb" absoluteBounds="13.5, 10.625, 2, 1.3862939453125005">
       <DataClassMoniker Name="/EDMdbDataContext/Documents" />
       <nestedChildShapes>
-        <elementListCompartment Id="e141ccc0-2d08-4b41-a3e4-4d3633e8a82a" absoluteBounds="9.015, 10.835, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="1c6d93ee-56d3-4e1c-8243-f44efa7aec02" absoluteBounds="13.515, 11.085, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="e9cddcfb-b036-4740-bf9e-be7257bcd5b3" absoluteBounds="0.75, 5.125, 2, 2.7324039713541666">
+    <classShape Id="f18cf579-b3ef-4201-8a83-7a2e6514cb21" absoluteBounds="0.75, 5.125, 2, 2.7324039713541666">
       <DataClassMoniker Name="/EDMdbDataContext/Users" />
       <nestedChildShapes>
-        <elementListCompartment Id="e590644f-3d07-4069-8f43-883548520d0a" absoluteBounds="0.765, 5.585, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="f5506c10-b3bc-4cc1-8913-eb1751334342" absoluteBounds="0.765, 5.585, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="b480fb59-db36-48c1-b00a-3a93142014da" absoluteBounds="14.75, 8.625, 2, 1.7708968098958344">
+    <classShape Id="8d505b26-8a07-48cb-abf9-02617042026d" absoluteBounds="14.75, 7.625, 2, 1.7708968098958335">
       <DataClassMoniker Name="/EDMdbDataContext/DocumentsInStep" />
       <nestedChildShapes>
-        <elementListCompartment Id="eb1bd0dd-55ac-44d8-9e79-02da62a51819" absoluteBounds="14.765, 9.085, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="741f7929-1f24-4dd1-b002-8e51d1a6d8a4" absoluteBounds="14.765, 8.085, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="9678a576-b559-4083-a158-02ab36077e81" absoluteBounds="6.75, 1.5, 2, 2.1554996744791666">
+    <classShape Id="e08ceebe-7c9a-4152-bf38-158c3f629af7" absoluteBounds="6.75, 1.5, 2, 2.1554996744791666">
       <DataClassMoniker Name="/EDMdbDataContext/EmailBots" />
       <nestedChildShapes>
-        <elementListCompartment Id="3e24cf87-e800-4b87-8684-1b06e879c547" absoluteBounds="6.765, 1.96, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="6cf7529a-6db2-416a-9e63-ba1276c00e62" absoluteBounds="6.765, 1.96, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="dc11fd6a-9f83-4c45-94b5-49750dad6a06" absoluteBounds="9.75, 1.5, 2, 2.5401025390625005">
+    <classShape Id="5456e04b-d5a2-4e97-8c97-bb857a4900a9" absoluteBounds="9.75, 1.5, 2, 2.5401025390625005">
       <DataClassMoniker Name="/EDMdbDataContext/EmailCopies" />
       <nestedChildShapes>
-        <elementListCompartment Id="2d310a09-d1fc-413c-9ac1-17962753ed0b" absoluteBounds="9.765, 1.96, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="4b6f495d-c0e8-44d3-bf98-57d274ec592f" absoluteBounds="9.765, 1.96, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="0ce9c49c-5f9b-4f7f-b829-eeb169d0a201" absoluteBounds="11.75, 5.5, 2, 1.9631982421875005">
+    <classShape Id="81202383-43f2-4165-9370-c52499801283" absoluteBounds="12.75, 1.5, 2, 1.9631982421875003">
       <DataClassMoniker Name="/EDMdbDataContext/EmailTemplates" />
       <nestedChildShapes>
-        <elementListCompartment Id="b9a390d3-fa0a-453d-b331-49741ed5237c" absoluteBounds="11.765, 5.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="f91b6e81-924c-4bea-8c0e-71a4c537050e" absoluteBounds="12.765, 1.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="253b2418-dfd1-4454-9349-519903accf71" absoluteBounds="9.25, 6.625, 2, 2.5401025390624996">
+    <classShape Id="15e7b9f6-bdb2-460c-8463-1ed7d2bead7a" absoluteBounds="9.25, 6.625, 2, 2.5401025390624996">
       <DataClassMoniker Name="/EDMdbDataContext/Participants" />
       <nestedChildShapes>
-        <elementListCompartment Id="d3ae2d5e-6888-4fbc-83e4-af1989c673bd" absoluteBounds="9.265, 7.085, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="494ef4e1-349f-4dbb-91f6-831dd1bf4476" absoluteBounds="9.265, 7.085, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="433ec1ce-5252-4bd5-a115-9eabe36bcfff" absoluteBounds="3.5, 9.875, 2, 2.7324039713541666">
+    <classShape Id="3947567d-c1f4-47c2-976b-ee70c141b071" absoluteBounds="3.5, 9.875, 2, 2.7324039713541666">
       <DataClassMoniker Name="/EDMdbDataContext/Processes" />
       <nestedChildShapes>
-        <elementListCompartment Id="abec8030-76ce-49f4-9cac-96d91e3dd4be" absoluteBounds="3.515, 10.335, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="79d205ea-fac2-4509-af60-1f56905aedc1" absoluteBounds="3.515, 10.335, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="3384dcca-bf58-4322-b2df-8a4102755834" absoluteBounds="3.5, 3.75, 2, 2.1554996744791666">
+    <classShape Id="7d38dae0-e7c6-4a79-88aa-42fa42b5d8a5" absoluteBounds="3.5, 3.75, 2, 2.1554996744791666">
       <DataClassMoniker Name="/EDMdbDataContext/ProcessTemplate" />
       <nestedChildShapes>
-        <elementListCompartment Id="a82e8245-1eff-467a-80b8-63fe5d0c959d" absoluteBounds="3.515, 4.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="441b1767-fc95-4623-8c14-e9584160d351" absoluteBounds="3.515, 4.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="7bed7642-4c04-4167-8298-31bd99dca0e3" absoluteBounds="6.25, 4.875, 2, 1.9631982421875005">
+    <classShape Id="162c8adc-f244-4c78-ba3f-827bfe138437" absoluteBounds="6.25, 4.875, 2, 1.9631982421875005">
       <DataClassMoniker Name="/EDMdbDataContext/ProcessTemplateParticipant" />
       <nestedChildShapes>
-        <elementListCompartment Id="056e66e3-e9c3-4398-a501-3c3f80e347eb" absoluteBounds="6.265, 5.335, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="5d0ba4d0-fc61-4975-9cae-538f15a062d4" absoluteBounds="6.265, 5.335, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="ac01a225-6299-484a-9c41-0cfe71a3c33c" absoluteBounds="6.25, 10.25, 2, 1.9631982421874987">
+    <classShape Id="ec67c540-4ae7-40c4-a8dc-1bdc599da0ce" absoluteBounds="6.25, 10.25, 2, 1.9631982421874987">
       <DataClassMoniker Name="/EDMdbDataContext/ProcessVersions" />
       <nestedChildShapes>
-        <elementListCompartment Id="009c1f73-add4-4b9a-856d-abd239fe79b4" absoluteBounds="6.265, 10.71, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="4f28b024-b83c-4bf3-b58f-ecc597176cfa" absoluteBounds="6.265, 10.71, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="4ae2d650-eabf-4188-8552-05acbf4bc394" absoluteBounds="12, 8.375, 2, 2.1554996744791666">
+    <classShape Id="3b942375-285a-4d35-9807-0eb8a23a0585" absoluteBounds="9.875, 11.875, 2, 1.7708968098958344">
+      <DataClassMoniker Name="/EDMdbDataContext/ProcVersionDocsMap" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e9c04652-8d65-4c04-a5f6-cadf8f337df7" absoluteBounds="9.89, 12.335, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="fed5ddb2-f6cc-4606-b5cb-51612708c599" absoluteBounds="12, 7.375, 2, 2.1554996744791666">
       <DataClassMoniker Name="/EDMdbDataContext/Steps" />
       <nestedChildShapes>
-        <elementListCompartment Id="78ed7e87-36ec-418e-9638-a54c1b6ed650" absoluteBounds="12.015, 8.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="db72cbc3-7a51-4a30-982f-f253bf327693" absoluteBounds="12.015, 7.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="0eab0e2a-0624-4013-83cb-5178022d706a" absoluteBounds="1.5, 0.75, 2, 1.5785953776041666">
+    <classShape Id="fc8f9faf-3012-4b44-af50-4cf3ce18f534" absoluteBounds="1.5, 0.75, 2, 1.5785953776041666">
       <DataClassMoniker Name="/EDMdbDataContext/Struct" />
       <nestedChildShapes>
-        <elementListCompartment Id="e6b671ff-dc46-4167-8f64-3662815a5201" absoluteBounds="1.5150000000000001, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="0e9ee9e8-49b3-4948-856a-4972e5270ae1" absoluteBounds="1.5150000000000001, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <associationConnector edgePoints="[(2.75 : 7.37905110677083); (9.25 : 7.37905110677083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/EDMdbDataContext/Users/Users_Participants" />
       <nodes>
-        <classShapeMoniker Id="e9cddcfb-b036-4740-bf9e-be7257bcd5b3" />
-        <classShapeMoniker Id="253b2418-dfd1-4454-9349-519903accf71" />
+        <classShapeMoniker Id="f18cf579-b3ef-4201-8a83-7a2e6514cb21" />
+        <classShapeMoniker Id="15e7b9f6-bdb2-460c-8463-1ed7d2bead7a" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(4.5 : 9.875); (4.5 : 8.30332932291667); (9.25 : 8.30332932291667)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/EDMdbDataContext/Processes/Processes_Participants" />
       <nodes>
-        <classShapeMoniker Id="433ec1ce-5252-4bd5-a115-9eabe36bcfff" />
-        <classShapeMoniker Id="253b2418-dfd1-4454-9349-519903accf71" />
+        <classShapeMoniker Id="3947567d-c1f4-47c2-976b-ee70c141b071" />
+        <classShapeMoniker Id="15e7b9f6-bdb2-460c-8463-1ed7d2bead7a" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(4.20923076923077 : 12.6074039713542); (4.20923076923077 : 12.8574039713542); (4.80461538461539 : 12.8574039713542); (4.80461538461539 : 12.6074039713542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/EDMdbDataContext/Processes/Processes_Processes" />
       <nodes>
-        <classShapeMoniker Id="433ec1ce-5252-4bd5-a115-9eabe36bcfff" />
-        <classShapeMoniker Id="433ec1ce-5252-4bd5-a115-9eabe36bcfff" />
+        <classShapeMoniker Id="3947567d-c1f4-47c2-976b-ee70c141b071" />
+        <classShapeMoniker Id="3947567d-c1f4-47c2-976b-ee70c141b071" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(1.75 : 7.85740397135417); (1.75 : 11.2412019856771); (3.5 : 11.2412019856771)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/EDMdbDataContext/Users/Users_Processes" />
       <nodes>
-        <classShapeMoniker Id="e9cddcfb-b036-4740-bf9e-be7257bcd5b3" />
-        <classShapeMoniker Id="433ec1ce-5252-4bd5-a115-9eabe36bcfff" />
+        <classShapeMoniker Id="f18cf579-b3ef-4201-8a83-7a2e6514cb21" />
+        <classShapeMoniker Id="3947567d-c1f4-47c2-976b-ee70c141b071" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(2.75 : 5.51524983723958); (3.5 : 5.51524983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/EDMdbDataContext/Users/Users_ProcessTemplate" />
       <nodes>
-        <classShapeMoniker Id="e9cddcfb-b036-4740-bf9e-be7257bcd5b3" />
-        <classShapeMoniker Id="3384dcca-bf58-4322-b2df-8a4102755834" />
+        <classShapeMoniker Id="f18cf579-b3ef-4201-8a83-7a2e6514cb21" />
+        <classShapeMoniker Id="7d38dae0-e7c6-4a79-88aa-42fa42b5d8a5" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(5.5 : 5.39024983723958); (6.25 : 5.39024983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/EDMdbDataContext/ProcessTemplate/ProcessTemplate_ProcessTemplateParticipant" />
       <nodes>
-        <classShapeMoniker Id="3384dcca-bf58-4322-b2df-8a4102755834" />
-        <classShapeMoniker Id="7bed7642-4c04-4167-8298-31bd99dca0e3" />
+        <classShapeMoniker Id="7d38dae0-e7c6-4a79-88aa-42fa42b5d8a5" />
+        <classShapeMoniker Id="162c8adc-f244-4c78-ba3f-827bfe138437" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(2.75 : 6.40309895833333); (6.25 : 6.40309895833333)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/EDMdbDataContext/Users/Users_ProcessTemplateParticipant" />
       <nodes>
-        <classShapeMoniker Id="e9cddcfb-b036-4740-bf9e-be7257bcd5b3" />
-        <classShapeMoniker Id="7bed7642-4c04-4167-8298-31bd99dca0e3" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 11.2604484049479); (9 : 11.2604484049479)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/EDMdbDataContext/ProcessVersions/ProcessVersions_Documents" />
-      <nodes>
-        <classShapeMoniker Id="ac01a225-6299-484a-9c41-0cfe71a3c33c" />
-        <classShapeMoniker Id="c50b9cec-5c3a-4744-812f-f8ac9afaf3cf" />
+        <classShapeMoniker Id="f18cf579-b3ef-4201-8a83-7a2e6514cb21" />
+        <classShapeMoniker Id="162c8adc-f244-4c78-ba3f-827bfe138437" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(5.5 : 11.2315991210937); (6.25 : 11.2315991210937)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/EDMdbDataContext/Processes/Processes_ProcessVersions" />
       <nodes>
-        <classShapeMoniker Id="433ec1ce-5252-4bd5-a115-9eabe36bcfff" />
-        <classShapeMoniker Id="ac01a225-6299-484a-9c41-0cfe71a3c33c" />
+        <classShapeMoniker Id="3947567d-c1f4-47c2-976b-ee70c141b071" />
+        <classShapeMoniker Id="ec67c540-4ae7-40c4-a8dc-1bdc599da0ce" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(14 : 9.51044840494792); (14.75 : 9.51044840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(13.5 : 11.25780875); (11.4062525 : 11.25780875); (11.4062525 : 11.875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/EDMdbDataContext/Documents/Documents_ProcVersionDocsMap" />
+      <nodes>
+        <classShapeMoniker Id="5b6f895b-8ab6-4601-bc3c-02a3d729bacb" />
+        <classShapeMoniker Id="3b942375-285a-4d35-9807-0eb8a23a0585" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 10.7031225); (10.875 : 10.7031225); (10.875 : 11.875)]" manuallyRouted="true" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/EDMdbDataContext/ProcessVersions/ProcessVersions_ProcVersionDocsMap" />
+      <nodes>
+        <classShapeMoniker Id="ec67c540-4ae7-40c4-a8dc-1bdc599da0ce" />
+        <classShapeMoniker Id="3b942375-285a-4d35-9807-0eb8a23a0585" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14 : 8.51044840494792); (14.75 : 8.51044840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/EDMdbDataContext/Steps/Steps_DocumentsInStep" />
       <nodes>
-        <classShapeMoniker Id="4ae2d650-eabf-4188-8552-05acbf4bc394" />
-        <classShapeMoniker Id="b480fb59-db36-48c1-b00a-3a93142014da" />
+        <classShapeMoniker Id="fed5ddb2-f6cc-4606-b5cb-51612708c599" />
+        <classShapeMoniker Id="8d505b26-8a07-48cb-abf9-02617042026d" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(11.25 : 8.77005126953125); (12 : 8.77005126953125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(11.25 : 8.27005126953125); (12 : 8.27005126953125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/EDMdbDataContext/Participants/Participants_Steps" />
       <nodes>
-        <classShapeMoniker Id="253b2418-dfd1-4454-9349-519903accf71" />
-        <classShapeMoniker Id="4ae2d650-eabf-4188-8552-05acbf4bc394" />
+        <classShapeMoniker Id="15e7b9f6-bdb2-460c-8463-1ed7d2bead7a" />
+        <classShapeMoniker Id="fed5ddb2-f6cc-4606-b5cb-51612708c599" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(7.25 : 10.25); (7.25 : 9.73880076953125); (12 : 9.73880076953125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(7.25 : 10.25); (7.25 : 9.37905110677083); (12 : 9.37905110677083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/EDMdbDataContext/ProcessVersions/ProcessVersions_Steps" />
       <nodes>
-        <classShapeMoniker Id="ac01a225-6299-484a-9c41-0cfe71a3c33c" />
-        <classShapeMoniker Id="4ae2d650-eabf-4188-8552-05acbf4bc394" />
+        <classShapeMoniker Id="ec67c540-4ae7-40c4-a8dc-1bdc599da0ce" />
+        <classShapeMoniker Id="fed5ddb2-f6cc-4606-b5cb-51612708c599" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(2.125 : 2.32859537760417); (2.125 : 5.125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/EDMdbDataContext/Struct/Struct_Users" />
       <nodes>
-        <classShapeMoniker Id="0eab0e2a-0624-4013-83cb-5178022d706a" />
-        <classShapeMoniker Id="e9cddcfb-b036-4740-bf9e-be7257bcd5b3" />
+        <classShapeMoniker Id="fc8f9faf-3012-4b44-af50-4cf3ce18f534" />
+        <classShapeMoniker Id="f18cf579-b3ef-4201-8a83-7a2e6514cb21" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(2.20242346379207 : 0.75); (2.20242346379207 : 0.5); (2.81174684745593 : 0.5); (2.81174684745593 : 0.75)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/EDMdbDataContext/Struct/Struct_Struct" />
       <nodes>
-        <classShapeMoniker Id="0eab0e2a-0624-4013-83cb-5178022d706a" />
-        <classShapeMoniker Id="0eab0e2a-0624-4013-83cb-5178022d706a" />
+        <classShapeMoniker Id="fc8f9faf-3012-4b44-af50-4cf3ce18f534" />
+        <classShapeMoniker Id="fc8f9faf-3012-4b44-af50-4cf3ce18f534" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>
