@@ -247,7 +247,7 @@ namespace EDM.edm
 
             #endregion Архив
 
-                ViewState["dataOneSource"] = dataOneSource;
+            ViewState["dataOneSource"] = dataOneSource;
 
             return dataOneSource;
         }
@@ -831,6 +831,11 @@ namespace EDM.edm
         protected void GoToTemplatesButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("TemplatesList.aspx");
+        }
+
+        protected void GoToSlavesHistory_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Subordinate.aspx");
         }
     }
 }

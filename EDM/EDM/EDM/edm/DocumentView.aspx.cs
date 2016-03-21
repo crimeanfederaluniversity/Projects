@@ -161,6 +161,7 @@ namespace EDM.edm
             Approvment approve = new Approvment();
 
             EDMdbDataContext dataContext = new EDMdbDataContext();
+            OtherFuncs of = new OtherFuncs();
 
             int procMaxVersion =
                     (from a in dataContext.ProcessVersions where a.fk_process == proc && a.active select a)
@@ -182,6 +183,7 @@ namespace EDM.edm
                             Directory.CreateDirectory(directoryToSave);
                         }
                         AddStepFileFileUpload.SaveAs(directoryToSave + AddStepFileFileUpload.FileName);
+                        of.DocAddmd5(docId, directoryToSave + AddStepFileFileUpload.FileName);
                     }
                     catch (Exception ex)
                     {

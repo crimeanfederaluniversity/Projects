@@ -38,6 +38,7 @@
         &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="goBackButton" CausesValidation="false"  runat="server" Enabled="true" CssClass="btn btn-default" Text="Назад" Width="150" Height="30" OnClientClick="history.back ()" OnClick="goBackButton_Click" />
         &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="goForwardButton" Enabled="true" CausesValidation="false"  CssClass="btn btn-default" runat="server" Text="Вперед" Width="150" Height="30" OnClientClick="history.forward ()"/>
  <asp:Button ID="GoToTemplatesButton" Enabled="true"  CausesValidation="false"  CssClass="btn btn-default button_right" runat="server" Text="Мои шаблоны" Width="150" Height="30" OnClick="GoToTemplatesButton_Click" />
+        <asp:Button ID="GoToSlavesHistory" runat="server" Text="К истории подчиненных" CausesValidation="false"  CssClass="btn btn-default button_right" OnClick="GoToSlavesHistory_Click"/>
 
            </div>
 </asp:Panel>
@@ -61,7 +62,7 @@
 
     
     
-    <asp:Label ID="Label1" runat="server" Text="Label" CssClass="header"></asp:Label>
+    <asp:Label ID="Label1" runat="server" Text="Label" CssClass="header" Visible="False"></asp:Label>
     <br />
         <div class="row centered-content position-rel">
 

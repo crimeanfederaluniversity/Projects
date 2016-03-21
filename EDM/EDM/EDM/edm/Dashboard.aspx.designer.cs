@@ -49,6 +49,15 @@ namespace EDM.edm {
         protected global::System.Web.UI.WebControls.Button GoToTemplatesButton;
         
         /// <summary>
+        /// GoToSlavesHistory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GoToSlavesHistory;
+        
+        /// <summary>
         /// comment_panel control.
         /// </summary>
         /// <remarks>

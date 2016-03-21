@@ -831,6 +831,8 @@ namespace EDM
 		
 		private string _documentComment;
 		
+		private string _md5;
+		
 		private EntitySet<ProcVersionDocsMap> _ProcVersionDocsMap;
 		
     #region Extensibility Method Definitions
@@ -845,6 +847,8 @@ namespace EDM
     partial void OnactiveChanged();
     partial void OndocumentCommentChanging(string value);
     partial void OndocumentCommentChanged();
+    partial void Onmd5Changing(string value);
+    partial void Onmd5Changed();
     #endregion
 		
 		public Documents()
@@ -929,6 +933,26 @@ namespace EDM
 					this._documentComment = value;
 					this.SendPropertyChanged("documentComment");
 					this.OndocumentCommentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_md5", DbType="VarChar(MAX)")]
+		public string md5
+		{
+			get
+			{
+				return this._md5;
+			}
+			set
+			{
+				if ((this._md5 != value))
+				{
+					this.Onmd5Changing(value);
+					this.SendPropertyChanging();
+					this._md5 = value;
+					this.SendPropertyChanged("md5");
+					this.Onmd5Changed();
 				}
 			}
 		}

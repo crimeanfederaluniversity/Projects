@@ -214,6 +214,7 @@
     <Content Include="edm\PrintList.aspx" />
     <Content Include="edm\ProcessEdit.aspx" />
     <Content Include="edm\ProcessHistory.aspx" />
+    <Content Include="edm\Subordinate.aspx" />
     <Content Include="edm\TemplatesList.aspx" />
     <Content Include="Error.html" />
     <Content Include="filenotfound.htm" />
@@ -496,6 +497,13 @@
     </Compile>
     <Compile Include="edm\ProcessHistory.aspx.designer.cs">
       <DependentUpon>ProcessHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="edm\Subordinate.aspx.cs">
+      <DependentUpon>Subordinate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="edm\Subordinate.aspx.designer.cs">
+      <DependentUpon>Subordinate.aspx</DependentUpon>
     </Compile>
     <Compile Include="edm\TableActions.cs" />
     <Compile Include="edm\TemplatesList.aspx.cs">

@@ -772,7 +772,7 @@ namespace EDM.edm
             #region do documents
             List<DocumentsClass> documentsToAdd;
             List<DocumentsClass> documentsToUpdateVersion = new List<DocumentsClass>();
-
+            OtherFuncs of = new OtherFuncs();
 
             ProcessVersions lastProcessVerson = main.GetLastVersionInProcess(processId);
             int newVersion = 0;
@@ -872,6 +872,8 @@ namespace EDM.edm
                         }
 
                         currentFileUpload.SaveAs(directoryToSave + currentFileUpload.FileName);
+                        of.DocAddmd5(docId, directoryToSave + currentFileUpload.FileName);
+
                     }
                     catch (Exception ex)
                     {
