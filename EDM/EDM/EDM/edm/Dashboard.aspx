@@ -53,7 +53,8 @@
             <asp:TextBox ID="commentTextBox" TextMode="MultiLine" placeholder="Комментарий..." Height="270" Width="885px" runat="server"></asp:TextBox>
             <br/>
             <div>
-            <asp:Button ID="Button5" runat="server" Text="Утвердить" OnClientClick="showSimpleLoadingScreen()" OnClick="Button5_Click"/>
+            <asp:Button ID="Button5" runat="server" Text="Утвердить" OnClientClick="showLoadingScreenWithText('Идет процесс утверждения. Пожалуйста дождитесь завершения!');" OnClick="Button5_Click"/>
+                <asp:Button ID="Button6" runat="server" OnClientClick="document.getElementById('coomentEndP').style.visibility='hidden'; return false;" Text="Отменить" />
            </div>
         </asp:Panel>
     </div>
