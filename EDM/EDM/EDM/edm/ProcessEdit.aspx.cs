@@ -492,10 +492,21 @@ namespace EDM.edm
             Session["ParticipantsList"] = ParticipantsList;
             Session["DocumentsList"] = DocumentsList;
 
+           
+
             int processId = 0;
             Int32.TryParse(HttpContext.Current.Session["processID"].ToString(), out processId);
             if (processId != 0)
             {
+                if (DocumentsList.Count == 0)
+                {
+                    AddDocumentRow(null, null);
+                }
+                if (ParticipantsList.Count == 0)
+                {
+                    AddParticipentRow(null, null);
+                }
+
                 bool withQueue = main.WithQueueByProcess(processId);
                 RefreshQueueInParticipantsList(withQueue);
                 Processes currentProcess = main.GetProcessById(processId);
@@ -861,7 +872,14 @@ namespace EDM.edm
         }
         public void Page_Load(object sender, EventArgs e)
         {
-            ParticipantsList = (List<Participant>) Session["ParticipantsList"];
+
+            var userId = Session["userID"];
+            if (userId == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+
+                ParticipantsList = (List<Participant>) Session["ParticipantsList"];
             DocumentsList = (List<DocumentsClass>) Session["DocumentsList"];
 
             if (!Page.IsPostBack)
@@ -899,6 +917,7 @@ namespace EDM.edm
                     commentForVersionTextBox.Text = main.GetCommentForLastVersion(processId);
                 }
             }
+
             Refersh();
         }       
     }

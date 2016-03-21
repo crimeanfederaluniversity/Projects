@@ -585,7 +585,8 @@ namespace EDM.edm
                     break;
                     case "SubApprove":
                     {
-                        Session["processID"] = idProcess;
+                        ProcessMainFucntions proc = new ProcessMainFucntions();
+                        Session["processID"] = proc.CreateChildProcess(idProcess);
                         //Session["SubApprove"];
                         Response.Redirect("ProcessEdit.aspx");
                     }
@@ -750,6 +751,12 @@ namespace EDM.edm
                         Button btnMore = (Button)e.Row.Cells[5].Controls[0];
                         btnMore.OnClientClick = "javascript: __doPostBack('ctl00$MainContent$dashGridView','ButtonR1$" +
                             id + "'); showSimpleLoadingScreen(); ";
+
+                        Button subApproval = (Button)e.Row.Cells[6].Controls[0];
+                        subApproval.OnClientClick = "javascript:if(!confirm('Вы хотите создать внутреннее согласование?')) {return false;} __doPostBack('ctl00$MainContent$dashGridView','ButtonR2$" +
+                            id + "'); showSimpleLoadingScreen(); ";
+
+
 
                         if (date.Day <= DateTime.Now.Day && date.Month <= DateTime.Now.Month && date.Year<= DateTime.Now.Year)
                         {

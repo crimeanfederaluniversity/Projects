@@ -454,5 +454,36 @@ namespace EDM.edm
             _edmDb.SubmitChanges();
             return newDocument.documentsInStepId;
         }
+
+        public int CreateChildProcess(int parentProcessId)
+        {
+
+                int userId;
+                int.TryParse(HttpContext.Current.Session["userID"].ToString(), out userId);
+
+
+                Processes parentProcess = GetProcessById(parentProcessId);
+            int childProcessId = CreateProcessByType(parentProcess.type, userId, parentProcess.name);
+            Processes childProcess = GetProcessById(childProcessId);
+            childProcess.fk_parentProcess = parentProcessId;
+            ProcessVersions parentProcessLastVersion = GetProcessVersionsLastVerson(parentProcessId);
+            int childProcVersion = CreateNewProcessVersion(childProcessId, parentProcessLastVersion.comment, 0, "");
+
+            List<Documents> parentDocuments = GetDocumentsInProcessVersion(parentProcessLastVersion.processVersionID,false);
+
+            foreach (Documents currentDoc in parentDocuments)
+            {
+                ProcVersionDocsMap newMap = new ProcVersionDocsMap();
+                newMap.active = true;
+                newMap.fk_documents = currentDoc.documentID;
+                newMap.fk_processVersion = childProcVersion;
+                newMap.documentComment = GetDocumentComment(currentDoc.documentID, childProcVersion);
+                _edmDb.ProcVersionDocsMap.InsertOnSubmit(newMap);
+                
+            }
+            _edmDb.SubmitChanges();
+
+            return childProcess.processID;
+        }
     }
 }
