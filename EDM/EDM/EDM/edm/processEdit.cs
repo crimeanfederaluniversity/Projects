@@ -12,6 +12,30 @@ namespace EDM.edm
     public class ProcessMainFucntions
     {
         EDMdbDataContext _edmDb = new EDMdbDataContext();
+
+
+        public bool IsTheDayWorkingDay(DateTime date)
+        {
+            if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+            {
+                bool isWorkingDay = ((from a in _edmDb.Calendar
+                    where a.active == true
+                          && a.date == date.Date
+                          && a.isWorkingDay == true
+                    select a).Any());
+                return isWorkingDay;
+            }
+            else
+            {
+                bool isDayOff = (from a in _edmDb.Calendar
+                    where a.active == true
+                          && a.date == date.Date
+                          && a.isDayOff
+                    select a).Any();
+                return !isDayOff;
+            }
+        }
+
         public void KillParticipant(int participantId)
         {
             Participants participantToKill =

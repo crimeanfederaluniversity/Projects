@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ApproveDB" Class="EDMdbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=ApproveDB;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ApproveDBConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.Documents" Member="Documents">
-    <Type Name="Documents">
-      <Column Name="documentID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="documentName" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+  <Table Name="dbo.Calendar" Member="Calendar">
+    <Type Name="Calendar">
+      <Column Name="calendarId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="Documents_ProcVersionDocsMap" Member="ProcVersionDocsMap" ThisKey="documentID" OtherKey="fk_documents" Type="ProcVersionDocsMap" />
+      <Column Name="date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="isDayOff" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="isWorkingDay" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.Users" Member="Users">
@@ -25,6 +26,15 @@
       <Association Name="Users_ProcessTemplate" Member="ProcessTemplate" ThisKey="userID" OtherKey="fk_owner" Type="ProcessTemplate" />
       <Association Name="Users_ProcessTemplateParticipant" Member="ProcessTemplateParticipant" ThisKey="userID" OtherKey="fk_user" Type="ProcessTemplateParticipant" />
       <Association Name="Struct_Users" Member="Struct1" ThisKey="fk_struct" OtherKey="structID" Type="Struct" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Documents" Member="Documents">
+    <Type Name="Documents">
+      <Column Name="documentID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="documentName" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="documentComment" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="Documents_ProcVersionDocsMap" Member="ProcVersionDocsMap" ThisKey="documentID" OtherKey="fk_documents" Type="ProcVersionDocsMap" />
     </Type>
   </Table>
   <Table Name="dbo.DocumentsInStep" Member="DocumentsInStep">

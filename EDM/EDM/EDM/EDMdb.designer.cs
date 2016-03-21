@@ -30,12 +30,15 @@ namespace EDM
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertDocuments(Documents instance);
-    partial void UpdateDocuments(Documents instance);
-    partial void DeleteDocuments(Documents instance);
+    partial void InsertCalendar(Calendar instance);
+    partial void UpdateCalendar(Calendar instance);
+    partial void DeleteCalendar(Calendar instance);
     partial void InsertUsers(Users instance);
     partial void UpdateUsers(Users instance);
     partial void DeleteUsers(Users instance);
+    partial void InsertDocuments(Documents instance);
+    partial void UpdateDocuments(Documents instance);
+    partial void DeleteDocuments(Documents instance);
     partial void InsertDocumentsInStep(DocumentsInStep instance);
     partial void UpdateDocumentsInStep(DocumentsInStep instance);
     partial void DeleteDocumentsInStep(DocumentsInStep instance);
@@ -104,11 +107,11 @@ namespace EDM
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Documents> Documents
+		public System.Data.Linq.Table<Calendar> Calendar
 		{
 			get
 			{
-				return this.GetTable<Documents>();
+				return this.GetTable<Calendar>();
 			}
 		}
 		
@@ -117,6 +120,14 @@ namespace EDM
 			get
 			{
 				return this.GetTable<Users>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Documents> Documents
+		{
+			get
+			{
+				return this.GetTable<Documents>();
 			}
 		}
 		
@@ -217,74 +228,59 @@ namespace EDM
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Documents")]
-	public partial class Documents : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Calendar")]
+	public partial class Calendar : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _documentID;
-		
-		private string _documentName;
+		private int _calendarId;
 		
 		private bool _active;
 		
-		private EntitySet<ProcVersionDocsMap> _ProcVersionDocsMap;
+		private System.DateTime _date;
+		
+		private bool _isDayOff;
+		
+		private bool _isWorkingDay;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OndocumentIDChanging(int value);
-    partial void OndocumentIDChanged();
-    partial void OndocumentNameChanging(string value);
-    partial void OndocumentNameChanged();
+    partial void OncalendarIdChanging(int value);
+    partial void OncalendarIdChanged();
     partial void OnactiveChanging(bool value);
     partial void OnactiveChanged();
+    partial void OndateChanging(System.DateTime value);
+    partial void OndateChanged();
+    partial void OnisDayOffChanging(bool value);
+    partial void OnisDayOffChanged();
+    partial void OnisWorkingDayChanging(bool value);
+    partial void OnisWorkingDayChanged();
     #endregion
 		
-		public Documents()
+		public Calendar()
 		{
-			this._ProcVersionDocsMap = new EntitySet<ProcVersionDocsMap>(new Action<ProcVersionDocsMap>(this.attach_ProcVersionDocsMap), new Action<ProcVersionDocsMap>(this.detach_ProcVersionDocsMap));
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_documentID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int documentID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_calendarId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int calendarId
 		{
 			get
 			{
-				return this._documentID;
+				return this._calendarId;
 			}
 			set
 			{
-				if ((this._documentID != value))
+				if ((this._calendarId != value))
 				{
-					this.OndocumentIDChanging(value);
+					this.OncalendarIdChanging(value);
 					this.SendPropertyChanging();
-					this._documentID = value;
-					this.SendPropertyChanged("documentID");
-					this.OndocumentIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_documentName", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
-		public string documentName
-		{
-			get
-			{
-				return this._documentName;
-			}
-			set
-			{
-				if ((this._documentName != value))
-				{
-					this.OndocumentNameChanging(value);
-					this.SendPropertyChanging();
-					this._documentName = value;
-					this.SendPropertyChanged("documentName");
-					this.OndocumentNameChanged();
+					this._calendarId = value;
+					this.SendPropertyChanged("calendarId");
+					this.OncalendarIdChanged();
 				}
 			}
 		}
@@ -309,16 +305,63 @@ namespace EDM
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Documents_ProcVersionDocsMap", Storage="_ProcVersionDocsMap", ThisKey="documentID", OtherKey="fk_documents")]
-		public EntitySet<ProcVersionDocsMap> ProcVersionDocsMap
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_date", DbType="Date NOT NULL")]
+		public System.DateTime date
 		{
 			get
 			{
-				return this._ProcVersionDocsMap;
+				return this._date;
 			}
 			set
 			{
-				this._ProcVersionDocsMap.Assign(value);
+				if ((this._date != value))
+				{
+					this.OndateChanging(value);
+					this.SendPropertyChanging();
+					this._date = value;
+					this.SendPropertyChanged("date");
+					this.OndateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_isDayOff", DbType="Bit NOT NULL")]
+		public bool isDayOff
+		{
+			get
+			{
+				return this._isDayOff;
+			}
+			set
+			{
+				if ((this._isDayOff != value))
+				{
+					this.OnisDayOffChanging(value);
+					this.SendPropertyChanging();
+					this._isDayOff = value;
+					this.SendPropertyChanged("isDayOff");
+					this.OnisDayOffChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_isWorkingDay", DbType="Bit NOT NULL")]
+		public bool isWorkingDay
+		{
+			get
+			{
+				return this._isWorkingDay;
+			}
+			set
+			{
+				if ((this._isWorkingDay != value))
+				{
+					this.OnisWorkingDayChanging(value);
+					this.SendPropertyChanging();
+					this._isWorkingDay = value;
+					this.SendPropertyChanged("isWorkingDay");
+					this.OnisWorkingDayChanged();
+				}
 			}
 		}
 		
@@ -340,18 +383,6 @@ namespace EDM
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_ProcVersionDocsMap(ProcVersionDocsMap entity)
-		{
-			this.SendPropertyChanging();
-			entity.Documents = this;
-		}
-		
-		private void detach_ProcVersionDocsMap(ProcVersionDocsMap entity)
-		{
-			this.SendPropertyChanging();
-			entity.Documents = null;
 		}
 	}
 	
@@ -783,6 +814,168 @@ namespace EDM
 		{
 			this.SendPropertyChanging();
 			entity.Users = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Documents")]
+	public partial class Documents : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _documentID;
+		
+		private string _documentName;
+		
+		private bool _active;
+		
+		private string _documentComment;
+		
+		private EntitySet<ProcVersionDocsMap> _ProcVersionDocsMap;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OndocumentIDChanging(int value);
+    partial void OndocumentIDChanged();
+    partial void OndocumentNameChanging(string value);
+    partial void OndocumentNameChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void OndocumentCommentChanging(string value);
+    partial void OndocumentCommentChanged();
+    #endregion
+		
+		public Documents()
+		{
+			this._ProcVersionDocsMap = new EntitySet<ProcVersionDocsMap>(new Action<ProcVersionDocsMap>(this.attach_ProcVersionDocsMap), new Action<ProcVersionDocsMap>(this.detach_ProcVersionDocsMap));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_documentID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int documentID
+		{
+			get
+			{
+				return this._documentID;
+			}
+			set
+			{
+				if ((this._documentID != value))
+				{
+					this.OndocumentIDChanging(value);
+					this.SendPropertyChanging();
+					this._documentID = value;
+					this.SendPropertyChanged("documentID");
+					this.OndocumentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_documentName", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string documentName
+		{
+			get
+			{
+				return this._documentName;
+			}
+			set
+			{
+				if ((this._documentName != value))
+				{
+					this.OndocumentNameChanging(value);
+					this.SendPropertyChanging();
+					this._documentName = value;
+					this.SendPropertyChanged("documentName");
+					this.OndocumentNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_documentComment", DbType="VarChar(MAX)")]
+		public string documentComment
+		{
+			get
+			{
+				return this._documentComment;
+			}
+			set
+			{
+				if ((this._documentComment != value))
+				{
+					this.OndocumentCommentChanging(value);
+					this.SendPropertyChanging();
+					this._documentComment = value;
+					this.SendPropertyChanged("documentComment");
+					this.OndocumentCommentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Documents_ProcVersionDocsMap", Storage="_ProcVersionDocsMap", ThisKey="documentID", OtherKey="fk_documents")]
+		public EntitySet<ProcVersionDocsMap> ProcVersionDocsMap
+		{
+			get
+			{
+				return this._ProcVersionDocsMap;
+			}
+			set
+			{
+				this._ProcVersionDocsMap.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_ProcVersionDocsMap(ProcVersionDocsMap entity)
+		{
+			this.SendPropertyChanging();
+			entity.Documents = this;
+		}
+		
+		private void detach_ProcVersionDocsMap(ProcVersionDocsMap entity)
+		{
+			this.SendPropertyChanging();
+			entity.Documents = null;
 		}
 	}
 	

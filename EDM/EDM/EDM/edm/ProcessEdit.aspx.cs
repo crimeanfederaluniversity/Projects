@@ -726,6 +726,12 @@ namespace EDM.edm
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('До окончания срока согласования менее 24 часов!');</script>");
                     return;
                 }
+
+                if (!main.IsTheDayWorkingDay(endDateTime))
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Окончание срока не может быть выходным либо праздничным днем!');</script>");
+                    return;
+                }
             }
 
 
@@ -810,7 +816,16 @@ namespace EDM.edm
                 if (nullEndDateTime.Value.Year < DateTime.Now.Year - 100)
                 {
                     endDateTime = DateTime.Now;
-                    endDateTime = endDateTime.AddHours(24);
+                    endDateTime = endDateTime.AddDays(1);
+                    while (!(main.IsTheDayWorkingDay(endDateTime)))
+                    {
+                        endDateTime = endDateTime.AddDays(1);
+                    }
+                    
+                }
+                if (endDateTime.TimeOfDay == TimeSpan.Zero)
+                {
+                    endDateTime = endDateTime.AddHours(23);
                 }
                 main.CreateNewParticipent(processId, userId, queue, endDateTime);
             }
