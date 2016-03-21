@@ -189,13 +189,14 @@ namespace EDM.edm
             
             return listToReturn;
         } 
-        public int CreateProcessByType(string type, int userId,string name)
+        public int CreateProcessByType(string type, int userId,string name,int? templateId)
         {
             Processes newProcess = new Processes();
             newProcess.active = true;
             newProcess.fk_initiator = userId;
             newProcess.type = type;
             newProcess.name = name;
+            newProcess.fk_template = templateId;
             newProcess.status = -1;
             _edmDb.Processes.InsertOnSubmit(newProcess);
             _edmDb.SubmitChanges();
@@ -487,7 +488,7 @@ namespace EDM.edm
 
 
                 Processes parentProcess = GetProcessById(parentProcessId);
-            int childProcessId = CreateProcessByType(parentProcess.type, userId, parentProcess.name);
+            int childProcessId = CreateProcessByType(parentProcess.type, userId, parentProcess.name,parentProcess.fk_template);
             Processes childProcess = GetProcessById(childProcessId);
             childProcess.fk_parentProcess = parentProcessId;
             ProcessVersions parentProcessLastVersion = GetProcessVersionsLastVerson(parentProcessId);

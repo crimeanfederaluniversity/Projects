@@ -14,10 +14,6 @@ namespace EDM.edm
         public List<ProcessEdit.Participant> ParticipantsTemplateList = new List<ProcessEdit.Participant>();
         public void Refresh()
         {
-
-
-
-
             int templateId = 0;
             var templateIdSes = Session["ProcessTemplateId"];
             Int32.TryParse(templateIdSes.ToString(), out templateId);
@@ -69,13 +65,15 @@ namespace EDM.edm
                                                 rowId.ToString() +
                                                 "').style.visibility = 'visible'; return false; ";
 
+
+
                 cell2.Controls.Add(proc.GetFiexdPanel(rowId));
                 openPunelButton.CssClass = "btn btn-sm btn-default";
                 cell2.Controls.Add(openPunelButton);
                 cell2.Controls.Add(currentParticipant.ParticipantNameTextBox);
                 cell2.Controls.Add(currentParticipant.ParticipantTextBox);
-
-                Button deleteParticipant = new Button();
+                    cell2.Controls.Add(currentParticipant.ParticipantUserValidator);
+                                    Button deleteParticipant = new Button();
                 deleteParticipant.Text = "Удалить";
                 deleteParticipant.CausesValidation = false;
                 deleteParticipant.CommandArgument = rowId.ToString();

@@ -51,7 +51,7 @@
         <br /><br />
         Текст листа согласования
         <br />
-       <asp:TextBox ID="TemplateContentTextBox" runat="server" Width="600px"></asp:TextBox>
+       <asp:TextBox ID="TemplateContentTextBox" runat="server" TextMode="MultiLine" Width="600px" Height="100px"></asp:TextBox>
     </div>
     <br/>
      

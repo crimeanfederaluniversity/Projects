@@ -25,8 +25,12 @@ return false;
 
 <input name="b_print" type="button" class="ipt"   onClick="printdiv('PrintMainDiv');" value=" Печать ">
 
+
     <div id="PrintMainDiv" runat="server">
+            <div id="TemplateHeaderDiv" runat="server">
     
+    </div>
+        <br/>
     </div>
     </form>
 </body>

@@ -2210,6 +2210,8 @@ namespace EDM
 		
 		private System.Nullable<int> _fk_parentProcess;
 		
+		private System.Nullable<int> _fk_template;
+		
 		private EntitySet<Participants> _Participants;
 		
 		private EntitySet<Processes> _Processes2;
@@ -2219,6 +2221,8 @@ namespace EDM
 		private EntityRef<Processes> _Processes1;
 		
 		private EntityRef<Users> _Users;
+		
+		private EntityRef<ProcessTemplate> _ProcessTemplate;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2244,6 +2248,8 @@ namespace EDM
     partial void OnendCommentChanged();
     partial void Onfk_parentProcessChanging(System.Nullable<int> value);
     partial void Onfk_parentProcessChanged();
+    partial void Onfk_templateChanging(System.Nullable<int> value);
+    partial void Onfk_templateChanged();
     #endregion
 		
 		public Processes()
@@ -2253,6 +2259,7 @@ namespace EDM
 			this._ProcessVersions = new EntitySet<ProcessVersions>(new Action<ProcessVersions>(this.attach_ProcessVersions), new Action<ProcessVersions>(this.detach_ProcessVersions));
 			this._Processes1 = default(EntityRef<Processes>);
 			this._Users = default(EntityRef<Users>);
+			this._ProcessTemplate = default(EntityRef<ProcessTemplate>);
 			OnCreated();
 		}
 		
@@ -2464,6 +2471,30 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_template", DbType="Int")]
+		public System.Nullable<int> fk_template
+		{
+			get
+			{
+				return this._fk_template;
+			}
+			set
+			{
+				if ((this._fk_template != value))
+				{
+					if (this._ProcessTemplate.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_templateChanging(value);
+					this.SendPropertyChanging();
+					this._fk_template = value;
+					this.SendPropertyChanged("fk_template");
+					this.Onfk_templateChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_Participants", Storage="_Participants", ThisKey="processID", OtherKey="fk_process")]
 		public EntitySet<Participants> Participants
 		{
@@ -2571,6 +2602,40 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessTemplate_Processes", Storage="_ProcessTemplate", ThisKey="fk_template", OtherKey="processTemplateId", IsForeignKey=true)]
+		public ProcessTemplate ProcessTemplate
+		{
+			get
+			{
+				return this._ProcessTemplate.Entity;
+			}
+			set
+			{
+				ProcessTemplate previousValue = this._ProcessTemplate.Entity;
+				if (((previousValue != value) 
+							|| (this._ProcessTemplate.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ProcessTemplate.Entity = null;
+						previousValue.Processes.Remove(this);
+					}
+					this._ProcessTemplate.Entity = value;
+					if ((value != null))
+					{
+						value.Processes.Add(this);
+						this._fk_template = value.processTemplateId;
+					}
+					else
+					{
+						this._fk_template = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("ProcessTemplate");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2648,6 +2713,8 @@ namespace EDM
 		
 		private string _type;
 		
+		private EntitySet<Processes> _Processes;
+		
 		private EntitySet<ProcessTemplateParticipant> _ProcessTemplateParticipant;
 		
 		private EntityRef<Users> _Users;
@@ -2674,6 +2741,7 @@ namespace EDM
 		
 		public ProcessTemplate()
 		{
+			this._Processes = new EntitySet<Processes>(new Action<Processes>(this.attach_Processes), new Action<Processes>(this.detach_Processes));
 			this._ProcessTemplateParticipant = new EntitySet<ProcessTemplateParticipant>(new Action<ProcessTemplateParticipant>(this.attach_ProcessTemplateParticipant), new Action<ProcessTemplateParticipant>(this.detach_ProcessTemplateParticipant));
 			this._Users = default(EntityRef<Users>);
 			OnCreated();
@@ -2823,6 +2891,19 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessTemplate_Processes", Storage="_Processes", ThisKey="processTemplateId", OtherKey="fk_template")]
+		public EntitySet<Processes> Processes
+		{
+			get
+			{
+				return this._Processes;
+			}
+			set
+			{
+				this._Processes.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessTemplate_ProcessTemplateParticipant", Storage="_ProcessTemplateParticipant", ThisKey="processTemplateId", OtherKey="fk_template")]
 		public EntitySet<ProcessTemplateParticipant> ProcessTemplateParticipant
 		{
@@ -2888,6 +2969,18 @@ namespace EDM
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Processes(Processes entity)
+		{
+			this.SendPropertyChanging();
+			entity.ProcessTemplate = this;
+		}
+		
+		private void detach_Processes(Processes entity)
+		{
+			this.SendPropertyChanging();
+			entity.ProcessTemplate = null;
 		}
 		
 		private void attach_ProcessTemplateParticipant(ProcessTemplateParticipant entity)

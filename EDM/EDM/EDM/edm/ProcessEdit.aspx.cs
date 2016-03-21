@@ -605,7 +605,7 @@ namespace EDM.edm
         }
         public void CreateNewProcess(object sender, EventArgs e)
         {
-            int processId = main.CreateProcessByType(ProcessTypeDropDown.SelectedValue, (int)HttpContext.Current.Session["userID"], ProcessNameTextBox.Text);
+            int processId = main.CreateProcessByType(ProcessTypeDropDown.SelectedValue, (int)HttpContext.Current.Session["userID"], ProcessNameTextBox.Text,null);
             HttpContext.Current.Session["processID"] = processId;
             int participantsCount = 0;
             Int32.TryParse(ParticipantsCountTextBox.Text, out participantsCount);
@@ -618,12 +618,13 @@ namespace EDM.edm
         }
         protected void CreateNewTemplateProcess(object sender, EventArgs e)
         {
-            int processId = main.CreateProcessByType(ProcessTypeDropDown.SelectedValue, (int)HttpContext.Current.Session["userID"], ProcessNameT.Text);
+            int templateId = Convert.ToInt32(TemplatesDropDownList.SelectedValue);
+            int processId = main.CreateProcessByType(ProcessTypeDropDown.SelectedValue, (int)HttpContext.Current.Session["userID"], ProcessNameT.Text, templateId);
             HttpContext.Current.Session["processID"] = processId;
             int participantsCount = 0;
             Int32.TryParse(ParticipantsCountTextBox.Text, out participantsCount);
 
-            int templateId = Convert.ToInt32(TemplatesDropDownList.SelectedValue);
+            
 
             List<ProcessTemplateParticipant> allParticipants = main.GetProcessTemplateParticipantsInTemplate(templateId);
             int i = 0;

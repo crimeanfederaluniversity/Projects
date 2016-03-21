@@ -10,6 +10,7 @@ namespace EDM.edm
     public partial class PrintList : System.Web.UI.Page
     {
         EDMdbDataContext _edmDb = new EDMdbDataContext();
+        ProcessMainFucntions main = new ProcessMainFucntions();
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -21,10 +22,40 @@ namespace EDM.edm
                 Response.Redirect("~/Default.aspx");
             }
 
+
+
+
+
+
             int processId = (int) HttpContext.Current.Session["processID"];
-            ProcessMainFucntions main = new ProcessMainFucntions();
             ProcessVersions LAstVersion = main.GetLastVersionInProcess(processId);
             List<Steps> lastVersionSteps = main.GetStepsInProcessVersion(LAstVersion.processVersionID);
+
+            Processes proc = main.GetProcessById(processId);
+            if (proc.fk_template != null)
+            {
+                int templateId = (int) proc.fk_template;
+                ProcessTemplate template = main.GetProcessTemplateById(templateId);
+                Table headerTable = new Table();
+                headerTable.Width = 800;
+
+                TableRow headerRow1 = new TableRow();
+                TableCell headerCell1 = new TableCell();
+                headerCell1.HorizontalAlign =HorizontalAlign.Center;
+                headerCell1.Text = template.title;
+                headerRow1.Cells.Add(headerCell1);
+                headerTable.Rows.Add(headerRow1);
+
+                TableRow headerRow2 = new TableRow();
+                TableCell headerCell2 = new TableCell();
+                headerCell2.HorizontalAlign = HorizontalAlign.Center;
+                headerCell2.Text = template.content_;
+                headerRow2.Cells.Add(headerCell2);
+                headerTable.Rows.Add(headerRow2);
+
+                TemplateHeaderDiv.Controls.Add(headerTable);
+            }
+
 
             Table newTable = new Table();
             foreach(Steps step in lastVersionSteps)

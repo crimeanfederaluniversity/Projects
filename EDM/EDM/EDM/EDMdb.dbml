@@ -109,11 +109,13 @@
       <Column Name="endDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="endComment" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="fk_parentProcess" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="fk_template" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Processes_Participants" Member="Participants" ThisKey="processID" OtherKey="fk_process" Type="Participants" />
       <Association Name="Processes_Processes" Member="Processes2" ThisKey="processID" OtherKey="fk_parentProcess" Type="Processes" />
       <Association Name="Processes_ProcessVersions" Member="ProcessVersions" ThisKey="processID" OtherKey="fk_process" Type="ProcessVersions" />
       <Association Name="Processes_Processes" Member="Processes1" ThisKey="fk_parentProcess" OtherKey="processID" Type="Processes" IsForeignKey="true" />
       <Association Name="Users_Processes" Member="Users" ThisKey="fk_initiator" OtherKey="userID" Type="Users" IsForeignKey="true" />
+      <Association Name="ProcessTemplate_Processes" Member="ProcessTemplate" ThisKey="fk_template" OtherKey="processTemplateId" Type="ProcessTemplate" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ProcessTemplate" Member="ProcessTemplate">
@@ -125,6 +127,7 @@
       <Column Name="title" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Column Name="content_" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="ProcessTemplate_Processes" Member="Processes" ThisKey="processTemplateId" OtherKey="fk_template" Type="Processes" />
       <Association Name="ProcessTemplate_ProcessTemplateParticipant" Member="ProcessTemplateParticipant" ThisKey="processTemplateId" OtherKey="fk_template" Type="ProcessTemplateParticipant" />
       <Association Name="Users_ProcessTemplate" Member="Users" ThisKey="fk_owner" OtherKey="userID" Type="Users" IsForeignKey="true" />
     </Type>
