@@ -3,8 +3,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link href="../Content/Site.css" rel="stylesheet" />
 
-    <asp:Button ID="Button1" runat="server" Height="22px" OnClick="Button1_Click" Text="TryAddOutgoind" Width="232px" />
     <br />
+    <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
     <br />
-    <asp:Button ID="Button2" runat="server" Height="22px" OnClick="Button2_Click" Text="TryAddIncoming" Width="232px"  />
+    <asp:TextBox ID="TextBox1" TextMode="MultiLine" runat="server" Height="615px" Width="757px"></asp:TextBox>
+<br />
 </asp:Content>
+

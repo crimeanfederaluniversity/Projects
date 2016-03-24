@@ -12,7 +12,7 @@ namespace Chancelerry.kanz
 {
     public partial class RegisterView : System.Web.UI.Page
     {
-        bool vVersion = false;
+        bool vVersion = true;
         int page = 0;
         private void RedirectToEdit(object sender, EventArgs e)
         {
@@ -58,15 +58,19 @@ namespace Chancelerry.kanz
                 
                 if (vVersion)
                 {
-                    int size = 100;
+                    int size = 10;
                     if (Request.QueryString["page"] != null)
                         Int32.TryParse(Request.QueryString["page"], out page);
 
                     Dictionary<int, string> vSearchList = (Dictionary<int, string>)Session["vSearchList"];
+                    string searchAll = (string) Session["vSearchAll"];
+                    string searchCardId = (string)Session["vSearchById"];
+                    
+                    //SearchAllTextBox.Text = searchAll;
                     CardCommonFunctions cardCommonFunctions = new CardCommonFunctions();
                     
 
-                    string sum = cardCommonFunctions.FastSearch(vSearchList, register.RegisterID, Convert.ToInt32(userID), dataTable, page * size, (page + 1) * size);
+                    string sum = cardCommonFunctions.FastSearch(searchCardId,vSearchList, searchAll, register.RegisterID, Convert.ToInt32(userID), dataTable, page * size, (page + 1) * size);
                     Button5.Visible = true;
                     Button6.Visible = true;
                     Button7.Visible = false;
@@ -96,6 +100,16 @@ namespace Chancelerry.kanz
                 }
             }
         }
+
+        protected void Page_PreRender(object sender, EventArgs e)
+        {
+            string searchAll = (string)Session["vSearchAll"];
+            SearchAllTextBox.Text = searchAll;
+
+            string searchById = (string)Session["vSearchById"];
+            SearchByIdTextbox.Text = searchById;
+        }
+
         protected void Page_Unload(object sender, EventArgs e)
         {
            // Session["pageCntrl"] = 0;
@@ -148,6 +162,9 @@ namespace Chancelerry.kanz
 
             // По сессии передаем searchList и перезагружаем страницу
             //Session["searchList"] = searchList;
+            Session["vSearchById"] = null;
+            Session["vSearchAll"] = null;
+            SearchAllTextBox.Text = "";
             Session["vSearchList"] = vSearchDict;
             Response.Redirect("RegisterView.aspx");
         }
@@ -159,7 +176,9 @@ namespace Chancelerry.kanz
 
         protected void Button4_Click(object sender, EventArgs e)
         {
+            Session["vSearchById"] = null;
             Session["vSearchList"] = null;
+            Session["vSearchAll"] = null;
             Session["searchList"] = new List<TableActions.SearchValues>();
             Response.Redirect("RegisterView.aspx");
         }
@@ -211,6 +230,53 @@ namespace Chancelerry.kanz
             }
             Session["pageCntrl"] = (int)Session["pageCount"]-1;
             Response.Redirect("RegisterView.aspx");
+        }
+
+        protected void SearchAllButton_Click(object sender, EventArgs e)
+        {
+            Session["vSearchById"] = null;
+            Session["vSearchList"] = null;
+            Session["vSearchAll"] = SearchAllTextBox.Text;
+            Response.Redirect("RegisterView.aspx");
+        }
+
+        protected void SearchById_Click(object sender, EventArgs e)
+        {
+            Session["vSearchById"] = SearchByIdTextbox.Text;
+            Session["vSearchList"] = null;
+            Session["vSearchAll"] = null;
+            Response.Redirect("RegisterView.aspx");
+        }
+
+        protected void OpenByIdButton_Click(object sender, EventArgs e)
+        {
+            string textboxValue = OpenByIdTextBox.Text;
+            if (textboxValue != null)
+            {
+                if (textboxValue.Length > 0)
+                {
+                    int cardId = 0;
+                    Int32.TryParse(textboxValue, out cardId);
+                    if (cardId != 0)
+                    {
+                        ChancelerryDb dataContext = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
+                        int regId;
+                        Int32.TryParse(Session["registerID"].ToString(), out regId);
+                        CollectedCards cardIdReal = (from a in dataContext.CollectedCards
+                            where a.FkRegister == regId
+                                  && a.MaInFieldID == cardId
+                                  && a.Active 
+                            select a).FirstOrDefault();
+                        if (cardIdReal!=null)
+                        {
+                            Session["canEdit"] = true;
+                            Session["cardID"] = cardIdReal.CollectedCardID;
+                            Session["version"] = 200500;
+                            Response.Redirect("CardEdit.aspx");
+                        }
+                    }
+                }
+            }
         }
     }
     

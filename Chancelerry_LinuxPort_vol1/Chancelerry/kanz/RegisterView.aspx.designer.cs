@@ -31,22 +31,58 @@ namespace Chancelerry.kanz {
         protected global::System.Web.UI.WebControls.Button Button3;
         
         /// <summary>
-        /// SearchPanel control.
+        /// SearchAllTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel SearchPanel;
+        protected global::System.Web.UI.WebControls.TextBox SearchAllTextBox;
         
         /// <summary>
-        /// Button44 control.
+        /// SearchAllButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button44;
+        protected global::System.Web.UI.WebControls.Button SearchAllButton;
+        
+        /// <summary>
+        /// SearchByIdTextbox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox SearchByIdTextbox;
+        
+        /// <summary>
+        /// SearchById control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SearchById;
+        
+        /// <summary>
+        /// OpenByIdTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox OpenByIdTextBox;
+        
+        /// <summary>
+        /// OpenByIdButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button OpenByIdButton;
         
         /// <summary>
         /// Button2 control.
@@ -56,6 +92,15 @@ namespace Chancelerry.kanz {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button2;
+        
+        /// <summary>
+        /// Button44 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button44;
         
         /// <summary>
         /// RegisterNameLabel control.

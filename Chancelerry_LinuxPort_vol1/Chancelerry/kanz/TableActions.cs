@@ -47,7 +47,7 @@ namespace Chancelerry
             public List<string> cardToRender { get; set; } 
         }
 
-        private void RedirectToEdit(object sender, EventArgs e)
+        public void RedirectToEdit(object sender, EventArgs e)
         {
             
             ImageButton thisButton = (ImageButton)sender;
@@ -58,7 +58,7 @@ namespace Chancelerry
             HttpContext.Current.Response.Redirect("~/kanz/CardEdit.aspx", true);
         }
 
-        private void RedirectToView(object sender, EventArgs e)
+        public void RedirectToView(object sender, EventArgs e)
         {
             ImageButton thisButton = (ImageButton)sender;
             int currentCardId = Convert.ToInt32(thisButton.Attributes["_cardID"]);
@@ -68,7 +68,7 @@ namespace Chancelerry
             HttpContext.Current.Response.Redirect("~/kanz/CardEdit.aspx", true);
         }
 
-        private void DeleteCard(object sender, EventArgs e)
+        public void DeleteCard(object sender, EventArgs e)
         {
             ImageButton thisButton = (ImageButton)sender;
             int currentCardId = Convert.ToInt32(thisButton.Attributes["_cardID"]);
@@ -280,7 +280,7 @@ namespace Chancelerry
 
             //ВАГЕКОД НАЧАЛО
             CardCommonFunctions ccf = new CardCommonFunctions();
-            cardsToShow = ccf.GetCardsToShow(searchList, (int)HttpContext.Current.Session["registerID"]);
+            cardsToShow = ccf.GetCardsToShow(null,searchList,null, (int)HttpContext.Current.Session["registerID"], (int)HttpContext.Current.Session["pageCntrl"] * rowsOnPage, (int)HttpContext.Current.Session["pageCntrl"] * rowsOnPage+ rowsOnPage);
             //ВАГЕКОД КОНЕЦ
 
             // SIVAS OPTIMIZATION START

@@ -81,7 +81,7 @@ namespace Chancelerry.kanz
                                                               && a.FkRegister == regId
                                                          select a).FirstOrDefault();
 
-                    /*
+                    
                     foreach (Fields currentField in allFieldsInTable)
                     {
                         if (allFieldsWithUser.Contains(currentField))
@@ -91,15 +91,15 @@ namespace Chancelerry.kanz
                         else
                         {
                             RegistersView registersView = new RegistersView();
-                            registersView.active = true;
-                            registersView.fk_registersUsersMap = registerUserMap.registersUsersMapID;
-                            registersView.fk_field = currentField.fieldID;
-                            registersView.weight = 0;
+                            registersView.Active = true;
+                            registersView.FkRegistersUsersMap = registerUserMap.RegistersUsersMapID ;
+                            registersView.FkField = currentField.FieldID;
+                            registersView.Weight = 0;
                             dataContext.RegistersView.InsertOnSubmit(registersView);
                             dataContext.SubmitChanges();
                         }
                     }
-
+                    /*
                     // Кусок Ваге окончен :)
                     // Все возможные поля для таблицы в данном реестре
                       var all = (from a in dataContext.Fields
