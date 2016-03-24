@@ -77,7 +77,7 @@ namespace EDM.edm
                 }
 
                 directionLabel.Visible = true;
-                directionLabel.Text = "%Процессы подчиненных%";
+                directionLabel.Text = "Процессы подчиненных";
                 subGridView.DataSource = data;
 
                 BoundField boundField = new BoundField();
@@ -112,7 +112,7 @@ namespace EDM.edm
 
                 BoundField boundField6 = new BoundField();
                 boundField6.DataField = "DateEnd";
-                boundField6.HeaderText = "Дата конец";
+                boundField6.HeaderText = "Дата окончания";
                 boundField6.Visible = true;
                 subGridView.Columns.Add(boundField6);
 
