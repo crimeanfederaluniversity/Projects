@@ -8,17 +8,16 @@
                 Email
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="EmailTextBox" ErrorMessage="!" ForeColor="red"/>
             </td>
-            <td>
+            <td style="width: 130px">
                 <asp:TextBox ID="EmailTextBox" runat="server"></asp:TextBox>
             </td>
-        </tr>
-        
+        </tr>       
                 <tr>
             <td>
                 Логин
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="LoginTextBox" ErrorMessage="!" ForeColor="red"/>
             </td>
-            <td>
+            <td style="width: 130px">
                     <asp:TextBox ID="LoginTextBox" runat="server"></asp:TextBox>
             </td>
         </tr>
@@ -28,7 +27,7 @@
                 Имя
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="NameTextBox" ErrorMessage="!" ForeColor="red"/>
             </td>
-            <td>
+            <td style="width: 130px">
                 <asp:TextBox ID="NameTextBox" runat="server"></asp:TextBox>
             </td>
         </tr>
@@ -38,8 +37,11 @@
                 Структура
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="StructTextBox" ErrorMessage="!" ForeColor="red"/>
             </td>
-            <td>
+            <td style="width: 130px">
                 <asp:TextBox ID="StructTextBox" runat="server"></asp:TextBox>
+                <br />
+                <asp:DropDownList ID="DropDownList1" runat="server" Height="25px" Width="274px">
+                </asp:DropDownList>
             </td>
         </tr>
                   
@@ -48,7 +50,7 @@
                 Пароль
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="PasswordTextBox" ErrorMessage="!" ForeColor="red"/>
             </td>
-            <td>
+            <td style="width: 130px">
                 <asp:TextBox ID="PasswordTextBox" runat="server"></asp:TextBox>
             </td>
         </tr>
@@ -57,7 +59,7 @@
                Повторите пароль
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="PasswordConfirmTextBox" ErrorMessage="!" ForeColor="red"/>
             </td>
-            <td>
+            <td style="width: 130px">
                 <asp:TextBox ID="PasswordConfirmTextBox" runat="server"></asp:TextBox>
             </td>
         </tr>

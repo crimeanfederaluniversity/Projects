@@ -37,7 +37,7 @@ namespace EDM.edm
                 ProcessVersions procVer =
                     (from b in dataContext.ProcessVersions where b.active && b.processVersionID == procMaxVersion select b)
                         .FirstOrDefault();
-                if (procVer != null) { procVer.status = "В работе " + (from a in dataContext.Users where a.userID == userID select a.name).FirstOrDefault() + " / " + DateTime.Now.ToShortDateString(); } else throw new Exception("Не возможно присвоить версии процесса в статус. Скорее всего он не существует");
+                if (procVer != null) { procVer.status = "В работе " + (from a in dataContext.Users where a.userID == userID select a.name).FirstOrDefault() + " / " + DateTime.Now.ToShortDateString(); } else throw new Exception("Невозможно присвоить версии процесса в статус. Скорее всего он не существует");
                 dataContext.SubmitChanges();
 
                 LabelComment.Text =

@@ -2,5 +2,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     Основная страница администратора электронного докмуентооборота.<br />
 <br />
+    <br />
     <asp:Button ID="NewUserButton" runat="server" Height="30px" Text="Создать нового пользователя" Width="300px" OnClick="NewUserButton_Click" />
+    <br />
+    <br />
+    <asp:Button ID="WatchUsers" runat="server" Height="30px" Text="Просмотр пользователей" Width="300px" OnClick="WatchUsers_Click" />
+    <br />
 </asp:Content>
