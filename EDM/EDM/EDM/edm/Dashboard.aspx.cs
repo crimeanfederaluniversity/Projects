@@ -814,10 +814,16 @@ namespace EDM.edm
                         #region isParentLink
 
                         var procParent =
-                            (from p in dc.Processes where p.active && p.processID == procId select p).FirstOrDefault();
+                               (from p in dc.Processes where p.active && p.processID == procId select p).FirstOrDefault();
 
                         if (procParent?.fk_parentProcess != null)
-                            e.Row.Cells[0].Text = "Внутренний " + procId + " (" + procParent.fk_parentProcess + ")";
+                        {
+                            e.Row.Cells[0].Controls.Add(new Label()
+                            {
+                                Text = "Внутренний " + procId + " (" + procParent.fk_parentProcess + ")",
+                                ForeColor = e.Row.ForeColor
+                            });
+                        }
 
                         #endregion isParentLink
                     }

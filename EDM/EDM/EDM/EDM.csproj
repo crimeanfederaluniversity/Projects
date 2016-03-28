@@ -468,7 +468,6 @@
       <DependentUpon>DocumentView.aspx</DependentUpon>
     </Compile>
     <Compile Include="edm\EmailFuncs.cs" />
-    <Compile Include="edm\History.cs" />
     <Compile Include="edm\Main.aspx.cs">
       <DependentUpon>Main.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
