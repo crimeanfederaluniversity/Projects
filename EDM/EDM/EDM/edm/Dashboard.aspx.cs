@@ -40,7 +40,7 @@ namespace EDM.edm
                 Response.Redirect("~/Default.aspx");
             }
             /////////////////////////////////////////////////////////////////////
-
+            ProcessMainFucntions main = new ProcessMainFucntions();
             if (!Page.IsPostBack)
             {
                 int userID;
@@ -48,12 +48,17 @@ namespace EDM.edm
                 int.TryParse(Session["userID"].ToString(), out userID);
                 int.TryParse(Session["direction"].ToString(), out direction);
 
+                GoToSubmitterButton.Visible = main.IsUserSubmitter(userID);
+                GoToTemplatesButton.Visible = main.CanUserDoTemplate(userID);
+                GoToSlavesHistory.Visible = main.IsUserHead(userID);
+
                 OtherFuncs of = new OtherFuncs();
                 var notifications = of.Notification(userID);
 
                 Button1.Text += notifications[0];
                 Button2.Text += notifications[1];
                 RenderGrid(dashGridView, FillingGrid(direction, userID), direction);
+
             }
         }
 
