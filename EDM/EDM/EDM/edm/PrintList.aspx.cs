@@ -32,6 +32,18 @@ namespace EDM.edm
             List<Steps> lastVersionSteps = main.GetStepsInProcessVersion(LAstVersion.processVersionID);
 
             Processes proc = main.GetProcessById(processId);
+
+            if (!Page.IsPostBack)
+            {
+                PrintHistory newHistory = new PrintHistory();
+                newHistory.active = true;
+                newHistory.fk_user = (int) userID;
+                newHistory.fk_process = processId;
+                newHistory.date = DateTime.Now;
+                _edmDb.PrintHistory.InsertOnSubmit(newHistory);
+                _edmDb.SubmitChanges();
+            }
+
             if (proc.fk_template != null)
             {
                 int templateId = (int) proc.fk_template;

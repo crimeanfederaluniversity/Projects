@@ -98,16 +98,20 @@ namespace EDM.edm
             historyTableHeaderRow.Cells.Add(cell6);
 
             TableHeaderCell cell7 = new TableHeaderCell();
-            cell7.Text = "Результат";
+            cell7.Text = "Срок";
             historyTableHeaderRow.Cells.Add(cell7);
 
             TableHeaderCell cell8 = new TableHeaderCell();
-            cell8.Text = "Комментарий";
+            cell8.Text = "Результат";
             historyTableHeaderRow.Cells.Add(cell8);
 
             TableHeaderCell cell9 = new TableHeaderCell();
-            cell9.Text = "Прикрепленный файл";
+            cell9.Text = "Комментарий";
             historyTableHeaderRow.Cells.Add(cell9);
+
+            TableHeaderCell cell10 = new TableHeaderCell();
+            cell10.Text = "Прикрепленный файл";
+            historyTableHeaderRow.Cells.Add(cell10);
 
             historyTable.Rows.Add(historyTableHeaderRow);
 
@@ -182,6 +186,10 @@ namespace EDM.edm
                     TableCell stepDateCell = new TableCell();
                     stepDateCell.Text = step.date.ToString();
                     processVersionStepRow.Cells.Add(stepDateCell);
+
+                    TableCell stepEndDateCell = new TableCell();
+                    stepEndDateCell.Text = participant.dateEnd.ToString();//step.date.ToString();
+                    processVersionStepRow.Cells.Add(stepEndDateCell);
 
                     TableCell stepResultCell = new TableCell();
                     stepResultCell.Text = step.stepResult.ToString();
