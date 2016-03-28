@@ -8,4 +8,8 @@
     <br />
     <asp:Button ID="WatchUsers" runat="server" Height="30px" Text="Просмотр пользователей" Width="300px" OnClick="WatchUsers_Click" />
     <br />
+    <br />
+    <asp:Button ID="WatchStructure" runat="server" Height="30px" Text="Редактирование структуры" Width="300px" OnClick="WatchStructure_Click" />
+    <br />
+    <br />
 </asp:Content>

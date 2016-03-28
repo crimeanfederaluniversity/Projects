@@ -23,5 +23,10 @@ namespace EDM.edmAdmin
         {
             Response.Redirect("~/edmAdmin/EditUser.aspx");
         }
+
+        protected void WatchStructure_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/edmAdmin/StructureForm.aspx");
+        }
     }
 }
