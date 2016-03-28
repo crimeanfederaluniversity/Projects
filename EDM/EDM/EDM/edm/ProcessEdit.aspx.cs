@@ -950,8 +950,15 @@ namespace EDM.edm
                             Directory.CreateDirectory(directoryToSave);
                         }
 
-                        currentFileUpload.SaveAs(directoryToSave + currentFileUpload.FileName);
-                        of.DocAddmd5(docId, directoryToSave + currentFileUpload.FileName);
+                        if (currentFileUpload.PostedFile.ContentLength < 38000)
+                        {
+                            currentFileUpload.SaveAs(directoryToSave + currentFileUpload.FileName);
+                            of.DocAddmd5(docId, directoryToSave + currentFileUpload.FileName);
+                        }
+                        else
+                        {
+                            throw new Exception(); // !!!!!!!!!!!!!!!!!!!!!!!!
+                        }
 
                     }
                     catch (Exception ex)

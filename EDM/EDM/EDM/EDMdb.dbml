@@ -22,11 +22,11 @@
       <Column Name="canInitiate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="canCreateTemplate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="Users_Participants" Member="Participants" ThisKey="userID" OtherKey="fk_user" Type="Participants" />
+      <Association Name="Users_PrintHistory" Member="PrintHistory" ThisKey="userID" OtherKey="fk_user" Type="PrintHistory" />
       <Association Name="Users_Processes" Member="Processes" ThisKey="userID" OtherKey="fk_initiator" Type="Processes" />
       <Association Name="Users_ProcessTemplate" Member="ProcessTemplate" ThisKey="userID" OtherKey="fk_owner" Type="ProcessTemplate" />
       <Association Name="Users_ProcessTemplateParticipant" Member="ProcessTemplateParticipant" ThisKey="userID" OtherKey="fk_user" Type="ProcessTemplateParticipant" />
       <Association Name="Users_Submitters" Member="Submitters" ThisKey="userID" OtherKey="fk_user" Type="Submitters" />
-      <Association Name="Users_PrintHistory" Member="PrintHistory" ThisKey="userID" OtherKey="fk_user" Type="PrintHistory" />
       <Association Name="Struct_Users" Member="Struct1" ThisKey="fk_struct" OtherKey="structID" Type="Struct" IsForeignKey="true" />
     </Type>
   </Table>
@@ -95,9 +95,21 @@
       <Column Name="fk_process" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="queue" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="isNew" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="dateIsNew" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="Participants_Steps" Member="Steps" ThisKey="participantID" OtherKey="fk_participent" Type="Steps" />
       <Association Name="Users_Participants" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
       <Association Name="Processes_Participants" Member="Processes" ThisKey="fk_process" OtherKey="processID" Type="Processes" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PrintHistory" Member="PrintHistory">
+    <Type Name="PrintHistory">
+      <Column Name="printHistoryId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fk_process" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Users_PrintHistory" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
+      <Association Name="Processes_PrintHistory" Member="Processes" ThisKey="fk_process" OtherKey="processID" Type="Processes" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Processes" Member="Processes">
@@ -115,9 +127,9 @@
       <Column Name="fk_template" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="fk_submitter" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Processes_Participants" Member="Participants" ThisKey="processID" OtherKey="fk_process" Type="Participants" />
+      <Association Name="Processes_PrintHistory" Member="PrintHistory" ThisKey="processID" OtherKey="fk_process" Type="PrintHistory" />
       <Association Name="Processes_Processes" Member="Processes2" ThisKey="processID" OtherKey="fk_parentProcess" Type="Processes" />
       <Association Name="Processes_ProcessVersions" Member="ProcessVersions" ThisKey="processID" OtherKey="fk_process" Type="ProcessVersions" />
-      <Association Name="Processes_PrintHistory" Member="PrintHistory" ThisKey="processID" OtherKey="fk_process" Type="PrintHistory" />
       <Association Name="Processes_Processes" Member="Processes1" ThisKey="fk_parentProcess" OtherKey="processID" Type="Processes" IsForeignKey="true" />
       <Association Name="Users_Processes" Member="Users" ThisKey="fk_initiator" OtherKey="userID" Type="Users" IsForeignKey="true" />
       <Association Name="ProcessTemplate_Processes" Member="ProcessTemplate" ThisKey="fk_template" OtherKey="processTemplateId" Type="ProcessTemplate" IsForeignKey="true" />
@@ -209,17 +221,6 @@
       <Association Name="Submitters_Processes" Member="Processes" ThisKey="submitterId" OtherKey="fk_submitter" Type="Processes" />
       <Association Name="Submitters_ProcessTemplate" Member="ProcessTemplate" ThisKey="submitterId" OtherKey="fk_submitter" Type="ProcessTemplate" />
       <Association Name="Users_Submitters" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.PrintHistory" Member="PrintHistory">
-    <Type Name="PrintHistory">
-      <Column Name="printHistoryId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="fk_process" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Association Name="Processes_PrintHistory" Member="Processes" ThisKey="fk_process" OtherKey="processID" Type="Processes" IsForeignKey="true" />
-      <Association Name="Users_PrintHistory" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

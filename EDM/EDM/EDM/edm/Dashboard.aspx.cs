@@ -32,7 +32,6 @@ namespace EDM.edm
             public int Queue { get; set; }
         }
 
-        ProcessMainFucntions main = new ProcessMainFucntions();
         protected void Page_Load(object sender, EventArgs e)
         {
             var userId = Session["userID"];
@@ -49,9 +48,6 @@ namespace EDM.edm
                 int.TryParse(Session["userID"].ToString(), out userID);
                 int.TryParse(Session["direction"].ToString(), out direction);
 
-                GoToSubmitterButton.Visible = main.IsUserSubmitter(userID);
-                GoToTemplatesButton.Visible = main.CanUserDoTemplate(userID);
-                GoToSlavesHistory.Visible = main.IsUserHead(userID);
                 OtherFuncs of = new OtherFuncs();
                 var notifications = of.Notification(userID);
 
@@ -357,7 +353,12 @@ namespace EDM.edm
                             break;
                         case 1:
                         {
+                                if (itm.Type != "review")
                             itm.Status4All = "Согласован, ждет утверждения";
+                                else
+                                {
+                                    itm.Status4All = "Согласован и Утвержден";
+                                }
                         }
                             break;
                         case 10:
@@ -632,7 +633,12 @@ namespace EDM.edm
                                 "<script> alert('Ошибка удаления процесса!');</script>");
                     }
                         break;
-                }
+                case "LinkParent":
+                    {
+                        Response.Redirect("ProcessEdit.aspx");
+                    }
+                    break;
+            }
         }
 
         protected void dashGridView_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -643,6 +649,8 @@ namespace EDM.edm
                 {
                     int direction;
                     int userId;
+                    int procId;
+                    int.TryParse(e.Row.Cells[0].Text, out procId);
                     int.TryParse(Session["direction"].ToString(), out direction);
                     int.TryParse(Session["userID"].ToString(), out userId);
                     int id = e.Row.RowIndex;
@@ -671,6 +679,7 @@ namespace EDM.edm
 
                         printButton.Enabled = false;
 
+
                         if (e.Row.Cells[3].Text.Equals("Согласован и Утвержден"))
                         {
                             btnStart.Enabled = false;
@@ -685,9 +694,6 @@ namespace EDM.edm
                         if (e.Row.Cells[3].Text.Equals("В процессе"))
                         {
                             #region Tooltip Кто просматривал
-
-                            int procId;
-                            int.TryParse(e.Row.Cells[0].Text, out procId);
                             StringBuilder partStat = new StringBuilder();
                             //partStat.Append("| Имя участника |" + "\t" + "| Статус документа|" + "\t" + "| Очередь |"+Environment.NewLine);
 
@@ -740,6 +746,28 @@ namespace EDM.edm
                             btnStart.Enabled = false;
                             e.Row.ForeColor = Color.DarkRed;
                         }
+                        if (e.Row.Cells[2].Text.Equals("Рецензия"))
+                        {
+                            printButton.Text = "Печать рецензии";
+                        }
+
+                        #region isParentLink
+
+                        var procParent =
+                            (from p in dc.Processes where p.active && p.processID == procId select p).FirstOrDefault();
+
+                        if (procParent?.fk_parentProcess != null)
+                        {
+                            e.Row.Cells[0].Controls.Add(new HyperLink()
+                            {
+                                Text = "Внутренний " + procId + " (" + procParent.fk_parentProcess + ")",
+                                NavigateUrl = "DocumentView.aspx?id=" + procParent.fk_parentProcess,
+                                ForeColor = e.Row.ForeColor
+                            });
+                        }
+                    
+                        #endregion isParentLink
+
                     }
                     #endregion Исходящие
 
@@ -757,8 +785,9 @@ namespace EDM.edm
                             id + "'); showSimpleLoadingScreen(); ";
 
                         Button subApproval = (Button)e.Row.Cells[6].Controls[0];
-                        subApproval.OnClientClick = "javascript:if(!confirm('Вы хотите создать внутреннее согласование?')) {return false;} __doPostBack('ctl00$MainContent$dashGridView','ButtonR2$" +
-                            id + "'); showSimpleLoadingScreen(); ";
+                        subApproval.OnClientClick = "javascript: if (confirm('Вы хотите создать внутреннее согласование?') == true) {__doPostBack('ctl00$MainContent$dashGridView','SubApprove$" +
+                            id + "'); showSimpleLoadingScreen(); } else return false";
+
 
 
 
@@ -776,6 +805,16 @@ namespace EDM.edm
                             e.Row.ForeColor = Color.RoyalBlue;
                             e.Row.Font.Bold = true;
                         }
+
+                        #region isParentLink
+
+                        var procParent =
+                            (from p in dc.Processes where p.active && p.processID == procId select p).FirstOrDefault();
+
+                        if (procParent?.fk_parentProcess != null)
+                            e.Row.Cells[0].Text = "Внутренний " + procId + " (" + procParent.fk_parentProcess + ")";
+
+                        #endregion isParentLink
                     }
 
                     #endregion Входящие
@@ -845,7 +884,6 @@ namespace EDM.edm
         protected void GoToSubmitterButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("SubmittedPage.aspx");
-
         }
     }
 }

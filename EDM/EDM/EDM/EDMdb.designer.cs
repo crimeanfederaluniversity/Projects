@@ -54,6 +54,9 @@ namespace EDM
     partial void InsertParticipants(Participants instance);
     partial void UpdateParticipants(Participants instance);
     partial void DeleteParticipants(Participants instance);
+    partial void InsertPrintHistory(PrintHistory instance);
+    partial void UpdatePrintHistory(PrintHistory instance);
+    partial void DeletePrintHistory(PrintHistory instance);
     partial void InsertProcesses(Processes instance);
     partial void UpdateProcesses(Processes instance);
     partial void DeleteProcesses(Processes instance);
@@ -78,9 +81,6 @@ namespace EDM
     partial void InsertSubmitters(Submitters instance);
     partial void UpdateSubmitters(Submitters instance);
     partial void DeleteSubmitters(Submitters instance);
-    partial void InsertPrintHistory(PrintHistory instance);
-    partial void UpdatePrintHistory(PrintHistory instance);
-    partial void DeletePrintHistory(PrintHistory instance);
     #endregion
 		
 		public EDMdbDataContext() : 
@@ -177,6 +177,14 @@ namespace EDM
 			}
 		}
 		
+		public System.Data.Linq.Table<PrintHistory> PrintHistory
+		{
+			get
+			{
+				return this.GetTable<PrintHistory>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Processes> Processes
 		{
 			get
@@ -238,14 +246,6 @@ namespace EDM
 			get
 			{
 				return this.GetTable<Submitters>();
-			}
-		}
-		
-		public System.Data.Linq.Table<PrintHistory> PrintHistory
-		{
-			get
-			{
-				return this.GetTable<PrintHistory>();
 			}
 		}
 	}
@@ -436,6 +436,8 @@ namespace EDM
 		
 		private EntitySet<Participants> _Participants;
 		
+		private EntitySet<PrintHistory> _PrintHistory;
+		
 		private EntitySet<Processes> _Processes;
 		
 		private EntitySet<ProcessTemplate> _ProcessTemplate;
@@ -443,8 +445,6 @@ namespace EDM
 		private EntitySet<ProcessTemplateParticipant> _ProcessTemplateParticipant;
 		
 		private EntitySet<Submitters> _Submitters;
-		
-		private EntitySet<PrintHistory> _PrintHistory;
 		
 		private EntityRef<Struct> _Struct1;
 		
@@ -477,11 +477,11 @@ namespace EDM
 		public Users()
 		{
 			this._Participants = new EntitySet<Participants>(new Action<Participants>(this.attach_Participants), new Action<Participants>(this.detach_Participants));
+			this._PrintHistory = new EntitySet<PrintHistory>(new Action<PrintHistory>(this.attach_PrintHistory), new Action<PrintHistory>(this.detach_PrintHistory));
 			this._Processes = new EntitySet<Processes>(new Action<Processes>(this.attach_Processes), new Action<Processes>(this.detach_Processes));
 			this._ProcessTemplate = new EntitySet<ProcessTemplate>(new Action<ProcessTemplate>(this.attach_ProcessTemplate), new Action<ProcessTemplate>(this.detach_ProcessTemplate));
 			this._ProcessTemplateParticipant = new EntitySet<ProcessTemplateParticipant>(new Action<ProcessTemplateParticipant>(this.attach_ProcessTemplateParticipant), new Action<ProcessTemplateParticipant>(this.detach_ProcessTemplateParticipant));
 			this._Submitters = new EntitySet<Submitters>(new Action<Submitters>(this.attach_Submitters), new Action<Submitters>(this.detach_Submitters));
-			this._PrintHistory = new EntitySet<PrintHistory>(new Action<PrintHistory>(this.attach_PrintHistory), new Action<PrintHistory>(this.detach_PrintHistory));
 			this._Struct1 = default(EntityRef<Struct>);
 			OnCreated();
 		}
@@ -703,6 +703,19 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_PrintHistory", Storage="_PrintHistory", ThisKey="userID", OtherKey="fk_user")]
+		public EntitySet<PrintHistory> PrintHistory
+		{
+			get
+			{
+				return this._PrintHistory;
+			}
+			set
+			{
+				this._PrintHistory.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Processes", Storage="_Processes", ThisKey="userID", OtherKey="fk_initiator")]
 		public EntitySet<Processes> Processes
 		{
@@ -752,19 +765,6 @@ namespace EDM
 			set
 			{
 				this._Submitters.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_PrintHistory", Storage="_PrintHistory", ThisKey="userID", OtherKey="fk_user")]
-		public EntitySet<PrintHistory> PrintHistory
-		{
-			get
-			{
-				return this._PrintHistory;
-			}
-			set
-			{
-				this._PrintHistory.Assign(value);
 			}
 		}
 		
@@ -834,6 +834,18 @@ namespace EDM
 			entity.Users = null;
 		}
 		
+		private void attach_PrintHistory(PrintHistory entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = this;
+		}
+		
+		private void detach_PrintHistory(PrintHistory entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = null;
+		}
+		
 		private void attach_Processes(Processes entity)
 		{
 			this.SendPropertyChanging();
@@ -877,18 +889,6 @@ namespace EDM
 		}
 		
 		private void detach_Submitters(Submitters entity)
-		{
-			this.SendPropertyChanging();
-			entity.Users = null;
-		}
-		
-		private void attach_PrintHistory(PrintHistory entity)
-		{
-			this.SendPropertyChanging();
-			entity.Users = this;
-		}
-		
-		private void detach_PrintHistory(PrintHistory entity)
 		{
 			this.SendPropertyChanging();
 			entity.Users = null;
@@ -1946,6 +1946,8 @@ namespace EDM
 		
 		private System.Nullable<bool> _isNew;
 		
+		private System.Nullable<System.DateTime> _dateIsNew;
+		
 		private EntitySet<Steps> _Steps;
 		
 		private EntityRef<Users> _Users;
@@ -1974,6 +1976,8 @@ namespace EDM
     partial void OnqueueChanged();
     partial void OnisNewChanging(System.Nullable<bool> value);
     partial void OnisNewChanged();
+    partial void OndateIsNewChanging(System.Nullable<System.DateTime> value);
+    partial void OndateIsNewChanged();
     #endregion
 		
 		public Participants()
@@ -2172,6 +2176,26 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dateIsNew", DbType="DateTime")]
+		public System.Nullable<System.DateTime> dateIsNew
+		{
+			get
+			{
+				return this._dateIsNew;
+			}
+			set
+			{
+				if ((this._dateIsNew != value))
+				{
+					this.OndateIsNewChanging(value);
+					this.SendPropertyChanging();
+					this._dateIsNew = value;
+					this.SendPropertyChanged("dateIsNew");
+					this.OndateIsNewChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Participants_Steps", Storage="_Steps", ThisKey="participantID", OtherKey="fk_participent")]
 		public EntitySet<Steps> Steps
 		{
@@ -2286,6 +2310,246 @@ namespace EDM
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PrintHistory")]
+	public partial class PrintHistory : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _printHistoryId;
+		
+		private bool _active;
+		
+		private int _fk_user;
+		
+		private int _fk_process;
+		
+		private System.DateTime _date;
+		
+		private EntityRef<Users> _Users;
+		
+		private EntityRef<Processes> _Processes;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnprintHistoryIdChanging(int value);
+    partial void OnprintHistoryIdChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void Onfk_userChanging(int value);
+    partial void Onfk_userChanged();
+    partial void Onfk_processChanging(int value);
+    partial void Onfk_processChanged();
+    partial void OndateChanging(System.DateTime value);
+    partial void OndateChanged();
+    #endregion
+		
+		public PrintHistory()
+		{
+			this._Users = default(EntityRef<Users>);
+			this._Processes = default(EntityRef<Processes>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_printHistoryId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int printHistoryId
+		{
+			get
+			{
+				return this._printHistoryId;
+			}
+			set
+			{
+				if ((this._printHistoryId != value))
+				{
+					this.OnprintHistoryIdChanging(value);
+					this.SendPropertyChanging();
+					this._printHistoryId = value;
+					this.SendPropertyChanged("printHistoryId");
+					this.OnprintHistoryIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_user", DbType="Int NOT NULL")]
+		public int fk_user
+		{
+			get
+			{
+				return this._fk_user;
+			}
+			set
+			{
+				if ((this._fk_user != value))
+				{
+					if (this._Users.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_userChanging(value);
+					this.SendPropertyChanging();
+					this._fk_user = value;
+					this.SendPropertyChanged("fk_user");
+					this.Onfk_userChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_process", DbType="Int NOT NULL")]
+		public int fk_process
+		{
+			get
+			{
+				return this._fk_process;
+			}
+			set
+			{
+				if ((this._fk_process != value))
+				{
+					if (this._Processes.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_processChanging(value);
+					this.SendPropertyChanging();
+					this._fk_process = value;
+					this.SendPropertyChanged("fk_process");
+					this.Onfk_processChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_date", DbType="DateTime NOT NULL")]
+		public System.DateTime date
+		{
+			get
+			{
+				return this._date;
+			}
+			set
+			{
+				if ((this._date != value))
+				{
+					this.OndateChanging(value);
+					this.SendPropertyChanging();
+					this._date = value;
+					this.SendPropertyChanged("date");
+					this.OndateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_PrintHistory", Storage="_Users", ThisKey="fk_user", OtherKey="userID", IsForeignKey=true)]
+		public Users Users
+		{
+			get
+			{
+				return this._Users.Entity;
+			}
+			set
+			{
+				Users previousValue = this._Users.Entity;
+				if (((previousValue != value) 
+							|| (this._Users.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Users.Entity = null;
+						previousValue.PrintHistory.Remove(this);
+					}
+					this._Users.Entity = value;
+					if ((value != null))
+					{
+						value.PrintHistory.Add(this);
+						this._fk_user = value.userID;
+					}
+					else
+					{
+						this._fk_user = default(int);
+					}
+					this.SendPropertyChanged("Users");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_PrintHistory", Storage="_Processes", ThisKey="fk_process", OtherKey="processID", IsForeignKey=true)]
+		public Processes Processes
+		{
+			get
+			{
+				return this._Processes.Entity;
+			}
+			set
+			{
+				Processes previousValue = this._Processes.Entity;
+				if (((previousValue != value) 
+							|| (this._Processes.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Processes.Entity = null;
+						previousValue.PrintHistory.Remove(this);
+					}
+					this._Processes.Entity = value;
+					if ((value != null))
+					{
+						value.PrintHistory.Add(this);
+						this._fk_process = value.processID;
+					}
+					else
+					{
+						this._fk_process = default(int);
+					}
+					this.SendPropertyChanged("Processes");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Processes")]
 	public partial class Processes : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2318,11 +2582,11 @@ namespace EDM
 		
 		private EntitySet<Participants> _Participants;
 		
+		private EntitySet<PrintHistory> _PrintHistory;
+		
 		private EntitySet<Processes> _Processes2;
 		
 		private EntitySet<ProcessVersions> _ProcessVersions;
-		
-		private EntitySet<PrintHistory> _PrintHistory;
 		
 		private EntityRef<Processes> _Processes1;
 		
@@ -2365,9 +2629,9 @@ namespace EDM
 		public Processes()
 		{
 			this._Participants = new EntitySet<Participants>(new Action<Participants>(this.attach_Participants), new Action<Participants>(this.detach_Participants));
+			this._PrintHistory = new EntitySet<PrintHistory>(new Action<PrintHistory>(this.attach_PrintHistory), new Action<PrintHistory>(this.detach_PrintHistory));
 			this._Processes2 = new EntitySet<Processes>(new Action<Processes>(this.attach_Processes2), new Action<Processes>(this.detach_Processes2));
 			this._ProcessVersions = new EntitySet<ProcessVersions>(new Action<ProcessVersions>(this.attach_ProcessVersions), new Action<ProcessVersions>(this.detach_ProcessVersions));
-			this._PrintHistory = new EntitySet<PrintHistory>(new Action<PrintHistory>(this.attach_PrintHistory), new Action<PrintHistory>(this.detach_PrintHistory));
 			this._Processes1 = default(EntityRef<Processes>);
 			this._Users = default(EntityRef<Users>);
 			this._ProcessTemplate = default(EntityRef<ProcessTemplate>);
@@ -2644,6 +2908,19 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_PrintHistory", Storage="_PrintHistory", ThisKey="processID", OtherKey="fk_process")]
+		public EntitySet<PrintHistory> PrintHistory
+		{
+			get
+			{
+				return this._PrintHistory;
+			}
+			set
+			{
+				this._PrintHistory.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_Processes", Storage="_Processes2", ThisKey="processID", OtherKey="fk_parentProcess")]
 		public EntitySet<Processes> Processes2
 		{
@@ -2667,19 +2944,6 @@ namespace EDM
 			set
 			{
 				this._ProcessVersions.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_PrintHistory", Storage="_PrintHistory", ThisKey="processID", OtherKey="fk_process")]
-		public EntitySet<PrintHistory> PrintHistory
-		{
-			get
-			{
-				return this._PrintHistory;
-			}
-			set
-			{
-				this._PrintHistory.Assign(value);
 			}
 		}
 		
@@ -2851,6 +3115,18 @@ namespace EDM
 			entity.Processes = null;
 		}
 		
+		private void attach_PrintHistory(PrintHistory entity)
+		{
+			this.SendPropertyChanging();
+			entity.Processes = this;
+		}
+		
+		private void detach_PrintHistory(PrintHistory entity)
+		{
+			this.SendPropertyChanging();
+			entity.Processes = null;
+		}
+		
 		private void attach_Processes2(Processes entity)
 		{
 			this.SendPropertyChanging();
@@ -2870,18 +3146,6 @@ namespace EDM
 		}
 		
 		private void detach_ProcessVersions(ProcessVersions entity)
-		{
-			this.SendPropertyChanging();
-			entity.Processes = null;
-		}
-		
-		private void attach_PrintHistory(PrintHistory entity)
-		{
-			this.SendPropertyChanging();
-			entity.Processes = this;
-		}
-		
-		private void detach_PrintHistory(PrintHistory entity)
 		{
 			this.SendPropertyChanging();
 			entity.Processes = null;
@@ -4786,246 +5050,6 @@ namespace EDM
 		{
 			this.SendPropertyChanging();
 			entity.Submitters = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PrintHistory")]
-	public partial class PrintHistory : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _printHistoryId;
-		
-		private bool _active;
-		
-		private int _fk_user;
-		
-		private int _fk_process;
-		
-		private System.DateTime _date;
-		
-		private EntityRef<Processes> _Processes;
-		
-		private EntityRef<Users> _Users;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnprintHistoryIdChanging(int value);
-    partial void OnprintHistoryIdChanged();
-    partial void OnactiveChanging(bool value);
-    partial void OnactiveChanged();
-    partial void Onfk_userChanging(int value);
-    partial void Onfk_userChanged();
-    partial void Onfk_processChanging(int value);
-    partial void Onfk_processChanged();
-    partial void OndateChanging(System.DateTime value);
-    partial void OndateChanged();
-    #endregion
-		
-		public PrintHistory()
-		{
-			this._Processes = default(EntityRef<Processes>);
-			this._Users = default(EntityRef<Users>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_printHistoryId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int printHistoryId
-		{
-			get
-			{
-				return this._printHistoryId;
-			}
-			set
-			{
-				if ((this._printHistoryId != value))
-				{
-					this.OnprintHistoryIdChanging(value);
-					this.SendPropertyChanging();
-					this._printHistoryId = value;
-					this.SendPropertyChanged("printHistoryId");
-					this.OnprintHistoryIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
-		public bool active
-		{
-			get
-			{
-				return this._active;
-			}
-			set
-			{
-				if ((this._active != value))
-				{
-					this.OnactiveChanging(value);
-					this.SendPropertyChanging();
-					this._active = value;
-					this.SendPropertyChanged("active");
-					this.OnactiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_user", DbType="Int NOT NULL")]
-		public int fk_user
-		{
-			get
-			{
-				return this._fk_user;
-			}
-			set
-			{
-				if ((this._fk_user != value))
-				{
-					if (this._Users.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_userChanging(value);
-					this.SendPropertyChanging();
-					this._fk_user = value;
-					this.SendPropertyChanged("fk_user");
-					this.Onfk_userChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_process", DbType="Int NOT NULL")]
-		public int fk_process
-		{
-			get
-			{
-				return this._fk_process;
-			}
-			set
-			{
-				if ((this._fk_process != value))
-				{
-					if (this._Processes.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_processChanging(value);
-					this.SendPropertyChanging();
-					this._fk_process = value;
-					this.SendPropertyChanged("fk_process");
-					this.Onfk_processChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_date", DbType="DateTime NOT NULL")]
-		public System.DateTime date
-		{
-			get
-			{
-				return this._date;
-			}
-			set
-			{
-				if ((this._date != value))
-				{
-					this.OndateChanging(value);
-					this.SendPropertyChanging();
-					this._date = value;
-					this.SendPropertyChanged("date");
-					this.OndateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_PrintHistory", Storage="_Processes", ThisKey="fk_process", OtherKey="processID", IsForeignKey=true)]
-		public Processes Processes
-		{
-			get
-			{
-				return this._Processes.Entity;
-			}
-			set
-			{
-				Processes previousValue = this._Processes.Entity;
-				if (((previousValue != value) 
-							|| (this._Processes.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Processes.Entity = null;
-						previousValue.PrintHistory.Remove(this);
-					}
-					this._Processes.Entity = value;
-					if ((value != null))
-					{
-						value.PrintHistory.Add(this);
-						this._fk_process = value.processID;
-					}
-					else
-					{
-						this._fk_process = default(int);
-					}
-					this.SendPropertyChanged("Processes");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_PrintHistory", Storage="_Users", ThisKey="fk_user", OtherKey="userID", IsForeignKey=true)]
-		public Users Users
-		{
-			get
-			{
-				return this._Users.Entity;
-			}
-			set
-			{
-				Users previousValue = this._Users.Entity;
-				if (((previousValue != value) 
-							|| (this._Users.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Users.Entity = null;
-						previousValue.PrintHistory.Remove(this);
-					}
-					this._Users.Entity = value;
-					if ((value != null))
-					{
-						value.PrintHistory.Add(this);
-						this._fk_user = value.userID;
-					}
-					else
-					{
-						this._fk_user = default(int);
-					}
-					this.SendPropertyChanged("Users");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 }

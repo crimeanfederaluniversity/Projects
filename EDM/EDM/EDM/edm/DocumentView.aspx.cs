@@ -17,12 +17,20 @@ namespace EDM.edm
             {
                 Response.Redirect("~/Default.aspx");
             }
+
             //////////////////////////////////////////////////
 
             if (!Page.IsPostBack)
             {
-
                 int proc;
+                var procIdStr = HttpContext.Current.Session["processID"];
+
+                if (!string.IsNullOrEmpty(Request.QueryString["id"]))
+                    HttpContext.Current.Session["processID"] = Request.QueryString["id"];
+
+                if (procIdStr == null)
+                        Response.Redirect("Dashboard.aspx");
+
                 int.TryParse(Session["processID"].ToString(), out proc);
 
                 EDMdbDataContext dataContext = new EDMdbDataContext();
@@ -33,6 +41,30 @@ namespace EDM.edm
                 int procMaxVersion =
                     (from a in dataContext.ProcessVersions where a.fk_process == proc && a.active select a)
                         .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
+
+                #region Security :)
+
+                var userParticInProc =
+                    (from a in dataContext.Participants
+                     where a.active && a.fk_user == (int)userId && a.fk_process == proc
+                     select a.participantID).ToList();
+
+                if (!userParticInProc.Any())
+                {
+                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "err_msg", "alert('Вы не являетесь участником этого процесса. Ваши действия занесены в лог'); showSimpleLoadingScreen(); window.location.href = '../Default.aspx'", true);
+                    // кикнуть
+                }
+
+                var stepsForuser = (from a in dataContext.Steps
+                    where a.active && a.fk_processVersion == procMaxVersion && a.fk_participent == userParticInProc[0]
+                    select a).FirstOrDefault();
+
+                if (stepsForuser != null)
+                {
+                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "err_msg", "alert('Вы уже приняли участие в этом процессе'); showSimpleLoadingScreen(); window.location.href = '../Default.aspx'", true);
+                }
+
+                #endregion Secutiry
 
                 ProcessVersions procVer =
                     (from b in dataContext.ProcessVersions where b.active && b.processVersionID == procMaxVersion select b)
@@ -55,6 +87,7 @@ namespace EDM.edm
                 if ( part!= null && part.isNew == true)
                 {
                     part.isNew = false;
+                    part.dateIsNew = DateTime.Now;
                     dataContext.SubmitChanges();
                 }
 
@@ -167,7 +200,31 @@ namespace EDM.edm
                     (from a in dataContext.ProcessVersions where a.fk_process == proc && a.active select a)
                         .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
 
-            int stepId = approve.AddApprove(userId, procMaxVersion, CommentTextBox.Text);
+                #region Security :)
+
+                var userParticInProc =
+                    (from a in dataContext.Participants
+                     where a.active && a.fk_user == (int)userId && a.fk_process == proc
+                     select a.participantID).ToList();
+
+                if (!userParticInProc.Any())
+                {
+                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "err_msg", "alert('Вы не являетесь участником этого процесса. Ваши действия занесены в лог'); showSimpleLoadingScreen(); window.location.href = '../Default.aspx'", true);
+                    // кикнуть
+                }
+
+                var stepsForuser = (from a in dataContext.Steps
+                                    where a.active && a.fk_processVersion == procMaxVersion && a.fk_participent == userParticInProc[0]
+                                    select a).FirstOrDefault();
+
+                if (stepsForuser != null)
+                {
+                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "err_msg", "alert('Вы уже приняли участие в этом процессе'); showSimpleLoadingScreen(); window.location.href = '../Default.aspx'", true);
+                }
+
+                #endregion Secutiry
+
+                int stepId = approve.AddApprove(userId, procMaxVersion, CommentTextBox.Text);
 
                 if (AddStepFileFileUpload.HasFile)
                 {
@@ -217,6 +274,30 @@ namespace EDM.edm
                 int procMaxVersion =
                     (from a in dataContext.ProcessVersions where a.fk_process == proc && a.active select a)
                         .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
+
+                #region Security :)
+
+                var userParticInProc =
+                    (from a in dataContext.Participants
+                     where a.active && a.fk_user == (int)userId && a.fk_process == proc
+                     select a.participantID).ToList();
+
+                if (!userParticInProc.Any())
+                {
+                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "err_msg", "alert('Вы не являетесь участником этого процесса. Ваши действия занесены в лог'); showSimpleLoadingScreen(); window.location.href = '../Default.aspx'", true);
+                    // кикнуть
+                }
+
+                var stepsForuser = (from a in dataContext.Steps
+                                    where a.active && a.fk_processVersion == procMaxVersion && a.fk_participent == userParticInProc[0]
+                                    select a).FirstOrDefault();
+
+                if (stepsForuser != null)
+                {
+                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "err_msg", "alert('Вы уже приняли участие в этом процессе'); showSimpleLoadingScreen(); window.location.href = '../Default.aspx'", true);
+                }
+
+                #endregion Secutiry
 
                 int stepId = approve.RejectApprove(userId, procMaxVersion, CommentTextBox.Text);
 
