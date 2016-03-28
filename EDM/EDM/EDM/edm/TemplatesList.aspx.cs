@@ -121,14 +121,23 @@ namespace EDM.edm
 
             int userID;
             int.TryParse(Session["userID"].ToString(), out userID);
+
+            if (_main.IsAnyTemplateByThatName(NewTemplateNameTextBox.Text))
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Шаблон с таким названием существует. Придумайте другое название!');</script>");
+            }
+                else
+            {
+                ProcessTemplate newTemplate = new ProcessTemplate();
+                newTemplate.active = true;
+                newTemplate.name = NewTemplateNameTextBox.Text;
+                newTemplate.fk_owner = userID;
+                newTemplate.type = ProcessTypeDropDown.SelectedValue;
+                _edm.ProcessTemplate.InsertOnSubmit(newTemplate);
+                _edm.SubmitChanges();
+            }
+
             
-            ProcessTemplate newTemplate = new ProcessTemplate();
-            newTemplate.active = true;
-            newTemplate.name = NewTemplateNameTextBox.Text;
-            newTemplate.fk_owner = userID;
-            newTemplate.type = ProcessTypeDropDown.SelectedValue;
-            _edm.ProcessTemplate.InsertOnSubmit(newTemplate);
-            _edm.SubmitChanges();
             Refresh();
         }
 

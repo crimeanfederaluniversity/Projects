@@ -49,6 +49,33 @@ namespace EDM.edm {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl createNewProcessDiv;
         
         /// <summary>
+        /// TemplatesDropDownList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList TemplatesDropDownList;
+        
+        /// <summary>
+        /// ProcessNameT control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ProcessNameT;
+        
+        /// <summary>
+        /// CreateNewProcessByTemplate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CreateNewProcessByTemplate;
+        
+        /// <summary>
         /// ProcessTypeDropDown control.
         /// </summary>
         /// <remarks>
@@ -83,33 +110,6 @@ namespace EDM.edm {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button CreateProcessButton;
-        
-        /// <summary>
-        /// TemplatesDropDownList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList TemplatesDropDownList;
-        
-        /// <summary>
-        /// ProcessNameT control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ProcessNameT;
-        
-        /// <summary>
-        /// CreateNewProcessByTemplate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CreateNewProcessByTemplate;
         
         /// <summary>
         /// existingProcessTitleDiv control.

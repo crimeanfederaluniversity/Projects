@@ -72,12 +72,60 @@
             document.getElementById(userIdField).value = userId;
             document.getElementById(panelId).style.visibility = 'hidden';
         }
+
+        function toggle_visibility(id1 ) {
+            var e1 = document.getElementById(id1);
+          //  var e2 = document.getElementById(id2);
+
+            if (e1.disabled == true) {
+               
+                e1.disabled = false;
+                
+                // e2.enable = false;
+            } else {
+                e1.disabled = true;
+                e1.value = '';
+               // e2.enable = true;
+            }
+        }
     </script>
     
   
 
     <div id="createNewProcessDiv" runat="server" class="row" >
     <table class="table table-striped edm-table edm-PocessEdit-table centered-block">
+        
+        <tr >
+		    <td colspan="4">
+               Согласование с шаблоном
+            </td>
+        </tr>
+         
+        <tr>
+		   <th colspan="2">Шаблон</th>
+            <th>Название </th>
+            <th>Создать</th>        
+        </tr>
+        
+        <tr>
+            
+		   <td colspan="2">
+            <asp:DropDownList ID="TemplatesDropDownList" runat="server" AutoPostBack="False" CssClass="form-control">
+            </asp:DropDownList>
+		       
+
+            </td>
+            <td>
+                <asp:TextBox ID="ProcessNameT"  runat="server" CssClass="form-control"></asp:TextBox>
+                
+            </td>
+            
+            <td>
+                <asp:Button ID="CreateNewProcessByTemplate" runat="server" OnClick="CreateNewTemplateProcess" Text="Создать" CssClass="btn btn-warning" OnClientClick="javascript:if(withTemplateValidation()){showSimpleLoadingScreen()} else return false;"/>
+            </td>   
+                  
+        </tr>
+        
         <tr >
 		    <td colspan="4">
                Согласование без шаблона
@@ -116,38 +164,6 @@
                 <asp:Button ID="CreateProcessButton" runat="server" OnClick="CreateNewProcess" Text="Создать" CssClass="btn btn-warning" OnClientClick="javascript:if(noTemplateValidation()){showSimpleLoadingScreen()} else return false;"/>
             </td>           
         </tr>
-        
-        <tr >
-		    <td colspan="4">
-               Согласование с шаблоном
-            </td>
-        </tr>
-         
-        <tr>
-		   <th colspan="2">Шаблон</th>
-            <th>Название </th>
-            <th>Создать</th>        
-        </tr>
-        
-        <tr>
-            
-		   <td colspan="2">
-            <asp:DropDownList ID="TemplatesDropDownList" runat="server" AutoPostBack="False" CssClass="form-control">
-            </asp:DropDownList>
-		       
-
-            </td>
-            <td>
-                <asp:TextBox ID="ProcessNameT"  runat="server" CssClass="form-control"></asp:TextBox>
-                
-            </td>
-            
-            <td>
-                <asp:Button ID="CreateNewProcessByTemplate" runat="server" OnClick="CreateNewTemplateProcess" Text="Создать" CssClass="btn btn-warning" OnClientClick="javascript:if(withTemplateValidation()){showSimpleLoadingScreen()} else return false;"/>
-            </td>   
-                  
-        </tr>
-        
         
 
         </table>

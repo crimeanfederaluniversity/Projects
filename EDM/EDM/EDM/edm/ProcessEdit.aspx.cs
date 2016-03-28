@@ -286,8 +286,12 @@ namespace EDM.edm
                 tableQueueHeaderCell.Text = "Очередь";
                 tableHeaderRow.Cells.Add(tableQueueHeaderCell);
 
+                TableHeaderCell tableEndDateCheckBoxHeaderCell = new TableHeaderCell();
+                tableEndDateCheckBoxHeaderCell.Text = "";
+                tableHeaderRow.Cells.Add(tableEndDateCheckBoxHeaderCell);
+
                 TableHeaderCell tableEndDateHeaderCell = new TableHeaderCell();
-                tableEndDateHeaderCell.Text = "Срок";
+                tableEndDateHeaderCell.Text = "Срок ";
                 tableHeaderRow.Cells.Add(tableEndDateHeaderCell);
 
                 TableHeaderCell tableParticipentHeaderCell = new TableHeaderCell();
@@ -298,7 +302,21 @@ namespace EDM.edm
                 tableDeleteParticipentHeaderCell.Text = "Удалить";
                 tableHeaderRow.Cells.Add(tableDeleteParticipentHeaderCell);
 
+
+
                 participantsTable.Rows.Add(tableHeaderRow);
+
+
+                TableRow secondHeader = new TableRow();
+                secondHeader.Cells.Add(new TableCell());
+                secondHeader.Cells.Add(new TableCell());
+                TableCell newCell = new TableCell();
+                newCell.Text = "(только рабочие дни)";
+                secondHeader.Cells.Add(newCell);
+                secondHeader.Cells.Add(new TableCell());
+                secondHeader.Cells.Add(new TableCell());
+                participantsTable.Rows.Add(secondHeader);
+
                 for (int i = 0; i < participantsCount; i++)
                 {
                     TableRow participantRow = new TableRow();
@@ -312,6 +330,27 @@ namespace EDM.edm
                     queueCell.Controls.Add(ParticipantsList[i].ParticipantQueueValidator);
                     participantRow.Cells.Add(queueCell);
 
+                    TableCell endDateCheckBoxCell = new TableCell();
+                    CheckBox endDateCheckBox = new CheckBox();
+                    endDateCheckBox.Attributes.Add("onclick", "toggle_visibility('MainContent_"+ ParticipantsList[i].ParticipantEndDateTextBox.ID + "')");
+                    endDateCheckBox.AutoPostBack = false;
+                    endDateCheckBox.ID = ParticipantsList[i].ParticipantEndDateTextBox.ID + "checkBox";
+                    if (ParticipantsList[i].ParticipantEndDateTextBox.Text == "")
+                    {
+                        endDateCheckBox.Checked = true;
+                        ParticipantsList[i].ParticipantEndDateTextBox.Enabled = false;
+                    }
+                    else
+                    {
+                        endDateCheckBox.Checked = false;
+                        ParticipantsList[i].ParticipantEndDateTextBox.Enabled = true;
+                    }
+                       
+
+
+                    endDateCheckBoxCell.Controls.Add(endDateCheckBox);
+                    participantRow.Cells.Add(endDateCheckBoxCell);
+                    
                     TableCell endDateCell = new TableCell();
                     endDateCell.Controls.Add(ParticipantsList[i].ParticipantEndDateTextBox);
 
@@ -491,17 +530,9 @@ namespace EDM.edm
         {
             Session["ParticipantsList"] = ParticipantsList;
             Session["DocumentsList"] = DocumentsList;
-
-           
-
+          
             int processId = 0;
             Int32.TryParse(HttpContext.Current.Session["processID"].ToString(), out processId);
-
-
-
-
-
-
             if (processId != 0)
             {
                 if (DocumentsList.Count == 0)
@@ -526,6 +557,7 @@ namespace EDM.edm
                     SaveAllDiv.Visible = true;
                 }
                 submitterDiv.Visible = true;
+                SubmitterDropDown.Enabled = (currentProcess.fk_template == null);
                 createNewProcessDiv.Visible = false;
                 existingProcessTitleDiv.Visible = true;
                 ParticipantsDiv.Visible = true;
@@ -665,8 +697,6 @@ namespace EDM.edm
          
              Refersh();
         }
-
-
         #endregion
         public void RefreshQueueInParticipantsList(bool withQueue)
         {           
@@ -864,12 +894,19 @@ namespace EDM.edm
                     {
                         endDateTime = endDateTime.AddDays(1);
                     }
-                    
+                 //   TimeSpan ts = new TimeSpan(17, 00, 0);
+                 //   endDateTime = endDateTime.Date + ts;
+
+
                 }
                 if (endDateTime.TimeOfDay == TimeSpan.Zero)
                 {
                     endDateTime = endDateTime.AddHours(23);
+                   // TimeSpan ts = new TimeSpan(17, 00, 0);
+                   // endDateTime = endDateTime.Date + ts;
                 }
+                TimeSpan ts = new TimeSpan(17, 00, 0);
+                endDateTime = endDateTime.Date + ts;
                 main.CreateNewParticipent(processId, userId, queue, endDateTime);
             }
 

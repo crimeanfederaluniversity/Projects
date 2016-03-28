@@ -520,6 +520,14 @@ namespace EDM.edm
         #endregion
 
         #region check
+
+        public bool IsAnyTemplateByThatName(string name)
+        {
+           return (from a in _edmDb.ProcessTemplate
+                where a.name == name
+                      && a.active == true
+                select a).Any();
+        }
         public bool IsUserHead(int userId)
         {
             Users headuser = GetUserById(userId);
