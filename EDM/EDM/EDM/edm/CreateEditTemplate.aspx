@@ -37,10 +37,18 @@
     
      <div runat="server" id="mainDiv">
          <br />
+         <br />
+         <br />
          Тип согласования
          <br />
          <asp:Label ID="AprrovalTypeLabel" runat="server" Text="Label"></asp:Label>
-        <br /><br />
+        <br />
+         <br />
+         Отправлять по завершению<br />
+         <asp:DropDownList ID="SubmitterDropDown" runat="server" Height="20px" Width="602px">
+         </asp:DropDownList>
+         <br />
+         <br />
         Название шаблона
         <br />
        <asp:TextBox ID="TemplateNameTextBox" runat="server" Width="600px"></asp:TextBox>
@@ -60,5 +68,5 @@
     
     </div>
     <br/><br/>
-   <asp:Button ID="SaveAllButton" runat="server"  Text="Сохранить" Width="211px" OnClick="SaveAllButton_Click" />
+   <asp:Button ID="SaveAllButton" runat="server"  Text="Сохранить" Width="211px"  OnClientClick="showSimpleLoadingScreen()" OnClick="SaveAllButton_Click" />
 </asp:Content>

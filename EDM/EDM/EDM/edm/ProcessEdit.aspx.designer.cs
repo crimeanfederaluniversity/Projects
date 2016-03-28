@@ -130,6 +130,24 @@ namespace EDM.edm {
         protected global::System.Web.UI.WebControls.Label ProcessIdLabel;
         
         /// <summary>
+        /// submitterDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl submitterDiv;
+        
+        /// <summary>
+        /// SubmitterDropDown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList SubmitterDropDown;
+        
+        /// <summary>
         /// commentForVersionDiv control.
         /// </summary>
         /// <remarks>

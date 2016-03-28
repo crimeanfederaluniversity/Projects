@@ -32,6 +32,7 @@ namespace EDM.edm
             public int Queue { get; set; }
         }
 
+        ProcessMainFucntions main = new ProcessMainFucntions();
         protected void Page_Load(object sender, EventArgs e)
         {
             var userId = Session["userID"];
@@ -48,6 +49,9 @@ namespace EDM.edm
                 int.TryParse(Session["userID"].ToString(), out userID);
                 int.TryParse(Session["direction"].ToString(), out direction);
 
+                GoToSubmitterButton.Visible = main.IsUserSubmitter(userID);
+                GoToTemplatesButton.Visible = main.CanUserDoTemplate(userID);
+                GoToSlavesHistory.Visible = main.IsUserHead(userID);
                 OtherFuncs of = new OtherFuncs();
                 var notifications = of.Notification(userID);
 
@@ -836,6 +840,12 @@ namespace EDM.edm
         protected void GoToSlavesHistory_Click(object sender, EventArgs e)
         {
             Response.Redirect("Subordinate.aspx");
+        }
+
+        protected void GoToSubmitterButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("SubmittedPage.aspx");
+
         }
     }
 }

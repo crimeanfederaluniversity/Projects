@@ -75,6 +75,9 @@ namespace EDM
     partial void InsertStruct(Struct instance);
     partial void UpdateStruct(Struct instance);
     partial void DeleteStruct(Struct instance);
+    partial void InsertSubmitters(Submitters instance);
+    partial void UpdateSubmitters(Submitters instance);
+    partial void DeleteSubmitters(Submitters instance);
     #endregion
 		
 		public EDMdbDataContext() : 
@@ -224,6 +227,14 @@ namespace EDM
 			get
 			{
 				return this.GetTable<Struct>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Submitters> Submitters
+		{
+			get
+			{
+				return this.GetTable<Submitters>();
 			}
 		}
 	}
@@ -420,6 +431,8 @@ namespace EDM
 		
 		private EntitySet<ProcessTemplateParticipant> _ProcessTemplateParticipant;
 		
+		private EntitySet<Submitters> _Submitters;
+		
 		private EntityRef<Struct> _Struct1;
 		
     #region Extensibility Method Definitions
@@ -454,6 +467,7 @@ namespace EDM
 			this._Processes = new EntitySet<Processes>(new Action<Processes>(this.attach_Processes), new Action<Processes>(this.detach_Processes));
 			this._ProcessTemplate = new EntitySet<ProcessTemplate>(new Action<ProcessTemplate>(this.attach_ProcessTemplate), new Action<ProcessTemplate>(this.detach_ProcessTemplate));
 			this._ProcessTemplateParticipant = new EntitySet<ProcessTemplateParticipant>(new Action<ProcessTemplateParticipant>(this.attach_ProcessTemplateParticipant), new Action<ProcessTemplateParticipant>(this.detach_ProcessTemplateParticipant));
+			this._Submitters = new EntitySet<Submitters>(new Action<Submitters>(this.attach_Submitters), new Action<Submitters>(this.detach_Submitters));
 			this._Struct1 = default(EntityRef<Struct>);
 			OnCreated();
 		}
@@ -714,6 +728,19 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Submitters", Storage="_Submitters", ThisKey="userID", OtherKey="fk_user")]
+		public EntitySet<Submitters> Submitters
+		{
+			get
+			{
+				return this._Submitters;
+			}
+			set
+			{
+				this._Submitters.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Struct_Users", Storage="_Struct1", ThisKey="fk_struct", OtherKey="structID", IsForeignKey=true)]
 		public Struct Struct1
 		{
@@ -811,6 +838,18 @@ namespace EDM
 		}
 		
 		private void detach_ProcessTemplateParticipant(ProcessTemplateParticipant entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = null;
+		}
+		
+		private void attach_Submitters(Submitters entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = this;
+		}
+		
+		private void detach_Submitters(Submitters entity)
 		{
 			this.SendPropertyChanging();
 			entity.Users = null;
@@ -2236,6 +2275,8 @@ namespace EDM
 		
 		private System.Nullable<int> _fk_template;
 		
+		private System.Nullable<int> _fk_submitter;
+		
 		private EntitySet<Participants> _Participants;
 		
 		private EntitySet<Processes> _Processes2;
@@ -2247,6 +2288,8 @@ namespace EDM
 		private EntityRef<Users> _Users;
 		
 		private EntityRef<ProcessTemplate> _ProcessTemplate;
+		
+		private EntityRef<Submitters> _Submitters;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2274,6 +2317,8 @@ namespace EDM
     partial void Onfk_parentProcessChanged();
     partial void Onfk_templateChanging(System.Nullable<int> value);
     partial void Onfk_templateChanged();
+    partial void Onfk_submitterChanging(System.Nullable<int> value);
+    partial void Onfk_submitterChanged();
     #endregion
 		
 		public Processes()
@@ -2284,6 +2329,7 @@ namespace EDM
 			this._Processes1 = default(EntityRef<Processes>);
 			this._Users = default(EntityRef<Users>);
 			this._ProcessTemplate = default(EntityRef<ProcessTemplate>);
+			this._Submitters = default(EntityRef<Submitters>);
 			OnCreated();
 		}
 		
@@ -2519,6 +2565,30 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_submitter", DbType="Int")]
+		public System.Nullable<int> fk_submitter
+		{
+			get
+			{
+				return this._fk_submitter;
+			}
+			set
+			{
+				if ((this._fk_submitter != value))
+				{
+					if (this._Submitters.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_submitterChanging(value);
+					this.SendPropertyChanging();
+					this._fk_submitter = value;
+					this.SendPropertyChanged("fk_submitter");
+					this.Onfk_submitterChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Processes_Participants", Storage="_Participants", ThisKey="processID", OtherKey="fk_process")]
 		public EntitySet<Participants> Participants
 		{
@@ -2660,6 +2730,40 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Submitters_Processes", Storage="_Submitters", ThisKey="fk_submitter", OtherKey="submitterId", IsForeignKey=true)]
+		public Submitters Submitters
+		{
+			get
+			{
+				return this._Submitters.Entity;
+			}
+			set
+			{
+				Submitters previousValue = this._Submitters.Entity;
+				if (((previousValue != value) 
+							|| (this._Submitters.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Submitters.Entity = null;
+						previousValue.Processes.Remove(this);
+					}
+					this._Submitters.Entity = value;
+					if ((value != null))
+					{
+						value.Processes.Add(this);
+						this._fk_submitter = value.submitterId;
+					}
+					else
+					{
+						this._fk_submitter = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Submitters");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2737,11 +2841,15 @@ namespace EDM
 		
 		private string _type;
 		
+		private System.Nullable<int> _fk_submitter;
+		
 		private EntitySet<Processes> _Processes;
 		
 		private EntitySet<ProcessTemplateParticipant> _ProcessTemplateParticipant;
 		
 		private EntityRef<Users> _Users;
+		
+		private EntityRef<Submitters> _Submitters;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2761,6 +2869,8 @@ namespace EDM
     partial void Oncontent_Changed();
     partial void OntypeChanging(string value);
     partial void OntypeChanged();
+    partial void Onfk_submitterChanging(System.Nullable<int> value);
+    partial void Onfk_submitterChanged();
     #endregion
 		
 		public ProcessTemplate()
@@ -2768,6 +2878,7 @@ namespace EDM
 			this._Processes = new EntitySet<Processes>(new Action<Processes>(this.attach_Processes), new Action<Processes>(this.detach_Processes));
 			this._ProcessTemplateParticipant = new EntitySet<ProcessTemplateParticipant>(new Action<ProcessTemplateParticipant>(this.attach_ProcessTemplateParticipant), new Action<ProcessTemplateParticipant>(this.detach_ProcessTemplateParticipant));
 			this._Users = default(EntityRef<Users>);
+			this._Submitters = default(EntityRef<Submitters>);
 			OnCreated();
 		}
 		
@@ -2915,6 +3026,30 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_submitter", DbType="Int")]
+		public System.Nullable<int> fk_submitter
+		{
+			get
+			{
+				return this._fk_submitter;
+			}
+			set
+			{
+				if ((this._fk_submitter != value))
+				{
+					if (this._Submitters.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_submitterChanging(value);
+					this.SendPropertyChanging();
+					this._fk_submitter = value;
+					this.SendPropertyChanged("fk_submitter");
+					this.Onfk_submitterChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessTemplate_Processes", Storage="_Processes", ThisKey="processTemplateId", OtherKey="fk_template")]
 		public EntitySet<Processes> Processes
 		{
@@ -2971,6 +3106,40 @@ namespace EDM
 						this._fk_owner = default(int);
 					}
 					this.SendPropertyChanged("Users");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Submitters_ProcessTemplate", Storage="_Submitters", ThisKey="fk_submitter", OtherKey="submitterId", IsForeignKey=true)]
+		public Submitters Submitters
+		{
+			get
+			{
+				return this._Submitters.Entity;
+			}
+			set
+			{
+				Submitters previousValue = this._Submitters.Entity;
+				if (((previousValue != value) 
+							|| (this._Submitters.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Submitters.Entity = null;
+						previousValue.ProcessTemplate.Remove(this);
+					}
+					this._Submitters.Entity = value;
+					if ((value != null))
+					{
+						value.ProcessTemplate.Add(this);
+						this._fk_submitter = value.submitterId;
+					}
+					else
+					{
+						this._fk_submitter = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Submitters");
 				}
 			}
 		}
@@ -4343,6 +4512,213 @@ namespace EDM
 		{
 			this.SendPropertyChanging();
 			entity.Struct1 = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Submitters")]
+	public partial class Submitters : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _submitterId;
+		
+		private bool _active;
+		
+		private int _fk_user;
+		
+		private EntitySet<Processes> _Processes;
+		
+		private EntitySet<ProcessTemplate> _ProcessTemplate;
+		
+		private EntityRef<Users> _Users;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnsubmitterIdChanging(int value);
+    partial void OnsubmitterIdChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void Onfk_userChanging(int value);
+    partial void Onfk_userChanged();
+    #endregion
+		
+		public Submitters()
+		{
+			this._Processes = new EntitySet<Processes>(new Action<Processes>(this.attach_Processes), new Action<Processes>(this.detach_Processes));
+			this._ProcessTemplate = new EntitySet<ProcessTemplate>(new Action<ProcessTemplate>(this.attach_ProcessTemplate), new Action<ProcessTemplate>(this.detach_ProcessTemplate));
+			this._Users = default(EntityRef<Users>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_submitterId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int submitterId
+		{
+			get
+			{
+				return this._submitterId;
+			}
+			set
+			{
+				if ((this._submitterId != value))
+				{
+					this.OnsubmitterIdChanging(value);
+					this.SendPropertyChanging();
+					this._submitterId = value;
+					this.SendPropertyChanged("submitterId");
+					this.OnsubmitterIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_user", DbType="Int NOT NULL")]
+		public int fk_user
+		{
+			get
+			{
+				return this._fk_user;
+			}
+			set
+			{
+				if ((this._fk_user != value))
+				{
+					if (this._Users.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_userChanging(value);
+					this.SendPropertyChanging();
+					this._fk_user = value;
+					this.SendPropertyChanged("fk_user");
+					this.Onfk_userChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Submitters_Processes", Storage="_Processes", ThisKey="submitterId", OtherKey="fk_submitter")]
+		public EntitySet<Processes> Processes
+		{
+			get
+			{
+				return this._Processes;
+			}
+			set
+			{
+				this._Processes.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Submitters_ProcessTemplate", Storage="_ProcessTemplate", ThisKey="submitterId", OtherKey="fk_submitter")]
+		public EntitySet<ProcessTemplate> ProcessTemplate
+		{
+			get
+			{
+				return this._ProcessTemplate;
+			}
+			set
+			{
+				this._ProcessTemplate.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Submitters", Storage="_Users", ThisKey="fk_user", OtherKey="userID", IsForeignKey=true)]
+		public Users Users
+		{
+			get
+			{
+				return this._Users.Entity;
+			}
+			set
+			{
+				Users previousValue = this._Users.Entity;
+				if (((previousValue != value) 
+							|| (this._Users.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Users.Entity = null;
+						previousValue.Submitters.Remove(this);
+					}
+					this._Users.Entity = value;
+					if ((value != null))
+					{
+						value.Submitters.Add(this);
+						this._fk_user = value.userID;
+					}
+					else
+					{
+						this._fk_user = default(int);
+					}
+					this.SendPropertyChanged("Users");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Processes(Processes entity)
+		{
+			this.SendPropertyChanging();
+			entity.Submitters = this;
+		}
+		
+		private void detach_Processes(Processes entity)
+		{
+			this.SendPropertyChanging();
+			entity.Submitters = null;
+		}
+		
+		private void attach_ProcessTemplate(ProcessTemplate entity)
+		{
+			this.SendPropertyChanging();
+			entity.Submitters = this;
+		}
+		
+		private void detach_ProcessTemplate(ProcessTemplate entity)
+		{
+			this.SendPropertyChanging();
+			entity.Submitters = null;
 		}
 	}
 }

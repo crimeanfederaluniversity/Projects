@@ -150,6 +150,9 @@ namespace EDM.edm
                 TemplateNameTextBox.Text = currentTemplate.name;
                 TemplateContentTextBox.Text = currentTemplate.content_;
                 AprrovalTypeLabel.Text = _main.GetProcessTypeNameByType(currentTemplate.type);
+                int submitterId = 0;
+                Int32.TryParse(currentTemplate.fk_submitter.ToString(), out submitterId);
+                SubmitterDropDown.Items.AddRange(_main.GetSubmittersList(submitterId));
 
                 ParticipantsTemplateList = new List<ProcessEdit.Participant>();
 
@@ -224,7 +227,11 @@ namespace EDM.edm
             int templateId = 0;
             var templateIdSes = Session["ProcessTemplateId"];
             Int32.TryParse(templateIdSes.ToString(), out templateId);
-            _main.SetTemplateParams(TemplateNameTextBox.Text, TemplateTitleTextBox.Text, TemplateContentTextBox.Text, templateId);
+            string submitterString = SubmitterDropDown.SelectedValue;
+            int submitterId = 0;
+            Int32.TryParse(submitterString, out submitterId);
+
+            _main.SetTemplateParams(TemplateNameTextBox.Text, TemplateTitleTextBox.Text, TemplateContentTextBox.Text, templateId, submitterId);
 
             #region do participants
             List<ProcessEdit.Participant> participantsToAdd;
