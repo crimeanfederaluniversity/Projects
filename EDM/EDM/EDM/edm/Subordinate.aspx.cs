@@ -94,7 +94,7 @@ namespace EDM.edm
                     }
                 }
 
-                directionLabel.Visible = true;
+                //directionLabel.Visible = true;
                 directionLabel.Text = "Процессы подчиненных";
                 subGridView.DataSource = data;
 
