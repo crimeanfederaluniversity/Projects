@@ -30,7 +30,7 @@ namespace EDM.Account
                     {
 
                     Session["userID"] = user.userID;
-                    if (user.password == "123456")
+                    if (user.password == "KVFAJVIAOWw2")
                     {   
                         Response.Redirect("~/Account/NewPassword.aspx");
                     }

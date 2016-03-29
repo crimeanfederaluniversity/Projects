@@ -192,6 +192,7 @@
     <Content Include="Account\Manage.aspx" />
     <Content Include="Account\ManageLogins.aspx" />
     <Content Include="Account\ManagePassword.aspx" />
+    <Content Include="Account\NewPassword.aspx" />
     <Content Include="Account\OpenAuthProviders.ascx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
@@ -204,7 +205,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="edmAdmin\AdminMain.aspx" />
+    <Content Include="edmAdmin\ChangeUser.aspx" />
     <Content Include="edmAdmin\CreateNewUser.aspx" />
+    <Content Include="edmAdmin\EditUser.aspx" />
+    <Content Include="edmAdmin\StructureForm.aspx" />
     <Content Include="edm\AutoAccept.aspx" />
     <Content Include="edm\calendar_ru.js" />
     <Content Include="edm\CreateEditTemplate.aspx" />
@@ -345,6 +349,13 @@
     <Compile Include="Account\ManagePassword.aspx.designer.cs">
       <DependentUpon>ManagePassword.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Account\NewPassword.aspx.cs">
+      <DependentUpon>NewPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\NewPassword.aspx.designer.cs">
+      <DependentUpon>NewPassword.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Account\OpenAuthProviders.ascx.cs">
       <DependentUpon>OpenAuthProviders.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -426,12 +437,33 @@
     <Compile Include="edmAdmin\AdminMain.aspx.designer.cs">
       <DependentUpon>AdminMain.aspx</DependentUpon>
     </Compile>
+    <Compile Include="edmAdmin\ChangeUser.aspx.cs">
+      <DependentUpon>ChangeUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="edmAdmin\ChangeUser.aspx.designer.cs">
+      <DependentUpon>ChangeUser.aspx</DependentUpon>
+    </Compile>
     <Compile Include="edmAdmin\CreateNewUser.aspx.cs">
       <DependentUpon>CreateNewUser.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="edmAdmin\CreateNewUser.aspx.designer.cs">
       <DependentUpon>CreateNewUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="edmAdmin\EditUser.aspx.cs">
+      <DependentUpon>EditUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="edmAdmin\EditUser.aspx.designer.cs">
+      <DependentUpon>EditUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="edmAdmin\StructureForm.aspx.cs">
+      <DependentUpon>StructureForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="edmAdmin\StructureForm.aspx.designer.cs">
+      <DependentUpon>StructureForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="EDMdb.designer.cs">
       <AutoGen>True</AutoGen>
