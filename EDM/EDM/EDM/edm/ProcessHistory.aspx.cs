@@ -128,7 +128,8 @@ namespace EDM.edm
             }
             else
             versionsInProcess = _main.GetProcessVersionsInProcess(processId);
-            ProcessVersions lastVersion = versionsInProcess[versionsInProcess.Count - 1];
+            ProcessVersions lastVersion =_main.GetProcessVersionsLastVerson(processId);
+            //ProcessVersions lastVersion = versionsInProcess[versionsInProcess.Count - 1];
             foreach (ProcessVersions currentVersion in versionsInProcess)
             {
                 TableRow processVersionRow = new TableRow();
@@ -229,7 +230,13 @@ namespace EDM.edm
 
                         LinkButton linkButton = new LinkButton();
                         linkButton.Text = doc.documentName;
-                        linkButton.CommandArgument = currentVersion.fk_process + "stepsDocs/" +
+                        StepDocInStepMap tmp = _main.GetFirstStepDocMapByDoc(doc.documentsInStepId);
+                        Steps tmpStep = _main.GetStepById(tmp.fk_step);
+                        ProcessVersions version = _main.GetProcessversionById(tmpStep.fk_processVersion);
+                        
+
+
+                        linkButton.CommandArgument = version.fk_process + "stepsDocs/" +
                                                      doc.documentsInStepId.ToString();
                         linkButton.Click += GetDocumentClick;
                         linkButtonCell.Controls.Add(linkButton);

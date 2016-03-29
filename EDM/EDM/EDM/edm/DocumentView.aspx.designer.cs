@@ -121,6 +121,24 @@ namespace EDM.edm {
         protected global::System.Web.UI.WebControls.FileUpload AddStepFileFileUpload;
         
         /// <summary>
+        /// ExistingDocNameLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ExistingDocNameLabel;
+        
+        /// <summary>
+        /// ExistingDocIdTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ExistingDocIdTextBox;
+        
+        /// <summary>
         /// RejectButton control.
         /// </summary>
         /// <remarks>

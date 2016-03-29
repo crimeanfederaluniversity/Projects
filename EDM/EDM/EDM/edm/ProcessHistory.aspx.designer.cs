@@ -22,6 +22,15 @@ namespace EDM.edm {
         protected global::System.Web.UI.WebControls.Panel top_panel2;
         
         /// <summary>
+        /// goBackButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button goBackButton;
+        
+        /// <summary>
         /// goForwardButton control.
         /// </summary>
         /// <remarks>

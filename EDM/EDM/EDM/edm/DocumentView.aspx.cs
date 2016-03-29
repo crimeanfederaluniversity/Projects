@@ -82,7 +82,8 @@ namespace EDM.edm
 
             Button setAllButton = new Button();
             setAllButton.Style.Add("width","100%");
-            setAllButton.Text = "Ок";
+            setAllButton.Text = "Ок"; 
+            setAllButton.OnClientClick = "setValues(); return false;";
 
             Button cancelButton = new Button();
             cancelButton.Style.Add("width", "100%");
@@ -316,8 +317,13 @@ namespace EDM.edm
                 #endregion Secutiry
 
                 int stepId = approve.AddApprove(userId, procMaxVersion, CommentTextBox.Text);
-
-                if (AddStepFileFileUpload.HasFile)
+                if (ExistingDocIdTextBox.Text != "")
+                {
+                    int tmp = 0;
+                    Int32.TryParse(ExistingDocIdTextBox.Text, out tmp);
+                    main.CreateNewStepDocumentConnection(stepId, tmp);
+                }
+                else if (AddStepFileFileUpload.HasFile)
                 {
                     try
                     {
@@ -392,8 +398,13 @@ namespace EDM.edm
 
                 int stepId = approve.RejectApprove(userId, procMaxVersion, CommentTextBox.Text);
 
-
-                if (AddStepFileFileUpload.HasFile)
+                if (ExistingDocIdTextBox.Text != "")
+                {
+                    int tmp = 0;
+                    Int32.TryParse(ExistingDocIdTextBox.Text, out tmp);
+                    main.CreateNewStepDocumentConnection(stepId, tmp);
+                }
+                else if (AddStepFileFileUpload.HasFile)
                 {
                     try
                     {

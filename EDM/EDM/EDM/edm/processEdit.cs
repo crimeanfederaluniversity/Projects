@@ -16,6 +16,17 @@ namespace EDM.edm
         public List<ProcessEdit.Participant> ParticipantsList = new List<ProcessEdit.Participant>();
 
         #region create
+
+        
+        public void CreateNewStepDocumentConnection(int stepId, int docId)
+        {
+            StepDocInStepMap newstepDocMap = new StepDocInStepMap();
+            newstepDocMap.active = true;
+            newstepDocMap.fk_step = stepId;
+            newstepDocMap.fk_documentInStep = docId;
+            _edmDb.StepDocInStepMap.InsertOnSubmit(newstepDocMap);
+            _edmDb.SubmitChanges();
+        }
         public int CreateNewProcessVersion(int processId, string comment, int version, string status)
         {
             Processes currentProcess = GetProcessById(processId);
@@ -175,6 +186,27 @@ namespace EDM.edm
         #endregion
 
         #region get
+
+        public ProcessVersions GetProcessversionById(int versionId )
+        {
+            return (from a in _edmDb.ProcessVersions
+                where a.processVersionID == versionId
+                select a).FirstOrDefault();
+        }
+        public Steps GetStepById(int stepId)
+        {
+            return (from a in _edmDb.Steps
+                where a.stepID == stepId
+                select a).FirstOrDefault();
+        }
+
+        public StepDocInStepMap GetFirstStepDocMapByDoc(int docId)
+        {
+            return (from a in _edmDb.StepDocInStepMap
+                where a.fk_documentInStep == docId
+                select a).FirstOrDefault();
+
+        }
         public Processes GetChildProcess(int procId,int initiatorId)
         {
             return (from a in _edmDb.Processes

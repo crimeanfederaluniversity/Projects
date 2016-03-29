@@ -2,7 +2,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <style type="text/css">
         
-        
+        .invisible {
+            visibility: hidden;
+        }
             
          .RBL label
          {
@@ -33,10 +35,66 @@
     
     
     <script>
-        
-        function setComment(content) {
 
-            document.getElementById('MainContent_LabelCommentl').value = content();
+
+        function setValues() {
+            setComment();
+            setDocument();
+            document.getElementById('MainContent_chooseInnerProcPanel').style.visibility = 'hidden';
+        }
+
+        function setComment() {
+
+            var mainDiv = document.getElementById('MainContent_chooseInnerProcPanelScrollComment');
+            var firstChild = mainDiv.children[0];
+            var secondChild = firstChild.children[0];
+            var commentValue = "";
+            for (var i = 0; i < secondChild.children.length; i++)
+            {
+                var thirdChild = secondChild.children[i];
+                var cell = thirdChild.children[0];
+
+                var radio = cell.children[0];
+                var text = cell.children[1];
+
+                if (radio.checked)
+                {
+                    commentValue = text.textContent;
+                }
+            }
+            if (commentValue.length > 2)
+                document.getElementById('MainContent_CommentTextBox').value = commentValue;
+        }
+
+        function setDocument() {
+
+            var mainDiv = document.getElementById('MainContent_chooseInnerProcPanelScrollDocs');
+            var firstChild = mainDiv.children[0];
+            var secondChild = firstChild.children[0];
+            var documentValue = '';
+            var documentId = '';
+            for (var i = 0; i < secondChild.children.length; i++) {
+                var thirdChild = secondChild.children[i];
+                var cell = thirdChild.children[0];
+
+                var radio = cell.children[0];
+                var text = cell.children[1];
+
+                if (radio.checked) {
+                    documentValue = text.textContent;
+                    documentId = radio.value;
+                }
+            }
+            if (documentId!='')
+            {
+                document.getElementById('MainContent_AddStepFileFileUpload').style.visibility = 'hidden';
+                document.getElementById('MainContent_ExistingDocNameLabel').style.visibility = 'visible';
+                document.getElementById('MainContent_ExistingDocNameLabel').innerHTML = documentValue;
+               // alert(documentId);
+               // document.getElementById('MainContent_ExistingDocIdTextBox').text = documentId;
+                document.getElementById('MainContent_ExistingDocIdTextBox').value = documentId;
+                //
+            }         
         }
 
     </script>
@@ -82,7 +140,7 @@
             <asp:RequiredFieldValidator runat="server" SetFocusOnError="True" ControlToValidate="CommentTextBox" ErrorMessage="Введите комментарий!" ForeColor="red"/>
             <div class="input-group-lg">
                 <br />
-                <asp:TextBox ID="LabelPrevComment"  runat="server" ReadOnly="True" TextMode="MultiLine" Visible="false" cssClass="form-control" Height="100px" Text="Label" ></asp:TextBox>
+                <asp:TextBox ID="LabelPrevComment"  runat="server" ReadOnly="True" TextMode="MultiLine" Visible="false"  cssClass="form-control" Height="100px" Text="Label" ></asp:TextBox>
 
                 <br />
                 <asp:Button ID="ButtonPrevComment" runat="server" Text="Показать Ваш комментарий из предыдущей версии процесса" OnClientClick="javascript:showSimpleLoadingScreen()" CausesValidation="False" Visible="False" Width="100%" OnClick="ButtonPrevComment_Click"/>
@@ -93,6 +151,11 @@
 
                 Прикрепление документа(не обязательно)
                 <asp:FileUpload ID="AddStepFileFileUpload" runat="server" Width="532px" />
+
+                <asp:Label ID="ExistingDocNameLabel" Visible="true" runat="server" ></asp:Label>
+                <br />
+                <asp:TextBox ID="ExistingDocIdTextBox" CssClass="invisible"  runat="server"></asp:TextBox>
+
                 <br />
 
                 <div class="btn-group float-right">
