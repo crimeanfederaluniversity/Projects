@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -911,5 +912,12 @@ namespace EDM.edm
         {
             Response.Redirect("SubmittedPage.aspx");
         }
+
+        protected void md5CheckButton_OnClick(object sender, EventArgs e)
+        {
+            OtherFuncs of = new OtherFuncs();
+            of.Md5Check(this.Page,FileUpload1);
+        }
+
     }
 }

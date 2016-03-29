@@ -1,6 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"  CodeBehind="Dashboard.aspx.cs" Inherits="EDM.edm.Dashboard" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    
 <style type="text/css">
     .top_panel {
     position:fixed;
@@ -14,13 +13,13 @@
     padding-top:5px;
     font-weight:bold;
 }
-   #coomentEndP{
-	width : 900px;
-	height : 372px;
+   #coomentEndP, #md5check{
+	width : 300px;
+	height : 120px;
 	position : fixed; 
 	z-index : 50;
 	top : 20%; 
-	left : 30%;	
+	left : 40%;	
 
 	border : 2px solid;
 	border-radius: 10px;
@@ -35,11 +34,12 @@
 
 <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="True">    
     <div>          
-        &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="goBackButton" CausesValidation="false"  runat="server" Enabled="true" CssClass="btn btn-default" Text="Назад" Width="150" Height="30" OnClientClick="history.back ()" OnClick="goBackButton_Click" />
-        &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="goForwardButton" Enabled="true" CausesValidation="false"  CssClass="btn btn-default" runat="server" Text="Вперед" Width="150" Height="30" OnClientClick="history.forward ()"/>
-        <asp:Button ID="GoToTemplatesButton" Enabled="true"  CausesValidation="false"  CssClass="btn btn-default button_right" runat="server" Text="Мои шаблоны" Width="150" Height="30" OnClick="GoToTemplatesButton_Click" />
-        <asp:Button ID="GoToSlavesHistory" runat="server" Text="К истории подчиненных" CausesValidation="false"  CssClass="btn btn-default button_right" Width="200" Height="30" OnClick="GoToSlavesHistory_Click"/>
-        <asp:Button ID="GoToSubmitterButton" runat="server" Text="Утвержденные документы" CausesValidation="false"  CssClass="btn btn-default button_right" Width="200" Height="30" OnClick="GoToSubmitterButton_Click" />
+        &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="goBackButton" CausesValidation="false"  runat="server" Enabled="true" CssClass="btn btn-default" Text="Назад" Width="200" Height="100%" OnClientClick="history.back ()" OnClick="goBackButton_Click" />
+        &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="goForwardButton" Enabled="true" CausesValidation="false"  CssClass="btn btn-default" runat="server" Text="Вперед" Width="200" Height="100%" OnClientClick="history.forward ()"/>
+        <asp:Button ID="GoToTemplatesButton" Enabled="true"  CausesValidation="false"  CssClass="btn btn-default button_right" runat="server" Text="Мои шаблоны" Width="200" Height="100%" OnClick="GoToTemplatesButton_Click" />
+        <asp:Button ID="GoToSlavesHistory" runat="server" Text="К истории подчиненных" CausesValidation="false"  CssClass="btn btn-default button_right" Width="200" Height="100%" OnClick="GoToSlavesHistory_Click"/>
+        <asp:Button ID="GoToSubmitterButton" runat="server" Text="Утвержденные документы" CausesValidation="false"  CssClass="btn btn-default button_right" Width="200" Height="100%" OnClick="GoToSubmitterButton_Click" />
+        <asp:Button ID="md5Button" runat="server" Text="Проверить документ md5" CssClass="btn btn-default button_right" Width="200" Height="100%" OnClientClick="javascript: document.getElementById('md5check').style.visibility='visible'; return false;"/>
            </div>
 </asp:Panel>
     <br/><br/>
@@ -56,6 +56,21 @@
             <div>
             <asp:Button ID="Button5" runat="server" Text="Утвердить" OnClientClick="showLoadingScreenWithText('Идет процесс утверждения. Пожалуйста дождитесь завершения!');" OnClick="Button5_Click"/>
                 <asp:Button ID="Button6" runat="server" OnClientClick="document.getElementById('coomentEndP').style.visibility='hidden'; return false;" Text="Отменить" />
+           </div>
+        </asp:Panel>
+    </div>
+    
+        <div id="md5check" style="visibility: hidden; background-color:lightgreen">
+        <asp:Panel runat="server" ID="md5_panel" Visible="true">
+            <asp:Label ID="Label3" runat="server" Text="Укажите файл" Font-Bold="True"></asp:Label>
+            <br/>
+            <br/>
+            <asp:FileUpload ID="FileUpload1" runat="server" />
+            <br/>
+            <asp:Label ID="md5Label" runat="server" Text="Label" Visible="False"></asp:Label>
+            <div>
+            <asp:Button ID="md5CheckButton" runat="server" Text="Проверить" OnClientClick="showLoadingScreenWithText('Идет процесс, подождите');" OnClick="md5CheckButton_OnClick"/>
+            <asp:Button ID="Button8" runat="server" OnClientClick="document.getElementById('md5check').style.visibility='hidden'; return false;" Text="Отменить" />
            </div>
         </asp:Panel>
     </div>

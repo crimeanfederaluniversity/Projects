@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace EDM.edm
@@ -162,10 +163,50 @@ namespace EDM.edm
             }
         }
 
+        public string GetMd5FromFile(string path)
+        {
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(path))
+                {
+                    return BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
+                }
+            }
+        }
+
         public int GetProcMaxVersion(int procId)
         {
             return (from a in dc.ProcessVersions where a.active && a.fk_process == procId select a)
                 .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
+        }
+
+        public void Md5Check(Page pg, FileUpload fu)
+        {
+            OtherFuncs of = new OtherFuncs();
+            string directoryToSave = HttpContext.Current.Server.MapPath("~/edm/documents/tmp/");
+            if (!Directory.Exists(directoryToSave))
+            {
+                Directory.CreateDirectory(directoryToSave);
+            }
+
+            if (fu.PostedFile.FileName.Any() && fu.HasFile && fu.PostedFile.ContentLength < 35243512)
+            {
+                fu.SaveAs(directoryToSave + fu.FileName);
+                var res = of.GetMd5FromFile(directoryToSave + fu.FileName);
+
+                if (File.Exists(directoryToSave + fu.FileName))
+                {
+                    File.Delete(directoryToSave + fu.FileName);
+                }
+
+                ScriptManager.RegisterStartupScript(pg, pg.GetType(), "err_msg", "alert('" + res + "');", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(pg, pg.GetType(), "err_msg", "alert('Ошибка выполнения');",
+                    true);
+                //throw new Exception(); // !!!!!!!!!!!!!!!!!!!!!!!!
+            }
         }
     }
 }
