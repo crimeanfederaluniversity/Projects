@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ZakupkaDB" Class="ZakupkaDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=ZakupkaDB;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ZakupkaDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Contracts" Member="Contracts">
+    <Type Name="Contracts">
+      <Column Name="contractID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="fk_event" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="fk_project" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Contracts_CollectedValues" Member="CollectedValues" ThisKey="contractID" OtherKey="fk_contract" Type="CollectedValues" />
+      <Association Name="Events_Contracts" Member="Events" ThisKey="fk_event" OtherKey="eventID" Type="Events" IsForeignKey="true" />
+      <Association Name="Projects_Contracts" Member="Projects" ThisKey="fk_project" OtherKey="projectID" Type="Projects" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Events" Member="Events">
+    <Type Name="Events">
+      <Column Name="eventID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="Events_Contracts" Member="Contracts" ThisKey="eventID" OtherKey="fk_event" Type="Contracts" />
+      <Association Name="Events_Projects" Member="Projects" ThisKey="eventID" OtherKey="fk_event" Type="Projects" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Projects" Member="Projects">
+    <Type Name="Projects">
+      <Column Name="projectID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="fk_event" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Projects_Contracts" Member="Contracts" ThisKey="projectID" OtherKey="fk_project" Type="Contracts" />
+      <Association Name="Events_Projects" Member="Events" ThisKey="fk_event" OtherKey="eventID" Type="Events" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="Users">
+      <Column Name="userID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="login" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="struct" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="Users_CollectedValues" Member="CollectedValues" ThisKey="userID" OtherKey="fk_user" Type="CollectedValues" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CollectedValues" Member="CollectedValues">
+    <Type Name="CollectedValues">
+      <Column Name="collectedFieldID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="version" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="value" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="fk_field" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fk_contract" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="createDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Contracts_CollectedValues" Member="Contracts" ThisKey="fk_contract" OtherKey="contractID" Type="Contracts" IsForeignKey="true" />
+      <Association Name="Users_CollectedValues" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
+      <Association Name="Fields_CollectedValues" Member="Fields" ThisKey="fk_field" OtherKey="filedID" Type="Fields" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Fields" Member="Fields">
+    <Type Name="Fields">
+      <Column Name="filedID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="type" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="line" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="col" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="height" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="width" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="step" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Fields_CollectedValues" Member="CollectedValues" ThisKey="filedID" OtherKey="fk_field" Type="CollectedValues" />
+    </Type>
+  </Table>
+</Database>
