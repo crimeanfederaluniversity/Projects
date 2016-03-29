@@ -129,21 +129,22 @@ namespace EDM.edm
             else
             versionsInProcess = _main.GetProcessVersionsInProcess(processId);
             ProcessVersions lastVersion =_main.GetProcessVersionsLastVerson(processId);
-            //ProcessVersions lastVersion = versionsInProcess[versionsInProcess.Count - 1];
             foreach (ProcessVersions currentVersion in versionsInProcess)
             {
-                TableRow processVersionRow = new TableRow();
-
-                
+                TableRow processVersionRow = new TableRow();              
                 List<Steps> stepsInVersion = _main.GetStepsInProcessVersion(currentVersion.processVersionID);
                 int stepsCount = stepsInVersion.Count;
                 int rowSpanCount = 0;
                 List<Participants> participantsWithoutStep = new List<Participants>();
                 if (lastVersion == currentVersion)
                 {
-                     participantsWithoutStep = _main.GetParticipantsInProcessWithNoStep(processId,
+                    participantsWithoutStep = _main.GetParticipantsInProcessWithNoStep(processId,
                         lastVersion.processVersionID);
                     rowSpanCount = stepsCount + participantsWithoutStep.Count;
+                }
+                else
+                {
+                    rowSpanCount = stepsCount;
                 }
 
                 
