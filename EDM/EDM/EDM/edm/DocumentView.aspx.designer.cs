@@ -67,6 +67,24 @@ namespace EDM.edm {
         protected global::System.Web.UI.WebControls.TextBox LabelComment;
         
         /// <summary>
+        /// useInnerProc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl useInnerProc;
+        
+        /// <summary>
+        /// OpenFixedPanelButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button OpenFixedPanelButton;
+        
+        /// <summary>
         /// LabelPrevComment control.
         /// </summary>
         /// <remarks>

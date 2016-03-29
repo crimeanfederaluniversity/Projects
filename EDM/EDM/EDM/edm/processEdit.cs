@@ -54,10 +54,18 @@ namespace EDM.edm
             DocumentsInStep newDocument = new DocumentsInStep();
             newDocument.active = true;
             newDocument.documentName = docName;
-            newDocument.fk_step = stepId;
+            //newDocument.fk_step = stepId;
             newDocument.documentComment = docComment;
             _edmDb.DocumentsInStep.InsertOnSubmit(newDocument);
             _edmDb.SubmitChanges();
+
+            StepDocInStepMap newstepDocMap = new StepDocInStepMap();
+            newstepDocMap.active = true;
+            newstepDocMap.fk_step = stepId;
+            newstepDocMap.fk_documentInStep = newDocument.documentsInStepId;
+            _edmDb.StepDocInStepMap.InsertOnSubmit(newstepDocMap);
+            _edmDb.SubmitChanges();
+
             return newDocument.documentsInStepId;
         }
         public int CreateChildProcess(int parentProcessId)
@@ -167,7 +175,14 @@ namespace EDM.edm
         #endregion
 
         #region get
-
+        public Processes GetChildProcess(int procId,int initiatorId)
+        {
+            return (from a in _edmDb.Processes
+                where a.fk_parentProcess == procId
+                && a.fk_initiator == initiatorId
+                      && a.active == true
+                select a).FirstOrDefault();
+        }
         public Submitters GetSubmitterIdByUsrerId(int userId)
         {
             return (from a in _edmDb.Submitters where a.fk_user == userId select a).FirstOrDefault();
@@ -396,7 +411,9 @@ namespace EDM.edm
         public DocumentsInStep GetDocumentInStep(int stepid)
         {
             return (from a in _edmDb.DocumentsInStep
-                    where a.fk_step == stepid
+                    join b in _edmDb.StepDocInStepMap
+                    on a.documentsInStepId equals  b.fk_documentInStep
+                    where b.fk_step == stepid
                           && a.active == true
                     select a).FirstOrDefault();
         }

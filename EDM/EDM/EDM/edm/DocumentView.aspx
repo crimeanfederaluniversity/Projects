@@ -1,24 +1,48 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DocumentView.aspx.cs" Inherits="EDM.edm.DocumentView" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-
     <style type="text/css">
-    .top_panel {
-    position:fixed;
-    left:0;
-    top:3.5em;
-    width:100%;
-    height:30px;
-    background-color:#70463A !important;
-    z-index:10;
-    color:#05ff01;  
-    padding-top:5px;
-    font-weight:bold;
-}
-   .button_right 
-   {
-       float:right
-   }     
-</style> 
+        
+        
+            
+         .RBL label
+         {
+             display: inline;
+         }
+        .RBL td
+        {
+            text-align: left;
+            width: 100%;
+        }
+        .top_panel {
+            position:fixed;
+            left:0;
+            top:3.5em;
+            width:100%;
+            height:30px;
+            background-color:#70463A !important;
+            z-index:10;
+            color:#05ff01;  
+            padding-top:5px;
+            font-weight:bold;
+        }
+        .button_right 
+        {
+            float:right
+        }
+    </style> 
+    
+    
+    <script>
+        
+        function setComment(content) {
+
+            document.getElementById('MainContent_LabelCommentl').value = content();
+        }
+
+    </script>
+    
+    
+
 <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
     <div>          
         &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="goBackButton" CausesValidation="false"   runat="server" Enabled="true" CssClass="btn btn-default" Text="Назад" Width="150" Height="30" OnClick="goBackButton_Click" />
@@ -47,6 +71,10 @@
            
 
             <br />
+            <div id="useInnerProc" runat="server" Visible="False">
+                <br />
+                <asp:Button ID="OpenFixedPanelButton" runat="server" Text="Прикрепить комментарий и документы из внутренненго согласования" Width="790px" />
+                </div>
             <br />
             
         <%--<asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine" Height="54px" Width="160px"></asp:TextBox>--%> 

@@ -10,6 +10,92 @@ namespace EDM.edm
 {
     public partial class DocumentView : System.Web.UI.Page
     {
+
+        ProcessMainFucntions main = new ProcessMainFucntions();
+        public Panel GetChooseFromInnerProcessDocumentsPanel(int procId,int userId)
+        {
+            Panel panelToReturn = new Panel();
+            panelToReturn.ID = "chooseInnerProcPanel";
+            panelToReturn.Style.Add("top", "50%");
+            panelToReturn.Style.Add("left", "50%");
+            panelToReturn.Style.Add("margin", "-250px 0px 0px -470px");
+
+            panelToReturn.Style.Add("border", "1px solid black");
+            panelToReturn.Style.Add("z-index", "21");
+            panelToReturn.Style.Add("position", "fixed");
+            panelToReturn.Style.Add("background-color", "white");
+            panelToReturn.Style.Add("visibility", "hidden");
+            panelToReturn.Style.Add("height", "500px");
+            panelToReturn.Style.Add("width", "940px");
+
+            Panel scrollPanelComment = new Panel();
+            scrollPanelComment.ID = "chooseInnerProcPanelScrollComment";
+            scrollPanelComment.Style.Add("height","40%");
+            scrollPanelComment.ScrollBars = ScrollBars.Vertical;
+
+            Panel scrollPanelDocs = new Panel();
+            scrollPanelDocs.ID = "chooseInnerProcPanelScrollDocs";
+            scrollPanelDocs.Style.Add("height", "40%");
+            scrollPanelDocs.ScrollBars = ScrollBars.Vertical;
+
+            Processes childProc = main.GetChildProcess(procId, userId);
+            ProcessVersions childLastVersion = main.GetProcessVersionsLastVerson(childProc.processID);
+            List<Steps> childLastVersionSteps = main.GetStepsInProcessVersion(childLastVersion.processVersionID);
+
+            Label title1 = new Label();
+            Label title2 = new Label();
+            title1.Text = "Комментарии:";
+            
+            title2.Text = "Документы:";
+
+            RadioButtonList commentsList = new RadioButtonList();
+            RadioButtonList docsList = new RadioButtonList();
+
+            commentsList.CssClass = "RBL";
+            docsList.CssClass = "RBL";
+
+            foreach (Steps curStep in childLastVersionSteps)
+            {
+                ListItem newCommentItem = new ListItem();
+                newCommentItem.Text = curStep.comment;
+                newCommentItem.Value = curStep.comment;
+                commentsList.Items.Add(newCommentItem);
+
+                DocumentsInStep doc = main.GetDocumentInStep(curStep.stepID);
+                if (doc != null)
+                {
+                    ListItem newDocItem = new ListItem();
+                    newDocItem.Text = doc.documentName;
+                    newDocItem.Value = doc.documentsInStepId.ToString();
+                    docsList.Items.Add(newDocItem);
+                }
+            }
+
+            
+                
+            scrollPanelComment.Controls.Add(commentsList);
+            scrollPanelDocs.Controls.Add(docsList);
+            panelToReturn.Controls.Add(title1);
+            panelToReturn.Controls.Add(scrollPanelComment);
+            panelToReturn.Controls.Add(title2);
+            panelToReturn.Controls.Add(scrollPanelDocs);
+
+            Button setAllButton = new Button();
+            setAllButton.Style.Add("width","100%");
+            setAllButton.Text = "Ок";
+
+            Button cancelButton = new Button();
+            cancelButton.Style.Add("width", "100%");
+            cancelButton.Text = "Отмена";
+
+            cancelButton.OnClientClick = "document.getElementById('MainContent_chooseInnerProcPanel').style.visibility = 'hidden'; return false; ";
+
+            panelToReturn.Controls.Add(setAllButton);
+            panelToReturn.Controls.Add(cancelButton);
+
+            return panelToReturn;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             var userId = Session["userID"];
@@ -35,6 +121,14 @@ namespace EDM.edm
 
                 EDMdbDataContext dataContext = new EDMdbDataContext();
 
+
+                bool procHasChild = (main.GetChildProcess(proc, (int) userId) != null);
+                if (procHasChild)
+                {
+                    useInnerProc.Visible = true;
+                    useInnerProc.Controls.Add(GetChooseFromInnerProcessDocumentsPanel(proc, (int)userId));
+                    OpenFixedPanelButton.OnClientClick = "document.getElementById('MainContent_chooseInnerProcPanel').style.visibility = 'visible'; return false; ";
+                }
 
                 int userID;
                 int.TryParse(Session["userID"].ToString(), out userID);
