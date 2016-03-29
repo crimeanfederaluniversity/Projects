@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -9,6 +10,7 @@ namespace EDM.edm
 {
     public partial class Subordinate : System.Web.UI.Page
     {
+        [Serializable]
         public class DataOne
         {
             public int Id { get; set; }
@@ -32,8 +34,13 @@ namespace EDM.edm
             {
                 int direction;
                 int.TryParse(Session["directionS"].ToString(), out direction);
+                DateTime strDateTime;
+                DateTime.TryParse(Session["dateStartSearch"].ToString(), out strDateTime);
 
-                RenderSubGrid(direction, userId, FillGrid(direction, userId));
+                RenderSubGrid(direction, userId,
+                    strDateTime != DateTime.MinValue
+                        ? FillGrid(direction, userId, Session["searchName"].ToString(), strDateTime.ToString())
+                        : FillGrid(direction, userId, Session["searchName"].ToString()));
             }
         }
 
@@ -44,6 +51,17 @@ namespace EDM.edm
 
             if (direction == 10)
             {
+                //directionLabel.Text = "История процесов";
+                Button10.BackColor = Color.WhiteSmoke;
+                Button10.BorderStyle = BorderStyle.Inset;
+                Button10.BorderWidth = 2;
+                Button10.BorderColor = Color.OrangeRed;
+
+                NameSearchBox.Text = Session["searchName"].ToString();
+                DateSearchBox.Text = Session["dateStartSearch"].ToString();
+
+                searchDiv.Visible = true;
+
                 foreach (var itm in data)
                 {
                     switch (itm.Status)
@@ -132,13 +150,18 @@ namespace EDM.edm
 
             if (direction == 20)
             {
-             
+                Button20.BackColor = Color.WhiteSmoke;
+                Button20.BorderStyle = BorderStyle.Inset;
+                Button20.BorderWidth = 2;
+                Button20.BorderColor = Color.OrangeRed;
+
+                searchDiv.Visible = false;
             }
 
             #endregion 20
         }
 
-        private  List<DataOne> FillGrid(int direction, object userId)
+        private  List<DataOne> FillGrid(int direction, object userId, params string[] searchValues)
         {
             List<DataOne> directionData = new List<DataOne>();
 
@@ -153,6 +176,15 @@ namespace EDM.edm
                 slavesId =
                     of.GetSlaves((int)(from a in dc.Users where a.active && a.userID == (int) userId select a.fk_struct).FirstOrDefault(),
                         ref slavesStructId); // TryParse
+
+                if (searchValues.Any())
+                {
+                    slavesId = (from a in dc.Users
+                        where a.active && slavesId.Contains(a.userID)
+                        join b in dc.Users on a.userID equals b.userID
+                        where b.name.Contains(searchValues[0])
+                        select b.userID).ToList();
+                }
 
                 var processIncludeSlaves =
                     (from a in dc.Participants where a.active && slavesId.Contains(a.fk_user) select a.fk_process)
@@ -171,10 +203,24 @@ namespace EDM.edm
                         DateStart = b.dateStart,
                         DateEnd = b.dateEnd
                     }
-                    ).OrderByDescending(d => d.DateStart).GroupBy(x => x.Id).Select(x => x.First()).ToList(); ;
+                    ).OrderByDescending(d => d.DateStart).GroupBy(x => x.Id).Select(x => x.First()).ToList();
+
+                if (searchValues.Count() > 1)
+                {
+                    DateTime compDate;
+                    DateTime.TryParse(searchValues[1], out compDate);
+
+                    directionData = directionData.Where(
+                                a =>
+                                a.DateStart != null &&
+                                a.DateStart.Value.Year.ToString().Contains(compDate.Year.ToString()) &&
+                                a.DateStart.Value.Month.ToString().Contains(compDate.Month.ToString()) &&
+                                a.DateStart.Value.Day.ToString().Contains(compDate.Day.ToString())).OrderByDescending(d => d.DateStart).GroupBy(x => x.Id).Select(x => x.First()).ToList();
+                }
             }
             #endregion 10
 
+            ViewState["dataOneSource"] = directionData;
             return directionData;
         }
 
@@ -191,6 +237,33 @@ namespace EDM.edm
                     }
                     break;
             }
+        }
+
+        protected void subGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            subGridView.PageIndex = e.NewPageIndex;
+            subGridView.DataSource = ViewState["dataOneSource"];
+            subGridView.DataBind();
+        }
+
+        protected void SearchButton_Click(object sender, EventArgs e)
+        {
+            Session["searchName"] = NameSearchBox.Text;
+            Session["dateStartSearch"] = DateSearchBox.Text;
+            Response.Redirect("Subordinate.aspx");
+        }
+
+        protected void Button10_Click(object sender, EventArgs e)
+        {
+            Session["directionS"] = 10;
+            Response.Redirect("Subordinate.aspx");
+        }
+
+        protected void Button20_Click(object sender, EventArgs e)
+        {
+            Session["directionS"] = 20;
+            Response.Redirect("Subordinate.aspx");
+
         }
     }
 }

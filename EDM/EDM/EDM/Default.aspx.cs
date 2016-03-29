@@ -18,6 +18,8 @@ namespace EDM
             Session["directionS"] = 10;
             Session["archiveVersion"] = -1;
             Session["isPrevCommentShow"] = true;
+            Session["searchName"] = string.Empty;
+            Session["dateStartSearch"] = string.Empty;
             Response.Redirect("~/edm/Dashboard.aspx");
         }
         protected void Page_Load(object sender, EventArgs e)
