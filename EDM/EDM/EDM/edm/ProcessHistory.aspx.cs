@@ -128,7 +128,7 @@ namespace EDM.edm
             }
             else
             versionsInProcess = _main.GetProcessVersionsInProcess(processId);
-
+            ProcessVersions lastVersion = versionsInProcess[versionsInProcess.Count - 1];
             foreach (ProcessVersions currentVersion in versionsInProcess)
             {
                 TableRow processVersionRow = new TableRow();
@@ -136,29 +136,40 @@ namespace EDM.edm
                 
                 List<Steps> stepsInVersion = _main.GetStepsInProcessVersion(currentVersion.processVersionID);
                 int stepsCount = stepsInVersion.Count;
+                int rowSpanCount = 0;
+                List<Participants> participantsWithoutStep = new List<Participants>();
+                if (lastVersion == currentVersion)
+                {
+                     participantsWithoutStep = _main.GetParticipantsInProcessWithNoStep(processId,
+                        lastVersion.processVersionID);
+                    rowSpanCount = stepsCount + participantsWithoutStep.Count;
+                }
+
+                
 
                 TableCell versionIdCell = new TableCell();
                 versionIdCell.Text = currentVersion.version.ToString();
-                versionIdCell.RowSpan = stepsCount;
+                versionIdCell.RowSpan = rowSpanCount;
                 processVersionRow.Cells.Add(versionIdCell);
 
                 TableCell versionComment = new TableCell();
                 versionComment.Text = currentVersion.comment.ToString();
-                versionComment.RowSpan = stepsCount;
+                versionComment.RowSpan = rowSpanCount;
                 processVersionRow.Cells.Add(versionComment);
 
                 TableCell versionStatus = new TableCell();
                 versionStatus.Text = currentVersion.status.ToString();
-                versionStatus.RowSpan = stepsCount;
+                versionStatus.RowSpan = rowSpanCount;
                 processVersionRow.Cells.Add(versionStatus);
 
                 TableCell documentsCell = DocumentsInVersion(currentVersion.processVersionID,processId);
-                documentsCell.RowSpan = stepsCount;
+                documentsCell.RowSpan = rowSpanCount;
                 processVersionRow.Cells.Add(documentsCell);
 
 
-                if (stepsCount == 0)
+                if (rowSpanCount == 0)
                 {
+                    processVersionRow.Cells.Add(new TableCell());
                     processVersionRow.Cells.Add(new TableCell());
                     processVersionRow.Cells.Add(new TableCell());
                     processVersionRow.Cells.Add(new TableCell());
@@ -168,6 +179,7 @@ namespace EDM.edm
                 }
 
                 bool firstStep = true;
+
                 foreach (Steps step in stepsInVersion)
                 {
                     TableRow processVersionStepRow = new TableRow();
@@ -233,8 +245,40 @@ namespace EDM.edm
                     historyTable.Rows.Add(processVersionStepRow);
                 }
 
+                foreach (Participants part in participantsWithoutStep)
+                {
+                    TableRow processVersionStepRow = new TableRow();
 
-                
+                    if (stepsCount == 0 && firstStep)
+                    {
+                        firstStep = false;
+                        processVersionStepRow = processVersionRow;
+                    }
+
+                    TableCell stepUserCell = new TableCell();
+                    stepUserCell.Text = _main.GetUserById(part.fk_user).name;
+                    processVersionStepRow.Cells.Add(stepUserCell);
+
+                    TableCell stepDateCell = new TableCell();
+                    processVersionStepRow.Cells.Add(stepDateCell);
+
+                    TableCell stepEndDateCell = new TableCell();
+                    stepEndDateCell.Text = part.dateEnd.ToString();
+                    processVersionStepRow.Cells.Add(stepEndDateCell);
+
+                    TableCell stepResultCell = new TableCell();
+                    stepResultCell.Text = "Не просмотрено";
+                    processVersionStepRow.Cells.Add(stepResultCell);
+
+                    TableCell stepCommentCell = new TableCell();
+                    processVersionStepRow.Cells.Add(stepCommentCell);
+
+                    TableCell stepDocCell = new TableCell();
+                    processVersionStepRow.Cells.Add(stepDocCell);
+
+                    historyTable.Rows.Add(processVersionStepRow);
+                }
+
             }
             historyTable.BorderWidth = 1;
             historyTable.CssClass = "table edm-table edm-history-table centered-block";

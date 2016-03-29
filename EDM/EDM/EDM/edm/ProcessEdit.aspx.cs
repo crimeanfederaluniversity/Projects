@@ -162,7 +162,7 @@ namespace EDM.edm
 
             return nodeToReturn;
         }
-        public TreeNode GetStructTreeViewNode(string panelId, string userNameField, string userIdField, bool fullStruct)
+        public TreeNode GetStructTreeViewNode(string panelId, string userNameField, string userIdField, bool fullStruct,int mainNodeId)
         {
 
             TreeNode nodeToReturn = new TreeNode();
@@ -173,15 +173,15 @@ namespace EDM.edm
                                       where a.active == true
                                       select a).ToList();
 
-            nodeToReturn = RecursiveGetTreeNode(2, outStruct, panelId, userNameField, userIdField, "", fullStruct);
+            nodeToReturn = RecursiveGetTreeNode(mainNodeId, outStruct, panelId, userNameField, userIdField, "", fullStruct);
 
             return nodeToReturn;
         }
-        public TreeView GetTreeViewWithPepole(int rowId)
+        public TreeView GetTreeViewWithPepole(int rowId, int mainNodeId)
         {
             TreeView strucTreeView = new TreeView();
             strucTreeView.ID = "treeView" + rowId;
-            strucTreeView.Nodes.Add(GetStructTreeViewNode("MainContent_chooseUserPanel" + rowId, "MainContent_ParticipentNameTextBox" + rowId, "MainContent_ParticipentIdTextBox" + rowId, false));
+            strucTreeView.Nodes.Add(GetStructTreeViewNode("MainContent_chooseUserPanel" + rowId, "MainContent_ParticipentNameTextBox" + rowId, "MainContent_ParticipentIdTextBox" + rowId, false, mainNodeId));
             strucTreeView.ExpandAll();
             foreach (TreeNode node in strucTreeView.Nodes[0].ChildNodes)
             {
@@ -239,7 +239,7 @@ namespace EDM.edm
             return tableToReturn;
 
         }
-        public Panel GetFiexdPanel(int rowId)
+        public Panel GetFiexdPanel(int rowId, int mainNodeId)
         {
             Panel panelToReturn = new Panel();
             panelToReturn.ID = "chooseUserPanel" + rowId;
@@ -261,11 +261,11 @@ namespace EDM.edm
             scrollPanel.Style.Add("height", "100%");
 
             //scrollPanel.Controls.Add(GetSearchResults("", rowId));
-            scrollPanel.Controls.Add(GetTreeViewWithPepole(rowId));
+            scrollPanel.Controls.Add(GetTreeViewWithPepole(rowId, mainNodeId));
             panelToReturn.Controls.Add(scrollPanel);
             return panelToReturn;
         }
-        public Table GetNewParticipantsTable()
+        public Table GetNewParticipantsTable(bool canEdit)
         {
             int processId = 0;
 
@@ -277,6 +277,15 @@ namespace EDM.edm
             }
             bool withQueu = main.WithQueueByProcess(processId);
             int participantsCount = ParticipantsList.Count;
+
+            int mainNodeId = 2;
+            Processes proc = main.GetProcessById(processId);
+            if (proc.fk_parentProcess != null)
+            {
+                if (main.GetUserById(proc.fk_initiator).fk_struct!=null)
+                mainNodeId = (int) main.GetUserById(proc.fk_initiator).fk_struct;
+            }
+           
 
             if (participantsCount != 0)
             {
@@ -363,7 +372,7 @@ namespace EDM.edm
                     participentCell.Controls.Add(ParticipantsList[i].ParticipantUserNameValidator);
 
                     Button openPunelButton = new Button();
-
+                    openPunelButton.Enabled = canEdit;
                     int rowId = i;
                     string tmpstr = ParticipantsList[i].ParticipantNameTextBox.ID.Replace("ParticipentNameTextBox", "");
                     Int32.TryParse(tmpstr, out rowId);
@@ -372,7 +381,9 @@ namespace EDM.edm
                     openPunelButton.OnClientClick = "document.getElementById('MainContent_chooseUserPanel" +
                                                     rowId.ToString() +
                                                     "').style.visibility = 'visible'; return false; ";
-                    participentCell.Controls.Add(GetFiexdPanel(rowId));
+                    if (canEdit)
+                    participentCell.Controls.Add(GetFiexdPanel(rowId, mainNodeId));
+
                     openPunelButton.CssClass = "btn btn-sm btn-default";
                     participentCell.Controls.Add(openPunelButton);
                     participantRow.Cells.Add(participentCell);
@@ -380,6 +391,7 @@ namespace EDM.edm
                     TableCell deleteParticipentCell = new TableCell();
 
                     Button deleteParticipentButton = new Button();
+                    deleteParticipentButton.Enabled = canEdit;
                     deleteParticipentButton.CausesValidation = false;
                     deleteParticipentButton.Text = "Удалить";
                     deleteParticipentButton.CommandArgument = rowId.ToString();
@@ -398,6 +410,7 @@ namespace EDM.edm
             }
 
             Button addRowToParticipantButton = new Button();
+            addRowToParticipantButton.Enabled = canEdit;
             addRowToParticipantButton.CausesValidation = false;
             addRowToParticipantButton.Text = "Добавить согласующего";
             addRowToParticipantButton.ID = "addRowToParticipantButton";
@@ -557,11 +570,19 @@ namespace EDM.edm
                     SaveAllDiv.Visible = true;
                 }
                 submitterDiv.Visible = true;
-                SubmitterDropDown.Enabled = (currentProcess.fk_template == null);
+               
                 createNewProcessDiv.Visible = false;
                 existingProcessTitleDiv.Visible = true;
                 ParticipantsDiv.Visible = true;
                 documentsDiv.Visible = true;
+
+                bool canEdit = true;
+                if (currentProcess.fk_template != null)
+                {
+                    ProcessTemplate templ = main.GetProcessTemplateById((int) currentProcess.fk_template);
+                    canEdit = templ.allowEditProcess;
+                }
+                SubmitterDropDown.Enabled = canEdit;
 
                 commentForVersionDiv.Visible = true;
 
@@ -569,7 +590,7 @@ namespace EDM.edm
                 ProcessIdLabel.Style.Add("word-wrap", "break-word");
 
                 ParticipantsDiv.Controls.Clear();
-                ParticipantsDiv.Controls.Add(GetNewParticipantsTable());
+                ParticipantsDiv.Controls.Add(GetNewParticipantsTable(canEdit));
                 documentsDiv.Controls.Clear();
                 documentsDiv.Controls.Add(GetDocumentsTable());
             }
@@ -998,7 +1019,8 @@ namespace EDM.edm
 
             if (!Page.IsPostBack)
             {
-                List<ProcessTemplate> templates = main.GetAllProcessTemplates();
+                Users thisUser = main.GetUserById((int) userId);
+                List<ProcessTemplate> templates = main.GetAllProcessTemplatesByStruct((int)thisUser.fk_struct);
 
                 foreach (ProcessTemplate template in templates)
                 {

@@ -3174,11 +3174,17 @@ namespace EDM
 		
 		private System.Nullable<int> _fk_submitter;
 		
+		private bool _allowEditProcess;
+		
+		private int _fk_struct;
+		
 		private EntitySet<Processes> _Processes;
 		
 		private EntitySet<ProcessTemplateParticipant> _ProcessTemplateParticipant;
 		
 		private EntityRef<Users> _Users;
+		
+		private EntityRef<Struct> _Struct;
 		
 		private EntityRef<Submitters> _Submitters;
 		
@@ -3202,6 +3208,10 @@ namespace EDM
     partial void OntypeChanged();
     partial void Onfk_submitterChanging(System.Nullable<int> value);
     partial void Onfk_submitterChanged();
+    partial void OnallowEditProcessChanging(bool value);
+    partial void OnallowEditProcessChanged();
+    partial void Onfk_structChanging(int value);
+    partial void Onfk_structChanged();
     #endregion
 		
 		public ProcessTemplate()
@@ -3209,6 +3219,7 @@ namespace EDM
 			this._Processes = new EntitySet<Processes>(new Action<Processes>(this.attach_Processes), new Action<Processes>(this.detach_Processes));
 			this._ProcessTemplateParticipant = new EntitySet<ProcessTemplateParticipant>(new Action<ProcessTemplateParticipant>(this.attach_ProcessTemplateParticipant), new Action<ProcessTemplateParticipant>(this.detach_ProcessTemplateParticipant));
 			this._Users = default(EntityRef<Users>);
+			this._Struct = default(EntityRef<Struct>);
 			this._Submitters = default(EntityRef<Submitters>);
 			OnCreated();
 		}
@@ -3381,6 +3392,50 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_allowEditProcess", DbType="Bit NOT NULL")]
+		public bool allowEditProcess
+		{
+			get
+			{
+				return this._allowEditProcess;
+			}
+			set
+			{
+				if ((this._allowEditProcess != value))
+				{
+					this.OnallowEditProcessChanging(value);
+					this.SendPropertyChanging();
+					this._allowEditProcess = value;
+					this.SendPropertyChanged("allowEditProcess");
+					this.OnallowEditProcessChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_struct", DbType="Int NOT NULL")]
+		public int fk_struct
+		{
+			get
+			{
+				return this._fk_struct;
+			}
+			set
+			{
+				if ((this._fk_struct != value))
+				{
+					if (this._Struct.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_structChanging(value);
+					this.SendPropertyChanging();
+					this._fk_struct = value;
+					this.SendPropertyChanged("fk_struct");
+					this.Onfk_structChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessTemplate_Processes", Storage="_Processes", ThisKey="processTemplateId", OtherKey="fk_template")]
 		public EntitySet<Processes> Processes
 		{
@@ -3437,6 +3492,40 @@ namespace EDM
 						this._fk_owner = default(int);
 					}
 					this.SendPropertyChanged("Users");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Struct_ProcessTemplate", Storage="_Struct", ThisKey="fk_struct", OtherKey="structID", IsForeignKey=true)]
+		public Struct Struct
+		{
+			get
+			{
+				return this._Struct.Entity;
+			}
+			set
+			{
+				Struct previousValue = this._Struct.Entity;
+				if (((previousValue != value) 
+							|| (this._Struct.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Struct.Entity = null;
+						previousValue.ProcessTemplate.Remove(this);
+					}
+					this._Struct.Entity = value;
+					if ((value != null))
+					{
+						value.ProcessTemplate.Add(this);
+						this._fk_struct = value.structID;
+					}
+					else
+					{
+						this._fk_struct = default(int);
+					}
+					this.SendPropertyChanged("Struct");
 				}
 			}
 		}
@@ -4631,6 +4720,8 @@ namespace EDM
 		
 		private EntitySet<Users> _Users;
 		
+		private EntitySet<ProcessTemplate> _ProcessTemplate;
+		
 		private EntitySet<Struct> _Struct2;
 		
 		private EntityRef<Struct> _Struct1;
@@ -4652,6 +4743,7 @@ namespace EDM
 		public Struct()
 		{
 			this._Users = new EntitySet<Users>(new Action<Users>(this.attach_Users), new Action<Users>(this.detach_Users));
+			this._ProcessTemplate = new EntitySet<ProcessTemplate>(new Action<ProcessTemplate>(this.attach_ProcessTemplate), new Action<ProcessTemplate>(this.detach_ProcessTemplate));
 			this._Struct2 = new EntitySet<Struct>(new Action<Struct>(this.attach_Struct2), new Action<Struct>(this.detach_Struct2));
 			this._Struct1 = default(EntityRef<Struct>);
 			OnCreated();
@@ -4754,6 +4846,19 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Struct_ProcessTemplate", Storage="_ProcessTemplate", ThisKey="structID", OtherKey="fk_struct")]
+		public EntitySet<ProcessTemplate> ProcessTemplate
+		{
+			get
+			{
+				return this._ProcessTemplate;
+			}
+			set
+			{
+				this._ProcessTemplate.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Struct_Struct", Storage="_Struct2", ThisKey="structID", OtherKey="fk_parent")]
 		public EntitySet<Struct> Struct2
 		{
@@ -4831,6 +4936,18 @@ namespace EDM
 		{
 			this.SendPropertyChanging();
 			entity.Struct1 = null;
+		}
+		
+		private void attach_ProcessTemplate(ProcessTemplate entity)
+		{
+			this.SendPropertyChanging();
+			entity.Struct = this;
+		}
+		
+		private void detach_ProcessTemplate(ProcessTemplate entity)
+		{
+			this.SendPropertyChanging();
+			entity.Struct = null;
 		}
 		
 		private void attach_Struct2(Struct entity)

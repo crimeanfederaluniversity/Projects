@@ -129,6 +129,8 @@ namespace EDM.edm
                 else
             {
                 ProcessTemplate newTemplate = new ProcessTemplate();
+                newTemplate.fk_struct = 2;
+                newTemplate.allowEditProcess = false;
                 newTemplate.active = true;
                 newTemplate.name = NewTemplateNameTextBox.Text;
                 newTemplate.fk_owner = userID;

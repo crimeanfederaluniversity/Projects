@@ -288,6 +288,27 @@ namespace EDM.edm
 
             return listToReturn;
         }
+
+        public ListItem[] GetAllStructToDropDown(int checkedStruct)
+        {
+            List<Struct> allStruct = (from a in _edmDb.Struct
+                where a.active == true
+                select a).ToList();
+            ListItem[] itemsToReturn = new ListItem[allStruct.Count];
+            int i = 0;
+            foreach (Struct curStruct in allStruct)
+            {
+                ListItem newItem = new ListItem();
+                newItem.Text = curStruct.name;
+                newItem.Value = curStruct.structID.ToString();
+                if (curStruct.structID == checkedStruct)
+                    newItem.Selected = true;
+                itemsToReturn[i] = newItem;
+                i++;
+            }
+            return itemsToReturn;
+        }
+
         public List<ProcessEdit.Participant> GetParticipantsInTempolate(int templateId)
         {
 
@@ -309,6 +330,37 @@ namespace EDM.edm
 
             return listToReturn;
         }
+
+
+        public List<Participants> GetParticipantsInProcessWithNoStep(int processId, int processLastVersion)
+        {
+            List<Participants> participantsWithStep = (from a in _edmDb.Participants
+                join b in _edmDb.Steps
+                    on a.participantID equals b.fk_participent
+                where a.active == true
+                      && b.active == true
+                      && b.fk_processVersion == processLastVersion
+                select a).Distinct().ToList();
+            List<Participants> allParticipantsInVersion = (from a in _edmDb.Participants
+                where a.fk_process == processId
+                where a.active == true
+                select a).ToList();
+            List<Participants> participantsToReturn = new List<Participants>();
+
+            foreach (Participants participant in allParticipantsInVersion)
+            {
+                if (participantsWithStep.Contains(participant))
+                {
+                    
+                }
+                else
+                {
+                    participantsToReturn.Add(participant);
+                }
+            }
+            return participantsToReturn;
+        }
+
         public List<Participants> GetParticipantsInProcess(int processId)
         {
             // List <ProcessEdit.Participant> listToReturn = new List<ProcessEdit.Participant>();
@@ -422,6 +474,35 @@ namespace EDM.edm
         {
             return (from a in _edmDb.ProcessTemplate where a.active == true select a).ToList();
         }
+        public Struct GetStructById (int structId)
+        {
+            return (from a in _edmDb.Struct
+                where a.structID == structId
+                select a).FirstOrDefault();
+        }
+        public List<ProcessTemplate> GetAllProcessTemplatesByStruct(int structId)
+        {
+            List<ProcessTemplate> toReturn = new List<ProcessTemplate>();
+            int currentStruct = structId;
+            while (true)
+            {
+                List<ProcessTemplate> tmpList = (from a in _edmDb.ProcessTemplate
+                    where a.active == true
+                          && a.fk_struct == currentStruct
+                    select a).ToList();
+                foreach (ProcessTemplate tmp in tmpList)
+                {
+                    toReturn.Add(tmp);
+                }
+                if (currentStruct == 2)
+                    break;
+                currentStruct = (int) GetStructById(currentStruct).fk_parent;
+
+            }
+
+
+            return toReturn;
+        }
         public ProcessTemplate GetProcessTemplateById(int templateId)
         {
             return (from a in _edmDb.ProcessTemplate where a.processTemplateId == templateId select a).FirstOrDefault();
@@ -500,12 +581,14 @@ namespace EDM.edm
             proc.fk_submitter = submitterId;
             _edmDb.SubmitChanges();
         }
-        public void SetTemplateParams(string name, string title, string content, int templateId, int submitterId)
+        public void SetTemplateParams(string name, string title, string content, int templateId, int submitterId, int fkStruct, bool allowChangeProcess)
         {
             ProcessTemplate currentTemplate = GetProcessTemplateById(templateId);
             currentTemplate.content_ = content;
             currentTemplate.name = name;
             currentTemplate.title = title;
+            currentTemplate.allowEditProcess = allowChangeProcess;
+            currentTemplate.fk_struct = fkStruct;
             if (submitterId == 0)
             {
                 currentTemplate.fk_submitter = null;

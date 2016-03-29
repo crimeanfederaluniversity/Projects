@@ -94,6 +94,24 @@ namespace EDM.edm {
         protected global::System.Web.UI.WebControls.TextBox TemplateContentTextBox;
         
         /// <summary>
+        /// AllowChangeProcessCheckBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox AllowChangeProcessCheckBox;
+        
+        /// <summary>
+        /// ChooseStructDropDown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ChooseStructDropDown;
+        
+        /// <summary>
         /// participantsDiv control.
         /// </summary>
         /// <remarks>

@@ -67,7 +67,7 @@ namespace EDM.edm
 
 
 
-                cell2.Controls.Add(proc.GetFiexdPanel(rowId));
+                cell2.Controls.Add(proc.GetFiexdPanel(rowId,2));
                 openPunelButton.CssClass = "btn btn-sm btn-default";
                 cell2.Controls.Add(openPunelButton);
                 cell2.Controls.Add(currentParticipant.ParticipantNameTextBox);
@@ -129,7 +129,6 @@ namespace EDM.edm
             Refresh();
         }
 
-
         protected void Page_Load(object sender, EventArgs e)
         {
             var userId = Session["userID"];
@@ -153,6 +152,9 @@ namespace EDM.edm
                 int submitterId = 0;
                 Int32.TryParse(currentTemplate.fk_submitter.ToString(), out submitterId);
                 SubmitterDropDown.Items.AddRange(_main.GetSubmittersList(submitterId));
+
+                AllowChangeProcessCheckBox.Checked = currentTemplate.allowEditProcess;
+                ChooseStructDropDown.Items.AddRange(_main.GetAllStructToDropDown(currentTemplate.fk_struct));
 
                 ParticipantsTemplateList = new List<ProcessEdit.Participant>();
 
@@ -230,8 +232,9 @@ namespace EDM.edm
             string submitterString = SubmitterDropDown.SelectedValue;
             int submitterId = 0;
             Int32.TryParse(submitterString, out submitterId);
-
-            _main.SetTemplateParams(TemplateNameTextBox.Text, TemplateTitleTextBox.Text, TemplateContentTextBox.Text, templateId, submitterId);
+            int fkStruct = 2;
+            Int32.TryParse(ChooseStructDropDown.SelectedValue, out fkStruct);
+            _main.SetTemplateParams(TemplateNameTextBox.Text, TemplateTitleTextBox.Text, TemplateContentTextBox.Text, templateId, submitterId, fkStruct, AllowChangeProcessCheckBox.Checked);
 
             #region do participants
             List<ProcessEdit.Participant> participantsToAdd;

@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CreateEditTemplate.aspx.cs" Inherits="EDM.edm.CreateEditTamplate" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-   <style type="text/css">
+    <style type="text/css">
     .top_panel {
     position:fixed;
     left:0;
@@ -60,9 +60,19 @@
         Текст листа согласования
         <br />
        <asp:TextBox ID="TemplateContentTextBox" runat="server" TextMode="MultiLine" Width="600px" Height="100px"></asp:TextBox>
+           <br />
+         <br />
+         <asp:CheckBox ID="AllowChangeProcessCheckBox" Text="Разрешить вносить изменения при создании процесса" runat="server" />
+         <br />
+         <br />
+         Структурное подразделение<br />
+        <asp:DropDownList ID="ChooseStructDropDown" runat="server" Height="20px" Width="602px">
+         </asp:DropDownList>
+         
+         <br />
     </div>
-    <br/>
-     
+    <br />
+    
     <br/>
     <div runat="server" id ="participantsDiv">
     

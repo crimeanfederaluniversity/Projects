@@ -35,10 +35,22 @@ namespace EDM.edm
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 client.Send(mail);
                 mail.Dispose();
+
+                EmailCopies emailCopy2 = new EmailCopies();
+                emailCopy2.emailFrom = from;
+                emailCopy2.emailTo = mailto;
+                emailCopy2.emailTitle = caption;
+                emailCopy2.emailContent = message;
+                emailCopy2.emailAttachment = attachFile;
+                emailCopy2.sendOk = true;
+                emailCopy2.sendDateTime = DateTime.Now;
+                dataContext.EmailCopies.InsertOnSubmit(emailCopy2);
+                dataContext.SubmitChanges();
+                return 1;
             }
             catch (Exception ex)
             {
-                /*
+                
                 emailCopy.emailFrom = from;
                 emailCopy.emailTo = mailto;
                 emailCopy.emailTitle = caption;
@@ -49,22 +61,16 @@ namespace EDM.edm
                 emailCopy.errorMessage = ex.ToString();
                 dataContext.EmailCopies.InsertOnSubmit(emailCopy);
                 dataContext.SubmitChanges();
-            */
+
+
+                return 0;
             }
-            EmailCopies emailCopy2 = new EmailCopies();
-            emailCopy2.emailFrom = from;
-            emailCopy2.emailTo = mailto;
-            emailCopy2.emailTitle = caption;
-            emailCopy2.emailContent = message;
-            emailCopy2.emailAttachment = attachFile;
-            emailCopy2.sendOk = true;
-            emailCopy2.sendDateTime = DateTime.Now;
-            dataContext.EmailCopies.InsertOnSubmit(emailCopy2);
-
-            dataContext.SubmitChanges();
 
 
-            return 0;
+            
+
+
+            
         }
 
         public int SendEmail(string emailto, string caption, string message, string attachFile)
