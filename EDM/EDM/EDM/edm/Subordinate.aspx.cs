@@ -20,6 +20,14 @@ namespace EDM.edm
             public DateTime? DateStart { get; set; }
             public DateTime? DateEnd { get; set; }
             public string Initiator { get; set; }
+            public string UserName { get; set; }
+            public int Participation { get; set; }
+            public int Approve { get; set; }
+            public int Reject { get; set; }
+            public int Overdue { get; set; }
+            public int InProcess { get; set; }
+
+
         }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -47,6 +55,8 @@ namespace EDM.edm
         private void RenderSubGrid(int direction, object userId, List<DataOne> data )
         {
             EDMdbDataContext dc = new EDMdbDataContext();
+            subGridView.DataSource = data;
+
             #region 10
 
             if (direction == 10)
@@ -96,7 +106,6 @@ namespace EDM.edm
 
                 //directionLabel.Visible = true;
                 directionLabel.Text = "Процессы подчиненных";
-                subGridView.DataSource = data;
 
                 BoundField boundField = new BoundField();
                 boundField.DataField = "Id";
@@ -156,6 +165,57 @@ namespace EDM.edm
                 Button20.BorderColor = Color.OrangeRed;
 
                 searchDiv.Visible = false;
+
+                BoundField boundField = new BoundField();
+                boundField.DataField = "Id";
+                boundField.HeaderText = "ИН";
+                boundField.Visible = true;
+                subGridView.Columns.Add(boundField);
+
+                BoundField boundField2 = new BoundField();
+                boundField2.DataField = "UserName";
+                boundField2.HeaderText = "Имя";
+                boundField2.Visible = true;
+                subGridView.Columns.Add(boundField2);
+
+                BoundField boundField3 = new BoundField();
+                boundField3.DataField = "Participation";
+                boundField3.HeaderText = "Участие";
+                boundField3.Visible = true;
+                subGridView.Columns.Add(boundField3);
+
+                BoundField boundField4 = new BoundField();
+                boundField4.DataField = "Approve";
+                boundField4.HeaderText = "Утвердил";
+                boundField4.Visible = true;
+                subGridView.Columns.Add(boundField4);
+
+                BoundField boundField5 = new BoundField();
+                boundField5.DataField = "Reject";
+                boundField5.HeaderText = "Отклонил";
+                boundField5.Visible = true;
+                subGridView.Columns.Add(boundField5);
+
+                BoundField boundField6 = new BoundField();
+                boundField6.DataField = "Overdue";
+                boundField6.HeaderText = "Просрочил";
+                boundField6.Visible = true;
+                subGridView.Columns.Add(boundField6);
+
+                BoundField boundField7 = new BoundField();
+                boundField7.DataField = "InProcess";
+                boundField7.HeaderText = "В процессе";
+                boundField7.Visible = true;
+                subGridView.Columns.Add(boundField7);
+
+                ButtonField coluButtonField = new ButtonField();
+                coluButtonField.Text = "Подробнее";
+                coluButtonField.ButtonType = ButtonType.Button;
+                coluButtonField.CommandName = "ButtonR20";
+                coluButtonField.ControlStyle.CssClass = "btn btn-default";
+                subGridView.Columns.Add(coluButtonField);
+
+                DataBind();
             }
 
             #endregion 20
@@ -164,18 +224,19 @@ namespace EDM.edm
         private  List<DataOne> FillGrid(int direction, object userId, params string[] searchValues)
         {
             List<DataOne> directionData = new List<DataOne>();
+            EDMdbDataContext dc = new EDMdbDataContext();
+            OtherFuncs of = new OtherFuncs();
+
+            List<int> slavesId = new List<int>();
+            List<int> slavesStructId = new List<int>();
+
+            slavesId =
+                of.GetSlaves((int)(from a in dc.Users where a.active && a.userID == (int)userId select a.fk_struct).FirstOrDefault(),
+                    ref slavesStructId); // TryParse
 
             #region 10
             if (direction == 10)
             {
-                EDMdbDataContext dc = new EDMdbDataContext();
-                OtherFuncs of = new OtherFuncs();
-                List<int> slavesId = new List<int>();
-                List<int> slavesStructId = new List<int>();
-
-                slavesId =
-                    of.GetSlaves((int)(from a in dc.Users where a.active && a.userID == (int) userId select a.fk_struct).FirstOrDefault(),
-                        ref slavesStructId); // TryParse
 
                 if (searchValues.Any())
                 {
@@ -187,10 +248,13 @@ namespace EDM.edm
                 }
 
                 var processIncludeSlaves =
-                    (from a in dc.Participants where a.active && slavesId.Contains(a.fk_user) select a.fk_process)
-                        .Distinct().ToList();
+                    (from a in dc.Participants
+                        where a.active && slavesId.Contains(a.fk_user)
+                        join pr in dc.Processes on a.fk_process equals pr.processID
+                        where pr.active
+                        select pr.processID).Distinct().ToList();
 
-                    directionData = (from a in dc.Processes
+                directionData = (from a in dc.Processes
                     where a.active && processIncludeSlaves.Contains(a.processID)
                     join b in dc.Participants on a.processID equals b.fk_process
                     where b.active
@@ -220,21 +284,72 @@ namespace EDM.edm
             }
             #endregion 10
 
+            #region 20
+
+            if (direction == 20)
+            {    
+                directionData = (from a in dc.Users
+                    where a.active && slavesId.Contains(a.userID)
+                    select new DataOne()
+                    {
+                        Id = a.userID,
+                        UserName = a.name,
+
+                        Participation = (from b in dc.Participants where b.active && b.fk_user == a.userID 
+                                         join pr in dc.Processes on b.fk_process equals pr.processID where pr.active select pr.processID).Distinct().Count(),
+
+                        Approve = (from b in dc.Participants where b.active && b.fk_user == a.userID
+                                   join s in dc.Steps on b.participantID equals s.fk_participent
+                                   where s.active && s.stepResult == 1 && !s.comment.Contains("автомат") // ПОДУМАТЬ
+                                   select s).OrderByDescending(d => d.fk_processVersion).GroupBy(x => x.fk_processVersion).Select(x => x.First()).Distinct().Count(),
+
+                        Reject = (from b in dc.Participants
+                                  where b.active && b.fk_user == a.userID
+                                  join s in dc.Steps on b.participantID equals s.fk_participent
+                                  where s.active && s.stepResult == -2
+                                  select s).OrderByDescending(d => d.fk_processVersion).GroupBy(x => x.fk_processVersion).Select(x => x.First()).Distinct().Count(),
+
+                        Overdue = (from b in dc.Participants
+                                   where b.active && b.fk_user == a.userID
+                                   join s in dc.Steps on b.participantID equals s.fk_participent
+                                   where s.active && s.stepResult == 1 && s.comment.Contains("автомат") // ПОДУМАТЬ
+                                   select s).OrderByDescending(d => d.fk_processVersion).GroupBy(x => x.fk_processVersion).Select(x => x.First()).Distinct().Count(),
+
+                    }
+                    ).OrderBy(n=>n.UserName).ToList();
+
+                foreach (var itm in directionData)
+                {
+                    itm.InProcess = itm.Participation - itm.Approve - itm.Reject - itm.Overdue;
+                }
+
+            }
+
+            #endregion 20
+
             ViewState["dataOneSource"] = directionData;
             return directionData;
         }
 
         protected void subGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            int idProcess = Convert.ToInt32(subGridView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[0].Text);
+            EDMdbDataContext dc = new EDMdbDataContext();
+            int id = Convert.ToInt32(subGridView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[0].Text);
 
             switch (e.CommandName)
             {
                 case "ButtonR10":
                 {
-                        Session["processID"] = idProcess;
-                        Response.Redirect("ProcessHistory.aspx");
-                    }
+                    Session["processID"] = id;
+                    Response.Redirect("ProcessHistory.aspx");
+                }
+                    break;
+                case "ButtonR20":
+                {
+                    Session["searchName"] = (from a in dc.Users where a.active && a.userID == id select a.name).FirstOrDefault();
+                    Session["directionS"] = 10;
+                    Response.Redirect("Subordinate.aspx");
+                }
                     break;
             }
         }

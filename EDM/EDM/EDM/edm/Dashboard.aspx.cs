@@ -547,6 +547,7 @@ namespace EDM.edm
             // 2 - архив
 
             EDMdbDataContext dataContext = new EDMdbDataContext();
+            OtherFuncs of = new OtherFuncs();
 
 
 
@@ -631,6 +632,20 @@ namespace EDM.edm
                         {
                             process.active = false;
                             dataContext.SubmitChanges();
+
+                            #region DeleteAllSteps
+                            List<Steps> steps = (from pv in dataContext.ProcessVersions
+                                where pv.fk_process == process.processID
+                                join s in dataContext.Steps on pv.processVersionID equals s.fk_processVersion
+                                select s).ToList();
+
+                            foreach (var step in steps)
+                            {
+                                step.active = false;
+                                dataContext.SubmitChanges();
+                            }
+                            #endregion DeleteAllSteps
+
                             Response.Redirect("Dashboard.aspx");
                         }
                         else

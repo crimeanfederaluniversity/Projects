@@ -161,5 +161,11 @@ namespace EDM.edm
                 dc.SubmitChanges();
             }
         }
+
+        public int GetProcMaxVersion(int procId)
+        {
+            return (from a in dc.ProcessVersions where a.active && a.fk_process == procId select a)
+                .OrderByDescending(v => v.version).Select(v => v.processVersionID).FirstOrDefault();
+        }
     }
 }

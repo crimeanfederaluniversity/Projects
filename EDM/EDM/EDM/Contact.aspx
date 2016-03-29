@@ -10,7 +10,7 @@
         Техническая поддержка: +7-978-117-53-98</address>
 
     <address>
-        E-mail:  <a href="mailto:otdel-avtomatizatsii-kfu@yandex.ru?subject=Обращение в техподдержку">otdel-avtomatizatsii-kfu@yandex.ru</a><br />
+        E-mail:  <a href="mailto:it-cfu@ya.ru?subject=Обращение в техподдержку">it-cfu@ya.ru</a><br />
         
     </address>
 </asp:Content>
