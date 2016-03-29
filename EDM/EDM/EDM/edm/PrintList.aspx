@@ -27,6 +27,7 @@ return false;
 
 
     <div id="PrintMainDiv" runat="server">
+        <asp:Label ID="idDocLabel" runat="server" Text=""></asp:Label>
             <div id="TemplateHeaderDiv" runat="server">
     
     </div>

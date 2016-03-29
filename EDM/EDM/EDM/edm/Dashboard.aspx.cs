@@ -815,6 +815,7 @@ namespace EDM.edm
                         if (date.Day <= DateTime.Now.Day && date.Month <= DateTime.Now.Month && date.Year<= DateTime.Now.Year)
                         {
                             e.Row.Cells[3].ForeColor = Color.Red;
+                            e.Row.Cells[4].ForeColor = Color.Red;
                         }
                         var isNew =
                             (from a in dc.Participants

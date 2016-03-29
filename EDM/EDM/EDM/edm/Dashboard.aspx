@@ -13,13 +13,26 @@
     padding-top:5px;
     font-weight:bold;
 }
-   #coomentEndP, #md5check{
+   #md5check{
 	width : 300px;
 	height : 120px;
 	position : fixed; 
 	z-index : 50;
 	top : 20%; 
-	left : 40%;	
+	left : 42%;	
+
+	border : 2px solid;
+	border-radius: 10px;
+	
+	padding: 5px;
+}
+   #coomentEndP{
+	width : 900px;
+	height : 372px;
+	position : fixed; 
+	z-index : 50;
+	top : 20%; 
+	left : 30%;	
 
 	border : 2px solid;
 	border-radius: 10px;

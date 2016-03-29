@@ -11,6 +11,7 @@ namespace EDM.edm
     {
         EDMdbDataContext _edmDb = new EDMdbDataContext();
         ProcessMainFucntions main = new ProcessMainFucntions();
+        OtherFuncs of = new OtherFuncs();
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -22,14 +23,19 @@ namespace EDM.edm
                 Response.Redirect("~/Default.aspx");
             }
 
-
-
-
-
-
             int processId = (int) HttpContext.Current.Session["processID"];
             ProcessVersions LAstVersion = main.GetLastVersionInProcess(processId);
             List<Steps> lastVersionSteps = main.GetStepsInProcessVersion(LAstVersion.processVersionID);
+
+            var documentsInProc = (from a in _edmDb.ProcVersionDocsMap
+                where a.active && a.fk_processVersion == of.GetProcMaxVersion(processId)
+                select a.fk_documents).ToList();
+
+            foreach (var doc in documentsInProc)
+            {
+                idDocLabel.Text += "ДОКУМЕНТ № " + doc + " ( md5: " + _edmDb.Documents.Where(d => d.documentID == doc).Select(h => h.md5).FirstOrDefault() + " ) "+ "<br/>";
+            }
+
 
             Processes proc = main.GetProcessById(processId);
 
