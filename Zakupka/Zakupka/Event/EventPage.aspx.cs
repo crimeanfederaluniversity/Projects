@@ -13,7 +13,11 @@ namespace Zakupka.Event
         ZakupkaDBDataContext zakupkaDB = new ZakupkaDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (Session["userID"] != null)
+            Refresh();
+        }
+        protected void Refresh()
+        {
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add(new DataColumn("eventID", typeof(string)));
             dataTable.Columns.Add(new DataColumn("eventName", typeof(string)));
@@ -47,7 +51,13 @@ namespace Zakupka.Event
             newevent.name = TextBox1.Text;
             zakupkaDB.Events.InsertOnSubmit(newevent);
             zakupkaDB.SubmitChanges();
+            Refresh();
 
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Event/View1.aspx");
         }
     }
 }

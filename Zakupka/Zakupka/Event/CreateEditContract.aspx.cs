@@ -9,6 +9,7 @@ namespace Zakupka.Event
 {
     public partial class CreateEditContract : System.Web.UI.Page
     {
+
         ZakupkaDBDataContext zakupkaDB = new ZakupkaDBDataContext();        
         public List<ValueSaveClass> ValuesList = new List<ValueSaveClass>();
 
@@ -19,26 +20,36 @@ namespace Zakupka.Event
             public int ContractId { get; set; }
         }
 
-        public string GetCollectedValue(int fieldId, int contractId)
+        public string GetCollectedValue(int fieldId, int contractId, int userId)
         {
             //вытаскиваем значение если нету то создаем
-            if (fieldId != null && contractId != null)
+            if (fieldId != null && contractId != null && userId != null)
             {
                 CollectedValues fk = (from a in zakupkaDB.CollectedValues
                                       where a.fk_contract == contractId
-                                          && a.fk_field == fieldId
+                                          && a.fk_field == fieldId && a.fk_user == userId 
                                       select a).FirstOrDefault();
-                if(fk == null)
+                if(fk != null)
                 {
-                    CollectedValues newvalue = new CollectedValues();
-                    newvalue.active = true;
-                    newvalue.value = "";
-                    newvalue.fk_field = fieldId;
-                    newvalue.fk_contract = contractId;
-                    newvalue.createDateTime = DateTime.Now;
-                    zakupkaDB.CollectedValues.InsertOnSubmit(newvalue);
+                    if (fk.active == false)
+                    {
+                        fk.active = true;
+                        zakupkaDB.SubmitChanges();
+                    }                       
+                }
+                else
+                {
+                    fk  = new CollectedValues();
+                    fk.active = true;
+                    fk.value = "";
+                    fk.fk_field = fieldId;
+                    fk.fk_contract = contractId;
+                    fk.fk_user = userId;
+                    fk.createDateTime = DateTime.Now;
+                    zakupkaDB.CollectedValues.InsertOnSubmit(fk);
                     zakupkaDB.SubmitChanges();
                 }
+                                
                 return fk.value;
             }
             return "0";
@@ -47,9 +58,11 @@ namespace Zakupka.Event
         public Table CreateNewTable ()
         {
             int step = Convert.ToInt32(Session["step"]);
+            int userID = Convert.ToInt32(Session["userID"]);
             int conId = Convert.ToInt32(Session["contractID"]);
             Table tableToReturn = new Table();
-            List<Fields> allFields = (from a in zakupkaDB.Fields where a.active && a.step == step select a).ToList();
+            List<Fields> allFields = (from a in zakupkaDB.Fields where a.active && a.step == step
+                                     select a).ToList();
             int maxLine = (from a in allFields select a.line).OrderByDescending(mc => mc).FirstOrDefault();
 
             for (int i =0; i<maxLine+1; i++)
@@ -68,7 +81,7 @@ namespace Zakupka.Event
                     newTextBox.Height = field.height;
                     //newTextBox.ID = field.filedID;
                     int contractId = conId;// вытаскиваеш из сессии
-                    newTextBox.Text = GetCollectedValue(field.filedID, contractId);
+                    newTextBox.Text = GetCollectedValue(field.filedID, contractId, userID);
 
                     ValueSaveClass classTmp = new ValueSaveClass();
                     classTmp.Value = newTextBox;
@@ -84,6 +97,7 @@ namespace Zakupka.Event
                 tableToReturn.Rows.Add(headerNewRow);
                 tableToReturn.Rows.Add(newRow);
             }
+            Session["values"] = ValuesList;
             return tableToReturn;           
         }
 
@@ -112,14 +126,24 @@ namespace Zakupka.Event
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
+            //if (!Page.IsPostBack)
+            ValuesList = (List<ValueSaveClass>) Session["values"];
+            if (ValuesList == null)
+                ValuesList = new List<ValueSaveClass>();
+            TableDiv.Controls.Clear();
             TableDiv.Controls.Add(CreateNewTable());
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
             SaveAll();
+            TableDiv.Controls.Clear();
             TableDiv.Controls.Add(CreateNewTable());
+        }
+
+        protected void Back_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Event/ContractPage.aspx");
         }
     }
 }

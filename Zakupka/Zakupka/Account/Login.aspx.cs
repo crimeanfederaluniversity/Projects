@@ -14,32 +14,36 @@ namespace Zakupka.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            RegisterHyperLink.NavigateUrl = "Register";
-            OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
-            var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
-            if (!String.IsNullOrEmpty(returnUrl))
-            {
-                RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
-            }
+
         }
 
         protected void LogIn(object sender, EventArgs e)
         {
+            
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
             if (IsValid)
             {
-                // Проверка пароля пользователя
-                var manager = new UserManager();
-                ApplicationUser user = manager.Find(UserName.Text, Password.Text);
+                ZakupkaDBDataContext ZakupkaDB = new ZakupkaDBDataContext();
+
+
+                var user = (from u in ZakupkaDB.Users
+                            where u.login == UserName.Text && u.password == Password.Text && u.active == true
+                            select u).FirstOrDefault();
+
                 if (user != null)
                 {
-                    IdentityHelper.SignIn(manager, user, RememberMe.Checked);
-                    IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+                    Session["userID"] = user.userID;
+                    Response.Redirect("~/Default.aspx");
                 }
                 else
                 {
-                    FailureText.Text = "Invalid username or password.";
+                    FailureText.Text = "Неверный адрес электронной почты или пароль.";
                     ErrorMessage.Visible = true;
                 }
+
             }
         }
     }

@@ -3,59 +3,40 @@
 <%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <h2><%: Title %>.</h2>
+    <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Visible="false">
 
-    <div class="row">
-        <div class="col-md-8">
-            <section id="loginForm">
-                <div class="form-horizontal">
-                    <h4>Используйте для входа локальную учетную запись.</h4>
-                    <hr />
-                      <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
+    </asp:Panel>
+    <div id="left_content">
+        </div>
+    <div id="page_wrapper">    
+     <div class="body-content">
+    <div class="first_div_on_login">
+        <div class="login_image_gerb"></div>
+        <br />
+        <asp:Label ID="Label3" runat="server" Font-Size="18pt" Text="Введите Ваш логин и пароль для входа в систему"></asp:Label>
+        <br />
+        <br />
+        <asp:Label ID="Label1" runat="server" Text="Адрес электронной почты"></asp:Label>
+  
+        <br />
+                        <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
                         <p class="text-danger">
                             <asp:Literal runat="server" ID="FailureText" />
                         </p>
-                    </asp:PlaceHolder>
-                    <div class="form-group">
-                        <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label">Имя пользователя</asp:Label>
-                        <div class="col-md-10">
-                            <asp:TextBox runat="server" ID="UserName" CssClass="form-control" />
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName"
-                                CssClass="text-danger" ErrorMessage="Поле имени пользователя заполнять обязательно." />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Пароль</asp:Label>
-                        <div class="col-md-10">
-                            <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="Поле пароля заполнять обязательно." />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <div class="checkbox">
-                                <asp:CheckBox runat="server" ID="RememberMe" />
-                                <asp:Label runat="server" AssociatedControlID="RememberMe">Запомнить меня</asp:Label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <asp:Button runat="server" OnClick="LogIn" Text="Выполнить вход" CssClass="btn btn-default" />
-                        </div>
-                    </div>
-                </div>
-                <p>
-                    <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Зарегистрируйтесь,</asp:HyperLink>
-                    если отсутствует локальная учетная запись.
-                </p>
-            </section>
-        </div>
+                        </asp:PlaceHolder>
+       <asp:TextBox ID="UserName" CssClass="form-control" runat="server" Height="40px" Width="300px"></asp:TextBox>
+       <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName"
+                                CssClass="text-danger" ErrorMessage="Поле &quot;Адрес электронной почты&quot; обязательное." />
+        <br />
+        <asp:Label ID="Label2" runat="server" Text="Пароль"></asp:Label>
+        <br />
 
-        <div class="col-md-4">
-            <section id="socialLoginForm">
-                <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
-            </section>
-        </div>
+        <asp:TextBox ID="Password" CssClass="form-control" TextMode="Password" runat="server" Height="40px" Width="300px"></asp:TextBox>
+         <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="Поле &quot;Пароль&quot; обязательное." />
+        <br />
+        <asp:Button ID="Button1" CssClass="form-control" runat="server" Text="Войти" Height="40px" OnClick="Button1_Click" Width="300px" />
+        <br />
+        
+ </div></div></div>
     </div>
 </asp:Content>

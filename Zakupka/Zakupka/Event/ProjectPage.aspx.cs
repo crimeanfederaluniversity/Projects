@@ -14,8 +14,13 @@ namespace Zakupka.Event
         ZakupkaDBDataContext zakupkaDB = new ZakupkaDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["userID"] != null)
+                Refresh();
+        }
+             protected void Refresh()
+        {
             int eventID = (int)Session["eventID"];
-            Projects name = (from a in zakupkaDB.Projects where a.fk_event == eventID select a).FirstOrDefault();
+            Events name = (from a in zakupkaDB.Events where a.eventID == eventID select a).FirstOrDefault();
             Label1.Text = name.name.ToString();
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add(new DataColumn("projectID", typeof(string)));
@@ -52,7 +57,12 @@ namespace Zakupka.Event
             newproject.fk_event = eventID;
             zakupkaDB.Projects.InsertOnSubmit(newproject);
             zakupkaDB.SubmitChanges();
+            Refresh();
+        }
 
+        protected void Back_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Event/EventPage.aspx");
         }
     }
 }

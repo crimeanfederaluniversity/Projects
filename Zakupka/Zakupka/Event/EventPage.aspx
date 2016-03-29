@@ -1,7 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="EventPage.aspx.cs" Inherits="Zakupka.Event.EventPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
    <h2>Список мероприятий</h2>
-    <p>&nbsp;</p>
+    <p>
+        <asp:Button ID="Button1" runat="server" Text="Вид 1" OnClick="Button1_Click" />
+    </p>
     <p>
         <asp:GridView ID="GridView1" runat="server"  AutoGenerateColumns="False"  >
                <Columns>                
@@ -15,9 +17,7 @@
                     </Columns>
                     </asp:GridView>
     </p>
-    <p>
-        <h3>Добавление нового мероприятия:</h3>Введите название мероприятия: 
-    <p>
+        <h3>Добавление нового мероприятия:</h3><p>
         <asp:TextBox ID="TextBox1" runat="server" Width="400px"></asp:TextBox>
     </p>
     <p>

@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ContractPage.aspx.cs" Inherits="Zakupka.Event.ContractPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:Button ID="Back" runat="server" Text="Назад" OnClick="Back_Click" />
         <h2><asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></h2>
-    <p>&nbsp;</p>
     <p>
         <asp:GridView ID="GridView1" runat="server"  AutoGenerateColumns="False"  >
                <Columns>                
@@ -20,7 +20,6 @@
                     </Columns>
                     </asp:GridView>
     </p>
-    <p>
         <h3>Добавление нового договора:</h3>Введите название договора: 
     <p>
         <asp:TextBox ID="TextBox1" runat="server" Width="400px"></asp:TextBox>

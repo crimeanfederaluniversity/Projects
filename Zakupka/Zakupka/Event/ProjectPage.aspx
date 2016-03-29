@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectPage.aspx.cs" Inherits="Zakupka.Event.ProjectPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:Button ID="Back" runat="server" Text="Назад" OnClick="Back_Click" />
       <h2><asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
       </h2>
-    <p>&nbsp;</p>
     <p>
         <asp:GridView ID="GridView1" runat="server"  AutoGenerateColumns="False"  >
                <Columns>                
@@ -16,7 +16,6 @@
                     </Columns>
                     </asp:GridView>
     </p>
-    <p>
         <h3>Добавление нового проекта:</h3>Введите название проекта: 
     <p>
         <asp:TextBox ID="TextBox1" runat="server" Width="400px"></asp:TextBox>
