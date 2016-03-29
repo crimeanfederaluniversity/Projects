@@ -196,11 +196,9 @@ namespace KPIWeb.AutomationDepartment
                                     TextBox TextBoxPassword = (TextBox)GridView1.Rows[rowIndex].FindControl("Password");
                                     TextBox TextBoxEmail = (TextBox)GridView1.Rows[rowIndex].FindControl("Email");
                                     TextBox TextBoxFirstlvl = (TextBox)GridView1.Rows[rowIndex].FindControl("Firstlvl");
-                                    TextBox TextBoxSecondlvl =
-                                        (TextBox)GridView1.Rows[rowIndex].FindControl("Secondlvl");
+                                    TextBox TextBoxSecondlvl =(TextBox)GridView1.Rows[rowIndex].FindControl("Secondlvl");
                                     TextBox TextBoxThirdlvl = (TextBox)GridView1.Rows[rowIndex].FindControl("Thirdlvl");
-                                    TextBox TextBoxFourthlvl =
-                                        (TextBox)GridView1.Rows[rowIndex].FindControl("Fourthlvl");
+                                    TextBox TextBoxFourthlvl =(TextBox)GridView1.Rows[rowIndex].FindControl("Fourthlvl");
                                     TextBox TextBoxFifthlvl = (TextBox)GridView1.Rows[rowIndex].FindControl("Fifthlvl");
                                     TextBox TextBoxAcceslvl = (TextBox)GridView1.Rows[rowIndex].FindControl("Acceslvl");
                                     TextBox TextBoxZerolvl = (TextBox)GridView1.Rows[rowIndex].FindControl("Zerolvl");
@@ -225,7 +223,6 @@ namespace KPIWeb.AutomationDepartment
                                             user.FK_FirstLevelSubdivisionTable = (from a in kPiDataContext.UsersTable
                                                                                   where a.UsersTableID == Convert.ToInt32(TextBoxFourthlvlId.Text)
                                                                                   select a.FK_FirstLevelSubdivisionTable).FirstOrDefault();
-
                                        
                                         if (TextBoxSecondlvl.Text.Any())
                                             user.FK_SecondLevelSubdivisionTable = (from a in kPiDataContext.UsersTable
@@ -260,10 +257,6 @@ namespace KPIWeb.AutomationDepartment
                                 rowIndex++;
 
                             }
-
-
-
-
                         }
                     }
                 }

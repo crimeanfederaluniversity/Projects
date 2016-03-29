@@ -51,6 +51,10 @@ namespace EDM
             Session.Abandon();
             Response.Redirect("~/Default.aspx");
         }
+        protected void LinkButtonClick(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Account/ResetPassword.aspx");
+        }
     }
 
 }

@@ -11,36 +11,42 @@ namespace EDM.Account
 {
     public partial class ResetPassword : Page
     {
-        protected string StatusMessage
+        protected void Page_Load(object sender, EventArgs e)
         {
-            get;
-            private set;
+
         }
-
-        protected void Reset_Click(object sender, EventArgs e)
+        protected void Button1_Click(object sender, EventArgs e)            
         {
-            string code = IdentityHelper.GetCodeFromRequest(Request);
-            if (code != null)
+            EDMdbDataContext edmDb = new EDMdbDataContext();            
+            int userID;
+            int.TryParse(Session["userID"].ToString(), out userID);
+            Users user = (from a in edmDb.Users where a.userID == userID && a.active == true select a).FirstOrDefault();
+            if (OldPassword.Text == user.password)
             {
-                var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-
-                var user = manager.FindByName(Email.Text);
-                if (user == null)
+                if (Password.Text == ConfirmPassword.Text)
                 {
-                    ErrorMessage.Text = "No user found";
-                    return;
+                    user.password = Password.Text;
+                    edmDb.SubmitChanges();
+                    Response.Redirect("~/Default.aspx");
                 }
-                var result = manager.ResetPassword(user.Id, code, Password.Text);
-                if (result.Succeeded)
+                else
                 {
-                    Response.Redirect("~/Account/ResetPasswordConfirmation");
-                    return;
+                    DisplayAlert("Пароли не совпадают");
                 }
-                ErrorMessage.Text = result.Errors.FirstOrDefault();
-                return;
             }
-
-            ErrorMessage.Text = "An error has occurred";
+            else
+            {
+                DisplayAlert("Старый пароль введен неверно");
+            }
+        }
+        private void DisplayAlert(string message)
+        {
+            ClientScript.RegisterStartupScript(
+              this.GetType(),
+              Guid.NewGuid().ToString(),
+              string.Format("alert('{0}');",
+                message.Replace("'", @"\'").Replace("\n", "\\n").Replace("\r", "\\r")),
+                true);
         }
     }
 }

@@ -54,6 +54,16 @@
 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
                
+             <asp:TemplateField HeaderText="Может инициировать">
+                        <ItemTemplate>
+                            <asp:CheckBox ID="CanIniateCheck" runat="server" CommandName="Select" Text="" Width="200px" Checked='<%# Bind("CanIniate") %>'/>
+                        </ItemTemplate>
+                    </asp:TemplateField> 
+             <asp:TemplateField HeaderText="Может создавать шаблоны">
+                        <ItemTemplate>
+                            <asp:CheckBox ID="CanCreateTemple" runat="server" CommandName="Select" Text="" Width="200px" Checked='<%# Bind("CanCreate") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField> 
                  <asp:TemplateField HeaderText="Удалить пользователя">
                         <ItemTemplate>
                             <asp:Button ID="DeleteUserButton" runat="server" CommandName="Select" Text="Удалить" Width="200px" CommandArgument='<%# Eval("DeleteUser") %>' OnClick="DeleteUserButtonClick" />

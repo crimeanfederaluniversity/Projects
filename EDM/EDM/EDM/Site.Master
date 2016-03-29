@@ -64,7 +64,8 @@
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Добрый день, <%: Context.User.Identity.GetUserName()  %> !</a></li>
+                                <li>                                    
+<asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButtonClick">Добрый день, <%: Context.User.Identity.GetUserName()  %> !</asp:LinkButton></li>
                                 <li>
                                     <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Выход" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
                                 </li>

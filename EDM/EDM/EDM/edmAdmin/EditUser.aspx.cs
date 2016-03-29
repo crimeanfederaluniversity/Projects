@@ -99,6 +99,8 @@ namespace EDM.edmAdmin
             dataTable.Columns.Add(new DataColumn("DeleteUser", typeof(string)));
             dataTable.Columns.Add(new DataColumn("SaveUser", typeof(string)));
             dataTable.Columns.Add(new DataColumn("ChangeUser", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("CanIniate", typeof(bool)));
+            dataTable.Columns.Add(new DataColumn("CanCreate", typeof(bool)));
 
             using (EDMdbDataContext edmDb = new EDMdbDataContext())
             {
@@ -116,6 +118,8 @@ namespace EDM.edmAdmin
                     dataRow["DeleteUser"] = user.userID;
                     dataRow["SaveUser"] = user.userID;
                     dataRow["ChangeUser"] = user.userID;
+                    dataRow["CanIniate"] = user.canInitiate;
+                    dataRow["CanCreate"] = user.canCreateTemplate;
                     dataTable.Rows.Add(dataRow);
                 }
                 ViewState["GridviewUsers"] = dataTable;

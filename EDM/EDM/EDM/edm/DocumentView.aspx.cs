@@ -178,9 +178,6 @@ namespace EDM.edm
             DataBind();
         }
 
-
-
-
         protected void ApproveButton_Click(object sender, EventArgs e)
         {
             if (CommentTextBox.Text.Any())
