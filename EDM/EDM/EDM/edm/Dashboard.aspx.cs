@@ -905,6 +905,8 @@ namespace EDM.edm
 
         protected void GoToSlavesHistory_Click(object sender, EventArgs e)
         {
+            Session["searchName"] = string.Empty;
+            Session["dateStartSearch"] = string.Empty;
             Response.Redirect("Subordinate.aspx");
         }
 
