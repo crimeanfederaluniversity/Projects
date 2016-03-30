@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -27,6 +28,7 @@ namespace EDM.edm
                     docCommentTableCell.Text = _main.GetDocumentComment(document.documentID, processVersionId);// document.documentComment;
                     LinkButton newLinkButton = new LinkButton();
 
+                    newLinkButton.Font.Bold = true;
                     // newLinkButton.LinkButtonToDocument.ID = "linkButton" + currentDocument.documentID;
                     newLinkButton.CommandArgument = processId + "/" + document.documentID;
                     ProcessEdit proc = new ProcessEdit();
@@ -35,6 +37,11 @@ namespace EDM.edm
 
                     newLinkButton.Text = document.documentName;
                     docLinkCell.Controls.Add(newLinkButton);
+                    docLinkCell.Controls.Add(new Label()
+                    {
+                        Text = "<br/>" + document.md5,
+                        ForeColor = Color.Green
+                    });
                     docTableRow.Cells.Add(docLinkCell);
                     docTableRow.Cells.Add(docCommentTableCell);
                     docTable.Rows.Add(docTableRow);
