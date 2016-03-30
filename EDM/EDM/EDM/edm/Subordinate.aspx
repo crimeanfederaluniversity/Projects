@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <script src="calendar_ru.js" type="text/javascript"> </script>
 
-    <asp:Label ID="directionLabel" runat="server" Text="Заголовок" CssClass="header" Visible="False" ></asp:Label>
+    <asp:Label ID="directionLabel" runat="server" Text="История и статистика" CssClass="header" Visible="True" ></asp:Label>
      <br />
         <div class="row centered-content">
         

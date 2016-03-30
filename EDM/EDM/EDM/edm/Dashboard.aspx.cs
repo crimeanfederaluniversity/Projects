@@ -52,11 +52,7 @@ namespace EDM.edm
                 int.TryParse(Session["direction"].ToString(), out direction);
                 bool.TryParse(Session["isPage"].ToString(), out isPage);
                 int.TryParse(Session["page"].ToString(), out page);
-
-                GoToSubmitterButton.Visible = main.IsUserSubmitter(userID);
-                GoToTemplatesButton.Visible = main.CanUserDoTemplate(userID);
-                GoToSlavesHistory.Visible = main.IsUserHead(userID);
-
+           
                 OtherFuncs of = new OtherFuncs();
                 var notifications = of.Notification(userID);
 
@@ -939,12 +935,6 @@ namespace EDM.edm
         protected void GoToSubmitterButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("SubmittedPage.aspx");
-        }
-
-        protected void md5CheckButton_OnClick(object sender, EventArgs e)
-        {
-            OtherFuncs of = new OtherFuncs();
-            of.Md5Check(this.Page,FileUpload1);
         }
 
     }

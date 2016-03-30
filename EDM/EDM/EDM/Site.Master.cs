@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using EDM.edm;
 using Microsoft.AspNet.Identity;
 
 namespace EDM
@@ -42,9 +43,49 @@ namespace EDM
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            var userSer = Session["userID"];
+
+            if (userSer != null)
+            {
+                int userID;
+                int.TryParse(Session["userID"].ToString(), out userID);
+
+                ProcessMainFucntions main = new ProcessMainFucntions();
+
+                GoToSubmitterButton.Visible = main.IsUserSubmitter(userID);
+                GoToTemplatesButton.Visible = main.CanUserDoTemplate(userID);
+                GoToSlavesHistory.Visible = main.IsUserHead(userID);
+                top_panel2.Visible = true;
+            }
+            else
+            {
+                top_panel2.Visible = false;
+            }
+        }
+
+        protected void goBackButton_Click(object sender, EventArgs e)
+        {
 
         }
 
+
+
+        protected void GoToTemplatesButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("TemplatesList.aspx");
+        }
+
+        protected void GoToSlavesHistory_Click(object sender, EventArgs e)
+        {
+            Session["searchName"] = string.Empty;
+            Session["dateStartSearch"] = string.Empty;
+            Response.Redirect("Subordinate.aspx");
+        }
+
+        protected void GoToSubmitterButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("SubmittedPage.aspx");
+        }
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
             FormsAuthentication.SignOut();
@@ -55,6 +96,13 @@ namespace EDM
         {
             Response.Redirect("~/Account/ResetPassword.aspx");
         }
+
+        protected void md5CheckButton_OnClick(object sender, EventArgs e)
+        {
+            OtherFuncs of = new OtherFuncs();
+            of.Md5Check(this.Page, FileUpload1);
+        }
+
     }
 
 }

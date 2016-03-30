@@ -199,7 +199,7 @@ namespace EDM.edm
                     File.Delete(directoryToSave + fu.FileName);
                 }
 
-                ScriptManager.RegisterStartupScript(pg, pg.GetType(), "err_msg", "prompt('MD5: \\n\\r (нажмите CTRL+C чтобы скопировать)', '" + res + "');", true);
+                ScriptManager.RegisterStartupScript(pg, pg.GetType(), "err_msg", "prompt('MD5: \\n\\r  ( нажмите CTRL+C чтобы скопировать )', '" + res + "');", true);
             }
             else
             {

@@ -18,12 +18,6 @@
        float:right
    }     
 </style> 
-<asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="true">    
-    <div>          
-        &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="goBackButton" CausesValidation="false"  runat="server" Enabled="true" CssClass="btn btn-default" Text="Назад" Width="150" Height="30" OnClientClick="showSimpleLoadingScreen()" OnClick="goBackButton_Click" />
-        &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="goForwardButton" CausesValidation="false" Enabled="false" CssClass="btn btn-default" runat="server" Text="Вперед" Width="150" Height="30" OnClientClick="history.forward ()"/>
-    </div>
-</asp:Panel>
      <script>
 
 
