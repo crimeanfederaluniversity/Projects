@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="Создание нового пользователя" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CreateNewUser.aspx.cs" Inherits="EDM.edmAdmin.CreateNewUser" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+    &nbsp;<asp:Button ID="Button2" runat="server" Height="31px" OnClick="Button2_Click" Text="На главную" Width="158px" />
 
     <Table ID="RegisterTable">
         <tr>

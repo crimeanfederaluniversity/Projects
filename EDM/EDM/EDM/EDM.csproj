@@ -205,6 +205,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="edmAdmin\AdminMain.aspx" />
+    <Content Include="edmAdmin\ChangeSubmiters.aspx" />
     <Content Include="edmAdmin\ChangeUser.aspx" />
     <Content Include="edmAdmin\CreateNewUser.aspx" />
     <Content Include="edmAdmin\EditUser.aspx" />
@@ -436,6 +437,13 @@
     </Compile>
     <Compile Include="edmAdmin\AdminMain.aspx.designer.cs">
       <DependentUpon>AdminMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="edmAdmin\ChangeSubmiters.aspx.cs">
+      <DependentUpon>ChangeSubmiters.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="edmAdmin\ChangeSubmiters.aspx.designer.cs">
+      <DependentUpon>ChangeSubmiters.aspx</DependentUpon>
     </Compile>
     <Compile Include="edmAdmin\ChangeUser.aspx.cs">
       <DependentUpon>ChangeUser.aspx</DependentUpon>

@@ -110,5 +110,10 @@ namespace EDM.edmAdmin
             DropdownStructUpdate();
             }
         }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/edmAdmin/AdminMain.aspx");
+        }
     }
 }

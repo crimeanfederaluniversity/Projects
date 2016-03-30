@@ -74,5 +74,10 @@ namespace EDM.edmAdmin
                 message.Replace("'", @"\'").Replace("\n", "\\n").Replace("\r", "\\r")),
                 true);
         }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/edmAdmin/AdminMain.aspx");
+        }
     }
 }

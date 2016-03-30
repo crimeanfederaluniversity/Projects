@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server">           
+    <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" CssClass="table edm-table edm-history-table centered-block" AllowPaging="true">           
             
          <Columns>               
                            

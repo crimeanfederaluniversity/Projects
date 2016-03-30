@@ -3,6 +3,9 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+    <asp:Button ID="Button2" runat="server" Height="25px" OnClick="Button2_Click" Text="На главную" Width="124px" />
+    <br />
+    <br />
     Выберите струкутрное подразделение<br />
     &nbsp;<asp:DropDownList ID="DropDownList1" runat="server" Height="25px" Width="280px">
     </asp:DropDownList>

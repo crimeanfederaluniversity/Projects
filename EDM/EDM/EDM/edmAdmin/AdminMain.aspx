@@ -12,4 +12,7 @@
     <asp:Button ID="WatchStructure" runat="server" Height="30px" Text="Редактирование структуры" Width="300px" OnClick="WatchStructure_Click" />
     <br />
     <br />
+    <asp:Button ID="WatchSubmiters" runat="server" Height="30px" Text="Доступ к отчетам о распечатке" Width="300px" OnClick="WatchSubmitersClick" />
+    <br />
+    <br />
 </asp:Content>

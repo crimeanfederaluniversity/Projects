@@ -2,6 +2,8 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
+    <div style="margin-top:auto">
+    <br />
     Введите Ваш старый пароль
     <asp:TextBox runat="server" ID="OldPassword" CssClass="form-control" /><br />    
     Введите Ваш новый пароль<br />
@@ -12,4 +14,5 @@
                     CssClass="text-danger" Display="Dynamic" ErrorMessage="Пароли не совпадают!" Visible="false" />
     <br />
     <asp:Button ID="Button1" runat="server" Height="27px" Text="Применить" Width="201px" OnClick="Button1_Click" />
- </asp:Content>
+    </div>
+    </asp:Content>

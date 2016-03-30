@@ -28,7 +28,6 @@ namespace EDM.Account
                                 select u).FirstOrDefault();                
                     if (user != null)
                     {
-
                     Session["userID"] = user.userID;
                     if (user.password == "KVFAJVIAOWw2")
                     {   
