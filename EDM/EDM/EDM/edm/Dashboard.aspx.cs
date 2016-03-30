@@ -46,8 +46,12 @@ namespace EDM.edm
             {
                 int userID;
                 int direction;
+                bool isPage;
+                int page;
                 int.TryParse(Session["userID"].ToString(), out userID);
                 int.TryParse(Session["direction"].ToString(), out direction);
+                bool.TryParse(Session["isPage"].ToString(), out isPage);
+                int.TryParse(Session["page"].ToString(), out page);
 
                 GoToSubmitterButton.Visible = main.IsUserSubmitter(userID);
                 GoToTemplatesButton.Visible = main.CanUserDoTemplate(userID);
@@ -58,7 +62,8 @@ namespace EDM.edm
 
                 Button1.Text += notifications[0];
                 Button2.Text += notifications[1];
-                RenderGrid(dashGridView, FillingGrid(direction, userID), direction);
+
+                RenderGrid(dashGridView, FillingGrid(direction, userID), direction, !isPage ? 0 : page);
 
             }
         }
@@ -250,14 +255,16 @@ namespace EDM.edm
 
             #endregion Архив
 
-            ViewState["dataOneSource"] = dataOneSource;
+            //ViewState["dataOneSource"] = dataOneSource;
 
             return dataOneSource;
         }
 
-        public void RenderGrid(GridView gridView, List<DataOne> dataOneSource, int direction)
+        public void RenderGrid(GridView gridView, List<DataOne> dataOneSource, int direction, int page)
         {
             EDMdbDataContext dataContext = new EDMdbDataContext();
+
+            gridView.PageIndex = page;
 
             #region Входящие
             if (direction == 1)
@@ -536,6 +543,8 @@ namespace EDM.edm
                 DataBind();
             }
             #endregion
+
+            Session["isPage"] = false;
         }
 
         protected void dashGridView_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -693,7 +702,7 @@ namespace EDM.edm
                             id + "'); showSimpleLoadingScreen(); ";
 
                         btneEit.OnClientClick = "javascript: __doPostBack('ctl00$MainContent$dashGridView','ButtonR0$" +
-                            id + "'); showSimpleLoadingScreen(); ";
+                            id + "'); showSimpleLoadingScreen(); "; 
 
                         printButton.Enabled = false;
 
@@ -891,9 +900,13 @@ namespace EDM.edm
         protected void dashGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
 
-            dashGridView.PageIndex = e.NewPageIndex;
+            /*dashGridView.PageIndex = e.NewPageIndex;
             dashGridView.DataSource = ViewState["dataOneSource"];
-            dashGridView.DataBind();
+            dashGridView.DataBind();*/
+
+            Session["isPage"] = true;
+            Session["page"] = e.NewPageIndex;
+            Response.Redirect("Dashboard.aspx");
 
         }
 
