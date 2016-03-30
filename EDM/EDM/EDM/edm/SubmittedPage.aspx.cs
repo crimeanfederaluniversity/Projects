@@ -10,8 +10,6 @@ namespace EDM.edm
     public partial class SubmittedPage : System.Web.UI.Page
     {
         ProcessMainFucntions main = new ProcessMainFucntions();
-
-
         protected void PrintListClick (object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -22,7 +20,6 @@ namespace EDM.edm
             Session["processID"] = idProcess;
             Response.Redirect("PrintList.aspx");
         }
-
         protected void GetHistoryClick (object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -33,9 +30,7 @@ namespace EDM.edm
             Session["processID"] = idProcess;
             Session["archiveVersion"] = -1;
             Response.Redirect("ProcessHistory.aspx");
-        }
-
-        
+        }      
         protected void Page_Load(object sender, EventArgs e)
         {
             var userId = Session["userID"];

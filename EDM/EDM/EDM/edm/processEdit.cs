@@ -187,6 +187,32 @@ namespace EDM.edm
 
         #region get
 
+        public List<Processes> GetAllProcessesInStructWithNoInitiateCreator(int structId)
+        {
+            // OtherFuncs other = new OtherFuncs();
+            // List<int> usersIds = new List<int>(){structId};
+            // List<int> users = other.GetSlaves(structId, ref usersIds);
+            List<Users> user = GetRecursiveChildAllStructList(structId, false);
+            List<int> users = (from a in user select a.userID).ToList();
+            List <Processes> processesToShow = (from a in _edmDb.Processes
+                where a.active == true
+                      && a.status == -1
+                join b in _edmDb.Users
+                    on a.fk_initiator equals b.userID
+                where b.active == true
+                      && b.canInitiate == false
+                      && users.Contains(b.userID)
+                select a).Distinct().ToList();
+            return processesToShow;
+        }
+
+        public ProcessStarterUser GetProcessStarterByUserId(int userId )
+        {
+            return (from a in _edmDb.ProcessStarterUser
+                where a.active == true
+                      && a.fk_user == userId
+                select a).FirstOrDefault();
+        }
         public ProcessVersions GetProcessversionById(int versionId )
         {
             return (from a in _edmDb.ProcessVersions
@@ -609,7 +635,40 @@ namespace EDM.edm
             }
             return ListToReturn;
 
-        } 
+        }
+
+
+        public List<Users> GetRecursiveChildAllStructList(int structId, bool isFirstStep)
+        {
+            List<Users> ListToReturn = new List<Users>();
+            if (!isFirstStep)
+            {
+                ListToReturn = (from a in _edmDb.Users
+                                where a.active == true
+                                      && a.fk_struct == structId
+                                select a).ToList();
+                if (ListToReturn.Any())
+                {
+                    return ListToReturn;
+                }
+            }
+            List<Struct> childStructs = new List<Struct>();
+
+            childStructs = (from a in _edmDb.Struct
+                            where a.fk_parent == structId
+                            select a).ToList();
+
+            foreach (Struct currentChild in childStructs)
+            {
+                List<Users> tmp = GetRecursiveChildStructList(currentChild.structID, false);
+                foreach (Users curTmp in tmp)
+                {
+                    ListToReturn.Add(curTmp);
+                }
+            }
+            return ListToReturn;
+
+        }
 
         #endregion
 
@@ -630,6 +689,14 @@ namespace EDM.edm
             proc.fk_submitter = submitterId;
             _edmDb.SubmitChanges();
         }
+
+        public void SetProcessStatus(int procId, int newStatus)
+        {
+            Processes proc = GetProcessById(procId);
+            proc.status = newStatus;
+            _edmDb.SubmitChanges();
+        }
+
         public void SetTemplateParams(string name, string title, string content, int templateId, int submitterId, int fkStruct, bool allowChangeProcess)
         {
             ProcessTemplate currentTemplate = GetProcessTemplateById(templateId);
@@ -653,6 +720,14 @@ namespace EDM.edm
 
         #region check
 
+        public bool IsUserStarter(int userId)
+        {
+            return (from a in _edmDb.ProcessStarterUser
+                where a.active == true
+                      && a.fk_user == userId
+                select a).Any();
+
+        }
         public bool IsAnyTemplateByThatName(string name)
         {
            return (from a in _edmDb.ProcessTemplate

@@ -53,6 +53,7 @@ namespace EDM.edm
                 bool.TryParse(Session["isPage"].ToString(), out isPage);
                 int.TryParse(Session["page"].ToString(), out page);
            
+
                 OtherFuncs of = new OtherFuncs();
                 var notifications = of.Notification(userID);
 
@@ -543,6 +544,7 @@ namespace EDM.edm
             Session["isPage"] = false;
         }
 
+        
         protected void dashGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             // 0 - исходящие
@@ -854,9 +856,15 @@ namespace EDM.edm
                         bool procHasChild = (main.GetChildProcess(procId, (int)userId) != null);
                         if (procHasChild)
                         {
+                            e.Row.Cells[0].Controls.Add(new Label()
+                            {
+                                Text = procId + " ( внутренний " + main.GetChildProcess(procId, (int)userId).processID + ")",
+                                ForeColor = e.Row.ForeColor
+                            });
+                            /*
                             e.Row.Cells[0].Controls.Clear();
                             e.Row.Cells[0].Text =  procId + " ( внутренний " +
-                                                  main.GetChildProcess(procId, (int)userId).processID + ")";
+                                                  main.GetChildProcess(procId, (int)userId).processID + ")";*/
                         }
                         #endregion
 
@@ -910,8 +918,6 @@ namespace EDM.edm
         {
             
         }
-
-
         protected void Button5_Click(object sender, EventArgs e)
         {
             Approvment ap = new Approvment();
@@ -937,5 +943,9 @@ namespace EDM.edm
             Response.Redirect("SubmittedPage.aspx");
         }
 
+        protected void GoToStarterPageButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ProcessStarterPage.aspx");
+        }
     }
 }

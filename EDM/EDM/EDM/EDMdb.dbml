@@ -9,14 +9,26 @@
       <Column Name="isWorkingDay" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.Submitters" Member="Submitters">
-    <Type Name="Submitters">
-      <Column Name="submitterId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="Users">
+      <Column Name="userID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Submitters_Processes" Member="Processes" ThisKey="submitterId" OtherKey="fk_submitter" Type="Processes" />
-      <Association Name="Submitters_ProcessTemplate" Member="ProcessTemplate" ThisKey="submitterId" OtherKey="fk_submitter" Type="ProcessTemplate" />
-      <Association Name="Users_Submitters" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
+      <Column Name="email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="login" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="struct" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="fk_struct" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="canInitiate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="canCreateTemplate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Users_Participants" Member="Participants" ThisKey="userID" OtherKey="fk_user" Type="Participants" />
+      <Association Name="Users_PrintHistory" Member="PrintHistory" ThisKey="userID" OtherKey="fk_user" Type="PrintHistory" />
+      <Association Name="Users_Processes" Member="Processes" ThisKey="userID" OtherKey="fk_initiator" Type="Processes" />
+      <Association Name="Users_ProcessStarterUser" Member="ProcessStarterUser" ThisKey="userID" OtherKey="fk_user" Type="ProcessStarterUser" />
+      <Association Name="Users_ProcessTemplate" Member="ProcessTemplate" ThisKey="userID" OtherKey="fk_owner" Type="ProcessTemplate" />
+      <Association Name="Users_ProcessTemplateParticipant" Member="ProcessTemplateParticipant" ThisKey="userID" OtherKey="fk_user" Type="ProcessTemplateParticipant" />
+      <Association Name="Users_Submitters" Member="Submitters" ThisKey="userID" OtherKey="fk_user" Type="Submitters" />
+      <Association Name="Struct_Users" Member="Struct1" ThisKey="fk_struct" OtherKey="structID" Type="Struct" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Documents" Member="Documents">
@@ -85,8 +97,8 @@
       <Column Name="isNew" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="dateIsNew" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="Participants_Steps" Member="Steps" ThisKey="participantID" OtherKey="fk_participent" Type="Steps" />
-      <Association Name="Processes_Participants" Member="Processes" ThisKey="fk_process" OtherKey="processID" Type="Processes" IsForeignKey="true" />
       <Association Name="Users_Participants" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
+      <Association Name="Processes_Participants" Member="Processes" ThisKey="fk_process" OtherKey="processID" Type="Processes" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.PrintHistory" Member="PrintHistory">
@@ -96,8 +108,8 @@
       <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="fk_process" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Association Name="Processes_PrintHistory" Member="Processes" ThisKey="fk_process" OtherKey="processID" Type="Processes" IsForeignKey="true" />
       <Association Name="Users_PrintHistory" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
+      <Association Name="Processes_PrintHistory" Member="Processes" ThisKey="fk_process" OtherKey="processID" Type="Processes" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Processes" Member="Processes">
@@ -119,9 +131,19 @@
       <Association Name="Processes_Processes" Member="Processes2" ThisKey="processID" OtherKey="fk_parentProcess" Type="Processes" />
       <Association Name="Processes_ProcessVersions" Member="ProcessVersions" ThisKey="processID" OtherKey="fk_process" Type="ProcessVersions" />
       <Association Name="Processes_Processes" Member="Processes1" ThisKey="fk_parentProcess" OtherKey="processID" Type="Processes" IsForeignKey="true" />
-      <Association Name="Submitters_Processes" Member="Submitters" ThisKey="fk_submitter" OtherKey="submitterId" Type="Submitters" IsForeignKey="true" />
-      <Association Name="ProcessTemplate_Processes" Member="ProcessTemplate" ThisKey="fk_template" OtherKey="processTemplateId" Type="ProcessTemplate" IsForeignKey="true" />
       <Association Name="Users_Processes" Member="Users" ThisKey="fk_initiator" OtherKey="userID" Type="Users" IsForeignKey="true" />
+      <Association Name="ProcessTemplate_Processes" Member="ProcessTemplate" ThisKey="fk_template" OtherKey="processTemplateId" Type="ProcessTemplate" IsForeignKey="true" />
+      <Association Name="Submitters_Processes" Member="Submitters" ThisKey="fk_submitter" OtherKey="submitterId" Type="Submitters" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProcessStarterUser" Member="ProcessStarterUser">
+    <Type Name="ProcessStarterUser">
+      <Column Name="processStarterUserId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fk_struct" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Users_ProcessStarterUser" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
+      <Association Name="Struct_ProcessStarterUser" Member="Struct" ThisKey="fk_struct" OtherKey="structID" Type="Struct" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ProcessTemplate" Member="ProcessTemplate">
@@ -138,9 +160,9 @@
       <Column Name="fk_struct" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="ProcessTemplate_Processes" Member="Processes" ThisKey="processTemplateId" OtherKey="fk_template" Type="Processes" />
       <Association Name="ProcessTemplate_ProcessTemplateParticipant" Member="ProcessTemplateParticipant" ThisKey="processTemplateId" OtherKey="fk_template" Type="ProcessTemplateParticipant" />
-      <Association Name="Submitters_ProcessTemplate" Member="Submitters" ThisKey="fk_submitter" OtherKey="submitterId" Type="Submitters" IsForeignKey="true" />
-      <Association Name="Struct_ProcessTemplate" Member="Struct" ThisKey="fk_struct" OtherKey="structID" Type="Struct" IsForeignKey="true" />
       <Association Name="Users_ProcessTemplate" Member="Users" ThisKey="fk_owner" OtherKey="userID" Type="Users" IsForeignKey="true" />
+      <Association Name="Struct_ProcessTemplate" Member="Struct" ThisKey="fk_struct" OtherKey="structID" Type="Struct" IsForeignKey="true" />
+      <Association Name="Submitters_ProcessTemplate" Member="Submitters" ThisKey="fk_submitter" OtherKey="submitterId" Type="Submitters" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ProcessTemplateParticipant" Member="ProcessTemplateParticipant">
@@ -209,31 +231,21 @@
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="fk_parent" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Struct_Users" Member="Users" ThisKey="structID" OtherKey="fk_struct" Type="Users" />
+      <Association Name="Struct_ProcessStarterUser" Member="ProcessStarterUser" ThisKey="structID" OtherKey="fk_struct" Type="ProcessStarterUser" />
       <Association Name="Struct_ProcessTemplate" Member="ProcessTemplate" ThisKey="structID" OtherKey="fk_struct" Type="ProcessTemplate" />
       <Association Name="Struct_Struct" Member="Struct2" ThisKey="structID" OtherKey="fk_parent" Type="Struct" />
-      <Association Name="Struct_Users" Member="Users" ThisKey="structID" OtherKey="fk_struct" Type="Users" />
       <Association Name="Struct_Struct" Member="Struct1" ThisKey="fk_parent" OtherKey="structID" Type="Struct" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Users" Member="Users">
-    <Type Name="Users">
-      <Column Name="userID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.Submitters" Member="Submitters">
+    <Type Name="Submitters">
+      <Column Name="submitterId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="login" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="password" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
-      <Column Name="struct" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Column Name="fk_struct" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="canInitiate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="canCreateTemplate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="Users_Submitters" Member="Submitters" ThisKey="userID" OtherKey="fk_user" Type="Submitters" />
-      <Association Name="Users_Participants" Member="Participants" ThisKey="userID" OtherKey="fk_user" Type="Participants" />
-      <Association Name="Users_PrintHistory" Member="PrintHistory" ThisKey="userID" OtherKey="fk_user" Type="PrintHistory" />
-      <Association Name="Users_Processes" Member="Processes" ThisKey="userID" OtherKey="fk_initiator" Type="Processes" />
-      <Association Name="Users_ProcessTemplate" Member="ProcessTemplate" ThisKey="userID" OtherKey="fk_owner" Type="ProcessTemplate" />
-      <Association Name="Users_ProcessTemplateParticipant" Member="ProcessTemplateParticipant" ThisKey="userID" OtherKey="fk_user" Type="ProcessTemplateParticipant" />
-      <Association Name="Struct_Users" Member="Struct1" ThisKey="fk_struct" OtherKey="structID" Type="Struct" IsForeignKey="true" />
+      <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Submitters_Processes" Member="Processes" ThisKey="submitterId" OtherKey="fk_submitter" Type="Processes" />
+      <Association Name="Submitters_ProcessTemplate" Member="ProcessTemplate" ThisKey="submitterId" OtherKey="fk_submitter" Type="ProcessTemplate" />
+      <Association Name="Users_Submitters" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
