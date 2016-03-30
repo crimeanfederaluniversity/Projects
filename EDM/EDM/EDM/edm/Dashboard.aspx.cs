@@ -13,6 +13,7 @@ namespace EDM.edm
 {
     public partial class Dashboard : System.Web.UI.Page
     {
+        ProcessMainFucntions main = new ProcessMainFucntions();
         [Serializable]
         public class DataOne
         {
@@ -32,7 +33,6 @@ namespace EDM.edm
             public string TimeLeft { get; set; }
             public int Queue { get; set; }
         }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             var userId = Session["userID"];
@@ -41,7 +41,7 @@ namespace EDM.edm
                 Response.Redirect("~/Default.aspx");
             }
             /////////////////////////////////////////////////////////////////////
-            ProcessMainFucntions main = new ProcessMainFucntions();
+            
             if (!Page.IsPostBack)
             {
                 int userID;
@@ -62,9 +62,6 @@ namespace EDM.edm
 
             }
         }
-
-
-
         private  List<DataOne> FillingGrid(int direction, int userID)
         {
             EDMdbDataContext dataContext = new EDMdbDataContext();
@@ -597,8 +594,8 @@ namespace EDM.edm
                     break;
                     case "SubApprove":
                     {
-                        ProcessMainFucntions proc = new ProcessMainFucntions();
-                        Session["processID"] = proc.CreateChildProcess(idProcess);
+                       // ProcessMainFucntions proc = new ProcessMainFucntions();
+                        Session["processID"] = main.CreateChildProcess(idProcess);
                         //Session["SubApprove"];
                         Response.Redirect("ProcessEdit.aspx");
                     }
@@ -771,7 +768,7 @@ namespace EDM.edm
                         {
                             printButton.Text = "Печать рецензии";
                         }
-
+                        
                         #region isParentLink
 
                         var procParent =
@@ -786,8 +783,12 @@ namespace EDM.edm
                                 ForeColor = e.Row.ForeColor
                             });
                         }
-                    
+
+
+
                         #endregion isParentLink
+
+                       
 
                     }
                     #endregion Исходящие
@@ -843,6 +844,17 @@ namespace EDM.edm
                         }
 
                         #endregion isParentLink
+
+                        #region isChild
+                        bool procHasChild = (main.GetChildProcess(procId, (int)userId) != null);
+                        if (procHasChild)
+                        {
+                            e.Row.Cells[0].Controls.Clear();
+                            e.Row.Cells[0].Text =  procId + " ( внутренний " +
+                                                  main.GetChildProcess(procId, (int)userId).processID + ")";
+                        }
+                        #endregion
+
                     }
 
                     #endregion Входящие
