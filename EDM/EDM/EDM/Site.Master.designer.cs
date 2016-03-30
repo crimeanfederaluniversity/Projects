@@ -40,6 +40,15 @@ namespace EDM {
         protected global::System.Web.UI.WebControls.Button goForwardButton;
         
         /// <summary>
+        /// GoToStarterPageButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GoToStarterPageButton;
+        
+        /// <summary>
         /// GoToTemplatesButton control.
         /// </summary>
         /// <remarks>

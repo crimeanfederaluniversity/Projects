@@ -189,11 +189,11 @@ namespace EDM.edm
 
         public List<Processes> GetAllProcessesInStructWithNoInitiateCreator(int structId)
         {
-            // OtherFuncs other = new OtherFuncs();
-            // List<int> usersIds = new List<int>(){structId};
-            // List<int> users = other.GetSlaves(structId, ref usersIds);
-            List<Users> user = GetRecursiveChildAllStructList(structId, false);
-            List<int> users = (from a in user select a.userID).ToList();
+             OtherFuncs other = new OtherFuncs();
+             List<int> usersIds = new List<int>(){structId};
+             List<int> users = other.GetSlaves(structId, ref usersIds);
+            //List<Users> user = GetRecursiveChildAllStructList(structId, false);
+            //List<int> users = (from a in user select a.userID).ToList();
             List <Processes> processesToShow = (from a in _edmDb.Processes
                 where a.active == true
                       && a.status == -1
@@ -660,7 +660,7 @@ namespace EDM.edm
 
             foreach (Struct currentChild in childStructs)
             {
-                List<Users> tmp = GetRecursiveChildStructList(currentChild.structID, false);
+                List<Users> tmp = GetRecursiveChildAllStructList(currentChild.structID, false);
                 foreach (Users curTmp in tmp)
                 {
                     ListToReturn.Add(curTmp);
@@ -719,6 +719,14 @@ namespace EDM.edm
         #endregion
 
         #region check
+
+        public bool CanUserStart(int userId)
+        {
+            return (from a in _edmDb.Users
+                    where  a.userID == userId
+                    select a.canInitiate).FirstOrDefault();
+
+        }
 
         public bool IsUserStarter(int userId)
         {

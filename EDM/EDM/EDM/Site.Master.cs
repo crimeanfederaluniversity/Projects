@@ -51,7 +51,7 @@ namespace EDM
                 int.TryParse(Session["userID"].ToString(), out userID);
 
                 ProcessMainFucntions main = new ProcessMainFucntions();
-
+                GoToStarterPageButton.Visible = main.IsUserStarter(userID);
                 GoToSubmitterButton.Visible = main.IsUserSubmitter(userID);
                 GoToTemplatesButton.Visible = main.CanUserDoTemplate(userID);
                 GoToSlavesHistory.Visible = main.IsUserHead(userID);
@@ -69,7 +69,10 @@ namespace EDM
         }
 
 
-
+        protected void GoToStarterPageButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ProcessStarterPage.aspx");
+        }
         protected void GoToTemplatesButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("TemplatesList.aspx");

@@ -454,6 +454,8 @@ namespace EDM.edm
                 
                 coluButtonField3.CommandName = "StartP";
                 coluButtonField3.ControlStyle.CssClass = "btn btn-success";
+                
+
                 gridView.Columns.Add(coluButtonField3);
 
                 ButtonField printButton = new ButtonField();
@@ -765,6 +767,13 @@ namespace EDM.edm
                             "javascript: {document.getElementById('coomentEndP').style.visibility='visible'; " +
                             "document.getElementById('MainContent_textBoxId').value ='" + e.Row.Cells[0].Text + "'; " +
                             "return false;}";
+                        }
+                        else
+                        {
+                            if (!main.CanUserStart(userId))
+                            {
+                                btnStart.Enabled = false;
+                            }
                         }
                         if (e.Row.Cells[3].Text.Equals("Возвращен на доработку"))
                         {
