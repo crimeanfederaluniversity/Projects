@@ -768,11 +768,21 @@ namespace EDM.edm
                             "document.getElementById('MainContent_textBoxId').value ='" + e.Row.Cells[0].Text + "'; " +
                             "return false;}";
                         }
+                        else if (e.Row.Cells[3].Text.Equals(""))
+                        {
+                           // btnStart.Enabled = false;
+                          //  btnStart.
+                        }
                         else
                         {
                             if (!main.CanUserStart(userId))
                             {
                                 btnStart.Enabled = false;
+                            }
+                            else if (!main.IsProcessOk(procId))
+                            {
+                                btnStart.Enabled = false;
+                                btnStart.ToolTip = "Процесс пуст!";
                             }
                         }
                         if (e.Row.Cells[3].Text.Equals("Возвращен на доработку"))

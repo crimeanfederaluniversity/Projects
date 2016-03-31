@@ -721,6 +721,13 @@ namespace EDM.edm
 
         #region check
 
+        public bool IsProcessOk(int procId)
+        {
+            if (GetLastVersionInProcess(procId) != null)
+                return true;
+            return false;
+        }
+       
         public bool CanUserStart(int userId)
         {
             return (from a in _edmDb.Users
