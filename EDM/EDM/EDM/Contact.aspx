@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="Контакты" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="EDM.Contact" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <br />
     <h2><%: Title %>.</h2>
     <h3>Крымский федеральный университет имени В. И. Вернадского</h3>
     <address>

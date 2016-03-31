@@ -22,7 +22,7 @@ namespace EDM
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="ApproveDB")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="NewApproveDB")]
 	public partial class EDMdbDataContext : System.Data.Linq.DataContext
 	{
 		

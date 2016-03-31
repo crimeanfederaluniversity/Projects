@@ -53,6 +53,7 @@ namespace EDM.edm
             ProcVersionDocsMap newDocsMap = new ProcVersionDocsMap();
             newDocsMap.active = true;
             newDocsMap.fk_processVersion = processVersion;
+            
             newDocsMap.documentComment = docComment;
             newDocsMap.fk_documents = newDocument.documentID;
             _edmDb.ProcVersionDocsMap.InsertOnSubmit(newDocsMap);
