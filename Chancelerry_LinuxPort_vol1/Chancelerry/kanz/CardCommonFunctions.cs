@@ -382,7 +382,7 @@ namespace Chancelerry.kanz
                 return "Данных нет";
 
 
-            string sqlquery = "Select * from \"CollectedFieldsValues\" where fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
+            string sqlquery = "SELECT * FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
                 "AND  fk_field IN (" + string.Join(",", allFields.Keys.ToArray()) + ")";
 
             List<CollectedFieldsValues> allValues = chancDb.ExecuteQuery<CollectedFieldsValues>(sqlquery).ToList();
@@ -973,6 +973,7 @@ namespace Chancelerry.kanz
                     if (currentField.Type == "fullStruct" || currentField.Type == "onlyLastStruct")
                     {
                         currentFieldTextBox.TextMode = TextBoxMode.MultiLine;
+                        currentFieldTextBox.CssClass = "MultiLinea";
                         bool fullStruct = currentField.Type == "fullStruct";
                         ImageButton structButton = new ImageButton();
                         structButton.ImageUrl = "~/kanz/icons/treeButtonIcon.jpg";

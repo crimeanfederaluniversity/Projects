@@ -1,4 +1,5 @@
 ﻿function showLoadingScreen() {
+    window.scrollTo(0, 0);  //
     var over = document.createElement("div");
     over.id = "Loader";
     over.classList.add("overlay");
@@ -10,11 +11,8 @@
     document.body.appendChild(over);
 
     // lock scroll
-
-    $('html, body').css({
-        'overflow': 'hidden',
-        'height': '100%'
-    });
+    document.body.style['overflow'] = 'hidden';
+    document.body.style['height'] = '100%';
 };
 
 function removeLoadingScreen() {
