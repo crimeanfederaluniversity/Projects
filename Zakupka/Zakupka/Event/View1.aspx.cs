@@ -16,7 +16,7 @@ namespace Zakupka.Event
             Table tableToReturn = new Table();          
             List<Fields> allfields = (from f in zakupkaDB.Fields
                                       where f.active == true
-                                      join z in zakupkaDB.ViewField
+                                      join z in zakupkaDB.ViewField.OrderBy(mc=>mc.@orderby)
                                       on f.filedID equals z.fk_field
                                       where z.viewtype == Convert.ToInt32(DropDownList1.Items[DropDownList1.SelectedIndex].Value) && z.active == true
                                       select f).ToList();
@@ -40,33 +40,89 @@ namespace Zakupka.Event
                                       select a).ToList();
                 foreach (Events n in allevents)
                 {
-                    TableRow newRow = new TableRow();
-                    TableCell newCell = new TableCell();
-                    newCell.Text = n.name;
-                    newCell.Style.Add("background-color", "red");
-                    newRow.Cells.Add(newCell);
+                    TableRow eventRow = new TableRow();
+                    TableCell eventCell = new TableCell();
+                eventCell.Text = n.name;
+                eventCell.Style.Add("background-color", "red");
+                    eventRow.Cells.Add(eventCell);
 
-                    tableToReturn.Rows.Add(newRow);
-                    List<Projects> allprojects = (from a in zakupkaDB.Projects
+               
+                foreach(Fields field in allfields)
+                {
+                    TableCell sumValue = new TableCell();
+                    if (field.sumby == true)
+                    {
+                        List<string> strList = (from c in zakupkaDB.CollectedValues
+                                                where c.active == true
+                                                && c.fk_field == field.filedID
+                                                join k in zakupkaDB.Contracts on c.fk_contract equals k.contractID
+                                                where k.active == true
+                                                join d in zakupkaDB.Projects
+                                                on k.fk_project equals d.projectID
+                                                where d.fk_event == n.eventID
+                                                    select c.value).ToList();
+
+                        decimal eventsum=0;
+                        foreach (var itm  in strList)
+                        {
+                            Decimal tmp=0;
+                            Decimal.TryParse(itm, out tmp);
+                            eventsum += tmp;
+                        }
+                        sumValue.Text = eventsum.ToString();
+                    }            
+
+                   
+                    eventRow.Cells.Add(sumValue);
+                }
+                
+                   tableToReturn.Rows.Add(eventRow);
+
+                List<Projects> allprojects = (from a in zakupkaDB.Projects
                                                   where a.active && a.fk_event == n.eventID
                                                   select a).ToList();
                     foreach (Projects a in allprojects)
                     {
-                        TableRow newRow1 = new TableRow();
-                        TableCell newCell1 = new TableCell();
-                        newCell1.Text = a.name;
-                        newCell1.Style.Add("background-color", "yellow");
-                        newRow1.Cells.Add(newCell1);
-                        tableToReturn.Rows.Add(newRow1);
-                        List<Contracts> allcontracts = (from b in zakupkaDB.Contracts
+                        TableRow projectRow = new TableRow();
+                        TableCell projectCell = new TableCell();
+                    projectCell.Text = a.name;
+                    projectCell.Style.Add("background-color", "yellow");
+                    projectRow.Cells.Add(projectCell);
+                    foreach (Fields field in allfields)
+                    {
+                        TableCell sumForPrValue = new TableCell();
+                        if (field.sumby == true)
+                        {
+                            List<string> strList =  (from c in zakupkaDB.CollectedValues
+                             where c.active == true
+                             && c.fk_field == field.filedID
+                             join k in zakupkaDB.Contracts on c.fk_contract equals k.contractID
+                             where k.active == true 
+                             && k.fk_project == a.projectID
+                             select c.value).Distinct().ToList();
+
+                            decimal prsum = 0;
+                            foreach (var itm in strList)
+                            {
+                                Decimal tmp = 0;
+                                Decimal.TryParse(itm, out tmp);
+                                prsum += tmp;
+                            }
+                            sumForPrValue.Text = prsum.ToString();                       
+                        }
+                        projectRow.Cells.Add(sumForPrValue);
+                    }
+                    tableToReturn.Rows.Add(projectRow);
+
+                    List<Contracts> allcontracts = (from b in zakupkaDB.Contracts
                                                         where b.active  && b.fk_project == a.projectID
                                                         select b).ToList();
                         foreach (Contracts b in allcontracts)
                         {
-                            TableRow newRow2 = new TableRow();
-                            TableCell newCell2 = new TableCell();
-                            newCell2.Text = b.name;
-                            newRow2.Cells.Add(newCell2);
+                            TableRow contractRow = new TableRow();
+                            TableCell contractCell = new TableCell();
+                        contractCell.Text = b.name;
+                        contractRow.Cells.Add(contractCell);
 
                             foreach (Fields field in allfields)
                             {
@@ -75,8 +131,8 @@ namespace Zakupka.Event
                                 newValue.Text = (from c in zakupkaDB.CollectedValues
                                              where c.active && c.fk_contract == b.contractID && c.fk_field == field.filedID
                                              select c.value).FirstOrDefault();
-                                newRow2.Cells.Add(newValue);
-                               tableToReturn.Rows.Add(newRow2);
+                            contractRow.Cells.Add(newValue);
+                               tableToReturn.Rows.Add(contractRow);
                             }
                        // tableToReturn.Rows.Add(newRow2);
                       }

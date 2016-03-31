@@ -45,12 +45,12 @@ namespace Zakupka
     partial void InsertCollectedValues(CollectedValues instance);
     partial void UpdateCollectedValues(CollectedValues instance);
     partial void DeleteCollectedValues(CollectedValues instance);
-    partial void InsertFields(Fields instance);
-    partial void UpdateFields(Fields instance);
-    partial void DeleteFields(Fields instance);
     partial void InsertViewField(ViewField instance);
     partial void UpdateViewField(ViewField instance);
     partial void DeleteViewField(ViewField instance);
+    partial void InsertFields(Fields instance);
+    partial void UpdateFields(Fields instance);
+    partial void DeleteFields(Fields instance);
     #endregion
 		
 		public ZakupkaDBDataContext() : 
@@ -123,19 +123,19 @@ namespace Zakupka
 			}
 		}
 		
-		public System.Data.Linq.Table<Fields> Fields
-		{
-			get
-			{
-				return this.GetTable<Fields>();
-			}
-		}
-		
 		public System.Data.Linq.Table<ViewField> ViewField
 		{
 			get
 			{
 				return this.GetTable<ViewField>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Fields> Fields
+		{
+			get
+			{
+				return this.GetTable<Fields>();
 			}
 		}
 	}
@@ -1364,6 +1364,205 @@ namespace Zakupka
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ViewField")]
+	public partial class ViewField : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private System.Nullable<bool> _active;
+		
+		private System.Nullable<int> _viewtype;
+		
+		private System.Nullable<int> _fk_field;
+		
+		private System.Nullable<int> _orderby;
+		
+		private EntityRef<Fields> _Fields;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnactiveChanging(System.Nullable<bool> value);
+    partial void OnactiveChanged();
+    partial void OnviewtypeChanging(System.Nullable<int> value);
+    partial void OnviewtypeChanged();
+    partial void Onfk_fieldChanging(System.Nullable<int> value);
+    partial void Onfk_fieldChanged();
+    partial void OnorderbyChanging(System.Nullable<int> value);
+    partial void OnorderbyChanged();
+    #endregion
+		
+		public ViewField()
+		{
+			this._Fields = default(EntityRef<Fields>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit")]
+		public System.Nullable<bool> active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_viewtype", DbType="Int")]
+		public System.Nullable<int> viewtype
+		{
+			get
+			{
+				return this._viewtype;
+			}
+			set
+			{
+				if ((this._viewtype != value))
+				{
+					this.OnviewtypeChanging(value);
+					this.SendPropertyChanging();
+					this._viewtype = value;
+					this.SendPropertyChanged("viewtype");
+					this.OnviewtypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_field", DbType="Int")]
+		public System.Nullable<int> fk_field
+		{
+			get
+			{
+				return this._fk_field;
+			}
+			set
+			{
+				if ((this._fk_field != value))
+				{
+					if (this._Fields.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_fieldChanging(value);
+					this.SendPropertyChanging();
+					this._fk_field = value;
+					this.SendPropertyChanged("fk_field");
+					this.Onfk_fieldChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_orderby", DbType="Int")]
+		public System.Nullable<int> orderby
+		{
+			get
+			{
+				return this._orderby;
+			}
+			set
+			{
+				if ((this._orderby != value))
+				{
+					this.OnorderbyChanging(value);
+					this.SendPropertyChanging();
+					this._orderby = value;
+					this.SendPropertyChanged("orderby");
+					this.OnorderbyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fields_ViewField", Storage="_Fields", ThisKey="fk_field", OtherKey="filedID", IsForeignKey=true)]
+		public Fields Fields
+		{
+			get
+			{
+				return this._Fields.Entity;
+			}
+			set
+			{
+				Fields previousValue = this._Fields.Entity;
+				if (((previousValue != value) 
+							|| (this._Fields.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Fields.Entity = null;
+						previousValue.ViewField.Remove(this);
+					}
+					this._Fields.Entity = value;
+					if ((value != null))
+					{
+						value.ViewField.Add(this);
+						this._fk_field = value.filedID;
+					}
+					else
+					{
+						this._fk_field = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Fields");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Fields")]
 	public partial class Fields : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1389,6 +1588,8 @@ namespace Zakupka
 		private int _width;
 		
 		private System.Nullable<int> _step;
+		
+		private System.Nullable<bool> _sumby;
 		
 		private EntitySet<CollectedValues> _CollectedValues;
 		
@@ -1418,6 +1619,8 @@ namespace Zakupka
     partial void OnwidthChanged();
     partial void OnstepChanging(System.Nullable<int> value);
     partial void OnstepChanged();
+    partial void OnsumbyChanging(System.Nullable<bool> value);
+    partial void OnsumbyChanged();
     #endregion
 		
 		public Fields()
@@ -1627,6 +1830,26 @@ namespace Zakupka
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sumby", DbType="Bit")]
+		public System.Nullable<bool> sumby
+		{
+			get
+			{
+				return this._sumby;
+			}
+			set
+			{
+				if ((this._sumby != value))
+				{
+					this.OnsumbyChanging(value);
+					this.SendPropertyChanging();
+					this._sumby = value;
+					this.SendPropertyChanged("sumby");
+					this.OnsumbyChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fields_CollectedValues", Storage="_CollectedValues", ThisKey="filedID", OtherKey="fk_field")]
 		public EntitySet<CollectedValues> CollectedValues
 		{
@@ -1695,205 +1918,6 @@ namespace Zakupka
 		{
 			this.SendPropertyChanging();
 			entity.Fields = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ViewField")]
-	public partial class ViewField : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private System.Nullable<bool> _active;
-		
-		private System.Nullable<int> _viewtype;
-		
-		private System.Nullable<int> _fk_field;
-		
-		private System.Nullable<int> _orderby;
-		
-		private EntityRef<Fields> _Fields;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnactiveChanging(System.Nullable<bool> value);
-    partial void OnactiveChanged();
-    partial void OnviewtypeChanging(System.Nullable<int> value);
-    partial void OnviewtypeChanged();
-    partial void Onfk_fieldChanging(System.Nullable<int> value);
-    partial void Onfk_fieldChanged();
-    partial void OnorderbyChanging(System.Nullable<int> value);
-    partial void OnorderbyChanged();
-    #endregion
-		
-		public ViewField()
-		{
-			this._Fields = default(EntityRef<Fields>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit")]
-		public System.Nullable<bool> active
-		{
-			get
-			{
-				return this._active;
-			}
-			set
-			{
-				if ((this._active != value))
-				{
-					this.OnactiveChanging(value);
-					this.SendPropertyChanging();
-					this._active = value;
-					this.SendPropertyChanged("active");
-					this.OnactiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_viewtype", DbType="Int")]
-		public System.Nullable<int> viewtype
-		{
-			get
-			{
-				return this._viewtype;
-			}
-			set
-			{
-				if ((this._viewtype != value))
-				{
-					this.OnviewtypeChanging(value);
-					this.SendPropertyChanging();
-					this._viewtype = value;
-					this.SendPropertyChanged("viewtype");
-					this.OnviewtypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_field", DbType="Int")]
-		public System.Nullable<int> fk_field
-		{
-			get
-			{
-				return this._fk_field;
-			}
-			set
-			{
-				if ((this._fk_field != value))
-				{
-					if (this._Fields.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_fieldChanging(value);
-					this.SendPropertyChanging();
-					this._fk_field = value;
-					this.SendPropertyChanged("fk_field");
-					this.Onfk_fieldChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_orderby", DbType="Int")]
-		public System.Nullable<int> orderby
-		{
-			get
-			{
-				return this._orderby;
-			}
-			set
-			{
-				if ((this._orderby != value))
-				{
-					this.OnorderbyChanging(value);
-					this.SendPropertyChanging();
-					this._orderby = value;
-					this.SendPropertyChanged("orderby");
-					this.OnorderbyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fields_ViewField", Storage="_Fields", ThisKey="fk_field", OtherKey="filedID", IsForeignKey=true)]
-		public Fields Fields
-		{
-			get
-			{
-				return this._Fields.Entity;
-			}
-			set
-			{
-				Fields previousValue = this._Fields.Entity;
-				if (((previousValue != value) 
-							|| (this._Fields.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Fields.Entity = null;
-						previousValue.ViewField.Remove(this);
-					}
-					this._Fields.Entity = value;
-					if ((value != null))
-					{
-						value.ViewField.Add(this);
-						this._fk_field = value.filedID;
-					}
-					else
-					{
-						this._fk_field = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Fields");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 }

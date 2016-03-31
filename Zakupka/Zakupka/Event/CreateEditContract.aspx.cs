@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 
 namespace Zakupka.Event
 {
@@ -12,7 +14,7 @@ namespace Zakupka.Event
 
         ZakupkaDBDataContext zakupkaDB = new ZakupkaDBDataContext();        
         public List<ValueSaveClass> ValuesList = new List<ValueSaveClass>();
-
+        public DataValidator validator = new DataValidator();
         public class ValueSaveClass
         {
             public TextBox Value { get; set; }
@@ -65,21 +67,21 @@ namespace Zakupka.Event
                                      select a).ToList();
             int maxLine = (from a in allFields select a.line).OrderByDescending(mc => mc).FirstOrDefault();
 
-            for (int i =0; i<maxLine+1; i++)
+            for (int i = 0; i < maxLine + 1; i++)
             {
                 TableRow newRow = new TableRow();
                 TableRow headerNewRow = new TableRow();
-                List<Fields> fieldsInLine = (from a in allFields where a.line == i select a).OrderBy(mc=>mc.col).ToList();
+                List<Fields> fieldsInLine = (from a in allFields where a.line == i select a).OrderBy(mc => mc.col).ToList();
                 foreach (Fields field in fieldsInLine)
                 {
                     TableCell newCell = new TableCell();
                     TableCell headerNewCell = new TableCell();
                     headerNewCell.Text = field.name;
 
-                    TextBox newTextBox = new TextBox();
+                    TextBox newTextBox = validator.GetTextBox(field.type);
                     newTextBox.Width = field.width;
                     newTextBox.Height = field.height;
-                    //newTextBox.ID = field.filedID;
+                    newTextBox.ID = "textBox"+ field.filedID.ToString();
                     int contractId = conId;// вытаскиваеш из сессии
                     newTextBox.Text = GetCollectedValue(field.filedID, contractId, userID);
 
@@ -89,24 +91,36 @@ namespace Zakupka.Event
                     classTmp.ContractId = contractId;
                     ValuesList.Add(classTmp);
 
+                    newCell.Controls.Add(validator.GetRangeValidator("RangeValidator" + field.filedID, "textBox" + field.filedID.ToString(), field.type));
                     newCell.Controls.Add(newTextBox);
 
-                    headerNewRow.Cells.Add(headerNewCell);
                     newRow.Cells.Add(newCell);
+
+                    headerNewRow.Cells.Add(headerNewCell);
                 }
                 tableToReturn.Rows.Add(headerNewRow);
                 tableToReturn.Rows.Add(newRow);
             }
             Session["values"] = ValuesList;
-            return tableToReturn;           
+            return tableToReturn;  
+                     
         }
 
 
         public void SaveCollectedValue (int fieldId, int contractId, string value)
         {
-            // находиш в базе коллектед по филду и контракту и меняеш его значение
             if (fieldId != null && contractId != null)
             {
+                Fields fieldtype = (from a in zakupkaDB.Fields
+                                    where a.filedID == fieldId
+                                        && a.active == true
+                                    select a).FirstOrDefault();
+                DataValidator check = new DataValidator();
+              
+                TextBox currentFieldTextBox = check.GetTextBox(fieldtype.type);
+                TableDiv.Controls.Add(check.GetRangeValidator("RangeValidator" + currentFieldTextBox.ID, fieldtype.filedID.ToString(), fieldtype.type));
+                // находиш в базе коллектед по филду и контракту и меняеш его значение
+
                 CollectedValues fk = (from a in zakupkaDB.CollectedValues
                                       where a.fk_contract == contractId
                                           && a.fk_field == fieldId
@@ -119,8 +133,8 @@ namespace Zakupka.Event
         public void SaveAll()
         {
             foreach (ValueSaveClass tmp in ValuesList)
-            {
-                SaveCollectedValue(tmp.FieldId, tmp.ContractId, tmp.Value.Text);
+            {               
+               SaveCollectedValue(tmp.FieldId, tmp.ContractId, tmp.Value.Text);
             }
         }
 
@@ -136,6 +150,8 @@ namespace Zakupka.Event
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            
+            
             SaveAll();
             TableDiv.Controls.Clear();
             TableDiv.Controls.Add(CreateNewTable());
