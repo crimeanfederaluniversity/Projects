@@ -548,6 +548,10 @@ namespace EDM.edm
             Int32.TryParse(HttpContext.Current.Session["processID"].ToString(), out processId);
             if (processId != 0)
             {
+
+
+                
+
                 if (DocumentsList.Count == 0)
                 {
                     AddDocumentRow(null, null);
@@ -710,12 +714,7 @@ namespace EDM.edm
                 ParticipantsList.Add(CreateParticipant(i, 0, templateParticipant.queue.ToString(), "", templateParticipant.fk_user.ToString(), main.GetUserById(templateParticipant.fk_user).name));
                 i++;
             }
-
-                    int submitterId = 0;
-                    Int32.TryParse(main.GetProcessById(processId).fk_submitter.ToString(), out submitterId);
-                    SubmitterDropDown.Items.AddRange(main.GetSubmittersList(submitterId));
-
-         
+     
              Refersh();
         }
         #endregion
@@ -1058,6 +1057,10 @@ namespace EDM.edm
                     DocumentsList = GetDocumentsInProcess(processId);
                     commentForVersionTextBox.Text = main.GetCommentForLastVersion(processId);
 
+                    int submitterId = 0;
+                    Int32.TryParse(main.GetProcessById(processId).fk_submitter.ToString(), out submitterId);
+                    SubmitterDropDown.Items.Clear();
+                    SubmitterDropDown.Items.AddRange(main.GetSubmittersList(submitterId));
 
                 }
                 else

@@ -71,23 +71,23 @@ namespace EDM
 
         protected void GoToStarterPageButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ProcessStarterPage.aspx");
+            Response.Redirect("~/edm/ProcessStarterPage.aspx");
         }
         protected void GoToTemplatesButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("TemplatesList.aspx");
+            Response.Redirect("~/edm/TemplatesList.aspx");
         }
 
         protected void GoToSlavesHistory_Click(object sender, EventArgs e)
         {
             Session["searchName"] = string.Empty;
             Session["dateStartSearch"] = string.Empty;
-            Response.Redirect("Subordinate.aspx");
+            Response.Redirect("~/edm/Subordinate.aspx");
         }
 
         protected void GoToSubmitterButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("SubmittedPage.aspx");
+            Response.Redirect("~/edm/SubmittedPage.aspx");
         }
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {

@@ -255,36 +255,38 @@ namespace EDM.edm
             using (EDMdbDataContext dataContext = new EDMdbDataContext())
             {
                 Processes procToFinish = (from p in dataContext.Processes where p.active && p.processID == procId select p).FirstOrDefault();
-                if (procToFinish.fk_submitter != null)
-                {
+                
                     ProcessMainFucntions main = new ProcessMainFucntions();
-                    Users submitter = main.GetUserById((int)procToFinish.fk_submitter);
+                    
                     if (procToFinish != null)
                     {
                         procToFinish.status = 10;
                         procToFinish.endComment = comment;
                         procToFinish.endDate = DateTime.Now;
                         dataContext.SubmitChanges();
-
+                        if (procToFinish.fk_submitter != null)
+                        {
+                        Users submitter = main.GetUserById((int)procToFinish.fk_submitter);
                         EmailTemplates etmp =
-                            (from a in dataContext.EmailTemplates
-                                where a.active && a.name == "youFinishedApprove"
-                                select a)
-                                .FirstOrDefault();
+                                (from a in dataContext.EmailTemplates
+                                    where a.active && a.name == "youFinishedApprove"
+                                    select a)
+                                    .FirstOrDefault();
 
-                        // Зменить email
-
-                        ef.SendEmail(submitter.email, etmp.emailTitle,
-                            etmp.emailContent.Replace("#processName#",
-                                (from a in dataContext.Processes where a.active && a.processID == procId select a.name)
-                                    .FirstOrDefault()), null); // Добавить attached 
+                            ef.SendEmail(submitter.email, etmp.emailTitle,
+                                etmp.emailContent.Replace("#processName#",
+                                    (from a in dataContext.Processes
+                                        where a.active && a.processID == procId
+                                        select a.name)
+                                        .FirstOrDefault()), null); // Добавить attached 
+                        }
                     }
                     else
                     {
                         throw new Exception("Ошибка утверждения процесса № " + procId); //LOG
                     }
                 }
-            }
+            
         }
     }
 }
