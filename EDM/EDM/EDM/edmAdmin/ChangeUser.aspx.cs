@@ -11,7 +11,12 @@ namespace EDM.edmAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-             var UserID = Session["userID"];
+            var Id = Session["userAdmin"];
+            if (Id == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            var UserID = Session["userID"];
 
               if (UserID == null)
               {

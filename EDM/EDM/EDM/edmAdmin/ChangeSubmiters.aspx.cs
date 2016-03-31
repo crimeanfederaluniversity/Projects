@@ -14,7 +14,13 @@ namespace EDM.edmAdmin
     public partial class ChangeSubmiters : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
+
         {
+            var Id = Session["userAdmin"];
+            if (Id == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
             if (!Page.IsPostBack)
             {
                 grid1Update();

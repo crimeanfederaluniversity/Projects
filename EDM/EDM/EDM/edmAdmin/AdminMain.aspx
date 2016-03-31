@@ -15,4 +15,6 @@
     <asp:Button ID="WatchSubmiters" runat="server" Height="30px" Text="Доступ к отчетам о распечатке" Width="300px" OnClick="WatchSubmitersClick" />
     <br />
     <br />
+    <asp:Button ID="WatchSubmiters0" runat="server" Height="30px" Text="Пользователи, имеющие право на рассылку" Width="300px" OnClick="ProcessStartClick" />
+    <br />
 </asp:Content>

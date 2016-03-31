@@ -11,9 +11,12 @@ namespace EDM.edmAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            var Id = Session["userAdmin"];
+            if (Id == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
         }
-
         protected void NewUserButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/edmAdmin/CreateNewUser.aspx");
@@ -32,6 +35,10 @@ namespace EDM.edmAdmin
         protected void WatchSubmitersClick(object sender, EventArgs e)
         {
             Response.Redirect("~/edmAdmin/ChangeSubmiters.aspx");
+        }
+        protected void ProcessStartClick(object sender, EventArgs e)
+        {
+            Response.Redirect("~/edmAdmin/UserProcessStart.aspx");
         }
     }
 }
