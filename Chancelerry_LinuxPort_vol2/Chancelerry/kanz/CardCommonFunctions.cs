@@ -359,12 +359,21 @@ namespace Chancelerry.kanz
             public double Weight { get; set; }
         }
 
+        public class ValuesClass
+        {
+            public int fk_collectedcard { get; set; }
+            public int fk_field { get; set; }
+            public int version { get; set; }
+            public int instance { get; set; }
+            public string valuetext { get; set; }
+            public bool isdeleted { get; set; }
+        }
 
 
-        public string FastSearch(string cardId,Dictionary<int, string> searchList,string searchAll, int registerId, int userId, Table vTable, int LineFrom, int LineTo)
+        public string FastSearch(string cardId, Dictionary<int, string> searchList, string searchAll, int registerId, int userId, Table vTable, int LineFrom, int LineTo)
         {
             #region GetSortedCutedCardsToShow
-            List<int> sortedCutedCardsToShow = GetCardsToShow(cardId,searchList, searchAll, registerId, LineFrom, LineTo); // NEW           
+            List<int> sortedCutedCardsToShow = GetCardsToShow(cardId, searchList, searchAll, registerId, LineFrom, LineTo); // NEW           
             Dictionary<int, string> allFields = (from a in chancDb.RegistersUsersMap
                                                  join b in chancDb.RegistersView
                                                  on a.RegistersUsersMapID equals b.FkRegistersUsersMap
@@ -376,16 +385,13 @@ namespace Chancelerry.kanz
                                                  && b.Active
                                                  && c.Active
                                                  && a.Active
-                                                 select new NameFieldWeightClass {name = c.Name,FieldID = c.FieldID,Weight = b.Weight }).OrderBy(w => w.Weight).ToDictionary(t => t.FieldID, t => t.name);
+                                                 select new NameFieldWeightClass { name = c.Name, FieldID = c.FieldID, Weight = b.Weight }).OrderBy(w => w.Weight).ToDictionary(t => t.FieldID, t => t.name);
 
             if (sortedCutedCardsToShow.Count == 0 || allFields.Count == 0)
                 return "Данных нет";
-
-
-            string sqlquery = "SELECT * FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
-                "AND  fk_field IN (" + string.Join(",", allFields.Keys.ToArray()) + ")";
-
-            List<CollectedFieldsValues> allValues = chancDb.ExecuteQuery<CollectedFieldsValues>(sqlquery).ToList();
+            string sqlqueryTMP = "SELECT fk_collectedcard,fk_field,instance,valuetext,isdeleted FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
+                 "AND  fk_field IN (" + string.Join(",", allFields.Keys.ToArray()) + ")";
+            ValuesClass[] tmpStrList = chancDb.ExecuteQuery<ValuesClass>(sqlqueryTMP).ToArray();
             vTable.Rows.Add(AddSearchHeaderRoFromListWithData(allFields.Keys.ToList(), searchList));
             vTable.Rows.Add(ta.AddHeaderRoFromList(allFields.Values.ToList()));
             #endregion
@@ -393,14 +399,14 @@ namespace Chancelerry.kanz
             foreach (int currentCard in sortedCutedCardsToShow)
             {
                 int maxInstanceInCard =
-                    (from a in allValues where a.FkCollectedCard == currentCard select a.Instance).OrderByDescending(
-                        mc => mc).FirstOrDefault() ;
+                    (from a in tmpStrList where a.fk_collectedcard == currentCard select a.instance).OrderByDescending(
+                        mc => mc).FirstOrDefault();
                 int fieldsCount = allFields.Count;
 
-                string [,] arrayOfStrings = new string [fieldsCount,maxInstanceInCard+1];
-                for (int i=0;i< fieldsCount ;i++)
+                string[,] arrayOfStrings = new string[fieldsCount, maxInstanceInCard + 1];
+                for (int i = 0; i < fieldsCount; i++)
                 {
-                    for (int j=0; j < maxInstanceInCard+1; j++)
+                    for (int j = 0; j < maxInstanceInCard + 1; j++)
                     {
                         arrayOfStrings[i, j] = "~null~";
                     }
@@ -409,21 +415,21 @@ namespace Chancelerry.kanz
                 int fieldN = 0;
                 foreach (int currentField in allFields.Keys)
                 {
-                    List<CollectedFieldsValues> collectedFields = (from a in allValues where a.FkField == currentField && a.FkCollectedCard == currentCard select a).ToList();     
-                    for (int i = 0;i < maxInstanceInCard+1;i++)
+                    List<ValuesClass> collectedFields = (from a in tmpStrList where a.fk_field == currentField && a.fk_collectedcard == currentCard select a).ToList();
+                    for (int i = 0; i < maxInstanceInCard + 1; i++)
                     {
-                        List<CollectedFieldsValues> tmp3 = (from a in collectedFields where a.Instance == i select a).OrderByDescending(mc => mc.Version).ToList();
-                        CollectedFieldsValues tmp2 = null;
+                        List<ValuesClass> tmp3 = (from a in collectedFields where a.instance == i select a).OrderByDescending(mc => mc.version).ToList();
+                        ValuesClass tmp2 = null;
                         if (tmp3.Count > 0)
                         {
-                            tmp2 = (from a in tmp3 where a.ValueText.Length > 0 select a).FirstOrDefault();
+                            tmp2 = (from a in tmp3 where a.valuetext.Length > 0 select a).FirstOrDefault();
                             arrayOfStrings[fieldN, i] = "";
                         }
                         if (tmp2 == null)
                             continue;
-                        if (tmp2.IsDeleted)
+                        if (tmp2.isdeleted)
                             continue;
-                        arrayOfStrings[fieldN, i] = tmp2.ValueText;
+                        arrayOfStrings[fieldN, i] = tmp2.valuetext;
                     }
                     fieldN++;
                 }
@@ -439,15 +445,15 @@ namespace Chancelerry.kanz
                         cell0.BorderStyle = BorderStyle.Solid;
                         if (arrayOfStrings[i, j] == "~null~")
                         {
-                            if (j!=0)
-                                 continue;
+                            if (j != 0)
+                                continue;
                             arrayOfStrings[i, j] = "";
                         }
                         cell0.Text = arrayOfStrings[i, j];
-                        int colSpanCheckCounter = j+1;
+                        int colSpanCheckCounter = j + 1;
                         int colspanTmp = 1;
 
-                        while (colSpanCheckCounter<= maxInstanceInCard && arrayOfStrings[i, colSpanCheckCounter]== "~null~")
+                        while (colSpanCheckCounter <= maxInstanceInCard && arrayOfStrings[i, colSpanCheckCounter] == "~null~")
                         {
                             colspanTmp++;
                             colSpanCheckCounter++;
@@ -484,7 +490,7 @@ namespace Chancelerry.kanz
                         cell.Controls.Add(buttonEdit);
                         cell.Controls.Add(buttonView);
                         cell.Controls.Add(buttonDelete);
-                        cell.RowSpan = maxInstanceInCard+1;
+                        cell.RowSpan = maxInstanceInCard + 1;
                         instRow.Cells.Add(cell);
                     }
                 }
@@ -492,7 +498,8 @@ namespace Chancelerry.kanz
             #endregion
             return "Всего:" + totalCnt.ToString() + "  " + "Показано с " + (LineFrom + 1) + " по " + (LineTo);
         }
-    }
+    
+}
 
 
 
