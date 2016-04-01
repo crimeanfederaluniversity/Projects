@@ -272,12 +272,7 @@ namespace EDM.edm
                 Button2.BorderWidth = 2;
                 Button2.BorderColor = Color.OrangeRed;
 
-                foreach (var itm in dataOneSource)
-                {
-                    itm.Initiator =
-                        (from a in dataContext.Users where a.userID == itm.InitiatorId select a.name).FirstOrDefault();
-
-                }
+            
                 gridView.DataSource = dataOneSource;
 
 
@@ -294,7 +289,7 @@ namespace EDM.edm
                 gridView.Columns.Add(boundField2);
 
                 BoundField boundField3 = new BoundField();
-                boundField3.DataField = "Initiator";
+                boundField3.DataField = "InitiatorId";
                 boundField3.HeaderText = "Инициатор";
                 boundField3.Visible = true;
                 gridView.Columns.Add(boundField3);
@@ -836,9 +831,7 @@ namespace EDM.edm
                         subApproval.OnClientClick = "javascript: if (confirm('Вы хотите создать внутреннее согласование?') == true) {__doPostBack('ctl00$MainContent$dashGridView','SubApprove$" +
                             id + "'); showSimpleLoadingScreen(); } else return false";
 
-
-
-
+                        #region Colorfull
                         if (date.Day <= DateTime.Now.Day && date.Month <= DateTime.Now.Month && date.Year<= DateTime.Now.Year)
                         {
                             e.Row.Cells[3].ForeColor = Color.Red;
@@ -854,6 +847,7 @@ namespace EDM.edm
                             e.Row.ForeColor = Color.RoyalBlue;
                             e.Row.Font.Bold = true;
                         }
+                        #endregion colorfull
 
                         #region isParentLink
 
@@ -886,6 +880,23 @@ namespace EDM.edm
                                                   main.GetChildProcess(procId, (int)userId).processID + ")";*/
                         }
                         #endregion
+
+                        #region InitiatorName + toolTip
+
+                        var toltipData = (from u in dc.Users
+                                          where u.active && u.userID == Convert.ToInt32(e.Row.Cells[2].Text)
+                                          join s in dc.Struct on u.fk_struct equals s.structID
+                                          where s.active
+                                          select new { s.name, u.@struct }).FirstOrDefault();
+
+                        e.Row.Cells[2].Controls.Add(new Label()
+                        {
+                            Text = dc.Users.Where(u => u.active && u.userID == Convert.ToInt32(e.Row.Cells[2].Text)).Select(u => u.name).FirstOrDefault(),
+                            ToolTip = toltipData?.@struct + ",\t " + Environment.NewLine + toltipData?.name,
+                            ForeColor = e.Row.Cells[2].ForeColor,
+                            Font = { Bold = e.Row.Font.Bold }
+                        });
+                        #endregion InitiatorName
 
                     }
 

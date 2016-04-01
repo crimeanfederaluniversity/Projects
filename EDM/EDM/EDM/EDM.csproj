@@ -219,7 +219,6 @@
     <Content Include="edm\PrintList.aspx" />
     <Content Include="edm\ProcessEdit.aspx" />
     <Content Include="edm\ProcessHistory.aspx" />
-    <Content Include="edm\ProcessStarterPage.aspx" />
     <Content Include="edm\SubmittedPage.aspx" />
     <Content Include="edm\Subordinate.aspx" />
     <Content Include="edm\TemplatesList.aspx" />
@@ -538,13 +537,6 @@
     </Compile>
     <Compile Include="edm\ProcessHistory.aspx.designer.cs">
       <DependentUpon>ProcessHistory.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="edm\ProcessStarterPage.aspx.cs">
-      <DependentUpon>ProcessStarterPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="edm\ProcessStarterPage.aspx.designer.cs">
-      <DependentUpon>ProcessStarterPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="edm\SubmittedPage.aspx.cs">
       <DependentUpon>SubmittedPage.aspx</DependentUpon>
