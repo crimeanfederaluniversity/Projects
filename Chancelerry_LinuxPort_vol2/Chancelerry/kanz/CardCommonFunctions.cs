@@ -282,7 +282,7 @@ namespace Chancelerry.kanz
                     string fieldValue = "";
                     searchList.TryGetValue(fieldId, out fieldValue); //достаем айдишник нашего филда
                     List<CollectedCards> cardsWithValue1 = (from a in chancDb.CollectedFieldsValues
-                        where a.Active == true && a.FkField == fieldId && a.ValueText.Contains(fieldValue)
+                        where a.Active == true && a.FkField == fieldId && a.ValueText.ToLower().Contains(fieldValue.ToLower())
                         join b in chancDb.CollectedCards on a.FkCollectedCard equals b.CollectedCardID
                         where b.Active == true && b.FkRegister == registerId
                         select b).Distinct().OrderByDescending(uc => uc.MaInFieldID).ToList();
@@ -327,7 +327,7 @@ namespace Chancelerry.kanz
                                join b in chancDb.CollectedFieldsValues
                                                on a.CollectedCardID equals b.FkCollectedCard
                                where b.Active == true
-                               && b.ValueText.Contains(searchAll)
+                               && b.ValueText.ToLower().Contains(searchAll.ToLower())
                                select a).OrderByDescending(uc => (int)uc.MaInFieldID).Select(vk => vk.CollectedCardID).ToList().Distinct().ToList();
                 totalCnt = cardsToShow.Count;
                 cardsToShow = cardsToShow.Skip(lineFrom).Take(lineTo - lineFrom).ToList();
