@@ -132,6 +132,30 @@
             Ваш комментарий 
             <asp:RequiredFieldValidator runat="server" SetFocusOnError="True" ControlToValidate="CommentTextBox" ErrorMessage="Введите комментарий!" ForeColor="red"/>
             <div class="input-group-lg">
+                
+                <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+                <script>
+                    $(document).ready(function() {
+                        $("#MainContent_RadioButtonList1_0").click(function () {
+
+                            $("[id*=MainContent_RadioButtonList1_0] input").each(function () {
+
+                                if ($('#MainContent_RadioButtonList1_0 input:checked').val() == "1") {
+
+                                    $("#MainContent_ApproveButton").prop('value', 'Согласовать с комментом');
+                                } else {
+
+                                    $("#MainContent_ApproveButton").prop('value', 'Согласовать с замечанием');
+                                }
+                            });
+                        });
+                    });
+                </script>
+
+                <asp:RadioButtonList ID="RadioButtonList1" runat="server" RepeatDirection="Horizontal">
+                    <asp:ListItem Value="1">Комментарий</asp:ListItem>
+                    <asp:ListItem Selected="True" Value="2">Замечание</asp:ListItem>
+                </asp:RadioButtonList>
                 <br />
                 <asp:TextBox ID="LabelPrevComment"  runat="server" ReadOnly="True" TextMode="MultiLine" Visible="false"  cssClass="form-control" Height="100px" Text="Label" ></asp:TextBox>
 
