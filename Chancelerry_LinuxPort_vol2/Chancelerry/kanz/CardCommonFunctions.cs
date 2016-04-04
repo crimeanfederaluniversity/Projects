@@ -370,11 +370,14 @@ namespace Chancelerry.kanz
             public bool isdeleted { get; set; }
         }
 
-
+        public string timeStamps = "";
         public string FastSearch(string cardId, Dictionary<int, string> searchList, string searchAll, int registerId, int userId, Table vTable, int LineFrom, int LineTo)
         {
             #region GetSortedCutedCardsToShow
-            List<int> sortedCutedCardsToShow = GetCardsToShow(cardId, searchList, searchAll, registerId, LineFrom, LineTo); // NEW           
+
+            timeStamps += " 1_" + DateTime.Now.TimeOfDay;
+            List<int> sortedCutedCardsToShow = GetCardsToShow(cardId, searchList, searchAll, registerId, LineFrom, LineTo); // NEW    
+            timeStamps += " 2_" + DateTime.Now.TimeOfDay;
             Dictionary<int, string> allFields = (from a in chancDb.RegistersUsersMap
                                                  join b in chancDb.RegistersView
                                                  on a.RegistersUsersMapID equals b.FkRegistersUsersMap
@@ -387,14 +390,16 @@ namespace Chancelerry.kanz
                                                  && c.Active
                                                  && a.Active
                                                  select new NameFieldWeightClass { name = c.Name, FieldID = c.FieldID, Weight = b.Weight }).OrderBy(w => w.Weight).ToDictionary(t => t.FieldID, t => t.name);
-
+            timeStamps += " 3_" + DateTime.Now.TimeOfDay;
             if (sortedCutedCardsToShow.Count == 0 || allFields.Count == 0)
                 return "Данных нет";
             string sqlqueryTMP = "SELECT fk_collectedcard,fk_field,instance,valuetext,isdeleted FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
                  "AND  fk_field IN (" + string.Join(",", allFields.Keys.ToArray()) + ")";
             ValuesClass[] tmpStrList = chancDb.ExecuteQuery<ValuesClass>(sqlqueryTMP).ToArray();
+            timeStamps += " 4_" + DateTime.Now.TimeOfDay;
             vTable.Rows.Add(AddSearchHeaderRoFromListWithData(allFields.Keys.ToList(), searchList));
             vTable.Rows.Add(ta.AddHeaderRoFromList(allFields.Values.ToList()));
+            timeStamps += " 5_" + DateTime.Now.TimeOfDay;
             #endregion
             #region CreateTable
             foreach (int currentCard in sortedCutedCardsToShow)
@@ -497,6 +502,7 @@ namespace Chancelerry.kanz
                 }
             }
             #endregion
+            timeStamps += " 6_" + DateTime.Now.TimeOfDay;
             return "Всего:" + totalCnt.ToString() + "  " + "Показано с " + (LineFrom + 1) + " по " + (LineTo);
         }
     

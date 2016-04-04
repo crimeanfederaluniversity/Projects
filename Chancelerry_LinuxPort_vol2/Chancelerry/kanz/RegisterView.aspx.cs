@@ -21,9 +21,10 @@ namespace Chancelerry.kanz
             int currentCardId = Convert.ToInt32(thisButton.Attributes["_cardID"]);
             HttpContext.Current.Response.Redirect("https://www.ya.ru/", true);
         }
-
+        public int size = 10;
         protected void Page_Load(object sender, EventArgs e)
         {
+            timeStampsLabel.Text = " 0_" + DateTime.Now.TimeOfDay;
             int userID;
             int.TryParse(Session["userID"].ToString(), out userID);
 
@@ -58,9 +59,12 @@ namespace Chancelerry.kanz
                 
                 if (vVersion)
                 {
-                    int size = 10;
+                    
                     if (Request.QueryString["page"] != null)
                         Int32.TryParse(Request.QueryString["page"], out page);
+
+                    if (Request.QueryString["size"] != null)
+                        Int32.TryParse(Request.QueryString["size"], out size);
 
                     Dictionary<int, string> vSearchList = (Dictionary<int, string>)Session["vSearchList"];
                     string searchAll = (string) Session["vSearchAll"];
@@ -71,6 +75,7 @@ namespace Chancelerry.kanz
                     
 
                     string sum = cardCommonFunctions.FastSearch(searchCardId,vSearchList, searchAll, register.RegisterID, Convert.ToInt32(userID), dataTable, page * size, (page + 1) * size);
+                    timeStampsLabel.Text += cardCommonFunctions.timeStamps;
                     Button5.Visible = true;
                     Button6.Visible = true;
                     Button7.Visible = false;
@@ -99,6 +104,7 @@ namespace Chancelerry.kanz
                     
                 }
             }
+            timeStampsLabel.Text += " 7_" + DateTime.Now.TimeOfDay;
         }
 
         protected void Page_PreRender(object sender, EventArgs e)
@@ -108,6 +114,7 @@ namespace Chancelerry.kanz
 
             string searchById = (string)Session["vSearchById"];
             SearchByIdTextbox.Text = searchById;
+            timeStampsLabel.Text += " 8_" + DateTime.Now.TimeOfDay;
         }
 
         protected void Page_Unload(object sender, EventArgs e)
@@ -187,7 +194,7 @@ namespace Chancelerry.kanz
         {
             if (vVersion)
             {
-                Response.Redirect("RegisterView.aspx?page=" + (page + 1));
+                Response.Redirect("RegisterView.aspx?page=" + (page + 1)+"&size="+size);
             }
             Session["pageCntrl"] = (int)Session["pageCntrl"]+1;
             Response.Redirect("RegisterView.aspx");
@@ -199,7 +206,7 @@ namespace Chancelerry.kanz
             {
                 if (page > 0)
                 {
-                    Response.Redirect("RegisterView.aspx?page=" + (page - 1));
+                    Response.Redirect("RegisterView.aspx?page=" + (page - 1) + "&size=" + size);
                 }
             }
             if ((int) Session["pageCntrl"] > 0)
@@ -213,7 +220,7 @@ namespace Chancelerry.kanz
         {
             if (vVersion)
             {
-                Response.Redirect("RegisterView.aspx?page=0");
+                Response.Redirect("RegisterView.aspx?page=0"+"&size=" + size);
             }
             Session["pageCntrl"] = 0;
             Response.Redirect("RegisterView.aspx");
@@ -225,7 +232,7 @@ namespace Chancelerry.kanz
             {
                 if (page > 0)
                 {
-                    Response.Redirect("RegisterView.aspx?page=" + (page - 1));
+                    Response.Redirect("RegisterView.aspx?page=" + (page - 1)+"&size=" + size);
                 }
             }
             Session["pageCntrl"] = (int)Session["pageCount"]-1;

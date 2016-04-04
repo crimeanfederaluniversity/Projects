@@ -155,5 +155,7 @@
             });
         })
     </script>
+    
+    <asp:Label ID="timeStampsLabel" runat="server" Text="" Height="5" Font-Size="3"></asp:Label>
 
 </asp:Content>
