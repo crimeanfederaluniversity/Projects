@@ -136,17 +136,21 @@
                 <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
                 <script>
                     $(document).ready(function() {
-                        $("#MainContent_RadioButtonList1_0").click(function () {
+                        $("#MainContent_RadioButtonList1").click(function () {
 
-                            $("[id*=MainContent_RadioButtonList1_0] input").each(function () {
+                            $("#MainContent_RadioButtonList1 input").each(function (i, radio_btn) {
+                                var rb_element = $(radio_btn);
 
-                                if ($('#MainContent_RadioButtonList1_0 input:checked').val() == "1") {
+                                if ( rb_element.prop('checked') ) {
+                                    if ( rb_element.val() == '1') {
+                                        $("#MainContent_ApproveButton").prop('value', 'Согласовать с комментом');
+                                    } else {
 
-                                    $("#MainContent_ApproveButton").prop('value', 'Согласовать с комментом');
-                                } else {
-
-                                    $("#MainContent_ApproveButton").prop('value', 'Согласовать с замечанием');
+                                        $("#MainContent_ApproveButton").prop('value', 'Согласовать с замечанием');
+                                    }
                                 }
+
+                                
                             });
                         });
                     });
