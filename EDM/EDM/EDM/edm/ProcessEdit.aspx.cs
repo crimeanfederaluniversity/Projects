@@ -12,6 +12,7 @@ namespace EDM.edm
 {
     public partial class ProcessEdit : System.Web.UI.Page
     {
+        LogHandler log = new LogHandler();
         ProcessMainFucntions main = new ProcessMainFucntions();
         protected void goBackButton_Click(object sender, EventArgs e)
         {
@@ -970,26 +971,29 @@ namespace EDM.edm
                             Directory.CreateDirectory(directoryToSave);
                         }
 
-                        if (currentFileUpload.PostedFile.ContentLength < 38000)
+                        if (currentFileUpload.HasFile)
                         {
                             currentFileUpload.SaveAs(directoryToSave + currentFileUpload.FileName);
                             of.DocAddmd5(docId, directoryToSave + currentFileUpload.FileName);
                         }
                         else
                         {
-                            throw new Exception(); // !!!!!!!!!!!!!!!!!!!!!!!!
+                            log.AddError("Ошибка прикрепления файла в процессе с  id= " + processId);
+                            break;
+                            //throw new Exception(); 
                         }
 
                     }
                     catch (Exception ex)
                     {
+                        log.AddError("Ошибка2 прикрепления файла в процессе с  id= " + processId + "; "+ ex.ToString());
                         break;
                     }
                 }
             }
 
 
-
+            log.AddInfo("Создана версия с id= "+ processVersionId+ ", процесса с id = " + processId);
 
             Session["direction"] = 0;
             Response.Redirect("Dashboard.aspx");

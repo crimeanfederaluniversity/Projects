@@ -13,6 +13,7 @@ namespace EDM.edm
 {
     public partial class Dashboard : System.Web.UI.Page
     {
+        LogHandler log = new LogHandler();
         ProcessMainFucntions main = new ProcessMainFucntions();
         [Serializable]
         public class DataOne
@@ -598,8 +599,11 @@ namespace EDM.edm
                     break;
                     case "SubApprove":
                     {
-                       // ProcessMainFucntions proc = new ProcessMainFucntions();
+                        // ProcessMainFucntions proc = new ProcessMainFucntions();
                         Session["processID"] = main.CreateChildProcess(idProcess);
+
+                        log.AddInfo("Создан дочерний процесс с id " + (int)Session["processID"] + ", родительский id = " + idProcess+";");
+
                         //Session["SubApprove"];
                         Response.Redirect("ProcessEdit.aspx");
                     }
@@ -618,11 +622,15 @@ namespace EDM.edm
 
                             ef.StartProcess(idProcess);
 
+                            log.AddInfo("Запущен процесс с id " + idProcess + ";");
                             Response.Redirect("Dashboard.aspx");
                         }
                         else
+                        {
+                            log.AddError("Ошибка запуска процесса с id " + idProcess + ";");
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert",
                                 "<script> alert('Ошибка запуска процесса!');</script>");
+                        }
                     }
                         break;
                     case "DeleteP":
@@ -636,6 +644,7 @@ namespace EDM.edm
                             dataContext.SubmitChanges();
 
                             #region DeleteAllSteps
+
                             List<Steps> steps = (from pv in dataContext.ProcessVersions
                                 where pv.fk_process == process.processID
                                 join s in dataContext.Steps on pv.processVersionID equals s.fk_processVersion
@@ -646,13 +655,18 @@ namespace EDM.edm
                                 step.active = false;
                                 dataContext.SubmitChanges();
                             }
+
                             #endregion DeleteAllSteps
 
+                            log.AddInfo("Удален процесс с id " + idProcess + ";");
                             Response.Redirect("Dashboard.aspx");
                         }
                         else
+                        {
+                            log.AddError("Ошибка удаления процесса с id " + idProcess + ";");
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert",
                                 "<script> alert('Ошибка удаления процесса!');</script>");
+                        }
                     }
                         break;
                 case "LinkParent":
@@ -950,10 +964,29 @@ namespace EDM.edm
         }
         protected void Button5_Click(object sender, EventArgs e)
         {
-            Approvment ap = new Approvment();
+            try
+            {
+                Approvment ap = new Approvment();
 
-            ap.FinishApprove(Convert.ToInt32(textBoxId.Text), commentTextBox.Text);
-            Response.Redirect("Dashboard.aspx");
+                ap.FinishApprove(Convert.ToInt32(textBoxId.Text), commentTextBox.Text);
+                log.AddInfo("Утверждение процесса с id: " + Convert.ToInt32(textBoxId.Text) + " и комментарием: '" +
+                            commentTextBox.Text + "'");
+            }
+            catch (Exception er)
+            {
+
+                log.AddError("Ошибка утверждения процесса с id " + Convert.ToInt32(textBoxId.Text) + "; " +
+                             er.ToString());
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert",
+                    "<script> alert('Ошибка утверждения процесса!');</script>");
+
+
+            }
+            finally
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+
         }
 
         protected void GoToTemplatesButton_Click(object sender, EventArgs e)

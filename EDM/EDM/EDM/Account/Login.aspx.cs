@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using EDM.edm;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
@@ -17,6 +18,8 @@ namespace EDM.Account
 
         protected void LogIn(object sender, EventArgs e)
         {
+            LogHandler log = new LogHandler();
+
                 if (IsValid)
                 {
                     EDMdbDataContext datacontext = new EDMdbDataContext();
@@ -47,7 +50,8 @@ namespace EDM.Account
                         Response.Redirect("~/Account/NewPassword.aspx");
                     }
                     else
-                    {                       
+                    {   
+                        log.AddInfo("Вход в систему");               
                         Response.Redirect("~/Default.aspx");
                     }
                         

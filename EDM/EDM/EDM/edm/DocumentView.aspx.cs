@@ -10,7 +10,7 @@ namespace EDM.edm
 {
     public partial class DocumentView : System.Web.UI.Page
     {
-
+        LogHandler log = new LogHandler();
         ProcessMainFucntions main = new ProcessMainFucntions();
         public Panel GetChooseFromInnerProcessDocumentsPanel(int procId,int userId)
         {
@@ -317,6 +317,7 @@ namespace EDM.edm
                 #endregion Secutiry
 
                 int stepId = approve.AddApprove(userId, procMaxVersion, CommentTextBox.Text);
+                log.AddInfo("Согласована версия процесса с  id= "+ procMaxVersion +", и комментарием: '"+ CommentTextBox.Text+"'");
                 if (ExistingDocIdTextBox.Text != "")
                 {
                     int tmp = 0;
@@ -341,6 +342,7 @@ namespace EDM.edm
                     }
                     catch (Exception ex)
                     {
+                        log.AddError("Ошибка записи документа в процессе " + proc + "; " + ex.ToString());
                         HttpContext.Current.Response.Redirect("Dashboard.aspx"); //LOG
                     }
                 }
@@ -398,6 +400,8 @@ namespace EDM.edm
 
                 int stepId = approve.RejectApprove(userId, procMaxVersion, CommentTextBox.Text);
 
+                log.AddInfo("Отклонена версия процесса с  id= " + procMaxVersion + ", и комментарием: '" + CommentTextBox.Text + "'");
+
                 if (ExistingDocIdTextBox.Text != "")
                 {
                     int tmp = 0;
@@ -421,6 +425,7 @@ namespace EDM.edm
                     }
                     catch (Exception ex)
                     {
+                        log.AddError("Ошибка записи документа в процессе " + proc + "; " + ex.ToString());
                         HttpContext.Current.Response.Redirect("Dashboard.aspx"); //LOG
                     }
                 }

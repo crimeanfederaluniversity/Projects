@@ -51,6 +51,9 @@ namespace EDM
     partial void InsertEmailTemplates(EmailTemplates instance);
     partial void UpdateEmailTemplates(EmailTemplates instance);
     partial void DeleteEmailTemplates(EmailTemplates instance);
+    partial void InsertLog(Log instance);
+    partial void UpdateLog(Log instance);
+    partial void DeleteLog(Log instance);
     partial void InsertParticipants(Participants instance);
     partial void UpdateParticipants(Participants instance);
     partial void DeleteParticipants(Participants instance);
@@ -172,6 +175,14 @@ namespace EDM
 			get
 			{
 				return this.GetTable<EmailTemplates>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Log> Log
+		{
+			get
+			{
+				return this.GetTable<Log>();
 			}
 		}
 		
@@ -456,6 +467,12 @@ namespace EDM
 		
 		private bool _canCreateTemplate;
 		
+		private bool _canInitiateCustom;
+		
+		private bool _canPrintResult;
+		
+		private EntitySet<Log> _Log;
+		
 		private EntitySet<Participants> _Participants;
 		
 		private EntitySet<PrintHistory> _PrintHistory;
@@ -496,10 +513,15 @@ namespace EDM
     partial void OncanInitiateChanged();
     partial void OncanCreateTemplateChanging(bool value);
     partial void OncanCreateTemplateChanged();
+    partial void OncanInitiateCustomChanging(bool value);
+    partial void OncanInitiateCustomChanged();
+    partial void OncanPrintResultChanging(bool value);
+    partial void OncanPrintResultChanged();
     #endregion
 		
 		public Users()
 		{
+			this._Log = new EntitySet<Log>(new Action<Log>(this.attach_Log), new Action<Log>(this.detach_Log));
 			this._Participants = new EntitySet<Participants>(new Action<Participants>(this.attach_Participants), new Action<Participants>(this.detach_Participants));
 			this._PrintHistory = new EntitySet<PrintHistory>(new Action<PrintHistory>(this.attach_PrintHistory), new Action<PrintHistory>(this.detach_PrintHistory));
 			this._Processes = new EntitySet<Processes>(new Action<Processes>(this.attach_Processes), new Action<Processes>(this.detach_Processes));
@@ -715,6 +737,59 @@ namespace EDM
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_canInitiateCustom", DbType="Bit NOT NULL")]
+		public bool canInitiateCustom
+		{
+			get
+			{
+				return this._canInitiateCustom;
+			}
+			set
+			{
+				if ((this._canInitiateCustom != value))
+				{
+					this.OncanInitiateCustomChanging(value);
+					this.SendPropertyChanging();
+					this._canInitiateCustom = value;
+					this.SendPropertyChanged("canInitiateCustom");
+					this.OncanInitiateCustomChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_canPrintResult", DbType="Bit NOT NULL")]
+		public bool canPrintResult
+		{
+			get
+			{
+				return this._canPrintResult;
+			}
+			set
+			{
+				if ((this._canPrintResult != value))
+				{
+					this.OncanPrintResultChanging(value);
+					this.SendPropertyChanging();
+					this._canPrintResult = value;
+					this.SendPropertyChanged("canPrintResult");
+					this.OncanPrintResultChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Log", Storage="_Log", ThisKey="userID", OtherKey="fk_user")]
+		public EntitySet<Log> Log
+		{
+			get
+			{
+				return this._Log;
+			}
+			set
+			{
+				this._Log.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Participants", Storage="_Participants", ThisKey="userID", OtherKey="fk_user")]
 		public EntitySet<Participants> Participants
 		{
@@ -858,6 +933,18 @@ namespace EDM
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Log(Log entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = this;
+		}
+		
+		private void detach_Log(Log entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = null;
 		}
 		
 		private void attach_Participants(Participants entity)
@@ -1910,6 +1997,277 @@ namespace EDM
 					this._comment = value;
 					this.SendPropertyChanged("comment");
 					this.OncommentChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[Log]")]
+	public partial class Log : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private bool _active;
+		
+		private string _type;
+		
+		private System.DateTime _date;
+		
+		private string _page;
+		
+		private int _fk_user;
+		
+		private string _userip;
+		
+		private string _message;
+		
+		private EntityRef<Users> _Users;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void OntypeChanging(string value);
+    partial void OntypeChanged();
+    partial void OndateChanging(System.DateTime value);
+    partial void OndateChanged();
+    partial void OnpageChanging(string value);
+    partial void OnpageChanged();
+    partial void Onfk_userChanging(int value);
+    partial void Onfk_userChanged();
+    partial void OnuseripChanging(string value);
+    partial void OnuseripChanged();
+    partial void OnmessageChanging(string value);
+    partial void OnmessageChanged();
+    #endregion
+		
+		public Log()
+		{
+			this._Users = default(EntityRef<Users>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string type
+		{
+			get
+			{
+				return this._type;
+			}
+			set
+			{
+				if ((this._type != value))
+				{
+					this.OntypeChanging(value);
+					this.SendPropertyChanging();
+					this._type = value;
+					this.SendPropertyChanged("type");
+					this.OntypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_date", DbType="DateTime NOT NULL")]
+		public System.DateTime date
+		{
+			get
+			{
+				return this._date;
+			}
+			set
+			{
+				if ((this._date != value))
+				{
+					this.OndateChanging(value);
+					this.SendPropertyChanging();
+					this._date = value;
+					this.SendPropertyChanged("date");
+					this.OndateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_page", DbType="VarChar(MAX)")]
+		public string page
+		{
+			get
+			{
+				return this._page;
+			}
+			set
+			{
+				if ((this._page != value))
+				{
+					this.OnpageChanging(value);
+					this.SendPropertyChanging();
+					this._page = value;
+					this.SendPropertyChanged("page");
+					this.OnpageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_user", DbType="Int NOT NULL")]
+		public int fk_user
+		{
+			get
+			{
+				return this._fk_user;
+			}
+			set
+			{
+				if ((this._fk_user != value))
+				{
+					if (this._Users.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_userChanging(value);
+					this.SendPropertyChanging();
+					this._fk_user = value;
+					this.SendPropertyChanged("fk_user");
+					this.Onfk_userChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_userip", DbType="VarChar(50)")]
+		public string userip
+		{
+			get
+			{
+				return this._userip;
+			}
+			set
+			{
+				if ((this._userip != value))
+				{
+					this.OnuseripChanging(value);
+					this.SendPropertyChanging();
+					this._userip = value;
+					this.SendPropertyChanged("userip");
+					this.OnuseripChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_message", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string message
+		{
+			get
+			{
+				return this._message;
+			}
+			set
+			{
+				if ((this._message != value))
+				{
+					this.OnmessageChanging(value);
+					this.SendPropertyChanging();
+					this._message = value;
+					this.SendPropertyChanged("message");
+					this.OnmessageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_Log", Storage="_Users", ThisKey="fk_user", OtherKey="userID", IsForeignKey=true)]
+		public Users Users
+		{
+			get
+			{
+				return this._Users.Entity;
+			}
+			set
+			{
+				Users previousValue = this._Users.Entity;
+				if (((previousValue != value) 
+							|| (this._Users.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Users.Entity = null;
+						previousValue.Log.Remove(this);
+					}
+					this._Users.Entity = value;
+					if ((value != null))
+					{
+						value.Log.Add(this);
+						this._fk_user = value.userID;
+					}
+					else
+					{
+						this._fk_user = default(int);
+					}
+					this.SendPropertyChanged("Users");
 				}
 			}
 		}
@@ -4276,7 +4634,7 @@ namespace EDM
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessVersions_ProcVersionDocsMap", Storage="_ProcVersionDocsMap", ThisKey="processVersionID", OtherKey="fk_documents")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessVersions_ProcVersionDocsMap", Storage="_ProcVersionDocsMap", ThisKey="processVersionID", OtherKey="fk_processVersion")]
 		public EntitySet<ProcVersionDocsMap> ProcVersionDocsMap
 		{
 			get
@@ -4455,6 +4813,10 @@ namespace EDM
 			{
 				if ((this._fk_processVersion != value))
 				{
+					if (this._ProcessVersions.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.Onfk_processVersionChanging(value);
 					this.SendPropertyChanging();
 					this._fk_processVersion = value;
@@ -4475,7 +4837,7 @@ namespace EDM
 			{
 				if ((this._fk_documents != value))
 				{
-					if ((this._Documents.HasLoadedOrAssignedValue || this._ProcessVersions.HasLoadedOrAssignedValue))
+					if (this._Documents.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -4562,7 +4924,7 @@ namespace EDM
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessVersions_ProcVersionDocsMap", Storage="_ProcessVersions", ThisKey="fk_documents", OtherKey="processVersionID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProcessVersions_ProcVersionDocsMap", Storage="_ProcessVersions", ThisKey="fk_processVersion", OtherKey="processVersionID", IsForeignKey=true)]
 		public ProcessVersions ProcessVersions
 		{
 			get
@@ -4585,11 +4947,11 @@ namespace EDM
 					if ((value != null))
 					{
 						value.ProcVersionDocsMap.Add(this);
-						this._fk_documents = value.processVersionID;
+						this._fk_processVersion = value.processVersionID;
 					}
 					else
 					{
-						this._fk_documents = default(int);
+						this._fk_processVersion = default(int);
 					}
 					this.SendPropertyChanged("ProcessVersions");
 				}

@@ -21,6 +21,9 @@
       <Column Name="fk_struct" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="canInitiate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="canCreateTemplate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="canInitiateCustom" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="canPrintResult" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Users_Log" Member="Log" ThisKey="userID" OtherKey="fk_user" Type="Log" />
       <Association Name="Users_Participants" Member="Participants" ThisKey="userID" OtherKey="fk_user" Type="Participants" />
       <Association Name="Users_PrintHistory" Member="PrintHistory" ThisKey="userID" OtherKey="fk_user" Type="PrintHistory" />
       <Association Name="Users_Processes" Member="Processes" ThisKey="userID" OtherKey="fk_initiator" Type="Processes" />
@@ -82,6 +85,19 @@
       <Column Name="emailTitle" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="emailContent" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="comment" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Log]" Member="Log">
+    <Type Name="Log">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="page" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="userip" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="message" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Users_Log" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Participants" Member="Participants">
@@ -185,7 +201,7 @@
       <Column Name="version" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="comment" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="status" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Association Name="ProcessVersions_ProcVersionDocsMap" Member="ProcVersionDocsMap" ThisKey="processVersionID" OtherKey="fk_documents" Type="ProcVersionDocsMap" />
+      <Association Name="ProcessVersions_ProcVersionDocsMap" Member="ProcVersionDocsMap" ThisKey="processVersionID" OtherKey="fk_processVersion" Type="ProcVersionDocsMap" />
       <Association Name="ProcessVersions_Steps" Member="Steps" ThisKey="processVersionID" OtherKey="fk_processVersion" Type="Steps" />
       <Association Name="Processes_ProcessVersions" Member="Processes" ThisKey="fk_process" OtherKey="processID" Type="Processes" IsForeignKey="true" />
     </Type>
@@ -198,7 +214,7 @@
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="documentComment" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Association Name="Documents_ProcVersionDocsMap" Member="Documents" ThisKey="fk_documents" OtherKey="documentID" Type="Documents" IsForeignKey="true" />
-      <Association Name="ProcessVersions_ProcVersionDocsMap" Member="ProcessVersions" ThisKey="fk_documents" OtherKey="processVersionID" Type="ProcessVersions" IsForeignKey="true" />
+      <Association Name="ProcessVersions_ProcVersionDocsMap" Member="ProcessVersions" ThisKey="fk_processVersion" OtherKey="processVersionID" Type="ProcessVersions" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.StepDocInStepMap" Member="StepDocInStepMap">
