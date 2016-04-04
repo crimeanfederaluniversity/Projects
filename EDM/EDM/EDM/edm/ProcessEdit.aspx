@@ -120,13 +120,13 @@
                   
         </tr>
         
-        <tr >
+        <tr runat="server" id="CustomProcessNameRow">
 		    <td colspan="4">
                Согласование без шаблона
             </td>
         </tr>
 
-        <tr>
+        <tr runat="server" id="CustomProcessTitleRow">
 		   <th>Тип согласования</th>
             <th>Название  </th>
             <th>Кол-во согласующих
@@ -135,7 +135,7 @@
             
         </tr>
 
-        <tr>
+        <tr runat="server" id="CustomProcessCreateRow">
 		   <td>
             <asp:DropDownList ID="ProcessTypeDropDown" runat="server" AutoPostBack="False" CssClass="form-control">
                 <asp:ListItem Value="parallel">Параллельное согласование</asp:ListItem>

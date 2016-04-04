@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Документооборот</title>
+    <title>Система электронного документооборота</title>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -22,16 +22,44 @@ document.body.innerHTML = oldstr;
 return false;
 }
 </script>
+        
+  
+        
 
-<input name="b_print" type="button" class="ipt"   onClick="printdiv('PrintMainDiv');" value=" Печать ">
+    <input name="b_print" type="button" class="ipt"   onClick="printdiv('PrintMainDiv');" value=" Печать ">
+    <br />  
+    <div id="PrintMainDiv" style="width: 800px" runat="server">
+        
+         <style type="text/css">
+   TABLE {
+   
+    border-collapse: collapse;
+   }
+   TD, TH {
+    padding: 3px;
+    border: 1px solid black;
+   }
+       .auto-style1 {
+           text-align: center;
+       }
+  </style>
 
-
-    <div id="PrintMainDiv" runat="server">
-        <asp:Label ID="idDocLabel" runat="server" Text=""></asp:Label>
+        <div id="mainDiv" runat="server" class="auto-style1">    
+            <a>  ЛИСТ СОГЛАСОВАНИЯ </a>
+            <br />
+            <asp:Label ID="processNameLabel" runat="server" Text=""></asp:Label>
+            <br />
             <div id="TemplateHeaderDiv" runat="server">
-    
-    </div>
+            </div>
+            <br />
+            <asp:Label ID="idDocLabel" runat="server" Text=""></asp:Label>
+            
+            <br/>
+          </div>  
         <br/>
+        <asp:Label ID="initiatorStructLabel" runat="server" Text=""></asp:Label>
+        <br/>
+        <asp:Label ID="initiatorNameLabel" runat="server" Text=""></asp:Label>
     </div>
     </form>
 </body>

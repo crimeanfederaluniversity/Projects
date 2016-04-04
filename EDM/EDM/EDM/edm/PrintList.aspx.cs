@@ -39,6 +39,9 @@ namespace EDM.edm
 
             Processes proc = main.GetProcessById(processId);
 
+            processNameLabel.Text = proc.name;
+            initiatorStructLabel.Text ="Проект подготовлен: " + main.GetStructById((int)main.GetUserById((int) userID).fk_struct).name ;
+            initiatorNameLabel.Text = "Исполнитель: " + main.GetUserById((int) userID).name;
             if (!Page.IsPostBack)
             {
                 PrintHistory newHistory = new PrintHistory();
@@ -76,33 +79,33 @@ namespace EDM.edm
 
 
             Table newTable = new Table();
-            foreach(Steps step in lastVersionSteps)
+
+            TableRow headerRow = new TableRow();
+            headerRow.Cells.Add(new TableHeaderCell() { Text = "№ п/п" });
+            headerRow.Cells.Add(new TableHeaderCell() { Text = "Должность" });
+            headerRow.Cells.Add(new TableHeaderCell() { Text = "Ф.И.О." });
+            headerRow.Cells.Add(new TableHeaderCell() { Text = "Замечания" });
+            headerRow.Cells.Add(new TableHeaderCell() { Text = "Подпись" });
+            newTable.Rows.Add(headerRow);
+            int i = 1;
+            foreach (Steps step in lastVersionSteps)
             {
 
                 TableRow newRow = new TableRow();
-                TableCell newCell1 = new TableCell();
-                TableCell newCell2 = new TableCell();
-                TableCell newCell3 = new TableCell();
-
+                newRow.Cells.Add(new TableCell() {Text = i.ToString() + "."});
                 Participants participant = (from a in _edmDb.Participants
                                             where a.participantID == step.fk_participent
                                             select a).FirstOrDefault();
-
-                newCell1.Text = main.GetUserById(participant.fk_user).name;
-                newCell2.Text = step.date.ToString().Split(' ')[0];
-                newCell3.Text = step.comment;
-
-                newRow.Cells.Add(newCell1);
-
-                newRow.Cells.Add(newCell2);
-
-                newRow.Cells.Add(newCell3);
-
+                newRow.Cells.Add(new TableCell() { Text = main.GetUserById(participant.fk_user).@struct});
+                newRow.Cells.Add(new TableCell() {Text = main.GetUserById(participant.fk_user).name});
+                newRow.Cells.Add(new TableCell() { Text =  step.comment });
+                newRow.Cells.Add(new TableCell() { Text = "электронная подпись "+ main.GetUserById(participant.fk_user).email });
+                //  newCell2.Text = step.date.ToString().Split(' ')[0];
                 newTable.Rows.Add(newRow);
-
+                i++;
             }
             newTable.Width = 800;
-            PrintMainDiv.Controls.Add(newTable);
+            mainDiv.Controls.Add(newTable);
 
 
         }

@@ -1026,7 +1026,9 @@ namespace EDM.edm
             {
                 Users thisUser = main.GetUserById((int) userId);
                 List<ProcessTemplate> templates = main.GetAllProcessTemplatesByStruct((int)thisUser.fk_struct);
-
+                CustomProcessNameRow.Visible = thisUser.canInitiateCustom;
+                CustomProcessTitleRow.Visible = thisUser.canInitiateCustom;
+                CustomProcessCreateRow.Visible = thisUser.canInitiateCustom;
                 foreach (ProcessTemplate template in templates)
                 {
                     ListItem newListItem = new ListItem();

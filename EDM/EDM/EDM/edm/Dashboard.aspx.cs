@@ -695,6 +695,7 @@ namespace EDM.edm
                     #region Исходящие
                     if (direction == 0)
                     {
+                        
                         Button btnDel = (Button) e.Row.Cells[9].Controls[0];
                         Button printButton = (Button)e.Row.Cells[8].Controls[0];
                         Button btnStart = (Button) e.Row.Cells[7].Controls[0];
@@ -719,7 +720,7 @@ namespace EDM.edm
                         if (e.Row.Cells[3].Text.Equals("Согласован и Утвержден"))
                         {
                             btnStart.Enabled = false;
-                            printButton.Enabled = true;
+                            printButton.Enabled = main.CanUserPrint(userId);
                             btneEit.Enabled = false;
                             e.Row.ForeColor = Color.Green;
                         }

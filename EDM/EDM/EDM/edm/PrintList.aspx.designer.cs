@@ -31,13 +31,22 @@ namespace EDM.edm {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl PrintMainDiv;
         
         /// <summary>
-        /// idDocLabel control.
+        /// mainDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label idDocLabel;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mainDiv;
+        
+        /// <summary>
+        /// processNameLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label processNameLabel;
         
         /// <summary>
         /// TemplateHeaderDiv control.
@@ -47,5 +56,32 @@ namespace EDM.edm {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl TemplateHeaderDiv;
+        
+        /// <summary>
+        /// idDocLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label idDocLabel;
+        
+        /// <summary>
+        /// initiatorStructLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label initiatorStructLabel;
+        
+        /// <summary>
+        /// initiatorNameLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label initiatorNameLabel;
     }
 }

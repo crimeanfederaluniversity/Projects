@@ -727,7 +727,13 @@ namespace EDM.edm
                 return true;
             return false;
         }
-       
+        public bool CanUserPrint(int userId)
+        {
+            return (from a in _edmDb.Users
+                    where a.userID == userId
+                    select a.canPrintResult).FirstOrDefault();
+
+        }
         public bool CanUserStart(int userId)
         {
             return (from a in _edmDb.Users

@@ -49,6 +49,33 @@ namespace EDM.edm {
         protected global::System.Web.UI.WebControls.Button CreateNewProcessByTemplate;
         
         /// <summary>
+        /// CustomProcessNameRow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow CustomProcessNameRow;
+        
+        /// <summary>
+        /// CustomProcessTitleRow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow CustomProcessTitleRow;
+        
+        /// <summary>
+        /// CustomProcessCreateRow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow CustomProcessCreateRow;
+        
+        /// <summary>
         /// ProcessTypeDropDown control.
         /// </summary>
         /// <remarks>
