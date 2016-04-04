@@ -93,7 +93,7 @@ namespace EDM
     #endregion
 		
 		public EDMdbDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["ApproveDBConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["NewApproveDBConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}

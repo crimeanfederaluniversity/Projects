@@ -971,18 +971,20 @@ namespace EDM.edm
                             Directory.CreateDirectory(directoryToSave);
                         }
 
-                        if (currentFileUpload.HasFile)
+                        //if (currentFileUpload.PostedFile.ContentLength < 38000)
+                        //if (currentFileUpload.PostedFile.ContentLength < 380000000)
                         {
                             currentFileUpload.SaveAs(directoryToSave + currentFileUpload.FileName);
                             of.DocAddmd5(docId, directoryToSave + currentFileUpload.FileName);
                         }
-                        else
+                       // else
+                       /* else
                         {
                             log.AddError("Ошибка прикрепления файла в процессе с  id= " + processId);
                             break;
                             //throw new Exception(); 
                         }
-
+                        */
                     }
                     catch (Exception ex)
                     {

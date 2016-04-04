@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="NewApproveDB" Class="EDMdbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=NewApproveDB;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ApproveDBConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=NewApproveDB;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="NewApproveDBConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Calendar" Member="Calendar">
     <Type Name="Calendar">
       <Column Name="calendarId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
