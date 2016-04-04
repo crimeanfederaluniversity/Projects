@@ -2,7 +2,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
-    <div style="margin-top:auto">
+    <div style="margin-top:5%">
     <br />
     Введите Ваш старый пароль
     <asp:TextBox runat="server" ID="OldPassword" CssClass="form-control" /><br />    
