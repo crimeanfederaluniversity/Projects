@@ -286,7 +286,7 @@ namespace EDM.edm
 
                     approve.AddApprove(userProc.fk_user, procMaxVersion,
                         "Процесс согласован автоматически / " + DateTime.Now.ToShortDateString() + " " +
-                        DateTime.Now.ToShortTimeString());
+                        DateTime.Now.ToShortTimeString(),2);
                 }
 
             }

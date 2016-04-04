@@ -5215,6 +5215,8 @@ namespace EDM
 		
 		private System.Nullable<System.DateTime> _date;
 		
+		private System.Nullable<int> _commentType;
+		
 		private EntitySet<StepDocInStepMap> _StepDocInStepMap;
 		
 		private EntityRef<Participants> _Participants;
@@ -5239,6 +5241,8 @@ namespace EDM
     partial void OnstepResultChanged();
     partial void OndateChanging(System.Nullable<System.DateTime> value);
     partial void OndateChanged();
+    partial void OncommentTypeChanging(System.Nullable<int> value);
+    partial void OncommentTypeChanged();
     #endregion
 		
 		public Steps()
@@ -5393,6 +5397,26 @@ namespace EDM
 					this._date = value;
 					this.SendPropertyChanged("date");
 					this.OndateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_commentType", DbType="Int")]
+		public System.Nullable<int> commentType
+		{
+			get
+			{
+				return this._commentType;
+			}
+			set
+			{
+				if ((this._commentType != value))
+				{
+					this.OncommentTypeChanging(value);
+					this.SendPropertyChanging();
+					this._commentType = value;
+					this.SendPropertyChanged("commentType");
+					this.OncommentTypeChanged();
 				}
 			}
 		}

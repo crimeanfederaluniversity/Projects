@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="NewApproveDB" Class="EDMdbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=NewApproveDB;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="NewApproveDBConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=NewApproveDB;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="NewApproveDBConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Calendar" Member="Calendar">
     <Type Name="Calendar">
       <Column Name="calendarId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -236,6 +236,7 @@
       <Column Name="comment" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="stepResult" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="commentType" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Steps_StepDocInStepMap" Member="StepDocInStepMap" ThisKey="stepID" OtherKey="fk_step" Type="StepDocInStepMap" />
       <Association Name="Participants_Steps" Member="Participants" ThisKey="fk_participent" OtherKey="participantID" Type="Participants" IsForeignKey="true" />
       <Association Name="ProcessVersions_Steps" Member="ProcessVersions" ThisKey="fk_processVersion" OtherKey="processVersionID" Type="ProcessVersions" IsForeignKey="true" />

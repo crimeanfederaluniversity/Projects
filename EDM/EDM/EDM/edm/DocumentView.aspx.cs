@@ -316,7 +316,9 @@ namespace EDM.edm
 
                 #endregion Secutiry
 
-                int stepId = approve.AddApprove(userId, procMaxVersion, CommentTextBox.Text);
+                var sss = Convert.ToInt32(RadioButtonList1.Items[RadioButtonList1.SelectedIndex].Value);
+
+                int stepId = approve.AddApprove(userId, procMaxVersion, CommentTextBox.Text, Convert.ToInt32(RadioButtonList1.Items[RadioButtonList1.SelectedIndex].Value));
                 log.AddInfo("Согласована версия процесса с  id= "+ procMaxVersion +", и комментарием: '"+ CommentTextBox.Text+"'");
                 if (ExistingDocIdTextBox.Text != "")
                 {

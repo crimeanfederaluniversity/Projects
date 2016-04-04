@@ -127,9 +127,13 @@
                 <asp:Button ID="OpenFixedPanelButton" runat="server" Text="Прикрепить комментарий и документы из внутренненго согласования" Width="790px" />
                 </div>
             <br />
-            
+             <asp:RadioButtonList ID="RadioButtonList1" runat="server" RepeatDirection="Horizontal">
+                    <asp:ListItem Selected="True" Value="1">Комментарий</asp:ListItem>
+                    <asp:ListItem Value="2">Замечание</asp:ListItem>
+                </asp:RadioButtonList>
         <%--<asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine" Height="54px" Width="160px"></asp:TextBox>--%> 
-            Ваш комментарий 
+
+            <asp:Label ID="Label2" runat="server" Text="Ваш комментарий"></asp:Label> 
             <asp:RequiredFieldValidator runat="server" SetFocusOnError="True" ControlToValidate="CommentTextBox" ErrorMessage="Введите комментарий!" ForeColor="red"/>
             <div class="input-group-lg">
                 
@@ -143,10 +147,14 @@
 
                                 if ( rb_element.prop('checked') ) {
                                     if ( rb_element.val() == '1') {
-                                        $("#MainContent_ApproveButton").prop('value', 'Согласовать с комментом');
+                                        $("#MainContent_ApproveButton").prop('value', 'Согласовать');
+                                        $("#MainContent_Label2").text("Ваш комментарий");
+                                        $("#MainContent_CommentTextBox").prop('placeholder', 'Введите комментарий к процессу');
                                     } else {
 
                                         $("#MainContent_ApproveButton").prop('value', 'Согласовать с замечанием');
+                                        $("#MainContent_Label2").text("Ваше замечание");
+                                        $("#MainContent_CommentTextBox").prop('placeholder', 'Введите замечание к процессу');
                                     }
                                 }
 
@@ -155,18 +163,13 @@
                         });
                     });
                 </script>
-
-                <asp:RadioButtonList ID="RadioButtonList1" runat="server" RepeatDirection="Horizontal">
-                    <asp:ListItem Value="1">Комментарий</asp:ListItem>
-                    <asp:ListItem Selected="True" Value="2">Замечание</asp:ListItem>
-                </asp:RadioButtonList>
                 <br />
                 <asp:TextBox ID="LabelPrevComment"  runat="server" ReadOnly="True" TextMode="MultiLine" Visible="false"  cssClass="form-control" Height="100px" Text="Label" ></asp:TextBox>
 
                 <br />
                 <asp:Button ID="ButtonPrevComment" runat="server" Text="Показать Ваш комментарий из предыдущей версии процесса" OnClientClick="javascript:showSimpleLoadingScreen()" CausesValidation="False" Visible="False" Width="100%" OnClick="ButtonPrevComment_Click"/>
 
-                <asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine"  cssClass="form-control"  Height="100px" ></asp:TextBox>
+                <asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine"  cssClass="form-control"  placeholder="Введите комментарий к процессу" Height="100px" ></asp:TextBox>
 
                 <br />
 

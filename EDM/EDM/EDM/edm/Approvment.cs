@@ -8,7 +8,7 @@ namespace EDM.edm
 {
     public class Approvment
     {
-        public int AddApprove(int user, int procVersion, string comment)
+        public int AddApprove(int user, int procVersion, string comment, int commentType)
         {
             int stepId = 0;
             using (EDMdbDataContext dataContext = new EDMdbDataContext())
@@ -32,6 +32,7 @@ namespace EDM.edm
                 step.fk_processVersion = procVersion;
                 step.fk_participent = fkParticipant;
                 step.comment = comment;
+                step.commentType = commentType;
                 step.stepResult = 1;
                 step.date = DateTime.Now;
 
