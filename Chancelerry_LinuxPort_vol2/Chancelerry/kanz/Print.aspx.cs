@@ -31,9 +31,14 @@ namespace Chancelerry.kanz
             var versionSes = vers;
             var cardIdSes = cardId;
 
-           PrintMainDiv.Controls.Add(cardCreateView.GetPrintVersion((int)registerIdSes, (int)cardIdSes, (int)versionSes));
+           PrintMainDiv.Controls.Add(cardCreateView.GetPrintVersion((int)registerIdSes, (int)cardIdSes, (int)versionSes,Convert.ToInt32(DropDownList1.SelectedValue)));
          
             
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("RegisterView.aspx");
         }
     }
 }

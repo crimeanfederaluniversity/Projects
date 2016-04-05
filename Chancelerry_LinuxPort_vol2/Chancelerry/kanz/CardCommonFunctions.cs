@@ -279,20 +279,15 @@ namespace Chancelerry.kanz
                 bool isFirst = true;
                 foreach (int fieldId in searchList.Keys) // проходимся по каждому фильтру
                 {
-                    //int fieldId = currentKey;
                     string fieldValue = "";
                     searchList.TryGetValue(fieldId, out fieldValue); //достаем айдишник нашего филда
+                    List<string> valuesList = fieldValue.Split('#').ToList();
                     List<CollectedCards> cardsWithValue1 = (from a in chancDb.CollectedFieldsValues
-                        where a.Active == true && a.FkField == fieldId && a.ValueText.ToLower(new CultureInfo("ru-RU")).Contains(fieldValue.ToLower(new CultureInfo("ru-RU")))
+                        where a.Active == true && a.FkField == fieldId && a.ValueText.Contains(fieldValue)
                         join b in chancDb.CollectedCards on a.FkCollectedCard equals b.CollectedCardID
                         where b.Active == true && b.FkRegister == registerId
                         select b).Distinct().OrderByDescending(uc => uc.MaInFieldID).ToList();
-
                     List<int> cardsWithValue = (from a in cardsWithValue1 select a.CollectedCardID).ToList();
-                                                /*
-                        .
-                        .Select(vk => vk.CollectedCardID)
-                        .ToList();*/ // находим все карточки которые соответсвтуют
                     List<int> tmpList;
                     if (isFirst)
                     {
@@ -311,16 +306,6 @@ namespace Chancelerry.kanz
             }
             else if (searchAll!=null) //фильтр по всему реестру
             {
-               /* List<CollectedCards> cardss = (from a in chancDb.CollectedCards
-                                               where a.Active == true
-                                                     && a.FkRegister == registerId
-                                                     && a.MaInFieldID != null // ПЛОХО
-                                                     join b in chancDb.CollectedFieldsValues
-                                                     on a.CollectedCardID equals b.FkCollectedCard
-                                               where b.Active == true
-                                               && b.ValueText.Contains(searchAll)
-                                               select a).OrderByDescending(uc => (int)uc.MaInFieldID).Skip(lineFrom).Take(lineTo - lineFrom).ToList();
-*/
                 cardsToShow = (from a in chancDb.CollectedCards
                                where a.Active == true
                                      && a.FkRegister == registerId
@@ -336,12 +321,6 @@ namespace Chancelerry.kanz
             }
             else // если фильтров нет, показываем все карточки 
             {
-                /*List<CollectedCards> cardss = (from a in chancDb.CollectedCards
-                                               where a.Active == true
-                                                     && a.FkRegister == registerId
-                                                     && a.MaInFieldID != null // ПЛОХО
-                                               select a).OrderByDescending(uc => (int)uc.MaInFieldID).Skip(lineFrom).Take(lineTo - lineFrom).ToList();
-*/
                 cardsToShow = (from a in chancDb.CollectedCards
                                where a.Active == true
                                      && a.FkRegister == registerId
@@ -425,7 +404,7 @@ namespace Chancelerry.kanz
                     for (int i = 0; i < maxInstanceInCard + 1; i++)
                     {
                         List<ValuesClass> tmp3 = (from a in collectedFields where a.instance == i select a).OrderByDescending(mc => mc.version).ToList();
-                        ValuesClass tmp2 = null;
+                        ValuesClass tmp2 = null; 
                         if (tmp3.Count > 0)
                         {
                             tmp2 = (from a in tmp3   select a).FirstOrDefault();
@@ -1173,7 +1152,7 @@ namespace Chancelerry.kanz
             return cardMainPanel;
 
         }
-        public Panel GetPrintVersion(int registerId, int cardId, int Version) // версия для печати
+        public Panel GetPrintVersion(int registerId, int cardId, int Version, int tableWidth) // версия для печати
         {
             Panel panelToReturn = new Panel();
             Registers currentRegister = _common.GetRegisterById(registerId); // текущий реестр
@@ -1191,7 +1170,7 @@ namespace Chancelerry.kanz
                     List<Fields> fieldToShow = _common.GetFieldsInFieldGroupOrderByLine(currentFieldGroup.FieldsGroupID);
                     List<int> LinesToShow = GetDistinctedSordetLinesFromFieldsList(fieldToShow);
                     Table LineTable = new Table();
-                    LineTable.Width = 800;
+                    LineTable.Width = tableWidth;
                     foreach (int currentFieldsLine in LinesToShow)
                     {
 
