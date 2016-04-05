@@ -393,7 +393,7 @@ namespace Chancelerry.kanz
             timeStamps += " 3_" + DateTime.Now.TimeOfDay;
             if (sortedCutedCardsToShow.Count == 0 || allFields.Count == 0)
                 return "Данных нет";
-            string sqlqueryTMP = "SELECT fk_collectedcard,fk_field,instance,valuetext,isdeleted FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
+            string sqlqueryTMP = "SELECT fk_collectedcard,fk_field,instance,valuetext,isdeleted,version FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
                  "AND  fk_field IN (" + string.Join(",", allFields.Keys.ToArray()) + ")";
             ValuesClass[] tmpStrList = chancDb.ExecuteQuery<ValuesClass>(sqlqueryTMP).ToArray();
             timeStamps += " 4_" + DateTime.Now.TimeOfDay;
@@ -428,7 +428,7 @@ namespace Chancelerry.kanz
                         ValuesClass tmp2 = null;
                         if (tmp3.Count > 0)
                         {
-                            tmp2 = (from a in tmp3 where a.valuetext.Length > 0 select a).FirstOrDefault();
+                            tmp2 = (from a in tmp3   select a).FirstOrDefault();
                             arrayOfStrings[fieldN, i] = "";
                         }
                         if (tmp2 == null)
