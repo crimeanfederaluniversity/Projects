@@ -48,6 +48,17 @@ namespace Zakupka.Event
             }
 
         }
+        protected void DeleteButtonClick(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            {
+                Projects delevent = (from a in zakupkaDB.Projects where a.active == true && a.projectID == Convert.ToInt32(button.CommandArgument) select a).FirstOrDefault();
+                delevent.active = false;
+                zakupkaDB.SubmitChanges();
+                Refresh();
+            }
+
+        }
         protected void SaveButtonClick(object sender, EventArgs e)
         {
             int eventID = (int)Session["eventID"];

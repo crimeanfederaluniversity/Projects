@@ -56,6 +56,16 @@ namespace Zakupka.Event
                 Response.Redirect("~/Event/CreateEditContract.aspx");
             }
         }
+        protected void DeleteButtonClick(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            {
+                Contracts deletecontract = (from a in zakupkaDB.Contracts where a.active == true && a.contractID == Convert.ToInt32(button.CommandArgument) select a).FirstOrDefault();
+                deletecontract.active = false;
+                zakupkaDB.SubmitChanges();
+                Refresh();
+            }
+        }
         protected void SaveButtonClick(object sender, EventArgs e)
         {
             int projectID = (int)Session["projectID"];

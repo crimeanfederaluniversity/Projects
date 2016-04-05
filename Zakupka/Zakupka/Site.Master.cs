@@ -17,34 +17,8 @@ namespace Zakupka
 
         protected void Page_Init(object sender, EventArgs e)
         {
-            // Код ниже защищает от XSRF-атак
-            var requestCookie = Request.Cookies[AntiXsrfTokenKey];
-            Guid requestCookieGuidValue;
-            if (requestCookie != null && Guid.TryParse(requestCookie.Value, out requestCookieGuidValue))
-            {
-                // Использование маркера Anti-XSRF из файла cookie
-                _antiXsrfTokenValue = requestCookie.Value;
-                Page.ViewStateUserKey = _antiXsrfTokenValue;
-            }
-            else
-            {
-                // Создание нового маркера Anti-XSRF и его сохранение в файле cookie
-                _antiXsrfTokenValue = Guid.NewGuid().ToString("N");
-                Page.ViewStateUserKey = _antiXsrfTokenValue;
-
-                var responseCookie = new HttpCookie(AntiXsrfTokenKey)
-                {
-                    HttpOnly = true,
-                    Value = _antiXsrfTokenValue
-                };
-                if (FormsAuthentication.RequireSSL && Request.IsSecureConnection)
-                {
-                    responseCookie.Secure = true;
-                }
-                Response.Cookies.Set(responseCookie);
-            }
-
-            Page.PreLoad += master_Page_PreLoad;
+            
+            
         }
 
         protected void master_Page_PreLoad(object sender, EventArgs e)
@@ -73,7 +47,9 @@ namespace Zakupka
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
-            Context.GetOwinContext().Authentication.SignOut();
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            Response.Redirect("~/Default.aspx");
         }
     }
 

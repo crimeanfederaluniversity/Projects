@@ -61,7 +61,9 @@ namespace Zakupka.Event
         {
             int step = Convert.ToInt32(Session["step"]);
             int userID = Convert.ToInt32(Session["userID"]);
-            int conId = Convert.ToInt32(Session["contractID"]);
+            int conId = Convert.ToInt32(Session["contractID"]);    
+            Contracts name = (from a in zakupkaDB.Contracts where a.contractID == conId select a).FirstOrDefault();
+            Label1.Text = name.name.ToString();
             Table tableToReturn = new Table();
             List<Fields> allFields = (from a in zakupkaDB.Fields where a.active && a.step == step
                                      select a).ToList();
@@ -149,12 +151,12 @@ namespace Zakupka.Event
         }
 
         protected void Button1_Click(object sender, EventArgs e)
-        {
-            
-            
+        {                    
             SaveAll();
             TableDiv.Controls.Clear();
             TableDiv.Controls.Add(CreateNewTable());
+            Response.Redirect("~/Event/ContractPage.aspx");
+
         }
 
         protected void Back_Click(object sender, EventArgs e)

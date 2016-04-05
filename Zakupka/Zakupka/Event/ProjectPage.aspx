@@ -1,6 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectPage.aspx.cs" Inherits="Zakupka.Event.ProjectPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <br />
     <asp:Button ID="Back" runat="server" CssClass="btn btn-default" Text="Назад" OnClick="Back_Click" />
       <h2><asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
       </h2>
@@ -13,13 +12,18 @@
                         <ItemTemplate>
                             <asp:Button ID="GoButton" runat="server" CommandName="Select" CssClass="btn btn-default" OnClientClick="showLoadPanel()" Text="Перейти" Width="200px" CommandArgument='<%# Eval("projectID") %>' OnClick="GoButtonClick"/>
                         </ItemTemplate>
+              </asp:TemplateField>
+                 <asp:TemplateField HeaderText="Удалить">
+                        <ItemTemplate>
+                            <asp:Button ID="DeleteButton" runat="server" CommandName="Select" CssClass="btn btn-default" OnClientClick="if (!askForIsOkWithLoading('Вы уверены что хотите удалить проект?') == true ) return false;" Text="Удалить" Width="200px" CommandArgument='<%# Eval("projectID") %>' OnClick="DeleteButtonClick"/>
+                        </ItemTemplate>                   
                     </asp:TemplateField>
                     </Columns>
                     </asp:GridView>
     </p>
         <h3>Добавление нового проекта:</h3>Введите название проекта: 
     <p>
-        <asp:TextBox ID="TextBox1"  runat="server" Width="500px"></asp:TextBox>
+        <asp:TextBox ID="TextBox1"  runat="server" Width="500px" TextMode="MultiLine"></asp:TextBox>
     </p>
     <p>
         <asp:Button ID="SaveButton" runat="server" CssClass="btn btn-default" Text="Сохранить" OnClick="SaveButtonClick" />
