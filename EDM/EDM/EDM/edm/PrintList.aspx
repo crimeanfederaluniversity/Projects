@@ -47,16 +47,20 @@ return false;
         <div id="mainDiv" runat="server" class="auto-style1">    
             <a>  ЛИСТ СОГЛАСОВАНИЯ </a>
             <br />
+             <br />
             <asp:Label ID="processNameLabel" runat="server" Text=""></asp:Label>
             <br />
+             <br />
             <div id="TemplateHeaderDiv" runat="server">
             </div>
             <br />
+             <br />
             <asp:Label ID="idDocLabel" runat="server" Text=""></asp:Label>
             
             <br/>
           </div>  
         <br/>
+         <br />
         <asp:Label ID="initiatorStructLabel" runat="server" Text=""></asp:Label>
         <br/>
         <asp:Label ID="initiatorNameLabel" runat="server" Text=""></asp:Label>

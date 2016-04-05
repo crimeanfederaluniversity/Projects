@@ -98,7 +98,14 @@ namespace EDM.edm
                                             select a).FirstOrDefault();
                 newRow.Cells.Add(new TableCell() { Text = main.GetUserById(participant.fk_user).@struct});
                 newRow.Cells.Add(new TableCell() {Text = main.GetUserById(participant.fk_user).name});
-                newRow.Cells.Add(new TableCell() { Text =  step.comment });
+                if (step.commentType == 2)
+                {
+                    newRow.Cells.Add(new TableCell() {Text = step.comment});
+                }
+                else
+                {
+                    newRow.Cells.Add(new TableCell());
+                }
                 newRow.Cells.Add(new TableCell() { Text = "электронная подпись "+ main.GetUserById(participant.fk_user).email });
                 //  newCell2.Text = step.date.ToString().Split(' ')[0];
                 newTable.Rows.Add(newRow);
