@@ -1575,7 +1575,7 @@ namespace Zakupka
 		
 		private string _name;
 		
-		private string _description;
+		private System.Nullable<bool> _autocalculate;
 		
 		private string _type;
 		
@@ -1591,6 +1591,8 @@ namespace Zakupka
 		
 		private System.Nullable<bool> _sumby;
 		
+		private System.Nullable<int> _autosum;
+		
 		private EntitySet<CollectedValues> _CollectedValues;
 		
 		private EntitySet<ViewField> _ViewField;
@@ -1605,8 +1607,8 @@ namespace Zakupka
     partial void OnactiveChanged();
     partial void OnnameChanging(string value);
     partial void OnnameChanged();
-    partial void OndescriptionChanging(string value);
-    partial void OndescriptionChanged();
+    partial void OnautocalculateChanging(System.Nullable<bool> value);
+    partial void OnautocalculateChanged();
     partial void OntypeChanging(string value);
     partial void OntypeChanged();
     partial void OnlineChanging(int value);
@@ -1621,6 +1623,8 @@ namespace Zakupka
     partial void OnstepChanged();
     partial void OnsumbyChanging(System.Nullable<bool> value);
     partial void OnsumbyChanged();
+    partial void OnautosumChanging(System.Nullable<int> value);
+    partial void OnautosumChanged();
     #endregion
 		
 		public Fields()
@@ -1690,22 +1694,22 @@ namespace Zakupka
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_description", DbType="VarChar(MAX)")]
-		public string description
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_autocalculate", DbType="Bit")]
+		public System.Nullable<bool> autocalculate
 		{
 			get
 			{
-				return this._description;
+				return this._autocalculate;
 			}
 			set
 			{
-				if ((this._description != value))
+				if ((this._autocalculate != value))
 				{
-					this.OndescriptionChanging(value);
+					this.OnautocalculateChanging(value);
 					this.SendPropertyChanging();
-					this._description = value;
-					this.SendPropertyChanged("description");
-					this.OndescriptionChanged();
+					this._autocalculate = value;
+					this.SendPropertyChanged("autocalculate");
+					this.OnautocalculateChanged();
 				}
 			}
 		}
@@ -1846,6 +1850,26 @@ namespace Zakupka
 					this._sumby = value;
 					this.SendPropertyChanged("sumby");
 					this.OnsumbyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_autosum", DbType="Int")]
+		public System.Nullable<int> autosum
+		{
+			get
+			{
+				return this._autosum;
+			}
+			set
+			{
+				if ((this._autosum != value))
+				{
+					this.OnautosumChanging(value);
+					this.SendPropertyChanging();
+					this._autosum = value;
+					this.SendPropertyChanged("autosum");
+					this.OnautosumChanged();
 				}
 			}
 		}

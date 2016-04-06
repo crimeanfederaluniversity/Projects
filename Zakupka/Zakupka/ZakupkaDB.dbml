@@ -73,7 +73,7 @@
       <Column Name="filedID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
-      <Column Name="description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="autocalculate" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="type" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="line" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="col" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -81,6 +81,7 @@
       <Column Name="width" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="step" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="sumby" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="autosum" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Fields_CollectedValues" Member="CollectedValues" ThisKey="filedID" OtherKey="fk_field" Type="CollectedValues" />
       <Association Name="Fields_ViewField" Member="ViewField" ThisKey="filedID" OtherKey="fk_field" Type="ViewField" />
     </Type>

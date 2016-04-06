@@ -135,9 +135,68 @@ namespace Zakupka.Event
         public void SaveAll()
         {
             foreach (ValueSaveClass tmp in ValuesList)
-            {               
-               SaveCollectedValue(tmp.FieldId, tmp.ContractId, tmp.Value.Text);
+            {
+                SaveCollectedValue(tmp.FieldId, tmp.ContractId, tmp.Value.Text);
             }
+            int step = Convert.ToInt32(Session["step"]);
+            List<Fields> autosum = (from a in zakupkaDB.Fields
+                                    where   a.active == true && a.step == step && a.autosum != null
+                                    select a).ToList();
+            List<Fields> autosumvalue = (from a in zakupkaDB.Fields
+                                    where a.active == true && a.step == step && a.autosum != null && a.autocalculate == true
+                                    select a).ToList();
+            List<CollectedValues> valueforsum = new List<CollectedValues>();
+            int conId = Convert.ToInt32(Session["contractID"]);
+
+            foreach (var tmp in autosum)
+            {
+                CollectedValues value = (from a in zakupkaDB.CollectedValues
+                                         where a.fk_contract == conId
+                                             && a.fk_field == tmp.filedID
+                                         select a).FirstOrDefault();
+                valueforsum.Add(value);
+            }  
+            foreach(var tmp in autosumvalue)
+            {
+                CollectedValues value = (from a in zakupkaDB.CollectedValues
+                                         where a.fk_contract == conId
+                                             && a.fk_field == tmp.filedID
+                                         select a).FirstOrDefault();
+                if (tmp.autosum == 5)
+                {
+                    List<CollectedValues> val = (from a in zakupkaDB.CollectedValues
+                                                 where a.active == true && a.fk_contract == conId
+                                                 join b in zakupkaDB.Fields
+                                                 on a.fk_field equals b.filedID
+                                                 where b.active == true && b.autocalculate == false && b.autosum == tmp.autosum
+                                                 select a).ToList();
+
+                    Decimal sum = Convert.ToDecimal(val[0].value) - Convert.ToDecimal(val[1].value);                
+                    value.value = sum.ToString();
+                    zakupkaDB.SubmitChanges();
+                }
+                else
+                {
+                    List<CollectedValues> val = (from a in zakupkaDB.CollectedValues
+                                                 where a.active == true && a.fk_contract == conId
+                                                 join b in zakupkaDB.Fields
+                                                 on a.fk_field equals b.filedID
+                                                 where b.active == true && b.autocalculate == false && b.autosum == tmp.autosum
+                                                 select a).ToList();
+
+                    Decimal sum = 0;
+
+                    foreach (var n in val)
+                    {
+                        sum = sum + Convert.ToDecimal(n.value);
+
+                    }
+
+                    value.value = sum.ToString();
+                    zakupkaDB.SubmitChanges();
+                }
+            }
+                     
         }
 
         protected void Page_Load(object sender, EventArgs e)
