@@ -384,6 +384,7 @@ namespace EDM.edm
                     break;
                 case "ButtonR20":
                 {
+                    Session["searchStruct"] = new KeyValuePair<int, string>(0, "-1");
                     Session["searchName"] = (from a in dc.Users where a.active && a.userID == id select a.name).FirstOrDefault();
                     Session["directionS"] = 10;
                     Response.Redirect("Subordinate.aspx");
