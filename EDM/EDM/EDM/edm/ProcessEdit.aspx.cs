@@ -52,7 +52,8 @@ namespace EDM.edm
             response.ClearContent();
             response.Clear();
             response.ContentType = "text/plain";
-            response.AddHeader("Content-Disposition", "attachment; filename=" + thisButton.Text + ";");
+            string name = thisButton.Text.Replace(',','.');
+            response.AddHeader("Content-Disposition", "attachment; filename=" + name + ";");
             response.TransmitFile(path);
             response.Flush();
             response.End();
