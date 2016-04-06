@@ -129,8 +129,8 @@ namespace EDM.edm
         {
             List<int> result = new List<int>();
 
-                var slavesByStuct =
-                    (from a in dc.Struct where a.active && a.fk_parent == bossStuctId select a).ToList();
+            var slavesByStuct =
+                (from a in dc.Struct where a.active && a.fk_parent == bossStuctId select a).ToList();
 
                 if (slavesByStuct.Any())
                 {
@@ -207,6 +207,18 @@ namespace EDM.edm
                     true);
                 //throw new Exception(); // !!!!!!!!!!!!!!!!!!!!!!!!
             }
+        }
+
+        public List<DateTime> GetDatesBetween(DateTime startD, DateTime endD)
+        {
+            var dates = new List<DateTime>();
+
+            for (var dt = startD; dt <= endD; dt = dt.AddDays(1))
+            {
+                dates.Add(dt);
+            }
+
+            return dates;
         }
     }
 }

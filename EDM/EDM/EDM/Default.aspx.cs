@@ -20,6 +20,8 @@ namespace EDM
             Session["isPrevCommentShow"] = true;
             Session["searchName"] = string.Empty;
             Session["dateStartSearch"] = string.Empty;
+            Session["dateEndSearch"] = string.Empty;
+            Session["searchStruct"] = new KeyValuePair<int, string>(0, "-1");
             Session["isPage"] = false;
             Session["page"] = 0;
             Response.Redirect("~/edm/Dashboard.aspx");

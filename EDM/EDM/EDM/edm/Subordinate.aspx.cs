@@ -43,12 +43,15 @@ namespace EDM.edm
                 int direction;
                 int.TryParse(Session["directionS"].ToString(), out direction);
                 DateTime strDateTime;
+                DateTime strDateTimeEnd;
                 DateTime.TryParse(Session["dateStartSearch"].ToString(), out strDateTime);
+                DateTime.TryParse(Session["dateEndSearch"].ToString(), out strDateTimeEnd);
 
                 RenderSubGrid(direction, userId,
                     strDateTime != DateTime.MinValue
-                        ? FillGrid(direction, userId, Session["searchName"].ToString(), strDateTime.ToString())
+                        ? FillGrid(direction, userId, Session["searchName"].ToString(), strDateTime.ToString(),strDateTimeEnd.ToString())
                         : FillGrid(direction, userId, Session["searchName"].ToString()));
+
             }
         }
 
@@ -69,6 +72,10 @@ namespace EDM.edm
 
                 NameSearchBox.Text = Session["searchName"].ToString();
                 DateSearchBox.Text = Session["dateStartSearch"].ToString();
+                DateSearchBoxEnd.Text = Session["dateEndSearch"].ToString();
+
+                var structSearch = (KeyValuePair<int, string>) Session["searchStruct"];
+                DropDownList1.SelectedIndex = structSearch.Key;
 
                 searchDiv.Visible = true;
 
@@ -237,14 +244,36 @@ namespace EDM.edm
             #region 10
             if (direction == 10)
             {
+                #region Струкутра в dropdown
+
+                Dictionary<int, string> structList = new Dictionary<int, string> { { -1, "Выберите структурное" } };
+                foreach (var s in slavesStructId)
+                {
+                    structList.Add(s, dc.Struct.Where(st=>st.structID == s && st.active).Select(st=>st.name).FirstOrDefault());
+                }
+
+                foreach (var itm in structList)
+                {
+                    DropDownList1.Items.Add(new ListItem(itm.Value, itm.Key.ToString()));
+                }     
+
+                #endregion
+
 
                 if (searchValues.Any())
                 {
                     slavesId = (from a in dc.Users
-                        where a.active && slavesId.Contains(a.userID)
-                        join b in dc.Users on a.userID equals b.userID
-                        where b.name.Contains(searchValues[0])
-                        select b.userID).ToList();
+                                where a.active && slavesId.Contains(a.userID) && a.name.Contains(searchValues[0])
+                                select a.userID).ToList();
+                }
+
+                var structSearch = (KeyValuePair<int, string>) Session["searchStruct"];
+
+               if (structSearch.Key != 0)
+                {
+                    slavesId = (from a in dc.Users
+                                where a.active && slavesId.Contains(a.userID) && a.name.Contains(searchValues[0]) && a.fk_struct == Convert.ToInt32(structSearch.Value)
+                                select a.userID).ToList();
                 }
 
                 var processIncludeSlaves =
@@ -271,15 +300,21 @@ namespace EDM.edm
 
                 if (searchValues.Count() > 1)
                 {
-                    DateTime compDate;
-                    DateTime.TryParse(searchValues[1], out compDate);
+                    List<DateTime> compDate;
+                    DateTime compStartDate;
+                    DateTime compEndDate;
+                    DateTime.TryParse(searchValues[1], out compStartDate);
+                    DateTime.TryParse(searchValues[2], out compEndDate);
+
+                    compDate = of.GetDatesBetween(compStartDate, compEndDate);
 
                     directionData = directionData.Where(
                                 a =>
                                 a.DateStart != null &&
-                                a.DateStart.Value.Year.ToString().Contains(compDate.Year.ToString()) &&
-                                a.DateStart.Value.Month.ToString().Contains(compDate.Month.ToString()) &&
-                                a.DateStart.Value.Day.ToString().Contains(compDate.Day.ToString())).OrderByDescending(d => d.DateStart).GroupBy(x => x.Id).Select(x => x.First()).ToList();
+                                compDate.Select(x => x.Year).ToList().Contains(a.DateStart.Value.Year) && //a.DateStart.Value.Year.ToString().Contains(compDate.Year.ToString()) &&
+                                compDate.Select(x => x.Month).ToList().Contains(a.DateStart.Value.Month) && //a.DateStart.Value.Month.ToString().Contains(compDate.Month.ToString()) &&
+                                compDate.Select(x => x.Day).ToList().Contains(a.DateStart.Value.Day)) //a.DateStart.Value.Day.ToString().Contains(compDate.Day.ToString()))
+                                .OrderByDescending(d => d.DateStart).GroupBy(x => x.Id).Select(x => x.First()).ToList();
                 }
             }
             #endregion 10
@@ -363,8 +398,10 @@ namespace EDM.edm
 
         protected void SearchButton_Click(object sender, EventArgs e)
         {
+            Session["searchStruct"]= new KeyValuePair<int, string>(DropDownList1.SelectedIndex, DropDownList1.SelectedValue);
             Session["searchName"] = NameSearchBox.Text;
             Session["dateStartSearch"] = DateSearchBox.Text;
+            Session["dateEndSearch"] = (DateSearchBoxEnd.Text.Any()) ? DateSearchBoxEnd.Text : DateSearchBox.Text;
             Response.Redirect("Subordinate.aspx");
         }
 

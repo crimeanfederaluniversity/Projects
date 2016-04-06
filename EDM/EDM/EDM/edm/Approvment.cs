@@ -8,6 +8,7 @@ namespace EDM.edm
 {
     public class Approvment
     {
+        private LogHandler log = new LogHandler();
         public int AddApprove(int user, int procVersion, string comment, int commentType)
         {
             int stepId = 0;
@@ -84,6 +85,7 @@ namespace EDM.edm
                 step.fk_processVersion = procVersion;
                 step.fk_participent = fkParticipant;
                 step.comment = comment;
+                step.commentType = 2; // замечание
                 step.stepResult = -2;
                 step.date = DateTime.Now;
                 
@@ -134,7 +136,7 @@ namespace EDM.edm
                     {
                         if (proces.status != 0)
                         {
-                            throw new Exception("Статус процесса равен не 0");
+                            log.AddError("Статус процесса "+ proces.processID+ " равен не 0");
                         }
 
                         if (procVer != null) procVer.status = "Согласовано / "+ DateTime.Now.ToShortDateString(); else throw new Exception("Не возможно вернуть процесс в статус 1. Скорее всего он не существует");
@@ -163,11 +165,11 @@ namespace EDM.edm
                                                         select a).Count();
 
                                 if (procVer != null) procVer.status = "Обработано " + stepsCount + " рецензентами из " + participantCount + " / " + " " + DateTime.Now.ToShortDateString();
-                                    else throw new Exception("Не возможно присвоить версии процесса в статус 1. Скорее всего он не существует");
+                                    else log.AddError("Не возможно присвоить версии процесса в статус 1. Скорее всего он не существует");
                                 }
 
                             else if (procVer != null) procVer.status = "Согласовано " + (from a in dataContext.Users where a.userID == user select a.name).FirstOrDefault() + " / " + DateTime.Now.ToShortDateString();
-                                    else throw new Exception("Не возможно присвоить версии процесса в статус 1. Скорее всего он не существует");
+                                    else log.AddError("Не возможно присвоить версии процесса в статус 1. Скорее всего он не существует");
                             }
                             break;
 
@@ -181,7 +183,7 @@ namespace EDM.edm
                                 procVer.status = "Возвращено на доработку " + (from a in dataContext.Users where a.userID == user select a.name).FirstOrDefault() + " / " + DateTime.Now.ToShortDateString();
                                 ef.RejectProcess(procId);// EMAIL
                              }
-                            else throw new Exception("Не возможно вернуть процесс в статус -2. Скорее всего он не существует");
+                            else log.AddError("Не возможно вернуть процесс в статус -2. Скорее всего он не существует");
                         }
                             break;
                     }
@@ -194,8 +196,6 @@ namespace EDM.edm
         public void ContinueApprove(int procId)
         {
             // Вызывать после создания новой версии ()
-
-
             using (EDMdbDataContext dc = new EDMdbDataContext())
             {
                 List<Steps> stepsOld;
@@ -284,6 +284,7 @@ namespace EDM.edm
                     }
                     else
                     {
+                        log.AddError("Ошибка утверждения процесса № " + procId);
                         throw new Exception("Ошибка утверждения процесса № " + procId); //LOG
                     }
                 }
