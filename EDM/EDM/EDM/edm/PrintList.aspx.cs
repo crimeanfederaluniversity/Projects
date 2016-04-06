@@ -40,8 +40,9 @@ namespace EDM.edm
             Processes proc = main.GetProcessById(processId);
 
             processNameLabel.Text = proc.name;
-            initiatorStructLabel.Text ="Проект подготовлен: " + main.GetStructById((int)main.GetUserById((int) userID).fk_struct).name ;
-            initiatorNameLabel.Text = "Исполнитель: " + main.GetUserById((int) userID).name;
+            initiatorStructLabel.Text ="Проект подготовлен: " + main.GetStructById((int)main.GetUserById((int) proc.fk_initiator).fk_struct).name;
+            initiatorNameLabel.Text = "Исполнитель: " + _edmDb.Users.Where(u => u.userID == proc.fk_initiator && u.active).Select(u => u.name).FirstOrDefault();
+
             if (!Page.IsPostBack)
             {
                 PrintHistory newHistory = new PrintHistory();
