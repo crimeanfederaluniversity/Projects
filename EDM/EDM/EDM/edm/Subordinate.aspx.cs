@@ -70,6 +70,8 @@ namespace EDM.edm
                 Button10.BorderWidth = 2;
                 Button10.BorderColor = Color.OrangeRed;
 
+                Div1.Visible = true;
+
                 NameSearchBox.Text = Session["searchName"].ToString();
                 DateSearchBox.Text = Session["dateStartSearch"].ToString();
                 DateSearchBoxEnd.Text = Session["dateEndSearch"].ToString();
@@ -171,6 +173,7 @@ namespace EDM.edm
                 Button20.BorderWidth = 2;
                 Button20.BorderColor = Color.OrangeRed;
 
+                Div1.Visible = false;
                 searchDiv.Visible = false;
 
                 BoundField boundField = new BoundField();
