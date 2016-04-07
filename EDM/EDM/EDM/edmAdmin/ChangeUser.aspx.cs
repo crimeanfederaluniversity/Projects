@@ -68,7 +68,6 @@ namespace EDM.edmAdmin
         {
 
         }
-
         protected void ChangeUserButton_Click(object sender, EventArgs e)
         {
             int userID;

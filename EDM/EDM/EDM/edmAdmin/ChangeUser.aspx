@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+    <div style="margin-top:auto">
     <Table ID="RegisterTable">
         <tr>
             <td>Email
@@ -57,5 +58,5 @@
     </Table>
     <br />
     <asp:Button ID="ChangeUserButton" runat="server" Height="50px" Text="Изменить" Width="300px" OnClick="ChangeUserButton_Click" />
-
+    </div>
 </asp:Content>

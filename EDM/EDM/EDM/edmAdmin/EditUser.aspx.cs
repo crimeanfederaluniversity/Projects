@@ -53,19 +53,26 @@ namespace EDM.edmAdmin
                                 Label SecondLevel = (Label)GridView1.Rows[rowIndex].FindControl("SecondLevel");
                                 Label Structure = (Label)GridView1.Rows[rowIndex].FindControl("Structure");
                                 Label TextBoxThirdlvl = (Label)GridView1.Rows[rowIndex].FindControl("SaveUser");
+                            CheckBox CanIniate = (CheckBox)GridView1.Rows[rowIndex].FindControl("CanIniate");
+                            CheckBox CanCreate = (CheckBox)GridView1.Rows[rowIndex].FindControl("CanCreate");
+                            CheckBox CanIniateCustom = (CheckBox)GridView1.Rows[rowIndex].FindControl("CanIniateCustom");
+                            CheckBox CanPrint = (CheckBox)GridView1.Rows[rowIndex].FindControl("CanPrint");
 
-                                using (EDMdbDataContext edmDb = new EDMdbDataContext())
+                            using (EDMdbDataContext edmDb = new EDMdbDataContext())
                                 {
                                     Users user =
                                         (from a in edmDb.Users
                                          where a.userID == Convert.ToInt32(button.CommandArgument)
                                          select a).FirstOrDefault();
-
                                     user.login = TextBoxLogin.Text;
                                     user.password= TextBoxPassword.Text;
                                     user.email = TextBoxEmail.Text;
                                     user.@struct = Structure.Text;
-                                    edmDb.SubmitChanges();
+                                user.canInitiate = CanIniate.Checked;
+                                user.canCreateTemplate = CanCreate.Checked;
+                                user.canInitiateCustom = CanIniateCustom.Checked;
+                                user.canPrintResult = CanPrint.Checked;
+                                edmDb.SubmitChanges();
                        
                                 }
                             }
@@ -75,23 +82,22 @@ namespace EDM.edmAdmin
             }
         }
         protected void DeleteUserButtonClick(object sender, EventArgs e)
-        {        
-                Button button = (Button)sender;
+        {
+            Button button = (Button)sender;
+            {
+                using (EDMdbDataContext edmDb = new EDMdbDataContext())
                 {
-                    using (EDMdbDataContext edmDb = new EDMdbDataContext())
-                    {
-                        Users user =
-                            (from a in edmDb.Users
-                             where a.userID == Convert.ToInt32(button.CommandArgument)
-                             select a).FirstOrDefault();
+                    Users user =
+                        (from a in edmDb.Users
+                         where a.userID == Convert.ToInt32(button.CommandArgument)
+                         select a).FirstOrDefault();
 
-                        user.active = false;
+                    user.active = false;
                     edmDb.SubmitChanges();
-                    }
+                }
                 grid1Update();
-            }           
+            }
         }
-
         protected void grid1Update()
         {        
             DataTable dataTable = new DataTable();
@@ -106,6 +112,8 @@ namespace EDM.edmAdmin
             dataTable.Columns.Add(new DataColumn("ChangeUser", typeof(string)));
             dataTable.Columns.Add(new DataColumn("CanIniate", typeof(bool)));
             dataTable.Columns.Add(new DataColumn("CanCreate", typeof(bool)));
+            dataTable.Columns.Add(new DataColumn("CanIniateCustom", typeof(bool)));
+            dataTable.Columns.Add(new DataColumn("CanPrint", typeof(bool)));
 
             using (EDMdbDataContext edmDb = new EDMdbDataContext())
             {
@@ -125,30 +133,19 @@ namespace EDM.edmAdmin
                     dataRow["ChangeUser"] = user.userID;
                     dataRow["CanIniate"] = user.canInitiate;
                     dataRow["CanCreate"] = user.canCreateTemplate;
+                    dataRow["CanIniateCustom"] = user.canInitiateCustom;
+                    dataRow["CanPrint"] = user.canPrintResult;
                     dataTable.Rows.Add(dataRow);
                 }
-                ViewState["GridviewUsers"] = dataTable;
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();            
         }
 
     }
 
-    /*    protected void dropdownsUpdate()
+        protected void Button2_Click(object sender, EventArgs e)
         {
-            EDMdbDataContext edmDb = new EDMdbDataContext();
-            List<Struct> structList =
-                    (from a in edmDb.Struct
-                     where a.active == true
-                     select a).OrderBy(mc => mc.structID).ToList();
-            var dictionary = new Dictionary<int, string>();
-            dictionary.Add(-1, "Выберите значение");
-            foreach (var item in structList)
-                dictionary.Add(item.structID, item.name);
-            Structure.DataTextField = "Value";
-            DropDownList1.DataValueField = "Key";
-            DropDownList1.DataSource = dictionary;
-            DropDownList1.DataBind();
-            */
+            Response.Redirect("~/edmAdmin/EditUser.aspx");
         }
+    }
 }

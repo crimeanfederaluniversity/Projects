@@ -2,16 +2,15 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
    
+    <br />
+    <br />
+    <div style="margin-top:auto">
         <br />
    
-        <asp:Button ID="Button2" runat="server" Height="25px" OnClick="Button2_Click" Text="На главную" Width="203px" />
-    
-        <br />
-    
-        <br />
-    
-     <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" CssClass="table edm-table edm-history-table centered-block" Height="215px" Width="1427px">           
-            
+        <asp:Button ID="Button2" runat="server" Height="25px" OnClick="Button2_Click" Text="На главную" Width="203px" />    
+        <br />    
+        <br />    
+     <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" CssClass="table edm-table edm-history-table centered-block" Height="215px" Width="1427px">                       
          <Columns>               
                            
                  <asp:TemplateField HeaderText="ID пользователя" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
@@ -57,4 +56,6 @@
      <br />
      <br />
      <asp:Button ID="Button1" runat="server" Height="34px" OnClick="Button1_Click" Text="Добавить" Width="198px" />
+
+        </div>
 </asp:Content>

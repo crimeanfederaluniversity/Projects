@@ -153,9 +153,7 @@ namespace EDM.edm
                 {
                     rowSpanCount = stepsCount;
                 }
-
-                
-
+               
                 TableCell versionIdCell = new TableCell();
                 versionIdCell.Text = currentVersion.version.ToString();
                 versionIdCell.RowSpan = rowSpanCount;

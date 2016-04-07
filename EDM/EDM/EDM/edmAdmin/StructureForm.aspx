@@ -2,7 +2,9 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-
+    <div style="margin-top:auto">
+        <br />
+        <br />
     <asp:Button ID="Button2" runat="server" Height="25px" OnClick="Button2_Click" Text="На главную" Width="124px" />
     <br />
     <br />
@@ -22,7 +24,5 @@
     &nbsp;<asp:TextBox ID="NewStructureBox" runat="server" Height="25px" Width="280px"></asp:TextBox>
 
     &nbsp;<asp:Button ID="AddNewStructure" runat="server" Height="25px" Text="Применить" Width="200px" OnClick="AddNewStructure_Click" />
-
-
-
+        </div>
 </asp:Content>

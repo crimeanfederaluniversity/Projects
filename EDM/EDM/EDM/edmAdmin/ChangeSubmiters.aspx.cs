@@ -91,8 +91,7 @@ namespace EDM.edmAdmin
                 newUserSubmit.fk_user = user.userID;
                 edmDb.Submitters.InsertOnSubmit(newUserSubmit);
                 edmDb.SubmitChanges();
-                DisplayAlert("Пользователь добавлен");
-                
+                DisplayAlert("Пользователь добавлен");               
             }
             else
             {

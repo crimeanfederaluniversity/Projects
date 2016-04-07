@@ -1,7 +1,15 @@
 ﻿<%@ Page Language="C#" Title="Редактирование пользователей" AutoEventWireup="true"  MasterPageFile="~/Site.Master" EnableEventValidation="false" CodeBehind="EditUser.aspx.cs" Inherits="EDM.edmAdmin.ChangeUser" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-
+    <div style="margin-top:auto">
+            <br />
+            <br />
+            <asp:Button ID="Button2" runat="server" Height="25px" OnClick="Button2_Click" Text="На главную" Width="198px" />
+    
+            <br />
+    
+            <br />
+    
     <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" CssClass="table edm-table edm-history-table centered-block" AllowPaging="true">           
             
          <Columns>               
@@ -64,6 +72,16 @@
                             <asp:CheckBox ID="CanCreateTemple" runat="server" CommandName="Select" Text="" Width="200px" Checked='<%# Bind("CanCreate") %>' />
                         </ItemTemplate>
                     </asp:TemplateField> 
+             <asp:TemplateField HeaderText="Может создавать нешаблонные процессы">
+                        <ItemTemplate>
+                            <asp:CheckBox ID="CanIniateCustom" runat="server" CommandName="Select" Text="" Width="200px" Checked='<%# Bind("CanIniateCustom") %>'/>
+                        </ItemTemplate>
+                    </asp:TemplateField> 
+             <asp:TemplateField HeaderText="Может печатать результат">
+                        <ItemTemplate>
+                            <asp:CheckBox ID="CanPrint" runat="server" CommandName="Select" Text="" Width="200px" Checked='<%# Bind("CanPrint") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField> 
                  <asp:TemplateField HeaderText="Удалить пользователя">
                         <ItemTemplate>
                             <asp:Button ID="DeleteUserButton" runat="server" CommandName="Select" Text="Удалить" Width="200px" CommandArgument='<%# Eval("DeleteUser") %>' OnClick="DeleteUserButtonClick" />
@@ -83,5 +101,5 @@
                     </asp:TemplateField>                     
                 </Columns>
        </asp:GridView>
-
+        </div>
 </asp:Content>

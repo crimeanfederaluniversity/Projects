@@ -19,6 +19,7 @@ namespace EDM.edmAdmin
         }
         protected void NewUserButton_Click(object sender, EventArgs e)
         {
+            var Id = Session["userId"];
             Response.Redirect("~/edmAdmin/CreateNewUser.aspx");
         }
 

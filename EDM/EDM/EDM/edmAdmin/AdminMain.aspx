@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="Основная форма администратора" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AdminMain.aspx.cs" Inherits="EDM.edmAdmin.AdminMain" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <br />
+    <div style="margin-top:auto">
     Основная страница администратора электронного докмуентооборота.<br />
 <br />
     <br />
@@ -17,4 +19,5 @@
     <br />
     <asp:Button ID="WatchSubmiters0" runat="server" Height="30px" Text="Пользователи, имеющие право на рассылку" Width="300px" OnClick="ProcessStartClick" />
     <br />
+        </div>
 </asp:Content>
