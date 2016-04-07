@@ -87,5 +87,10 @@ namespace Chancelerry.kanz
         {
             Response.Redirect("ChooseDictionary.aspx");
         }
+
+        protected void GoToStatistics_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("StatisticsMain.aspx");
+        }
     }
 }
