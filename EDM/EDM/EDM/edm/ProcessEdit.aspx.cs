@@ -47,16 +47,8 @@ namespace EDM.edm
         public void GetDocumentClick(object sender, EventArgs e)
         {
             LinkButton thisButton = (LinkButton)sender;
-            string path = HttpContext.Current.Server.MapPath("~/edm/documents/" + thisButton.CommandArgument + "/" + thisButton.Text);
-            System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
-            response.ClearContent();
-            response.Clear();
-            response.ContentType = "text/plain";
-            string name = thisButton.Text.Replace(',','.');
-            response.AddHeader("Content-Disposition", "attachment; filename=" + name + ";");
-            response.TransmitFile(path);
-            response.Flush();
-            response.End();
+            main.DownloadFile(Convert.ToInt32(thisButton.CommandArgument));
+            
         }
         public void DeleteDocumentRow(object sender, EventArgs e)
         {
@@ -486,7 +478,7 @@ namespace EDM.edm
                     {
                         LinkButton newLinkButton = new LinkButton();
                         newLinkButton.ID = currentDocument.LinkButtonToDocument.ID;
-                        newLinkButton.CommandArgument = currentDocument.LinkButtonToDocument.CommandArgument;
+                        newLinkButton.CommandArgument = currentDocument.DocumentId.ToString();
                         newLinkButton.Text = currentDocument.LinkButtonToDocument.Text;
                         newLinkButton.Click += GetDocumentClick;
                         cell1.Controls.Add(newLinkButton);
@@ -744,7 +736,7 @@ namespace EDM.edm
                     newDocClass.LinkButtonToDocument = new LinkButton();
                     newDocClass.LinkButtonToDocument.ID = "linkButton" + currentDocument.documentID;
                     newDocClass.LinkButtonToDocument.Text = currentDocument.documentName;
-                    newDocClass.LinkButtonToDocument.CommandArgument = processId+"/"+ currentDocument.documentID;
+                    newDocClass.LinkButtonToDocument.CommandArgument = currentDocument.documentID.ToString();// processId +"/"+ currentDocument.documentID;
                     newDocClass.LinkButtonToDocument.Click += GetDocumentClick;
                     
                     newDocClass.DocumentId = currentDocument.documentID;

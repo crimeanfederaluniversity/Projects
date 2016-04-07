@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
@@ -88,7 +89,7 @@ namespace EDM.edm
 
 
             Processes parentProcess = GetProcessById(parentProcessId);
-            int childProcessId = CreateProcessByType(parentProcess.type, userId, parentProcess.name, parentProcess.fk_template, null);
+            int childProcessId = CreateProcessByType(parentProcess.type, userId, parentProcess.name,/* parentProcess.fk_template*/ null, null);
             Processes childProcess = GetProcessById(childProcessId);
             childProcess.fk_parentProcess = parentProcessId;
             ProcessVersions parentProcessLastVersion = GetProcessVersionsLastVerson(parentProcessId);
@@ -187,7 +188,280 @@ namespace EDM.edm
         #endregion
 
         #region get
+        public void GetDocumentClick(object sender, EventArgs e)
+        {
+            LinkButton thisButton = (LinkButton)sender;
+           // string path = HttpContext.Current.Server.MapPath("~/edm/documents/" + thisButton.CommandArgument + "/" + thisButton.Text);
+            DownloadStepFile(Convert.ToInt32(thisButton.CommandArgument));
+        }
+        public TableCell GetDocumentsInVersion(int processVersionId, int processId)
+        {
+            List<Documents> documentsInVersion = GetDocumentsInProcessVersion(processVersionId, false);
+            TableCell documentsInVersionCell = new TableCell();
+            if (documentsInVersion.Count > 0)
+            {
+                Table docTable = new Table();
+                docTable.Style.Add("height", "100%");
+                docTable.Style.Add("width", "100%");
+                foreach (Documents document in documentsInVersion)
+                {
+                    TableRow docTableRow = new TableRow();
+                    TableCell docLinkCell = new TableCell();
+                    TableCell docCommentTableCell = new TableCell();
+                    docCommentTableCell.Text = GetDocumentComment(document.documentID, processVersionId);// document.documentComment;
+                    LinkButton newLinkButton = new LinkButton();
 
+                    newLinkButton.Font.Bold = true;
+                    // newLinkButton.LinkButtonToDocument.ID = "linkButton" + currentDocument.documentID;
+                    newLinkButton.CommandArgument =  document.documentID.ToString();
+                    ProcessEdit proc = new ProcessEdit();
+                    newLinkButton.Click += proc.GetDocumentClick;
+
+
+                    newLinkButton.Text = document.documentName;
+                    docLinkCell.Controls.Add(newLinkButton);
+                    docLinkCell.Controls.Add(new Label()
+                    {
+                        Text = "<br/>" + document.md5,
+                        ForeColor = Color.Green
+                    });
+                    docTableRow.Cells.Add(docLinkCell);
+                    docTableRow.Cells.Add(docCommentTableCell);
+                    docTable.Rows.Add(docTableRow);
+                }
+                documentsInVersionCell.Controls.Add(docTable);
+            }
+            else
+            {
+                documentsInVersionCell.Text = "Документов нет";
+            }
+            return documentsInVersionCell;
+        }
+        public Table GetHistoryTable(int archiveVersion, int processId)
+        {
+            Table historyTable = new Table();
+            #region headers
+            TableHeaderRow historyTableHeaderRow = new TableHeaderRow();
+            TableHeaderCell cell1 = new TableHeaderCell();
+            cell1.Text = "Версия процесса";
+            historyTableHeaderRow.Cells.Add(cell1);
+
+            TableHeaderCell cell2 = new TableHeaderCell();
+            cell2.Text = "Комментарий к версии процесса";
+            historyTableHeaderRow.Cells.Add(cell2);
+
+            TableHeaderCell cell3 = new TableHeaderCell();
+            cell3.Text = "Статус";
+            historyTableHeaderRow.Cells.Add(cell3);
+
+            TableHeaderCell cell4 = new TableHeaderCell();
+            cell4.Text = "Документы";
+            historyTableHeaderRow.Cells.Add(cell4);
+
+            TableHeaderCell cell5 = new TableHeaderCell();
+            cell5.Text = "Пользователь";
+            historyTableHeaderRow.Cells.Add(cell5);
+
+            TableHeaderCell cell6 = new TableHeaderCell();
+            cell6.Text = "Дата";
+            historyTableHeaderRow.Cells.Add(cell6);
+
+            TableHeaderCell cell7 = new TableHeaderCell();
+            cell7.Text = "Срок";
+            historyTableHeaderRow.Cells.Add(cell7);
+
+            TableHeaderCell cell8 = new TableHeaderCell();
+            cell8.Text = "Результат";
+            historyTableHeaderRow.Cells.Add(cell8);
+
+            TableHeaderCell cell9 = new TableHeaderCell();
+            cell9.Text = "Комментарий";
+            historyTableHeaderRow.Cells.Add(cell9);
+
+            TableHeaderCell cell10 = new TableHeaderCell();
+            cell10.Text = "Прикрепленный файл";
+            historyTableHeaderRow.Cells.Add(cell10);
+
+            historyTable.Rows.Add(historyTableHeaderRow);
+
+            #endregion
+            List<ProcessVersions> versionsInProcess = new List<ProcessVersions>();
+
+            if (archiveVersion != -1)
+            {
+                EDMdbDataContext dc = new EDMdbDataContext();
+
+                versionsInProcess = (from a in dc.ProcessVersions
+                                     where a.active && a.fk_process == processId && a.version == archiveVersion
+                                     select a).ToList();
+            }
+            else
+                versionsInProcess = GetProcessVersionsInProcess(processId);
+            ProcessVersions lastVersion = GetProcessVersionsLastVerson(processId);
+            foreach (ProcessVersions currentVersion in versionsInProcess)
+            {
+                TableRow processVersionRow = new TableRow();
+                List<Steps> stepsInVersion = GetStepsInProcessVersion(currentVersion.processVersionID);
+                int stepsCount = stepsInVersion.Count;
+                int rowSpanCount = 0;
+                List<Participants> participantsWithoutStep = new List<Participants>();
+                if (lastVersion == currentVersion)
+                {
+                    participantsWithoutStep = GetParticipantsInProcessWithNoStep(processId,
+                        lastVersion.processVersionID);
+                    rowSpanCount = stepsCount + participantsWithoutStep.Count;
+                }
+                else
+                {
+                    rowSpanCount = stepsCount;
+                }
+
+
+
+                TableCell versionIdCell = new TableCell();
+                versionIdCell.Text = currentVersion.version.ToString();
+                versionIdCell.RowSpan = rowSpanCount;
+                processVersionRow.Cells.Add(versionIdCell);
+
+                TableCell versionComment = new TableCell();
+                versionComment.Text = currentVersion.comment.ToString();
+                versionComment.RowSpan = rowSpanCount;
+                processVersionRow.Cells.Add(versionComment);
+
+                TableCell versionStatus = new TableCell();
+                versionStatus.Text = currentVersion.status.ToString();
+                versionStatus.RowSpan = rowSpanCount;
+                processVersionRow.Cells.Add(versionStatus);
+
+                TableCell documentsCell = GetDocumentsInVersion(currentVersion.processVersionID, processId);
+                documentsCell.RowSpan = rowSpanCount;
+                processVersionRow.Cells.Add(documentsCell);
+
+
+                if (rowSpanCount == 0)
+                {
+                    processVersionRow.Cells.Add(new TableCell());
+                    processVersionRow.Cells.Add(new TableCell());
+                    processVersionRow.Cells.Add(new TableCell());
+                    processVersionRow.Cells.Add(new TableCell());
+                    processVersionRow.Cells.Add(new TableCell());
+                    processVersionRow.Cells.Add(new TableCell());
+                    historyTable.Rows.Add(processVersionRow);
+                }
+
+                bool firstStep = true;
+
+                foreach (Steps step in stepsInVersion)
+                {
+                    TableRow processVersionStepRow = new TableRow();
+                    if (firstStep)
+                    {
+                        firstStep = false;
+                        processVersionStepRow = processVersionRow;
+                    }
+
+                    Participants participant = GetParticipantById(step.fk_participent);
+
+                    TableCell stepUserCell = new TableCell();
+                    stepUserCell.Text = GetUserById(participant.fk_user).name;
+                    processVersionStepRow.Cells.Add(stepUserCell);
+
+                    TableCell stepDateCell = new TableCell();
+                    stepDateCell.Text = step.date.ToString();
+                    processVersionStepRow.Cells.Add(stepDateCell);
+
+                    TableCell stepEndDateCell = new TableCell();
+                    stepEndDateCell.Text = participant.dateEnd.ToString();//step.date.ToString();
+                    processVersionStepRow.Cells.Add(stepEndDateCell);
+
+                    TableCell stepResultCell = new TableCell();
+                    stepResultCell.Text = step.stepResult.ToString();
+                    if (step.stepResult == -2)
+                    {
+                        stepResultCell.Text = "Отказано";
+                    }
+
+                    if (step.stepResult == 1)
+                    {
+                        stepResultCell.Text = "Согласовано";
+                    }
+
+
+
+                    processVersionStepRow.Cells.Add(stepResultCell);
+                    TableCell stepCommentCell = new TableCell();
+                    stepCommentCell.Text = step.comment.ToString();
+                    processVersionStepRow.Cells.Add(stepCommentCell);
+
+                    DocumentsInStep doc = GetDocumentInStep(step.stepID);
+                    TableCell linkButtonCell = new TableCell();
+                    if (doc != null)
+                    {
+
+                        LinkButton linkButton = new LinkButton();
+                        linkButton.Text = doc.documentName;
+                        StepDocInStepMap tmp = GetFirstStepDocMapByDoc(doc.documentsInStepId);
+                        Steps tmpStep = GetStepById(tmp.fk_step);
+                        ProcessVersions version = GetProcessversionById(tmpStep.fk_processVersion);
+
+
+
+                        linkButton.CommandArgument = doc.documentsInStepId.ToString(); /*version.fk_process + "stepsDocs/" +
+                                                     doc.documentsInStepId.ToString();*/
+                        linkButton.Click += GetDocumentClick;
+                        linkButtonCell.Controls.Add(linkButton);
+
+
+                    }
+                    else
+                    {
+                        linkButtonCell.Text = "Документов нет";
+                    }
+                    processVersionStepRow.Cells.Add(linkButtonCell);
+
+                    historyTable.Rows.Add(processVersionStepRow);
+                }
+
+                foreach (Participants part in participantsWithoutStep)
+                {
+                    TableRow processVersionStepRow = new TableRow();
+
+                    if (stepsCount == 0 && firstStep)
+                    {
+                        firstStep = false;
+                        processVersionStepRow = processVersionRow;
+                    }
+
+                    TableCell stepUserCell = new TableCell();
+                    stepUserCell.Text = GetUserById(part.fk_user).name;
+                    processVersionStepRow.Cells.Add(stepUserCell);
+
+                    TableCell stepDateCell = new TableCell();
+                    processVersionStepRow.Cells.Add(stepDateCell);
+
+                    TableCell stepEndDateCell = new TableCell();
+                    stepEndDateCell.Text = part.dateEnd.ToString();
+                    processVersionStepRow.Cells.Add(stepEndDateCell);
+
+                    TableCell stepResultCell = new TableCell();
+                    stepResultCell.Text = (part.isNew == true) ? "Не заходил" : "Просмотрел";
+
+
+                    processVersionStepRow.Cells.Add(stepResultCell);
+
+                    TableCell stepCommentCell = new TableCell();
+                    processVersionStepRow.Cells.Add(stepCommentCell);
+
+                    TableCell stepDocCell = new TableCell();
+                    processVersionStepRow.Cells.Add(stepDocCell);
+
+                    historyTable.Rows.Add(processVersionStepRow);
+                }
+            }
+            historyTable.BorderWidth = 1;
+            historyTable.CssClass = "table edm-table edm-history-table centered-block";
+            return historyTable;
+        }
         public List<Processes> GetAllProcessesInStructWithNoInitiateCreator(int structId)
         {
              OtherFuncs other = new OtherFuncs();
@@ -206,7 +480,6 @@ namespace EDM.edm
                 select a).Distinct().ToList();
             return processesToShow;
         }
-
         public ProcessStarterUser GetProcessStarterByUserId(int userId )
         {
             return (from a in _edmDb.ProcessStarterUser
@@ -226,7 +499,6 @@ namespace EDM.edm
                 where a.stepID == stepId
                 select a).FirstOrDefault();
         }
-
         public StepDocInStepMap GetFirstStepDocMapByDoc(int docId)
         {
             return (from a in _edmDb.StepDocInStepMap
@@ -362,7 +634,6 @@ namespace EDM.edm
 
             return listToReturn;
         }
-
         public ListItem[] GetAllStructToDropDown(int checkedStruct)
         {
             List<Struct> allStruct = (from a in _edmDb.Struct
@@ -382,7 +653,6 @@ namespace EDM.edm
             }
             return itemsToReturn;
         }
-
         public List<ProcessEdit.Participant> GetParticipantsInTempolate(int templateId)
         {
 
@@ -404,8 +674,6 @@ namespace EDM.edm
 
             return listToReturn;
         }
-
-
         public List<Participants> GetParticipantsInProcessWithNoStep(int processId, int processLastVersion)
         {
             List<Participants> participantsWithStep = (from a in _edmDb.Participants
@@ -434,7 +702,6 @@ namespace EDM.edm
             }
             return participantsToReturn;
         }
-
         public List<Participants> GetParticipantsInProcess(int processId)
         {
             // List <ProcessEdit.Participant> listToReturn = new List<ProcessEdit.Participant>();
@@ -604,7 +871,6 @@ namespace EDM.edm
                           && a.fk_process == processId
                     select a).ToList();
         }
-
         public List<Users> GetRecursiveChildStructList(int structId , bool isFirstStep)
         {
             List<Users> ListToReturn = new List<Users>();
@@ -637,8 +903,6 @@ namespace EDM.edm
             return ListToReturn;
 
         }
-
-
         public List<Users> GetRecursiveChildAllStructList(int structId, bool isFirstStep)
         {
             List<Users> ListToReturn = new List<Users>();
@@ -821,6 +1085,57 @@ namespace EDM.edm
         {
             TextBox newParticipant = new TextBox();
             ExistingParticipants.Add(newParticipant);
+        }
+        public void DownloadFile(int docInProcId)
+        {
+            Documents doc = (from a in _edmDb.Documents
+                             where a.documentID == docInProcId
+                             select a).FirstOrDefault();
+            ProcVersionDocsMap procVersionDocsMap = (from a in _edmDb.ProcVersionDocsMap
+                                                     where a.fk_documents == docInProcId
+                                                     select a).FirstOrDefault();
+
+            ProcessVersions version = (from a in _edmDb.ProcessVersions
+                                       where a.processVersionID == procVersionDocsMap.fk_processVersion
+                                       select a).FirstOrDefault();
+
+            string path = HttpContext.Current.Server.MapPath("~/edm/documents/" + version.fk_process + "/" + doc.documentID + "/" + doc.documentName);
+            System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
+            response.ClearContent();
+            response.Clear();
+            response.ContentType = "text/plain";
+            string name = doc.documentName.Replace(',', '.');
+            response.AddHeader("Content-Disposition", "attachment; filename=" + name + ";");
+            response.TransmitFile(path);
+            response.Flush();
+            response.End();
+        }
+        public void DownloadStepFile(int docInStepId)
+        {
+            DocumentsInStep doc = (from a in _edmDb.DocumentsInStep
+                where a.documentsInStepId == docInStepId
+                                   select a).FirstOrDefault();
+            StepDocInStepMap stepDocInStepMap = (from a in _edmDb.StepDocInStepMap
+                                                   where a.fk_documentInStep == docInStepId
+                                                   select a).FirstOrDefault();
+            Steps step = (from a in _edmDb.Steps
+                where a.stepID == stepDocInStepMap.fk_step
+                select a).FirstOrDefault();
+            ProcessVersions version = (from a in _edmDb.ProcessVersions
+                where a.processVersionID == step.fk_processVersion
+                select a).FirstOrDefault();
+
+            string path = HttpContext.Current.Server.MapPath("~/edm/documents/" + version.fk_process + "stepsDocs/" + doc.documentsInStepId + "/");
+            //string path = HttpContext.Current.Server.MapPath("~/edm/documents/" + procVersionDocsMap.ProcVersionDocsMapId + "/" + doc.documentID + "/" + doc.documentName);
+            System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
+            response.ClearContent();
+            response.Clear();
+            response.ContentType = "text/plain";
+            string name = doc.documentName.Replace(',', '.');
+            response.AddHeader("Content-Disposition", "attachment; filename=" + name + ";");
+            response.TransmitFile(path);
+            response.Flush();
+            response.End();
         }
         #endregion
     }

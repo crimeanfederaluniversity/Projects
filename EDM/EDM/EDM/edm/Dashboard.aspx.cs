@@ -257,7 +257,6 @@ namespace EDM.edm
 
             return dataOneSource;
         }
-
         public void RenderGrid(GridView gridView, List<DataOne> dataOneSource, int direction, int page)
         {
             EDMdbDataContext dataContext = new EDMdbDataContext();
@@ -540,9 +539,7 @@ namespace EDM.edm
             #endregion
 
             Session["isPage"] = false;
-        }
-
-        
+        }      
         protected void dashGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             // 0 - исходящие
@@ -676,7 +673,6 @@ namespace EDM.edm
                     break;
             }
         }
-
         protected void dashGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -920,35 +916,28 @@ namespace EDM.edm
             }
 
         }
-
-
-         protected void Button2_Click(object sender, EventArgs e)
+        protected void Button2_Click(object sender, EventArgs e)
         {
             Session["direction"] = 1;
             Response.Redirect("Dashboard.aspx");
         }
-
         protected void Button1_Click(object sender, EventArgs e)
         {
             Session["direction"] = 0;
             Response.Redirect("Dashboard.aspx");
         }
-
         protected void Button3_Click(object sender, EventArgs e)
         {
             Session["direction"] = 2;
             Response.Redirect("Dashboard.aspx");
         }
-
         protected void Button4_Click(object sender, EventArgs e)
         {
             Session["processID"] = 0;
             Response.Redirect("ProcessEdit.aspx");
         }
-
         protected void dashGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
             /*dashGridView.PageIndex = e.NewPageIndex;
             dashGridView.DataSource = ViewState["dataOneSource"];
             dashGridView.DataBind();*/
@@ -958,7 +947,6 @@ namespace EDM.edm
             Response.Redirect("Dashboard.aspx");
 
         }
-
         protected void goBackButton_Click(object sender, EventArgs e)
         {
             
@@ -989,24 +977,20 @@ namespace EDM.edm
             }
 
         }
-
         protected void GoToTemplatesButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("TemplatesList.aspx");
         }
-
         protected void GoToSlavesHistory_Click(object sender, EventArgs e)
         {
             Session["searchName"] = string.Empty;
             Session["dateStartSearch"] = string.Empty;
             Response.Redirect("Subordinate.aspx");
         }
-
         protected void GoToSubmitterButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("SubmittedPage.aspx");
         }
-
         protected void GoToStarterPageButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("ProcessStarterPage.aspx");

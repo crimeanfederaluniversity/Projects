@@ -22,6 +22,7 @@
 <br />
     <br />
     <script src="calendar_ru.js" type="text/javascript"> </script>
+    <script src="calendar_ru.js" type="text/javascript"> </script>
   
       <style type="text/css">
           .noFirstColumn td:first-child

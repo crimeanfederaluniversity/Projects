@@ -1,15 +1,52 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DocumentView.aspx.cs" Inherits="EDM.edm.DocumentView" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <style type="text/css">
-        
+
+
+        .fixedHistoryPanel {
+           background-color:rgba(0, 0, 0, 0.85);
+             z-index: 2100;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          visibility: hidden;
+          
+           
+        }
+
+        .fixedHistoryPanel2 {
+            top: 50%;
+            left: 50%;
+            margin: -300px 0px 0px -600px;
+            border: 1px solid black;
+            z-index: 21;
+            position: fixed;
+            background-color: white;
+            
+            height: 600px;
+            width: 1200px;
+        }
+        .leftButton {
+             left: 0px;
+             width: 49%;
+            
+         }
+        .rightButton {
+            left: 50%;
+            width: 49%;
+            
+        }
+
         .invisible {
             visibility: hidden;
         }
             
-         .RBL label
-         {
-             display: inline;
-         }
+        .RBL label
+        {
+            display: inline;
+        }
         .RBL td
         {
             text-align: left;
@@ -31,11 +68,30 @@
         {
             float:right
         }
-    </style> 
-    
-    
+    </style>
     <script>
+        
 
+        function showHistory() {
+            document.getElementById('MainContent_historyDiv').style.visibility = 'visible';
+        }
+        function CloseHistoryDiv() {
+            document.getElementById('MainContent_historyDiv').style.visibility = 'hidden';
+        }
+        
+        function buttonClickValidate()
+        {
+            var selectedvalue = $('#<%= RadioButtonList1.ClientID %> input:checked').val();
+            if (selectedvalue == 2)
+            {
+                if (document.getElementById('MainContent_CommentTextBox').value.length < 1)
+                {
+                    alert('Введите Ваши замечания');
+                    return false;
+                }
+            }
+            return true;
+        }
 
         function setValues() {
             setComment();
@@ -90,102 +146,101 @@
                 document.getElementById('MainContent_AddStepFileFileUpload').style.visibility = 'hidden';
                 document.getElementById('MainContent_ExistingDocNameLabel').style.visibility = 'visible';
                 document.getElementById('MainContent_ExistingDocNameLabel').innerHTML = documentValue;
-               // alert(documentId);
-               // document.getElementById('MainContent_ExistingDocIdTextBox').text = documentId;
+                // alert(documentId);
+                // document.getElementById('MainContent_ExistingDocIdTextBox').text = documentId;
                 document.getElementById('MainContent_ExistingDocIdTextBox').value = documentId;
                 //
             }         
         }
 
     </script>
-    
-   
-<br />
-<br />
- 
-    <div class="row centered-content">
-        <div class="edm-document-view-content input-group">
-            <asp:Label ID="Label1" runat="server" Text="Документы" CssClass="header"></asp:Label>
-            <br />
-   
-    
-            <asp:GridView ID="docGridView" runat="server" AutoGenerateColumns="False" OnRowCommand="docGridView_RowCommand" CssClass="table table-striped edm-table">
-            </asp:GridView>
-    
-            <br />
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#MainContent_RadioButtonList1").click(function () {
 
+                $("#MainContent_RadioButtonList1 input").each(function (i, radio_btn) {
+                    var rb_element = $(radio_btn);
+
+                    if ( rb_element.prop('checked') ) {
+                        if ( rb_element.val() == '1') {
+                            $("#MainContent_ApproveButton").prop('value', 'Согласовать');
+                            $("#MainContent_Label2").text("Ваш комментарий");
+                            $("#MainContent_CommentTextBox").prop('placeholder', 'Введите комментарий к процессу');
+                        } else {
+
+                            $("#MainContent_ApproveButton").prop('value', 'Согласовать с замечанием');
+                            $("#MainContent_Label2").text("Ваше замечание");
+                            $("#MainContent_CommentTextBox").prop('placeholder', 'Введите замечание к процессу');
+                        }
+                    }
+
+                                
+                });
+            });
+        });
+    </script>
+    <br />
+    <br />
   
-                    Комментарий инициатора согласования  
-                <asp:TextBox ID="LabelComment" TextMode="MultiLine" runat="server" ReadOnly="True" Height="300px" Width="600px" Text="Label" CssClass="edm-document-view-comment-block"></asp:TextBox>
+    <h3 style="text-align: center;">  <asp:Label ID="InitiatorLabel" runat="server" Text="" ></asp:Label> </h3>
+
+    <br />
+    <div class="row centered-content">        
+        <div class="edm-document-view-content input-group">
+            <!--<asp:Label ID="Label1" runat="server" Text="Документы" CssClass="header"></asp:Label>
+            <br /> -->
             
-
-           
-
+            <asp:GridView ID="docGridView" runat="server" AutoGenerateColumns="False" OnRowCommand="docGridView_RowCommand" Width="100%" CssClass="table table-striped edm-table">
+            </asp:GridView>
+            <h4 style="text-align: center;">   Комментарий инициатора согласования </h4>
+            
+            <asp:TextBox ID="LabelComment" TextMode="MultiLine" runat="server" ReadOnly="True" Height="100px" Width="100%" Text="Label" CssClass="edm-document-view-comment-block"></asp:TextBox>
             <br />
             <div id="useInnerProc" runat="server" Visible="False">
                 <br />
-                <asp:Button ID="OpenFixedPanelButton" runat="server" Text="Прикрепить комментарий и документы из внутренненго согласования" Width="790px" />
+                <asp:Button ID="OpenFixedPanelButton" runat="server" Text="Прикрепить комментарий и документы из внутренненго согласования"  Width="100%" />
                 </div>
+             <asp:Button ID="ShowHistory" runat="server" Text="Показать историю согласования" Width="100%"  OnClientClick="showHistory(); return false;" />
+            <div runat="server" id="historyDiv" class="fixedHistoryPanel" onclick="CloseHistoryDiv();">
+                <asp:Button ID="CloseHistoryDiv" runat="server" Text="Закрыть" Height="30px" Width="100%"  OnClientClick="CloseHistoryDiv();return false;"/>
+
+
+            </div>
             <br />
-             <asp:RadioButtonList ID="RadioButtonList1" runat="server" RepeatDirection="Horizontal">
+            <div class="input-group-lg">                              
+                <br />
+                <asp:TextBox ID="LabelPrevComment"  runat="server" ReadOnly="True" TextMode="MultiLine" Visible="false"  cssClass="form-control" Height="100px" Text="Label" ></asp:TextBox>
+                <br />
+                <asp:Button ID="ButtonPrevComment" runat="server" Text="Показать Ваш комментарий из предыдущей версии процесса" OnClientClick="javascript:showSimpleLoadingScreen();" CausesValidation="False" Visible="False" Width="100%" OnClick="ButtonPrevComment_Click"/>
+                <br />
+                
+                <asp:RadioButtonList ID="RadioButtonList1" runat="server" RepeatDirection="Horizontal">
                     <asp:ListItem Selected="True" Value="1">Комментарий</asp:ListItem>
                     <asp:ListItem Value="2">Замечание</asp:ListItem>
                 </asp:RadioButtonList>
-        <%--<asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine" Height="54px" Width="160px"></asp:TextBox>--%> 
-
-            <asp:Label ID="Label2" runat="server" Text="Ваш комментарий"></asp:Label> 
-            <asp:RequiredFieldValidator runat="server" SetFocusOnError="True" ControlToValidate="CommentTextBox" ErrorMessage="Введите комментарий!" ForeColor="red"/>
-            <div class="input-group-lg">
+         
                 
-                <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
-                <script>
-                    $(document).ready(function() {
-                        $("#MainContent_RadioButtonList1").click(function () {
-
-                            $("#MainContent_RadioButtonList1 input").each(function (i, radio_btn) {
-                                var rb_element = $(radio_btn);
-
-                                if ( rb_element.prop('checked') ) {
-                                    if ( rb_element.val() == '1') {
-                                        $("#MainContent_ApproveButton").prop('value', 'Согласовать');
-                                        $("#MainContent_Label2").text("Ваш комментарий");
-                                        $("#MainContent_CommentTextBox").prop('placeholder', 'Введите комментарий к процессу');
-                                    } else {
-
-                                        $("#MainContent_ApproveButton").prop('value', 'Согласовать с замечанием');
-                                        $("#MainContent_Label2").text("Ваше замечание");
-                                        $("#MainContent_CommentTextBox").prop('placeholder', 'Введите замечание к процессу');
-                                    }
-                                }
-
-                                
-                            });
-                        });
-                    });
-                </script>
-                <br />
-                <asp:TextBox ID="LabelPrevComment"  runat="server" ReadOnly="True" TextMode="MultiLine" Visible="false"  cssClass="form-control" Height="100px" Text="Label" ></asp:TextBox>
-
-                <br />
-                <asp:Button ID="ButtonPrevComment" runat="server" Text="Показать Ваш комментарий из предыдущей версии процесса" OnClientClick="javascript:showSimpleLoadingScreen()" CausesValidation="False" Visible="False" Width="100%" OnClick="ButtonPrevComment_Click"/>
-
                 <asp:TextBox ID="CommentTextBox" runat="server" TextMode="MultiLine"  cssClass="form-control"  placeholder="Введите комментарий к процессу" Height="100px" ></asp:TextBox>
-
-                <br />
-
-                Прикрепление документа(не обязательно)
-                <asp:FileUpload ID="AddStepFileFileUpload" runat="server" Width="532px" />
-
+               
+                
+                <table>
+                    <tr>
+                        <td>
+                            Прикрепление документа(не обязательно)
+                            </td>
+                         <td>
+                            <asp:FileUpload ID="AddStepFileFileUpload" runat="server" Width="532px" />
+                            </td>
+                        </tr>
+                    </table>    
+                                     
                 <asp:Label ID="ExistingDocNameLabel" Visible="true" runat="server" ></asp:Label>
-                <br />
                 <asp:TextBox ID="ExistingDocIdTextBox" CssClass="invisible"  runat="server"></asp:TextBox>
-
                 <br />
-
-                <div class="btn-group float-right">
-                    <br />
-                    <asp:Button ID="RejectButton" runat="server" Text="Отправить на доработку" OnClientClick="javascript:Page_ClientValidate(); if (Page_IsValid==true) if ( confirm('Вы уверены что хотите отправить на доработку?') == true ) {showLoadingScreenWithText('Возвращаем на доработку. Дождитесь завершения процесса!');} else return false;" OnClick="RejectButton_Click" CssClass="btn btn-default"/>
-                    <asp:Button ID="ApproveButton" runat="server" Text="Согласовать" OnClientClick="javascript:Page_ClientValidate(); if (Page_IsValid==true) if ( confirm('Вы уверены что хотите согласовать процесс?') == true ) {showLoadingScreenWithText('Утверждаем процесс. Дождитесь завершения!');} else return false;" OnClick="ApproveButton_Click" CssClass="btn btn-success" />
+                <div> 
+                    <asp:Button ID="RejectButton" runat="server"  Text="Отправить на доработку" OnClientClick="javascript: if (buttonClickValidate()==false) return false; if ( confirm('Вы уверены что хотите отправить на доработку?') == true ) {showLoadingScreenWithText('Возвращаем на доработку. Дождитесь завершения процесса!');} else return false;" OnClick="RejectButton_Click"  CssClass="btn btn-default leftButton"/>
+                    <asp:Button ID="ApproveButton" runat="server" Text="Согласовать" OnClientClick="javascript:if (buttonClickValidate()==false) return false; if ( confirm('Вы уверены что хотите согласовать процесс?') == true ) {showLoadingScreenWithText('Утверждаем процесс. Дождитесь завершения!');} else return false;" OnClick="ApproveButton_Click" CssClass="btn btn-success rightButton" />
                 </div>
             </div>
         </div>

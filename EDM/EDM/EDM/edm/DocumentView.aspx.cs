@@ -11,7 +11,7 @@ namespace EDM.edm
     public partial class DocumentView : System.Web.UI.Page
     {
         LogHandler log = new LogHandler();
-        ProcessMainFucntions main = new ProcessMainFucntions();
+        public ProcessMainFucntions main = new ProcessMainFucntions();
         public Panel GetChooseFromInnerProcessDocumentsPanel(int procId,int userId)
         {
             Panel panelToReturn = new Panel();
@@ -96,7 +96,6 @@ namespace EDM.edm
 
             return panelToReturn;
         }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             var userId = Session["userID"];
@@ -104,24 +103,25 @@ namespace EDM.edm
             {
                 Response.Redirect("~/Default.aspx");
             }
+            int proc;
+            var procIdStr = HttpContext.Current.Session["processID"];
 
+            if (!string.IsNullOrEmpty(Request.QueryString["id"]))
+                HttpContext.Current.Session["processID"] = Request.QueryString["id"];
+
+            if (procIdStr == null)
+                Response.Redirect("Dashboard.aspx");
+
+            int.TryParse(Session["processID"].ToString(), out proc);
             //////////////////////////////////////////////////
-
+            historyDiv.Controls.Add(main.GetHistoryTable(-1, proc));
             if (!Page.IsPostBack)
             {
-                int proc;
-                var procIdStr = HttpContext.Current.Session["processID"];
-
-                if (!string.IsNullOrEmpty(Request.QueryString["id"]))
-                    HttpContext.Current.Session["processID"] = Request.QueryString["id"];
-
-                if (procIdStr == null)
-                        Response.Redirect("Dashboard.aspx");
-
-                int.TryParse(Session["processID"].ToString(), out proc);
+                
 
                 EDMdbDataContext dataContext = new EDMdbDataContext();
-
+                Users initiator = main.GetUserById(main.GetProcessById(proc).fk_initiator);
+                InitiatorLabel.Text = "Инициатор :" + initiator.name + "   " +initiator.@struct;
 
                 bool procHasChild = (main.GetChildProcess(proc, (int) userId) != null);
                 if (procHasChild)
@@ -224,22 +224,8 @@ namespace EDM.edm
 
             }
         }
-
         private void RefreshGrid(EDMdbDataContext dataContext, int procMaxVersion)
-        {
-          /*  List<Documents> documents =
-                (from d in dataContext.Documents where d.fk_processVersion == procMaxVersion && d.active select d)
-                    .ToList();
-                    */
-
-          /*  List<Documents> documents = (from a in dataContext.Documents
-                join b in dataContext.ProcVersionDocsMap
-                    on a.documentID equals b.fk_documents
-                where b.active == true
-                      && a.active == true
-                      && b.fk_processVersion == procMaxVersion
-                select a).ToList();
-                */
+        {       
            var documents = (from a in dataContext.Documents
                          join b in dataContext.ProcVersionDocsMap
                              on a.documentID equals b.fk_documents
@@ -249,6 +235,7 @@ namespace EDM.edm
                          select new {a.documentID,a.documentName,b.documentComment}).ToList();
 
             docGridView.DataSource = documents;
+
 
             BoundField boundField = new BoundField();
             boundField.DataField = "documentID";
@@ -272,10 +259,9 @@ namespace EDM.edm
 
             DataBind();
         }
-
         protected void ApproveButton_Click(object sender, EventArgs e)
         {
-            if (CommentTextBox.Text.Any())
+            //if (CommentTextBox.Text.Any())
             {
             int proc;
             int userId;
@@ -351,16 +337,15 @@ namespace EDM.edm
 
                 HttpContext.Current.Response.Redirect("Dashboard.aspx");
             }
-            else
+           /* else
             {
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Отсутствует комментарий к процессу. Пожалуйста заполните!');</script>");
-            }
+            }*/
 
         }
-
         protected void RejectButton_Click(object sender, EventArgs e)
         {
-            if (CommentTextBox.Text.Any())
+            //if (CommentTextBox.Text.Any())
             {
                 int proc;
                 int userId;
@@ -436,12 +421,11 @@ namespace EDM.edm
 
                 HttpContext.Current.Response.Redirect("Dashboard.aspx");
             }
-            else
+            /*else
             {
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "<script> alert('Отсутствует комментарий к процессу. Пожалуйста заполните!');</script>");
-            }
-        }
-        
+            }*/
+        }       
         protected void docGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "openDocument")
@@ -462,30 +446,21 @@ namespace EDM.edm
                     int procId=-1;
                     int.TryParse(Session["processID"].ToString(), out procId);
                     if (procId < 0) return;
-                    EDMdbDataContext edmDb = new EDMdbDataContext();
-                    string fileName =
+                   // EDMdbDataContext edmDb = new EDMdbDataContext();
+                /*    string fileName =
                      (from a in edmDb.Documents where a.documentID == docId select a.documentName).FirstOrDefault();
                     if (fileName==null)
                     return;
+                    */
                     
-                    string path = HttpContext.Current.Server.MapPath("~/edm/documents/" + procId+"/"+ docId +"/"+ fileName);
-
-                    System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
-                    response.ClearContent();
-                    response.Clear();
-                    response.ContentType = "text/plain";
-                    response.AddHeader("Content-Disposition", "attachment; filename=" + fileName + ";");
-                    response.TransmitFile(path);
-                    response.Flush();
-                    response.End();                  
+                main.DownloadFile(docId);
+              
             }
         }
-
         protected void goBackButton_Click(object sender, EventArgs e)
         {
             HttpContext.Current.Response.Redirect("Dashboard.aspx");
         }
-
         protected void ButtonPrevComment_Click(object sender, EventArgs e)
         {
             bool isPrevCommentShow;
