@@ -243,13 +243,13 @@ namespace EDM.edm
         {
             EDMdbDataContext dc = new EDMdbDataContext();
             Approvment approve = new Approvment();
+            LogHandler log = new LogHandler();
 
             var participantProcessDebt =
                 (from a in dc.Participants where a.active && a.dateEnd < DateTime.Now
                     join b in dc.Processes on a.fk_process equals b.processID
                     where b.active && b.status == 0
                  select new {a.fk_user, a.fk_process, a.participantID}).ToList();
-
 
             foreach (var userProc in participantProcessDebt)
             {
@@ -287,6 +287,7 @@ namespace EDM.edm
                     approve.AddApprove(userProc.fk_user, procMaxVersion,
                         "Процесс согласован автоматически / " + DateTime.Now.ToShortDateString() + " " +
                         DateTime.Now.ToShortTimeString(),2);
+                    log.AddInfo("Автоутверждение процесса: "+process?.processID+" в версии: "+procMaxVersion+", для участника с id = "+ userProc.fk_user);
                 }
 
             }
