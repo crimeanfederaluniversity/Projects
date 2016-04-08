@@ -12,6 +12,7 @@ namespace EDM.edm
 {
     public class EmailFuncs
     {
+        EDMdbDataContext dc = new EDMdbDataContext();
         private int SendMailProcess(string smtpServer, int port, string from, string password,
             string mailto, string caption, string message, string attachFile)
         {
@@ -49,8 +50,7 @@ namespace EDM.edm
                 return 1;
             }
             catch (Exception ex)
-            {
-                
+            {              
                 emailCopy.emailFrom = from;
                 emailCopy.emailTo = mailto;
                 emailCopy.emailTitle = caption;
@@ -61,8 +61,6 @@ namespace EDM.edm
                 emailCopy.errorMessage = ex.ToString();
                 dataContext.EmailCopies.InsertOnSubmit(emailCopy);
                 dataContext.SubmitChanges();
-
-
                 return 0;
             }
 
@@ -95,8 +93,7 @@ namespace EDM.edm
 
             foreach (var ems in emails)
             {
-                if (
-                    SendMailProcess(ems.smtpName, 587, ems.email, ems.password, emailto, caption,
+                if ( SendMailProcess(ems.smtpName, 587, ems.email, ems.password, emailto, caption,
                         messageBuilder.ToString(), attachFile) == 1)
                 {
                     ems.sendOk++;
@@ -111,9 +108,40 @@ namespace EDM.edm
             return errors;
         }
 
+
+        public string EmailContentAutoReplace(string content, int?procId,int? userToSendId)
+        {
+            string tmpResult = content;
+
+            string procName = "";
+            string userName = "";
+
+            if (procId != null)
+            {
+                Processes process = (from a in dc.Processes where a.processID == procId select a).FirstOrDefault();
+                if (process != null)
+                {
+                    procName = process.name;
+                }
+            }
+            if (userToSendId != null)
+            {
+                Users user = (from a in dc.Users where a.userID == userToSendId select a).FirstOrDefault();
+                if (user != null)
+                {
+                    userName = user.name;
+                    
+                }
+            }
+
+            tmpResult = tmpResult.Replace("#linkToWebSite#", " http://edm.cfu-portal.ru/ ");
+            tmpResult = tmpResult.Replace("#userName#",  userName );
+            tmpResult = tmpResult.Replace("#processName#", " " + procName + " ");
+            return tmpResult;
+        }
+
         public void StartProcess(int procId)
         {
-            EDMdbDataContext dc = new EDMdbDataContext();
             int currentQueue = 0;
             int procMaxVersion =
                 (from a in dc.ProcessVersions where a.fk_process == procId && a.active select a)
@@ -121,22 +149,17 @@ namespace EDM.edm
             var steps = (from a in dc.Steps where a.active && a.fk_processVersion == procMaxVersion select a).ToList(); // для AutoAccept() ContinueAccept
 
 
+            Users initiator = (from a in dc.Processes
+                               where a.active && a.processID == procId
+                               join b in dc.Users on a.fk_initiator equals b.userID
+                               select b).FirstOrDefault();
 
-            var initiatorEmail =
-                (from a in dc.Processes
-                    where a.active && a.processID == procId
-                    join b in dc.Users on a.fk_initiator equals b.userID
-                    select b.email).FirstOrDefault();
+                
 
-            string processName = "";
-            Processes process = (from a in dc.Processes where a.processID == procId select a).FirstOrDefault();
-            if (process!=null)
-            {
-                processName = process.name;
-            }
+           
             EmailTemplates etmpInit =
                 (from i in dc.EmailTemplates where i.active && i.name == "youStartedProcess" select i).FirstOrDefault();
-            SendEmail(initiatorEmail, etmpInit.emailTitle, etmpInit.emailContent.Replace("#processName#"," "+ processName+" "), null);
+            SendEmail(initiator.email, etmpInit.emailTitle, EmailContentAutoReplace(etmpInit.emailContent,procId, initiator.userID), null);
 
             if (steps.Count > 0) // для AutoAccept() ContinueAccept
             {       
@@ -158,11 +181,11 @@ namespace EDM.edm
             {
                 foreach (var usrId in participantsZero)
                 {
-                    var userEmail =
-                        (from a in dc.Users where a.active && a.userID == usrId select a.email).FirstOrDefault();
+                    Users user =
+                        (from a in dc.Users where a.active && a.userID == usrId select a).FirstOrDefault();
                     EmailTemplates etmp =
                         (from i in dc.EmailTemplates where i.active && i.name == "yourStep" select i).FirstOrDefault();
-                    SendEmail(userEmail, etmp.emailTitle, etmp.emailContent.Replace("#processName#", processName), null);
+                    SendEmail(user.email, etmp.emailTitle, EmailContentAutoReplace(etmp.emailContent,procId, initiator.userID), null);
                 }
             }
             else
@@ -173,64 +196,46 @@ namespace EDM.edm
         }
 
         public void ApproveProcess(int procId)
-        {
-            EDMdbDataContext dc = new EDMdbDataContext();
-
+        {          
             string processName = "";
-            Processes process = (from a in dc.Processes where a.processID == procId select a).FirstOrDefault();
+           /* Processes process = (from a in dc.Processes where a.processID == procId select a).FirstOrDefault();
             if (process != null)
             {
                 processName = process.name;
             }
-
-            var initiatorEmail =
+            */
+            Users initiator =
                 (from a in dc.Processes
                     where a.active && a.processID == procId
                     join b in dc.Users on a.fk_initiator equals b.userID
-                    select b.email).FirstOrDefault();
+                    select b).FirstOrDefault();
 
             EmailTemplates etmpInit =
                 (from i in dc.EmailTemplates where i.active && i.name == "yourProcessApproved" select i).FirstOrDefault();
-            SendEmail(initiatorEmail, etmpInit.emailTitle, etmpInit.emailContent.Replace("#processName#", processName), null);
+            SendEmail(initiator.email, etmpInit.emailTitle, EmailContentAutoReplace(etmpInit.emailContent, procId,initiator.userID), null);
         }
 
         public void RejectProcess(int procId)
-        {
-            EDMdbDataContext dc = new EDMdbDataContext();
-            string processName = "";
-            Processes process = (from a in dc.Processes where a.processID == procId select a).FirstOrDefault();
-            if (process != null)
-            {
-                processName = process.name;
-            }
-            var initiatorEmail =
+        { 
+            Users initiator =
                 (from a in dc.Processes
                     where a.active && a.processID == procId
                     join b in dc.Users on a.fk_initiator equals b.userID
-                    select b.email).FirstOrDefault();
+                    select b).FirstOrDefault();
 
             EmailTemplates etmpInit =
                 (from i in dc.EmailTemplates where i.active && i.name == "yourProcessCameBack" select i).FirstOrDefault();
-            SendEmail(initiatorEmail, etmpInit.emailTitle, etmpInit.emailContent.Replace("#processName#", processName), null);
+            SendEmail(initiator.email, etmpInit.emailTitle, EmailContentAutoReplace(etmpInit.emailContent,procId, initiator.userID), null);
         }
 
         public void StepApprove(int procId, int userId)
         {
-            EDMdbDataContext dc = new EDMdbDataContext();
-            string processName = "";
-            Processes process = (from a in dc.Processes where a.processID == procId select a).FirstOrDefault();
-            if (process != null)
-            {
-                processName = process.name;
-            }
             // Отправка следующему для serial
             var userEmail =
                 (from a in dc.Users where a.active && a.userID == userId select a.email).FirstOrDefault();
-
             EmailTemplates etmp =
                 (from i in dc.EmailTemplates where i.active && i.name == "yourStep" select i).FirstOrDefault();
-
-            SendEmail(userEmail, etmp.emailTitle, etmp.emailContent.Replace("#processName#", processName), null);
+            SendEmail(userEmail, etmp.emailTitle, EmailContentAutoReplace(etmp.emailContent, procId, userId), null);
         }
     
 
@@ -241,7 +246,6 @@ namespace EDM.edm
 
         public void AutoAccept()
         {
-            EDMdbDataContext dc = new EDMdbDataContext();
             Approvment approve = new Approvment();
             LogHandler log = new LogHandler();
 
@@ -280,8 +284,7 @@ namespace EDM.edm
                             .FirstOrDefault();
 
                     if (userEmail != null)
-                        SendEmail(userEmail, etmp.emailTitle, etmp.emailContent.Replace("#processName#", processName),
-                            null);
+                        SendEmail(userEmail, etmp.emailTitle, EmailContentAutoReplace(etmp.emailContent, userProc.fk_process, userProc.fk_user),null);
 
 
                     approve.AddApprove(userProc.fk_user, procMaxVersion,

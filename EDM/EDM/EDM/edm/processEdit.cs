@@ -15,7 +15,6 @@ namespace EDM.edm
         EDMdbDataContext _edmDb = new EDMdbDataContext();
         public List<TextBox> ExistingParticipants = new List<TextBox>();
         public List<ProcessEdit.Participant> ParticipantsList = new List<ProcessEdit.Participant>();
-
         #region create
 
         
@@ -157,7 +156,6 @@ namespace EDM.edm
 
         }
         #endregion
-
         #region kill
         public void KillDocument(int docId, int versionId)
         {
@@ -186,7 +184,6 @@ namespace EDM.edm
             _edmDb.SubmitChanges();
         }
         #endregion
-
         #region get
         public void GetDocumentClick(object sender, EventArgs e)
         {
@@ -936,7 +933,6 @@ namespace EDM.edm
         }
 
         #endregion
-
         #region set
         public void SetDocumentToVersion(int documentId, int newVersion, string newComment) // раньше меняли просто фк, но теперь есть таблица связи поэтому создадим новую связь
         {
@@ -982,7 +978,6 @@ namespace EDM.edm
             _edmDb.SubmitChanges();
         }
         #endregion
-
         #region check
 
         public bool IsProcessOk(int procId)
@@ -1079,7 +1074,6 @@ namespace EDM.edm
             return WithQueueuByType(currentProc.type);
         }
         #endregion
-
         #region other
         public void AddParticipantClick(object sender, EventArgs e)
         {
@@ -1125,7 +1119,7 @@ namespace EDM.edm
                 where a.processVersionID == step.fk_processVersion
                 select a).FirstOrDefault();
 
-            string path = HttpContext.Current.Server.MapPath("~/edm/documents/" + version.fk_process + "stepsDocs/" + doc.documentsInStepId + "/");
+            string path = HttpContext.Current.Server.MapPath("~/edm/documents/" + version.fk_process + "stepsDocs/" + doc.documentsInStepId + "/"+ doc.documentName);
             //string path = HttpContext.Current.Server.MapPath("~/edm/documents/" + procVersionDocsMap.ProcVersionDocsMapId + "/" + doc.documentID + "/" + doc.documentName);
             System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
             response.ClearContent();

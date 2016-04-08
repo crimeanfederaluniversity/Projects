@@ -48,7 +48,7 @@ namespace EDM.edm
             
             title2.Text = "Документы:";
 
-            RadioButtonList commentsList = new RadioButtonList();
+            CheckBoxList commentsList = new CheckBoxList();
             RadioButtonList docsList = new RadioButtonList();
 
             commentsList.CssClass = "RBL";
@@ -56,11 +56,13 @@ namespace EDM.edm
 
             foreach (Steps curStep in childLastVersionSteps)
             {
-                ListItem newCommentItem = new ListItem();
-                newCommentItem.Text = curStep.comment;
-                newCommentItem.Value = curStep.comment;
-                commentsList.Items.Add(newCommentItem);
-
+                if (curStep.comment.Any())
+                {           
+                    ListItem newCommentItem = new ListItem();
+                    newCommentItem.Text = curStep.comment;
+                    newCommentItem.Value = curStep.comment;
+                    commentsList.Items.Add(newCommentItem);
+                }
                 DocumentsInStep doc = main.GetDocumentInStep(curStep.stepID);
                 if (doc != null)
                 {
