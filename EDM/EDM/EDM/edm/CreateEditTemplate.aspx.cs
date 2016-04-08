@@ -151,8 +151,10 @@ namespace EDM.edm
                 AprrovalTypeLabel.Text = _main.GetProcessTypeNameByType(currentTemplate.type);
                 int submitterId = 0;
                 Int32.TryParse(currentTemplate.fk_submitter.ToString(), out submitterId);
+                int processCharacterId = 0;
+                Int32.TryParse(currentTemplate.fk_processCharacter.ToString(), out processCharacterId);
                 SubmitterDropDown.Items.AddRange(_main.GetSubmittersList(submitterId));
-
+                ProcessCharacterDD.Items.AddRange(_main.GetProcessCharacterList(processCharacterId));
                 AllowChangeProcessCheckBox.Checked = currentTemplate.allowEditProcess;
                 ChooseStructDropDown.Items.AddRange(_main.GetAllStructToDropDown(currentTemplate.fk_struct));
 
@@ -229,12 +231,18 @@ namespace EDM.edm
             int templateId = 0;
             var templateIdSes = Session["ProcessTemplateId"];
             Int32.TryParse(templateIdSes.ToString(), out templateId);
+
             string submitterString = SubmitterDropDown.SelectedValue;
             int submitterId = 0;
             Int32.TryParse(submitterString, out submitterId);
+
+            string processCharacterString = ProcessCharacterDD.SelectedValue;
+            int processCharacterId = 0;
+            Int32.TryParse(processCharacterString, out processCharacterId);
+
             int fkStruct = 2;
             Int32.TryParse(ChooseStructDropDown.SelectedValue, out fkStruct);
-            _main.SetTemplateParams(TemplateNameTextBox.Text, TemplateTitleTextBox.Text, TemplateContentTextBox.Text, templateId, submitterId, fkStruct, AllowChangeProcessCheckBox.Checked);
+            _main.SetTemplateParams(TemplateNameTextBox.Text, TemplateTitleTextBox.Text, TemplateContentTextBox.Text, templateId, submitterId, processCharacterId ,fkStruct, AllowChangeProcessCheckBox.Checked);
 
             #region do participants
             List<ProcessEdit.Participant> participantsToAdd;

@@ -173,6 +173,13 @@
         <div runat="server" id="existingProcessTitleDiv" class="header">
             <asp:Label ID="ProcessIdLabel"  runat="server" Text=""></asp:Label>
         </div>
+             
+             <div runat="server" id="ProcessCharacterDiv" class="input-group-lg">
+                 Тип документа<br />
+         <asp:DropDownList ID="ProcessCharacterDD" runat="server" Height="20px" Width="602px">
+         </asp:DropDownList>
+                 </div>
+             <br />
      <br/>
              <div runat="server" id="submitterDiv" class="input-group-lg">
                    Отправлять по завершению<br />

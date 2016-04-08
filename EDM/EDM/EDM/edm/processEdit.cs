@@ -88,7 +88,7 @@ namespace EDM.edm
 
 
             Processes parentProcess = GetProcessById(parentProcessId);
-            int childProcessId = CreateProcessByType(parentProcess.type, userId, parentProcess.name,/* parentProcess.fk_template*/ null, null);
+            int childProcessId = CreateProcessByType(parentProcess.type, userId, parentProcess.name,/* parentProcess.fk_template*/ null, null, parentProcess.fk_processCharacter);
             Processes childProcess = GetProcessById(childProcessId);
             childProcess.fk_parentProcess = parentProcessId;
             ProcessVersions parentProcessLastVersion = GetProcessVersionsLastVerson(parentProcessId);
@@ -110,10 +110,11 @@ namespace EDM.edm
 
             return childProcess.processID;
         }
-        public int CreateProcessByType(string type, int userId, string name, int? templateId, int? submitter)
+        public int CreateProcessByType(string type, int userId, string name, int? templateId, int? submitter , int? processCharacterid)
         {
             Processes newProcess = new Processes();
             newProcess.fk_submitter = submitter;
+            newProcess.fk_processCharacter = processCharacterid;
             newProcess.active = true;
             newProcess.fk_initiator = userId;
             newProcess.type = type;
@@ -185,6 +186,19 @@ namespace EDM.edm
         }
         #endregion
         #region get
+
+        public ProcessCharacter GetProcessCharacterById(int procCharId)
+        {
+            return (from a in _edmDb.ProcessCharacter
+                    where a.processCharacterId == procCharId
+                    select a).FirstOrDefault();
+        }
+        public List<ProcessCharacter> GetProcessCharactersList()
+        {
+            return (from a in _edmDb.ProcessCharacter
+                where a.active == true
+                select a).ToList();
+        } 
         public void GetDocumentClick(object sender, EventArgs e)
         {
             LinkButton thisButton = (LinkButton)sender;
@@ -767,6 +781,38 @@ namespace EDM.edm
 
             return listToReturn;
         }
+        public ListItem[] GetProcessCharacterList(int selectedId)
+        {
+            List<ProcessCharacter> processCharacters = GetProcessCharactersList();
+
+            ListItem[] listToReturn = new ListItem[processCharacters.Count + 1];
+            int i = 1;
+            bool anySelected = false;
+            foreach (ProcessCharacter currentprocessCharacter in processCharacters)
+            {
+                ListItem newListItem = new ListItem();
+                newListItem.Text = currentprocessCharacter.name;
+                newListItem.Value = currentprocessCharacter.processCharacterId.ToString();
+                if (currentprocessCharacter.processCharacterId == selectedId)
+                {
+                    newListItem.Selected = true;
+                    anySelected = true;
+                }
+                listToReturn[i] = newListItem;
+                i++;
+            }
+
+            ListItem newListItemZero = new ListItem();
+            newListItemZero.Text = "";
+            newListItemZero.Value = "0";
+            if (!anySelected)
+                newListItemZero.Selected = true;
+
+            listToReturn[0] = newListItemZero;
+
+
+            return listToReturn;
+        }
         public ListItem[] GetSubmittersList(int selectedId)
         {
             List<Submitters> submitters = (from a in _edmDb.Submitters
@@ -950,7 +996,13 @@ namespace EDM.edm
             proc.fk_submitter = submitterId;
             _edmDb.SubmitChanges();
         }
-
+        public void SetProcessCharacter(int procId, int? characterId)
+        {
+            Processes proc = GetProcessById(procId);
+            proc.fk_processCharacter = characterId;
+            _edmDb.SubmitChanges();
+        }
+        
         public void SetProcessStatus(int procId, int newStatus)
         {
             Processes proc = GetProcessById(procId);
@@ -958,11 +1010,12 @@ namespace EDM.edm
             _edmDb.SubmitChanges();
         }
 
-        public void SetTemplateParams(string name, string title, string content, int templateId, int submitterId, int fkStruct, bool allowChangeProcess)
+        public void SetTemplateParams(string name, string title, string content, int templateId, int submitterId,int processCharacterId, int fkStruct, bool allowChangeProcess)
         {
             ProcessTemplate currentTemplate = GetProcessTemplateById(templateId);
             currentTemplate.content_ = content;
             currentTemplate.name = name;
+            
             currentTemplate.title = title;
             currentTemplate.allowEditProcess = allowChangeProcess;
             currentTemplate.fk_struct = fkStruct;
@@ -973,6 +1026,15 @@ namespace EDM.edm
             else
             {
                 currentTemplate.fk_submitter = submitterId;
+            }
+
+            if (processCharacterId == 0)
+            {
+                currentTemplate.fk_processCharacter = null;
+            }
+            else
+            {
+                currentTemplate.fk_processCharacter = processCharacterId;
             }
 
             _edmDb.SubmitChanges();

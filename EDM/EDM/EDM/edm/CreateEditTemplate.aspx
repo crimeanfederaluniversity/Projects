@@ -37,6 +37,9 @@
          <br />
          <asp:Label ID="AprrovalTypeLabel" runat="server" Text="Label"></asp:Label>
         <br />
+         Тип документа<br />
+         <asp:DropDownList ID="ProcessCharacterDD" runat="server" Height="20px" Width="602px">
+         </asp:DropDownList>
          <br />
          Отправлять по завершению<br />
          <asp:DropDownList ID="SubmitterDropDown" runat="server" Height="20px" Width="602px">

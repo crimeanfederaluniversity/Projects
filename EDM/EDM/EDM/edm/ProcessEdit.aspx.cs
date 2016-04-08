@@ -568,7 +568,7 @@ namespace EDM.edm
                     SaveAllDiv.Visible = true;
                 }
                 submitterDiv.Visible = true;
-               
+                ProcessCharacterDiv.Visible = true;
                 createNewProcessDiv.Visible = false;
                 existingProcessTitleDiv.Visible = true;
                 ParticipantsDiv.Visible = true;
@@ -581,7 +581,7 @@ namespace EDM.edm
                     canEdit = templ.allowEditProcess;
                 }
                 SubmitterDropDown.Enabled = canEdit;
-
+                ProcessCharacterDD.Enabled = canEdit;
                 commentForVersionDiv.Visible = true;
 
                 ProcessIdLabel.Text = main.GetProcessNameById(processId);
@@ -595,6 +595,7 @@ namespace EDM.edm
             else
             {
                 submitterDiv.Visible = false;
+                ProcessCharacterDiv.Visible = false;
                 commentForVersionDiv.Visible = false;
                 existingProcessTitleDiv.Visible = false;
                 ParticipantsDiv.Visible = false;
@@ -671,7 +672,16 @@ namespace EDM.edm
                 Int32.TryParse(ddSubmitterValue, out tmpId);
             if (tmpId != 0)
                 submitterId = tmpId;
-            int processId = main.CreateProcessByType(ProcessTypeDropDown.SelectedValue, (int)HttpContext.Current.Session["userID"], ProcessNameTextBox.Text,null, submitterId);
+
+
+            int? processCharacterId = null;
+
+            int procId = 0;
+            Int32.TryParse(ProcessCharacterDD.SelectedValue, out procId);
+            if (procId != 0)
+                processCharacterId = procId;
+
+            int processId = main.CreateProcessByType(ProcessTypeDropDown.SelectedValue, (int)HttpContext.Current.Session["userID"], ProcessNameTextBox.Text,null, submitterId, processCharacterId);
             HttpContext.Current.Session["processID"] = processId;
             int participantsCount = 0;
             Int32.TryParse(ParticipantsCountTextBox.Text, out participantsCount);
@@ -682,7 +692,7 @@ namespace EDM.edm
             }
 
             SubmitterDropDown.Items.AddRange(main.GetSubmittersList(0));
-           
+            ProcessCharacterDD.Items.AddRange(main.GetProcessCharacterList(0));
 
 
             Refersh();
@@ -691,10 +701,10 @@ namespace EDM.edm
         {             
             int templateId = Convert.ToInt32(TemplatesDropDownList.SelectedValue);
             ProcessTemplate procTemplate = main.GetProcessTemplateById(templateId);
-            int processId = main.CreateProcessByType(procTemplate.type, (int)HttpContext.Current.Session["userID"], ProcessNameT.Text, templateId,procTemplate.fk_submitter);
+            int processId = main.CreateProcessByType(procTemplate.type, (int)HttpContext.Current.Session["userID"], ProcessNameT.Text, templateId,procTemplate.fk_submitter,procTemplate.fk_processCharacter);
 
             //ProcessTemplate templ = main.GetProcessTemplateById(templateId);
-            main.SetProcessSubmitter(processId, procTemplate.fk_submitter);
+            //main.SetProcessSubmitter(processId, procTemplate.fk_submitter);
             HttpContext.Current.Session["processID"] = processId;
             int participantsCount = 0;
             Int32.TryParse(ParticipantsCountTextBox.Text, out participantsCount);
@@ -708,8 +718,14 @@ namespace EDM.edm
                 ParticipantsList.Add(CreateParticipant(i, 0, templateParticipant.queue.ToString(), "", templateParticipant.fk_user.ToString(), main.GetUserById(templateParticipant.fk_user).name));
                 i++;
             }
-     
-             Refersh();
+
+            Processes proc = main.GetProcessById(processId);
+            SubmitterDropDown.Items.Clear();
+            SubmitterDropDown.Items.AddRange(main.GetSubmittersList(proc.fk_submitter==null?0:(int)proc.fk_submitter));
+            ProcessCharacterDD.Items.Clear();
+            ProcessCharacterDD.Items.AddRange(main.GetProcessCharacterList(proc.fk_processCharacter == null ? 0 : (int)proc.fk_processCharacter));
+
+            Refersh();
         }
         #endregion
         public void RefreshQueueInParticipantsList(bool withQueue)
@@ -760,6 +776,7 @@ namespace EDM.edm
             string submittersDDvalue = SubmitterDropDown.SelectedValue;
             int tmpSubmitterValue = 0;
             Int32.TryParse(submittersDDvalue, out tmpSubmitterValue);
+            //main.SetProcessSubmitter(processId, tmpSubmitterValue == 0?null:tmpSubmitterValue);
             if (tmpSubmitterValue == 0)
             {
                 main.SetProcessSubmitter(processId, null);
@@ -768,6 +785,20 @@ namespace EDM.edm
             {
                 main.SetProcessSubmitter(processId, tmpSubmitterValue);
             }
+
+            string processCharacterDDvalue = ProcessCharacterDD.SelectedValue;
+            int tmpProcCharacter = 0;
+            Int32.TryParse(processCharacterDDvalue, out tmpProcCharacter);
+            if (tmpProcCharacter == 0)
+            {
+                main.SetProcessCharacter(processId, null);
+            }
+            else
+            {
+                main.SetProcessCharacter(processId, tmpProcCharacter);
+            }
+
+
             int tmp = (from a in ParticipantsList
                 join b in ParticipantsList
                     on a.ParticipantTextBox.Text equals b.ParticipantTextBox.Text
@@ -933,14 +964,9 @@ namespace EDM.edm
             int iii = 0;
             foreach (DocumentsClass document in documentsToUpdateVersion)
             {
-
                 main.SetDocumentToVersion(document.DocumentId, processVersionId, documentsToUpdateComment[iii].DocumentCommentTextBox.Text);
                 iii++;
             }
-
-            
-            //List<Participant> oldParticipants = main.GetParticipantsListInProcess(processId);
-
             foreach (DocumentsClass document in documentsToAdd)
             {
                 FileUpload currentFileUpload = document.DocumentFileUpload;
@@ -1051,23 +1077,22 @@ namespace EDM.edm
                         i++;
                     }
 
-                  //  int submitterId = 0;
-                  //  Int32.TryParse(main.GetProcessById(processId).fk_submitter.ToString(), out submitterId);
-                   // SubmitterDropDown.Items.AddRange(main.GetSubmittersList(submitterId));
 
                     DocumentsList = GetDocumentsInProcess(processId);
                     commentForVersionTextBox.Text = main.GetCommentForLastVersion(processId);
 
                     int submitterId = 0;
                     Int32.TryParse(main.GetProcessById(processId).fk_submitter.ToString(), out submitterId);
+                    int procCharId = 0;
+                    Int32.TryParse(main.GetProcessById(processId).fk_processCharacter.ToString(), out procCharId);
                     SubmitterDropDown.Items.Clear();
                     SubmitterDropDown.Items.AddRange(main.GetSubmittersList(submitterId));
+                    ProcessCharacterDD.Items.Clear();
+                    ProcessCharacterDD.Items.AddRange(main.GetProcessCharacterList(procCharId));
 
                 }
                 else
                 {
-                    
-                  //  SubmitterDropDown.Items.AddRange(main.GetSubmittersList(0));
                 }
             }
 

@@ -14,6 +14,13 @@ namespace EDM.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            var userId = Session["userID"];
+            if (userId != null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+
         }
 
         protected void LogIn(object sender, EventArgs e)

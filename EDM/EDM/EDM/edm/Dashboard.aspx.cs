@@ -687,11 +687,19 @@ namespace EDM.edm
                     int.TryParse(Session["userID"].ToString(), out userId);
                     int id = e.Row.RowIndex;
                     EDMdbDataContext dc = new EDMdbDataContext();
+                    Processes proc = main.GetProcessById(procId);
+                    string procCharacterName = proc.fk_processCharacter == null
+                        ? ""
+                        : main.GetProcessCharacterById((int) proc.fk_processCharacter).name;
+
+                    
 
                     #region Исходящие
                     if (direction == 0)
                     {
-                        
+                        if (procCharacterName.Any())
+                            e.Row.Cells[1].Text = "(" + procCharacterName + ")<br />" + e.Row.Cells[1].Text;
+
                         Button btnDel = (Button) e.Row.Cells[9].Controls[0];
                         Button printButton = (Button)e.Row.Cells[8].Controls[0];
                         Button btnStart = (Button) e.Row.Cells[7].Controls[0];
@@ -712,6 +720,8 @@ namespace EDM.edm
 
                         printButton.Enabled = false;
 
+                     //   if (procCharacterName.Any())
+                     //       e.Row.Cells[1].Text = "("+ procCharacterName + ")<br />"+ e.Row.Cells[1].Text;
 
                         if (e.Row.Cells[3].Text.Equals("Согласован и Утвержден"))
                         {
@@ -827,6 +837,7 @@ namespace EDM.edm
 
                     #region Входящие
 
+
                     if (direction == 1)
                     {
                         int processId;
@@ -841,6 +852,9 @@ namespace EDM.edm
                         Button subApproval = (Button)e.Row.Cells[6].Controls[0];
                         subApproval.OnClientClick = "javascript: if (confirm('Вы хотите создать внутреннее согласование?') == true) {__doPostBack('ctl00$MainContent$dashGridView','SubApprove$" +
                             id + "'); showSimpleLoadingScreen(); } else return false";
+
+                        if (procCharacterName.Any())
+                            e.Row.Cells[2].Text = "(" + procCharacterName + ")<br />" + e.Row.Cells[2].Text;
 
                         #region Colorfull
                         if (date.Day <= DateTime.Now.Day && date.Month <= DateTime.Now.Month && date.Year<= DateTime.Now.Year)
@@ -912,6 +926,13 @@ namespace EDM.edm
                     }
 
                     #endregion Входящие
+                    #region
+                    if (direction == 2)
+                    {
+                        if (procCharacterName.Any())
+                            e.Row.Cells[2].Text = "(" + procCharacterName + ")<br />" + e.Row.Cells[2].Text;
+                    }
+                    #endregion
                 }
             }
 
