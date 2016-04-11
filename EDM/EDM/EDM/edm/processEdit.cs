@@ -259,11 +259,11 @@ namespace EDM.edm
                         ForeColor = Color.Green
                     });
 
-                    /*docLinkCell.Controls.Add(new Label()
+                    docLinkCell.Controls.Add(new Label()
                     {
                         Text = "<br/>" + "(" + _edmDb.Users.Where(u => u.userID == document.userDownload && u.active).Select(u => u.name).FirstOrDefault() + ")",
                         ForeColor = Color.Black
-                    });*/
+                    });
                     docTableRow.Cells.Add(docLinkCell);
                     docTableRow.Cells.Add(docCommentTableCell);
                     docTable.Rows.Add(docTableRow);
