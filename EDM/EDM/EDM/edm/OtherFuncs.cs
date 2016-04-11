@@ -146,7 +146,7 @@ namespace EDM.edm
                     return result;
         }
 
-        public void DocAddmd5(int docId, string path)
+        public void DocAddmd5AndUser(int docId, string path, int user)
         {
             Documents doc = (from a in dc.Documents where a.active && a.documentID == docId select a).FirstOrDefault();
 
@@ -157,6 +157,7 @@ namespace EDM.edm
                     using (var stream = File.OpenRead(path))
                     {
                     doc.md5= BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
+                    doc.userDownload = user;
                     }
                 }
                 dc.SubmitChanges();

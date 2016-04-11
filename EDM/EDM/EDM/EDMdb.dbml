@@ -42,6 +42,7 @@
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="documentComment" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="md5" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="userDownload" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Documents_ProcVersionDocsMap" Member="ProcVersionDocsMap" ThisKey="documentID" OtherKey="fk_documents" Type="ProcVersionDocsMap" />
     </Type>
   </Table>

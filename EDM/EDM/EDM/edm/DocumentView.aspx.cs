@@ -328,7 +328,7 @@ namespace EDM.edm
                             Directory.CreateDirectory(directoryToSave);
                         }
                         AddStepFileFileUpload.SaveAs(directoryToSave + AddStepFileFileUpload.FileName);
-                        of.DocAddmd5(docId, directoryToSave + AddStepFileFileUpload.FileName);
+                        of.DocAddmd5AndUser(docId, directoryToSave + AddStepFileFileUpload.FileName, userId);
                     }
                     catch (Exception ex)
                     {

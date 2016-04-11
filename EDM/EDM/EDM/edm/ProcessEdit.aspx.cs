@@ -1002,7 +1002,7 @@ namespace EDM.edm
                         //if (currentFileUpload.PostedFile.ContentLength < 380000000)
                         {
                             currentFileUpload.SaveAs(directoryToSave + currentFileUpload.FileName);
-                            of.DocAddmd5(docId, directoryToSave + currentFileUpload.FileName);
+                            of.DocAddmd5AndUser(docId, directoryToSave + currentFileUpload.FileName, userId);
                         }
                        // else
                        /* else

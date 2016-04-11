@@ -1083,6 +1083,8 @@ namespace EDM
 		
 		private string _md5;
 		
+		private System.Nullable<int> _userDownload;
+		
 		private EntitySet<ProcVersionDocsMap> _ProcVersionDocsMap;
 		
     #region Extensibility Method Definitions
@@ -1099,6 +1101,8 @@ namespace EDM
     partial void OndocumentCommentChanged();
     partial void Onmd5Changing(string value);
     partial void Onmd5Changed();
+    partial void OnuserDownloadChanging(System.Nullable<int> value);
+    partial void OnuserDownloadChanged();
     #endregion
 		
 		public Documents()
@@ -1203,6 +1207,26 @@ namespace EDM
 					this._md5 = value;
 					this.SendPropertyChanged("md5");
 					this.Onmd5Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_userDownload", DbType="Int")]
+		public System.Nullable<int> userDownload
+		{
+			get
+			{
+				return this._userDownload;
+			}
+			set
+			{
+				if ((this._userDownload != value))
+				{
+					this.OnuserDownloadChanging(value);
+					this.SendPropertyChanging();
+					this._userDownload = value;
+					this.SendPropertyChanged("userDownload");
+					this.OnuserDownloadChanged();
 				}
 			}
 		}
