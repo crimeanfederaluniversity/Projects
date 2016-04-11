@@ -70,7 +70,6 @@ namespace EDM.edm
 
             
         }
-
         public int SendEmail(string emailto, string caption, string message, string attachFile)
         {
             int errors = 0;
@@ -107,20 +106,20 @@ namespace EDM.edm
 
             return errors;
         }
-
-
         public string EmailContentAutoReplace(string content, int?procId,int? userToSendId)
         {
             string tmpResult = content;
-
+            ProcessMainFucntions main = new ProcessMainFucntions();
             string procName = "";
             string userName = "";
-
+            string sexName = "ый(ая)";
+            string initiatorName = "";
             if (procId != null)
             {
                 Processes process = (from a in dc.Processes where a.processID == procId select a).FirstOrDefault();
                 if (process != null)
                 {
+                    initiatorName = main.GetUserById(process.fk_initiator).name;
                     procName = process.name;
                 }
             }
@@ -129,17 +128,25 @@ namespace EDM.edm
                 Users user = (from a in dc.Users where a.userID == userToSendId select a).FirstOrDefault();
                 if (user != null)
                 {
-                    userName = user.name;
-                    
+                    if (user.sex == false)
+                    {
+                        sexName = "ый";
+                    }
+                    else
+                    {
+                        sexName = "ая";
+                    }
+                    userName = main.GetOnlyIONameById((int)userToSendId);               
                 }
             }
 
             tmpResult = tmpResult.Replace("#linkToWebSite#", " http://edm.cfu-portal.ru/ ");
             tmpResult = tmpResult.Replace("#userName#",  userName );
+            tmpResult = tmpResult.Replace("#pol#", sexName);
+            tmpResult = tmpResult.Replace("#initiator#",  "инициатор - "+initiatorName);
             tmpResult = tmpResult.Replace("#processName#", " " + procName + " ");
             return tmpResult;
         }
-
         public void StartProcess(int procId)
         {
             int currentQueue = 0;
@@ -185,7 +192,7 @@ namespace EDM.edm
                         (from a in dc.Users where a.active && a.userID == usrId select a).FirstOrDefault();
                     EmailTemplates etmp =
                         (from i in dc.EmailTemplates where i.active && i.name == "yourStep" select i).FirstOrDefault();
-                    SendEmail(user.email, etmp.emailTitle, EmailContentAutoReplace(etmp.emailContent,procId, initiator.userID), null);
+                    SendEmail(user.email, etmp.emailTitle, EmailContentAutoReplace(etmp.emailContent,procId, user.userID), null);
                 }
             }
             else
@@ -194,7 +201,6 @@ namespace EDM.edm
             }
 
         }
-
         public void ApproveProcess(int procId)
         {          
             string processName = "";
@@ -214,7 +220,6 @@ namespace EDM.edm
                 (from i in dc.EmailTemplates where i.active && i.name == "yourProcessApproved" select i).FirstOrDefault();
             SendEmail(initiator.email, etmpInit.emailTitle, EmailContentAutoReplace(etmpInit.emailContent, procId,initiator.userID), null);
         }
-
         public void RejectProcess(int procId)
         { 
             Users initiator =
@@ -227,7 +232,6 @@ namespace EDM.edm
                 (from i in dc.EmailTemplates where i.active && i.name == "yourProcessCameBack" select i).FirstOrDefault();
             SendEmail(initiator.email, etmpInit.emailTitle, EmailContentAutoReplace(etmpInit.emailContent,procId, initiator.userID), null);
         }
-
         public void StepApprove(int procId, int userId)
         {
             // Отправка следующему для serial
@@ -237,13 +241,10 @@ namespace EDM.edm
                 (from i in dc.EmailTemplates where i.active && i.name == "yourStep" select i).FirstOrDefault();
             SendEmail(userEmail, etmp.emailTitle, EmailContentAutoReplace(etmp.emailContent, procId, userId), null);
         }
-    
-
         public void StepReject(int procId, int userId)
         {
             //// не вижу смысла так спамить :)
         }
-
         public void AutoAccept()
         {
             Approvment approve = new Approvment();

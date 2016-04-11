@@ -187,6 +187,28 @@ namespace EDM.edm
         #endregion
         #region get
 
+        public string GetOnlyIONameById(int userId)
+        {
+            Users user = GetUserById(userId);
+            string name = user.name.Trim();
+            List<string> tmp = name.Split(' ').ToList();
+            tmp[0] = "";
+            name=String.Join(" ",tmp).Trim();
+            return name;
+        }
+
+        public string GetShortFIONameById(int userId)
+        {
+            Users user = GetUserById(userId);
+            string name = user.name.Trim();
+            List<string> tmp = name.Split(' ').ToList();
+            for (int i = 1; i < tmp.Count; i++)
+            {
+                tmp[i] = tmp[i].Trim()[0] + ".";
+            }
+            name = String.Join(" ", tmp).Trim();
+            return name;
+        }
         public ProcessCharacter GetProcessCharacterById(int procCharId)
         {
             return (from a in _edmDb.ProcessCharacter
