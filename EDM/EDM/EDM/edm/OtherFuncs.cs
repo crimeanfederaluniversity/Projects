@@ -220,5 +220,15 @@ namespace EDM.edm
 
             return dates;
         }
+
+        public int GetSecToRefresh()
+        {
+
+            var now = DateTime.Now;
+            var nownext = new DateTime(now.Year,now.Month,now.Day,17,1,0);
+            var next = new DateTime(now.AddDays(1).Year, now.AddDays(1).Month,now.AddDays(1).Day,17,1,0);
+
+            return now.Hour < 17 ? (int)(nownext - now).TotalSeconds : (int)(next - now).TotalSeconds;
+        }
     }
 }
