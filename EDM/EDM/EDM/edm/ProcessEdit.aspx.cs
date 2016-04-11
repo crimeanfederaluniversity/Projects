@@ -269,6 +269,13 @@ namespace EDM.edm
             {
                 return participantsTable;
             }
+
+            bool canChangeParticipant = canEdit;
+            if (main.IsAnyStepInProcess(processId))
+            {
+                canChangeParticipant = false;
+            }
+
             bool withQueu = main.WithQueueByProcess(processId);
             int participantsCount = ParticipantsList.Count;
 
@@ -366,12 +373,13 @@ namespace EDM.edm
                     participentCell.Controls.Add(ParticipantsList[i].ParticipantUserNameValidator);
 
                     Button openPunelButton = new Button();
-                    openPunelButton.Enabled = canEdit;
+                    //openPunelButton.Enabled = canEdit;
                     int rowId = i;
                     string tmpstr = ParticipantsList[i].ParticipantNameTextBox.ID.Replace("ParticipentNameTextBox", "");
                     Int32.TryParse(tmpstr, out rowId);
 
                     openPunelButton.Text = "Выбрать";
+                    openPunelButton.Enabled = canChangeParticipant;
                     openPunelButton.OnClientClick = "document.getElementById('MainContent_chooseUserPanel" +
                                                     rowId.ToString() +
                                                     "').style.visibility = 'visible'; return false; ";
@@ -383,9 +391,9 @@ namespace EDM.edm
                     participantRow.Cells.Add(participentCell);
 
                     TableCell deleteParticipentCell = new TableCell();
-
+                    
                     Button deleteParticipentButton = new Button();
-                    deleteParticipentButton.Enabled = canEdit;
+                    deleteParticipentButton.Enabled = canChangeParticipant;
                     deleteParticipentButton.CausesValidation = false;
                     deleteParticipentButton.Text = "Удалить";
                     deleteParticipentButton.CommandArgument = rowId.ToString();

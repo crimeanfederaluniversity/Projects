@@ -1146,6 +1146,16 @@ namespace EDM.edm
                 return !isDayOff;
             }
         }
+
+        public bool IsAnyStepInProcess(int procId)
+        {
+           return (from a in _edmDb.ProcessVersions
+                where a.fk_process == procId
+                join b in _edmDb.Steps
+                    on a.processVersionID equals b.fk_processVersion
+                where b.active == true
+                select b).Any();
+        }
         public bool WithQueueuByType(string type)
         {
             if (type == "serial")
