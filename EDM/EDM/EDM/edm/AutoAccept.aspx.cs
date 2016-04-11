@@ -13,11 +13,11 @@ namespace EDM.edm
         protected void Page_Load(object sender, EventArgs e)
         {
             // ТОЛЬКО АДМИН!!
-            var userId = Session["userID"];
+          /*  var userId = Session["userID"];
             if (userId == null)
             {
                 Response.Redirect("~/Default.aspx");
-            }
+            }*/
             //////////////////////////////////////////////////
 
             EmailFuncs ef = new EmailFuncs();
