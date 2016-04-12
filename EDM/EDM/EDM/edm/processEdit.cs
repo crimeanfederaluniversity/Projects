@@ -80,15 +80,12 @@ namespace EDM.edm
 
             return newDocument.documentsInStepId;
         }
-        public int CreateChildProcess(int parentProcessId)
+        public int CreateChildProcess(int parentProcessId, string procType)
         {
-
             int userId;
             int.TryParse(HttpContext.Current.Session["userID"].ToString(), out userId);
-
-
             Processes parentProcess = GetProcessById(parentProcessId);
-            int childProcessId = CreateProcessByType(parentProcess.type, userId, parentProcess.name,/* parentProcess.fk_template*/ null, null, parentProcess.fk_processCharacter);
+            int childProcessId = CreateProcessByType(procType,userId,parentProcess.name,null,null,parentProcess.fk_processCharacter);
             Processes childProcess = GetProcessById(childProcessId);
             childProcess.fk_parentProcess = parentProcessId;
             ProcessVersions parentProcessLastVersion = GetProcessVersionsLastVerson(parentProcessId);

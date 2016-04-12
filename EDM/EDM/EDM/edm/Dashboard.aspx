@@ -1,49 +1,78 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"  CodeBehind="Dashboard.aspx.cs" Inherits="EDM.edm.Dashboard" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" EnableEventValidation="false" AutoEventWireup="true"  CodeBehind="Dashboard.aspx.cs" Inherits="EDM.edm.Dashboard" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <style type="text/css">
-    .top_panel {
-    position:fixed;
-    left:0;
-    top:3.5em;
-    width:100%;
-    height:30px;
-    background-color:#70463A !important;
-    z-index:10;
-    color:#05ff01;  
-    padding-top:5px;
-    font-weight:bold;
-}
-   #md5check{
-	width : 300px;
-	height : 120px;
-	position : fixed; 
-	z-index : 50;
-	top : 20%; 
-	left : 42%;	
+        
+        .innerSubmitionFixed {
+            width : 315px;
+            height : 120px;
+            position : fixed; 
+            z-index : 51;
+            top : 40%; 
+            left : 40%;	
+            border : 2px solid;
+            border-radius: 10px;
+            background: grey;
+            padding: 5px;
+            visibility: hidden;
+        }
+         .top_panel {
+             position:fixed;
+             left:0;
+             top:3.5em;
+             width:100%;
+             height:30px;
+             background-color:#70463A !important;
+             z-index:10;
+             color:#05ff01;  
+             padding-top:5px;
+             font-weight:bold;
+         }
+        #md5check{
+            width : 300px;
+            height : 120px;
+            position : fixed; 
+            z-index : 50;
+            top : 20%; 
+            left : 42%;	
 
-	border : 2px solid;
-	border-radius: 10px;
+            border : 2px solid;
+            border-radius: 10px;
 	
-	padding: 5px;
-}
-   #coomentEndP{
-	width : 900px;
-	height : 372px;
-	position : fixed; 
-	z-index : 50;
-	top : 20%; 
-	left : 30%;	
+            padding: 5px;
+        }
+        #coomentEndP{
+            width : 900px;
+            height : 372px;
+            position : fixed; 
+            z-index : 50;
+            top : 20%; 
+            left : 30%;	
 
-	border : 2px solid;
-	border-radius: 10px;
+            border : 2px solid;
+            border-radius: 10px;
 	
-	padding: 5px;
-}
-         .button_right 
-   {
-       float:right
-   } 
-</style> 
+            padding: 5px;
+        }
+        .button_right 
+        {
+            float:right
+        }
+    </style> 
+    
+    <script>
+        rowId = 0;
+    </script>
+
+    <div runat="server" id="fixedPanelNewSub" class="innerSubmitionFixed">
+        
+        <asp:DropDownList ID="ProcessTypeDropDown" runat="server" Width="300" Height="30" AutoPostBack="False" CssClass="form-control">
+                <asp:ListItem Value="parallel">Параллельное согласование</asp:ListItem>
+                <asp:ListItem Value="serial">Последовательное согласование</asp:ListItem>
+                <asp:ListItem Value="review">Рецензия</asp:ListItem>
+            </asp:DropDownList>
+        <asp:Button ID="createSubProcessButton" Width="300" Height="30" runat="server" Text="Создать" OnClientClick=" __doPostBack('ctl00$MainContent$dashGridView','SubApprove$'+rowId); return false;" />
+        <asp:Button ID="cancelSubProcessButton" Width="300" Height="30" runat="server" Text="Отмена" OnClientClick="document.getElementById('MainContent_fixedPanelNewSub').style.visibility='hidden';  return false;" />
+        </div>
     <br/><br/>
     <div id="coomentEndP" style="visibility: hidden; background-color: blanchedalmond">
         <asp:Panel runat="server" ID="comment_panel" Visible="true">

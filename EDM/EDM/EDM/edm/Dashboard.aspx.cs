@@ -14,7 +14,7 @@ namespace EDM.edm
     public partial class Dashboard : System.Web.UI.Page
     {
         LogHandler log = new LogHandler();
-        ProcessMainFucntions main = new ProcessMainFucntions();
+        ProcessMainFucntions main = new ProcessMainFucntions();   
         [Serializable]
         public class DataOne
         {
@@ -35,7 +35,8 @@ namespace EDM.edm
             public int Queue { get; set; }
         }
         protected void Page_Load(object sender, EventArgs e)
-        {
+
+        {   
             var userId = Session["userID"];
             if (userId == null)
             {
@@ -320,7 +321,7 @@ namespace EDM.edm
                 coluButtonField2.ControlStyle.CssClass = "btn btn-default";
                 gridView.Columns.Add(coluButtonField2);
 
-                DataBind();
+                DataBind();        
             }
             #endregion
 
@@ -551,7 +552,9 @@ namespace EDM.edm
 
 
 
-           int  idProcess = Convert.ToInt32(dashGridView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[0].Text);
+            int  idProcess = Convert.ToInt32(dashGridView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[0].Text);
+
+
 
                 switch (e.CommandName)
 
@@ -596,12 +599,8 @@ namespace EDM.edm
                     break;
                     case "SubApprove":
                     {
-                        // ProcessMainFucntions proc = new ProcessMainFucntions();
-                        Session["processID"] = main.CreateChildProcess(idProcess);
-
+                        Session["processID"] = main.CreateChildProcess(idProcess, ProcessTypeDropDown.SelectedValue);
                         log.AddInfo("Создан дочерний процесс с id " + (int)Session["processID"] + ", родительский id = " + idProcess+";");
-
-                        //Session["SubApprove"];
                         Response.Redirect("ProcessEdit.aspx");
                     }
                         break;
@@ -834,27 +833,23 @@ namespace EDM.edm
 
                     }
                     #endregion Исходящие
-
                     #region Входящие
-
-
                     if (direction == 1)
                     {
                         int processId;
                         DateTime date;
                         int.TryParse(e.Row.Cells[0].Text, out processId);
                         DateTime.TryParse(e.Row.Cells[3].Text, out date);
-
                         Button btnMore = (Button)e.Row.Cells[5].Controls[0];
                         btnMore.OnClientClick = "javascript: __doPostBack('ctl00$MainContent$dashGridView','ButtonR1$" +
                             id + "'); showSimpleLoadingScreen(); ";
-
                         Button subApproval = (Button)e.Row.Cells[6].Controls[0];
-                        subApproval.OnClientClick = "javascript: if (confirm('Вы хотите создать внутреннее согласование?') == true) {__doPostBack('ctl00$MainContent$dashGridView','SubApprove$" +
-                            id + "'); showSimpleLoadingScreen(); } else return false";
-
+                        #region 
+                        subApproval.OnClientClick =
+                            "rowId=" + e.Row.RowIndex + "; document.getElementById('MainContent_fixedPanelNewSub').style.visibility='visible'; return false;";
+                        #endregion
                         if (procCharacterName.Any())
-                            e.Row.Cells[2].Text = "(" + procCharacterName + ")<br />" + e.Row.Cells[2].Text;
+                            e.Row.Cells[1].Text = "(" + procCharacterName + ")<br />" + e.Row.Cells[1].Text;
 
                         #region Colorfull
                         if (date.Day <= DateTime.Now.Day && date.Month <= DateTime.Now.Month && date.Year<= DateTime.Now.Year)
@@ -907,6 +902,7 @@ namespace EDM.edm
                         #endregion
 
                         #region InitiatorName + toolTip
+
 
                         var toltipData = (from u in dc.Users
                                           where u.active && u.userID == Convert.ToInt32(e.Row.Cells[2].Text)
@@ -1016,5 +1012,15 @@ namespace EDM.edm
         {
             Response.Redirect("ProcessStarterPage.aspx");
         }
+
+        protected void createSubProcessButton_Click(object sender, EventArgs e)
+        {
+            Button button = (Button) sender;
+            int idProcess = 0;
+            Int32.TryParse(button.CommandArgument, out idProcess);
+            Session["processID"] = main.CreateChildProcess(idProcess, ProcessTypeDropDown.SelectedValue);
+            log.AddInfo("Создан дочерний процесс с id " + (int)Session["processID"] + ", родительский id = " + idProcess + ";");
+            Response.Redirect("ProcessEdit.aspx");
+        } 
     }
 }

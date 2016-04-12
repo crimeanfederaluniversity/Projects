@@ -185,7 +185,6 @@ namespace EDM.edm
         }
         public Table GetSearchResults(string searchText, int rowId)
         {
-
             Table tableToReturn = new Table();
             TableHeaderRow headerRow = new TableHeaderRow();
             TableHeaderCell headercell1 = new TableHeaderCell();
@@ -200,13 +199,10 @@ namespace EDM.edm
             TableHeaderCell headercell4 = new TableHeaderCell();
             headercell2.Text = "Выбрать";
             headerRow.Cells.Add(headercell4);
-
             List<Users> users = main.GetUsersBySearch(searchText);
             foreach (Users user in users)
             {
-
                 TableRow userRow = new TableRow();
-
                 TableCell cell1 = new TableHeaderCell();
                 cell1.Text = user.name;
                 userRow.Cells.Add(cell1);
@@ -216,13 +212,10 @@ namespace EDM.edm
                 TableCell cell3 = new TableHeaderCell();
                 cell3.Text = user.@struct;
                 userRow.Cells.Add(cell3);
-
                 TableCell cell4 = new TableHeaderCell();
                 Button chooseButton = new Button();
-
                 chooseButton.Text = "Выбрать";
                 chooseButton.OnClientClick = "document.getElementById('MainContent_ParticipentIdTextBox" + rowId.ToString() + "').value = " + user.userID + "; " +
-
                                              "document.getElementById('MainContent_ParticipentNameTextBox" + rowId.ToString() + "').value = '" + user.name + " " + user.@struct + "'; " +
                                              "document.getElementById('MainContent_chooseUserPanel" + rowId + "').style.visibility = 'hidden';  return false; ";
                 //chooseButton.CssClass = "btn btn-default float-right";

@@ -13,6 +13,42 @@ namespace EDM.edm {
     public partial class Dashboard {
         
         /// <summary>
+        /// fixedPanelNewSub control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl fixedPanelNewSub;
+        
+        /// <summary>
+        /// ProcessTypeDropDown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ProcessTypeDropDown;
+        
+        /// <summary>
+        /// createSubProcessButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button createSubProcessButton;
+        
+        /// <summary>
+        /// cancelSubProcessButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button cancelSubProcessButton;
+        
+        /// <summary>
         /// comment_panel control.
         /// </summary>
         /// <remarks>
