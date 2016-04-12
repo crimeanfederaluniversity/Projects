@@ -959,8 +959,8 @@ namespace EDM.edm
            
             int processVersionId = main.CreateNewProcessVersion(processId, commentForVersionTextBox.Text, newVersion, "Новая версия процесса");
 
-            Approvment approvment = new Approvment();
-            approvment.ContinueApprove(processId);
+            //Approvment approvment = new Approvment();
+            //approvment.ContinueApprove(processId);
 
             int iii = 0;
             foreach (DocumentsClass document in documentsToUpdateVersion)
