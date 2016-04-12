@@ -25,17 +25,17 @@ namespace EDM.edm
             EmailFuncs ef = new EmailFuncs();
             OtherFuncs of = new OtherFuncs();
 
-            HtmlMeta meta = new HtmlMeta();
-            meta.Name = "refreshpage";
-            meta.HttpEquiv = "refresh";
-            meta.Content = of.GetSecToRefresh().ToString();
-            MetaPlaceHolder.Controls.Add(meta);
-
             if (!Page.IsPostBack)
             {
 
                 ef.AutoAccept();
             }
+
+            HtmlMeta meta = new HtmlMeta();
+            meta.Name = "refreshpage";
+            meta.HttpEquiv = "refresh";
+            meta.Content = of.GetSecToRefresh().ToString();
+            MetaPlaceHolder.Controls.Add(meta);
         }
     }
 }

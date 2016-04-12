@@ -13,6 +13,9 @@
     <div>
    
     
+        <asp:Label ID="Label1" runat="server" Text="НЕ ЗАКРЫВАТЬ НЕ ПРИКАКИХ ОБСТОЯТЕЛЬСТВАХ!"></asp:Label>
+   
+    
     </div>
     </form>
 </body>
