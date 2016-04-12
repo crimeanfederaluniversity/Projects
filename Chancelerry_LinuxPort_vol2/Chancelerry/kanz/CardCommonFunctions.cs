@@ -22,6 +22,13 @@ namespace Chancelerry.kanz
         public double Weight { get; set; }
     }
 
+    public class PrintManyParams
+    {
+        public int RegisterId { get; set; }
+        public int Version { get; set; }
+        public int CardId { get; set; }
+    }
+
     public class CardCommonFunctions
     {
 
@@ -29,6 +36,10 @@ namespace Chancelerry.kanz
         private TableActions ta = new TableActions();
         private ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
 
+        public CollectedCards GetCardById(int cardId)
+        {
+            return (from a in chancDb.CollectedCards where a.CollectedCardID == cardId select a).FirstOrDefault();
+        }
         public List<Registers> GetAllRegistersForUser(int userId)
         {
             List<Registers> registers = (from rum in chancDb.RegistersUsersMap
@@ -506,12 +517,44 @@ namespace Chancelerry.kanz
 
     public class StatisticsClass
     {
+        private List<CollectedFieldsValues> valuesList;
+
         private ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
         public List<CollectedFieldsValues> GetAllCollectedForFieldInDateRange(int registerId, int fieldToGetId,
-            int dateFieldId, DateTime startDate, DateTime endDate)
+            int dateFieldId, DateTime startDate, DateTime endDate, int fieldToSearchInId, string searchValue)
         {
             List<int> allCards = GetCardsWhereDateFieldInRange(dateFieldId, registerId, startDate, endDate);
-            return GetLastValuesListInCards(allCards,registerId, fieldToGetId);
+            return GetLastValuesListInCardsWithFilter(allCards,registerId, fieldToGetId, fieldToSearchInId, searchValue);
+        }
+
+        private CollectedFieldsValues GetLastValueInCardEndField(int fieldId, int cardId)            
+        {
+            List<CollectedFieldsValues> tmp = (from a in valuesList
+                                               where a.FkCollectedCard == cardId
+                                                     && a.FkField == fieldId
+                                                     && a.Active
+                                               select a).ToList();
+            if (tmp.Count == 0) return null; // Почему оно ноль??
+            int maxInstance = (from a in tmp select a.Instance).Max();
+            for (int i = 0; i < maxInstance + 1; i++)
+            {
+                List<CollectedFieldsValues> tmp1 = (from a in tmp where a.Instance == i select a).OrderByDescending(mc => mc.Version).ToList();
+                CollectedFieldsValues tmp2 = new CollectedFieldsValues();
+                if (tmp1.Count > 0)
+                {
+                    tmp2 = (from a in tmp1 select a).FirstOrDefault();
+                }
+                else
+                {
+                    continue;
+                }
+                if (tmp2 == null)
+                    continue;
+                if (tmp2.IsDeleted)
+                    continue;
+                return tmp2;
+            }
+            return null;
         }
         private List<int> GetCardsWhereDateFieldInRange(int fieldId, int registerId, DateTime startDate, DateTime endDate)
         {
@@ -548,45 +591,36 @@ namespace Chancelerry.kanz
             listToReturn = listToReturn.Distinct().ToList();
             return listToReturn; //возвращаем список карточек с подходящими датами в поле
         }
-        private List<CollectedFieldsValues> GetLastValuesListInCards(List<int> cardslist,int registerId, int fieldId)
+        private List<CollectedFieldsValues> GetLastValuesListInCardsWithFilter(List<int> cardslist,int registerId, int fieldId, int filterFieldId, string filterValue)
         {
             List<CollectedFieldsValues> ListToReturn = new List<CollectedFieldsValues>();
 
-            List<CollectedFieldsValues> valuesList = (from a in chancDb.CollectedCards // найдем все значения для данного филда в данном регистре
+            valuesList = (from a in chancDb.CollectedCards // найдем все значения для данного филда в данном регистре
                                                       join b in chancDb.CollectedFieldsValues
                                                           on a.CollectedCardID equals b.FkCollectedCard
                                                       where a.Active == true
                                                             && b.Active == true
-                                                            && b.FkField == fieldId
+                                                            && (b.FkField == fieldId || (filterValue.Any()&&b.FkField==filterFieldId)) 
                                                             && a.FkRegister == registerId
                                                       select b).Distinct().ToList();
             foreach (int cardId in cardslist)
             {
-                List<CollectedFieldsValues> tmp = (from a in valuesList
-                                                   where a.FkCollectedCard == cardId
-                                                         && a.FkField == fieldId
-                                                         && a.Active
-                                                   select a).ToList();
-                if (tmp.Count == 0) continue; // Почему оно ноль??
-                int maxInstance = (from a in tmp select a.Instance).Max();
-                for (int i = 0; i < maxInstance + 1; i++)
+                if (filterValue.Any())
                 {
-                    List<CollectedFieldsValues> tmp1 = (from a in tmp where a.Instance == i select a).OrderByDescending(mc => mc.Version).ToList();
-                    CollectedFieldsValues tmp2 = new CollectedFieldsValues();
-                    if (tmp1.Count > 0)
-                    {
-                        tmp2 = (from a in tmp1 select a).FirstOrDefault();
-                    }
-                    else
+                    CollectedFieldsValues searchFeildValue = (GetLastValueInCardEndField(filterFieldId, cardId));
+                    if (searchFeildValue==null)
+                        continue;
+                    if (!searchFeildValue.ValueText.ToLower().Contains(filterValue.ToLower()))
                     {
                         continue;
-                    }
-                    if (tmp2 == null)
-                        continue;
-                    if (tmp2.IsDeleted)
-                        continue;
-                    ListToReturn.Add(tmp2);
+                    }                 
+                }                
+                CollectedFieldsValues fieldValue = GetLastValueInCardEndField(fieldId, cardId);
+                if (fieldValue == null)
+                {
+                    continue;
                 }
+                ListToReturn.Add(fieldValue);
             }
             return ListToReturn;
         }
