@@ -209,7 +209,7 @@ namespace Chancelerry.kanz
                 return resultItems;
             }
         }
-        private TreeNode RecursiveGetTreeNode(int parentId, List<Struct> structList, string fieldId, string panelId, string backValue, bool fullStruct)
+        private TreeNode RecursiveGetTreeNode(int parentId, List<Struct> structList, string fieldId, string panelId, string backValue, bool fullStruct, bool collapse)
         {
 
             TreeNode nodeToReturn = new TreeNode();
@@ -233,12 +233,12 @@ namespace Chancelerry.kanz
                                      select a).ToList();
             foreach (Struct currentStruct in children)
             {
-                nodeToReturn.ChildNodes.Add(RecursiveGetTreeNode(currentStruct.STRuCtID, structList, fieldId, panelId, Value, fullStruct));
+                nodeToReturn.ChildNodes.Add(RecursiveGetTreeNode(currentStruct.STRuCtID, structList, fieldId, panelId, Value, fullStruct, collapse));
             }
-
+            //nodeToReturn.Collapse();
             return nodeToReturn;
         }
-        public TreeNode GetStructTreeViewNode(string fieldId, string panelId, bool fullStruct)
+        public TreeNode GetStructTreeViewNode(string fieldId, string panelId, bool fullStruct , bool collapse)
         {
             TreeNode nodeToReturn = new TreeNode();
             nodeToReturn.SelectAction = TreeNodeSelectAction.Select;
@@ -246,8 +246,9 @@ namespace Chancelerry.kanz
             List<Struct> outStruct = (from a in chancDb.Struct
                                       where a.Active == true
                                       select a).ToList();
-            nodeToReturn = RecursiveGetTreeNode(2, outStruct, fieldId, panelId, "", fullStruct);
-
+            nodeToReturn = RecursiveGetTreeNode(2, outStruct, fieldId, panelId, "", fullStruct , collapse);
+            if (collapse)
+                nodeToReturn.CollapseAll();
             return nodeToReturn;
         }
         public TableHeaderRow AddSearchHeaderRoFromListWithData(List<int> FieldID, Dictionary<int, string> searchData)
@@ -1104,11 +1105,12 @@ namespace Chancelerry.kanz
                     }
                     #endregion
                     #region tree
-                    if (currentField.Type == "fullStruct" || currentField.Type == "onlyLastStruct")
+                    if (currentField.Type == "fullStruct" || currentField.Type == "onlyLastStruct" || currentField.Type == "onlyLastStructCollaps")
                     {
                         currentFieldTextBox.TextMode = TextBoxMode.MultiLine;
                         currentFieldTextBox.CssClass = "MultiLinea";
                         bool fullStruct = currentField.Type == "fullStruct";
+                        bool collapse = currentField.Type == "onlyLastStructCollaps";
                         ImageButton structButton = new ImageButton();
                         structButton.ImageUrl = "~/kanz/icons/treeButtonIcon.jpg";
                         structButton.Height = 20;
@@ -1151,7 +1153,7 @@ namespace Chancelerry.kanz
                         strucTreeView.CssClass = "custom-tree";
                         //strucTreeView.SelectedNodeChanged += treeViewClick;
                         //strucTreeView.ShowCheckBoxes = TreeNodeTypes.All;
-                        strucTreeView.Nodes.Add(_common.GetStructTreeViewNode("ctl00_MainContent_" + currentFieldTextBox.ID, "ctl00_MainContent_" + treeViewPanel.ID, fullStruct));
+                        strucTreeView.Nodes.Add(_common.GetStructTreeViewNode("ctl00_MainContent_" + currentFieldTextBox.ID, "ctl00_MainContent_" + treeViewPanel.ID, fullStruct , collapse));
 
                         scrollPanel.Controls.Add(strucTreeView);
                         treeViewPanel.Controls.Add(scrollPanel);
@@ -1178,8 +1180,8 @@ namespace Chancelerry.kanz
         private List<int> GetInstancesListByGroupAndVersion(int cardId, int groupId, int Version)
         {
             List<CollectedFieldsValues> collectedValues = _common.GetCollectedFieldsByCardVersionGroup(cardId, groupId, Version);
-            List<int> isDeletedInstances = (from a in collectedValues where a.IsDeleted select a.Instance).Distinct().ToList();
-            List<int> allInstances = (from a in collectedValues select a.Instance).Distinct().ToList();
+            List<int> isDeletedInstances = (from a in collectedValues where a.IsDeleted select a.Instance).OrderBy(mc => mc).Distinct().ToList();
+            List<int> allInstances = (from a in collectedValues select a.Instance).Distinct().OrderBy(mc=>mc).ToList();
             List<int> onlyActiveInstances = allInstances;
             foreach (int currendDeletedInstance in isDeletedInstances)
             {
