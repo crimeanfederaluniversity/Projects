@@ -383,8 +383,8 @@ img {
 }
 
 hr {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   border: 0;
   border-top: 1px solid #eeeeee;
 }
@@ -405,7 +405,7 @@ p {
 }
 
 .lead {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 16.099999999999998px;
   font-weight: 200;
   line-height: 1.4;
@@ -498,7 +498,7 @@ h6 small,
 h1,
 h2,
 h3 {
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 
@@ -1634,9 +1634,9 @@ table th[class*="col-"] {
 }
 
 fieldset {
-  padding: 0;
+/*  padding: 0;
   margin: 0;
-  border: 0;
+  border: 0;*/
 }
 
 legend {
