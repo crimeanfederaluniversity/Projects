@@ -10,10 +10,60 @@ using Npgsql;
 
 namespace Chancelerry.kanz
 {
+
+    
+
     public partial class RegisterView : System.Web.UI.Page
     {
         bool vVersion = true;
         int page = 0;
+
+
+        private string getPostBackControlName()
+        {
+            Control control = null;
+            //first we will check the "__EVENTTARGET" because if post back made by       the controls
+            //which used "_doPostBack" function also available in Request.Form collection.
+
+            string ctrlname = Page.Request.Params["__EVENTTARGET"];
+            if (ctrlname != null && ctrlname != String.Empty)
+            {
+                control = Page.FindControl(ctrlname);
+            }
+
+            // if __EVENTTARGET is null, the control is a button type and we need to
+            // iterate over the form collection to find it
+            else
+            {
+                string ctrlStr = String.Empty;
+                Control c = null;
+                foreach (string ctl in Page.Request.Form)
+                {
+                    //handle ImageButton they having an additional "quasi-property" in their Id which identifies
+                    //mouse x and y coordinates
+                    if (ctl.EndsWith(".x") || ctl.EndsWith(".y"))
+                    {
+                        ctrlStr = ctl.Substring(0, ctl.Length - 2);
+                        c = Page.FindControl(ctrlStr);
+                    }
+                    else
+                    {
+                        c = Page.FindControl(ctl);
+                    }
+                    if (c is System.Web.UI.WebControls.Button ||
+                        c is System.Web.UI.WebControls.ImageButton)
+                    {
+                        control = c;
+                        break;
+                    }
+                }
+
+            }
+            if (control==null)
+            return null;
+            return control.ID;
+        }
+
         private void RedirectToEdit(object sender, EventArgs e)
         {
 
@@ -24,87 +74,92 @@ namespace Chancelerry.kanz
         public int size = 10;
         protected void Page_Load(object sender, EventArgs e)
         {
-            timeStampsLabel.Text = " 0_" + DateTime.Now.TimeOfDay;
-            int userID;
-            int.TryParse(Session["userID"].ToString(), out userID);
+                timeStampsLabel.Text = " 0_" + DateTime.Now.TimeOfDay;
+                int userID;
+                int.TryParse(Session["userID"].ToString(), out userID);
 
-            if (userID == null)
-            {
-                Response.Redirect("~/Default.aspx");
-            }
-            else
-            {
-                ViewState["userID"] = userID;
-            }
-
-            /////////////////////////////////////////////////////////////////////
-
-            int regId;
-            Int32.TryParse(Session["registerID"].ToString(), out regId);
-
-            ChancelerryDb dataContext = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
-
-            TableActions ta = new TableActions();
-
-            var register = 
-                (from r in dataContext.Registers
-                 where r.RegisterID == regId
-                 select r).FirstOrDefault();
-
-
-            if (register != null)
-            {
-                RegisterNameLabel.Text = register.Name;
-
-                
-                if (vVersion)
+                if (userID == null)
                 {
-                    
-                    if (Request.QueryString["page"] != null)
-                        Int32.TryParse(Request.QueryString["page"], out page);
-
-                    if (Request.QueryString["size"] != null)
-                        Int32.TryParse(Request.QueryString["size"], out size);
-
-                    Dictionary<int, string> vSearchList = (Dictionary<int, string>)Session["vSearchList"];
-                    string searchAll = (string) Session["vSearchAll"];
-                    string searchCardId = (string)Session["vSearchById"];
-                    
-                    //SearchAllTextBox.Text = searchAll;
-                    CardCommonFunctions cardCommonFunctions = new CardCommonFunctions();
-                    
-
-                    string sum = cardCommonFunctions.FastSearch(searchCardId,vSearchList, searchAll, register.RegisterID, Convert.ToInt32(userID), dataTable, page * size, (page + 1) * size);
-                    timeStampsLabel.Text += cardCommonFunctions.timeStamps;
-                    Button5.Visible = true;
-                    Button6.Visible = true;
-                    Button7.Visible = false;
-                    Button8.Visible = false;
-                    BottomButton9.Visible = false;
-                    BottomButton10.Visible = true;
-                    BottomButton11.Visible = true;
-                    BottomButton12.Visible = false;
-                    string page_info = sum;
-                    PageNumberLabel.Text = page_info;
-                    BottomPageNumberLabel.Text = page_info;
-
+                    Response.Redirect("~/Default.aspx");
                 }
                 else
                 {
-                    int uusrId;
-                    int.TryParse(Session["userID"].ToString(), out uusrId);
-
-                    ta.RefreshTable(dataContext, uusrId, register, regId, dataTable, (Dictionary<int, string>)Session["vSearchList"]);
-                    TableActions.DTable = dataTable;
-
-
-                    string page_info = "Cтраница: " + ((int)Session["pageCntrl"] + 1).ToString() + "/" + (int)Session["pageCount"] + ". Всего: " + (int)Session["cardsCount"];
-                    PageNumberLabel.Text = page_info;
-                    BottomPageNumberLabel.Text = page_info;
-                    
+                    ViewState["userID"] = userID;
                 }
-            }
-            timeStampsLabel.Text += " 7_" + DateTime.Now.TimeOfDay;
+
+                /////////////////////////////////////////////////////////////////////
+
+                int regId;
+                Int32.TryParse(Session["registerID"].ToString(), out regId);
+
+                ChancelerryDb dataContext =
+                    new ChancelerryDb(
+                        new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
+
+                TableActions ta = new TableActions();
+
+                var register =
+                    (from r in dataContext.Registers
+                        where r.RegisterID == regId
+                        select r).FirstOrDefault();
+
+
+                if (register != null)
+                {
+                    RegisterNameLabel.Text = register.Name;
+
+
+                    if (vVersion)
+                    {
+
+                        if (Request.QueryString["page"] != null)
+                            Int32.TryParse(Request.QueryString["page"], out page);
+
+                        if (Request.QueryString["size"] != null)
+                            Int32.TryParse(Request.QueryString["size"], out size);
+
+                        Dictionary<int, string> vSearchList = (Dictionary<int, string>) Session["vSearchList"];
+                        string searchAll = (string) Session["vSearchAll"];
+                        string searchCardId = (string) Session["vSearchById"];
+
+                        //SearchAllTextBox.Text = searchAll;
+                        CardCommonFunctions cardCommonFunctions = new CardCommonFunctions();
+
+
+                        string sum = cardCommonFunctions.FastSearch(searchCardId, vSearchList, searchAll,
+                            register.RegisterID, Convert.ToInt32(userID), dataTable, page*size, (page + 1)*size);
+                        timeStampsLabel.Text += cardCommonFunctions.timeStamps;
+                        Button5.Visible = true;
+                        Button6.Visible = true;
+                        Button7.Visible = false;
+                        Button8.Visible = false;
+                        BottomButton9.Visible = false;
+                        BottomButton10.Visible = true;
+                        BottomButton11.Visible = true;
+                        BottomButton12.Visible = false;
+                        string page_info = sum;
+                        PageNumberLabel.Text = page_info;
+                        BottomPageNumberLabel.Text = page_info;
+
+                    }
+                    else
+                    {
+                        int uusrId;
+                        int.TryParse(Session["userID"].ToString(), out uusrId);
+
+                        ta.RefreshTable(dataContext, uusrId, register, regId, dataTable,
+                            (Dictionary<int, string>) Session["vSearchList"]);
+                        TableActions.DTable = dataTable;
+
+
+                        string page_info = "Cтраница: " + ((int) Session["pageCntrl"] + 1).ToString() + "/" +
+                                           (int) Session["pageCount"] + ". Всего: " + (int) Session["cardsCount"];
+                        PageNumberLabel.Text = page_info;
+                        BottomPageNumberLabel.Text = page_info;
+
+                    }
+                }
+                timeStampsLabel.Text += " 7_" + DateTime.Now.TimeOfDay;   
         }
 
         protected void Page_PreRender(object sender, EventArgs e)
@@ -131,6 +186,7 @@ namespace Chancelerry.kanz
         }
 
         protected void Button2_Click(object sender, EventArgs e)
+
         {
             Search();
         }

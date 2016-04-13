@@ -35,7 +35,12 @@ namespace Chancelerry.kanz
 
         private TableActions ta = new TableActions();
         private ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
-
+        public List<CollectedFieldsValues> GetAllValuesInCard(int cardId)
+        {
+            return (from a in chancDb.CollectedFieldsValues
+                where a.FkCollectedCard == cardId
+                select a).ToList();
+        }
         public CollectedCards GetCardById(int cardId)
         {
             return (from a in chancDb.CollectedCards where a.CollectedCardID == cardId select a).FirstOrDefault();
@@ -73,10 +78,10 @@ namespace Chancelerry.kanz
         {
             return (from a in chancDb.Registers where a.Active && a.RegisterID == registerId select a).FirstOrDefault();
         }
-        public string GetFieldValueByCardVersionInstance(int fieldId, int cardId, int Version, int Instance)
+        public string GetFieldValueByCardVersionInstance(int fieldId, int cardId, int Version, int Instance, List<CollectedFieldsValues> allValues)
         {
             CardCreateEdit cardCreateEdit = new CardCreateEdit();
-            CollectedFieldsValues currentCollectedFieldsValues = (from a in chancDb.CollectedFieldsValues
+            CollectedFieldsValues currentCollectedFieldsValues = (from a in allValues
                                                                   where a.Active
                                                                         && a.FkField == fieldId
                                                                         && a.FkCollectedCard == cardId
@@ -93,7 +98,7 @@ namespace Chancelerry.kanz
                 }
 
                 cardCreateEdit.CreateNewFieldValueInCard(cardId, userId, fieldId, Version, Instance, "", false);
-                currentCollectedFieldsValues = (from a in chancDb.CollectedFieldsValues
+                currentCollectedFieldsValues = (from a in allValues
                                                 where a.Active
                                                       && a.FkField == fieldId
                                                       && a.FkCollectedCard == cardId
@@ -103,9 +108,9 @@ namespace Chancelerry.kanz
             }
             return currentCollectedFieldsValues.ValueText;
         }
-        public int GetCollectedValueIdByCardVersionInstance(int fieldId, int cardId, int Version, int Instance)
+        public int GetCollectedValueIdByCardVersionInstance(int fieldId, int cardId, int Version, int Instance, List<CollectedFieldsValues> allValues )
         {
-            CollectedFieldsValues currentCollectedFieldsValues = (from a in chancDb.CollectedFieldsValues
+            CollectedFieldsValues currentCollectedFieldsValues = (from a in allValues
                                                                   where a.Active
                                                                         && a.FkField == fieldId
                                                                         && a.FkCollectedCard == cardId
@@ -855,6 +860,8 @@ namespace Chancelerry.kanz
         {
             HttpContext.Current.Response.Redirect("CardEdit.aspx", true);
         }
+
+       
         private void AddInstanceButtonClick(object sender, EventArgs e)
         {
             _cardId = _cardCreateEdit.SaveCard(_registerId, _cardId, allFieldsInCard, allFileUploadsInCard);
@@ -946,7 +953,7 @@ namespace Chancelerry.kanz
             response.Flush();
             response.End();
         }
-        public Table CreateLineTable(List<Fields> fieldsInLine, int leftPaddingSpaceBetween, int cardId, int Version, int Instance, bool _readonly)
+        public Table CreateLineTable(List<Fields> fieldsInLine, int leftPaddingSpaceBetween, int cardId, int Version, int Instance, bool _readonly, List<CollectedFieldsValues> allValues )
         {
             int leftPadding = leftPaddingSpaceBetween;
             Table LineTable = new Table();
@@ -961,11 +968,12 @@ namespace Chancelerry.kanz
 
                 if (currentField.Type == "fileAttach") //если файлаплоад то текстовое поле вообще не нужно
                 {
+                    #region прикрепление файла
                     LinkButton linkToFile = new LinkButton();
                     linkToFile.Click += OpenDocument;
                     linkToFile.Attributes.Add("_myFieldId", currentField.FieldID.ToString());
                     linkToFile.Attributes.Add("_myCollectedFieldInstance", Instance.ToString());
-                    linkToFile.Attributes.Add("_myCollectedFieldId", _common.GetCollectedValueIdByCardVersionInstance(currentField.FieldID, cardId, Version, Instance).ToString());
+                    linkToFile.Attributes.Add("_myCollectedFieldId", _common.GetCollectedValueIdByCardVersionInstance(currentField.FieldID, cardId, Version, Instance, allValues).ToString());
 
                     FileUpload fileUpload = new FileUpload();
                     fileUpload.Style["Height"] = currentField.Height + "px";
@@ -973,7 +981,7 @@ namespace Chancelerry.kanz
                     fileUpload.Style["max-width"] = currentField.Width + "px";
                     fileUpload.Attributes.Add("_myFieldId", currentField.FieldID.ToString());
                     fileUpload.Attributes.Add("_myCollectedFieldInstance", Instance.ToString());
-                    fileUpload.Attributes.Add("_myCollectedFieldId", _common.GetCollectedValueIdByCardVersionInstance(currentField.FieldID, cardId, Version, Instance).ToString());
+                    fileUpload.Attributes.Add("_myCollectedFieldId", _common.GetCollectedValueIdByCardVersionInstance(currentField.FieldID, cardId, Version, Instance, allValues).ToString());
                     fileUpload.ID = "FileUpload" + fieldId;
                     Label currentFieldTitle = new Label();
                     currentFieldTitle.ID = "Title" + fieldId;
@@ -984,7 +992,7 @@ namespace Chancelerry.kanz
                     if (cardId != 0)
                     {
                         string tmp = _common.GetFieldValueByCardVersionInstance(currentField.FieldID, cardId, Version,
-                            Instance);
+                            Instance, allValues);
                         if (tmp.Length > 3)
                         {
                             linkToFile.Text = tmp;
@@ -1001,6 +1009,7 @@ namespace Chancelerry.kanz
                         allFileUploadsInCard.Add(fileUpload); // запоминаем файлаплоады
                         tableCell2.Controls.Add(fileUpload);
                     }
+                #endregion
                 }
                 else
                 {
@@ -1020,7 +1029,7 @@ namespace Chancelerry.kanz
                     currentFieldTextBox.Style["max-width"] = currentField.Width + "px";
                     currentFieldTextBox.Attributes.Add("_myFieldId", currentField.FieldID.ToString());
                     currentFieldTextBox.Attributes.Add("_myCollectedFieldInstance", Instance.ToString());
-                    currentFieldTextBox.Attributes.Add("_myCollectedFieldId", _common.GetCollectedValueIdByCardVersionInstance(currentField.FieldID, cardId, Version, Instance).ToString());
+                    currentFieldTextBox.Attributes.Add("_myCollectedFieldId", _common.GetCollectedValueIdByCardVersionInstance(currentField.FieldID, cardId, Version, Instance, allValues).ToString());
                     currentFieldTextBox.ID = "TextBox" + fieldId;
                     //создаем название поля и mandatory валидатор
                     Label currentFieldTitle = new Label();
@@ -1045,8 +1054,7 @@ namespace Chancelerry.kanz
                     #endregion
                     if (cardId != 0)
                     {
-                        currentFieldTextBox.Text = _common.GetFieldValueByCardVersionInstance(currentField.FieldID,
-                            cardId, Version, Instance);//Trim();
+                        currentFieldTextBox.Text = _common.GetFieldValueByCardVersionInstance(currentField.FieldID, cardId, Version, Instance, allValues);//Trim();
                     }
                     else if (_dataTypes.IsFieldAutoFill(currentField.Type))
                     {
@@ -1198,7 +1206,9 @@ namespace Chancelerry.kanz
                 _common.GetFieldsGroupsInRegisterModelOrderByLine(currentRegisterModel.RegisterModelID);
             //группы которые нужно показать
             //нашли все группы
-            foreach (FieldsGroups currentFieldGroup in fieldGroupsToShow)
+            List<CollectedFieldsValues> allValuesInCard = _common.GetAllValuesInCard(cardId);
+
+            foreach (FieldsGroups currentFieldGroup in fieldGroupsToShow) //идем по каждой группе
             {
                 List<int> InstancesList;
                 if (cardId == 0)
@@ -1216,6 +1226,10 @@ namespace Chancelerry.kanz
                 int InstanceNumber = 0;
                 int InstancesCount = InstancesList.Count;
 
+                List<Fields> fieldToShow = _common.GetFieldsInFieldGroupOrderByLine(currentFieldGroup.FieldsGroupID);
+                List<int> LinesToShow = GetDistinctedSordetLinesFromFieldsList(fieldToShow);
+                //нашли все лайны внутри группы
+                #region Добавляем все инстансы
                 foreach (int currentInstance in InstancesList)
                 {
                     Table InstanceTable = new Table();
@@ -1227,20 +1241,15 @@ namespace Chancelerry.kanz
                     TableRow InstanceRow = new TableRow();
                     TableCell InstanceCell = new TableCell();
                     TableCell delInstanceCell = new TableCell();
-                    //TableCell tableCell2 = new TableCell();
-                    //if (InstancesCount > 0) InstancePanel.GroupingText = (InstanceNumber++).ToString();
-
-                    List<Fields> fieldToShow = _common.GetFieldsInFieldGroupOrderByLine(currentFieldGroup.FieldsGroupID);
-                    List<int> LinesToShow = GetDistinctedSordetLinesFromFieldsList(fieldToShow);
-                    //нашли все лайны внутри группы
+                    
                     foreach (int currentFieldsLine in LinesToShow)
                     {
                         List<Fields> fieldsInLine = GetFieldsByLineSortedByColumn(currentFieldsLine, fieldToShow);
                         Table tableToAdd = CreateLineTable(fieldsInLine, leftPaddingSpaceBetween, cardId, Version,
-                            currentInstance, _readonly);
-
+                            currentInstance, _readonly,allValuesInCard);
                         InstanceCell.Controls.Add(tableToAdd);
                     }
+
                     InstanceRow.Cells.Add(InstanceCell);
                     if (InstancesCount > 1 && !_readonly)
                     {
@@ -1258,7 +1267,8 @@ namespace Chancelerry.kanz
                     InstanceTable.Rows.Add(InstanceRow);
                     groupPanel.Controls.Add(InstanceTable);
                 }
-                cardMainPanel.Controls.Add(groupPanel);
+                #endregion
+                #region Добавляем кнопку добавить если нужна
                 if (currentFieldGroup.Multiple && !_readonly)
                 {
                     TextBox inputCnt = new TextBox();
@@ -1278,9 +1288,11 @@ namespace Chancelerry.kanz
 
                     addCntTextBoxes.Add(addGroupButton.CommandArgument, inputCnt);
 
-                    cardMainPanel.Controls.Add(inputCnt);
-                    cardMainPanel.Controls.Add(addGroupButton);
+                    groupPanel.Controls.Add(inputCnt);
+                    groupPanel.Controls.Add(addGroupButton);
                 }
+                #endregion
+                cardMainPanel.Controls.Add(groupPanel);
             }
             return cardMainPanel;
 
@@ -1290,6 +1302,7 @@ namespace Chancelerry.kanz
             Panel panelToReturn = new Panel();
             Registers currentRegister = _common.GetRegisterById(registerId); // текущий реестр
             List<FieldsGroups> fieldGroupsToShow = _common.GetFieldsGroupsInRegisterModelOrderByLine(currentRegister.FkRegistersModel);
+            List<CollectedFieldsValues> allValuesInCard = _common.GetAllValuesInCard(cardId);
             foreach (FieldsGroups currentFieldGroup in fieldGroupsToShow)
             {
                 List<int> InstancesList = GetInstancesListByGroupAndVersion(cardId, currentFieldGroup.FieldsGroupID,
@@ -1319,7 +1332,7 @@ namespace Chancelerry.kanz
                             TableCell tableCell2 = new TableCell(); //само поле
                             Label cell2 = new Label();
                             cell2.Text = _common.GetFieldValueByCardVersionInstance(currentField.FieldID, cardId,
-                                Version, currentInstance);
+                                Version, currentInstance, allValuesInCard);
                             if (cell2.Text != "")
                             {
                                 addThisInstance = true;
@@ -1457,6 +1470,7 @@ namespace Chancelerry.kanz
                 }
             }
             #endregion
+            List<CollectedFieldsValues> allValuesInCard = _common.GetAllValuesInCard(cardId);
             #region fieldValues
             foreach (TextBox currentField in fieldsToSave)
             {
@@ -1478,7 +1492,7 @@ namespace Chancelerry.kanz
                 else
                 {
                     string Value = _common.GetFieldValueByCardVersionInstance(currentFieldId, cardId, lastVersion,
-                        currentCollectedFieldInstance);
+                        currentCollectedFieldInstance, allValuesInCard);
                     if (Value != currentField.Text)
                     {
                         CreateNewFieldValueInCard(cardId, userId, currentFieldId, lastVersion + 1,

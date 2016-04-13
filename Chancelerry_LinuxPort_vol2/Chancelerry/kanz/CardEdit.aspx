@@ -1,10 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CardEdit.aspx.cs" Inherits="Chancelerry.kanz.CardEdit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link href="../Content/Site.css" rel="stylesheet" />
-    <script>
-        
-        </script>
-
             <script src="calendar_ru.js" type="text/javascript">
     </script>
     <script src="toggleLoadingScreen.js" type="text/javascript"></script>
