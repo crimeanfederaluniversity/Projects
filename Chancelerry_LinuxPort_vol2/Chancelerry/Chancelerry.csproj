@@ -264,6 +264,9 @@
     <Content Include="kanz\icons\addButtonIcon.jpg" />
     <Content Include="kanz\icons\delButtonIcon.jpg" />
     <Content Include="kanz\icons\editaddButtonIcon.gif" />
+    <Content Include="kanz\icons\greenOkIcon.png" />
+    <Content Include="kanz\icons\gteenQuestionIcon.png" />
+    <Content Include="kanz\icons\redWarningIcon.png" />
     <Content Include="kanz\icons\saveButtonIcon.jpg" />
     <Content Include="kanz\icons\treeButtonIcon.jpg" />
     <Content Include="kanz\icons\viewButtonIcon.png" />

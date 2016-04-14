@@ -21,17 +21,31 @@ namespace Chancelerry.kanz
         public string Name { get; set; }
         public double Weight { get; set; }
     }
-
     public class PrintManyParams
     {
         public int RegisterId { get; set; }
         public int Version { get; set; }
         public int CardId { get; set; }
     }
-
     public class CardCommonFunctions
     {
+        public bool IsValueUinque(int fieldId, int registerId,int currentCardId, string value)
+        {
+            bool tmp =
+                (from a in chancDb.CollectedFieldsValues
+                    where a.Active == true
+                    where a.FkField == fieldId
+                          && a.ValueText.ToLower().Trim() == value.ToLower().Trim()
+                    join b in chancDb.CollectedCards
+                        on a.FkCollectedCard equals b.CollectedCardID
+                    where b.FkRegister == registerId
+                    where b.Active == true
+                    && b.CollectedCardID != currentCardId
+                 select a.Active).Any();
 
+            return !tmp;
+
+        }
 
         private TableActions ta = new TableActions();
         private ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
@@ -516,11 +530,6 @@ namespace Chancelerry.kanz
         }
     
 }
-
-
-
-
-
     public class StatisticsClass
     {
         private List<CollectedFieldsValues> valuesList;
@@ -631,15 +640,6 @@ namespace Chancelerry.kanz
             return ListToReturn;
         }
     }
-
-
-
-
-
-
-
-
-
     public class DataTypes
     {
         private CardCommonFunctions _common = new CardCommonFunctions();
@@ -697,6 +697,12 @@ namespace Chancelerry.kanz
                         fieldRangeValidator.Enabled = false;
                         fieldRangeValidator.Type = ValidationDataType.String;
                         //fieldRangeValidator.Enabled = true;
+                        break;
+                    }
+                case "singleLineTextUniqueCheck": //text
+                    {
+                        fieldRangeValidator.Enabled = false;
+                        fieldRangeValidator.Type = ValidationDataType.String;
                         break;
                     }
                 case "multiLineText": //text
@@ -779,7 +785,7 @@ namespace Chancelerry.kanz
                         textBoxToReturn.TextMode = TextBoxMode.MultiLine;
                         break;
                     }
-                case "singleLineTextWithUniqueCheck": //text
+                case "singleLineTextUniqueCheck": //text
                     {
                         textBoxToReturn.TextMode = TextBoxMode.SingleLine;
                         break;
@@ -844,6 +850,15 @@ namespace Chancelerry.kanz
             return "";
         }
     }
+
+    public class UniqueChecker
+    {
+        public TextBox ValueTextBox { set; get; }
+        public ImageButton CheckerButton { set; get; }
+        public int FieldId { set; get; }
+        public int RegisterId { set; get; }
+        public int CardId { set; get; }
+    }
     public class CardCreateView
     {
         private CardCommonFunctions _common = new CardCommonFunctions();
@@ -856,13 +871,12 @@ namespace Chancelerry.kanz
         private int textBoxesIdsCounter = 0;
         public List<TextBox> allFieldsInCard;
         public List<FileUpload> allFileUploadsInCard;
+        public List<UniqueChecker> allUniqueCheckers;
         public Dictionary<string, TextBox> addCntTextBoxes = new Dictionary<string, TextBox>();
         private void RefreshPage()
         {
             HttpContext.Current.Response.Redirect("CardEdit.aspx", true);
-        }
-
-       
+        }       
         private void AddInstanceButtonClick(object sender, EventArgs e)
         {
             _cardId = _cardCreateEdit.SaveCard(_registerId, _cardId, allFieldsInCard, allFileUploadsInCard);
@@ -900,6 +914,37 @@ namespace Chancelerry.kanz
             }
             RefreshPage();
         }
+
+        public void CheckForUnique(object sender, EventArgs e)
+        {
+            if (allUniqueCheckers != null)
+            {
+                foreach (UniqueChecker cur in allUniqueCheckers)
+                {
+                    bool isUnique = _common.IsValueUinque(cur.FieldId, cur.RegisterId, cur.CardId, cur.ValueTextBox.Text);
+                    bool isNew = !cur.ValueTextBox.Text.Any();
+                    if (isNew)
+                    {
+                        cur.CheckerButton.ImageUrl = "~/kanz/icons/gteenQuestionIcon.png";
+                    }
+                    else if (isUnique)
+                    {
+                        cur.CheckerButton.ImageUrl = "~/kanz/icons/greenOkIcon.png";
+                    }
+                    else
+                    {
+                        cur.CheckerButton.ImageUrl = "~/kanz/icons/redWarningIcon.png";
+                    }
+                    cur.CheckerButton.Click += CheckForUnique;
+                }
+            }       
+        }
+
+        public void Bind(object sender, EventArgs e)
+        {
+
+        }
+
         private void DelInstanceButtonClick(object sender, EventArgs e)
         {
             ImageButton thisButton = (ImageButton)sender;
@@ -1165,8 +1210,24 @@ namespace Chancelerry.kanz
                     tableCell1.Controls.Add(_dataTypes.GetRangeValidator("RangeValidator" + fieldId, currentFieldTextBox.ID, currentField.Type));
                     allFieldsInCard.Add(currentFieldTextBox); //запоминаем какие textbox у нас на карте
                     tableCell2.Controls.Add(currentFieldTextBox);
-                }
+                    #region добавим кнопку проверки  уникальности
+                   
+                    if (currentField.Type == "singleLineTextUniqueCheck")
+                    {
+                        ImageButton checkForUniqueButton = new ImageButton();
+                        checkForUniqueButton.ID = "UniqueCheck" + currentField.FieldID;
+                        checkForUniqueButton.Width = 20;
+                        checkForUniqueButton.Height = 20;
+                        checkForUniqueButton.ImageUrl = "~/kanz/icons/gteenQuestionIcon.png";
+                        checkForUniqueButton.Click += CheckForUnique;
+                        tableCell2.Controls.Add(checkForUniqueButton);
 
+                        if (allUniqueCheckers ==null )
+                            allUniqueCheckers = new List<UniqueChecker>();
+                        allUniqueCheckers.Add(new UniqueChecker() {CardId = cardId,CheckerButton = checkForUniqueButton ,FieldId = currentField.FieldID, RegisterId = _registerId,ValueTextBox = currentFieldTextBox });
+                    }
+                    #endregion
+                }
 
                 leftPadding += leftPaddingSpaceBetween + currentField.Width;
                 tableRow1.Cells.Add(tableCell1);
@@ -1176,7 +1237,6 @@ namespace Chancelerry.kanz
             LineTable.Rows.Add(tableRow2);
             return LineTable;
         }
-        // public string 
         private List<int> GetInstancesListByGroupAndVersion(int cardId, int groupId, int Version)
         {
             List<CollectedFieldsValues> collectedValues = _common.GetCollectedFieldsByCardVersionGroup(cardId, groupId, Version);
@@ -1195,6 +1255,7 @@ namespace Chancelerry.kanz
             _registerId = registerId;
             _nextVersion = _common.GetLastVersionByCard(cardId);
 
+            if (allFieldsInCard == null)
             allFieldsInCard = new List<TextBox>(); // будем запоминать все поля чтобы потом сохранять
             allFileUploadsInCard = new List<FileUpload>();
             int leftPaddingSpaceBetween = 5; // отступы между полями
@@ -1296,6 +1357,7 @@ namespace Chancelerry.kanz
                 #endregion
                 cardMainPanel.Controls.Add(groupPanel);
             }
+            HttpContext.Current.Session["allTextBoxes"] = allFieldsInCard;
             return cardMainPanel;
 
         }

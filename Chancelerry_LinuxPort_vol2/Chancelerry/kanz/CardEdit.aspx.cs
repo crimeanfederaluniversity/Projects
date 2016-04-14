@@ -39,7 +39,6 @@ namespace Chancelerry.kanz
                 Response.Redirect("Dashboard.aspx");
             }
         }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             var userID = Session["userID"];
@@ -48,14 +47,10 @@ namespace Chancelerry.kanz
             {
                 Response.Redirect("~/Default.aspx");
             }
-
             UpdateSessionValues();
             CardCreateView cardCreateView = new CardCreateView();
-
             Session["searchList"] = new List<TableActions.SearchValues>(); // сессия поиска 
-            var canEditSession = Session["userID"];
             cardMainDiv.Controls.Add(cardCreateView.CreateViewByRegisterAndCard(_registerId, _cardId, _version, !_canEdit));
-            // cardPrintDiv.Controls.Add(cardCreateView.GetPrintVersion(_registerId,_cardId, _version));
             if (!_canEdit)
             {
                 LinkButton1.Visible = true;
@@ -72,7 +67,6 @@ namespace Chancelerry.kanz
             cardCreateEdit.SaveCard(_registerId, _cardId, createdFields, createdFileUploads);
             Response.Redirect("RegisterView.aspx");
         }
-
         protected void LinkButton1_Click(object sender, EventArgs e)
         {
             Response.Redirect("Print.aspx");
