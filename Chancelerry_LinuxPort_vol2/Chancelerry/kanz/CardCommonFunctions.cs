@@ -112,13 +112,8 @@ namespace Chancelerry.kanz
                 }
 
                 cardCreateEdit.CreateNewFieldValueInCard(cardId, userId, fieldId, Version, Instance, "", false);
-                currentCollectedFieldsValues = (from a in allValues
-                                                where a.Active
-                                                      && a.FkField == fieldId
-                                                      && a.FkCollectedCard == cardId
-                                                      && a.Instance == Instance
-                                                      && a.Version <= Version
-                                                select a).OrderByDescending(ver => ver.Version).FirstOrDefault();
+                return "";
+
             }
             return currentCollectedFieldsValues.ValueText;
         }
