@@ -999,6 +999,7 @@ namespace Chancelerry.kanz
             response.Flush();
             response.End();
         }
+
         public Table CreateLineTable(List<Fields> fieldsInLine, int leftPaddingSpaceBetween, int cardId, int Version, int Instance, bool _readonly, List<CollectedFieldsValues> allValues )
         {
             int leftPadding = leftPaddingSpaceBetween;
@@ -1215,7 +1216,7 @@ namespace Chancelerry.kanz
                     if (currentField.Type == "singleLineTextUniqueCheck")
                     {
                         ImageButton checkForUniqueButton = new ImageButton();
-                        checkForUniqueButton.ID = "UniqueCheck" + currentField.FieldID;
+                        checkForUniqueButton.ID = "UniqueCheck" + currentField.FieldID + "_"+ Instance;
                         checkForUniqueButton.Width = 20;
                         checkForUniqueButton.Height = 20;
                         checkForUniqueButton.ImageUrl = "~/kanz/icons/gteenQuestionIcon.png";
