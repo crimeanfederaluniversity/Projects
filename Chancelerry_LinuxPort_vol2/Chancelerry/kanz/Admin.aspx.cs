@@ -52,8 +52,9 @@ namespace Chancelerry.kanz
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            /*
             string str = "";
-            List<CollectedCards> allCards = (from a in chancDb.CollectedCards where a.Active == true && a.FkRegister == 1 select a).OrderByDescending(mc=>mc.MaInFieldID).ToList();
+            List<CollectedCards> allCards = (from a in chancDb.CollectedCards where a.Active == true && a.FkRegister == 2 select a).OrderByDescending(mc=>mc.MaInFieldID).ToList();
             int maxValue = allCards[0].MaInFieldID.Value;
             for (int i=0;i<maxValue;i++)
             {
@@ -67,17 +68,18 @@ namespace Chancelerry.kanz
                     str += i.ToString() + " ERRROR" + Environment.NewLine;
                 }
             }
-            TextBox1.Text = str;
+            TextBox1.Text = str;*/
         }
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            string wholeFile = File.ReadAllText("c:\\1\\4.txt");
+            /*
+            string wholeFile = File.ReadAllText("c:\\1\\5.txt");
             string[] rows = wholeFile.Split('z');
             foreach (string currentRow in rows)
             {
                 string[] fields = currentRow.Split('#');
-                int cardId = addCard(6, Convert.ToInt32(fields[0]));
+                int cardId = addCard(-1, Convert.ToInt32(fields[0]));
 
                 
                 int i = 0;
@@ -89,10 +91,10 @@ namespace Chancelerry.kanz
                     }
                     if (i == 1)
                     {
-                        string date = currentField[7].ToString() + currentField[8].ToString() +
-                                     currentField[9].ToString() + currentField[10].ToString() + "-" +
-                                     currentField[4].ToString() + currentField[5].ToString() + "-" +
-                                     currentField[1].ToString() + currentField[2].ToString();
+                        string date = currentField[6].ToString() + currentField[7].ToString() +
+                                     currentField[8].ToString() + currentField[9].ToString() + "-" +
+                                     currentField[3].ToString() + currentField[4].ToString() + "-" +
+                                     currentField[0].ToString() + currentField[1].ToString();
                         createFieldValue(cardId, 79, date, 0);
                     }
                     if (i == 2)
@@ -111,7 +113,7 @@ namespace Chancelerry.kanz
                     }
                     i++;
                 }
-            }
+            }*/
         }
     }
 }
