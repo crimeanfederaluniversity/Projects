@@ -52,9 +52,9 @@ namespace Chancelerry.kanz
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            /*
+            
             string str = "";
-            List<CollectedCards> allCards = (from a in chancDb.CollectedCards where a.Active == true && a.FkRegister == 2 select a).OrderByDescending(mc=>mc.MaInFieldID).ToList();
+            List<CollectedCards> allCards = (from a in chancDb.CollectedCards where a.Active == true && a.FkRegister == 1 select a).OrderByDescending(mc=>mc.MaInFieldID).ToList();
             int maxValue = allCards[0].MaInFieldID.Value;
             for (int i=0;i<maxValue;i++)
             {
@@ -68,7 +68,7 @@ namespace Chancelerry.kanz
                     str += i.ToString() + " ERRROR" + Environment.NewLine;
                 }
             }
-            TextBox1.Text = str;*/
+            TextBox1.Text = str;
         }
 
         protected void Button2_Click(object sender, EventArgs e)

@@ -373,13 +373,15 @@ namespace Chancelerry.kanz
 
         public class NameFieldWeightClass
         {
-            public string name { get; set; }
+            public string Name { get; set; }
             public int FieldID { get; set; }
             public double Weight { get; set; }
+            public string Type { get; set; }
         }
 
         public class ValuesClass
         {
+            public int collectedfieldvalueid { get; set; }
             public int fk_collectedcard { get; set; }
             public int fk_field { get; set; }
             public int version { get; set; }
@@ -389,6 +391,7 @@ namespace Chancelerry.kanz
         }
 
         public string timeStamps = "";
+
         public string FastSearch(string cardId, Dictionary<int, string> searchList, string searchAll, int registerId, int userId, Table vTable, int LineFrom, int LineTo)
         {
             #region GetSortedCutedCardsToShow
@@ -396,7 +399,7 @@ namespace Chancelerry.kanz
             timeStamps += " 1_" + DateTime.Now.TimeOfDay;
             List<int> sortedCutedCardsToShow = GetCardsToShow(cardId, searchList, searchAll, registerId, LineFrom, LineTo); // NEW    
             timeStamps += " 2_" + DateTime.Now.TimeOfDay;
-            Dictionary<int, string> allFields = (from a in chancDb.RegistersUsersMap
+            List<NameFieldWeightClass> allFields = (from a in chancDb.RegistersUsersMap
                                                  join b in chancDb.RegistersView
                                                  on a.RegistersUsersMapID equals b.FkRegistersUsersMap
                                                  join c in chancDb.Fields
@@ -407,16 +410,16 @@ namespace Chancelerry.kanz
                                                  && b.Active
                                                  && c.Active
                                                  && a.Active
-                                                 select new NameFieldWeightClass { name = c.Name, FieldID = c.FieldID, Weight = b.Weight }).OrderBy(w => w.Weight).ToDictionary(t => t.FieldID, t => t.name);
+                                                 select new NameFieldWeightClass { Name = c.Name, FieldID = c.FieldID, Weight = b.Weight,Type = c.Type}).OrderBy(w => w.Weight).ToList();
             timeStamps += " 3_" + DateTime.Now.TimeOfDay;
             if (sortedCutedCardsToShow.Count == 0 || allFields.Count == 0)
                 return "Данных нет";
-            string sqlqueryTMP = "SELECT fk_collectedcard,fk_field,instance,valuetext,isdeleted,version FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
-                 "AND  fk_field IN (" + string.Join(",", allFields.Keys.ToArray()) + ")";
+            string sqlqueryTMP = "SELECT fk_collectedcard,fk_field,instance,valuetext,isdeleted,version,collectedfieldvalueid FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
+                 "AND  fk_field IN (" + string.Join(",", allFields.Select(mc=>mc.FieldID).ToArray()) + ")";
             ValuesClass[] tmpStrList = chancDb.ExecuteQuery<ValuesClass>(sqlqueryTMP).ToArray();
             timeStamps += " 4_" + DateTime.Now.TimeOfDay;
-            vTable.Rows.Add(AddSearchHeaderRoFromListWithData(allFields.Keys.ToList(), searchList));
-            vTable.Rows.Add(ta.AddHeaderRoFromList(allFields.Values.ToList()));
+            vTable.Rows.Add(AddSearchHeaderRoFromListWithData(allFields.Select(mc=>mc.FieldID).ToList(), searchList));
+            vTable.Rows.Add(ta.AddHeaderRoFromList(allFields.Select(mc=>mc.Name).ToList()));
             timeStamps += " 5_" + DateTime.Now.TimeOfDay;
             #endregion
             #region CreateTable
@@ -437,9 +440,9 @@ namespace Chancelerry.kanz
                 }
 
                 int fieldN = 0;
-                foreach (int currentField in allFields.Keys)
+                foreach (NameFieldWeightClass currentField in allFields)
                 {
-                    List<ValuesClass> collectedFields = (from a in tmpStrList where a.fk_field == currentField && a.fk_collectedcard == currentCard select a).ToList();
+                    List<ValuesClass> collectedFields = (from a in tmpStrList where a.fk_field == currentField.FieldID && a.fk_collectedcard == currentCard select a).ToList();
                     for (int i = 0; i < maxInstanceInCard + 1; i++)
                     {
                         List<ValuesClass> tmp3 = (from a in collectedFields where a.instance == i select a).OrderByDescending(mc => mc.version).ToList();
@@ -447,13 +450,30 @@ namespace Chancelerry.kanz
                         if (tmp3.Count > 0)
                         {
                             tmp2 = (from a in tmp3   select a).FirstOrDefault();
-                            arrayOfStrings[fieldN, i] = "";
+                            if (currentField.Type != "fileAttach")
+                            {
+                                arrayOfStrings[fieldN, i] = "";
+                            }
+                            
                         }
                         if (tmp2 == null)
                             continue;
                         if (tmp2.isdeleted)
                             continue;
-                        arrayOfStrings[fieldN, i] = tmp2.valuetext;
+
+                        if (currentField.Type == "fileAttach" )
+                        {
+                            if (tmp2.valuetext.Any())
+                            {
+                                string location = "attachedDocs/" + currentCard + "/" + tmp2.collectedfieldvalueid + "/" +
+                                                  tmp2.valuetext;
+                                arrayOfStrings[fieldN, i] = "<a href='" + location + "'>" + tmp2.valuetext + "</a> ";
+                            }
+                        }
+                        else
+                        {
+                            arrayOfStrings[fieldN, i] = tmp2.valuetext;
+                        }
                     }
                     fieldN++;
                 }
@@ -476,7 +496,6 @@ namespace Chancelerry.kanz
                         cell0.Text = arrayOfStrings[i, j];
                         int colSpanCheckCounter = j + 1;
                         int colspanTmp = 1;
-
                         while (colSpanCheckCounter <= maxInstanceInCard && arrayOfStrings[i, colSpanCheckCounter] == "~null~")
                         {
                             colspanTmp++;
@@ -845,7 +864,6 @@ namespace Chancelerry.kanz
             return "";
         }
     }
-
     public class UniqueChecker
     {
         public TextBox ValueTextBox { set; get; }
@@ -983,16 +1001,27 @@ namespace Chancelerry.kanz
             int currentCollectedFieldId = Convert.ToInt32(thisButton.Attributes["_myCollectedFieldId"]);
             int currentCollectedFieldInstance = Convert.ToInt32(thisButton.Attributes["_myCollectedFieldInstance"]);
             CollectedCards card = _common.GetCollevtedCardByCollevtedField(currentCollectedFieldId);
-            string path = HttpContext.Current.Server.MapPath("~/kanz/attachedDocs/" + card.CollectedCardID + "/" + currentCollectedFieldId + "/" + thisButton.Text);
+            string location = "~/kanz/attachedDocs/" + card.CollectedCardID + "/" + currentCollectedFieldId + "/" +
+                              thisButton.Text;
+            string path = HttpContext.Current.Server.MapPath(location);
             // HttpContext.Current.Response.Redirect(path);
-            System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
-            response.ClearContent();
-            response.Clear();
-            response.ContentType = "text/plain";
-            response.AddHeader("Content-Disposition", "attachment; filename=" + thisButton.Text + ";");
-            response.TransmitFile(path);
-            response.Flush();
-            response.End();
+            string fileName = thisButton.Text;
+            string fileRes = fileName.Substring(fileName.Length - 4, 4);
+            if (fileRes.ToLower() == ".pdf")
+            {
+                System.Web.HttpContext.Current.Response.Redirect(location);
+            }
+            else
+            {
+                System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
+                response.ClearContent();
+                response.Clear();
+                response.ContentType = "text/plain";
+                response.AddHeader("Content-Disposition", "attachment; filename=" + thisButton.Text + ";");
+                response.TransmitFile(path);
+                response.Flush();
+                response.End();
+            }
         }
 
         public Table CreateLineTable(List<Fields> fieldsInLine, int leftPaddingSpaceBetween, int cardId, int Version, int Instance, bool _readonly, List<CollectedFieldsValues> allValues )
