@@ -30,24 +30,45 @@ namespace Zakupka
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertContractProjectMappingTable(ContractProjectMappingTable instance);
+    partial void UpdateContractProjectMappingTable(ContractProjectMappingTable instance);
+    partial void DeleteContractProjectMappingTable(ContractProjectMappingTable instance);
     partial void InsertContracts(Contracts instance);
     partial void UpdateContracts(Contracts instance);
     partial void DeleteContracts(Contracts instance);
+    partial void InsertCostClassTable(CostClassTable instance);
+    partial void UpdateCostClassTable(CostClassTable instance);
+    partial void DeleteCostClassTable(CostClassTable instance);
     partial void InsertEvents(Events instance);
     partial void UpdateEvents(Events instance);
     partial void DeleteEvents(Events instance);
+    partial void InsertKOSGUtable(KOSGUtable instance);
+    partial void UpdateKOSGUtable(KOSGUtable instance);
+    partial void DeleteKOSGUtable(KOSGUtable instance);
+    partial void InsertMainEvent(MainEvent instance);
+    partial void UpdateMainEvent(MainEvent instance);
+    partial void DeleteMainEvent(MainEvent instance);
+    partial void InsertProjectEventMappingTable(ProjectEventMappingTable instance);
+    partial void UpdateProjectEventMappingTable(ProjectEventMappingTable instance);
+    partial void DeleteProjectEventMappingTable(ProjectEventMappingTable instance);
     partial void InsertProjects(Projects instance);
     partial void UpdateProjects(Projects instance);
     partial void DeleteProjects(Projects instance);
+    partial void InsertStructTable(StructTable instance);
+    partial void UpdateStructTable(StructTable instance);
+    partial void DeleteStructTable(StructTable instance);
     partial void InsertUsers(Users instance);
     partial void UpdateUsers(Users instance);
     partial void DeleteUsers(Users instance);
-    partial void InsertCollectedValues(CollectedValues instance);
-    partial void UpdateCollectedValues(CollectedValues instance);
-    partial void DeleteCollectedValues(CollectedValues instance);
     partial void InsertViewField(ViewField instance);
     partial void UpdateViewField(ViewField instance);
     partial void DeleteViewField(ViewField instance);
+    partial void InsertCollectedValues(CollectedValues instance);
+    partial void UpdateCollectedValues(CollectedValues instance);
+    partial void DeleteCollectedValues(CollectedValues instance);
+    partial void InsertProjectsValues(ProjectsValues instance);
+    partial void UpdateProjectsValues(ProjectsValues instance);
+    partial void DeleteProjectsValues(ProjectsValues instance);
     partial void InsertFields(Fields instance);
     partial void UpdateFields(Fields instance);
     partial void DeleteFields(Fields instance);
@@ -83,11 +104,27 @@ namespace Zakupka
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<ContractProjectMappingTable> ContractProjectMappingTable
+		{
+			get
+			{
+				return this.GetTable<ContractProjectMappingTable>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Contracts> Contracts
 		{
 			get
 			{
 				return this.GetTable<Contracts>();
+			}
+		}
+		
+		public System.Data.Linq.Table<CostClassTable> CostClassTable
+		{
+			get
+			{
+				return this.GetTable<CostClassTable>();
 			}
 		}
 		
@@ -99,11 +136,43 @@ namespace Zakupka
 			}
 		}
 		
+		public System.Data.Linq.Table<KOSGUtable> KOSGUtable
+		{
+			get
+			{
+				return this.GetTable<KOSGUtable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<MainEvent> MainEvent
+		{
+			get
+			{
+				return this.GetTable<MainEvent>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ProjectEventMappingTable> ProjectEventMappingTable
+		{
+			get
+			{
+				return this.GetTable<ProjectEventMappingTable>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Projects> Projects
 		{
 			get
 			{
 				return this.GetTable<Projects>();
+			}
+		}
+		
+		public System.Data.Linq.Table<StructTable> StructTable
+		{
+			get
+			{
+				return this.GetTable<StructTable>();
 			}
 		}
 		
@@ -115,14 +184,6 @@ namespace Zakupka
 			}
 		}
 		
-		public System.Data.Linq.Table<CollectedValues> CollectedValues
-		{
-			get
-			{
-				return this.GetTable<CollectedValues>();
-			}
-		}
-		
 		public System.Data.Linq.Table<ViewField> ViewField
 		{
 			get
@@ -131,11 +192,243 @@ namespace Zakupka
 			}
 		}
 		
+		public System.Data.Linq.Table<CollectedValues> CollectedValues
+		{
+			get
+			{
+				return this.GetTable<CollectedValues>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ProjectsValues> ProjectsValues
+		{
+			get
+			{
+				return this.GetTable<ProjectsValues>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Fields> Fields
 		{
 			get
 			{
 				return this.GetTable<Fields>();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ContractProjectMappingTable")]
+	public partial class ContractProjectMappingTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private System.Nullable<bool> _Active;
+		
+		private System.Nullable<int> _fk_project;
+		
+		private System.Nullable<int> _fk_contract;
+		
+		private EntityRef<Contracts> _Contracts;
+		
+		private EntityRef<Projects> _Projects;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void Onfk_projectChanging(System.Nullable<int> value);
+    partial void Onfk_projectChanged();
+    partial void Onfk_contractChanging(System.Nullable<int> value);
+    partial void Onfk_contractChanged();
+    #endregion
+		
+		public ContractProjectMappingTable()
+		{
+			this._Contracts = default(EntityRef<Contracts>);
+			this._Projects = default(EntityRef<Projects>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_project", DbType="Int")]
+		public System.Nullable<int> fk_project
+		{
+			get
+			{
+				return this._fk_project;
+			}
+			set
+			{
+				if ((this._fk_project != value))
+				{
+					if (this._Projects.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_projectChanging(value);
+					this.SendPropertyChanging();
+					this._fk_project = value;
+					this.SendPropertyChanged("fk_project");
+					this.Onfk_projectChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_contract", DbType="Int")]
+		public System.Nullable<int> fk_contract
+		{
+			get
+			{
+				return this._fk_contract;
+			}
+			set
+			{
+				if ((this._fk_contract != value))
+				{
+					if (this._Contracts.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_contractChanging(value);
+					this.SendPropertyChanging();
+					this._fk_contract = value;
+					this.SendPropertyChanged("fk_contract");
+					this.Onfk_contractChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contracts_ContractProjectMappingTable", Storage="_Contracts", ThisKey="fk_contract", OtherKey="contractID", IsForeignKey=true)]
+		public Contracts Contracts
+		{
+			get
+			{
+				return this._Contracts.Entity;
+			}
+			set
+			{
+				Contracts previousValue = this._Contracts.Entity;
+				if (((previousValue != value) 
+							|| (this._Contracts.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Contracts.Entity = null;
+						previousValue.ContractProjectMappingTable.Remove(this);
+					}
+					this._Contracts.Entity = value;
+					if ((value != null))
+					{
+						value.ContractProjectMappingTable.Add(this);
+						this._fk_contract = value.contractID;
+					}
+					else
+					{
+						this._fk_contract = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Contracts");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Projects_ContractProjectMappingTable", Storage="_Projects", ThisKey="fk_project", OtherKey="projectID", IsForeignKey=true)]
+		public Projects Projects
+		{
+			get
+			{
+				return this._Projects.Entity;
+			}
+			set
+			{
+				Projects previousValue = this._Projects.Entity;
+				if (((previousValue != value) 
+							|| (this._Projects.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Projects.Entity = null;
+						previousValue.ContractProjectMappingTable.Remove(this);
+					}
+					this._Projects.Entity = value;
+					if ((value != null))
+					{
+						value.ContractProjectMappingTable.Add(this);
+						this._fk_project = value.projectID;
+					}
+					else
+					{
+						this._fk_project = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Projects");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -152,15 +445,9 @@ namespace Zakupka
 		
 		private string _name;
 		
-		private System.Nullable<int> _fk_event;
-		
-		private System.Nullable<int> _fk_project;
+		private EntitySet<ContractProjectMappingTable> _ContractProjectMappingTable;
 		
 		private EntitySet<CollectedValues> _CollectedValues;
-		
-		private EntityRef<Events> _Events;
-		
-		private EntityRef<Projects> _Projects;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -172,17 +459,12 @@ namespace Zakupka
     partial void OnactiveChanged();
     partial void OnnameChanging(string value);
     partial void OnnameChanged();
-    partial void Onfk_eventChanging(System.Nullable<int> value);
-    partial void Onfk_eventChanged();
-    partial void Onfk_projectChanging(System.Nullable<int> value);
-    partial void Onfk_projectChanged();
     #endregion
 		
 		public Contracts()
 		{
+			this._ContractProjectMappingTable = new EntitySet<ContractProjectMappingTable>(new Action<ContractProjectMappingTable>(this.attach_ContractProjectMappingTable), new Action<ContractProjectMappingTable>(this.detach_ContractProjectMappingTable));
 			this._CollectedValues = new EntitySet<CollectedValues>(new Action<CollectedValues>(this.attach_CollectedValues), new Action<CollectedValues>(this.detach_CollectedValues));
-			this._Events = default(EntityRef<Events>);
-			this._Projects = default(EntityRef<Projects>);
 			OnCreated();
 		}
 		
@@ -246,51 +528,16 @@ namespace Zakupka
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_event", DbType="Int")]
-		public System.Nullable<int> fk_event
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contracts_ContractProjectMappingTable", Storage="_ContractProjectMappingTable", ThisKey="contractID", OtherKey="fk_contract")]
+		public EntitySet<ContractProjectMappingTable> ContractProjectMappingTable
 		{
 			get
 			{
-				return this._fk_event;
+				return this._ContractProjectMappingTable;
 			}
 			set
 			{
-				if ((this._fk_event != value))
-				{
-					if (this._Events.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_eventChanging(value);
-					this.SendPropertyChanging();
-					this._fk_event = value;
-					this.SendPropertyChanged("fk_event");
-					this.Onfk_eventChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_project", DbType="Int")]
-		public System.Nullable<int> fk_project
-		{
-			get
-			{
-				return this._fk_project;
-			}
-			set
-			{
-				if ((this._fk_project != value))
-				{
-					if (this._Projects.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_projectChanging(value);
-					this.SendPropertyChanging();
-					this._fk_project = value;
-					this.SendPropertyChanged("fk_project");
-					this.Onfk_projectChanged();
-				}
+				this._ContractProjectMappingTable.Assign(value);
 			}
 		}
 		
@@ -304,74 +551,6 @@ namespace Zakupka
 			set
 			{
 				this._CollectedValues.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Events_Contracts", Storage="_Events", ThisKey="fk_event", OtherKey="eventID", IsForeignKey=true)]
-		public Events Events
-		{
-			get
-			{
-				return this._Events.Entity;
-			}
-			set
-			{
-				Events previousValue = this._Events.Entity;
-				if (((previousValue != value) 
-							|| (this._Events.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Events.Entity = null;
-						previousValue.Contracts.Remove(this);
-					}
-					this._Events.Entity = value;
-					if ((value != null))
-					{
-						value.Contracts.Add(this);
-						this._fk_event = value.eventID;
-					}
-					else
-					{
-						this._fk_event = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Events");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Projects_Contracts", Storage="_Projects", ThisKey="fk_project", OtherKey="projectID", IsForeignKey=true)]
-		public Projects Projects
-		{
-			get
-			{
-				return this._Projects.Entity;
-			}
-			set
-			{
-				Projects previousValue = this._Projects.Entity;
-				if (((previousValue != value) 
-							|| (this._Projects.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Projects.Entity = null;
-						previousValue.Contracts.Remove(this);
-					}
-					this._Projects.Entity = value;
-					if ((value != null))
-					{
-						value.Contracts.Add(this);
-						this._fk_project = value.projectID;
-					}
-					else
-					{
-						this._fk_project = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Projects");
-				}
 			}
 		}
 		
@@ -395,6 +574,18 @@ namespace Zakupka
 			}
 		}
 		
+		private void attach_ContractProjectMappingTable(ContractProjectMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Contracts = this;
+		}
+		
+		private void detach_ContractProjectMappingTable(ContractProjectMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Contracts = null;
+		}
+		
 		private void attach_CollectedValues(CollectedValues entity)
 		{
 			this.SendPropertyChanging();
@@ -405,6 +596,116 @@ namespace Zakupka
 		{
 			this.SendPropertyChanging();
 			entity.Contracts = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CostClassTable")]
+	public partial class CostClassTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _name;
+		
+		private bool _active;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    #endregion
+		
+		public CostClassTable()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -420,9 +721,15 @@ namespace Zakupka
 		
 		private string _name;
 		
-		private EntitySet<Contracts> _Contracts;
+		private System.Nullable<int> _fk_mainevent;
 		
-		private EntitySet<Projects> _Projects;
+		private EntitySet<ProjectEventMappingTable> _ProjectEventMappingTable;
+		
+		private EntitySet<CollectedValues> _CollectedValues;
+		
+		private EntitySet<ProjectsValues> _ProjectsValues;
+		
+		private EntityRef<MainEvent> _MainEvent;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -434,12 +741,16 @@ namespace Zakupka
     partial void OnactiveChanged();
     partial void OnnameChanging(string value);
     partial void OnnameChanged();
+    partial void Onfk_maineventChanging(System.Nullable<int> value);
+    partial void Onfk_maineventChanged();
     #endregion
 		
 		public Events()
 		{
-			this._Contracts = new EntitySet<Contracts>(new Action<Contracts>(this.attach_Contracts), new Action<Contracts>(this.detach_Contracts));
-			this._Projects = new EntitySet<Projects>(new Action<Projects>(this.attach_Projects), new Action<Projects>(this.detach_Projects));
+			this._ProjectEventMappingTable = new EntitySet<ProjectEventMappingTable>(new Action<ProjectEventMappingTable>(this.attach_ProjectEventMappingTable), new Action<ProjectEventMappingTable>(this.detach_ProjectEventMappingTable));
+			this._CollectedValues = new EntitySet<CollectedValues>(new Action<CollectedValues>(this.attach_CollectedValues), new Action<CollectedValues>(this.detach_CollectedValues));
+			this._ProjectsValues = new EntitySet<ProjectsValues>(new Action<ProjectsValues>(this.attach_ProjectsValues), new Action<ProjectsValues>(this.detach_ProjectsValues));
+			this._MainEvent = default(EntityRef<MainEvent>);
 			OnCreated();
 		}
 		
@@ -483,7 +794,7 @@ namespace Zakupka
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string name
 		{
 			get
@@ -503,29 +814,100 @@ namespace Zakupka
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Events_Contracts", Storage="_Contracts", ThisKey="eventID", OtherKey="fk_event")]
-		public EntitySet<Contracts> Contracts
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_mainevent", DbType="Int")]
+		public System.Nullable<int> fk_mainevent
 		{
 			get
 			{
-				return this._Contracts;
+				return this._fk_mainevent;
 			}
 			set
 			{
-				this._Contracts.Assign(value);
+				if ((this._fk_mainevent != value))
+				{
+					if (this._MainEvent.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_maineventChanging(value);
+					this.SendPropertyChanging();
+					this._fk_mainevent = value;
+					this.SendPropertyChanged("fk_mainevent");
+					this.Onfk_maineventChanged();
+				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Events_Projects", Storage="_Projects", ThisKey="eventID", OtherKey="fk_event")]
-		public EntitySet<Projects> Projects
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Events_ProjectEventMappingTable", Storage="_ProjectEventMappingTable", ThisKey="eventID", OtherKey="fk_event")]
+		public EntitySet<ProjectEventMappingTable> ProjectEventMappingTable
 		{
 			get
 			{
-				return this._Projects;
+				return this._ProjectEventMappingTable;
 			}
 			set
 			{
-				this._Projects.Assign(value);
+				this._ProjectEventMappingTable.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Events_CollectedValues", Storage="_CollectedValues", ThisKey="eventID", OtherKey="fk_event")]
+		public EntitySet<CollectedValues> CollectedValues
+		{
+			get
+			{
+				return this._CollectedValues;
+			}
+			set
+			{
+				this._CollectedValues.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Events_ProjectsValues", Storage="_ProjectsValues", ThisKey="eventID", OtherKey="fk_event")]
+		public EntitySet<ProjectsValues> ProjectsValues
+		{
+			get
+			{
+				return this._ProjectsValues;
+			}
+			set
+			{
+				this._ProjectsValues.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MainEvent_Events", Storage="_MainEvent", ThisKey="fk_mainevent", OtherKey="ID", IsForeignKey=true)]
+		public MainEvent MainEvent
+		{
+			get
+			{
+				return this._MainEvent.Entity;
+			}
+			set
+			{
+				MainEvent previousValue = this._MainEvent.Entity;
+				if (((previousValue != value) 
+							|| (this._MainEvent.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._MainEvent.Entity = null;
+						previousValue.Events.Remove(this);
+					}
+					this._MainEvent.Entity = value;
+					if ((value != null))
+					{
+						value.Events.Add(this);
+						this._fk_mainevent = value.ID;
+					}
+					else
+					{
+						this._fk_mainevent = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("MainEvent");
+				}
 			}
 		}
 		
@@ -549,28 +931,584 @@ namespace Zakupka
 			}
 		}
 		
-		private void attach_Contracts(Contracts entity)
+		private void attach_ProjectEventMappingTable(ProjectEventMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.Events = this;
 		}
 		
-		private void detach_Contracts(Contracts entity)
+		private void detach_ProjectEventMappingTable(ProjectEventMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.Events = null;
 		}
 		
-		private void attach_Projects(Projects entity)
+		private void attach_CollectedValues(CollectedValues entity)
 		{
 			this.SendPropertyChanging();
 			entity.Events = this;
 		}
 		
-		private void detach_Projects(Projects entity)
+		private void detach_CollectedValues(CollectedValues entity)
 		{
 			this.SendPropertyChanging();
 			entity.Events = null;
+		}
+		
+		private void attach_ProjectsValues(ProjectsValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.Events = this;
+		}
+		
+		private void detach_ProjectsValues(ProjectsValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.Events = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.KOSGUtable")]
+	public partial class KOSGUtable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private System.Nullable<bool> _Active;
+		
+		private string _Name;
+		
+		private System.Nullable<int> _Class;
+		
+		private EntitySet<CollectedValues> _CollectedValues;
+		
+		private EntitySet<ProjectsValues> _ProjectsValues;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnClassChanging(System.Nullable<int> value);
+    partial void OnClassChanged();
+    #endregion
+		
+		public KOSGUtable()
+		{
+			this._CollectedValues = new EntitySet<CollectedValues>(new Action<CollectedValues>(this.attach_CollectedValues), new Action<CollectedValues>(this.detach_CollectedValues));
+			this._ProjectsValues = new EntitySet<ProjectsValues>(new Action<ProjectsValues>(this.attach_ProjectsValues), new Action<ProjectsValues>(this.detach_ProjectsValues));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(MAX)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Class", DbType="Int")]
+		public System.Nullable<int> Class
+		{
+			get
+			{
+				return this._Class;
+			}
+			set
+			{
+				if ((this._Class != value))
+				{
+					this.OnClassChanging(value);
+					this.SendPropertyChanging();
+					this._Class = value;
+					this.SendPropertyChanged("Class");
+					this.OnClassChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="KOSGUtable_CollectedValues", Storage="_CollectedValues", ThisKey="ID", OtherKey="fk_kosgu")]
+		public EntitySet<CollectedValues> CollectedValues
+		{
+			get
+			{
+				return this._CollectedValues;
+			}
+			set
+			{
+				this._CollectedValues.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="KOSGUtable_ProjectsValues", Storage="_ProjectsValues", ThisKey="ID", OtherKey="fk_kosgu")]
+		public EntitySet<ProjectsValues> ProjectsValues
+		{
+			get
+			{
+				return this._ProjectsValues;
+			}
+			set
+			{
+				this._ProjectsValues.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_CollectedValues(CollectedValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.KOSGUtable = this;
+		}
+		
+		private void detach_CollectedValues(CollectedValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.KOSGUtable = null;
+		}
+		
+		private void attach_ProjectsValues(ProjectsValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.KOSGUtable = this;
+		}
+		
+		private void detach_ProjectsValues(ProjectsValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.KOSGUtable = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MainEvent")]
+	public partial class MainEvent : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _MainEvent1;
+		
+		private System.Nullable<bool> _Active;
+		
+		private EntitySet<Events> _Events;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnMainEvent1Changing(string value);
+    partial void OnMainEvent1Changed();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public MainEvent()
+		{
+			this._Events = new EntitySet<Events>(new Action<Events>(this.attach_Events), new Action<Events>(this.detach_Events));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="MainEvent", Storage="_MainEvent1", DbType="NVarChar(MAX)")]
+		public string MainEvent1
+		{
+			get
+			{
+				return this._MainEvent1;
+			}
+			set
+			{
+				if ((this._MainEvent1 != value))
+				{
+					this.OnMainEvent1Changing(value);
+					this.SendPropertyChanging();
+					this._MainEvent1 = value;
+					this.SendPropertyChanged("MainEvent1");
+					this.OnMainEvent1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MainEvent_Events", Storage="_Events", ThisKey="ID", OtherKey="fk_mainevent")]
+		public EntitySet<Events> Events
+		{
+			get
+			{
+				return this._Events;
+			}
+			set
+			{
+				this._Events.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Events(Events entity)
+		{
+			this.SendPropertyChanging();
+			entity.MainEvent = this;
+		}
+		
+		private void detach_Events(Events entity)
+		{
+			this.SendPropertyChanging();
+			entity.MainEvent = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ProjectEventMappingTable")]
+	public partial class ProjectEventMappingTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _fk_event;
+		
+		private int _fk_project;
+		
+		private bool _active;
+		
+		private EntityRef<Events> _Events;
+		
+		private EntityRef<Projects> _Projects;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void Onfk_eventChanging(int value);
+    partial void Onfk_eventChanged();
+    partial void Onfk_projectChanging(int value);
+    partial void Onfk_projectChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    #endregion
+		
+		public ProjectEventMappingTable()
+		{
+			this._Events = default(EntityRef<Events>);
+			this._Projects = default(EntityRef<Projects>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_event", DbType="Int NOT NULL")]
+		public int fk_event
+		{
+			get
+			{
+				return this._fk_event;
+			}
+			set
+			{
+				if ((this._fk_event != value))
+				{
+					if (this._Events.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_eventChanging(value);
+					this.SendPropertyChanging();
+					this._fk_event = value;
+					this.SendPropertyChanged("fk_event");
+					this.Onfk_eventChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_project", DbType="Int NOT NULL")]
+		public int fk_project
+		{
+			get
+			{
+				return this._fk_project;
+			}
+			set
+			{
+				if ((this._fk_project != value))
+				{
+					if (this._Projects.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_projectChanging(value);
+					this.SendPropertyChanging();
+					this._fk_project = value;
+					this.SendPropertyChanged("fk_project");
+					this.Onfk_projectChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Events_ProjectEventMappingTable", Storage="_Events", ThisKey="fk_event", OtherKey="eventID", IsForeignKey=true)]
+		public Events Events
+		{
+			get
+			{
+				return this._Events.Entity;
+			}
+			set
+			{
+				Events previousValue = this._Events.Entity;
+				if (((previousValue != value) 
+							|| (this._Events.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Events.Entity = null;
+						previousValue.ProjectEventMappingTable.Remove(this);
+					}
+					this._Events.Entity = value;
+					if ((value != null))
+					{
+						value.ProjectEventMappingTable.Add(this);
+						this._fk_event = value.eventID;
+					}
+					else
+					{
+						this._fk_event = default(int);
+					}
+					this.SendPropertyChanged("Events");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Projects_ProjectEventMappingTable", Storage="_Projects", ThisKey="fk_project", OtherKey="projectID", IsForeignKey=true)]
+		public Projects Projects
+		{
+			get
+			{
+				return this._Projects.Entity;
+			}
+			set
+			{
+				Projects previousValue = this._Projects.Entity;
+				if (((previousValue != value) 
+							|| (this._Projects.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Projects.Entity = null;
+						previousValue.ProjectEventMappingTable.Remove(this);
+					}
+					this._Projects.Entity = value;
+					if ((value != null))
+					{
+						value.ProjectEventMappingTable.Add(this);
+						this._fk_project = value.projectID;
+					}
+					else
+					{
+						this._fk_project = default(int);
+					}
+					this.SendPropertyChanged("Projects");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -586,11 +1524,13 @@ namespace Zakupka
 		
 		private string _name;
 		
-		private int _fk_event;
+		private EntitySet<ContractProjectMappingTable> _ContractProjectMappingTable;
 		
-		private EntitySet<Contracts> _Contracts;
+		private EntitySet<ProjectEventMappingTable> _ProjectEventMappingTable;
 		
-		private EntityRef<Events> _Events;
+		private EntitySet<CollectedValues> _CollectedValues;
+		
+		private EntitySet<ProjectsValues> _ProjectsValues;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -602,14 +1542,14 @@ namespace Zakupka
     partial void OnactiveChanged();
     partial void OnnameChanging(string value);
     partial void OnnameChanged();
-    partial void Onfk_eventChanging(int value);
-    partial void Onfk_eventChanged();
     #endregion
 		
 		public Projects()
 		{
-			this._Contracts = new EntitySet<Contracts>(new Action<Contracts>(this.attach_Contracts), new Action<Contracts>(this.detach_Contracts));
-			this._Events = default(EntityRef<Events>);
+			this._ContractProjectMappingTable = new EntitySet<ContractProjectMappingTable>(new Action<ContractProjectMappingTable>(this.attach_ContractProjectMappingTable), new Action<ContractProjectMappingTable>(this.detach_ContractProjectMappingTable));
+			this._ProjectEventMappingTable = new EntitySet<ProjectEventMappingTable>(new Action<ProjectEventMappingTable>(this.attach_ProjectEventMappingTable), new Action<ProjectEventMappingTable>(this.detach_ProjectEventMappingTable));
+			this._CollectedValues = new EntitySet<CollectedValues>(new Action<CollectedValues>(this.attach_CollectedValues), new Action<CollectedValues>(this.detach_CollectedValues));
+			this._ProjectsValues = new EntitySet<ProjectsValues>(new Action<ProjectsValues>(this.attach_ProjectsValues), new Action<ProjectsValues>(this.detach_ProjectsValues));
 			OnCreated();
 		}
 		
@@ -673,74 +1613,55 @@ namespace Zakupka
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_event", DbType="Int NOT NULL")]
-		public int fk_event
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Projects_ContractProjectMappingTable", Storage="_ContractProjectMappingTable", ThisKey="projectID", OtherKey="fk_project")]
+		public EntitySet<ContractProjectMappingTable> ContractProjectMappingTable
 		{
 			get
 			{
-				return this._fk_event;
+				return this._ContractProjectMappingTable;
 			}
 			set
 			{
-				if ((this._fk_event != value))
-				{
-					if (this._Events.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_eventChanging(value);
-					this.SendPropertyChanging();
-					this._fk_event = value;
-					this.SendPropertyChanged("fk_event");
-					this.Onfk_eventChanged();
-				}
+				this._ContractProjectMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Projects_Contracts", Storage="_Contracts", ThisKey="projectID", OtherKey="fk_project")]
-		public EntitySet<Contracts> Contracts
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Projects_ProjectEventMappingTable", Storage="_ProjectEventMappingTable", ThisKey="projectID", OtherKey="fk_project")]
+		public EntitySet<ProjectEventMappingTable> ProjectEventMappingTable
 		{
 			get
 			{
-				return this._Contracts;
+				return this._ProjectEventMappingTable;
 			}
 			set
 			{
-				this._Contracts.Assign(value);
+				this._ProjectEventMappingTable.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Events_Projects", Storage="_Events", ThisKey="fk_event", OtherKey="eventID", IsForeignKey=true)]
-		public Events Events
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Projects_CollectedValues", Storage="_CollectedValues", ThisKey="projectID", OtherKey="fk_project")]
+		public EntitySet<CollectedValues> CollectedValues
 		{
 			get
 			{
-				return this._Events.Entity;
+				return this._CollectedValues;
 			}
 			set
 			{
-				Events previousValue = this._Events.Entity;
-				if (((previousValue != value) 
-							|| (this._Events.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Events.Entity = null;
-						previousValue.Projects.Remove(this);
-					}
-					this._Events.Entity = value;
-					if ((value != null))
-					{
-						value.Projects.Add(this);
-						this._fk_event = value.eventID;
-					}
-					else
-					{
-						this._fk_event = default(int);
-					}
-					this.SendPropertyChanged("Events");
-				}
+				this._CollectedValues.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Projects_ProjectsValues", Storage="_ProjectsValues", ThisKey="projectID", OtherKey="fk_project")]
+		public EntitySet<ProjectsValues> ProjectsValues
+		{
+			get
+			{
+				return this._ProjectsValues;
+			}
+			set
+			{
+				this._ProjectsValues.Assign(value);
 			}
 		}
 		
@@ -764,16 +1685,162 @@ namespace Zakupka
 			}
 		}
 		
-		private void attach_Contracts(Contracts entity)
+		private void attach_ContractProjectMappingTable(ContractProjectMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.Projects = this;
 		}
 		
-		private void detach_Contracts(Contracts entity)
+		private void detach_ContractProjectMappingTable(ContractProjectMappingTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.Projects = null;
+		}
+		
+		private void attach_ProjectEventMappingTable(ProjectEventMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Projects = this;
+		}
+		
+		private void detach_ProjectEventMappingTable(ProjectEventMappingTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Projects = null;
+		}
+		
+		private void attach_CollectedValues(CollectedValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.Projects = this;
+		}
+		
+		private void detach_CollectedValues(CollectedValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.Projects = null;
+		}
+		
+		private void attach_ProjectsValues(ProjectsValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.Projects = this;
+		}
+		
+		private void detach_ProjectsValues(ProjectsValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.Projects = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.StructTable")]
+	public partial class StructTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _name;
+		
+		private bool _active;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    #endregion
+		
+		public StructTable()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -797,8 +1864,6 @@ namespace Zakupka
 		
 		private string _name;
 		
-		private EntitySet<CollectedValues> _CollectedValues;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -821,7 +1886,6 @@ namespace Zakupka
 		
 		public Users()
 		{
-			this._CollectedValues = new EntitySet<CollectedValues>(new Action<CollectedValues>(this.attach_CollectedValues), new Action<CollectedValues>(this.detach_CollectedValues));
 			OnCreated();
 		}
 		
@@ -961,384 +2025,6 @@ namespace Zakupka
 					this._name = value;
 					this.SendPropertyChanged("name");
 					this.OnnameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_CollectedValues", Storage="_CollectedValues", ThisKey="userID", OtherKey="fk_user")]
-		public EntitySet<CollectedValues> CollectedValues
-		{
-			get
-			{
-				return this._CollectedValues;
-			}
-			set
-			{
-				this._CollectedValues.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_CollectedValues(CollectedValues entity)
-		{
-			this.SendPropertyChanging();
-			entity.Users = this;
-		}
-		
-		private void detach_CollectedValues(CollectedValues entity)
-		{
-			this.SendPropertyChanging();
-			entity.Users = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CollectedValues")]
-	public partial class CollectedValues : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _collectedFieldID;
-		
-		private bool _active;
-		
-		private int _version;
-		
-		private string _value;
-		
-		private int _fk_field;
-		
-		private int _fk_contract;
-		
-		private int _fk_user;
-		
-		private System.DateTime _createDateTime;
-		
-		private EntityRef<Contracts> _Contracts;
-		
-		private EntityRef<Users> _Users;
-		
-		private EntityRef<Fields> _Fields;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OncollectedFieldIDChanging(int value);
-    partial void OncollectedFieldIDChanged();
-    partial void OnactiveChanging(bool value);
-    partial void OnactiveChanged();
-    partial void OnversionChanging(int value);
-    partial void OnversionChanged();
-    partial void OnvalueChanging(string value);
-    partial void OnvalueChanged();
-    partial void Onfk_fieldChanging(int value);
-    partial void Onfk_fieldChanged();
-    partial void Onfk_contractChanging(int value);
-    partial void Onfk_contractChanged();
-    partial void Onfk_userChanging(int value);
-    partial void Onfk_userChanged();
-    partial void OncreateDateTimeChanging(System.DateTime value);
-    partial void OncreateDateTimeChanged();
-    #endregion
-		
-		public CollectedValues()
-		{
-			this._Contracts = default(EntityRef<Contracts>);
-			this._Users = default(EntityRef<Users>);
-			this._Fields = default(EntityRef<Fields>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_collectedFieldID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int collectedFieldID
-		{
-			get
-			{
-				return this._collectedFieldID;
-			}
-			set
-			{
-				if ((this._collectedFieldID != value))
-				{
-					this.OncollectedFieldIDChanging(value);
-					this.SendPropertyChanging();
-					this._collectedFieldID = value;
-					this.SendPropertyChanged("collectedFieldID");
-					this.OncollectedFieldIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
-		public bool active
-		{
-			get
-			{
-				return this._active;
-			}
-			set
-			{
-				if ((this._active != value))
-				{
-					this.OnactiveChanging(value);
-					this.SendPropertyChanging();
-					this._active = value;
-					this.SendPropertyChanged("active");
-					this.OnactiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_version", DbType="Int NOT NULL")]
-		public int version
-		{
-			get
-			{
-				return this._version;
-			}
-			set
-			{
-				if ((this._version != value))
-				{
-					this.OnversionChanging(value);
-					this.SendPropertyChanging();
-					this._version = value;
-					this.SendPropertyChanged("version");
-					this.OnversionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_value", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
-		public string value
-		{
-			get
-			{
-				return this._value;
-			}
-			set
-			{
-				if ((this._value != value))
-				{
-					this.OnvalueChanging(value);
-					this.SendPropertyChanging();
-					this._value = value;
-					this.SendPropertyChanged("value");
-					this.OnvalueChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_field", DbType="Int NOT NULL")]
-		public int fk_field
-		{
-			get
-			{
-				return this._fk_field;
-			}
-			set
-			{
-				if ((this._fk_field != value))
-				{
-					if (this._Fields.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_fieldChanging(value);
-					this.SendPropertyChanging();
-					this._fk_field = value;
-					this.SendPropertyChanged("fk_field");
-					this.Onfk_fieldChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_contract", DbType="Int NOT NULL")]
-		public int fk_contract
-		{
-			get
-			{
-				return this._fk_contract;
-			}
-			set
-			{
-				if ((this._fk_contract != value))
-				{
-					if (this._Contracts.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_contractChanging(value);
-					this.SendPropertyChanging();
-					this._fk_contract = value;
-					this.SendPropertyChanged("fk_contract");
-					this.Onfk_contractChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_user", DbType="Int NOT NULL")]
-		public int fk_user
-		{
-			get
-			{
-				return this._fk_user;
-			}
-			set
-			{
-				if ((this._fk_user != value))
-				{
-					if (this._Users.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onfk_userChanging(value);
-					this.SendPropertyChanging();
-					this._fk_user = value;
-					this.SendPropertyChanged("fk_user");
-					this.Onfk_userChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_createDateTime", DbType="DateTime NOT NULL")]
-		public System.DateTime createDateTime
-		{
-			get
-			{
-				return this._createDateTime;
-			}
-			set
-			{
-				if ((this._createDateTime != value))
-				{
-					this.OncreateDateTimeChanging(value);
-					this.SendPropertyChanging();
-					this._createDateTime = value;
-					this.SendPropertyChanged("createDateTime");
-					this.OncreateDateTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contracts_CollectedValues", Storage="_Contracts", ThisKey="fk_contract", OtherKey="contractID", IsForeignKey=true)]
-		public Contracts Contracts
-		{
-			get
-			{
-				return this._Contracts.Entity;
-			}
-			set
-			{
-				Contracts previousValue = this._Contracts.Entity;
-				if (((previousValue != value) 
-							|| (this._Contracts.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Contracts.Entity = null;
-						previousValue.CollectedValues.Remove(this);
-					}
-					this._Contracts.Entity = value;
-					if ((value != null))
-					{
-						value.CollectedValues.Add(this);
-						this._fk_contract = value.contractID;
-					}
-					else
-					{
-						this._fk_contract = default(int);
-					}
-					this.SendPropertyChanged("Contracts");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_CollectedValues", Storage="_Users", ThisKey="fk_user", OtherKey="userID", IsForeignKey=true)]
-		public Users Users
-		{
-			get
-			{
-				return this._Users.Entity;
-			}
-			set
-			{
-				Users previousValue = this._Users.Entity;
-				if (((previousValue != value) 
-							|| (this._Users.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Users.Entity = null;
-						previousValue.CollectedValues.Remove(this);
-					}
-					this._Users.Entity = value;
-					if ((value != null))
-					{
-						value.CollectedValues.Add(this);
-						this._fk_user = value.userID;
-					}
-					else
-					{
-						this._fk_user = default(int);
-					}
-					this.SendPropertyChanged("Users");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fields_CollectedValues", Storage="_Fields", ThisKey="fk_field", OtherKey="filedID", IsForeignKey=true)]
-		public Fields Fields
-		{
-			get
-			{
-				return this._Fields.Entity;
-			}
-			set
-			{
-				Fields previousValue = this._Fields.Entity;
-				if (((previousValue != value) 
-							|| (this._Fields.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Fields.Entity = null;
-						previousValue.CollectedValues.Remove(this);
-					}
-					this._Fields.Entity = value;
-					if ((value != null))
-					{
-						value.CollectedValues.Add(this);
-						this._fk_field = value.filedID;
-					}
-					else
-					{
-						this._fk_field = default(int);
-					}
-					this.SendPropertyChanged("Fields");
 				}
 			}
 		}
@@ -1563,6 +2249,811 @@ namespace Zakupka
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CollectedValues")]
+	public partial class CollectedValues : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _collectedFieldID;
+		
+		private bool _active;
+		
+		private string _value;
+		
+		private System.Nullable<int> _fk_field;
+		
+		private System.Nullable<int> _fk_contract;
+		
+		private System.Nullable<int> _fk_project;
+		
+		private System.Nullable<int> _fk_event;
+		
+		private System.Nullable<int> _fk_kosgu;
+		
+		private EntityRef<Contracts> _Contracts;
+		
+		private EntityRef<Events> _Events;
+		
+		private EntityRef<KOSGUtable> _KOSGUtable;
+		
+		private EntityRef<Projects> _Projects;
+		
+		private EntityRef<Fields> _Fields;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OncollectedFieldIDChanging(int value);
+    partial void OncollectedFieldIDChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void OnvalueChanging(string value);
+    partial void OnvalueChanged();
+    partial void Onfk_fieldChanging(System.Nullable<int> value);
+    partial void Onfk_fieldChanged();
+    partial void Onfk_contractChanging(System.Nullable<int> value);
+    partial void Onfk_contractChanged();
+    partial void Onfk_projectChanging(System.Nullable<int> value);
+    partial void Onfk_projectChanged();
+    partial void Onfk_eventChanging(System.Nullable<int> value);
+    partial void Onfk_eventChanged();
+    partial void Onfk_kosguChanging(System.Nullable<int> value);
+    partial void Onfk_kosguChanged();
+    #endregion
+		
+		public CollectedValues()
+		{
+			this._Contracts = default(EntityRef<Contracts>);
+			this._Events = default(EntityRef<Events>);
+			this._KOSGUtable = default(EntityRef<KOSGUtable>);
+			this._Projects = default(EntityRef<Projects>);
+			this._Fields = default(EntityRef<Fields>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_collectedFieldID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int collectedFieldID
+		{
+			get
+			{
+				return this._collectedFieldID;
+			}
+			set
+			{
+				if ((this._collectedFieldID != value))
+				{
+					this.OncollectedFieldIDChanging(value);
+					this.SendPropertyChanging();
+					this._collectedFieldID = value;
+					this.SendPropertyChanged("collectedFieldID");
+					this.OncollectedFieldIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_value", DbType="VarChar(MAX)")]
+		public string value
+		{
+			get
+			{
+				return this._value;
+			}
+			set
+			{
+				if ((this._value != value))
+				{
+					this.OnvalueChanging(value);
+					this.SendPropertyChanging();
+					this._value = value;
+					this.SendPropertyChanged("value");
+					this.OnvalueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_field", DbType="Int")]
+		public System.Nullable<int> fk_field
+		{
+			get
+			{
+				return this._fk_field;
+			}
+			set
+			{
+				if ((this._fk_field != value))
+				{
+					if (this._Fields.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_fieldChanging(value);
+					this.SendPropertyChanging();
+					this._fk_field = value;
+					this.SendPropertyChanged("fk_field");
+					this.Onfk_fieldChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_contract", DbType="Int")]
+		public System.Nullable<int> fk_contract
+		{
+			get
+			{
+				return this._fk_contract;
+			}
+			set
+			{
+				if ((this._fk_contract != value))
+				{
+					if (this._Contracts.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_contractChanging(value);
+					this.SendPropertyChanging();
+					this._fk_contract = value;
+					this.SendPropertyChanged("fk_contract");
+					this.Onfk_contractChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_project", DbType="Int")]
+		public System.Nullable<int> fk_project
+		{
+			get
+			{
+				return this._fk_project;
+			}
+			set
+			{
+				if ((this._fk_project != value))
+				{
+					if (this._Projects.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_projectChanging(value);
+					this.SendPropertyChanging();
+					this._fk_project = value;
+					this.SendPropertyChanged("fk_project");
+					this.Onfk_projectChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_event", DbType="Int")]
+		public System.Nullable<int> fk_event
+		{
+			get
+			{
+				return this._fk_event;
+			}
+			set
+			{
+				if ((this._fk_event != value))
+				{
+					if (this._Events.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_eventChanging(value);
+					this.SendPropertyChanging();
+					this._fk_event = value;
+					this.SendPropertyChanged("fk_event");
+					this.Onfk_eventChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_kosgu", DbType="Int")]
+		public System.Nullable<int> fk_kosgu
+		{
+			get
+			{
+				return this._fk_kosgu;
+			}
+			set
+			{
+				if ((this._fk_kosgu != value))
+				{
+					if (this._KOSGUtable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_kosguChanging(value);
+					this.SendPropertyChanging();
+					this._fk_kosgu = value;
+					this.SendPropertyChanged("fk_kosgu");
+					this.Onfk_kosguChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contracts_CollectedValues", Storage="_Contracts", ThisKey="fk_contract", OtherKey="contractID", IsForeignKey=true)]
+		public Contracts Contracts
+		{
+			get
+			{
+				return this._Contracts.Entity;
+			}
+			set
+			{
+				Contracts previousValue = this._Contracts.Entity;
+				if (((previousValue != value) 
+							|| (this._Contracts.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Contracts.Entity = null;
+						previousValue.CollectedValues.Remove(this);
+					}
+					this._Contracts.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedValues.Add(this);
+						this._fk_contract = value.contractID;
+					}
+					else
+					{
+						this._fk_contract = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Contracts");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Events_CollectedValues", Storage="_Events", ThisKey="fk_event", OtherKey="eventID", IsForeignKey=true)]
+		public Events Events
+		{
+			get
+			{
+				return this._Events.Entity;
+			}
+			set
+			{
+				Events previousValue = this._Events.Entity;
+				if (((previousValue != value) 
+							|| (this._Events.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Events.Entity = null;
+						previousValue.CollectedValues.Remove(this);
+					}
+					this._Events.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedValues.Add(this);
+						this._fk_event = value.eventID;
+					}
+					else
+					{
+						this._fk_event = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Events");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="KOSGUtable_CollectedValues", Storage="_KOSGUtable", ThisKey="fk_kosgu", OtherKey="ID", IsForeignKey=true)]
+		public KOSGUtable KOSGUtable
+		{
+			get
+			{
+				return this._KOSGUtable.Entity;
+			}
+			set
+			{
+				KOSGUtable previousValue = this._KOSGUtable.Entity;
+				if (((previousValue != value) 
+							|| (this._KOSGUtable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._KOSGUtable.Entity = null;
+						previousValue.CollectedValues.Remove(this);
+					}
+					this._KOSGUtable.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedValues.Add(this);
+						this._fk_kosgu = value.ID;
+					}
+					else
+					{
+						this._fk_kosgu = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("KOSGUtable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Projects_CollectedValues", Storage="_Projects", ThisKey="fk_project", OtherKey="projectID", IsForeignKey=true)]
+		public Projects Projects
+		{
+			get
+			{
+				return this._Projects.Entity;
+			}
+			set
+			{
+				Projects previousValue = this._Projects.Entity;
+				if (((previousValue != value) 
+							|| (this._Projects.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Projects.Entity = null;
+						previousValue.CollectedValues.Remove(this);
+					}
+					this._Projects.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedValues.Add(this);
+						this._fk_project = value.projectID;
+					}
+					else
+					{
+						this._fk_project = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Projects");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fields_CollectedValues", Storage="_Fields", ThisKey="fk_field", OtherKey="filedID", IsForeignKey=true)]
+		public Fields Fields
+		{
+			get
+			{
+				return this._Fields.Entity;
+			}
+			set
+			{
+				Fields previousValue = this._Fields.Entity;
+				if (((previousValue != value) 
+							|| (this._Fields.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Fields.Entity = null;
+						previousValue.CollectedValues.Remove(this);
+					}
+					this._Fields.Entity = value;
+					if ((value != null))
+					{
+						value.CollectedValues.Add(this);
+						this._fk_field = value.filedID;
+					}
+					else
+					{
+						this._fk_field = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Fields");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ProjectsValues")]
+	public partial class ProjectsValues : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private System.Nullable<int> _fk_field;
+		
+		private System.Nullable<int> _fk_project;
+		
+		private System.Nullable<int> _fk_kosgu;
+		
+		private string _value;
+		
+		private System.Nullable<bool> _active;
+		
+		private System.Nullable<int> _fk_event;
+		
+		private EntityRef<Events> _Events;
+		
+		private EntityRef<KOSGUtable> _KOSGUtable;
+		
+		private EntityRef<Projects> _Projects;
+		
+		private EntityRef<Fields> _Fields;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void Onfk_fieldChanging(System.Nullable<int> value);
+    partial void Onfk_fieldChanged();
+    partial void Onfk_projectChanging(System.Nullable<int> value);
+    partial void Onfk_projectChanged();
+    partial void Onfk_kosguChanging(System.Nullable<int> value);
+    partial void Onfk_kosguChanged();
+    partial void OnvalueChanging(string value);
+    partial void OnvalueChanged();
+    partial void OnactiveChanging(System.Nullable<bool> value);
+    partial void OnactiveChanged();
+    partial void Onfk_eventChanging(System.Nullable<int> value);
+    partial void Onfk_eventChanged();
+    #endregion
+		
+		public ProjectsValues()
+		{
+			this._Events = default(EntityRef<Events>);
+			this._KOSGUtable = default(EntityRef<KOSGUtable>);
+			this._Projects = default(EntityRef<Projects>);
+			this._Fields = default(EntityRef<Fields>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_field", DbType="Int")]
+		public System.Nullable<int> fk_field
+		{
+			get
+			{
+				return this._fk_field;
+			}
+			set
+			{
+				if ((this._fk_field != value))
+				{
+					if (this._Fields.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_fieldChanging(value);
+					this.SendPropertyChanging();
+					this._fk_field = value;
+					this.SendPropertyChanged("fk_field");
+					this.Onfk_fieldChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_project", DbType="Int")]
+		public System.Nullable<int> fk_project
+		{
+			get
+			{
+				return this._fk_project;
+			}
+			set
+			{
+				if ((this._fk_project != value))
+				{
+					if (this._Projects.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_projectChanging(value);
+					this.SendPropertyChanging();
+					this._fk_project = value;
+					this.SendPropertyChanged("fk_project");
+					this.Onfk_projectChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_kosgu", DbType="Int")]
+		public System.Nullable<int> fk_kosgu
+		{
+			get
+			{
+				return this._fk_kosgu;
+			}
+			set
+			{
+				if ((this._fk_kosgu != value))
+				{
+					if (this._KOSGUtable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_kosguChanging(value);
+					this.SendPropertyChanging();
+					this._fk_kosgu = value;
+					this.SendPropertyChanged("fk_kosgu");
+					this.Onfk_kosguChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_value", DbType="VarChar(MAX)")]
+		public string value
+		{
+			get
+			{
+				return this._value;
+			}
+			set
+			{
+				if ((this._value != value))
+				{
+					this.OnvalueChanging(value);
+					this.SendPropertyChanging();
+					this._value = value;
+					this.SendPropertyChanged("value");
+					this.OnvalueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit")]
+		public System.Nullable<bool> active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fk_event", DbType="Int")]
+		public System.Nullable<int> fk_event
+		{
+			get
+			{
+				return this._fk_event;
+			}
+			set
+			{
+				if ((this._fk_event != value))
+				{
+					if (this._Events.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onfk_eventChanging(value);
+					this.SendPropertyChanging();
+					this._fk_event = value;
+					this.SendPropertyChanged("fk_event");
+					this.Onfk_eventChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Events_ProjectsValues", Storage="_Events", ThisKey="fk_event", OtherKey="eventID", IsForeignKey=true)]
+		public Events Events
+		{
+			get
+			{
+				return this._Events.Entity;
+			}
+			set
+			{
+				Events previousValue = this._Events.Entity;
+				if (((previousValue != value) 
+							|| (this._Events.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Events.Entity = null;
+						previousValue.ProjectsValues.Remove(this);
+					}
+					this._Events.Entity = value;
+					if ((value != null))
+					{
+						value.ProjectsValues.Add(this);
+						this._fk_event = value.eventID;
+					}
+					else
+					{
+						this._fk_event = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Events");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="KOSGUtable_ProjectsValues", Storage="_KOSGUtable", ThisKey="fk_kosgu", OtherKey="ID", IsForeignKey=true)]
+		public KOSGUtable KOSGUtable
+		{
+			get
+			{
+				return this._KOSGUtable.Entity;
+			}
+			set
+			{
+				KOSGUtable previousValue = this._KOSGUtable.Entity;
+				if (((previousValue != value) 
+							|| (this._KOSGUtable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._KOSGUtable.Entity = null;
+						previousValue.ProjectsValues.Remove(this);
+					}
+					this._KOSGUtable.Entity = value;
+					if ((value != null))
+					{
+						value.ProjectsValues.Add(this);
+						this._fk_kosgu = value.ID;
+					}
+					else
+					{
+						this._fk_kosgu = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("KOSGUtable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Projects_ProjectsValues", Storage="_Projects", ThisKey="fk_project", OtherKey="projectID", IsForeignKey=true)]
+		public Projects Projects
+		{
+			get
+			{
+				return this._Projects.Entity;
+			}
+			set
+			{
+				Projects previousValue = this._Projects.Entity;
+				if (((previousValue != value) 
+							|| (this._Projects.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Projects.Entity = null;
+						previousValue.ProjectsValues.Remove(this);
+					}
+					this._Projects.Entity = value;
+					if ((value != null))
+					{
+						value.ProjectsValues.Add(this);
+						this._fk_project = value.projectID;
+					}
+					else
+					{
+						this._fk_project = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Projects");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fields_ProjectsValues", Storage="_Fields", ThisKey="fk_field", OtherKey="filedID", IsForeignKey=true)]
+		public Fields Fields
+		{
+			get
+			{
+				return this._Fields.Entity;
+			}
+			set
+			{
+				Fields previousValue = this._Fields.Entity;
+				if (((previousValue != value) 
+							|| (this._Fields.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Fields.Entity = null;
+						previousValue.ProjectsValues.Remove(this);
+					}
+					this._Fields.Entity = value;
+					if ((value != null))
+					{
+						value.ProjectsValues.Add(this);
+						this._fk_field = value.filedID;
+					}
+					else
+					{
+						this._fk_field = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Fields");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Fields")]
 	public partial class Fields : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1575,7 +3066,7 @@ namespace Zakupka
 		
 		private string _name;
 		
-		private System.Nullable<bool> _autocalculate;
+		private System.Nullable<bool> _commonfield;
 		
 		private string _type;
 		
@@ -1591,11 +3082,15 @@ namespace Zakupka
 		
 		private System.Nullable<bool> _sumby;
 		
-		private System.Nullable<int> _autosum;
+		private System.Nullable<bool> _staticvalue;
+		
+		private string _engname;
+		
+		private EntitySet<ViewField> _ViewField;
 		
 		private EntitySet<CollectedValues> _CollectedValues;
 		
-		private EntitySet<ViewField> _ViewField;
+		private EntitySet<ProjectsValues> _ProjectsValues;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1607,8 +3102,8 @@ namespace Zakupka
     partial void OnactiveChanged();
     partial void OnnameChanging(string value);
     partial void OnnameChanged();
-    partial void OnautocalculateChanging(System.Nullable<bool> value);
-    partial void OnautocalculateChanged();
+    partial void OncommonfieldChanging(System.Nullable<bool> value);
+    partial void OncommonfieldChanged();
     partial void OntypeChanging(string value);
     partial void OntypeChanged();
     partial void OnlineChanging(int value);
@@ -1623,14 +3118,17 @@ namespace Zakupka
     partial void OnstepChanged();
     partial void OnsumbyChanging(System.Nullable<bool> value);
     partial void OnsumbyChanged();
-    partial void OnautosumChanging(System.Nullable<int> value);
-    partial void OnautosumChanged();
+    partial void OnstaticvalueChanging(System.Nullable<bool> value);
+    partial void OnstaticvalueChanged();
+    partial void OnengnameChanging(string value);
+    partial void OnengnameChanged();
     #endregion
 		
 		public Fields()
 		{
-			this._CollectedValues = new EntitySet<CollectedValues>(new Action<CollectedValues>(this.attach_CollectedValues), new Action<CollectedValues>(this.detach_CollectedValues));
 			this._ViewField = new EntitySet<ViewField>(new Action<ViewField>(this.attach_ViewField), new Action<ViewField>(this.detach_ViewField));
+			this._CollectedValues = new EntitySet<CollectedValues>(new Action<CollectedValues>(this.attach_CollectedValues), new Action<CollectedValues>(this.detach_CollectedValues));
+			this._ProjectsValues = new EntitySet<ProjectsValues>(new Action<ProjectsValues>(this.attach_ProjectsValues), new Action<ProjectsValues>(this.detach_ProjectsValues));
 			OnCreated();
 		}
 		
@@ -1694,22 +3192,22 @@ namespace Zakupka
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_autocalculate", DbType="Bit")]
-		public System.Nullable<bool> autocalculate
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_commonfield", DbType="Bit")]
+		public System.Nullable<bool> commonfield
 		{
 			get
 			{
-				return this._autocalculate;
+				return this._commonfield;
 			}
 			set
 			{
-				if ((this._autocalculate != value))
+				if ((this._commonfield != value))
 				{
-					this.OnautocalculateChanging(value);
+					this.OncommonfieldChanging(value);
 					this.SendPropertyChanging();
-					this._autocalculate = value;
-					this.SendPropertyChanged("autocalculate");
-					this.OnautocalculateChanged();
+					this._commonfield = value;
+					this.SendPropertyChanged("commonfield");
+					this.OncommonfieldChanged();
 				}
 			}
 		}
@@ -1854,23 +3352,56 @@ namespace Zakupka
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_autosum", DbType="Int")]
-		public System.Nullable<int> autosum
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_staticvalue", DbType="Bit")]
+		public System.Nullable<bool> staticvalue
 		{
 			get
 			{
-				return this._autosum;
+				return this._staticvalue;
 			}
 			set
 			{
-				if ((this._autosum != value))
+				if ((this._staticvalue != value))
 				{
-					this.OnautosumChanging(value);
+					this.OnstaticvalueChanging(value);
 					this.SendPropertyChanging();
-					this._autosum = value;
-					this.SendPropertyChanged("autosum");
-					this.OnautosumChanged();
+					this._staticvalue = value;
+					this.SendPropertyChanged("staticvalue");
+					this.OnstaticvalueChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_engname", DbType="NVarChar(50)")]
+		public string engname
+		{
+			get
+			{
+				return this._engname;
+			}
+			set
+			{
+				if ((this._engname != value))
+				{
+					this.OnengnameChanging(value);
+					this.SendPropertyChanging();
+					this._engname = value;
+					this.SendPropertyChanged("engname");
+					this.OnengnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fields_ViewField", Storage="_ViewField", ThisKey="filedID", OtherKey="fk_field")]
+		public EntitySet<ViewField> ViewField
+		{
+			get
+			{
+				return this._ViewField;
+			}
+			set
+			{
+				this._ViewField.Assign(value);
 			}
 		}
 		
@@ -1887,16 +3418,16 @@ namespace Zakupka
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fields_ViewField", Storage="_ViewField", ThisKey="filedID", OtherKey="fk_field")]
-		public EntitySet<ViewField> ViewField
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Fields_ProjectsValues", Storage="_ProjectsValues", ThisKey="filedID", OtherKey="fk_field")]
+		public EntitySet<ProjectsValues> ProjectsValues
 		{
 			get
 			{
-				return this._ViewField;
+				return this._ProjectsValues;
 			}
 			set
 			{
-				this._ViewField.Assign(value);
+				this._ProjectsValues.Assign(value);
 			}
 		}
 		
@@ -1920,6 +3451,18 @@ namespace Zakupka
 			}
 		}
 		
+		private void attach_ViewField(ViewField entity)
+		{
+			this.SendPropertyChanging();
+			entity.Fields = this;
+		}
+		
+		private void detach_ViewField(ViewField entity)
+		{
+			this.SendPropertyChanging();
+			entity.Fields = null;
+		}
+		
 		private void attach_CollectedValues(CollectedValues entity)
 		{
 			this.SendPropertyChanging();
@@ -1932,13 +3475,13 @@ namespace Zakupka
 			entity.Fields = null;
 		}
 		
-		private void attach_ViewField(ViewField entity)
+		private void attach_ProjectsValues(ProjectsValues entity)
 		{
 			this.SendPropertyChanging();
 			entity.Fields = this;
 		}
 		
-		private void detach_ViewField(ViewField entity)
+		private void detach_ProjectsValues(ProjectsValues entity)
 		{
 			this.SendPropertyChanging();
 			entity.Fields = null;

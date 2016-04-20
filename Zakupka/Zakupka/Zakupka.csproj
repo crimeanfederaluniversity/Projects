@@ -159,8 +159,14 @@
     <Content Include="Content\Site.css" />
     <Content Include="Event\calendar_ru.js" />
     <Content Include="Event\ContractPage.aspx" />
+    <Content Include="Event\CreateContractPage.aspx" />
     <Content Include="Event\CreateEditContract.aspx" />
+    <Content Include="Event\CreateProjectPage.aspx" />
+    <Content Include="Event\EditAllContracts.aspx" />
+    <Content Include="Event\EditAllProjects.aspx" />
     <Content Include="Event\EventPage.aspx" />
+    <Content Include="Event\MainEventPage.aspx" />
+    <Content Include="Event\ProjectEdit.aspx" />
     <Content Include="Event\ProjectPage.aspx" />
     <Content Include="Event\View1.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -283,12 +289,20 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Event\Calculations.cs" />
     <Compile Include="Event\ContractPage.aspx.cs">
       <DependentUpon>ContractPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Event\ContractPage.aspx.designer.cs">
       <DependentUpon>ContractPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Event\CreateContractPage.aspx.cs">
+      <DependentUpon>CreateContractPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Event\CreateContractPage.aspx.designer.cs">
+      <DependentUpon>CreateContractPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Event\CreateEditContract.aspx.cs">
       <DependentUpon>CreateEditContract.aspx</DependentUpon>
@@ -297,13 +311,48 @@
     <Compile Include="Event\CreateEditContract.aspx.designer.cs">
       <DependentUpon>CreateEditContract.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Event\CreateProjectPage.aspx.cs">
+      <DependentUpon>CreateProjectPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Event\CreateProjectPage.aspx.designer.cs">
+      <DependentUpon>CreateProjectPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Event\DataValidator.cs" />
+    <Compile Include="Event\EditAllContracts.aspx.cs">
+      <DependentUpon>EditAllContracts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Event\EditAllContracts.aspx.designer.cs">
+      <DependentUpon>EditAllContracts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Event\EditAllProjects.aspx.cs">
+      <DependentUpon>EditAllProjects.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Event\EditAllProjects.aspx.designer.cs">
+      <DependentUpon>EditAllProjects.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Event\EventPage.aspx.cs">
       <DependentUpon>EventPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Event\EventPage.aspx.designer.cs">
       <DependentUpon>EventPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Event\MainEventPage.aspx.cs">
+      <DependentUpon>MainEventPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Event\MainEventPage.aspx.designer.cs">
+      <DependentUpon>MainEventPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Event\ProjectEdit.aspx.cs">
+      <DependentUpon>ProjectEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Event\ProjectEdit.aspx.designer.cs">
+      <DependentUpon>ProjectEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="Event\ProjectPage.aspx.cs">
       <DependentUpon>ProjectPage.aspx</DependentUpon>

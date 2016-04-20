@@ -44,34 +44,11 @@ namespace Zakupka.Event
             }
 
         }
-        protected void DeleteButtonClick(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            {
-                Events delevent = (from a in zakupkaDB.Events where a.active == true && a.eventID == Convert.ToInt32(button.CommandArgument) select a).FirstOrDefault();
-                if (delevent != null)
-                {
-                    delevent.active = false;
-                    zakupkaDB.SubmitChanges();
-                    Refresh();
-                }
-            }
+    
 
-        }
-        protected void SaveButtonClick(object sender, EventArgs e)
+        protected void Back_Click(object sender, EventArgs e)
         {
-            Events newevent = new Events();
-            newevent.active = true;
-            newevent.name = TextBox1.Text;
-            zakupkaDB.Events.InsertOnSubmit(newevent);
-            zakupkaDB.SubmitChanges();
-            Refresh();
-
-        }
-
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Event/View1.aspx");
+            Response.Redirect("~/Event/MainEventPage.aspx");
         }
     }
 }

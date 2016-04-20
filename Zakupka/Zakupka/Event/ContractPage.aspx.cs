@@ -25,7 +25,11 @@ namespace Zakupka.Event
             dataTable.Columns.Add(new DataColumn("contractID", typeof(string)));
             dataTable.Columns.Add(new DataColumn("contractName", typeof(string)));
 
-            List<Contracts> contractList = (from a in zakupkaDB.Contracts where a.active == true && a.fk_project == projectID select a).ToList();
+            List<Contracts> contractList = (from a in zakupkaDB.Contracts
+                                            where a.active == true
+                                            join b in zakupkaDB.ContractProjectMappingTable on a.contractID equals b.fk_contract
+                                            where b.fk_project == projectID
+                                            select a).ToList();
             foreach (Contracts currentContract in contractList)
             {
                 DataRow dataRow = dataTable.NewRow();
@@ -42,42 +46,39 @@ namespace Zakupka.Event
         {
             Button button = (Button)sender;
             {
-                Session["step"] = 1;
+                
                 Session["contractID"] = Convert.ToInt32(button.CommandArgument);
                 Response.Redirect("~/Event/CreateEditContract.aspx");
             }
         }
-        protected void EditButton2Click(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            {
-                Session["step"] = 2;
-                Session["contractID"] = Convert.ToInt32(button.CommandArgument);
-                Response.Redirect("~/Event/CreateEditContract.aspx");
-            }
-        }
+      
         protected void DeleteButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
             {
+                int eventID = (int)Session["eventId"];
+                int projectID = (int)Session["projectID"];
                 Contracts deletecontract = (from a in zakupkaDB.Contracts where a.active == true && a.contractID == Convert.ToInt32(button.CommandArgument) select a).FirstOrDefault();
                 deletecontract.active = false;
                 zakupkaDB.SubmitChanges();
+                List<ContractProjectMappingTable> deletelink = (from a in zakupkaDB.ContractProjectMappingTable where a.Active == true && a.fk_contract == Convert.ToInt32(button.CommandArgument) && a.fk_project == projectID select a).ToList();
+                foreach (ContractProjectMappingTable n in deletelink)
+                {
+                    n.Active = false;
+                    zakupkaDB.SubmitChanges();
+                }
+                List<CollectedValues> values = (from a in zakupkaDB.CollectedValues where a.active == true && a.fk_contract == Convert.ToInt32(button.CommandArgument) && a.fk_project== projectID && a.fk_event == eventID select a).ToList();
+                foreach (CollectedValues n in values)
+                {
+                    n.active = false;
+                    zakupkaDB.SubmitChanges();
+                }
+                Calculations calc = new Calculations();
+                calc.CalculateMIyProject(projectID, eventID);
                 Refresh();
             }
         }
-        protected void SaveButtonClick(object sender, EventArgs e)
-        {
-            int projectID = (int)Session["projectID"];
-            Contracts newcontract = new Contracts();
-            newcontract.active = true;
-            newcontract.name = TextBox1.Text;
-            newcontract.fk_project = projectID;
-            zakupkaDB.Contracts.InsertOnSubmit(newcontract);
-            zakupkaDB.SubmitChanges();
-            Refresh();
-
-        }
+      
 
         protected void Back_Click(object sender, EventArgs e)
         {

@@ -1,20 +1,19 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="CreateEditContract.aspx.cs" Inherits="Zakupka.Event.CreateEditContract" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="ProjectEdit.aspx.cs" Inherits="Zakupka.Event.ProjectEdit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-   
-    <asp:Button ID="Back" runat="server" Text="Назад" CssClass="btn btn-default" OnClick="Back_Click" />
-     
-           <h2> <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>  </h2>
-     
+    <br />
+    <asp:Button ID="Back" runat="server" CssClass="btn btn-default" Text="Назад" OnClick="Back_Click" />
+    <h2> <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>  </h2>
+    
      <script src="calendar_ru.js" type="text/javascript"> </script>
     <div id="TableDiv" runat="server">
         </div>
     <br />
-  
-    <asp:DropDownList ID="CostClass" runat="server" Height="20px"   Visible="true" Width="400px">
-    </asp:DropDownList>
+    <asp:DropDownList ID="Struct"  runat="server" Visible="true"  Height="20px" Width="400px" OnSelectedIndexChanged="Struct_SelectedIndexChanged"  >  </asp:DropDownList>
+    &nbsp;
+    <asp:DropDownList ID="CostClass"  runat="server" Visible="true"  Height="20px" Width="400px" OnSelectedIndexChanged="CostClass_SelectedIndexChanged"  >  </asp:DropDownList>
     <br />
-    <br />
-     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Width="877px" AutoGenerateSelectButton="True" >
+      <br />
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Width="877px" AutoGenerateSelectButton="True" >
           <Columns>    
                  <asp:TemplateField Visible="false"   HeaderText="">
                         <ItemTemplate>
@@ -33,7 +32,7 @@
                     </asp:TemplateField> 
              <asp:TemplateField Visible="true"   HeaderText="Cумма">
                         <ItemTemplate>
-                            <asp:TextBox ID="Sum" runat="server"  Visible="true" Text='<%# Bind("Sum") %>'    ></asp:TextBox> 
+                            <asp:TextBox ID="Sum" runat="server"  Visible="true" Text='<%# Bind("Sum") %>'  ></asp:TextBox> 
                                </ItemTemplate>
                     </asp:TemplateField> 
                <asp:TemplateField HeaderText="Сохранить">
@@ -66,15 +65,19 @@
                                  <asp:ListItem Value="12">Увеличение стоимости материальных запасов</asp:ListItem>    
                             </asp:DropDownList>
     &nbsp;
-    <asp:DropDownList ID="kosgu"  runat="server" Visible="true" AutoPostBack="true" Height="20px" Width="400px">   </asp:DropDownList>
+    <asp:DropDownList ID="kosgu"  runat="server" Visible="true" AutoPostBack="true" Height="20px" Width="400px" OnSelectedIndexChanged="kosgu_SelectedIndexChanged">   </asp:DropDownList>
     &nbsp;<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-
 &nbsp;<asp:Button ID="AddRowButton" runat="server" OnClick="AddRowButton_Click" Text="+"     />
     <br />
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:Label ID="kosguError" runat="server" Font-Size="X-Small" ForeColor="Red" Text="Превышает КОСГУ по проекту!" Visible="False"></asp:Label>
-    <br />
  
-    <!-- javascript:Page_ClientValidate(); if (Page_IsValid==true) { this.disabled=true; } -->
-    <asp:Button ID="Button1" runat="server" Text="Сохранить" CssClass="btn btn-default"  OnClientClick="showSimpleLoadingScreen();"  OnClick="Button1_Click" />
+    &nbsp;<br />
+    <asp:Button ID="Button1" runat="server" CssClass="btn btn-default" OnClick="Button1_Click" OnClientClick="showSimpleLoadingScreen();" Text="Сохранить" />
+    <br />
+  
+ 
+
+    <br />
+  
+ 
+
 </asp:Content>

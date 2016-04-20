@@ -10,7 +10,7 @@
 namespace Zakupka.Event {
     
     
-    public partial class ContractPage {
+    public partial class MainEventPage {
         
         /// <summary>
         /// Back control.
@@ -22,13 +22,22 @@ namespace Zakupka.Event {
         protected global::System.Web.UI.WebControls.Button Back;
         
         /// <summary>
-        /// Label1 control.
+        /// CreateProject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Button CreateProject;
+        
+        /// <summary>
+        /// CreateContract control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CreateContract;
         
         /// <summary>
         /// GridView1 control.

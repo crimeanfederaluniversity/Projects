@@ -10,7 +10,7 @@
 namespace Zakupka.Event {
     
     
-    public partial class CreateEditContract {
+    public partial class ProjectEdit {
         
         /// <summary>
         /// Back control.
@@ -38,6 +38,15 @@ namespace Zakupka.Event {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl TableDiv;
+        
+        /// <summary>
+        /// Struct control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList Struct;
         
         /// <summary>
         /// CostClass control.
@@ -92,15 +101,6 @@ namespace Zakupka.Event {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button AddRowButton;
-        
-        /// <summary>
-        /// kosguError control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label kosguError;
         
         /// <summary>
         /// Button1 control.

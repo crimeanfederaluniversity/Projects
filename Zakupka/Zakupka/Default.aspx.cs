@@ -27,7 +27,7 @@ namespace Zakupka
 
             if (user != null)
             {
-                Response.Redirect("~/Event/EventPage.aspx");
+                Response.Redirect("~/Event/MainEventPage.aspx");
             }
             else
             {

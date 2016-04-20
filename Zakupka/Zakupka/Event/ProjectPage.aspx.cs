@@ -26,7 +26,9 @@ namespace Zakupka.Event
             dataTable.Columns.Add(new DataColumn("projectID", typeof(string)));
             dataTable.Columns.Add(new DataColumn("projectName", typeof(string)));
 
-            List<Projects> projectList = (from a in zakupkaDB.Projects where a.active == true && a.fk_event == eventID select a).ToList();
+            List<Projects> projectList = (from a in zakupkaDB.Projects where a.active == true  
+                                          join b in zakupkaDB.ProjectEventMappingTable on a.projectID equals b.fk_project
+                                          where b.fk_event == eventID select a).ToList();
             foreach (Projects currentProject in projectList)
             {
                 DataRow dataRow = dataTable.NewRow();
@@ -43,6 +45,8 @@ namespace Zakupka.Event
         {
             Button button = (Button)sender;
             {
+                int eventID = (int)Session["eventID"];
+                Session["eventId"] = eventID;
                 Session["projectID"] = Convert.ToInt32(button.CommandArgument);
                 Response.Redirect("~/Event/ContractPage.aspx");
             }
@@ -50,25 +54,36 @@ namespace Zakupka.Event
         }
         protected void DeleteButtonClick(object sender, EventArgs e)
         {
+            int eventID = (int)Session["eventID"];
             Button button = (Button)sender;
             {
                 Projects delevent = (from a in zakupkaDB.Projects where a.active == true && a.projectID == Convert.ToInt32(button.CommandArgument) select a).FirstOrDefault();
                 delevent.active = false;
                 zakupkaDB.SubmitChanges();
+                List<ProjectEventMappingTable> deletelink = (from a in zakupkaDB.ProjectEventMappingTable where a.active == true && a.fk_project == Convert.ToInt32(button.CommandArgument) select a).ToList();
+                foreach(ProjectEventMappingTable n in deletelink)
+                {
+                    n.active = false;
+                    zakupkaDB.SubmitChanges();
+                }
+                List<ProjectsValues> values = (from a in zakupkaDB.ProjectsValues where a.active == true && a.fk_project == Convert.ToInt32(button.CommandArgument) && a.fk_event == eventID select a).ToList();
+                foreach (ProjectsValues n in values)
+                {
+                    n.active = false;
+                    zakupkaDB.SubmitChanges();
+                }
                 Refresh();
             }
 
         }
-        protected void SaveButtonClick(object sender, EventArgs e)
+        protected void EditButtonClick(object sender, EventArgs e)
         {
-            int eventID = (int)Session["eventID"];
-            Projects newproject = new Projects();
-            newproject.active = true;
-            newproject.name = TextBox1.Text;
-            newproject.fk_event = eventID;
-            zakupkaDB.Projects.InsertOnSubmit(newproject);
-            zakupkaDB.SubmitChanges();
-            Refresh();
+            Button button = (Button)sender;
+            {
+                
+                Session["projectID"] = Convert.ToInt32(button.CommandArgument);
+                Response.Redirect("~/Event/ProjectEdit.aspx");
+            }
         }
 
         protected void Back_Click(object sender, EventArgs e)
