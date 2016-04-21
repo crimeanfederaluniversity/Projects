@@ -272,6 +272,7 @@
     <Content Include="kanz\icons\saveButtonIcon.jpg" />
     <Content Include="kanz\icons\treeButtonIcon.jpg" />
     <Content Include="kanz\icons\viewButtonIcon.png" />
+    <Content Include="kanz\NotUniqueError.aspx" />
     <Content Include="kanz\Print.aspx" />
     <Content Include="kanz\PrintMany.aspx" />
     <Content Include="kanz\RegisterView.aspx" />
@@ -498,6 +499,13 @@
     </Compile>
     <Compile Include="kanz\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="kanz\NotUniqueError.aspx.cs">
+      <DependentUpon>NotUniqueError.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="kanz\NotUniqueError.aspx.designer.cs">
+      <DependentUpon>NotUniqueError.aspx</DependentUpon>
     </Compile>
     <Compile Include="kanz\Print.aspx.cs">
       <DependentUpon>Print.aspx</DependentUpon>

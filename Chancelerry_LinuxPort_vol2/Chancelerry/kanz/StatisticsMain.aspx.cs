@@ -143,17 +143,24 @@ namespace Chancelerry.kanz
             List<string> uniqueValues = (from a in resultList orderby a.ValueText.Trim() select a.ValueText.Trim()).Distinct().ToList();
 
             Table resultTable = new Table() {CssClass = "resultTable" };
-            resultTable.Rows.Add(new TableRow() { Cells = {new TableCell() {Text = "Название"}, new TableCell() {Text = "Кол-во"}} });
+            resultTable.Rows.Add(new TableRow() { Cells = {new TableCell() {Text = "Название"}, new TableCell() {Text = "Кол-во" }, new TableCell() { Text = "Список номеров"  } } });
             int sum = 0;
+
+            
 
             foreach (string current in uniqueValues)
             {
                 List<CollectedFieldsValues> res = (from a in resultList where a.ValueText.Trim() == current select a).ToList();
                 //List<string> = res.Select(mc=>mc.)
-                //string cardIds = r
+                List<CollectedCards> cards = new List<CollectedCards>();
+                foreach (CollectedFieldsValues tmp in res)
+                {
+                    cards.Add(main.GetCardById(tmp.FkCollectedCard));
+                }
+                string cardIdsText = String.Join(",", cards.Select(mc => mc.MaInFieldID).ToList());
                 int count = res.Count();
                 sum += count;
-                resultTable.Rows.Add(new TableRow() { Cells = { new TableCell() { Text = current }, new TableCell() { Text = count.ToString() }} });
+                resultTable.Rows.Add(new TableRow() { Cells = { new TableCell() { Text = current }, new TableCell() { Text = count.ToString()}, new TableCell() { Text = cardIdsText } } });
             }
             resultTable.Rows.Add(new TableRow() { Cells = { new TableCell() { Text = "Итого" }, new TableCell() { Text = sum.ToString() } } });
             resultDiv.Controls.Add(resultTable);

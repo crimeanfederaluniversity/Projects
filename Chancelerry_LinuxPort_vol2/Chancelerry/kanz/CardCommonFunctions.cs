@@ -892,7 +892,7 @@ namespace Chancelerry.kanz
         }       
         private void AddInstanceButtonClick(object sender, EventArgs e)
         {
-            _cardId = _cardCreateEdit.SaveCard(_registerId, _cardId, allFieldsInCard, allFileUploadsInCard);
+            _cardId = _cardCreateEdit.SaveCard(_registerId, _cardId, allFieldsInCard, allFileUploadsInCard, false);
             HttpContext.Current.Session["cardID"] = _cardId;
             ImageButton thisButton = (ImageButton)sender;
             string commandArgument = thisButton.CommandArgument;
@@ -1486,7 +1486,7 @@ namespace Chancelerry.kanz
             chancDb.SubmitChanges();
             return newField.CollectedFieldValueID;
         }
-        public int SaveCard(int registerId, int cardId, List<TextBox> fieldsToSave, List<FileUpload> filesToSave)
+        public int SaveCard(int registerId, int cardId, List<TextBox> fieldsToSave, List<FileUpload> filesToSave, bool isMainSave)
         {
             int mainfieldId = 0;
             foreach (TextBox currentTextBox in fieldsToSave)
@@ -1495,14 +1495,17 @@ namespace Chancelerry.kanz
                 {
                     if (currentTextBox.Attributes["iamfieldid"] == "1")
                     {
-                        Int32.TryParse(currentTextBox.Text, out mainfieldId);
+                        Int32.TryParse(currentTextBox.Text, out mainfieldId); 
                     }
                 }
             }
-
+            
             if (cardId == 0)
                 cardId = CreateNewCardInRegister(registerId, mainfieldId);
             SaveFieldsValues(fieldsToSave, filesToSave, cardId);
+
+          //  _common.IsValueUinque(cur.FieldId, cur.RegisterId, cur.CardId, cur.ValueTextBox.Text);
+
             return cardId;
         }
         public void SaveFieldsValues(List<TextBox> fieldsToSave, List<FileUpload> filesToSave, int cardId)

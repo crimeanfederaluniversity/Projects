@@ -10,7 +10,7 @@
            }
           .resultTable TH, TD {
               border: 1px solid black; 
-              text-align: center; 
+              text-align: left; 
               padding: 4px; 
           }
           .resultTable TH {

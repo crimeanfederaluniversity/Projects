@@ -64,7 +64,8 @@ namespace Chancelerry.kanz
         {
             UpdateSessionValues();
             CardCreateEdit cardCreateEdit = new CardCreateEdit();
-            cardCreateEdit.SaveCard(_registerId, _cardId, createdFields, createdFileUploads);
+            cardCreateEdit.SaveCard(_registerId, _cardId, createdFields, createdFileUploads,true);
+
             Response.Redirect("RegisterView.aspx");
         }
         protected void LinkButton1_Click(object sender, EventArgs e)
