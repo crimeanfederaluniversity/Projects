@@ -1,0 +1,156 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="EDM.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - Электронный документооборот КФУ</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    
+    <style type="text/css">
+    .top_panel {
+    position:fixed;
+    left:0;
+    top:3.5em;
+    width:100%;
+    height:30px;
+    background-color:#70463A !important;
+    z-index:10;
+    color:#05ff01;  
+    padding-top:5px;
+    font-weight:bold;
+}
+   #md5check{
+	width : 300px;
+	height : 120px;
+	position : fixed; 
+	z-index : 50;
+	top : 20%; 
+	left : 42%;	
+
+	border : 2px solid;
+	border-radius: 10px;
+	
+	padding: 5px;
+}
+   #coomentEndP{
+	width : 900px;
+	height : 372px;
+	position : fixed; 
+	z-index : 50;
+	top : 20%; 
+	left : 30%;	
+
+	border : 2px solid;
+	border-radius: 10px;
+	
+	padding: 5px;
+}
+         .button_right 
+   {
+       float:right
+   } 
+</style> 
+
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <%--Site Scripts--%>
+                <asp:ScriptReference Path="~/Scripts/loadingScreens.js" />
+            </Scripts>
+        </asp:ScriptManager>
+        
+        <asp:Panel runat="server" ID="top_panel2" CssClass="top_panel" Height="40" Visible="True">    
+    <div>          
+        &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="goBackButton" CausesValidation="false"  runat="server" Enabled="true" CssClass="btn btn-default" Text="Назад" Width="200" Height="100%" OnClientClick="history.back (); showSimpleLoadingScreen();"/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="goForwardButton" Enabled="true" CausesValidation="false"  CssClass="btn btn-default" runat="server" Text="Вперед" Width="200" Height="100%" OnClientClick="history.forward (); showSimpleLoadingScreen()"/>
+        <asp:Button ID="GoToStarterPageButton" Enabled="true"  CausesValidation="false"  CssClass="btn btn-default button_right" runat="server" Text="Запуск процессов" Width="200" Height="100%" OnClientClick="showSimpleLoadingScreen()" OnClick="GoToStarterPageButton_Click" />
+        <asp:Button ID="GoToTemplatesButton" Enabled="true"  CausesValidation="false"  CssClass="btn btn-default button_right" runat="server" Text="Мои шаблоны" Width="200" Height="100%" OnClientClick="showSimpleLoadingScreen()" OnClick="GoToTemplatesButton_Click" />
+        <asp:Button ID="GoToSlavesHistory" runat="server" Text="К истории подчиненных" CausesValidation="false"  CssClass="btn btn-default button_right" Width="200" Height="100%" OnClientClick="showSimpleLoadingScreen()" OnClick="GoToSlavesHistory_Click"/>
+        <asp:Button ID="GoToSubmitterButton" runat="server" Text="Утвержденные документы" CausesValidation="false"  CssClass="btn btn-default button_right" Width="200" Height="100%" OnClientClick="showSimpleLoadingScreen()" OnClick="GoToSubmitterButton_Click" />
+        <asp:Button ID="md5Button" runat="server" Text="Проверить документ md5" CssClass="btn btn-default button_right" Width="200" Height="100%" OnClientClick="javascript: document.getElementById('md5check').style.visibility='visible'; return false;"/>
+
+           </div>
+</asp:Panel>
+        
+                <div id="md5check" style="visibility: hidden; background-color:lightgreen">
+        <asp:Panel runat="server" ID="md5_panel" Visible="true">
+            <asp:Label ID="Label3" runat="server" Text="Укажите файл" Font-Bold="True"></asp:Label>
+            <br/>
+            <br/>
+            <asp:FileUpload ID="FileUpload1" runat="server" />
+            <br/>
+            <asp:Label ID="md5Label" runat="server" Text="Label" Visible="False"></asp:Label>
+            <div>
+            <asp:Button ID="md5CheckButton" runat="server" Text="Проверить" OnClientClick="showLoadingScreenWithText('Идет процесс, подождите');" OnClick="md5CheckButton_OnClick"/>
+            <asp:Button ID="Button8" runat="server" OnClientClick="document.getElementById('md5check').style.visibility='hidden'; return false;" Text="Отменить" />
+           </div>
+        </asp:Panel>
+    </div>
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" runat="server" href="~/">Электронный документооборот</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                      <!--   <li><a runat="server" href="~/">Главная</a></li>-->
+                       <!-- <li><a runat="server" href="~/About.aspx">Информация</a></li> -->
+                        <li><a runat="server" href="~/Contact.aspx">Контакты</a></li>
+                    </ul>
+                    <asp:LoginView runat="server" ViewStateMode="Disabled">
+                        <AnonymousTemplate>
+                            <ul class="nav navbar-nav navbar-right">
+                               <!-- <li><a runat="server" href="~/Account/Register">Регистрация</a></li> -->
+                                <li><a runat="server" href="~/Account/Login">Вход</a></li>
+                            </ul>
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>                                    
+<asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButtonClick">Добрый день, <%: Context.User.Identity.GetUserName()  %> !</asp:LinkButton></li>
+                                <li>
+                                    <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Выход" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                                </li>
+                            </ul>
+                        </LoggedInTemplate>
+                    </asp:LoginView>
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+            <footer>
+                <p>&copy; <%: DateTime.Now.Year %> - Электронный документооборот КФУ</p>
+            </footer>
+        </div>
+    </form>
+</body>
+</html>

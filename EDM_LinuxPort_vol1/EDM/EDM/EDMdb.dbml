@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="NewApproveDB" Class="EDMdbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=NewApproveDB;Persist Security Info=True;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="NewApproveDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Calendar" Member="Calendar">
+    <Type Name="Calendar">
+      <Column Name="calendarId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="isDayOff" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="isWorkingDay" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="Users">
+      <Column Name="userID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="login" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="struct" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="fk_struct" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="canInitiate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="canCreateTemplate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="canInitiateCustom" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="canPrintResult" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sex" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Users_Log" Member="Log" ThisKey="userID" OtherKey="fk_user" Type="Log" />
+      <Association Name="Users_Participants" Member="Participants" ThisKey="userID" OtherKey="fk_user" Type="Participants" />
+      <Association Name="Users_PrintHistory" Member="PrintHistory" ThisKey="userID" OtherKey="fk_user" Type="PrintHistory" />
+      <Association Name="Users_Processes" Member="Processes" ThisKey="userID" OtherKey="fk_initiator" Type="Processes" />
+      <Association Name="Users_ProcessStarterUser" Member="ProcessStarterUser" ThisKey="userID" OtherKey="fk_user" Type="ProcessStarterUser" />
+      <Association Name="Users_ProcessTemplate" Member="ProcessTemplate" ThisKey="userID" OtherKey="fk_owner" Type="ProcessTemplate" />
+      <Association Name="Users_ProcessTemplateParticipant" Member="ProcessTemplateParticipant" ThisKey="userID" OtherKey="fk_user" Type="ProcessTemplateParticipant" />
+      <Association Name="Users_Submitters" Member="Submitters" ThisKey="userID" OtherKey="fk_user" Type="Submitters" />
+      <Association Name="Struct_Users" Member="Struct1" ThisKey="fk_struct" OtherKey="structID" Type="Struct" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Documents" Member="Documents">
+    <Type Name="Documents">
+      <Column Name="documentID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="documentName" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="documentComment" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="md5" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="userDownload" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Documents_ProcVersionDocsMap" Member="ProcVersionDocsMap" ThisKey="documentID" OtherKey="fk_documents" Type="ProcVersionDocsMap" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DocumentsInStep" Member="DocumentsInStep">
+    <Type Name="DocumentsInStep">
+      <Column Name="documentsInStepId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="documentName" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="documentComment" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="DocumentsInStep_StepDocInStepMap" Member="StepDocInStepMap" ThisKey="documentsInStepId" OtherKey="fk_documentInStep" Type="StepDocInStepMap" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EmailBots" Member="EmailBots">
+    <Type Name="EmailBots">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="smtpName" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="port" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="sendOk" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="sendError" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EmailCopies" Member="EmailCopies">
+    <Type Name="EmailCopies">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="emailTo" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="emailFrom" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="emailTitle" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="emailContent" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="emailAttachment" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="sendDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sendOk" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="errorMessage" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EmailTemplates" Member="EmailTemplates">
+    <Type Name="EmailTemplates">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="emailTitle" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="emailContent" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="comment" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Log]" Member="Log">
+    <Type Name="Log">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="page" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="userip" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="message" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Users_Log" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Participants" Member="Participants">
+    <Type Name="Participants">
+      <Column Name="participantID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="dateStart" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dateEnd" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fk_process" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="queue" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="isNew" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="dateIsNew" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Participants_Steps" Member="Steps" ThisKey="participantID" OtherKey="fk_participent" Type="Steps" />
+      <Association Name="Users_Participants" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
+      <Association Name="Processes_Participants" Member="Processes" ThisKey="fk_process" OtherKey="processID" Type="Processes" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PrintHistory" Member="PrintHistory">
+    <Type Name="PrintHistory">
+      <Column Name="printHistoryId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fk_process" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Users_PrintHistory" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
+      <Association Name="Processes_PrintHistory" Member="Processes" ThisKey="fk_process" OtherKey="processID" Type="Processes" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProcessCharacter" Member="ProcessCharacter">
+    <Type Name="ProcessCharacter">
+      <Column Name="processCharacterId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="ProcessCharacter_Processes" Member="Processes" ThisKey="processCharacterId" OtherKey="fk_processCharacter" Type="Processes" />
+      <Association Name="ProcessCharacter_ProcessTemplate" Member="ProcessTemplate" ThisKey="processCharacterId" OtherKey="fk_processCharacter" Type="ProcessTemplate" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Processes" Member="Processes">
+    <Type Name="Processes">
+      <Column Name="processID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="fk_initiator" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="startDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="endDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="endComment" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="fk_parentProcess" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="fk_template" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="fk_submitter" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="fk_processCharacter" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Processes_Participants" Member="Participants" ThisKey="processID" OtherKey="fk_process" Type="Participants" />
+      <Association Name="Processes_PrintHistory" Member="PrintHistory" ThisKey="processID" OtherKey="fk_process" Type="PrintHistory" />
+      <Association Name="Processes_Processes" Member="Processes2" ThisKey="processID" OtherKey="fk_parentProcess" Type="Processes" />
+      <Association Name="Processes_ProcessVersions" Member="ProcessVersions" ThisKey="processID" OtherKey="fk_process" Type="ProcessVersions" />
+      <Association Name="ProcessCharacter_Processes" Member="ProcessCharacter" ThisKey="fk_processCharacter" OtherKey="processCharacterId" Type="ProcessCharacter" IsForeignKey="true" />
+      <Association Name="Processes_Processes" Member="Processes1" ThisKey="fk_parentProcess" OtherKey="processID" Type="Processes" IsForeignKey="true" />
+      <Association Name="Users_Processes" Member="Users" ThisKey="fk_initiator" OtherKey="userID" Type="Users" IsForeignKey="true" />
+      <Association Name="ProcessTemplate_Processes" Member="ProcessTemplate" ThisKey="fk_template" OtherKey="processTemplateId" Type="ProcessTemplate" IsForeignKey="true" />
+      <Association Name="Submitters_Processes" Member="Submitters" ThisKey="fk_submitter" OtherKey="submitterId" Type="Submitters" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProcessStarterUser" Member="ProcessStarterUser">
+    <Type Name="ProcessStarterUser">
+      <Column Name="processStarterUserId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fk_struct" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Users_ProcessStarterUser" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
+      <Association Name="Struct_ProcessStarterUser" Member="Struct" ThisKey="fk_struct" OtherKey="structID" Type="Struct" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProcessTemplate" Member="ProcessTemplate">
+    <Type Name="ProcessTemplate">
+      <Column Name="processTemplateId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="fk_owner" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="title" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="content_" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="fk_submitter" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="allowEditProcess" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="fk_struct" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fk_processCharacter" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="ProcessTemplate_Processes" Member="Processes" ThisKey="processTemplateId" OtherKey="fk_template" Type="Processes" />
+      <Association Name="ProcessTemplate_ProcessTemplateParticipant" Member="ProcessTemplateParticipant" ThisKey="processTemplateId" OtherKey="fk_template" Type="ProcessTemplateParticipant" />
+      <Association Name="ProcessCharacter_ProcessTemplate" Member="ProcessCharacter" ThisKey="fk_processCharacter" OtherKey="processCharacterId" Type="ProcessCharacter" IsForeignKey="true" />
+      <Association Name="Users_ProcessTemplate" Member="Users" ThisKey="fk_owner" OtherKey="userID" Type="Users" IsForeignKey="true" />
+      <Association Name="Struct_ProcessTemplate" Member="Struct" ThisKey="fk_struct" OtherKey="structID" Type="Struct" IsForeignKey="true" />
+      <Association Name="Submitters_ProcessTemplate" Member="Submitters" ThisKey="fk_submitter" OtherKey="submitterId" Type="Submitters" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProcessTemplateParticipant" Member="ProcessTemplateParticipant">
+    <Type Name="ProcessTemplateParticipant">
+      <Column Name="processTemplateParticipantId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="queue" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="endDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="fk_template" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ProcessTemplate_ProcessTemplateParticipant" Member="ProcessTemplate" ThisKey="fk_template" OtherKey="processTemplateId" Type="ProcessTemplate" IsForeignKey="true" />
+      <Association Name="Users_ProcessTemplateParticipant" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProcessVersions" Member="ProcessVersions">
+    <Type Name="ProcessVersions">
+      <Column Name="processVersionID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="fk_process" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="version" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="comment" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="status" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="ProcessVersions_ProcVersionDocsMap" Member="ProcVersionDocsMap" ThisKey="processVersionID" OtherKey="fk_processVersion" Type="ProcVersionDocsMap" />
+      <Association Name="ProcessVersions_Steps" Member="Steps" ThisKey="processVersionID" OtherKey="fk_processVersion" Type="Steps" />
+      <Association Name="Processes_ProcessVersions" Member="Processes" ThisKey="fk_process" OtherKey="processID" Type="Processes" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProcVersionDocsMap" Member="ProcVersionDocsMap">
+    <Type Name="ProcVersionDocsMap">
+      <Column Name="ProcVersionDocsMapId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="fk_processVersion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fk_documents" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="documentComment" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Association Name="Documents_ProcVersionDocsMap" Member="Documents" ThisKey="fk_documents" OtherKey="documentID" Type="Documents" IsForeignKey="true" />
+      <Association Name="ProcessVersions_ProcVersionDocsMap" Member="ProcessVersions" ThisKey="fk_processVersion" OtherKey="processVersionID" Type="ProcessVersions" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StepDocInStepMap" Member="StepDocInStepMap">
+    <Type Name="StepDocInStepMap">
+      <Column Name="stepDocInStepId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="fk_step" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fk_documentInStep" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="DocumentsInStep_StepDocInStepMap" Member="DocumentsInStep" ThisKey="fk_documentInStep" OtherKey="documentsInStepId" Type="DocumentsInStep" IsForeignKey="true" />
+      <Association Name="Steps_StepDocInStepMap" Member="Steps" ThisKey="fk_step" OtherKey="stepID" Type="Steps" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Steps" Member="Steps">
+    <Type Name="Steps">
+      <Column Name="stepID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="fk_processVersion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fk_participent" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="comment" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="stepResult" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="commentType" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Steps_StepDocInStepMap" Member="StepDocInStepMap" ThisKey="stepID" OtherKey="fk_step" Type="StepDocInStepMap" />
+      <Association Name="Participants_Steps" Member="Participants" ThisKey="fk_participent" OtherKey="participantID" Type="Participants" IsForeignKey="true" />
+      <Association Name="ProcessVersions_Steps" Member="ProcessVersions" ThisKey="fk_processVersion" OtherKey="processVersionID" Type="ProcessVersions" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Struct" Member="Struct">
+    <Type Name="Struct">
+      <Column Name="structID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="fk_parent" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Struct_Users" Member="Users" ThisKey="structID" OtherKey="fk_struct" Type="Users" />
+      <Association Name="Struct_ProcessStarterUser" Member="ProcessStarterUser" ThisKey="structID" OtherKey="fk_struct" Type="ProcessStarterUser" />
+      <Association Name="Struct_ProcessTemplate" Member="ProcessTemplate" ThisKey="structID" OtherKey="fk_struct" Type="ProcessTemplate" />
+      <Association Name="Struct_Struct" Member="Struct2" ThisKey="structID" OtherKey="fk_parent" Type="Struct" />
+      <Association Name="Struct_Struct" Member="Struct1" ThisKey="fk_parent" OtherKey="structID" Type="Struct" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Submitters" Member="Submitters">
+    <Type Name="Submitters">
+      <Column Name="submitterId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="fk_user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Submitters_Processes" Member="Processes" ThisKey="submitterId" OtherKey="fk_submitter" Type="Processes" />
+      <Association Name="Submitters_ProcessTemplate" Member="ProcessTemplate" ThisKey="submitterId" OtherKey="fk_submitter" Type="ProcessTemplate" />
+      <Association Name="Users_Submitters" Member="Users" ThisKey="fk_user" OtherKey="userID" Type="Users" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
