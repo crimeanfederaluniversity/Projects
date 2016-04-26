@@ -13,8 +13,9 @@ namespace Zakupka.Event
         ZakupkaDBDataContext zakupkaDB = new ZakupkaDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["userID"] != null)
-                Refresh();
+            if (Session["userID"] == null)
+                Response.Redirect("~/Default.aspx");
+            Refresh();
         }
             protected void Refresh()
         {
@@ -28,7 +29,7 @@ namespace Zakupka.Event
             List<Contracts> contractList = (from a in zakupkaDB.Contracts
                                             where a.active == true
                                             join b in zakupkaDB.ContractProjectMappingTable on a.contractID equals b.fk_contract
-                                            where b.fk_project == projectID
+                                            where b.fk_project == projectID && b.Active == true
                                             select a).ToList();
             foreach (Contracts currentContract in contractList)
             {
@@ -57,22 +58,43 @@ namespace Zakupka.Event
             Button button = (Button)sender;
             {
                 int eventID = (int)Session["eventId"];
-                int projectID = (int)Session["projectID"];
-                Contracts deletecontract = (from a in zakupkaDB.Contracts where a.active == true && a.contractID == Convert.ToInt32(button.CommandArgument) select a).FirstOrDefault();
-                deletecontract.active = false;
-                zakupkaDB.SubmitChanges();
-                List<ContractProjectMappingTable> deletelink = (from a in zakupkaDB.ContractProjectMappingTable where a.Active == true && a.fk_contract == Convert.ToInt32(button.CommandArgument) && a.fk_project == projectID select a).ToList();
-                foreach (ContractProjectMappingTable n in deletelink)
+                int projectID = (int)Session["projectID"];              
+                List<ContractProjectMappingTable> deletelink = (from a in zakupkaDB.ContractProjectMappingTable where a.Active == true && a.fk_contract == Convert.ToInt32(button.CommandArgument) select a).ToList();
+                if (deletelink.Count == 1)
                 {
-                    n.Active = false;
+                    Contracts deletecontract = (from a in zakupkaDB.Contracts where a.active == true && a.contractID == Convert.ToInt32(button.CommandArgument) select a).FirstOrDefault();
+                    deletecontract.active = false;
                     zakupkaDB.SubmitChanges();
+                    List<CollectedValues> values = (from a in zakupkaDB.CollectedValues where a.active == true && a.fk_contract == Convert.ToInt32(button.CommandArgument)   select a).ToList();
+                    foreach (CollectedValues n in values)
+                    {
+                        n.active = false;
+                        zakupkaDB.SubmitChanges();
+                    }
+                    foreach (ContractProjectMappingTable n in deletelink)
+                    {
+                        n.Active = false;
+                        zakupkaDB.SubmitChanges();
+                    }
                 }
-                List<CollectedValues> values = (from a in zakupkaDB.CollectedValues where a.active == true && a.fk_contract == Convert.ToInt32(button.CommandArgument) && a.fk_project== projectID && a.fk_event == eventID select a).ToList();
-                foreach (CollectedValues n in values)
+                else
                 {
-                    n.active = false;
-                    zakupkaDB.SubmitChanges();
+                    foreach (ContractProjectMappingTable n in deletelink)
+                    {
+                        if(n.fk_project == projectID)
+                        {
+                            n.Active = false;
+                            zakupkaDB.SubmitChanges();
+                            List<CollectedValues> values = (from a in zakupkaDB.CollectedValues where a.active == true && a.fk_contract == n.fk_contract && a.fk_project == projectID  select a).ToList();
+                            foreach (CollectedValues tmp in values)
+                            {
+                                tmp.active = false;
+                                zakupkaDB.SubmitChanges();
+                            }
+                        }                      
+                    }
                 }
+                
                 Calculations calc = new Calculations();
                 calc.CalculateMIyProject(projectID, eventID);
                 Refresh();

@@ -13,7 +13,7 @@
     <asp:DropDownList ID="CostClass"  runat="server" Visible="true"  Height="20px" Width="400px" OnSelectedIndexChanged="CostClass_SelectedIndexChanged"  >  </asp:DropDownList>
     <br />
       <br />
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Width="877px" AutoGenerateSelectButton="True" >
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Width="877px"  >
           <Columns>    
                  <asp:TemplateField Visible="false"   HeaderText="">
                         <ItemTemplate>

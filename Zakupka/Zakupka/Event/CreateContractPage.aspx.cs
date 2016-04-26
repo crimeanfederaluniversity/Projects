@@ -15,7 +15,9 @@ namespace Zakupka.Event
         {
             if (!Page.IsPostBack)
             {
-               
+                if (Session["userID"] == null)
+                    Response.Redirect("~/Default.aspx");
+
                 GridApdate();
             }
         }

@@ -13,33 +13,13 @@ namespace Zakupka.Event
         ZakupkaDBDataContext zakupkaDB = new ZakupkaDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["userID"] != null)
-                // Refresh();
+            if (Session["userID"] == null)
+                Response.Redirect("~/Default.aspx");
 
-                RenderGrid(FillData());
+            RenderGrid(FillData());
 
         }
-        protected void Refresh()
-        {
-            /* DataTable dataTable = new DataTable();
-             dataTable.Columns.Add(new DataColumn("maineventID", typeof(string)));
-             dataTable.Columns.Add(new DataColumn("maineventName", typeof(string)));
-
-             List<MainEvent> eventList = (from a in zakupkaDB.MainEvent where a.Active == true select a).ToList();
-             foreach (MainEvent currentEvent in eventList)
-             {
-                 DataRow dataRow = dataTable.NewRow();
-                 dataRow["maineventID"] = currentEvent.ID;
-                 dataRow["maineventName"] = currentEvent.MainEvent1;
-                 dataTable.Rows.Add(dataRow);
-             }
-
-             GridView1.DataSource = dataTable;
-             GridView1.DataBind();*/
- 
-        }
-
-
+       
         private List<MainEvent> FillData()
 
         {
@@ -52,13 +32,13 @@ namespace Zakupka.Event
 
             BoundField boundField = new BoundField();
             boundField.DataField = "ID";
-            boundField.HeaderText = "Id";
+            boundField.HeaderText = "ИН";
             boundField.Visible = true;
             GridView1.Columns.Add(boundField);
 
             BoundField boundField2 = new BoundField();
             boundField2.DataField = "MainEvent1";
-            boundField2.HeaderText = "Название";
+            boundField2.HeaderText = "Название основного мероприятия";
             boundField2.Visible = true;
             GridView1.Columns.Add(boundField2);
 
@@ -71,9 +51,6 @@ namespace Zakupka.Event
 
             DataBind();
         }
-
-
-  
 
         protected void Back_Click(object sender, EventArgs e)
         {
@@ -108,14 +85,6 @@ namespace Zakupka.Event
             }
             }
 
-        protected void EditProjects_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Event/EditAllProjects.aspx");
-        }
-
-        protected void EditContracts_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Event/EditAllContracts.aspx");
-        }
+    
     }
 }

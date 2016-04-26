@@ -6,8 +6,7 @@
     <p>
         <asp:Button ID="Back" runat="server" CssClass="btn btn-default" Text="Назад" OnClick="Back_Click" />
     </p>
-    <p>
-    
+     <h4><asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>   </h4>
         <asp:GridView ID="GridView1" runat="server"  AutoGenerateColumns="False" Width="100%"  class="table table-striped edm-table edm-PocessEdit-table centered-block" >
                <Columns>                
              <asp:BoundField DataField="eventID"   HeaderText="ID" Visible="false" />    

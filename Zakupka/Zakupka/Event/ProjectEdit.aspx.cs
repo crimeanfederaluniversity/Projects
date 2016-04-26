@@ -22,13 +22,28 @@ namespace Zakupka.Event
         }
         public void SaveCollectedValue(int fieldId,  int projectid, int eventid, string value)
         {
-            ProjectsValues fk = (from a in zakupkaDB.ProjectsValues  where  a.fk_field == fieldId  && a.fk_project == projectid  && a.fk_event == eventid  select a).FirstOrDefault();
-            fk.value = value;
-            zakupkaDB.SubmitChanges();
+             
+            Fields typeoffield = (from a in zakupkaDB.Fields where a.filedID == fieldId where a.active select a).FirstOrDefault();
+            if (typeoffield.commonfield == true)
+            {
+                ProjectsValues fk = (from a in zakupkaDB.ProjectsValues
+                                     where a.fk_project == projectid && a.fk_field == fieldId
+                                      && a.fk_event == null  select a).FirstOrDefault();
+                fk.value = value;
+                zakupkaDB.SubmitChanges();
+            }
+            else
+            {
+                CollectedValues fk = (from a in zakupkaDB.CollectedValues where a.fk_project == projectid
+                                       && a.fk_field == fieldId  && a.fk_event == eventid  select a).FirstOrDefault();
+                fk.value = value;
+                zakupkaDB.SubmitChanges();
+            }
         }
         public string GetCollectedValue(int fieldId,  int projectid, int eventid)
         {
-            ProjectsValues fk = (from a in zakupkaDB.ProjectsValues  where a.fk_field == fieldId  && a.fk_project == projectid  && a.fk_event == eventid select a).FirstOrDefault();
+            ProjectsValues fk = (from a in zakupkaDB.ProjectsValues  where a.fk_field == fieldId  
+                                 && a.fk_project == projectid  && (a.fk_event == eventid || a.fk_event == null) select a).FirstOrDefault();
             if (fk != null)
             {
                 if (fk.active == false)
@@ -39,14 +54,29 @@ namespace Zakupka.Event
             }
             else
             {
-                fk = new ProjectsValues();
-                fk.active = true;
-                fk.value = "";
-                fk.fk_field = fieldId;
-                fk.fk_project = projectid;
-                fk.fk_event = eventid;
-                zakupkaDB.ProjectsValues.InsertOnSubmit(fk);
-                zakupkaDB.SubmitChanges();
+                Fields typeoffield = (from a in zakupkaDB.Fields where a.filedID == fieldId where a.active select a).FirstOrDefault();
+                if (typeoffield.commonfield == true)
+                {
+                    fk = new ProjectsValues();
+                    fk.active = true;
+                    fk.value = "";
+                    fk.fk_field = fieldId;
+                    fk.fk_project = projectid;
+                    fk.fk_event = null;
+                    zakupkaDB.ProjectsValues.InsertOnSubmit(fk);
+                    zakupkaDB.SubmitChanges();
+                }
+                else
+                {
+                    fk = new ProjectsValues();
+                    fk.active = true;
+                    fk.value = "";
+                    fk.fk_field = fieldId;
+                    fk.fk_project = projectid;
+                    fk.fk_event = eventid;
+                    zakupkaDB.ProjectsValues.InsertOnSubmit(fk);
+                    zakupkaDB.SubmitChanges();
+                }
             }
             return fk.value;
         }
@@ -90,10 +120,11 @@ namespace Zakupka.Event
             }
             else
             {
-                string value = (from a in zakupkaDB.ProjectsValues where a.active == true && a.fk_field == field.filedID && a.fk_project == projectId && a.fk_event == eventId select a.value).FirstOrDefault();
+                ProjectsValues value = (from a in zakupkaDB.ProjectsValues where a.active == true && a.fk_field == field.filedID && a.fk_project == projectId && a.fk_event == eventId select a).FirstOrDefault();
                         if(value != null)
-                        { 
-                            newRow.Cells.Add(new TableCell() { Text = value.ToString() });
+                        {
+                            newCell.Text = value.value.ToString();
+                            // newRow.Cells.Add(new TableCell() { Text = value.ToString() });
                         }           
             }
             newRow.Cells.Add(newCell);
@@ -161,38 +192,42 @@ namespace Zakupka.Event
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            int projectID = (int)Session["projectID"];
-            Projects name = (from a in zakupkaDB.Projects where a.projectID == projectID select a).FirstOrDefault();
-            Label1.Text = name.name.ToString();
-            Refresh();
-            ValuesList = (List<ProjectValueSaveClass>)Session["values"];
-            if (ValuesList == null) ValuesList = new List<ProjectValueSaveClass>();
-            TableDiv.Controls.Clear();
-            TableDiv.Controls.Add(CreateNewTable());
-            if (!Page.IsPostBack)
-            {
-                ProjectsValues currentstruct = (from a in zakupkaDB.ProjectsValues where a.active == true && a.fk_field == 26 && a.fk_project == projectID select a).FirstOrDefault();
-                string currentStructTextValue = "";
-                if (currentstruct != null)
-                { currentStructTextValue = currentstruct.value; }
-                
-                List<StructTable> allstruct = (from a in zakupkaDB.StructTable where a.active == true select a).ToList();
-                Struct.Items.Add(new ListItem {Text= "Выберите структурное подразделение", Value="0" });
-                foreach (var item in allstruct)
-                    Struct.Items.Add(new ListItem { Text = item.name, Value = item.name, Selected=(item.name == currentStructTextValue) });
-             
+            if (Session["userID"] == null)
+                Response.Redirect("~/Default.aspx");
 
-                ProjectsValues currentcost = (from a in zakupkaDB.ProjectsValues where a.active == true && a.fk_field == 27 && a.fk_project == projectID select a).FirstOrDefault();
-                string currentCostTextValue = "";
-                if (currentcost != null)
+                int projectID = (int)Session["projectID"];
+                Projects name = (from a in zakupkaDB.Projects where a.projectID == projectID select a).FirstOrDefault();
+                Label1.Text = name.name.ToString();
+                Refresh();
+                ValuesList = (List<ProjectValueSaveClass>)Session["values"];
+                if (ValuesList == null) ValuesList = new List<ProjectValueSaveClass>();
+                TableDiv.Controls.Clear();
+                TableDiv.Controls.Add(CreateNewTable());
+                if (!Page.IsPostBack)
                 {
-                    currentCostTextValue = currentcost.value;
+                    ProjectsValues currentstruct = (from a in zakupkaDB.ProjectsValues where a.active == true && a.fk_field == 26 && a.fk_project == projectID select a).FirstOrDefault();
+                    string currentStructTextValue = "";
+                    if (currentstruct != null)
+                    { currentStructTextValue = currentstruct.value; }
+
+                    List<StructTable> allstruct = (from a in zakupkaDB.StructTable where a.active == true select a).ToList();
+                    Struct.Items.Add(new ListItem { Text = "Выберите структурное подразделение", Value = "0" });
+                    foreach (var item in allstruct)
+                        Struct.Items.Add(new ListItem { Text = item.name, Value = item.name, Selected = (item.name == currentStructTextValue) });
+
+
+                    ProjectsValues currentcost = (from a in zakupkaDB.ProjectsValues where a.active == true && a.fk_field == 27 && a.fk_project == projectID select a).FirstOrDefault();
+                    string currentCostTextValue = "";
+                    if (currentcost != null)
+                    {
+                        currentCostTextValue = currentcost.value;
+                    }
+                    List<CostClassTable> allcost = (from a in zakupkaDB.CostClassTable where a.active == true select a).ToList();
+                    CostClass.Items.Add(new ListItem { Text = "Выберите вид расходов", Value = 0.ToString() });
+                    foreach (var item in allcost)
+                        CostClass.Items.Add(new ListItem { Text = item.name, Value = item.name, Selected = (item.name == currentCostTextValue) });
                 }
-                List<CostClassTable> allcost = (from a in zakupkaDB.CostClassTable where a.active == true select a).ToList();
-                CostClass.Items.Add(new ListItem { Text = "Выберите вид расходов", Value = 0.ToString() });
-                foreach (var item in allcost)
-                    CostClass.Items.Add(new ListItem { Text = item.name, Value = item.name, Selected = (item.name == currentCostTextValue) });
-            }
+            
         }     
         protected void Refresh()
         {
@@ -235,8 +270,9 @@ namespace Zakupka.Event
         }
         protected void AddRowButton_Click(object sender, EventArgs e)
         {
+            SaveAll();
             if (TextBox1.Text != null && kosgu.SelectedIndex != 0 && kosgutype.SelectedIndex != 0)
-            {
+            {               
                 int eventId = Convert.ToInt32(Session["eventID"]);
                 int userID = (int)Session["userID"];
                 int projectID = (int)Session["projectID"];
@@ -248,7 +284,7 @@ namespace Zakupka.Event
                 newValue.fk_event = eventId;
                 zakupkaDB.ProjectsValues.InsertOnSubmit(newValue);
                 zakupkaDB.SubmitChanges();
-                SaveAll();
+               
                 TableDiv.Controls.Clear();
                 TableDiv.Controls.Add(CreateNewTable());
                 Response.Redirect("~/Event/ProjectEdit.aspx");

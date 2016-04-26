@@ -95,16 +95,6 @@
       <Column Name="name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.ViewField" Member="ViewField">
-    <Type Name="ViewField">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="viewtype" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="fk_field" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="orderby" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Fields_ViewField" Member="Fields" ThisKey="fk_field" OtherKey="filedID" Type="Fields" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.CollectedValues" Member="CollectedValues">
     <Type Name="CollectedValues">
       <Column Name="collectedFieldID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -152,9 +142,20 @@
       <Column Name="sumby" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="staticvalue" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="engname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Association Name="Fields_ViewField" Member="ViewField" ThisKey="filedID" OtherKey="fk_field" Type="ViewField" />
       <Association Name="Fields_CollectedValues" Member="CollectedValues" ThisKey="filedID" OtherKey="fk_field" Type="CollectedValues" />
       <Association Name="Fields_ProjectsValues" Member="ProjectsValues" ThisKey="filedID" OtherKey="fk_field" Type="ProjectsValues" />
+      <Association Name="Fields_ViewField" Member="ViewField" ThisKey="filedID" OtherKey="fk_field" Type="ViewField" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ViewField" Member="ViewField">
+    <Type Name="ViewField">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="viewtype" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="fk_field" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="orderby" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="byproject" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Fields_ViewField" Member="Fields" ThisKey="fk_field" OtherKey="filedID" Type="Fields" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

@@ -13,6 +13,9 @@ namespace Zakupka.Event
         ZakupkaDBDataContext zakupkaDB = new ZakupkaDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["userID"] == null)
+                Response.Redirect("~/Default.aspx");
+
             List<Projects> allprojects = (from a in zakupkaDB.Projects where a.active == true select a).ToList();
 
             DataTable dataTable = new DataTable();

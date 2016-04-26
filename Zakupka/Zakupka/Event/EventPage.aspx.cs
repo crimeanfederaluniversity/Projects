@@ -13,16 +13,21 @@ namespace Zakupka.Event
         ZakupkaDBDataContext zakupkaDB = new ZakupkaDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["userID"] != null)
+            if (Session["userID"] == null)
+                Response.Redirect("~/Default.aspx");
+
             Refresh();
         }
         protected void Refresh()
         {
+            int mainid = Convert.ToInt32(Session["maineventID"]);
+            string name = (from a in zakupkaDB.MainEvent where a.Active == true && a.ID == mainid select a.MainEvent1).FirstOrDefault();
+            Label1.Text = name.ToString();
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add(new DataColumn("eventID", typeof(string)));
             dataTable.Columns.Add(new DataColumn("eventName", typeof(string)));
             
-            List<Events> eventList = (from a in zakupkaDB.Events where a.active == true select a).ToList();
+            List<Events> eventList = (from a in zakupkaDB.Events where a.active == true && a.fk_mainevent == mainid select a).ToList();
             foreach (Events currentEvent in eventList)
             {
                 DataRow dataRow = dataTable.NewRow();

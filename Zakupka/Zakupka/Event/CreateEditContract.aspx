@@ -14,7 +14,7 @@
     </asp:DropDownList>
     <br />
     <br />
-     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Width="877px" AutoGenerateSelectButton="True" >
+     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Width="877px" >
           <Columns>    
                  <asp:TemplateField Visible="false"   HeaderText="">
                         <ItemTemplate>

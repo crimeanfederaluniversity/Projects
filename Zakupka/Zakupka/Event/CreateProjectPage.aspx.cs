@@ -13,10 +13,14 @@ namespace Zakupka.Event
         ZakupkaDBDataContext zakupkaDB = new ZakupkaDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["userID"] == null)
+                Response.Redirect("~/Default.aspx");
+
             if (!Page.IsPostBack)
             {
-               
-                GridApdate();
+                if (Session["userID"] != null)
+                
+                    GridApdate();
             }
         }
         protected void GridApdate()

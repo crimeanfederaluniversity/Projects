@@ -30,15 +30,17 @@ namespace Zakupka.Event
             Fields typeoffield = (from a in zakupkaDB.Fields where a.filedID == fieldId where a.active select a).FirstOrDefault();
             if (typeoffield.commonfield == true)
             {
-                CollectedValues fk = (from a in zakupkaDB.CollectedValues where a.fk_contract == contractId  && a.fk_field == fieldId
+                CollectedValues fk = (from a in zakupkaDB.CollectedValues
+                                      where a.fk_contract == contractId  && a.fk_field == fieldId
                                         && a.fk_project == null  && a.fk_event == null  select a).FirstOrDefault();
                 fk.value = value;
                 zakupkaDB.SubmitChanges();
             }
             else
             {
-                CollectedValues fk = (from a in zakupkaDB.CollectedValues  where a.fk_contract == contractId
-                                          && a.fk_field == fieldId  && a.fk_project == projectid  && a.fk_event == eventid select a).FirstOrDefault();
+                CollectedValues fk = (from a in zakupkaDB.CollectedValues
+                                      where a.fk_contract == contractId
+                                      && a.fk_field == fieldId  && a.fk_project == projectid  && a.fk_event == eventid select a).FirstOrDefault();
                 fk.value = value;
                 zakupkaDB.SubmitChanges();
             }                          
@@ -184,6 +186,9 @@ namespace Zakupka.Event
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["userID"] == null)
+                Response.Redirect("~/Default.aspx");
+
             int projectID = (int)Session["projectID"];
             int conId = Convert.ToInt32(Session["contractID"]);
             ValuesList = (List<ValueSaveClass>)Session["contractvalues"];
@@ -192,25 +197,26 @@ namespace Zakupka.Event
             Refresh();
             TableDiv.Controls.Clear();
             TableDiv.Controls.Add(CreateNewTable());
-            if (!Page.IsPostBack)
-            { 
-                    ProjectsValues currentcost = (from a in zakupkaDB.ProjectsValues where a.active == true && a.fk_field == 27 && a.fk_project == projectID select a).FirstOrDefault();
-                if (currentcost != null) { CostClass.Visible = false; }
-                else
+                if (!Page.IsPostBack)
                 {
-                    CollectedValues contractcost = (from a in zakupkaDB.CollectedValues where a.active == true && a.fk_field == 27 && a.fk_contract == conId select a).FirstOrDefault();
-                    string currentCostTextValue = "";
-                    if (contractcost != null)
+                    ProjectsValues currentcost = (from a in zakupkaDB.ProjectsValues where a.active == true && a.fk_field == 27 && a.fk_project == projectID select a).FirstOrDefault();
+                    if (currentcost != null) { CostClass.Visible = false; }
+                    else
                     {
-                        currentCostTextValue = contractcost.value;
+                        CollectedValues contractcost = (from a in zakupkaDB.CollectedValues where a.active == true && a.fk_field == 27 && a.fk_contract == conId select a).FirstOrDefault();
+                        string currentCostTextValue = "";
+                        if (contractcost != null)
+                        {
+                            currentCostTextValue = contractcost.value;
+                        }
+                        List<CostClassTable> allcost = (from a in zakupkaDB.CostClassTable where a.active == true select a).ToList();
+                        CostClass.Items.Add(new ListItem { Text = "Выберите вид расходов", Value = 0.ToString() });
+                        foreach (var item in allcost)
+                            CostClass.Items.Add(new ListItem { Text = item.name, Value = item.name, Selected = (item.name == currentCostTextValue) });
                     }
-                    List<CostClassTable> allcost = (from a in zakupkaDB.CostClassTable where a.active == true select a).ToList();
-                    CostClass.Items.Add(new ListItem { Text = "Выберите вид расходов", Value = 0.ToString() });
-                    foreach (var item in allcost)
-                        CostClass.Items.Add(new ListItem { Text = item.name, Value = item.name, Selected = (item.name == currentCostTextValue) });
                 }
             }
-        }
+        
         protected void Refresh()
         {
             int eventId = Convert.ToInt32(Session["eventID"]);
@@ -270,12 +276,12 @@ namespace Zakupka.Event
         }
         protected void AddRowButton_Click(object sender, EventArgs e)
         {
+            SaveAll();
             if (TextBox1.Text != null && kosgu.SelectedIndex != 0 && kosgutype.SelectedIndex != 0)
             {
                 int eventId = Convert.ToInt32(Session["eventID"]);
                 int conId = Convert.ToInt32(Session["contractID"]);
-                int projectID = (int)Session["projectID"];
-                SaveAll();
+                int projectID = (int)Session["projectID"];           
                 TableDiv.Controls.Clear();
                 TableDiv.Controls.Add(CreateNewTable());
                 kosguError.Visible = false;
@@ -364,8 +370,7 @@ namespace Zakupka.Event
                 zakupkaDB.SubmitChanges();              
             }
             List<CollectedValues> valueList = (from a in zakupkaDB.CollectedValues
-                                               where a.active == true && a.fk_field == null
-                                               && a.fk_kosgu != null && a.fk_contract == conId && a.fk_project == projectId && a.fk_event == eventId
+                                               where a.active == true && a.fk_field == null  && a.fk_kosgu != null && a.fk_contract == conId && a.fk_project == projectId && a.fk_event == eventId
                                                select a).ToList();
 
             if (valueList.Count != 0)
@@ -378,6 +383,11 @@ namespace Zakupka.Event
                     smeta.value = sum.ToString();
                     zakupkaDB.SubmitChanges();
                 }
+            else
+            {
+                smeta.value = "0";
+                zakupkaDB.SubmitChanges();
+            }
             #endregion
 
             Calculations calc = new Calculations();

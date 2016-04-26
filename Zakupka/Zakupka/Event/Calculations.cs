@@ -7,12 +7,13 @@ namespace Zakupka.Event
 {
     public class Calculations
     {
+        public DataValidator validator = new DataValidator();
         ZakupkaDBDataContext zakupkaDB = new ZakupkaDBDataContext();
         public void CalculateMIyProject(int projectId ,int eventId)
         {
             #region считается и записывается СМЕТА ПРОЕКТА
             ProjectsValues smeta = (from a in zakupkaDB.ProjectsValues
-                                    where a.active == true && a.fk_project == projectId
+                                    where a.active == true && a.fk_project == projectId && a.fk_event == eventId
                                     join b in zakupkaDB.Fields on a.fk_field equals b.filedID
                                     where b.engname == "smeta"
                                     select a).FirstOrDefault();
@@ -52,7 +53,7 @@ namespace Zakupka.Event
             #region ЗАКОНТРАКТОВАНО
 
             ProjectsValues zakontract = (from a in zakupkaDB.ProjectsValues
-                                         where a.active == true && a.fk_project == projectId
+                                         where a.active == true && a.fk_project == projectId && a.fk_event == eventId
                                          join b in zakupkaDB.Fields on a.fk_field equals b.filedID
                                          where b.engname == "zakontract"
                                          select a).FirstOrDefault();
@@ -84,7 +85,7 @@ namespace Zakupka.Event
             #endregion
             #region СУММА ПРЕВЫШЕНИЯ
             ProjectsValues summa = (from a in zakupkaDB.ProjectsValues
-                                    where a.active == true && a.fk_project == projectId
+                                    where a.active == true && a.fk_project == projectId && a.fk_event == eventId
                                     join b in zakupkaDB.Fields on a.fk_field equals b.filedID
                                     where b.engname == "summa"
                                     select a).FirstOrDefault();
@@ -110,7 +111,7 @@ namespace Zakupka.Event
             #endregion
             #region ОПЛАЧЕНО ПО ДОГОВОРАМ
             ProjectsValues bycontract = (from a in zakupkaDB.ProjectsValues
-                                         where a.active == true && a.fk_project == projectId
+                                         where a.active == true && a.fk_project == projectId && a.fk_event == eventId
                                          join b in zakupkaDB.Fields on a.fk_field equals b.filedID
                                          where b.engname == "paybycontract" && b.staticvalue == true
                                          select a).FirstOrDefault();
@@ -143,7 +144,7 @@ namespace Zakupka.Event
             #endregion
             #region ОСТАТОК ПО ДОГОВОРАМ
             ProjectsValues ostatok = (from a in zakupkaDB.ProjectsValues
-                                      where a.active == true && a.fk_project == projectId
+                                      where a.active == true && a.fk_project == projectId && a.fk_event == eventId
                                       join b in zakupkaDB.Fields on a.fk_field equals b.filedID
                                       where b.engname == "leftbycontract" && b.staticvalue == true
                                       select a).FirstOrDefault();
@@ -178,7 +179,7 @@ namespace Zakupka.Event
             #endregion
             #region ОСТАТОК ПО ПРОЕКТУ
             ProjectsValues ostbypr = (from a in zakupkaDB.ProjectsValues
-                                      where a.active == true && a.fk_project == projectId
+                                      where a.active == true && a.fk_project == projectId && a.fk_event == eventId
                                       join b in zakupkaDB.Fields on a.fk_field equals b.filedID
                                       where b.engname == "leftbyproject" && b.staticvalue == true
                                       select a).FirstOrDefault();
