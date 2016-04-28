@@ -3,28 +3,24 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <script src="toggleLoadingScreen.js" type="text/javascript"></script>
-     <script src="calendar_ru.js" type="text/javascript">
+    `<script src="toggleLoadingScreen.js" type="text/javascript"></script><script src="calendar_ru.js" type="text/javascript">
     </script>
-      <style type="text/css">
-          
-           .resultTable {
-               border-collapse: collapse; 
-           }
-          .resultTable TH, TD {
-              border: 1px solid black; 
-              text-align: left; 
-              padding: 4px; 
-          }
-          .resultTable TH {
-              background: #fc0; 
-              height: 40px; 
-              vertical-align: bottom; 
-              padding: 0;
-          }
-
-      </style>
-    <br/>
+    
+    <script language="javascript">
+        function printdiv(printpage)
+        {
+        var headstr = "<html><head><title></title></head><body>";
+        var footstr = "</body>";
+        var newstr = document.all.item(printpage).innerHTML;
+        var oldstr = document.body.innerHTML;
+        document.body.innerHTML = headstr+newstr+footstr;
+        window.print();
+        document.body.innerHTML = oldstr;
+        return false;
+        }
+    </script>
+    
+   <br/>
         <br/>
     <div id="FieldOptions">
         
@@ -116,6 +112,28 @@
     </div>
     
     <div runat="server" id="resultDiv">
+         <style type="text/css">
+          
+           .resultTable {
+               border-collapse: collapse; 
+           }
+          .resultTable TH, TD {
+              border: 1px solid black; 
+              text-align: left; 
+              padding: 4px; 
+          }
+          .resultTable TH {
+              background: #fc0; 
+              height: 40px; 
+              vertical-align: bottom; 
+              padding: 0;
+          }
+
+      </style>
+
         </div>
-    <asp:Button ID="PrintFinded" runat="server" Text="Печать" Width="469px" OnClick="PrintFinded_Click" OnClientClick="showLoadingScreen()"/>
+    <br />
+    <input class="ipt" name="b_print" onclick="printdiv('MainContent_resultDiv');" type="button" width="469px" value=" Печать таблицы" /><br />
+    <br />
+    <asp:Button ID="PrintFinded" runat="server" Text="Печать всех найденных РКК" Width="469px" OnClick="PrintFinded_Click" OnClientClick="showLoadingScreen()"/>
 </asp:Content>

@@ -157,7 +157,7 @@ namespace Chancelerry.kanz
                 {
                     cards.Add(main.GetCardById(tmp.FkCollectedCard));
                 }
-                string cardIdsText = String.Join(",", cards.Select(mc => mc.MaInFieldID).ToList());
+                string cardIdsText = String.Join(", ", cards.Select(mc => mc.MaInFieldID).ToList());
                 int count = res.Count();
                 sum += count;
                 resultTable.Rows.Add(new TableRow() { Cells = { new TableCell() { Text = current }, new TableCell() { Text = count.ToString()}, new TableCell() { Text = cardIdsText } } });

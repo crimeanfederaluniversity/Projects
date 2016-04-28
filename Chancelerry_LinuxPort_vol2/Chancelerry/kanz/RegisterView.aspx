@@ -1,25 +1,32 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RegisterView.aspx.cs" Inherits="Chancelerry.kanz.RegisterView" %>
-
-
-
  <asp:Content ID="TableContent1" ContentPlaceHolderID="TableContent" runat="server">
-     
-     <style> 
-   
-    </style>
-
     <div style="margin-left: 5px">
        <asp:Table ID="dataTable" runat="server" Width="100%" >
-    </asp:Table>
-        </div>
+        </asp:Table>
+    </div>
     <asp:Panel runat="server" CssClass="center pagination">
-        <asp:Button ID="BottomButton9" runat="server" OnClick="Button7_Click" Text="На первую" OnClientClick="showLoadingScreen()"/>
-        <asp:Button ID="BottomButton10" runat="server" OnClick="Button5_Click" Text="Назад" Width="61px" OnClientClick="showLoadingScreen()"/>
-        <asp:Label ID="BottomPageNumberLabel" runat="server" Text="Label"></asp:Label>
-        <asp:Button ID="BottomButton11" runat="server" OnClick="Button6_Click" Text="Вперёд" OnClientClick="showLoadingScreen()"/>
-        <asp:Button ID="BottomButton12" runat="server" Text="К последней" OnClick="Button8_Click" OnClientClick="showLoadingScreen()"/>
+        <asp:Label  ID="PageInfoBottom"         runat="server" Text=""></asp:Label>        
+        <br>
+        <asp:Button ID="GoToFirstBottom"       runat="server" Text=" <<< "      />
+        <asp:Button ID="GoToPreviousBottom"    runat="server" Text="  <  "         />
+        <asp:Label  ID="PagesListBottom"       runat="server" Text=""></asp:Label>
+        <asp:Button ID="GoToNextBottom"        runat="server" Text="  >  "        />
+        <asp:Button ID="GoToLastBottom"        runat="server" Text=" >>> "   />   
     </asp:Panel>
     <br />
+    <script language="javascript">
+        function printdiv(printpage)
+        {
+        var headstr = "<html><head><title></title></head><body>";
+        var footstr = "</body>";
+        var newstr = document.all.item(printpage).innerHTML;
+        var oldstr = document.body.innerHTML;
+        document.body.innerHTML = headstr+newstr+footstr;
+        window.print();
+        document.body.innerHTML = oldstr;
+        return false;
+        }
+    </script>
     <script>
         $(function () {
 
@@ -42,10 +49,9 @@
                 search_field.style.left = position.left - search_field.clientWidth / 2 + "px";
             });
         })
-    </script>
-    
+    </script>   
     <asp:Label ID="timeStampsLabel" runat="server" Text="" Height="5" Font-Size="3"></asp:Label>
-</asp:Content>
+ </asp:Content>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <script src="toggleLoadingScreen.js" type="text/javascript"></script>
@@ -155,23 +161,16 @@
     
 
     <br />
-
-    <asp:Label ID="RegisterNameLabel" runat="server" Text="Label"></asp:Label>
-    
+    <asp:Label ID="RegisterNameLabel" runat="server" Text="Label"></asp:Label>  
     <br />
-
     <asp:Panel runat="server" CssClass="center pagination">
-        <asp:Button ID="Button7" runat="server" OnClick="Button7_Click" Text="На первую" OnClientClick="showLoadingScreen()"/>
-
-        <asp:Button ID="Button5" runat="server" OnClick="Button5_Click" Text="Назад" Width="61px" OnClientClick="showLoadingScreen()"/>
-        <asp:Label ID="PageNumberLabel" runat="server" Text="Label"></asp:Label>
-        <asp:Button ID="Button6" runat="server" OnClick="Button6_Click" Text="Вперёд" OnClientClick="showLoadingScreen()"/>
-
-        <asp:Button ID="Button8" runat="server" Text="К последней" OnClick="Button8_Click" OnClientClick="showLoadingScreen()"/>
+        <asp:Label  ID="PageInfoTop"         runat="server" Text=""></asp:Label>        
+        <br>
+        <asp:Button ID="GoToFirstTop"       runat="server" Text=" <<< "      />
+        <asp:Button ID="GoToPreviousTop"    runat="server" Text="  <  "         />
+        <asp:Label  ID="PagesListTop"       runat="server" Text=""></asp:Label>
+        <asp:Button ID="GoToNextTop"        runat="server" Text="  >  "        />
+        <asp:Button ID="GoToLastTop"        runat="server" Text=" >>> "   />
     </asp:Panel>
-
     <br />
-    
- 
-
 </asp:Content>

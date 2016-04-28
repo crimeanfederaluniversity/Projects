@@ -125,25 +125,70 @@ namespace Chancelerry.kanz
                         //SearchAllTextBox.Text = searchAll;
                         CardCommonFunctions cardCommonFunctions = new CardCommonFunctions();
 
-
-                        string sum = cardCommonFunctions.FastSearch(searchCardId, vSearchList, searchAll,
-                            register.RegisterID, Convert.ToInt32(userID), dataTable, page*size, (page + 1)*size);
+                        int totalCnt = 0;
+                        string sum = cardCommonFunctions.FastSearch(searchCardId, vSearchList, searchAll, register.RegisterID, Convert.ToInt32(userID), dataTable, page*size, (page + 1)*size,out totalCnt);
                         timeStampsLabel.Text += cardCommonFunctions.timeStamps;
-                        Button5.Visible = true;
-                        Button6.Visible = true;
-                        Button7.Visible = false;
-                        Button8.Visible = false;
-                        BottomButton9.Visible = false;
-                        BottomButton10.Visible = true;
-                        BottomButton11.Visible = true;
-                        BottomButton12.Visible = false;
-                        string page_info = sum;
-                        PageNumberLabel.Text = page_info;
-                        BottomPageNumberLabel.Text = page_info;
 
+                        int pagesCnt = totalCnt/size;
+                        string pageNumbers = "";
+                     
+                        if (totalCnt%size > 0) pagesCnt++;
+
+                        int startNumber = page - 5;
+                        startNumber = startNumber < 0 ? 0 : startNumber;
+
+                        for (int i = startNumber; i < 10+ startNumber; i++)
+                        {
+                        if (i>pagesCnt-1)
+                            continue;
+                            if (i == page)
+                            {
+                                pageNumbers += "<font color='red'> " + (i + 1).ToString()+ " </font>";
+                            }
+                            else
+
+                            {
+                                pageNumbers += "<a href=\"?page="+ i + "&size="+size+"\"> " + (i + 1).ToString() + " </a>";
+                            }
+                            
+                        }
+
+                    GoToFirstTop.OnClientClick = "window.open(location.origin+location.pathname+'?page=0&size=" + size + "','_self'); return false;";
+                    GoToFirstBottom.OnClientClick = "window.open(location.origin+location.pathname+'?page=0&size=" + size + "','_self'); return false;";
+                    if (page == 0)
+                        {
+                            GoToPreviousTop.Enabled = false;
+                            GoToPreviousBottom.Enabled = false;
+                        }
+                        else
+                        {
+                            GoToPreviousTop.OnClientClick = "window.open(location.origin+location.pathname+'?page=" + (page-1)+"&size=" + size + "','_self'); return false;";
+                            GoToPreviousBottom.OnClientClick = "window.open(location.origin+location.pathname+'?page=" + (page - 1) + "&size=" + size + "','_self'); return false;";
+                        }
+                        if (page == pagesCnt-1)
+                        {
+                            GoToNextTop.Enabled = false;
+                            GoToNextBottom.Enabled = false;
+                        }
+                        else
+                        {
+                            GoToNextTop.OnClientClick = "window.open(location.origin+location.pathname+'?page=" + (page + 1) + "&size=" +size + "','_self'); return false;";
+                            GoToNextBottom.OnClientClick = "window.open(location.origin+location.pathname+'?page=" + (page + 1) + "&size=" + size + "','_self'); return false;";
+                        }
+                        GoToLastTop.OnClientClick = "window.open(location.origin+location.pathname+'?page=" + (pagesCnt-1) + "&size=" + size + "','_self'); return false;";
+                        GoToLastBottom.OnClientClick = "window.open(location.origin+location.pathname+'?page=" + (pagesCnt - 1) + "&size=" + size + "','_self'); return false;";
+
+                        string page_info = sum;
+
+                        PagesListTop.Text = pageNumbers;
+                        PagesListBottom.Text = pageNumbers;
+
+                        PageInfoTop.Text = page_info;
+                        PageInfoBottom.Text = page_info;
                     }
                     else
                     {
+                        /*
                         int uusrId;
                         int.TryParse(Session["userID"].ToString(), out uusrId);
 
@@ -156,7 +201,7 @@ namespace Chancelerry.kanz
                                            (int) Session["pageCount"] + ". Всего: " + (int) Session["cardsCount"];
                         PageNumberLabel.Text = page_info;
                         BottomPageNumberLabel.Text = page_info;
-
+                        */
                     }
                 }
                 timeStampsLabel.Text += " 7_" + DateTime.Now.TimeOfDay;   

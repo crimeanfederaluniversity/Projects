@@ -22,49 +22,58 @@ namespace Chancelerry.kanz {
         protected global::System.Web.UI.WebControls.Table dataTable;
         
         /// <summary>
-        /// BottomButton9 control.
+        /// PageInfoBottom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BottomButton9;
+        protected global::System.Web.UI.WebControls.Label PageInfoBottom;
         
         /// <summary>
-        /// BottomButton10 control.
+        /// GoToFirstBottom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BottomButton10;
+        protected global::System.Web.UI.WebControls.Button GoToFirstBottom;
         
         /// <summary>
-        /// BottomPageNumberLabel control.
+        /// GoToPreviousBottom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label BottomPageNumberLabel;
+        protected global::System.Web.UI.WebControls.Button GoToPreviousBottom;
         
         /// <summary>
-        /// BottomButton11 control.
+        /// PagesListBottom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BottomButton11;
+        protected global::System.Web.UI.WebControls.Label PagesListBottom;
         
         /// <summary>
-        /// BottomButton12 control.
+        /// GoToNextBottom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BottomButton12;
+        protected global::System.Web.UI.WebControls.Button GoToNextBottom;
+        
+        /// <summary>
+        /// GoToLastBottom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GoToLastBottom;
         
         /// <summary>
         /// timeStampsLabel control.
@@ -175,48 +184,57 @@ namespace Chancelerry.kanz {
         protected global::System.Web.UI.WebControls.Label RegisterNameLabel;
         
         /// <summary>
-        /// Button7 control.
+        /// PageInfoTop control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button7;
+        protected global::System.Web.UI.WebControls.Label PageInfoTop;
         
         /// <summary>
-        /// Button5 control.
+        /// GoToFirstTop control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button5;
+        protected global::System.Web.UI.WebControls.Button GoToFirstTop;
         
         /// <summary>
-        /// PageNumberLabel control.
+        /// GoToPreviousTop control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PageNumberLabel;
+        protected global::System.Web.UI.WebControls.Button GoToPreviousTop;
         
         /// <summary>
-        /// Button6 control.
+        /// PagesListTop control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button6;
+        protected global::System.Web.UI.WebControls.Label PagesListTop;
         
         /// <summary>
-        /// Button8 control.
+        /// GoToNextTop control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button8;
+        protected global::System.Web.UI.WebControls.Button GoToNextTop;
+        
+        /// <summary>
+        /// GoToLastTop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GoToLastTop;
     }
 }

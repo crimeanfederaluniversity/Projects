@@ -47,6 +47,17 @@ namespace Chancelerry
             public List<string> cardToRender { get; set; } 
         }
 
+        public void RedirectToPrint(object sender, EventArgs e)
+        {
+
+            ImageButton thisButton = (ImageButton)sender;
+            int currentCardId = Convert.ToInt32(thisButton.Attributes["_cardID"]);
+            HttpContext.Current.Session["cardID"] = currentCardId;
+            HttpContext.Current.Session["version"] = 200500;
+            HttpContext.Current.Session["canEdit"] = true;
+            HttpContext.Current.Response.Redirect("~/kanz/Print.aspx", true); 
+        }
+
         public void RedirectToEdit(object sender, EventArgs e)
         {
             

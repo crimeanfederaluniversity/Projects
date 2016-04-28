@@ -324,7 +324,7 @@ namespace Chancelerry.kanz
                     searchList.TryGetValue(fieldId, out fieldValue); //достаем айдишник нашего филда
                     List<string> valuesList = fieldValue.Split('#').ToList();
                     List<CollectedCards> cardsWithValue1 = (from a in chancDb.CollectedFieldsValues
-                        where a.Active == true && a.FkField == fieldId && a.ValueText.Contains(fieldValue)
+                        where a.Active == true && a.FkField == fieldId && a.ValueText.ToLower().Contains(fieldValue.ToLower())
                         join b in chancDb.CollectedCards on a.FkCollectedCard equals b.CollectedCardID
                         where b.Active == true && b.FkRegister == registerId
                         select b).Distinct().OrderByDescending(uc => uc.MaInFieldID).ToList();
@@ -396,8 +396,10 @@ namespace Chancelerry.kanz
         public string timeStamps = "";
 
 
-        public string FastSearch(string cardId, Dictionary<int, string> searchList, string searchAll, int registerId, int userId, Table vTable, int LineFrom, int LineTo)
+        public string FastSearch(string cardId, Dictionary<int, string> searchList, string searchAll, int registerId, int userId, Table vTable, int LineFrom, int LineTo,out int totalToShow )
         {
+            totalToShow = 0;
+            //totalOnPage = 0;
             #region GetSortedCutedCardsToShow
 
             timeStamps += " 1_" + DateTime.Now.TimeOfDay;
@@ -420,13 +422,13 @@ namespace Chancelerry.kanz
                 return "Данных нет";
             string sqlqueryTMP = "SELECT fk_collectedcard,fk_field,instance,valuetext,isdeleted,version,collectedfieldvalueid FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
                  "AND  fk_field IN (" + string.Join(",", allFields.Select(mc=>mc.FieldID).ToArray()) + ")";
-
+/*
             string sqlqueryCnt = "SELECT COUNT(fk_collectedcard) FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
                  "AND  fk_field IN (" + string.Join(",", allFields.Select(mc => mc.FieldID).ToArray()) + ")";
-
+                 */
 
             IEnumerable<ValuesClass> tmp = chancDb.ExecuteQuery<ValuesClass>(sqlqueryTMP);
-            int cnt = chancDb.ExecuteCommand(sqlqueryCnt);
+           // int cnt = chancDb.ExecuteCommand(sqlqueryCnt);
             ValuesClass[] tmpStrList = tmp.ToArray();// tmp.ToArray();
          /*   ValuesClass[] tmpTmp = new ValuesClass[cnt];
 
@@ -558,9 +560,19 @@ namespace Chancelerry.kanz
                         buttonDelete.Attributes.Add("_cardID", currentCard.ToString());
                         buttonDelete.Click += ta.DeleteCard;
                         buttonDelete.OnClientClick = "return confirm('Вы уверены, что хотите удалить?');";
+
+                        ImageButton buttonPrint = new ImageButton();
+                        buttonPrint.ImageUrl = "~/kanz/icons/printButtonIcon.png";
+                        buttonPrint.Height = 20;
+                        buttonPrint.Width = 20;
+                        buttonPrint.Attributes.Add("_cardID", currentCard.ToString());
+                        buttonPrint.Click += ta.RedirectToPrint;
+
                         cell.Controls.Add(buttonEdit);
                         cell.Controls.Add(buttonView);
                         cell.Controls.Add(buttonDelete);
+                        cell.Controls.Add(buttonPrint);
+
                         cell.RowSpan = maxInstanceInCard + 1;
                         instRow.Cells.Add(cell);
                     }
@@ -568,6 +580,10 @@ namespace Chancelerry.kanz
             }
             #endregion
             timeStamps += " 6_" + DateTime.Now.TimeOfDay;
+
+            totalToShow = totalCnt;
+            //totalOnPage = 0;
+            LineTo = LineTo > totalCnt ? totalCnt : LineTo;
             return "Всего:" + totalCnt.ToString() + "  " + "Показано с " + (LineFrom + 1) + " по " + (LineTo);
         }
     
