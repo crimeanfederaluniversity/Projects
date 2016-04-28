@@ -12,9 +12,11 @@ using System.Web.UI.WebControls;
 using Chancelerry;
 using Chancelerry.kanz;
 using Npgsql;
+using System.Data.SqlClient;
 
 namespace Chancelerry.kanz
 {
+
     public class DataPortKoStyl
     {
         public int Id { get; set; }
@@ -379,6 +381,7 @@ namespace Chancelerry.kanz
             public string Type { get; set; }
         }
 
+
         public class ValuesClass
         {
             public int collectedfieldvalueid { get; set; }
@@ -391,6 +394,7 @@ namespace Chancelerry.kanz
         }
 
         public string timeStamps = "";
+
 
         public string FastSearch(string cardId, Dictionary<int, string> searchList, string searchAll, int registerId, int userId, Table vTable, int LineFrom, int LineTo)
         {
@@ -416,7 +420,31 @@ namespace Chancelerry.kanz
                 return "Данных нет";
             string sqlqueryTMP = "SELECT fk_collectedcard,fk_field,instance,valuetext,isdeleted,version,collectedfieldvalueid FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
                  "AND  fk_field IN (" + string.Join(",", allFields.Select(mc=>mc.FieldID).ToArray()) + ")";
-            ValuesClass[] tmpStrList = chancDb.ExecuteQuery<ValuesClass>(sqlqueryTMP).ToArray();
+
+            string sqlqueryCnt = "SELECT COUNT(fk_collectedcard) FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
+                 "AND  fk_field IN (" + string.Join(",", allFields.Select(mc => mc.FieldID).ToArray()) + ")";
+
+
+            IEnumerable<ValuesClass> tmp = chancDb.ExecuteQuery<ValuesClass>(sqlqueryTMP);
+            int cnt = chancDb.ExecuteCommand(sqlqueryCnt);
+            ValuesClass[] tmpStrList = tmp.ToArray();// tmp.ToArray();
+         /*   ValuesClass[] tmpTmp = new ValuesClass[cnt];
+
+            int gg = 0;
+
+            IEnumerator<ValuesClass> tmp33 = tmp.GetEnumerator();
+            foreach (ValuesClass value in tmp)
+            {
+                tmpTmp[gg++] = value;
+            }
+            
+            for (int k = 0; k < cnt; k++)
+            {
+                tmpTmp[k] = tmp33.Current;
+                tmp33.MoveNext();
+            }
+      */
+
             timeStamps += " 4_" + DateTime.Now.TimeOfDay;
             vTable.Rows.Add(AddSearchHeaderRoFromListWithData(allFields.Select(mc=>mc.FieldID).ToList(), searchList));
             vTable.Rows.Add(ta.AddHeaderRoFromList(allFields.Select(mc=>mc.Name).ToList()));

@@ -1,4 +1,52 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RegisterView.aspx.cs" Inherits="Chancelerry.kanz.RegisterView" %>
+
+
+
+ <asp:Content ID="TableContent1" ContentPlaceHolderID="TableContent" runat="server">
+     
+     <style> 
+   
+    </style>
+
+    <div style="margin-left: 5px">
+       <asp:Table ID="dataTable" runat="server" Width="100%" >
+    </asp:Table>
+        </div>
+    <asp:Panel runat="server" CssClass="center pagination">
+        <asp:Button ID="BottomButton9" runat="server" OnClick="Button7_Click" Text="На первую" OnClientClick="showLoadingScreen()"/>
+        <asp:Button ID="BottomButton10" runat="server" OnClick="Button5_Click" Text="Назад" Width="61px" OnClientClick="showLoadingScreen()"/>
+        <asp:Label ID="BottomPageNumberLabel" runat="server" Text="Label"></asp:Label>
+        <asp:Button ID="BottomButton11" runat="server" OnClick="Button6_Click" Text="Вперёд" OnClientClick="showLoadingScreen()"/>
+        <asp:Button ID="BottomButton12" runat="server" Text="К последней" OnClick="Button8_Click" OnClientClick="showLoadingScreen()"/>
+    </asp:Panel>
+    <br />
+    <script>
+        $(function () {
+
+            $(".container").click(function (e) {
+                var $target = $(e.target);
+
+                if (!$target.closest(".search-field").length) {
+                    var search_field = document.getElementById("ctl00_MainContent_SearchPanel");
+                    search_field.classList.add("hidden");
+                }
+            });
+
+            $(".search-field").focus(function () {
+                var $clicker = $(this);
+                var position = $clicker.position();
+
+                var search_field = document.getElementById("ctl00_MainContent_SearchPanel");
+                search_field.classList.remove("hidden");
+                search_field.style.top = 35 + position.top + "px";
+                search_field.style.left = position.left - search_field.clientWidth / 2 + "px";
+            });
+        })
+    </script>
+    
+    <asp:Label ID="timeStampsLabel" runat="server" Text="" Height="5" Font-Size="3"></asp:Label>
+</asp:Content>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <script src="toggleLoadingScreen.js" type="text/javascript"></script>
     <link href="../Content/Site.css" rel="stylesheet" />
@@ -13,6 +61,13 @@
    }
 </script>
     
+    <style>
+        .c1 { width: 500px; height: 30px; margin: auto; background-color: #c0c0c0; }
+        .c2 { margin: 0px; text-align: center; background-color: #a0a0a0; }
+        .fullwidth { width: 100%; }
+         
+    </style>
+
      <script>
         function runScript(e)
         {
@@ -117,45 +172,6 @@
 
     <br />
     
-    <asp:Table ID="dataTable" runat="server" Width="100%" >
-    </asp:Table>
-
-    <asp:Panel runat="server" CssClass="center pagination">
-        <asp:Button ID="BottomButton9" runat="server" OnClick="Button7_Click" Text="На первую" OnClientClick="showLoadingScreen()"/>
-
-        <asp:Button ID="BottomButton10" runat="server" OnClick="Button5_Click" Text="Назад" Width="61px" OnClientClick="showLoadingScreen()"/>
-        <asp:Label ID="BottomPageNumberLabel" runat="server" Text="Label"></asp:Label>
-        <asp:Button ID="BottomButton11" runat="server" OnClick="Button6_Click" Text="Вперёд" OnClientClick="showLoadingScreen()"/>
-
-        <asp:Button ID="BottomButton12" runat="server" Text="К последней" OnClick="Button8_Click" OnClientClick="showLoadingScreen()"/>
-    </asp:Panel>
-
-    <br />
-
-    <script>
-        $(function () {
-
-            $(".container").click(function (e) {
-                var $target = $(e.target);
-
-                if (!$target.closest(".search-field").length) {
-                    var search_field = document.getElementById("ctl00_MainContent_SearchPanel");
-                    search_field.classList.add("hidden");
-                }
-            });
-
-            $(".search-field").focus(function () {
-                var $clicker = $(this);
-                var position = $clicker.position();
-
-                var search_field = document.getElementById("ctl00_MainContent_SearchPanel");
-                search_field.classList.remove("hidden");
-                search_field.style.top = 35 + position.top + "px";
-                search_field.style.left = position.left - search_field.clientWidth / 2 + "px";
-            });
-        })
-    </script>
-    
-    <asp:Label ID="timeStampsLabel" runat="server" Text="" Height="5" Font-Size="3"></asp:Label>
+ 
 
 </asp:Content>

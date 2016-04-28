@@ -1,4 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StatisticsMain.aspx.cs" Inherits="Chancelerry.kanz.StatisticsMain" %>
+
+
+
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <script src="toggleLoadingScreen.js" type="text/javascript"></script>
      <script src="calendar_ru.js" type="text/javascript">
