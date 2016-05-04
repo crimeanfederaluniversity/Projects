@@ -68,7 +68,6 @@
                         <li><a runat="server" href="~/Contact.aspx">Контакты</a></li>
                         
                     </ul>
-                    <font size="3" style="background-color: yellow"  color="red">Обновление системы в 13:00</font>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">

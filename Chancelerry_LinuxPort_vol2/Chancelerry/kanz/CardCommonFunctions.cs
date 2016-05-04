@@ -1313,9 +1313,9 @@ namespace Chancelerry.kanz
 
                     if (currentField.Type == "dateIncrement")
                     {
-                        Button addDays1Button = new Button() { Text = "15", Width = 20, Height = 20, OnClientClick = "return addDays('MainContent_" + currentFieldTextBox.ID + "',15);" };
-                        Button addDays2Button = new Button() { Text = "30", Width = 20, Height = 20, OnClientClick = "return addDays('MainContent_" + currentFieldTextBox.ID + "',30);" };
-                        Button addDays3Button = new Button() { Text = "60", Width = 20, Height = 20, OnClientClick = "return addDays('MainContent_" + currentFieldTextBox.ID + "',60);" };
+                        Button addDays1Button = new Button() { Text = "15", Width = 20, Height = 20, OnClientClick = "return addDays('ctl00_MainContent_" + currentFieldTextBox.ID + "',15);" };
+                        Button addDays2Button = new Button() { Text = "30", Width = 20, Height = 20, OnClientClick = "return addDays('ctl00_MainContent_" + currentFieldTextBox.ID + "',30);" };
+                        Button addDays3Button = new Button() { Text = "60", Width = 20, Height = 20, OnClientClick = "return addDays('ctl00_MainContent_" + currentFieldTextBox.ID + "',60);" };
 
                         addDays1Button.Style.Add("padding","0 0 0 0");
                         addDays2Button.Style.Add("padding","0 0 0 0");
