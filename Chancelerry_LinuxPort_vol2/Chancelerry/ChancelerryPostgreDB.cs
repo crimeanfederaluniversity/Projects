@@ -101,8 +101,8 @@ public partial class ChancelerryDb : DataContext
 			return this.GetTable<Logs>();
 		}
 	}
-	
-	public Table<Registers> Registers
+
+    public Table<Registers> Registers
 	{
 		get
 		{

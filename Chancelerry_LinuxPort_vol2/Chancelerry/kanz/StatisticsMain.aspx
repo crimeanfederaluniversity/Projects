@@ -1,9 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StatisticsMain.aspx.cs" Inherits="Chancelerry.kanz.StatisticsMain" %>
-
-
-
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    `<script src="toggleLoadingScreen.js" type="text/javascript"></script><script src="calendar_ru.js" type="text/javascript">
+    <script src="toggleLoadingScreen.js" type="text/javascript"></script><script src="calendar_ru.js" type="text/javascript">
     </script>
     
     <script language="javascript">
@@ -18,8 +15,7 @@
         document.body.innerHTML = oldstr;
         return false;
         }
-    </script>
-    
+    </script>   
    <br/>
         <br/>
     <div id="FieldOptions">
@@ -45,8 +41,8 @@
                 <td rowspan="3">
                    <asp:DropDownList ID="RegistersDropoDownList" runat="server" Height="20px" Width="250px" AutoPostBack="True" OnSelectedIndexChanged="SumByRegistersDropoDownList_SelectedIndexChanged"></asp:DropDownList>
                 </td>
-                <td rowspan="3">
-                    <asp:DropDownList ID="FiedsDropDownList" runat="server" Enabled="False" Height="20px" Width="250px"></asp:DropDownList>
+                <td >
+                    <asp:DropDownList ID="FiedsDropDownList" runat="server" Enabled="False" Height="20px" Width="250px"></asp:DropDownList>                  
                 </td>
                 <td>
                     <asp:DropDownList ID="DateForFilter" runat="server" Enabled="False" Height="20px" Width="250px"></asp:DropDownList>
@@ -55,24 +51,34 @@
                    <asp:DropDownList ID="FilterFiedsDropDownList" runat="server" Enabled="False" Height="20px" Width="250px"></asp:DropDownList>
                 </td>
 
-
-                 </tr>    
+            </tr>    
             <tr>
-                
+                 <td>
+                       Начальная дата последнего изменения (включительно)
+                     <br/>
+                     <asp:TextBox ID="LastChangedDateStartTextBox" runat="server"></asp:TextBox>
+                </td>
                     <td>
                         Начальная дата(включительно)
+                        <br/>
                      <asp:TextBox ID="StartDateTextBox" runat="server"></asp:TextBox>
                  </td>
                     <td rowspan="2">
                        Поиск (без учета регистра)
+                        <br/>
                       <asp:TextBox ID="SearchInFieldTextBox" runat="server"></asp:TextBox>
                  </td>
                 
             </tr>
              <tr>
-
+                 <td>
+                 Конечная дата последнего изменения (включительно)
+                     <br/>
+                     <asp:TextBox ID="LastChangedDateEndTextBox" runat="server"></asp:TextBox>
+                </td>
                     <td>
                        Конечная дата(включительно)
+                        <br/>
                      <asp:TextBox ID="EndDateTextBox" runat="server"></asp:TextBox>
                  </td>
                
@@ -83,6 +89,8 @@
         <br/>
          <table>
             <tr>
+                
+                
                 <td>
                     <asp:Button ID="SumByButton" runat="server" Text="Просуммировать по выбранному полю" Width="300px" Enabled="False" OnClick="SumByButton_Click"  OnClientClick="showLoadingScreen()" />     
                 </td>
@@ -131,9 +139,10 @@
 
       </style>
 
+
         </div>
     <br />
-    <input class="ipt" name="b_print" onclick="printdiv('MainContent_resultDiv');" type="button" width="469px" value=" Печать таблицы" /><br />
+   <input name="b_print" onclick="printdiv('ctl00_MainContent_resultDiv');" type="button" value=" Печать таблицы" /><br /> 
     <br />
     <asp:Button ID="PrintFinded" runat="server" Text="Печать всех найденных РКК" Width="469px" OnClick="PrintFinded_Click" OnClientClick="showLoadingScreen()"/>
 </asp:Content>

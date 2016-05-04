@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RegisterView.aspx.cs" Inherits="Chancelerry.kanz.RegisterView" %>
  <asp:Content ID="TableContent1" ContentPlaceHolderID="TableContent" runat="server">
-    <div style="margin-left: 5px">
+    <div id="tableDiv" style="margin-left: 5px">
        <asp:Table ID="dataTable" runat="server" Width="100%" >
         </asp:Table>
     </div>
@@ -12,18 +12,18 @@
         <asp:Label  ID="PagesListBottom"       runat="server" Text=""></asp:Label>
         <asp:Button ID="GoToNextBottom"        runat="server" Text="  >  "        />
         <asp:Button ID="GoToLastBottom"        runat="server" Text=" >>> "   />   
-    </asp:Panel>
+     </asp:Panel>
     <br />
     <script language="javascript">
         function printdiv(printpage)
         {
-        var headstr = "<html><head><title></title></head><body>";
+        var headstr = "<html><head><title></title></head><body style='width:100px'>";
         var footstr = "</body>";
         var newstr = document.all.item(printpage).innerHTML;
         var oldstr = document.body.innerHTML;
         document.body.innerHTML = headstr+newstr+footstr;
-        window.print();
-        document.body.innerHTML = oldstr;
+       // window.print();
+       // document.body.innerHTML = oldstr;
         return false;
         }
     </script>
@@ -91,6 +91,9 @@
         <%--<asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Очистить поиск" OnClientClick="showLoadingScreen()"/>
         <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Поиск" OnClientClick="showLoadingScreen()"/>--%>
         <asp:Button ID="Button1" runat="server" CssClass="float-left" Text="Добавить новую карточку" Width="362px" OnClick="Button1_Click" OnClientClick="showLoadingScreen()"/>
+
+       <!-- <input name="b_print" Class="float-right" onclick="printdiv('tableDiv');" type="button" value=" Печать таблицы" /> -->
+
         <asp:Button ID="Button3" runat="server" CssClass="float-right" OnClick="Button3_Click" Text="Настройка страницы" OnClientClick="showLoadingScreen()"/>
     </asp:Panel>
     

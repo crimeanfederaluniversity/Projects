@@ -273,6 +273,7 @@
     <Content Include="kanz\icons\saveButtonIcon.jpg" />
     <Content Include="kanz\icons\treeButtonIcon.jpg" />
     <Content Include="kanz\icons\viewButtonIcon.png" />
+    <Content Include="kanz\moment.min.js" />
     <Content Include="kanz\NotUniqueError.aspx" />
     <Content Include="kanz\Print.aspx" />
     <Content Include="kanz\PrintMany.aspx" />

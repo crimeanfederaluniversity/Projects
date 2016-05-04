@@ -49,6 +49,15 @@ namespace Chancelerry.kanz {
         protected global::System.Web.UI.WebControls.DropDownList FilterFiedsDropDownList;
         
         /// <summary>
+        /// LastChangedDateStartTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox LastChangedDateStartTextBox;
+        
+        /// <summary>
         /// StartDateTextBox control.
         /// </summary>
         /// <remarks>
@@ -65,6 +74,15 @@ namespace Chancelerry.kanz {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox SearchInFieldTextBox;
+        
+        /// <summary>
+        /// LastChangedDateEndTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox LastChangedDateEndTextBox;
         
         /// <summary>
         /// EndDateTextBox control.

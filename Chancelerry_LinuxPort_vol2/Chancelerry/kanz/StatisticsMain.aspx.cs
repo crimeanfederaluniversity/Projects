@@ -26,12 +26,21 @@ namespace Chancelerry.kanz
 
             if (!Page.IsPostBack)
             {
+                DateTime now = DateTime.Now; 
+                EndDateTextBox.Text = now.Year + "-"+now.Month+"-"+now.Day;
                 EndDateTextBox.Attributes.Add("onfocus", "this.select();lcs(this)");
                 EndDateTextBox.Attributes.Add("onclick", "event.cancelBubble=true;this.select();lcs(this)");
 
                 StartDateTextBox.Attributes.Add("onfocus", "this.select();lcs(this)");
                 StartDateTextBox.Attributes.Add("onclick", "event.cancelBubble=true;this.select();lcs(this)");
 
+                LastChangedDateEndTextBox.Attributes.Add("onfocus", "this.select();lcs(this)");
+                LastChangedDateEndTextBox.Attributes.Add("onclick", "event.cancelBubble=true;this.select();lcs(this)");
+
+                LastChangedDateStartTextBox.Attributes.Add("onfocus", "this.select();lcs(this)");
+                LastChangedDateStartTextBox.Attributes.Add("onclick", "event.cancelBubble=true;this.select();lcs(this)");
+
+                RegistersDropoDownList.Items.Add(new ListItem() { Value = "-1", Text = "Выберите регистр" });
                 List<Registers> allRegisters = main.GetAllRegistersForUser(userId);
                 foreach (Registers reg in allRegisters)
                 {
@@ -48,35 +57,56 @@ namespace Chancelerry.kanz
             SumByResultLabel.Text = "";
             int selectedId = 0;
             Int32.TryParse(RegistersDropoDownList.SelectedValue, out selectedId);
-            Registers currentRegister = main.GetRegisterById(selectedId);
-            List<FieldsGroups> fieldsGroupInRegister =
-                main.GetFieldsGroupsInRegisterModelOrderByLine(currentRegister.FkRegistersModel);
-            List<Fields> allFields = new List<Fields>();
-            foreach (FieldsGroups fieldGroup in fieldsGroupInRegister)
+            if (selectedId == -1)
             {
-                List<Fields> tmp = main.GetFieldsInFieldGroupOrderByLine(fieldGroup.FieldsGroupID);
-                foreach (Fields curTmp in tmp)
+                FiedsDropDownList.Items.Clear();
+                FilterFiedsDropDownList.Items.Clear();
+                DateForFilter.Items.Clear();
+
+
+                FilterFiedsDropDownList.Enabled = false;
+                FiedsDropDownList.Enabled = false;
+                DateForFilter.Enabled = false;
+                SumByButton.Enabled = false;
+                CreateTableButton.Enabled = false;
+            }
+            else
+            {
+                Registers currentRegister = main.GetRegisterById(selectedId);
+                List<FieldsGroups> fieldsGroupInRegister =
+                    main.GetFieldsGroupsInRegisterModelOrderByLine(currentRegister.FkRegistersModel);
+                List<Fields> allFields = new List<Fields>();
+                foreach (FieldsGroups fieldGroup in fieldsGroupInRegister)
                 {
-                    allFields.Add(curTmp);
+                    List<Fields> tmp = main.GetFieldsInFieldGroupOrderByLine(fieldGroup.FieldsGroupID);
+                    foreach (Fields curTmp in tmp)
+                    {
+                        allFields.Add(curTmp);
+                    }
                 }
-            }
-            foreach (Fields field in allFields)
-            {
-                FiedsDropDownList.Items.Add(new ListItem() {Value = field.FieldID.ToString(),Text = field.Name});
-                FilterFiedsDropDownList.Items.Add(new ListItem() { Value = field.FieldID.ToString(), Text = field.Name });
-            }
-            foreach (Fields field in allFields)
-            {
-                if ((field.Type == "date" || field.Type == "autoDate") && field.Multiple==false && (from a in fieldsGroupInRegister where a.FieldsGroupID == field.FkFieldsGroup select a).FirstOrDefault().Multiple==false)
-                DateForFilter.Items.Add(new ListItem() { Value = field.FieldID.ToString(), Text = field.Name });
-            }
+                foreach (Fields field in allFields)
+                {
+                    FiedsDropDownList.Items.Add(new ListItem() {Value = field.FieldID.ToString(), Text = field.Name});
+                    FilterFiedsDropDownList.Items.Add(new ListItem()
+                    {
+                        Value = field.FieldID.ToString(),
+                        Text = field.Name
+                    });
+                }
+                foreach (Fields field in allFields)
+                {
+                    if ((field.Type == "date" || field.Type == "autoDate") && field.Multiple == false &&
+                        (from a in fieldsGroupInRegister where a.FieldsGroupID == field.FkFieldsGroup select a)
+                            .FirstOrDefault().Multiple == false)
+                        DateForFilter.Items.Add(new ListItem() {Value = field.FieldID.ToString(), Text = field.Name});
+                }
 
-            FilterFiedsDropDownList.Enabled = true;
-            FiedsDropDownList.Enabled = true;
-            DateForFilter.Enabled = true;
-            SumByButton.Enabled = true;
-            CreateTableButton.Enabled = true;
-
+                FilterFiedsDropDownList.Enabled = true;
+                FiedsDropDownList.Enabled = true;
+                DateForFilter.Enabled = true;
+                SumByButton.Enabled = true;
+                CreateTableButton.Enabled = true;
+            }
         }       
         protected void SumByButton_Click(object sender, EventArgs e)
         {
@@ -95,6 +125,12 @@ namespace Chancelerry.kanz
             DateTime endDate = DateTime.MaxValue;
             DateTime.TryParse(EndDateTextBox.Text, out endDate);
 
+            DateTime LastChangeStartDate = DateTime.MinValue;
+            DateTime.TryParse(LastChangedDateStartTextBox.Text, out LastChangeStartDate);
+
+            DateTime LastChangeEndDate = DateTime.MaxValue;
+            DateTime.TryParse(LastChangedDateEndTextBox.Text, out LastChangeEndDate);
+
             string valueToSearch = "";
             valueToSearch = SearchInFieldTextBox.Text;
 
@@ -102,10 +138,14 @@ namespace Chancelerry.kanz
             Int32.TryParse(RegistersDropoDownList.SelectedValue, out registerId);
             StatisticsClass stClass = new StatisticsClass();
             List<CollectedFieldsValues> resultList = stClass.GetAllCollectedForFieldInDateRange(registerId,fieldId, datefieldId , startDate, endDate, fieldToSerachIn, valueToSearch);
-
+            resultList =
+                (from a in resultList
+                 where a.CreateDateTime >= LastChangeStartDate && a.CreateDateTime <= LastChangeEndDate
+                 select a).Distinct().ToList();
             decimal sum = 0;
             foreach (CollectedFieldsValues current in resultList)
             {
+                
                 decimal tmp = 0;
                 decimal.TryParse(current.ValueText, out tmp);
                 sum += tmp;
@@ -128,6 +168,16 @@ namespace Chancelerry.kanz
 
             DateTime endDate = DateTime.MaxValue;
             DateTime.TryParse(EndDateTextBox.Text, out endDate);
+            if (endDate.Year < 10)
+                endDate = DateTime.MaxValue;
+
+            DateTime LastChangeStartDate = DateTime.MinValue;
+            DateTime.TryParse(LastChangedDateStartTextBox.Text, out LastChangeStartDate);
+
+            DateTime LastChangeEndDate = DateTime.MaxValue;
+            DateTime.TryParse(LastChangedDateEndTextBox.Text, out LastChangeEndDate);
+            if (LastChangeEndDate.Year < 10)
+                LastChangeEndDate = DateTime.MaxValue;
 
             string valueToSearch = "";
             valueToSearch = SearchInFieldTextBox.Text;
@@ -137,6 +187,12 @@ namespace Chancelerry.kanz
             //Получили все параметры со страницы
             StatisticsClass stClass = new StatisticsClass();
             List<CollectedFieldsValues> resultList = stClass.GetAllCollectedForFieldInDateRange(registerId, fieldId, datefieldId, startDate, endDate,fieldToSerachIn,valueToSearch);
+
+            resultList =
+                (from a in resultList
+                    where a.CreateDateTime >= LastChangeStartDate && a.CreateDateTime <= LastChangeEndDate
+                    select a).Distinct().ToList();
+
 
             List<int> cardIds = (from a in resultList select a.FkCollectedCard).Distinct().ToList();
             Session["cardsIds"] = cardIds;

@@ -800,6 +800,15 @@ namespace Chancelerry.kanz
                         fieldRangeValidator.Enabled = true;
                         break;
                     }
+                case "dateIncrement": // date 
+                    {
+                        fieldRangeValidator.MinimumValue = "1/1/1900";
+                        fieldRangeValidator.MaximumValue = "1/1/2090";
+                        fieldRangeValidator.Type = ValidationDataType.Date;
+                        fieldRangeValidator.ErrorMessage = "!";
+                        fieldRangeValidator.Enabled = true;
+                        break;
+                    }
                 default:
                     {
 
@@ -868,6 +877,12 @@ namespace Chancelerry.kanz
                         textBoxToReturn.Attributes.Add("onclick", "event.cancelBubble=true;this.select();lcs(this)");
                         //textBoxToReturn.TextMode = TextBoxMode.SingleLine;
                         //textBoxToReturn.TextMode = TextBoxMode.Date;
+                        break;
+                    }
+                case "dateIncrement": // АвтоДата
+                    {
+                        textBoxToReturn.Attributes.Add("onfocus", "this.select();lcs(this)");
+                        textBoxToReturn.Attributes.Add("onclick", "event.cancelBubble=true;this.select();lcs(this)");
                         break;
                     }
                 case "fileAttach": // АвтоДата
@@ -1294,6 +1309,21 @@ namespace Chancelerry.kanz
                         if (allUniqueCheckers ==null )
                             allUniqueCheckers = new List<UniqueChecker>();
                         allUniqueCheckers.Add(new UniqueChecker() {CardId = cardId,CheckerButton = checkForUniqueButton ,FieldId = currentField.FieldID, RegisterId = _registerId,ValueTextBox = currentFieldTextBox });
+                    }
+
+                    if (currentField.Type == "dateIncrement")
+                    {
+                        Button addDays1Button = new Button() { Text = "15", Width = 20, Height = 20, OnClientClick = "return addDays('MainContent_" + currentFieldTextBox.ID + "',15);" };
+                        Button addDays2Button = new Button() { Text = "30", Width = 20, Height = 20, OnClientClick = "return addDays('MainContent_" + currentFieldTextBox.ID + "',30);" };
+                        Button addDays3Button = new Button() { Text = "60", Width = 20, Height = 20, OnClientClick = "return addDays('MainContent_" + currentFieldTextBox.ID + "',60);" };
+
+                        addDays1Button.Style.Add("padding","0 0 0 0");
+                        addDays2Button.Style.Add("padding","0 0 0 0");
+                        addDays3Button.Style.Add("padding","0 0 0 0");
+
+                        tableCell2.Controls.Add(addDays1Button);
+                        tableCell2.Controls.Add(addDays2Button);
+                        tableCell2.Controls.Add(addDays3Button);
                     }
                     #endregion
                 }

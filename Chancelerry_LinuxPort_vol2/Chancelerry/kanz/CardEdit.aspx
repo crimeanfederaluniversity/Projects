@@ -4,11 +4,23 @@
             <script src="calendar_ru.js" type="text/javascript">
     </script>
     <script src="toggleLoadingScreen.js" type="text/javascript"></script>
+    <script src="moment.min.js"></script>
     <script>
         function putValueAndClose(val, fieldId, panelId) {
             document.getElementById(fieldId).value = val;
             document.getElementById(panelId).style.visibility = 'hidden';
         }
+
+        function addDays(textboxId, days) {
+            var textBox = document.getElementById(textboxId);
+            var textBoxValue = textBox.value;
+            if (textBoxValue == "") return false;
+            var choosenDate = moment(textBoxValue);
+            var resDate = moment(choosenDate).add(days, 'day');
+            textBox.value = moment(resDate).format('YYYY[-]MM[-]DD');
+            return false;
+        }
+
     </script>
     
     <script type="text/javascript">
