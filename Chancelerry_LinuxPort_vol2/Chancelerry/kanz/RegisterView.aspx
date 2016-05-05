@@ -24,7 +24,7 @@
      var myBody;
      window.onload = function ()
      {
-        var myTable = document.getElementById("TableContent_dataTable");
+         var myTable = document.getElementById("ctl00_TableContent_dataTable");
         myBody = myTable.children[0].cloneNode(true);
         for (var i = 2; i < myBody.children.length; i++)
         {
