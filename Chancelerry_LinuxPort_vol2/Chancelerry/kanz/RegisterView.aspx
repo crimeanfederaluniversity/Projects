@@ -25,10 +25,10 @@
      window.onload = function ()
      {
          var myTable = document.getElementById("ctl00_TableContent_dataTable");
-        myBody = myTable.children[0].cloneNode(true);
-        for (var i = 2; i < myBody.children.length; i++)
+         myBody = myTable.children[0].cloneNode(true);
+         myBody.removeChild(myBody.children[0]);
+        for (var i = 1; i < myBody.children.length; i++)
         {
-            //myBody.children[i].style.display = 'none';
             myBody.children[i].style.visibility = 'hidden';
         }
         var tableForHeader = document.getElementById("tableForHeader");
