@@ -292,14 +292,14 @@ namespace Chancelerry.kanz
                                            select a).FirstOrDefault();
             return cardToReturn;
         }
+
         public int totalCnt = 0;
-        public List<int> GetCardsToShow(string cardId, Dictionary<int, string> searchList,string searchAll, int registerId, int lineFrom, int lineTo) ///NEW
+
+        public List<int> GetCardsToShow(string cardId, Dictionary<int, string> searchList,string searchAll, int registerId, int lineFrom, int lineTo) 
         {
             List<int> cardsToShow = new List<int>();
             if (cardId != null)
             {
-                if (cardId != null)
-                {
                     if (cardId.Length > 0)
                     {
                         int cardIdI = 0;
@@ -311,9 +311,9 @@ namespace Chancelerry.kanz
                                                                     && a.MaInFieldID == cardIdI
                                                                     && a.FkRegister == registerId
                                                                     select a).Distinct().OrderByDescending(uc => uc.MaInFieldID).ToList().Select(mc=>mc.CollectedCardID).ToList();
+
                         }
                     }
-                }
             }
             else if (searchList != null) //если фильтры есть
             {
@@ -1236,6 +1236,7 @@ namespace Chancelerry.kanz
                     #region tree
                     if (currentField.Type == "fullStruct" || currentField.Type == "onlyLastStruct" || currentField.Type == "onlyLastStructCollaps")
                     {
+
                         currentFieldTextBox.TextMode = TextBoxMode.MultiLine;
                         currentFieldTextBox.CssClass = "MultiLinea";
                         bool fullStruct = currentField.Type == "fullStruct";
@@ -1256,7 +1257,11 @@ namespace Chancelerry.kanz
                         cancelButton.Style.Add("heigth", "50px");
                         cancelButton.OnClientClick = "document.getElementById('ctl00_MainContent_treeViewPanel" + fieldId + "').style.visibility = 'hidden'; return false;";
 
+
                         Panel treeViewPanel = new Panel();
+
+
+
                         treeViewPanel.ID = "treeViewPanel" + fieldId;
                         treeViewPanel.Style.Add("top", "50%");
                         treeViewPanel.Style.Add("left", "50%");
@@ -1280,14 +1285,26 @@ namespace Chancelerry.kanz
                         strucTreeView.ID = "treeView" + fieldId;
                         scrollPanel.CssClass = "custom-tree";
                         strucTreeView.CssClass = "custom-tree";
-                        //strucTreeView.SelectedNodeChanged += treeViewClick;
-                        //strucTreeView.ShowCheckBoxes = TreeNodeTypes.All;
-                        strucTreeView.Nodes.Add(_common.GetStructTreeViewNode("ctl00_MainContent_" + currentFieldTextBox.ID, "ctl00_MainContent_" + treeViewPanel.ID, fullStruct , collapse));
-
+                        strucTreeView.Nodes.Add(_common.GetStructTreeViewNode("ctl00_MainContent_" + currentFieldTextBox.ID, "ctl00_MainContent_" + treeViewPanel.ID, fullStruct, collapse));
                         scrollPanel.Controls.Add(strucTreeView);
+
+
+                        #region
+                        Button searchButton = new Button();
+                        searchButton.ID = "treeViewPanelsearchButton" + fieldId;
+                        searchButton.Text = "Поиск";
+                        searchButton.Width = 100;
+
+                        TextBox searchTextBox = new TextBox();
+                        searchTextBox.ID = "treeViewPanelsearchTextBox" + fieldId;
+                        searchTextBox.Width = 400;
+                        searchButton.OnClientClick = "findInControl('ctl00_MainContent_" + treeViewPanel.ID + "','ctl00_MainContent_" + searchTextBox.ID + "'); return false;";
+
+                        treeViewPanel.Controls.Add(searchButton);
+                        treeViewPanel.Controls.Add(searchTextBox);
+                        #endregion
                         treeViewPanel.Controls.Add(scrollPanel);
-                        //treeViewPanel.Controls.Add(okButton);
-                        treeViewPanel.Controls.Add(cancelButton);
+                        treeViewPanel.Controls.Add(cancelButton);                   
                         tableCell2.Controls.Add(treeViewPanel);
                     }
                     #endregion

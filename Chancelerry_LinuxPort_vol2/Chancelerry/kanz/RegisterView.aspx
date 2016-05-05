@@ -1,12 +1,67 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RegisterView.aspx.cs" Inherits="Chancelerry.kanz.RegisterView" %>
- <asp:Content ID="TableContent1" ContentPlaceHolderID="TableContent" runat="server">
+ <asp:Content ID="TableContent1" ContentPlaceHolderID="TableContent" runat="server">     
+     
+     
+
+     <style>
+         .search-field {
+             width: 100%;
+             max-width: none !important;
+         }
+          #TableHeaderDiv {
+              margin-left: 5px;
+              margin-top: 50px;
+              display: none;
+              position: absolute;
+             
+          }
+     </style>    
+    <div id="TableHeaderDiv" >
+      <Table id="tableForHeader" style="width: 100%">
+      </Table>
+    </div>
+    <script>
+     var myBody;
+     window.onload = function ()
+     {
+        var myTable = document.getElementById("TableContent_dataTable");
+        myBody = myTable.children[0].cloneNode(true);
+        for (var i = 2; i < myBody.children.length; i++)
+        {
+            //myBody.children[i].style.display = 'none';
+            myBody.children[i].style.visibility = 'hidden';
+        }
+        var tableForHeader = document.getElementById("tableForHeader");
+        tableForHeader.appendChild(myBody);
+     }
+     window.onscroll = function ()
+     {
+        var tablHeaderDiv = document.getElementById("TableHeaderDiv");
+        tablHeaderDiv.style.top = window.pageYOffset  + 'px';
+        var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+        if (scrolled > 400)
+        {
+             tablHeaderDiv.style.display = 'block';
+            //tablHeaderDiv.style.visibility = 'visible';
+        }
+        else
+        {
+            //tablHeaderDiv.style.visibility = 'hidden';
+            tablHeaderDiv.style.display = 'none';
+        }
+     }
+</script>
+     
+     
+     
+
     <div id="tableDiv" style="margin-left: 5px">
-       <asp:Table ID="dataTable" runat="server" Width="100%" >
-        </asp:Table>
+        <asp:Table ID="dataTable" runat="server" Width="100%" >
+        </asp:Table>       
     </div>
     <asp:Panel runat="server" CssClass="center pagination">
-        <asp:Label  ID="PageInfoBottom"         runat="server" Text=""></asp:Label>        
-        <br>
+    <asp:Label  ID="PageInfoBottom"         runat="server" Text=""></asp:Label>        
+    <br>
         <asp:Button ID="GoToFirstBottom"       runat="server" Text=" <<< "      />
         <asp:Button ID="GoToPreviousBottom"    runat="server" Text="  <  "         />
         <asp:Label  ID="PagesListBottom"       runat="server" Text=""></asp:Label>
@@ -14,58 +69,22 @@
         <asp:Button ID="GoToLastBottom"        runat="server" Text=" >>> "   />   
      </asp:Panel>
     <br />
-    <script language="javascript">
-        function printdiv(printpage)
-        {
-        var headstr = "<html><head><title></title></head><body style='width:100px'>";
-        var footstr = "</body>";
-        var newstr = document.all.item(printpage).innerHTML;
-        var oldstr = document.body.innerHTML;
-        document.body.innerHTML = headstr+newstr+footstr;
-       // window.print();
-       // document.body.innerHTML = oldstr;
-        return false;
-        }
-    </script>
-    <script>
-        $(function () {
 
-            $(".container").click(function (e) {
-                var $target = $(e.target);
-
-                if (!$target.closest(".search-field").length) {
-                    var search_field = document.getElementById("ctl00_MainContent_SearchPanel");
-                    search_field.classList.add("hidden");
-                }
-            });
-
-            $(".search-field").focus(function () {
-                var $clicker = $(this);
-                var position = $clicker.position();
-
-                var search_field = document.getElementById("ctl00_MainContent_SearchPanel");
-                search_field.classList.remove("hidden");
-                search_field.style.top = 35 + position.top + "px";
-                search_field.style.left = position.left - search_field.clientWidth / 2 + "px";
-            });
-        })
-    </script>   
     <asp:Label ID="timeStampsLabel" runat="server" Text="" Height="5" Font-Size="3"></asp:Label>
- </asp:Content>
-
+    </asp:Content>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <script src="toggleLoadingScreen.js" type="text/javascript"></script>
     <link href="../Content/Site.css" rel="stylesheet" />
    
     <script type="text/javascript">
-   function toggle_visibility(id) {
-       var e = document.getElementById(id);
-       if(e.style.display == 'block')
-          e.style.display = 'none';
-       else
-          e.style.display = 'block';
-   }
-</script>
+        function toggle_visibility(id) {
+            var e = document.getElementById(id);
+            if(e.style.display == 'block')
+                e.style.display = 'none';
+            else
+                e.style.display = 'block';
+        }
+    </script>
     
     <style>
         .c1 { width: 500px; height: 30px; margin: auto; background-color: #c0c0c0; }
@@ -75,15 +94,15 @@
     </style>
 
      <script>
-        function runScript(e)
-        {
-            if (e.keyCode == 13 || e.which == 13)
-            {
-                document.getElementById('ctl00_MainContent_Button2').focus();
-                return false;
-            }
-        }
-        </script>
+         function runScript(e)
+         {
+             if (e.keyCode == 13 || e.which == 13)
+             {
+                 document.getElementById('ctl00_MainContent_Button2').focus();
+                 return false;
+             }
+         }
+     </script>
 
     <br />
 
