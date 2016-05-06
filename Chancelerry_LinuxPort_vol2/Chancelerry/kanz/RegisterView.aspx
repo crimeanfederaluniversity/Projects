@@ -15,16 +15,29 @@
               position: absolute;
              
           }
+          #tableForHeader {
+              width: 100%;
+              border:0px solid transparent;
+          }
+
+          #tableForHeader tr td {
+              border:0px solid transparent;
+          }
+
+          #tableForHeader tr {
+              border:0px solid transparent;
+          }
+
      </style>    
-    <div id="TableHeaderDiv" >
-      <Table id="tableForHeader" style="width: 100%">
+    <div id="TableHeaderDiv">
+      <Table id="tableForHeader" style="">
       </Table>
     </div>
     <script>
      var myBody;
      window.onload = function ()
      {
-         var myTable = document.getElementById("ctl00_TableContent_dataTable");
+         var myTable = document.getElementById("TableContent_dataTable");
          myBody = myTable.children[0].cloneNode(true);
          myBody.removeChild(myBody.children[0]);
         for (var i = 1; i < myBody.children.length; i++)
