@@ -1,69 +1,63 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RegisterView.aspx.cs" Inherits="Chancelerry.kanz.RegisterView" %>
  <asp:Content ID="TableContent1" ContentPlaceHolderID="TableContent" runat="server">     
-     
-     
-
-     <style>
-         .search-field {
-             width: 100%;
-             max-width: none !important;
-         }
-          #TableHeaderDiv {
-              margin-left: 5px;
-              margin-top: 50px;
-              display: none;
-              position: absolute;
-             
-          }
-          #tableForHeader {
+ <!-- sticky header styles -->    <style> /* sticky header styles */        
+          .search-field {
               width: 100%;
-              border:0px solid transparent;
+              max-width: none !important;
           }
+         #TableHeaderDiv {
+             margin-left: 5px;
+             margin-top: 50px;
+             display: none;
+             position: absolute;
+             
+         }
+         #tableForHeader {
+             width: 100%;
+             border:0px solid transparent;
+         }
 
-          #tableForHeader tr td {
-              border:0px solid transparent;
-          }
+         #tableForHeader tr td {
+             border:0px solid transparent;
+         }
 
-          #tableForHeader tr {
-              border:0px solid transparent;
-          }
-
+         #tableForHeader tr {
+             border:0px solid transparent;
+         }
      </style>    
     <div id="TableHeaderDiv">
       <Table id="tableForHeader" style="">
       </Table>
     </div>
     <script>
-     var myBody;
-     window.onload = function ()
-     {
-         var myTable = document.getElementById("TableContent_dataTable");
-         myBody = myTable.children[0].cloneNode(true);
-         myBody.removeChild(myBody.children[0]);
-        for (var i = 1; i < myBody.children.length; i++)
+        var myBody;
+        window.onload = function ()
         {
-            myBody.children[i].style.visibility = 'hidden';
+            var myTable = document.getElementById("ctl00_TableContent_dataTable");
+            myBody = myTable.children[0].cloneNode(true);
+            myBody.removeChild(myBody.children[0]);
+            for (var i = 1; i < myBody.children.length; i++)
+            {
+                myBody.children[i].style.visibility = 'hidden';
+            }
+            var tableForHeader = document.getElementById("tableForHeader");
+            tableForHeader.appendChild(myBody);
         }
-        var tableForHeader = document.getElementById("tableForHeader");
-        tableForHeader.appendChild(myBody);
-     }
-     window.onscroll = function ()
-     {
-        var tablHeaderDiv = document.getElementById("TableHeaderDiv");
-        tablHeaderDiv.style.top = window.pageYOffset  + 'px';
-        var scrolled = window.pageYOffset || document.documentElement.scrollTop;
-        if (scrolled > 400)
+        window.onscroll = function ()
         {
-             tablHeaderDiv.style.display = 'block';
-            //tablHeaderDiv.style.visibility = 'visible';
+            var tablHeaderDiv = document.getElementById("TableHeaderDiv");
+            tablHeaderDiv.style.top = window.pageYOffset  + 'px';
+            var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrolled > 400)
+            {
+                tablHeaderDiv.style.display = 'block';
+            }
+            else
+            {
+                tablHeaderDiv.style.display = 'none';
+            }
         }
-        else
-        {
-            //tablHeaderDiv.style.visibility = 'hidden';
-            tablHeaderDiv.style.display = 'none';
-        }
-     }
-</script>
+    </script>
      
      
      
@@ -85,10 +79,10 @@
 
     <asp:Label ID="timeStampsLabel" runat="server" Text="" Height="5" Font-Size="3"></asp:Label>
     </asp:Content>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <script src="toggleLoadingScreen.js" type="text/javascript"></script>
-    <link href="../Content/Site.css" rel="stylesheet" />
-   
+    <link href="../Content/Site.css" rel="stylesheet" />   
     <script type="text/javascript">
         function toggle_visibility(id) {
             var e = document.getElementById(id);
@@ -99,44 +93,64 @@
         }
     </script>
     
+    <script>
+        function ChangeAllInputToMyInput(mainDiv) {
+            var newDiv = mainDiv.cloneNode(true);
+            var main = newDiv.children[0];
+            var tableBody = main.children[0];
+            tableBody.removeChild(tableBody.children[0]);
+
+            for (var i = 0; i < tableBody.children.length; i++) {
+                var tmpRow = tableBody.children[i];
+                if (i > 0)
+                {
+                    tmpRow.removeChild(tmpRow.children[tmpRow.children.length-1]);
+                }
+            }
+            return newDiv;
+        }
+        function openCntlInNewPrintPage(cntrlName) {
+            var myTable = document.getElementById(cntrlName);
+            myTable = ChangeAllInputToMyInput(myTable);
+            var headstr =
+                "<html>\
+                 <input  type='button' onClick='window.print();' value=' Печать '>        \
+                    <head>\
+                    <title>\
+                    </title>\
+                    \
+                    <style>        \
+                    table {border-collapse: collapse;}\
+                    table, tr, td { border: 1px solid black; } \
+                    table, tr { border: 1px solid black; }\
+                    </style>         \
+                   <style type='text/css' media='print'>         \
+                           \
+                    </style>         \
+                    </head>\
+                 <body>";
+            var footstr = "</body></html>";
+            var newstr = myTable.innerHTML;
+            window.open().document.write(headstr + newstr + footstr);
+        }
+    </script>
+
     <style>
         .c1 { width: 500px; height: 30px; margin: auto; background-color: #c0c0c0; }
         .c2 { margin: 0px; text-align: center; background-color: #a0a0a0; }
-        .fullwidth { width: 100%; }
-         
+        .fullwidth { width: 100%; }        
     </style>
-
-     <script>
-         function runScript(e)
-         {
-             if (e.keyCode == 13 || e.which == 13)
-             {
-                 document.getElementById('ctl00_MainContent_Button2').focus();
-                 return false;
-             }
-         }
-     </script>
-
     <br />
-
     <asp:Panel runat="server" CssClass="edit-panel" Height="30px">
-        <%--<asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Очистить поиск" OnClientClick="showLoadingScreen()"/>
-        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Поиск" OnClientClick="showLoadingScreen()"/>--%>
         <asp:Button ID="Button1" runat="server" CssClass="float-left" Text="Добавить новую карточку" Width="362px" OnClick="Button1_Click" OnClientClick="showLoadingScreen()"/>
-
-       <!-- <input name="b_print" Class="float-right" onclick="printdiv('tableDiv');" type="button" value=" Печать таблицы" /> -->
-
+        <input name="b_print" Class="float-right" onclick="openCntlInNewPrintPage('tableDiv');" type="button" value=" Печать таблицы" /> 
         <asp:Button ID="Button3" runat="server" CssClass="float-right" OnClick="Button3_Click" Text="Настройка страницы" OnClientClick="showLoadingScreen()"/>
     </asp:Panel>
-    
-    
     <div style="width: 100%; height: 20px; border-bottom: 1px solid black; text-align: center">
       <span style="font-size: 15px; padding: 0 0px;" onclick="toggle_visibility('searchDiv')">
         Поиск
       </span>
     </div>
-    
-
     <div id="searchDiv">
         <table>
             <tr>
@@ -190,11 +204,6 @@
              </tr>      
         </table>
     </div>
-
-    
-    
-    
-
     <br />
     <asp:Label ID="RegisterNameLabel" runat="server" Text="Label"></asp:Label>  
     <br />

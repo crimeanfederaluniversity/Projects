@@ -513,9 +513,12 @@ namespace Chancelerry.kanz
                 for (int j = 0; j < maxInstanceInCard + 1; j++)
                 {
                     TableRow instRow = new TableRow();
+                    //instRow.Attributes.Add("cardId", currentCard.ToString());
                     for (int i = 0; i < fieldsCount; i++)
                     {
                         TableCell cell0 = new TableCell();
+                        cell0.Attributes.Add("colId",i.ToString());
+                        cell0.CssClass += "specialPrintClassColumn" + i;
                         cell0.BorderStyle = BorderStyle.Solid;
                         if (arrayOfStrings[i, j] == "~null~")
                         {

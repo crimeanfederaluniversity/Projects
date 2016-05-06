@@ -124,12 +124,16 @@ namespace Chancelerry.kanz
 
             DateTime endDate = DateTime.MaxValue;
             DateTime.TryParse(EndDateTextBox.Text, out endDate);
+            if (endDate.Year < 10)
+                endDate = DateTime.MaxValue;
 
             DateTime LastChangeStartDate = DateTime.MinValue;
             DateTime.TryParse(LastChangedDateStartTextBox.Text, out LastChangeStartDate);
 
             DateTime LastChangeEndDate = DateTime.MaxValue;
             DateTime.TryParse(LastChangedDateEndTextBox.Text, out LastChangeEndDate);
+            if (LastChangeEndDate.Year < 10)
+                LastChangeEndDate = DateTime.MaxValue;
 
             string valueToSearch = "";
             valueToSearch = SearchInFieldTextBox.Text;
