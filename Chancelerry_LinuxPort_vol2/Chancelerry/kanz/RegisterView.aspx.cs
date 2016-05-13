@@ -10,81 +10,24 @@ using Npgsql;
 
 namespace Chancelerry.kanz
 {
-
-    
-
     public partial class RegisterView : System.Web.UI.Page
     {
         bool vVersion = true;
         int page = 0;
-
-
-        private string getPostBackControlName()
-        {
-            Control control = null;
-            //first we will check the "__EVENTTARGET" because if post back made by       the controls
-            //which used "_doPostBack" function also available in Request.Form collection.
-
-            string ctrlname = Page.Request.Params["__EVENTTARGET"];
-            if (ctrlname != null && ctrlname != String.Empty)
-            {
-                control = Page.FindControl(ctrlname);
-            }
-
-            // if __EVENTTARGET is null, the control is a button type and we need to
-            // iterate over the form collection to find it
-            else
-            {
-                string ctrlStr = String.Empty;
-                Control c = null;
-                foreach (string ctl in Page.Request.Form)
-                {
-                    //handle ImageButton they having an additional "quasi-property" in their Id which identifies
-                    //mouse x and y coordinates
-                    if (ctl.EndsWith(".x") || ctl.EndsWith(".y"))
-                    {
-                        ctrlStr = ctl.Substring(0, ctl.Length - 2);
-                        c = Page.FindControl(ctrlStr);
-                    }
-                    else
-                    {
-                        c = Page.FindControl(ctl);
-                    }
-                    if (c is System.Web.UI.WebControls.Button ||
-                        c is System.Web.UI.WebControls.ImageButton)
-                    {
-                        control = c;
-                        break;
-                    }
-                }
-
-            }
-            if (control==null)
-            return null;
-            return control.ID;
-        }
-
-        private void RedirectToEdit(object sender, EventArgs e)
-        {
-
-            ImageButton thisButton = (ImageButton)sender;
-            int currentCardId = Convert.ToInt32(thisButton.Attributes["_cardID"]);
-            HttpContext.Current.Response.Redirect("https://www.ya.ru/", true);
-        }
         public int size = 10;
         protected void Page_Load(object sender, EventArgs e)
         {
                 timeStampsLabel.Text = " 0_" + DateTime.Now.TimeOfDay;
-                int userID;
-                int.TryParse(Session["userID"].ToString(), out userID);
+                int userId = 0;
+                int.TryParse(Session["userID"].ToString(), out userId);
 
-                if (userID == null)
+                if (userId == 0)
                 {
                     Response.Redirect("~/Default.aspx");
                 }
                 else
                 {
-                    ViewState["userID"] = userID;
+                    ViewState["userID"] = userId;
                 }
 
                 /////////////////////////////////////////////////////////////////////
@@ -121,12 +64,12 @@ namespace Chancelerry.kanz
                         Dictionary<int, string> vSearchList = (Dictionary<int, string>) Session["vSearchList"];
                         string searchAll = (string) Session["vSearchAll"];
                         string searchCardId = (string) Session["vSearchById"];
-
+                        string searchAllExtended = (string)Session["vSearchAllWithParams"];
                         //SearchAllTextBox.Text = searchAll;
                         CardCommonFunctions cardCommonFunctions = new CardCommonFunctions();
 
                         int totalCnt = 0;
-                        string sum = cardCommonFunctions.FastSearch(searchCardId, vSearchList, searchAll, register.RegisterID, Convert.ToInt32(userID), dataTable, page*size, (page + 1)*size,out totalCnt);
+                        string sum = cardCommonFunctions.FastSearch(searchAllExtended, searchCardId, vSearchList, searchAll, register.RegisterID, Convert.ToInt32(userId), dataTable, page*size, (page + 1)*size,out totalCnt);
                         timeStampsLabel.Text += cardCommonFunctions.timeStamps;
 
                         int pagesCnt = totalCnt/size;
@@ -272,6 +215,7 @@ namespace Chancelerry.kanz
             //Session["searchList"] = searchList;
             Session["vSearchById"] = null;
             Session["vSearchAll"] = null;
+            Session["vSearchAllWithParams"] = null;
             SearchAllTextBox.Text = "";
             Session["vSearchList"] = vSearchDict;
             Response.Redirect("RegisterView.aspx");
@@ -287,6 +231,7 @@ namespace Chancelerry.kanz
             Session["vSearchById"] = null;
             Session["vSearchList"] = null;
             Session["vSearchAll"] = null;
+            Session["vSearchAllWithParams"] = null;
             Session["searchList"] = new List<TableActions.SearchValues>();
             Response.Redirect("RegisterView.aspx");
         }
@@ -344,6 +289,7 @@ namespace Chancelerry.kanz
         {
             Session["vSearchById"] = null;
             Session["vSearchList"] = null;
+            Session["vSearchAllWithParams"] = null;
             Session["vSearchAll"] = SearchAllTextBox.Text;
             Response.Redirect("RegisterView.aspx");
         }
@@ -353,6 +299,7 @@ namespace Chancelerry.kanz
             Session["vSearchById"] = SearchByIdTextbox.Text;
             Session["vSearchList"] = null;
             Session["vSearchAll"] = null;
+            Session["vSearchAllWithParams"] = null;
             Response.Redirect("RegisterView.aspx");
         }
 
@@ -385,6 +332,15 @@ namespace Chancelerry.kanz
                     }
                 }
             }
+        }
+
+        protected void SearchAllExtendedButton_Click(object sender, EventArgs e)
+        {
+            Session["vSearchById"] = null;
+            Session["vSearchList"] = null;
+            Session["vSearchAllWithParams"] = SearchAllTextBoxExtended.Text;
+            Session["vSearchAll"] = null;
+            Response.Redirect("RegisterView.aspx");
         }
     }
     

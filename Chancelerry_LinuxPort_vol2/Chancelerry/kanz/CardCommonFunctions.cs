@@ -17,6 +17,176 @@ using System.Data.SqlClient;
 namespace Chancelerry.kanz
 {
 
+    public class PolishSearch
+    {
+        public ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
+        public List<int> GetIdsByOneSarchValues(string value, int registerId)
+        {
+            int cnt = (from a in chancDb.CollectedCards select a).Count();
+            if (value[0] == '!')
+            {
+                value = value.Replace("!", "");
+                value = value.Trim();
+                List<int> cardsNotToShow = (from a in chancDb.CollectedCards
+                    where a.Active == true
+                          && a.FkRegister == registerId
+                          && a.MaInFieldID != null
+                    // ПЛОХО
+                    join b in chancDb.CollectedFieldsValues
+                        on a.CollectedCardID equals b.FkCollectedCard
+                    where b.Active == true   &&
+                          b.ValueText.ToLower(new CultureInfo("ru-RU")).Contains(value.ToLower(new CultureInfo("ru-RU")))
+                    select a).OrderByDescending(uc => (int) uc.MaInFieldID).Select(vk => vk.CollectedCardID).ToList().Distinct().ToList();
+
+
+                List<int> allCards = (from a in chancDb.CollectedCards
+                                     where a.Active == true
+                                           && a.FkRegister == registerId
+                                           && a.MaInFieldID != null
+                                     // ПЛОХО
+                                     join b in chancDb.CollectedFieldsValues
+                                         on a.CollectedCardID equals b.FkCollectedCard
+                                     where b.Active == true
+                                     select a).OrderByDescending(uc => (int)uc.MaInFieldID).Select(vk => vk.CollectedCardID).ToList().Distinct().ToList();
+                return allCards.Except(cardsNotToShow).ToList();
+
+            }
+            else
+            {
+
+                List<int> cardsToShow = (from a in chancDb.CollectedCards
+                    where a.Active == true
+                          && a.FkRegister == registerId
+                          && a.MaInFieldID != null
+                    join b in chancDb.CollectedFieldsValues
+                        on a.CollectedCardID equals b.FkCollectedCard
+                    where b.Active == true
+                    && b.ValueText.ToLower(new CultureInfo("ru-RU")).Contains(value.ToLower(new CultureInfo("ru-RU")))
+                    select a).OrderByDescending(uc => (int) uc.MaInFieldID).Select(vk => vk.CollectedCardID).ToList().Distinct().ToList();
+                return cardsToShow;
+            }
+        }
+        public int GetPriority(char s)
+        {
+            switch (s)
+            {
+                case '(': return 0;
+                case ')': return 1;
+                case '|': return 2;
+                case '&': return 3;
+               // case '!': return 3;
+                default: return 10;
+            }
+        }
+        public bool IsOperator(char с)
+        {
+            if (("|&()".IndexOf(с) != -1))
+                return true;
+            return false;
+        }
+        public List<string> Calculate(string input)
+        {
+
+            if (input.Contains("\"") || input.Contains("'") ||
+                   input.Contains("=") || input.Contains("\\") || input.Contains("/"))
+                return null;
+            if (input.Split('(').Count() != input.Split(')').Count())
+                return null;
+            input = input.Replace(" ИЛИ ", "|").Replace(" И ", "&").Replace("НЕ ", "!");
+
+            List<string> output = GetExpression(input); //Преобразовываем выражение в постфиксную запись  
+            return output; //Возвращаем результат
+        }
+        public List<string> GetExpression(string input)
+        {
+            List<string> toReturnList = new List<string>();
+            string output = string.Empty; //Строка для хранения выражения
+            Stack<char> operStack = new Stack<char>(); //Стек для хранения операторов
+            for (int i = 0; i < input.Length; i++) //Для каждого символа в входной строке
+            {
+                if (!IsOperator(input[i])) //Если цифра
+                {
+                    while (!IsOperator(input[i]))
+                    {
+                        output += input[i];
+                        i++;
+                        if (i == input.Length) break; //Если символ - последний, то выходим из цикла
+                    }
+                    //output += " ";
+                    toReturnList.Add(output);
+                    output = "";
+                    i--;
+                }
+                else
+                {
+                    if (input[i] == '(')
+                        operStack.Push(input[i]);
+                    else if (input[i] == ')')
+                    {
+                        char s = operStack.Pop();
+                        while (s != '(')
+                        {
+                            //output += s.ToString() + ' ';
+                            toReturnList.Add(s.ToString());
+                            s = operStack.Pop();
+                        }
+                    }
+                    else 
+                    {
+                        if (operStack.Count > 0) 
+                            if (GetPriority(input[i]) <= GetPriority(operStack.Peek())) 
+                                toReturnList.Add(operStack.Pop().ToString());
+                               // output += operStack.Pop().ToString() + " "; 
+                        operStack.Push(char.Parse(input[i].ToString()));
+                    }
+                }
+            }
+            while (operStack.Count > 0)
+                toReturnList.Add(operStack.Pop().ToString());
+           // output += operStack.Pop() + " ";
+            return toReturnList;
+        }
+        public List<int> GetCardsIds (string input, int registerId)
+        {
+            List<String> searchLines = Calculate(input);
+            Stack<List<int>> stackOfIds = new Stack<List<int>>();
+                foreach (string current in searchLines)
+                {
+                    string currentValue = current.Trim();
+                    if (IsOperator(currentValue[0]))
+                    {
+                    if (stackOfIds.Count < 2) return null;
+                    switch (currentValue[0])
+                        {                           
+                        case '&':
+                            {
+                                List<int> first = stackOfIds.Pop();
+                                List<int> second = stackOfIds.Pop();
+                                stackOfIds.Push(first.Intersect(second).Distinct().ToList());
+                                break;
+                            }
+                        case '|':
+                            {
+                                List<int> first = stackOfIds.Pop();
+                                List<int> second = stackOfIds.Pop();
+                                stackOfIds.Push(first.Union(second).Distinct().ToList());
+                                break;
+                            }
+                        default:
+                            {
+                                break;
+                            }
+                            
+                        }
+                    }
+                    else
+                    {
+                    stackOfIds.Push(GetIdsByOneSarchValues(currentValue, registerId));
+                    }
+                }
+             return stackOfIds.Pop();
+        } 
+    }
     public class DataPortKoStyl
     {
         public int Id { get; set; }
@@ -295,12 +465,13 @@ namespace Chancelerry.kanz
 
         public int totalCnt = 0;
 
-        public List<int> GetCardsToShow(string cardId, Dictionary<int, string> searchList,string searchAll, int registerId, int lineFrom, int lineTo) 
+        public List<int> GetCardsToShow(string extendedSearchAll, string cardId, Dictionary<int, string> searchList,string searchAll, int registerId, int lineFrom, int lineTo) 
         {
             List<int> cardsToShow = new List<int>();
             if (cardId != null)
             {
-                    if (cardId.Length > 0)
+                #region ищем по АйДи
+                if (cardId.Length > 0)
                     {
                         int cardIdI = 0;
                         Int32.TryParse(cardId, out cardIdI);
@@ -314,9 +485,11 @@ namespace Chancelerry.kanz
 
                         }
                     }
+                #endregion
             }
             else if (searchList != null) //если фильтры есть
             {
+                #region ищем по нескольким полям
                 bool isFirst = true;
                 foreach (int fieldId in searchList.Keys) // проходимся по каждому фильтру
                 {
@@ -344,24 +517,46 @@ namespace Chancelerry.kanz
                 }
                 totalCnt = cardsToShow.Count;
                 cardsToShow = cardsToShow.Skip(lineFrom).Take(lineTo - lineFrom).ToList();
+                #endregion
             }
-            else if (searchAll!=null) //фильтр по всему реестру
+            else if (searchAll != null) //фильтр по всему реестру
             {
+                #region ищем по всему реестру
+
                 cardsToShow = (from a in chancDb.CollectedCards
-                               where a.Active == true
-                                     && a.FkRegister == registerId
-                                     && a.MaInFieldID != null // ПЛОХО
-                               join b in chancDb.CollectedFieldsValues
-                                               on a.CollectedCardID equals b.FkCollectedCard
-                               where b.Active == true
-                               && b.ValueText.ToLower(new CultureInfo("ru-RU")).Contains(searchAll.ToLower(new CultureInfo("ru-RU")))
-                               select a).OrderByDescending(uc => (int)uc.MaInFieldID).Select(vk => vk.CollectedCardID).ToList().Distinct().ToList();
+                    where a.Active == true
+                          && a.FkRegister == registerId
+                          && a.MaInFieldID != null
+                    // ПЛОХО
+                    join b in chancDb.CollectedFieldsValues
+                        on a.CollectedCardID equals b.FkCollectedCard
+                    where b.Active == true
+                          &&
+                          b.ValueText.ToLower(new CultureInfo("ru-RU"))
+                              .Contains(searchAll.ToLower(new CultureInfo("ru-RU")))
+                    select a).OrderByDescending(uc => (int) uc.MaInFieldID)
+                    .Select(vk => vk.CollectedCardID)
+                    .ToList()
+                    .Distinct()
+                    .ToList();
                 totalCnt = cardsToShow.Count;
                 cardsToShow = cardsToShow.Skip(lineFrom).Take(lineTo - lineFrom).ToList();
 
+                #endregion
+            }
+            else if (extendedSearchAll != null)
+            {
+                #region ищем по всему реестру понескольким параметрам
+                PolishSearch polishSearch = new PolishSearch();
+                cardsToShow = polishSearch.GetCardsIds(extendedSearchAll,registerId);
+                totalCnt = cardsToShow.Count;
+                cardsToShow = cardsToShow.Skip(lineFrom).Take(lineTo - lineFrom).ToList();
+
+                #endregion
             }
             else // если фильтров нет, показываем все карточки 
             {
+                #region показываем все карточки
                 cardsToShow = (from a in chancDb.CollectedCards
                                where a.Active == true
                                      && a.FkRegister == registerId
@@ -369,8 +564,10 @@ namespace Chancelerry.kanz
                                select a).OrderByDescending(uc => (int)uc.MaInFieldID).Select(vk => vk.CollectedCardID).ToList();
                 totalCnt = cardsToShow.Count;
                 cardsToShow = cardsToShow.Skip(lineFrom).Take(lineTo - lineFrom).ToList();
+                #endregion
             }
             return cardsToShow;
+            
         }
 
         public class NameFieldWeightClass
@@ -396,14 +593,14 @@ namespace Chancelerry.kanz
         public string timeStamps = "";
 
 
-        public string FastSearch(string cardId, Dictionary<int, string> searchList, string searchAll, int registerId, int userId, Table vTable, int LineFrom, int LineTo,out int totalToShow )
+        public string FastSearch(string extendedSeatchAll, string cardId, Dictionary<int, string> searchList, string searchAll, int registerId, int userId, Table vTable, int LineFrom, int LineTo,out int totalToShow )
         {
             totalToShow = 0;
             //totalOnPage = 0;
             #region GetSortedCutedCardsToShow
 
             timeStamps += " 1_" + DateTime.Now.TimeOfDay;
-            List<int> sortedCutedCardsToShow = GetCardsToShow(cardId, searchList, searchAll, registerId, LineFrom, LineTo); // NEW    
+            List<int> sortedCutedCardsToShow = GetCardsToShow(extendedSeatchAll, cardId, searchList, searchAll, registerId, LineFrom, LineTo); // NEW    
             timeStamps += " 2_" + DateTime.Now.TimeOfDay;
             List<NameFieldWeightClass> allFields = (from a in chancDb.RegistersUsersMap
                                                  join b in chancDb.RegistersView

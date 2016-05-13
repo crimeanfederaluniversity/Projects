@@ -291,7 +291,7 @@ namespace Chancelerry
 
             //ВАГЕКОД НАЧАЛО
             CardCommonFunctions ccf = new CardCommonFunctions();
-            cardsToShow = ccf.GetCardsToShow(null,searchList,null, (int)HttpContext.Current.Session["registerID"], (int)HttpContext.Current.Session["pageCntrl"] * rowsOnPage, (int)HttpContext.Current.Session["pageCntrl"] * rowsOnPage+ rowsOnPage);
+            cardsToShow = ccf.GetCardsToShow(null,null,searchList,null, (int)HttpContext.Current.Session["registerID"], (int)HttpContext.Current.Session["pageCntrl"] * rowsOnPage, (int)HttpContext.Current.Session["pageCntrl"] * rowsOnPage+ rowsOnPage);
             //ВАГЕКОД КОНЕЦ
 
             // SIVAS OPTIMIZATION START

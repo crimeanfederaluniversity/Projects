@@ -92,5 +92,10 @@ namespace Chancelerry.kanz
         {
             Response.Redirect("StatisticsMain.aspx");
         }
+
+        protected void GoToControl_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ControlPage.aspx");
+        }
     }
 }

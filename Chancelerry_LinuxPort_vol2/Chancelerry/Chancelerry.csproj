@@ -262,6 +262,7 @@
     <Content Include="kanz\calendar_ru.js" />
     <Content Include="kanz\CardEdit.aspx" />
     <Content Include="kanz\ChooseDictionary.aspx" />
+    <Content Include="kanz\ControlPage.aspx" />
     <Content Include="kanz\Dashboard.aspx" />
     <Content Include="kanz\icons\addButtonIcon.jpg" />
     <Content Include="kanz\icons\delButtonIcon.jpg" />
@@ -495,6 +496,13 @@
     </Compile>
     <Compile Include="kanz\ChooseDictionary.aspx.designer.cs">
       <DependentUpon>ChooseDictionary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="kanz\ControlPage.aspx.cs">
+      <DependentUpon>ControlPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="kanz\ControlPage.aspx.designer.cs">
+      <DependentUpon>ControlPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="kanz\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>

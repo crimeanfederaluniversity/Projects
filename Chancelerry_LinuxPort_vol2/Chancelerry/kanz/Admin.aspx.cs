@@ -74,7 +74,7 @@ namespace Chancelerry.kanz
         protected void Button2_Click(object sender, EventArgs e)
         {
             /*
-            string wholeFile = File.ReadAllText("c:\\1\\5.txt");
+            string wholeFile = File.ReadAllText("c:\\1\\6.txt");
             string[] rows = wholeFile.Split('z');
             foreach (string currentRow in rows)
             {
@@ -87,29 +87,158 @@ namespace Chancelerry.kanz
                 {
                     if (i == 0)
                     {
-                        createFieldValue(cardId, 78, currentField.Trim(), 0);
+                        createFieldValue(cardId, 125, currentField.Trim(), 0);
                     }
                     if (i == 1)
                     {
-                        string date = currentField[6].ToString() + currentField[7].ToString() +
-                                     currentField[8].ToString() + currentField[9].ToString() + "-" +
-                                     currentField[3].ToString() + currentField[4].ToString() + "-" +
-                                     currentField[0].ToString() + currentField[1].ToString();
-                        createFieldValue(cardId, 79, date, 0);
+                        createFieldValue(cardId, 126, currentField.Trim(), 0);
                     }
                     if (i == 2)
                     {
-                        createFieldValue(cardId, 83, currentField.Trim(), 0);
+                        if (currentField.Any())
+                        {
+                            string date = currentField[6].ToString() + currentField[7].ToString() +
+                                          currentField[8].ToString() + currentField[9].ToString() + "-" +
+                                          currentField[3].ToString() + currentField[4].ToString() + "-" +
+                                          currentField[0].ToString() + currentField[1].ToString();
+                            createFieldValue(cardId, 127, date, 0);
+                        }
                     }
                     if (i == 3)
                     {
 
-                        createFieldValue(cardId, 82, currentField.Trim(), 0);
+                        createFieldValue(cardId, 128, currentField.Trim(), 0);
                     }
                     if (i == 4)
                     {
+                        createFieldValue(cardId, 129, currentField.Trim(), 0);
+                    }
+                    if (i == 5)
+                    {
 
-                        createFieldValue(cardId, 81, currentField.Trim(), 0);
+                        createFieldValue(cardId, 130, currentField.Trim(), 0);
+                    }
+                    if (i == 6)
+                    {
+
+                        createFieldValue(cardId, 131, currentField.Trim(), 0);
+                    }
+                    if (i == 7)
+                    {
+                        createFieldValue(cardId, 132, currentField.Trim(), 0);
+                    }
+                    
+                    if (i == 8)
+                    {
+                        createFieldValue(cardId, 133, currentField.Trim(), 0);
+                    }
+                    if (i == 9)
+                    {
+
+                        createFieldValue(cardId, 134, currentField.Trim(), 0);
+                    }
+                    if (i == 10)
+                    {
+
+                        createFieldValue(cardId, 135, currentField.Trim(), 0);
+                    }
+                    if (i == 11)
+                    {
+                        if (currentField.Any())
+                        {
+                            string date = currentField[6].ToString() + currentField[7].ToString() +
+                                          currentField[8].ToString() + currentField[9].ToString() + "-" +
+                                          currentField[3].ToString() + currentField[4].ToString() + "-" +
+                                          currentField[0].ToString() + currentField[1].ToString();
+                            createFieldValue(cardId, 136, date, 0);
+                        }
+                    }
+                    if (i == 12)
+                    {
+
+                        createFieldValue(cardId, 137, currentField.Trim(), 0);
+                    }
+                    if (i == 13)
+                    {
+
+                        createFieldValue(cardId, 138, currentField.Trim(), 0);
+                    }
+                    if (i == 14)
+                    {
+
+                        createFieldValue(cardId, 139, currentField.Trim(), 0);
+                    }
+                    if (i == 15)
+                    {
+
+                        createFieldValue(cardId, 140, currentField.Trim(), 0);
+                    }
+                    if (i == 16)
+                    {
+                        createFieldValue(cardId, 141, currentField.Trim(), 0);
+                    }
+                    if (i == 17)
+                    {
+                        if (currentField.Any())
+                        {
+                            string date = currentField[6].ToString() + currentField[7].ToString() +
+                                          currentField[8].ToString() + currentField[9].ToString() + "-" +
+                                          currentField[3].ToString() + currentField[4].ToString() + "-" +
+                                          currentField[0].ToString() + currentField[1].ToString();
+                            createFieldValue(cardId, 142, date, 0);
+                        }
+                    }
+                    if (i == 18)
+                    {
+
+                        createFieldValue(cardId, 144, currentField.Trim(), 0);
+                    }
+                    if (i == 19)
+                    {
+                        if (currentField.Any())
+                        {
+                            string date = currentField[6].ToString() + currentField[7].ToString() +
+                                          currentField[8].ToString() + currentField[9].ToString() + "-" +
+                                          currentField[3].ToString() + currentField[4].ToString() + "-" +
+                                          currentField[0].ToString() + currentField[1].ToString();
+                            createFieldValue(cardId, 147, date, 0);
+                        }
+                    }
+                    if (i == 20)
+                    {
+                        if (currentField.Any())
+                        {
+                            string date = currentField[6].ToString() + currentField[7].ToString() +
+                                          currentField[8].ToString() + currentField[9].ToString() + "-" +
+                                          currentField[3].ToString() + currentField[4].ToString() + "-" +
+                                          currentField[0].ToString() + currentField[1].ToString();
+                            createFieldValue(cardId, 148, date, 0);
+                        }
+                    }
+                    if (i == 21)
+                    {
+
+                        createFieldValue(cardId, 149, currentField.Trim(), 0);
+                    }
+                    if (i == 22)
+                    {
+                        createFieldValue(cardId, 150, currentField.Trim(), 0);
+                    }
+                    if (i == 23)
+                    {
+
+                        createFieldValue(cardId, 151, currentField.Trim(), 0);
+                    }
+                    if (i == 24)
+                    {
+                        if (currentField.Any())
+                        {
+                            string date = currentField[6].ToString() + currentField[7].ToString() +
+                                          currentField[8].ToString() + currentField[9].ToString() + "-" +
+                                          currentField[3].ToString() + currentField[4].ToString() + "-" +
+                                          currentField[0].ToString() + currentField[1].ToString();
+                            createFieldValue(cardId, 143, date, 0);
+                        }
                     }
                     i++;
                 }

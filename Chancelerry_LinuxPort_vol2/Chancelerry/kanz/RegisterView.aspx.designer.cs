@@ -139,6 +139,15 @@ namespace Chancelerry.kanz {
         protected global::System.Web.UI.WebControls.Button SearchById;
         
         /// <summary>
+        /// SearchAllTextBoxExtended control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox SearchAllTextBoxExtended;
+        
+        /// <summary>
         /// OpenByIdTextBox control.
         /// </summary>
         /// <remarks>
@@ -155,6 +164,15 @@ namespace Chancelerry.kanz {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button OpenByIdButton;
+        
+        /// <summary>
+        /// SearchAllExtendedButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SearchAllExtendedButton;
         
         /// <summary>
         /// Button2 control.

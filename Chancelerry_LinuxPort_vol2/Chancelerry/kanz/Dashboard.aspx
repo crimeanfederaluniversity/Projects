@@ -12,7 +12,9 @@
     <asp:Button ID="GoToStatistics" runat="server" Text="Статистика" class="centered-button" OnClick="GoToStatistics_Click"/>
 
     <br />
-        
+    <asp:Button ID="GoToControl" runat="server" Text="Контроль" class="centered-button" OnClick="GoToControl_Click" />
+
+    <br />
     <script>
         window.onbeforeunload = showLoadingScreen;
     </script>

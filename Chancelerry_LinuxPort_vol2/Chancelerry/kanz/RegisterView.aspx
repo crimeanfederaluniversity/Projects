@@ -24,6 +24,12 @@
          #tableForHeader tr {
              border:0px solid transparent;
          }
+                                      .auto-style1 {
+                                          width: 19px;
+                                      }
+                                      .auto-style2 {
+                                          width: 331px;
+                                      }
      </style>    
     <div id="TableHeaderDiv">
       <Table id="tableForHeader" style="">
@@ -33,6 +39,7 @@
         var myBody;
         window.onload = function ()
         {
+            /*
             var myTable = document.getElementById("ctl00_TableContent_dataTable");
             myBody = myTable.children[0].cloneNode(true);
             myBody.removeChild(myBody.children[0]);
@@ -42,9 +49,11 @@
             }
             var tableForHeader = document.getElementById("tableForHeader");
             tableForHeader.appendChild(myBody);
+            */
         }
         window.onscroll = function ()
         {
+            /*
             var tablHeaderDiv = document.getElementById("TableHeaderDiv");
             tablHeaderDiv.style.top = window.pageYOffset  + 'px';
             var scrolled = window.pageYOffset || document.documentElement.scrollTop;
@@ -56,6 +65,7 @@
             {
                 tablHeaderDiv.style.display = 'none';
             }
+            */
         }
     </script>
      
@@ -163,6 +173,10 @@
                 <td>
                     <asp:Button ID="SearchAllButton" runat="server" Text="Поиск" Width="200px" OnClick="SearchAllButton_Click" OnClientClick="showLoadingScreen()"/>
                 </td> 
+                <td class="auto-style1">
+                    &nbsp;</td> 
+                <td class="auto-style2">
+                    Поиск по всему реестру с параметрами</td> 
             </tr>
             <tr>
                 <td>
@@ -174,6 +188,11 @@
                 <td>
                     <asp:Button ID="SearchById" runat="server" Text="Поиск" Width="200px" OnClientClick="showLoadingScreen()" OnClick="SearchById_Click"/>
                 </td>
+                <td class="auto-style1">
+                    &nbsp;</td> 
+                <td class="auto-style2">
+                     <asp:TextBox ID="SearchAllTextBoxExtended" runat="server" Height="37px" Width="315px"></asp:TextBox> 
+                </td> 
             </tr>
             <tr>
                 <td>
@@ -185,21 +204,26 @@
                 <td>
                     <asp:Button ID="OpenByIdButton" runat="server" Text="Открыть" Width="200px" OnClientClick="showLoadingScreen()" OnClick="OpenByIdButton_Click"/>  
                 </td> 
+                <td class="auto-style1">
+                    &nbsp;</td> 
+                <td class="auto-style2">
+                    <asp:Button ID="SearchAllExtendedButton" runat="server" Text="Поиск" Width="322px"  OnClientClick="showLoadingScreen()" OnClick="SearchAllExtendedButton_Click"/>
+                </td> 
                 </tr>
             <tr>   
                 <td > 
                     Поиск по фильтрам 
                 </td> 
-                <td colspan="2"> 
-                    <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Width="402px" Text="Поиск" OnClientClick="showLoadingScreen()"/>
+                <td colspan="4"> 
+                    <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Width="760px" Text="Поиск" OnClientClick="showLoadingScreen()"/>
                 </td> 
             </tr>
             <tr>
                 <td > 
                     Очистить
                     поиск</td>  
-                <td colspan="2"> 
-                    <asp:Button ID="Button44" runat="server" OnClick="Button4_Click" Width="402px" Text="Очистить" OnClientClick="showLoadingScreen()"/>
+                <td colspan="4"> 
+                    <asp:Button ID="Button44" runat="server" OnClick="Button4_Click" Width="760px" Text="Очистить" OnClientClick="showLoadingScreen()"/>
                 <td>  
              </tr>      
         </table>
