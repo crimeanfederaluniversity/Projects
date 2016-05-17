@@ -829,7 +829,7 @@ namespace Chancelerry.kanz
             }
             return null;
         }
-        private List<int> GetCardsWhereDateFieldInRange(int fieldId, int registerId, DateTime startDate, DateTime endDate)
+        public List<int> GetCardsWhereDateFieldInRange(int fieldId, int registerId, DateTime startDate, DateTime endDate)
         {
             List<int> listToReturn = new List<int>(); // сюда будем складывать список карточек
             List<CollectedFieldsValues> valuesList = (from a in chancDb.CollectedCards // найдем все значения для данного филда в данном регистре
