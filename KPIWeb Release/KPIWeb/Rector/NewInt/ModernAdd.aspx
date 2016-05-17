@@ -23,13 +23,13 @@
         <br />
                  </div>
            <div id="right_side">
-        <asp:HyperLink ID="Button2" runat="server" NavigateUrl="ModernAddStuff/VnedrObr.png">  Внедрение в образовательный процесс современного учебного оборудования </asp:HyperLink>
+        <asp:HyperLink ID="Button2" runat="server" NavigateUrl="../ImageShower.aspx?url=NewInt/ModernAddStuff/VnedrObr.png">  Внедрение в образовательный процесс современного учебного оборудования </asp:HyperLink>
         <br />
                </div>   
 
     </div>
     <div id="wrapapiu_bot_but">
-        <asp:HyperLink ID="Button3" runat="server" NavigateUrl="ModernAddStuff/Razvitie_1.png">  Развитие современных форм профориентационной работы </asp:HyperLink>
+        <asp:HyperLink ID="Button3" runat="server" NavigateUrl="../ImageShower.aspx?url=NewInt/ModernAddStuff/Razvitie_1.png">  Развитие современных форм профориентационной работы </asp:HyperLink>
         <br />
     </div>
     

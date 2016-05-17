@@ -29,7 +29,7 @@
         <asp:LinkButton ID="LinkButton5" runat="server" PostBackUrl="~/Rector/RAnalitics.aspx">Сведения о достижении целевых
 показателей Программы развития</asp:LinkButton>
         <br />
-       <asp:HyperLink ID="LinkButton6" runat="server" NavigateUrl="picforr1.png">Сведения о расходовании средств
+       <asp:HyperLink ID="LinkButton6" runat="server" NavigateUrl="/Rector/ImageShower.aspx?url=NewInt/picforr1.png">Сведения о расходовании средств
 Программы развития КФУ</asp:HyperLink>
                 
         <br />

@@ -35,12 +35,12 @@
 разработок для решения актуальных проблем 
 развития региона" PostBackUrl="~/Rector/NewInt/CreationModern.aspx" />
         <br />
-             <asp:HyperLink ID="Button92" runat="server" NavigateUrl="Motivation2015_1.png">Мотивация персонала и создание</asp:HyperLink>
+             <asp:HyperLink ID="Button92" runat="server" NavigateUrl="/Rector/ImageShower.aspx?url=NewInt/Motivation2015_1.png">Мотивация персонала и создание</asp:HyperLink>
         <br />
         </div>
      
    </div><div id="wrapapiu_bot_but">
-         <asp:HyperLink ID="Button110" runat="server" NavigateUrl="BrendMarket.jpg">  Брендинг и маркетинг </asp:HyperLink>
+         <asp:HyperLink ID="Button110" runat="server" NavigateUrl="/Rector/ImageShower.aspx?url=NewInt/BrendMarket.jpg">  Брендинг и маркетинг </asp:HyperLink>
        </div>
 </div>   
 

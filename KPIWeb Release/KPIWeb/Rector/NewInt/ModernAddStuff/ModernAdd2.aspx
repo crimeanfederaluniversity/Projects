@@ -17,11 +17,11 @@
       <div id="left_side">
      
     
-         <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="OOPmagistr_1.png">ООП Магистратуры </asp:HyperLink>
+         <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="/Rector/ImageShower.aspx?url=NewInt/ModernAddStuff/OOPmagistr_1.png">ООП Магистратуры </asp:HyperLink>
        
-         <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="OOPbakalavr_1.png">ООП Бакалавриата </asp:HyperLink>
+         <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="/Rector/ImageShower.aspx?url=NewInt/ModernAddStuff/OOPbakalavr_1.png">ООП Бакалавриата </asp:HyperLink>
    
-         <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="DopProf_1.png">Дополнительные профессиональные программы</asp:HyperLink>
+         <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="/Rector/ImageShower.aspx?url=NewInt/ModernAddStuff/DopProf_1.png">Дополнительные профессиональные программы</asp:HyperLink>
     
       
     </div>

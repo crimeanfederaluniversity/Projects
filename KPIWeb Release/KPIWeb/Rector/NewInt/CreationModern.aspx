@@ -19,18 +19,18 @@
 региона"></asp:Label>
          <div id="all_menu">
        <div id="left_side">
-           <asp:HyperLink ID="Button25" runat="server" NavigateUrl="CreationModernStuff/NauchObr.png"> Научно-образовательные центры </asp:HyperLink>
+           <asp:HyperLink ID="Button25" runat="server" NavigateUrl="/Rector/ImageShower.aspx?url=NewInt/CreationModernStuff/NauchObr.png"> Научно-образовательные центры </asp:HyperLink>
         <br />
-        <asp:HyperLink ID="Button26" runat="server" NavigateUrl="CreationModernStuff/CentComp_1.png"> Центры компетенций и экспертизы по направлениям, актуальным для устойчивого развития региона </asp:HyperLink>
+        <asp:HyperLink ID="Button26" runat="server" NavigateUrl="/Rector/ImageShower.aspx?url=NewInt/CreationModernStuff/CentComp_1.png"> Центры компетенций и экспертизы по направлениям, актуальным для устойчивого развития региона </asp:HyperLink>
         <br />
            </div>
                 <div id="right_side">
-                    <asp:HyperLink ID="Button27" runat="server" NavigateUrl="CreationModernStuff/Researchlab_1.png"> Научные лаборатории и центры, оснащенные
+                    <asp:HyperLink ID="Button27" runat="server" NavigateUrl="/Rector/ImageShower.aspx?url=NewInt/CreationModernStuff/Researchlab_1.png"> Научные лаборатории и центры, оснащенные
 современным оборудованием, по прорывным 
 для университета тематикам в рамках 
 приоритетных направлений исследований </asp:HyperLink>
         <br />
-        <asp:HyperLink ID="Button28" runat="server" NavigateUrl="CreationModernStuff/simulatCentr_1.png"> Симуляционный центр </asp:HyperLink>
+        <asp:HyperLink ID="Button28" runat="server" NavigateUrl="/Rector/ImageShower.aspx?url=NewInt/CreationModernStuff/simulatCentr_1.png"> Симуляционный центр </asp:HyperLink>
     </div>
            
     </div>

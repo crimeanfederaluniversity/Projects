@@ -66,7 +66,10 @@
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
       <Private>True</Private>
@@ -246,6 +249,7 @@
     <Content Include="Rector\NewInt\CreationModernStuff\simulatCentr_1.png" />
     <Content Include="Rector\NewInt\GovTask.aspx" />
     <Content Include="Rector\NewInt\GovTaskStuff\2016.aspx" />
+    <Content Include="Rector\ImageShower.aspx" />
     <Content Include="Rector\NewInt\ModernAdd.aspx" />
     <Content Include="Rector\NewInt\ModernAddStuff\DopProf_1.png" />
     <Content Include="Rector\NewInt\ModernAddStuff\ModernAdd2.aspx" />
@@ -713,6 +717,13 @@
     <Compile Include="Rector\NewInt\GovTaskStuff\2016.aspx.designer.cs">
       <DependentUpon>2016.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Rector\ImageShower.aspx.cs">
+      <DependentUpon>ImageShower.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rector\ImageShower.aspx.designer.cs">
+      <DependentUpon>ImageShower.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Rector\NewInt\ModernAdd.aspx.cs">
       <DependentUpon>ModernAdd.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -785,7 +796,6 @@
     </Compile>
     <Compile Include="Rector\ViewStruct.aspx.cs">
       <DependentUpon>ViewStruct.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Rector\ViewStruct.aspx.designer.cs">
       <DependentUpon>ViewStruct.aspx</DependentUpon>
