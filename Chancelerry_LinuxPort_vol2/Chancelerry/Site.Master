@@ -15,8 +15,13 @@
 
 </head>
     <script>
+        
+      
+
         function loadPage () {
+
             
+
             var tableElem = document.getElementById('ctl00_MainContent_cardMainDiv');
             if (tableElem == null) {
                 return false;
@@ -33,7 +38,7 @@
     </script>
 
 <body onload="loadPage()">
-    <form runat="server">
+    <form runat="server" onsubmit="onPageSubmit()" >
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>

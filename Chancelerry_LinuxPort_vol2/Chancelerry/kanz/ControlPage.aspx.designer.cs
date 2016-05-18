@@ -13,6 +13,69 @@ namespace Chancelerry.kanz {
     public partial class ControlPage {
         
         /// <summary>
+        /// T2ListOfIncomingDropDownList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList T2ListOfIncomingDropDownList;
+        
+        /// <summary>
+        /// T2CntlFilterStartDateTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox T2CntlFilterStartDateTextBox;
+        
+        /// <summary>
+        /// T2CntrlFilterEndDateTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox T2CntrlFilterEndDateTextBox;
+        
+        /// <summary>
+        /// T2CompareDateTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox T2CompareDateTextBox;
+        
+        /// <summary>
+        /// T2RadioButtonList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList T2RadioButtonList;
+        
+        /// <summary>
+        /// T2CreateTableButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton T2CreateTableButton;
+        
+        /// <summary>
+        /// T2ResultDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl T2ResultDiv;
+        
+        /// <summary>
         /// T1ListOfIncomingDropDownList control.
         /// </summary>
         /// <remarks>
@@ -64,7 +127,7 @@ namespace Chancelerry.kanz {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button T1CreateTableButton;
+        protected global::System.Web.UI.WebControls.LinkButton T1CreateTableButton;
         
         /// <summary>
         /// T1ResultDiv control.

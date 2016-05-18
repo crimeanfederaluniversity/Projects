@@ -3,6 +3,13 @@
      <script src="toggleLoadingScreen.js" type="text/javascript"></script>
     <script src="calendar_ru.js" type="text/javascript"></script>
     
+    <script>
+        function onPageSubmit()
+        {
+            this.action += top.location.hash;
+        }
+    </script>
+
     <style type="text/css">
           
            .resultTable {
@@ -40,13 +47,44 @@
                       <br id="tab2"/><br id="tab3"/>
                       <a href="#tab1">Шаблон 1</a><a href="#tab2">Шаблон 2</a><a href="#tab3">Шаблон 3</a>
                       <div>    
-                      <asp:DropDownList ID="T1ListOfIncomingDropDownList" runat="server" Height="20px" Width="400px"></asp:DropDownList>
+                       <asp:DropDownList ID="T2ListOfIncomingDropDownList" runat="server" Height="20px" Width="400px"></asp:DropDownList>
                       <br />
                       <br />
-                      <asp:TextBox ID="T1StartDateTextBox" runat="server" Height="20px" Width="400px" onfocus="this.select();lcs(this)" onclick="event.cancelBubble=true;this.select();lcs(this)" placeholder="Начальная дата (включительно)"></asp:TextBox>
+                      <asp:TextBox ID="T2CntlFilterStartDateTextBox" runat="server" Height="20px" Width="400px" onfocus="this.select();lcs(this)" onclick="event.cancelBubble=true;this.select();lcs(this)" placeholder="Начальная дата контроля (включительно)"></asp:TextBox>
                       <br />
                       <br />
-                      <asp:TextBox ID="T1EndDateTextBox" runat="server" Height="20px" Width="400px" onfocus="this.select();lcs(this)" onclick="event.cancelBubble=true;this.select();lcs(this)" placeholder="Конечнпая дата (включительно)"></asp:TextBox>
+                      <asp:TextBox ID="T2CntrlFilterEndDateTextBox" runat="server" Height="20px" Width="400px" onfocus="this.select();lcs(this)" onclick="event.cancelBubble=true;this.select();lcs(this)" placeholder="Конечнпая дата контроля (включительно)"></asp:TextBox>
+                      <br />
+                      <br />
+                      <asp:TextBox ID="T2CompareDateTextBox" runat="server" Height="20px" Width="400px" onfocus="this.select();lcs(this)" onclick="event.cancelBubble=true;this.select();lcs(this)" placeholder="Дата для сравнения"></asp:TextBox>
+                      <br />
+                      <asp:RadioButtonList ID="T2RadioButtonList" runat="server" Visible="False" Height="100px" Width="400px">
+                          <asp:ListItem Selected="True" Value="0">Неисполненные (срок прошел)</asp:ListItem>
+                          <asp:ListItem Value="1">Неисполненные (срок не прошел)</asp:ListItem>
+                          <asp:ListItem Value="2">Исполненные с нарушением срока</asp:ListItem>
+                          <asp:ListItem Value="3">Исполненные без нарушения срока</asp:ListItem>
+                        </asp:RadioButtonList>     
+                      <br />
+                      <asp:LinkButton ID="T2CreateTableButton" runat="server" Text="Показать" Height="20px" Width="400px" OnClick="T2CreateTableButton_Click"  />      
+                      <br />
+                      <br />
+                          <div id="T2ResultDiv" runat="server">      
+                          </div>
+                      </div>
+                      <div>
+                          
+                          
+                     
+
+                      </div>
+                      <div>
+                          <asp:DropDownList ID="T1ListOfIncomingDropDownList" runat="server" Height="20px" Width="400px"></asp:DropDownList>
+                      <br />
+                      <br />
+                      <asp:TextBox ID="T1StartDateTextBox" runat="server" Height="20px" Width="400px" onfocus="this.select();lcs(this)" onclick="event.cancelBubble=true;this.select();lcs(this)" placeholder="Начальная дата поступления документа (включительно)"></asp:TextBox>
+                      <br />
+                      <br />
+                      <asp:TextBox ID="T1EndDateTextBox" runat="server" Height="20px" Width="400px" onfocus="this.select();lcs(this)" onclick="event.cancelBubble=true;this.select();lcs(this)" placeholder="Конечнпая дата поступления документа(включительно)"></asp:TextBox>
                       <br />
                       <br />
                       <asp:TextBox ID="T1CompareDateTextBox" runat="server" Height="20px" Width="400px" onfocus="this.select();lcs(this)" onclick="event.cancelBubble=true;this.select();lcs(this)" placeholder="Дата для сравнения"></asp:TextBox>
@@ -56,28 +94,15 @@
                           <asp:ListItem Value="1">Неисполненные (срок не прошел)</asp:ListItem>
                           <asp:ListItem Value="2">Исполненные с нарушением срока</asp:ListItem>
                           <asp:ListItem Value="3">Исполненные без нарушения срока</asp:ListItem>
-                        </asp:RadioButtonList>
-     
+                        </asp:RadioButtonList>     
                       <br />
-                      <asp:Button ID="T1CreateTableButton" runat="server" Text="Показать" Height="20px" Width="400px" OnClick="T1CreateTableButton_Click" />
-      
+                      <asp:LinkButton ID="T1CreateTableButton" runat="server" Text="Показать" Height="20px" Width="400px" OnClick="T1CreateTableButton_Click" />      
                       <br />
                       <br />
-                      <div id="T1ResultDiv" runat="server">
-      
-      </div>
-
+                          <div id="T1ResultDiv" runat="server">      
+                          </div>
                       </div>
-                      <div>
-      
-
-                      </div>
-                      <div>
-      
-
-                      </div>
-                      </div>
-    
+                      </div>  
                       <style>
                   #tab2, #tab3 {position: fixed; }
 
