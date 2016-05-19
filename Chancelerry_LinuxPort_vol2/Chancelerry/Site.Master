@@ -38,7 +38,7 @@
     </script>
 
 <body onload="loadPage()">
-    <form runat="server" onsubmit="onPageSubmit()" >
+    <form runat="server">
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
