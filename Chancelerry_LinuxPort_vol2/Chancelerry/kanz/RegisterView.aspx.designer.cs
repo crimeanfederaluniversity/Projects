@@ -13,78 +13,6 @@ namespace Chancelerry.kanz {
     public partial class RegisterView {
         
         /// <summary>
-        /// dataTable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Table dataTable;
-        
-        /// <summary>
-        /// PageInfoBottom control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PageInfoBottom;
-        
-        /// <summary>
-        /// GoToFirstBottom control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoToFirstBottom;
-        
-        /// <summary>
-        /// GoToPreviousBottom control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoToPreviousBottom;
-        
-        /// <summary>
-        /// PagesListBottom control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PagesListBottom;
-        
-        /// <summary>
-        /// GoToNextBottom control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoToNextBottom;
-        
-        /// <summary>
-        /// GoToLastBottom control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoToLastBottom;
-        
-        /// <summary>
-        /// timeStampsLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label timeStampsLabel;
-        
-        /// <summary>
         /// Button1 control.
         /// </summary>
         /// <remarks>
@@ -92,15 +20,6 @@ namespace Chancelerry.kanz {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
-        
-        /// <summary>
-        /// Button3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button3;
         
         /// <summary>
         /// SearchAllTextBox control.
@@ -121,6 +40,24 @@ namespace Chancelerry.kanz {
         protected global::System.Web.UI.WebControls.Button SearchAllButton;
         
         /// <summary>
+        /// SearchAllTextBoxExtended control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox SearchAllTextBoxExtended;
+        
+        /// <summary>
+        /// SearchAllExtendedButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SearchAllExtendedButton;
+        
+        /// <summary>
         /// SearchByIdTextbox control.
         /// </summary>
         /// <remarks>
@@ -139,13 +76,13 @@ namespace Chancelerry.kanz {
         protected global::System.Web.UI.WebControls.Button SearchById;
         
         /// <summary>
-        /// SearchAllTextBoxExtended control.
+        /// CardsOnPageDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox SearchAllTextBoxExtended;
+        protected global::System.Web.UI.WebControls.DropDownList CardsOnPageDropDownList;
         
         /// <summary>
         /// OpenByIdTextBox control.
@@ -166,13 +103,13 @@ namespace Chancelerry.kanz {
         protected global::System.Web.UI.WebControls.Button OpenByIdButton;
         
         /// <summary>
-        /// SearchAllExtendedButton control.
+        /// ChooseSortFieldIdDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SearchAllExtendedButton;
+        protected global::System.Web.UI.WebControls.DropDownList ChooseSortFieldIdDropDownList;
         
         /// <summary>
         /// Button2 control.
@@ -182,6 +119,15 @@ namespace Chancelerry.kanz {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button2;
+        
+        /// <summary>
+        /// Button3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button3;
         
         /// <summary>
         /// Button44 control.
@@ -254,5 +200,77 @@ namespace Chancelerry.kanz {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button GoToLastTop;
+        
+        /// <summary>
+        /// dataTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table dataTable;
+        
+        /// <summary>
+        /// PageInfoBottom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PageInfoBottom;
+        
+        /// <summary>
+        /// GoToFirstBottom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GoToFirstBottom;
+        
+        /// <summary>
+        /// GoToPreviousBottom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GoToPreviousBottom;
+        
+        /// <summary>
+        /// PagesListBottom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PagesListBottom;
+        
+        /// <summary>
+        /// GoToNextBottom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GoToNextBottom;
+        
+        /// <summary>
+        /// GoToLastBottom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GoToLastBottom;
+        
+        /// <summary>
+        /// timeStampsLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label timeStampsLabel;
     }
 }

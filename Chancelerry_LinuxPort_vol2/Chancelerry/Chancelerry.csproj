@@ -269,6 +269,7 @@
     <Content Include="kanz\icons\editaddButtonIcon.gif" />
     <Content Include="kanz\icons\greenOkIcon.png" />
     <Content Include="kanz\icons\gteenQuestionIcon.png" />
+    <Content Include="kanz\icons\infoButtonIcon.png" />
     <Content Include="kanz\icons\printButtonIcon.png" />
     <Content Include="kanz\icons\redWarningIcon.png" />
     <Content Include="kanz\icons\saveButtonIcon.jpg" />

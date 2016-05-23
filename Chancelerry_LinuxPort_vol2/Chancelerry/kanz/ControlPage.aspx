@@ -44,7 +44,8 @@
       </style>
 
                   <div class="menu1">
-                      <br id="tab2"/><br id="tab3"/>
+                      <br />
+                      <br id="tab3"/>
                       <a href="#tab1">Шаблон 1</a><a href="#tab2">Шаблон 2</a><a href="#tab3">Шаблон 3</a>
                       <div>    
                        <asp:DropDownList ID="T2ListOfIncomingDropDownList" runat="server" Height="20px" Width="400px"></asp:DropDownList>

@@ -453,6 +453,26 @@ namespace Chancelerry.kanz
             }
             return row;
         }
+
+        protected class SortableArrayClass
+        {
+            public int fk_collectedcard { get; set; }
+            public string valuetext { get; set; }
+        }
+        private List<int> SortCardsByFieldId(List<int> initialCardsList, int fieldId, int registerId)
+        {
+            List<int> allSortedCardsInFieldAndRegister = (from a in chancDb.CollectedFieldsValues
+                where a.FkField == fieldId
+                join b in chancDb.CollectedCards
+                    on a.FkCollectedCard equals b.CollectedCardID
+                where b.FkRegister == registerId
+                select new SortableArrayClass() {fk_collectedcard = a.FkCollectedCard, valuetext = a.ValueText}).OrderBy(mc => mc.valuetext).Select(mc => mc.fk_collectedcard).ToList();
+
+
+
+            return allSortedCardsInFieldAndRegister.Intersect(initialCardsList).ToList();
+        } 
+
         public CollectedCards GetCollevtedCardByCollevtedField(int collectedFieldId)
         {
             CollectedCards cardToReturn = (from a in chancDb.CollectedCards
@@ -462,10 +482,8 @@ namespace Chancelerry.kanz
                                            select a).FirstOrDefault();
             return cardToReturn;
         }
-
         public int totalCnt = 0;
-
-        public List<int> GetCardsToShow(string extendedSearchAll, string cardId, Dictionary<int, string> searchList,string searchAll, int registerId, int lineFrom, int lineTo) 
+        public List<int> GetCardsToShow(int sortFieldId, string extendedSearchAll, string cardId, Dictionary<int, string> searchList,string searchAll, int registerId, int lineFrom, int lineTo) 
         {
             List<int> cardsToShow = new List<int>();
             if (cardId != null)
@@ -515,8 +533,6 @@ namespace Chancelerry.kanz
                     isFirst = false;
                     cardsToShow = tmpList;
                 }
-                totalCnt = cardsToShow.Count;
-                cardsToShow = cardsToShow.Skip(lineFrom).Take(lineTo - lineFrom).ToList();
                 #endregion
             }
             else if (searchAll != null) //фильтр по всему реестру
@@ -539,9 +555,6 @@ namespace Chancelerry.kanz
                     .ToList()
                     .Distinct()
                     .ToList();
-                totalCnt = cardsToShow.Count;
-                cardsToShow = cardsToShow.Skip(lineFrom).Take(lineTo - lineFrom).ToList();
-
                 #endregion
             }
             else if (extendedSearchAll != null)
@@ -549,9 +562,6 @@ namespace Chancelerry.kanz
                 #region ищем по всему реестру понескольким параметрам
                 PolishSearch polishSearch = new PolishSearch();
                 cardsToShow = polishSearch.GetCardsIds(extendedSearchAll,registerId);
-                totalCnt = cardsToShow.Count;
-                cardsToShow = cardsToShow.Skip(lineFrom).Take(lineTo - lineFrom).ToList();
-
                 #endregion
             }
             else // если фильтров нет, показываем все карточки 
@@ -562,14 +572,15 @@ namespace Chancelerry.kanz
                                      && a.FkRegister == registerId
                                      && a.MaInFieldID != null // ПЛОХО
                                select a).OrderByDescending(uc => (int)uc.MaInFieldID).Select(vk => vk.CollectedCardID).ToList();
-                totalCnt = cardsToShow.Count;
-                cardsToShow = cardsToShow.Skip(lineFrom).Take(lineTo - lineFrom).ToList();
                 #endregion
             }
-            return cardsToShow;
-            
+            totalCnt = cardsToShow.Count;
+            if (sortFieldId != 0)
+            {
+                cardsToShow = SortCardsByFieldId(cardsToShow, sortFieldId,registerId);
+            }
+            return cardsToShow.Skip(lineFrom).Take(lineTo - lineFrom).ToList(); //cardsToShow;         
         }
-
         public class NameFieldWeightClass
         {
             public string Name { get; set; }
@@ -577,8 +588,6 @@ namespace Chancelerry.kanz
             public double Weight { get; set; }
             public string Type { get; set; }
         }
-
-
         public class ValuesClass
         {
             public int collectedfieldvalueid { get; set; }
@@ -589,18 +598,13 @@ namespace Chancelerry.kanz
             public string valuetext { get; set; }
             public bool isdeleted { get; set; }
         }
-
         public string timeStamps = "";
-
-
-        public string FastSearch(string extendedSeatchAll, string cardId, Dictionary<int, string> searchList, string searchAll, int registerId, int userId, Table vTable, int LineFrom, int LineTo,out int totalToShow )
+        public string FastSearch(int sortFieldId, string extendedSeatchAll, string cardId, Dictionary<int, string> searchList, string searchAll, int registerId, int userId, Table vTable, int LineFrom, int LineTo,out int totalToShow )
         {
             totalToShow = 0;
-            //totalOnPage = 0;
             #region GetSortedCutedCardsToShow
-
             timeStamps += " 1_" + DateTime.Now.TimeOfDay;
-            List<int> sortedCutedCardsToShow = GetCardsToShow(extendedSeatchAll, cardId, searchList, searchAll, registerId, LineFrom, LineTo); // NEW    
+            List<int> sortedCutedCardsToShow = GetCardsToShow(sortFieldId,extendedSeatchAll, cardId, searchList, searchAll, registerId, LineFrom, LineTo); // NEW    
             timeStamps += " 2_" + DateTime.Now.TimeOfDay;
             List<NameFieldWeightClass> allFields = (from a in chancDb.RegistersUsersMap
                                                  join b in chancDb.RegistersView
@@ -615,35 +619,13 @@ namespace Chancelerry.kanz
                                                  && a.Active
                                                  select new NameFieldWeightClass { Name = c.Name, FieldID = c.FieldID, Weight = b.Weight,Type = c.Type}).OrderBy(w => w.Weight).ToList();
             timeStamps += " 3_" + DateTime.Now.TimeOfDay;
+
             if (sortedCutedCardsToShow.Count == 0 || allFields.Count == 0)
                 return "Данных нет";
             string sqlqueryTMP = "SELECT fk_collectedcard,fk_field,instance,valuetext,isdeleted,version,collectedfieldvalueid FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
                  "AND  fk_field IN (" + string.Join(",", allFields.Select(mc=>mc.FieldID).ToArray()) + ")";
-/*
-            string sqlqueryCnt = "SELECT COUNT(fk_collectedcard) FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
-                 "AND  fk_field IN (" + string.Join(",", allFields.Select(mc => mc.FieldID).ToArray()) + ")";
-                 */
-
             IEnumerable<ValuesClass> tmp = chancDb.ExecuteQuery<ValuesClass>(sqlqueryTMP);
-           // int cnt = chancDb.ExecuteCommand(sqlqueryCnt);
-            ValuesClass[] tmpStrList = tmp.ToArray();// tmp.ToArray();
-         /*   ValuesClass[] tmpTmp = new ValuesClass[cnt];
-
-            int gg = 0;
-
-            IEnumerator<ValuesClass> tmp33 = tmp.GetEnumerator();
-            foreach (ValuesClass value in tmp)
-            {
-                tmpTmp[gg++] = value;
-            }
-            
-            for (int k = 0; k < cnt; k++)
-            {
-                tmpTmp[k] = tmp33.Current;
-                tmp33.MoveNext();
-            }
-      */
-
+            ValuesClass[] tmpStrList = tmp.ToArray();
             timeStamps += " 4_" + DateTime.Now.TimeOfDay;
             vTable.Rows.Add(AddSearchHeaderRoFromListWithData(allFields.Select(mc=>mc.FieldID).ToList(), searchList));
             vTable.Rows.Add(ta.AddHeaderRoFromList(allFields.Select(mc=>mc.Name).ToList()));
@@ -780,9 +762,7 @@ namespace Chancelerry.kanz
             }
             #endregion
             timeStamps += " 6_" + DateTime.Now.TimeOfDay;
-
             totalToShow = totalCnt;
-            //totalOnPage = 0;
             LineTo = LineTo > totalCnt ? totalCnt : LineTo;
             return "Всего:" + totalCnt.ToString() + "  " + "Показано с " + (LineFrom + 1) + " по " + (LineTo);
         }
