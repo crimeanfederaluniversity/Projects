@@ -224,6 +224,7 @@
     <Content Include="Decan\DecViewBasicParams.aspx" />
     <Content Include="Decan\DecViewReport.aspx" />
     <Content Include="DepartmentFilling\ChooseBasic.aspx" />
+    <Content Include="Director\check.jpg" />
     <Content Include="Director\ConfirmCheckBoxes.aspx" />
     <Content Include="Director\DDetailRating.aspx" />
     <Content Include="Director\DRating.aspx" />
@@ -308,6 +309,7 @@
     <Content Include="Rector\RShowChartDetailed.aspx" />
     <Content Include="Rector\RShowChartFaculty.aspx" />
     <Content Include="Info_Pages\RegisterProcessInfo.aspx" />
+    <Content Include="SMKdocuments.aspx" />
     <Content Include="Spinner.css" />
     <Content Include="StatisticsDepartment\PlannedIndicator.aspx" />
     <Content Include="Rector\RectorChooseReport.aspx" />
@@ -1003,6 +1005,13 @@
       <DependentUpon>RegisterProcessInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports_\FillingTheReportFunctions.cs" />
+    <Compile Include="SMKdocuments.aspx.cs">
+      <DependentUpon>SMKdocuments.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SMKdocuments.aspx.designer.cs">
+      <DependentUpon>SMKdocuments.aspx</DependentUpon>
+    </Compile>
     <Compile Include="StatisticsDepartment\PlannedIndicator.aspx.cs">
       <DependentUpon>PlannedIndicator.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
