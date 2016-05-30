@@ -26,9 +26,11 @@
     <script>
 
         function search(controlM, value) {
-            
+
             if (controlM.tagName == 'A') {
-                if (controlM.innerText.indexOf(value) != -1)
+                var text = controlM.innerText.toLowerCase();
+                var lowValue = value.toLowerCase();
+                if (text.indexOf(lowValue) != -1)
                 {
                     controlM.focus();
                     return 1;
@@ -39,11 +41,11 @@
                 if (search(controlM.children[i], value) == 1)
                 return 1;
             }
+
             return 0;
         }
 
-        function findInControl(controlId, textToFindBoxId) {
-            
+        function findInControl(controlId, textToFindBoxId) {        
             var myElem = document.getElementById(controlId);
             var textBox = document.getElementById(textToFindBoxId);
             search(myElem, textBox.value);

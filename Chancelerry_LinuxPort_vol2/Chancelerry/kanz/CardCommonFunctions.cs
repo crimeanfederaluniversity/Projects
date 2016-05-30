@@ -342,13 +342,16 @@ namespace Chancelerry.kanz
                                                   where b.Active == true
                                                         && b.FkRegister == registerId
                                                   select a).Distinct().ToList();
+
             List<int> valuesAsInt = new List<int>();
+
             foreach (CollectedFieldsValues currentValue in values)
             {
                 int tmpValue = 0;
                 Int32.TryParse(currentValue.ValueText, out tmpValue);
                 valuesAsInt.Add(tmpValue);
             }
+
             List<int> valuesSortedList =
                 (from a in valuesAsInt select a).Distinct().OrderByDescending(mc => mc).ToList();
 
@@ -459,18 +462,58 @@ namespace Chancelerry.kanz
             public int fk_collectedcard { get; set; }
             public string valuetext { get; set; }
         }
+        protected class SortableArrayIntegersClass
+        {
+            public int fk_collectedcard { get; set; }
+            public int intValue { get; set; }
+        }
+        protected class SortableArrayDateClass
+        {
+            public int fk_collectedcard { get; set; }
+            public DateTime dateValue { get; set; }
+        }
         private List<int> SortCardsByFieldId(List<int> initialCardsList, int fieldId, int registerId)
         {
-            List<int> allSortedCardsInFieldAndRegister = (from a in chancDb.CollectedFieldsValues
+            List<CollectedFieldsValues> allFieldValues = (from a in chancDb.CollectedFieldsValues
                 where a.FkField == fieldId
-                join b in chancDb.CollectedCards
-                    on a.FkCollectedCard equals b.CollectedCardID
-                where b.FkRegister == registerId
-                select new SortableArrayClass() {fk_collectedcard = a.FkCollectedCard, valuetext = a.ValueText}).OrderBy(mc => mc.valuetext).Select(mc => mc.fk_collectedcard).ToList();
+                select a).ToList();
+            Fields field = (from a in chancDb.Fields select a).FirstOrDefault();
+            List<int> allSortedCardsInFieldAndRegister = new List<int>();
+            if (field.Name == "autoIncrement" || field.Name == "autoIncrementReadonly") // цифры
+            {
+                List<SortableArrayIntegersClass> tmpDictionary = new List<SortableArrayIntegersClass>();
+                foreach (CollectedFieldsValues curent in allFieldValues)
+                {
+                    int tmpValue = 0;
+                    Int32.TryParse(curent.ValueText, out tmpValue);
+                    tmpDictionary.Add(new SortableArrayIntegersClass() {fk_collectedcard = curent.FkCollectedCard,intValue = tmpValue });
+                }
+                allSortedCardsInFieldAndRegister =
+                    (from a in tmpDictionary.OrderBy(mc => mc.intValue) select a.fk_collectedcard).ToList();
+            }
+            else if (field.Name == "autoDate" || field.Name == "date" || field.Name == "dateIncrement") //даты
+            {
+                List<SortableArrayDateClass> tmpDictionary = new List<SortableArrayDateClass>();
+                foreach (CollectedFieldsValues curent in allFieldValues)
+                {
+                    DateTime tmpValue = DateTime.MinValue;
+                    DateTime.TryParse(curent.ValueText, out tmpValue);
+                    tmpDictionary.Add(new SortableArrayDateClass() { fk_collectedcard = curent.FkCollectedCard, dateValue = tmpValue });
+                }
+                allSortedCardsInFieldAndRegister =
+                    (from a in tmpDictionary.OrderBy(mc => mc.dateValue) select a.fk_collectedcard).ToList();
+            }
+            else //текст
+            {
+                List<SortableArrayClass> tmpDictionary = new List<SortableArrayClass>();
+                foreach (CollectedFieldsValues curent in allFieldValues)
+                {
+                    tmpDictionary.Add(new SortableArrayClass() { fk_collectedcard = curent.FkCollectedCard,valuetext  = curent.ValueText.Trim()});
+                }
+                allSortedCardsInFieldAndRegister = (from a in tmpDictionary.OrderBy(mc => mc.valuetext) select a.fk_collectedcard).ToList();
+            }        
 
-
-
-            return allSortedCardsInFieldAndRegister.Intersect(initialCardsList).ToList();
+            return allSortedCardsInFieldAndRegister.Intersect(initialCardsList).Distinct().ToList();
         } 
 
         public CollectedCards GetCollevtedCardByCollevtedField(int collectedFieldId)
@@ -687,7 +730,7 @@ namespace Chancelerry.kanz
                     fieldN++;
                 }
                 //TableRow row = new TableRow();
-
+                
                 int rowCnt = 1;
                 for (int j = 0; j < maxInstanceInCard + 1; j++)
                 {
@@ -695,6 +738,7 @@ namespace Chancelerry.kanz
                     //instRow.Attributes.Add("cardId", currentCard.ToString());
                     for (int i = 0; i < fieldsCount; i++)
                     {
+                        bool isThisFirstNotLastAndNull = false;
                         TableCell cell0 = new TableCell();
                         cell0.Attributes.Add("colId",i.ToString());
                         cell0.CssClass += "specialPrintClassColumn" + i;
@@ -703,6 +747,8 @@ namespace Chancelerry.kanz
                         {
                             if (j != 0)
                                 continue;
+                            if (maxInstanceInCard > 0) 
+                                isThisFirstNotLastAndNull = true;
                             arrayOfStrings[i, j] = "";
                         }
                         cell0.Text = arrayOfStrings[i, j];
@@ -713,6 +759,7 @@ namespace Chancelerry.kanz
                             colspanTmp++;
                             colSpanCheckCounter++;
                         }
+                        //if (isThisFirstNotLastAndNull) colspanTmp++;
                         cell0.RowSpan = colspanTmp;
                         instRow.Cells.Add(cell0);
                         rowCnt++;

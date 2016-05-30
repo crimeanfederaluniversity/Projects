@@ -100,7 +100,7 @@ namespace Chancelerry.kanz
                     else
 
                     {
-                        pageNumbers += "<a href=\"?page=" + i + "&size=" + size + "\"> " + (i + 1).ToString() + " </a>";
+                        pageNumbers += "<a href=\"?page=" + i + "&size=" + size + "&sortFieldId=" + sortFieldId + "\"> " + (i + 1).ToString() + " </a>";
                     }
 
                 }

@@ -97,5 +97,10 @@ namespace Chancelerry.kanz
         {
             Response.Redirect("ControlPage.aspx");
         }
+
+        protected void GoToShowResterAndPrint_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ShowRegisteAndPrint.aspx");
+        }
     }
 }

@@ -281,6 +281,7 @@
     <Content Include="kanz\Print.aspx" />
     <Content Include="kanz\PrintMany.aspx" />
     <Content Include="kanz\RegisterView.aspx" />
+    <Content Include="kanz\ShowRegisteAndPrint.aspx" />
     <Content Include="kanz\StatisticsMain.aspx" />
     <Content Include="kanz\TableSettings.aspx" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
@@ -326,7 +327,6 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Site.Mobile.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -540,6 +540,13 @@
     <Compile Include="kanz\RegisterView.aspx.designer.cs">
       <DependentUpon>RegisterView.aspx</DependentUpon>
     </Compile>
+    <Compile Include="kanz\ShowRegisteAndPrint.aspx.cs">
+      <DependentUpon>ShowRegisteAndPrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="kanz\ShowRegisteAndPrint.aspx.designer.cs">
+      <DependentUpon>ShowRegisteAndPrint.aspx</DependentUpon>
+    </Compile>
     <Compile Include="kanz\StatisticsMain.aspx.cs">
       <DependentUpon>StatisticsMain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -563,13 +570,6 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
-    </Compile>
-    <Compile Include="Site.Mobile.Master.cs">
-      <DependentUpon>Site.Mobile.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Site.Mobile.Master.designer.cs">
-      <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="kanz\TableActions.cs" />

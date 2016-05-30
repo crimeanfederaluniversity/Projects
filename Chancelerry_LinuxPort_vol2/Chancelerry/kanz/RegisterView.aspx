@@ -152,7 +152,7 @@
     <div id="searchDiv">
         <table>
             <tr>
-                <td class="auto-style1">Поиск по всему реестру <a href="#searchAllInfo" ><img border="0" alt="W3Schools" src="icons/infoButtonIcon.png" width="15" height="15"></a>
+                <td>Поиск по всему реестру <a href="#searchAllInfo" ><img border="0" alt="W3Schools" src="icons/infoButtonIcon.png" width="15" height="15"></a>
                 </td>
                 <td>
                     <asp:TextBox ID="SearchAllTextBox" runat="server" Height="20px" Width="200px"></asp:TextBox>
@@ -161,7 +161,7 @@
                     <asp:Button ID="SearchAllButton" runat="server" Text="Поиск" Width="200px" OnClick="SearchAllButton_Click" OnClientClick="showLoadingScreen()" />
                 </td>
                 <td>&nbsp;</td>
-                <td>Расширенный поиск <a href="#searchWithParamInfo"><img border="0" alt="W3Schools" src="icons/infoButtonIcon.png" width="15" height="15"></a> </td>
+                <td colspan="2">Расширенный поиск <a href="#searchWithParamInfo"><img border="0" alt="W3Schools" src="icons/infoButtonIcon.png" width="15" height="15"></a> </td>
                 <td>
                     <asp:TextBox ID="SearchAllTextBoxExtended" runat="server" Height="20px" Width="200px"></asp:TextBox>
                 </td>
@@ -170,7 +170,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="auto-style1">Поиск по номеру 
+                <td>Поиск по номеру 
                 </td>
                 <td>
                     <asp:TextBox ID="SearchByIdTextbox" runat="server" Height="20px" Width="200px"></asp:TextBox>
@@ -179,7 +179,7 @@
                     <asp:Button ID="SearchById" runat="server" Text="Поиск" Width="200px" OnClientClick="showLoadingScreen()" OnClick="SearchById_Click" />
                 </td>
                 <td>&nbsp;</td>
-                <td>
+                <td colspan="2">
                     Карточек на странице</td>
                 <td>
                     <asp:DropDownList ID="CardsOnPageDropDownList" runat="server" AutoPostBack="True" CssClass="float-right" Height="25px" OnSelectedIndexChanged="CardsOnPageDropDownList_SelectedIndexChanged" Width="100px">
@@ -195,7 +195,7 @@
                     &nbsp;</td>
             </tr>
             <tr>
-                <td class="auto-style1">Откыть карточку по номеру 
+                <td>Откыть карточку по номеру 
                 </td>
                 <td>
                     <asp:TextBox ID="OpenByIdTextBox" runat="server" Height="20px" Width="200px"></asp:TextBox>
@@ -204,7 +204,7 @@
                     <asp:Button ID="OpenByIdButton" runat="server" Text="Открыть" Width="200px" OnClientClick="showLoadingScreen()" OnClick="OpenByIdButton_Click" />
                 </td>
                 <td>&nbsp;</td>
-                <td>
+                <td colspan="2">
                     Сортировать по</td>
                 <td>
         <asp:DropDownList ID="ChooseSortFieldIdDropDownList" runat="server" CssClass="float-right" Height="17px" OnSelectedIndexChanged="ChooseSortFieldIdDropDownList_SelectedIndexChanged" AutoPostBack="True" Width="200px"></asp:DropDownList>
@@ -214,22 +214,23 @@
                     &nbsp;</td>
             </tr>
             <tr>
-                <td class="auto-style1" >Поиск по фильтрам 
+                <td >Поиск по фильтрам 
                 </td>
                 <td colspan="3" >
                     <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Width="400px" Text="Поиск" OnClientClick="showLoadingScreen()" />
                 </td>
-                <td colspan="3" >
+                <td colspan="4" >
         <asp:Button ID="Button3" runat="server"  OnClick="Button3_Click" Text="Настройка страницы" OnClientClick="showLoadingScreen()" Width="400px"/>
         
                 </td>
             </tr>
             <tr>
-                <td class="auto-style1" >Очистить
+                <td >Очистить
                     поиск</td>
                 <td colspan="2" >
                     <asp:Button ID="Button44" runat="server" OnClick="Button4_Click" Width="400px" Text="Очистить" OnClientClick="showLoadingScreen()" />
-                <td colspan="4" >
+                <td colspan="2" >
+                    &nbsp;<td colspan="3">
         <input name="b_print" onclick="openCntlInNewPrintPage('tableDiv');" type="button" value=" Печать таблицы" style="width: 400px" /><td >
             </tr>
         </table>
@@ -251,66 +252,40 @@
 <asp:Content ID="TableContent1" ContentPlaceHolderID="TableContent" runat="server">
     <!-- sticky header styles -->
     <style>
-        
-        /*main table style*/
-
-
-        /* sticky header styles */
          .search-field {
              width: 100%;
              max-width: none !important;
          }
-
         #TableHeaderDiv {
             margin-left: 5px;
             margin-top: 50px;
             display: none;
             position: absolute;
         }
-
         #tableForHeader {
             width: 100%;
+            table-layout: fixed;
             border: 0px solid transparent;
-        }
-
-
-
-        #tableForHeader tr:nth-child(n+2)  {
-            z-index: -1000;
-            visibility: hidden;
-            border: transparent;
-        }
-      
-        .auto-style1 {
-            width: 241px;
-        }
-      
+        }    
     </style>
     <div id="TableHeaderDiv">
         <table id="tableForHeader" style="">
         </table>
     </div>
-    <script>
-        /*
-        var myBody;
+    <script>       
         window.onload = function ()
-        {
-           
+        {        
             var myTable = document.getElementById("TableContent_dataTable");
-            myBody = myTable.children[0].cloneNode(true);
-            myBody.removeChild(myBody.children[0]);
-            for (var i = 1; i < myBody.children.length; i++)
-            {
-                //myBody.children[i].style.visibility = 'hidden';
-                //myBody.children[i].style.zIndex = '-1';
+            var widthArray = new Array(myTable.children[0].children[0].children.length);      
+            var myRow = myTable.children[0].children[1].cloneNode(true);
+            for (var i = 0; i < myTable.children[0].children[0].children.length; i++) {
+                myRow.children[i].width = myTable.children[0].children[0].children[i].offsetWidth;
             }
             var tableForHeader = document.getElementById("tableForHeader");
-            tableForHeader.appendChild(myBody);
-            
+            tableForHeader.appendChild(myRow);
         }
         window.onscroll = function ()
-        {
-            
+        {          
             var tablHeaderDiv = document.getElementById("TableHeaderDiv");
             tablHeaderDiv.style.top = window.pageYOffset  + 'px';
             var scrolled = window.pageYOffset || document.documentElement.scrollTop;
@@ -321,9 +296,8 @@
             else
             {
                 tablHeaderDiv.style.display = 'none';
-            }
-            
-        }*/
+            }          
+        }
     </script>
     <div id="tableDiv" style="margin-left: 5px">
         <asp:Table ID="dataTable" runat="server" Width="100%">

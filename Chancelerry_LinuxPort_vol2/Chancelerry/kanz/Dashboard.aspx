@@ -2,21 +2,16 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <script src="toggleLoadingScreen.js" type="text/javascript"></script>
     <asp:GridView ID="GridViewRegisters" AutoGenerateColumns="False" runat="server" OnRowCommand="GridViewRegisters_RowCommand"/>
-    
-
-    <br />
+        <br />
     <asp:Button ID="DictionaryEdit" runat="server" Text="Редактирование справочников" class="centered-button" OnClick="DictionaryEdit_Click"/>
-    
-
-    <br />
+        <br />
     <asp:Button ID="GoToStatistics" runat="server" Text="Статистика" class="centered-button" OnClick="GoToStatistics_Click"/>
-
-    <br />
+        <br />
     <asp:Button ID="GoToControl" runat="server" Text="Контроль" class="centered-button" OnClick="GoToControl_Click" />
-
-    <br />
+        <br />
+    <asp:Button ID="GoToShowResterAndPrint" runat="server" Visible="False" Text="Вывести весь ресстр" class="centered-button" OnClick="GoToShowResterAndPrint_Click" />
+        <br />    
     <script>
         window.onbeforeunload = showLoadingScreen;
     </script>
-
 </asp:Content>
