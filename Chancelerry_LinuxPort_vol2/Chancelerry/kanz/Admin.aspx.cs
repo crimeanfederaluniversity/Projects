@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.IO;
 using System.Web.Configuration;
 using Npgsql;
 
@@ -12,22 +8,22 @@ namespace Chancelerry.kanz
 {
     public partial class Admin : System.Web.UI.Page
     {
-        private ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
+        private readonly ChancelerryDb _chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
 
 
-        public int addCard(int fkRegister, int mainFieldId)
+        public int AddCard(int fkRegister, int mainFieldId)
         {
             
             CollectedCards newCard = new CollectedCards();
             newCard.Active = true;
             newCard.FkRegister = fkRegister;
             newCard.MaInFieldID = mainFieldId;
-            chancDb.CollectedCards.InsertOnSubmit(newCard);
-            chancDb.SubmitChanges();
+            _chancDb.CollectedCards.InsertOnSubmit(newCard);
+            _chancDb.SubmitChanges();
             return newCard.CollectedCardID;
         }
 
-        public void createFieldValue(int fkCard, int fkField, string value, int instance)
+        public void CreateFieldValue(int fkCard, int fkField, string value, int instance)
         {
           
             CollectedFieldsValues newValue = new CollectedFieldsValues();
@@ -40,8 +36,8 @@ namespace Chancelerry.kanz
             newValue.IsDeleted = false;
             newValue.Version = 1;
             newValue.Instance = instance;
-            chancDb.CollectedFieldsValues.InsertOnSubmit(newValue);
-            chancDb.SubmitChanges();
+            _chancDb.CollectedFieldsValues.InsertOnSubmit(newValue);
+            _chancDb.SubmitChanges();
         }
 
 
@@ -54,7 +50,7 @@ namespace Chancelerry.kanz
         {
             
             string str = "";
-            List<CollectedCards> allCards = (from a in chancDb.CollectedCards where a.Active == true && a.FkRegister == 1 select a).OrderByDescending(mc=>mc.MaInFieldID).ToList();
+            List<CollectedCards> allCards = (from a in _chancDb.CollectedCards where a.Active == true && a.FkRegister == 1 select a).OrderByDescending(mc=>mc.MaInFieldID).ToList();
             int maxValue = allCards[0].MaInFieldID.Value;
             for (int i=0;i<maxValue;i++)
             {

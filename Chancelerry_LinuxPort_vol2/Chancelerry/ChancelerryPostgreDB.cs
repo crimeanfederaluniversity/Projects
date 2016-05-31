@@ -9,7 +9,6 @@
 // Please visit http://code.google.com/p/dblinq2007/ for more information.
 //
 using System;
-using System.ComponentModel;
 using System.Data;
 #if MONO_STRICT
 	using System.Data.Linq;

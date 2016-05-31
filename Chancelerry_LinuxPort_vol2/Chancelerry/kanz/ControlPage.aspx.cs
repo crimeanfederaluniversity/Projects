@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.EnterpriseServices;
 using System.Linq;
-using System.Web;
 using System.Web.Configuration;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Windows.Forms;
 using Npgsql;
-using NUnit.Framework.SyntaxHelpers;
 
 namespace Chancelerry.kanz
 {

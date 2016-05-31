@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace Chancelerry.kanz
@@ -11,7 +8,6 @@ namespace Chancelerry.kanz
     {
         private List<TextBox> createdFields;
         private List<FileUpload> createdFileUploads;
-        private int _userId;//= 1;
         private int _registerId;// = 1;
         private int _cardId;// = 0;
         private int _version;// = int.MaxValue;
@@ -28,8 +24,7 @@ namespace Chancelerry.kanz
                 _canEdit = (bool)_canEditSes;
 
             if (userIdSes != null && registerIdSes != null && versionSes != null && cardIdSes != null)
-            {
-                _userId = (int)userIdSes;
+            {     
                 _registerId = (int)registerIdSes;
                 _version = (int)versionSes;
                 _cardId = (int)cardIdSes;

@@ -137,6 +137,15 @@
         <h2>Поиск по всему реестру</h2>
         <p>Поиск производится по всему реестру</p>
     </div>
+        </div>
+    <div id="searchByFilters" class="modalDialog">
+        <div>
+        <a href="#close" title="Закрыть" class="close">X</a>
+        <h2>Поиск по фильтрам</h2>
+        <p>Поиск производится по каждому полю.</p>
+        <p>При поиске ключевой фразы "пустой" отобразятся все карточки в которых есть пустое поле в выбранной колонке.</p>
+        <p>При поиске ключевой фразы "не пустой" отобразятся все карточки в которых есть не пустое поле в выбранной колонке.</p>
+    </div>
         
 
     </div>
@@ -214,7 +223,7 @@
                     &nbsp;</td>
             </tr>
             <tr>
-                <td >Поиск по фильтрам 
+                <td >Поиск по фильтрам <a href="#searchByFilters" ><img border="0" alt="W3Schools" src="icons/infoButtonIcon.png" width="15" height="15">
                 </td>
                 <td colspan="3" >
                     <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Width="400px" Text="Поиск" OnClientClick="showLoadingScreen()" />
@@ -275,8 +284,7 @@
     <script>       
         window.onload = function ()
         {        
-            var myTable = document.getElementById("TableContent_dataTable");
-            var widthArray = new Array(myTable.children[0].children[0].children.length);      
+            var myTable = document.getElementById("ctl00_TableContent_dataTable");   
             var myRow = myTable.children[0].children[1].cloneNode(true);
             for (var i = 0; i < myTable.children[0].children[0].children.length; i++) {
                 myRow.children[i].width = myTable.children[0].children[0].children[i].offsetWidth;

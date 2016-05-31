@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
-using System.Web;
 using System.Web.Configuration;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Npgsql;
 
@@ -189,7 +186,7 @@ namespace Chancelerry.kanz
             int.TryParse(Session["userID"].ToString(), out userId);
 
             int rowIndex = 0;
-            Button button = (Button) sender;
+            //Button button = (Button) sender;
             using (ChancelerryDb dataContext = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"])))
             {
                 // Запись в RegisterUserMap для данного пользователя и реестра
@@ -208,7 +205,7 @@ namespace Chancelerry.kanz
                         {
                             // Находим компоненты 
                             Label fieldId = (Label) GridView1.Rows[rowIndex].FindControl("fieldId");
-                            TextBox fieldName = (TextBox) GridView1.Rows[rowIndex].FindControl("fieldName");
+                         //   TextBox fieldName = (TextBox) GridView1.Rows[rowIndex].FindControl("fieldName");
                             TextBox fieldWeight = (TextBox) GridView1.Rows[rowIndex].FindControl("fieldWeight");
                             CheckBox fieldIsAdd = (CheckBox) GridView1.Rows[rowIndex].FindControl("fieldIsAdd");
 

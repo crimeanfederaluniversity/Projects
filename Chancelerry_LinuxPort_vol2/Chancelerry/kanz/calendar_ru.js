@@ -28,9 +28,8 @@ function Left(obj)
 	var curleft = 0;
 	if (obj.offsetParent)
 	{
-		while (obj.offsetParent)
-		{
-			curleft += obj.offsetLeft
+		while (obj.offsetParent) {
+		    curleft += obj.offsetLeft;
 			obj = obj.offsetParent;
 		}
 	}
@@ -44,9 +43,8 @@ function Top(obj)
 	var curtop = 0;
 	if (obj.offsetParent)
 	{
-		while (obj.offsetParent)
-		{
-			curtop += obj.offsetTop
+		while (obj.offsetParent) {
+		    curtop += obj.offsetTop;
 			obj = obj.offsetParent;
 		}
 	}

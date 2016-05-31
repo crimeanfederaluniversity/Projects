@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Owin;
-using Chancelerry.Models;
 using Npgsql;
 
 namespace Chancelerry.Account
@@ -28,7 +23,7 @@ namespace Chancelerry.Account
                 var user = (from u in datacontext.Users where 
                             u.Login == Email.Text && 
                             u.Password == Password.Text && 
-                            u.Active == true
+                            u.Active
                             select u).FirstOrDefault();
 
                 if (user != null)

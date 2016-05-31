@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -15,7 +13,7 @@ namespace Chancelerry.kanz
         public int page = 0;
         public int size = 10;
         public int sortFieldId = 0;
-        ChancelerryDb dataContext = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
+        readonly ChancelerryDb dataContext = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
         protected ListItem[] GetListOfColumns(int registerId, int userId)
         {
             List<ListItem> listToReturn = new List<ListItem>();
@@ -50,7 +48,7 @@ namespace Chancelerry.kanz
             /////////////////////////////////////////////////////////////////////
             int regId;
             Int32.TryParse(Session["registerID"].ToString(), out regId);
-            TableActions ta = new TableActions();
+            //TableActions ta = new TableActions();
             var register =
                 (from r in dataContext.Registers
                  where r.RegisterID == regId
@@ -173,7 +171,7 @@ namespace Chancelerry.kanz
         {
             Table table = TableActions.DTable;
             table = dataTable;
-            List<TableActions.SearchValues> searchList = new List<TableActions.SearchValues>();
+           // List<TableActions.SearchValues> searchList = new List<TableActions.SearchValues>();
             Dictionary<int, string> vSearchDict = new Dictionary<int, string>();
             // Проходимся по таблице и ищем "поисковые" TextBox'ы 
             foreach (TableRow tr in table.Rows)

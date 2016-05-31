@@ -6,67 +6,57 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
-using System.Web.Providers.Entities;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using Chancelerry;
-using Chancelerry.kanz;
 using Npgsql;
-using System.Data.SqlClient;
 
 namespace Chancelerry.kanz
 {
-
-    public class PolishSearch
+    public class PolishSearch 
     {
-        public ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
-        public List<int> GetIdsByOneSarchValues(string value, int registerId)
+        private readonly ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
+        private List<int> GetIdsByOneSarchValues(string value, int registerId)
         {
-            int cnt = (from a in chancDb.CollectedCards select a).Count();
             if (value[0] == '!')
             {
                 value = value.Replace("!", "");
                 value = value.Trim();
                 List<int> cardsNotToShow = (from a in chancDb.CollectedCards
-                    where a.Active == true
-                          && a.FkRegister == registerId
-                          && a.MaInFieldID != null
-                    // ПЛОХО
-                    join b in chancDb.CollectedFieldsValues
-                        on a.CollectedCardID equals b.FkCollectedCard
-                    where b.Active == true   &&
-                          b.ValueText.ToLower(new CultureInfo("ru-RU")).Contains(value.ToLower(new CultureInfo("ru-RU")))
-                    select a).OrderByDescending(uc => (int) uc.MaInFieldID).Select(vk => vk.CollectedCardID).ToList().Distinct().ToList();
-
+                                            where a.Active
+                                                  && a.FkRegister == registerId
+                                                  && a.MaInFieldID != null
+                                            // ПЛОХО
+                                            join b in chancDb.CollectedFieldsValues
+                                                on a.CollectedCardID equals b.FkCollectedCard
+                                            where b.Active &&
+                                                  b.ValueText.ToLower(new CultureInfo("ru-RU")).Contains(value.ToLower(new CultureInfo("ru-RU")))
+                                            select a).OrderByDescending(uc => (int)uc.MaInFieldID).Select(vk => vk.CollectedCardID).ToList().Distinct().ToList();
 
                 List<int> allCards = (from a in chancDb.CollectedCards
-                                     where a.Active == true
-                                           && a.FkRegister == registerId
-                                           && a.MaInFieldID != null
-                                     // ПЛОХО
-                                     join b in chancDb.CollectedFieldsValues
-                                         on a.CollectedCardID equals b.FkCollectedCard
-                                     where b.Active == true
-                                     select a).OrderByDescending(uc => (int)uc.MaInFieldID).Select(vk => vk.CollectedCardID).ToList().Distinct().ToList();
+                                      where a.Active 
+                                            && a.FkRegister == registerId
+                                            && a.MaInFieldID != null
+                                      // ПЛОХО
+                                      join b in chancDb.CollectedFieldsValues
+                                          on a.CollectedCardID equals b.FkCollectedCard
+                                      where b.Active 
+                                      select a).OrderByDescending(uc => (int)uc.MaInFieldID).Select(vk => vk.CollectedCardID).ToList().Distinct().ToList();
                 return allCards.Except(cardsNotToShow).ToList();
-
             }
             else
             {
-
                 List<int> cardsToShow = (from a in chancDb.CollectedCards
-                    where a.Active == true
-                          && a.FkRegister == registerId
-                          && a.MaInFieldID != null
-                    join b in chancDb.CollectedFieldsValues
-                        on a.CollectedCardID equals b.FkCollectedCard
-                    where b.Active == true
-                    && b.ValueText.ToLower(new CultureInfo("ru-RU")).Contains(value.ToLower(new CultureInfo("ru-RU")))
-                    select a).OrderByDescending(uc => (int) uc.MaInFieldID).Select(vk => vk.CollectedCardID).ToList().Distinct().ToList();
+                                         where a.Active 
+                                               && a.FkRegister == registerId
+                                               && a.MaInFieldID != null
+                                         join b in chancDb.CollectedFieldsValues
+                                             on a.CollectedCardID equals b.FkCollectedCard
+                                         where b.Active 
+                                         && b.ValueText.ToLower(new CultureInfo("ru-RU")).Contains(value.ToLower(new CultureInfo("ru-RU")))
+                                         select a).OrderByDescending(uc => (int)uc.MaInFieldID).Select(vk => vk.CollectedCardID).ToList().Distinct().ToList();
                 return cardsToShow;
             }
         }
-        public int GetPriority(char s)
+        private int GetPriority(char s)
         {
             switch (s)
             {
@@ -74,30 +64,28 @@ namespace Chancelerry.kanz
                 case ')': return 1;
                 case '|': return 2;
                 case '&': return 3;
-               // case '!': return 3;
+                // case '!': return 3;
                 default: return 10;
             }
         }
-        public bool IsOperator(char с)
+        private bool IsOperator(char с)
         {
             if (("|&()".IndexOf(с) != -1))
                 return true;
             return false;
         }
-        public List<string> Calculate(string input)
+        private List<string> Calculate(string input)
         {
-
             if (input.Contains("\"") || input.Contains("'") ||
                    input.Contains("=") || input.Contains("\\") || input.Contains("/"))
                 return null;
             if (input.Split('(').Count() != input.Split(')').Count())
                 return null;
             input = input.Replace(" ИЛИ ", "|").Replace(" И ", "&").Replace("НЕ ", "!");
-
             List<string> output = GetExpression(input); //Преобразовываем выражение в постфиксную запись  
             return output; //Возвращаем результат
         }
-        public List<string> GetExpression(string input)
+        private List<string> GetExpression(string input)
         {
             List<string> toReturnList = new List<string>();
             string output = string.Empty; //Строка для хранения выражения
@@ -131,33 +119,33 @@ namespace Chancelerry.kanz
                             s = operStack.Pop();
                         }
                     }
-                    else 
+                    else
                     {
-                        if (operStack.Count > 0) 
-                            if (GetPriority(input[i]) <= GetPriority(operStack.Peek())) 
+                        if (operStack.Count > 0)
+                            if (GetPriority(input[i]) <= GetPriority(operStack.Peek()))
                                 toReturnList.Add(operStack.Pop().ToString());
-                               // output += operStack.Pop().ToString() + " "; 
+                        // output += operStack.Pop().ToString() + " "; 
                         operStack.Push(char.Parse(input[i].ToString()));
                     }
                 }
             }
             while (operStack.Count > 0)
                 toReturnList.Add(operStack.Pop().ToString());
-           // output += operStack.Pop() + " ";
+            // output += operStack.Pop() + " ";
             return toReturnList;
         }
-        public List<int> GetCardsIds (string input, int registerId)
+        public List<int> GetCardsIds(string input, int registerId)
         {
             List<String> searchLines = Calculate(input);
             Stack<List<int>> stackOfIds = new Stack<List<int>>();
-                foreach (string current in searchLines)
+            foreach (string current in searchLines)
+            {
+                string currentValue = current.Trim();
+                if (IsOperator(currentValue[0]))
                 {
-                    string currentValue = current.Trim();
-                    if (IsOperator(currentValue[0]))
-                    {
                     if (stackOfIds.Count < 2) return null;
                     switch (currentValue[0])
-                        {                           
+                    {
                         case '&':
                             {
                                 List<int> first = stackOfIds.Pop();
@@ -176,22 +164,15 @@ namespace Chancelerry.kanz
                             {
                                 break;
                             }
-                            
-                        }
-                    }
-                    else
-                    {
-                    stackOfIds.Push(GetIdsByOneSarchValues(currentValue, registerId));
                     }
                 }
-             return stackOfIds.Pop();
-        } 
-    }
-    public class DataPortKoStyl
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public double Weight { get; set; }
+                else
+                {
+                    stackOfIds.Push(GetIdsByOneSarchValues(currentValue, registerId));
+                }
+            }
+            return stackOfIds.Pop();
+        }
     }
     public class PrintManyParams
     {
@@ -201,31 +182,31 @@ namespace Chancelerry.kanz
     }
     public class CardCommonFunctions
     {
-        public bool IsValueUinque(int fieldId, int registerId,int currentCardId, string value)
+        public bool IsValueUinque(int fieldId, int registerId, int currentCardId, string value)
         {
             bool tmp =
                 (from a in chancDb.CollectedFieldsValues
-                    where a.Active == true
-                    where a.FkField == fieldId
-                          && a.ValueText.ToLower().Trim() == value.ToLower().Trim()
-                    join b in chancDb.CollectedCards
-                        on a.FkCollectedCard equals b.CollectedCardID
-                    where b.FkRegister == registerId
-                    where b.Active == true
-                    && b.CollectedCardID != currentCardId
+                 where a.Active
+                 where a.FkField == fieldId
+                       && a.ValueText.ToLower().Trim() == value.ToLower().Trim()
+                 join b in chancDb.CollectedCards
+                     on a.FkCollectedCard equals b.CollectedCardID
+                 where b.FkRegister == registerId
+                 where b.Active
+                 && b.CollectedCardID != currentCardId
                  select a.Active).Any();
 
             return !tmp;
 
         }
 
-        private TableActions ta = new TableActions();
-        private ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
+        private readonly TableActions ta = new TableActions();
+        private readonly ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
         public List<CollectedFieldsValues> GetAllValuesInCard(int cardId)
         {
             return (from a in chancDb.CollectedFieldsValues
-                where a.FkCollectedCard == cardId
-                select a).ToList();
+                    where a.FkCollectedCard == cardId
+                    select a).ToList();
         }
         public CollectedCards GetCardById(int cardId)
         {
@@ -238,7 +219,7 @@ namespace Chancelerry.kanz
                                          where reg.Active && rum.Active && rum.FkUser == userId
                                          select reg).ToList();
             return registers;
-        } 
+        }
 
         public RegistersModels GetRegisterModelById(int registerModelId)
 
@@ -289,7 +270,7 @@ namespace Chancelerry.kanz
             }
             return currentCollectedFieldsValues.ValueText;
         }
-        public int GetCollectedValueIdByCardVersionInstance(int fieldId, int cardId, int Version, int Instance, List<CollectedFieldsValues> allValues )
+        public int GetCollectedValueIdByCardVersionInstance(int fieldId, int cardId, int Version, int Instance, List<CollectedFieldsValues> allValues)
         {
             CollectedFieldsValues currentCollectedFieldsValues = (from a in allValues
                                                                   where a.Active
@@ -339,7 +320,7 @@ namespace Chancelerry.kanz
                                                         && a.FkField == fieldId
                                                   join b in chancDb.CollectedCards
                                                       on a.FkCollectedCard equals b.CollectedCardID
-                                                  where b.Active == true
+                                                  where b.Active 
                                                         && b.FkRegister == registerId
                                                   select a).Distinct().ToList();
 
@@ -363,15 +344,15 @@ namespace Chancelerry.kanz
             if (dictionaryId == 11)
             {
                 List<string> valuesList = (from a in chancDb.CollectedFieldsValues
-                                           where a.Active == true
+                                           where a.Active
                                            && a.FkField == 119
                                            join b in chancDb.CollectedCards
                                            on a.FkCollectedCard equals b.CollectedCardID
-                                           where b.Active == true
+                                           where b.Active
                                            && b.FkRegister == 10
                                            select a.ValueText).Distinct().OrderBy(mc => mc).ToList();
                 ListItem[] resultItems = new ListItem[valuesList.Count];
-               // resultItems[0] = new ListItem("");
+                // resultItems[0] = new ListItem("");
                 for (int i = 0; i < valuesList.Count; i++)
                 {
                     resultItems[i] = new ListItem(valuesList[i]);
@@ -381,9 +362,9 @@ namespace Chancelerry.kanz
             else
             {
                 List<string> valuesList = (from a in chancDb.DictionarysValues
-                    where a.Active == true
-                          && a.FkDictionary == dictionaryId
-                    select a.Value).OrderBy(mc => mc).ToList();
+                                           where a.Active
+                                                 && a.FkDictionary == dictionaryId
+                                           select a.Value).OrderBy(mc => mc).ToList();
                 ListItem[] resultItems = new ListItem[valuesList.Count + 1];
                 resultItems[0] = new ListItem("");
                 for (int i = 0; i < valuesList.Count; i++)
@@ -422,31 +403,31 @@ namespace Chancelerry.kanz
             //nodeToReturn.Collapse();
             return nodeToReturn;
         }
-        public TreeNode GetStructTreeViewNode(string fieldId, string panelId, bool fullStruct , bool collapse)
+        public TreeNode GetStructTreeViewNode(string fieldId, string panelId, bool fullStruct, bool collapse)
         {
             TreeNode nodeToReturn = new TreeNode();
             nodeToReturn.SelectAction = TreeNodeSelectAction.Select;
 
             List<Struct> outStruct = (from a in chancDb.Struct
-                                      where a.Active == true
+                                      where a.Active
                                       select a).ToList();
-            nodeToReturn = RecursiveGetTreeNode(2, outStruct, fieldId, panelId, "", fullStruct , collapse);
+            nodeToReturn = RecursiveGetTreeNode(2, outStruct, fieldId, panelId, "", fullStruct, collapse);
             if (collapse)
                 nodeToReturn.CollapseAll();
             return nodeToReturn;
         }
-        public TableHeaderRow AddSearchHeaderRoFromListWithData(List<int> FieldID, Dictionary<int, string> searchData)
+        public TableHeaderRow AddSearchHeaderRoFromListWithData(List<int> fieldID, Dictionary<int, string> searchData)
         {
             TableHeaderRow row = new TableHeaderRow();
             row.BorderStyle = BorderStyle.Inset;
-            foreach (int elm in FieldID)
+            foreach (int elm in fieldID)
             {
                 TableCell cell = new TableCell();
                 TextBox tb = new TextBox();
                 string tmp = "";
                 if (searchData != null) searchData.TryGetValue(elm, out tmp);
                 tb.Attributes.Add("_FieldID4search", elm.ToString());
-                tb.ID = "searchTb" + elm.ToString();
+                tb.ID = "searchTb"+ elm;
                 tb.Text = tmp;
                 tb.Attributes.Add("onkeypress", "return runScript(event);");
                 tb.Attributes.Add("onkeydown", "return runScript(event);");
@@ -472,11 +453,11 @@ namespace Chancelerry.kanz
             public int fk_collectedcard { get; set; }
             public DateTime dateValue { get; set; }
         }
-        private List<int> SortCardsByFieldId(List<int> initialCardsList, int fieldId, int registerId)
+        private List<int> SortCardsByFieldId(List<int> initialCardsList, int fieldId)
         {
             List<CollectedFieldsValues> allFieldValues = (from a in chancDb.CollectedFieldsValues
-                where a.FkField == fieldId
-                select a).ToList();
+                                                          where a.FkField == fieldId
+                                                          select a).ToList();
             Fields field = (from a in chancDb.Fields select a).FirstOrDefault();
             List<int> allSortedCardsInFieldAndRegister = new List<int>();
             if (field.Name == "autoIncrement" || field.Name == "autoIncrementReadonly") // цифры
@@ -486,7 +467,7 @@ namespace Chancelerry.kanz
                 {
                     int tmpValue = 0;
                     Int32.TryParse(curent.ValueText, out tmpValue);
-                    tmpDictionary.Add(new SortableArrayIntegersClass() {fk_collectedcard = curent.FkCollectedCard,intValue = tmpValue });
+                    tmpDictionary.Add(new SortableArrayIntegersClass() { fk_collectedcard = curent.FkCollectedCard, intValue = tmpValue });
                 }
                 allSortedCardsInFieldAndRegister =
                     (from a in tmpDictionary.OrderBy(mc => mc.intValue) select a.fk_collectedcard).ToList();
@@ -508,13 +489,13 @@ namespace Chancelerry.kanz
                 List<SortableArrayClass> tmpDictionary = new List<SortableArrayClass>();
                 foreach (CollectedFieldsValues curent in allFieldValues)
                 {
-                    tmpDictionary.Add(new SortableArrayClass() { fk_collectedcard = curent.FkCollectedCard,valuetext  = curent.ValueText.Trim()});
+                    tmpDictionary.Add(new SortableArrayClass() { fk_collectedcard = curent.FkCollectedCard, valuetext = curent.ValueText.Trim() });
                 }
                 allSortedCardsInFieldAndRegister = (from a in tmpDictionary.OrderBy(mc => mc.valuetext) select a.fk_collectedcard).ToList();
-            }        
+            }
 
             return allSortedCardsInFieldAndRegister.Intersect(initialCardsList).Distinct().ToList();
-        } 
+        }
 
         public CollectedCards GetCollevtedCardByCollevtedField(int collectedFieldId)
         {
@@ -526,26 +507,26 @@ namespace Chancelerry.kanz
             return cardToReturn;
         }
         public int totalCnt = 0;
-        public List<int> GetCardsToShow(int sortFieldId, string extendedSearchAll, string cardId, Dictionary<int, string> searchList,string searchAll, int registerId, int lineFrom, int lineTo) 
+        public List<int> GetCardsToShow(int sortFieldId, string extendedSearchAll, string cardId, Dictionary<int, string> searchList, string searchAll, int registerId, int lineFrom, int lineTo)
         {
             List<int> cardsToShow = new List<int>();
             if (cardId != null)
             {
                 #region ищем по АйДи
                 if (cardId.Length > 0)
+                {
+                    int cardIdI = 0;
+                    Int32.TryParse(cardId, out cardIdI);
+                    if (cardIdI != 0)
                     {
-                        int cardIdI = 0;
-                        Int32.TryParse(cardId, out cardIdI);
-                        if (cardIdI  != 0)
-                        {
-                             cardsToShow = (from a in chancDb.CollectedCards
-                                                                    where a.Active == true 
-                                                                    && a.MaInFieldID == cardIdI
-                                                                    && a.FkRegister == registerId
-                                                                    select a).Distinct().OrderByDescending(uc => uc.MaInFieldID).ToList().Select(mc=>mc.CollectedCardID).ToList();
+                        cardsToShow = (from a in chancDb.CollectedCards
+                                       where a.Active
+                                       && a.MaInFieldID == cardIdI
+                                       && a.FkRegister == registerId
+                                       select a).Distinct().OrderByDescending(uc => uc.MaInFieldID).ToList().Select(mc => mc.CollectedCardID).ToList();
 
-                        }
                     }
+                }
                 #endregion
             }
             else if (searchList != null) //если фильтры есть
@@ -556,12 +537,20 @@ namespace Chancelerry.kanz
                 {
                     string fieldValue = "";
                     searchList.TryGetValue(fieldId, out fieldValue); //достаем айдишник нашего филда
-                    List<string> valuesList = fieldValue.Split('#').ToList();
+
                     List<CollectedCards> cardsWithValue1 = (from a in chancDb.CollectedFieldsValues
-                        where a.Active == true && a.FkField == fieldId && a.ValueText.ToLower().Contains(fieldValue.ToLower())
-                        join b in chancDb.CollectedCards on a.FkCollectedCard equals b.CollectedCardID
-                        where b.Active == true && b.FkRegister == registerId
-                        select b).Distinct().OrderByDescending(uc => uc.MaInFieldID).ToList();
+                                                            where a.Active == true
+                                                            && a.FkField == fieldId
+                                                            &&
+                                                            ((fieldValue.ToLower() != "пустой" && fieldValue.ToLower() != "не пустой" && a.ValueText.ToLower().Contains(fieldValue.ToLower()))
+                                                              || (fieldValue.ToLower() == "не пустой" && (a.ValueText != null && a.ValueText != "" && a.ValueText != " "))
+                                                              || (fieldValue.ToLower() == "пустой" && (a.ValueText == null || a.ValueText == "" || a.ValueText == " "))
+                                                            )
+                                                            join b in chancDb.CollectedCards on a.FkCollectedCard equals b.CollectedCardID
+                                                            where b.Active == true
+                                                            && b.FkRegister == registerId
+                                                            select b).Distinct().OrderByDescending(uc => uc.MaInFieldID).ToList();
+
                     List<int> cardsWithValue = (from a in cardsWithValue1 select a.CollectedCardID).ToList();
                     List<int> tmpList;
                     if (isFirst)
@@ -583,17 +572,17 @@ namespace Chancelerry.kanz
                 #region ищем по всему реестру
 
                 cardsToShow = (from a in chancDb.CollectedCards
-                    where a.Active == true
-                          && a.FkRegister == registerId
-                          && a.MaInFieldID != null
-                    // ПЛОХО
-                    join b in chancDb.CollectedFieldsValues
-                        on a.CollectedCardID equals b.FkCollectedCard
-                    where b.Active == true
-                          &&
-                          b.ValueText.ToLower(new CultureInfo("ru-RU"))
-                              .Contains(searchAll.ToLower(new CultureInfo("ru-RU")))
-                    select a).OrderByDescending(uc => (int) uc.MaInFieldID)
+                               where a.Active == true
+                                     && a.FkRegister == registerId
+                                     && a.MaInFieldID != null
+                               // ПЛОХО
+                               join b in chancDb.CollectedFieldsValues
+                                   on a.CollectedCardID equals b.FkCollectedCard
+                               where b.Active == true
+                                     &&
+                                     b.ValueText.ToLower(new CultureInfo("ru-RU"))
+                                         .Contains(searchAll.ToLower(new CultureInfo("ru-RU")))
+                               select a).OrderByDescending(uc => (int)uc.MaInFieldID)
                     .Select(vk => vk.CollectedCardID)
                     .ToList()
                     .Distinct()
@@ -604,14 +593,14 @@ namespace Chancelerry.kanz
             {
                 #region ищем по всему реестру понескольким параметрам
                 PolishSearch polishSearch = new PolishSearch();
-                cardsToShow = polishSearch.GetCardsIds(extendedSearchAll,registerId);
+                cardsToShow = polishSearch.GetCardsIds(extendedSearchAll, registerId);
                 #endregion
             }
             else // если фильтров нет, показываем все карточки 
             {
                 #region показываем все карточки
                 cardsToShow = (from a in chancDb.CollectedCards
-                               where a.Active == true
+                               where a.Active
                                      && a.FkRegister == registerId
                                      && a.MaInFieldID != null // ПЛОХО
                                select a).OrderByDescending(uc => (int)uc.MaInFieldID).Select(vk => vk.CollectedCardID).ToList();
@@ -620,7 +609,7 @@ namespace Chancelerry.kanz
             totalCnt = cardsToShow.Count;
             if (sortFieldId != 0)
             {
-                cardsToShow = SortCardsByFieldId(cardsToShow, sortFieldId,registerId);
+                cardsToShow = SortCardsByFieldId(cardsToShow, sortFieldId);
             }
             return cardsToShow.Skip(lineFrom).Take(lineTo - lineFrom).ToList(); //cardsToShow;         
         }
@@ -642,36 +631,36 @@ namespace Chancelerry.kanz
             public bool isdeleted { get; set; }
         }
         public string timeStamps = "";
-        public string FastSearch(int sortFieldId, string extendedSeatchAll, string cardId, Dictionary<int, string> searchList, string searchAll, int registerId, int userId, Table vTable, int LineFrom, int LineTo,out int totalToShow )
+        public string FastSearch(int sortFieldId, string extendedSeatchAll, string cardId, Dictionary<int, string> searchList, string searchAll, int registerId, int userId, Table vTable, int LineFrom, int LineTo, out int totalToShow)
         {
             totalToShow = 0;
             #region GetSortedCutedCardsToShow
             timeStamps += " 1_" + DateTime.Now.TimeOfDay;
-            List<int> sortedCutedCardsToShow = GetCardsToShow(sortFieldId,extendedSeatchAll, cardId, searchList, searchAll, registerId, LineFrom, LineTo); // NEW    
+            List<int> sortedCutedCardsToShow = GetCardsToShow(sortFieldId, extendedSeatchAll, cardId, searchList, searchAll, registerId, LineFrom, LineTo); // NEW    
             timeStamps += " 2_" + DateTime.Now.TimeOfDay;
             List<NameFieldWeightClass> allFields = (from a in chancDb.RegistersUsersMap
-                                                 join b in chancDb.RegistersView
-                                                 on a.RegistersUsersMapID equals b.FkRegistersUsersMap
-                                                 join c in chancDb.Fields
-                                                 on b.FkField equals c.FieldID
-                                                 where
-                                                 a.FkUser == userId
-                                                 && a.FkRegister == registerId
-                                                 && b.Active
-                                                 && c.Active
-                                                 && a.Active
-                                                 select new NameFieldWeightClass { Name = c.Name, FieldID = c.FieldID, Weight = b.Weight,Type = c.Type}).OrderBy(w => w.Weight).ToList();
+                                                    join b in chancDb.RegistersView
+                                                    on a.RegistersUsersMapID equals b.FkRegistersUsersMap
+                                                    join c in chancDb.Fields
+                                                    on b.FkField equals c.FieldID
+                                                    where
+                                                    a.FkUser == userId
+                                                    && a.FkRegister == registerId
+                                                    && b.Active
+                                                    && c.Active
+                                                    && a.Active
+                                                    select new NameFieldWeightClass { Name = c.Name, FieldID = c.FieldID, Weight = b.Weight, Type = c.Type }).OrderBy(w => w.Weight).ToList();
             timeStamps += " 3_" + DateTime.Now.TimeOfDay;
 
             if (sortedCutedCardsToShow.Count == 0 || allFields.Count == 0)
                 return "Данных нет";
             string sqlqueryTMP = "SELECT fk_collectedcard,fk_field,instance,valuetext,isdeleted,version,collectedfieldvalueid FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
-                 "AND  fk_field IN (" + string.Join(",", allFields.Select(mc=>mc.FieldID).ToArray()) + ")";
+                 "AND  fk_field IN (" + string.Join(",", allFields.Select(mc => mc.FieldID).ToArray()) + ")";
             IEnumerable<ValuesClass> tmp = chancDb.ExecuteQuery<ValuesClass>(sqlqueryTMP);
             ValuesClass[] tmpStrList = tmp.ToArray();
             timeStamps += " 4_" + DateTime.Now.TimeOfDay;
-            vTable.Rows.Add(AddSearchHeaderRoFromListWithData(allFields.Select(mc=>mc.FieldID).ToList(), searchList));
-            vTable.Rows.Add(ta.AddHeaderRoFromList(allFields.Select(mc=>mc.Name).ToList()));
+            vTable.Rows.Add(AddSearchHeaderRoFromListWithData(allFields.Select(mc => mc.FieldID).ToList(), searchList));
+            vTable.Rows.Add(ta.AddHeaderRoFromList(allFields.Select(mc => mc.Name).ToList()));
             timeStamps += " 5_" + DateTime.Now.TimeOfDay;
             #endregion
             #region CreateTable
@@ -698,22 +687,22 @@ namespace Chancelerry.kanz
                     for (int i = 0; i < maxInstanceInCard + 1; i++)
                     {
                         List<ValuesClass> tmp3 = (from a in collectedFields where a.instance == i select a).OrderByDescending(mc => mc.version).ToList();
-                        ValuesClass tmp2 = null; 
+                        ValuesClass tmp2 = null;
                         if (tmp3.Count > 0)
                         {
-                            tmp2 = (from a in tmp3   select a).FirstOrDefault();
+                            tmp2 = (from a in tmp3 select a).FirstOrDefault();
                             if (currentField.Type != "fileAttach")
                             {
                                 arrayOfStrings[fieldN, i] = "";
                             }
-                            
+
                         }
                         if (tmp2 == null)
                             continue;
                         if (tmp2.isdeleted)
                             continue;
 
-                        if (currentField.Type == "fileAttach" )
+                        if (currentField.Type == "fileAttach")
                         {
                             if (tmp2.valuetext.Any())
                             {
@@ -729,26 +718,20 @@ namespace Chancelerry.kanz
                     }
                     fieldN++;
                 }
-                //TableRow row = new TableRow();
-                
-                int rowCnt = 1;
+                //int rowCnt = 1;
                 for (int j = 0; j < maxInstanceInCard + 1; j++)
                 {
                     TableRow instRow = new TableRow();
-                    //instRow.Attributes.Add("cardId", currentCard.ToString());
                     for (int i = 0; i < fieldsCount; i++)
                     {
-                        bool isThisFirstNotLastAndNull = false;
                         TableCell cell0 = new TableCell();
-                        cell0.Attributes.Add("colId",i.ToString());
+                        cell0.Attributes.Add("colId", i.ToString());
                         cell0.CssClass += "specialPrintClassColumn" + i;
                         cell0.BorderStyle = BorderStyle.Solid;
                         if (arrayOfStrings[i, j] == "~null~")
                         {
                             if (j != 0)
                                 continue;
-                            if (maxInstanceInCard > 0) 
-                                isThisFirstNotLastAndNull = true;
                             arrayOfStrings[i, j] = "";
                         }
                         cell0.Text = arrayOfStrings[i, j];
@@ -759,10 +742,9 @@ namespace Chancelerry.kanz
                             colspanTmp++;
                             colSpanCheckCounter++;
                         }
-                        //if (isThisFirstNotLastAndNull) colspanTmp++;
                         cell0.RowSpan = colspanTmp;
                         instRow.Cells.Add(cell0);
-                        rowCnt++;
+                       // rowCnt++;
 
                     }
                     instRow.BorderStyle = BorderStyle.Solid;
@@ -813,21 +795,21 @@ namespace Chancelerry.kanz
             LineTo = LineTo > totalCnt ? totalCnt : LineTo;
             return "Всего:" + totalCnt.ToString() + "  " + "Показано с " + (LineFrom + 1) + " по " + (LineTo);
         }
-    
-}
+
+    }
     public class StatisticsClass
     {
         private List<CollectedFieldsValues> valuesList;
 
-        private ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
+        private readonly ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
         public List<CollectedFieldsValues> GetAllCollectedForFieldInDateRange(int registerId, int fieldToGetId,
             int dateFieldId, DateTime startDate, DateTime endDate, int fieldToSearchInId, string searchValue)
         {
             List<int> allCards = GetCardsWhereDateFieldInRange(dateFieldId, registerId, startDate, endDate);
-            return GetLastValuesListInCardsWithFilter(allCards,registerId, fieldToGetId, fieldToSearchInId, searchValue);
+            return GetLastValuesListInCardsWithFilter(allCards, registerId, fieldToGetId, fieldToSearchInId, searchValue);
         }
 
-        private CollectedFieldsValues GetLastValueInCardEndField(int fieldId, int cardId)            
+        private CollectedFieldsValues GetLastValueInCardEndField(int fieldId, int cardId)
         {
             List<CollectedFieldsValues> tmp = (from a in valuesList
                                                where a.FkCollectedCard == cardId
@@ -862,8 +844,8 @@ namespace Chancelerry.kanz
             List<CollectedFieldsValues> valuesList = (from a in chancDb.CollectedCards // найдем все значения для данного филда в данном регистре
                                                       join b in chancDb.CollectedFieldsValues
                                                           on a.CollectedCardID equals b.FkCollectedCard
-                                                      where a.Active == true
-                                                            && b.Active == true
+                                                      where a.Active
+                                                            && b.Active
                                                             && b.FkField == fieldId
                                                             && a.FkRegister == registerId
                                                       select b).Distinct().ToList();
@@ -891,30 +873,30 @@ namespace Chancelerry.kanz
             listToReturn = listToReturn.Distinct().ToList();
             return listToReturn; //возвращаем список карточек с подходящими датами в поле
         }
-        private List<CollectedFieldsValues> GetLastValuesListInCardsWithFilter(List<int> cardslist,int registerId, int fieldId, int filterFieldId, string filterValue)
+        private List<CollectedFieldsValues> GetLastValuesListInCardsWithFilter(List<int> cardslist, int registerId, int fieldId, int filterFieldId, string filterValue)
         {
             List<CollectedFieldsValues> ListToReturn = new List<CollectedFieldsValues>();
 
             valuesList = (from a in chancDb.CollectedCards // найдем все значения для данного филда в данном регистре
-                                                      join b in chancDb.CollectedFieldsValues
-                                                          on a.CollectedCardID equals b.FkCollectedCard
-                                                      where a.Active == true
-                                                            && b.Active == true
-                                                            && (b.FkField == fieldId || (filterValue.Any()&&b.FkField==filterFieldId)) 
-                                                            && a.FkRegister == registerId
-                                                      select b).Distinct().ToList();
+                          join b in chancDb.CollectedFieldsValues
+                              on a.CollectedCardID equals b.FkCollectedCard
+                          where a.Active
+                                && b.Active 
+                                && (b.FkField == fieldId || (filterValue.Any() && b.FkField == filterFieldId))
+                                && a.FkRegister == registerId
+                          select b).Distinct().ToList();
             foreach (int cardId in cardslist)
             {
                 if (filterValue.Any())
                 {
                     CollectedFieldsValues searchFeildValue = (GetLastValueInCardEndField(filterFieldId, cardId));
-                    if (searchFeildValue==null)
+                    if (searchFeildValue == null)
                         continue;
                     if (!searchFeildValue.ValueText.ToLower().Contains(filterValue.ToLower()))
                     {
                         continue;
-                    }                 
-                }                
+                    }
+                }
                 CollectedFieldsValues fieldValue = GetLastValueInCardEndField(fieldId, cardId);
                 if (fieldValue == null)
                 {
@@ -927,7 +909,7 @@ namespace Chancelerry.kanz
     }
     public class DataTypes
     {
-        private CardCommonFunctions _common = new CardCommonFunctions();
+        private readonly CardCommonFunctions _common = new CardCommonFunctions();
         public RangeValidator GetRangeValidator(string rangeValidatorId, string fieldToValidateId, string Type)
         {
 
@@ -1160,13 +1142,11 @@ namespace Chancelerry.kanz
     }
     public class CardCreateView
     {
-        private CardCommonFunctions _common = new CardCommonFunctions();
-        private DataTypes _dataTypes = new DataTypes();
-        private CardCreateEdit _cardCreateEdit = new CardCreateEdit();
+        private readonly CardCommonFunctions _common = new CardCommonFunctions();
+        private readonly DataTypes _dataTypes = new DataTypes();
+        private readonly CardCreateEdit _cardCreateEdit = new CardCreateEdit();
         private int _cardId;
-        private int _nextVersion;
         private int _registerId;
-        private int _Version;
         private int textBoxesIdsCounter = 0;
         public List<TextBox> allFieldsInCard;
         public List<FileUpload> allFileUploadsInCard;
@@ -1175,7 +1155,7 @@ namespace Chancelerry.kanz
         private void RefreshPage()
         {
             HttpContext.Current.Response.Redirect("CardEdit.aspx", true);
-        }       
+        }
         private void AddInstanceButtonClick(object sender, EventArgs e)
         {
             _cardId = _cardCreateEdit.SaveCard(_registerId, _cardId, allFieldsInCard, allFileUploadsInCard, false);
@@ -1236,7 +1216,7 @@ namespace Chancelerry.kanz
                     }
                     cur.CheckerButton.Click += CheckForUnique;
                 }
-            }       
+            }
         }
 
         public void Bind(object sender, EventArgs e)
@@ -1283,9 +1263,9 @@ namespace Chancelerry.kanz
         public void OpenDocument(object sender, EventArgs e)
         {
             LinkButton thisButton = (LinkButton)sender;
-            int currentFieldId = Convert.ToInt32(thisButton.Attributes["_myFieldId"]);
+            //int currentFieldId = Convert.ToInt32(thisButton.Attributes["_myFieldId"]);
             int currentCollectedFieldId = Convert.ToInt32(thisButton.Attributes["_myCollectedFieldId"]);
-            int currentCollectedFieldInstance = Convert.ToInt32(thisButton.Attributes["_myCollectedFieldInstance"]);
+            //int currentCollectedFieldInstance = Convert.ToInt32(thisButton.Attributes["_myCollectedFieldInstance"]);
             CollectedCards card = _common.GetCollevtedCardByCollevtedField(currentCollectedFieldId);
             string location = "~/kanz/attachedDocs/" + card.CollectedCardID + "/" + currentCollectedFieldId + "/" +
                               thisButton.Text;
@@ -1310,9 +1290,9 @@ namespace Chancelerry.kanz
             }
         }
 
-        public Table CreateLineTable(List<Fields> fieldsInLine, int leftPaddingSpaceBetween, int cardId, int Version, int Instance, bool _readonly, List<CollectedFieldsValues> allValues )
+        public Table CreateLineTable(List<Fields> fieldsInLine, int leftPaddingSpaceBetween, int cardId, int Version, int Instance, bool _readonly, List<CollectedFieldsValues> allValues)
         {
-            int leftPadding = leftPaddingSpaceBetween;
+            //int leftPadding = leftPaddingSpaceBetween;
             Table LineTable = new Table();
             //в таблице две строки и сколько угодно колонок, каджая колонка один филд
             TableRow tableRow1 = new TableRow(); //названия филдов
@@ -1366,7 +1346,7 @@ namespace Chancelerry.kanz
                         allFileUploadsInCard.Add(fileUpload); // запоминаем файлаплоады
                         tableCell2.Controls.Add(fileUpload);
                     }
-                #endregion
+                    #endregion
                 }
                 else
                 {
@@ -1409,7 +1389,15 @@ namespace Chancelerry.kanz
                         tableCell1.Controls.Add(currentFieldTitle);
                     }
                     #endregion
-                    if (cardId != 0)
+                    #region multipleField
+
+                    if (currentField.Multiple == true)
+                    {
+                       // currentFieldTitle.ForeColor = Color.Red;
+                    }
+
+                    #endregion
+                        if (cardId != 0)
                     {
                         currentFieldTextBox.Text = _common.GetFieldValueByCardVersionInstance(currentField.FieldID, cardId, Version, Instance, allValues);//Trim();
                     }
@@ -1531,7 +1519,7 @@ namespace Chancelerry.kanz
                         treeViewPanel.Controls.Add(searchTextBox);
                         #endregion
                         treeViewPanel.Controls.Add(scrollPanel);
-                        treeViewPanel.Controls.Add(cancelButton);                   
+                        treeViewPanel.Controls.Add(cancelButton);
                         tableCell2.Controls.Add(treeViewPanel);
                     }
                     #endregion
@@ -1539,20 +1527,20 @@ namespace Chancelerry.kanz
                     allFieldsInCard.Add(currentFieldTextBox); //запоминаем какие textbox у нас на карте
                     tableCell2.Controls.Add(currentFieldTextBox);
                     #region добавим кнопку проверки  уникальности
-                   
+
                     if (currentField.Type == "singleLineTextUniqueCheck")
                     {
                         ImageButton checkForUniqueButton = new ImageButton();
-                        checkForUniqueButton.ID = "UniqueCheck" + currentField.FieldID + "_"+ Instance;
+                        checkForUniqueButton.ID = "UniqueCheck" + currentField.FieldID + "_" + Instance;
                         checkForUniqueButton.Width = 20;
                         checkForUniqueButton.Height = 20;
                         checkForUniqueButton.ImageUrl = "~/kanz/icons/gteenQuestionIcon.png";
                         checkForUniqueButton.Click += CheckForUnique;
                         tableCell2.Controls.Add(checkForUniqueButton);
 
-                        if (allUniqueCheckers ==null )
+                        if (allUniqueCheckers == null)
                             allUniqueCheckers = new List<UniqueChecker>();
-                        allUniqueCheckers.Add(new UniqueChecker() {CardId = cardId,CheckerButton = checkForUniqueButton ,FieldId = currentField.FieldID, RegisterId = _registerId,ValueTextBox = currentFieldTextBox });
+                        allUniqueCheckers.Add(new UniqueChecker() { CardId = cardId, CheckerButton = checkForUniqueButton, FieldId = currentField.FieldID, RegisterId = _registerId, ValueTextBox = currentFieldTextBox });
                     }
 
                     if (currentField.Type == "dateIncrement")
@@ -1561,9 +1549,9 @@ namespace Chancelerry.kanz
                         Button addDays2Button = new Button() { Text = "30", Width = 20, Height = 20, OnClientClick = "return addDays('ctl00_MainContent_" + currentFieldTextBox.ID + "',30);" };
                         Button addDays3Button = new Button() { Text = "60", Width = 20, Height = 20, OnClientClick = "return addDays('ctl00_MainContent_" + currentFieldTextBox.ID + "',60);" };
 
-                        addDays1Button.Style.Add("padding","0 0 0 0");
-                        addDays2Button.Style.Add("padding","0 0 0 0");
-                        addDays3Button.Style.Add("padding","0 0 0 0");
+                        addDays1Button.Style.Add("padding", "0 0 0 0");
+                        addDays2Button.Style.Add("padding", "0 0 0 0");
+                        addDays3Button.Style.Add("padding", "0 0 0 0");
 
                         tableCell2.Controls.Add(addDays1Button);
                         tableCell2.Controls.Add(addDays2Button);
@@ -1572,7 +1560,7 @@ namespace Chancelerry.kanz
                     #endregion
                 }
 
-                leftPadding += leftPaddingSpaceBetween + currentField.Width;
+               // leftPadding += leftPaddingSpaceBetween + currentField.Width;
                 tableRow1.Cells.Add(tableCell1);
                 tableRow2.Cells.Add(tableCell2);
             }
@@ -1584,7 +1572,7 @@ namespace Chancelerry.kanz
         {
             List<CollectedFieldsValues> collectedValues = _common.GetCollectedFieldsByCardVersionGroup(cardId, groupId, Version);
             List<int> isDeletedInstances = (from a in collectedValues where a.IsDeleted select a.Instance).OrderBy(mc => mc).Distinct().ToList();
-            List<int> allInstances = (from a in collectedValues select a.Instance).Distinct().OrderBy(mc=>mc).ToList();
+            List<int> allInstances = (from a in collectedValues select a.Instance).Distinct().OrderBy(mc => mc).ToList();
             List<int> onlyActiveInstances = allInstances;
             foreach (int currendDeletedInstance in isDeletedInstances)
             {
@@ -1596,10 +1584,10 @@ namespace Chancelerry.kanz
         {
             _cardId = cardId;
             _registerId = registerId;
-            _nextVersion = _common.GetLastVersionByCard(cardId);
+ //           _nextVersion = _common.GetLastVersionByCard(cardId);
 
             if (allFieldsInCard == null)
-            allFieldsInCard = new List<TextBox>(); // будем запоминать все поля чтобы потом сохранять
+                allFieldsInCard = new List<TextBox>(); // будем запоминать все поля чтобы потом сохранять
             allFileUploadsInCard = new List<FileUpload>();
             int leftPaddingSpaceBetween = 5; // отступы между полями
             Panel cardMainPanel = new Panel(); // основная панель
@@ -1629,7 +1617,7 @@ namespace Chancelerry.kanz
 
                 Panel groupPanel = new Panel(); // отдельно по панели на каждую группу
                 groupPanel.GroupingText = currentFieldGroup.Name;
-                int InstanceNumber = 0;
+                //int InstanceNumber = 0;
                 int InstancesCount = InstancesList.Count;
 
                 List<Fields> fieldToShow = _common.GetFieldsInFieldGroupOrderByLine(currentFieldGroup.FieldsGroupID);
@@ -1647,12 +1635,12 @@ namespace Chancelerry.kanz
                     TableRow InstanceRow = new TableRow();
                     TableCell InstanceCell = new TableCell();
                     TableCell delInstanceCell = new TableCell();
-                    
+
                     foreach (int currentFieldsLine in LinesToShow)
                     {
                         List<Fields> fieldsInLine = GetFieldsByLineSortedByColumn(currentFieldsLine, fieldToShow);
                         Table tableToAdd = CreateLineTable(fieldsInLine, leftPaddingSpaceBetween, cardId, Version,
-                            currentInstance, _readonly,allValuesInCard);
+                            currentInstance, _readonly, allValuesInCard);
                         InstanceCell.Controls.Add(tableToAdd);
                     }
 
@@ -1772,8 +1760,8 @@ namespace Chancelerry.kanz
     public class CardCreateEdit
     {
         //  private int _userId = 1;
-        private ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
-        private CardCommonFunctions _common = new CardCommonFunctions();
+        private readonly ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
+        private readonly CardCommonFunctions _common = new CardCommonFunctions();
         public int CreateNewCardInRegister(int registerId, int fieldId)
         {
             CollectedCards newCard = new CollectedCards();
@@ -1813,16 +1801,16 @@ namespace Chancelerry.kanz
                 {
                     if (currentTextBox.Attributes["iamfieldid"] == "1")
                     {
-                        Int32.TryParse(currentTextBox.Text, out mainfieldId); 
+                        Int32.TryParse(currentTextBox.Text, out mainfieldId);
                     }
                 }
             }
-            
+
             if (cardId == 0)
                 cardId = CreateNewCardInRegister(registerId, mainfieldId);
             SaveFieldsValues(fieldsToSave, filesToSave, cardId);
 
-          //  _common.IsValueUinque(cur.FieldId, cur.RegisterId, cur.CardId, cur.ValueTextBox.Text);
+            //  _common.IsValueUinque(cur.FieldId, cur.RegisterId, cur.CardId, cur.ValueTextBox.Text);
 
             return cardId;
         }
@@ -1873,8 +1861,9 @@ namespace Chancelerry.kanz
 
                         currentFileUpload.SaveAs(fieldFolder + currentFileUpload.FileName);
                     }
-                    catch (Exception ex)
+                    catch/* (Exception ex)*/
                     {
+
                         break;
                     }
                 }

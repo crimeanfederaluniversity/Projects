@@ -242,6 +242,6 @@ C:\Users\vage\Desktop\R4\trunk\Chancelerry_LinuxPort_vol2\Chancelerry\bin\fi\Npg
 C:\Users\vage\Desktop\R4\trunk\Chancelerry_LinuxPort_vol2\Chancelerry\bin\fr\Npgsql.resources.dll
 C:\Users\vage\Desktop\R4\trunk\Chancelerry_LinuxPort_vol2\Chancelerry\bin\ja\Npgsql.resources.dll
 C:\Users\vage\Desktop\R4\trunk\Chancelerry_LinuxPort_vol2\Chancelerry\bin\zh-CN\Npgsql.resources.dll
-C:\Users\vage\Desktop\R4\trunk\Chancelerry_LinuxPort_vol2\Chancelerry\obj\Debug\Chancelerry.csprojResolveAssemblyReference.cache
 C:\Users\vage\Desktop\R4\trunk\Chancelerry_LinuxPort_vol2\Chancelerry\obj\Debug\Chancelerry.dll
 C:\Users\vage\Desktop\R4\trunk\Chancelerry_LinuxPort_vol2\Chancelerry\obj\Debug\Chancelerry.pdb
+C:\Users\vage\Desktop\R4\trunk\Chancelerry_LinuxPort_vol2\Chancelerry\obj\Debug\Chancelerry.csprojResolveAssemblyReference.cache

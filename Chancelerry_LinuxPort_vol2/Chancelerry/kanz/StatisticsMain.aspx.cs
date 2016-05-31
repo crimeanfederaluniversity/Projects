@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Configuration;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using Chancelerry.Account;
-using Npgsql;
 
 namespace Chancelerry.kanz
 {
     public partial class StatisticsMain : System.Web.UI.Page
     {
-        CardCommonFunctions main = new CardCommonFunctions();
-        private ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
+        readonly CardCommonFunctions main = new CardCommonFunctions();
         protected void Page_Load(object sender, EventArgs e)
         {
             int userId=0;
@@ -95,9 +89,9 @@ namespace Chancelerry.kanz
                 }
                 foreach (Fields field in allFields)
                 {
-                    if ((field.Type == "date" || field.Type == "autoDate") && field.Multiple == false &&
-                        (from a in fieldsGroupInRegister where a.FieldsGroupID == field.FkFieldsGroup select a)
-                            .FirstOrDefault().Multiple == false)
+                    if (field.Type == "date" || field.Type == "autoDate") /*&& field.Multiple == false*/// &&
+                       // (from a in fieldsGroupInRegister where a.FieldsGroupID == field.FkFieldsGroup select a).FirstOrDefault().Multiple == false)
+
                         DateForFilter.Items.Add(new ListItem() {Value = field.FieldID.ToString(), Text = field.Name});
                 }
 
@@ -154,7 +148,7 @@ namespace Chancelerry.kanz
                 decimal.TryParse(current.ValueText, out tmp);
                 sum += tmp;
             }
-            SumByResultLabel.Text = "Сумма: "+sum.ToString();
+            SumByResultLabel.Text = "Сумма: "+sum;
         }
         protected void CreateTableButton_Click(object sender, EventArgs e)
         {
@@ -225,7 +219,6 @@ namespace Chancelerry.kanz
             resultTable.Rows.Add(new TableRow() { Cells = { new TableCell() { Text = "Итого" }, new TableCell() { Text = sum.ToString() } } });
             resultDiv.Controls.Add(resultTable);
         }
-
         protected void PrintFinded_Click(object sender, EventArgs e)
         {
             List<int> allCards = (List<int>) Session["cardsIds"];

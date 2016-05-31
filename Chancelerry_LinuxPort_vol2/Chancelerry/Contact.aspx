@@ -1,17 +1,14 @@
 ﻿<%@ Page Title="Контакты" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="Chancelerry.Contact" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2><%: Title %>.</h2>
-    <h3></h3>
-    <address>
-       <br />
-        <br />
-        <abbr title=""></abbr>
-        
-    </address>
-
-    <address>
-        <strong>:</strong>   <a href="mailto:Support@example.com"></a><br />
-        <strong>:</strong> <a href="mailto:Marketing@example.com"></a>
-    </address>
+    <h2><%: Title %></h2>
+<h3 style="box-sizing: border-box; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 500; line-height: 1.1; margin-top: 20px; margin-bottom: 10px; font-size: 24px; color: rgb(51, 51, 51); font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(231, 228, 219);">Крымский федеральный университет имени В. И. Вернадского</h3>
+<address style="box-sizing: border-box; display: block; margin-bottom: 20px; font-style: normal; line-height: 20px; color: rgb(51, 51, 51); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(231, 228, 219);">
+    Департамент управления качеством и проектных решений<br style="box-sizing: border-box;" />
+    Центр развития единого информационного пространства</address>
+<address style="box-sizing: border-box; display: block; margin-bottom: 20px; font-style: normal; line-height: 20px; color: rgb(51, 51, 51); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(231, 228, 219);">
+    Техническая поддержка: +7-978-117-53-98</address>
+<address style="box-sizing: border-box; display: block; margin-bottom: 20px; font-style: normal; line-height: 20px; color: rgb(51, 51, 51); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(231, 228, 219);">
+    E-mail:<span class="Apple-converted-space">&nbsp;</span><a href="mailto:it-cfu@ya.ru?subject=%D0%9E%D0%B1%D1%80%D0%B0%D1%89%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%20%D1%82%D0%B5%D1%85%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D1%83" style="box-sizing: border-box; color: rgb(0, 0, 0); text-decoration: none;">it-cfu@ya.ru</a><br style="box-sizing: border-box;" />
+</address>
 </asp:Content>

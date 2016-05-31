@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Configuration;
-using System.Web.Providers.Entities;
 using System.Web.UI.WebControls;
 using Chancelerry.kanz;
 using Npgsql;
@@ -14,10 +12,10 @@ namespace Chancelerry
 {
     public class TableActions
     {
-        private List<string> strList;
-        private List<int> intList;
-        private List<DateTime> dateList;
-        private List<float> floatList;
+        //private List<string> strList;
+        //private List<int> intList;
+        //private List<DateTime> dateList;
+        //private List<float> floatList;
         public static List<TextBox> SearchBoxsData = new List<TextBox>();
         public static Table DTable { get; set; }
         private int rowsOnPage = 10;
@@ -179,7 +177,7 @@ namespace Chancelerry
             {
                 TableCell cel = new TableCell();
                 cel.BorderStyle = BorderStyle.Solid;
-                var asd = elm;
+                //var asd = elm;
                 cel.Text = elm;
                 row.Cells.Add(cel);
             }
