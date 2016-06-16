@@ -6,6 +6,18 @@
     <script src="toggleLoadingScreen.js" type="text/javascript"></script>
     <script src="moment.min.js"></script>
     <script>
+        
+        function getAllElementsWithAttribute(attribute) {
+            var matchingElements = [];
+            var allElements = document.getElementsByTagName('*');
+            for (var i = 0, n = allElements.length; i < n; i++) {
+                if (allElements[i].getAttribute(attribute) !== null) {
+                    matchingElements.push(allElements[i]);
+                }
+            }
+            return matchingElements;
+        }
+
         function putValueAndClose(val, fieldId, panelId) {
             document.getElementById(fieldId).value = val;
             document.getElementById(panelId).style.visibility = 'hidden';
@@ -21,6 +33,35 @@
             return false;
         }
 
+        function multiFieldRefresh() {
+            var allMultiField = getAllElementsWithAttribute('multiField');
+            
+            for (var i = 0; i < allMultiField.length; i++) {
+                var spanWeNeed = allMultiField[i].parentElement.firstChild;
+                var result='';
+                for (var j = 0; j < spanWeNeed.children.length; j++) {
+                    if (spanWeNeed.children[j].type == 'text') {
+                        if (spanWeNeed.children[j].value.length>0) {
+                            result += spanWeNeed.children[j].value + ',';
+                        }                       
+                    }                   
+                }
+                if (result[result.length-1] == ',') {
+                    result = result.slice(0, result.length - 1);
+                }
+                allMultiField[i].value = result;
+            }        
+        }
+
+        function addInputControl(cntrlId) {
+            var multiFieldDiv = document.getElementById(cntrlId);
+            var newInput = document.createElement("input");
+            newInput.type = "text";
+            newInput.onclick = function () { event.cancelBubble = true; this.select(); lcs(this); };
+            newInput.onfocus = function () { this.select(); lcs(this); };
+            multiFieldDiv.appendChild(document.createElement("br"));
+            multiFieldDiv.appendChild(newInput);
+        }
     </script>
     
     <script>
@@ -39,7 +80,7 @@
 
             for (var i = 0; i < controlM.children.length; i++) {
                 if (search(controlM.children[i], value) == 1)
-                return 1;
+                    return 1;
             }
 
             return 0;
@@ -65,5 +106,5 @@
     <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click" Visible="False">Версия для печати</asp:LinkButton>
     </div>
     <br />
-    <asp:Button ID="CreateButton" runat="server" Text="Сохранить" OnClick="CreateButton_Click" Width="100%" />
+    <asp:Button ID="CreateButton" runat="server" Text="Сохранить" OnClick="CreateButton_Click" OnClientClick="multiFieldRefresh();" Width="100%" />
 </asp:Content>

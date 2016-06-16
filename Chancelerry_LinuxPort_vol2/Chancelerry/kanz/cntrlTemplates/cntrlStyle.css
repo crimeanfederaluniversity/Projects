@@ -1,0 +1,27 @@
+﻿           .resultTable {
+               border-collapse: collapse; 
+           }
+          .resultTable TH, TD {
+              border: 1px solid black; 
+              text-align: left; 
+              padding: 4px; 
+          }
+          .resultTable TH {
+              background: #fc0; 
+              height: 40px; 
+              vertical-align: bottom; 
+              padding: 0;
+          }
+
+          .bad1 {
+             color: red;
+          }
+          .bad2 {
+              color: orange;
+          }
+          .good1 {
+              color: green;
+          }
+          .good2 {
+              color: black;
+          }

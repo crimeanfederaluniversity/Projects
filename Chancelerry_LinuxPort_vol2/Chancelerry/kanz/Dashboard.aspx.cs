@@ -88,7 +88,7 @@ namespace Chancelerry.kanz
 
         protected void GoToControl_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ControlPage.aspx");
+            Response.Redirect("ChooseCntrlTempl.aspx");
         }
 
         protected void GoToShowResterAndPrint_Click(object sender, EventArgs e)

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Npgsql;
 
@@ -1105,26 +1106,21 @@ namespace Chancelerry.kanz
         }
         public bool IsFieldAutoFill(string Type)
         {
-            if (Type == "autoIncrement" || Type == "autoDate" || Type == "autoIncrementReadonly") return true;
+            if (Type == "autoIncrement" || Type == "autoDate" || Type == "autoIncrementReadonly" || Type == "dateIncrement") return true;
             return false;
         }
         public bool IsFieldDate(string Type)
         {
-            if (Type == "date" || Type == "autoDate") return true;
+            if (Type == "date" || Type == "autoDate" || Type == "dateIncrement") return true;
             return false;
         }
         public string GetAutoValue(string Type, int fieldId, int registerId)
         {
-            if (Type == "autoDate")
+            if (Type == "autoDate" || Type == "dateIncrement")
             {
                 return DateTime.Now.ToString("u").Split(' ')[0];
             }
-            if (Type == "autoIncrement")
-            {
-                int tmp = _common.GetMaxValueByFieldRegister(fieldId, registerId);
-                return (tmp + 1).ToString();
-            }
-            if (Type == "autoIncrementReadonly")
+            if (Type == "autoIncrement" || Type == "autoIncrementReadonly")
             {
                 int tmp = _common.GetMaxValueByFieldRegister(fieldId, registerId);
                 return (tmp + 1).ToString();
@@ -1389,14 +1385,7 @@ namespace Chancelerry.kanz
                         tableCell1.Controls.Add(currentFieldTitle);
                     }
                     #endregion
-                    #region multipleField
-
-                    if (currentField.Multiple == true)
-                    {
-                       // currentFieldTitle.ForeColor = Color.Red;
-                    }
-
-                    #endregion
+                   
                         if (cardId != 0)
                     {
                         currentFieldTextBox.Text = _common.GetFieldValueByCardVersionInstance(currentField.FieldID, cardId, Version, Instance, allValues);//Trim();
@@ -1410,6 +1399,29 @@ namespace Chancelerry.kanz
                     {
                         currentFieldTextBox.Text = "";
                     }
+
+                    #region multipleField
+
+                    if (currentField.Multiple == true)
+                    {
+                        //currentFieldTitle.ForeColor = Color.Red;
+                        currentFieldTextBox.Style["display"] = "none";
+                        currentFieldTextBox.Attributes.Add("multiField","true");
+                        HtmlGenericControl div = new HtmlGenericControl();
+                        div.ID = "multiCellDiv" + fieldId;
+                        div.InnerHtml += "<input type='button' value='+' onclick=\"addInputControl('ctl00_MainContent_" + div.ID + "')\">";
+                        string tmpText = currentFieldTextBox.Text;
+                        List<string> allValuesOfMultiValue = tmpText.Split(',').ToList();
+                        foreach (string currentValue in allValuesOfMultiValue)
+                        {
+                            div.InnerHtml+= "</br> <input type='text'  onfocus='this.select();lcs(this)' onclick='event.cancelBubble=true;this.select();lcs(this)' value='" + currentValue + "'>";
+                        }
+                        
+                        tableCell2.Controls.Add(div);
+                    }
+
+                    #endregion
+
                     #region dropdown
                     if (currentField.FkDictionary != null && !_readonly) // создаем выпадающий список
                     {
@@ -1658,8 +1670,14 @@ namespace Chancelerry.kanz
                         delInstanceCell.Controls.Add(delGroupButton);
                         InstanceRow.Cells.Add(delInstanceCell);
                     }
+
                     InstanceTable.Rows.Add(InstanceRow);
+                    if (currentFieldGroup.FieldsGroupID == 26) //HARDCODE
+                        InstanceTable.Rows.Add(new TableRow() {Cells = {new TableCell() {Text = "<a href='/kanz/rtfExport/export1.aspx?card="+cardId+"&inst="+currentInstance+ "&reg="+registerId+"'>Сформировать напоминание<a>" } }});
+                    if (currentFieldGroup.FieldsGroupID == 6) //HARDCODE
+                        InstanceTable.Rows.Add(new TableRow() { Cells = { new TableCell() { Text = "<a href='/kanz/rtfExport/export2.aspx?card=" + cardId + "&inst=" + currentInstance + "&reg=" + registerId + "'>Сформировать напоминание<a>" } } });
                     groupPanel.Controls.Add(InstanceTable);
+
                 }
                 #endregion
                 #region Добавляем кнопку добавить если нужна

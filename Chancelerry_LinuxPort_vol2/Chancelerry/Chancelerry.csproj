@@ -221,6 +221,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Login.aspx" />
+    <Content Include="kanz\ChooseCntrlTempl.aspx" />
+    <Content Include="kanz\cntrlTemplates\cntrl1.aspx" />
+    <Content Include="kanz\cntrlTemplates\cntrl2.aspx" />
+    <Content Include="kanz\cntrlTemplates\cntrl3.aspx" />
+    <Content Include="kanz\cntrlTemplates\cntrl4.aspx" />
+    <Content Include="kanz\cntrlTemplates\cntrlStyle.css" />
+    <Content Include="kanz\rtfExport\export1.aspx" />
+    <Content Include="kanz\rtfExport\export2.aspx" />
     <Content Include="Scripts\toggleLoadingScreen.js" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
@@ -246,7 +254,6 @@
     <Content Include="kanz\calendar_ru.js" />
     <Content Include="kanz\CardEdit.aspx" />
     <Content Include="kanz\ChooseDictionary.aspx" />
-    <Content Include="kanz\ControlPage.aspx" />
     <Content Include="kanz\Dashboard.aspx" />
     <Content Include="kanz\icons\addButtonIcon.jpg" />
     <Content Include="kanz\icons\delButtonIcon.jpg" />
@@ -362,6 +369,13 @@
     <Compile Include="kanz\CardEdit.aspx.designer.cs">
       <DependentUpon>CardEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="kanz\ChooseCntrlTempl.aspx.cs">
+      <DependentUpon>ChooseCntrlTempl.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="kanz\ChooseCntrlTempl.aspx.designer.cs">
+      <DependentUpon>ChooseCntrlTempl.aspx</DependentUpon>
+    </Compile>
     <Compile Include="kanz\ChooseDictionary.aspx.cs">
       <DependentUpon>ChooseDictionary.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -369,13 +383,35 @@
     <Compile Include="kanz\ChooseDictionary.aspx.designer.cs">
       <DependentUpon>ChooseDictionary.aspx</DependentUpon>
     </Compile>
-    <Compile Include="kanz\ControlPage.aspx.cs">
-      <DependentUpon>ControlPage.aspx</DependentUpon>
+    <Compile Include="kanz\cntrlTemplates\cntrl1.aspx.cs">
+      <DependentUpon>cntrl1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="kanz\ControlPage.aspx.designer.cs">
-      <DependentUpon>ControlPage.aspx</DependentUpon>
+    <Compile Include="kanz\cntrlTemplates\cntrl1.aspx.designer.cs">
+      <DependentUpon>cntrl1.aspx</DependentUpon>
     </Compile>
+    <Compile Include="kanz\cntrlTemplates\cntrl2.aspx.cs">
+      <DependentUpon>cntrl2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="kanz\cntrlTemplates\cntrl2.aspx.designer.cs">
+      <DependentUpon>cntrl2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="kanz\cntrlTemplates\cntrl3.aspx.cs">
+      <DependentUpon>cntrl3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="kanz\cntrlTemplates\cntrl3.aspx.designer.cs">
+      <DependentUpon>cntrl3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="kanz\cntrlTemplates\cntrl4.aspx.cs">
+      <DependentUpon>cntrl4.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="kanz\cntrlTemplates\cntrl4.aspx.designer.cs">
+      <DependentUpon>cntrl4.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="kanz\ControlTemplates.cs" />
     <Compile Include="kanz\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -411,6 +447,21 @@
     <Compile Include="kanz\RegisterView.aspx.designer.cs">
       <DependentUpon>RegisterView.aspx</DependentUpon>
     </Compile>
+    <Compile Include="kanz\rtfExport\export1.aspx.cs">
+      <DependentUpon>export1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="kanz\rtfExport\export1.aspx.designer.cs">
+      <DependentUpon>export1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="kanz\rtfExport\export2.aspx.cs">
+      <DependentUpon>export2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="kanz\rtfExport\export2.aspx.designer.cs">
+      <DependentUpon>export2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="kanz\rtfExport\rtfExporter.cs" />
     <Compile Include="kanz\ShowRegisteAndPrint.aspx.cs">
       <DependentUpon>ShowRegisteAndPrint.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
