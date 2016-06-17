@@ -51,9 +51,6 @@ namespace Rank
     partial void InsertRank_DifficaltPoint(Rank_DifficaltPoint instance);
     partial void UpdateRank_DifficaltPoint(Rank_DifficaltPoint instance);
     partial void DeleteRank_DifficaltPoint(Rank_DifficaltPoint instance);
-    partial void InsertRank_Fields(Rank_Fields instance);
-    partial void UpdateRank_Fields(Rank_Fields instance);
-    partial void DeleteRank_Fields(Rank_Fields instance);
     partial void InsertRank_Mark(Rank_Mark instance);
     partial void UpdateRank_Mark(Rank_Mark instance);
     partial void DeleteRank_Mark(Rank_Mark instance);
@@ -69,6 +66,15 @@ namespace Rank
     partial void InsertUsersTable(UsersTable instance);
     partial void UpdateUsersTable(UsersTable instance);
     partial void DeleteUsersTable(UsersTable instance);
+    partial void InsertRank_DropDownValues(Rank_DropDownValues instance);
+    partial void UpdateRank_DropDownValues(Rank_DropDownValues instance);
+    partial void DeleteRank_DropDownValues(Rank_DropDownValues instance);
+    partial void InsertRank_DropDown(Rank_DropDown instance);
+    partial void UpdateRank_DropDown(Rank_DropDown instance);
+    partial void DeleteRank_DropDown(Rank_DropDown instance);
+    partial void InsertRank_Fields(Rank_Fields instance);
+    partial void UpdateRank_Fields(Rank_Fields instance);
+    partial void DeleteRank_Fields(Rank_Fields instance);
     #endregion
 		
 		public RankDBDataContext() : 
@@ -157,14 +163,6 @@ namespace Rank
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_Fields> Rank_Fields
-		{
-			get
-			{
-				return this.GetTable<Rank_Fields>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Rank_Mark> Rank_Mark
 		{
 			get
@@ -210,6 +208,30 @@ namespace Rank
 			get
 			{
 				return this.GetTable<UsersTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Rank_DropDownValues> Rank_DropDownValues
+		{
+			get
+			{
+				return this.GetTable<Rank_DropDownValues>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Rank_DropDown> Rank_DropDown
+		{
+			get
+			{
+				return this.GetTable<Rank_DropDown>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Rank_Fields> Rank_Fields
+		{
+			get
+			{
+				return this.GetTable<Rank_Fields>();
 			}
 		}
 	}
@@ -1338,9 +1360,9 @@ namespace Rank
 		
 		private EntityRef<Rank_Articles> _Rank_Articles;
 		
-		private EntityRef<Rank_Fields> _Rank_Fields;
-		
 		private EntityRef<Rank_Parametrs> _Rank_Parametrs;
+		
+		private EntityRef<Rank_Fields> _Rank_Fields;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1363,8 +1385,8 @@ namespace Rank
 		public Rank_ArticleValues()
 		{
 			this._Rank_Articles = default(EntityRef<Rank_Articles>);
-			this._Rank_Fields = default(EntityRef<Rank_Fields>);
 			this._Rank_Parametrs = default(EntityRef<Rank_Parametrs>);
+			this._Rank_Fields = default(EntityRef<Rank_Fields>);
 			OnCreated();
 		}
 		
@@ -1534,40 +1556,6 @@ namespace Rank
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Fields_Rank_ArticleValues", Storage="_Rank_Fields", ThisKey="FK_Field", OtherKey="ID", IsForeignKey=true)]
-		public Rank_Fields Rank_Fields
-		{
-			get
-			{
-				return this._Rank_Fields.Entity;
-			}
-			set
-			{
-				Rank_Fields previousValue = this._Rank_Fields.Entity;
-				if (((previousValue != value) 
-							|| (this._Rank_Fields.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Rank_Fields.Entity = null;
-						previousValue.Rank_ArticleValues.Remove(this);
-					}
-					this._Rank_Fields.Entity = value;
-					if ((value != null))
-					{
-						value.Rank_ArticleValues.Add(this);
-						this._FK_Field = value.ID;
-					}
-					else
-					{
-						this._FK_Field = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Rank_Fields");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametrs_Rank_ArticleValues", Storage="_Rank_Parametrs", ThisKey="FK_Param", OtherKey="ID", IsForeignKey=true)]
 		public Rank_Parametrs Rank_Parametrs
 		{
@@ -1598,6 +1586,40 @@ namespace Rank
 						this._FK_Param = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("Rank_Parametrs");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Fields_Rank_ArticleValues", Storage="_Rank_Fields", ThisKey="FK_Field", OtherKey="ID", IsForeignKey=true)]
+		public Rank_Fields Rank_Fields
+		{
+			get
+			{
+				return this._Rank_Fields.Entity;
+			}
+			set
+			{
+				Rank_Fields previousValue = this._Rank_Fields.Entity;
+				if (((previousValue != value) 
+							|| (this._Rank_Fields.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Rank_Fields.Entity = null;
+						previousValue.Rank_ArticleValues.Remove(this);
+					}
+					this._Rank_Fields.Entity = value;
+					if ((value != null))
+					{
+						value.Rank_ArticleValues.Add(this);
+						this._FK_Field = value.ID;
+					}
+					else
+					{
+						this._FK_Field = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Rank_Fields");
 				}
 			}
 		}
@@ -2114,353 +2136,6 @@ namespace Rank
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rank_Fields")]
-	public partial class Rank_Fields : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private System.Nullable<bool> _Active;
-		
-		private string _Name;
-		
-		private System.Nullable<int> _FK_parametr;
-		
-		private int _line;
-		
-		private System.Nullable<int> _col;
-		
-		private System.Nullable<int> _step;
-		
-		private int _high;
-		
-		private int _width;
-		
-		private string _type;
-		
-		private EntitySet<Rank_ArticleValues> _Rank_ArticleValues;
-		
-		private EntityRef<Rank_Parametrs> _Rank_Parametrs;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnActiveChanging(System.Nullable<bool> value);
-    partial void OnActiveChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnFK_parametrChanging(System.Nullable<int> value);
-    partial void OnFK_parametrChanged();
-    partial void OnlineChanging(int value);
-    partial void OnlineChanged();
-    partial void OncolChanging(System.Nullable<int> value);
-    partial void OncolChanged();
-    partial void OnstepChanging(System.Nullable<int> value);
-    partial void OnstepChanged();
-    partial void OnhighChanging(int value);
-    partial void OnhighChanged();
-    partial void OnwidthChanging(int value);
-    partial void OnwidthChanged();
-    partial void OntypeChanging(string value);
-    partial void OntypeChanged();
-    #endregion
-		
-		public Rank_Fields()
-		{
-			this._Rank_ArticleValues = new EntitySet<Rank_ArticleValues>(new Action<Rank_ArticleValues>(this.attach_Rank_ArticleValues), new Action<Rank_ArticleValues>(this.detach_Rank_ArticleValues));
-			this._Rank_Parametrs = default(EntityRef<Rank_Parametrs>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
-		public System.Nullable<bool> Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(150)")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_parametr", DbType="Int")]
-		public System.Nullable<int> FK_parametr
-		{
-			get
-			{
-				return this._FK_parametr;
-			}
-			set
-			{
-				if ((this._FK_parametr != value))
-				{
-					if (this._Rank_Parametrs.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_parametrChanging(value);
-					this.SendPropertyChanging();
-					this._FK_parametr = value;
-					this.SendPropertyChanged("FK_parametr");
-					this.OnFK_parametrChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_line", DbType="Int NOT NULL")]
-		public int line
-		{
-			get
-			{
-				return this._line;
-			}
-			set
-			{
-				if ((this._line != value))
-				{
-					this.OnlineChanging(value);
-					this.SendPropertyChanging();
-					this._line = value;
-					this.SendPropertyChanged("line");
-					this.OnlineChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_col", DbType="Int")]
-		public System.Nullable<int> col
-		{
-			get
-			{
-				return this._col;
-			}
-			set
-			{
-				if ((this._col != value))
-				{
-					this.OncolChanging(value);
-					this.SendPropertyChanging();
-					this._col = value;
-					this.SendPropertyChanged("col");
-					this.OncolChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_step", DbType="Int")]
-		public System.Nullable<int> step
-		{
-			get
-			{
-				return this._step;
-			}
-			set
-			{
-				if ((this._step != value))
-				{
-					this.OnstepChanging(value);
-					this.SendPropertyChanging();
-					this._step = value;
-					this.SendPropertyChanged("step");
-					this.OnstepChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_high", DbType="Int NOT NULL")]
-		public int high
-		{
-			get
-			{
-				return this._high;
-			}
-			set
-			{
-				if ((this._high != value))
-				{
-					this.OnhighChanging(value);
-					this.SendPropertyChanging();
-					this._high = value;
-					this.SendPropertyChanged("high");
-					this.OnhighChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_width", DbType="Int NOT NULL")]
-		public int width
-		{
-			get
-			{
-				return this._width;
-			}
-			set
-			{
-				if ((this._width != value))
-				{
-					this.OnwidthChanging(value);
-					this.SendPropertyChanging();
-					this._width = value;
-					this.SendPropertyChanged("width");
-					this.OnwidthChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type", DbType="NChar(10)")]
-		public string type
-		{
-			get
-			{
-				return this._type;
-			}
-			set
-			{
-				if ((this._type != value))
-				{
-					this.OntypeChanging(value);
-					this.SendPropertyChanging();
-					this._type = value;
-					this.SendPropertyChanged("type");
-					this.OntypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Fields_Rank_ArticleValues", Storage="_Rank_ArticleValues", ThisKey="ID", OtherKey="FK_Field")]
-		public EntitySet<Rank_ArticleValues> Rank_ArticleValues
-		{
-			get
-			{
-				return this._Rank_ArticleValues;
-			}
-			set
-			{
-				this._Rank_ArticleValues.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametrs_Rank_Fields", Storage="_Rank_Parametrs", ThisKey="FK_parametr", OtherKey="ID", IsForeignKey=true)]
-		public Rank_Parametrs Rank_Parametrs
-		{
-			get
-			{
-				return this._Rank_Parametrs.Entity;
-			}
-			set
-			{
-				Rank_Parametrs previousValue = this._Rank_Parametrs.Entity;
-				if (((previousValue != value) 
-							|| (this._Rank_Parametrs.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Rank_Parametrs.Entity = null;
-						previousValue.Rank_Fields.Remove(this);
-					}
-					this._Rank_Parametrs.Entity = value;
-					if ((value != null))
-					{
-						value.Rank_Fields.Add(this);
-						this._FK_parametr = value.ID;
-					}
-					else
-					{
-						this._FK_parametr = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Rank_Parametrs");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Rank_ArticleValues(Rank_ArticleValues entity)
-		{
-			this.SendPropertyChanging();
-			entity.Rank_Fields = this;
-		}
-		
-		private void detach_Rank_ArticleValues(Rank_ArticleValues entity)
-		{
-			this.SendPropertyChanging();
-			entity.Rank_Fields = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rank_Mark")]
 	public partial class Rank_Mark : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2712,9 +2387,9 @@ namespace Rank
 		
 		private EntitySet<Rank_DifficaltPoint> _Rank_DifficaltPoint;
 		
-		private EntitySet<Rank_Fields> _Rank_Fields;
-		
 		private EntitySet<Rank_Mark> _Rank_Mark;
+		
+		private EntitySet<Rank_Fields> _Rank_Fields;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2738,8 +2413,8 @@ namespace Rank
 			this._Rank_ArticleValues = new EntitySet<Rank_ArticleValues>(new Action<Rank_ArticleValues>(this.attach_Rank_ArticleValues), new Action<Rank_ArticleValues>(this.detach_Rank_ArticleValues));
 			this._Rank_Collected_ParametrsValue = new EntitySet<Rank_Collected_ParametrsValue>(new Action<Rank_Collected_ParametrsValue>(this.attach_Rank_Collected_ParametrsValue), new Action<Rank_Collected_ParametrsValue>(this.detach_Rank_Collected_ParametrsValue));
 			this._Rank_DifficaltPoint = new EntitySet<Rank_DifficaltPoint>(new Action<Rank_DifficaltPoint>(this.attach_Rank_DifficaltPoint), new Action<Rank_DifficaltPoint>(this.detach_Rank_DifficaltPoint));
-			this._Rank_Fields = new EntitySet<Rank_Fields>(new Action<Rank_Fields>(this.attach_Rank_Fields), new Action<Rank_Fields>(this.detach_Rank_Fields));
 			this._Rank_Mark = new EntitySet<Rank_Mark>(new Action<Rank_Mark>(this.attach_Rank_Mark), new Action<Rank_Mark>(this.detach_Rank_Mark));
+			this._Rank_Fields = new EntitySet<Rank_Fields>(new Action<Rank_Fields>(this.attach_Rank_Fields), new Action<Rank_Fields>(this.detach_Rank_Fields));
 			OnCreated();
 		}
 		
@@ -2895,19 +2570,6 @@ namespace Rank
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametrs_Rank_Fields", Storage="_Rank_Fields", ThisKey="ID", OtherKey="FK_parametr")]
-		public EntitySet<Rank_Fields> Rank_Fields
-		{
-			get
-			{
-				return this._Rank_Fields;
-			}
-			set
-			{
-				this._Rank_Fields.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametrs_Rank_Mark", Storage="_Rank_Mark", ThisKey="ID", OtherKey="fk_parametr")]
 		public EntitySet<Rank_Mark> Rank_Mark
 		{
@@ -2918,6 +2580,19 @@ namespace Rank
 			set
 			{
 				this._Rank_Mark.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametrs_Rank_Fields", Storage="_Rank_Fields", ThisKey="ID", OtherKey="FK_parametr")]
+		public EntitySet<Rank_Fields> Rank_Fields
+		{
+			get
+			{
+				return this._Rank_Fields;
+			}
+			set
+			{
+				this._Rank_Fields.Assign(value);
 			}
 		}
 		
@@ -2989,18 +2664,6 @@ namespace Rank
 			entity.Rank_Parametrs = null;
 		}
 		
-		private void attach_Rank_Fields(Rank_Fields entity)
-		{
-			this.SendPropertyChanging();
-			entity.Rank_Parametrs = this;
-		}
-		
-		private void detach_Rank_Fields(Rank_Fields entity)
-		{
-			this.SendPropertyChanging();
-			entity.Rank_Parametrs = null;
-		}
-		
 		private void attach_Rank_Mark(Rank_Mark entity)
 		{
 			this.SendPropertyChanging();
@@ -3008,6 +2671,18 @@ namespace Rank
 		}
 		
 		private void detach_Rank_Mark(Rank_Mark entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rank_Parametrs = null;
+		}
+		
+		private void attach_Rank_Fields(Rank_Fields entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rank_Parametrs = this;
+		}
+		
+		private void detach_Rank_Fields(Rank_Fields entity)
 		{
 			this.SendPropertyChanging();
 			entity.Rank_Parametrs = null;
@@ -4531,6 +4206,759 @@ namespace Rank
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rank_DropDownValues")]
+	public partial class Rank_DropDownValues : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _Name;
+		
+		private System.Nullable<bool> _Active;
+		
+		private System.Nullable<int> _FK_dropdown;
+		
+		private EntityRef<Rank_DropDown> _Rank_DropDown;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnFK_dropdownChanging(System.Nullable<int> value);
+    partial void OnFK_dropdownChanged();
+    #endregion
+		
+		public Rank_DropDownValues()
+		{
+			this._Rank_DropDown = default(EntityRef<Rank_DropDown>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(150)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_dropdown", DbType="Int")]
+		public System.Nullable<int> FK_dropdown
+		{
+			get
+			{
+				return this._FK_dropdown;
+			}
+			set
+			{
+				if ((this._FK_dropdown != value))
+				{
+					if (this._Rank_DropDown.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_dropdownChanging(value);
+					this.SendPropertyChanging();
+					this._FK_dropdown = value;
+					this.SendPropertyChanged("FK_dropdown");
+					this.OnFK_dropdownChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_DropDown_Rank_DropDownValues", Storage="_Rank_DropDown", ThisKey="FK_dropdown", OtherKey="ID", IsForeignKey=true)]
+		public Rank_DropDown Rank_DropDown
+		{
+			get
+			{
+				return this._Rank_DropDown.Entity;
+			}
+			set
+			{
+				Rank_DropDown previousValue = this._Rank_DropDown.Entity;
+				if (((previousValue != value) 
+							|| (this._Rank_DropDown.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Rank_DropDown.Entity = null;
+						previousValue.Rank_DropDownValues.Remove(this);
+					}
+					this._Rank_DropDown.Entity = value;
+					if ((value != null))
+					{
+						value.Rank_DropDownValues.Add(this);
+						this._FK_dropdown = value.ID;
+					}
+					else
+					{
+						this._FK_dropdown = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Rank_DropDown");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rank_DropDown")]
+	public partial class Rank_DropDown : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _DropDown;
+		
+		private System.Nullable<bool> _Active;
+		
+		private EntitySet<Rank_DropDownValues> _Rank_DropDownValues;
+		
+		private EntitySet<Rank_Fields> _Rank_Fields;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnDropDownChanging(string value);
+    partial void OnDropDownChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public Rank_DropDown()
+		{
+			this._Rank_DropDownValues = new EntitySet<Rank_DropDownValues>(new Action<Rank_DropDownValues>(this.attach_Rank_DropDownValues), new Action<Rank_DropDownValues>(this.detach_Rank_DropDownValues));
+			this._Rank_Fields = new EntitySet<Rank_Fields>(new Action<Rank_Fields>(this.attach_Rank_Fields), new Action<Rank_Fields>(this.detach_Rank_Fields));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DropDown", DbType="NVarChar(50)")]
+		public string DropDown
+		{
+			get
+			{
+				return this._DropDown;
+			}
+			set
+			{
+				if ((this._DropDown != value))
+				{
+					this.OnDropDownChanging(value);
+					this.SendPropertyChanging();
+					this._DropDown = value;
+					this.SendPropertyChanged("DropDown");
+					this.OnDropDownChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_DropDown_Rank_DropDownValues", Storage="_Rank_DropDownValues", ThisKey="ID", OtherKey="FK_dropdown")]
+		public EntitySet<Rank_DropDownValues> Rank_DropDownValues
+		{
+			get
+			{
+				return this._Rank_DropDownValues;
+			}
+			set
+			{
+				this._Rank_DropDownValues.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_DropDown_Rank_Fields", Storage="_Rank_Fields", ThisKey="ID", OtherKey="FK_dropdown")]
+		public EntitySet<Rank_Fields> Rank_Fields
+		{
+			get
+			{
+				return this._Rank_Fields;
+			}
+			set
+			{
+				this._Rank_Fields.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Rank_DropDownValues(Rank_DropDownValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rank_DropDown = this;
+		}
+		
+		private void detach_Rank_DropDownValues(Rank_DropDownValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rank_DropDown = null;
+		}
+		
+		private void attach_Rank_Fields(Rank_Fields entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rank_DropDown = this;
+		}
+		
+		private void detach_Rank_Fields(Rank_Fields entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rank_DropDown = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rank_Fields")]
+	public partial class Rank_Fields : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private System.Nullable<bool> _Active;
+		
+		private string _Name;
+		
+		private System.Nullable<int> _FK_parametr;
+		
+		private int _line;
+		
+		private System.Nullable<int> _col;
+		
+		private System.Nullable<int> _step;
+		
+		private int _high;
+		
+		private int _width;
+		
+		private string _type;
+		
+		private System.Nullable<int> _FK_dropdown;
+		
+		private EntitySet<Rank_ArticleValues> _Rank_ArticleValues;
+		
+		private EntityRef<Rank_DropDown> _Rank_DropDown;
+		
+		private EntityRef<Rank_Parametrs> _Rank_Parametrs;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnFK_parametrChanging(System.Nullable<int> value);
+    partial void OnFK_parametrChanged();
+    partial void OnlineChanging(int value);
+    partial void OnlineChanged();
+    partial void OncolChanging(System.Nullable<int> value);
+    partial void OncolChanged();
+    partial void OnstepChanging(System.Nullable<int> value);
+    partial void OnstepChanged();
+    partial void OnhighChanging(int value);
+    partial void OnhighChanged();
+    partial void OnwidthChanging(int value);
+    partial void OnwidthChanged();
+    partial void OntypeChanging(string value);
+    partial void OntypeChanged();
+    partial void OnFK_dropdownChanging(System.Nullable<int> value);
+    partial void OnFK_dropdownChanged();
+    #endregion
+		
+		public Rank_Fields()
+		{
+			this._Rank_ArticleValues = new EntitySet<Rank_ArticleValues>(new Action<Rank_ArticleValues>(this.attach_Rank_ArticleValues), new Action<Rank_ArticleValues>(this.detach_Rank_ArticleValues));
+			this._Rank_DropDown = default(EntityRef<Rank_DropDown>);
+			this._Rank_Parametrs = default(EntityRef<Rank_Parametrs>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(150)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_parametr", DbType="Int")]
+		public System.Nullable<int> FK_parametr
+		{
+			get
+			{
+				return this._FK_parametr;
+			}
+			set
+			{
+				if ((this._FK_parametr != value))
+				{
+					if (this._Rank_Parametrs.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_parametrChanging(value);
+					this.SendPropertyChanging();
+					this._FK_parametr = value;
+					this.SendPropertyChanged("FK_parametr");
+					this.OnFK_parametrChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_line", DbType="Int NOT NULL")]
+		public int line
+		{
+			get
+			{
+				return this._line;
+			}
+			set
+			{
+				if ((this._line != value))
+				{
+					this.OnlineChanging(value);
+					this.SendPropertyChanging();
+					this._line = value;
+					this.SendPropertyChanged("line");
+					this.OnlineChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_col", DbType="Int")]
+		public System.Nullable<int> col
+		{
+			get
+			{
+				return this._col;
+			}
+			set
+			{
+				if ((this._col != value))
+				{
+					this.OncolChanging(value);
+					this.SendPropertyChanging();
+					this._col = value;
+					this.SendPropertyChanged("col");
+					this.OncolChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_step", DbType="Int")]
+		public System.Nullable<int> step
+		{
+			get
+			{
+				return this._step;
+			}
+			set
+			{
+				if ((this._step != value))
+				{
+					this.OnstepChanging(value);
+					this.SendPropertyChanging();
+					this._step = value;
+					this.SendPropertyChanged("step");
+					this.OnstepChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_high", DbType="Int NOT NULL")]
+		public int high
+		{
+			get
+			{
+				return this._high;
+			}
+			set
+			{
+				if ((this._high != value))
+				{
+					this.OnhighChanging(value);
+					this.SendPropertyChanging();
+					this._high = value;
+					this.SendPropertyChanged("high");
+					this.OnhighChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_width", DbType="Int NOT NULL")]
+		public int width
+		{
+			get
+			{
+				return this._width;
+			}
+			set
+			{
+				if ((this._width != value))
+				{
+					this.OnwidthChanging(value);
+					this.SendPropertyChanging();
+					this._width = value;
+					this.SendPropertyChanged("width");
+					this.OnwidthChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type", DbType="NChar(10)")]
+		public string type
+		{
+			get
+			{
+				return this._type;
+			}
+			set
+			{
+				if ((this._type != value))
+				{
+					this.OntypeChanging(value);
+					this.SendPropertyChanging();
+					this._type = value;
+					this.SendPropertyChanged("type");
+					this.OntypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_dropdown", DbType="Int")]
+		public System.Nullable<int> FK_dropdown
+		{
+			get
+			{
+				return this._FK_dropdown;
+			}
+			set
+			{
+				if ((this._FK_dropdown != value))
+				{
+					if (this._Rank_DropDown.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_dropdownChanging(value);
+					this.SendPropertyChanging();
+					this._FK_dropdown = value;
+					this.SendPropertyChanged("FK_dropdown");
+					this.OnFK_dropdownChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Fields_Rank_ArticleValues", Storage="_Rank_ArticleValues", ThisKey="ID", OtherKey="FK_Field")]
+		public EntitySet<Rank_ArticleValues> Rank_ArticleValues
+		{
+			get
+			{
+				return this._Rank_ArticleValues;
+			}
+			set
+			{
+				this._Rank_ArticleValues.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_DropDown_Rank_Fields", Storage="_Rank_DropDown", ThisKey="FK_dropdown", OtherKey="ID", IsForeignKey=true)]
+		public Rank_DropDown Rank_DropDown
+		{
+			get
+			{
+				return this._Rank_DropDown.Entity;
+			}
+			set
+			{
+				Rank_DropDown previousValue = this._Rank_DropDown.Entity;
+				if (((previousValue != value) 
+							|| (this._Rank_DropDown.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Rank_DropDown.Entity = null;
+						previousValue.Rank_Fields.Remove(this);
+					}
+					this._Rank_DropDown.Entity = value;
+					if ((value != null))
+					{
+						value.Rank_Fields.Add(this);
+						this._FK_dropdown = value.ID;
+					}
+					else
+					{
+						this._FK_dropdown = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Rank_DropDown");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rank_Parametrs_Rank_Fields", Storage="_Rank_Parametrs", ThisKey="FK_parametr", OtherKey="ID", IsForeignKey=true)]
+		public Rank_Parametrs Rank_Parametrs
+		{
+			get
+			{
+				return this._Rank_Parametrs.Entity;
+			}
+			set
+			{
+				Rank_Parametrs previousValue = this._Rank_Parametrs.Entity;
+				if (((previousValue != value) 
+							|| (this._Rank_Parametrs.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Rank_Parametrs.Entity = null;
+						previousValue.Rank_Fields.Remove(this);
+					}
+					this._Rank_Parametrs.Entity = value;
+					if ((value != null))
+					{
+						value.Rank_Fields.Add(this);
+						this._FK_parametr = value.ID;
+					}
+					else
+					{
+						this._FK_parametr = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Rank_Parametrs");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Rank_ArticleValues(Rank_ArticleValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rank_Fields = this;
+		}
+		
+		private void detach_Rank_ArticleValues(Rank_ArticleValues entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rank_Fields = null;
 		}
 	}
 }

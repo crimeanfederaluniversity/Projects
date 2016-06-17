@@ -3,18 +3,21 @@
      <div style="font-size: medium">
         <asp:Button ID="Button1" runat="server" Text="Назад" OnClick="Button1_Click" />
         <br />Добавление/редактирование в показателе:<asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></span>&nbsp;<br />
-        &nbsp;&nbsp;&nbsp;<br />
-        Выберите вид издания: <span style="font-size: medium">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Выберите гриф/рекомендация:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><br />
-        <asp:DropDownList ID="DropDownList1" runat="server" Height="30px" Width="200px" AutoPostBack ="true">
-            <asp:ListItem Selected="True" Value="0">Печатное</asp:ListItem>
-            <asp:ListItem Value="1">Электронное</asp:ListItem>
+         <br />
+         <asp:Label ID="Label10" runat="server" Text="Выберите гриф/рекомендация:"></asp:Label>
+&nbsp;&nbsp;
+         <asp:Label ID="Label11" runat="server" Text="Выберите вид документа:"></asp:Label>
+         <span style="font-size: medium">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><br />
+         <asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack="True" Height="30px" Width="225px">
         </asp:DropDownList>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack="True" Height="30px" Width="200px">
-        </asp:DropDownList>
-        &nbsp;&nbsp;&nbsp;&nbsp;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;<asp:DropDownList ID="DropDownList7" runat="server" Width="201px">
+             <asp:ListItem Selected="True" Value="1">Диплом</asp:ListItem>
+             <asp:ListItem Value="2">Приказ</asp:ListItem>
+         </asp:DropDownList>
+         <br />
         &nbsp;<div id="TableDiv" runat="server">
         </div>
+         <br />
        Авторы:     
         <br />
         <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server"   >

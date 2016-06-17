@@ -15,6 +15,7 @@ namespace Rank.Forms
         public DataValidator validator = new DataValidator();
         public class ValueSaveClass
         {
+            public DropDownList SelectedValue { get; set; }
             public TextBox Value { get; set; }
             public int FieldId { get; set; }
             public int ArticleId { get; set; }
@@ -27,8 +28,7 @@ namespace Rank.Forms
             Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
             Label1.Text = name.Name;
             TableDiv.Controls.Clear();
-            TableDiv.Controls.Add(CreateNewTable());
-            Refresh();
+            TableDiv.Controls.Add(CreateNewTable());         
             if (!IsPostBack)
             {
                 List<FirstLevelSubdivisionTable> First_stageList = (from item in ratingDB.FirstLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
@@ -185,27 +185,48 @@ namespace Rank.Forms
                 List<Rank_Fields> fieldsInLine = (from a in allFields where a.line == i select a).OrderBy(mc => mc.col).ToList();
                 foreach (Rank_Fields field in fieldsInLine)
                 {
+                    
                     TableCell newCell = new TableCell();
                     TableCell headerNewCell = new TableCell();
                     headerNewCell.Text = field.Name;
 
-                    TextBox newTextBox = validator.GetTextBox(field.type);
-                    newTextBox.Width = field.width;
-                    newTextBox.Height = field.high;
-                    newTextBox.ID = "textBox" + field.ID.ToString();
-                    newTextBox.Text = GetCollectedValue(field.ID, article, paramId);
+                    if (field.FK_dropdown != null)
+                    {
+                        DropDownList ddList = new DropDownList();
+                       List<Rank_DropDownValues> values = (from a in ratingDB.Rank_DropDownValues where a.Active == true
+                                                           join b in ratingDB.Rank_DropDown on a.FK_dropdown equals b.ID
+                                                           where b.Active == true && b.ID == field.FK_dropdown select a).ToList();
+                        foreach (Rank_DropDownValues tmp in values)
+                        {
+                            ddList.Items.Add(new ListItem() { Value = tmp.Name, Text = tmp.Name });
+                        }
+                        ValueSaveClass classTmp = new ValueSaveClass();
+                   //     classTmp.SelectedValue = Convert.ToString(ddList.SelectedValue);
+                        classTmp.FieldId = field.ID;
+                        classTmp.ArticleId = article;
+                        classTmp.ParamId = paramId;
 
-                    ValueSaveClass classTmp = new ValueSaveClass();
-                    classTmp.Value = newTextBox;
-                    classTmp.FieldId = field.ID;
-                    classTmp.ArticleId = article;
-                    classTmp.ParamId = paramId;
+                        ValuesList.Add(classTmp);
+                    }
+                    else
+                    {
+                        TextBox newTextBox = validator.GetTextBox(field.type);
+                        newTextBox.Width = field.width;
+                        newTextBox.Height = field.high;
+                        newTextBox.ID = "textBox" + field.ID.ToString();
+                        newTextBox.Text = GetCollectedValue(field.ID, article, paramId);
 
-                    ValuesList.Add(classTmp);
+                        ValueSaveClass classTmp = new ValueSaveClass();
+                        classTmp.Value = newTextBox;
+                        classTmp.FieldId = field.ID;
+                        classTmp.ArticleId = article;
+                        classTmp.ParamId = paramId;
 
-                    newCell.Controls.Add(validator.GetRangeValidator("RangeValidator" + field.ID, "textBox" + field.ID.ToString(), field.type));
-                    newCell.Controls.Add(newTextBox);
+                        ValuesList.Add(classTmp);
 
+                        newCell.Controls.Add(validator.GetRangeValidator("RangeValidator" + field.ID, "textBox" + field.ID.ToString(), field.type));
+                        newCell.Controls.Add(newTextBox);
+                    }
                     newRow.Cells.Add(newCell);
                     headerNewRow.Cells.Add(headerNewCell);
                 }
@@ -224,7 +245,7 @@ namespace Rank.Forms
         }
         protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
         {
-          //  DropDownList3.Items.Clear();
+          
             int SelectedValue = -1;
 
             if (int.TryParse(DropDownList3.SelectedValue, out SelectedValue) && SelectedValue != -1)

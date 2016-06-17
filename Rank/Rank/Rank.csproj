@@ -197,6 +197,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Forms\calendar_ru.js" />
+    <Content Include="Forms\UserArticleAccept.aspx" />
     <Content Include="RankDB.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>RankDB.designer.cs</LastGenOutput>
@@ -289,6 +290,13 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\DataValidator.cs" />
+    <Compile Include="Forms\UserArticleAccept.aspx.cs">
+      <DependentUpon>UserArticleAccept.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\UserArticleAccept.aspx.designer.cs">
+      <DependentUpon>UserArticleAccept.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\UserArticlePage.aspx.cs">
       <DependentUpon>UserArticlePage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

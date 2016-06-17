@@ -54,7 +54,7 @@ namespace Rank.Forms
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("~/Forms/UserArticleAccept.aspx");
         }
     }
 }
