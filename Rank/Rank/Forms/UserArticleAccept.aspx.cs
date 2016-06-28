@@ -31,14 +31,18 @@ namespace Rank.Forms
             dataTable.Columns.Add(new DataColumn("Date", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Point", typeof(string)));
 
-            List<Rank_Articles> authorList = (from b in ratingDB.Rank_Articles where b.Active == true
+            List<Rank_Articles> authorList = (from b in ratingDB.Rank_Articles
+                                              where b.Active == true
                                               join a in ratingDB.Rank_UserArticleMappingTable on b.ID equals a.FK_Article
-                                              where a.Active == true && a.FK_User == userID && a.UserConfirm == false select b).ToList();
+                                              where a.Active == true && a.FK_User == userID && a.UserConfirm == false
+                                              select b).ToList();
             foreach (Rank_Articles value in authorList)
             {
-                Rank_DifficaltPoint point = (from b in ratingDB.Rank_DifficaltPoint where b.Active == true
+                Rank_DifficaltPoint point = (from b in ratingDB.Rank_DifficaltPoint
+                                             where b.Active == true
                                              join a in ratingDB.Rank_UserArticleMappingTable on b.ID equals a.FK_point
-                                             where a.FK_Article == value.ID select b).FirstOrDefault();
+                                             where a.FK_Article == value.ID
+                                             select b).FirstOrDefault();
                 DataRow dataRow = dataTable.NewRow();
                 dataRow["ID"] = value.ID;
                 dataRow["Name"] = value.Name;
@@ -49,6 +53,22 @@ namespace Rank.Forms
             GridView1.DataSource = dataTable;
             GridView1.DataBind();
 
+        }
+
+        protected void AcceptButtonClik(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            var userId = Session["UserID"];
+            int userID = (int)userId;
+            Rank_UserArticleMappingTable confirm = (from a in ratingDB.Rank_UserArticleMappingTable
+                                                    where a.Active == true && a.FK_User == userID && a.UserConfirm == false && a.FK_Article == Convert.ToInt32(button.CommandArgument)
+                                                    select a).FirstOrDefault();
+            if (confirm != null)
+            {
+                confirm.UserConfirm = true;
+                ratingDB.SubmitChanges();
+                Refresh();
+            }
         }
     }
 }

@@ -205,7 +205,7 @@
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Forms\UserArticlePage.aspx" />
-    <Content Include="Forms\UserFillFormPage.aspx" />
+    <Content Include="Forms\FormUchebniki.aspx" />
     <Content Include="Forms\UserMainPage.aspx" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
@@ -304,12 +304,12 @@
     <Compile Include="Forms\UserArticlePage.aspx.designer.cs">
       <DependentUpon>UserArticlePage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\UserFillFormPage.aspx.cs">
-      <DependentUpon>UserFillFormPage.aspx</DependentUpon>
+    <Compile Include="Forms\FormUchebniki.aspx.cs">
+      <DependentUpon>FormUchebniki.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Forms\UserFillFormPage.aspx.designer.cs">
-      <DependentUpon>UserFillFormPage.aspx</DependentUpon>
+    <Compile Include="Forms\FormUchebniki.aspx.designer.cs">
+      <DependentUpon>FormUchebniki.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\UserMainPage.aspx.cs">
       <DependentUpon>UserMainPage.aspx</DependentUpon>
