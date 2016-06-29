@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 namespace Rank.Forms
 {
-    public partial class UserFillFormPage : System.Web.UI.Page
+    public partial class FormUserPublication : System.Web.UI.Page
     {
         RankDBDataContext ratingDB = new RankDBDataContext();
         public List<ValueSaveClass> ValuesList = new List<ValueSaveClass>();
@@ -20,6 +20,10 @@ namespace Rank.Forms
             public int FieldId { get; set; }
             public int ArticleId { get; set; }
             public int ParamId { get; set; }
+        }
+        protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -51,10 +55,10 @@ namespace Rank.Forms
             DropDownList2.DataTextField = "Value";
             DropDownList2.DataValueField = "Key";
             DropDownList2.DataSource = dictionary1;
-            DropDownList2.DataBind();           
+            DropDownList2.DataBind();
         }
         protected void Refresh()
-        {         
+        {
             int article = Convert.ToInt32(Session["articleID"]);
             int paramId = Convert.ToInt32(Session["parametrID"]);
             DataTable dataTable = new DataTable();
@@ -78,7 +82,7 @@ namespace Rank.Forms
                 ThirdLevelSubdivisionTable third = (from a in ratingDB.ThirdLevelSubdivisionTable where a.Active == true && a.ThirdLevelSubdivisionTableID == author.FK_ThirdLevelSubdivisionTable select a).FirstOrDefault();
                 dataRow["ID"] = value.ID;
                 dataRow["userid"] = author.UsersTableID;
-                if(first != null)
+                if (first != null)
                 {
                     dataRow["firstlvl"] = first.Name;
                 }
@@ -117,25 +121,25 @@ namespace Rank.Forms
             GridView1.DataBind();
         }
         protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
-        {           
-                if (e.Row.RowType == DataControlRowType.DataRow)
-                {
-                    int paramId = Convert.ToInt32(Session["parametrID"]);
-                    DropDownList ddlPoint = (e.Row.FindControl("ddlPoint") as DropDownList);
-                    List<Rank_DifficaltPoint> points = (from item in ratingDB.Rank_DifficaltPoint where item.fk_parametr == paramId select item).ToList();
-                    var dictionary = new Dictionary<int, string>();
-                    dictionary.Add(0, "Выберите значение");
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                int paramId = Convert.ToInt32(Session["parametrID"]);
+                DropDownList ddlPoint = (e.Row.FindControl("ddlPoint") as DropDownList);
+                List<Rank_DifficaltPoint> points = (from item in ratingDB.Rank_DifficaltPoint where item.fk_parametr == paramId select item).ToList();
+                var dictionary = new Dictionary<int, string>();
+                dictionary.Add(0, "Выберите значение");
 
-                    foreach (var item in points)
-                        dictionary.Add(item.ID, item.Name);
-                    ddlPoint.DataSource = dictionary;
-                    ddlPoint.DataTextField = "Value";
-                    ddlPoint.DataValueField = "Key";
-                    ddlPoint.DataBind();
+                foreach (var item in points)
+                    dictionary.Add(item.ID, item.Name);
+                ddlPoint.DataSource = dictionary;
+                ddlPoint.DataTextField = "Value";
+                ddlPoint.DataValueField = "Key";
+                ddlPoint.DataBind();
 
-               //     ddlPoint.Items.Insert(0, new ListItem("Выберите коэффициент"));
+                //     ddlPoint.Items.Insert(0, new ListItem("Выберите коэффициент"));
 
-                    string point = (e.Row.FindControl("point") as Label).Text;
+                string point = (e.Row.FindControl("point") as Label).Text;
                 if (point != null && point != "")
                 {
                     ddlPoint.Items.FindByText(point).Selected = true;
@@ -144,18 +148,18 @@ namespace Rank.Forms
                 {
                     ddlPoint.SelectedIndex = 0;
                 }
-                }           
-        }       
+            }
+        }
         protected void ddlPoint_SelectedIndexChanged(object sender, EventArgs e)
         {
-         
+
         }
         public string GetCollectedValue(int fieldId, int articleId, int paramid)
         {
             Rank_ArticleValues fk = (from a in ratingDB.Rank_ArticleValues
-                                     where 
+                                     where
                                         a.FK_Article == articleId
-                                     && a.FK_Field == fieldId 
+                                     && a.FK_Field == fieldId
                                      && a.FK_Param == paramid
                                      select a).FirstOrDefault();
             if (fk != null)
@@ -208,7 +212,7 @@ namespace Rank.Forms
                 List<Rank_Fields> fieldsInLine = (from a in allFields where a.line == i select a).OrderBy(mc => mc.col).ToList();
                 foreach (Rank_Fields field in fieldsInLine)
                 {
-                    
+
                     TableCell newCell = new TableCell();
                     TableCell headerNewCell = new TableCell();
                     headerNewCell.Text = field.Name;
@@ -281,7 +285,7 @@ namespace Rank.Forms
             }
         }
         protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
-        {          
+        {
             int SelectedValue = -1;
             if (int.TryParse(DropDownList3.SelectedValue, out SelectedValue) && SelectedValue != -1)
             {
@@ -378,7 +382,7 @@ namespace Rank.Forms
                 TableDiv.Controls.Add(CreateNewTable());
                 searchError.Visible = false;
                 PoiskRefresh();
-            } 
+            }
         }
 
         protected void AddAutorButtonClik(object sender, EventArgs e)
@@ -395,18 +399,18 @@ namespace Rank.Forms
             Refresh();
         }
         protected void RankPointSaveButtonClik(object sender, EventArgs e)
-        {            
+        {
             Button button = (Button)sender;
             GridViewRow row = (GridViewRow)button.Parent.Parent;
             DropDownList drop = (DropDownList)row.FindControl("ddlPoint");
-            
+
             int article = Convert.ToInt32(Session["articleID"]);
             Rank_UserArticleMappingTable savepoint = (from a in ratingDB.Rank_UserArticleMappingTable
-                                                   where a.Active == true && a.FK_Article == article && a.FK_User == Convert.ToInt32(button.CommandArgument)
-                                                   select a).FirstOrDefault();
+                                                      where a.Active == true && a.FK_Article == article && a.FK_User == Convert.ToInt32(button.CommandArgument)
+                                                      select a).FirstOrDefault();
             int fkpoint = 0;
-            Int32.TryParse(drop.SelectedValue,out  fkpoint);
-            if(fkpoint != 0)
+            Int32.TryParse(drop.SelectedValue, out fkpoint);
+            if (fkpoint != 0)
             {
                 savepoint.FK_point = fkpoint;
             }
@@ -417,7 +421,7 @@ namespace Rank.Forms
             ratingDB.SubmitChanges();
             Refresh();
         }
-      
+
         protected void Rank_DeleteAutorButtonClik(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -432,7 +436,7 @@ namespace Rank.Forms
             }
             Refresh();
         }
-   
+
         protected void Button1_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Forms/UserArticlePage.aspx");
@@ -445,7 +449,7 @@ namespace Rank.Forms
 
         protected void AddNotSystemUserButtonClick(object sender, EventArgs e)
         {
-            if(CheckBox1.Checked)
+            if (CheckBox1.Checked)
             {
 
             }
@@ -454,5 +458,7 @@ namespace Rank.Forms
 
             }
         }
+
+        
     }
 }

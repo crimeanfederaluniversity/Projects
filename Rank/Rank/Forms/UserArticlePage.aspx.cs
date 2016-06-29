@@ -57,7 +57,7 @@ namespace Rank.Forms
         {
             Button button = (Button)sender;
             Session["articleID"] = Convert.ToInt32(button.CommandArgument);
-            Response.Redirect("~/Forms/UserFillFormPage.aspx");
+            Response.Redirect("~/Forms/FormUchebniki.aspx");
         }
 
         protected void Button2_Click(object sender, EventArgs e)

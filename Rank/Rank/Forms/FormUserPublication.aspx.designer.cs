@@ -10,7 +10,7 @@
 namespace Rank.Forms {
     
     
-    public partial class UserFillFormPage {
+    public partial class FormUserPublication {
         
         /// <summary>
         /// Button1 control.
