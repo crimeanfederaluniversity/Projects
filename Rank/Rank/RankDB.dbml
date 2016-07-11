@@ -6,8 +6,8 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="FK_SecondLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="ThirdLevelSubdivisionTable_Rank_StructPoints" Member="Rank_StructPoints" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_thirdlvl" Type="Rank_StructPoints" />
       <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="UsersTable" />
+      <Association Name="ThirdLevelSubdivisionTable_Rank_StructPoints" Member="Rank_StructPoints" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_thirdlvl" Type="Rank_StructPoints" />
       <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
@@ -18,8 +18,8 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="FK_FirstLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="ThirdLevelSubdivisionTable" />
-      <Association Name="SecondLevelSubdivisionTable_Rank_StructPoints" Member="Rank_StructPoints" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_secondlvl" Type="Rank_StructPoints" />
       <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="UsersTable" />
+      <Association Name="SecondLevelSubdivisionTable_Rank_StructPoints" Member="Rank_StructPoints" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_secondlvl" Type="Rank_StructPoints" />
       <Association Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
@@ -31,8 +31,8 @@
       <Column Name="FK_ZeroLevelSubvisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="AbbRu" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="SecondLevelSubdivisionTable" />
-      <Association Name="FirstLevelSubdivisionTable_Rank_StructPoints" Member="Rank_StructPoints" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_firstlvl" Type="Rank_StructPoints" />
       <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="UsersTable" />
+      <Association Name="FirstLevelSubdivisionTable_Rank_StructPoints" Member="Rank_StructPoints" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_firstlvl" Type="Rank_StructPoints" />
     </Type>
   </Table>
   <Table Name="dbo.Rank_Articles" Member="Rank_Articles">
@@ -45,35 +45,10 @@
       <Column Name="Filename" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="Status" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FK_mark" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Rank_Articles_Rank_ArticleValues" Member="Rank_ArticleValues" ThisKey="ID" OtherKey="ID" Type="Rank_ArticleValues" Cardinality="One" />
       <Association Name="Rank_Articles_Rank_UserArticleMappingTable" Member="Rank_UserArticleMappingTable" ThisKey="ID" OtherKey="FK_Article" Type="Rank_UserArticleMappingTable" />
+      <Association Name="Rank_Articles_Rank_ArticleValues" Member="Rank_ArticleValues" ThisKey="ID" OtherKey="FK_Article" Type="Rank_ArticleValues" />
       <Association Name="Rank_Mark_Rank_Articles" Member="Rank_Mark" ThisKey="FK_mark" OtherKey="ID" Type="Rank_Mark" IsForeignKey="true" />
       <Association Name="Rank_Parametrs_Rank_Articles" Member="Rank_Parametrs" ThisKey="FK_parametr" OtherKey="ID" Type="Rank_Parametrs" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_ArticleValues" Member="Rank_ArticleValues">
-    <Type Name="Rank_ArticleValues">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_Article" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Field" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Value" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="FK_Param" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Rank_Articles_Rank_ArticleValues" Member="Rank_Articles" ThisKey="ID" OtherKey="ID" Type="Rank_Articles" IsForeignKey="true" />
-      <Association Name="Rank_Parametrs_Rank_ArticleValues" Member="Rank_Parametrs" ThisKey="FK_Param" OtherKey="ID" Type="Rank_Parametrs" IsForeignKey="true" />
-      <Association Name="Rank_Fields_Rank_ArticleValues" Member="Rank_Fields" ThisKey="FK_Field" OtherKey="ID" Type="Rank_Fields" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_Collected_ParametrsValue" Member="Rank_Collected_ParametrsValue">
-    <Type Name="Rank_Collected_ParametrsValue">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_Parametrs" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Autor" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Value" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Status" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Rank_Parametrs_Rank_Collected_ParametrsValue" Member="Rank_Parametrs" ThisKey="FK_Parametrs" OtherKey="ID" Type="Rank_Parametrs" IsForeignKey="true" />
-      <Association Name="UsersTable_Rank_Collected_ParametrsValue" Member="UsersTable" ThisKey="FK_Autor" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Rank_DifficaltPoint" Member="Rank_DifficaltPoint">
@@ -95,36 +70,8 @@
       <Column Name="Points" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="fk_parametr" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Rank_Mark_Rank_Articles" Member="Rank_Articles" ThisKey="ID" OtherKey="FK_mark" Type="Rank_Articles" />
+      <Association Name="Rank_Mark_Rank_Fields" Member="Rank_Fields" ThisKey="ID" OtherKey="FK_mark" Type="Rank_Fields" />
       <Association Name="Rank_Parametrs_Rank_Mark" Member="Rank_Parametrs" ThisKey="fk_parametr" OtherKey="ID" Type="Rank_Parametrs" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_Parametrs" Member="Rank_Parametrs">
-    <Type Name="Rank_Parametrs">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="Amount" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
-      <Column Name="Formula" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Association Name="Rank_Parametrs_Rank_Articles" Member="Rank_Articles" ThisKey="ID" OtherKey="FK_parametr" Type="Rank_Articles" />
-      <Association Name="Rank_Parametrs_Rank_ArticleValues" Member="Rank_ArticleValues" ThisKey="ID" OtherKey="FK_Param" Type="Rank_ArticleValues" />
-      <Association Name="Rank_Parametrs_Rank_Collected_ParametrsValue" Member="Rank_Collected_ParametrsValue" ThisKey="ID" OtherKey="FK_Parametrs" Type="Rank_Collected_ParametrsValue" />
-      <Association Name="Rank_Parametrs_Rank_DifficaltPoint" Member="Rank_DifficaltPoint" ThisKey="ID" OtherKey="fk_parametr" Type="Rank_DifficaltPoint" />
-      <Association Name="Rank_Parametrs_Rank_Mark" Member="Rank_Mark" ThisKey="ID" OtherKey="fk_parametr" Type="Rank_Mark" />
-      <Association Name="Rank_Parametrs_Rank_UserParametrValue" Member="Rank_UserParametrValue" ThisKey="ID" OtherKey="FK_parametr" Type="Rank_UserParametrValue" />
-      <Association Name="Rank_Parametrs_Rank_Fields" Member="Rank_Fields" ThisKey="ID" OtherKey="FK_parametr" Type="Rank_Fields" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_StructPoints" Member="Rank_StructPoints">
-    <Type Name="Rank_StructPoints">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="FK_thirdlvl" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_secondlvl" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_firstlvl" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Value" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Association Name="FirstLevelSubdivisionTable_Rank_StructPoints" Member="FirstLevelSubdivisionTable" ThisKey="FK_firstlvl" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
-      <Association Name="SecondLevelSubdivisionTable_Rank_StructPoints" Member="SecondLevelSubdivisionTable" ThisKey="FK_secondlvl" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
-      <Association Name="ThirdLevelSubdivisionTable_Rank_StructPoints" Member="ThirdLevelSubdivisionTable" ThisKey="FK_thirdlvl" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Rank_UserArticleMappingTable" Member="Rank_UserArticleMappingTable">
@@ -138,18 +85,6 @@
       <Association Name="Rank_Articles_Rank_UserArticleMappingTable" Member="Rank_Articles" ThisKey="FK_Article" OtherKey="ID" Type="Rank_Articles" IsForeignKey="true" />
       <Association Name="Rank_DifficaltPoint_Rank_UserArticleMappingTable" Member="Rank_DifficaltPoint" ThisKey="FK_point" OtherKey="ID" Type="Rank_DifficaltPoint" IsForeignKey="true" />
       <Association Name="UsersTable_Rank_UserArticleMappingTable" Member="UsersTable" ThisKey="FK_User" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Rank_UserParametrValue" Member="Rank_UserParametrValue">
-    <Type Name="Rank_UserParametrValue">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FK_parametr" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_user" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Value" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="Rank_Parametrs_Rank_UserParametrValue" Member="Rank_Parametrs" ThisKey="FK_parametr" OtherKey="ID" Type="Rank_Parametrs" IsForeignKey="true" />
-      <Association Name="UsersTable_Rank_UserParametrValue" Member="UsersTable" ThisKey="FK_user" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.UsersTable" Member="UsersTable">
@@ -178,7 +113,6 @@
       <Column Name="Kurs" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FK_Specialization" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FK_StudentGroup" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="UsersTable_Rank_Collected_ParametrsValue" Member="Rank_Collected_ParametrsValue" ThisKey="UsersTableID" OtherKey="FK_Autor" Type="Rank_Collected_ParametrsValue" />
       <Association Name="UsersTable_Rank_UserArticleMappingTable" Member="Rank_UserArticleMappingTable" ThisKey="UsersTableID" OtherKey="FK_User" Type="Rank_UserArticleMappingTable" />
       <Association Name="UsersTable_Rank_UserParametrValue" Member="Rank_UserParametrValue" ThisKey="UsersTableID" OtherKey="FK_user" Type="Rank_UserParametrValue" />
       <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
@@ -192,6 +126,7 @@
       <Column Name="Name" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="FK_dropdown" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Rank_DropDownValues_Rank_ArticleValues" Member="Rank_ArticleValues" ThisKey="ID" OtherKey="FK_dropvalue" Type="Rank_ArticleValues" />
       <Association Name="Rank_DropDown_Rank_DropDownValues" Member="Rank_DropDown" ThisKey="FK_dropdown" OtherKey="ID" Type="Rank_DropDown" IsForeignKey="true" />
     </Type>
   </Table>
@@ -202,6 +137,21 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="Rank_DropDown_Rank_DropDownValues" Member="Rank_DropDownValues" ThisKey="ID" OtherKey="FK_dropdown" Type="Rank_DropDownValues" />
       <Association Name="Rank_DropDown_Rank_Fields" Member="Rank_Fields" ThisKey="ID" OtherKey="FK_dropdown" Type="Rank_Fields" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rank_ArticleValues" Member="Rank_ArticleValues">
+    <Type Name="Rank_ArticleValues">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_Article" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_Field" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Value" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="FK_Param" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_dropvalue" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Rank_Articles_Rank_ArticleValues" Member="Rank_Articles" ThisKey="FK_Article" OtherKey="ID" Type="Rank_Articles" IsForeignKey="true" />
+      <Association Name="Rank_DropDownValues_Rank_ArticleValues" Member="Rank_DropDownValues" ThisKey="FK_dropvalue" OtherKey="ID" Type="Rank_DropDownValues" IsForeignKey="true" />
+      <Association Name="Rank_Fields_Rank_ArticleValues" Member="Rank_Fields" ThisKey="FK_Field" OtherKey="ID" Type="Rank_Fields" IsForeignKey="true" />
+      <Association Name="Rank_Parametrs_Rank_ArticleValues" Member="Rank_Parametrs" ThisKey="FK_Param" OtherKey="ID" Type="Rank_Parametrs" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Rank_Fields" Member="Rank_Fields">
@@ -217,9 +167,60 @@
       <Column Name="width" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="type" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
       <Column Name="FK_dropdown" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_mark" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="formtype" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Rank_Fields_Rank_ArticleValues" Member="Rank_ArticleValues" ThisKey="ID" OtherKey="FK_Field" Type="Rank_ArticleValues" />
       <Association Name="Rank_DropDown_Rank_Fields" Member="Rank_DropDown" ThisKey="FK_dropdown" OtherKey="ID" Type="Rank_DropDown" IsForeignKey="true" />
+      <Association Name="Rank_Mark_Rank_Fields" Member="Rank_Mark" ThisKey="FK_mark" OtherKey="ID" Type="Rank_Mark" IsForeignKey="true" />
       <Association Name="Rank_Parametrs_Rank_Fields" Member="Rank_Parametrs" ThisKey="FK_parametr" OtherKey="ID" Type="Rank_Parametrs" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rank_Parametrs" Member="Rank_Parametrs">
+    <Type Name="Rank_Parametrs">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="UserType" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Weight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="EditUserType" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OneOrManyAuthor" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Rank_Parametrs_Rank_Articles" Member="Rank_Articles" ThisKey="ID" OtherKey="FK_parametr" Type="Rank_Articles" />
+      <Association Name="Rank_Parametrs_Rank_DifficaltPoint" Member="Rank_DifficaltPoint" ThisKey="ID" OtherKey="fk_parametr" Type="Rank_DifficaltPoint" />
+      <Association Name="Rank_Parametrs_Rank_Mark" Member="Rank_Mark" ThisKey="ID" OtherKey="fk_parametr" Type="Rank_Mark" />
+      <Association Name="Rank_Parametrs_Rank_ArticleValues" Member="Rank_ArticleValues" ThisKey="ID" OtherKey="FK_Param" Type="Rank_ArticleValues" />
+      <Association Name="Rank_Parametrs_Rank_Fields" Member="Rank_Fields" ThisKey="ID" OtherKey="FK_parametr" Type="Rank_Fields" />
+      <Association Name="Rank_Parametrs_Rank_StructPoints" Member="Rank_StructPoints" ThisKey="ID" OtherKey="FK_parametr" Type="Rank_StructPoints" />
+      <Association Name="Rank_Parametrs_Rank_UserParametrValue" Member="Rank_UserParametrValue" ThisKey="ID" OtherKey="FK_parametr" Type="Rank_UserParametrValue" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rank_StructPoints" Member="Rank_StructPoints">
+    <Type Name="Rank_StructPoints">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_thirdlvl" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_secondlvl" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_firstlvl" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Value" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Accept" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_parametr" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AcceptDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="FirstLevelSubdivisionTable_Rank_StructPoints" Member="FirstLevelSubdivisionTable" ThisKey="FK_firstlvl" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="Rank_Parametrs_Rank_StructPoints" Member="Rank_Parametrs" ThisKey="FK_parametr" OtherKey="ID" Type="Rank_Parametrs" IsForeignKey="true" />
+      <Association Name="SecondLevelSubdivisionTable_Rank_StructPoints" Member="SecondLevelSubdivisionTable" ThisKey="FK_secondlvl" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="ThirdLevelSubdivisionTable_Rank_StructPoints" Member="ThirdLevelSubdivisionTable" ThisKey="FK_thirdlvl" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rank_UserParametrValue" Member="Rank_UserParametrValue">
+    <Type Name="Rank_UserParametrValue">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FK_parametr" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_user" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Value" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AcceptDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Accept" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Rank_Parametrs_Rank_UserParametrValue" Member="Rank_Parametrs" ThisKey="FK_parametr" OtherKey="ID" Type="Rank_Parametrs" IsForeignKey="true" />
+      <Association Name="UsersTable_Rank_UserParametrValue" Member="UsersTable" ThisKey="FK_user" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

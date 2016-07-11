@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserArticleAccept.aspx.cs" Inherits="Rank.Forms.UserArticleAccept" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableEventValidation ="false" CodeBehind="UserArticleAccept.aspx.cs" Inherits="Rank.Forms.UserArticleAccept" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
        <div>
           <h3>Работы, в которых Вас указали автором/соавтором:</h3>        
@@ -32,7 +32,6 @@
                         </ItemTemplate>
                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
-
                       <asp:TemplateField HeaderText="Утвердить">
                         <ItemTemplate>
                             <asp:Button ID="AcceptButton" runat="server" CommandName="Select" Text="Утвердить" Width="150px" CommandArgument='<%# Eval("ID") %>' OnClick="AcceptButtonClik" />

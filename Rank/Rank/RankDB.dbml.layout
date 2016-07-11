@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 15.875, 31.25" name="RankDB">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 17.75, 30.375" name="RankDB">
   <DataContextMoniker Name="/RankDBDataContext" />
   <nestedChildShapes>
     <classShape Id="0ec0f44a-4ff7-41e8-865b-d18fdecb20a6" absoluteBounds="9.125, 3.375, 2, 1.5785953776041666">
@@ -40,18 +40,6 @@
         <elementListCompartment Id="bd858704-8288-424d-a182-760340249ac1" absoluteBounds="6.265, 19.085, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="7984324b-cc82-495b-8332-64ee0c588cfd" absoluteBounds="9, 24.625, 2, 1.9631982421875023">
-      <DataClassMoniker Name="/RankDBDataContext/Rank_ArticleValues" />
-      <nestedChildShapes>
-        <elementListCompartment Id="ff1f9d27-9b33-442d-a48c-01023e439d53" absoluteBounds="9.015, 25.085, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="12546acf-6ca6-46d3-bb18-bf41673acb96" absoluteBounds="9.25, 10.875, 2, 1.9631982421874987">
-      <DataClassMoniker Name="/RankDBDataContext/Rank_Collected_ParametrsValue" />
-      <nestedChildShapes>
-        <elementListCompartment Id="4c3a28e5-eaf2-4850-959b-bf65cec4bd9a" absoluteBounds="9.265, 11.335, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="985d5919-c5d9-4fe2-84c7-900b91e524a0" absoluteBounds="3.5, 16.125, 2, 1.7708968098958309">
       <DataClassMoniker Name="/RankDBDataContext/Rank_DifficaltPoint" />
       <nestedChildShapes>
@@ -64,37 +52,12 @@
         <elementListCompartment Id="71fa1f71-8e82-4feb-8c27-2dcde4af3170" absoluteBounds="3.515, 19.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="408ab928-2f0f-4d95-ad0e-e106a41ac80a" absoluteBounds="0.75, 19.125, 2, 1.7708968098958309">
-      <DataClassMoniker Name="/RankDBDataContext/Rank_Parametrs" />
-      <nestedChildShapes>
-        <elementListCompartment Id="763ecfd7-df74-4052-a91a-e6a748f5d3c1" absoluteBounds="0.765, 19.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="d66073f5-d67f-400e-b8cb-0b170e048f26" absoluteBounds="13.625, 5.375, 2, 1.9631982421875005">
-      <DataClassMoniker Name="/RankDBDataContext/Rank_StructPoints" />
-      <nestedChildShapes>
-        <elementListCompartment Id="51234701-0093-4d31-a5dc-a43cd98af7d9" absoluteBounds="13.64, 5.835, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="9a83d35a-7b5e-4559-892f-95dd38a4f823" absoluteBounds="12.25, 12.875, 2, 1.9631982421874987">
       <DataClassMoniker Name="/RankDBDataContext/Rank_UserArticleMappingTable" />
       <nestedChildShapes>
         <elementListCompartment Id="3b4e49a9-02b1-4a7a-b27b-13217ecd8416" absoluteBounds="12.265, 13.335, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="9fbc31f0-4df2-4d5b-b3a6-c9b817b1874b" absoluteBounds="9.25, 13.875, 2, 1.9631982421874987">
-      <DataClassMoniker Name="/RankDBDataContext/Rank_UserParametrValue" />
-      <nestedChildShapes>
-        <elementListCompartment Id="b484be25-4641-4e74-b80a-b419b05c80de" absoluteBounds="9.265, 14.335, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <associationConnector edgePoints="[(7.25 : 20.9728011067708); (7.25 : 25.6065991210938); (9 : 25.6065991210938)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RankDBDataContext/Rank_Articles/Rank_Articles_Rank_ArticleValues" />
-      <nodes>
-        <classShapeMoniker Id="ef997da3-6cba-4792-9b74-ad2835095f3c" />
-        <classShapeMoniker Id="7984324b-cc82-495b-8332-64ee0c588cfd" />
-      </nodes>
-    </associationConnector>
     <associationConnector edgePoints="[(5.5 : 19.6354484049479); (6.25 : 19.6354484049479)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/RankDBDataContext/Rank_Mark/Rank_Mark_Rank_Articles" />
       <nodes>
@@ -102,81 +65,18 @@
         <classShapeMoniker Id="ef997da3-6cba-4792-9b74-ad2835095f3c" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 20.7396468098958); (6.25 : 20.7396468098958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RankDBDataContext/Rank_Parametrs/Rank_Parametrs_Rank_Articles" />
-      <nodes>
-        <classShapeMoniker Id="408ab928-2f0f-4d95-ad0e-e106a41ac80a" />
-        <classShapeMoniker Id="ef997da3-6cba-4792-9b74-ad2835095f3c" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 20.8958968098958); (1.75 : 25.0845470605469); (2.19791916666667 : 25.0845470605469 : JumpStart); (2.36458583333333 : 25.0845470605469 : JumpEnd); (7.16666666666667 : 25.0845470605469 : JumpStart); (7.33333333333333 : 25.0845470605469 : JumpEnd); (9 : 25.0845470605469)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RankDBDataContext/Rank_Parametrs/Rank_Parametrs_Rank_ArticleValues" />
-      <nodes>
-        <classShapeMoniker Id="408ab928-2f0f-4d95-ad0e-e106a41ac80a" />
-        <classShapeMoniker Id="7984324b-cc82-495b-8332-64ee0c588cfd" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 19.125); (1.75 : 12.3786511816406); (9.25 : 12.3786511816406)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RankDBDataContext/Rank_Parametrs/Rank_Parametrs_Rank_Collected_ParametrsValue" />
-      <nodes>
-        <classShapeMoniker Id="408ab928-2f0f-4d95-ad0e-e106a41ac80a" />
-        <classShapeMoniker Id="12546acf-6ca6-46d3-bb18-bf41673acb96" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(2.2812525 : 19.125); (2.2812525 : 17.0104484049479); (3.5 : 17.0104484049479)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RankDBDataContext/Rank_Parametrs/Rank_Parametrs_Rank_DifficaltPoint" />
-      <nodes>
-        <classShapeMoniker Id="408ab928-2f0f-4d95-ad0e-e106a41ac80a" />
-        <classShapeMoniker Id="985d5919-c5d9-4fe2-84c7-900b91e524a0" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 19.8229484049479); (3.5 : 19.8229484049479)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RankDBDataContext/Rank_Parametrs/Rank_Parametrs_Rank_Mark" />
-      <nodes>
-        <classShapeMoniker Id="408ab928-2f0f-4d95-ad0e-e106a41ac80a" />
-        <classShapeMoniker Id="2b19a8de-1a1f-4a31-af76-bf686002405d" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(12.5 : 8.51044840494792); (14.625 : 8.51044840494792); (14.625 : 7.3381982421875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RankDBDataContext/FirstLevelSubdivisionTable/FirstLevelSubdivisionTable_Rank_StructPoints" />
-      <nodes>
-        <classShapeMoniker Id="717221d0-c876-4148-b92a-6d8fd500601b" />
-        <classShapeMoniker Id="d66073f5-d67f-400e-b8cb-0b170e048f26" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(11.75 : 6.16429768880208); (13.625 : 6.16429768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RankDBDataContext/SecondLevelSubdivisionTable/SecondLevelSubdivisionTable_Rank_StructPoints" />
-      <nodes>
-        <classShapeMoniker Id="4b20ed89-15ce-4f93-814b-cad26b38d399" />
-        <classShapeMoniker Id="d66073f5-d67f-400e-b8cb-0b170e048f26" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(11.125 : 4.16429768880208); (14.625 : 4.16429768880208); (14.625 : 5.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RankDBDataContext/ThirdLevelSubdivisionTable/ThirdLevelSubdivisionTable_Rank_StructPoints" />
-      <nodes>
-        <classShapeMoniker Id="0ec0f44a-4ff7-41e8-865b-d18fdecb20a6" />
-        <classShapeMoniker Id="d66073f5-d67f-400e-b8cb-0b170e048f26" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(7.25 : 18.625); (7.25 : 13.34375); (12.25 : 13.34375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(7.25 : 18.625); (7.25 : 13.34375); (9.52604041666667 : 13.34375 : JumpStart); (9.69270708333333 : 13.34375 : JumpEnd); (12.25 : 13.34375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/RankDBDataContext/Rank_Articles/Rank_Articles_Rank_UserArticleMappingTable" />
       <nodes>
         <classShapeMoniker Id="ef997da3-6cba-4792-9b74-ad2835095f3c" />
         <classShapeMoniker Id="9a83d35a-7b5e-4559-892f-95dd38a4f823" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(4.5 : 16.125); (4.5 : 13.6093775); (12.25 : 13.6093775)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(4.26562625 : 16.125); (4.26562625 : 14.1222266210937); (7.16666666666667 : 14.1222266210937 : JumpStart); (7.33333333333333 : 14.1222266210937 : JumpEnd); (9.52604041666667 : 14.1222266210937 : JumpStart); (9.69270708333333 : 14.1222266210937 : JumpEnd); (12.25 : 14.1222266210937)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/RankDBDataContext/Rank_DifficaltPoint/Rank_DifficaltPoint_Rank_UserArticleMappingTable" />
       <nodes>
         <classShapeMoniker Id="985d5919-c5d9-4fe2-84c7-900b91e524a0" />
         <classShapeMoniker Id="9a83d35a-7b5e-4559-892f-95dd38a4f823" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(1.2187475 : 19.125); (1.2187475 : 14.8565991210937); (1.66666666666667 : 14.8565991210937 : JumpStart); (1.83333333333333 : 14.8565991210937 : JumpEnd); (9.25 : 14.8565991210937)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RankDBDataContext/Rank_Parametrs/Rank_Parametrs_Rank_UserParametrValue" />
-      <nodes>
-        <classShapeMoniker Id="408ab928-2f0f-4d95-ad0e-e106a41ac80a" />
-        <classShapeMoniker Id="9fbc31f0-4df2-4d5b-b3a6-c9b817b1874b" />
       </nodes>
     </associationConnector>
     <classShape Id="a3775c56-71aa-4de7-9451-72ba91265091" absoluteBounds="3.5, 4.375, 2, 5.4246240234375">
@@ -185,35 +85,21 @@
         <elementListCompartment Id="6cf73cb2-65a8-453f-a6cf-aea4dec8e23e" absoluteBounds="3.515, 4.835, 1.9700000000000002, 4.8646240234375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.5 : 9.7996240234375); (4.5 : 11.5955730908203); (4.94791916666667 : 11.5955730908203 : JumpStart); (5.11458583333333 : 11.5955730908203 : JumpEnd); (9.25 : 11.5955730908203)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RankDBDataContext/UsersTable/UsersTable_Rank_Collected_ParametrsValue" />
-      <nodes>
-        <classShapeMoniker Id="a3775c56-71aa-4de7-9451-72ba91265091" />
-        <classShapeMoniker Id="12546acf-6ca6-46d3-bb18-bf41673acb96" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(5.0312525 : 9.7996240234375); (5.0312525 : 13.0781225); (12.25 : 13.0781225)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(4.882813125 : 9.7996240234375); (4.882813125 : 13.7329883105469); (7.16666666666667 : 13.7329883105469 : JumpStart); (7.33333333333333 : 13.7329883105469 : JumpEnd); (9.52604041666667 : 13.7329883105469 : JumpStart); (9.69270708333333 : 13.7329883105469 : JumpEnd); (12.25 : 13.7329883105469)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/RankDBDataContext/UsersTable/UsersTable_Rank_UserArticleMappingTable" />
       <nodes>
         <classShapeMoniker Id="a3775c56-71aa-4de7-9451-72ba91265091" />
         <classShapeMoniker Id="9a83d35a-7b5e-4559-892f-95dd38a4f823" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(3.9687475 : 9.7996240234375); (3.9687475 : 14.3345470605468); (4.41666666666667 : 14.3345470605468 : JumpStart); (4.58333333333333 : 14.3345470605468 : JumpEnd); (7.16666666666667 : 14.3345470605468 : JumpStart); (7.33333333333333 : 14.3345470605468 : JumpEnd); (9.25 : 14.3345470605468)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RankDBDataContext/UsersTable/UsersTable_Rank_UserParametrValue" />
-      <nodes>
-        <classShapeMoniker Id="a3775c56-71aa-4de7-9451-72ba91265091" />
-        <classShapeMoniker Id="9fbc31f0-4df2-4d5b-b3a6-c9b817b1874b" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(10.5 : 8.51044840494792); (5.5 : 8.51044840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(10.5 : 8.51044840494792); (10.1770833333333 : 8.51044840494792 : JumpStart); (10.0104166666667 : 8.51044840494792 : JumpEnd); (9.45052020833333 : 8.51044840494792 : JumpStart); (9.28385354166667 : 8.51044840494792 : JumpEnd); (5.5 : 8.51044840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/RankDBDataContext/FirstLevelSubdivisionTable/FirstLevelSubdivisionTable_UsersTable" />
       <nodes>
         <classShapeMoniker Id="717221d0-c876-4148-b92a-6d8fd500601b" />
         <classShapeMoniker Id="a3775c56-71aa-4de7-9451-72ba91265091" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(9.75 : 6.16429768880208); (5.5 : 6.16429768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(9.75 : 6.16429768880208); (9.45052020833333 : 6.16429768880208 : JumpStart); (9.28385354166667 : 6.16429768880208 : JumpEnd); (5.5 : 6.16429768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/RankDBDataContext/SecondLevelSubdivisionTable/SecondLevelSubdivisionTable_UsersTable" />
       <nodes>
         <classShapeMoniker Id="4b20ed89-15ce-4f93-814b-cad26b38d399" />
@@ -239,38 +125,153 @@
         <elementListCompartment Id="d703344b-3352-4a9f-b444-86c80254aa8e" absoluteBounds="5.015, 27.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6 : 28.5112939453125); (6 : 29.2892976888021); (7.25 : 29.2892976888021)]" fixedFrom="Algorithm" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(6 : 28.5112939453125); (6 : 29.2892976888021); (7.25 : 29.2892976888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/RankDBDataContext/Rank_DropDown/Rank_DropDown_Rank_DropDownValues" />
       <nodes>
         <classShapeMoniker Id="c30d1aec-d1ac-4e7a-abcc-487350742445" />
         <classShapeMoniker Id="cdc44b88-bf6f-4fed-8b4a-063cb6e307d1" />
       </nodes>
     </associationConnector>
-    <classShape Id="03535fd4-c363-4cb9-ba79-85024c281a39" absoluteBounds="11.375, 28.125, 2, 2.9247054036458331">
-      <DataClassMoniker Name="/RankDBDataContext/Rank_Fields" />
+    <classShape Id="790731b1-bbc6-41ab-ac38-0fb9dcd7df2a" absoluteBounds="9.875, 25.125, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/RankDBDataContext/Rank_ArticleValues" />
       <nestedChildShapes>
-        <elementListCompartment Id="ddd92471-33b3-4172-aab9-4dc5dd67382f" absoluteBounds="11.39, 28.585, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="432710b8-b73f-444b-a22a-e76b70bd53c0" absoluteBounds="9.89, 25.585, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(12.375 : 28.125); (12.375 : 25.6065991210938); (11 : 25.6065991210938)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/RankDBDataContext/Rank_Fields/Rank_Fields_Rank_ArticleValues" />
+    <associationConnector edgePoints="[(7.65625 : 20.9728011067708); (7.65625 : 26.5729484049479); (8.33854166666667 : 26.5729484049479 : JumpStart); (8.50520833333333 : 26.5729484049479 : JumpEnd); (9.875 : 26.5729484049479)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/RankDBDataContext/Rank_Articles/Rank_Articles_Rank_ArticleValues" />
       <nodes>
-        <classShapeMoniker Id="03535fd4-c363-4cb9-ba79-85024c281a39" />
-        <classShapeMoniker Id="7984324b-cc82-495b-8332-64ee0c588cfd" />
+        <classShapeMoniker Id="ef997da3-6cba-4792-9b74-ad2835095f3c" />
+        <classShapeMoniker Id="790731b1-bbc6-41ab-ac38-0fb9dcd7df2a" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(7 : 28.28125); (11.375 : 28.28125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.421875 : 28.5); (8.421875 : 26.0036258365885); (9.875 : 26.0036258365885)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/RankDBDataContext/Rank_DropDownValues/Rank_DropDownValues_Rank_ArticleValues" />
+      <nodes>
+        <classShapeMoniker Id="cdc44b88-bf6f-4fed-8b4a-063cb6e307d1" />
+        <classShapeMoniker Id="790731b1-bbc6-41ab-ac38-0fb9dcd7df2a" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="7430638f-42cd-4062-8de6-59f8cbad6911" absoluteBounds="12.625, 21.5, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/RankDBDataContext/Rank_Fields" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b18bdded-0761-4739-9c24-1cf502c96555" absoluteBounds="12.64, 21.96, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(12.625 : 23.3886539713542); (11.8333360833333 : 23.3886539713542 : JumpStart); (11.6666694166667 : 23.3886539713542 : JumpEnd); (11.437498875 : 23.3886539713542); (11.437498875 : 25.125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/RankDBDataContext/Rank_Fields/Rank_Fields_Rank_ArticleValues" />
+      <nodes>
+        <classShapeMoniker Id="7430638f-42cd-4062-8de6-59f8cbad6911" />
+        <classShapeMoniker Id="790731b1-bbc6-41ab-ac38-0fb9dcd7df2a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6 : 27.125); (6 : 24.1302336197917); (7.57291666666667 : 24.1302336197917 : JumpStart); (7.73958333333333 : 24.1302336197917 : JumpEnd); (11.3541655416667 : 24.1302336197917 : JumpStart); (11.5208322083333 : 24.1302336197917 : JumpEnd); (11.6666694166667 : 24.1302336197917 : JumpStart); (11.8333360833333 : 24.1302336197917 : JumpEnd); (12.625 : 24.1302336197917)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/RankDBDataContext/Rank_DropDown/Rank_DropDown_Rank_Fields" />
       <nodes>
         <classShapeMoniker Id="c30d1aec-d1ac-4e7a-abcc-487350742445" />
-        <classShapeMoniker Id="03535fd4-c363-4cb9-ba79-85024c281a39" />
+        <classShapeMoniker Id="7430638f-42cd-4062-8de6-59f8cbad6911" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.2812525 : 20.8958968098958); (2.2812525 : 30.595400390625); (11.375 : 30.595400390625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(4.23437375 : 20.5208968098958); (4.23437375 : 22.6470743229167); (7.57291666666667 : 22.6470743229167 : JumpStart); (7.73958333333333 : 22.6470743229167 : JumpEnd); (11.6666694166667 : 22.6470743229167 : JumpStart); (11.8333360833333 : 22.6470743229167 : JumpEnd); (12.625 : 22.6470743229167)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/RankDBDataContext/Rank_Mark/Rank_Mark_Rank_Fields" />
+      <nodes>
+        <classShapeMoniker Id="2b19a8de-1a1f-4a31-af76-bf686002405d" />
+        <classShapeMoniker Id="7430638f-42cd-4062-8de6-59f8cbad6911" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="698383db-096f-4c4d-9900-b445b3c0b3a4" absoluteBounds="9.125, 19.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/RankDBDataContext/Rank_Parametrs" />
+      <nestedChildShapes>
+        <elementListCompartment Id="949e51e9-1b18-48a4-b3d9-5e2b9c248203" absoluteBounds="9.14, 20.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(9.125 : 20.3614005533854); (8.25 : 20.3614005533854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/RankDBDataContext/Rank_Parametrs/Rank_Parametrs_Rank_Articles" />
+      <nodes>
+        <classShapeMoniker Id="698383db-096f-4c4d-9900-b445b3c0b3a4" />
+        <classShapeMoniker Id="ef997da3-6cba-4792-9b74-ad2835095f3c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(10.1562525 : 19.75); (10.1562525 : 17.0104484049479); (9.69270708333333 : 17.0104484049479 : JumpStart); (9.52604041666667 : 17.0104484049479 : JumpEnd); (7.33333333333333 : 17.0104484049479 : JumpStart); (7.16666666666667 : 17.0104484049479 : JumpEnd); (5.5 : 17.0104484049479)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/RankDBDataContext/Rank_Parametrs/Rank_Parametrs_Rank_DifficaltPoint" />
+      <nodes>
+        <classShapeMoniker Id="698383db-096f-4c4d-9900-b445b3c0b3a4" />
+        <classShapeMoniker Id="985d5919-c5d9-4fe2-84c7-900b91e524a0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(9.125 : 21.470400390625); (7.73958333333333 : 21.470400390625 : JumpStart); (7.57291666666667 : 21.470400390625 : JumpEnd); (5.0312525 : 21.470400390625); (5.0312525 : 20.5208968098958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/RankDBDataContext/Rank_Parametrs/Rank_Parametrs_Rank_Mark" />
+      <nodes>
+        <classShapeMoniker Id="698383db-096f-4c4d-9900-b445b3c0b3a4" />
+        <classShapeMoniker Id="2b19a8de-1a1f-4a31-af76-bf686002405d" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.125 : 20.8277498372396); (11.75000275 : 20.8277498372396); (11.75000275 : 25.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/RankDBDataContext/Rank_Parametrs/Rank_Parametrs_Rank_ArticleValues" />
+      <nodes>
+        <classShapeMoniker Id="698383db-096f-4c4d-9900-b445b3c0b3a4" />
+        <classShapeMoniker Id="790731b1-bbc6-41ab-ac38-0fb9dcd7df2a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.125 : 21.7027498372396); (11.6666694166667 : 21.7027498372396 : JumpStart); (11.8333360833333 : 21.7027498372396 : JumpEnd); (12.625 : 21.7027498372396)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/RankDBDataContext/Rank_Parametrs/Rank_Parametrs_Rank_Fields" />
       <nodes>
-        <classShapeMoniker Id="408ab928-2f0f-4d95-ad0e-e106a41ac80a" />
-        <classShapeMoniker Id="03535fd4-c363-4cb9-ba79-85024c281a39" />
+        <classShapeMoniker Id="698383db-096f-4c4d-9900-b445b3c0b3a4" />
+        <classShapeMoniker Id="7430638f-42cd-4062-8de6-59f8cbad6911" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="407c0c74-d60a-4cd0-92cc-5388ce236c44" absoluteBounds="14.75, 9.75, 2, 2.5401025390625">
+      <DataClassMoniker Name="/RankDBDataContext/Rank_StructPoints" />
+      <nestedChildShapes>
+        <elementListCompartment Id="14475027-3ee8-41e4-994d-1e66ad5420a1" absoluteBounds="14.765, 10.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(12.5 : 8.51044840494792); (15.75 : 8.51044840494792); (15.75 : 9.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/RankDBDataContext/FirstLevelSubdivisionTable/FirstLevelSubdivisionTable_Rank_StructPoints" />
+      <nodes>
+        <classShapeMoniker Id="717221d0-c876-4148-b92a-6d8fd500601b" />
+        <classShapeMoniker Id="407c0c74-d60a-4cd0-92cc-5388ce236c44" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(9.60937375 : 19.75); (9.60937375 : 11.0200512695312); (14.75 : 11.0200512695312)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/RankDBDataContext/Rank_Parametrs/Rank_Parametrs_Rank_StructPoints" />
+      <nodes>
+        <classShapeMoniker Id="698383db-096f-4c4d-9900-b445b3c0b3a4" />
+        <classShapeMoniker Id="407c0c74-d60a-4cd0-92cc-5388ce236c44" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(10.09375 : 6.95359537760417); (10.09375 : 10.3537731347656); (14.75 : 10.3537731347656)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/RankDBDataContext/SecondLevelSubdivisionTable/SecondLevelSubdivisionTable_Rank_StructPoints" />
+      <nodes>
+        <classShapeMoniker Id="4b20ed89-15ce-4f93-814b-cad26b38d399" />
+        <classShapeMoniker Id="407c0c74-d60a-4cd0-92cc-5388ce236c44" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(9.367186875 : 4.95359537760417); (9.367186875 : 11.6863294042969); (9.52604041666667 : 11.6863294042969 : JumpStart); (9.69270708333333 : 11.6863294042969 : JumpEnd); (14.75 : 11.6863294042969)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/RankDBDataContext/ThirdLevelSubdivisionTable/ThirdLevelSubdivisionTable_Rank_StructPoints" />
+      <nodes>
+        <classShapeMoniker Id="0ec0f44a-4ff7-41e8-865b-d18fdecb20a6" />
+        <classShapeMoniker Id="407c0c74-d60a-4cd0-92cc-5388ce236c44" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="8d732f5d-3787-4b2b-b3cd-2273e9c2dd65" absoluteBounds="15.5, 13.375, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/RankDBDataContext/Rank_UserParametrValue" />
+      <nestedChildShapes>
+        <elementListCompartment Id="64369ff3-b9ec-43e1-aec5-20215201033f" absoluteBounds="15.515, 13.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(10.67187875 : 19.75); (10.67187875 : 15.2155989583333); (15.5 : 15.2155989583333)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/RankDBDataContext/Rank_Parametrs/Rank_Parametrs_Rank_UserParametrValue" />
+      <nodes>
+        <classShapeMoniker Id="698383db-096f-4c4d-9900-b445b3c0b3a4" />
+        <classShapeMoniker Id="8d732f5d-3787-4b2b-b3cd-2273e9c2dd65" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.882813125 : 9.7996240234375); (3.882813125 : 15.0268961002604); (4.18229291666667 : 15.0268961002604 : JumpStart); (4.34895958333333 : 15.0268961002604 : JumpEnd); (7.16666666666667 : 15.0268961002604 : JumpStart); (7.33333333333333 : 15.0268961002604 : JumpEnd); (9.52604041666667 : 15.0268961002604 : JumpStart); (9.69270708333333 : 15.0268961002604 : JumpEnd); (15.5 : 15.0268961002604)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/RankDBDataContext/UsersTable/UsersTable_Rank_UserParametrValue" />
+      <nodes>
+        <classShapeMoniker Id="a3775c56-71aa-4de7-9451-72ba91265091" />
+        <classShapeMoniker Id="8d732f5d-3787-4b2b-b3cd-2273e9c2dd65" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

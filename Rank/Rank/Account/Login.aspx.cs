@@ -15,17 +15,11 @@ namespace Rank.Account
         {
             
         }
-
-       
-
         protected void Button1_Click(object sender, EventArgs e)
-        {
-            if (IsValid)
-            {
+        { 
                 RankDBDataContext rating = new RankDBDataContext();
-
                 var user = (from u in rating.UsersTable
-                            where u.Login == UserName.Text && u.Password == Password.Text && u.Active == true
+                            where u.Email == UserName.Text && u.Password == Password.Text && u.Active == true
                             select u).FirstOrDefault();
 
                 if (user != null)
@@ -38,8 +32,6 @@ namespace Rank.Account
                     FailureText.Text = "Неверный адрес электронной почты или пароль.";
                     ErrorMessage.Visible = true;
                 }
-
-            }
         }
     }
 }

@@ -10,16 +10,16 @@
 namespace Rank.Forms {
     
     
-    public partial class UserArticlePage {
+    public partial class FormUserPublication {
         
         /// <summary>
-        /// Button3 элемент управления.
+        /// Button1 элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button3;
+        protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
         /// Label1 элемент управления.
