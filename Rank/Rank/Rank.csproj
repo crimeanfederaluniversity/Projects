@@ -201,6 +201,7 @@
     <Content Include="Forms\StructPointsForm.aspx" />
     <Content Include="Forms\StructUserPointsForAccept.aspx" />
     <Content Include="Forms\UserArticleAccept.aspx" />
+    <Content Include="ClassDiagram1.cd" />
     <Content Include="RankDB.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>RankDB.designer.cs</LastGenOutput>

@@ -30,31 +30,94 @@ namespace Rank.Forms
                 Response.Redirect("~/Default.aspx");
             }
             int userID = (int)userId;
+            UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+            int usertype;
+
+            if (rights.AccessLevel == 9)
+            {
+                usertype = 0;
+            }
+            else
+            {
+                usertype = 1;
+            }
             int article = Convert.ToInt32(Session["articleID"]);
             Rank_Articles send = (from a in ratingDB.Rank_Articles
                                   where a.Active == true && a.ID == article
                                   select a).FirstOrDefault();
-            if(send.Status == 1 || send.Status == 2)
+            Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
+            Label1.Text = name.Name;
+            if ((send.Status == 1) || (send.Status == 2) )             
             {
                 SaveButton.Visible = false;
                 SendButton.Visible = false;
                 Label11.Text = "Вы находитесь в режиме просмотра данных, редактирование невозможно!";
                 Label11.Visible = true;
             }
-            else
+            if (rights.AccessLevel == 9)
+            {
+                if ((name.EditUserType != 0) || (name.EditUserType != 2))
+                {
+                    SaveButton.Visible = false;
+                    SendButton.Visible = false;
+                    Label11.Text = "Вы находитесь в режиме просмотра данных, редактирование невозможно!";
+                    Label11.Visible = true;
+                }
+                else
+                {
+                    SaveButton.Visible = true;
+                    SendButton.Visible = true;
+                    Label11.Text = "Вы находитесь в режиме редактирования данных!";
+                    Label11.Visible = true;
+                }
+            }
+            if (rights.AccessLevel != 9)
+            {
+                if ((name.EditUserType != 1) || (name.EditUserType != 2))
+                {
+                    SaveButton.Visible = false;
+                    SendButton.Visible = false;
+                    Label11.Text = "Вы находитесь в режиме просмотра данных, редактирование невозможно!";
+                    Label11.Visible = true;
+                }
+                else
+                {
+                    SaveButton.Visible = true;
+                    SendButton.Visible = true;
+                    Label11.Text = "Вы находитесь в режиме редактирования данных!";
+                    Label11.Visible = true;
+                }
+            }
+            if  ((send.Status == 3) || (send.Status == 0))
             {
                 SaveButton.Visible = true;
                 SendButton.Visible = true;
                 Label11.Text = "Вы находитесь в режиме редактирования данных!";
                 Label11.Visible = true;
             }
-            Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
-            Label1.Text = name.Name;   
-            if(name.OneOrManyAuthor == true)
+              
+            if(name.OneOrManyAuthor == true) // если нужна таблица с авторами
             {
+                Label2.Visible = true;
+                DropDownList3.Visible = true;
+                Label3.Visible = true;
+                DropDownList4.Visible = true;
+                Label4.Visible = true;
+                DropDownList5.Visible = true;
+                Label12.Visible = true;
+                TextBox2.Visible = true;
+                NewAuthorButton.Visible = true;               
                 Refresh();
             }
-            if (paramId != 5 || paramId != 6 || paramId != 7)
+            if (paramId == 5 || paramId == 6 || paramId == 7)
+            {
+                if(send.FK_mark != null)
+                {
+                    TableDiv.Controls.Clear();
+                    TableDiv.Controls.Add(CreateNewTable());
+                }
+            }
+            else
             {
                 TableDiv.Controls.Clear();
                 TableDiv.Controls.Add(CreateNewTable());
@@ -77,19 +140,22 @@ namespace Rank.Forms
                 {
                     DropDownList2.Visible = false;
                 }
-                else
-                {
+                                                 
                     var dictionary1 = new Dictionary<int, string>();
-                    dictionary1.Add(0, "Выберите значение");
+                    dictionary1.Add(0, "Выберите значение" );
 
                     foreach (var item in marks)
                         dictionary1.Add(item.ID, item.Name);
-
                     DropDownList2.DataTextField = "Value";
                     DropDownList2.DataValueField = "Key";
+              /*  if (send.FK_mark != null)
+               {                    
+                    Rank_Mark drop = (from item in ratingDB.Rank_Mark where item.ID == send.FK_mark select item).FirstOrDefault();
+                    string value = drop.Name.ToString();
+                    DropDownList2.Items.FindByText(value).Selected = true;               
+                }*/
                     DropDownList2.DataSource = dictionary1;
-                    DropDownList2.DataBind();
-                }
+                    DropDownList2.DataBind();                                                                       
             }          
         }
         protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
@@ -248,9 +314,20 @@ namespace Rank.Forms
             Table tableToReturn = new Table();
             List<Rank_Fields> allFields = new List<Rank_Fields>();
             if (paramId == 5 || paramId == 6 || paramId == 7)
-            {
-                allFields = (from a in ratingDB.Rank_Fields where a.Active == true && a.FK_parametr == paramId  && a.formtype == 1
-                             && a.FK_mark ==  Convert.ToInt32(DropDownList2.SelectedItem.Value) select a).ToList();
+            {               
+                Rank_Articles send = (from a in ratingDB.Rank_Articles
+                                      where a.Active == true && a.ID == article
+                                      select a).FirstOrDefault();
+                if(send.FK_mark != null)
+                {
+                    allFields = (from a in ratingDB.Rank_Fields where a.Active == true && a.FK_parametr == paramId && a.formtype == 1
+                                  && a.FK_mark == send.FK_mark select a).ToList();
+                }
+                else
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Выберите тип публикации!');", true);
+                }
+ 
             }
             else
             {
@@ -396,6 +473,19 @@ namespace Rank.Forms
             int paramId = Convert.ToInt32(Session["parametrID"]);
             var userId = Session["UserID"];         
             int userID = (int)userId;
+            List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.fk_parametr == paramId select item).ToList();
+            if (marks.Count == 1)
+            {
+                int article = Convert.ToInt32(Session["articleID"]);
+                Rank_Articles mark = (from a in ratingDB.Rank_Articles
+                                      where a.Active == true && a.ID == article
+                                      select a).FirstOrDefault();
+                foreach(var tmp in marks)
+                {
+                    mark.FK_mark = tmp.ID;
+                    ratingDB.SubmitChanges();
+                }              
+            }
             Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
             if (name.OneOrManyAuthor == false) // если это единичная привязка
             {
@@ -422,7 +512,7 @@ namespace Rank.Forms
                 ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newValue);
                 ratingDB.SubmitChanges();
             }
-                Response.Redirect("~/Forms/FormUchebniki.aspx");
+                Response.Redirect("~/Forms/CreateEditForm.aspx");
         }
         protected void PoiskRefresh()
         {

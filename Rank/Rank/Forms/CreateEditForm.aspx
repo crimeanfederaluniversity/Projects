@@ -2,12 +2,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
      <div style="font-size: medium">
         <asp:Button ID="Button1" runat="server" Text="Назад" OnClick="Button1_Click" />
-        <br /> <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></span>&nbsp;<br />
          <br />
+        <br /> <asp:Label ID="Label1" runat="server" Text="Label" Font-Bold="True" Font-Size="Large"></asp:Label></span>&nbsp;<br />
          <asp:Label ID="Label11" runat="server" ForeColor="Red" Text="Label" Visible="False"></asp:Label>
          <br />
-         <br />
-         <asp:Label ID="Label10" runat="server" Text="Выберите гриф/рекомендация:"></asp:Label>
 &nbsp;&nbsp;
          <span style="font-size: medium">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><br />
          <asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack ="true" Height="30px" Width="225px" OnSelectedIndexChanged="DropDownList2_SelectedIndexChanged">
@@ -15,8 +13,6 @@
         &nbsp;&nbsp;&nbsp;&nbsp;<br />
         &nbsp;<div id="TableDiv" runat="server">
         </div>
-         <br />
-       Авторы:     
         <br />
         <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" OnRowDataBound ="OnRowDataBound"  >
             <Columns>
@@ -65,29 +61,31 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
-         <span class="auto-style2"><span style="font-size: medium">Добавление нового автора/соавтора:</span></span><span style="font-size: medium"><br /><asp:Label ID="Label2" runat="server" Text="Академия"></asp:Label>
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:Label ID="Label3" runat="server" Text="Факультет"></asp:Label>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="Label4" runat="server" Text="Кафедра"></asp:Label>
-&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="auto-style2"><span style="font-size: medium">Введите фамилию соавтора: 
-        &nbsp;<asp:Label ID="searchError" runat="server" Font-Size="X-Small" ForeColor="Red" Text="Пользователь не найден!" Visible="False"></asp:Label>
+         <span style="font-size: medium"><br /><asp:Label ID="Label2" runat="server" Text="Академия" Visible="False"></asp:Label>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+        <asp:Label ID="Label3" runat="server" Text="Факультет" Visible="False"></asp:Label>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<asp:Label ID="Label4" runat="server" Text="Кафедра" Visible="False"></asp:Label>
+&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="auto-style2"><span style="font-size: medium">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <asp:Label ID="Label12" runat="server" Text="Введите фамилию:" Visible="False"></asp:Label>
+          
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:Label ID="searchError" runat="server" Font-Size="X-Small" ForeColor="Red" Text="Пользователь не найден!" Visible="False"></asp:Label>
         </span>
          </span>
-        <br /><asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="True" Height="25px"  Width="250px" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged">
+        <br /><asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="True" Height="25px"  Width="250px" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged" Visible="False">
         </asp:DropDownList>
-&nbsp;&nbsp;<asp:DropDownList ID="DropDownList4" runat="server" AutoPostBack="True" Height="25px"  Width="250px" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged">
+&nbsp;&nbsp;<asp:DropDownList ID="DropDownList4" runat="server" AutoPostBack="True" Height="25px"  Width="250px" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged" Visible="False">
         </asp:DropDownList>
-&nbsp;&nbsp;<asp:DropDownList ID="DropDownList5" runat="server" AutoPostBack="True" Height="25px" Width="250px" >
+&nbsp;&nbsp;<asp:DropDownList ID="DropDownList5" runat="server" AutoPostBack="True" Height="25px" Width="250px" Visible="False" >
         </asp:DropDownList>
         &nbsp;
-        <asp:TextBox ID="TextBox2" runat="server" Width="200px"></asp:TextBox>
-        &nbsp;&nbsp; <asp:Button ID="NewAuthorButton" runat="server" Text="Поиск" OnClick="NewAuthorButtonClick" />
+        <asp:TextBox ID="TextBox2" runat="server" Width="200px" Visible="False"></asp:TextBox>
+        &nbsp;&nbsp; <asp:Button ID="NewAuthorButton" runat="server" Text="Поиск" OnClick="NewAuthorButtonClick" Visible="False" />
          <br />
-         <asp:CheckBox ID="CheckBox1" runat="server" Text="Нет в системе" Font-Size="Small" />
+         <asp:CheckBox ID="CheckBox1" runat="server" Text="Нет в системе" Font-Size="Small" Visible="False" />
 &nbsp;
-         <asp:Button ID="AddNotSystemUserButton" runat="server" Text="Добавить" OnClick="AddNotSystemUserButtonClick" />
+         <asp:Button ID="AddNotSystemUserButton" runat="server" Text="Добавить" OnClick="AddNotSystemUserButtonClick" Visible="False" />
         <br />
-         Результаты поиска:<span class="auto-style2"><span style="font-size: medium">
+         <span class="auto-style2"><span style="font-size: medium">
          <asp:GridView ID="GridView2" AutoGenerateColumns="false"  runat="server">
                 <Columns>
                  <asp:BoundField DataField="ID" HeaderText="" Visible="false" />

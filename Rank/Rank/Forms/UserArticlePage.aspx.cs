@@ -172,10 +172,10 @@ namespace Rank.Forms
                 newLink.FK_Article = newValue.ID;
                 newLink.UserConfirm = false;
                 newLink.FK_User = userID;
+                newLink.UserConfirm = true;
                 ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink);
-                ratingDB.SubmitChanges();
-                Session["articleID"] = Convert.ToInt32(newValue.ID);
-                Response.Redirect("~/Forms/CreateEditForm.aspx");
+                ratingDB.SubmitChanges();      
+                Refresh();
             }
           
         }
