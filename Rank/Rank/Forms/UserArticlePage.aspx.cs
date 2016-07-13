@@ -154,11 +154,11 @@ namespace Rank.Forms
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            if (TextBox1.Text != null)
+            if (TextBox1.Text != "")
             {
                 var userId = Session["UserID"];
                 int userID = (int)userId;
-                int paramId = Convert.ToInt32(Session["parametrID"]);
+                int paramId = Convert.ToInt32(Session["parametrID"]);                
                 Rank_Articles newValue = new Rank_Articles();
                 newValue.Active = true;
                 newValue.AddDate = DateTime.Now;
@@ -167,17 +167,36 @@ namespace Rank.Forms
                 newValue.Status = 0;
                 ratingDB.Rank_Articles.InsertOnSubmit(newValue);
                 ratingDB.SubmitChanges();
-                Rank_UserArticleMappingTable newLink = new Rank_UserArticleMappingTable();
-                newLink.Active = true;
-                newLink.FK_Article = newValue.ID;
-                newLink.UserConfirm = false;
-                newLink.FK_User = userID;
-                newLink.UserConfirm = true;
-                ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink);
-                ratingDB.SubmitChanges();      
-                Refresh();
-            }
-          
+                             
+                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+                if (rights.AccessLevel == 9)
+                {
+                    var edituserId = Session["edituserID"];
+                    if (edituserId != null)
+                    {
+                        int edituser = (int)edituserId;
+                        Rank_UserArticleMappingTable newLink = new Rank_UserArticleMappingTable();
+                        newLink.Active = true;
+                        newLink.FK_Article = newValue.ID;
+                        newLink.FK_User = edituser;
+                        newLink.UserConfirm = false;
+                        ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink);
+                        ratingDB.SubmitChanges();
+                    }                 
+                }
+                else
+                {
+                    Rank_UserArticleMappingTable newLink = new Rank_UserArticleMappingTable();
+                    newLink.Active = true;
+                    newLink.FK_Article = newValue.ID;
+                    newLink.FK_User = userID;
+                    newLink.UserConfirm = true;
+                    ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink);
+                    ratingDB.SubmitChanges();
+                }                           
+                Session["articleID"] = Convert.ToInt32(newValue.ID);
+                Response.Redirect("~/Forms/CreateEditForm.aspx");
+            }         
         }
 
         protected void Button3_Click(object sender, EventArgs e)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -15,6 +16,8 @@ namespace Rank.Forms
         public DataValidator validator = new DataValidator();
         public class ValueSaveClass
         {
+            public FileUpload File { get; set; }
+            public LinkButton Download { get; set; }
             public DropDownList SelectedValue { get; set; }
             public TextBox Value { get; set; }
             public int FieldId { get; set; }
@@ -31,32 +34,14 @@ namespace Rank.Forms
             }
             int userID = (int)userId;
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-            int usertype;
-
-            if (rights.AccessLevel == 9)
-            {
-                usertype = 0;
-            }
-            else
-            {
-                usertype = 1;
-            }
-            int article = Convert.ToInt32(Session["articleID"]);
-            Rank_Articles send = (from a in ratingDB.Rank_Articles
-                                  where a.Active == true && a.ID == article
-                                  select a).FirstOrDefault();
             Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
-            Label1.Text = name.Name;
-            if ((send.Status == 1) || (send.Status == 2) )             
+            int article = Convert.ToInt32(Session["articleID"]);
+            Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
+                   
+            Label1.Text = name.Name;             
+            if (!IsPostBack)
             {
-                SaveButton.Visible = false;
-                SendButton.Visible = false;
-                Label11.Text = "Вы находитесь в режиме просмотра данных, редактирование невозможно!";
-                Label11.Visible = true;
-            }
-            if (rights.AccessLevel == 9)
-            {
-                if ((name.EditUserType != 0) || (name.EditUserType != 2))
+                if ((rights.AccessLevel == 9 && name.EditUserType != 0 && name.EditUserType != 2) || (send.Status == 1 || send.Status == 2))
                 {
                     SaveButton.Visible = false;
                     SendButton.Visible = false;
@@ -70,10 +55,7 @@ namespace Rank.Forms
                     Label11.Text = "Вы находитесь в режиме редактирования данных!";
                     Label11.Visible = true;
                 }
-            }
-            if (rights.AccessLevel != 9)
-            {
-                if ((name.EditUserType != 1) || (name.EditUserType != 2))
+                if ((rights.AccessLevel != 9 && name.EditUserType != 1 && name.EditUserType != 2) || (send.Status == 1 || send.Status == 2))
                 {
                     SaveButton.Visible = false;
                     SendButton.Visible = false;
@@ -87,17 +69,42 @@ namespace Rank.Forms
                     Label11.Text = "Вы находитесь в режиме редактирования данных!";
                     Label11.Visible = true;
                 }
+                List<FirstLevelSubdivisionTable> First_stageList = (from item in ratingDB.FirstLevelSubdivisionTable where item.Active == true select item).OrderBy(mc => mc.Name).ToList();
+                var dictionary = new Dictionary<int, string>();
+                dictionary.Add(0, "Выберите значение");
+                foreach (var item in First_stageList)
+                    dictionary.Add(item.FirstLevelSubdivisionTableID, item.Name);
+                DropDownList3.DataTextField = "Value";
+                DropDownList3.DataValueField = "Key";
+                DropDownList3.DataSource = dictionary;
+                DropDownList3.DataBind();
+
+                List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.Active == true && item.fk_parametr == paramId select item).ToList();
+                if (marks.Count == 1)
+                {
+                    DropDownList2.Visible = false;
+                }
+                else
+                {
+                    var dictionary1 = new Dictionary<int, string>();
+                    dictionary1.Add(0, "Выберите значение");
+
+                    foreach (var item in marks)
+                        dictionary1.Add(item.ID, item.Name);
+
+                    DropDownList2.DataTextField = "Value";
+                    DropDownList2.DataValueField = "Key";
+                    if(send.FK_mark != null)
+                    {
+                        DropDownList2.SelectedValue = send.FK_mark.ToString();
+                    }
+                    DropDownList2.DataSource = dictionary1;
+                    DropDownList2.DataBind();
+                }
             }
-            if  ((send.Status == 3) || (send.Status == 0))
+            if (name.OneOrManyAuthor == true)
             {
-                SaveButton.Visible = true;
-                SendButton.Visible = true;
-                Label11.Text = "Вы находитесь в режиме редактирования данных!";
-                Label11.Visible = true;
-            }
-              
-            if(name.OneOrManyAuthor == true) // если нужна таблица с авторами
-            {
+                Label13.Visible = true;
                 Label2.Visible = true;
                 DropDownList3.Visible = true;
                 Label3.Visible = true;
@@ -106,12 +113,12 @@ namespace Rank.Forms
                 DropDownList5.Visible = true;
                 Label12.Visible = true;
                 TextBox2.Visible = true;
-                NewAuthorButton.Visible = true;               
+                NewAuthorButton.Visible = true;
                 Refresh();
             }
             if (paramId == 5 || paramId == 6 || paramId == 7)
             {
-                if(send.FK_mark != null)
+                if (send.FK_mark != null)
                 {
                     TableDiv.Controls.Clear();
                     TableDiv.Controls.Add(CreateNewTable());
@@ -122,46 +129,11 @@ namespace Rank.Forms
                 TableDiv.Controls.Clear();
                 TableDiv.Controls.Add(CreateNewTable());
             }
-                                       
-            if (!IsPostBack)
-            {
-                List<FirstLevelSubdivisionTable> First_stageList = (from item in ratingDB.FirstLevelSubdivisionTable select item).OrderBy(mc => mc.Name).ToList();
-                var dictionary = new Dictionary<int, string>();
-                dictionary.Add(0, "Выберите значение");
-                foreach (var item in First_stageList)
-                    dictionary.Add(item.FirstLevelSubdivisionTableID, item.Name);
-                DropDownList3.DataTextField = "Value";
-                DropDownList3.DataValueField = "Key";
-                DropDownList3.DataSource = dictionary;
-                DropDownList3.DataBind();
-
-                List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.fk_parametr == paramId select item).ToList();
-                if (marks.Count == 1)
-                {
-                    DropDownList2.Visible = false;
-                }
-                                                 
-                    var dictionary1 = new Dictionary<int, string>();
-                    dictionary1.Add(0, "Выберите значение" );
-
-                    foreach (var item in marks)
-                        dictionary1.Add(item.ID, item.Name);
-                    DropDownList2.DataTextField = "Value";
-                    DropDownList2.DataValueField = "Key";
-              /*  if (send.FK_mark != null)
-               {                    
-                    Rank_Mark drop = (from item in ratingDB.Rank_Mark where item.ID == send.FK_mark select item).FirstOrDefault();
-                    string value = drop.Name.ToString();
-                    DropDownList2.Items.FindByText(value).Selected = true;               
-                }*/
-                    DropDownList2.DataSource = dictionary1;
-                    DropDownList2.DataBind();                                                                       
-            }          
         }
         protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
         {
             int article = Convert.ToInt32(Session["articleID"]);
-            Rank_Articles mark = (from a in ratingDB.Rank_Articles where a.ID == article select a).FirstOrDefault();
+            Rank_Articles mark = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
             mark.FK_mark = Convert.ToInt32(DropDownList2.SelectedItem.Value);
             ratingDB.SubmitChanges();
             TableDiv.Controls.Clear();
@@ -169,7 +141,7 @@ namespace Rank.Forms
         }
         #region таблица с авторами
         protected void Refresh()
-        {         
+        {
             int article = Convert.ToInt32(Session["articleID"]);
             int paramId = Convert.ToInt32(Session["parametrID"]);
             DataTable dataTable = new DataTable();
@@ -181,19 +153,18 @@ namespace Rank.Forms
             dataTable.Columns.Add(new DataColumn("fio", typeof(string)));
             dataTable.Columns.Add(new DataColumn("point", typeof(string)));
 
-            List<Rank_UserArticleMappingTable> authorList = (from a in ratingDB.Rank_UserArticleMappingTable
-                                                             where a.Active == true && a.FK_Article == article
-                                                             select a).ToList();
+            List<Rank_UserArticleMappingTable> authorList = (from a in ratingDB.Rank_UserArticleMappingTable  where a.Active == true && a.FK_Article == article  select a).ToList();
             foreach (Rank_UserArticleMappingTable value in authorList)
             {
-                DataRow dataRow = dataTable.NewRow();
+                DataRow dataRow = dataTable.NewRow();            
                 UsersTable author = (from a in ratingDB.UsersTable where a.Active == true && a.UsersTableID == value.FK_User select a).FirstOrDefault();
                 FirstLevelSubdivisionTable first = (from a in ratingDB.FirstLevelSubdivisionTable where a.Active == true && a.FirstLevelSubdivisionTableID == author.FK_FirstLevelSubdivisionTable select a).FirstOrDefault();
                 SecondLevelSubdivisionTable second = (from a in ratingDB.SecondLevelSubdivisionTable where a.Active == true && a.SecondLevelSubdivisionTableID == author.FK_SecondLevelSubdivisionTable select a).FirstOrDefault();
                 ThirdLevelSubdivisionTable third = (from a in ratingDB.ThirdLevelSubdivisionTable where a.Active == true && a.ThirdLevelSubdivisionTableID == author.FK_ThirdLevelSubdivisionTable select a).FirstOrDefault();
+
                 dataRow["ID"] = value.ID;
                 dataRow["userid"] = author.UsersTableID;
-                if(first != null)
+                if (first != null)
                 {
                     dataRow["firstlvl"] = first.Name;
                 }
@@ -230,6 +201,7 @@ namespace Rank.Forms
             }
             GridView1.DataSource = dataTable;
             GridView1.DataBind();
+        
         }
         #endregion table
         protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
@@ -238,7 +210,7 @@ namespace Rank.Forms
                 {
                     int paramId = Convert.ToInt32(Session["parametrID"]);
                     DropDownList ddlPoint = (e.Row.FindControl("ddlPoint") as DropDownList);
-                    List<Rank_DifficaltPoint> points = (from item in ratingDB.Rank_DifficaltPoint where item.fk_parametr == paramId select item).ToList();
+                    List<Rank_DifficaltPoint> points = (from item in ratingDB.Rank_DifficaltPoint where item.Active == true && item.fk_parametr == paramId select item).ToList();
                     var dictionary = new Dictionary<int, string>();
                     dictionary.Add(0, "Выберите значение");
 
@@ -297,14 +269,17 @@ namespace Rank.Forms
         public void SaveCollectedValue(int fieldId, int articleId, int paramid, string value)
         {
             Rank_Fields typeoffield = (from a in ratingDB.Rank_Fields where a.ID == fieldId where a.Active == true select a).FirstOrDefault();
+         
+                Rank_ArticleValues fk = (from a in ratingDB.Rank_ArticleValues
+                                         where a.FK_Article == articleId && a.FK_Field == fieldId
+                                        && a.FK_Param == paramid
+                                         select a).FirstOrDefault();
 
-            Rank_ArticleValues fk = (from a in ratingDB.Rank_ArticleValues
-                                     where a.FK_Article == articleId && a.FK_Field == fieldId
-                                    && a.FK_Param == paramid
-                                     select a).FirstOrDefault();
-            fk.Value = value;
-            ratingDB.SubmitChanges();
+                fk.Value = value;
+                ratingDB.SubmitChanges();
+                            
         }
+    
         public Table CreateNewTable()
         {
             int article = Convert.ToInt32(Session["articleID"]);
@@ -313,32 +288,26 @@ namespace Rank.Forms
             int userID = (int)userId;
             Table tableToReturn = new Table();
             List<Rank_Fields> allFields = new List<Rank_Fields>();
-            if (paramId == 5 || paramId == 6 || paramId == 7)
-            {               
-                Rank_Articles send = (from a in ratingDB.Rank_Articles
-                                      where a.Active == true && a.ID == article
-                                      select a).FirstOrDefault();
-                if(send.FK_mark != null)
-                {
-                    allFields = (from a in ratingDB.Rank_Fields where a.Active == true && a.FK_parametr == paramId && a.formtype == 1
-                                  && a.FK_mark == send.FK_mark select a).ToList();
-                }
-                else
-                {
-                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Выберите тип публикации!');", true);
-                }
- 
-            }
-            else
-            {
+           
                 UsersTable right = (from a in ratingDB.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
-                if (right.AccessLevel == 9)
+           if (right.AccessLevel == 9)
+            {
+                    allFields = (from a in ratingDB.Rank_Fields where a.Active == true && a.FK_parametr == paramId  select a).ToList();
+            }  
+           else
+           {
+                if (paramId == 5 || paramId == 6 || paramId == 7)
                 {
-                    allFields = (from a in ratingDB.Rank_Fields where a.Active == true && a.FK_parametr == paramId && (a.formtype == 0 || a.formtype == 2) select a).ToList();
-                }  
+                    Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
+                    if (send.FK_mark != null)
+                    {
+                        allFields = (from a in ratingDB.Rank_Fields  where a.Active == true && a.FK_parametr == paramId   && a.FK_mark == send.FK_mark
+                                     select a).ToList();
+                    }
+                }
                 else
                 {
-                    allFields = (from a in ratingDB.Rank_Fields where a.Active == true && a.FK_parametr == paramId && (a.formtype == 1 || a.formtype == 2) select a).ToList();
+                    allFields = (from a in ratingDB.Rank_Fields where a.Active == true && a.FK_parametr == paramId   select a).ToList();
                 }         
             }
             int maxLine = (from a in allFields select a.line).OrderByDescending(mc => mc).FirstOrDefault();
@@ -353,39 +322,79 @@ namespace Rank.Forms
                     TableCell newCell = new TableCell();
                     TableCell headerNewCell = new TableCell();
                     headerNewCell.Text = field.Name;
-                    /*
-                                        if (field.FK_dropdown != null)
-                                        {
-                                            DropDownList ddList = new DropDownList();
-                                            ddList.Width = field.width;
-                                            ddList.Height = field.high;
-                                            ddList.ID = "dropdown" + field.ID.ToString();                      
-                                            string value = GetCollectedValue(field.ID, article, paramId);
-                                            if(value != null && value != "")
-                                            {
-                                                ddList.SelectedItem.Value = value;
-                                            }
 
-                                            List<Rank_DropDownValues> values = (from a in ratingDB.Rank_DropDownValues where a.Active == true
+                    if (field.type.Contains("file") )
+                    {                      
+                        string value = GetCollectedValue(field.ID, article, paramId);
+                        
+                            if (value != null && value != "")
+                            {
+                                LinkButton filedownload = new LinkButton();
+                                filedownload.Text = value;
+                                filedownload.Width = field.width;
+                                filedownload.Height = field.high;
+                                filedownload.ID = "filedownload" + field.ID.ToString();
+                                filedownload.Click += new EventHandler(filedownloadclick);
+                        
+                                ValueSaveClass classTmp = new ValueSaveClass();
+                                classTmp.Download = filedownload;
+                                classTmp.FieldId = field.ID;
+                                classTmp.ArticleId = article;
+                                classTmp.ParamId = paramId;
+
+                                ValuesList.Add(classTmp);
+                           //     newCell.Controls.Add(validator.GetRangeValidator("RangeValidator" + field.ID, "filedownload" + field.ID.ToString(), field.type));
+                                newCell.Controls.Add(filedownload);                         
+                        }
+                        else
+                        {
+                            if (Label11.Text == "Вы находитесь в режиме редактирования данных!")
+                            {
+                                FileUpload filename = new FileUpload();
+                                filename.Width = field.width;
+                                filename.Height = field.high;
+                                filename.ID = "fileupload" + field.ID.ToString();
+
+                                ValueSaveClass classTmp = new ValueSaveClass();
+                                classTmp.File = filename;
+                                classTmp.FieldId = field.ID;
+                                classTmp.ArticleId = article;
+                                classTmp.ParamId = paramId;
+
+                                ValuesList.Add(classTmp);
+                         //       newCell.Controls.Add(validator.GetRangeValidator("RangeValidator" + field.ID, "fileupload" + field.ID.ToString(), field.type));
+                                newCell.Controls.Add(filename);
+                            }
+                        }                    
+                    }
+                    if (field.type.Contains("drop"))
+                    {
+                        DropDownList ddList = new DropDownList();
+                        ddList.Width = field.width;
+                        ddList.Height = field.high;
+                        ddList.ID = "dropdown" + field.ID.ToString();                      
+                        string value = GetCollectedValue(field.ID, article, paramId);
+                        List<Rank_DropDownValues> values = (from a in ratingDB.Rank_DropDownValues where a.Active == true
                                                                                join b in ratingDB.Rank_DropDown on a.FK_dropdown equals b.ID
                                                                                where b.Active == true && b.ID == field.FK_dropdown select a).ToList();
-                                            foreach (Rank_DropDownValues tmp in values)
-                                            {
-                                                ddList.Items.Add(new ListItem() { Value = tmp.Name, Text = tmp.Name });
-                                            }
-
-                                            ValueSaveClass classTmp = new ValueSaveClass();
-                                            classTmp.SelectedValue = ddList;
-                                            classTmp.FieldId = field.ID;
-                                            classTmp.ArticleId = article;
-                                            classTmp.ParamId = paramId;
-
-                                            ValuesList.Add(classTmp);
-                                            newCell.Controls.Add(validator.GetRangeValidator("RangeValidator" + field.ID, "dropdown" + field.ID.ToString(), field.type));
-                                            newCell.Controls.Add(ddList);
-                                        }
-                                        else
-                                        */
+                        foreach (Rank_DropDownValues tmp in values)
+                        {
+                         ddList.Items.Add(new ListItem() { Value = tmp.Name, Text = tmp.Name });
+                            if (value != null && value != "")
+                            {
+                                ddList.SelectedValue = value;
+                            }
+                        }
+                         ValueSaveClass classTmp = new ValueSaveClass();
+                         classTmp.SelectedValue = ddList;
+                         classTmp.FieldId = field.ID;
+                         classTmp.ArticleId = article;
+                         classTmp.ParamId = paramId;
+                         ValuesList.Add(classTmp);
+                         newCell.Controls.Add(validator.GetRangeValidator("RangeValidator" + field.ID, "dropdown" + field.ID.ToString(), field.type));
+                         newCell.Controls.Add(ddList);
+                        }
+                    if (field.type.Contains("string") || field.type.Contains("int") || field.type.Contains("date"))
                     {
                         TextBox newTextBox = validator.GetTextBox(field.type);
                         newTextBox.Width = field.width;
@@ -412,21 +421,70 @@ namespace Rank.Forms
             }
             Session["contractvalues"] = ValuesList;
             return tableToReturn;
+        }      
+
+        private byte[] ReadByteArryFromFile(string destPath)
+        {
+            byte[] buff = null;
+            FileStream fs = new FileStream(destPath, FileMode.Open, FileAccess.Read);
+            BinaryReader br = new BinaryReader(fs);
+            long numBytes = new FileInfo(destPath).Length;
+            buff = br.ReadBytes((int)numBytes);
+            return buff;
+        }
+        public void filedownloadclick(object sender, EventArgs e)
+        {
+            foreach (ValueSaveClass tmp in ValuesList)
+            {
+                Rank_Fields typeoffield = (from a in ratingDB.Rank_Fields where a.ID == tmp.FieldId where a.Active == true select a).FirstOrDefault();
+                if (typeoffield.type.Contains("file"))
+                {
+                    string value = GetCollectedValue(tmp.FieldId, tmp.ArticleId, tmp.ParamId);
+                    if (value != null && value != "")
+                    {
+                        String path = value;
+                        HttpContext.Current.Response.ContentType = "application/x-zip-compressed";
+                        HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=" + value );
+                        HttpContext.Current.Response.BinaryWrite(ReadByteArryFromFile(path));
+                        HttpContext.Current.Response.End();
+                        Response.End();
+                    }
+                }
+            }
+            
         }
         public void SaveAll()
         {
             foreach (ValueSaveClass tmp in ValuesList)
             {
-                SaveCollectedValue(tmp.FieldId, tmp.ArticleId, tmp.ParamId, tmp.Value.Text);
-            }
+                Rank_Fields typeoffield = (from a in ratingDB.Rank_Fields where a.ID == tmp.FieldId where a.Active == true select a).FirstOrDefault();
+                if (typeoffield.type.Contains("string") || typeoffield.type.Contains("int") || typeoffield.type.Contains("date"))
+                {
+                    SaveCollectedValue(tmp.FieldId, tmp.ArticleId, tmp.ParamId, tmp.Value.Text);
+                }
+                if (typeoffield.FK_dropdown != null)
+                {
+                    SaveCollectedValue(tmp.FieldId, tmp.ArticleId, tmp.ParamId, tmp.SelectedValue.SelectedValue);
+                }
+                if (typeoffield.type.Contains("file"))
+                {
+                    String path = Server.MapPath("~/userdocs");
+                    Directory.CreateDirectory(path + "\\\\" + tmp.ArticleId.ToString());
+                    if (tmp.File.HasFile)
+                    {
+                        tmp.File.PostedFile.SaveAs(path + "\\\\" + tmp.ArticleId.ToString() + "\\\\" +  tmp.File.FileName);
+                        SaveCollectedValue(tmp.FieldId, tmp.ArticleId, tmp.ParamId, path + "\\\\" + tmp.ArticleId.ToString() + "\\\\" +   tmp.File.FileName);
+                    }
+                }
+            }              
         }
         protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
         {          
             int SelectedValue = -1;
             if (int.TryParse(DropDownList3.SelectedValue, out SelectedValue) && SelectedValue != -1)
             {
-                List<SecondLevelSubdivisionTable> second_stageList = (from item in ratingDB.SecondLevelSubdivisionTable
-                                                                      where item.FK_FirstLevelSubdivisionTable == SelectedValue
+                List<SecondLevelSubdivisionTable> second_stageList = (from item in ratingDB.SecondLevelSubdivisionTable 
+                                                                      where item.Active == true && item.FK_FirstLevelSubdivisionTable == SelectedValue
                                                                       select item).OrderBy(mc => mc.SecondLevelSubdivisionTableID).ToList();
                 if (second_stageList != null && second_stageList.Count() > 0)
                 {
@@ -449,7 +507,7 @@ namespace Rank.Forms
             if (int.TryParse(DropDownList4.SelectedValue, out SelectedValue) && SelectedValue != -1)
             {
                 List<ThirdLevelSubdivisionTable> third_stage = (from item in ratingDB.ThirdLevelSubdivisionTable
-                                                                where item.FK_SecondLevelSubdivisionTable == SelectedValue
+                                                                where item.Active == true && item.FK_SecondLevelSubdivisionTable == SelectedValue
                                                                 select item).OrderBy(mc => mc.ThirdLevelSubdivisionTableID).ToList();
                 if (third_stage != null && third_stage.Count() > 0)
                 {
@@ -473,23 +531,21 @@ namespace Rank.Forms
             int paramId = Convert.ToInt32(Session["parametrID"]);
             var userId = Session["UserID"];         
             int userID = (int)userId;
-            List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.fk_parametr == paramId select item).ToList();
+            List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.Active == true && item.fk_parametr == paramId select item).ToList();
             if (marks.Count == 1)
             {
                 int article = Convert.ToInt32(Session["articleID"]);
-                Rank_Articles mark = (from a in ratingDB.Rank_Articles
-                                      where a.Active == true && a.ID == article
-                                      select a).FirstOrDefault();
-                foreach(var tmp in marks)
+                Rank_Articles mark = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
+                foreach(var a in marks)
                 {
-                    mark.FK_mark = tmp.ID;
+                    mark.FK_mark = a.ID;
                     ratingDB.SubmitChanges();
-                }              
+                }             
             }
             Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
             if (name.OneOrManyAuthor == false) // если это единичная привязка
             {
-                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+                UsersTable rights = (from item in ratingDB.UsersTable where item.Active == true && item.UsersTableID == userID select item).FirstOrDefault();
               
                 int article = Convert.ToInt32(Session["articleID"]);
                 Rank_UserArticleMappingTable newValue = new Rank_UserArticleMappingTable();
@@ -512,7 +568,7 @@ namespace Rank.Forms
                 ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newValue);
                 ratingDB.SubmitChanges();
             }
-                Response.Redirect("~/Forms/CreateEditForm.aspx");
+                Response.Redirect("~/Forms/UserArticlePage.aspx");
         }
         protected void PoiskRefresh()
         {

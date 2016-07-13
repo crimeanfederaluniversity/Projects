@@ -2,12 +2,12 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
      <div style="font-size: medium">
         <asp:Button ID="Button1" runat="server" Text="Назад" OnClick="Button1_Click" />
+        <br /> 
          <br />
-        <br /> <asp:Label ID="Label1" runat="server" Text="Label" Font-Bold="True" Font-Size="Large"></asp:Label></span>&nbsp;<br />
+         <asp:Label ID="Label1" runat="server" Text="Label" Font-Bold="True"></asp:Label></span>&nbsp;<br />
          <asp:Label ID="Label11" runat="server" ForeColor="Red" Text="Label" Visible="False"></asp:Label>
          <br />
-&nbsp;&nbsp;
-         <span style="font-size: medium">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><br />
+         <span style="font-size: medium">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><br />
          <asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack ="true" Height="30px" Width="225px" OnSelectedIndexChanged="DropDownList2_SelectedIndexChanged">
         </asp:DropDownList>
         &nbsp;&nbsp;&nbsp;&nbsp;<br />
@@ -61,14 +61,15 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
+         <asp:Label ID="Label13" runat="server" Text="Прикрепить пользователя:" Visible="False"></asp:Label>
          <span style="font-size: medium"><br /><asp:Label ID="Label2" runat="server" Text="Академия" Visible="False"></asp:Label>
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
         <asp:Label ID="Label3" runat="server" Text="Факультет" Visible="False"></asp:Label>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<asp:Label ID="Label4" runat="server" Text="Кафедра" Visible="False"></asp:Label>
-&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="auto-style2"><span style="font-size: medium">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         <asp:Label ID="Label12" runat="server" Text="Введите фамилию:" Visible="False"></asp:Label>
-          
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:Label ID="searchError" runat="server" Font-Size="X-Small" ForeColor="Red" Text="Пользователь не найден!" Visible="False"></asp:Label>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<asp:Label ID="Label4" runat="server" Text="Кафедра" Visible="False"></asp:Label>
+&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 
+         <asp:Label ID="Label12" runat="server" Text="Введите фамилию соавтора: " Visible="False"></asp:Label>
+         <span class="auto-style2"><span style="font-size: medium">
+        &nbsp;<asp:Label ID="searchError" runat="server" Font-Size="X-Small" ForeColor="Red" Text="Пользователь не найден!" Visible="False"></asp:Label>
         </span>
          </span>
         <br /><asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="True" Height="25px"  Width="250px" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged" Visible="False">
@@ -80,13 +81,12 @@
         &nbsp;
         <asp:TextBox ID="TextBox2" runat="server" Width="200px" Visible="False"></asp:TextBox>
         &nbsp;&nbsp; <asp:Button ID="NewAuthorButton" runat="server" Text="Поиск" OnClick="NewAuthorButtonClick" Visible="False" />
-         <br />
          <asp:CheckBox ID="CheckBox1" runat="server" Text="Нет в системе" Font-Size="Small" Visible="False" />
 &nbsp;
          <asp:Button ID="AddNotSystemUserButton" runat="server" Text="Добавить" OnClick="AddNotSystemUserButtonClick" Visible="False" />
         <br />
          <span class="auto-style2"><span style="font-size: medium">
-         <asp:GridView ID="GridView2" AutoGenerateColumns="false"  runat="server">
+         <asp:GridView ID="GridView2" AutoGenerateColumns="false"  runat="server" Height="40px" Width="732px">
                 <Columns>
                  <asp:BoundField DataField="ID" HeaderText="" Visible="false" />
                 <asp:TemplateField HeaderText="Код автора" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
@@ -122,14 +122,10 @@
                 </asp:TemplateField>
                        </Columns>
          </asp:GridView>
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<br />
-         Пожалуйста прикрепите лист с библиографическими данными издания<br />
-        <asp:FileUpload ID="FileUpload1" runat="server" Width="500px" />
-         Пожалуйста прикрепите скан выписки<asp:FileUpload ID="FileUpload2" runat="server" Width="500px" />
-        <br />
+        </span></span>
         <br />
         <asp:Button ID="SaveButton" runat="server" Text="Сохранить" OnClick="SaveButtonClick" Height="35px" Width="200px" />
         &nbsp;&nbsp;&nbsp; <asp:Button ID="SendButton" runat="server" Text="Отправить" OnClick="SendButtonClick" Height="35px" Width="200px" />
+
     </div>
 </asp:Content>
