@@ -33,7 +33,7 @@ namespace Chancelerry.kanz
         protected void Page_Load(object sender, EventArgs e)
         {
             #region инициализация сессии пользователя и выбранного регистра
-            //timeStampsLabel.Text = " 0_" + DateTime.Now.TimeOfDay;
+            timeStampsLabel.Text = " 0_" + DateTime.Now.TimeOfDay;
             int userId = 0;
             int.TryParse(Session["userID"].ToString(), out userId);
 
@@ -78,7 +78,8 @@ namespace Chancelerry.kanz
                 int totalCnt = 0;
                 string sum = cardCommonFunctions.FastSearch(sortFieldId , searchAllExtended, searchCardId, vSearchList, searchAll, register.RegisterID, Convert.ToInt32(userId), dataTable, page * size, (page + 1) * size, out totalCnt);
                 #region инициализация кнопок и инфо
-                //timeStampsLabel.Text += cardCommonFunctions.timeStamps;
+                
+                timeStampsLabel.Text += cardCommonFunctions.timeStamps;
                 int pagesCnt = totalCnt / size;
                 string pageNumbers = "";
 
@@ -137,7 +138,7 @@ namespace Chancelerry.kanz
                 PageInfoBottom.Text = page_info;
                 #endregion
             }
-            //timeStampsLabel.Text += " 7_" + DateTime.Now.TimeOfDay;
+            timeStampsLabel.Text += " 7_" + DateTime.Now.TimeOfDay;
         }
         protected void Page_PreRender(object sender, EventArgs e)
         {
@@ -153,7 +154,7 @@ namespace Chancelerry.kanz
             ChooseSortFieldIdDropDownList.SelectedValue = sortFieldId.ToString();
             CardsOnPageDropDownList.SelectedValue = size.ToString();
 
-           // timeStampsLabel.Text += " 8_" + DateTime.Now.TimeOfDay;
+            timeStampsLabel.Text += " 8_" + DateTime.Now.TimeOfDay;
         }
         protected void Button1_Click(object sender, EventArgs e)
         {

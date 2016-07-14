@@ -78,15 +78,16 @@ namespace Chancelerry.kanz.rtfExport
             Int32.TryParse(registerIdStr, out regId);
 
             Dictionary<string, string> newTmpDict = GetDataEndExport(cardId, instance);
+            string st;
             if (regId == 3)
             {
-                rtf.Export(Server.MapPath("export1.rtf"), newTmpDict, Server.MapPath("tmp/"), 0, 0, 0);
+                st = rtf.Export(Server.MapPath("export1.rtf"), newTmpDict, Server.MapPath("tmp/"), 0, 0, 0);
             }
             else
             {
-                rtf.Export(Server.MapPath("export2.rtf"), newTmpDict, Server.MapPath("tmp/"), 0, 0, 0);
+                st =  rtf.Export(Server.MapPath("export2.rtf"), newTmpDict, Server.MapPath("tmp/"), 0, 0, 0);
             }
-
+            Label1.Text = st.ToString();
         }
     }
 }

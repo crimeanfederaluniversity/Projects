@@ -248,6 +248,7 @@
       <Generator>MSLinqToSQLGenerator</Generator>
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Properties\PublishProfiles\mono debug.pubxml" />
     <None Include="Properties\PublishProfiles\sivas111.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="kanz\Admin.aspx" />
@@ -447,6 +448,7 @@
     <Compile Include="kanz\RegisterView.aspx.designer.cs">
       <DependentUpon>RegisterView.aspx</DependentUpon>
     </Compile>
+    <Compile Include="kanz\rtfExport\asciiCharConverter.cs" />
     <Compile Include="kanz\rtfExport\export1.aspx.cs">
       <DependentUpon>export1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

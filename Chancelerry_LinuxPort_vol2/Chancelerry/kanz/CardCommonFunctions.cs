@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using DbLinq.Data.Linq.Mapping;
 using Npgsql;
 
 namespace Chancelerry.kanz
@@ -525,7 +526,6 @@ namespace Chancelerry.kanz
                                        && a.MaInFieldID == cardIdI
                                        && a.FkRegister == registerId
                                        select a).Distinct().OrderByDescending(uc => uc.MaInFieldID).ToList().Select(mc => mc.CollectedCardID).ToList();
-
                     }
                 }
                 #endregion
@@ -571,23 +571,55 @@ namespace Chancelerry.kanz
             else if (searchAll != null) //фильтр по всему реестру
             {
                 #region ищем по всему реестру
+                List<CollectedFieldsValues> allFieldsWithValue = (from a in chancDb.CollectedFieldsValues
+                    where a.Active == true
+                          &&
+                          a.ValueText.ToLower(new CultureInfo("ru-RU"))
+                          .Contains(searchAll.ToLower(new CultureInfo("ru-RU")))
+                    join b in chancDb.CollectedCards
+                        on a.FkCollectedCard equals b.CollectedCardID
+                    where b.Active == true
+                          && b.FkRegister == registerId
+                          && b.MaInFieldID != null
+                    select a).Distinct().ToList();
 
+
+                foreach (CollectedFieldsValues currentCollected in allFieldsWithValue)
+                {
+                    if (!(from a in chancDb.CollectedFieldsValues
+                        where
+                            a.FkField == currentCollected.FkField &&
+                            a.FkCollectedCard == currentCollected.FkCollectedCard &&
+                            a.Version > currentCollected.Version
+                        select a).Any())
+                    {
+                        cardsToShow.Add(currentCollected.FkCollectedCard);
+                    }
+                }
+
+
+
+                /*
+                string sqlqueryTMP = "SELECT fk_collectedcard,fk_field,instance,valuetext,isdeleted,version,collectedfieldvalueid FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
+                 "AND  fk_field IN (" + string.Join(",", allFields.Select(mc => mc.FieldID).ToArray()) + ")";
+                IEnumerable<ValuesClass> tmp = chancDb.ExecuteQuery<ValuesClass>(sqlqueryTMP);*/
+
+                /*
                 cardsToShow = (from a in chancDb.CollectedCards
                                where a.Active == true
-                                     && a.FkRegister == registerId
-                                     && a.MaInFieldID != null
-                               // ПЛОХО
+                               && a.FkRegister == registerId // из нужного регистра
+                               && a.MaInFieldID != null   // на всякий случай // ПЛОХО
                                join b in chancDb.CollectedFieldsValues
-                                   on a.CollectedCardID equals b.FkCollectedCard
+                               on a.CollectedCardID equals b.FkCollectedCard
                                where b.Active == true
-                                     &&
-                                     b.ValueText.ToLower(new CultureInfo("ru-RU"))
-                                         .Contains(searchAll.ToLower(new CultureInfo("ru-RU")))
-                               select a).OrderByDescending(uc => (int)uc.MaInFieldID)
-                    .Select(vk => vk.CollectedCardID)
-                    .ToList()
-                    .Distinct()
-                    .ToList();
+                               && b.ValueText.ToLower(new CultureInfo("ru-RU")).Contains(searchAll.ToLower(new CultureInfo("ru-RU")))
+
+                               join c in chancDb.CollectedFieldsValues
+                               on a.CollectedCardID equals c.FkCollectedCard
+                               where b.FkField == c.FkField
+                               && b.Version.ToString().All(nc=>nc.)
+
+                               select a).OrderByDescending(uc => (int)uc.MaInFieldID).Select(vk => vk.CollectedCardID).Distinct().ToList();*/
                 #endregion
             }
             else if (extendedSearchAll != null)
