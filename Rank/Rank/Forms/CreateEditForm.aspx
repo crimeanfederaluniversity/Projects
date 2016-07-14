@@ -3,12 +3,13 @@
      <div style="font-size: medium">
         <asp:Button ID="Button1" runat="server" Text="Назад" OnClick="Button1_Click" />
         <br /> 
+          <script src="calendar_ru.js" type="text/javascript"> </script>
          <br />
          <asp:Label ID="Label1" runat="server" Text="Label" Font-Bold="True"></asp:Label></span>&nbsp;<br />
          <asp:Label ID="Label11" runat="server" ForeColor="Red" Text="Label" Visible="False"></asp:Label>
          <br />
          <span style="font-size: medium">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><br />
-         <asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack ="true" Height="30px" Width="225px" OnSelectedIndexChanged="DropDownList2_SelectedIndexChanged">
+         <asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack ="false" Height="30px" Width="225px" OnSelectedIndexChanged="DropDownList2_SelectedIndexChanged">
         </asp:DropDownList>
         &nbsp;&nbsp;&nbsp;&nbsp;<br />
         &nbsp;<div id="TableDiv" runat="server">

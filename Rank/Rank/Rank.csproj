@@ -201,7 +201,6 @@
     <Content Include="Forms\StructPointsForm.aspx" />
     <Content Include="Forms\StructUserPointsForAccept.aspx" />
     <Content Include="Forms\UserArticleAccept.aspx" />
-    <Content Include="ClassDiagram1.cd" />
     <Content Include="RankDB.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>RankDB.designer.cs</LastGenOutput>
@@ -293,6 +292,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Calculate.cs" />
     <Compile Include="Forms\DataValidator.cs" />
     <Compile Include="Forms\FormCreateEditByUser.aspx.cs">
       <DependentUpon>FormCreateEditByUser.aspx</DependentUpon>

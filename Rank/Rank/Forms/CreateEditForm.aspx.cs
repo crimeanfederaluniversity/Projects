@@ -16,6 +16,7 @@ namespace Rank.Forms
         public DataValidator validator = new DataValidator();
         public class ValueSaveClass
         {
+            
             public FileUpload File { get; set; }
             public LinkButton Download { get; set; }
             public DropDownList SelectedValue { get; set; }
@@ -36,6 +37,8 @@ namespace Rank.Forms
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
             Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
             int article = Convert.ToInt32(Session["articleID"]);
+            Calculate userpoints = new Calculate();
+            userpoints.CalculateUserPoint(paramId, article, userID);
             Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
                    
             Label1.Text = name.Name;             
@@ -322,79 +325,96 @@ namespace Rank.Forms
                     TableCell newCell = new TableCell();
                     TableCell headerNewCell = new TableCell();
                     headerNewCell.Text = field.Name;
-
                     if (field.type.Contains("file") )
                     {                      
                         string value = GetCollectedValue(field.ID, article, paramId);
-                        
-                            if (value != null && value != "")
-                            {
+                        if ((value == null || value == "" ) && (Label11.Text == "Вы находитесь в режиме редактирования данных!"))
+                        { 
+                                FileUpload filename = new FileUpload();
+                                filename.Width = field.width;
+                                filename.Height = field.high;
+                                filename.ID = "fileupload" + field.ID.ToString();
+                                ValueSaveClass classTmp = new ValueSaveClass();
+                                classTmp.File = filename;
+                                classTmp.FieldId = field.ID;
+                                classTmp.ArticleId = article;
+                                classTmp.ParamId = paramId;
+                                ValuesList.Add(classTmp);
+                                //       newCell.Controls.Add(validator.GetRangeValidator("RangeValidator" + field.ID, "fileupload" + field.ID.ToString(), field.type));
+                                newCell.Controls.Add(filename);
+                            
+                        }
+                       else
+                        {                            
                                 LinkButton filedownload = new LinkButton();
                                 filedownload.Text = value;
                                 filedownload.Width = field.width;
                                 filedownload.Height = field.high;
                                 filedownload.ID = "filedownload" + field.ID.ToString();
                                 filedownload.Click += new EventHandler(filedownloadclick);
-                        
                                 ValueSaveClass classTmp = new ValueSaveClass();
                                 classTmp.Download = filedownload;
                                 classTmp.FieldId = field.ID;
                                 classTmp.ArticleId = article;
                                 classTmp.ParamId = paramId;
-
                                 ValuesList.Add(classTmp);
-                           //     newCell.Controls.Add(validator.GetRangeValidator("RangeValidator" + field.ID, "filedownload" + field.ID.ToString(), field.type));
-                                newCell.Controls.Add(filedownload);                         
+                                //     newCell.Controls.Add(validator.GetRangeValidator("RangeValidator" + field.ID, "filedownload" + field.ID.ToString(), field.type));
+                                newCell.Controls.Add(filedownload);
+                            
                         }
-                        else
-                        {
-                            if (Label11.Text == "Вы находитесь в режиме редактирования данных!")
-                            {
-                                FileUpload filename = new FileUpload();
-                                filename.Width = field.width;
-                                filename.Height = field.high;
-                                filename.ID = "fileupload" + field.ID.ToString();
-
-                                ValueSaveClass classTmp = new ValueSaveClass();
-                                classTmp.File = filename;
-                                classTmp.FieldId = field.ID;
-                                classTmp.ArticleId = article;
-                                classTmp.ParamId = paramId;
-
-                                ValuesList.Add(classTmp);
-                         //       newCell.Controls.Add(validator.GetRangeValidator("RangeValidator" + field.ID, "fileupload" + field.ID.ToString(), field.type));
-                                newCell.Controls.Add(filename);
-                            }
-                        }                    
+                                     
                     }
                     if (field.type.Contains("drop"))
                     {
                         DropDownList ddList = new DropDownList();
                         ddList.Width = field.width;
                         ddList.Height = field.high;
-                        ddList.ID = "dropdown" + field.ID.ToString();                      
+                        ddList.ID = "dropdown" + field.ID.ToString();
                         string value = GetCollectedValue(field.ID, article, paramId);
-                        List<Rank_DropDownValues> values = (from a in ratingDB.Rank_DropDownValues where a.Active == true
-                                                                               join b in ratingDB.Rank_DropDown on a.FK_dropdown equals b.ID
-                                                                               where b.Active == true && b.ID == field.FK_dropdown select a).ToList();
+                        List<Rank_DropDownValues> values = (from a in ratingDB.Rank_DropDownValues
+                                                            where a.Active == true
+                                                            join b in ratingDB.Rank_DropDown on a.FK_dropdown equals b.ID
+                                                            where b.Active == true && b.ID == field.FK_dropdown
+                                                            select a).ToList();
                         foreach (Rank_DropDownValues tmp in values)
                         {
-                         ddList.Items.Add(new ListItem() { Value = tmp.Name, Text = tmp.Name });
-                            if (value != null && value != "")
+                            ddList.Items.Add(new ListItem() { Value = tmp.Name, Text = tmp.Name });
+                            if (value != null || value != "")
                             {
                                 ddList.SelectedValue = value;
                             }
                         }
-                         ValueSaveClass classTmp = new ValueSaveClass();
-                         classTmp.SelectedValue = ddList;
-                         classTmp.FieldId = field.ID;
-                         classTmp.ArticleId = article;
-                         classTmp.ParamId = paramId;
-                         ValuesList.Add(classTmp);
-                         newCell.Controls.Add(validator.GetRangeValidator("RangeValidator" + field.ID, "dropdown" + field.ID.ToString(), field.type));
-                         newCell.Controls.Add(ddList);
-                        }
-                    if (field.type.Contains("string") || field.type.Contains("int") || field.type.Contains("date"))
+                        ValueSaveClass classTmp = new ValueSaveClass();
+                        classTmp.SelectedValue = ddList;
+                        classTmp.FieldId = field.ID;
+                        classTmp.ArticleId = article;
+                        classTmp.ParamId = paramId;
+                        ValuesList.Add(classTmp);
+                        newCell.Controls.Add(validator.GetRangeValidator("RangeValidator" + field.ID, "dropdown" + field.ID.ToString(), field.type));
+                        newCell.Controls.Add(ddList);
+                    }
+                    if (field.type.Contains("date"))
+                    {                       
+                        TextBox textBoxToReturn = new TextBox();
+                        textBoxToReturn.Width = field.width;
+                        textBoxToReturn.Height = field.high;
+                        textBoxToReturn.ID = "date" + field.ID.ToString();
+                        textBoxToReturn.Text = GetCollectedValue(field.ID, article, paramId);
+                         
+                       textBoxToReturn.Attributes.Add("onfocus", "this.select();lcs(this)");
+                       textBoxToReturn.Attributes.Add("onclick", "event.cancelBubble=true;this.select();lcs(this)");
+                                 
+                        ValueSaveClass classTmp = new ValueSaveClass();
+                        classTmp.Value = textBoxToReturn;
+                        classTmp.FieldId = field.ID;
+                        classTmp.ArticleId = article;
+                        classTmp.ParamId = paramId;
+                        ValuesList.Add(classTmp);
+                     //   newCell.Controls.Add(validator.GetRangeValidator("RangeValidator" + field.ID, "dropdown" + field.ID.ToString(), field.type));
+                        newCell.Controls.Add(textBoxToReturn);
+                    }
+
+                    if (field.type.Contains("string") || field.type.Contains("int") )
                     {
                         TextBox newTextBox = validator.GetTextBox(field.type);
                         newTextBox.Width = field.width;
@@ -450,8 +470,7 @@ namespace Rank.Forms
                         Response.End();
                     }
                 }
-            }
-            
+            }           
         }
         public void SaveAll()
         {
@@ -467,13 +486,20 @@ namespace Rank.Forms
                     SaveCollectedValue(tmp.FieldId, tmp.ArticleId, tmp.ParamId, tmp.SelectedValue.SelectedValue);
                 }
                 if (typeoffield.type.Contains("file"))
-                {
-                    String path = Server.MapPath("~/userdocs");
-                    Directory.CreateDirectory(path + "\\\\" + tmp.ArticleId.ToString());
-                    if (tmp.File.HasFile)
+                {                   
+                    if (Label11.Text == "Вы находитесь в режиме редактирования данных!")
                     {
-                        tmp.File.PostedFile.SaveAs(path + "\\\\" + tmp.ArticleId.ToString() + "\\\\" +  tmp.File.FileName);
-                        SaveCollectedValue(tmp.FieldId, tmp.ArticleId, tmp.ParamId, path + "\\\\" + tmp.ArticleId.ToString() + "\\\\" +   tmp.File.FileName);
+                        string value = GetCollectedValue(tmp.FieldId, tmp.ArticleId, tmp.ParamId);
+                        if (value == null || value == "")
+                        {
+                            if (tmp.File.HasFile)
+                            {
+                                String path = Server.MapPath("~/userdocs");
+                                Directory.CreateDirectory(path + "\\\\" + tmp.ArticleId.ToString());
+                                tmp.File.PostedFile.SaveAs(path + "\\\\" + tmp.ArticleId.ToString() + "\\\\" + tmp.File.FileName);
+                                SaveCollectedValue(tmp.FieldId, tmp.ArticleId, tmp.ParamId, path + "\\\\" + tmp.ArticleId.ToString() + "\\\\" + tmp.File.FileName);
+                            }
+                        }
                     }
                 }
             }              
@@ -630,7 +656,8 @@ namespace Rank.Forms
             Refresh();
         }
         protected void RankPointSaveButtonClik(object sender, EventArgs e)
-        {            
+        {
+            SaveAll();
             Button button = (Button)sender;
             GridViewRow row = (GridViewRow)button.Parent.Parent;
             DropDownList drop = (DropDownList)row.FindControl("ddlPoint");

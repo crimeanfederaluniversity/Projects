@@ -13,6 +13,7 @@ namespace Rank.Forms
         RankDBDataContext ratingDB = new RankDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
+           
             var userId = Session["UserID"];
             if (userId == null)
             {
@@ -35,10 +36,21 @@ namespace Rank.Forms
             {
                 foreach (var tmp in allparam)
                 {
+                    Rank_UserParametrValue calculate = (from a in ratingDB.Rank_UserParametrValue
+                                                        where a.Active == true && a.FK_parametr == tmp.ID && a.FK_user == userID
+                                                        select a).FirstOrDefault();
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = tmp.ID;
                     dataRow["Parametr"] = tmp.Name;
-                    dataRow["Point"] = ""; // запрос на значения
+                   
+                   if(calculate!= null)
+                    {
+                        dataRow["Point"] = calculate.Value;
+                    }
+                    else
+                    {
+                        dataRow["Point"] = "нет данных";
+                    }
                     dataTable.Rows.Add(dataRow);
                 }
 

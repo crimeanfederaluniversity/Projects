@@ -20,7 +20,21 @@ namespace Rank.Forms
             }
             int userID = (int)userId;
             Refresh();
-          }
+            List<Rank_Parametrs> allparam = (from a in ratingDB.Rank_Parametrs where a.Active == true select a).ToList();
+            foreach (var PAR in allparam)
+            {
+                List<Rank_Articles> userparamarticle = (from a in ratingDB.Rank_Articles
+                                                  where a.Active == true && a.FK_parametr == PAR.ID
+                                                  join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
+                                                  where b.FK_User == userID && b.Active == true && b.UserConfirm == true
+                                                  select a).ToList();
+                foreach (var ART in userparamarticle)
+                {
+                    Calculate userpoints = new Calculate();
+                    userpoints.CalculateUserPoint(PAR.ID, ART.ID, userID);
+                }
+            }
+        }
             protected void Refresh()
         {
             var userId = Session["UserID"];     
