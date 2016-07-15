@@ -10,6 +10,10 @@
     <br />
     <br />
     <asp:Button ID="Button2" runat="server" Text="DOIT" Width="227px" OnClick="Button2_Click" />
+    <br />
+    <br />
+    <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Fix addInfo Incoming" Width="230px" />
+    <br />
 <br />
 </asp:Content>
 

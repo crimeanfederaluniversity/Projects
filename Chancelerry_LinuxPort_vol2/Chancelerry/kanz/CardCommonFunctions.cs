@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity.Core.Mapping;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -8,7 +11,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using DbLinq.Data.Linq.Mapping;
+using Microsoft.Ajax.Utilities;
 using Npgsql;
 
 namespace Chancelerry.kanz
@@ -509,6 +512,25 @@ namespace Chancelerry.kanz
             return cardToReturn;
         }
         public int totalCnt = 0;
+
+
+         public class SearchModel
+        {
+            //public int collectedfieldvalueid { get; set; }
+            public int main_field_id { get; set; }
+            public int fk_collectedcard { get; set; }
+            public int fk_field { get; set; }
+            public int version { get; set; }
+            public int instance { get; set; }
+            public string valuetext { get; set; }
+            //public bool isdeleted { get; set; }
+        }
+
+        public class SortModel
+        {
+            public int main_field_id { get; set; }
+            public int fk_collectedcard { get; set; }
+        }
         public List<int> GetCardsToShow(int sortFieldId, string extendedSearchAll, string cardId, Dictionary<int, string> searchList, string searchAll, int registerId, int lineFrom, int lineTo)
         {
             List<int> cardsToShow = new List<int>();
@@ -534,12 +556,34 @@ namespace Chancelerry.kanz
             {
                 #region ищем по нескольким полям
                 bool isFirst = true;
+                List<SortModel> resulList = new List<SortModel>();
+                string emptStr = "пустой";
+                string nEmpStr = "не пустой";
                 foreach (int fieldId in searchList.Keys) // проходимся по каждому фильтру
                 {
                     string fieldValue = "";
                     searchList.TryGetValue(fieldId, out fieldValue); //достаем айдишник нашего филда
+                    fieldValue = fieldValue.ToLower(new CultureInfo("ru-RU"));
+                    List<SearchModel> allValuesInField = (from a in chancDb.CollectedFieldsValues
+                                                   where a.Active == true
+                                                   && a.FkField == fieldId
+                                                          join b in chancDb.CollectedCards
+                                                         on a.FkCollectedCard equals b.CollectedCardID
+                                                   where b.Active == true
+                                                   
+                                                         && b.FkRegister == registerId
+                                                         && b.MaInFieldID != null
+                                                   select new SearchModel { fk_collectedcard = a.FkCollectedCard, fk_field = a.FkField, version = a.Version, instance = a.Instance, /*collectedfieldvalueid = a.CollectedFieldValueID, isdeleted = a.IsDeleted,*/main_field_id=b.MaInFieldID.Value, valuetext = a.ValueText.ToLower(new CultureInfo("ru-RU")) }).Distinct().ToList();
+                    List<SearchModel> withValue =
+                        (from a in allValuesInField where    ((fieldValue != emptStr && fieldValue != nEmpStr && a.valuetext.Contains(fieldValue))
+                                                              || (fieldValue == nEmpStr && !a.valuetext.IsNullOrWhiteSpace())
+                                                              || (fieldValue == emptStr && a.valuetext.IsNullOrWhiteSpace()))
+                                                               select a).ToList();
 
-                    List<CollectedCards> cardsWithValue1 = (from a in chancDb.CollectedFieldsValues
+                    List<SortModel> cardsWithValue = (from a in withValue where !(from b in allValuesInField where b.fk_field == a.fk_field && b.fk_collectedcard == a.fk_collectedcard && a.instance == b.instance && b.version > a.version select b).Any() select new SortModel {fk_collectedcard = a.fk_collectedcard, main_field_id = a.main_field_id}).Distinct().ToList();
+
+
+                    /*List<CollectedCards> cardsWithValue1 = (from a in chancDb.CollectedFieldsValues
                                                             where a.Active == true
                                                             && a.FkField == fieldId
                                                             &&
@@ -551,9 +595,9 @@ namespace Chancelerry.kanz
                                                             where b.Active == true
                                                             && b.FkRegister == registerId
                                                             select b).Distinct().OrderByDescending(uc => uc.MaInFieldID).ToList();
-
-                    List<int> cardsWithValue = (from a in cardsWithValue1 select a.CollectedCardID).ToList();
-                    List<int> tmpList;
+                                                            */
+                   // List<int> cardsWithValue = (from a in cardsWithValue1 select a.CollectedCardID).ToList();
+                    List<SortModel> tmpList;
                     if (isFirst)
                     {
                         tmpList = cardsWithValue;
@@ -561,65 +605,51 @@ namespace Chancelerry.kanz
                     else
                     {
                         tmpList =
-                            (from a in cardsWithValue join b in cardsToShow on a equals b select a).Distinct().ToList();
+                            (from a in cardsWithValue join b in resulList on a.fk_collectedcard equals b.fk_collectedcard select a).Distinct().ToList();
                     }
                     isFirst = false;
-                    cardsToShow = tmpList;
+                    resulList = tmpList;
                 }
+
+                cardsToShow = resulList.Distinct().OrderByDescending(mc => mc.main_field_id).Select(mc => mc.fk_collectedcard).ToList();
+
                 #endregion
             }
             else if (searchAll != null) //фильтр по всему реестру
             {
                 #region ищем по всему реестру
-                List<CollectedFieldsValues> allFieldsWithValue = (from a in chancDb.CollectedFieldsValues
-                    where a.Active == true
-                          &&
-                          a.ValueText.ToLower(new CultureInfo("ru-RU"))
-                          .Contains(searchAll.ToLower(new CultureInfo("ru-RU")))
-                    join b in chancDb.CollectedCards
-                        on a.FkCollectedCard equals b.CollectedCardID
-                    where b.Active == true
-                          && b.FkRegister == registerId
-                          && b.MaInFieldID != null
-                    select a).Distinct().ToList();
 
+                /* List<ValuesClass> allValues = (from a in chancDb.CollectedFieldsValues
+                                                     where a.Active == true
+                                                     join b in chancDb.CollectedCards
+                                                           on a.FkCollectedCard equals b.CollectedCardID
+                                                     where b.Active == true
+                                                           && b.FkRegister == registerId
+                                                           && b.MaInFieldID != null
+                                                     select new ValuesClass { fk_collectedcard = a.FkCollectedCard, fk_field = a.FkField, version = a.Version, instance = a.Instance, collectedfieldvalueid = a.CollectedFieldValueID, isdeleted = a.IsDeleted, valuetext = a.ValueText }).Distinct().ToList();
+                 List<ValuesClass> allValuesContain = (from a in allValues
+                                                       where a.valuetext.ToLower(new CultureInfo("ru-RU"))
+                                                           .Contains(searchAll.ToLower(new CultureInfo("ru-RU")))
+                                                       select a).ToList();
 
-                foreach (CollectedFieldsValues currentCollected in allFieldsWithValue)
-                {
-                    if (!(from a in chancDb.CollectedFieldsValues
-                        where
-                            a.FkField == currentCollected.FkField &&
-                            a.FkCollectedCard == currentCollected.FkCollectedCard &&
-                            a.Version > currentCollected.Version
-                        select a).Any())
-                    {
-                        cardsToShow.Add(currentCollected.FkCollectedCard);
-                    }
-                }
-
-
-
-                /*
-                string sqlqueryTMP = "SELECT fk_collectedcard,fk_field,instance,valuetext,isdeleted,version,collectedfieldvalueid FROM \"CollectedFieldsValues\" WHERE fk_collectedcard IN (" + string.Join(",", sortedCutedCardsToShow.ToArray()) + ")" +
-                 "AND  fk_field IN (" + string.Join(",", allFields.Select(mc => mc.FieldID).ToArray()) + ")";
-                IEnumerable<ValuesClass> tmp = chancDb.ExecuteQuery<ValuesClass>(sqlqueryTMP);*/
-
-                /*
+                 cardsToShow.AddRange(from a in allValuesContain where !(from b in allValues where b.fk_field == a.fk_field && b.fk_collectedcard == a.fk_collectedcard && a.instance == b.instance && b.version > a.version select b).Any() select a.fk_collectedcard);
+                 */
                 cardsToShow = (from a in chancDb.CollectedCards
                                where a.Active == true
-                               && a.FkRegister == registerId // из нужного регистра
-                               && a.MaInFieldID != null   // на всякий случай // ПЛОХО
+                                     && a.FkRegister == registerId
+                                     && a.MaInFieldID != null
+                               // ПЛОХО
                                join b in chancDb.CollectedFieldsValues
-                               on a.CollectedCardID equals b.FkCollectedCard
+                                   on a.CollectedCardID equals b.FkCollectedCard
                                where b.Active == true
-                               && b.ValueText.ToLower(new CultureInfo("ru-RU")).Contains(searchAll.ToLower(new CultureInfo("ru-RU")))
-
-                               join c in chancDb.CollectedFieldsValues
-                               on a.CollectedCardID equals c.FkCollectedCard
-                               where b.FkField == c.FkField
-                               && b.Version.ToString().All(nc=>nc.)
-
-                               select a).OrderByDescending(uc => (int)uc.MaInFieldID).Select(vk => vk.CollectedCardID).Distinct().ToList();*/
+                                     &&
+                                     b.ValueText.ToLower(new CultureInfo("ru-RU"))
+                                         .Contains(searchAll.ToLower(new CultureInfo("ru-RU")))
+                               select a).OrderByDescending(uc => (int)uc.MaInFieldID)
+                            .Select(vk => vk.CollectedCardID)
+                            .ToList()
+                            .Distinct()
+                            .ToList();
                 #endregion
             }
             else if (extendedSearchAll != null)
@@ -653,6 +683,20 @@ namespace Chancelerry.kanz
             public double Weight { get; set; }
             public string Type { get; set; }
         }
+
+        public class ValuesSearchSmallClass
+        {
+            public int fk_collectedcard { get; set; }
+            public int fk_field { get; set; }
+        }
+        public class ValuesSearchClass
+        {
+            public int fk_collectedcard { get; set; }
+            public int fk_field { get; set; }
+            public int version { get; set; }
+            public int instance { get; set; }
+        }
+
         public class ValuesClass
         {
             public int collectedfieldvalueid { get; set; }

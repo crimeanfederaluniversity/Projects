@@ -57,8 +57,9 @@
             var multiFieldDiv = document.getElementById(cntrlId);
             var newInput = document.createElement("input");
             newInput.type = "text";
-            newInput.onclick = function () { event.cancelBubble = true; this.select(); lcs(this); };
-            newInput.onfocus = function () { this.select(); lcs(this); };
+          //  newInput.addEventListener("click", function () { event.cancelBubble = true; this.select(); lcs(this); }, false);
+            newInput.onclick = function (evt) { evt.cancelBubble = true; this.select(); lcs(this); };
+            newInput.onfocus = function (evt) { this.select(); lcs(this); };
             multiFieldDiv.appendChild(document.createElement("br"));
             multiFieldDiv.appendChild(newInput);
         }

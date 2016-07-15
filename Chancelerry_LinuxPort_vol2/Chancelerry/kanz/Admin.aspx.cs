@@ -240,5 +240,45 @@ namespace Chancelerry.kanz
                 }
             }*/
         }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            /*
+            List<CollectedCards> allCardsInRegister =
+                (from a in _chancDb.CollectedCards where a.FkRegister == 2 select a).ToList();
+            int cnt = 0;
+
+            List<CollectedFieldsValues> fieldAllValues = (from a in _chancDb.CollectedFieldsValues
+                where a.FkField == 72
+
+                join b in _chancDb.CollectedCards
+                    on a.FkCollectedCard equals b.CollectedCardID
+                where b.FkRegister == 2
+                select a).ToList();
+
+            foreach (CollectedCards currentCard in allCardsInRegister)
+            {
+                if (!(from a in fieldAllValues where a.FkCollectedCard == currentCard.CollectedCardID select a).Any())
+                {
+                    
+                    CollectedFieldsValues addinfoFieldValue = new CollectedFieldsValues();
+                    addinfoFieldValue.FkCollectedCard = currentCard.CollectedCardID;
+                    addinfoFieldValue.FkField = 72;
+                    addinfoFieldValue.FkUser = 1;
+                    addinfoFieldValue.Active = true;
+                    addinfoFieldValue.CreateDateTime = DateTime.Now;
+                    addinfoFieldValue.Instance = 0;
+                    addinfoFieldValue.Version = 0;
+                    addinfoFieldValue.IsDeleted = false;
+                    addinfoFieldValue.ValueText = "";
+                    _chancDb.CollectedFieldsValues.InsertOnSubmit(addinfoFieldValue);
+                    
+                    cnt++;
+                }
+            }
+
+   //        _chancDb.SubmitChanges();
+            */
+        }
     }
 }
