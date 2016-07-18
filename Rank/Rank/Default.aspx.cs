@@ -27,7 +27,15 @@ namespace Rank
 
             if (user != null)
             {
-                Response.Redirect("~/Forms/UserMainPage.aspx");
+                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == user.UsersTableID select item).FirstOrDefault();
+                if (rights.AccessLevel == 10)
+                {
+                    Session["parametrID"] = 16;
+                    Response.Redirect("~/Forms/UserArticlePage.aspx");
+                }
+                else {
+                    Response.Redirect("~/Forms/UserMainPage.aspx");
+                }
             }
             else
             {

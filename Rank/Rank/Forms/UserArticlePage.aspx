@@ -4,12 +4,15 @@
       
               <asp:Button ID="Button3" runat="server" Text="Назад" OnClick="Button3_Click" />
     
-            <h3>Список всех пунктов в показателе  <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></h3>
+              <h3>Список всех пунктов в показателе  <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></h3>
+              <p>
+                  <asp:Label ID="Label2" runat="server" Text="Label" Visible="False"></asp:Label>
+              </p>
             <p>
                 <asp:TextBox ID="TextBox1" runat="server" Height="20px" Visible="False" Width="450px"></asp:TextBox>
                 <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Добавить" Visible="False" />
           </p>
-          <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" >
+          <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server"  >
              <Columns>
                   <asp:TemplateField HeaderText="" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "false" >
                         <ItemTemplate> 

@@ -25,6 +25,8 @@ namespace Rank.Forms
                 Response.Redirect("~/Default.aspx");
             }
             int userID = (int)userId;
+            Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
+            Label1.Text = name.Name;
             Refresh();
         }
 
@@ -96,7 +98,7 @@ namespace Rank.Forms
         {
             Button button = (Button)sender;
             {
-                Session["userID"] = Convert.ToInt32(button.CommandArgument); // надо сделать чтобы с этиой сессией был только просмотр
+                Session["showuserID"] = Convert.ToInt32(button.CommandArgument); // надо сделать чтобы с этиой сессией был только просмотр
                 Response.Redirect("~/Forms/UserArticlePage.aspx");
             }
         }

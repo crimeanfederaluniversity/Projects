@@ -31,7 +31,7 @@ namespace Rank.Forms
                 foreach (var ART in userparamarticle)
                 {
                     Calculate userpoints = new Calculate();
-                    userpoints.CalculateUserPoint(PAR.ID, ART.ID, userID);
+                    userpoints.CalculateStructParametrPoint(PAR.ID, ART.ID, userID);
                 }
             }
         }

@@ -15,8 +15,7 @@ namespace Rank.Forms
         public List<ValueSaveClass> ValuesList = new List<ValueSaveClass>();
         public DataValidator validator = new DataValidator();
         public class ValueSaveClass
-        {
-            
+        {           
             public FileUpload File { get; set; }
             public LinkButton Download { get; set; }
             public DropDownList SelectedValue { get; set; }
@@ -32,46 +31,18 @@ namespace Rank.Forms
             if (userId == null)
             {
                 Response.Redirect("~/Default.aspx");
-            }
+            }           
             int userID = (int)userId;
+           
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-            Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
-            int article = Convert.ToInt32(Session["articleID"]);
-            Calculate userpoints = new Calculate();
-            userpoints.CalculateUserPoint(paramId, article, userID);
+            Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();        
+            int article = Convert.ToInt32(Session["articleID"]);      
             Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
                    
-            Label1.Text = name.Name;             
-            if (!IsPostBack)
-            {
-                if ((rights.AccessLevel == 9 && name.EditUserType != 0 && name.EditUserType != 2) || (send.Status == 1 || send.Status == 2))
-                {
-                    SaveButton.Visible = false;
-                    SendButton.Visible = false;
-                    Label11.Text = "Вы находитесь в режиме просмотра данных, редактирование невозможно!";
-                    Label11.Visible = true;
-                }
-                else
-                {
-                    SaveButton.Visible = true;
-                    SendButton.Visible = true;
-                    Label11.Text = "Вы находитесь в режиме редактирования данных!";
-                    Label11.Visible = true;
-                }
-                if ((rights.AccessLevel != 9 && name.EditUserType != 1 && name.EditUserType != 2) || (send.Status == 1 || send.Status == 2))
-                {
-                    SaveButton.Visible = false;
-                    SendButton.Visible = false;
-                    Label11.Text = "Вы находитесь в режиме просмотра данных, редактирование невозможно!";
-                    Label11.Visible = true;
-                }
-                else
-                {
-                    SaveButton.Visible = true;
-                    SendButton.Visible = true;
-                    Label11.Text = "Вы находитесь в режиме редактирования данных!";
-                    Label11.Visible = true;
-                }
+            Label1.Text = name.Name;
+            var viewuser = Session["showuserID"];
+           
+           
                 List<FirstLevelSubdivisionTable> First_stageList = (from item in ratingDB.FirstLevelSubdivisionTable where item.Active == true select item).OrderBy(mc => mc.Name).ToList();
                 var dictionary = new Dictionary<int, string>();
                 dictionary.Add(0, "Выберите значение");
@@ -104,7 +75,7 @@ namespace Rank.Forms
                     DropDownList2.DataSource = dictionary1;
                     DropDownList2.DataBind();
                 }
-            }
+            
             if (name.OneOrManyAuthor == true)
             {
                 Label13.Visible = true;
@@ -328,7 +299,7 @@ namespace Rank.Forms
                     if (field.type.Contains("file") )
                     {                      
                         string value = GetCollectedValue(field.ID, article, paramId);
-                        if ((value == null || value == "" ) && (Label11.Text == "Вы находитесь в режиме редактирования данных!"))
+                        if (value == null || value == "" ) 
                         { 
                                 FileUpload filename = new FileUpload();
                                 filename.Width = field.width;
@@ -487,8 +458,7 @@ namespace Rank.Forms
                 }
                 if (typeoffield.type.Contains("file"))
                 {                   
-                    if (Label11.Text == "Вы находитесь в режиме редактирования данных!")
-                    {
+                  
                         string value = GetCollectedValue(tmp.FieldId, tmp.ArticleId, tmp.ParamId);
                         if (value == null || value == "")
                         {
@@ -499,13 +469,14 @@ namespace Rank.Forms
                                 tmp.File.PostedFile.SaveAs(path + "\\\\" + tmp.ArticleId.ToString() + "\\\\" + tmp.File.FileName);
                                 SaveCollectedValue(tmp.FieldId, tmp.ArticleId, tmp.ParamId, path + "\\\\" + tmp.ArticleId.ToString() + "\\\\" + tmp.File.FileName);
                             }
-                        }
+                        
                     }
                 }
             }              
         }
         protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
-        {          
+        {
+            SaveAll();
             int SelectedValue = -1;
             if (int.TryParse(DropDownList3.SelectedValue, out SelectedValue) && SelectedValue != -1)
             {
@@ -528,7 +499,7 @@ namespace Rank.Forms
             }
         }
         protected void DropDownList4_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        {   
             int SelectedValue = -1;
             if (int.TryParse(DropDownList4.SelectedValue, out SelectedValue) && SelectedValue != -1)
             {
@@ -703,12 +674,18 @@ namespace Rank.Forms
         protected void SendButtonClick(object sender, EventArgs e)
         {
             int article = Convert.ToInt32(Session["articleID"]);
+            int paramId = Convert.ToInt32(Session["parametrID"]);
+            var userId = Session["UserID"];           
+            int userID = (int)userId;
             Rank_Articles send = (from a in ratingDB.Rank_Articles
                                   where a.Active == true && a.ID == article 
                                   select a).FirstOrDefault();
             send.Status = 1;
             ratingDB.SubmitChanges();
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Отправлено на утверждение заведующему Вашего структурного подразделения!');", true);
+            Calculate userpoints = new Calculate();
+            userpoints.CalculateUserArticlePoint(paramId, article, userID);
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Отправлено на утверждение заведующему Вашего структурного подразделения! Баллы показателя пересчитаны с учетом новых данных.');", true);
+
         }
 
         protected void AddNotSystemUserButtonClick(object sender, EventArgs e)
