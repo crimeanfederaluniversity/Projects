@@ -41,7 +41,11 @@ namespace Rank.Forms
             else
             {              
                 UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-                if ((rights.AccessLevel == 9 && name.EditUserType != 0 && name.EditUserType != 2 && name.EditUserType != 3) || (rights.AccessLevel != 10 && name.EditUserType == 3)
+                if (rights.AccessLevel == 10)
+                {
+                    Button3.Visible = false;
+                }
+                    if ((rights.AccessLevel == 9 && name.EditUserType != 0 && name.EditUserType != 2 && name.EditUserType != 3) || (rights.AccessLevel != 10 && name.EditUserType == 3)
                   || (rights.AccessLevel != 9 && rights.AccessLevel != 10 && name.EditUserType != 1 && name.EditUserType != 2))
                 {
                     TextBox1.Visible = false;
@@ -78,16 +82,28 @@ namespace Rank.Forms
                 if (rights.AccessLevel != 9 || rights.AccessLevel != 0)
                 {                 
                     userparamarticle = (from a in ratingDB.Rank_Articles
-                                        where a.Active == true && a.FK_parametr == paramId
+                                        where a.Active == true && a.FK_parametr == paramId && a.Status == 1
                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
-                                        where b.FK_User == edituser && b.Active == true && b.UserConfirm == true
+                                        where b.FK_User == edituser && b.Active == true && b.UserConfirm == true 
                                         select a).ToList();
                 }
             }
             else
             {               
-                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();            
-                    if (rights.AccessLevel != 9 || rights.AccessLevel != 0)
+                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+                if (rights.AccessLevel == 10 )
+                {
+                    userparamarticle = (from a in ratingDB.Rank_Articles
+                                        where a.Active == true && a.FK_parametr == 16
+                                        select a).ToList();
+                }
+                if (rights.AccessLevel == 9)
+                {
+                    userparamarticle = (from a in ratingDB.Rank_Articles  where a.Active == true
+                                        join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
+                                        where b.FK_User == userID && b.Active == true  select a).ToList();
+                }
+                if (rights.AccessLevel != 10 && rights.AccessLevel != 9 )
                     {
                         userparamarticle = (from a in ratingDB.Rank_Articles
                                             where a.Active == true && a.FK_parametr == paramId
@@ -159,18 +175,19 @@ namespace Rank.Forms
                 var userId = Session["UserID"];               
                 int userID = (int)userId;
                 Rank_UserArticleMappingTable delete = (from item in ratingDB.Rank_UserArticleMappingTable where item.FK_Article == Convert.ToInt32(button.CommandArgument)
-                                                       && item.FK_User == userID
+                                                       && item.FK_User == userID && item.Active == true
                                                        join b in ratingDB.Rank_Articles on item.FK_Article equals b.ID
                                                        where b.Active == true  && b.Status == 0 select item).FirstOrDefault();
                 if (delete != null)
                 {
                     delete.Active = false;
-                    ratingDB.SubmitChanges();           
+                    ratingDB.SubmitChanges();
+                    Refresh();
                 }
                 {
                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Вы не можете удалить данный пункт, т.к. он уже отправлен на утверждение!');", true);
                 }
-                Refresh();
+              
             }
         }
 
@@ -191,7 +208,10 @@ namespace Rank.Forms
                 ratingDB.SubmitChanges();
                              
                 UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-                if (rights.AccessLevel == 9 || rights.AccessLevel == 10)
+                if (rights.AccessLevel == 10)
+                {
+                }                
+                if(rights.AccessLevel == 9 )
                 {
                     var edituserId = Session["edituserID"];
                     if (edituserId != null)
@@ -204,7 +224,25 @@ namespace Rank.Forms
                         newLink.UserConfirm = false;
                         ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink);
                         ratingDB.SubmitChanges();
-                    }                 
+                        Rank_UserArticleMappingTable newLink2 = new Rank_UserArticleMappingTable();
+                        newLink2.Active = true;
+                        newLink2.FK_Article = newValue.ID;
+                        newLink2.FK_User = userID;
+                        newLink2.CreateUser = true;
+                        ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink2);
+                        ratingDB.SubmitChanges();
+                    }
+                    else
+                    {
+                        Rank_UserArticleMappingTable newLink3 = new Rank_UserArticleMappingTable();
+                        newLink3.Active = true;
+                        newLink3.FK_Article = newValue.ID;
+                        newLink3.FK_User = userID;
+                        newLink3.CreateUser = true;
+                        ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink3);
+                        ratingDB.SubmitChanges();
+
+                    }
                 }
                 else
                 {
@@ -213,6 +251,7 @@ namespace Rank.Forms
                     newLink.FK_Article = newValue.ID;
                     newLink.FK_User = userID;
                     newLink.UserConfirm = true;
+                    newLink.CreateUser = true;
                     ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink);
                     ratingDB.SubmitChanges();
                 }                           

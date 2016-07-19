@@ -42,7 +42,8 @@ namespace Rank.Forms
             Label1.Text = name.Name;
             var viewuser = Session["showuserID"];
            
-           
+           if(!Page.IsPostBack)
+            {
                 List<FirstLevelSubdivisionTable> First_stageList = (from item in ratingDB.FirstLevelSubdivisionTable where item.Active == true select item).OrderBy(mc => mc.Name).ToList();
                 var dictionary = new Dictionary<int, string>();
                 dictionary.Add(0, "Выберите значение");
@@ -52,29 +53,37 @@ namespace Rank.Forms
                 DropDownList3.DataValueField = "Key";
                 DropDownList3.DataSource = dictionary;
                 DropDownList3.DataBind();
-
-                List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.Active == true && item.fk_parametr == paramId select item).ToList();
-                if (marks.Count == 1)
-                {
-                    DropDownList2.Visible = false;
+               
+                    if ( (paramId == 1 || paramId == 2) && (rights.AccessLevel != 9))
+                { 
+                        DropDownList2.Visible = false;                 
                 }
                 else
                 {
-                    var dictionary1 = new Dictionary<int, string>();
-                    dictionary1.Add(0, "Выберите значение");
-
-                    foreach (var item in marks)
-                        dictionary1.Add(item.ID, item.Name);
-
-                    DropDownList2.DataTextField = "Value";
-                    DropDownList2.DataValueField = "Key";
-                    if(send.FK_mark != null)
+                    List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.Active == true && item.fk_parametr == paramId select item).ToList();
+                    if (marks.Count == 1)
                     {
-                        DropDownList2.SelectedValue = send.FK_mark.ToString();
+                        DropDownList2.Visible = false;
                     }
-                    DropDownList2.DataSource = dictionary1;
-                    DropDownList2.DataBind();
+                    else
+                    {
+                        var dictionary1 = new Dictionary<int, string>();
+                        dictionary1.Add(0, "Выберите значение");
+
+                        foreach (var item in marks)
+                            dictionary1.Add(item.ID, item.Name);
+
+                        DropDownList2.DataTextField = "Value";
+                        DropDownList2.DataValueField = "Key";
+                        if (send.FK_mark != null)
+                        {
+                            DropDownList2.SelectedValue = send.FK_mark.ToString();
+                        }
+                        DropDownList2.DataSource = dictionary1;
+                        DropDownList2.DataBind();
+                    }
                 }
+            }
             
             if (name.OneOrManyAuthor == true)
             {
@@ -130,48 +139,51 @@ namespace Rank.Forms
             List<Rank_UserArticleMappingTable> authorList = (from a in ratingDB.Rank_UserArticleMappingTable  where a.Active == true && a.FK_Article == article  select a).ToList();
             foreach (Rank_UserArticleMappingTable value in authorList)
             {
-                DataRow dataRow = dataTable.NewRow();            
                 UsersTable author = (from a in ratingDB.UsersTable where a.Active == true && a.UsersTableID == value.FK_User select a).FirstOrDefault();
-                FirstLevelSubdivisionTable first = (from a in ratingDB.FirstLevelSubdivisionTable where a.Active == true && a.FirstLevelSubdivisionTableID == author.FK_FirstLevelSubdivisionTable select a).FirstOrDefault();
-                SecondLevelSubdivisionTable second = (from a in ratingDB.SecondLevelSubdivisionTable where a.Active == true && a.SecondLevelSubdivisionTableID == author.FK_SecondLevelSubdivisionTable select a).FirstOrDefault();
-                ThirdLevelSubdivisionTable third = (from a in ratingDB.ThirdLevelSubdivisionTable where a.Active == true && a.ThirdLevelSubdivisionTableID == author.FK_ThirdLevelSubdivisionTable select a).FirstOrDefault();
+                if (author.AccessLevel != 9)
+                {
+                    DataRow dataRow = dataTable.NewRow();
+                    FirstLevelSubdivisionTable first = (from a in ratingDB.FirstLevelSubdivisionTable where a.Active == true && a.FirstLevelSubdivisionTableID == author.FK_FirstLevelSubdivisionTable select a).FirstOrDefault();
+                    SecondLevelSubdivisionTable second = (from a in ratingDB.SecondLevelSubdivisionTable where a.Active == true && a.SecondLevelSubdivisionTableID == author.FK_SecondLevelSubdivisionTable select a).FirstOrDefault();
+                    ThirdLevelSubdivisionTable third = (from a in ratingDB.ThirdLevelSubdivisionTable where a.Active == true && a.ThirdLevelSubdivisionTableID == author.FK_ThirdLevelSubdivisionTable select a).FirstOrDefault();
 
-                dataRow["ID"] = value.ID;
-                dataRow["userid"] = author.UsersTableID;
-                if (first != null)
-                {
-                    dataRow["firstlvl"] = first.Name;
+                    dataRow["ID"] = value.ID;
+                    dataRow["userid"] = author.UsersTableID;
+                    if (first != null)
+                    {
+                        dataRow["firstlvl"] = first.Name;
+                    }
+                    else
+                    {
+                        dataRow["firstlvl"] = "Нет привязки";
+                    }
+                    if (second != null)
+                    {
+                        dataRow["secondlvl"] = second.Name;
+                    }
+                    else
+                    {
+                        dataRow["secondlvl"] = "Нет привязки";
+                    }
+                    if (third != null)
+                    {
+                        dataRow["thirdlvl"] = third.Name;
+                    }
+                    else
+                    {
+                        dataRow["thirdlvl"] = "Нет привязки";
+                    }
+                    dataRow["fio"] = author.Surname + " " + author.Name + " " + author.Patronimyc;
+                    if (value.FK_point != null)
+                    {
+                        dataRow["point"] = (from a in ratingDB.Rank_DifficaltPoint where a.Active == true && a.ID == value.FK_point select a.Name).FirstOrDefault().ToString();
+                    }
+                    else
+                    {
+                        dataRow["point"] = "";
+                    }
+                    dataTable.Rows.Add(dataRow);
                 }
-                else
-                {
-                    dataRow["firstlvl"] = "Нет привязки";
-                }
-                if (second != null)
-                {
-                    dataRow["secondlvl"] = second.Name;
-                }
-                else
-                {
-                    dataRow["secondlvl"] = "Нет привязки";
-                }
-                if (third != null)
-                {
-                    dataRow["thirdlvl"] = third.Name;
-                }
-                else
-                {
-                    dataRow["thirdlvl"] = "Нет привязки";
-                }
-                dataRow["fio"] = author.Surname + " " + author.Name + " " + author.Patronimyc;
-                if (value.FK_point != null)
-                {
-                    dataRow["point"] = (from a in ratingDB.Rank_DifficaltPoint where a.Active == true && a.ID == value.FK_point select a.Name).FirstOrDefault().ToString();
-                }
-                else
-                {
-                    dataRow["point"] = "";
-                }
-                dataTable.Rows.Add(dataRow);
             }
             GridView1.DataSource = dataTable;
             GridView1.DataBind();
@@ -275,7 +287,7 @@ namespace Rank.Forms
                     Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
                     if (send.FK_mark != null)
                     {
-                        allFields = (from a in ratingDB.Rank_Fields  where a.Active == true && a.FK_parametr == paramId   && a.FK_mark == send.FK_mark
+                        allFields = (from a in ratingDB.Rank_Fields  where a.Active == true && a.FK_parametr == paramId   && ( a.FK_mark == send.FK_mark || a.FK_mark == null)
                                      select a).ToList();
                     }
                 }
@@ -528,11 +540,24 @@ namespace Rank.Forms
             int paramId = Convert.ToInt32(Session["parametrID"]);
             var userId = Session["UserID"];         
             int userID = (int)userId;
+            UsersTable rights = (from item in ratingDB.UsersTable where item.Active == true && item.UsersTableID == userID select item).FirstOrDefault();
             List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.Active == true && item.fk_parametr == paramId select item).ToList();
+            int article = Convert.ToInt32(Session["articleID"]);
+            Rank_Articles mark = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
+            if ((paramId == 1 || paramId == 2) && (rights.AccessLevel != 9))
+            { 
+                 if(paramId == 1)
+                {
+                    mark.FK_mark = 1;
+                }
+                if (paramId == 2)
+                {
+                    mark.FK_mark = 6;
+                }
+            }           
             if (marks.Count == 1)
             {
-                int article = Convert.ToInt32(Session["articleID"]);
-                Rank_Articles mark = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
+               
                 foreach(var a in marks)
                 {
                     mark.FK_mark = a.ID;
@@ -541,10 +566,7 @@ namespace Rank.Forms
             }
             Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
             if (name.OneOrManyAuthor == false) // если это единичная привязка
-            {
-                UsersTable rights = (from item in ratingDB.UsersTable where item.Active == true && item.UsersTableID == userID select item).FirstOrDefault();
-              
-                int article = Convert.ToInt32(Session["articleID"]);
+            {                       
                 Rank_UserArticleMappingTable newValue = new Rank_UserArticleMappingTable();
                 newValue.Active = true;
                 newValue.FK_Article = article;

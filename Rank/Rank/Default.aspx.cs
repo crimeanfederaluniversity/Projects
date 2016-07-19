@@ -33,8 +33,17 @@ namespace Rank
                     Session["parametrID"] = 16;
                     Response.Redirect("~/Forms/UserArticlePage.aspx");
                 }
-                else {
+                if (rights.AccessLevel == 9)
+                {                  
+                    Response.Redirect("~/Forms/OMRMainPage.aspx");
+                }
+                if (rights.AccessLevel == 0)
+                {
                     Response.Redirect("~/Forms/UserMainPage.aspx");
+                }
+                else
+                {        
+                    Response.Redirect("~/Forms/HeadMainPage.aspx");
                 }
             }
             else

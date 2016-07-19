@@ -12,26 +12,37 @@ namespace Rank.Forms
     {
         RankDBDataContext ratingDB = new RankDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
-        {
-           
+        {           
             var userId = Session["UserID"];
             if (userId == null)
             {
                 Response.Redirect("~/Default.aspx");
             }
             int userID = (int)userId;
-            UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-            if(rights.AccessLevel != 0)
+            UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();        
+            List<Rank_Articles> authorList = (from b in ratingDB.Rank_Articles
+                                              where b.Active == true
+                                              join a in ratingDB.Rank_UserArticleMappingTable on b.ID equals a.FK_Article
+                                              where a.Active == true && a.FK_User == userID && a.UserConfirm == false
+                                              select b).ToList();
+            if(authorList.Count != 0)
             {
-                Button3.Visible = true;
+                Button2.Text += "(" + authorList.Count.ToString() + ")";
             }
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Parametr", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Point", typeof(string)));
 
-            List<Rank_Parametrs> 
+            List<Rank_Parametrs> allparam;
+            if (rights.AccessLevel == 9)
+            {
+                allparam = (from a in ratingDB.Rank_Parametrs where a.Active == true && (a.EditUserType == 1 || a.EditUserType == 2) select a).ToList();
+            }
+            else
+            {
                 allparam = (from a in ratingDB.Rank_Parametrs where a.Active == true select a).ToList();
+            }
             if (allparam != null)
             {
                 foreach (var tmp in allparam)
