@@ -34,7 +34,11 @@ namespace Rank.Forms
             dataTable.Columns.Add(new DataColumn("Parametr", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Point", typeof(string)));
 
-            List<Rank_Parametrs> allparam;
+            List<Rank_Parametrs> allparam;  
+            if (rights.AccessLevel == 10)
+            {
+                GridView1.Columns[2].Visible = false;    
+            }
             if (rights.AccessLevel == 9)
             {
                 allparam = (from a in ratingDB.Rank_Parametrs where a.Active == true && (a.EditUserType == 1 || a.EditUserType == 2) select a).ToList();

@@ -18,13 +18,18 @@
         <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" OnRowDataBound ="OnRowDataBound"  >
             <Columns>
                  <asp:BoundField DataField="ID" HeaderText="" Visible="false" />
-                <asp:TemplateField HeaderText="Код автора" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                <asp:TemplateField HeaderText="Код автора" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "false" >
                     <ItemTemplate>
-                        <asp:Label ID="userid" runat="server" Text='<%# Bind("userid") %>'  Visible="True"></asp:Label>
+                        <asp:Label ID="userid" runat="server" Text='<%# Bind("userid") %>'  Visible="false"></asp:Label>
                     </ItemTemplate>
                     <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                 </asp:TemplateField>
-                       <asp:TemplateField HeaderText="Структурное подразделение/филиал" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                   <asp:TemplateField HeaderText="Фамилия Имя Отчество" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                    <ItemTemplate>
+                        <asp:Label ID="fio" runat="server" Text='<%# Bind("fio") %>'  Visible="True"></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField> 
+                       <asp:TemplateField HeaderText="Академия" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                     <ItemTemplate>
                         <asp:Label ID="firstlvl" runat="server" Text='<%# Bind("firstlvl") %>'  Visible="True"></asp:Label>
                     </ItemTemplate>
@@ -39,15 +44,11 @@
                         <asp:Label ID="thirdlvl" runat="server" Text='<%# Bind("thirdlvl") %>'  Visible="True"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="ФИО" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
-                    <ItemTemplate>
-                        <asp:Label ID="fio" runat="server" Text='<%# Bind("fio") %>'  Visible="True"></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>     
+                 
                 <asp:TemplateField HeaderText="Коэффициент сложности" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                     <ItemTemplate>
                          <asp:Label ID="point" runat="server" Text='<%# Bind("point") %>'  Visible="false"></asp:Label>     
-                        <asp:DropDownList ID="ddlPoint" runat="server"  OnSelectedIndexChanged="ddlPoint_SelectedIndexChanged" > </asp:DropDownList>                        
+                        <asp:DropDownList ID="ddlPoint" runat="server"  OnSelectedIndexChanged="ddlPoint_SelectedIndexChanged" Width ="300"> </asp:DropDownList>                        
                     </ItemTemplate>
                 </asp:TemplateField>
                  <asp:TemplateField HeaderText="Сохранить">
@@ -55,38 +56,69 @@
                         <asp:Button ID="RankPointSaveButton" runat="server" CommandName="Select" Text="Сохранить" Width="150px" CommandArgument='<%# Eval("userid") %>'  OnClick="RankPointSaveButtonClik" />
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Удаление автора">
+                <asp:TemplateField HeaderText="Удалить">
                     <ItemTemplate>
                         <asp:Button ID="Rank_DeleteAutorButton" runat="server" CommandName="Select" Text="Удалить" Width="150px" CommandArgument='<%# Eval("userid") %>' OnClientClick="return confirm('Вы уверены что хотите удалить автора?');" OnClick="Rank_DeleteAutorButtonClik" />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
-         <asp:Label ID="Label13" runat="server" Text="Прикрепить пользователя:" Visible="False"></asp:Label>
-         <span style="font-size: medium"><br /><asp:Label ID="Label2" runat="server" Text="Академия" Visible="False"></asp:Label>
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-        <asp:Label ID="Label3" runat="server" Text="Факультет" Visible="False"></asp:Label>
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<asp:Label ID="Label4" runat="server" Text="Кафедра" Visible="False"></asp:Label>
-&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; 
-         <asp:Label ID="Label12" runat="server" Text="Введите фамилию соавтора: " Visible="False"></asp:Label>
-         <span class="auto-style2"><span style="font-size: medium">
-        &nbsp;<asp:Label ID="searchError" runat="server" Font-Size="X-Small" ForeColor="Red" Text="Пользователь не найден!" Visible="False"></asp:Label>
-        </span>
-         </span>
-        <br /><asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="True" Height="25px"  Width="250px" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged" Visible="False">
+              <asp:GridView ID="GridView3" AutoGenerateColumns="false"  runat="server" Height="40px" Width="732px" Visible="False">
+                <Columns>
+                 <asp:BoundField DataField="ID" HeaderText="" Visible="false" />
+                <asp:TemplateField HeaderText="Код автора" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                    <ItemTemplate>
+                        <asp:Label ID="userid" runat="server" Text='<%# Bind("notsystemuserid") %>'  Visible="True"></asp:Label>
+                    </ItemTemplate>
+                    <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
+                </asp:TemplateField>
+                       <asp:TemplateField HeaderText="Фамилия и инициалы" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                    <ItemTemplate>
+                        <asp:Label ID="surname" runat="server" Text='<%# Bind("notsystemuserfio") %>'  Visible="True"></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>              
+                <asp:TemplateField HeaderText="Коэффициент сложности" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                    <ItemTemplate>
+                         <asp:Label ID="point" runat="server" Text='<%# Bind("notsystemuserpoint") %>'  Visible="false"></asp:Label>                        
+                    </ItemTemplate>
+                </asp:TemplateField>
+                         <asp:TemplateField HeaderText="Удалить">
+                    <ItemTemplate>
+                        <asp:Button ID="DeleteNotSystemAutorButton" runat="server" CommandName="Select" Text="Удалить" Width="150px" CommandArgument='<%# Eval("notsystemuserid") %>' OnClientClick="return confirm('Вы уверены что хотите удалить автора?');" OnClick="DeleteNotSystemAutorButtonClick" />
+                    </ItemTemplate>
+                </asp:TemplateField>
+                       </Columns>
+         </asp:GridView>
+         <table>
+             <tr>
+                 <td>
+         <asp:Panel ID="Panel2" runat="server" Width="506px" >
+             <span style="font-size: medium"><asp:Label ID="Label2" runat="server" Text="Добавление человека (автора), являющегося сотрудником КФУ :" Visible="False"></asp:Label>
+                 <span style="font-size: medium"> <asp:Label ID="Label14" runat="server" Text="Введите фамилию и инициалы: " Visible="False"></asp:Label>
+                     <asp:TextBox ID="TextBox3" runat="server" Width="500px" Visible="False" ToolTip="Фамилия и инициалы человека не являющегося сотрудником КФУ" Height="20px"></asp:TextBox>
+                      <asp:DropDownList ID="DropDownList6" runat="server" AutoPostBack="True" Height="20px"  Width="500px"  Visible="False">
         </asp:DropDownList>
-&nbsp;&nbsp;<asp:DropDownList ID="DropDownList4" runat="server" AutoPostBack="True" Height="25px"  Width="250px" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged" Visible="False">
-        </asp:DropDownList>
-&nbsp;&nbsp;<asp:DropDownList ID="DropDownList5" runat="server" AutoPostBack="True" Height="25px" Width="250px" Visible="False" >
-        </asp:DropDownList>
-        &nbsp;
-        <asp:TextBox ID="TextBox2" runat="server" Width="200px" Visible="False"></asp:TextBox>
-        &nbsp;&nbsp; <asp:Button ID="NewAuthorButton" runat="server" Text="Поиск" OnClick="NewAuthorButtonClick" Visible="False" />
-         <asp:CheckBox ID="CheckBox1" runat="server" Text="Нет в системе" Font-Size="Small" Visible="False" />
-&nbsp;
          <asp:Button ID="AddNotSystemUserButton" runat="server" Text="Добавить" OnClick="AddNotSystemUserButtonClick" Visible="False" />
-        <br />
+                     </asp:Panel>
+                     </td>
+                 <td>
+         <asp:Panel ID="Panel1" runat="server" Width="507px">
+               <asp:Label ID="Label13" runat="server" Text="Добавление человека (автора), не являющегося сотрудником КФУ:" Visible="False" ForeColor="Black"></asp:Label>
+             <br /><asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="True" Height="20px"  Width="500px" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged" Visible="False">
+        </asp:DropDownList>
+             <asp:DropDownList ID="DropDownList4" runat="server" AutoPostBack="True" Height="20px"  Width="500px" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged" Visible="False">
+        </asp:DropDownList>
+              <asp:DropDownList ID="DropDownList5" runat="server" AutoPostBack="True" Height="20px" Width="500px" Visible="False" >
+        </asp:DropDownList>
+               <asp:Label ID="Label12" runat="server" Text="Введите фамилию: " Visible="False"></asp:Label>
+        <asp:TextBox ID="TextBox2" runat="server" Width="276px" Visible="False" Height="20px"></asp:TextBox>
+        &nbsp;&nbsp; <asp:Button ID="NewAuthorButton" runat="server" Text="Поиск" OnClick="NewAuthorButtonClick" Visible="False" />
+         </asp:Panel>
+                     </td>
+                 </tr>
+             </table>
          <span class="auto-style2"><span style="font-size: medium">
+     <asp:Label ID="searchError" runat="server" Font-Size="Medium" ForeColor="Red" Text="Пользователь не найден!" Visible="False"></asp:Label>
          <asp:GridView ID="GridView2" AutoGenerateColumns="false"  runat="server" Height="40px" Width="732px">
                 <Columns>
                  <asp:BoundField DataField="ID" HeaderText="" Visible="false" />
@@ -123,10 +155,12 @@
                 </asp:TemplateField>
                        </Columns>
          </asp:GridView>
-        </span></span>
+        </span>
+         </span>
         <br />
         <asp:Button ID="SaveButton" runat="server" Text="Сохранить" OnClick="SaveButtonClick" Height="35px" Width="200px" />
         &nbsp;&nbsp;&nbsp; <asp:Button ID="SendButton" runat="server" Text="Отправить" OnClick="SendButtonClick" Height="35px" Width="200px" />
 
     </div>
+     </span></span>
 </asp:Content>

@@ -44,9 +44,19 @@ namespace Rank.Forms
            
            if(!Page.IsPostBack)
             {
+                List<Rank_DifficaltPoint> points = (from item in ratingDB.Rank_DifficaltPoint where item.Active == true && item.fk_parametr == paramId select item).ToList();
+                var dictionary2 = new Dictionary<int, string>();
+                dictionary2.Add(0, "Выберите коэффициент сложности");
+                foreach (var item in points)
+                    dictionary2.Add(item.ID, item.Name);
+                DropDownList6.DataSource = dictionary2;
+                DropDownList6.DataTextField = "Value";
+                DropDownList6.DataValueField = "Key";
+                DropDownList6.DataBind();
+ 
                 List<FirstLevelSubdivisionTable> First_stageList = (from item in ratingDB.FirstLevelSubdivisionTable where item.Active == true select item).OrderBy(mc => mc.Name).ToList();
                 var dictionary = new Dictionary<int, string>();
-                dictionary.Add(0, "Выберите значение");
+                dictionary.Add(0, "Выберите академию");           
                 foreach (var item in First_stageList)
                     dictionary.Add(item.FirstLevelSubdivisionTableID, item.Name);
                 DropDownList3.DataTextField = "Value";
@@ -89,15 +99,18 @@ namespace Rank.Forms
             {
                 Label13.Visible = true;
                 Label2.Visible = true;
+                Label14.Visible = true;
                 DropDownList3.Visible = true;
-                Label3.Visible = true;
-                DropDownList4.Visible = true;
-                Label4.Visible = true;
+                TextBox3.Visible = true;
+                DropDownList4.Visible = true;      
                 DropDownList5.Visible = true;
+                DropDownList6.Visible = true;
                 Label12.Visible = true;
                 TextBox2.Visible = true;
                 NewAuthorButton.Visible = true;
+                AddNotSystemUserButton.Visible = true;
                 Refresh();
+                NotSystmAuthorRefresh();
             }
             if (paramId == 5 || paramId == 6 || paramId == 7)
             {
@@ -499,7 +512,7 @@ namespace Rank.Forms
                 {
                     var dictionary = new Dictionary<int, string>();
 
-                    dictionary.Add(-1, "Выберите значение");
+                    dictionary.Add(-1, "Выберите факультет");
                     foreach (var item in second_stageList)
                         dictionary.Add(item.SecondLevelSubdivisionTableID, item.Name);
                     DropDownList4.Enabled = true;
@@ -521,7 +534,7 @@ namespace Rank.Forms
                 if (third_stage != null && third_stage.Count() > 0)
                 {
                     var dictionary = new Dictionary<int, string>();
-                    dictionary.Add(-1, "Выберите значение");
+                    dictionary.Add(-1, "Выберите кафедру");
                     foreach (var item in third_stage)
                         dictionary.Add(item.ThirdLevelSubdivisionTableID, item.Name);
                     DropDownList5.Enabled = true;
@@ -623,6 +636,39 @@ namespace Rank.Forms
             GridView2.DataSource = dataTable;
             GridView2.DataBind();
         }
+        protected void NotSystmAuthorRefresh()
+        {
+            int article = Convert.ToInt32(Session["articleID"]);
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add(new DataColumn("notsystemuserid", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("notsystemuserfio", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("notsystemuserpoint", typeof(string)));
+   
+            List<Rank_NotSystemAuthors> poisk = (from a in ratingDB.Rank_NotSystemAuthors
+                                                 where a.Active == true &&  a.FK_Article == article select a).ToList();
+            if (poisk != null && poisk.Count != 0)
+            {
+                foreach (var author in poisk)
+                {
+                    DataRow dataRow = dataTable.NewRow();
+                    dataRow["notsystemuserid"] = author.ID;
+                    dataRow["notsystemuserfio"] = author.FIO;
+                    if (author.FK_Point != null)
+                    {
+                        dataRow["notsystemuserpoint"] = (from a in ratingDB.Rank_DifficaltPoint where a.Active == true && a.ID == author.FK_Point select a.Name).FirstOrDefault().ToString();
+                    }
+                    else
+                    {
+                        dataRow["notsystemuserpoint"] = "";
+                    }
+
+                    dataTable.Rows.Add(dataRow);
+                }
+            }
+      
+            GridView3.DataSource = dataTable;
+            GridView3.DataBind();
+        }
         protected void NewAuthorButtonClick(object sender, EventArgs e)
         {
             SaveAll();
@@ -709,19 +755,33 @@ namespace Rank.Forms
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Отправлено на утверждение заведующему Вашего структурного подразделения! Баллы показателя пересчитаны с учетом новых данных.');", true);
 
         }
-
+        protected void DeleteNotSystemAutorButtonClick(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            int article = Convert.ToInt32(Session["articleID"]);
+            Rank_NotSystemAuthors delete = (from a in ratingDB.Rank_NotSystemAuthors
+                                            where a.Active == true && a.FK_Article == article && a.ID == Convert.ToInt32(button.CommandArgument)
+                                                   select a).FirstOrDefault();
+            if (delete != null)
+            {
+                delete.Active = false;
+                ratingDB.SubmitChanges();
+            }
+            Refresh();
+        }
         protected void AddNotSystemUserButtonClick(object sender, EventArgs e)
         {
-            if(CheckBox1.Checked)
+            if(TextBox3.Text  != null && Convert.ToInt32(DropDownList6.SelectedItem.Value) != 0)
             {
-
-            }
-            else
-            {
-
-            }
+                int article = Convert.ToInt32(Session["articleID"]);
+                Rank_NotSystemAuthors newnotCFUauthor = new Rank_NotSystemAuthors();
+                newnotCFUauthor.Active = true;
+                newnotCFUauthor.FK_Article = article;
+                newnotCFUauthor.FK_Point = Convert.ToInt32(DropDownList6.SelectedItem.Value);
+                newnotCFUauthor.FIO = TextBox3.Text;
+                NotSystmAuthorRefresh();
+            }        
         }
-
-       
+      
     }
 }

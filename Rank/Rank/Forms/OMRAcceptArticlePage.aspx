@@ -1,29 +1,26 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="OMRAcceptArticlePage.aspx.cs" Inherits="Rank.Forms.OMRAcceptArticlePage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <br />
+    <asp:Button ID="Button2" runat="server" Text="Назад" OnClick="Button2_Click" />
     <h3>Верифицировать данные сотрудников КФУ:</h3>
     <span style="font-size: medium">
     Выберите структурное подразделение:<br />
-    <asp:Label ID="Label2" runat="server" Text="Академия" Visible="False"></asp:Label>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:Label ID="Label3" runat="server" Text="Факультет" Visible="False"></asp:Label>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:Label ID="Label4" runat="server" Text="Кафедра" Visible="False"></asp:Label>
     <br />
     </span>
-    <asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="True" Height="25px"  Width="250px" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged" Visible="False">
+    <asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="True" Height="25px"  Width="250px" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged">
     </asp:DropDownList>
 &nbsp;
-    <asp:DropDownList ID="DropDownList4" runat="server" AutoPostBack="True" Height="25px"  Width="250px" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged" Visible="False">
+    <asp:DropDownList ID="DropDownList4" runat="server" AutoPostBack="True" Height="25px"  Width="250px" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged">
     </asp:DropDownList>
 &nbsp;
-    <asp:DropDownList ID="DropDownList5" runat="server" AutoPostBack="True" Height="25px" Width="250px" Visible="False" >
+    <asp:DropDownList ID="DropDownList5" runat="server" AutoPostBack="True" Height="25px" Width="250px" >
     </asp:DropDownList>
     <br />
     Выберите показатель:<br />
     <asp:DropDownList ID="DropDownList6" runat="server" Height="17px" Width="249px">
     </asp:DropDownList>
 &nbsp;&nbsp;
-    <asp:Button ID="Button1" runat="server" Text="Поиск" />
+    <asp:Button ID="Button1" runat="server" Text="Поиск" OnClick="Button1_Click" />
     <br />
     <br />
           <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server"  >
@@ -55,6 +52,7 @@
                         </ItemTemplate>
                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
+              
 
                       <asp:TemplateField HeaderText="Просмотреть/Редактировать">
                         <ItemTemplate>
@@ -63,7 +61,7 @@
                     </asp:TemplateField>      
                     <asp:TemplateField HeaderText="Утвердить">
                         <ItemTemplate>
-                            <asp:Button ID="AcceptButton" runat="server" CommandName="Select" Text="Утвердить" Width="150px" CommandArgument='<%# Eval("ID") %>' OnClick="AcceptButtonClik" OnClientClick ="return confirm('Вы уверены что хотите удалить?');"  />
+                            <asp:Button ID="AcceptButton" runat="server" CommandName="Select" Text="Утвердить" Width="150px" CommandArgument='<%# Eval("ID") %>' OnClick="AcceptButtonClik"   />
                         </ItemTemplate>
                     </asp:TemplateField>                
                  </Columns>

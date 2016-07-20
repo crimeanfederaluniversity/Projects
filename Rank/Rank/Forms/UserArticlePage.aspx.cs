@@ -70,13 +70,14 @@ namespace Rank.Forms
             dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Date", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Status", typeof(string)));
-            List<Rank_Articles> userparamarticle = new List<Rank_Articles>();
+            dataTable.Columns.Add(new DataColumn("Point", typeof(string)));
+            List<Rank_Articles> userparamarticle = new List<Rank_Articles>(); 
             var userId = Session["UserID"];
             int userID = (int)userId;         
             var edituserId = Session["showuserID"];
             if (edituserId != null)
             {
-                GridView1.Columns[5].Visible = false;
+                GridView1.Columns[6].Visible = false;
                 int edituser = (int)edituserId;
                 UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == edituser select item).FirstOrDefault();                           
                 if (rights.AccessLevel != 9 || rights.AccessLevel != 0)
@@ -93,9 +94,8 @@ namespace Rank.Forms
                 UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
                 if (rights.AccessLevel == 10 )
                 {
-                    userparamarticle = (from a in ratingDB.Rank_Articles
-                                        where a.Active == true && a.FK_parametr == 16
-                                        select a).ToList();
+                    
+                    userparamarticle = (from a in ratingDB.Rank_Articles  where a.Active == true && a.FK_parametr == 16   select a).ToList();
                 }
                 if (rights.AccessLevel == 9)
                 {
@@ -114,10 +114,38 @@ namespace Rank.Forms
             }
               foreach (var tmp in userparamarticle)
             {
+                Rank_UserArticleMappingTable userarticlepoint = new Rank_UserArticleMappingTable();  
+                if (edituserId != null)
+                {
+                    int edituser = (int)edituserId;
+                    UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == edituser select item).FirstOrDefault();
+                    if (rights.AccessLevel != 9 || rights.AccessLevel != 0)
+                    {
+                        userarticlepoint = (from a in ratingDB.Rank_UserArticleMappingTable
+                                            where a.Active == true && a.FK_Article == tmp.ID && a.FK_User == edituser
+                                            select a).FirstOrDefault();
+                    }
+                }
+                else
+                {
+                    UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+                    if (rights.AccessLevel == 10)
+                    {
+                        GridView1.Columns[4].Visible = false;
+                    }
+                   else
+                    {
+                        userarticlepoint = (from a in ratingDB.Rank_UserArticleMappingTable
+                                            where a.Active == true && a.FK_Article == tmp.ID && a.FK_User == userID
+                                            select a).FirstOrDefault();
+                    }                
+                }
+               
                 DataRow dataRow = dataTable.NewRow();
                 dataRow["ID"] = tmp.ID;
                 dataRow["Name"] = tmp.Name;
                 dataRow["Date"] = tmp.AddDate;
+                dataRow["Date"] = userarticlepoint.ValuebyArticle;
                 if (tmp.Status == 0)
                     dataRow["Status"] = "Доступна для редактирования";
                 if (tmp.Status == 1)

@@ -41,6 +41,12 @@
                         </ItemTemplate>
                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
+                          <asp:TemplateField HeaderText="Баллы" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                        <ItemTemplate> 
+                            <asp:Label ID="Point" runat="server" Text='<%# Bind("Point") %>'  Visible="True"></asp:Label>
+                        </ItemTemplate>
+               <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
+                    </asp:TemplateField> 
 
                       <asp:TemplateField HeaderText="Перейти">
                         <ItemTemplate>
