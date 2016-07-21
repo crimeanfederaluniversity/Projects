@@ -14,6 +14,7 @@
         &nbsp;&nbsp;&nbsp;&nbsp;<br />
          <div id="TableDiv" runat="server">
         </div>
+         <asp:Label ID="Label15" runat="server" Text="Сотрудники КФУ (зарегистрированные в системе пользователи)" Visible="False"></asp:Label>
         <br />
         <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" OnRowDataBound ="OnRowDataBound"  >
             <Columns>
@@ -63,12 +64,13 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
-              <asp:GridView ID="GridView3" AutoGenerateColumns="false"  runat="server" Height="40px" Width="732px" Visible="False">
+              <asp:Label ID="Label16" runat="server" Text="Не относятся к КФУ (нет в системе)" Visible="False"></asp:Label>
+              <asp:GridView ID="GridView3" AutoGenerateColumns="false"  runat="server" Height="40px" Width="732px">
                 <Columns>
                  <asp:BoundField DataField="ID" HeaderText="" Visible="false" />
-                <asp:TemplateField HeaderText="Код автора" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                <asp:TemplateField HeaderText="Код автора" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "false" >
                     <ItemTemplate>
-                        <asp:Label ID="userid" runat="server" Text='<%# Bind("notsystemuserid") %>'  Visible="True"></asp:Label>
+                        <asp:Label ID="userid" runat="server" Text='<%# Bind("notsystemuserid") %>'  Visible="false"></asp:Label>
                     </ItemTemplate>
                     <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                 </asp:TemplateField>
@@ -79,7 +81,7 @@
                 </asp:TemplateField>              
                 <asp:TemplateField HeaderText="Коэффициент сложности" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                     <ItemTemplate>
-                         <asp:Label ID="point" runat="server" Text='<%# Bind("notsystemuserpoint") %>'  Visible="false"></asp:Label>                        
+                         <asp:Label ID="point" runat="server" Text='<%# Bind("notsystemuserpoint") %>'  Visible="True"></asp:Label>                        
                     </ItemTemplate>
                 </asp:TemplateField>
                          <asp:TemplateField HeaderText="Удалить">
@@ -89,6 +91,7 @@
                 </asp:TemplateField>
                        </Columns>
          </asp:GridView>
+         <br />
          <table>
              <tr>
                  <td>

@@ -100,6 +100,8 @@ namespace Rank.Forms
                 Label13.Visible = true;
                 Label2.Visible = true;
                 Label14.Visible = true;
+                Label15.Visible = true;
+                Label16.Visible = true;
                 DropDownList3.Visible = true;
                 TextBox3.Visible = true;
                 DropDownList4.Visible = true;      
@@ -683,13 +685,23 @@ namespace Rank.Forms
         }
         protected void AddAutorButtonClik(object sender, EventArgs e)
         {
+            var userId = Session["UserID"];      
+            int userID = (int)userId;
+            UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
             Button button = (Button)sender;
             int article = Convert.ToInt32(Session["articleID"]);
             Rank_UserArticleMappingTable newValue = new Rank_UserArticleMappingTable();
             newValue.Active = true;
             newValue.FK_Article = article;
             newValue.FK_User = Convert.ToInt32(button.CommandArgument);
-            newValue.UserConfirm = false;
+            if(rights.AccessLevel == 9 || rights.AccessLevel == 10)
+            {
+                newValue.UserConfirm = true;
+            }
+            else
+            {
+                newValue.UserConfirm = false;
+            }       
             ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newValue);
             ratingDB.SubmitChanges();
             Refresh();
@@ -779,6 +791,8 @@ namespace Rank.Forms
                 newnotCFUauthor.FK_Article = article;
                 newnotCFUauthor.FK_Point = Convert.ToInt32(DropDownList6.SelectedItem.Value);
                 newnotCFUauthor.FIO = TextBox3.Text;
+                ratingDB.Rank_NotSystemAuthors.InsertOnSubmit(newnotCFUauthor);
+                ratingDB.SubmitChanges();
                 NotSystmAuthorRefresh();
             }        
         }
