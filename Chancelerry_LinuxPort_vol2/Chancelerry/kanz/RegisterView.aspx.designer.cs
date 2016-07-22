@@ -40,6 +40,24 @@ namespace Chancelerry.kanz {
         protected global::System.Web.UI.WebControls.Button SearchAllButton;
         
         /// <summary>
+        /// Button2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button2;
+        
+        /// <summary>
+        /// Button4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button4;
+        
+        /// <summary>
         /// SearchAllTextBoxExtended control.
         /// </summary>
         /// <remarks>
@@ -56,6 +74,15 @@ namespace Chancelerry.kanz {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button SearchAllExtendedButton;
+        
+        /// <summary>
+        /// CardsOnPageDropDownList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList CardsOnPageDropDownList;
         
         /// <summary>
         /// SearchByIdTextbox control.
@@ -76,13 +103,13 @@ namespace Chancelerry.kanz {
         protected global::System.Web.UI.WebControls.Button SearchById;
         
         /// <summary>
-        /// CardsOnPageDropDownList control.
+        /// ChooseSortFieldIdDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList CardsOnPageDropDownList;
+        protected global::System.Web.UI.WebControls.DropDownList ChooseSortFieldIdDropDownList;
         
         /// <summary>
         /// OpenByIdTextBox control.
@@ -103,22 +130,22 @@ namespace Chancelerry.kanz {
         protected global::System.Web.UI.WebControls.Button OpenByIdButton;
         
         /// <summary>
-        /// ChooseSortFieldIdDropDownList control.
+        /// ShowCardHistoryTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ChooseSortFieldIdDropDownList;
+        protected global::System.Web.UI.WebControls.TextBox ShowCardHistoryTextBox;
         
         /// <summary>
-        /// Button2 control.
+        /// ShowCardHistoryButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button ShowCardHistoryButton;
         
         /// <summary>
         /// Button3 control.
@@ -128,15 +155,6 @@ namespace Chancelerry.kanz {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button3;
-        
-        /// <summary>
-        /// Button44 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button44;
         
         /// <summary>
         /// RegisterNameLabel control.

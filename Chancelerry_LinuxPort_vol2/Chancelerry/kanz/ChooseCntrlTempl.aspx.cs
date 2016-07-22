@@ -33,5 +33,10 @@ namespace Chancelerry.kanz
         {
             Response.Redirect("cntrlTemplates/cntrl4.aspx");
         }
+
+        protected void ControlLink5_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("cntrlTemplates/cntrl5.aspx");
+        }
     }
 }

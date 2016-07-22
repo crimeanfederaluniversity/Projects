@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.UI.WebControls;
+using System.Windows.Forms.VisualStyles;
+using Microsoft.Ajax.Utilities;
 using Npgsql;
 
 namespace Chancelerry.kanz
@@ -618,6 +621,131 @@ namespace Chancelerry.kanz
                 Str2 = "Кол-во резолюций без движения документа";
             }
 
+        }
+
+        public class Template5 
+        {
+            
+            protected ChancelerryDb chancDb =
+               new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
+            private int registerModelId = 3;
+
+            public int UserId { set; get; }
+            private int dateFieldId = 79;
+            private DateTime startDate;
+            private DateTime endDate;
+            private int registerId;
+            private string valueWeNeed = "да";
+            private int valueWeNeedFieldId = 170;
+            private int dateToCheckFieldId = 100;
+
+
+
+            protected virtual List<int> GetCardsWhereDateFieldInRange()
+            {
+                StatisticsClass statisticsClass = new StatisticsClass();
+                return statisticsClass.GetCardsWhereDateFieldInRange(dateFieldId, registerId, startDate, endDate);
+            }
+            protected List<CollectedFieldsValues> GetCollectedValuesInFieldInRegister(int fieldId)
+            {
+                return (from a in chancDb.CollectedCards
+                            // найдем все значения для данного филда в данном регистре
+                        join b in chancDb.CollectedFieldsValues
+                            on a.CollectedCardID equals b.FkCollectedCard
+                        where a.Active == true
+                              && b.Active == true
+                              && b.FkField == fieldId
+                              && a.FkRegister == registerId
+                        select b).Distinct().ToList();
+            }
+
+            public void SetStartParams(DateTime stardate, DateTime enddate, int registerid)
+            {
+                startDate = stardate;
+                endDate = enddate;
+                registerId = registerid;
+            }
+
+            public Table GetResultTable()
+            {
+                Table resultTable = new Table();
+                List<int> allCardsInDateRange = GetCardsWhereDateFieldInRange();
+                List<CollectedFieldsValues> allFieldValues = GetCollectedValuesInFieldInRegister(valueWeNeedFieldId);
+                List<int> allCardsInDateRangeWithNeededValue=new List<int>();
+                foreach (int currentCardId in allCardsInDateRange)
+                {
+                    if (
+                        (from a in allFieldValues where a.FkCollectedCard == currentCardId select a).OrderByDescending(
+                            mc => mc.Version).FirstOrDefault().ValueText.ToLower().Contains(valueWeNeed))
+                    {
+                        allCardsInDateRangeWithNeededValue.Add(currentCardId);
+                    }
+                }
+                List<int> onControlAllDone = new List<int>();
+                List<int> onControlNoneDone = new List<int>();
+                List<int> onControlSomeDone = new List<int>();
+
+                List<CollectedFieldsValues> allNeededDateFieldValues = GetCollectedValuesInFieldInRegister(dateToCheckFieldId);
+                foreach (int currentCardId in allCardsInDateRangeWithNeededValue)
+                {
+                    List<CollectedFieldsValues> allValuesInFieldRegisterCard =
+                        (from a in allNeededDateFieldValues where a.FkCollectedCard == currentCardId select a).ToList();
+                    int maxInstanceInCard = (from a in allValuesInFieldRegisterCard select a.Instance).Max();
+                    bool allDone = true;
+                    bool someDone = false;
+
+                    for (int i = 0; i < maxInstanceInCard + 1; i++)
+                    {
+                        CollectedFieldsValues realValue = (from a in allValuesInFieldRegisterCard where a.Instance == i select a).OrderByDescending(
+                            mc => mc.Version).FirstOrDefault();
+                        if (realValue == null)
+                            continue;
+                        if (realValue.IsDeleted)
+                            continue;
+                        if (realValue.ValueText.IsNullOrWhiteSpace())
+                        {
+                            allDone = false;
+                        }
+                        else
+                        {
+                            someDone = true;
+                        }
+                    }
+                    if (allDone)
+                    {
+                        onControlAllDone.Add(currentCardId);
+                    }
+                    else if (someDone)
+                    {
+                        onControlSomeDone.Add(currentCardId);
+                    }
+                    else
+                    {
+                        onControlNoneDone.Add(currentCardId);
+                    }
+                }
+
+                resultTable.Rows.Add(new TableRow() { Cells = { new TableCell() { Text = "Всего на контроле:" }, new TableCell() { Text = allCardsInDateRangeWithNeededValue.Count().ToString() } } });
+                resultTable.Rows.Add(new TableRow() { Cells = { new TableCell() { Text = "Все пункты исполнены:" }, new TableCell() { Text = onControlAllDone.Count().ToString() } } });
+                resultTable.Rows.Add(new TableRow() { Cells = { new TableCell() { Text = "Часть пунктов исполнена:" }, new TableCell() { Text = onControlSomeDone.Count().ToString() } } });
+                resultTable.Rows.Add(new TableRow() { Cells = { new TableCell() { Text = "Ни один пункт не исполнен:" }, new TableCell() { Text = onControlNoneDone.Count().ToString() } } });
+
+                return resultTable;
+            }
+
+
+            public ListItem[] GetDropDownListItems()
+            {
+                return (from a in chancDb.Registers
+                    where a.FkRegistersModel == registerModelId
+                          && a.Active == true
+                    join b in chancDb.RegistersUsersMap
+                        on a.RegisterID equals b.FkRegister
+
+                    where  b.Active == true
+                    && b.FkUser == UserId
+                        select a).Distinct().Select(mc => new ListItem() {Value = mc.RegisterID.ToString(), Text = mc.Name}).ToArray();
+            }
         }
     }
 }

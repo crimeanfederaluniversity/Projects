@@ -10,4 +10,8 @@
     <br />
      <asp:LinkButton ID="ControlLink4" runat="server" OnClick="ControlLink4_Click" >Вх. Статистика по резолюциям (с учетом движения докуменитов). Выборка по дате передачи.</asp:LinkButton>
     <br />
+     <asp:LinkButton ID="ControlLink5" runat="server" OnClick="ControlLink5_Click" >Приказы. Статистика по контрольным приказам.</asp:LinkButton>
+    <br />
+     <asp:LinkButton ID="ControlLink6" runat="server" Visible="False" ></asp:LinkButton>
+    <br />
     </asp:Content>

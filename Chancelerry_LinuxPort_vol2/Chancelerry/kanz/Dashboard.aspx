@@ -5,9 +5,9 @@
         <br />
     <asp:Button ID="DictionaryEdit" runat="server" Text="Редактирование справочников" class="centered-button" OnClick="DictionaryEdit_Click"/>
         <br />
-    <asp:Button ID="GoToStatistics" runat="server" Text="Статистика" class="centered-button" OnClick="GoToStatistics_Click"/>
+    <asp:Button ID="GoToStatistics" runat="server" Text="Статистика 1" class="centered-button" OnClick="GoToStatistics_Click"/>
         <br />
-    <asp:Button ID="GoToControl" runat="server" Text="Контроль" class="centered-button" OnClick="GoToControl_Click" />
+    <asp:Button ID="GoToControl" runat="server" Text="Статистика 2" class="centered-button" OnClick="GoToControl_Click" />
         <br />
     <asp:Button ID="GoToShowResterAndPrint" runat="server" Visible="False" Text="Вывести весь ресстр" class="centered-button" OnClick="GoToShowResterAndPrint_Click" />
         <br />    

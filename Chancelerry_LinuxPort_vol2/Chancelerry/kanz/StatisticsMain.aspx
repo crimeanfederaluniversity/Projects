@@ -54,9 +54,9 @@
             </tr>    
             <tr>
                  <td>
-                       <!--Начальная дата последнего изменения (включительно)-->
+                       Начальная дата последнего изменения (включительно)
                      <br/>
-                     <asp:TextBox ID="LastChangedDateStartTextBox" runat="server" Visible="False"></asp:TextBox>
+                     <asp:TextBox ID="LastChangedDateStartTextBox" runat="server" Visible="True"></asp:TextBox>
                 </td>
                     <td>
                         Начальная дата(включительно)
@@ -72,9 +72,9 @@
             </tr>
              <tr>
                  <td>
-                <!-- Конечная дата последнего изменения (включительно)-->
+                 Конечная дата последнего изменения (включительно)
                      <br/>
-                     <asp:TextBox ID="LastChangedDateEndTextBox" runat="server" Visible="False"></asp:TextBox>
+                     <asp:TextBox ID="LastChangedDateEndTextBox" runat="server" Visible="True"></asp:TextBox>
                 </td>
                     <td>
                        Конечная дата(включительно)

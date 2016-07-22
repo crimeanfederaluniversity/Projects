@@ -77,7 +77,7 @@ namespace Chancelerry.kanz.rtfExport
             Int32.TryParse(registerIdStr, out regId);
 
             Dictionary<string, string> newTmpDict = GetDataEndExport(cardId, instance);
-            rtf.Export(Server.MapPath("export3.rtf"), newTmpDict, Server.MapPath("tmp/"), 0, 0, 0);
+            rtf.Export(Server.MapPath("export3.rtf"), Server.MapPath("tmp/"), cardId, userId, 0, instance);
 
 
 

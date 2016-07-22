@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.Configuration;
+using System.Web.Providers.Entities;
+using Npgsql;
 
 namespace Chancelerry.kanz.rtfExport
 {
@@ -19,7 +23,7 @@ namespace Chancelerry.kanz.rtfExport
         }
         private void ReplaceMarkWithValue(string mark, string value)
         {
-            _fileContent = _fileContent.Replace(mark, RussianStringToHexString(value));
+            _fileContent = _fileContent.Replace(mark, (value));
         }
         private string CreateNewFile(string folderPath, int cardId, int userId, int type)
         {
@@ -48,14 +52,98 @@ namespace Chancelerry.kanz.rtfExport
                 return 7;
             }
         }
-        public string Export (string filePath, Dictionary<string,string> changesDictionary, string tmpFilesPath, int cardId, int userId, int type )
+
+        private List<string> GetAllMarks()
         {
-            OpenFile(filePath);
-            foreach (string key in changesDictionary.Keys)
+            string pattern = "#mark[^#]+#";
+            List<string> marks = new List<string>();
+            foreach (Match match in Regex.Matches(_fileContent, pattern, RegexOptions.IgnoreCase))
             {
-                string tmp = key;
-                changesDictionary.TryGetValue(key, out tmp);
-                ReplaceMarkWithValue(key, tmp);
+                marks.Add(match.ToString());
+            }
+            return marks;
+        }
+
+        private string GetDataFromList(List<CollectedFieldsValues> allCollectedFieldsValues, int instance, int fieldId) // if instance == -1 то любой сойдет
+        {
+            string tmp = (from a in allCollectedFieldsValues
+                          where a.FkField == fieldId
+                                && (a.Instance == instance || instance == -1)
+                          select a).OrderByDescending(mc => mc.Version).Select(mc => mc.ValueText).FirstOrDefault();
+            if (tmp == null)
+                return "";
+            return tmp;
+        }
+
+
+
+        private string GetValueByMark(string mark, List<CollectedFieldsValues> allValues, int instance)
+        {
+            string strWithoutMark = mark.Substring(5, mark.Length - 6);
+            string strInstance = strWithoutMark.Substring(0, 1);
+            int instanceType = -1;
+            Int32.TryParse(strInstance, out instanceType);
+            string strWithoutMarkAndInstance = strWithoutMark.Substring(1, strWithoutMark.Length - 1);
+            string resultString = strWithoutMarkAndInstance;
+            string pattern = "&S[^&]+&E";
+            foreach (Match match in Regex.Matches(strWithoutMarkAndInstance, pattern, RegexOptions.IgnoreCase))
+            {
+                string currentSmallMark = match.ToString();
+                string currentSmallMarkCutted = currentSmallMark.Replace("&S", "").Replace("&E", "");
+                
+                List<string> values = (currentSmallMarkCutted.Split('*')).ToList();
+                int fieldId = -1;
+                Int32.TryParse(values[0],out fieldId);
+
+                if (instanceType == 0 || instanceType == 1)
+                {
+                    string value = GetDataFromList(allValues, instanceType == 0?-1:instance, fieldId);
+
+                    if (values[1] == "d")
+                    {
+                        DateTime tmpDate = DateTime.MinValue;
+                        DateTime.TryParse(value, out tmpDate);
+                       
+                        value = (tmpDate.Year < 1900)? values[2] : values[3] + tmpDate.Day.ToString("D2")+"."+tmpDate.Month.ToString("D2") + "."+ tmpDate.Year + values[4];
+                    }
+                    else
+                    {
+                        value = value == "" ? values[2] : values[3] + RussianStringToHexString(value) + values[4];
+                    }
+                    
+                    resultString = resultString.Replace(currentSmallMark, value);
+                }
+
+            }
+            return resultString;
+        }
+
+        public string Export (string filePath, string tmpFilesPath, int cardId, int userId, int type, int instance )
+        {
+            ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
+            List<CollectedFieldsValues> allCollectedInCard = (from a in chancDb.CollectedFieldsValues
+                                                              where a.FkCollectedCard == cardId
+                                                              select a).ToList();
+            OpenFile(filePath);
+            List<string> allMarks = GetAllMarks();
+            foreach (string key in allMarks)
+            {
+                string resultValue = "";
+
+                if (key == "#markUserName#")
+                {
+                    resultValue =
+                        (from a in chancDb.Users where a.UserID == userId select a.Name).FirstOrDefault().ToString();
+                }
+                else if (key== "#markTodayDate#")
+                {
+                    resultValue = DateTime.Now.Date.ToString();
+                }
+                else
+                {
+                    resultValue = GetValueByMark(key, allCollectedInCard,instance);
+                }
+                ReplaceMarkWithValue(key, resultValue);
             }
             string path = CreateNewFile(tmpFilesPath, cardId, userId, type);
             int sendStatus = SendFileToClient(path);

@@ -3,12 +3,45 @@
     <script src="toggleLoadingScreen.js" type="text/javascript"></script>
     <link href="../Content/Site.css" rel="stylesheet" />
     <script type="text/javascript">
+
+        var preId = 'ctl00_MainContent_';
+       
+        function searchKeyPressProcess(ev, buttonToClick) {
+            if (ev.keyCode == 13) {
+
+                eventFire(document.getElementById(preId+buttonToClick), 'click');
+
+              //  alert('123');
+                return false;
+            }
+        }
+
+        function eventFire(el, etype) {
+            if (el.fireEvent) {
+                el.fireEvent('on' + etype);
+            } else {
+                var evObj = document.createEvent('Events');
+                evObj.initEvent(etype, true, false);
+                el.dispatchEvent(evObj);
+            }
+        }
+  
+        
         function toggle_visibility(id) {
             var e = document.getElementById(id);
-            if(e.style.display == 'block')
+            var f = document.getElementById('toggleVisibilityLink');
+            
+            if (e.style.display == 'block') {
                 e.style.display = 'none';
-            else
+                f.classList.remove("glyphicon-chevron-up");
+                f.classList.add("glyphicon-chevron-down");
+               // f.class = "glyphicon glyphicon-chevron-down";
+            } else {
                 e.style.display = 'block';
+                f.classList.add("glyphicon-chevron-up");
+                f.classList.remove("glyphicon-chevron-down");
+               // f.class = "glyphicon glyphicon-chevron-up";
+            }
         }
 
         function ChangeAllInputToMyInput(mainDiv) {
@@ -16,13 +49,16 @@
             var main = newDiv.children[0];
             var tableBody = main.children[0];
             tableBody.removeChild(tableBody.children[0]);
-
-            for (var i = 0; i < tableBody.children.length; i++) {
+            var maxLength = 0;
+            for (var i = 1; i < tableBody.children.length; i++) 
+            {
                 var tmpRow = tableBody.children[i];
-                if (i > 0)
-                {
+                maxLength = tmpRow.children.length > maxLength ? tmpRow.children.length : maxLength;
+            }
+            for (var i = 1; i < tableBody.children.length; i++) {
+                var tmpRow = tableBody.children[i];
+                if (maxLength == tmpRow.children.length)    
                     tmpRow.removeChild(tmpRow.children[tmpRow.children.length-1]);
-                }
             }
             return newDiv;
         }
@@ -145,107 +181,147 @@
         <p>Поиск производится по каждому полю.</p>
         <p>При поиске ключевой фразы "пустой" отобразятся все карточки в которых есть пустое поле в выбранной колонке.</p>
         <p>При поиске ключевой фразы "не пустой" отобразятся все карточки в которых есть не пустое поле в выбранной колонке.</p>
+        <p>При поиске ключевой фразы "все пустые" отобразятся все карточки в которых все поля данной колонки не имеют значения.</p>
     </div>
         
 
     </div>
-
-    <br />
-    <asp:Panel runat="server" CssClass="edit-panel" Height="30px">
-        <asp:Button ID="Button1" runat="server" CssClass="float-left" Text="Добавить новую карточку" Width="1192px" OnClick="Button1_Click" OnClientClick="showLoadingScreen()" Height="25px" />
-        &nbsp;</asp:Panel>
-    <div style="width: 100%; height: 20px; border-bottom: 1px solid black; text-align: center">
-        <span style="font-size: 15px; padding: 0 0px;" onclick="toggle_visibility('searchDiv')">Поиск
-        </span>
-    </div>
-    <div id="searchDiv">
+    <br />   
+    <span>
         <table>
             <tr>
-                <td>Поиск по всему реестру <a href="#searchAllInfo" ><img border="0" alt="W3Schools" src="icons/infoButtonIcon.png" width="15" height="15"></a>
+                <td rowspan="4">
+                    <asp:Button ID="Button1" runat="server" CssClass="float-left" Text="Добавить новую карточку" Width="394px" OnClick="Button1_Click" OnClientClick="showLoadingScreen()" Height="55px" />
+                </td>
+                <td rowspan="4">&nbsp;</td>   
+              </tr>
+            <tr>
+                <td>
+                    Поиск по всему реестру  <a href="#searchAllInfo" ><img border="0" alt="W3Schools" src="icons/infoButtonIcon.png" width="15" height="15"></a>
                 </td>
                 <td>
-                    <asp:TextBox ID="SearchAllTextBox" runat="server" Height="20px" Width="200px"></asp:TextBox>
+                    <asp:TextBox ID="SearchAllTextBox" runat="server" Height="20px" Width="200px" onkeypress = "return searchKeyPressProcess (event,'SearchAllButton');"></asp:TextBox>
                 </td>
                 <td>
-                    <asp:Button ID="SearchAllButton" runat="server" Text="Поиск" Width="200px" OnClick="SearchAllButton_Click" OnClientClick="showLoadingScreen()" />
+                     <asp:Button ID="SearchAllButton" runat="server" Text="Поиск" Width="200px" OnClick="SearchAllButton_Click" OnClientClick="showLoadingScreen()" />
                 </td>
-                <td>&nbsp;</td>
-                <td colspan="2">Расширенный поиск <a href="#searchWithParamInfo"><img border="0" alt="W3Schools" src="icons/infoButtonIcon.png" width="15" height="15"></a> </td>
+            </tr>    
+            <tr>
                 <td>
-                    <asp:TextBox ID="SearchAllTextBoxExtended" runat="server" Height="20px" Width="200px"></asp:TextBox>
+                    Поиск по фильтрам <a href="#searchByFilters" > <img border="0" alt="W3Schools" src="icons/infoButtonIcon.png" width="15" height="15"> </a> 
+
+                </td>
+                 <td colspan="2">
+                    <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Width="400px" Text="Поиск" OnClientClick="showLoadingScreen()" />
+                     </td>
+            </tr>    
+             <tr>
+                <td>Очистить поиск
+                 </td>
+                <td colspan="2">
+                    <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Width="400px" Text="Очистить" OnClientClick="showLoadingScreen()" />
+                </td>
+
+            </tr>   
+         </table>
+    </span>
+    
+    <button type="button" class="btn btn-default btn-sm" onclick="toggle_visibility('searchSpan')">
+          <span  id="toggleVisibilityLink" class="glyphicon glyphicon-chevron-down" ></span> Расширенный поиск и дополнения
+    </button>
+  
+    <span id="searchSpan" style="display: none">
+        <table>
+            <tr>
+                <td>
+                    Расширенный поиск <a href="#searchWithParamInfo"><img border="0" alt="W3Schools" src="icons/infoButtonIcon.png" width="15" height="15"></a>
                 </td>
                 <td>
-                    <asp:Button ID="SearchAllExtendedButton" runat="server" Text="Поиск" Width="200px" OnClientClick="showLoadingScreen()" OnClick="SearchAllExtendedButton_Click" />
+                    <asp:TextBox ID="SearchAllTextBoxExtended" runat="server" Height="20px" Width="200px" onkeypress = "return searchKeyPressProcess (event,'SearchAllExtendedButton');" ></asp:TextBox>
+                </td>
+                 <td>
+                    <asp:Button ID="SearchAllExtendedButton" runat="server" Text="Поиск" Width="200px" OnClientClick="showLoadingScreen()" OnClick="SearchAllExtendedButton_Click" />                                
+                </td>
+                 <td>&nbsp;</td>
+                 <td >
+                    Карточек на странице
+
+                 </td>
+                <td>
+                    <asp:DropDownList ID="CardsOnPageDropDownList" runat="server" AutoPostBack="True" CssClass="float-right" Height="25px" OnSelectedIndexChanged="CardsOnPageDropDownList_SelectedIndexChanged" Width="100px">
+                        <asp:ListItem>10</asp:ListItem>
+                        <asp:ListItem>50</asp:ListItem>
+                        <asp:ListItem>100</asp:ListItem>
+                        <asp:ListItem>500</asp:ListItem>
+                        <asp:ListItem>1000</asp:ListItem>
+                        <asp:ListItem>2000</asp:ListItem>
+                    </asp:DropDownList>
                 </td>
             </tr>
+
             <tr>
-                <td>Поиск по номеру 
+                <td>
+                    Поиск по номеру 
                 </td>
                 <td>
-                    <asp:TextBox ID="SearchByIdTextbox" runat="server" Height="20px" Width="200px"></asp:TextBox>
+                    <asp:TextBox ID="SearchByIdTextbox" runat="server" Height="20px" Width="200px"  onkeypress = "return searchKeyPressProcess (event,'SearchById');" ></asp:TextBox>
                 </td>
                 <td>
                     <asp:Button ID="SearchById" runat="server" Text="Поиск" Width="200px" OnClientClick="showLoadingScreen()" OnClick="SearchById_Click" />
-                </td>
-                <td>&nbsp;</td>
-                <td colspan="2">
-                    Карточек на странице</td>
+                </td>      
+                 <td>&nbsp;</td>   
                 <td>
-                    <asp:DropDownList ID="CardsOnPageDropDownList" runat="server" AutoPostBack="True" CssClass="float-right" Height="25px" OnSelectedIndexChanged="CardsOnPageDropDownList_SelectedIndexChanged" Width="100px">
-                        <asp:ListItem>5</asp:ListItem>
-                        <asp:ListItem>10</asp:ListItem>
-                        <asp:ListItem>20</asp:ListItem>
-                        <asp:ListItem>50</asp:ListItem>
-                        <asp:ListItem>100</asp:ListItem>
-                        <asp:ListItem>200</asp:ListItem>
-                        <asp:ListItem>500</asp:ListItem>
-                        <asp:ListItem>1000</asp:ListItem>
-                    </asp:DropDownList>
-                </td>
+                    Сортировать по</td>
                 <td>
-                    &nbsp;</td>
+                <asp:DropDownList ID="ChooseSortFieldIdDropDownList" runat="server" CssClass="float-right" Height="17px" OnSelectedIndexChanged="ChooseSortFieldIdDropDownList_SelectedIndexChanged" AutoPostBack="True" Width="200px"></asp:DropDownList>      
+                </td>
+                     
             </tr>
             <tr>
                 <td>Откыть карточку по номеру 
                 </td>
                 <td>
-                    <asp:TextBox ID="OpenByIdTextBox" runat="server" Height="20px" Width="200px"></asp:TextBox>
+                    <asp:TextBox ID="OpenByIdTextBox" runat="server" Height="20px" Width="200px" onkeypress = "return searchKeyPressProcess (event,'OpenByIdButton');" ></asp:TextBox>
                 </td>
                 <td >
                     <asp:Button ID="OpenByIdButton" runat="server" Text="Открыть" Width="200px" OnClientClick="showLoadingScreen()" OnClick="OpenByIdButton_Click" />
                 </td>
-                <td>&nbsp;</td>
+                 <td>&nbsp;</td>
+                <td colspan="2"> <input name="b_print" onclick="openCntlInNewPrintPage('tableDiv');" type="button" value=" Печать таблицы" style="width: 400px" /></td>
+            </tr>
+
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
                 <td colspan="2">
-                    Сортировать по</td>
-                <td>
-        <asp:DropDownList ID="ChooseSortFieldIdDropDownList" runat="server" CssClass="float-right" Height="17px" OnSelectedIndexChanged="ChooseSortFieldIdDropDownList_SelectedIndexChanged" AutoPostBack="True" Width="200px"></asp:DropDownList>
-        
-                </td>
-                <td>
-                    &nbsp;</td>
-            </tr>
-            <tr>
-                <td >Поиск по фильтрам <a href="#searchByFilters" ><img border="0" alt="W3Schools" src="icons/infoButtonIcon.png" width="15" height="15">
-                </td>
-                <td colspan="3" >
-                    <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Width="400px" Text="Поиск" OnClientClick="showLoadingScreen()" />
-                </td>
-                <td colspan="4" >
-        <asp:Button ID="Button3" runat="server"  OnClick="Button3_Click" Text="Настройка страницы" OnClientClick="showLoadingScreen()" Width="400px"/>
-        
+                 <input type="button" onclick="location.href = 'RegisterIntegrityCheck.aspx'" value="Проверить целостность реестра" style="width: 400px" />
                 </td>
             </tr>
             <tr>
-                <td >Очистить
-                    поиск</td>
-                <td colspan="2" >
-                    <asp:Button ID="Button44" runat="server" OnClick="Button4_Click" Width="400px" Text="Очистить" OnClientClick="showLoadingScreen()" />
-                <td colspan="2" >
-                    &nbsp;<td colspan="3">
-        <input name="b_print" onclick="openCntlInNewPrintPage('tableDiv');" type="button" value=" Печать таблицы" style="width: 400px" /><td >
+                <td>
+                    История изменений карты
+                </td>             
+                <td>
+                    <asp:TextBox ID="ShowCardHistoryTextBox" runat="server" Height="20px" Width="200px" onkeypress = "return searchKeyPressProcess (event,'ShowCardHistoryButton');" ></asp:TextBox>
+                </td>            
+                <td>
+                    <asp:Button ID="ShowCardHistoryButton" runat="server" Text="Открыть" Width="200px" OnClientClick="showLoadingScreen()" OnClick="ShowCardHistoryButton_Click" />
+                </td>
+                <td>
+                </td>
+                <td colspan="2">
+                  <asp:Button ID="Button3" runat="server"  OnClick="Button3_Click" Text="Настройка страницы" OnClientClick="showLoadingScreen()" Width="400px"/>
+                </td>
             </tr>
         </table>
-    </div>
+        </span>
+
     <br />
     <asp:Label ID="RegisterNameLabel" runat="server" Text="Label"></asp:Label>
     <br />
@@ -259,14 +335,15 @@
         <asp:Button ID="GoToLastTop" runat="server" Text=" >>> " />
     </asp:Panel>
     <br />
+
 </asp:Content>
 <asp:Content ID="TableContent1" ContentPlaceHolderID="TableContent" runat="server">
     <!-- sticky header styles -->
     <style>
-         .search-field {
-             width: 100%;
-             max-width: none !important;
-         }
+        .search-field {
+            width: 100%;
+            max-width: none !important;
+        }
         #TableHeaderDiv {
             margin-left: 5px;
             margin-top: 50px;

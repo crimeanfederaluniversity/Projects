@@ -69,7 +69,9 @@ namespace Chancelerry.kanz
                 if (Request.QueryString["sortFieldId"] != null)
                     Int32.TryParse(Request.QueryString["sortFieldId"], out sortFieldId);
 
-                Dictionary<int, string> vSearchList = (Dictionary<int, string>)Session["vSearchList"];
+                Session["currentPage"] = "?page=" + page + "&size=" + size + " & sortFieldId = " + sortFieldId;
+
+                Dictionary <int, string> vSearchList = (Dictionary<int, string>)Session["vSearchList"];
                 string searchAll = (string)Session["vSearchAll"];
                 string searchCardId = (string)Session["vSearchById"];
                 string searchAllExtended = (string)Session["vSearchAllWithParams"];
@@ -297,6 +299,17 @@ namespace Chancelerry.kanz
         {
             Int32.TryParse(CardsOnPageDropDownList.SelectedValue, out size);
             Response.Redirect("RegisterView.aspx?page=0&size=" + size + "&sortFieldId=" + sortFieldId);
+        }
+
+        protected void ShowCardHistoryButton_Click(object sender, EventArgs e)
+        {
+            int tmp = -1;
+            Int32.TryParse(ShowCardHistoryTextBox.Text, out tmp);
+            if (tmp < 1 )
+                return;
+
+            Session["mainFieldId"] = tmp;
+            Response.Redirect("CardHistory.aspx");
         }
     }
 

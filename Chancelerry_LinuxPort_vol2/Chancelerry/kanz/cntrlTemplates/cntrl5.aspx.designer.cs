@@ -7,63 +7,54 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Chancelerry.kanz {
+namespace Chancelerry.kanz.cntrlTemplates {
     
     
-    public partial class ChooseCntrlTempl {
+    public partial class cntrl5 {
         
         /// <summary>
-        /// ControlLink1 control.
+        /// T5ListOfPrikazDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ControlLink1;
+        protected global::System.Web.UI.WebControls.DropDownList T5ListOfPrikazDropDownList;
         
         /// <summary>
-        /// ControlLink2 control.
+        /// T5StartDateTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ControlLink2;
+        protected global::System.Web.UI.WebControls.TextBox T5StartDateTextBox;
         
         /// <summary>
-        /// ControlLink3 control.
+        /// T5EndDateTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ControlLink3;
+        protected global::System.Web.UI.WebControls.TextBox T5EndDateTextBox;
         
         /// <summary>
-        /// ControlLink4 control.
+        /// T5CreateTableButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ControlLink4;
+        protected global::System.Web.UI.WebControls.LinkButton T5CreateTableButton;
         
         /// <summary>
-        /// ControlLink5 control.
+        /// T5ResultDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ControlLink5;
-        
-        /// <summary>
-        /// ControlLink6 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ControlLink6;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl T5ResultDiv;
     }
 }

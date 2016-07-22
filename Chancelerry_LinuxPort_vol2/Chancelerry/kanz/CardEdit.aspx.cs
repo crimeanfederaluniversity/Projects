@@ -60,8 +60,9 @@ namespace Chancelerry.kanz
             UpdateSessionValues();
             CardCreateEdit cardCreateEdit = new CardCreateEdit();
             cardCreateEdit.SaveCard(_registerId, _cardId, createdFields, createdFileUploads,true);
-
-            Response.Redirect("RegisterView.aspx");
+            string lastPage = (string) Session["currentPage"];
+            lastPage = "RegisterView.aspx"+lastPage;
+            Response.Redirect(lastPage);
         }
         protected void LinkButton1_Click(object sender, EventArgs e)
         {

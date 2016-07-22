@@ -434,8 +434,9 @@ namespace Chancelerry.kanz
                 tb.Attributes.Add("_FieldID4search", elm.ToString());
                 tb.ID = "searchTb"+ elm;
                 tb.Text = tmp;
-                tb.Attributes.Add("onkeypress", "return runScript(event);");
-                tb.Attributes.Add("onkeydown", "return runScript(event);");
+
+                tb.Attributes.Add("onkeypress", "return searchKeyPressProcess(event,'Button2');");
+                //tb.Attributes.Add("onkeydown", "return runScript(event);");
                 tb.Attributes.Add("class", "search-field");
                 cell.Controls.Add(tb);
                 row.Cells.Add(cell);
@@ -523,7 +524,7 @@ namespace Chancelerry.kanz
             public int version { get; set; }
             public int instance { get; set; }
             public string valuetext { get; set; }
-            //public bool isdeleted { get; set; }
+            public bool isdeleted { get; set; }
         }
 
         public class SortModel
@@ -558,6 +559,7 @@ namespace Chancelerry.kanz
                 bool isFirst = true;
                 List<SortModel> resulList = new List<SortModel>();
                 string emptStr = "пустой";
+                string allEmptStr = "все пустые";
                 string nEmpStr = "не пустой";
                 foreach (int fieldId in searchList.Keys) // проходимся по каждому фильтру
                 {
@@ -573,14 +575,58 @@ namespace Chancelerry.kanz
                                                    
                                                          && b.FkRegister == registerId
                                                          && b.MaInFieldID != null
-                                                   select new SearchModel { fk_collectedcard = a.FkCollectedCard, fk_field = a.FkField, version = a.Version, instance = a.Instance, /*collectedfieldvalueid = a.CollectedFieldValueID, isdeleted = a.IsDeleted,*/main_field_id=b.MaInFieldID.Value, valuetext = a.ValueText.ToLower(new CultureInfo("ru-RU")) }).Distinct().ToList();
+                                                   select new SearchModel { fk_collectedcard = a.FkCollectedCard, fk_field = a.FkField, version = a.Version, instance = a.Instance, /*collectedfieldvalueid = a.CollectedFieldValueID,*/ isdeleted = a.IsDeleted, main_field_id=b.MaInFieldID.Value, valuetext = a.ValueText.ToLower(new CultureInfo("ru-RU")) }).Distinct().ToList();
+
                     List<SearchModel> withValue =
-                        (from a in allValuesInField where    ((fieldValue != emptStr && fieldValue != nEmpStr && a.valuetext.Contains(fieldValue))
+                        (from a in allValuesInField where    ((fieldValue != emptStr && fieldValue != nEmpStr && fieldValue != allEmptStr && a.valuetext.Contains(fieldValue))
                                                               || (fieldValue == nEmpStr && !a.valuetext.IsNullOrWhiteSpace())
-                                                              || (fieldValue == emptStr && a.valuetext.IsNullOrWhiteSpace()))
+                                                              || (fieldValue == emptStr && a.valuetext.IsNullOrWhiteSpace())
+                                                              || (fieldValue == allEmptStr && a.valuetext.IsNullOrWhiteSpace()))
                                                                select a).ToList();
 
-                    List<SortModel> cardsWithValue = (from a in withValue where !(from b in allValuesInField where b.fk_field == a.fk_field && b.fk_collectedcard == a.fk_collectedcard && a.instance == b.instance && b.version > a.version select b).Any() select new SortModel {fk_collectedcard = a.fk_collectedcard, main_field_id = a.main_field_id}).Distinct().ToList();
+                    List<SortModel> cardsWithValue = new List<SortModel>();
+                    if (fieldValue == allEmptStr)
+                    {
+                         foreach (SearchModel search in withValue)
+                        {
+                            List<SearchModel> dataByFieldAndCard =
+                                (from a in allValuesInField where a.fk_collectedcard == search.fk_collectedcard select a)
+                                    .ToList();
+
+                            int maxInstance = (from a in dataByFieldAndCard select a.instance).Max();
+                            bool addToList = true;
+                            for (int i = 0; i < maxInstance + 1; i++)
+                            {
+                                List<SearchModel> tmp1 = (from a in dataByFieldAndCard where a.instance == i select a).OrderByDescending(mc => mc.version).ToList();
+                                SearchModel tmp2 = new SearchModel();
+                                if (tmp1.Count > 0)
+                                {
+                                    tmp2 = (from a in tmp1 select a).FirstOrDefault();
+                                }
+                                else
+                                {
+                                   // break;
+                                    continue ;
+                                }
+                                if (tmp2 == null)
+                                    continue;
+                                if (tmp2.isdeleted)
+                                    continue;                               
+                                if (tmp2.valuetext.IsNullOrWhiteSpace())
+                                    continue;
+                                addToList = false;
+                                break;
+
+                            }
+                            if (addToList)
+                            cardsWithValue.Add(new SortModel() {fk_collectedcard = search.fk_collectedcard, main_field_id = search.main_field_id});
+                        }
+                    }
+                    else
+                    {
+                        cardsWithValue = (from a in withValue where !(from b in allValuesInField where b.fk_field == a.fk_field && b.fk_collectedcard == a.fk_collectedcard && a.instance == b.instance && b.version > a.version select b).Any() select new SortModel { fk_collectedcard = a.fk_collectedcard, main_field_id = a.main_field_id }).Distinct().ToList();
+
+                    }
 
 
                     /*List<CollectedCards> cardsWithValue1 = (from a in chancDb.CollectedFieldsValues
@@ -596,7 +642,7 @@ namespace Chancelerry.kanz
                                                             && b.FkRegister == registerId
                                                             select b).Distinct().OrderByDescending(uc => uc.MaInFieldID).ToList();
                                                             */
-                   // List<int> cardsWithValue = (from a in cardsWithValue1 select a.CollectedCardID).ToList();
+                    // List<int> cardsWithValue = (from a in cardsWithValue1 select a.CollectedCardID).ToList();
                     List<SortModel> tmpList;
                     if (isFirst)
                     {
@@ -611,7 +657,7 @@ namespace Chancelerry.kanz
                     resulList = tmpList;
                 }
 
-                cardsToShow = resulList.Distinct().OrderByDescending(mc => mc.main_field_id).Select(mc => mc.fk_collectedcard).ToList();
+                cardsToShow = resulList.DistinctBy(mc=>mc.fk_collectedcard).OrderByDescending(mc => mc.main_field_id).Select(mc => mc.fk_collectedcard).ToList();
 
                 #endregion
             }
@@ -1750,7 +1796,7 @@ namespace Chancelerry.kanz
                     InstanceTable.Rows.Add(InstanceRow);
                     if (currentFieldGroup.FieldsGroupID == 26) //HARDCODE
                         InstanceTable.Rows.Add(new TableRow() {Cells = {new TableCell() {Text = "<a href='/kanz/rtfExport/export1.aspx?card="+cardId+"&inst="+currentInstance+ "&reg="+registerId+"'>Сформировать напоминание<a>" } }});
-                    if (currentFieldGroup.FieldsGroupID == 6) //HARDCODE
+                    if (currentFieldGroup.FieldsGroupID == 7) //HARDCODE
                         InstanceTable.Rows.Add(new TableRow() { Cells = { new TableCell() { Text = "<a href='/kanz/rtfExport/export2.aspx?card=" + cardId + "&inst=" + currentInstance + "&reg=" + registerId + "'>Сформировать напоминание<a>" } } });
                     groupPanel.Controls.Add(InstanceTable);
 
