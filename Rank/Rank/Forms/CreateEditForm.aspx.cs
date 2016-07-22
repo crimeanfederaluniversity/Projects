@@ -62,11 +62,19 @@ namespace Rank.Forms
                 DropDownList3.DataTextField = "Value";
                 DropDownList3.DataValueField = "Key";
                 DropDownList3.DataSource = dictionary;
-                DropDownList3.DataBind();
-               
+                DropDownList3.DataBind();              
                     if ( (paramId == 1 || paramId == 2) && (rights.AccessLevel != 9))
-                { 
-                        DropDownList2.Visible = false;                 
+                {                   
+                    DropDownList2.Visible = false;
+                    Label17.Visible = true;
+                    if(paramId == 1)
+                    {
+                        Label17.Text = "- с грифом УМО - 70";
+                    }
+                    if (paramId == 2)
+                    {
+                        Label17.Text = "- с рекомендацией Ученого совета СП(Ф)  – 40";
+                    }                              
                 }
                 else
                 {
@@ -74,6 +82,11 @@ namespace Rank.Forms
                     if (marks.Count == 1)
                     {
                         DropDownList2.Visible = false;
+                        Label17.Visible = true;
+                        foreach(var a in marks)
+                        {
+                            Label17.Text = a.Name;
+                        }
                     }
                     else
                     {

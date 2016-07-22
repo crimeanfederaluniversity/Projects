@@ -1,12 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master"  AutoEventWireup="true" EnableEventValidation ="false" CodeBehind="UserMainPage.aspx.cs" Inherits="Rank.Forms.UserMainPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
       <div>
-          <h3>Добро пожаловать в систему "Рейтинги"</h3>
-          <h3>Результаты показателей Вашего индивидуального рейтинга за 2016 год:</h3>
+          <h3>Добро пожаловать в систему "Рейтинги"</h3>  
+          <h3><asp:Label ID="Label2" runat="server" Text="Результаты Вашего индивидуального рейтинга за 2016 год:" Visible="False"></asp:Label>
+&nbsp;<asp:Label ID="Label1" runat="server" Text="Label" Visible="False"></asp:Label>
+          </h3>
           <p>
-&nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Подтвердить мое соавторство" Width="401px" />
+&nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Подтвердить мое соавторство" Width="401px" Visible="False" />
           &nbsp;</p>
-          <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" >
+          <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" OnRowDataBound ="OnRowDataBound">
              <Columns>
                   <asp:TemplateField HeaderText="" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "false" >
                         <ItemTemplate> 
@@ -28,7 +30,7 @@
                     </asp:TemplateField> 
                       <asp:TemplateField HeaderText="Перейти">
                         <ItemTemplate>
-                            <asp:Button ID="EditButton" runat="server" CommandName="Select" Text="Перейти" Width="150px" CommandArgument='<%# Eval("ID") %>' OnClick="EditButtonClik" />
+                            <asp:Button ID="EditButton" runat="server" CommandName="Select" Text ="Редактировать"  Width="150px" CommandArgument='<%# Eval("ID") %>' OnClick="EditButtonClik" />
                         </ItemTemplate>
                     </asp:TemplateField>             
                  </Columns>

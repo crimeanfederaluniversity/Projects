@@ -6,12 +6,11 @@
           <script src="calendar_ru.js" type="text/javascript"> </script>
          <br />
          <asp:Label ID="Label1" runat="server" Text="Label" Font-Bold="True"></asp:Label></span>&nbsp;<br />
-  
          <br />
          <asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack ="true" Height="30px" Width="225px" OnSelectedIndexChanged="DropDownList2_SelectedIndexChanged">
         </asp:DropDownList>
-        &nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;<br />
+         <asp:Label ID="Label17" runat="server" Text="Label" Visible="False"></asp:Label>
+         <br />
          <div id="TableDiv" runat="server">
         </div>
          <asp:Label ID="Label15" runat="server" Text="Сотрудники КФУ (зарегистрированные в системе пользователи)" Visible="False"></asp:Label>

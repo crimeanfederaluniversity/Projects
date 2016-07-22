@@ -19,6 +19,15 @@ namespace Rank.Forms
                 Response.Redirect("~/Default.aspx");
             }
             int userID = (int)userId;
+            List<Rank_UserParametrValue> userrating = (from a in ratingDB.Rank_UserParametrValue where a.Active == true && a.FK_user == userID select a).ToList();
+            int sum = 0;
+            foreach (var a in userrating)
+            { if(a.Value.HasValue)
+                {
+                    sum = sum + Convert.ToInt32(a.Value.Value);
+                }               
+            }
+            Label1.Text = sum.ToString();
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();        
             List<Rank_Articles> authorList = (from b in ratingDB.Rank_Articles
                                               where b.Active == true
@@ -35,16 +44,16 @@ namespace Rank.Forms
             dataTable.Columns.Add(new DataColumn("Point", typeof(string)));
 
             List<Rank_Parametrs> allparam;  
-            if (rights.AccessLevel == 10)
-            {
-                GridView1.Columns[2].Visible = false;    
-            }
+          
             if (rights.AccessLevel == 9)
             {
                 allparam = (from a in ratingDB.Rank_Parametrs where a.Active == true && (a.EditUserType == 1 || a.EditUserType == 2) select a).ToList();
             }
             else
             {
+                Button2.Visible = true;
+                Label1.Visible = true;
+                Label2.Visible = true;
                 allparam = (from a in ratingDB.Rank_Parametrs where a.Active == true select a).ToList();
             }
             if (allparam != null)
@@ -95,7 +104,30 @@ namespace Rank.Forms
             }
            
         }
-
+        protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                var userId = Session["UserID"];
+                int userID = (int)userId;
+                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+                if(rights.AccessLevel != 9)
+                {
+                    Button but = (e.Row.FindControl("EditButton") as Button);
+                    Rank_Parametrs param = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.ID == Convert.ToUInt32(but.CommandArgument) select a).FirstOrDefault();
+                   
+                    if(param.EditUserType == 1 || param.EditUserType == 2 )
+                    {
+                        but.Text = "Редактировать";
+                    }
+                    else
+                    {
+                        but.Text = "Просмотреть";
+                    }                    
+                } 
+                                      
+            }
+        }
         protected void Button2_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Forms/UserArticleAccept.aspx");
