@@ -28,24 +28,23 @@ namespace Rank.Forms
                 Response.Redirect("~/Default.aspx");
             }
             int userID = (int)userId;
+            UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
             var edituserId = Session["showuserID"];
-            if (edituserId != null)
+            if (edituserId != null )
             {
                 int edituser = (int)edituserId;
                 UsersTable username = (from item in ratingDB.UsersTable where item.UsersTableID == edituser select item).FirstOrDefault();
                 Label2.Visible = true;
                 Label2.Text = username.Surname + " " + username.Name + " " + username.Patronimyc;
-                TextBox1.Visible = false;
-                Button2.Visible = false;
+                if (rights.AccessLevel == 9)
+                {
+                    TextBox1.Visible = true;
+                    Button2.Visible = true;
+                }                
             }
             else
             {              
-                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-                if (rights.AccessLevel == 10)
-                {
-                    Button3.Visible = false;
-                }
-                    if ((rights.AccessLevel == 9 && name.EditUserType != 0 && name.EditUserType != 2 && name.EditUserType != 3) || (rights.AccessLevel != 10 && name.EditUserType == 3)
+                    if ((rights.AccessLevel == 9 && name.EditUserType != 0  && name.EditUserType != 2) || (rights.AccessLevel != 10 && name.EditUserType == 3)
                   || (rights.AccessLevel != 9 && rights.AccessLevel != 10 && name.EditUserType != 1 && name.EditUserType != 2))
                 {
                     TextBox1.Visible = false;
@@ -71,6 +70,7 @@ namespace Rank.Forms
             dataTable.Columns.Add(new DataColumn("Date", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Status", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Point", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("Color", typeof(string)));
             List<Rank_Articles> userparamarticle = new List<Rank_Articles>(); 
             var userId = Session["UserID"];
             int userID = (int)userId;         
@@ -79,27 +79,28 @@ namespace Rank.Forms
             {
                 GridView1.Columns[6].Visible = false;
                 int edituser = (int)edituserId;
-                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == edituser select item).FirstOrDefault();                           
-                if (rights.AccessLevel != 9 || rights.AccessLevel != 0)
+                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();                           
+                if (rights.AccessLevel != 9 && rights.AccessLevel != 0)
                 {                 
-                    userparamarticle = (from a in ratingDB.Rank_Articles
-                                        where a.Active == true && a.FK_parametr == paramId && a.Status == 1
+                    userparamarticle = (from a in ratingDB.Rank_Articles  where a.Active == true && a.FK_parametr == paramId && a.Status != 0
                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                         where b.FK_User == edituser && b.Active == true && b.UserConfirm == true 
                                         select a).ToList();
                 }
+
             }
             else
             {               
                 UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
                 if (rights.AccessLevel == 10 )
                 {
-                    
+                    GridView1.Columns[6].Visible = false;
                     userparamarticle = (from a in ratingDB.Rank_Articles  where a.Active == true && a.FK_parametr == 16   select a).ToList();
                 }
                 if (rights.AccessLevel == 9)
                 {
-                    userparamarticle = (from a in ratingDB.Rank_Articles  where a.Active == true
+                    GridView1.Columns[6].Visible = false;
+                    userparamarticle = (from a in ratingDB.Rank_Articles  where a.Active == true && a.FK_parametr == paramId
                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                         where b.FK_User == userID && b.Active == true  select a).ToList();
                 }
@@ -110,11 +111,12 @@ namespace Rank.Forms
                                             join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                             where b.FK_User == userID && b.Active == true && b.UserConfirm == true
                                             select a).ToList();
+                    
                     }
             }
-              foreach (var tmp in userparamarticle)
+            foreach (var tmp in userparamarticle)
             {
-                Rank_UserArticleMappingTable userarticlepoint = new Rank_UserArticleMappingTable();  
+                Rank_UserArticleMappingTable userarticlepoint = new Rank_UserArticleMappingTable();
                 if (edituserId != null)
                 {
                     int edituser = (int)edituserId;
@@ -133,29 +135,50 @@ namespace Rank.Forms
                     {
                         GridView1.Columns[4].Visible = false;
                     }
-                   else
+                    else
                     {
                         userarticlepoint = (from a in ratingDB.Rank_UserArticleMappingTable
                                             where a.Active == true && a.FK_Article == tmp.ID && a.FK_User == userID
                                             select a).FirstOrDefault();
-                    }                
+                    }
                 }
-               
+
                 DataRow dataRow = dataTable.NewRow();
                 dataRow["ID"] = tmp.ID;
                 dataRow["Name"] = tmp.Name;
                 dataRow["Date"] = tmp.AddDate;
-                dataRow["Date"] = userarticlepoint.ValuebyArticle;
+                dataRow["Point"] = userarticlepoint.ValuebyArticle;
                 if (tmp.Status == 0)
-                    dataRow["Status"] = "Доступна для редактирования";
+                    dataRow["Status"] = "Доступно для редактирования";
                 if (tmp.Status == 1)
-                    dataRow["Status"] = "Отправлена на рассмотрение";
+                {
+                    if (edituserId != null)
+                    {
+                        dataRow["Color"] = 1; // красный     
+                    }
+                    else
+                    {
+                        dataRow["Color"] = "";
+                    }
+                    dataRow["Status"] = "Отправлено на рассмотрение";
+                    GridView1.Columns[6].Visible = false;
+                }
                 if (tmp.Status == 2)
-                    dataRow["Status"] = "Утверждена";
+                {
+                    dataRow["Color"] = 3;
+                    dataRow["Status"] = "Утверждена руководителем";
+                    GridView1.Columns[6].Visible = false;
+                }
                 if (tmp.Status == 3)
-                    dataRow["Status"] = "Возвращена на исправление";
+                {
+                    GridView1.Columns[6].Visible = false;
+                    dataRow["Status"] = "Добавлено ОМР";
+                }
                 if (tmp.Status == 4)
-                    dataRow["Status"] = "Возвращена соавтором на испраление";
+                {
+                    dataRow["Status"] = "Утверждено ОМР";
+                   
+                }
                 dataTable.Rows.Add(dataRow);
             }
             GridView1.DataSource = dataTable;          
@@ -165,9 +188,11 @@ namespace Rank.Forms
         {
             Button button = (Button)sender;
             Session["articleID"] = Convert.ToInt32(button.CommandArgument);
-          
+            var userId = Session["UserID"];
             var showuser = Session["showuserID"];
-            if (showuser != null)
+            Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == Convert.ToInt32(button.CommandArgument) select a).FirstOrDefault();
+            Rank_UserArticleMappingTable edit = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_User == Convert.ToInt32(userId) && a.ID == send.ID && a.CreateUser == false select a).FirstOrDefault();
+            if (showuser != null || edit != null)
             {
                 Response.Redirect("~/Forms/ViewArticleForm.aspx");
             }
@@ -175,12 +200,10 @@ namespace Rank.Forms
             {
                 var IdParam = Session["parametrID"];
                 int paramId = (int)IdParam;
-                var userId = Session["UserID"];
+               
                 int userID = (int)userId;
                 Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
-                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-                Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == Convert.ToInt32(button.CommandArgument) select a).FirstOrDefault();
-
+                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();               
                 if ((rights.AccessLevel == 9 && name.EditUserType != 0 && name.EditUserType != 2 && name.EditUserType != 3)
                     || (send.Status == 1 || send.Status == 2) || (rights.AccessLevel != 10 && name.EditUserType == 3)
                     || (rights.AccessLevel != 9 && rights.AccessLevel != 10 && name.EditUserType != 1 && name.EditUserType != 2)
@@ -212,6 +235,7 @@ namespace Rank.Forms
                     ratingDB.SubmitChanges();
                     Refresh();
                 }
+                else
                 {
                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Вы не можете удалить данный пункт, т.к. он уже отправлен на утверждение!');", true);
                 }
@@ -231,7 +255,7 @@ namespace Rank.Forms
                 newValue.AddDate = DateTime.Now;
                 newValue.FK_parametr = paramId;
                 newValue.Name = TextBox1.Text;
-                newValue.Status = 0;
+                newValue.Status = 3;
                 ratingDB.Rank_Articles.InsertOnSubmit(newValue);
                 ratingDB.SubmitChanges();
                              
@@ -249,7 +273,7 @@ namespace Rank.Forms
                         newLink.Active = true;
                         newLink.FK_Article = newValue.ID;
                         newLink.FK_User = edituser;
-                        newLink.UserConfirm = false;
+                        newLink.UserConfirm = true;
                         ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink);
                         ratingDB.SubmitChanges();
                         Rank_UserArticleMappingTable newLink2 = new Rank_UserArticleMappingTable();
@@ -267,6 +291,7 @@ namespace Rank.Forms
                         newLink3.FK_Article = newValue.ID;
                         newLink3.FK_User = userID;
                         newLink3.CreateUser = true;
+                        newLink3.UserConfirm = true;
                         ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink3);
                         ratingDB.SubmitChanges();
 
@@ -286,6 +311,25 @@ namespace Rank.Forms
                 Session["articleID"] = Convert.ToInt32(newValue.ID);
                 Response.Redirect("~/Forms/CreateEditForm.aspx");
             }         
+        }
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            var lblColor = e.Row.FindControl("Color") as Label;
+            if (lblColor != null)
+            {
+                if (lblColor.Text == "1") // красный 
+                {
+                    e.Row.Style.Add("background-color", "rgba(255, 0, 0, 0.3)");
+                }
+                if (lblColor.Text == "2") // желтый
+                {
+                    e.Row.Style.Add("background-color", "rgba(255, 255, 0, 0.3)");
+                }
+                if (lblColor.Text == "3") // зеленый
+                {
+                    e.Row.Style.Add("background-color", "rgba(0, 255, 0, 0.3)");
+                }
+            }
         }
 
         protected void Button3_Click(object sender, EventArgs e)

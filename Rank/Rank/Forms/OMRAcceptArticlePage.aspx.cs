@@ -81,18 +81,54 @@ namespace Rank.Forms
                 }
             }
         }
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            var lblColor = e.Row.FindControl("Color") as Label;
+            if (lblColor != null)
+            {
+                if (lblColor.Text == "1") // красный 
+                {
+                    e.Row.Style.Add("background-color", "rgba(255, 0, 0, 0.3)");
+                }
+                if (lblColor.Text == "2") // желтый
+                {
+                    e.Row.Style.Add("background-color", "rgba(255, 255, 0, 0.3)");
+                }
+                if (lblColor.Text == "3") // зеленый
+                {
+                    e.Row.Style.Add("background-color", "rgba(0, 255, 0, 0.3)");
+                }
+            }
+        }
         protected void Button1_Click(object sender, EventArgs e)
         {
             PoiskRefresh();
         }
         protected void EditButtonClik(object sender, EventArgs e)
         {
-            PoiskRefresh();
+            Button button = (Button)sender;
+            {
+                Session["articleID"] = Convert.ToInt32(button.CommandArgument);
+                Response.Redirect("~/Forms/CreateEditForm.aspx");
+            }
         }
 
         protected void AcceptButtonClik(object sender, EventArgs e)
         {
-            PoiskRefresh();
+            Button button = (Button)sender;
+            {
+
+                Rank_Articles accept = (from item in ratingDB.Rank_Articles
+                                        where item.ID == Convert.ToInt32(button.CommandArgument)
+                && item.Active == true
+                                        select item).FirstOrDefault();
+                if (accept != null)
+                {
+                    accept.Status = 4;
+                    ratingDB.SubmitChanges();
+                    PoiskRefresh();
+                }
+            }
         }
         protected void PoiskRefresh()
         {
@@ -101,7 +137,7 @@ namespace Rank.Forms
             dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Date", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Status", typeof(string)));
-
+            dataTable.Columns.Add(new DataColumn("Color", typeof(string)));
 
             if (Convert.ToInt32(DropDownList3.SelectedItem.Value) != 0 && Convert.ToInt32(DropDownList6.SelectedItem.Value) != 0)
             {
@@ -116,7 +152,7 @@ namespace Rank.Forms
                     foreach (var tmp in poisk)
                     {
                         List<Rank_Articles> userarticles = (from a in ratingDB.Rank_Articles
-                                                            where a.Active == true && a.Status != 0 && a.FK_parametr == Convert.ToInt32(DropDownList6.SelectedItem.Value)
+                                                            where a.Active == true && a.Status !=0 && a.FK_parametr == Convert.ToInt32(DropDownList6.SelectedItem.Value)
                                                             join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                                             where b.Active == true && b.FK_User == tmp.UsersTableID && b.UserConfirm == true
                                                             select a).ToList();
@@ -137,20 +173,23 @@ namespace Rank.Forms
                             dataRow["Name"] = article.Name;
                             dataRow["Date"] = article.AddDate;
                             if (article.Status == 0)
-                                dataRow["Status"] = "Доступна для редактирования";
+                                dataRow["Status"] = "Доступно для редактирования";
                             if (article.Status == 1)
-                                dataRow["Status"] = "Отправлена на рассмотрение";
+                                dataRow["Status"] = "Отправлено на рассмотрение";
                             if (article.Status == 2)
-                                dataRow["Status"] = "Утверждена";
+                                dataRow["Status"] = "Утверждено руководителем";
                             if (article.Status == 3)
-                                dataRow["Status"] = "Возвращена на исправление";
+                                dataRow["Status"] = "Добавлено ОМР";
                             if (article.Status == 4)
-                                dataRow["Status"] = "Возвращена соавтором на испраление";
+                            {
+                                dataRow["Color"] = 3;
+                                dataRow["Status"] = "Утверждено ОМР";
+                            }
+                                
 
                             dataTable.Rows.Add(dataRow);
                         }
                     }
-
                     GridView1.DataSource = dataTable;
                     GridView1.DataBind();
                 }

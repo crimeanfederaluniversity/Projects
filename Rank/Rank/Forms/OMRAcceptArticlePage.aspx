@@ -23,7 +23,7 @@
     <asp:Button ID="Button1" runat="server" Text="Поиск" OnClick="Button1_Click" />
     <br />
     <br />
-          <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server"  >
+          <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" OnRowDataBound ="GridView1_RowDataBound"  >
              <Columns>
                   <asp:TemplateField HeaderText="" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "false" >
                         <ItemTemplate> 
@@ -61,6 +61,7 @@
                     </asp:TemplateField>      
                     <asp:TemplateField HeaderText="Утвердить">
                         <ItemTemplate>
+                            <asp:Label ID="Color"  runat="server" Visible="false" Text='<%# Bind("Color") %>'></asp:Label>
                             <asp:Button ID="AcceptButton" runat="server" CommandName="Select" Text="Утвердить" Width="150px" CommandArgument='<%# Eval("ID") %>' OnClick="AcceptButtonClik"   />
                         </ItemTemplate>
                     </asp:TemplateField>                

@@ -29,20 +29,34 @@ namespace Rank.Forms
             Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
             Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
             Label1.Text = name.Name;
-
+           
                 List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.Active == true && item.fk_parametr == paramId select item).ToList();
-                if (marks.Count == 1)
-                {foreach (var a in marks)
+            if (marks.Count == 1)
+            {
+                foreach (var a in marks)
                 {
                     Label2.Text = a.Name;
-                }                
                 }
-                else
+            }
+            else
+            {
+                if (send.FK_mark == 1 || send.FK_mark == 6)
                 {
+                    if (send.FK_mark == 1)
+                        Label2.Text = "- с грифом УМО - 70";
+                    if (send.FK_mark == 6)
+                        Label2.Text = "- с рекомендацией Ученого совета СП(Ф)  – 40";
+                }
+                else { 
                 Rank_Mark mark = (from item in ratingDB.Rank_Mark where item.Active == true && item.ID == send.FK_mark select item).FirstOrDefault();
                 Label2.Text = mark.Name;
+            }
                 }
-
+            var rukovoditel = Session["showuserID"];
+            if (rukovoditel != null && send.Status == 1)
+            {
+                Button2.Visible = true;
+            }
             if (name.OneOrManyAuthor == true)
             {
                 Refresh();
@@ -52,6 +66,7 @@ namespace Rank.Forms
                 var edituserId = Session["edituserID"];
                 if (edituserId != null)
                 {
+                   
                     int edituser = (int)edituserId;
                     UsersTable username = (from item in ratingDB.UsersTable where item.UsersTableID == edituser select item).FirstOrDefault();
                     Label3.Visible = true;
@@ -80,43 +95,48 @@ namespace Rank.Forms
             {
                 DataRow dataRow = dataTable.NewRow();
                 UsersTable author = (from a in ratingDB.UsersTable where a.Active == true && a.UsersTableID == value.FK_User select a).FirstOrDefault();
-                FirstLevelSubdivisionTable first = (from a in ratingDB.FirstLevelSubdivisionTable where a.Active == true && a.FirstLevelSubdivisionTableID == author.FK_FirstLevelSubdivisionTable select a).FirstOrDefault();
-                SecondLevelSubdivisionTable second = (from a in ratingDB.SecondLevelSubdivisionTable where a.Active == true && a.SecondLevelSubdivisionTableID == author.FK_SecondLevelSubdivisionTable select a).FirstOrDefault();
-                ThirdLevelSubdivisionTable third = (from a in ratingDB.ThirdLevelSubdivisionTable where a.Active == true && a.ThirdLevelSubdivisionTableID == author.FK_ThirdLevelSubdivisionTable select a).FirstOrDefault();
-                dataRow["ID"] = value.ID;
-                dataRow["userid"] = author.UsersTableID;
-                if (first != null)
+                if (author.AccessLevel != 9)
                 {
-                    dataRow["firstlvl"] = first.Name;
-                }
-                else
-                {
-                    dataRow["firstlvl"] = "Нет привязки";
-                }
-                if (second != null)
-                {
-                    dataRow["secondlvl"] = second.Name;
-                }
-                else
-                {
-                    dataRow["secondlvl"] = "Нет привязки";
-                }
-                if (third != null)
-                {
-                    dataRow["thirdlvl"] = third.Name;
-                }
-                else
-                {
-                    dataRow["thirdlvl"] = "Нет привязки";
-                }
-                dataRow["fio"] = author.Surname + " " + author.Name + " " + author.Patronimyc;
-                if (value.FK_point != null)
-                {
-                    dataRow["point"] = (from a in ratingDB.Rank_DifficaltPoint where a.Active == true && a.ID == value.FK_point select a.Name).FirstOrDefault().ToString();
-                }
-                else
-                {
-                    dataRow["point"] = "";
+
+                    FirstLevelSubdivisionTable first = (from a in ratingDB.FirstLevelSubdivisionTable where a.Active == true && a.FirstLevelSubdivisionTableID == author.FK_FirstLevelSubdivisionTable select a).FirstOrDefault();
+                    SecondLevelSubdivisionTable second = (from a in ratingDB.SecondLevelSubdivisionTable where a.Active == true && a.SecondLevelSubdivisionTableID == author.FK_SecondLevelSubdivisionTable select a).FirstOrDefault();
+                    ThirdLevelSubdivisionTable third = (from a in ratingDB.ThirdLevelSubdivisionTable where a.Active == true && a.ThirdLevelSubdivisionTableID == author.FK_ThirdLevelSubdivisionTable select a).FirstOrDefault();
+                    dataRow["ID"] = value.ID;
+                    dataRow["userid"] = author.UsersTableID;
+                    if (first != null)
+                    {
+                        dataRow["firstlvl"] = first.Name;
+                    }
+                    else
+                    {
+                        dataRow["firstlvl"] = "Нет привязки";
+                    }
+                    if (second != null)
+                    {
+                        dataRow["secondlvl"] = second.Name;
+                    }
+                    else
+                    {
+                        dataRow["secondlvl"] = "Нет привязки";
+                    }
+                    if (third != null)
+                    {
+                        dataRow["thirdlvl"] = third.Name;
+                    }
+                    else
+                    {
+                        dataRow["thirdlvl"] = "Нет привязки";
+                    }
+                    dataRow["fio"] = author.Surname + " " + author.Name + " " + author.Patronimyc;
+
+                    if (value.FK_point != null)
+                    {
+                        dataRow["point"] = (from a in ratingDB.Rank_DifficaltPoint where a.Active == true && a.ID == value.FK_point select a.Name).FirstOrDefault().ToString();
+                    }
+                    else
+                    {
+                        dataRow["point"] = "";
+                    }
                 }
                 dataTable.Rows.Add(dataRow);
             }
@@ -225,6 +245,7 @@ namespace Rank.Forms
 
                         ValueSaveClass classTmp = new ValueSaveClass();
                         classTmp.Value = newTextBox;
+                        classTmp.Value.Font.Bold = true;
                         classTmp.FieldId = field.ID;
                         classTmp.ArticleId = article;
                         classTmp.ParamId = paramId;
@@ -277,6 +298,15 @@ namespace Rank.Forms
             Response.Redirect("~/Forms/UserArticlePage.aspx");
         }
 
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            int article = Convert.ToInt32(Session["articleID"]);
+ 
+            Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
+            send.Status = 2;
+            ratingDB.SubmitChanges();
+            Response.Redirect("~/Forms/UserArticlePage.aspx");
 
+        }
     }
 }

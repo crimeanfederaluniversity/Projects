@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" EnableEventValidation ="false" CodeBehind="HeadAcceptFirst.aspx.cs" Inherits="Rank.Forms.StructUserPointsForAccept" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h3>Результаты сотрудников Вашего структурного подразделения:</h3>
+    <h3>Рейтинг Вашего структурного подразделения: <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></h3>
 
     <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" OnRowDataBound ="GridView1_RowDataBound" >
         <Columns>
@@ -29,7 +29,7 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Подробнее">
                 <ItemTemplate>
-                    <asp:Button ID="ShowButton" runat="server" CommandName="Select" Text="Просмотреть и утвердить" Width="200px" CommandArgument='<%# Eval("ID") %>' OnClick="ShowButtonClik" />
+                    <asp:Button ID="ShowButton" runat="server" CommandName="Select" Text="Перейти" Width="150px" CommandArgument='<%# Eval("ID") %>' OnClick="ShowButtonClik" />
                 </ItemTemplate>
             </asp:TemplateField>
               

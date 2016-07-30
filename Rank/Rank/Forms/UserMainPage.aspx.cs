@@ -47,7 +47,7 @@ namespace Rank.Forms
           
             if (rights.AccessLevel == 9)
             {
-                allparam = (from a in ratingDB.Rank_Parametrs where a.Active == true && (a.EditUserType == 1 || a.EditUserType == 2) select a).ToList();
+                allparam = (from a in ratingDB.Rank_Parametrs where a.Active == true && (a.EditUserType == 0 || a.EditUserType == 2) select a).ToList();
             }
             else
             {
@@ -61,7 +61,7 @@ namespace Rank.Forms
                 foreach (var tmp in allparam)
                 {
                     Rank_UserParametrValue calculate = (from a in ratingDB.Rank_UserParametrValue
-                                                        where a.Active == true && a.FK_parametr == tmp.ID && a.FK_user == userID
+                                                        where a.Active == true && a.FK_parametr == tmp.ID && a.FK_user == userID                                                       
                                                         select a).FirstOrDefault();
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = tmp.ID;
@@ -73,7 +73,7 @@ namespace Rank.Forms
                     }
                     else
                     {
-                        dataRow["Point"] = "нет данных";
+                        dataRow["Point"] = "";
                     }
                     dataTable.Rows.Add(dataRow);
                 }

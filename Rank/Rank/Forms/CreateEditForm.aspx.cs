@@ -33,10 +33,11 @@ namespace Rank.Forms
                 Response.Redirect("~/Default.aspx");
             }           
             int userID = (int)userId;
-           
+            int article = Convert.ToInt32(Session["articleID"]);
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-            Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();        
-            int article = Convert.ToInt32(Session["articleID"]);      
+            Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs join a in ratingDB.Rank_Articles on item.ID equals a.FK_parametr
+                                   where a.ID == article
+                                   select item).FirstOrDefault();                      
             Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
                    
             Label1.Text = name.Name;
@@ -70,6 +71,7 @@ namespace Rank.Forms
                     if(paramId == 1)
                     {
                         Label17.Text = "- с грифом УМО - 70";
+
                     }
                     if (paramId == 2)
                     {
@@ -79,7 +81,7 @@ namespace Rank.Forms
                 else
                 {
                     List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.Active == true && item.fk_parametr == paramId select item).ToList();
-                    if (marks.Count == 1)
+                    if (marks.Count == 1 || (paramId == 1 || paramId == 2))
                     {
                         DropDownList2.Visible = false;
                         Label17.Visible = true;
@@ -100,7 +102,10 @@ namespace Rank.Forms
                         DropDownList2.DataValueField = "Key";
                         if (send.FK_mark != null)
                         {
-                            DropDownList2.SelectedValue = send.FK_mark.ToString();
+                           if (paramId != 1 || paramId != 2)
+                            { }
+                            else { DropDownList2.SelectedValue = send.FK_mark.ToString(); }
+                        
                         }
                         DropDownList2.DataSource = dictionary1;
                         DropDownList2.DataBind();
@@ -233,18 +238,21 @@ namespace Rank.Forms
                     ddlPoint.DataSource = dictionary;
                     ddlPoint.DataTextField = "Value";
                     ddlPoint.DataValueField = "Key";
-                    ddlPoint.DataBind();
-                    string point = (e.Row.FindControl("point") as Label).Text;
-                if (point != null && point != "")
+                ddlPoint.DataBind();
+                string point = (e.Row.FindControl("point") as Label).Text;
+                Rank_DifficaltPoint findpoint = (from item in ratingDB.Rank_DifficaltPoint where item.Active == true && item.Name.Contains(point) select item).FirstOrDefault();
+                if (findpoint != null)
                 {
-                    ddlPoint.Items.FindByText(point).Selected = true;
+                    //ddlPoint.Items.FindByValue(findpoint.ID.ToString()).Selected = true;
                 }
                 else
                 {
                     ddlPoint.SelectedIndex = 0;
                 }
-                }           
-        }       
+                }
+            
+        }
+     
         protected void ddlPoint_SelectedIndexChanged(object sender, EventArgs e)
         {
          
@@ -302,20 +310,13 @@ namespace Rank.Forms
             int userID = (int)userId;
             Table tableToReturn = new Table();
             List<Rank_Fields> allFields = new List<Rank_Fields>();
-           
-                UsersTable right = (from a in ratingDB.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
-           if (right.AccessLevel == 9)
-            {
-                    allFields = (from a in ratingDB.Rank_Fields where a.Active == true && a.FK_parametr == paramId  select a).ToList();
-            }  
-           else
-           {
+
                 if (paramId == 5 || paramId == 6 || paramId == 7)
                 {
                     Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
                     if (send.FK_mark != null)
                     {
-                        allFields = (from a in ratingDB.Rank_Fields  where a.Active == true && a.FK_parametr == paramId   && ( a.FK_mark == send.FK_mark || a.FK_mark == null)
+                        allFields = (from a in ratingDB.Rank_Fields  where a.Active == true && a.FK_parametr == paramId  && ( a.FK_mark == send.FK_mark || a.FK_mark == null)
                                      select a).ToList();
                     }
                 }
@@ -323,7 +324,7 @@ namespace Rank.Forms
                 {
                     allFields = (from a in ratingDB.Rank_Fields where a.Active == true && a.FK_parametr == paramId   select a).ToList();
                 }         
-            }
+        
             int maxLine = (from a in allFields select a.line).OrderByDescending(mc => mc).FirstOrDefault();
 
             for (int i = 0; i < maxLine + 1; i++)
@@ -370,10 +371,8 @@ namespace Rank.Forms
                                 classTmp.ParamId = paramId;
                                 ValuesList.Add(classTmp);
                                 //     newCell.Controls.Add(validator.GetRangeValidator("RangeValidator" + field.ID, "filedownload" + field.ID.ToString(), field.type));
-                                newCell.Controls.Add(filedownload);
-                            
-                        }
-                                     
+                                newCell.Controls.Add(filedownload);                           
+                        }                                    
                     }
                     if (field.type.Contains("drop"))
                     {
@@ -453,7 +452,6 @@ namespace Rank.Forms
             Session["contractvalues"] = ValuesList;
             return tableToReturn;
         }      
-
         private byte[] ReadByteArryFromFile(string destPath)
         {
             byte[] buff = null;
@@ -577,10 +575,12 @@ namespace Rank.Forms
                  if(paramId == 1)
                 {
                     mark.FK_mark = 1;
+                    ratingDB.SubmitChanges();
                 }
                 if (paramId == 2)
                 {
                     mark.FK_mark = 6;
+                    ratingDB.SubmitChanges();
                 }
             }           
             if (marks.Count == 1)
@@ -615,7 +615,7 @@ namespace Rank.Forms
                 ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newValue);
                 ratingDB.SubmitChanges();
             }
-                Response.Redirect("~/Forms/UserArticlePage.aspx");
+                Response.Redirect("~/Forms/CreateEditForm.aspx");
         }
         protected void PoiskRefresh()
         {
@@ -705,11 +705,12 @@ namespace Rank.Forms
             int article = Convert.ToInt32(Session["articleID"]);
             Rank_UserArticleMappingTable newValue = new Rank_UserArticleMappingTable();
             newValue.Active = true;
-            newValue.FK_Article = article;
+            newValue.FK_Article = article;      
             newValue.FK_User = Convert.ToInt32(button.CommandArgument);
             if(rights.AccessLevel == 9 || rights.AccessLevel == 10)
             {
                 newValue.UserConfirm = true;
+                newValue.CreateUser = false;
             }
             else
             {

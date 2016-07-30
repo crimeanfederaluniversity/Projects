@@ -94,8 +94,8 @@
          <table>
              <tr>
                  <td>
-         <asp:Panel ID="Panel2" runat="server" Width="506px" >
-             <span style="font-size: medium"><asp:Label ID="Label2" runat="server" Text="Добавление человека (автора), являющегося сотрудником КФУ :" Visible="False"></asp:Label>
+         <asp:Panel ID="Panel2" runat="server" Width="550px" >
+             <span style="font-size: medium"><asp:Label ID="Label2" runat="server" Text="Добавление человека (автора), не являющегося сотрудником КФУ :" Visible="False" Font-Bold="True"></asp:Label>
                  <span style="font-size: medium"> <asp:Label ID="Label14" runat="server" Text="Введите фамилию и инициалы: " Visible="False"></asp:Label>
                      <asp:TextBox ID="TextBox3" runat="server" Width="500px" Visible="False" ToolTip="Фамилия и инициалы человека не являющегося сотрудником КФУ" Height="20px"></asp:TextBox>
                       <asp:DropDownList ID="DropDownList6" runat="server" AutoPostBack="True" Height="20px"  Width="500px"  Visible="False">
@@ -104,8 +104,8 @@
                      </asp:Panel>
                      </td>
                  <td>
-         <asp:Panel ID="Panel1" runat="server" Width="507px">
-               <asp:Label ID="Label13" runat="server" Text="Добавление человека (автора), не являющегося сотрудником КФУ:" Visible="False" ForeColor="Black"></asp:Label>
+         <asp:Panel ID="Panel1" runat="server" Width="550px">
+               <asp:Label ID="Label13" runat="server" Text="Добавление человека (автора), являющегося сотрудником КФУ:" Visible="False" ForeColor="Black" Font-Bold="True"></asp:Label>
              <br /><asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="True" Height="20px"  Width="500px" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged" Visible="False">
         </asp:DropDownList>
              <asp:DropDownList ID="DropDownList4" runat="server" AutoPostBack="True" Height="20px"  Width="500px" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged" Visible="False">

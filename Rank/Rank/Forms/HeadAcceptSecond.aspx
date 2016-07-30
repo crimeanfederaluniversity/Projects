@@ -29,7 +29,7 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Подробнее">
                 <ItemTemplate>
-                    <asp:Button ID="ShowButton" runat="server" CommandName="Select" Text="Просмотреть и утвердить" Width="200px" CommandArgument='<%# Eval("ID") %>' OnClick="ShowButtonClik" />
+                    <asp:Button ID="ShowButton" runat="server" CommandName="Select" Text="Перейти" Width="150px" CommandArgument='<%# Eval("ID") %>' OnClick="ShowButtonClik" />
                 </ItemTemplate>
             </asp:TemplateField>
  

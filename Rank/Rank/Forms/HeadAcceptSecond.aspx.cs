@@ -27,7 +27,7 @@ namespace Rank.Forms
             foreach (var PAR in allparam)
             {
                 List<Rank_Articles> userparamarticle = (from a in ratingDB.Rank_Articles
-                                                  where a.Active == true && a.FK_parametr == PAR.ID
+                                                  where a.Active == true && a.FK_parametr == PAR.ID && a.Status == 1
                                                   join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                                   where b.FK_User == userID && b.Active == true && b.UserConfirm == true
                                                   select a).ToList();
@@ -47,7 +47,7 @@ namespace Rank.Forms
             dataTable.Columns.Add(new DataColumn("Point", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Status", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Color", typeof(string)));
-            List<Rank_Parametrs> allparam = (from a in ratingDB.Rank_Parametrs where a.Active == true select a).ToList();
+            List<Rank_Parametrs> allparam = (from a in ratingDB.Rank_Parametrs where a.Active == true && (a.EditUserType == 1 || a.EditUserType == 2) select a).ToList();
             if (allparam != null)
             {              
                 foreach (var tmp in allparam)
@@ -58,7 +58,7 @@ namespace Rank.Forms
                     dataRow["ID"] = tmp.ID;
                     dataRow["Parametr"] = tmp.Name;
                     List<Rank_Articles> userarticles = (from a in ratingDB.Rank_Articles
-                                                        where a.Active == true && a.Status == 0 && a.FK_parametr == tmp.ID
+                                                        where a.Active == true && a.Status == 1 && a.FK_parametr == tmp.ID
                                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                                         where b.Active == true && b.FK_User == userpoints && b.UserConfirm == true && b.CreateUser == true
                                                         select a).ToList();
@@ -68,7 +68,7 @@ namespace Rank.Forms
                     }
                     else
                     {
-                        dataRow["Point"] = "не рассчитан";
+                        dataRow["Point"] = "";
                     }
                     if (userarticles != null && userarticles.Count != 0)
                     {
@@ -77,8 +77,8 @@ namespace Rank.Forms
                     }
                     else
                     {
-                        dataRow["Status"] = "Утверждено";
-                        dataRow["Color"] = 3; // зеленый
+                        dataRow["Status"] = "Не требует утверждения";
+                        dataRow["Color"] = "";
                     }
 
                     dataTable.Rows.Add(dataRow);

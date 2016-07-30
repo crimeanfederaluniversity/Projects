@@ -50,23 +50,26 @@ namespace Rank.Forms
             }
             
             if (structusers != null)
-            {             
+            {
+                int allsumm = 0;           
                 foreach (var tmp in structusers)
                 {
                     List<Rank_UserParametrValue> userrating = (from a in ratingDB.Rank_UserParametrValue where a.Active == true && a.FK_user == tmp.UsersTableID select a).ToList();
                     int sum = 0;
+                    
                     foreach (var a in userrating)
                     {
                         if(a.Value != null )
                         sum = sum + Convert.ToInt32(a.Value.Value);
                     }
-                    List<Rank_Articles> userarticles = (from a in ratingDB.Rank_Articles where a.Active == true && a.Status == 0
+                    List<Rank_Articles> userarticles = (from a in ratingDB.Rank_Articles where a.Active == true && a.Status == 1
                                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                                         where b.Active == true  && b.FK_User == tmp.UsersTableID  && b.UserConfirm == true && b.CreateUser == true select a).ToList();
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = tmp.UsersTableID;
                     dataRow["User"] = tmp.Surname + " " + tmp.Name + " " + tmp.Patronimyc;
                     dataRow["Point"] = sum;
+                    allsumm = allsumm + sum;
                     if(userarticles!= null && userarticles.Count != 0)
                     {
                         dataRow["Status"] = "Ожидает Вашего утверждения";
@@ -74,12 +77,13 @@ namespace Rank.Forms
                     }
                     else
                     {
-                        dataRow["Status"] = "Утверждено";
-                        dataRow["Color"] = 3; // зеленый
+                        dataRow["Status"] = "Не требует утверждения";
+                        dataRow["Color"] = "";
                     }
            
                     dataTable.Rows.Add(dataRow);
                 }
+                Label1.Text = allsumm.ToString();
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
             }

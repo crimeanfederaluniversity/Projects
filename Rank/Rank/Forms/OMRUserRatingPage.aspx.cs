@@ -89,7 +89,7 @@ namespace Rank.Forms
             if (Convert.ToInt32(DropDownList3.SelectedItem.Value) != 0)
             {
                 List<UsersTable> poisk = (from a in ratingDB.UsersTable
-                                          where a.Active == true && (a.FK_FirstLevelSubdivisionTable == Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value) || a.FK_FirstLevelSubdivisionTable == null) &&
+                                          where a.Active == true && (a.FK_FirstLevelSubdivisionTable == Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value) ) &&
                                           (a.FK_SecondLevelSubdivisionTable == Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value) || a.FK_SecondLevelSubdivisionTable == null) &&
                                           (a.FK_ThirdLevelSubdivisionTable == Convert.ToInt32(DropDownList5.Items[DropDownList5.SelectedIndex].Value) || a.FK_ThirdLevelSubdivisionTable == null)
                                           select a).ToList();
@@ -106,7 +106,11 @@ namespace Rank.Forms
                         int sum = 0;
                         foreach (var a in userrating)
                         {
-                            sum = sum + Convert.ToInt32(a.Value.Value);
+                            if(a.Value.HasValue)
+                            {
+                                sum = sum + Convert.ToInt32(a.Value.Value);
+                            }
+                            
                         }
 
                         dataRow["userid"] = author.UsersTableID;
