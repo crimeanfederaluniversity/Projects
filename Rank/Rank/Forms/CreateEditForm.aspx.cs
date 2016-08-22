@@ -615,7 +615,10 @@ namespace Rank.Forms
                 ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newValue);
                 ratingDB.SubmitChanges();
             }
-                Response.Redirect("~/Forms/CreateEditForm.aspx");
+            Calculate userpoints = new Calculate();
+            userpoints.CalculateUserArticlePoint(paramId, article, userID);
+            userpoints.CalculateUserParametrPoint(paramId, article, userID);
+            Response.Redirect("~/Forms/UserArticlePage.aspx");
         }
         protected void PoiskRefresh()
         {
@@ -731,8 +734,8 @@ namespace Rank.Forms
             Rank_UserArticleMappingTable savepoint = (from a in ratingDB.Rank_UserArticleMappingTable
                                                    where a.Active == true && a.FK_Article == article && a.FK_User == Convert.ToInt32(button.CommandArgument)
                                                    select a).FirstOrDefault();
-            int fkpoint = 0;
-            Int32.TryParse(drop.SelectedValue,out  fkpoint);
+            int fkpoint;
+            Int32.TryParse(drop.SelectedValue, out fkpoint);
             if(fkpoint != 0)
             {
                 savepoint.FK_point = fkpoint;
@@ -776,9 +779,8 @@ namespace Rank.Forms
                                   select a).FirstOrDefault();
             send.Status = 1;
             ratingDB.SubmitChanges();
-            Calculate userpoints = new Calculate();
-            userpoints.CalculateUserArticlePoint(paramId, article, userID);
-            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Отправлено на утверждение заведующему Вашего структурного подразделения! Баллы показателя пересчитаны с учетом новых данных.');", true);
+           
+            Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Отправлено на утверждение руководителю Вашего структурного подразделения! Баллы показателя пересчитаны с учетом новых данных.');", true);
 
         }
         protected void DeleteNotSystemAutorButtonClick(object sender, EventArgs e)

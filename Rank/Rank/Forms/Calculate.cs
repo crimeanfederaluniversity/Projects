@@ -29,7 +29,7 @@ namespace Rank.Forms
                                                              where a.Active == true && a.FK_Article == articleid && a.FK_User == userId
                                                              join b in ratingDB.Rank_Articles on a.FK_Article equals b.ID
                                                              where b.Active == true
-                                                             && b.Status == 1
+                                                          //   && b.Status == 1
                                                              select a).FirstOrDefault();
 
                 if (weight != null && weight.Weight != null && mark != null && mark.Points != null && point != null && point.Value != null)
@@ -40,12 +40,12 @@ namespace Rank.Forms
                 }
             }
 
-        } 
+        }
 
         public void CalculateUserParametrPoint(int paramId, int articleid, int userId)  // посчитать баллы показателей 
         {
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userId select item).FirstOrDefault();
-            if (rights.AccessLevel == 0)
+            if (rights.AccessLevel != 9 && rights.AccessLevel != 10)
             {
                 Rank_UserParametrValue calculate = (from a in ratingDB.Rank_UserParametrValue
                                                     where a.Active == true && a.FK_parametr == paramId && a.FK_user == userId
@@ -64,88 +64,98 @@ namespace Rank.Forms
                 List<Rank_UserArticleMappingTable> userarticlevalue = (from a in ratingDB.Rank_UserArticleMappingTable
                                                                        where a.Active == true && a.FK_User == userId && a.UserConfirm == true
                                                                        join b in ratingDB.Rank_Articles on a.FK_Article equals b.ID
-                                                                       where b.Active == true && b.Status == 2
+                                                                       where b.Active == true && b.FK_parametr == paramId
+                                                                       // && b.Status == 2
                                                                        select a).ToList();
                 double sum = 0;
                 foreach (var tmp in userarticlevalue)
-                {
-                    sum = sum + tmp.ValuebyArticle.Value;
+                { if (tmp.ValuebyArticle.HasValue)
+                    {
+                        sum = sum + tmp.ValuebyArticle.Value;
+                    }
                 }
                 calculate.Value = sum;
                 ratingDB.SubmitChanges();
             }
+        }
+        public void CalculateHeadParametrPoint( int userId)  // посчитать баллы показателей 
+        {
+            RankUserRatingPoints point = (from a in ratingDB.RankUserRatingPoints
+                                          where a.Active == true && a.FK_user == userId
+                                          select a).FirstOrDefault();
+            if (point == null)
+            {
+                point = new RankUserRatingPoints();
+                point.Active = true;
+                point.FK_user = userId;
+                ratingDB.RankUserRatingPoints.InsertOnSubmit(point);
+                ratingDB.SubmitChanges();
+            }
+            UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userId select item).FirstOrDefault();
             if (rights.AccessLevel == 1)// рейтинг завкафедры
             {
-                Rank_UserParametrValue calculate = (from a in ratingDB.Rank_UserParametrValue
-                                                    where a.Active == true && a.FK_parametr == paramId && a.FK_user == userId
-                                                    select a).FirstOrDefault();
-                if (calculate == null)
-                {
-                    calculate = new Rank_UserParametrValue();
-                    calculate.Active = true;
-                    calculate.FK_parametr = paramId;
-                    calculate.FK_user = userId;
-                    calculate.Accept = false;
-                    ratingDB.Rank_UserParametrValue.InsertOnSubmit(calculate);
-                    ratingDB.SubmitChanges();
+                
+                List<Rank_UserParametrValue> calculate = (from a in ratingDB.Rank_UserParametrValue
+                                                    where a.Active == true && a.FK_user == userId
+                                                    select a).ToList();
 
-                }
-                List<Rank_UserArticleMappingTable> userarticlevalue = (from a in ratingDB.Rank_UserArticleMappingTable
-                                                                       where a.Active == true && a.FK_User == userId && a.UserConfirm == true
-                                                                       join b in ratingDB.Rank_Articles on a.FK_Article equals b.ID
-                                                                       where b.Active == true && b.Status == 2
-                                                                       select a).ToList();
-                Rank_StructPoints kafpoint = (from a in ratingDB.Rank_StructPoints
-                                              where a.Active == true && a.FK_parametr == paramId &&
-       (a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable
-        && a.FK_secondlvl == rights.FK_SecondLevelSubdivisionTable
-        && a.FK_thirdlvl == rights.FK_ThirdLevelSubdivisionTable)
-                                              select a).FirstOrDefault();
+                List<Rank_StructPoints> kafpoint = (from a in ratingDB.Rank_StructPoints
+                                                    where a.Active == true &&
+                                                    (a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable
+                                                     && a.FK_secondlvl == rights.FK_SecondLevelSubdivisionTable
+                                                     && a.FK_thirdlvl == rights.FK_ThirdLevelSubdivisionTable)
+                                                    select a).ToList();
 
-                double sum = 0;
-                foreach (var tmp in userarticlevalue)
+                double lsum = 0;
+                double ksum = 0;
+
+                foreach (var tmp in calculate)
                 {
-                    sum = sum + tmp.ValuebyArticle.Value;
+                    if(tmp.Value.HasValue)
+                    lsum = lsum + tmp.Value.Value;
                 }
-                calculate.Value = (sum + kafpoint.Value) / 2;
+                foreach(var kaf in kafpoint)
+                {
+                    if (kaf.Value.HasValue)
+                        ksum = ksum + kaf.Value.Value;
+                }
+                double allsum = 0;
+                allsum = (lsum + ksum) / 2;
+                point.Value = allsum;
                 ratingDB.SubmitChanges();
+
 
             }
 
             if (rights.AccessLevel == 2)// рейтинг декана
             {
-                Rank_UserParametrValue calculate = (from a in ratingDB.Rank_UserParametrValue
-                                                    where a.Active == true && a.FK_parametr == paramId && a.FK_user == userId
-                                                    select a).FirstOrDefault();
-                List<Rank_UserArticleMappingTable> userarticlevalue = (from a in ratingDB.Rank_UserArticleMappingTable
-                                                                       where a.Active == true && a.FK_User == userId && a.UserConfirm == true
-                                                                       join b in ratingDB.Rank_Articles on a.FK_Article equals b.ID
-                                                                       where b.Active == true && b.Status == 2
-                                                                       select a).ToList();
-                Rank_StructPoints facpoint = (from a in ratingDB.Rank_StructPoints
-                                              where a.Active == true && a.FK_parametr == paramId &&
-                                              (a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable
-                                               && a.FK_secondlvl == rights.FK_SecondLevelSubdivisionTable
-                                               && a.FK_thirdlvl == null)
-                                              select a).FirstOrDefault();
-                if (calculate == null)
-                {
-                    calculate = new Rank_UserParametrValue();
-                    calculate.Active = true;
-                    calculate.FK_parametr = paramId;
-                    calculate.FK_user = userId;
-                    calculate.Accept = false;
-                    ratingDB.Rank_UserParametrValue.InsertOnSubmit(calculate);
-                    ratingDB.SubmitChanges();
+                List<Rank_UserParametrValue> calculate = (from a in ratingDB.Rank_UserParametrValue
+                                                          where a.Active == true && a.FK_user == userId
+                                                          select a).ToList();
 
-                }
+                List<Rank_StructPoints> facpoint = (from a in ratingDB.Rank_StructPoints
+                                                    where a.Active == true &&
+                                                    (a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable
+                                                     && a.FK_secondlvl == rights.FK_SecondLevelSubdivisionTable
+                                                     && a.FK_thirdlvl == null)
+                                                    select a).ToList();
 
-                double sum = 0;
-                foreach (var tmp in userarticlevalue)
+                double lsum = 0;
+                double fsum = 0;
+
+                foreach (var tmp in calculate)
                 {
-                    sum = sum + tmp.ValuebyArticle.Value;
+                    if (tmp.Value.HasValue)
+                        lsum = lsum + tmp.Value.Value;
                 }
-                calculate.Value = (sum + facpoint.Value) / 2;
+                foreach (var kaf in facpoint)
+                {
+                    if (kaf.Value.HasValue)
+                        fsum = fsum + kaf.Value.Value;
+                }
+                double allsum = 0;
+                allsum = (lsum + fsum) / 2;
+                point.Value = allsum;
                 ratingDB.SubmitChanges();
 
             }
@@ -154,44 +164,39 @@ namespace Rank.Forms
             if (rights.AccessLevel == 5)// рейтинг директор
             {
 
-                Rank_UserParametrValue calculate = (from a in ratingDB.Rank_UserParametrValue
-                                                    where a.Active == true && a.FK_parametr == paramId && a.FK_user == userId
-                                                    select a).FirstOrDefault();
-                List<Rank_UserArticleMappingTable> userarticlevalue = (from a in ratingDB.Rank_UserArticleMappingTable
-                                                                       where a.Active == true && a.FK_User == userId && a.UserConfirm == true
-                                                                       join b in ratingDB.Rank_Articles on a.FK_Article equals b.ID
-                                                                       where b.Active == true && b.Status == 2
-                                                                       select a).ToList();
-                Rank_StructPoints acadpoint = (from a in ratingDB.Rank_StructPoints
-                                               where a.Active == true && a.FK_parametr == paramId &&
-                                               (a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable
-                                                && a.FK_secondlvl == null
-                                                && a.FK_thirdlvl == null)
-                                               select a).FirstOrDefault();
-                if (calculate == null)
-                {
-                    calculate = new Rank_UserParametrValue();
-                    calculate.Active = true;
-                    calculate.FK_parametr = paramId;
-                    calculate.FK_user = userId;
-                    calculate.Accept = false;
-                    ratingDB.Rank_UserParametrValue.InsertOnSubmit(calculate);
-                    ratingDB.SubmitChanges();
+                List<Rank_UserParametrValue> calculate = (from a in ratingDB.Rank_UserParametrValue
+                                                          where a.Active == true && a.FK_user == userId
+                                                          select a).ToList();
 
-                }
+                List<Rank_StructPoints> acadpoint = (from a in ratingDB.Rank_StructPoints
+                                                     where a.Active == true &&
+                                                     (a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable
+                                                      && a.FK_secondlvl == null
+                                                      && a.FK_thirdlvl == null)
+                                                     select a).ToList();
+                double lsum = 0;
+                double asum = 0;
 
-                double sum = 0;
-                foreach (var tmp in userarticlevalue)
+                foreach (var tmp in calculate)
                 {
-                    sum = sum + tmp.ValuebyArticle.Value;
+                    if (tmp.Value.HasValue)
+                        lsum = lsum + tmp.Value.Value;
                 }
-                calculate.Value = (sum + acadpoint.Value) / 2;
+                foreach (var kaf in acadpoint)
+                {
+                    if (kaf.Value.HasValue)
+                        asum = asum + kaf.Value.Value;
+                }
+                double allsum = 0;
+                allsum = (lsum + asum) / 2;
+                point.Value = allsum;
                 ratingDB.SubmitChanges();
-
+                
             }
+            
         }
 
-        public void CalculateStructParametrPoint(int paramId, int articleid, int userId)
+        public void CalculateStructParametrPoint(int paramId,  int userId)
         {
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userId select item).FirstOrDefault();
 
@@ -226,7 +231,8 @@ namespace Rank.Forms
                     foreach (var tmp in kafedra)
                     {
                         Rank_UserParametrValue calculate = (from a in ratingDB.Rank_UserParametrValue
-                                                            where a.Active == true && a.FK_parametr == paramId && a.FK_user == tmp.UsersTableID && a.Accept == true
+                                                            where a.Active == true && a.FK_parametr == paramId && a.FK_user == tmp.UsersTableID 
+                                                            //&& a.Accept == true
                                                             select a).FirstOrDefault();
                         if (calculate != null &&  calculate.Value.HasValue)
                         {
@@ -260,7 +266,8 @@ namespace Rank.Forms
 
                 }
                 List<Rank_StructPoints> faculty = (from a in ratingDB.Rank_StructPoints
-                                                   where a.Active == true && a.FK_secondlvl == rights.FK_SecondLevelSubdivisionTable && a.Accept == true
+                                                   where a.Active == true && a.FK_secondlvl == rights.FK_SecondLevelSubdivisionTable 
+                                                  // && a.Accept == true
                                                    select a).ToList();
                 if (faculty != null && faculty.Count > 0)
                 {
@@ -298,7 +305,8 @@ namespace Rank.Forms
                     ratingDB.SubmitChanges();
                 }
                 List<Rank_StructPoints> academy = (from a in ratingDB.Rank_StructPoints
-                                                   where a.Active == true && a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable && a.Accept == true
+                                                   where a.Active == true && a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable 
+                                                   //&& a.Accept == true
                                                    select a).ToList();
                 if (academy != null && academy.Count > 0)
                 {

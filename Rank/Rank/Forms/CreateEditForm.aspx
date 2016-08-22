@@ -47,7 +47,7 @@
                  
                 <asp:TemplateField HeaderText="Коэффициент сложности" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                     <ItemTemplate>
-                         <asp:Label ID="point" runat="server" Text='<%# Bind("point") %>'  Visible="false"></asp:Label>     
+                         <asp:Label ID="point" runat="server" Text='<%# Bind("point") %>'  Visible="true"></asp:Label>     
                         <asp:DropDownList ID="ddlPoint" runat="server"  OnSelectedIndexChanged="ddlPoint_SelectedIndexChanged" Width ="300"> </asp:DropDownList>                        
                     </ItemTemplate>
                 </asp:TemplateField>

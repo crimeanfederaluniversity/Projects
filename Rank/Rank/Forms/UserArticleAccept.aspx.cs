@@ -69,12 +69,20 @@ namespace Rank.Forms
                                                     where a.Active == true && a.FK_User == userID && a.UserConfirm == false 
                                                     && a.FK_Article == Convert.ToInt32(button.CommandArgument)
                                                     select a).FirstOrDefault();
+            Rank_Articles param = (from a in ratingDB.Rank_Articles
+                                   where a.Active == true && a.ID == Convert.ToInt32(button.CommandArgument)
+                                    select a).FirstOrDefault();
+            int paramId = Convert.ToInt32(param.FK_parametr);
             if (confirm != null)
             {
                 confirm.UserConfirm = true;
                 ratingDB.SubmitChanges();
             }
+            Calculate userpoints = new Calculate();
+            userpoints.CalculateUserArticlePoint(paramId, Convert.ToInt32(button.CommandArgument), userID);
+            userpoints.CalculateUserParametrPoint(paramId, Convert.ToInt32(button.CommandArgument), userID);
             Refresh();
+            
         }
     }
 }

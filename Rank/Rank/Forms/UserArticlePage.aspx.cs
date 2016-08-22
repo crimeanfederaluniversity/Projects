@@ -149,7 +149,10 @@ namespace Rank.Forms
                 dataRow["Date"] = tmp.AddDate;
                 dataRow["Point"] = userarticlepoint.ValuebyArticle;
                 if (tmp.Status == 0)
+                {
                     dataRow["Status"] = "Доступно для редактирования";
+                }
+                    
                 if (tmp.Status == 1)
                 {
                     if (edituserId != null)
@@ -249,20 +252,26 @@ namespace Rank.Forms
             {
                 var userId = Session["UserID"];
                 int userID = (int)userId;
-                int paramId = Convert.ToInt32(Session["parametrID"]);                
+                int paramId = Convert.ToInt32(Session["parametrID"]);
+                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+                             
                 Rank_Articles newValue = new Rank_Articles();
                 newValue.Active = true;
                 newValue.AddDate = DateTime.Now;
                 newValue.FK_parametr = paramId;
                 newValue.Name = TextBox1.Text;
-                newValue.Status = 3;
+                if (rights.AccessLevel == 9)
+                {
+                    newValue.Status = 3;
+                }
+                else
+                {
+                    newValue.Status = 0;
+                }
                 ratingDB.Rank_Articles.InsertOnSubmit(newValue);
                 ratingDB.SubmitChanges();
                              
-                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-                if (rights.AccessLevel == 10)
-                {
-                }                
+                            
                 if(rights.AccessLevel == 9 )
                 {
                     var edituserId = Session["edituserID"];
