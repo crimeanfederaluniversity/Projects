@@ -1,73 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Release_" Class="RankDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=212.110.152.173;Initial Catalog=Release_;User ID=potapov" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Release_ConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.ThirdLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable">
-    <Type Name="ThirdLevelSubdivisionTable">
-      <Column Name="ThirdLevelSubdivisionTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
-      <Column Name="FK_SecondLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="UsersTable" />
-      <Association Name="ThirdLevelSubdivisionTable_Rank_StructPoints" Member="Rank_StructPoints" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_thirdlvl" Type="Rank_StructPoints" />
-      <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.SecondLevelSubdivisionTable" Member="SecondLevelSubdivisionTable">
-    <Type Name="SecondLevelSubdivisionTable">
-      <Column Name="SecondLevelSubdivisionTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
-      <Column Name="FK_FirstLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="ThirdLevelSubdivisionTable" />
-      <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="UsersTable" />
-      <Association Name="SecondLevelSubdivisionTable_Rank_StructPoints" Member="Rank_StructPoints" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_secondlvl" Type="Rank_StructPoints" />
-      <Association Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.FirstLevelSubdivisionTable" Member="FirstLevelSubdivisionTable">
-    <Type Name="FirstLevelSubdivisionTable">
-      <Column Name="FirstLevelSubdivisionTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
-      <Column Name="FK_ZeroLevelSubvisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="AbbRu" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Association Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="SecondLevelSubdivisionTable" />
-      <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="UsersTable" />
-      <Association Name="FirstLevelSubdivisionTable_Rank_StructPoints" Member="Rank_StructPoints" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_firstlvl" Type="Rank_StructPoints" />
-    </Type>
-  </Table>
-  <Table Name="dbo.UsersTable" Member="UsersTable">
-    <Type Name="UsersTable">
-      <Column Name="UsersTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Login" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="Surname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Patronimyc" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="FK_FirstLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_SecondLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_ThirdLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_FourthLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_FifthLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="AccessLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_ZeroLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PassCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Confirmed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Data_Status" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Position" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="AcademicDegree" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="EducationForm" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Kurs" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_Specialization" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="FK_StudentGroup" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="UsersTable_Rank_UserArticleMappingTable" Member="Rank_UserArticleMappingTable" ThisKey="UsersTableID" OtherKey="FK_User" Type="Rank_UserArticleMappingTable" />
-      <Association Name="UsersTable_Rank_UserParametrValue" Member="Rank_UserParametrValue" ThisKey="UsersTableID" OtherKey="FK_user" Type="Rank_UserParametrValue" />
-      <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
-      <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
-      <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
-    </Type>
-  </Table>
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-QB5CCK4;Initial Catalog=Release_;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Release_ConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Rank_Articles" Member="Rank_Articles">
     <Type Name="Rank_Articles">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -201,8 +133,8 @@
       <Column Name="Accept" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="FK_parametr" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="AcceptDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Association Name="FirstLevelSubdivisionTable_Rank_StructPoints" Member="FirstLevelSubdivisionTable" ThisKey="FK_firstlvl" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="Rank_Parametrs_Rank_StructPoints" Member="Rank_Parametrs" ThisKey="FK_parametr" OtherKey="ID" Type="Rank_Parametrs" IsForeignKey="true" />
+      <Association Name="FirstLevelSubdivisionTable_Rank_StructPoints" Member="FirstLevelSubdivisionTable" ThisKey="FK_firstlvl" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="SecondLevelSubdivisionTable_Rank_StructPoints" Member="SecondLevelSubdivisionTable" ThisKey="FK_secondlvl" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
       <Association Name="ThirdLevelSubdivisionTable_Rank_StructPoints" Member="ThirdLevelSubdivisionTable" ThisKey="FK_thirdlvl" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
@@ -233,6 +165,79 @@
       <Column Name="Accept" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="Rank_Parametrs_Rank_UserParametrValue" Member="Rank_Parametrs" ThisKey="FK_parametr" OtherKey="ID" Type="Rank_Parametrs" IsForeignKey="true" />
       <Association Name="UsersTable_Rank_UserParametrValue" Member="UsersTable" ThisKey="FK_user" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FirstLevelSubdivisionTable" Member="FirstLevelSubdivisionTable">
+    <Type Name="FirstLevelSubdivisionTable">
+      <Column Name="FirstLevelSubdivisionTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="FK_ZeroLevelSubvisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AbbRu" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="FirstLevelSubdivisionTable_Rank_StructPoints" Member="Rank_StructPoints" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_firstlvl" Type="Rank_StructPoints" />
+      <Association Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="SecondLevelSubdivisionTable" />
+      <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="FirstLevelSubdivisionTableID" OtherKey="FK_FirstLevelSubdivisionTable" Type="UsersTable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SecondLevelSubdivisionTable" Member="SecondLevelSubdivisionTable">
+    <Type Name="SecondLevelSubdivisionTable">
+      <Column Name="SecondLevelSubdivisionTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="FK_FirstLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="SecondLevelSubdivisionTable_Rank_StructPoints" Member="Rank_StructPoints" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_secondlvl" Type="Rank_StructPoints" />
+      <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="ThirdLevelSubdivisionTable" />
+      <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="SecondLevelSubdivisionTableID" OtherKey="FK_SecondLevelSubdivisionTable" Type="UsersTable" />
+      <Association Name="FirstLevelSubdivisionTable_SecondLevelSubdivisionTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ThirdLevelSubdivisionTable" Member="ThirdLevelSubdivisionTable">
+    <Type Name="ThirdLevelSubdivisionTable">
+      <Column Name="ThirdLevelSubdivisionTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="FK_SecondLevelSubdivisionTable" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ThirdLevelSubdivisionTable_Rank_StructPoints" Member="Rank_StructPoints" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_thirdlvl" Type="Rank_StructPoints" />
+      <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="UsersTable" />
+      <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rank_UserRatingPoints" Member="Rank_UserRatingPoints">
+    <Type Name="Rank_UserRatingPoints">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FK_User" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Value" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="UsersTable_Rank_UserRatingPoints" Member="UsersTable" ThisKey="FK_User" OtherKey="UsersTableID" Type="UsersTable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UsersTable" Member="UsersTable">
+    <Type Name="UsersTable">
+      <Column Name="UsersTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Login" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Surname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Patronimyc" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="FK_FirstLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_SecondLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_ThirdLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_FourthLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_FifthLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AccessLevel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FK_ZeroLevelSubdivisionTable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PassCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Confirmed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Stavka" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Position" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Association Name="UsersTable_Rank_UserArticleMappingTable" Member="Rank_UserArticleMappingTable" ThisKey="UsersTableID" OtherKey="FK_User" Type="Rank_UserArticleMappingTable" />
+      <Association Name="UsersTable_Rank_UserParametrValue" Member="Rank_UserParametrValue" ThisKey="UsersTableID" OtherKey="FK_user" Type="Rank_UserParametrValue" />
+      <Association Name="UsersTable_Rank_UserRatingPoints" Member="Rank_UserRatingPoints" ThisKey="UsersTableID" OtherKey="FK_User" Type="Rank_UserRatingPoints" />
+      <Association Name="FirstLevelSubdivisionTable_UsersTable" Member="FirstLevelSubdivisionTable" ThisKey="FK_FirstLevelSubdivisionTable" OtherKey="FirstLevelSubdivisionTableID" Type="FirstLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="SecondLevelSubdivisionTable_UsersTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
+      <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="ThirdLevelSubdivisionTable" ThisKey="FK_ThirdLevelSubdivisionTable" OtherKey="ThirdLevelSubdivisionTableID" Type="ThirdLevelSubdivisionTable" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

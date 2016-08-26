@@ -34,12 +34,15 @@ namespace Rank.Forms
                 foreach (var ART in userparamarticle)
                 {
                     Calculate userpoints = new Calculate();
-                    userpoints.CalculateStructParametrPoint(PAR.ID, userID);
+                 //   userpoints.CalculateStructParametrPoint(PAR.ID, userID);
                 }
             }
         }
             protected void Refresh()
         {
+            var userId = Session["UserID"];
+            int userID = (int)userId;
+       
             int userpoints = Convert.ToInt32(Session["showuserID"]);
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
@@ -52,16 +55,44 @@ namespace Rank.Forms
             {              
                 foreach (var tmp in allparam)
                 {
-                    Rank_UserParametrValue point = (from a in ratingDB.Rank_UserParametrValue where a.Active == true && a.FK_parametr == tmp.ID && a.FK_user == userpoints select a).FirstOrDefault();
+                    Rank_UserParametrValue point = (from a in ratingDB.Rank_UserParametrValue where a.Active == true && a.FK_parametr == tmp.ID && a.FK_user == userpoints
+                                                    select a).FirstOrDefault();
   
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = tmp.ID;
                     dataRow["Parametr"] = tmp.Name;
-                    List<Rank_Articles> userarticles = (from a in ratingDB.Rank_Articles
-                                                        where a.Active == true && a.Status == 1 && a.FK_parametr == tmp.ID
-                                                        join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
-                                                        where b.Active == true && b.FK_User == userpoints && b.UserConfirm == true && b.CreateUser == true
-                                                        select a).ToList();
+                    UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+                    List<Rank_Articles> userarticles = new List<Rank_Articles>();
+                    if (rights.AccessLevel == 1)
+                    {
+                        userarticles = (from a in ratingDB.Rank_Articles
+                                        where a.Active == true && a.Status == 1
+                                        join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
+                                        where b.Active == true && b.FK_User == userpoints && b.UserConfirm == true && b.CreateUser == true
+                                        join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
+                                        where c.AccessLevel == 0
+                                        select a).ToList();
+                    }
+                    if (rights.AccessLevel == 2)
+                    {
+                        userarticles = (from a in ratingDB.Rank_Articles
+                                        where a.Active == true && a.Status == 1
+                                        join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
+                                        where b.Active == true && b.FK_User == userpoints  && b.UserConfirm == true && b.CreateUser == true
+                                        join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
+                                        where c.AccessLevel == 1
+                                        select a).ToList();
+                    }
+                    if (rights.AccessLevel == 4)
+                    {
+                        userarticles = (from a in ratingDB.Rank_Articles
+                                        where a.Active == true && a.Status == 1
+                                        join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
+                                        where b.Active == true && b.FK_User == userpoints && b.UserConfirm == true && b.CreateUser == true
+                                        join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
+                                        where c.AccessLevel == 2
+                                        select a).ToList();
+                    }
                     if (point != null)
                     {
                         dataRow["Point"] = point.Value;

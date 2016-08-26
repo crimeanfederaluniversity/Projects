@@ -19,9 +19,9 @@ namespace Rank.Forms
             }
             int userID = (int)userId;
             Calculate userpoints = new Calculate();
-            userpoints.CalculateHeadParametrPoint(userID);
-            RankUserRatingPoints point = (from a in ratingDB.RankUserRatingPoints
-                                          where a.Active == true && a.FK_user == userID
+         //   userpoints.CalculateHeadParametrPoint(userID);
+            Rank_UserRatingPoints point = (from a in ratingDB.Rank_UserRatingPoints
+                                           where a.Active == true && a.FK_User == userID
                                           select a).FirstOrDefault();
             if(point!= null)
             {

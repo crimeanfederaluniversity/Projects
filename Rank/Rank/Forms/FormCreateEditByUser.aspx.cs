@@ -97,8 +97,7 @@ namespace Rank.Forms
         protected void GoButtonClik(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            {
-            
+            {           
                 Session["edituserID"] = Convert.ToInt32(button.CommandArgument);
                 Response.Redirect("~/Forms/UserArticlePage.aspx");
             }

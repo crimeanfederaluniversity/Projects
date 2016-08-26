@@ -81,7 +81,7 @@ namespace Rank.Forms
                 else
                 {
                     List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.Active == true && item.fk_parametr == paramId select item).ToList();
-                    if (marks.Count == 1 || (paramId == 1 || paramId == 2))
+                    if (marks.Count == 1 )
                     {
                         DropDownList2.Visible = false;
                         Label17.Visible = true;
@@ -173,8 +173,12 @@ namespace Rank.Forms
             foreach (Rank_UserArticleMappingTable value in authorList)
             {
                 UsersTable author = (from a in ratingDB.UsersTable where a.Active == true && a.UsersTableID == value.FK_User select a).FirstOrDefault();
-                if (author.AccessLevel != 9)
+                if (author.AccessLevel == 9 || author.AccessLevel == 10)
                 {
+
+                }
+                else { 
+
                     DataRow dataRow = dataTable.NewRow();
                     FirstLevelSubdivisionTable first = (from a in ratingDB.FirstLevelSubdivisionTable where a.Active == true && a.FirstLevelSubdivisionTableID == author.FK_FirstLevelSubdivisionTable select a).FirstOrDefault();
                     SecondLevelSubdivisionTable second = (from a in ratingDB.SecondLevelSubdivisionTable where a.Active == true && a.SecondLevelSubdivisionTableID == author.FK_SecondLevelSubdivisionTable select a).FirstOrDefault();
@@ -561,6 +565,7 @@ namespace Rank.Forms
         protected void SaveButtonClick(object sender, EventArgs e)
         {
             SaveAll();
+            Calculate userpoints = new Calculate();
             TableDiv.Controls.Clear();
             TableDiv.Controls.Add(CreateNewTable());
             int paramId = Convert.ToInt32(Session["parametrID"]);
@@ -570,6 +575,15 @@ namespace Rank.Forms
             List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.Active == true && item.fk_parametr == paramId select item).ToList();
             int article = Convert.ToInt32(Session["articleID"]);
             Rank_Articles mark = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
+            if(rights.AccessLevel == 9 || rights.AccessLevel == 10)
+            {
+                Rank_Articles send = (from a in ratingDB.Rank_Articles
+                                      where a.Active == true && a.ID == article
+                                      select a).FirstOrDefault();
+                send.Status = 4;
+                ratingDB.SubmitChanges();
+               
+            }
             if ((paramId == 1 || paramId == 2) && (rights.AccessLevel != 9))
             { 
                  if(paramId == 1)
@@ -592,7 +606,7 @@ namespace Rank.Forms
                     ratingDB.SubmitChanges();
                 }             
             }
-            Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
+            Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();                   
             if (name.OneOrManyAuthor == false) // если это единичная привязка
             {                       
                 Rank_UserArticleMappingTable newValue = new Rank_UserArticleMappingTable();
@@ -604,36 +618,50 @@ namespace Rank.Forms
                     if (editID != null)
                     {
                         int edituserid = (int)editID; 
-                        newValue.FK_User = edituserid;
+                        newValue.FK_User = edituserid;                                 
                     }
                 }
                 else // если это сам юзер делаем связь по сессии юзера
                 {
                     newValue.FK_User = userID;
+                
                 }                  
                 newValue.UserConfirm = false;
                 ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newValue);
                 ratingDB.SubmitChanges();
             }
-            Calculate userpoints = new Calculate();
-            userpoints.CalculateUserArticlePoint(paramId, article, userID);
-            userpoints.CalculateUserParametrPoint(paramId, article, userID);
+            List<Rank_DifficaltPoint> onevalue = (from item in ratingDB.Rank_DifficaltPoint where item.Active== true && item.fk_parametr == paramId select item).ToList();
+            if (onevalue!=null && onevalue.Count == 1)
+            {
+                Rank_UserArticleMappingTable thisvalue = (from item in ratingDB.Rank_UserArticleMappingTable where item.FK_User == userID && item.Active == true && item.FK_Article == article  select item).FirstOrDefault();
+                foreach (var n in onevalue)
+                {
+                    thisvalue.FK_point = n.ID;
+                    ratingDB.SubmitChanges();
+                }
+            }         
+            userpoints.CalculateUserArticlePoint(paramId, article, userID);         
             Response.Redirect("~/Forms/UserArticlePage.aspx");
         }
         protected void PoiskRefresh()
-        {
+        { 
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add(new DataColumn("userid", typeof(string)));
             dataTable.Columns.Add(new DataColumn("surname", typeof(string)));
             dataTable.Columns.Add(new DataColumn("name", typeof(string)));
             dataTable.Columns.Add(new DataColumn("patronimyc", typeof(string)));
             dataTable.Columns.Add(new DataColumn("position", typeof(string)));
-            List<UsersTable> poisk = (from a in ratingDB.UsersTable
-                                      where a.Active == true && (a.FK_FirstLevelSubdivisionTable == Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value) || a.FK_FirstLevelSubdivisionTable == null) &&
-                                      (a.FK_SecondLevelSubdivisionTable == Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value) || a.FK_SecondLevelSubdivisionTable == null) &&
-                                      (a.FK_ThirdLevelSubdivisionTable == Convert.ToInt32(DropDownList5.Items[DropDownList5.SelectedIndex].Value) || a.FK_ThirdLevelSubdivisionTable == null)
-                                      && a.Surname.Contains(TextBox2.Text)
-                                      select a).ToList();
+            List<UsersTable> poisk = new List<UsersTable>();
+            if (TextBox2.Text != "")
+            {
+                poisk = (from a in ratingDB.UsersTable
+                                          where a.Active == true && (a.FK_FirstLevelSubdivisionTable == Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value) || a.FK_FirstLevelSubdivisionTable == null) &&
+                                          (a.FK_SecondLevelSubdivisionTable == Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value) || a.FK_SecondLevelSubdivisionTable == null) &&
+                                          (a.FK_ThirdLevelSubdivisionTable == Convert.ToInt32(DropDownList5.Items[DropDownList5.SelectedIndex].Value) || a.FK_ThirdLevelSubdivisionTable == null)
+                                          && a.Surname.Contains(TextBox2.Text)
+                                          select a).ToList();
+            }
+         
             if (poisk != null && poisk.Count != 0)
             {
                 foreach (UsersTable author in poisk)
@@ -649,7 +677,10 @@ namespace Rank.Forms
             }
             else
             {
-                searchError.Visible = true;
+                if (TextBox2.Text != "")
+                {
+                    searchError.Visible = true;
+                }
             }
             GridView2.DataSource = dataTable;
             GridView2.DataBind();
@@ -703,25 +734,43 @@ namespace Rank.Forms
         {
             var userId = Session["UserID"];      
             int userID = (int)userId;
-            UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
             Button button = (Button)sender;
             int article = Convert.ToInt32(Session["articleID"]);
-            Rank_UserArticleMappingTable newValue = new Rank_UserArticleMappingTable();
-            newValue.Active = true;
-            newValue.FK_Article = article;      
-            newValue.FK_User = Convert.ToInt32(button.CommandArgument);
-            if(rights.AccessLevel == 9 || rights.AccessLevel == 10)
+            List<Rank_UserArticleMappingTable> authorList = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_Article == article select a).ToList();
+            List<int> addusers = new List<int>();
+            foreach(var n in authorList)
             {
-                newValue.UserConfirm = true;
-                newValue.CreateUser = false;
+                addusers.Add(Convert.ToInt32(n.FK_User));
+            }
+            if (addusers.Contains(Convert.ToInt32(button.CommandArgument)))
+            {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Данный пользователь уже добавлен!');", true);
             }
             else
             {
-                newValue.UserConfirm = false;
-            }       
-            ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newValue);
-            ratingDB.SubmitChanges();
-            Refresh();
+                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+                Rank_UserArticleMappingTable newValue = new Rank_UserArticleMappingTable();
+                newValue.Active = true;
+                newValue.FK_Article = article;
+                newValue.FK_User = Convert.ToInt32(button.CommandArgument);
+                if (rights.AccessLevel == 9 || rights.AccessLevel == 10)
+                {
+                    newValue.UserConfirm = true;
+                    newValue.CreateUser = false;
+                }
+                else
+                {
+                    newValue.UserConfirm = false;
+                }
+                ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newValue);
+                ratingDB.SubmitChanges();
+                DropDownList3.SelectedIndex = 0;
+                DropDownList4.SelectedIndex = 0;
+                DropDownList5.SelectedIndex = 0;
+                TextBox2.Text = "";
+                PoiskRefresh();
+                Refresh();
+            }
         }
         protected void RankPointSaveButtonClik(object sender, EventArgs e)
         {
@@ -770,7 +819,18 @@ namespace Rank.Forms
 
         protected void SendButtonClick(object sender, EventArgs e)
         {
+            List<Rank_Fields> allFields = new List<Rank_Fields>();
             int article = Convert.ToInt32(Session["articleID"]);
+                List<Rank_ArticleValues> check = (from a in ratingDB.Rank_ArticleValues where a.Active == true && a.FK_Article == article select a).ToList();
+                foreach (var n in check)
+            {
+                if(n.Value == null || n.Value == "")
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Пожалуйста, заполните все поля!');", true);
+                    break;
+                }
+             
+            }                       
             int paramId = Convert.ToInt32(Session["parametrID"]);
             var userId = Session["UserID"];           
             int userID = (int)userId;
@@ -779,8 +839,10 @@ namespace Rank.Forms
                                   select a).FirstOrDefault();
             send.Status = 1;
             ratingDB.SubmitChanges();
-           
+            Calculate userpoints = new Calculate();
+            userpoints.CalculateUserParametrPoint(paramId, article, userID);
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Отправлено на утверждение руководителю Вашего структурного подразделения! Баллы показателя пересчитаны с учетом новых данных.');", true);
+            Response.Redirect("~/Forms/UserArticlePage.aspx");
 
         }
         protected void DeleteNotSystemAutorButtonClick(object sender, EventArgs e)

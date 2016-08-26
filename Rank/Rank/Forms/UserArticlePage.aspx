@@ -4,14 +4,17 @@
       
               &nbsp;&nbsp;
     
-              <h3><asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></h3>
+              <h3><asp:Label ID="Label1" runat="server" Text="Название показателя"></asp:Label>
+   
+              </h3>
               <p>
-                  <asp:Label ID="Label2" runat="server" Text="Label" Visible="False"></asp:Label>
+                  <asp:Label ID="Label2" runat="server" Text="ФИО" Visible="False"></asp:Label>
               </p>
-            <p>
-                <asp:TextBox ID="TextBox1" runat="server" Height="20px" Visible="False" Width="450px"></asp:TextBox>
+              <p>
+                  <asp:Label ID="Label4" runat="server" Text="Введите название новой работы:"></asp:Label>
+&nbsp;<asp:TextBox ID="TextBox1" runat="server" Height="20px" Visible="False" Width="450px" TextMode="MultiLine"></asp:TextBox>
                 <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Добавить" Visible="False" />
-          </p>
+              </p>
           <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" OnRowDataBound ="GridView1_RowDataBound" >
              <Columns>
                   <asp:TemplateField HeaderText="" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "false" >
@@ -44,6 +47,7 @@
                           <asp:TemplateField HeaderText="Баллы" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="Point" runat="server" Text='<%# Bind("Point") %>'  Visible="True"></asp:Label>
+                         
                         </ItemTemplate>
                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 

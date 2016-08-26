@@ -3,7 +3,7 @@
        <div>
           <h3>Работы, в которых Вас указали автором/соавтором:</h3>        
           
-          <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" >
+          <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" OnRowDataBound ="OnRowDataBound" >
              <Columns>
                   <asp:TemplateField HeaderText="" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "false" >
                         <ItemTemplate> 
@@ -29,6 +29,7 @@
                  <asp:TemplateField HeaderText="Коэффициент сложности" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="Point" runat="server" Text='<%# Bind("Point") %>'  Visible="True"></asp:Label>
+                               <asp:DropDownList ID="ddlPoint" runat="server"   OnSelectedIndexChanged="ddlPoint_SelectedIndexChanged"  Width ="300"> </asp:DropDownList>  
                         </ItemTemplate>
                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 

@@ -48,11 +48,13 @@ namespace Rank.Forms
                   || (rights.AccessLevel != 9 && rights.AccessLevel != 10 && name.EditUserType != 1 && name.EditUserType != 2))
                 {
                     TextBox1.Visible = false;
+                    Label4.Visible = false;
                     Button2.Visible = false;
                 }
                 else
                 {
                     TextBox1.Visible = true;
+                    Label4.Visible = true;
                     Button2.Visible = true;
                 }
             }
@@ -94,15 +96,16 @@ namespace Rank.Forms
                 UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
                 if (rights.AccessLevel == 10 )
                 {
-                    GridView1.Columns[6].Visible = false;
-                    userparamarticle = (from a in ratingDB.Rank_Articles  where a.Active == true && a.FK_parametr == 16   select a).ToList();
+                    GridView1.Columns[4].Visible = false;
+                    userparamarticle = (from a in ratingDB.Rank_Articles  where a.Active == true && a.FK_parametr == 16 select a).ToList();
                 }
                 if (rights.AccessLevel == 9)
                 {
-                    GridView1.Columns[6].Visible = false;
+                   GridView1.Columns[4].Visible = false;
                     userparamarticle = (from a in ratingDB.Rank_Articles  where a.Active == true && a.FK_parametr == paramId
                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
-                                        where b.FK_User == userID && b.Active == true  select a).ToList();
+                                        where b.FK_User == userID && b.Active == true && b.CreateUser == true
+                                        select a).ToList();
                 }
                 if (rights.AccessLevel != 10 && rights.AccessLevel != 9 )
                     {
@@ -147,7 +150,13 @@ namespace Rank.Forms
                 dataRow["ID"] = tmp.ID;
                 dataRow["Name"] = tmp.Name;
                 dataRow["Date"] = tmp.AddDate;
-                dataRow["Point"] = userarticlepoint.ValuebyArticle;
+                if (userarticlepoint != null)
+                {
+                    
+                        dataRow["Point"] = userarticlepoint.ValuebyArticle;
+                   
+                }
+              
                 if (tmp.Status == 0)
                 {
                     dataRow["Status"] = "Доступно для редактирования";
@@ -194,8 +203,9 @@ namespace Rank.Forms
             var userId = Session["UserID"];
             var showuser = Session["showuserID"];
             Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == Convert.ToInt32(button.CommandArgument) select a).FirstOrDefault();
-            Rank_UserArticleMappingTable edit = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_User == Convert.ToInt32(userId) && a.ID == send.ID && a.CreateUser == false select a).FirstOrDefault();
-            if (showuser != null || edit != null)
+            Rank_UserArticleMappingTable edit = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_User == Convert.ToInt32(userId) && a.FK_Article == send.ID select a).FirstOrDefault();
+
+            if (showuser != null || (edit.CreateUser == false || edit.CreateUser == null) )
             {
                 Response.Redirect("~/Forms/ViewArticleForm.aspx");
             }
@@ -272,7 +282,7 @@ namespace Rank.Forms
                 ratingDB.SubmitChanges();
                              
                             
-                if(rights.AccessLevel == 9 )
+                if(rights.AccessLevel == 9 || rights.AccessLevel == 10)
                 {
                     var edituserId = Session["edituserID"];
                     if (edituserId != null)
@@ -323,6 +333,28 @@ namespace Rank.Forms
         }
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                var userId = Session["UserID"];
+                int userID = (int)userId;
+                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+                if (rights.AccessLevel != 9)
+                {
+                    Button but = (e.Row.FindControl("DeleteButton") as Button);
+                    Rank_Articles delete = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == Convert.ToUInt32(but.CommandArgument) select a).FirstOrDefault();
+
+                    if (delete.Status !=0 )
+                    {
+                        but.Enabled = false;
+                    }
+                    else
+                    {
+                        but.Enabled = true;
+                    }
+                }
+
+            }
+           
             var lblColor = e.Row.FindControl("Color") as Label;
             if (lblColor != null)
             {

@@ -34,21 +34,32 @@ namespace Rank.Forms
             dataTable.Columns.Add(new DataColumn("Point", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Status", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Color", typeof(string)));
-            List<UsersTable> structusers;
-            UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-            if (rights.AccessLevel == 9)
-            {
-                structusers = (from a in ratingDB.UsersTable where a.Active == true select a).ToList();
-            }
-            else
-            {
+            List<UsersTable> structusers = new List<UsersTable>();
+            UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();         
                 // надо в базе сделать аксес левел чтобы понятно у кого есть подчиненные и по его привязке к структуре вытаскивать всех под ним
-                structusers = (from a in ratingDB.UsersTable where a.Active == true && 
-                               (a.FirstLevelSubdivisionTable == rights.FirstLevelSubdivisionTable 
-                               && a.FK_SecondLevelSubdivisionTable == rights.FK_SecondLevelSubdivisionTable
-                               && a.FK_ThirdLevelSubdivisionTable == rights.FK_ThirdLevelSubdivisionTable) select a).ToList();
-            }
-            
+                if ( rights.FK_FirstLevelSubdivisionTable != null &&  rights.FK_SecondLevelSubdivisionTable != null && rights.FK_ThirdLevelSubdivisionTable != null)
+                {
+                    structusers = (from a in ratingDB.UsersTable  where a.Active == true &&
+                                    (a.FirstLevelSubdivisionTable == rights.FirstLevelSubdivisionTable
+                                    && a.FK_SecondLevelSubdivisionTable == rights.FK_SecondLevelSubdivisionTable
+                                    && a.FK_ThirdLevelSubdivisionTable == rights.FK_ThirdLevelSubdivisionTable)
+                                   select a).ToList();
+                }
+                if (rights.FK_FirstLevelSubdivisionTable != null && rights.FK_SecondLevelSubdivisionTable != null )
+                {
+                    structusers = (from a in ratingDB.UsersTable
+                                   where a.Active == true &&  (a.FirstLevelSubdivisionTable == rights.FirstLevelSubdivisionTable  && a.FK_SecondLevelSubdivisionTable == rights.FK_SecondLevelSubdivisionTable)
+                                   select a).ToList();
+                }
+                if (rights.FK_FirstLevelSubdivisionTable != null)
+                {
+                    structusers = (from a in ratingDB.UsersTable   where a.Active == true &&  a.FirstLevelSubdivisionTable == rights.FirstLevelSubdivisionTable  select a).ToList();
+                }
+                if (rights.AccessLevel == 9)
+                {
+                    structusers = (from a in ratingDB.UsersTable where a.Active == true select a).ToList();
+                }
+          
             if (structusers != null)
             {
                 int allsumm = 0;           
@@ -62,9 +73,39 @@ namespace Rank.Forms
                         if(a.Value != null )
                         sum = sum + Convert.ToInt32(a.Value.Value);
                     }
-                    List<Rank_Articles> userarticles = (from a in ratingDB.Rank_Articles where a.Active == true && a.Status == 1
-                                                        join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
-                                                        where b.Active == true  && b.FK_User == tmp.UsersTableID  && b.UserConfirm == true && b.CreateUser == true select a).ToList();
+                    List<Rank_Articles> userarticles = new List<Rank_Articles>();
+                    if (rights.AccessLevel == 1)
+                    {
+                        userarticles = (from a in ratingDB.Rank_Articles
+                                        where a.Active == true && a.Status == 1
+                                        join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
+                                        where b.Active == true && b.FK_User == tmp.UsersTableID && b.UserConfirm == true && b.CreateUser == true
+                                        join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
+                                        where c.AccessLevel == 0
+                                        select a).ToList();
+                    }
+                    if (rights.AccessLevel == 2)
+                    {
+                        userarticles = (from a in ratingDB.Rank_Articles
+                                        where a.Active == true && a.Status == 1
+                                        join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
+                                        where b.Active == true && b.FK_User == tmp.UsersTableID && b.UserConfirm == true && b.CreateUser == true
+                                        join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
+                                        where c.AccessLevel == 1
+                                        select a).ToList();
+                    }
+                    if (rights.AccessLevel == 4)
+                    {
+                        userarticles = (from a in ratingDB.Rank_Articles
+                                        where a.Active == true && a.Status == 1
+                                        join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
+                                        where b.Active == true && b.FK_User == tmp.UsersTableID && b.UserConfirm == true && b.CreateUser == true
+                                        join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
+                                        where c.AccessLevel == 2
+                                        select a).ToList();
+                    }
+
+
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = tmp.UsersTableID;
                     dataRow["User"] = tmp.Surname + " " + tmp.Name + " " + tmp.Patronimyc;

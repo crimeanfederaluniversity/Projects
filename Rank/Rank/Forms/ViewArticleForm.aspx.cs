@@ -24,6 +24,12 @@ namespace Rank.Forms
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            var userId = Session["UserID"];
+            if (userId == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            int userID = (int)userId;
             int article = Convert.ToInt32(Session["articleID"]);
             int paramId = Convert.ToInt32(Session["parametrID"]);
             Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
@@ -49,13 +55,60 @@ namespace Rank.Forms
                 }
                 else { 
                 Rank_Mark mark = (from item in ratingDB.Rank_Mark where item.Active == true && item.ID == send.FK_mark select item).FirstOrDefault();
-                Label2.Text = mark.Name;
+                    if(mark != null)
+                    {
+                        Label2.Text = mark.Name;
+                    }
+                    else
+                    {
+                        Label2.Text = "Нет значения";
+                    }
+               
             }
                 }
-            var rukovoditel = Session["showuserID"];
-            if (rukovoditel != null && send.Status == 1)
+            var view = Session["showuserID"];
+            int ruk = Convert.ToInt32(Session["showuserID"]);
+            Rank_Articles userarticles = new Rank_Articles();
+            UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+          
+                if (rights.AccessLevel == 1)
+            {
+                userarticles = (from a in ratingDB.Rank_Articles
+                                where a.Active == true && a.Status == 1 && a.ID == article
+                                join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
+                                where b.Active == true && b.FK_User == ruk && b.UserConfirm == true && b.CreateUser == true
+                                join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
+                                where c.AccessLevel == 0
+                                select a).FirstOrDefault();
+            }
+            if (rights.AccessLevel == 2)
+            {
+                userarticles = (from a in ratingDB.Rank_Articles
+                                where a.Active == true && a.Status == 1 && a.ID == article
+                                join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
+                                where b.Active == true && b.FK_User == ruk && b.UserConfirm == true && b.CreateUser == true
+                                join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
+                                where c.AccessLevel == 1
+                                select a).FirstOrDefault();
+            }
+            if (rights.AccessLevel == 4)
+            {
+                userarticles = (from a in ratingDB.Rank_Articles
+                                where a.Active == true && a.Status == 1 && a.ID == article
+                                join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
+                                where b.Active == true && b.FK_User == ruk && b.UserConfirm == true && b.CreateUser == true
+                                join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
+                                where c.AccessLevel == 2
+                                select a).FirstOrDefault();
+            }
+
+            if (userarticles != null )
             {
                 Button2.Visible = true;
+            }
+            if(rights.AccessLevel == 0)
+            {
+                Button2.Visible = false;
             }
             if (name.OneOrManyAuthor == true)
             {

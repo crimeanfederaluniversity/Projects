@@ -198,9 +198,14 @@
     </Content>
     <Content Include="Forms\calendar_ru.js" />
     <Content Include="Forms\FormCreateEditByUser.aspx" />
-    <Content Include="Forms\StructPointsForm.aspx" />
-    <Content Include="Forms\StructUserPointsForAccept.aspx" />
+    <Content Include="Forms\HeadAcceptFirst.aspx" />
+    <Content Include="Forms\HeadAcceptSecond.aspx" />
+    <Content Include="Forms\HeadMainPage.aspx" />
+    <Content Include="Forms\OMRAcceptArticlePage.aspx" />
+    <Content Include="Forms\OMRMainPage.aspx" />
+    <Content Include="Forms\OMRUserRatingPage.aspx" />
     <Content Include="Forms\UserArticleAccept.aspx" />
+    <Content Include="Forms\ViewArticleForm.aspx" />
     <Content Include="RankDB.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>RankDB.designer.cs</LastGenOutput>
@@ -301,19 +306,47 @@
     <Compile Include="Forms\FormCreateEditByUser.aspx.designer.cs">
       <DependentUpon>FormCreateEditByUser.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\StructPointsForm.aspx.cs">
-      <DependentUpon>StructPointsForm.aspx</DependentUpon>
+    <Compile Include="Forms\HeadAcceptFirst.aspx.cs">
+      <DependentUpon>HeadAcceptFirst.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Forms\StructPointsForm.aspx.designer.cs">
-      <DependentUpon>StructPointsForm.aspx</DependentUpon>
+    <Compile Include="Forms\HeadAcceptFirst.aspx.designer.cs">
+      <DependentUpon>HeadAcceptFirst.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\StructUserPointsForAccept.aspx.cs">
-      <DependentUpon>StructUserPointsForAccept.aspx</DependentUpon>
+    <Compile Include="Forms\HeadAcceptSecond.aspx.cs">
+      <DependentUpon>HeadAcceptSecond.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Forms\StructUserPointsForAccept.aspx.designer.cs">
-      <DependentUpon>StructUserPointsForAccept.aspx</DependentUpon>
+    <Compile Include="Forms\HeadAcceptSecond.aspx.designer.cs">
+      <DependentUpon>HeadAcceptSecond.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\HeadMainPage.aspx.cs">
+      <DependentUpon>HeadMainPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\HeadMainPage.aspx.designer.cs">
+      <DependentUpon>HeadMainPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\OMRAcceptArticlePage.aspx.cs">
+      <DependentUpon>OMRAcceptArticlePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\OMRAcceptArticlePage.aspx.designer.cs">
+      <DependentUpon>OMRAcceptArticlePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\OMRMainPage.aspx.cs">
+      <DependentUpon>OMRMainPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\OMRMainPage.aspx.designer.cs">
+      <DependentUpon>OMRMainPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\OMRUserRatingPage.aspx.cs">
+      <DependentUpon>OMRUserRatingPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\OMRUserRatingPage.aspx.designer.cs">
+      <DependentUpon>OMRUserRatingPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forms\UserArticleAccept.aspx.cs">
       <DependentUpon>UserArticleAccept.aspx</DependentUpon>
@@ -342,6 +375,13 @@
     </Compile>
     <Compile Include="Forms\UserMainPage.aspx.designer.cs">
       <DependentUpon>UserMainPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ViewArticleForm.aspx.cs">
+      <DependentUpon>ViewArticleForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forms\ViewArticleForm.aspx.designer.cs">
+      <DependentUpon>ViewArticleForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

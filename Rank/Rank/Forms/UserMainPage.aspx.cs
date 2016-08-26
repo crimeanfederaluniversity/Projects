@@ -19,15 +19,8 @@ namespace Rank.Forms
                 Response.Redirect("~/Default.aspx");
             }
             int userID = (int)userId;
-            List<Rank_UserParametrValue> userrating = (from a in ratingDB.Rank_UserParametrValue where a.Active == true && a.FK_user == userID select a).ToList();
-            int sum = 0;
-            foreach (var a in userrating)
-            { if(a.Value.HasValue)
-                {
-                    sum = sum + Convert.ToInt32(a.Value.Value);
-                }               
-            }
-            Label1.Text = sum.ToString();
+            Calculate userpoints = new Calculate();
+
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();        
             List<Rank_Articles> authorList = (from b in ratingDB.Rank_Articles
                                               where b.Active == true
@@ -55,6 +48,41 @@ namespace Rank.Forms
                 Label1.Visible = true;
                 Label2.Visible = true;
                 allparam = (from a in ratingDB.Rank_Parametrs where a.Active == true select a).ToList();
+                List<Rank_Articles> allarticleList = (from b in ratingDB.Rank_Articles
+                                                      where b.Active == true
+                                                      join a in ratingDB.Rank_UserArticleMappingTable on b.ID equals a.FK_Article
+                                                      where a.Active == true && a.FK_User == userID && a.UserConfirm == true
+                                                      select b).ToList();
+               
+                foreach (var a in allparam)
+                {
+                    if (allarticleList.Count == 0)
+                    {
+                        List<Rank_UserParametrValue> clean = (from b in ratingDB.Rank_UserParametrValue
+                                                                       where b.Active == true && b.FK_user == userID && b.FK_parametr == a.ID   select b).ToList();
+                        foreach(var b in clean)
+                        {
+                            b.Value = 0;
+                            ratingDB.SubmitChanges();
+                        }
+
+                    }
+                    foreach (var n in allarticleList)
+                    {
+                      //  userpoints.CalculateUserArticlePoint(a.ID, n.ID, userID);
+                      //  userpoints.CalculateUserParametrPoint(a.ID, n.ID, userID);
+                    }
+                }
+                List<Rank_UserParametrValue> userrating = (from a in ratingDB.Rank_UserParametrValue where a.Active == true && a.FK_user == userID select a).ToList();
+                int sum = 0;
+                foreach (var a in userrating)
+                {
+                    if (a.Value.HasValue)
+                    {
+                        sum = sum + Convert.ToInt32(a.Value.Value);
+                    }
+                }
+                Label1.Text = sum.ToString();
             }
             if (allparam != null)
             {
