@@ -31,10 +31,10 @@ namespace Rank.Forms
                                                              where b.Active == true
                                                           //   && b.Status == 1
                                                              select a).FirstOrDefault();
-
+                double allsum = 0;
                 if (weight != null && weight.Weight != null && mark != null && mark.Points != null && point != null && point.Value != null)
                 {
-                    double allsum = weight.Weight.Value * mark.Points.Value * point.Value.Value;
+                    allsum = weight.Weight.Value * mark.Points.Value * point.Value.Value;
                     articlevalue.ValuebyArticle = allsum;
                     ratingDB.SubmitChanges();
                 }
@@ -42,7 +42,7 @@ namespace Rank.Forms
 
         }
 
-        public void CalculateUserParametrPoint(int paramId, int articleid, int userId)  // посчитать баллы показателей 
+        public void CalculateUserParametrPoint(int paramId, int articleid, int userId)  // посчитать баллы показателей индивидуального рейтинга
         {
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userId select item).FirstOrDefault();
             if (rights.AccessLevel != 9 && rights.AccessLevel != 10)
@@ -65,7 +65,7 @@ namespace Rank.Forms
                                                                        where a.Active == true && a.FK_User == userId && a.UserConfirm == true
                                                                        join b in ratingDB.Rank_Articles on a.FK_Article equals b.ID
                                                                        where b.Active == true && b.FK_parametr == paramId
-                                                                       // && b.Status == 2
+                                                                       && b.Status != 0
                                                                        select a).ToList();
                 double sum = 0;
                 foreach (var tmp in userarticlevalue)
@@ -78,17 +78,18 @@ namespace Rank.Forms
                 ratingDB.SubmitChanges();
             }
         }
-        public void CalculateHeadParametrPoint( int userId)  // посчитать баллы показателей 
+        /*
+        public void CalculateHeadParametrPoint( int userId)  // посчитать баллы показателей руководителей
         {
-            RankUserRatingPoints point = (from a in ratingDB.RankUserRatingPoints
-                                          where a.Active == true && a.FK_user == userId
+            Rank_UserRatingPoints point = (from a in ratingDB.Rank_UserRatingPoints
+                                           where a.Active == true && a.FK_User == userId
                                           select a).FirstOrDefault();
             if (point == null)
             {
-                point = new RankUserRatingPoints();
+                point = new Rank_UserRatingPoints();
                 point.Active = true;
-                point.FK_user = userId;
-                ratingDB.RankUserRatingPoints.InsertOnSubmit(point);
+                point.FK_User = userId;
+                ratingDB.Rank_UserRatingPoints.InsertOnSubmit(point);
                 ratingDB.SubmitChanges();
             }
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userId select item).FirstOrDefault();
@@ -106,22 +107,22 @@ namespace Rank.Forms
                                                      && a.FK_thirdlvl == rights.FK_ThirdLevelSubdivisionTable)
                                                     select a).ToList();
 
-                double lsum = 0;
-                double ksum = 0;
+                double lsum1 = 0;
+                double ksum1 = 0;
 
                 foreach (var tmp in calculate)
                 {
                     if(tmp.Value.HasValue)
-                    lsum = lsum + tmp.Value.Value;
+                    lsum1 = lsum1 + tmp.Value.Value;
                 }
                 foreach(var kaf in kafpoint)
                 {
                     if (kaf.Value.HasValue)
-                        ksum = ksum + kaf.Value.Value;
+                        ksum1 = ksum1 + kaf.Value.Value;
                 }
-                double allsum = 0;
-                allsum = (lsum + ksum) / 2;
-                point.Value = allsum;
+                double allsum2 = 0;
+                allsum2 = (lsum1 + ksum1) / 2;
+                point.Value = allsum2;
                 ratingDB.SubmitChanges();
 
 
@@ -140,22 +141,22 @@ namespace Rank.Forms
                                                      && a.FK_thirdlvl == null)
                                                     select a).ToList();
 
-                double lsum = 0;
-                double fsum = 0;
+                double lsum2 = 0;
+                double fsum2 = 0;
 
                 foreach (var tmp in calculate)
                 {
                     if (tmp.Value.HasValue)
-                        lsum = lsum + tmp.Value.Value;
+                        lsum2 = lsum2 + tmp.Value.Value;
                 }
                 foreach (var kaf in facpoint)
                 {
                     if (kaf.Value.HasValue)
-                        fsum = fsum + kaf.Value.Value;
+                        fsum2 = fsum2 + kaf.Value.Value;
                 }
-                double allsum = 0;
-                allsum = (lsum + fsum) / 2;
-                point.Value = allsum;
+                double allsum3 = 0;
+                allsum3 = (lsum2 + fsum2) / 2;
+                point.Value = allsum3;
                 ratingDB.SubmitChanges();
 
             }
@@ -174,22 +175,22 @@ namespace Rank.Forms
                                                       && a.FK_secondlvl == null
                                                       && a.FK_thirdlvl == null)
                                                      select a).ToList();
-                double lsum = 0;
-                double asum = 0;
+                double lsum3 = 0;
+                double asum3 = 0;
 
                 foreach (var tmp in calculate)
                 {
                     if (tmp.Value.HasValue)
-                        lsum = lsum + tmp.Value.Value;
+                        lsum3 = lsum3 + tmp.Value.Value;
                 }
                 foreach (var kaf in acadpoint)
                 {
                     if (kaf.Value.HasValue)
-                        asum = asum + kaf.Value.Value;
+                        asum3 = asum3 + kaf.Value.Value;
                 }
-                double allsum = 0;
-                allsum = (lsum + asum) / 2;
-                point.Value = allsum;
+                double allsum4 = 0;
+                allsum4 = (lsum3 + asum3) / 2;
+                point.Value = allsum4;
                 ratingDB.SubmitChanges();
                 
             }
@@ -227,19 +228,24 @@ namespace Rank.Forms
                                             select a).ToList();
                 if (kafedra != null && kafedra.Count > 0)
                 {
+                    double kafstavka = 0;                  
                     double sum = 0;                   
                     foreach (var tmp in kafedra)
                     {
+                        if(tmp.Stavka.HasValue)
+                        {
+                            kafstavka = kafstavka + tmp.Stavka.Value;
+                        }                        
+                        
                         Rank_UserParametrValue calculate = (from a in ratingDB.Rank_UserParametrValue
-                                                            where a.Active == true && a.FK_parametr == paramId && a.FK_user == tmp.UsersTableID 
-                                                            //&& a.Accept == true
+                                                            where a.Active == true && a.FK_parametr == paramId && a.FK_user == tmp.UsersTableID                                                     
                                                             select a).FirstOrDefault();
                         if (calculate != null &&  calculate.Value.HasValue)
                         {
                             sum = sum + calculate.Value.Value;
                         }
                     }
-                    double reitingkaf = sum / kafedra.Count;
+                    double reitingkaf = sum / kafstavka;
                     point.Value = reitingkaf;
                     ratingDB.SubmitChanges();
                 }
@@ -266,14 +272,13 @@ namespace Rank.Forms
 
                 }
                 List<Rank_StructPoints> faculty = (from a in ratingDB.Rank_StructPoints
-                                                   where a.Active == true && a.FK_secondlvl == rights.FK_SecondLevelSubdivisionTable 
-                                                  // && a.Accept == true
-                                                   select a).ToList();
+                                                   where a.Active == true && a.FK_secondlvl == rights.FK_SecondLevelSubdivisionTable                                             
+                                                   select a).ToList();   
                 if (faculty != null && faculty.Count > 0)
                 {
                     double sum = 0;                   
                     foreach (var tmp in faculty)
-                    {
+                    {                    
                         if (tmp.Value != null)
                         {
                             sum = sum + tmp.Value.Value;
@@ -325,6 +330,8 @@ namespace Rank.Forms
 
             }
         }
+        */
+     
     }
 }
  
