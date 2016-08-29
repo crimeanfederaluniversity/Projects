@@ -45,7 +45,7 @@ namespace Rank.Forms
             else
             {              
                     if ((rights.AccessLevel == 9 && name.EditUserType != 0  && name.EditUserType != 2) || (rights.AccessLevel != 10 && name.EditUserType == 3)
-                  || (rights.AccessLevel != 9 && rights.AccessLevel != 10 && name.EditUserType != 1 && name.EditUserType != 2))
+                  || (rights.AccessLevel != 9 && rights.AccessLevel != 10 && name.EditUserType != 1 && name.EditUserType != 2) || (rights.AccessLevel != 9 &&  paramId == 19))
                 {
                     TextBox1.Visible = false;
                     Label4.Visible = false;
@@ -199,36 +199,36 @@ namespace Rank.Forms
         protected void EditButtonClik(object sender, EventArgs e)
         {
             Button button = (Button)sender;
+
             Session["articleID"] = Convert.ToInt32(button.CommandArgument);
             var userId = Session["UserID"];
-            var showuser = Session["showuserID"];
+            int showuser = 0;
+            showuser = Convert.ToInt32(Session["showuserID"]);
+
             Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == Convert.ToInt32(button.CommandArgument) select a).FirstOrDefault();
             Rank_UserArticleMappingTable edit = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_User == Convert.ToInt32(userId) && a.FK_Article == send.ID select a).FirstOrDefault();
-
-            if (showuser != null || (edit.CreateUser == false || edit.CreateUser == null) )
-            {
-                Response.Redirect("~/Forms/ViewArticleForm.aspx");
-            }
-            else
-            {
+  
                 var IdParam = Session["parametrID"];
                 int paramId = (int)IdParam;
                
                 int userID = (int)userId;
                 Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
-                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();               
-                if ((rights.AccessLevel == 9 && name.EditUserType != 0 && name.EditUserType != 2 && name.EditUserType != 3)
+                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();        
+                if (paramId == 19 && send.Status == 0)
+                {
+                    Response.Redirect("~/Forms/CreateEditForm.aspx");
+                }
+                    if ((rights.AccessLevel == 9 && name.EditUserType != 0 && name.EditUserType != 2 && name.EditUserType != 3)
                     || (send.Status == 1 || send.Status == 2) || (rights.AccessLevel != 10 && name.EditUserType == 3)
                     || (rights.AccessLevel != 9 && rights.AccessLevel != 10 && name.EditUserType != 1 && name.EditUserType != 2)
-                    || (rights.AccessLevel != 10 && name.EditUserType == 3))
+                    || (rights.AccessLevel != 10 && name.EditUserType == 3) || (showuser != 0 ) || (edit.CreateUser == false || edit.CreateUser == null))
                 {
                     Response.Redirect("~/Forms/ViewArticleForm.aspx");
                 }
                 else
                 {
                     Response.Redirect("~/Forms/CreateEditForm.aspx");
-                }
-            }                             
+                }                                         
         }
         protected void DeleteButtonClik(object sender, EventArgs e)
         {
@@ -293,6 +293,10 @@ namespace Rank.Forms
                         newLink.FK_Article = newValue.ID;
                         newLink.FK_User = edituser;
                         newLink.UserConfirm = true;
+                        if(paramId == 19)
+                        {
+                            newLink.CreateUser = true;
+                        }
                         ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink);
                         ratingDB.SubmitChanges();
                         Rank_UserArticleMappingTable newLink2 = new Rank_UserArticleMappingTable();

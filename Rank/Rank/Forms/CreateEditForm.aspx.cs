@@ -580,8 +580,17 @@ namespace Rank.Forms
                 Rank_Articles send = (from a in ratingDB.Rank_Articles
                                       where a.Active == true && a.ID == article
                                       select a).FirstOrDefault();
-                send.Status = 4;
-                ratingDB.SubmitChanges();
+                if(paramId == 19)
+                {
+                    send.Status = 0;
+                    ratingDB.SubmitChanges();
+                }
+                else
+                {
+                    send.Status = 4;
+                    ratingDB.SubmitChanges();
+                }
+              
                
             }
             if ((paramId == 1 || paramId == 2) && (rights.AccessLevel != 9))

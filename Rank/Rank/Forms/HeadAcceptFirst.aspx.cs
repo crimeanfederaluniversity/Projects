@@ -27,7 +27,8 @@ namespace Rank.Forms
         {
             var userId = Session["UserID"];
             int userID = (int)userId;
-        
+            Calculate userpoints = new Calculate();
+            userpoints.CalculateStructPoint(userID);
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
             dataTable.Columns.Add(new DataColumn("User", typeof(string)));
@@ -74,6 +75,7 @@ namespace Rank.Forms
                         sum = sum + Convert.ToInt32(a.Value.Value);
                     }
                     List<Rank_Articles> userarticles = new List<Rank_Articles>();
+                    Rank_StructPoints spoint = new Rank_StructPoints(); 
                     if (rights.AccessLevel == 1)
                     {
                         userarticles = (from a in ratingDB.Rank_Articles
@@ -83,6 +85,8 @@ namespace Rank.Forms
                                         join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
                                         where c.AccessLevel == 0
                                         select a).ToList();
+                        spoint = (from a in ratingDB.Rank_StructPoints where a.Active == true && a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable
+                                  && a.FK_secondlvl == rights.FK_SecondLevelSubdivisionTable && a.FK_thirdlvl == rights.FK_ThirdLevelSubdivisionTable select a).FirstOrDefault();
                     }
                     if (rights.AccessLevel == 2)
                     {
@@ -93,6 +97,10 @@ namespace Rank.Forms
                                         join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
                                         where c.AccessLevel == 1
                                         select a).ToList();
+                        spoint = (from a in ratingDB.Rank_StructPoints
+                                  where a.Active == true && a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable
+                                  && a.FK_secondlvl == rights.FK_SecondLevelSubdivisionTable && a.FK_thirdlvl != null
+                                  select a).FirstOrDefault();
                     }
                     if (rights.AccessLevel == 4)
                     {
@@ -103,15 +111,25 @@ namespace Rank.Forms
                                         join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
                                         where c.AccessLevel == 2
                                         select a).ToList();
+                        spoint = (from a in ratingDB.Rank_StructPoints
+                                  where a.Active == true && a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable
+                                  && a.FK_secondlvl != null  && a.FK_thirdlvl != null
+                                  select a).FirstOrDefault();
                     }
-
-
+                    if(spoint != null && spoint.Value.HasValue)
+                    {
+                        Label1.Text = spoint.Value.ToString();
+                    }
+                    else
+                    {
+                        Label1.Text ="0";
+                    }                 
                     DataRow dataRow = dataTable.NewRow();
                     dataRow["ID"] = tmp.UsersTableID;
                     dataRow["User"] = tmp.Surname + " " + tmp.Name + " " + tmp.Patronimyc;
                     dataRow["Point"] = sum;
-                    allsumm = allsumm + sum;
-                    if(userarticles!= null && userarticles.Count != 0)
+                                               
+                    if (userarticles!= null && userarticles.Count != 0)
                     {
                         dataRow["Status"] = "Ожидает Вашего утверждения";
                         dataRow["Color"] = 1; // красный                       
@@ -123,8 +141,7 @@ namespace Rank.Forms
                     }
            
                     dataTable.Rows.Add(dataRow);
-                }
-                Label1.Text = allsumm.ToString();
+                }                         
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
             }
