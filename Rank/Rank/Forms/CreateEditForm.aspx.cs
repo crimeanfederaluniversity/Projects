@@ -150,7 +150,10 @@ namespace Rank.Forms
         {
             int article = Convert.ToInt32(Session["articleID"]);
             Rank_Articles mark = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
-            mark.FK_mark = Convert.ToInt32(DropDownList2.SelectedItem.Value);
+            if(DropDownList2.SelectedIndex != 0)
+            {
+                mark.FK_mark = Convert.ToInt32(DropDownList2.SelectedItem.Value);
+            }
             ratingDB.SubmitChanges();
             TableDiv.Controls.Clear();
             TableDiv.Controls.Add(CreateNewTable());
@@ -589,9 +592,7 @@ namespace Rank.Forms
                 {
                     send.Status = 4;
                     ratingDB.SubmitChanges();
-                }
-              
-               
+                }                             
             }
             if ((paramId == 1 || paramId == 2) && (rights.AccessLevel != 9))
             { 

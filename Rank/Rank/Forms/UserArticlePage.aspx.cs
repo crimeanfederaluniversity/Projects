@@ -233,26 +233,52 @@ namespace Rank.Forms
         protected void DeleteButtonClik(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            {
-                int article = Convert.ToInt32(Session["articleID"]);
+            {            
                 int paramId = Convert.ToInt32(Session["parametrID"]);
-                var userId = Session["UserID"];               
+                var userId = Session["UserID"];
                 int userID = (int)userId;
-                Rank_UserArticleMappingTable delete = (from item in ratingDB.Rank_UserArticleMappingTable where item.FK_Article == Convert.ToInt32(button.CommandArgument)
-                                                       && item.FK_User == userID && item.Active == true
-                                                       join b in ratingDB.Rank_Articles on item.FK_Article equals b.ID
-                                                       where b.Active == true  && b.Status == 0 select item).FirstOrDefault();
-                if (delete != null)
+                Calculate userpoints = new Calculate();
+                
+                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+                if (rights.AccessLevel == 9 || rights.AccessLevel == 10)
                 {
-                    delete.Active = false;
-                    ratingDB.SubmitChanges();
-                    Refresh();
+                    Rank_Articles deletearticle = (from item in ratingDB.Rank_Articles
+                                                   where item.Active == true && item.ID == Convert.ToInt32(button.CommandArgument)
+                                                   select item).FirstOrDefault();
+                    if (deletearticle != null)
+                    {
+                        deletearticle.Active = false;
+                        ratingDB.SubmitChanges();
+                        List<Rank_UserArticleMappingTable> deletelist = (from item in ratingDB.Rank_UserArticleMappingTable
+                                                               where  item.FK_Article == Convert.ToInt32(button.CommandArgument)
+                                                               && item.Active == true select item).ToList();
+                        foreach(var a in deletelist)
+                        {
+                            userpoints.CalculateUserArticlePoint(paramId, Convert.ToInt32(button.CommandArgument), a.FK_User.Value);
+                        }
+                    }
                 }
                 else
                 {
-                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Вы не можете удалить данный пункт, т.к. он уже отправлен на утверждение!');", true);
+                    Rank_UserArticleMappingTable delete = (from item in ratingDB.Rank_UserArticleMappingTable
+                                                           where item.FK_Article == Convert.ToInt32(button.CommandArgument)
+                                                              && item.FK_User == userID && item.Active == true
+                                                           join b in ratingDB.Rank_Articles on item.FK_Article equals b.ID
+                                                           where b.Active == true && b.Status == 0
+                                                           select item).FirstOrDefault();
+                    if (delete != null)
+                    {
+                        delete.Active = false;
+                        ratingDB.SubmitChanges();
+                        userpoints.CalculateUserArticlePoint(paramId, Convert.ToInt32(button.CommandArgument), userID);
+                        Refresh();
+                    }
+                    else
+                    {
+                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Вы не можете удалить данный пункт, т.к. он уже отправлен на утверждение!');", true);
+                    }
+
                 }
-              
             }
         }
 

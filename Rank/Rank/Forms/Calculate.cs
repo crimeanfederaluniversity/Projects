@@ -29,25 +29,48 @@ namespace Rank.Forms
                                                              join b in ratingDB.Rank_Articles on a.FK_Article equals b.ID
                                                              where b.Active == true
                                                              select a).FirstOrDefault();
-                if (paramId == 5)
+                if (paramId == 5 || paramId == 19)
                 {
                     Rank_ArticleValues ipp = (from a in ratingDB.Rank_ArticleValues
                                               where a.Active == true && a.FK_Field == 1183 && a.FK_Article == articleid
                                               select a).FirstOrDefault();
+                    Rank_ArticleValues drop19 = (from a in ratingDB.Rank_ArticleValues
+                                              where a.Active == true && a.FK_Field == 1159 && a.FK_Article == articleid
+                                              select a).FirstOrDefault();
                     double allsum = 0;
+                    if(paramId == 5)
+                    { 
                     if ( mark != null && mark.Points != null && point != null && point.Value != null && ipp.Value != null)
                     {
                       Rank_DropDownValues IPP = (from a in ratingDB.Rank_DropDownValues
                                                  where a.Active == true && a.FK_dropdown == 5 && a.Name == ipp.Value
                                                  select a).FirstOrDefault();
-                        if (IPP.FloatValue.HasValue)
-                        {
-                            allsum = IPP.FloatValue.Value * mark.Points.Value * point.Value.Value;
-                            articlevalue.ValuebyArticle = allsum;
-                            ratingDB.SubmitChanges();
+                            if (IPP.FloatValue.HasValue)
+                            {
+                                allsum = IPP.FloatValue.Value * mark.Points.Value * point.Value.Value;
+                            }
+                           
                         }
                     }
+                    if(paramId == 19)
+                    {
+                        if (mark != null && mark.Points != null && point != null && point.Value != null && drop19.Value != null)
+                        {
+                            Rank_DropDownValues DROP19 = (from a in ratingDB.Rank_DropDownValues
+                                                       where a.Active == true && a.FK_dropdown == 8 && a.Name == drop19.Value
+                                                       select a).FirstOrDefault();
+                            if (DROP19.FloatValue.HasValue)
+                            {
+                                allsum = DROP19.FloatValue.Value * mark.Points.Value * point.Value.Value;
+                            }
+
+                        }
+                    }
+                    articlevalue.ValuebyArticle = allsum;
+                    ratingDB.SubmitChanges();
+
                 }
+
                 else
                 {
                     double allsum = 0;
