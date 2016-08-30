@@ -54,14 +54,14 @@ namespace Rank.Forms
                     }
                     if(paramId == 19)
                     {
-                        if (mark != null && mark.Points != null && point != null && point.Value != null && drop19.Value != null)
+                        if (weight != null && weight.Weight != null && mark != null && mark.Points != null  && drop19.Value != null)
                         {
                             Rank_DropDownValues DROP19 = (from a in ratingDB.Rank_DropDownValues
                                                        where a.Active == true && a.FK_dropdown == 8 && a.Name == drop19.Value
                                                        select a).FirstOrDefault();
                             if (DROP19.FloatValue.HasValue)
                             {
-                                allsum = DROP19.FloatValue.Value * mark.Points.Value * point.Value.Value;
+                                allsum = DROP19.FloatValue.Value * mark.Points.Value * weight.Weight.Value;
                             }
 
                         }
@@ -84,7 +84,7 @@ namespace Rank.Forms
             }
 
         }
-        public void CalculateUserParametrPoint(int paramId, int articleid, int userId)  // посчитать баллы показателей индивидуального рейтинга
+        public void CalculateUserParametrPoint(int paramId,  int userId)  // посчитать баллы показателей индивидуального рейтинга
         {
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userId select item).FirstOrDefault();
             if (rights.AccessLevel != 9 && rights.AccessLevel != 10)
@@ -107,7 +107,7 @@ namespace Rank.Forms
                                                                        where a.Active == true && a.FK_User == userId && a.UserConfirm == true
                                                                        join b in ratingDB.Rank_Articles on a.FK_Article equals b.ID
                                                                        where b.Active == true && b.FK_parametr == paramId
-                                                                       && b.Status != 0
+                                              
                                                                        select a).ToList();
                 double sum = 0;
                 foreach (var tmp in userarticlevalue)

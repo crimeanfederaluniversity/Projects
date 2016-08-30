@@ -315,23 +315,39 @@ namespace Rank.Forms
                     {
                         int edituser = (int)edituserId;
                         Rank_UserArticleMappingTable newLink = new Rank_UserArticleMappingTable();
-                        newLink.Active = true;
-                        newLink.FK_Article = newValue.ID;
-                        newLink.FK_User = edituser;
-                        newLink.UserConfirm = true;
-                        if(paramId == 19)
-                        {
-                            newLink.CreateUser = true;
-                        }
-                        ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink);
-                        ratingDB.SubmitChanges();
                         Rank_UserArticleMappingTable newLink2 = new Rank_UserArticleMappingTable();
-                        newLink2.Active = true;
-                        newLink2.FK_Article = newValue.ID;
-                        newLink2.FK_User = userID;
-                        newLink2.CreateUser = true;
-                        ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink2);
-                        ratingDB.SubmitChanges();
+                        if (paramId == 19)
+                        {
+                            newLink.Active = true;
+                            newLink.FK_Article = newValue.ID;
+                            newLink.FK_User = edituser;
+                            newLink.UserConfirm = true;
+                            newLink.CreateUser = true;
+                            ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink);
+                            ratingDB.SubmitChanges();
+                            newLink2.Active = true;
+                            newLink2.FK_Article = newValue.ID;
+                            newLink2.FK_User = userID;
+                            newLink2.CreateUser = true;
+                            ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink2);
+                            ratingDB.SubmitChanges();
+                        }
+                        else
+                        {
+
+                            newLink.Active = true;
+                            newLink.FK_Article = newValue.ID;
+                            newLink.FK_User = edituser;
+                            newLink.UserConfirm = true;
+                            ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink);
+                            ratingDB.SubmitChanges();
+                            newLink2.Active = true;
+                            newLink2.FK_Article = newValue.ID;
+                            newLink2.FK_User = userID;
+                            newLink2.CreateUser = true;
+                            ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink2);
+                            ratingDB.SubmitChanges();
+                        }
                     }
                     else
                     {

@@ -616,10 +616,10 @@ namespace Rank.Forms
                     ratingDB.SubmitChanges();
                 }             
             }
-            Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();                   
-            if (name.OneOrManyAuthor == false) // если это единичная привязка
-            {                       
-                Rank_UserArticleMappingTable newValue = new Rank_UserArticleMappingTable();
+            Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();    
+              Rank_UserArticleMappingTable newValue = new Rank_UserArticleMappingTable();               
+            if (name.OneOrManyAuthor == false && paramId !=19) // если это единичная привязка
+            {                                  
                 newValue.Active = true;
                 newValue.FK_Article = article;
                 if (rights.AccessLevel == 9 && name.EditUserType == 0) // если это вводит ОМР
@@ -850,7 +850,7 @@ namespace Rank.Forms
             send.Status = 1;
             ratingDB.SubmitChanges();
             Calculate userpoints = new Calculate();
-            userpoints.CalculateUserParametrPoint(paramId, article, userID);
+            userpoints.CalculateUserParametrPoint(paramId, userID);
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Отправлено на утверждение руководителю Вашего структурного подразделения! Баллы показателя пересчитаны с учетом новых данных.');", true);
             Response.Redirect("~/Forms/UserArticlePage.aspx");
 

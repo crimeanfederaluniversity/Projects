@@ -93,7 +93,7 @@ namespace Rank.Forms
             }
             Calculate userpoints = new Calculate();
             userpoints.CalculateUserArticlePoint(paramId, Convert.ToInt32(button.CommandArgument), userID);
-            userpoints.CalculateUserParametrPoint(paramId, Convert.ToInt32(button.CommandArgument), userID);
+            userpoints.CalculateUserParametrPoint(paramId, userID);
             Refresh();
             
         }

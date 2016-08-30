@@ -67,11 +67,9 @@ namespace Rank.Forms
                         }
 
                     }
-                    foreach (var n in allarticleList)
-                    {
-                      //  userpoints.CalculateUserArticlePoint(a.ID, n.ID, userID);
-                      //  userpoints.CalculateUserParametrPoint(a.ID, n.ID, userID);
-                    }
+                  
+                        userpoints.CalculateUserParametrPoint(a.ID,  userID);
+                    
                 }
                 List<Rank_UserParametrValue> userrating = (from a in ratingDB.Rank_UserParametrValue where a.Active == true && a.FK_user == userID select a).ToList();
                 int sum = 0;
