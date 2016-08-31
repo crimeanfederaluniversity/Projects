@@ -83,7 +83,8 @@ namespace Rank.Forms
                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                         where b.Active == true && b.FK_User == tmp.UsersTableID && b.UserConfirm == true && b.CreateUser == true
                                         join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
-                                        where c.AccessLevel == 0
+                                        where c.AccessLevel == 0 && c.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable && c.FK_SecondLevelSubdivisionTable == rights.FK_SecondLevelSubdivisionTable
+                                        && c.FK_ThirdLevelSubdivisionTable == rights.FK_ThirdLevelSubdivisionTable
                                         select a).ToList();
                         spoint = (from a in ratingDB.Rank_StructPoints where a.Active == true && a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable
                                   && a.FK_secondlvl == rights.FK_SecondLevelSubdivisionTable && a.FK_thirdlvl == rights.FK_ThirdLevelSubdivisionTable select a).FirstOrDefault();
@@ -95,7 +96,7 @@ namespace Rank.Forms
                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                         where b.Active == true && b.FK_User == tmp.UsersTableID && b.UserConfirm == true && b.CreateUser == true
                                         join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
-                                        where c.AccessLevel == 1
+                                        where c.AccessLevel == 1 && c.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable && c.FK_SecondLevelSubdivisionTable == rights.FK_SecondLevelSubdivisionTable
                                         select a).ToList();
                         spoint = (from a in ratingDB.Rank_StructPoints
                                   where a.Active == true && a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable
@@ -109,7 +110,7 @@ namespace Rank.Forms
                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                         where b.Active == true && b.FK_User == tmp.UsersTableID && b.UserConfirm == true && b.CreateUser == true
                                         join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
-                                        where c.AccessLevel == 2
+                                        where c.AccessLevel == 2 && c.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable
                                         select a).ToList();
                         spoint = (from a in ratingDB.Rank_StructPoints
                                   where a.Active == true && a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable

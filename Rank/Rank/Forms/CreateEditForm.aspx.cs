@@ -26,6 +26,7 @@ namespace Rank.Forms
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             int paramId = Convert.ToInt32(Session["parametrID"]);
             var userId = Session["UserID"];
             if (userId == null)
@@ -54,7 +55,12 @@ namespace Rank.Forms
                 DropDownList6.DataTextField = "Value";
                 DropDownList6.DataValueField = "Key";
                 DropDownList6.DataBind();
- 
+
+                ddlPoint.DataSource = dictionary2;
+                ddlPoint.DataTextField = "Value";
+                ddlPoint.DataValueField = "Key";
+                ddlPoint.DataBind();
+
                 List<FirstLevelSubdivisionTable> First_stageList = (from item in ratingDB.FirstLevelSubdivisionTable where item.Active == true select item).OrderBy(mc => mc.Name).ToList();
                 var dictionary = new Dictionary<int, string>();
                 dictionary.Add(0, "Выберите академию");           
@@ -112,23 +118,24 @@ namespace Rank.Forms
                     }
                 }
             }
-            
-            if (name.OneOrManyAuthor == true)
+            List<Rank_UserArticleMappingTable> authorList = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_Article == article
+                                                             join b in ratingDB.UsersTable on a.FK_User equals b.UsersTableID where a.Active == true && b.AccessLevel != 9 && b.AccessLevel != 10 select a).ToList();
+            if (name.OneOrManyAuthor == false && authorList.Count>=1)
             {
-                Label13.Visible = true;
-                Label2.Visible = true;
-                Label14.Visible = true;
-                Label15.Visible = true;
-                Label16.Visible = true;
-                DropDownList3.Visible = true;
-                TextBox3.Visible = true;
-                DropDownList4.Visible = true;      
-                DropDownList5.Visible = true;
-                DropDownList6.Visible = true;
-                Label12.Visible = true;
-                TextBox2.Visible = true;
-                NewAuthorButton.Visible = true;
-                AddNotSystemUserButton.Visible = true;
+                Label13.Visible = false;
+                Label2.Visible = false;
+                Label14.Visible = false;
+                Label15.Visible = false;
+                Label16.Visible = false;
+                DropDownList3.Visible = false;
+                TextBox3.Visible = false;
+                DropDownList4.Visible = false;      
+                DropDownList5.Visible = false;
+                DropDownList6.Visible = false;
+                Label12.Visible = false;
+                TextBox2.Visible = false;
+                NewAuthorButton.Visible = false;
+                AddNotSystemUserButton.Visible = false;
                 Refresh();
                 NotSystmAuthorRefresh();
             }
@@ -231,11 +238,17 @@ namespace Rank.Forms
         }
         #endregion table
         protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
-        {           
-                if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+       
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                int paramId = Convert.ToInt32(Session["parametrID"]);
+                Label nopoint = (e.Row.FindControl("point") as Label);
+                DropDownList ddlPoint = (e.Row.FindControl("ddlPoint") as DropDownList);
+ 
+                if (nopoint.Text == null)
                 {
-                    int paramId = Convert.ToInt32(Session["parametrID"]);
-                    DropDownList ddlPoint = (e.Row.FindControl("ddlPoint") as DropDownList);
+                    ddlPoint.Visible = true;
                     List<Rank_DifficaltPoint> points = (from item in ratingDB.Rank_DifficaltPoint where item.Active == true && item.fk_parametr == paramId select item).ToList();
                     var dictionary = new Dictionary<int, string>();
                     dictionary.Add(0, "Выберите значение");
@@ -245,23 +258,15 @@ namespace Rank.Forms
                     ddlPoint.DataSource = dictionary;
                     ddlPoint.DataTextField = "Value";
                     ddlPoint.DataValueField = "Key";
-                ddlPoint.DataBind();
-                string point = (e.Row.FindControl("point") as Label).Text;
-                Rank_DifficaltPoint findpoint = (from item in ratingDB.Rank_DifficaltPoint where item.Active == true && item.Name.Contains(point) select item).FirstOrDefault();
-                if (findpoint != null)
-                {
-                    //ddlPoint.Items.FindByValue(findpoint.ID.ToString()).Selected = true;
+                    ddlPoint.DataBind();
+           
                 }
-                else
-                {
-                    ddlPoint.SelectedIndex = 0;
-                }
-                }
-            
+            }
+
         }
-     
+ 
         protected void ddlPoint_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        { 
          
         }
         public string GetCollectedValue(int fieldId, int articleId, int paramid)
@@ -305,10 +310,8 @@ namespace Rank.Forms
                                          select a).FirstOrDefault();
 
                 fk.Value = value;
-                ratingDB.SubmitChanges();
-                            
-        }
-    
+                ratingDB.SubmitChanges();                            
+        }    
         public Table CreateNewTable()
         {
             int article = Convert.ToInt32(Session["articleID"]);
@@ -616,41 +619,11 @@ namespace Rank.Forms
                     ratingDB.SubmitChanges();
                 }             
             }
-            Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();    
-              Rank_UserArticleMappingTable newValue = new Rank_UserArticleMappingTable();               
-            if (name.OneOrManyAuthor == false && paramId !=19) // если это единичная привязка
-            {                                  
-                newValue.Active = true;
-                newValue.FK_Article = article;
-                if (rights.AccessLevel == 9 && name.EditUserType == 0) // если это вводит ОМР
-                {
-                    var editID = Session["newuserID"]; // вытаскиваем айди юзера из сессии и делаем связь
-                    if (editID != null)
-                    {
-                        int edituserid = (int)editID; 
-                        newValue.FK_User = edituserid;                                 
-                    }
-                }
-                else // если это сам юзер делаем связь по сессии юзера
-                {
-                    newValue.FK_User = userID;
-                
-                }                  
-                newValue.UserConfirm = false;
-                ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newValue);
-                ratingDB.SubmitChanges();
-            }
-            List<Rank_DifficaltPoint> onevalue = (from item in ratingDB.Rank_DifficaltPoint where item.Active== true && item.fk_parametr == paramId select item).ToList();
-            if (onevalue!=null && onevalue.Count == 1)
+            List<Rank_UserArticleMappingTable> authorList = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_Article == article select a).ToList();
+            foreach(var a in authorList)
             {
-                Rank_UserArticleMappingTable thisvalue = (from item in ratingDB.Rank_UserArticleMappingTable where item.FK_User == userID && item.Active == true && item.FK_Article == article  select item).FirstOrDefault();
-                foreach (var n in onevalue)
-                {
-                    thisvalue.FK_point = n.ID;
-                    ratingDB.SubmitChanges();
-                }
-            }         
-            userpoints.CalculateUserArticlePoint(paramId, article, userID);         
+                userpoints.CalculateUserArticlePoint(paramId, article, a.FK_User.Value);
+            }        
             Response.Redirect("~/Forms/UserArticlePage.aspx");
         }
         protected void PoiskRefresh()
@@ -731,7 +704,7 @@ namespace Rank.Forms
         protected void NewAuthorButtonClick(object sender, EventArgs e)
         {
             SaveAll();
-            if (TextBox2.Text != null && DropDownList3.SelectedIndex != 0)
+            if (TextBox2.Text != null && DropDownList3.SelectedIndex != 0 && ddlPoint.SelectedIndex !=0)
             {
                 int article = Convert.ToInt32(Session["articleID"]);
                 TableDiv.Controls.Clear();
@@ -742,6 +715,7 @@ namespace Rank.Forms
         }
         protected void AddAutorButtonClik(object sender, EventArgs e)
         {
+            int paramId = Convert.ToInt32(Session["parametrID"]);
             var userId = Session["UserID"];      
             int userID = (int)userId;
             Button button = (Button)sender;
@@ -766,12 +740,20 @@ namespace Rank.Forms
                 if (rights.AccessLevel == 9 || rights.AccessLevel == 10)
                 {
                     newValue.UserConfirm = true;
-                    newValue.CreateUser = false;
+                    if(paramId == 19)
+                    {
+                        newValue.CreateUser = true;
+                    }
+                    else
+                    {
+                        newValue.CreateUser = false;
+                    }                  
                 }
                 else
                 {
                     newValue.UserConfirm = false;
                 }
+                newValue.FK_point = Convert.ToInt32(ddlPoint.SelectedValue);
                 ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newValue);
                 ratingDB.SubmitChanges();
                 DropDownList3.SelectedIndex = 0;
@@ -782,32 +764,7 @@ namespace Rank.Forms
                 Refresh();
             }
         }
-        protected void RankPointSaveButtonClik(object sender, EventArgs e)
-        {
-            SaveAll();
-            Button button = (Button)sender;
-            GridViewRow row = (GridViewRow)button.Parent.Parent;
-            DropDownList drop = (DropDownList)row.FindControl("ddlPoint");
-            
-            int article = Convert.ToInt32(Session["articleID"]);
-            Rank_UserArticleMappingTable savepoint = (from a in ratingDB.Rank_UserArticleMappingTable
-                                                   where a.Active == true && a.FK_Article == article && a.FK_User == Convert.ToInt32(button.CommandArgument)
-                                                   select a).FirstOrDefault();
-            int fkpoint;
-            Int32.TryParse(drop.SelectedValue, out fkpoint);
-            if(fkpoint != 0)
-            {
-                savepoint.FK_point = fkpoint;
-                ratingDB.SubmitChanges();
-            }
-            else
-            {
-                savepoint.FK_point = null;
-                ratingDB.SubmitChanges();
-            }
-           
-            Refresh();
-        }     
+      
         protected void Rank_DeleteAutorButtonClik(object sender, EventArgs e)
         {
             Button button = (Button)sender;

@@ -296,9 +296,9 @@ namespace Rank.Forms
                 newValue.AddDate = DateTime.Now;
                 newValue.FK_parametr = paramId;
                 newValue.Name = TextBox1.Text;
-                if (rights.AccessLevel == 9)
+                if (rights.AccessLevel == 9 && paramId!= 19)
                 {
-                    newValue.Status = 3;
+                    newValue.Status = 4;
                 }
                 else
                 {
@@ -306,51 +306,7 @@ namespace Rank.Forms
                 }
                 ratingDB.Rank_Articles.InsertOnSubmit(newValue);
                 ratingDB.SubmitChanges();
-                             
-                            
-                if(rights.AccessLevel == 9 || rights.AccessLevel == 10)
-                {
-                    var edituserId = Session["edituserID"];
-                    if (edituserId != null)
-                    {
-                        int edituser = (int)edituserId;
-                        Rank_UserArticleMappingTable newLink = new Rank_UserArticleMappingTable();
-                        Rank_UserArticleMappingTable newLink2 = new Rank_UserArticleMappingTable();
-                        if (paramId == 19)
-                        {
-                            newLink.Active = true;
-                            newLink.FK_Article = newValue.ID;
-                            newLink.FK_User = edituser;
-                            newLink.UserConfirm = true;
-                            newLink.CreateUser = true;
-                            ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink);
-                            ratingDB.SubmitChanges();
-                            newLink2.Active = true;
-                            newLink2.FK_Article = newValue.ID;
-                            newLink2.FK_User = userID;
-                            newLink2.CreateUser = true;
-                            ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink2);
-                            ratingDB.SubmitChanges();
-                        }
-                        else
-                        {
-
-                            newLink.Active = true;
-                            newLink.FK_Article = newValue.ID;
-                            newLink.FK_User = edituser;
-                            newLink.UserConfirm = true;
-                            ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink);
-                            ratingDB.SubmitChanges();
-                            newLink2.Active = true;
-                            newLink2.FK_Article = newValue.ID;
-                            newLink2.FK_User = userID;
-                            newLink2.CreateUser = true;
-                            ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink2);
-                            ratingDB.SubmitChanges();
-                        }
-                    }
-                    else
-                    {
+          
                         Rank_UserArticleMappingTable newLink3 = new Rank_UserArticleMappingTable();
                         newLink3.Active = true;
                         newLink3.FK_Article = newValue.ID;
@@ -359,20 +315,7 @@ namespace Rank.Forms
                         newLink3.UserConfirm = true;
                         ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink3);
                         ratingDB.SubmitChanges();
-
-                    }
-                }
-                else
-                {
-                    Rank_UserArticleMappingTable newLink = new Rank_UserArticleMappingTable();
-                    newLink.Active = true;
-                    newLink.FK_Article = newValue.ID;
-                    newLink.FK_User = userID;
-                    newLink.UserConfirm = true;
-                    newLink.CreateUser = true;
-                    ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink);
-                    ratingDB.SubmitChanges();
-                }                           
+                                                
                 Session["articleID"] = Convert.ToInt32(newValue.ID);
                 Response.Redirect("~/Forms/CreateEditForm.aspx");
             }         

@@ -40,6 +40,7 @@ namespace Rank.Forms
           
             if (rights.AccessLevel == 9)
             {
+                GridView1.Columns[2].Visible = false;
                 allparam = (from a in ratingDB.Rank_Parametrs where a.Active == true && (a.EditUserType == 0 || a.EditUserType == 2) select a).ToList();
             }
             else
@@ -117,16 +118,10 @@ namespace Rank.Forms
                 int userID = (int)userId;
                 Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == Convert.ToInt32(button.CommandArgument) select item).FirstOrDefault();
                 UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-                if (rights.AccessLevel == 9 && name.OneOrManyAuthor == false)
-                {
-                    Session["parametrID"] = Convert.ToInt32(button.CommandArgument);
-                    Response.Redirect("~/Forms/FormCreateEditByUser.aspx");
-                }
-                else
-                {
+             
                     Session["parametrID"] = Convert.ToInt32(button.CommandArgument);
                     Response.Redirect("~/Forms/UserArticlePage.aspx");
-                }
+              
             }
            
         }

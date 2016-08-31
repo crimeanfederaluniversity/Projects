@@ -48,14 +48,12 @@
                 <asp:TemplateField HeaderText="Коэффициент сложности" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                     <ItemTemplate>
                          <asp:Label ID="point" runat="server" Text='<%# Bind("point") %>'  Visible="true"></asp:Label>     
-                        <asp:DropDownList ID="ddlPoint" runat="server"  OnSelectedIndexChanged="ddlPoint_SelectedIndexChanged" Width ="300"> </asp:DropDownList>                        
+                            <asp:DropDownList ID="ddlPoint" runat="server" OnSelectedIndexChanged="ddlPoint_SelectedIndexChanged" Width="501px" Visible ="false"> 
+             </asp:DropDownList>
+                  
                     </ItemTemplate>
                 </asp:TemplateField>
-                 <asp:TemplateField HeaderText="Сохранить">
-                    <ItemTemplate>
-                        <asp:Button ID="RankPointSaveButton" runat="server" CommandName="Select" Text="Сохранить" Width="150px" CommandArgument='<%# Eval("userid") %>'  OnClick="RankPointSaveButtonClik" />
-                    </ItemTemplate>
-                </asp:TemplateField>
+     
                 <asp:TemplateField HeaderText="Удалить">
                     <ItemTemplate>
                         <asp:Button ID="Rank_DeleteAutorButton" runat="server" CommandName="Select" Text="Удалить" Width="150px" CommandArgument='<%# Eval("userid") %>' OnClientClick="return confirm('Вы уверены что хотите удалить автора?');" OnClick="Rank_DeleteAutorButtonClik" />
@@ -95,26 +93,30 @@
              <tr>
                  <td>
          <asp:Panel ID="Panel2" runat="server" Width="550px" >
-        <asp:Label ID="Label13" runat="server" Text="Добавление человека (автора), являющегося сотрудником КФУ:" Visible="False" ForeColor="Black" Font-Bold="True"></asp:Label>
-             <br /><asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="True" Height="20px"  Width="500px" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged" Visible="False">
+        <asp:Label ID="Label13" runat="server" Text="Добавление человека (автора), являющегося сотрудником КФУ:" ForeColor="Black" Font-Bold="True"></asp:Label>
+             <br /><asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="True" Height="20px"  Width="500px" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged">
         </asp:DropDownList>
-             <asp:DropDownList ID="DropDownList4" runat="server" AutoPostBack="True" Height="20px"  Width="500px" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged" Visible="False">
+             <asp:DropDownList ID="DropDownList4" runat="server" AutoPostBack="True" Height="20px"  Width="500px" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged">
         </asp:DropDownList>
-              <asp:DropDownList ID="DropDownList5" runat="server" AutoPostBack="True" Height="20px" Width="500px" Visible="False" >
+              <asp:DropDownList ID="DropDownList5" runat="server" AutoPostBack="True" Height="20px" Width="500px" >
         </asp:DropDownList>
-               <asp:Label ID="Label12" runat="server" Text="Введите фамилию: " Visible="False"></asp:Label>
-        <asp:TextBox ID="TextBox2" runat="server" Width="276px" Visible="False" Height="20px"></asp:TextBox>
-        &nbsp;&nbsp; <asp:Button ID="NewAuthorButton" runat="server" Text="Поиск" OnClick="NewAuthorButtonClick" Visible="False" />
+               <br />
+             <asp:DropDownList ID="ddlPoint" runat="server" OnSelectedIndexChanged="ddlPoint_SelectedIndexChanged" Width="501px" Visible="False">
+             </asp:DropDownList>
+             <br />
+               <asp:Label ID="Label12" runat="server" Text="Введите фамилию: "></asp:Label>
+        <asp:TextBox ID="TextBox2" runat="server" Width="276px" Height="20px"></asp:TextBox>
+        &nbsp;&nbsp; <asp:Button ID="NewAuthorButton" runat="server" Text="Поиск" OnClick="NewAuthorButtonClick" />
                      </asp:Panel>
                      </td>
                  <td>
          <asp:Panel ID="Panel1" runat="server" Width="550px">
-                   <span style="font-size: medium"><asp:Label ID="Label2" runat="server" Text="Добавление человека (автора), не являющегося сотрудником КФУ :" Visible="False" Font-Bold="True"></asp:Label>
-                 <span style="font-size: medium"> <asp:Label ID="Label14" runat="server" Text="Введите фамилию и инициалы: " Visible="False"></asp:Label>
-                     <asp:TextBox ID="TextBox3" runat="server" Width="500px" Visible="False" ToolTip="Фамилия и инициалы человека не являющегося сотрудником КФУ" Height="20px"></asp:TextBox>
-                      <asp:DropDownList ID="DropDownList6" runat="server" AutoPostBack="True" Height="20px"  Width="500px"  Visible="False">
+                   <span style="font-size: medium"><asp:Label ID="Label2" runat="server" Text="Добавление человека (автора), не являющегося сотрудником КФУ :" Font-Bold="True"></asp:Label>
+                 <span style="font-size: medium"> <asp:Label ID="Label14" runat="server" Text="Введите фамилию и инициалы: "></asp:Label>
+                     <asp:TextBox ID="TextBox3" runat="server" Width="500px" ToolTip="Фамилия и инициалы человека не являющегося сотрудником КФУ" Height="20px"></asp:TextBox>
+                      <asp:DropDownList ID="DropDownList6" runat="server" AutoPostBack="True" Height="20px"  Width="500px">
         </asp:DropDownList>
-         <asp:Button ID="AddNotSystemUserButton" runat="server" Text="Добавить" OnClick="AddNotSystemUserButtonClick" Visible="False" />
+         <asp:Button ID="AddNotSystemUserButton" runat="server" Text="Добавить" OnClick="AddNotSystemUserButtonClick" />
               
                      </asp:Panel>
                      </td>
