@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
       <div>
           <h3>Добро пожаловать в систему "Рейтинги"</h3>  
-          <h3><asp:Label ID="Label2" runat="server" Text="Результаты Вашего индивидуального рейтинга за 2016 год:" Visible="False"></asp:Label>
+          <h3><asp:Label ID="Label2" runat="server" Text="" Visible="False"></asp:Label>
 &nbsp;<asp:Label ID="Label1" runat="server" Text="Label" Visible="False"></asp:Label>
           </h3>
           <p>

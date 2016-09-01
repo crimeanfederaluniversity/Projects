@@ -13,7 +13,7 @@ namespace Rank.Forms
         RankDBDataContext ratingDB = new RankDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
-            var userId = Session["UserID"];
+            var userId = Session["userID"];
             if (userId == null)
             {
                 Response.Redirect("~/Default.aspx");
@@ -40,7 +40,7 @@ namespace Rank.Forms
         }
             protected void Refresh()
         {
-            var userId = Session["UserID"];
+            var userId = Session["userID"];
             int userID = (int)userId;
        
             int userpoints = Convert.ToInt32(Session["showuserID"]);
@@ -70,7 +70,8 @@ namespace Rank.Forms
                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                         where b.Active == true && b.FK_User == userpoints && b.UserConfirm == true && b.CreateUser == true
                                         join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
-                                        where c.AccessLevel == 0
+                                        where c.AccessLevel == 0 && c.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable && c.FK_SecondLevelSubdivisionTable == rights.FK_SecondLevelSubdivisionTable
+                                        && c.FK_ThirdLevelSubdivisionTable == rights.FK_ThirdLevelSubdivisionTable
                                         select a).ToList();
                     }
                     if (rights.AccessLevel == 2)
@@ -80,7 +81,8 @@ namespace Rank.Forms
                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                         where b.Active == true && b.FK_User == userpoints  && b.UserConfirm == true && b.CreateUser == true
                                         join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
-                                        where c.AccessLevel == 1
+                                        where c.AccessLevel == 1 && c.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable && c.FK_SecondLevelSubdivisionTable == rights.FK_SecondLevelSubdivisionTable
+                                        
                                         select a).ToList();
                     }
                     if (rights.AccessLevel == 4)
@@ -90,7 +92,7 @@ namespace Rank.Forms
                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                         where b.Active == true && b.FK_User == userpoints && b.UserConfirm == true && b.CreateUser == true
                                         join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
-                                        where c.AccessLevel == 2
+                                        where c.AccessLevel == 2 && c.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable  
                                         select a).ToList();
                     }
                     if (point != null)

@@ -29,7 +29,7 @@ namespace Rank.Forms
                                                              join b in ratingDB.Rank_Articles on a.FK_Article equals b.ID
                                                              where b.Active == true
                                                              select a).FirstOrDefault();
-                if (paramId == 5 || paramId == 19)
+                if (paramId == 5 )
                 {
                     Rank_ArticleValues ipp = (from a in ratingDB.Rank_ArticleValues
                                               where a.Active == true && a.FK_Field == 1183 && a.FK_Article == articleid
@@ -38,8 +38,7 @@ namespace Rank.Forms
                                               where a.Active == true && a.FK_Field == 1159 && a.FK_Article == articleid
                                               select a).FirstOrDefault();
                     double allsum = 0;
-                    if(paramId == 5)
-                    { 
+                 
                     if ( mark != null && mark.Points != null && point != null && point.Value != null && ipp.Value != null)
                     {
                       Rank_DropDownValues IPP = (from a in ratingDB.Rank_DropDownValues
@@ -51,21 +50,8 @@ namespace Rank.Forms
                             }
                            
                         }
-                    }
-                    if(paramId == 19)
-                    {
-                        if (weight != null && weight.Weight != null && mark != null && mark.Points != null  && drop19.Value != null)
-                        {
-                            Rank_DropDownValues DROP19 = (from a in ratingDB.Rank_DropDownValues
-                                                       where a.Active == true && a.FK_dropdown == 8 && a.Name == drop19.Value
-                                                       select a).FirstOrDefault();
-                            if (DROP19.FloatValue.HasValue)
-                            {
-                                allsum = DROP19.FloatValue.Value * mark.Points.Value * weight.Weight.Value;
-                            }
-
-                        }
-                    }
+                 
+            
                     articlevalue.ValuebyArticle = allsum;
                     ratingDB.SubmitChanges();
 

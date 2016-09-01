@@ -306,16 +306,24 @@ namespace Rank.Forms
                 }
                 ratingDB.Rank_Articles.InsertOnSubmit(newValue);
                 ratingDB.SubmitChanges();
-          
-                        Rank_UserArticleMappingTable newLink3 = new Rank_UserArticleMappingTable();
-                        newLink3.Active = true;
-                        newLink3.FK_Article = newValue.ID;
-                        newLink3.FK_User = userID;
-                        newLink3.CreateUser = true;
-                        newLink3.UserConfirm = true;
-                        ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink3);
-                        ratingDB.SubmitChanges();
-                                                
+          List<Rank_DifficaltPoint> one = (from item in ratingDB.Rank_DifficaltPoint where item.fk_parametr == paramId select item).ToList();
+               
+                    Rank_UserArticleMappingTable newLink3 = new Rank_UserArticleMappingTable();
+                    newLink3.Active = true;
+                    newLink3.FK_Article = newValue.ID;
+                    newLink3.FK_User = userID;
+                if (one != null && one.Count == 1)
+                {
+                    foreach (var a in one)
+                    {
+                        newLink3.FK_point = a.ID;
+                    }
+                }
+                    newLink3.CreateUser = true;
+                    newLink3.UserConfirm = true;
+                    ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newLink3);
+                    ratingDB.SubmitChanges();
+                                    
                 Session["articleID"] = Convert.ToInt32(newValue.ID);
                 Response.Redirect("~/Forms/CreateEditForm.aspx");
             }         

@@ -14,7 +14,7 @@ namespace Rank.Forms
         protected void Page_Load(object sender, EventArgs e)
         {
        
-            var userId = Session["UserID"];
+            var userId = Session["userID"];
             if (userId == null)
             {
                 Response.Redirect("~/Default.aspx");
@@ -25,7 +25,7 @@ namespace Rank.Forms
 
              protected void Refresh()
         {
-            var userId = Session["UserID"];
+            var userId = Session["userID"];
             int userID = (int)userId;
             Calculate userpoints = new Calculate();
             userpoints.CalculateStructPoint(userID);

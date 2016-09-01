@@ -45,9 +45,11 @@ namespace Rank.Forms
             }
             else
             {
+
                 Button2.Visible = true;
                 Label1.Visible = true;
                 Label2.Visible = true;
+                Label2.Text = "Индивидуальный рейтинг научно-педагогических работников, подразделений, СП(Ф) высшего образования и научных СП(Ф) и их руководителей ФГАОУ ВО «КФУ им. В.И.Вернадского» за 2016 год.";
                 allparam = (from a in ratingDB.Rank_Parametrs where a.Active == true select a).ToList();
                 List<Rank_Articles> allarticleList = (from b in ratingDB.Rank_Articles
                                                       where b.Active == true

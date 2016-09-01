@@ -26,7 +26,7 @@ namespace Rank.Forms
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            Refresh();
             int paramId = Convert.ToInt32(Session["parametrID"]);
             var userId = Session["UserID"];
             if (userId == null)
@@ -46,7 +46,14 @@ namespace Rank.Forms
            
            if(!Page.IsPostBack)
             {
+               
                 List<Rank_DifficaltPoint> points = (from item in ratingDB.Rank_DifficaltPoint where item.Active == true && item.fk_parametr == paramId select item).ToList();
+                if(points.Count==1)
+                {
+                    DropDownList6.Visible = false;
+                ddlPoint.Visible = false;
+
+                }
                 var dictionary2 = new Dictionary<int, string>();
                 dictionary2.Add(0, "Выберите коэффициент сложности");
                 foreach (var item in points)
@@ -132,6 +139,7 @@ namespace Rank.Forms
                 DropDownList4.Visible = false;      
                 DropDownList5.Visible = false;
                 DropDownList6.Visible = false;
+                ddlPoint.Visible = false;
                 Label12.Visible = false;
                 TextBox2.Visible = false;
                 NewAuthorButton.Visible = false;
@@ -237,19 +245,42 @@ namespace Rank.Forms
         
         }
         #endregion table
+
+
+        protected void SaveDropDownjChange(object sender, EventArgs e)
+        {
+            SaveAll();
+            int article = Convert.ToInt32(Session["articleID"]);
+            var userId = Session["UserID"];     
+            int userID = (int)userId;
+            Rank_UserArticleMappingTable user = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_Article == article && a.FK_User == userID select a).FirstOrDefault();
+            DropDownList point = (DropDownList)sender;
+            user.FK_point = Convert.ToInt32(point.SelectedValue);
+            ratingDB.SubmitChanges();
+            Response.Redirect("~/Forms/CreateEditForm.aspx");
+
+
+        }
+
         protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
         {
        
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                int article = Convert.ToInt32(Session["articleID"]);
                 int paramId = Convert.ToInt32(Session["parametrID"]);
+                Label userid = (e.Row.FindControl("userid") as Label);
                 Label nopoint = (e.Row.FindControl("point") as Label);
                 DropDownList ddlPoint = (e.Row.FindControl("ddlPoint") as DropDownList);
- 
-                if (nopoint.Text == null)
+                Rank_UserArticleMappingTable point = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_Article == article && a.FK_User == Convert.ToInt32(userid.Text) select a).FirstOrDefault();
+                if (point.FK_point == null)
                 {
+                    
                     ddlPoint.Visible = true;
+                    ddlPoint.AutoPostBack = true;
+                    ddlPoint.SelectedIndexChanged += SaveDropDownjChange;
                     List<Rank_DifficaltPoint> points = (from item in ratingDB.Rank_DifficaltPoint where item.Active == true && item.fk_parametr == paramId select item).ToList();
+                    ddlPoint.ID = "dropDownId" + point.ID;
                     var dictionary = new Dictionary<int, string>();
                     dictionary.Add(0, "Выберите значение");
 
@@ -704,14 +735,29 @@ namespace Rank.Forms
         protected void NewAuthorButtonClick(object sender, EventArgs e)
         {
             SaveAll();
-            if (TextBox2.Text != null && DropDownList3.SelectedIndex != 0 && ddlPoint.SelectedIndex !=0)
+            if(ddlPoint.Visible == false)
             {
-                int article = Convert.ToInt32(Session["articleID"]);
-                TableDiv.Controls.Clear();
-                TableDiv.Controls.Add(CreateNewTable());
-                searchError.Visible = false;
-                PoiskRefresh();
-            } 
+                if (TextBox2.Text != null && DropDownList3.SelectedIndex != 0)
+                {
+                    int article = Convert.ToInt32(Session["articleID"]);
+                    TableDiv.Controls.Clear();
+                    TableDiv.Controls.Add(CreateNewTable());
+                    searchError.Visible = false;
+                    PoiskRefresh();
+                }
+            }
+            else
+            {
+                if (TextBox2.Text != null && DropDownList3.SelectedIndex != 0 && ddlPoint.SelectedIndex !=0)
+                {
+                    int article = Convert.ToInt32(Session["articleID"]);
+                    TableDiv.Controls.Clear();
+                    TableDiv.Controls.Add(CreateNewTable());
+                    searchError.Visible = false;
+                    PoiskRefresh();
+                }
+            }
+           
         }
         protected void AddAutorButtonClik(object sender, EventArgs e)
         {
@@ -828,18 +874,38 @@ namespace Rank.Forms
         }
         protected void AddNotSystemUserButtonClick(object sender, EventArgs e)
         {
-            if(TextBox3.Text  != null && Convert.ToInt32(DropDownList6.SelectedItem.Value) != 0)
+            if(DropDownList6.Visible == true)
             {
-                int article = Convert.ToInt32(Session["articleID"]);
-                Rank_NotSystemAuthors newnotCFUauthor = new Rank_NotSystemAuthors();
-                newnotCFUauthor.Active = true;
-                newnotCFUauthor.FK_Article = article;
-                newnotCFUauthor.FK_Point = Convert.ToInt32(DropDownList6.SelectedItem.Value);
-                newnotCFUauthor.FIO = TextBox3.Text;
-                ratingDB.Rank_NotSystemAuthors.InsertOnSubmit(newnotCFUauthor);
-                ratingDB.SubmitChanges();
-                NotSystmAuthorRefresh();
-            }        
+                if (TextBox3.Text != null && Convert.ToInt32(DropDownList6.SelectedItem.Value) != 0)
+                {
+                    int article = Convert.ToInt32(Session["articleID"]);
+                    Rank_NotSystemAuthors newnotCFUauthor = new Rank_NotSystemAuthors();
+                    newnotCFUauthor.Active = true;
+                    newnotCFUauthor.FK_Article = article;
+                    newnotCFUauthor.FK_Point = Convert.ToInt32(DropDownList6.SelectedItem.Value);
+                    newnotCFUauthor.FIO = TextBox3.Text;
+                    ratingDB.Rank_NotSystemAuthors.InsertOnSubmit(newnotCFUauthor);
+                    ratingDB.SubmitChanges();
+                    NotSystmAuthorRefresh();
+                }
+            }
+            else
+            {
+                if (TextBox3.Text != null )
+                {
+                    int article = Convert.ToInt32(Session["articleID"]);
+                    Rank_NotSystemAuthors newnotCFUauthor = new Rank_NotSystemAuthors();
+                    newnotCFUauthor.Active = true;
+                    newnotCFUauthor.FK_Article = article;
+                    newnotCFUauthor.FK_Point = Convert.ToInt32(DropDownList6.SelectedItem.Value);
+                    newnotCFUauthor.FIO = TextBox3.Text;
+                    ratingDB.Rank_NotSystemAuthors.InsertOnSubmit(newnotCFUauthor);
+                    ratingDB.SubmitChanges();
+                    NotSystmAuthorRefresh();
+                }
+
+            }
+               
         }
       
     }

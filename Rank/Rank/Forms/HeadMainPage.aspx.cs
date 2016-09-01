@@ -12,7 +12,7 @@ namespace Rank.Forms
         RankDBDataContext ratingDB = new RankDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
-            var userId = Session["UserID"];
+            var userId = Session["userID"];
             if (userId == null)
             {
                 Response.Redirect("~/Default.aspx");

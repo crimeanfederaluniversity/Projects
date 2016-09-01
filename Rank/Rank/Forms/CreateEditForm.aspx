@@ -101,7 +101,7 @@
               <asp:DropDownList ID="DropDownList5" runat="server" AutoPostBack="True" Height="20px" Width="500px" >
         </asp:DropDownList>
                <br />
-             <asp:DropDownList ID="ddlPoint" runat="server" OnSelectedIndexChanged="ddlPoint_SelectedIndexChanged" Width="501px" Visible="False">
+             <asp:DropDownList ID="ddlPoint" runat="server" OnSelectedIndexChanged="ddlPoint_SelectedIndexChanged" Width="501px">
              </asp:DropDownList>
              <br />
                <asp:Label ID="Label12" runat="server" Text="Введите фамилию: "></asp:Label>
