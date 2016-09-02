@@ -1,69 +1,128 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CardEdit.aspx.cs" Inherits="Chancelerry.kanz.CardEdit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link href="../Content/Site.css" rel="stylesheet" />
-            <script src="calendar_ru.js" type="text/javascript">
-            </script>
+    <link href="../Content/jquery-te-1.4.0.css" rel="stylesheet" />
+    <script src="calendar_ru.js" type="text/javascript"></script>
     <script src="toggleLoadingScreen.js" type="text/javascript"></script>
     <script src="moment.min.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../Scripts/jquery-te-1.4.0.min.js"></script>
+
     <script>
-        
-        function getAllElementsWithAttribute(attribute) {
-            var matchingElements = [];
-            var allElements = document.getElementsByTagName('*');
-            for (var i = 0, n = allElements.length; i < n; i++) {
-                if (allElements[i].getAttribute(attribute) !== null) {
-                    matchingElements.push(allElements[i]);
-                }
-            }
-            return matchingElements;
-        }
-
-        function putValueAndClose(val, fieldId, panelId) {
-            document.getElementById(fieldId).value = val;
-            document.getElementById(panelId).style.visibility = 'hidden';
-        }
-
-        function addDays(textboxId, days) {
-            var textBox = document.getElementById(textboxId);
-            var textBoxValue = textBox.value;
-            if (textBoxValue == "") return false;
-            var choosenDate = moment(textBoxValue);
-            var resDate = moment(choosenDate).add(days, 'day');
-            textBox.value = moment(resDate).format('YYYY[-]MM[-]DD');
-            return false;
-        }
-
-        function multiFieldRefresh() {
-            var allMultiField = getAllElementsWithAttribute('multiField');
+        function putLinlInTextArea(link, name, linkControl) {
+            var newAlink = "<a href = '" + link + "'> " + name + " </a>";
             
-            for (var i = 0; i < allMultiField.length; i++) {
-                var spanWeNeed = allMultiField[i].parentElement.firstChild;
-                var result='';
-                for (var j = 0; j < spanWeNeed.children.length; j++) {
-                    if (spanWeNeed.children[j].type == 'text') {
-                        if (spanWeNeed.children[j].value.length>0) {
-                            result += spanWeNeed.children[j].value + ',';
-                        }                       
-                    }                   
-                }
-                if (result[result.length-1] == ',') {
-                    result = result.slice(0, result.length - 1);
-                }
-                allMultiField[i].value = result;
-            }        
-        }
-
-        function addInputControl(cntrlId) {
-            var multiFieldDiv = document.getElementById(cntrlId);
-            var newInput = document.createElement("input");
-            newInput.type = "text";
-          //  newInput.addEventListener("click", function () { event.cancelBubble = true; this.select(); lcs(this); }, false);
-            newInput.onclick = function (evt) { evt.cancelBubble = true; this.select(); lcs(this); };
-            newInput.onfocus = function (evt) { this.select(); lcs(this); };
-            multiFieldDiv.appendChild(document.createElement("br"));
-            multiFieldDiv.appendChild(newInput);
-        }
+            console.log(linkControl);
+            var divToChange = $("#MainContent_TextBox"+linkControl);
+            divToChange.each(function () { this.innerHTML += newAlink });
+           }
     </script>
+    
+    
+
+            <script>
+        
+                function getAllElementsWithAttribute(attribute) {
+                    var matchingElements = [];
+                    var allElements = document.getElementsByTagName('*');
+                    for (var i = 0, n = allElements.length; i < n; i++) {
+                        if (allElements[i].getAttribute(attribute) !== null) {
+                            matchingElements.push(allElements[i]);
+                        }
+                    }
+                    return matchingElements;
+                }
+
+                function putValueAndClose(val, fieldId, panelId) {
+                    document.getElementById(fieldId).value = val;
+                    document.getElementById(panelId).style.visibility = 'hidden';
+                }
+
+                function addDays(textboxId, days) {
+                    var textBox = document.getElementById(textboxId);
+                    var textBoxValue = textBox.value;
+                    if (textBoxValue == "") return false;
+                    var choosenDate = moment(textBoxValue);
+                    var resDate = moment(choosenDate).add(days, 'day');
+                    textBox.value = moment(resDate).format('YYYY[-]MM[-]DD');
+                    return false;
+                }
+
+                function multiFieldRefresh() {
+           
+
+                   
+                    //сделаем из div обатно textarea чтобы сохранялся
+                        var $fieldToRedo = $('div[containsLink="true"]');
+                        var attributes = $fieldToRedo.prop("attributes");
+                        $fieldToRedo.replaceWith(function (index, oldHTML) {
+                            
+                            console.log(oldHTML);
+                            var newValue = oldHTML;
+                            newValue = newValue.replace('<br>', '\n');
+                            newValue = newValue.replace('</div>', '');
+                            newValue = newValue.replace('<div>', '\n');
+                            newValue = newValue.replace('<a', '#linkStart#');
+                            newValue = newValue.replace('</a>', '#linkEnd#');
+                            console.log(newValue);
+                            
+                            var $div = $("<textarea>").html(newValue);
+
+                            $.each(attributes, function () {
+                                $div.attr(this.name, this.value);
+                            });
+                            //$div.attr("contenteditable", "true");
+                            return $div;
+
+                        });
+
+            
+
+
+                    var allMultiField = getAllElementsWithAttribute('multiField');
+            
+                    for (var i = 0; i < allMultiField.length; i++) {
+
+                        var spanWeNeed = undefined;
+                        if (allMultiField[i].parentElement == undefined) {
+                            spanWeNeed = allMultiField[i].parentNode.firstChild;
+                        } else {
+                            spanWeNeed = allMultiField[i].parentElement.firstChild;
+                        }              
+                
+                        var result = '';
+                
+                        for (var j = 0; j < spanWeNeed.children.length; j++) {
+                            if (spanWeNeed.children[j].type == 'text') {
+                                if (spanWeNeed.children[j].value.length>0) {
+                                    result += spanWeNeed.children[j].value + ',';
+                                }                       
+                            }                   
+                        }
+                        if (result[result.length-1] == ',') {
+                            result = result.slice(0, result.length - 1);
+                        }
+                        allMultiField[i].value = result;
+                        //allMultiField[i].style.display = 'block';
+                    }        
+                }
+
+                function addInputControl(cntrlId) {
+                    var multiFieldDiv = document.getElementById(cntrlId);
+                    var newInput = document.createElement("input");
+
+                    newInput.type = "text";
+                    //  newInput.addEventListener("click", function () { event.cancelBubble = true; this.select(); lcs(this); }, false);
+                    newInput.onclick = function (evt) { evt.cancelBubble = true; this.select(); lcs(this); };
+                    newInput.onfocus = function (evt) { this.select(); lcs(this); };
+                    multiFieldDiv.appendChild(document.createElement("br"));
+                    multiFieldDiv.appendChild(newInput);
+
+
+
+                    // multiFieldDiv.innerHTML += "<br/><input type='text' onfocus='this.select();lcs(this)' onblur='alert(\"sheet\")' onclick='event.cancelBubble=true;this.select();lcs(this)' value=''>";
+                }
+            </script>
     
     <script>
 
@@ -100,7 +159,36 @@
                     $("textarea").each(function () {
                         this.value = this.value.trim();
                     });
+
+                    //сделаем из textarea div чтобы теги работали
+                    var $fieldToRedo = $('textarea[containsLink="true"]');
+                    var attributes = $fieldToRedo.prop("attributes");
+                    $fieldToRedo.replaceWith(function (index, oldHTML) {
+                        console.log(oldHTML);
+                        var newValue = oldHTML;
+
+                        newValue = newValue.replace( '\n','<br>');
+                        newValue = newValue.replace('#linkStart#', '<a');
+                        newValue = newValue.replace('&gt;', '>');
+                        
+                        newValue = newValue.replace('#linkEnd#' , '</a>');
+                        console.log(newValue);
+
+                        var $div = $("<div>").html(newValue);
+
+                        $.each(attributes, function () {
+                            $div.attr(this.name, this.value);
+                        });
+                        $div.attr("contenteditable", "true");
+                        return $div;
+                       
+                    });
+                   
+
                 }
+
+             
+
             </script>
 
     <div id="cardMainDiv" runat="server">
@@ -108,4 +196,7 @@
     </div>
     <br />
     <asp:Button ID="CreateButton" runat="server" Text="Сохранить" OnClick="CreateButton_Click" OnClientClick="multiFieldRefresh();" Width="100%" />
+    
+  <!--  <input type="button" onclick="multiFieldRefresh()" >  -->
+
 </asp:Content>

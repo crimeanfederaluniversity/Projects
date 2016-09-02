@@ -7,36 +7,36 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Chancelerry {
+namespace Chancelerry.Admin {
     
     
-    public partial class SiteMaster {
+    public partial class UserAccessPage {
         
         /// <summary>
-        /// MainContent control.
+        /// Button2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.Button Button2;
         
         /// <summary>
-        /// TableContent control.
+        /// GridView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder TableContent;
+        protected global::System.Web.UI.WebControls.GridView GridView1;
         
         /// <summary>
-        /// OutOfFormContent control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder OutOfFormContent;
+        protected global::System.Web.UI.WebControls.Button Button1;
     }
 }

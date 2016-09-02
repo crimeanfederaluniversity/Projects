@@ -9,10 +9,12 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Microsoft.Ajax.Utilities;
 using Npgsql;
+using NUnit.Framework.SyntaxHelpers;
 
 namespace Chancelerry.kanz
 {
@@ -184,6 +186,14 @@ namespace Chancelerry.kanz
         public int RegisterId { get; set; }
         public int Version { get; set; }
         public int CardId { get; set; }
+    }
+    public class AjaxDocFinderStruct
+    {
+        public int Id { get; set; }
+        public TextBox CardIdTextBox {get; set;}
+        public Button FindDocsButton { get; set; }
+        public Panel DocsResultPanel { get; set; }
+
     }
     public class CardCommonFunctions
     {
@@ -415,7 +425,7 @@ namespace Chancelerry.kanz
 
             List<Struct> outStruct = (from a in chancDb.Struct
                                       where a.Active
-                                      select a).ToList();
+                                      select a).ToList().OrderBy(mc=>mc.STRuCtID).ToList();
             nodeToReturn = RecursiveGetTreeNode(2, outStruct, fieldId, panelId, "", fullStruct, collapse);
             if (collapse)
                 nodeToReturn.CollapseAll();
@@ -1269,6 +1279,7 @@ namespace Chancelerry.kanz
         public List<TextBox> allFieldsInCard;
         public List<FileUpload> allFileUploadsInCard;
         public List<UniqueChecker> allUniqueCheckers;
+        public List<AjaxDocFinderStruct> AllDocFinders;
         public Dictionary<string, TextBox> addCntTextBoxes = new Dictionary<string, TextBox>();
         private void RefreshPage()
         {
@@ -1310,6 +1321,49 @@ namespace Chancelerry.kanz
                 newInstance++;
             }
             RefreshPage();
+        }
+        public void GetDocsListInCard(object sender, EventArgs e)
+        {
+            Button caller = (Button) sender;
+            int fieldId = 0;
+            Int32.TryParse(caller.CommandArgument, out fieldId);
+            int fieldCounterId = -1;
+            Int32.TryParse(caller.Attributes["fieldCounterId"], out fieldCounterId);
+            AjaxDocFinderStruct current = AllDocFinders.FirstOrDefault(mc => mc.Id == fieldId);
+            if (current == null)
+                return;
+            
+            int registerId = 3;
+
+            ChancelerryDb chancDb =
+               new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
+
+            int searchCardId = 0;
+            Int32.TryParse(current.CardIdTextBox.Text, out searchCardId);
+            List<CollectedFieldsValues> allDocs = (from a in chancDb.CollectedFieldsValues
+                                                   join b in chancDb.CollectedCards
+                                                       on a.FkCollectedCard equals b.CollectedCardID
+                                                   join d in chancDb.Fields
+                                                       on a.FkField equals d.FieldID
+                                                   where
+                                                   b.MaInFieldID == searchCardId
+                                                   && b.FkRegister == registerId
+                                                   && d.Type == "fileAttach"
+                                                   && a.Active == true
+                                                   && b.Active == true
+                                                   && d.Active == true
+                                                   select a).Distinct().ToList();
+            string docsDivInnerCode = "";
+            foreach (CollectedFieldsValues currentDoc in allDocs)
+            {
+                if (currentDoc.ValueText.Any())
+                {
+                    string linkToDoc = "../kanz/attachedDocs/" + currentDoc.FkCollectedCard + "/" + currentDoc.CollectedFieldValueID + "/" + currentDoc.ValueText;
+                    docsDivInnerCode += "<a href=\"javascript:putLinlInTextArea('"+ linkToDoc + "','"+ currentDoc.ValueText +"',"+ fieldCounterId + ");\"> " + currentDoc.ValueText + " </a> <br />";
+                }
+                    
+            }
+            current.DocsResultPanel.Controls.Add(new LiteralControl(docsDivInnerCode));
         }
 
         public void CheckForUnique(object sender, EventArgs e)
@@ -1508,7 +1562,7 @@ namespace Chancelerry.kanz
                     }
                     #endregion
                    
-                        if (cardId != 0)
+                    if (cardId != 0)
                     {
                         currentFieldTextBox.Text = _common.GetFieldValueByCardVersionInstance(currentField.FieldID, cardId, Version, Instance, allValues);//Trim();
                     }
@@ -1521,9 +1575,7 @@ namespace Chancelerry.kanz
                     {
                         currentFieldTextBox.Text = "";
                     }
-
                     #region multipleField
-
                     if (currentField.Multiple == true)
                     {
                         //currentFieldTitle.ForeColor = Color.Red;
@@ -1531,7 +1583,7 @@ namespace Chancelerry.kanz
                         currentFieldTextBox.Attributes.Add("multiField","true");
                         HtmlGenericControl div = new HtmlGenericControl();
                         div.ID = "multiCellDiv" + fieldId;
-                        div.InnerHtml += "<input type='button' value='+' onclick=\"addInputControl('ctl00_MainContent_" + div.ID + "')\">";
+                        div.InnerHtml += "<input type='button' value='+' onclick=\"addInputControl('ctl00_MainContent_" + div.ID + "')\">"; 
                         string tmpText = currentFieldTextBox.Text;
                         List<string> allValuesOfMultiValue = tmpText.Split(',').ToList();
                         foreach (string currentValue in allValuesOfMultiValue)
@@ -1541,9 +1593,7 @@ namespace Chancelerry.kanz
                         
                         tableCell2.Controls.Add(div);
                     }
-
                     #endregion
-
                     #region dropdown
                     if (currentField.FkDictionary != null && !_readonly) // создаем выпадающий список
                     {
@@ -1657,26 +1707,61 @@ namespace Chancelerry.kanz
                         tableCell2.Controls.Add(treeViewPanel);
                     }
                     #endregion
-                    tableCell1.Controls.Add(_dataTypes.GetRangeValidator("RangeValidator" + fieldId, currentFieldTextBox.ID, currentField.Type));
-                    allFieldsInCard.Add(currentFieldTextBox); //запоминаем какие textbox у нас на карте
-                    tableCell2.Controls.Add(currentFieldTextBox);
                     #region добавим кнопку проверки  уникальности
-
                     if (currentField.Type == "singleLineTextUniqueCheck")
                     {
+                        UpdatePanel CheckForUniquePanel = new UpdatePanel();
+
                         ImageButton checkForUniqueButton = new ImageButton();
                         checkForUniqueButton.ID = "UniqueCheck" + currentField.FieldID + "_" + Instance;
                         checkForUniqueButton.Width = 20;
                         checkForUniqueButton.Height = 20;
                         checkForUniqueButton.ImageUrl = "~/kanz/icons/gteenQuestionIcon.png";
                         checkForUniqueButton.Click += CheckForUnique;
-                        tableCell2.Controls.Add(checkForUniqueButton);
+                        currentFieldTextBox.TextChanged += CheckForUnique;
+                        currentFieldTextBox.Attributes.Add("onchange", "document.getElementById('"+""+"MainContent_"+ checkForUniqueButton.ID + "').click();");
+                        //currentFieldTextBox.AutoPostBack = true;
+                        CheckForUniquePanel.ContentTemplateContainer.Controls.Add(checkForUniqueButton);
+                        tableCell2.Controls.Add(CheckForUniquePanel);
 
                         if (allUniqueCheckers == null)
                             allUniqueCheckers = new List<UniqueChecker>();
                         allUniqueCheckers.Add(new UniqueChecker() { CardId = cardId, CheckerButton = checkForUniqueButton, FieldId = currentField.FieldID, RegisterId = _registerId, ValueTextBox = currentFieldTextBox });
                     }
+                    #endregion
+                    tableCell1.Controls.Add(_dataTypes.GetRangeValidator("RangeValidator" + fieldId, currentFieldTextBox.ID, currentField.Type));
+                    allFieldsInCard.Add(currentFieldTextBox); //запоминаем какие textbox у нас на карте
+                    tableCell2.Controls.Add(currentFieldTextBox);
+                    #region Возможность прикрепить ссылку на документ
+                    if (currentField.Type == "multiLineText" && false)
+                    {
+                        
+                        currentFieldTextBox.Attributes.Add("containsLink", "true");
+                        tableCell2.Controls.Add(new LiteralControl("<br />"));
+                        UpdatePanel docAttachUpdatePanel = new UpdatePanel();
+                        docAttachUpdatePanel.ID = "docLinkAdderUpdatePanel" + currentField.FieldID + "_" + Instance;
+                        TextBox cardMainFieldIdTextBox = new TextBox();
+                        cardMainFieldIdTextBox.Width = 50;
+                        cardMainFieldIdTextBox.ID = "docLinkAdderTextBox" + currentField.FieldID + "_" + Instance;
+                        cardMainFieldIdTextBox.Attributes.Add("placeholder", "номер");
+                        docAttachUpdatePanel.ContentTemplateContainer.Controls.Add(cardMainFieldIdTextBox);
+                        Button getDocsListButton = new Button();
+                        getDocsListButton.Text = "Найти документ";
+                        getDocsListButton.Attributes.Add("fieldCounterId",fieldId.ToString());
+                        getDocsListButton.CommandArgument = currentField.FieldID.ToString();
+                        getDocsListButton.ID = "docLinkAdderButton" + currentField.FieldID + "_" + Instance;
+                        getDocsListButton.Click += GetDocsListInCard;
+                        docAttachUpdatePanel.ContentTemplateContainer.Controls.Add(getDocsListButton);
+                        Panel docsListPanel = new Panel();
+                        docsListPanel.ID = "docLinkAdderPanel" + currentField.FieldID + "_" + Instance;
+                        docAttachUpdatePanel.ContentTemplateContainer.Controls.Add(docsListPanel);
+                        if (AllDocFinders == null) AllDocFinders = new List<AjaxDocFinderStruct>();
+                        AllDocFinders.Add(new AjaxDocFinderStruct() { CardIdTextBox = cardMainFieldIdTextBox, DocsResultPanel = docsListPanel, FindDocsButton = getDocsListButton, Id = currentField.FieldID });
 
+                        tableCell2.Controls.Add(docAttachUpdatePanel);
+                    }
+                    #endregion                  
+                    #region 15 30 60
                     if (currentField.Type == "dateIncrement")
                     {
                         Button addDays1Button = new Button() { Text = "15", Width = 20, Height = 20, OnClientClick = "return addDays('ctl00_MainContent_" + currentFieldTextBox.ID + "',15);" };

@@ -19,7 +19,7 @@ namespace Chancelerry
         public static List<TextBox> SearchBoxsData = new List<TextBox>();
         public static Table DTable { get; set; }
         private int rowsOnPage = 10;
-        protected class DataOne
+     /*   protected class DataOne
         {
             public string textValue { get; set; }
             public int instance { get; set; }
@@ -31,20 +31,20 @@ namespace Chancelerry
             public double Weight { get; set; }
 
         }
-
+*/
         public class SearchValues
         {
             public int fieldId { get; set; }
             public string value { get; set; }
      
         }
-
+/*
         public class RenderCards
         {
             public int cardId { get; set; }
             public List<string> cardToRender { get; set; } 
         }
-
+*/
         public void RedirectToPrint(object sender, EventArgs e)
         {
 
@@ -101,7 +101,7 @@ namespace Chancelerry
 
             HttpContext.Current.Response.Redirect("~/kanz/RegisterView.aspx", true);
         }
-
+        /*
         public TableRow AddRowFromList(List<string> list, int cardID)
         {
             TableRow row = new TableRow();
@@ -149,8 +149,8 @@ namespace Chancelerry
             row.Controls.Add(cell);
 
             return row;
-        }
-
+        }*/
+/*
         public TableRow AddRowFromList(List<int> list)
         {
             TableRow row = new TableRow();
@@ -166,7 +166,7 @@ namespace Chancelerry
 
             return row;
         }
-
+*/
         public TableHeaderRow AddHeaderRoFromList(List<string> list)
         {
             TableHeaderRow row = new TableHeaderRow();
@@ -184,7 +184,7 @@ namespace Chancelerry
 
             return row;
         }
-
+        /*
         public TableHeaderRow AddSearchHeaderRoFromList(List<int> FieldID, Dictionary<int, string> searchData)
         {
 
@@ -208,8 +208,8 @@ namespace Chancelerry
                 row.Cells.Add(cell);
             }
             return row;
-        }
-        
+        }*/
+   /*     
         public void RefreshTable(ChancelerryDb dataContext, int userID, Registers register, object regId, Table dataTable, Dictionary<int, string> searchList)
         {
             
@@ -284,7 +284,7 @@ namespace Chancelerry
                                                          // фильтруем по номерам документов и достаем только ID'шники карточек
                                                          cardsToShow = (from a in cardsAllFull select a).OrderByDescending(n => n.version).ToList().Select(card => card.id).Distinct().ToList();
                                                      }
-                                                     */
+                                                     ///*
 
 
             //ВАГЕКОД НАЧАЛО
@@ -372,7 +372,7 @@ namespace Chancelerry
             
         }
         
-
+*/
 
     }
 }

@@ -18,13 +18,30 @@ namespace Chancelerry.kanz
         protected void Page_Load(object sender, EventArgs e)
         {
 
+
+
             var userID = Session["userID"];
             if (userID == null)
             {
                 Response.Redirect("~/Default.aspx");
             }
+
+
+         
+            int userId = (int)userID;
+            if (userId != 1)
+            {
+                GoToAdmin.Visible = false;
+                GoToAdmin.Enabled = false;
+            }
+            else
+            {
+                GoToAdmin.Visible = true;
+                GoToAdmin.Enabled = true;
+            }
+
             /////////////////////////////////////////////////////////////////////
-            
+
             ChancelerryDb dataContext = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
             // Забираем только прикрепленные реестры в  RegUsrMap для данного пользователя и проверяем на активность в Registers.
              List<DataForGv> registers = (from rum in dataContext.RegistersUsersMap
@@ -67,9 +84,10 @@ namespace Chancelerry.kanz
                                                   select new DataForGv() { Id = reg.RegisterID, Name = reg.Name }).ToList();
 
                         // CommandArgument - номер строки.
-                            Session["registerID"] = registers[Convert.ToInt32(e.CommandArgument)].Id;
-                    Session["searchList"] = new List<TableActions.SearchValues>();
+                        Session["registerID"] = registers[Convert.ToInt32(e.CommandArgument)].Id;
+                        Session["searchList"] = new List<TableActions.SearchValues>();
                         Session["vSearchList"] = null;
+                        Session["currentPage"] = null;
                         Response.Redirect("RegisterView.aspx");
                 }
                     break;
@@ -94,6 +112,16 @@ namespace Chancelerry.kanz
         protected void GoToShowResterAndPrint_Click(object sender, EventArgs e)
         {
             Response.Redirect("ShowRegisteAndPrint.aspx");
+        }
+
+        protected void GoToAdmin_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Admin/MainAdminPage.aspx");
+        }
+
+        protected void StructEdit_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Admin/StructEditPage.aspx");
         }
     }
 }

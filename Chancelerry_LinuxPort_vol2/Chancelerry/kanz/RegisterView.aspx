@@ -226,11 +226,11 @@
          </table>
     </span>
     
-    <button type="button" class="btn btn-default btn-sm" onclick="toggle_visibility('searchSpan')">
+    <button type="button" class="btn btn-default btn-sm"  onclick="toggle_visibility('searchSpan')">
           <span  id="toggleVisibilityLink" class="glyphicon glyphicon-chevron-down" ></span> Расширенный поиск и дополнения
     </button>
   
-    <span id="searchSpan" style="display: none">
+    <span id="searchSpan" style="display: block">
         <table>
             <tr>
                 <td>

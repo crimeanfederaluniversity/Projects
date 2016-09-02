@@ -132,12 +132,14 @@ namespace Chancelerry.kanz.rtfExport
 
                 if (key == "#markUserName#")
                 {
-                    resultValue =
-                        (from a in chancDb.Users where a.UserID == userId select a.Name).FirstOrDefault().ToString();
+                    string tmpValue = (from a in chancDb.Users where a.UserID == userId select a.Name).FirstOrDefault().ToString();
+                    resultValue = RussianStringToHexString(tmpValue);
                 }
                 else if (key== "#markTodayDate#")
                 {
-                    resultValue = DateTime.Now.Date.ToString();
+                    DateTime tmp = DateTime.Now;
+                    
+                    resultValue = tmp.Day.ToString("00") +"."+ tmp.Month.ToString("00") + "." + tmp.Year.ToString("0000");
                 }
                 else
                 {

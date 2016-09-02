@@ -7,72 +7,54 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Chancelerry.kanz {
+namespace Chancelerry.Admin {
     
     
-    public partial class Dashboard {
+    public partial class MainAdminPage {
         
         /// <summary>
-        /// GridViewRegisters control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridViewRegisters;
+        protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
-        /// DictionaryEdit control.
+        /// aStruct control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button DictionaryEdit;
+        protected global::System.Web.UI.UpdatePanel aStruct;
         
         /// <summary>
-        /// StructEdit control.
+        /// CardIdTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button StructEdit;
+        protected global::System.Web.UI.WebControls.TextBox CardIdTextBox;
         
         /// <summary>
-        /// GoToStatistics control.
+        /// aButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoToStatistics;
+        protected global::System.Web.UI.WebControls.Button aButton;
         
         /// <summary>
-        /// GoToControl control.
+        /// findedDocsList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoToControl;
-        
-        /// <summary>
-        /// GoToShowResterAndPrint control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoToShowResterAndPrint;
-        
-        /// <summary>
-        /// GoToAdmin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GoToAdmin;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl findedDocsList;
     }
 }

@@ -622,7 +622,6 @@ namespace Chancelerry.kanz
             }
 
         }
-
         public class Template5 
         {
             

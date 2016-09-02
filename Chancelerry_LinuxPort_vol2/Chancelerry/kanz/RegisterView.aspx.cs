@@ -10,6 +10,7 @@ namespace Chancelerry.kanz
 {
     public partial class RegisterView : System.Web.UI.Page
     {
+   
         public int page = 0;
         public int size = 10;
         public int sortFieldId = 0;
@@ -32,6 +33,19 @@ namespace Chancelerry.kanz
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Page.IsPostBack)
+            {
+                if (Request.QueryString["page"] == null)
+                {
+                    string lastPage = (string) Session["currentPage"];
+                    if (lastPage != null)
+                    {
+                        lastPage = "RegisterView.aspx" + lastPage;
+                        Response.Redirect(lastPage);
+                    }
+                }
+            }
+
             #region инициализация сессии пользователя и выбранного регистра
             timeStampsLabel.Text = " 0_" + DateTime.Now.TimeOfDay;
             int userId = 0;
@@ -166,7 +180,6 @@ namespace Chancelerry.kanz
             Response.Redirect("CardEdit.aspx");
         }
         protected void Button2_Click(object sender, EventArgs e)
-
         {
             Search();
         }
@@ -190,7 +203,6 @@ namespace Chancelerry.kanz
                     }
                 }
             }
-
             // По сессии передаем searchList и перезагружаем страницу
             //Session["searchList"] = searchList;
             Session["vSearchById"] = null;
@@ -300,7 +312,6 @@ namespace Chancelerry.kanz
             Int32.TryParse(CardsOnPageDropDownList.SelectedValue, out size);
             Response.Redirect("RegisterView.aspx?page=0&size=" + size + "&sortFieldId=" + sortFieldId);
         }
-
         protected void ShowCardHistoryButton_Click(object sender, EventArgs e)
         {
             int tmp = -1;

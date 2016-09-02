@@ -16,8 +16,7 @@ namespace Chancelerry.Account
         protected void LogIn(object sender, EventArgs e)
         {
             if (IsValid)
-            {
-            
+            {            
                 ChancelerryDb datacontext = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
 
                 var user = (from u in datacontext.Users where 

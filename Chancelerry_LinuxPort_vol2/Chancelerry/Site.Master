@@ -31,7 +31,7 @@
     </script>
 <body onload="loadPage()">
     <form runat="server">
-        <asp:ScriptManager runat="server">
+        <asp:ScriptManager  EnablePageMethods="true"  runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
@@ -96,5 +96,9 @@
             </footer>
         </div>
     </form>
+    
+     <asp:ContentPlaceHolder ID="OutOfFormContent" runat="server">
+            </asp:ContentPlaceHolder>
+
 </body>
 </html>

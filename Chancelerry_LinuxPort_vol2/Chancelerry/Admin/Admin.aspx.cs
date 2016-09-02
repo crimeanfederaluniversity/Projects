@@ -43,7 +43,19 @@ namespace Chancelerry.kanz
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            var userID = Session["userID"];
+            if (userID == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
+            else
+            {
+                int userId = (int)userID;
+                if (userId != 1)
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+            }        
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -243,17 +255,17 @@ namespace Chancelerry.kanz
 
         protected void Button3_Click(object sender, EventArgs e)
         {
-            /*
+            
             List<CollectedCards> allCardsInRegister =
-                (from a in _chancDb.CollectedCards where a.FkRegister == 2 select a).ToList();
+                (from a in _chancDb.CollectedCards where a.FkRegister == 3 select a).ToList();
             int cnt = 0;
 
             List<CollectedFieldsValues> fieldAllValues = (from a in _chancDb.CollectedFieldsValues
-                where a.FkField == 72
+                where a.FkField == 101
 
                 join b in _chancDb.CollectedCards
                     on a.FkCollectedCard equals b.CollectedCardID
-                where b.FkRegister == 2
+                where b.FkRegister == 3
                 select a).ToList();
 
             foreach (CollectedCards currentCard in allCardsInRegister)
@@ -263,7 +275,7 @@ namespace Chancelerry.kanz
                     
                     CollectedFieldsValues addinfoFieldValue = new CollectedFieldsValues();
                     addinfoFieldValue.FkCollectedCard = currentCard.CollectedCardID;
-                    addinfoFieldValue.FkField = 72;
+                    addinfoFieldValue.FkField = 101;
                     addinfoFieldValue.FkUser = 1;
                     addinfoFieldValue.Active = true;
                     addinfoFieldValue.CreateDateTime = DateTime.Now;
@@ -277,8 +289,8 @@ namespace Chancelerry.kanz
                 }
             }
 
-   //        _chancDb.SubmitChanges();
-            */
+           //_chancDb.SubmitChanges();
+            
         }
     }
 }
