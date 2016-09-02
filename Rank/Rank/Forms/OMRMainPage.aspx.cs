@@ -30,5 +30,10 @@ namespace Rank.Forms
         {
             Response.Redirect("~/Forms/OMRUserRatingPage.aspx");
         }
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Forms/FormCreateEditByUser.aspx");
+        }
     }
 }

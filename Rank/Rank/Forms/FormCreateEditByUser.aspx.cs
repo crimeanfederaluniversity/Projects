@@ -99,14 +99,14 @@ namespace Rank.Forms
             Button button = (Button)sender;
             {           
                 Session["edituserID"] = Convert.ToInt32(button.CommandArgument);
-                Response.Redirect("~/Forms/UserArticlePage.aspx");
+                Response.Redirect("~/Forms/UserMainPage.aspx");
             }
 
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Forms/UserMainPage.aspx");
+            Response.Redirect("~/Forms/OMRMainPage.aspx");
         }
     }
 }

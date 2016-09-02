@@ -1,9 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="FormCreateEditByUser.aspx.cs" Inherits="Rank.Forms.FormUserPublication" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Button ID="Button1" runat="server" Text="Назад" OnClick="Button1_Click" />
-    <br />Добавление/редактирование для показателя: 
-    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-
     <br />
     <br />
     Введите фамилию:<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>

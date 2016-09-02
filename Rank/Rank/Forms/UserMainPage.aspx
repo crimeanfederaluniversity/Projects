@@ -8,7 +8,36 @@
           <p>
 &nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Подтвердить мое соавторство" Width="401px" Visible="False" />
           &nbsp;</p>
-          <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" OnRowDataBound ="OnRowDataBound">
+          <asp:GridView ID="GridView2" AutoGenerateColumns="false" runat="server">
+             <Columns>
+                  <asp:TemplateField HeaderText="" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "false" >
+                        <ItemTemplate> 
+                            <asp:Label ID="ID0" runat="server" Text='<%# Bind("ID") %>'  Visible="false"></asp:Label>
+                        </ItemTemplate>
+               <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
+                    </asp:TemplateField> 
+
+                <asp:TemplateField HeaderText="Название параметра" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                        <ItemTemplate> 
+                            <asp:Label ID="Parametr0" runat="server" Text='<%# Bind("Parametr") %>'  Visible="True"></asp:Label>
+                        </ItemTemplate>
+               <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
+                    </asp:TemplateField> 
+                  <asp:TemplateField HeaderText="Баллы" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                        <ItemTemplate> 
+                            <asp:Label ID="Point0" runat="server" Text='<%# Bind("Point") %>'  Visible="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField> 
+                      <asp:TemplateField HeaderText="Перейти">
+                        <ItemTemplate>
+                            <asp:Button ID="EditButton0" runat="server" CommandName="Select" Text ="Редактировать"  Width="150px" CommandArgument='<%# Eval("ID") %>' OnClick="EditButtonClik" />
+                        </ItemTemplate>
+                    </asp:TemplateField>             
+                 </Columns>
+        </asp:GridView>
+
+          <br />
+          <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server"  OnRowDataBound ="OnRowDataBound" >
              <Columns>
                   <asp:TemplateField HeaderText="" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "false" >
                         <ItemTemplate> 
@@ -30,7 +59,7 @@
                     </asp:TemplateField> 
                       <asp:TemplateField HeaderText="Перейти">
                         <ItemTemplate>
-                            <asp:Button ID="EditButton" runat="server" CommandName="Select" Text ="Редактировать"  Width="150px" CommandArgument='<%# Eval("ID") %>' OnClick="EditButtonClik" />
+                            <asp:Button ID="EditButton" runat="server" CommandName="Select" Text =""  Width="150px" CommandArgument='<%# Eval("ID") %>' OnClick="EditButtonClik" />
                         </ItemTemplate>
                     </asp:TemplateField>             
                  </Columns>
