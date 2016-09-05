@@ -117,7 +117,6 @@ namespace Rank.Forms
         {
             Button button = (Button)sender;
             {
-
                 Rank_Articles accept = (from item in ratingDB.Rank_Articles
                                         where item.ID == Convert.ToInt32(button.CommandArgument)
                 && item.Active == true

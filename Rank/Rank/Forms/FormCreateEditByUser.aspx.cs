@@ -98,7 +98,7 @@ namespace Rank.Forms
         {
             Button button = (Button)sender;
             {           
-                Session["edituserID"] = Convert.ToInt32(button.CommandArgument);
+                Session["showuserID"] = Convert.ToInt32(button.CommandArgument);
                 Response.Redirect("~/Forms/UserMainPage.aspx");
             }
 

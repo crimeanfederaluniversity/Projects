@@ -2,11 +2,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
       <div>
           <h3>Добро пожаловать в систему "Рейтинги"</h3>  
-          <h3><asp:Label ID="Label2" runat="server" Text="" Visible="False"></asp:Label>
-&nbsp;<asp:Label ID="Label1" runat="server" Text="Label" Visible="False"></asp:Label>
+          <h3><asp:Label ID="Label2" runat="server" Text="" Visible="true"></asp:Label>
+&nbsp;<asp:Label ID="Label1" runat="server" Text="Label" ></asp:Label>
           </h3>
           <p>
-&nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Подтвердить мое соавторство" Width="401px" Visible="False" />
+&nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Подтвердить мое соавторство" Width="401px" />
           &nbsp;</p>
           <asp:GridView ID="GridView2" AutoGenerateColumns="false" runat="server">
              <Columns>

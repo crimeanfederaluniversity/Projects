@@ -29,27 +29,27 @@ namespace Rank.Forms
             }
             int userID = (int)userId;
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-            var edituserId = Session["showuserID"];
-            if (edituserId != null )
+        
+            
+            var edituserId = Session["showuserID"]; // для просмотра без права 
+            if (edituserId != null)
             {
+                TextBox1.Visible = false;
+                Label4.Visible = false;
+                Button2.Visible = false;
                 int edituser = (int)edituserId;
                 UsersTable username = (from item in ratingDB.UsersTable where item.UsersTableID == edituser select item).FirstOrDefault();
                 Label2.Visible = true;
                 Label2.Text = username.Surname + " " + username.Name + " " + username.Patronimyc;
-                if (rights.AccessLevel == 9)
-                {
-                    TextBox1.Visible = true;
-                    Button2.Visible = true;
-                }                
-            }
-            else
+          
+             }
+
+            /*else
             {              
-                    if ((rights.AccessLevel == 9 && name.EditUserType != 0  && name.EditUserType != 2) || (rights.AccessLevel != 10 && name.EditUserType == 3)
+                if ((rights.AccessLevel == 9 && name.EditUserType != 0  && name.EditUserType != 2) || (rights.AccessLevel != 10 && name.EditUserType == 3)
                   || (rights.AccessLevel != 9 && rights.AccessLevel != 10 && name.EditUserType != 1 && name.EditUserType != 2) || (rights.AccessLevel != 9 &&  paramId == 19))
                 {
-                    TextBox1.Visible = false;
-                    Label4.Visible = false;
-                    Button2.Visible = false;
+                
                 }
                 else
                 {
@@ -57,7 +57,7 @@ namespace Rank.Forms
                     Label4.Visible = true;
                     Button2.Visible = true;
                 }
-            }
+            }*/
 
         }
       
@@ -79,17 +79,20 @@ namespace Rank.Forms
             var edituserId = Session["showuserID"];
             if (edituserId != null)
             {
+                Label4.Visible = false;
+                TextBox1.Visible = false;
+                Button2.Visible = false;
+
                 GridView1.Columns[6].Visible = false;
                 int edituser = (int)edituserId;
                 UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();                           
-                if (rights.AccessLevel != 9 && rights.AccessLevel != 0)
+                if (rights.AccessLevel != 0)
                 {                 
-                    userparamarticle = (from a in ratingDB.Rank_Articles  where a.Active == true && a.FK_parametr == paramId && a.Status != 0
+                    userparamarticle = (from a in ratingDB.Rank_Articles  where a.Active == true && a.FK_parametr == paramId //&& a.Status != 0
                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                         where b.FK_User == edituser && b.Active == true && b.UserConfirm == true 
                                         select a).ToList();
                 }
-
             }
             else
             {               
@@ -113,8 +116,7 @@ namespace Rank.Forms
                                             where a.Active == true && a.FK_parametr == paramId
                                             join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                             where b.FK_User == userID && b.Active == true && b.UserConfirm == true
-                                            select a).ToList();
-                    
+                                            select a).ToList();                   
                     }
             }
             foreach (var tmp in userparamarticle)
@@ -199,36 +201,41 @@ namespace Rank.Forms
         protected void EditButtonClik(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-
             Session["articleID"] = Convert.ToInt32(button.CommandArgument);
             var userId = Session["UserID"];
-            int showuser = 0;
-            showuser = Convert.ToInt32(Session["showuserID"]);
-
+            int userID = (int)userId;
             Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == Convert.ToInt32(button.CommandArgument) select a).FirstOrDefault();
-            Rank_UserArticleMappingTable edit = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_User == Convert.ToInt32(userId) && a.FK_Article == send.ID select a).FirstOrDefault();
-  
-                var IdParam = Session["parametrID"];
-                int paramId = (int)IdParam;
-               
-                int userID = (int)userId;
-                Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
-                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();        
-                if (paramId == 19 && send.Status == 0)
+            UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+            if (Session["showuserID"]!= null)
+           {
+                int user = Convert.ToInt32(Session["showuserID"]);
+                if(rights.AccessLevel == 9)
                 {
                     Response.Redirect("~/Forms/CreateEditForm.aspx");
                 }
-                    if ((rights.AccessLevel == 9 && name.EditUserType != 0 && name.EditUserType != 2 && name.EditUserType != 3)
-                    || (send.Status == 1 || send.Status == 2) || (rights.AccessLevel != 10 && name.EditUserType == 3)
-                    || (rights.AccessLevel != 9 && rights.AccessLevel != 10 && name.EditUserType != 1 && name.EditUserType != 2)
-                    || (rights.AccessLevel != 10 && name.EditUserType == 3) || (showuser != 0 ) || (edit.CreateUser == false || edit.CreateUser == null))
+                else
                 {
+                    Response.Redirect("~/Forms/ViewArticleForm.aspx");
+                }
+
+            }
+            else
+            {
+                var IdParam = Session["parametrID"];
+                int paramId = (int)IdParam;
+                Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
+                Rank_UserArticleMappingTable edit = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_User == Convert.ToInt32(userId) && a.FK_Article == send.ID select a).FirstOrDefault();
+                if ((send.Status != 0 ) 
+                    || (rights.AccessLevel != 9 && rights.AccessLevel != 10 && name.EditUserType != 1 )
+                    || (rights.AccessLevel != 10 && name.EditUserType == 3) || (edit.CreateUser == false || edit.CreateUser == null))
+                     {
                     Response.Redirect("~/Forms/ViewArticleForm.aspx");
                 }
                 else
                 {
                     Response.Redirect("~/Forms/CreateEditForm.aspx");
-                }                                         
+                }
+            }                                           
         }
         protected void DeleteButtonClik(object sender, EventArgs e)
         {

@@ -20,28 +20,33 @@ namespace Rank.Forms
             }
             int userID = (int)userId;
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-            var showuser = Session["edituserID"];
-            if (showuser != null)
-            {
-                int id = (int)showuser;
-            
-            if (rights.AccessLevel == 9)
+            var showuser = Session["showuserID"];
+         
+                if (rights.AccessLevel == 9)
             {
                 Button2.Visible = false;
                 Label1.Visible = false;
-                    UsersTable user = (from item in ratingDB.UsersTable where item.UsersTableID == id select item).FirstOrDefault();
-                    Label2.Visible = true;
-                    Label2.Text = user.Surname.ToString() + " " + user.Name.ToString() + " " + user.Patronimyc.ToString();
+                    if (showuser != null)
+                    {
+                    int id = (int)showuser;
+                        UsersTable user = (from item in ratingDB.UsersTable where item.UsersTableID == id select item).FirstOrDefault();
+                        Label2.Text = user.Surname.ToString() + " " + user.Name.ToString() + " " + user.Patronimyc.ToString();
+                    }
+                    else
+                    {
+                        GridView1.Columns[2].Visible = false;
+                        GridView2.Visible = false;
+                        Label2.Text = "Индивидуальный рейтинг научно-педагогических работников, подразделений, СП(Ф) высшего образования и научных СП(Ф) и их руководителей ФГАОУ ВО «КФУ им. В.И.Вернадского» за 2016 год:";
+                    }
                 }
-                else
-                {
-                    GridView1.Columns[2].Visible = false;
-                    GridView2.Visible = false;
-                    Label2.Visible = false;
-                }
-             
-              
+            
+            else
+            {
+                Label1.Visible = true;
+                Button2.Visible = true;
+                Label2.Text = "Индивидуальный рейтинг научно-педагогических работников, подразделений, СП(Ф) высшего образования и научных СП(Ф) и их руководителей ФГАОУ ВО «КФУ им. В.И.Вернадского» за 2016 год:";
             }
+            
             Calculate userpoints = new Calculate();
               
             List<Rank_Articles> authorList = (from b in ratingDB.Rank_Articles
@@ -65,11 +70,7 @@ namespace Rank.Forms
        
             List<Rank_Parametrs> allparam1 = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.EditUserType == 0 select a).ToList();
             List<Rank_Parametrs> allparam2 = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.EditUserType == 1 select a).ToList();
-            Button2.Visible = true;
-                Label1.Visible = true;
-                Label2.Visible = true;
-                Label2.Text = "Индивидуальный рейтинг научно-педагогических работников, подразделений, СП(Ф) высшего образования и научных СП(Ф) и их руководителей ФГАОУ ВО «КФУ им. В.И.Вернадского» за 2016 год.";
-      
+       
                 List<Rank_Articles> allarticleList = (from b in ratingDB.Rank_Articles
                                                       where b.Active == true
                                                       join a in ratingDB.Rank_UserArticleMappingTable on b.ID equals a.FK_Article
@@ -204,8 +205,8 @@ namespace Rank.Forms
                 int userID = (int)userId;
                 Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == Convert.ToInt32(button.CommandArgument) select item).FirstOrDefault();
                 UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-             
-                    Session["parametrID"] = Convert.ToInt32(button.CommandArgument);
+          
+                Session["parametrID"] = Convert.ToInt32(button.CommandArgument);
                     Response.Redirect("~/Forms/UserArticlePage.aspx");              
             }
            

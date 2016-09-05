@@ -102,6 +102,7 @@ namespace Rank.Forms
                                 select a).FirstOrDefault();
             }
 
+
             if (userarticles != null )
             {
                 Button2.Visible = true;
@@ -116,7 +117,7 @@ namespace Rank.Forms
             }
             else
             {
-                var edituserId = Session["edituserID"];
+                var edituserId = Session["showuserID"];
                 if (edituserId != null)
                 {
                    

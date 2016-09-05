@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="OMRMainPage.aspx.cs" Inherits="Rank.Forms.OMRMainPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <br />
+    <h3>Информационно-аналитическая система личных кабинетов "Рейтинг научно-педагогических работников"</h3>
+      <br />
     <asp:Button ID="Button1" runat="server" Height="50px" OnClick="Button1_Click" Text="Ввод рейтинговых данных научно-педагогических работников КФУ" Width="500px" />
     <br />
     <br />
