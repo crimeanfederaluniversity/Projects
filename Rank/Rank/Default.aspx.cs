@@ -48,6 +48,7 @@ namespace Rank
             }
             else
             {
+                Session["showuserID"] = null;
                 FormsAuthentication.SignOut();
                 Session.Abandon();
                 Response.Redirect("~/Account/Login.aspx");

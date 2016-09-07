@@ -33,6 +33,7 @@ namespace Rank.Forms
             dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
             dataTable.Columns.Add(new DataColumn("User", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Point", typeof(string)));
+            dataTable.Columns.Add(new DataColumn("Position", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Status", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Color", typeof(string)));
             List<UsersTable> structusers = new List<UsersTable>();
@@ -129,15 +130,15 @@ namespace Rank.Forms
                     dataRow["ID"] = tmp.UsersTableID;
                     dataRow["User"] = tmp.Surname + " " + tmp.Name + " " + tmp.Patronimyc;
                     dataRow["Point"] = sum;
-                                               
+                    dataRow["Position"] = tmp.Position;
                     if (userarticles!= null && userarticles.Count != 0)
                     {
-                        dataRow["Status"] = "Ожидает Вашего утверждения";
+                        dataRow["Status"] = "Ожидает верификации";
                         dataRow["Color"] = 1; // красный                       
                     }
                     else
                     {
-                        dataRow["Status"] = "Не требует утверждения";
+                        dataRow["Status"] = "Верифицировано";
                         dataRow["Color"] = "";
                     }
            

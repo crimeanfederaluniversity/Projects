@@ -11,7 +11,7 @@ namespace Rank.Forms
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Session["showuserID"] = null;
         }
 
         protected void Button1_Click(object sender, EventArgs e)

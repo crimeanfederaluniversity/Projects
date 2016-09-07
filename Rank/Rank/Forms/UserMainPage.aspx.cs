@@ -24,10 +24,12 @@ namespace Rank.Forms
          
                 if (rights.AccessLevel == 9)
             {
+                Label3.Text = "Ввод рейтинговых данных научно-педагогических работников КФУ";
                 Button2.Visible = false;
                 Label1.Visible = false;
                     if (showuser != null)
                     {
+                 
                     int id = (int)showuser;
                         UsersTable user = (from item in ratingDB.UsersTable where item.UsersTableID == id select item).FirstOrDefault();
                         Label2.Text = user.Surname.ToString() + " " + user.Name.ToString() + " " + user.Patronimyc.ToString();
@@ -35,16 +37,14 @@ namespace Rank.Forms
                     else
                     {
                         GridView1.Columns[2].Visible = false;
-                        GridView2.Visible = false;
-                        Label2.Text = "Индивидуальный рейтинг научно-педагогических работников, подразделений, СП(Ф) высшего образования и научных СП(Ф) и их руководителей ФГАОУ ВО «КФУ им. В.И.Вернадского» за 2016 год:";
+                        GridView2.Visible = false;              
                     }
                 }
             
             else
             {
                 Label1.Visible = true;
-                Button2.Visible = true;
-                Label2.Text = "Индивидуальный рейтинг научно-педагогических работников, подразделений, СП(Ф) высшего образования и научных СП(Ф) и их руководителей ФГАОУ ВО «КФУ им. В.И.Вернадского» за 2016 год:";
+                Button2.Visible = true;               
             }
             
             Calculate userpoints = new Calculate();
@@ -62,14 +62,16 @@ namespace Rank.Forms
             dataTable1.Columns.Add(new DataColumn("ID", typeof(string)));
             dataTable1.Columns.Add(new DataColumn("Parametr", typeof(string)));
             dataTable1.Columns.Add(new DataColumn("Point", typeof(string)));
+            dataTable1.Columns.Add(new DataColumn("Number", typeof(string)));
 
             DataTable dataTable2 = new DataTable();
             dataTable2.Columns.Add(new DataColumn("ID", typeof(string)));
             dataTable2.Columns.Add(new DataColumn("Parametr", typeof(string)));
             dataTable2.Columns.Add(new DataColumn("Point", typeof(string)));
-       
-            List<Rank_Parametrs> allparam1 = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.EditUserType == 0 select a).ToList();
-            List<Rank_Parametrs> allparam2 = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.EditUserType == 1 select a).ToList();
+            dataTable2.Columns.Add(new DataColumn("Number", typeof(string)));
+
+            List<Rank_Parametrs> allparam1 = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.EditUserType == 0 select a).OrderBy(mc=>mc.Number).ToList();
+            List<Rank_Parametrs> allparam2 = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.EditUserType == 1 select a).OrderBy(mc => mc.Number).ToList();
        
                 List<Rank_Articles> allarticleList = (from b in ratingDB.Rank_Articles
                                                       where b.Active == true
@@ -77,20 +79,7 @@ namespace Rank.Forms
                                                       where a.Active == true && a.FK_User == userID && a.UserConfirm == true
                                                       select b).ToList();
 
-            /*  foreach (var a in allparam)
-              {
-                  if (allarticleList.Count == 0)
-                  {
-                      List<Rank_UserParametrValue> clean = (from b in ratingDB.Rank_UserParametrValue
-                                                                     where b.Active == true && b.FK_user == userID && b.FK_parametr == a.ID   select b).ToList();
-                      foreach(var b in clean)
-                      {
-                          b.Value = 0;
-                          ratingDB.SubmitChanges();
-                      }
-
-                  }
-                  */
+ 
             List<Rank_UserParametrValue> userrating = new List<Rank_UserParametrValue>();
             if (rights.AccessLevel == 9)
             {
@@ -144,8 +133,9 @@ namespace Rank.Forms
                     }
                     DataRow dataRow = dataTable1.NewRow();
                     dataRow["ID"] = tmp.ID;
-                    dataRow["Parametr"] = tmp.Name;                  
-                   if(calculate!= null)
+                    dataRow["Parametr"] = tmp.Name;
+                    dataRow["Number"] = tmp.Number;
+                    if (calculate!= null)
                     {
                         dataRow["Point"] = calculate.Value;
                     }
@@ -181,7 +171,7 @@ namespace Rank.Forms
                     DataRow dataRow = dataTable2.NewRow();
                     dataRow["ID"] = tmp.ID;
                     dataRow["Parametr"] = tmp.Name;
-
+                    dataRow["Number"] = tmp.Number;
                     if (calculate != null)
                     {
                         dataRow["Point"] = calculate.Value;
@@ -221,7 +211,7 @@ namespace Rank.Forms
                 Button but = (e.Row.FindControl("EditButton") as Button);
                 if (rights.AccessLevel == 9)
                 {
-                but.Text = "Редактировать";
+                but.Text = "Внести данные";
                     }
                     else
                     {

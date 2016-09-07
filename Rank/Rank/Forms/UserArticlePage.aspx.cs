@@ -34,8 +34,7 @@ namespace Rank.Forms
             var edituserId = Session["showuserID"]; // для просмотра без права 
             if (edituserId != null)
             {
-                TextBox1.Visible = false;
-                Label4.Visible = false;
+ 
                 Button2.Visible = false;
                 int edituser = (int)edituserId;
                 UsersTable username = (from item in ratingDB.UsersTable where item.UsersTableID == edituser select item).FirstOrDefault();
@@ -78,11 +77,8 @@ namespace Rank.Forms
             int userID = (int)userId;         
             var edituserId = Session["showuserID"];
             if (edituserId != null)
-            {
-                Label4.Visible = false;
-                TextBox1.Visible = false;
+            {       
                 Button2.Visible = false;
-
                 GridView1.Columns[6].Visible = false;
                 int edituser = (int)edituserId;
                 UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();                           
@@ -95,7 +91,8 @@ namespace Rank.Forms
                 }
             }
             else
-            {               
+            {
+                Button2.Visible = true;
                 UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
                 if (rights.AccessLevel == 10 )
                 {
@@ -291,8 +288,6 @@ namespace Rank.Forms
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            if (TextBox1.Text != "")
-            {
                 var userId = Session["UserID"];
                 int userID = (int)userId;
                 int paramId = Convert.ToInt32(Session["parametrID"]);
@@ -302,7 +297,6 @@ namespace Rank.Forms
                 newValue.Active = true;
                 newValue.AddDate = DateTime.Now;
                 newValue.FK_parametr = paramId;
-                newValue.Name = TextBox1.Text;
                 if (rights.AccessLevel == 9 && paramId!= 19)
                 {
                     newValue.Status = 4;
@@ -333,7 +327,7 @@ namespace Rank.Forms
                                     
                 Session["articleID"] = Convert.ToInt32(newValue.ID);
                 Response.Redirect("~/Forms/CreateEditForm.aspx");
-            }         
+                     
         }
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {

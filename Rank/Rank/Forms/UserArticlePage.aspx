@@ -11,8 +11,6 @@
                   <asp:Label ID="Label2" runat="server" Text="ФИО" Visible="False"></asp:Label>
               </p>
               <p>
-                  <asp:Label ID="Label4" runat="server" Text="Введите название новой работы:"></asp:Label>
-&nbsp;<asp:TextBox ID="TextBox1" runat="server" Height="20px" Visible="False" Width="450px" TextMode="MultiLine"></asp:TextBox>
                 <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Добавить" Visible="False" />
               </p>
           <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" OnRowDataBound ="GridView1_RowDataBound" >
