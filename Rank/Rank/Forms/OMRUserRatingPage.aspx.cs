@@ -16,9 +16,9 @@ namespace Rank.Forms
             if (!Page.IsPostBack)
             {
                 List<FirstLevelSubdivisionTable> First_stageList = (from item in ratingDB.FirstLevelSubdivisionTable where item.Active == true select item).OrderBy(mc => mc.Name).ToList();
-                var dictionary = new Dictionary<int, string>();
+                Dictionary<int, string> dictionary = new Dictionary<int, string>();
                 dictionary.Add(0, "Выберите значение");
-                foreach (var item in First_stageList)
+                foreach (FirstLevelSubdivisionTable item in First_stageList)
                     dictionary.Add(item.FirstLevelSubdivisionTableID, item.Name);
                 DropDownList3.DataTextField = "Value";
                 DropDownList3.DataValueField = "Key";
@@ -36,10 +36,10 @@ namespace Rank.Forms
                                                                       select item).OrderBy(mc => mc.SecondLevelSubdivisionTableID).ToList();
                 if (second_stageList != null && second_stageList.Count() > 0)
                 {
-                    var dictionary = new Dictionary<int, string>();
+                    Dictionary<int, string> dictionary = new Dictionary<int, string>();
 
                     dictionary.Add(-1, "Выберите значение");
-                    foreach (var item in second_stageList)
+                    foreach (SecondLevelSubdivisionTable item in second_stageList)
                         dictionary.Add(item.SecondLevelSubdivisionTableID, item.Name);
                     DropDownList4.Enabled = true;
                     DropDownList4.DataTextField = "Value";
@@ -59,9 +59,9 @@ namespace Rank.Forms
                                                                 select item).OrderBy(mc => mc.ThirdLevelSubdivisionTableID).ToList();
                 if (third_stage != null && third_stage.Count() > 0)
                 {
-                    var dictionary = new Dictionary<int, string>();
+                    Dictionary<int, string> dictionary = new Dictionary<int, string>();
                     dictionary.Add(-1, "Выберите значение");
-                    foreach (var item in third_stage)
+                    foreach (ThirdLevelSubdivisionTable item in third_stage)
                         dictionary.Add(item.ThirdLevelSubdivisionTableID, item.Name);
                     DropDownList5.Enabled = true;
                     DropDownList5.DataTextField = "Value";
@@ -86,12 +86,24 @@ namespace Rank.Forms
             dataTable.Columns.Add(new DataColumn("position", typeof(string)));
             dataTable.Columns.Add(new DataColumn("point", typeof(string)));
 
-            if (Convert.ToInt32(DropDownList3.SelectedItem.Value) != 0)
+            int fk_firstLevelSubdivisionTable;
+            int.TryParse(DropDownList3.Items[DropDownList3.SelectedIndex].Value, out fk_firstLevelSubdivisionTable);
+
+            int fk_secondLevelSubdivisionTable;
+            int.TryParse(DropDownList4.Items[DropDownList4.SelectedIndex].Value, out fk_secondLevelSubdivisionTable);
+
+            int fk_thirdLevelSubdivisionTable;
+            int.TryParse(DropDownList5.Items[DropDownList5.SelectedIndex].Value, out fk_thirdLevelSubdivisionTable);
+
+            int dd3Value;
+            int.TryParse(DropDownList3.SelectedItem.Value, out dd3Value);
+
+            if (dd3Value != 0)
             {
                 List<UsersTable> poisk = (from a in ratingDB.UsersTable
-                                          where a.Active == true && (a.FK_FirstLevelSubdivisionTable == Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value) ) &&
-                                          (a.FK_SecondLevelSubdivisionTable == Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value) || a.FK_SecondLevelSubdivisionTable == null) &&
-                                          (a.FK_ThirdLevelSubdivisionTable == Convert.ToInt32(DropDownList5.Items[DropDownList5.SelectedIndex].Value) || a.FK_ThirdLevelSubdivisionTable == null)
+                                          where a.Active == true && (a.FK_FirstLevelSubdivisionTable == fk_firstLevelSubdivisionTable ) &&
+                                          (a.FK_SecondLevelSubdivisionTable == fk_secondLevelSubdivisionTable || a.FK_SecondLevelSubdivisionTable == null) &&
+                                          (a.FK_ThirdLevelSubdivisionTable == fk_thirdLevelSubdivisionTable || a.FK_ThirdLevelSubdivisionTable == null)
                                           select a).ToList();
 
                 if (poisk != null && poisk.Count != 0)
@@ -104,7 +116,7 @@ namespace Rank.Forms
                         ThirdLevelSubdivisionTable third = (from a in ratingDB.ThirdLevelSubdivisionTable where a.Active == true && a.ThirdLevelSubdivisionTableID == author.FK_ThirdLevelSubdivisionTable select a).FirstOrDefault();
                         List<Rank_UserParametrValue> userrating = (from a in ratingDB.Rank_UserParametrValue where a.Active == true && a.FK_user == author.UsersTableID select a).ToList();
                         int sum = 0;
-                        foreach (var a in userrating)
+                        foreach (Rank_UserParametrValue a in userrating)
                         {
                             if(a.Value.HasValue)
                             {

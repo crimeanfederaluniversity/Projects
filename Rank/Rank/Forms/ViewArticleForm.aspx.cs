@@ -24,14 +24,25 @@ namespace Rank.Forms
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            var userId = Session["UserID"];
-            if (userId == null)
+            int userId = 0;
+            object str_UserID =  Session["UserID"] ?? String.Empty;
+            bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
+
+            if (!isSet_UserID)
             {
                 Response.Redirect("~/Default.aspx");
             }
+
             int userID = (int)userId;
-            int article = Convert.ToInt32(Session["articleID"]);
-            int paramId = Convert.ToInt32(Session["parametrID"]);
+
+            int article = 0;
+            object str_articleID =  Session["articleID"] ?? String.Empty;
+            bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
+
+            int paramId = 0;
+            object str_parametrID =  Session["parametrID"] ?? String.Empty;
+            bool isSet_parametrID = int.TryParse(str_parametrID.ToString(), out paramId);
+
             Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
             Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
             Label1.Text = name.Name;
@@ -39,7 +50,7 @@ namespace Rank.Forms
                 List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.Active == true && item.fk_parametr == paramId select item).ToList();
             if (marks.Count == 1)
             {
-                foreach (var a in marks)
+                foreach (Rank_Mark a in marks)
                 {
                     Label2.Text = a.Name;
                 }
@@ -66,12 +77,17 @@ namespace Rank.Forms
                
             }
                 }
-            var view = Session["showuserID"];
-            int ruk = Convert.ToInt32(Session["showuserID"]);
+            /*int view;
+            int.TryParse(Session["showuserID"].ToString(), out view);*/
+
+            int ruk = 0;
+            object str_showuserID =  Session["showuserID"] ?? String.Empty;
+            bool isSet_showuserID = int.TryParse(str_showuserID.ToString(), out ruk);
+
             Rank_Articles userarticles = new Rank_Articles();
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
           
-                if (rights.AccessLevel == 1)
+            if (rights.AccessLevel == 1)
             {
                 userarticles = (from a in ratingDB.Rank_Articles
                                 where a.Active == true && a.Status == 1 && a.ID == article
@@ -117,8 +133,11 @@ namespace Rank.Forms
             }
             else
             {
-                var edituserId = Session["showuserID"];
-                if (edituserId != null)
+                int edituserId = 0;
+                str_showuserID = (string) Session["showuserID"] ?? String.Empty;
+                isSet_showuserID = int.TryParse(str_showuserID.ToString(), out edituserId);
+
+                if (isSet_showuserID)
                 {
                    
                     int edituser = (int)edituserId;
@@ -133,8 +152,14 @@ namespace Rank.Forms
         
         protected void Refresh()
         {
-            int article = Convert.ToInt32(Session["articleID"]);
-            int paramId = Convert.ToInt32(Session["parametrID"]);
+            int article = 0;
+            object str_articleID =  Session["articleID"] ?? String.Empty;
+            bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
+
+            int paramId = 0;
+            object str_parametrID =  Session["parametrID"] ?? String.Empty;
+            bool isSet_parametrID = int.TryParse(str_parametrID.ToString(), out paramId);
+
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
             dataTable.Columns.Add(new DataColumn("userid", typeof(string)));
@@ -233,8 +258,13 @@ namespace Rank.Forms
 
         public Table CreateNewTable()
         {
-            int article = Convert.ToInt32(Session["articleID"]);
-            int paramId = Convert.ToInt32(Session["parametrID"]);
+            int article = 0;
+            object str_articleID =  Session["articleID"] ?? String.Empty;
+            bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
+
+            int paramId = 0;
+            object str_parametrID =  Session["parametrID"] ?? String.Empty;
+            bool isSet_parametrID = int.TryParse(str_parametrID.ToString(), out paramId);
     
             Table tableToReturn = new Table();
             List<Rank_Fields> allFields = new List<Rank_Fields>();
@@ -354,7 +384,9 @@ namespace Rank.Forms
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            int article = Convert.ToInt32(Session["articleID"]);
+            int article = 0;
+            object str_articleID =  Session["articleID"] ?? String.Empty;
+            bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
  
             Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
             send.Status = 2;

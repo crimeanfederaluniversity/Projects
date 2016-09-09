@@ -13,17 +13,25 @@ namespace Rank.Forms
         RankDBDataContext ratingDB = new RankDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
-            var userId = Session["UserID"];
-            if (userId == null)
+            int userId = 0;
+            object str_UserID =  Session["UserID"] ?? String.Empty;
+            bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
+            
+            if (!isSet_UserID)
             {
                 Response.Redirect("~/Default.aspx");
             }
+
             int userID = (int)userId;
+
             Refresh();
         }
         protected void Refresh()
         {
-            var userId = Session["UserID"];
+            int userId = 0;
+            object str_UserID =  Session["UserID"] ?? String.Empty;
+            bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
+
             int userID = (int)userId;
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
@@ -63,15 +71,24 @@ namespace Rank.Forms
         protected void AcceptButtonClik(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            var userId = Session["UserID"];
+
+            int userId = 0;
+            object str_UserID =  Session["UserID"] ?? String.Empty;
+            bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
+
             int userID = (int)userId;
+
+            int fk_article;
+            int.TryParse(button.CommandArgument, out fk_article);
+
             Rank_UserArticleMappingTable confirm = (from a in ratingDB.Rank_UserArticleMappingTable
                                                     where a.Active == true && a.FK_User == userID && a.UserConfirm == false
-                                                    && a.FK_Article == Convert.ToInt32(button.CommandArgument)
+                                                    && a.FK_Article == fk_article
                                                     select a).FirstOrDefault();
             Rank_Articles param = (from a in ratingDB.Rank_Articles
-                                   where a.Active == true && a.ID == Convert.ToInt32(button.CommandArgument)
+                                   where a.Active == true && a.ID == fk_article
                                    select a).FirstOrDefault();
+
             GridViewRow row = (GridViewRow)button.Parent.Parent;
             DropDownList drop = (DropDownList)row.FindControl("ddlPoint");
   
@@ -84,16 +101,19 @@ namespace Rank.Forms
             }
             else
             { 
-            }                 
-            int paramId = Convert.ToInt32(param.FK_parametr);
+            }
+
+            int paramId = Convert.ToInt32(param.FK_parametr); // TODO: mono
             if (confirm != null)
             {
                 confirm.UserConfirm = true;
                 ratingDB.SubmitChanges();
             }
             Calculate userpoints = new Calculate();
-            userpoints.CalculateUserArticlePoint(paramId, Convert.ToInt32(button.CommandArgument), userID);
+
+            userpoints.CalculateUserArticlePoint(paramId, fk_article, userID);
             userpoints.CalculateUserParametrPoint(paramId, userID);
+
             Refresh();
             
         }
@@ -101,15 +121,20 @@ namespace Rank.Forms
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                Label id = (e.Row.FindControl("ID") as Label);             
-                Rank_Articles paramId = (from item in ratingDB.Rank_Articles where item.Active == true && item.ID == Convert.ToInt32(id.Text) select item).FirstOrDefault();
+                Label id = (e.Row.FindControl("ID") as Label);
+
+                int itemId;
+                int.TryParse(id.Text, out itemId);
+                Rank_Articles paramId = (from item in ratingDB.Rank_Articles where item.Active == true && item.ID == itemId select item).FirstOrDefault();
+
                 DropDownList ddlPoint = (e.Row.FindControl("ddlPoint") as DropDownList);
                 List<Rank_DifficaltPoint> points = (from item in ratingDB.Rank_DifficaltPoint where item.Active == true && item.fk_parametr == paramId.FK_parametr select item).ToList();
-                var dictionary = new Dictionary<int, string>();
+                Dictionary<int, string>  dictionary = new Dictionary<int, string>();
                 dictionary.Add(0, "Выберите значение");
 
-                foreach (var item in points)
+                foreach (Rank_DifficaltPoint item in points)
                     dictionary.Add(item.ID, item.Name);
+
                 ddlPoint.DataSource = dictionary;
                 ddlPoint.DataTextField = "Value";
                 ddlPoint.DataValueField = "Key";

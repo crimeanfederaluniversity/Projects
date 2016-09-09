@@ -12,12 +12,17 @@ namespace Rank.Forms
         RankDBDataContext ratingDB = new RankDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
-            var userId = Session["userID"];
-            if (userId == null)
+            int userId = 0;
+            object str_userID =  Session["userID"] ?? String.Empty;
+            bool isSet_userID = int.TryParse(str_userID.ToString(), out userId);
+
+            if (!isSet_userID)
             {
                 Response.Redirect("~/Default.aspx");
             }
+
             int userID = (int)userId;
+
             Calculate userpoints = new Calculate();
             userpoints.CalculateHeadParametrPoint(userID);
             Rank_UserRatingPoints point = (from a in ratingDB.Rank_UserRatingPoints

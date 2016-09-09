@@ -62,7 +62,7 @@
                 <ItemTemplate>
                     <asp:Label ID="Parametr" runat="server" Text='<%# Bind("Parametr") %>'  Visible="True"></asp:Label>
                 </ItemTemplate>
-                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>-
+                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Баллы" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                 <ItemTemplate>

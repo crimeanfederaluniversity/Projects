@@ -13,20 +13,27 @@ namespace Rank.Forms
         RankDBDataContext ratingDB = new RankDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
-       
-            var userId = Session["userID"];
-            if (userId == null)
+            int userId = 0;
+            object str_userID =  Session["userID"] ?? String.Empty;
+            bool isSet_userID = int.TryParse(str_userID.ToString(), out userId);
+
+            if (!isSet_userID)
             {
                 Response.Redirect("~/Default.aspx");
             }
+
             int userID = (int)userId;
             Refresh();
         }
 
-             protected void Refresh()
-        {
-            var userId = Session["userID"];
+         protected void Refresh()
+         {
+             int userId = 0;
+             object str_userID =  Session["userID"] ?? String.Empty;
+             bool isSet_userID = int.TryParse(str_userID.ToString(), out userId);
+
             int userID = (int)userId;
+            
             Calculate userpoints = new Calculate();
             userpoints.CalculateStructPoint(userID);
             DataTable dataTable = new DataTable();
@@ -42,38 +49,41 @@ namespace Rank.Forms
                 if ( rights.FK_FirstLevelSubdivisionTable != null &&  rights.FK_SecondLevelSubdivisionTable != null && rights.FK_ThirdLevelSubdivisionTable != null)
                 {
                     structusers = (from a in ratingDB.UsersTable  where a.Active == true &&
-                                    (a.FirstLevelSubdivisionTable == rights.FirstLevelSubdivisionTable
+                                    (a.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable
                                     && a.FK_SecondLevelSubdivisionTable == rights.FK_SecondLevelSubdivisionTable
                                     && a.FK_ThirdLevelSubdivisionTable == rights.FK_ThirdLevelSubdivisionTable)
                                    select a).ToList();
                 }
-                if (rights.FK_FirstLevelSubdivisionTable != null && rights.FK_SecondLevelSubdivisionTable != null )
-                {
-                    structusers = (from a in ratingDB.UsersTable
-                                   where a.Active == true &&  (a.FirstLevelSubdivisionTable == rights.FirstLevelSubdivisionTable  && a.FK_SecondLevelSubdivisionTable == rights.FK_SecondLevelSubdivisionTable)
-                                   select a).ToList();
-                }
-                if (rights.FK_FirstLevelSubdivisionTable != null)
-                {
-                    structusers = (from a in ratingDB.UsersTable   where a.Active == true &&  a.FirstLevelSubdivisionTable == rights.FirstLevelSubdivisionTable  select a).ToList();
-                }
-                if (rights.AccessLevel == 9)
-                {
-                    structusers = (from a in ratingDB.UsersTable where a.Active == true select a).ToList();
-                }
-          
+            if (rights.FK_FirstLevelSubdivisionTable != null && rights.FK_SecondLevelSubdivisionTable != null )
+            {
+                structusers = (from a in ratingDB.UsersTable
+                               where a.Active == true &&  (a.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable  && a.FK_SecondLevelSubdivisionTable == rights.FK_SecondLevelSubdivisionTable)
+                               select a).ToList();
+            }
+            if (rights.FK_FirstLevelSubdivisionTable != null)
+            {
+                structusers = (from a in ratingDB.UsersTable   where a.Active == true &&  a.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable select a).ToList();
+            }
+            if (rights.AccessLevel == 9)
+            {
+                structusers = (from a in ratingDB.UsersTable where a.Active == true select a).ToList();
+            }
+
             if (structusers != null)
             {
                 int allsumm = 0;           
-                foreach (var tmp in structusers)
+                foreach (UsersTable tmp in structusers)
                 {
                     List<Rank_UserParametrValue> userrating = (from a in ratingDB.Rank_UserParametrValue where a.Active == true && a.FK_user == tmp.UsersTableID select a).ToList();
                     int sum = 0;
                     
                     foreach (var a in userrating)
                     {
-                        if(a.Value != null )
-                        sum = sum + Convert.ToInt32(a.Value.Value);
+                        if (a.Value != null)
+                        {
+                            int val = (int) a.Value.Value;
+                            sum = sum + val;
+                        }
                     }
                     List<Rank_Articles> userarticles = new List<Rank_Articles>();
                     Rank_StructPoints spoint = new Rank_StructPoints(); 
@@ -143,22 +153,23 @@ namespace Rank.Forms
                     }
            
                     dataTable.Rows.Add(dataRow);
-                }                         
-                GridView1.DataSource = dataTable;
+                }
+               GridView1.DataSource = dataTable;
                 GridView1.DataBind();
             }
         }
         protected void ShowButtonClik(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            {
-                Session["showuserID"] = Convert.ToInt32(button.CommandArgument);
-                Response.Redirect("~/Forms/HeadAcceptSecond.aspx");
-            }
+            int cmdArg;
+            int.TryParse(button.CommandArgument, out cmdArg);
+
+            Session["showuserID"] = cmdArg;
+            Response.Redirect("~/Forms/HeadAcceptSecond.aspx");
         }
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            var lblColor = e.Row.FindControl("Color") as Label;
+            Label lblColor = e.Row.FindControl("Color") as Label;
             if (lblColor != null)
             {
                 if (lblColor.Text == "1") // красный 

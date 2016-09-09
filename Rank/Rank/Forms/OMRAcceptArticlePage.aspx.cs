@@ -16,9 +16,9 @@ namespace Rank.Forms
             if (!Page.IsPostBack)
             {
                 List<FirstLevelSubdivisionTable> First_stageList = (from item in ratingDB.FirstLevelSubdivisionTable where item.Active == true select item).OrderBy(mc => mc.Name).ToList();
-                var dictionary = new Dictionary<int, string>();
+                Dictionary<int, string> dictionary = new Dictionary<int, string>();
                 dictionary.Add(0, "Выберите значение");
-                foreach (var item in First_stageList)
+                foreach (FirstLevelSubdivisionTable item in First_stageList)
                     dictionary.Add(item.FirstLevelSubdivisionTableID, item.Name);
                 DropDownList3.DataTextField = "Value";
                 DropDownList3.DataValueField = "Key";
@@ -26,9 +26,9 @@ namespace Rank.Forms
                 DropDownList3.DataBind();
 
                 List<Rank_Parametrs> paramList = (from item in ratingDB.Rank_Parametrs where item.Active == true select item).OrderBy(mc => mc.Name).ToList();
-                var dictionary2 = new Dictionary<int, string>();
+                Dictionary<int, string> dictionary2 = new Dictionary<int, string>();
                 dictionary2.Add(0, "Выберите значение");
-                foreach (var item in paramList)
+                foreach (Rank_Parametrs item in paramList)
                     dictionary2.Add(item.ID, item.Name);
                 DropDownList6.DataTextField = "Value";
                 DropDownList6.DataValueField = "Key";
@@ -46,10 +46,10 @@ namespace Rank.Forms
                                                                       select item).OrderBy(mc => mc.SecondLevelSubdivisionTableID).ToList();
                 if (second_stageList != null && second_stageList.Count() > 0)
                 {
-                    var dictionary = new Dictionary<int, string>();
+                    Dictionary<int, string> dictionary = new Dictionary<int, string>();
 
                     dictionary.Add(-1, "Выберите значение");
-                    foreach (var item in second_stageList)
+                    foreach (SecondLevelSubdivisionTable item in second_stageList)
                         dictionary.Add(item.SecondLevelSubdivisionTableID, item.Name);
                     DropDownList4.Enabled = true;
                     DropDownList4.DataTextField = "Value";
@@ -69,9 +69,9 @@ namespace Rank.Forms
                                                                 select item).OrderBy(mc => mc.ThirdLevelSubdivisionTableID).ToList();
                 if (third_stage != null && third_stage.Count() > 0)
                 {
-                    var dictionary = new Dictionary<int, string>();
+                    Dictionary<int, string> dictionary = new Dictionary<int, string>();
                     dictionary.Add(-1, "Выберите значение");
-                    foreach (var item in third_stage)
+                    foreach (ThirdLevelSubdivisionTable item in third_stage)
                         dictionary.Add(item.ThirdLevelSubdivisionTableID, item.Name);
                     DropDownList5.Enabled = true;
                     DropDownList5.DataTextField = "Value";
@@ -83,7 +83,7 @@ namespace Rank.Forms
         }
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            var lblColor = e.Row.FindControl("Color") as Label;
+            Label lblColor = e.Row.FindControl("Color") as Label;
             if (lblColor != null)
             {
                 if (lblColor.Text == "1") // красный 
@@ -107,26 +107,31 @@ namespace Rank.Forms
         protected void EditButtonClik(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            {
-                Session["articleID"] = Convert.ToInt32(button.CommandArgument);
-                Response.Redirect("~/Forms/CreateEditForm.aspx");
-            }
+
+            int btnArg;
+            int.TryParse(button.CommandArgument, out btnArg);
+            Session["articleID"] = btnArg;
+
+            Response.Redirect("~/Forms/CreateEditForm.aspx");
         }
 
         protected void AcceptButtonClik(object sender, EventArgs e)
         {
             Button button = (Button)sender;
+
+            int itemId = 0;
+            object str_itemId = button.CommandArgument ?? String.Empty;
+            bool isSet_itemId = int.TryParse(str_itemId.ToString(), out itemId);
+
+            Rank_Articles accept = (from item in ratingDB.Rank_Articles
+                                    where item.ID == itemId
+            && item.Active == true
+                                    select item).FirstOrDefault();
+            if (accept != null)
             {
-                Rank_Articles accept = (from item in ratingDB.Rank_Articles
-                                        where item.ID == Convert.ToInt32(button.CommandArgument)
-                && item.Active == true
-                                        select item).FirstOrDefault();
-                if (accept != null)
-                {
-                    accept.Status = 4;
-                    ratingDB.SubmitChanges();
-                    PoiskRefresh();
-                }
+                accept.Status = 4;
+                ratingDB.SubmitChanges();
+                PoiskRefresh();
             }
         }
         protected void PoiskRefresh()
@@ -138,25 +143,50 @@ namespace Rank.Forms
             dataTable.Columns.Add(new DataColumn("Status", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Color", typeof(string)));
 
-            if (Convert.ToInt32(DropDownList3.SelectedItem.Value) != 0 && Convert.ToInt32(DropDownList6.SelectedItem.Value) != 0)
+            int ddl3Value = 0;
+            object str_ddl3Value = DropDownList3.SelectedItem.Value ?? String.Empty;
+            bool isSet_ddl3Value = int.TryParse(str_ddl3Value.ToString(), out ddl3Value);
+
+            int ddl6Value = 0;
+            object str_ddl6Value = DropDownList6.SelectedItem.Value ?? String.Empty;
+            bool isSet_ddl6Value = int.TryParse(str_ddl6Value.ToString(), out ddl6Value);
+
+            if (ddl3Value != 0 && ddl6Value != 0)
             {
+                int fk_FirstLevelSubdivisionTable = 0;
+                object str_fk_FirstLevelSubdivisionTable = DropDownList3.Items[DropDownList3.SelectedIndex].Value ?? String.Empty;
+                int.TryParse(str_fk_FirstLevelSubdivisionTable.ToString(), out fk_FirstLevelSubdivisionTable);
+
+                int fk_SecondLevelSubdivisionTable = 0;
+                object fkr_FK_SecondLevelSubdivisionTable = DropDownList4.Items[DropDownList4.SelectedIndex].Value ?? String.Empty;
+                int.TryParse(fkr_FK_SecondLevelSubdivisionTable.ToString(), out fk_SecondLevelSubdivisionTable);
+
+                int fk_ThirdLevelSubdivisionTable = 0;
+                object fkr_FK_ThirdLevelSubdivisionTable = DropDownList5.Items[DropDownList5.SelectedIndex].Value ?? String.Empty;
+                int.TryParse(fkr_FK_ThirdLevelSubdivisionTable.ToString(), out fk_ThirdLevelSubdivisionTable);
+
                 List<UsersTable> poisk = (from a in ratingDB.UsersTable
-                                          where a.Active == true && (a.FK_FirstLevelSubdivisionTable == Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value) || a.FK_FirstLevelSubdivisionTable == null) &&
-                                          (a.FK_SecondLevelSubdivisionTable == Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value) || a.FK_SecondLevelSubdivisionTable == null) &&
-                                          (a.FK_ThirdLevelSubdivisionTable == Convert.ToInt32(DropDownList5.Items[DropDownList5.SelectedIndex].Value) || a.FK_ThirdLevelSubdivisionTable == null)
+                                          where a.Active == true && (a.FK_FirstLevelSubdivisionTable == fk_FirstLevelSubdivisionTable || a.FK_FirstLevelSubdivisionTable == null) &&
+                                          (a.FK_SecondLevelSubdivisionTable == fk_SecondLevelSubdivisionTable || a.FK_SecondLevelSubdivisionTable == null) &&
+                                          (a.FK_ThirdLevelSubdivisionTable == fk_ThirdLevelSubdivisionTable || a.FK_ThirdLevelSubdivisionTable == null)
                                           select a).ToList();
+
                 if (poisk != null && poisk.Count != 0)
                 {
                     List<Rank_Articles> structarticles = new List<Rank_Articles>();
-                    foreach (var tmp in poisk)
+                    foreach (UsersTable tmp in poisk)
                     {
+                        int fk_parametr = 0;
+                        object str_fk_parametr = DropDownList6.SelectedItem.Value ?? String.Empty;
+                        bool isSet_fk_parametr = int.TryParse(str_fk_parametr.ToString(), out fk_parametr);
+
                         List<Rank_Articles> userarticles = (from a in ratingDB.Rank_Articles
-                                                            where a.Active == true && a.Status !=0 && a.FK_parametr == Convert.ToInt32(DropDownList6.SelectedItem.Value)
+                                                            where a.Active == true && a.Status !=0 && a.FK_parametr == fk_parametr
                                                             join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                                             where b.Active == true && b.FK_User == tmp.UsersTableID && b.UserConfirm == true
                                                             select a).ToList();
 
-                        foreach (var a in userarticles)
+                        foreach (Rank_Articles a in userarticles)
                         {
                             structarticles.Add(a);
                         }
@@ -165,7 +195,7 @@ namespace Rank.Forms
 
                     if (structarticles != null && structarticles.Count != 0)
                     {
-                        foreach (var article in structarticles)
+                        foreach (Rank_Articles article in structarticles)
                         {
                             DataRow dataRow = dataTable.NewRow();
                             dataRow["ID"] = article.ID;

@@ -12,26 +12,31 @@ namespace Rank.Forms
     {
         RankDBDataContext ratingDB = new RankDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
-        {           
-            var userId = Session["UserID"];
-            if (userId == null)
+        {
+            int userId = 0;
+            object str_UserID = Session["UserID"] ?? String.Empty;
+            bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
+            
+            if (!isSet_UserID)
             {
                 Response.Redirect("~/Default.aspx");
             }
+
             int userID = (int)userId;
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-            var showuser = Session["showuserID"];
+
+            int showuser = 0;
+            object str_showuserID = Session["showuserID"] ?? String.Empty;
+            bool isSet_showuserID = int.TryParse(str_showuserID.ToString(), out showuser);
          
-                if (rights.AccessLevel == 9)
+            if (rights.AccessLevel == 9)
             {
                 Label3.Text = "Ввод рейтинговых данных научно-педагогических работников КФУ";
                 Button2.Visible = false;
                 Label1.Visible = false;
-                    if (showuser != null)
+                    if (isSet_showuserID)
                     {
-                 
-                    int id = (int)showuser;
-                        UsersTable user = (from item in ratingDB.UsersTable where item.UsersTableID == id select item).FirstOrDefault();
+                        UsersTable user = (from item in ratingDB.UsersTable where item.UsersTableID == showuser select item).FirstOrDefault();
                         Label2.Text = user.Surname.ToString() + " " + user.Name.ToString() + " " + user.Patronimyc.ToString();
                     }
                     else
@@ -73,20 +78,19 @@ namespace Rank.Forms
             List<Rank_Parametrs> allparam1 = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.EditUserType == 0 select a).OrderBy(mc=>mc.Number).ToList();
             List<Rank_Parametrs> allparam2 = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.EditUserType == 1 select a).OrderBy(mc => mc.Number).ToList();
        
-                List<Rank_Articles> allarticleList = (from b in ratingDB.Rank_Articles
-                                                      where b.Active == true
-                                                      join a in ratingDB.Rank_UserArticleMappingTable on b.ID equals a.FK_Article
-                                                      where a.Active == true && a.FK_User == userID && a.UserConfirm == true
-                                                      select b).ToList();
+            List<Rank_Articles> allarticleList = (from b in ratingDB.Rank_Articles
+                                                    where b.Active == true
+                                                    join a in ratingDB.Rank_UserArticleMappingTable on b.ID equals a.FK_Article
+                                                    where a.Active == true && a.FK_User == userID && a.UserConfirm == true
+                                                    select b).ToList();
 
  
             List<Rank_UserParametrValue> userrating = new List<Rank_UserParametrValue>();
             if (rights.AccessLevel == 9)
             {
-                if (showuser != null)
+                if (isSet_showuserID)
                 {
-                    int id = (int)showuser;
-                    userrating = (from a in ratingDB.Rank_UserParametrValue where a.Active == true && a.FK_user == id select a).ToList();
+                    userrating = (from a in ratingDB.Rank_UserParametrValue where a.Active == true && a.FK_user == showuser select a).ToList();
                     int sum = 0;
                     foreach (var a in userrating)
                     {
@@ -116,13 +120,12 @@ namespace Rank.Forms
                 foreach (var tmp in allparam1)
                 {
                     Rank_UserParametrValue calculate = new Rank_UserParametrValue();
-                    if (rights.AccessLevel == 9 && showuser != null)
-                    { 
-                            int id = (int)showuser;
+                    if (rights.AccessLevel == 9 && isSet_showuserID)
+                    {
                             calculate = (from a in ratingDB.Rank_UserParametrValue
-                                         where a.Active == true && a.FK_parametr == tmp.ID && a.FK_user == id
+                                         where a.Active == true && a.FK_parametr == tmp.ID && a.FK_user == showuser
                                          select a).FirstOrDefault();
-                        userpoints.CalculateUserParametrPoint(tmp.ID, id);
+                        userpoints.CalculateUserParametrPoint(tmp.ID, showuser);
                     }   
                     if(rights.AccessLevel != 9)
                     {
@@ -148,12 +151,12 @@ namespace Rank.Forms
                 GridView1.DataSource = dataTable1;
                 GridView1.DataBind();
             }
-            if (allparam2 != null)
+            /*if (allparam2 != null)
             {
                 foreach (var tmp in allparam2)
                 {
                     Rank_UserParametrValue calculate = new Rank_UserParametrValue();
-                    if (rights.AccessLevel == 9 && showuser != null)
+                    if (rights.AccessLevel == 9 && isSet_showuserID)
                     {
                         int id = (int)showuser;
                         calculate = (from a in ratingDB.Rank_UserParametrValue
@@ -184,28 +187,38 @@ namespace Rank.Forms
                 }
                 GridView2.DataSource = dataTable2;
                 GridView2.DataBind();
-            }
+            }*/
         }
 
         protected void EditButtonClik(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            { 
-                var userId = Session["UserID"];
-                int userID = (int)userId;
-                Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == Convert.ToInt32(button.CommandArgument) select item).FirstOrDefault();
-                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+
+            int userId = 0;
+            object str_UserID = Session["UserID"] ?? String.Empty;
+            bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
+
+            int userID = (int)userId;
+
+            int btnCmdArg = 0;
+            object str_btnCmdArg = button.CommandArgument ?? String.Empty;
+            bool isSet_btnCmdArg = int.TryParse(str_btnCmdArg.ToString(), out btnCmdArg);
+
+            Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == btnCmdArg select item).FirstOrDefault();
+            UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
           
-                Session["parametrID"] = Convert.ToInt32(button.CommandArgument);
-                    Response.Redirect("~/Forms/UserArticlePage.aspx");              
-            }
-           
+            Session["parametrID"] = btnCmdArg;
+
+            Response.Redirect("~/Forms/UserArticlePage.aspx");
         }
         protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                var userId = Session["UserID"];
+                int userId = 0;
+                object str_UserID = Session["UserID"] ?? String.Empty;
+                bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
+
                 int userID = (int)userId;
                 UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
                 Button but = (e.Row.FindControl("EditButton") as Button);

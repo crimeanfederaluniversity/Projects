@@ -27,14 +27,25 @@ namespace Rank.Forms
         protected void Page_Load(object sender, EventArgs e)
         {
             Refresh();
-            int paramId = Convert.ToInt32(Session["parametrID"]);
-            var userId = Session["UserID"];
-            if (userId == null)
+
+            int paramId = 0;
+            object str_parametrID =  Session["parametrID"] ?? String.Empty;
+            bool isSet_parametrIDSet = int.TryParse(str_parametrID.ToString(), out paramId);
+
+            int userId = 0;
+            object str_UserID =  Session["UserID"] ?? String.Empty;
+            bool isSet_UserIDSet = int.TryParse(str_UserID.ToString(), out userId);
+
+            if (!isSet_UserIDSet)
             {
                 Response.Redirect("~/Default.aspx");
-            }           
+            }
             int userID = (int)userId;
-            int article = Convert.ToInt32(Session["articleID"]);
+
+            int article = 0;
+            object str_articleID =  Session["articleID"] ?? String.Empty;
+            bool isSet_articleIDSet = int.TryParse(str_articleID.ToString(), out article);
+
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
             Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs join a in ratingDB.Rank_Articles on item.ID equals a.FK_parametr
                                    where a.ID == article
@@ -42,7 +53,10 @@ namespace Rank.Forms
             Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
                    
             Label1.Text = name.Name;
-            var viewuser = Session["showuserID"];
+
+            int viewuser = 0;
+            object str_showuserID =  Session["showuserID"] ?? String.Empty;
+            bool isSet_showuserIDSet = int.TryParse(str_showuserID.ToString(), out viewuser);
            
            if(!Page.IsPostBack)
             {
@@ -163,11 +177,18 @@ namespace Rank.Forms
         }
         protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int article = Convert.ToInt32(Session["articleID"]);
+            int article = 0;
+            object str_articleID =  Session["articleID"] ?? String.Empty;
+            bool isSet_articleIDSet = int.TryParse(str_articleID.ToString(), out article);
+
             Rank_Articles mark = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
             if(DropDownList2.SelectedIndex != 0)
             {
-                mark.FK_mark = Convert.ToInt32(DropDownList2.SelectedItem.Value);
+                int value = 0;
+                object str_ddl2Value =  Session["ddl2Value"] ?? String.Empty;
+                bool isSet_ddl2ValueSet = int.TryParse(str_ddl2Value.ToString(), out value);
+
+                mark.FK_mark = value;
             }
             ratingDB.SubmitChanges();
             TableDiv.Controls.Clear();
@@ -176,8 +197,14 @@ namespace Rank.Forms
         #region таблица с авторами
         protected void Refresh()
         {
-            int article = Convert.ToInt32(Session["articleID"]);
-            int paramId = Convert.ToInt32(Session["parametrID"]);
+            int article = 0;
+            object str_articleID =  Session["articleID"] ?? String.Empty;
+            bool isSet_articleIDSet = int.TryParse(str_articleID.ToString(), out article);
+
+            int paramId = 0;
+            object sparametrID = Session["parametrID"] ?? String.Empty;
+            bool isSet_parametrIDSet = int.TryParse(sparametrID.ToString(), out paramId);
+
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
             dataTable.Columns.Add(new DataColumn("userid", typeof(string)));
@@ -250,16 +277,29 @@ namespace Rank.Forms
         protected void SaveDropDownjChange(object sender, EventArgs e)
         {
             SaveAll();
-            int article = Convert.ToInt32(Session["articleID"]);
-            var userId = Session["UserID"];     
+            int article = 0;
+            object str_articleID =  Session["articleID"] ?? String.Empty;
+            bool isSet_articleIDSet = int.TryParse(str_articleID.ToString(), out article);
+
+            int userId = 0;
+            object str_UserID =  Session["UserID"] ?? String.Empty;
+            bool isSet_UserIDSet = int.TryParse(str_UserID.ToString(), out userId);
+
             int userID = (int)userId;
+
             Rank_UserArticleMappingTable user = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_Article == article && a.FK_User == userID select a).FirstOrDefault();
+
             DropDownList point = (DropDownList)sender;
-            user.FK_point = Convert.ToInt32(point.SelectedValue);
+
+            int selectedValue = 0;
+            object str_selectedValue =  point.SelectedValue ?? String.Empty;
+            bool isSet_selectedValueSet = int.TryParse(str_selectedValue.ToString(), out selectedValue);
+
+            user.FK_point = selectedValue;
+
             ratingDB.SubmitChanges();
+
             Response.Redirect("~/Forms/CreateEditForm.aspx");
-
-
         }
 
         protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
@@ -267,12 +307,23 @@ namespace Rank.Forms
        
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                int article = Convert.ToInt32(Session["articleID"]);
-                int paramId = Convert.ToInt32(Session["parametrID"]);
+                int article = 0;
+                object str_articleID =  Session["articleID"] ?? String.Empty;
+                bool isSet_articleIDSet = int.TryParse(str_articleID.ToString(), out article);
+
+                int paramId = 0;
+                object str_parametrID =  Session["parametrID"] ?? String.Empty;
+                bool isSet_parametrIDSet = int.TryParse(str_parametrID.ToString(), out paramId);
+
                 Label userid = (e.Row.FindControl("userid") as Label);
                 Label nopoint = (e.Row.FindControl("point") as Label);
                 DropDownList ddlPoint = (e.Row.FindControl("ddlPoint") as DropDownList);
-                Rank_UserArticleMappingTable point = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_Article == article && a.FK_User == Convert.ToInt32(userid.Text) select a).FirstOrDefault();
+
+                int userId = 0;
+                object str_userId = userid.Text ?? String.Empty;
+                bool isSet_userIdSet = int.TryParse(str_userId.ToString(), out userId);
+
+                Rank_UserArticleMappingTable point = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_Article == article && a.FK_User == userId select a).FirstOrDefault();
                 if (point.FK_point == null)
                 {
                     
@@ -345,26 +396,35 @@ namespace Rank.Forms
         }    
         public Table CreateNewTable()
         {
-            int article = Convert.ToInt32(Session["articleID"]);
-            int paramId = Convert.ToInt32(Session["parametrID"]);
-            var userId = Session["UserID"];           
+            int article = 0;
+            object str_articleID =  Session["articleID"] ?? String.Empty;
+            bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
+
+            int paramId = 0;
+            object str_parametrID =  Session["parametrID"] ?? String.Empty;
+            bool isSet_parametrID = int.TryParse(str_parametrID.ToString(), out paramId);
+
+            int userId = 0;
+            object str_UserID =  Session["UserID"] ?? String.Empty;
+            bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
+
             int userID = (int)userId;
             Table tableToReturn = new Table();
             List<Rank_Fields> allFields = new List<Rank_Fields>();
 
-                if (paramId == 5 || paramId == 6 || paramId == 7)
+            if (paramId == 5 || paramId == 6 || paramId == 7)
+            {
+                Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
+                if (send.FK_mark != null)
                 {
-                    Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
-                    if (send.FK_mark != null)
-                    {
-                        allFields = (from a in ratingDB.Rank_Fields  where a.Active == true && a.FK_parametr == paramId  && ( a.FK_mark == send.FK_mark || a.FK_mark == null)
-                                     select a).ToList();
-                    }
+                    allFields = (from a in ratingDB.Rank_Fields  where a.Active == true && a.FK_parametr == paramId  && ( a.FK_mark == send.FK_mark || a.FK_mark == null)
+                                    select a).ToList();
                 }
-                else
-                {
-                    allFields = (from a in ratingDB.Rank_Fields where a.Active == true && a.FK_parametr == paramId   select a).ToList();
-                }         
+            }
+            else
+            {
+                allFields = (from a in ratingDB.Rank_Fields where a.Active == true && a.FK_parametr == paramId   select a).ToList();
+            }
         
             int maxLine = (from a in allFields select a.line).OrderByDescending(mc => mc).FirstOrDefault();
 
@@ -605,12 +665,23 @@ namespace Rank.Forms
             Calculate userpoints = new Calculate();
             TableDiv.Controls.Clear();
             TableDiv.Controls.Add(CreateNewTable());
-            int paramId = Convert.ToInt32(Session["parametrID"]);
-            var userId = Session["UserID"];         
+
+            int paramId = 0;
+            object str_parametrID =  Session["parametrID"] ?? String.Empty;
+            bool isSet_parametrID = int.TryParse(str_parametrID.ToString(), out paramId);
+
+            int userId = 0;
+            object str_UserID =  Session["UserID"] ?? String.Empty;
+            bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
+
             int userID = (int)userId;
             UsersTable rights = (from item in ratingDB.UsersTable where item.Active == true && item.UsersTableID == userID select item).FirstOrDefault();
             List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.Active == true && item.fk_parametr == paramId select item).ToList();
-            int article = Convert.ToInt32(Session["articleID"]);
+
+            int article = 0;
+            object str_articleID =  Session["articleID"] ?? String.Empty;
+            bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
+
             Rank_Articles mark = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
             if(rights.AccessLevel == 9 || rights.AccessLevel == 10)
             {
@@ -668,10 +739,19 @@ namespace Rank.Forms
             List<UsersTable> poisk = new List<UsersTable>();
             if (TextBox2.Text != "")
             {
+                int firstLevelSubdivisionTable;
+                int.TryParse(DropDownList3.Items[DropDownList3.SelectedIndex].Value, out firstLevelSubdivisionTable);
+
+                int secondLevelSubdivisionTable;
+                int.TryParse(DropDownList4.Items[DropDownList4.SelectedIndex].Value, out secondLevelSubdivisionTable);
+
+                int thirdLevelSubdivisionTable;
+                int.TryParse(DropDownList5.Items[DropDownList5.SelectedIndex].Value, out thirdLevelSubdivisionTable);
+
                 poisk = (from a in ratingDB.UsersTable
-                                          where a.Active == true && (a.FK_FirstLevelSubdivisionTable == Convert.ToInt32(DropDownList3.Items[DropDownList3.SelectedIndex].Value) || a.FK_FirstLevelSubdivisionTable == null) &&
-                                          (a.FK_SecondLevelSubdivisionTable == Convert.ToInt32(DropDownList4.Items[DropDownList4.SelectedIndex].Value) || a.FK_SecondLevelSubdivisionTable == null) &&
-                                          (a.FK_ThirdLevelSubdivisionTable == Convert.ToInt32(DropDownList5.Items[DropDownList5.SelectedIndex].Value) || a.FK_ThirdLevelSubdivisionTable == null)
+                                          where a.Active == true && (a.FK_FirstLevelSubdivisionTable == firstLevelSubdivisionTable || a.FK_FirstLevelSubdivisionTable == null) &&
+                                          (a.FK_SecondLevelSubdivisionTable == secondLevelSubdivisionTable || a.FK_SecondLevelSubdivisionTable == null) &&
+                                          (a.FK_ThirdLevelSubdivisionTable == thirdLevelSubdivisionTable || a.FK_ThirdLevelSubdivisionTable == null)
                                           && a.Surname.Contains(TextBox2.Text)
                                           select a).ToList();
             }
@@ -701,7 +781,10 @@ namespace Rank.Forms
         }
         protected void NotSystmAuthorRefresh()
         {
-            int article = Convert.ToInt32(Session["articleID"]);
+            int article = 0;
+            object str_articleID =  Session["articleID"] ?? String.Empty;
+            bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
+
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add(new DataColumn("notsystemuserid", typeof(string)));
             dataTable.Columns.Add(new DataColumn("notsystemuserfio", typeof(string)));
@@ -739,7 +822,10 @@ namespace Rank.Forms
             {
                 if (TextBox2.Text != null && DropDownList3.SelectedIndex != 0)
                 {
-                    int article = Convert.ToInt32(Session["articleID"]);
+                    int article = 0;
+                    object str_articleID =  Session["articleID"] ?? String.Empty;
+                    bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
+
                     TableDiv.Controls.Clear();
                     TableDiv.Controls.Add(CreateNewTable());
                     searchError.Visible = false;
@@ -750,7 +836,7 @@ namespace Rank.Forms
             {
                 if (TextBox2.Text != null && DropDownList3.SelectedIndex != 0 && ddlPoint.SelectedIndex !=0)
                 {
-                    int article = Convert.ToInt32(Session["articleID"]);
+                    //int article = Convert.ToInt32(Session["articleID"]);
                     TableDiv.Controls.Clear();
                     TableDiv.Controls.Add(CreateNewTable());
                     searchError.Visible = false;
@@ -761,18 +847,34 @@ namespace Rank.Forms
         }
         protected void AddAutorButtonClik(object sender, EventArgs e)
         {
-            int paramId = Convert.ToInt32(Session["parametrID"]);
-            var userId = Session["UserID"];      
-            int userID = (int)userId;
+            int paramId = 0;
+            object str_parametrID =  Session["parametrID"] ?? String.Empty;
+            bool isSet_parametrID = int.TryParse(str_parametrID.ToString(), out paramId);
+
+            int userId = 0;
+            object str_UserID =  Session["UserID"] ?? String.Empty;
+            bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
+
+            int userID = userId;
             Button button = (Button)sender;
-            int article = Convert.ToInt32(Session["articleID"]);
+
+            int article = 0;
+            object str_articleID =  Session["articleID"] ?? String.Empty;
+            bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
+
+            int btnCmdArg = 0;
+            object str_btnCmdArg = button.CommandArgument ?? String.Empty;
+            bool isSet_btnCmdArg = int.TryParse(str_btnCmdArg.ToString(), out btnCmdArg);
+
             List<Rank_UserArticleMappingTable> authorList = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_Article == article select a).ToList();
             List<int> addusers = new List<int>();
             foreach(var n in authorList)
             {
-                addusers.Add(Convert.ToInt32(n.FK_User));
+                // TODO: MAYBE NOT SAVE FOR MONO
+                Int32 fk_user = Convert.ToInt32(n.FK_User);
+                addusers.Add(fk_user);
             }
-            if (addusers.Contains(Convert.ToInt32(button.CommandArgument)))
+            if (addusers.Contains(btnCmdArg))
             {
                 Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Данный пользователь уже добавлен!');", true);
             }
@@ -782,7 +884,7 @@ namespace Rank.Forms
                 Rank_UserArticleMappingTable newValue = new Rank_UserArticleMappingTable();
                 newValue.Active = true;
                 newValue.FK_Article = article;
-                newValue.FK_User = Convert.ToInt32(button.CommandArgument);
+                newValue.FK_User = btnCmdArg;
                 if (rights.AccessLevel == 9 || rights.AccessLevel == 10)
                 {
                     newValue.UserConfirm = true;
@@ -799,7 +901,11 @@ namespace Rank.Forms
                 {
                     newValue.UserConfirm = false;
                 }
-                newValue.FK_point = Convert.ToInt32(ddlPoint.SelectedValue);
+
+                int selectedValue;
+                int.TryParse(ddlPoint.SelectedValue, out selectedValue);
+
+                newValue.FK_point = selectedValue;
                 ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newValue);
                 ratingDB.SubmitChanges();
                 DropDownList3.SelectedIndex = 0;
@@ -814,9 +920,16 @@ namespace Rank.Forms
         protected void Rank_DeleteAutorButtonClik(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            int article = Convert.ToInt32(Session["articleID"]);
+
+            int article = 0;
+            object str_articleID =  Session["articleID"] ?? String.Empty;
+            bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
+
+            int btnCmdArg;
+            int.TryParse(button.CommandArgument, out btnCmdArg);
+
             Rank_UserArticleMappingTable delete = (from a in ratingDB.Rank_UserArticleMappingTable
-                                                   where a.Active == true && a.FK_Article == article && a.FK_User == Convert.ToInt32(button.CommandArgument)
+                                                   where a.Active == true && a.FK_Article == article && a.FK_User == btnCmdArg
                                                    select a).FirstOrDefault();
             if (delete != null)
             {
@@ -833,9 +946,13 @@ namespace Rank.Forms
         protected void SendButtonClick(object sender, EventArgs e)
         {
             List<Rank_Fields> allFields = new List<Rank_Fields>();
-            int article = Convert.ToInt32(Session["articleID"]);
-                List<Rank_ArticleValues> check = (from a in ratingDB.Rank_ArticleValues where a.Active == true && a.FK_Article == article select a).ToList();
-                foreach (var n in check)
+
+            int article = 0;
+            object str_articleID =  Session["articleID"] ?? String.Empty;
+            bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
+
+            List<Rank_ArticleValues> check = (from a in ratingDB.Rank_ArticleValues where a.Active == true && a.FK_Article == article select a).ToList();
+            foreach (var n in check)
             {
                 if(n.Value == null || n.Value == "")
                 {
@@ -843,9 +960,16 @@ namespace Rank.Forms
                     break;
                 }
              
-            }                       
-            int paramId = Convert.ToInt32(Session["parametrID"]);
-            var userId = Session["UserID"];           
+            }
+
+            int paramId = 0;
+            object str_parametrID =  Session["parametrID"] ?? String.Empty;
+            bool isSet_parametrID = int.TryParse(str_parametrID.ToString(), out paramId);
+
+            int userId = 0;
+            object str_UserID =  Session["UserID"] ?? String.Empty;
+            bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
+
             int userID = (int)userId;
             Rank_Articles send = (from a in ratingDB.Rank_Articles
                                   where a.Active == true && a.ID == article 
@@ -861,9 +985,15 @@ namespace Rank.Forms
         protected void DeleteNotSystemAutorButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            int article = Convert.ToInt32(Session["articleID"]);
+            int btnCmdArg;
+            int.TryParse(button.CommandArgument, out btnCmdArg);
+
+            int article = 0;
+            object str_articleID =  Session["articleID"] ?? String.Empty;
+            bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
+
             Rank_NotSystemAuthors delete = (from a in ratingDB.Rank_NotSystemAuthors
-                                            where a.Active == true && a.FK_Article == article && a.ID == Convert.ToInt32(button.CommandArgument)
+                                            where a.Active == true && a.FK_Article == article && a.ID == btnCmdArg
                                                    select a).FirstOrDefault();
             if (delete != null)
             {
@@ -876,13 +1006,22 @@ namespace Rank.Forms
         {
             if(DropDownList6.Visible == true)
             {
-                if (TextBox3.Text != null && Convert.ToInt32(DropDownList6.SelectedItem.Value) != 0)
+                int dd6Value;
+                int.TryParse(DropDownList6.SelectedItem.Value, out dd6Value);
+
+                if (TextBox3.Text != null && dd6Value != 0)
                 {
-                    int article = Convert.ToInt32(Session["articleID"]);
+                    int article = 0;
+                    object str_articleID =  Session["articleID"] ?? String.Empty;
+                    bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
+
                     Rank_NotSystemAuthors newnotCFUauthor = new Rank_NotSystemAuthors();
                     newnotCFUauthor.Active = true;
                     newnotCFUauthor.FK_Article = article;
-                    newnotCFUauthor.FK_Point = Convert.ToInt32(DropDownList6.SelectedItem.Value);
+
+                    int value;
+                    int.TryParse(DropDownList6.SelectedItem.Value, out value);
+                    newnotCFUauthor.FK_Point = value;
                     newnotCFUauthor.FIO = TextBox3.Text;
                     ratingDB.Rank_NotSystemAuthors.InsertOnSubmit(newnotCFUauthor);
                     ratingDB.SubmitChanges();
@@ -893,11 +1032,18 @@ namespace Rank.Forms
             {
                 if (TextBox3.Text != null )
                 {
-                    int article = Convert.ToInt32(Session["articleID"]);
+                    int article = 0;
+                    object str_articleID =  Session["articleID"] ?? String.Empty;
+                    bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
+
                     Rank_NotSystemAuthors newnotCFUauthor = new Rank_NotSystemAuthors();
                     newnotCFUauthor.Active = true;
                     newnotCFUauthor.FK_Article = article;
-                    newnotCFUauthor.FK_Point = Convert.ToInt32(DropDownList6.SelectedItem.Value);
+
+                    int value;
+                    int.TryParse(DropDownList6.SelectedItem.Value, out value);
+                    newnotCFUauthor.FK_Point = value;
+
                     newnotCFUauthor.FIO = TextBox3.Text;
                     ratingDB.Rank_NotSystemAuthors.InsertOnSubmit(newnotCFUauthor);
                     ratingDB.SubmitChanges();

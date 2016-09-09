@@ -13,11 +13,15 @@ namespace Rank.Forms
         RankDBDataContext ratingDB = new RankDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
-            var userId = Session["UserID"];
-            if (userId == null)
+            int userId = 0;
+            object str_UserID = Session["UserID"] ?? String.Empty;
+            bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
+
+            if (!isSet_UserID)
             {
                 Response.Redirect("~/Default.aspx");
             }
+
             int userID = (int)userId;
             UsersTable userTable =  (from a in ratingDB.UsersTable where a.UsersTableID == userID select a).FirstOrDefault();
             if ((userTable.AccessLevel != 10) && (userTable.AccessLevel != 9))
@@ -97,11 +101,8 @@ namespace Rank.Forms
         protected void GoButtonClik(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            {           
-                Session["showuserID"] = Convert.ToInt32(button.CommandArgument);
-                Response.Redirect("~/Forms/UserMainPage.aspx");
-            }
-
+            Session["showuserID"] = button.CommandArgument;
+            Response.Redirect("~/Forms/UserMainPage.aspx");
         }
 
         protected void Button1_Click(object sender, EventArgs e)
