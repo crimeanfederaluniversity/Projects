@@ -3,24 +3,23 @@
     <br />
     <asp:Button ID="Button2" runat="server" Text="Назад" OnClick="Button2_Click" />
     <h3>Верифицировать данные сотрудников КФУ:</h3>
-    <span style="font-size: medium">
-    Выберите структурное подразделение:<br />
-    <br />
+    <span>Выберите структурное подразделение:<br />
     </span>
-    <asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="True" Height="25px"  Width="250px" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged">
+    <asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="True" Height="25px" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged" Width="300px">
     </asp:DropDownList>
-&nbsp;
-    <asp:DropDownList ID="DropDownList4" runat="server" AutoPostBack="True" Height="25px"  Width="250px" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged">
+    &nbsp;
+    <asp:DropDownList ID="DropDownList4" runat="server" AutoPostBack="True" Height="25px" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged" Width="300px">
     </asp:DropDownList>
-&nbsp;
-    <asp:DropDownList ID="DropDownList5" runat="server" AutoPostBack="True" Height="25px" Width="250px" >
+    &nbsp;
+    <asp:DropDownList ID="DropDownList5" runat="server" AutoPostBack="True" Height="25px" Width="300px">
     </asp:DropDownList>
     <br />
     Выберите показатель:<br />
-    <asp:DropDownList ID="DropDownList6" runat="server" Height="17px" Width="249px">
+    <asp:DropDownList ID="DropDownList6" runat="server" Height="17px" Width="300px">
     </asp:DropDownList>
-&nbsp;&nbsp;
-    <asp:Button ID="Button1" runat="server" Text="Поиск" OnClick="Button1_Click" />
+    &nbsp;&nbsp;<asp:CheckBox ID="CheckBox1" runat="server" Text="Только неверифицированные данные" />
+    &nbsp;&nbsp;
+    <asp:Button ID="Button1" runat="server" Font-Bold="True" Height="30px" OnClick="Button1_Click" Text="Поиск" Width="100px" />
     <br />
     <br />
           <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" OnRowDataBound ="GridView1_RowDataBound"  >

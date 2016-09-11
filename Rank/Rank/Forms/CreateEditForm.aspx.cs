@@ -15,7 +15,7 @@ namespace Rank.Forms
         public List<ValueSaveClass> ValuesList = new List<ValueSaveClass>();
         public DataValidator validator = new DataValidator();
         public class ValueSaveClass
-        {           
+        {
             public FileUpload File { get; set; }
             public LinkButton Download { get; set; }
             public DropDownList SelectedValue { get; set; }
@@ -25,15 +25,13 @@ namespace Rank.Forms
             public int ParamId { get; set; }
         }
         protected void Page_Load(object sender, EventArgs e)
-        {
-            Refresh();
-
+       {           
             int paramId = 0;
-            object str_parametrID =  Session["parametrID"] ?? String.Empty;
+            object str_parametrID = Session["parametrID"] ?? String.Empty;
             bool isSet_parametrIDSet = int.TryParse(str_parametrID.ToString(), out paramId);
 
             int userId = 0;
-            object str_UserID =  Session["UserID"] ?? String.Empty;
+            object str_UserID = Session["UserID"] ?? String.Empty;
             bool isSet_UserIDSet = int.TryParse(str_UserID.ToString(), out userId);
 
             if (!isSet_UserIDSet)
@@ -43,30 +41,29 @@ namespace Rank.Forms
             int userID = (int)userId;
 
             int article = 0;
-            object str_articleID =  Session["articleID"] ?? String.Empty;
+            object str_articleID = Session["articleID"] ?? String.Empty;
             bool isSet_articleIDSet = int.TryParse(str_articleID.ToString(), out article);
 
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
             Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs join a in ratingDB.Rank_Articles on item.ID equals a.FK_parametr
                                    where a.ID == article
-                                   select item).FirstOrDefault();                      
+                                   select item).FirstOrDefault();
             Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
-                   
+
             Label1.Text = name.Name;
 
             int viewuser = 0;
-            object str_showuserID =  Session["showuserID"] ?? String.Empty;
+            object str_showuserID = Session["showuserID"] ?? String.Empty;
             bool isSet_showuserIDSet = int.TryParse(str_showuserID.ToString(), out viewuser);
-           
-           if(!Page.IsPostBack)
+
+            if (!Page.IsPostBack)
             {
-               
+                #region Коэффициент сложности          
                 List<Rank_DifficaltPoint> points = (from item in ratingDB.Rank_DifficaltPoint where item.Active == true && item.fk_parametr == paramId select item).ToList();
-                if(points.Count==1)
+                if (points.Count == 1)
                 {
                     DropDownList6.Visible = false;
-                ddlPoint.Visible = false;
-
+                    ddlPoint.Visible = false;
                 }
                 var dictionary2 = new Dictionary<int, string>();
                 dictionary2.Add(0, "Выберите коэффициент сложности");
@@ -81,63 +78,67 @@ namespace Rank.Forms
                 ddlPoint.DataTextField = "Value";
                 ddlPoint.DataValueField = "Key";
                 ddlPoint.DataBind();
+                #endregion
+                #region Баллы
+                List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.Active == true && item.fk_parametr == paramId select item).ToList();
+                if (marks.Count == 1 || paramId == 1 || paramId == 2)
+                {
+                    DropDownList2.Visible = false;
+                    Label17.Visible = true;
+                    if (paramId == 1)
+                    {
+                        Label17.Text = "- с грифом УМО - 70";
+                    }
+                    if (paramId == 2)
+                    {
+                        Label17.Text = "- гриф УМС СП(Ф)  – 40";
+                    }
+                    if (marks.Count == 1)
+                    {
+                        foreach (var a in marks)
+                        {
+                            Label17.Text = a.Name;
+                        }
+                    }
+                }
+                else
+                {
+                    var dictionary1 = new Dictionary<int, string>(); dictionary1.Add(0, "Выберите значение");
+                    foreach (var item in marks) dictionary1.Add(item.ID, item.Name);
+                    DropDownList2.DataTextField = "Value";
+                    DropDownList2.DataValueField = "Key";
+                    if (send != null && send.FK_mark != null)
+                    {
+                        DropDownList2.SelectedValue = send.FK_mark.ToString();
+                    }
+                    DropDownList2.DataSource = dictionary1;
+                    DropDownList2.DataBind();
+                }
+                #endregion
 
                 List<FirstLevelSubdivisionTable> First_stageList = (from item in ratingDB.FirstLevelSubdivisionTable where item.Active == true select item).OrderBy(mc => mc.Name).ToList();
                 var dictionary = new Dictionary<int, string>();
-                dictionary.Add(0, "Выберите академию");           
+                dictionary.Add(0, "Выберите академию");
                 foreach (var item in First_stageList)
                     dictionary.Add(item.FirstLevelSubdivisionTableID, item.Name);
                 DropDownList3.DataTextField = "Value";
                 DropDownList3.DataValueField = "Key";
                 DropDownList3.DataSource = dictionary;
-                DropDownList3.DataBind();              
-                    if ( (paramId == 1 || paramId == 2) && (rights.AccessLevel != 9))
-                {                   
-                    DropDownList2.Visible = false;
-                    Label17.Visible = true;
-                    if(paramId == 1)
-                    {
-                        Label17.Text = "- с грифом УМО - 70";
+                DropDownList3.DataBind();
 
-                    }
-                    if (paramId == 2)
-                    {
-                        Label17.Text = "- с рекомендацией Ученого совета СП(Ф)  – 40";
-                    }                              
-                }
-                else
+            }
+            if (paramId == 5 || paramId == 6 || paramId == 7)
+            {
+                if (send.FK_mark != null)
                 {
-                    List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.Active == true && item.fk_parametr == paramId select item).ToList();
-                    if (marks.Count == 1 )
-                    {
-                        DropDownList2.Visible = false;
-                        Label17.Visible = true;
-                        foreach(var a in marks)
-                        {
-                            Label17.Text = a.Name;
-                        }
-                    }
-                    else
-                    {
-                        var dictionary1 = new Dictionary<int, string>();
-                        dictionary1.Add(0, "Выберите значение");
-
-                        foreach (var item in marks)
-                            dictionary1.Add(item.ID, item.Name);
-
-                        DropDownList2.DataTextField = "Value";
-                        DropDownList2.DataValueField = "Key";
-                        if (send.FK_mark != null)
-                        {
-                           if (paramId != 1 || paramId != 2)
-                            { }
-                            else { DropDownList2.SelectedValue = send.FK_mark.ToString(); }
-                        
-                        }
-                        DropDownList2.DataSource = dictionary1;
-                        DropDownList2.DataBind();
-                    }
+                    TableDiv.Controls.Clear();
+                    TableDiv.Controls.Add(CreateNewTable());
                 }
+            }
+            else
+            {
+                TableDiv.Controls.Clear();
+                TableDiv.Controls.Add(CreateNewTable());
             }
             List<Rank_UserArticleMappingTable> authorList = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_Article == article
                                                              join b in ratingDB.UsersTable on a.FK_User equals b.UsersTableID where a.Active == true && b.AccessLevel != 9 && b.AccessLevel != 10 select a).ToList();
@@ -161,19 +162,8 @@ namespace Rank.Forms
                 Refresh();
                 NotSystmAuthorRefresh();
             }
-            if (paramId == 5 || paramId == 6 || paramId == 7)
-            {
-                if (send.FK_mark != null)
-                {
-                    TableDiv.Controls.Clear();
-                    TableDiv.Controls.Add(CreateNewTable());
-                }
-            }
-            else
-            {
-                TableDiv.Controls.Clear();
-                TableDiv.Controls.Add(CreateNewTable());
-            }
+            Refresh();
+          
         }
         protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -683,22 +673,7 @@ namespace Rank.Forms
             bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
 
             Rank_Articles mark = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
-            if(rights.AccessLevel == 9 || rights.AccessLevel == 10)
-            {
-                Rank_Articles send = (from a in ratingDB.Rank_Articles
-                                      where a.Active == true && a.ID == article
-                                      select a).FirstOrDefault();
-                if(paramId == 19)
-                {
-                    send.Status = 0;
-                    ratingDB.SubmitChanges();
-                }
-                else
-                {
-                    send.Status = 4;
-                    ratingDB.SubmitChanges();
-                }                             
-            }
+        
             if ((paramId == 1 || paramId == 2) && (rights.AccessLevel != 9))
             { 
                  if(paramId == 1)
@@ -713,8 +688,7 @@ namespace Rank.Forms
                 }
             }           
             if (marks.Count == 1)
-            {
-               
+            {           
                 foreach(var a in marks)
                 {
                     mark.FK_mark = a.ID;
@@ -726,7 +700,7 @@ namespace Rank.Forms
             {
                 userpoints.CalculateUserArticlePoint(paramId, article, a.FK_User.Value);
             }        
-            Response.Redirect("~/Forms/UserArticlePage.aspx");
+            Response.Redirect("~/Forms/CreateEditForm.aspx");
         }
         protected void PoiskRefresh()
         { 
