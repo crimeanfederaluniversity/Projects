@@ -26,13 +26,11 @@ namespace Registration.Account
                 TextBox3.Text = author.Name;
                 TextBox4.Text = author.Patronimyc;
                 TextBox6.Text = author.PublicationFIO;
-            }
-            
                 if (author.TypeOfPosition == true)
                 {
                     DropDownList6.SelectedIndex = 0;
                     PPS.Visible = true;
-                    PPS.Items.FindByText(author.Position).Selected = true;            
+                    PPS.Items.FindByText(author.Position).Selected = true;
                 }
                 else
                 {
@@ -44,7 +42,8 @@ namespace Registration.Account
                 if (author.Degree != null)
                 {
                     degree.Items.FindByText(author.Degree).Selected = true;
-                }                                 
+                }
+            }                              
             if (Convert.ToInt32(DropDownList6.SelectedItem.Value) == 0)
             {
                 PPS.Visible = true;
@@ -71,11 +70,15 @@ namespace Registration.Account
                 {
                     DropDownList1.SelectedValue = author.FK_FirstLevelSubdivisionTable.ToString();
                 }
-                if (author.FK_SecondLevelSubdivisionTable != null)
-                {
-                    DropDownList2.SelectedValue = author.FK_SecondLevelSubdivisionTable.ToString();
-                }
         
+            }
+            if (author.FK_SecondLevelSubdivisionTable != null)
+            {
+                DropDownList2.SelectedValue = author.FK_SecondLevelSubdivisionTable.ToString();
+            }
+            if (author.FK_ThirdLevelSubdivisionTable != null)
+            {
+                DropDownList3.SelectedValue = author.FK_ThirdLevelSubdivisionTable.ToString();
             }
         }
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -102,9 +105,7 @@ namespace Registration.Account
                     DropDownList2.DataTextField = "Value";
                     DropDownList2.DataValueField = "Key";
                     DropDownList2.DataSource = dictionary;
-                    DropDownList2.DataBind();
-                    
-                                       
+                    DropDownList2.DataBind();                                                         
                 }
             }
         }
@@ -132,13 +133,7 @@ namespace Registration.Account
                     DropDownList3.DataTextField = "Value";
                     DropDownList3.DataValueField = "Key";
                     DropDownList3.DataSource = dictionary;
-                    DropDownList3.DataBind();
-                   
-                    if (author.FK_ThirdLevelSubdivisionTable != null)
-                    {
-                        SelectedValue = author.FK_ThirdLevelSubdivisionTable.Value;
-                    }
-                    
+                    DropDownList3.DataBind();                   
                 }
             }
         }
@@ -216,60 +211,68 @@ namespace Registration.Account
             {
                 if (TextBox1.Text != null && TextBox2.Text.Any() && TextBox3.Text.Any() && TextBox4.Text.Any() && TextBox6.Text.Any() && DropDownList1.SelectedIndex != 0)
                 {
-                    UsersTable newuser = new UsersTable();
-                    newuser.Active = false;
-                    newuser.Email = TextBox1.Text;
-                    newuser.Surname = TextBox2.Text;
-                    newuser.Name = TextBox3.Text;
-                    newuser.Patronimyc = TextBox4.Text;
-                    if (degree.SelectedIndex != 2)
+                    UsersTable check = (from a in rating.UsersTable where a.Active == true && a.Email == TextBox1.Text select a).FirstOrDefault();
+                    if (check == null)
                     {
-                        newuser.Degree = degree.SelectedItem.Text;
-                    }
-                    if (PPS.Visible == true)
-                    {
-                        newuser.AccessLevel = Convert.ToInt32(PPS.SelectedItem.Value);
-                        newuser.Position = PPS.SelectedItem.Text;
-                    }
-                    else if (NR.Visible == true)
-                    {
-                        newuser.AccessLevel = Convert.ToInt32(NR.SelectedItem.Value);
-                        newuser.Position = NR.SelectedItem.Text;
-                    }
-                    newuser.FK_FirstLevelSubdivisionTable = Convert.ToInt32(DropDownList1.SelectedItem.Value);
-                    if (Convert.ToInt32(DropDownList2.SelectedItem.Value) != 0)
-                    {
-                        newuser.FK_SecondLevelSubdivisionTable = Convert.ToInt32(DropDownList2.SelectedItem.Value);
+                        UsersTable newuser = new UsersTable();
+                        newuser.Active = false;
+                        newuser.Email = TextBox1.Text;
+                        newuser.Surname = TextBox2.Text;
+                        newuser.Name = TextBox3.Text;
+                        newuser.Patronimyc = TextBox4.Text;
+                        if (degree.SelectedIndex != 2)
+                        {
+                            newuser.Degree = degree.SelectedItem.Text;
+                        }
+                        if (PPS.Visible == true)
+                        {
+                            newuser.AccessLevel = Convert.ToInt32(PPS.SelectedItem.Value);
+                            newuser.Position = PPS.SelectedItem.Text;
+                        }
+                        else if (NR.Visible == true)
+                        {
+                            newuser.AccessLevel = Convert.ToInt32(NR.SelectedItem.Value);
+                            newuser.Position = NR.SelectedItem.Text;
+                        }
+                        newuser.FK_FirstLevelSubdivisionTable = Convert.ToInt32(DropDownList1.SelectedItem.Value);
+                        if (Convert.ToInt32(DropDownList2.SelectedItem.Value) != 0)
+                        {
+                            newuser.FK_SecondLevelSubdivisionTable = Convert.ToInt32(DropDownList2.SelectedItem.Value);
+                        }
+                        else
+                        {
+                            newuser.FK_SecondLevelSubdivisionTable = null;
+                        }
+
+                        if (Convert.ToInt32(DropDownList3.SelectedItem.Value) != 0)
+                        {
+                            newuser.FK_ThirdLevelSubdivisionTable = Convert.ToInt32(DropDownList3.SelectedItem.Value);
+                        }
+                        else
+                        {
+                            newuser.FK_ThirdLevelSubdivisionTable = null;
+                        }
+
+                        newuser.Stavka = Convert.ToDouble(stavka.SelectedItem.Value);
+                        newuser.PublicationFIO = TextBox6.Text;
+                        newuser.Password = "";
+                        if (Convert.ToInt32(DropDownList6.SelectedItem.Value) == 0)
+                        {
+                            newuser.TypeOfPosition = true;
+                        }
+                        else if (Convert.ToInt32(DropDownList6.SelectedItem.Value) == 1)
+                        {
+                            newuser.TypeOfPosition = false;
+                        }
+                        newuser.Confirmed = false;
+                        rating.UsersTable.InsertOnSubmit(newuser);
+                        rating.SubmitChanges();
+                        Response.Redirect("~/Account/FinishPage.aspx");
                     }
                     else
                     {
-                        newuser.FK_SecondLevelSubdivisionTable = null;
+                        Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Пользователь с таким электронным адресом уже зарегистрирован!');", true);
                     }
-
-                    if (Convert.ToInt32(DropDownList3.SelectedItem.Value) != 0)
-                    {
-                        newuser.FK_ThirdLevelSubdivisionTable = Convert.ToInt32(DropDownList3.SelectedItem.Value);
-                    }
-                    else
-                    {
-                        newuser.FK_ThirdLevelSubdivisionTable = null;
-                    }
-
-                    newuser.Stavka = Convert.ToDouble(stavka.SelectedItem.Value);
-                    newuser.PublicationFIO = TextBox6.Text;
-                    newuser.Password = "";
-                    if (Convert.ToInt32(DropDownList6.SelectedItem.Value) == 0)
-                    {
-                        newuser.TypeOfPosition = true;
-                    }
-                    else if (Convert.ToInt32(DropDownList6.SelectedItem.Value) == 1)
-                    {
-                        newuser.TypeOfPosition = false;
-                    }
-                    newuser.Confirmed = false;
-                    rating.UsersTable.InsertOnSubmit(newuser);
-                    rating.SubmitChanges();
-                    Response.Redirect("~/Account/FinishPage.aspx");
                 }
                 else
                 {
@@ -277,5 +280,31 @@ namespace Registration.Account
                 }
             }
         }
+
+        protected void DropDownList6_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UsersTable author = null;
+            if (Session["edituser"] != null)
+            {
+                var id = Convert.ToInt32(Session["edituser"]);
+                author = (from a in rating.UsersTable where a.Active == false && a.UsersTableID == id select a).FirstOrDefault();
+            }
+
+            if (author != null)
+            {
+                if (Convert.ToInt32(DropDownList6.SelectedItem.Value) == 0)
+                {
+                    author.TypeOfPosition = true;
+                    rating.SubmitChanges();
+                }
+                else if (Convert.ToInt32(DropDownList6.SelectedItem.Value) == 1)
+                {
+                    author.TypeOfPosition = false;
+                    rating.SubmitChanges();
+                }
+                
+            }
+
+            }
     }
 }

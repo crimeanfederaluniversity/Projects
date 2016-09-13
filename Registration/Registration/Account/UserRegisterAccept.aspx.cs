@@ -34,7 +34,7 @@ namespace Registration.Account
             dataTable.Columns.Add(new DataColumn("stavka", typeof(string)));
             dataTable.Columns.Add(new DataColumn("degree", typeof(string)));
             dataTable.Columns.Add(new DataColumn("fio", typeof(string)));
-            List<UsersTable> authorList = (from a in rating.UsersTable where a.Active == false select a).ToList();
+            List<UsersTable> authorList = (from a in rating.UsersTable where a.Active == false && a.Confirmed == false select a).ToList();
                   
             foreach (UsersTable value in authorList)
             {
@@ -104,18 +104,27 @@ namespace Registration.Account
                 UsersTable author = (from a in rating.UsersTable where a.Active == false && a.UsersTableID == Convert.ToInt32(button.CommandArgument) select a).FirstOrDefault();
                 author.Active = true;
                 author.PassCode = passCode;
-                rating.SubmitChanges();
-            
+                rating.SubmitChanges();          
                 EmailTemplate EmailParams = (from a in rating.EmailTemplate
                                              where a.Name == "InviteToRegister"
                                              && a.Active == true
                                              select a).FirstOrDefault();
                 Action.MassMailing(author.Email, EmailParams.EmailTitle,
-                    EmailParams.EmailContent.Replace("#LINK#", ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" + passCode), null); 
-                //       LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RN0: Admin(mon) " + (string)ViewState["Login"] + " has registered a new user (With emailSend): " + EmailText.Text + "from ip: " + Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
-
-                
+                    EmailParams.EmailContent.Replace("#LINK#", ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" + passCode), null);
+                // LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RN0: Admin(mon) " + (string)ViewState["Login"] + " has registered a new user (With emailSend): " + author.Email + "from ip: " + Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
+                RefreshGrid();
             }
+        }
+        protected void GVRowDataBound(object sender, GridViewRowEventArgs e)
+        {
+        
+       }
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+            UsersTable email = (from a in rating.UsersTable where a.UsersTableID == Convert.ToInt32(textBoxId.Text) select a).FirstOrDefault();
+            Action.MassMailing(email.Email, "Регистрация в системе КФУ-Рейтинги", commentTextBox.Text, null);
+            RefreshGrid();
+
         }
         protected void EditButtonClick(object sender, EventArgs e)
         {
@@ -124,15 +133,20 @@ namespace Registration.Account
                 Session["edituser"] = button.CommandArgument;
                 Response.Redirect("~/Account/PersonalInfo.aspx");
             }
-
         }
         protected void FailButtonClick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            {               
-                UsersTable author = (from a in rating.UsersTable where a.Active == false && a.UsersTableID == Convert.ToInt32(button.CommandArgument) select a).FirstOrDefault();           
-                Action.MassMailing(author.Email, "Регистрация в системе КФУ-Рейтинги", "", null);            
+            {
+                UsersTable fail = (from a in rating.UsersTable where a.UsersTableID == Convert.ToInt32(button.CommandArgument) select a).FirstOrDefault();
+                fail.Confirmed = true;
+                rating.SubmitChanges();
+                button.OnClientClick = "javascript: {document.getElementById('coomentEndP').style.visibility='visible'; " +
+                         "document.getElementById('MainContent_textBoxId').value ='" + button.CommandArgument + "'; " +
+                         "return false;}";
+                
             }
+
         }
     }
 }

@@ -2,7 +2,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div>
-     
+
         <h3>Здравствуйте! Вы перешли на страницу регистрации системы "Рейтинг научно-педагогических работников КФУ". </h3>
         <h3>Пожалуйста, заполните и отправьте данную форму. Все поля, кроме указанных, являются обязательными для заполнения!</h3>
         <p>
@@ -23,7 +23,7 @@
         <asp:TextBox ID="TextBox1" runat="server" Width="200px"></asp:TextBox>
         </p>
         <asp:Label ID="Label10" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Courier New" Font-Size="X-Large" Text="Вид деятельности:"></asp:Label>
-        &nbsp;<asp:DropDownList ID="DropDownList6" runat="server" Width="200px" AutoPostBack ="true">
+        &nbsp;<asp:DropDownList ID="DropDownList6" runat="server" Width="200px"  AutoPostBack ="true" OnSelectedIndexChanged="DropDownList6_SelectedIndexChanged">
             <asp:ListItem  Value="0">Преподавательская (ППС)</asp:ListItem>
             <asp:ListItem Value="1">Научная (НР)</asp:ListItem>
         </asp:DropDownList>
