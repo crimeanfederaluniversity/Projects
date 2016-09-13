@@ -30,6 +30,15 @@ namespace Registration
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertEmailCopies(EmailCopies instance);
+    partial void UpdateEmailCopies(EmailCopies instance);
+    partial void DeleteEmailCopies(EmailCopies instance);
+    partial void InsertEmailSendTable(EmailSendTable instance);
+    partial void UpdateEmailSendTable(EmailSendTable instance);
+    partial void DeleteEmailSendTable(EmailSendTable instance);
+    partial void InsertEmailTemplate(EmailTemplate instance);
+    partial void UpdateEmailTemplate(EmailTemplate instance);
+    partial void DeleteEmailTemplate(EmailTemplate instance);
     partial void InsertFirstLevelSubdivisionTable(FirstLevelSubdivisionTable instance);
     partial void UpdateFirstLevelSubdivisionTable(FirstLevelSubdivisionTable instance);
     partial void DeleteFirstLevelSubdivisionTable(FirstLevelSubdivisionTable instance);
@@ -78,15 +87,6 @@ namespace Registration
     partial void InsertThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
     partial void UpdateThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
     partial void DeleteThirdLevelSubdivisionTable(ThirdLevelSubdivisionTable instance);
-    partial void InsertEmailTemplate(EmailTemplate instance);
-    partial void UpdateEmailTemplate(EmailTemplate instance);
-    partial void DeleteEmailTemplate(EmailTemplate instance);
-    partial void InsertEmailSendTable(EmailSendTable instance);
-    partial void UpdateEmailSendTable(EmailSendTable instance);
-    partial void DeleteEmailSendTable(EmailSendTable instance);
-    partial void InsertEmailCopies(EmailCopies instance);
-    partial void UpdateEmailCopies(EmailCopies instance);
-    partial void DeleteEmailCopies(EmailCopies instance);
     partial void InsertUsersTable(UsersTable instance);
     partial void UpdateUsersTable(UsersTable instance);
     partial void DeleteUsersTable(UsersTable instance);
@@ -120,6 +120,30 @@ namespace Registration
 				base(connection, mappingSource)
 		{
 			OnCreated();
+		}
+		
+		public System.Data.Linq.Table<EmailCopies> EmailCopies
+		{
+			get
+			{
+				return this.GetTable<EmailCopies>();
+			}
+		}
+		
+		public System.Data.Linq.Table<EmailSendTable> EmailSendTable
+		{
+			get
+			{
+				return this.GetTable<EmailSendTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<EmailTemplate> EmailTemplate
+		{
+			get
+			{
+				return this.GetTable<EmailTemplate>();
+			}
 		}
 		
 		public System.Data.Linq.Table<FirstLevelSubdivisionTable> FirstLevelSubdivisionTable
@@ -250,35 +274,677 @@ namespace Registration
 			}
 		}
 		
-		public System.Data.Linq.Table<EmailTemplate> EmailTemplate
-		{
-			get
-			{
-				return this.GetTable<EmailTemplate>();
-			}
-		}
-		
-		public System.Data.Linq.Table<EmailSendTable> EmailSendTable
-		{
-			get
-			{
-				return this.GetTable<EmailSendTable>();
-			}
-		}
-		
-		public System.Data.Linq.Table<EmailCopies> EmailCopies
-		{
-			get
-			{
-				return this.GetTable<EmailCopies>();
-			}
-		}
-		
 		public System.Data.Linq.Table<UsersTable> UsersTable
 		{
 			get
 			{
 				return this.GetTable<UsersTable>();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EmailCopies")]
+	public partial class EmailCopies : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _EmailTo;
+		
+		private string _EmailFrom;
+		
+		private string _EmailTitle;
+		
+		private string _EmailContent;
+		
+		private string _EmailAttachment;
+		
+		private System.Nullable<System.DateTime> _SendDateTime;
+		
+		private System.Nullable<bool> _SendOk;
+		
+		private string _ErrorMessage;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnEmailToChanging(string value);
+    partial void OnEmailToChanged();
+    partial void OnEmailFromChanging(string value);
+    partial void OnEmailFromChanged();
+    partial void OnEmailTitleChanging(string value);
+    partial void OnEmailTitleChanged();
+    partial void OnEmailContentChanging(string value);
+    partial void OnEmailContentChanged();
+    partial void OnEmailAttachmentChanging(string value);
+    partial void OnEmailAttachmentChanged();
+    partial void OnSendDateTimeChanging(System.Nullable<System.DateTime> value);
+    partial void OnSendDateTimeChanged();
+    partial void OnSendOkChanging(System.Nullable<bool> value);
+    partial void OnSendOkChanged();
+    partial void OnErrorMessageChanging(string value);
+    partial void OnErrorMessageChanged();
+    #endregion
+		
+		public EmailCopies()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailTo", DbType="VarChar(MAX)")]
+		public string EmailTo
+		{
+			get
+			{
+				return this._EmailTo;
+			}
+			set
+			{
+				if ((this._EmailTo != value))
+				{
+					this.OnEmailToChanging(value);
+					this.SendPropertyChanging();
+					this._EmailTo = value;
+					this.SendPropertyChanged("EmailTo");
+					this.OnEmailToChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailFrom", DbType="VarChar(MAX)")]
+		public string EmailFrom
+		{
+			get
+			{
+				return this._EmailFrom;
+			}
+			set
+			{
+				if ((this._EmailFrom != value))
+				{
+					this.OnEmailFromChanging(value);
+					this.SendPropertyChanging();
+					this._EmailFrom = value;
+					this.SendPropertyChanged("EmailFrom");
+					this.OnEmailFromChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailTitle", DbType="VarChar(MAX)")]
+		public string EmailTitle
+		{
+			get
+			{
+				return this._EmailTitle;
+			}
+			set
+			{
+				if ((this._EmailTitle != value))
+				{
+					this.OnEmailTitleChanging(value);
+					this.SendPropertyChanging();
+					this._EmailTitle = value;
+					this.SendPropertyChanged("EmailTitle");
+					this.OnEmailTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailContent", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string EmailContent
+		{
+			get
+			{
+				return this._EmailContent;
+			}
+			set
+			{
+				if ((this._EmailContent != value))
+				{
+					this.OnEmailContentChanging(value);
+					this.SendPropertyChanging();
+					this._EmailContent = value;
+					this.SendPropertyChanged("EmailContent");
+					this.OnEmailContentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailAttachment", DbType="VarChar(MAX)")]
+		public string EmailAttachment
+		{
+			get
+			{
+				return this._EmailAttachment;
+			}
+			set
+			{
+				if ((this._EmailAttachment != value))
+				{
+					this.OnEmailAttachmentChanging(value);
+					this.SendPropertyChanging();
+					this._EmailAttachment = value;
+					this.SendPropertyChanged("EmailAttachment");
+					this.OnEmailAttachmentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendDateTime", DbType="DateTime")]
+		public System.Nullable<System.DateTime> SendDateTime
+		{
+			get
+			{
+				return this._SendDateTime;
+			}
+			set
+			{
+				if ((this._SendDateTime != value))
+				{
+					this.OnSendDateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._SendDateTime = value;
+					this.SendPropertyChanged("SendDateTime");
+					this.OnSendDateTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendOk", DbType="Bit")]
+		public System.Nullable<bool> SendOk
+		{
+			get
+			{
+				return this._SendOk;
+			}
+			set
+			{
+				if ((this._SendOk != value))
+				{
+					this.OnSendOkChanging(value);
+					this.SendPropertyChanging();
+					this._SendOk = value;
+					this.SendPropertyChanged("SendOk");
+					this.OnSendOkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ErrorMessage", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string ErrorMessage
+		{
+			get
+			{
+				return this._ErrorMessage;
+			}
+			set
+			{
+				if ((this._ErrorMessage != value))
+				{
+					this.OnErrorMessageChanging(value);
+					this.SendPropertyChanging();
+					this._ErrorMessage = value;
+					this.SendPropertyChanged("ErrorMessage");
+					this.OnErrorMessageChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EmailSendTable")]
+	public partial class EmailSendTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _Email;
+		
+		private string _SMTPName;
+		
+		private System.Nullable<int> _Port;
+		
+		private string _Password;
+		
+		private System.Nullable<long> _SendOk;
+		
+		private System.Nullable<long> _SendError;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
+    partial void OnSMTPNameChanging(string value);
+    partial void OnSMTPNameChanged();
+    partial void OnPortChanging(System.Nullable<int> value);
+    partial void OnPortChanged();
+    partial void OnPasswordChanging(string value);
+    partial void OnPasswordChanged();
+    partial void OnSendOkChanging(System.Nullable<long> value);
+    partial void OnSendOkChanged();
+    partial void OnSendErrorChanging(System.Nullable<long> value);
+    partial void OnSendErrorChanged();
+    #endregion
+		
+		public EmailSendTable()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(500)")]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this.OnEmailChanging(value);
+					this.SendPropertyChanging();
+					this._Email = value;
+					this.SendPropertyChanged("Email");
+					this.OnEmailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SMTPName", DbType="VarChar(500)")]
+		public string SMTPName
+		{
+			get
+			{
+				return this._SMTPName;
+			}
+			set
+			{
+				if ((this._SMTPName != value))
+				{
+					this.OnSMTPNameChanging(value);
+					this.SendPropertyChanging();
+					this._SMTPName = value;
+					this.SendPropertyChanged("SMTPName");
+					this.OnSMTPNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Port", DbType="Int")]
+		public System.Nullable<int> Port
+		{
+			get
+			{
+				return this._Port;
+			}
+			set
+			{
+				if ((this._Port != value))
+				{
+					this.OnPortChanging(value);
+					this.SendPropertyChanging();
+					this._Port = value;
+					this.SendPropertyChanged("Port");
+					this.OnPortChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="VarChar(500)")]
+		public string Password
+		{
+			get
+			{
+				return this._Password;
+			}
+			set
+			{
+				if ((this._Password != value))
+				{
+					this.OnPasswordChanging(value);
+					this.SendPropertyChanging();
+					this._Password = value;
+					this.SendPropertyChanged("Password");
+					this.OnPasswordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendOk", DbType="BigInt")]
+		public System.Nullable<long> SendOk
+		{
+			get
+			{
+				return this._SendOk;
+			}
+			set
+			{
+				if ((this._SendOk != value))
+				{
+					this.OnSendOkChanging(value);
+					this.SendPropertyChanging();
+					this._SendOk = value;
+					this.SendPropertyChanged("SendOk");
+					this.OnSendOkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendError", DbType="BigInt")]
+		public System.Nullable<long> SendError
+		{
+			get
+			{
+				return this._SendError;
+			}
+			set
+			{
+				if ((this._SendError != value))
+				{
+					this.OnSendErrorChanging(value);
+					this.SendPropertyChanging();
+					this._SendError = value;
+					this.SendPropertyChanged("SendError");
+					this.OnSendErrorChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EmailTemplate")]
+	public partial class EmailTemplate : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _Name;
+		
+		private string _EmailTitle;
+		
+		private string _EmailContent;
+		
+		private System.Nullable<bool> _Active;
+		
+		private string _Comment;
+		
+		private string _NameRus;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnEmailTitleChanging(string value);
+    partial void OnEmailTitleChanged();
+    partial void OnEmailContentChanging(string value);
+    partial void OnEmailContentChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnCommentChanging(string value);
+    partial void OnCommentChanged();
+    partial void OnNameRusChanging(string value);
+    partial void OnNameRusChanged();
+    #endregion
+		
+		public EmailTemplate()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(500)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailTitle", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string EmailTitle
+		{
+			get
+			{
+				return this._EmailTitle;
+			}
+			set
+			{
+				if ((this._EmailTitle != value))
+				{
+					this.OnEmailTitleChanging(value);
+					this.SendPropertyChanging();
+					this._EmailTitle = value;
+					this.SendPropertyChanged("EmailTitle");
+					this.OnEmailTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailContent", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string EmailContent
+		{
+			get
+			{
+				return this._EmailContent;
+			}
+			set
+			{
+				if ((this._EmailContent != value))
+				{
+					this.OnEmailContentChanging(value);
+					this.SendPropertyChanging();
+					this._EmailContent = value;
+					this.SendPropertyChanged("EmailContent");
+					this.OnEmailContentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comment", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string Comment
+		{
+			get
+			{
+				return this._Comment;
+			}
+			set
+			{
+				if ((this._Comment != value))
+				{
+					this.OnCommentChanging(value);
+					this.SendPropertyChanging();
+					this._Comment = value;
+					this.SendPropertyChanged("Comment");
+					this.OnCommentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NameRus", DbType="VarChar(500)")]
+		public string NameRus
+		{
+			get
+			{
+				return this._NameRus;
+			}
+			set
+			{
+				if ((this._NameRus != value))
+				{
+					this.OnNameRusChanging(value);
+					this.SendPropertyChanging();
+					this._NameRus = value;
+					this.SendPropertyChanged("NameRus");
+					this.OnNameRusChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -2814,6 +3480,8 @@ namespace Registration
 		
 		private System.Nullable<bool> _OneOrManyAuthor;
 		
+		private System.Nullable<int> _Number;
+		
 		private EntitySet<Rank_Articles> _Rank_Articles;
 		
 		private EntitySet<Rank_ArticleValues> _Rank_ArticleValues;
@@ -2844,6 +3512,8 @@ namespace Registration
     partial void OnEditUserTypeChanged();
     partial void OnOneOrManyAuthorChanging(System.Nullable<bool> value);
     partial void OnOneOrManyAuthorChanged();
+    partial void OnNumberChanging(System.Nullable<int> value);
+    partial void OnNumberChanged();
     #endregion
 		
 		public Rank_Parametrs()
@@ -2993,6 +3663,26 @@ namespace Registration
 					this._OneOrManyAuthor = value;
 					this.SendPropertyChanged("OneOrManyAuthor");
 					this.OnOneOrManyAuthorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number", DbType="Int")]
+		public System.Nullable<int> Number
+		{
+			get
+			{
+				return this._Number;
+			}
+			set
+			{
+				if ((this._Number != value))
+				{
+					this.OnNumberChanging(value);
+					this.SendPropertyChanging();
+					this._Number = value;
+					this.SendPropertyChanged("Number");
+					this.OnNumberChanged();
 				}
 			}
 		}
@@ -4776,672 +5466,6 @@ namespace Registration
 		{
 			this.SendPropertyChanging();
 			entity.ThirdLevelSubdivisionTable = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EmailTemplate")]
-	public partial class EmailTemplate : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private string _Name;
-		
-		private string _EmailTitle;
-		
-		private string _EmailContent;
-		
-		private System.Nullable<bool> _Active;
-		
-		private string _Comment;
-		
-		private string _NameRus;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnEmailTitleChanging(string value);
-    partial void OnEmailTitleChanged();
-    partial void OnEmailContentChanging(string value);
-    partial void OnEmailContentChanged();
-    partial void OnActiveChanging(System.Nullable<bool> value);
-    partial void OnActiveChanged();
-    partial void OnCommentChanging(string value);
-    partial void OnCommentChanged();
-    partial void OnNameRusChanging(string value);
-    partial void OnNameRusChanged();
-    #endregion
-		
-		public EmailTemplate()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(500)")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailTitle", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		public string EmailTitle
-		{
-			get
-			{
-				return this._EmailTitle;
-			}
-			set
-			{
-				if ((this._EmailTitle != value))
-				{
-					this.OnEmailTitleChanging(value);
-					this.SendPropertyChanging();
-					this._EmailTitle = value;
-					this.SendPropertyChanged("EmailTitle");
-					this.OnEmailTitleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailContent", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		public string EmailContent
-		{
-			get
-			{
-				return this._EmailContent;
-			}
-			set
-			{
-				if ((this._EmailContent != value))
-				{
-					this.OnEmailContentChanging(value);
-					this.SendPropertyChanging();
-					this._EmailContent = value;
-					this.SendPropertyChanged("EmailContent");
-					this.OnEmailContentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
-		public System.Nullable<bool> Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comment", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		public string Comment
-		{
-			get
-			{
-				return this._Comment;
-			}
-			set
-			{
-				if ((this._Comment != value))
-				{
-					this.OnCommentChanging(value);
-					this.SendPropertyChanging();
-					this._Comment = value;
-					this.SendPropertyChanged("Comment");
-					this.OnCommentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NameRus", DbType="VarChar(500)")]
-		public string NameRus
-		{
-			get
-			{
-				return this._NameRus;
-			}
-			set
-			{
-				if ((this._NameRus != value))
-				{
-					this.OnNameRusChanging(value);
-					this.SendPropertyChanging();
-					this._NameRus = value;
-					this.SendPropertyChanged("NameRus");
-					this.OnNameRusChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EmailSendTable")]
-	public partial class EmailSendTable : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private string _Email;
-		
-		private string _SMTPName;
-		
-		private System.Nullable<int> _Port;
-		
-		private string _Password;
-		
-		private System.Nullable<long> _SendOk;
-		
-		private System.Nullable<long> _SendError;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnEmailChanging(string value);
-    partial void OnEmailChanged();
-    partial void OnSMTPNameChanging(string value);
-    partial void OnSMTPNameChanged();
-    partial void OnPortChanging(System.Nullable<int> value);
-    partial void OnPortChanged();
-    partial void OnPasswordChanging(string value);
-    partial void OnPasswordChanged();
-    partial void OnSendOkChanging(System.Nullable<long> value);
-    partial void OnSendOkChanged();
-    partial void OnSendErrorChanging(System.Nullable<long> value);
-    partial void OnSendErrorChanged();
-    #endregion
-		
-		public EmailSendTable()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(500)")]
-		public string Email
-		{
-			get
-			{
-				return this._Email;
-			}
-			set
-			{
-				if ((this._Email != value))
-				{
-					this.OnEmailChanging(value);
-					this.SendPropertyChanging();
-					this._Email = value;
-					this.SendPropertyChanged("Email");
-					this.OnEmailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SMTPName", DbType="VarChar(500)")]
-		public string SMTPName
-		{
-			get
-			{
-				return this._SMTPName;
-			}
-			set
-			{
-				if ((this._SMTPName != value))
-				{
-					this.OnSMTPNameChanging(value);
-					this.SendPropertyChanging();
-					this._SMTPName = value;
-					this.SendPropertyChanged("SMTPName");
-					this.OnSMTPNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Port", DbType="Int")]
-		public System.Nullable<int> Port
-		{
-			get
-			{
-				return this._Port;
-			}
-			set
-			{
-				if ((this._Port != value))
-				{
-					this.OnPortChanging(value);
-					this.SendPropertyChanging();
-					this._Port = value;
-					this.SendPropertyChanged("Port");
-					this.OnPortChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="VarChar(500)")]
-		public string Password
-		{
-			get
-			{
-				return this._Password;
-			}
-			set
-			{
-				if ((this._Password != value))
-				{
-					this.OnPasswordChanging(value);
-					this.SendPropertyChanging();
-					this._Password = value;
-					this.SendPropertyChanged("Password");
-					this.OnPasswordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendOk", DbType="BigInt")]
-		public System.Nullable<long> SendOk
-		{
-			get
-			{
-				return this._SendOk;
-			}
-			set
-			{
-				if ((this._SendOk != value))
-				{
-					this.OnSendOkChanging(value);
-					this.SendPropertyChanging();
-					this._SendOk = value;
-					this.SendPropertyChanged("SendOk");
-					this.OnSendOkChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendError", DbType="BigInt")]
-		public System.Nullable<long> SendError
-		{
-			get
-			{
-				return this._SendError;
-			}
-			set
-			{
-				if ((this._SendError != value))
-				{
-					this.OnSendErrorChanging(value);
-					this.SendPropertyChanging();
-					this._SendError = value;
-					this.SendPropertyChanged("SendError");
-					this.OnSendErrorChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EmailCopies")]
-	public partial class EmailCopies : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private string _EmailTo;
-		
-		private string _EmailFrom;
-		
-		private string _EmailTitle;
-		
-		private string _EmailContent;
-		
-		private string _EmailAttachment;
-		
-		private System.Nullable<System.DateTime> _SendDateTime;
-		
-		private System.Nullable<bool> _SendOk;
-		
-		private string _ErrorMessage;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnEmailToChanging(string value);
-    partial void OnEmailToChanged();
-    partial void OnEmailFromChanging(string value);
-    partial void OnEmailFromChanged();
-    partial void OnEmailTitleChanging(string value);
-    partial void OnEmailTitleChanged();
-    partial void OnEmailContentChanging(string value);
-    partial void OnEmailContentChanged();
-    partial void OnEmailAttachmentChanging(string value);
-    partial void OnEmailAttachmentChanged();
-    partial void OnSendDateTimeChanging(System.Nullable<System.DateTime> value);
-    partial void OnSendDateTimeChanged();
-    partial void OnSendOkChanging(System.Nullable<bool> value);
-    partial void OnSendOkChanged();
-    partial void OnErrorMessageChanging(string value);
-    partial void OnErrorMessageChanged();
-    #endregion
-		
-		public EmailCopies()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailTo", DbType="VarChar(MAX)")]
-		public string EmailTo
-		{
-			get
-			{
-				return this._EmailTo;
-			}
-			set
-			{
-				if ((this._EmailTo != value))
-				{
-					this.OnEmailToChanging(value);
-					this.SendPropertyChanging();
-					this._EmailTo = value;
-					this.SendPropertyChanged("EmailTo");
-					this.OnEmailToChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailFrom", DbType="VarChar(MAX)")]
-		public string EmailFrom
-		{
-			get
-			{
-				return this._EmailFrom;
-			}
-			set
-			{
-				if ((this._EmailFrom != value))
-				{
-					this.OnEmailFromChanging(value);
-					this.SendPropertyChanging();
-					this._EmailFrom = value;
-					this.SendPropertyChanged("EmailFrom");
-					this.OnEmailFromChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailTitle", DbType="VarChar(MAX)")]
-		public string EmailTitle
-		{
-			get
-			{
-				return this._EmailTitle;
-			}
-			set
-			{
-				if ((this._EmailTitle != value))
-				{
-					this.OnEmailTitleChanging(value);
-					this.SendPropertyChanging();
-					this._EmailTitle = value;
-					this.SendPropertyChanged("EmailTitle");
-					this.OnEmailTitleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailContent", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		public string EmailContent
-		{
-			get
-			{
-				return this._EmailContent;
-			}
-			set
-			{
-				if ((this._EmailContent != value))
-				{
-					this.OnEmailContentChanging(value);
-					this.SendPropertyChanging();
-					this._EmailContent = value;
-					this.SendPropertyChanged("EmailContent");
-					this.OnEmailContentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailAttachment", DbType="VarChar(MAX)")]
-		public string EmailAttachment
-		{
-			get
-			{
-				return this._EmailAttachment;
-			}
-			set
-			{
-				if ((this._EmailAttachment != value))
-				{
-					this.OnEmailAttachmentChanging(value);
-					this.SendPropertyChanging();
-					this._EmailAttachment = value;
-					this.SendPropertyChanged("EmailAttachment");
-					this.OnEmailAttachmentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendDateTime", DbType="DateTime")]
-		public System.Nullable<System.DateTime> SendDateTime
-		{
-			get
-			{
-				return this._SendDateTime;
-			}
-			set
-			{
-				if ((this._SendDateTime != value))
-				{
-					this.OnSendDateTimeChanging(value);
-					this.SendPropertyChanging();
-					this._SendDateTime = value;
-					this.SendPropertyChanged("SendDateTime");
-					this.OnSendDateTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendOk", DbType="Bit")]
-		public System.Nullable<bool> SendOk
-		{
-			get
-			{
-				return this._SendOk;
-			}
-			set
-			{
-				if ((this._SendOk != value))
-				{
-					this.OnSendOkChanging(value);
-					this.SendPropertyChanging();
-					this._SendOk = value;
-					this.SendPropertyChanged("SendOk");
-					this.OnSendOkChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ErrorMessage", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		public string ErrorMessage
-		{
-			get
-			{
-				return this._ErrorMessage;
-			}
-			set
-			{
-				if ((this._ErrorMessage != value))
-				{
-					this.OnErrorMessageChanging(value);
-					this.SendPropertyChanging();
-					this._ErrorMessage = value;
-					this.SendPropertyChanged("ErrorMessage");
-					this.OnErrorMessageChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	

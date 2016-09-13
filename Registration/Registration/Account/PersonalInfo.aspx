@@ -4,7 +4,7 @@
     <div>
      
         <h3>Здравствуйте! Вы перешли на страницу регистрации системы "Рейтинг научно-педагогических работников КФУ". </h3>
-        <h3>Пожалуйста, заполните и отправьте данную форму. Все поля являются обязательными для заполнения!</h3>
+        <h3>Пожалуйста, заполните и отправьте данную форму. Все поля, кроме указанных, являются обязательными для заполнения!</h3>
         <p>
         <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Courier New" Font-Size="X-Large" Text="Фамилия:"></asp:Label>
         &nbsp;&nbsp;&nbsp;
@@ -24,7 +24,7 @@
         </p>
         <asp:Label ID="Label10" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Courier New" Font-Size="X-Large" Text="Вид деятельности:"></asp:Label>
         &nbsp;<asp:DropDownList ID="DropDownList6" runat="server" Width="200px" AutoPostBack ="true">
-            <asp:ListItem Selected="True" Value="0">Преподавательская (ППС)</asp:ListItem>
+            <asp:ListItem  Value="0">Преподавательская (ППС)</asp:ListItem>
             <asp:ListItem Value="1">Научная (НР)</asp:ListItem>
         </asp:DropDownList>
         <br />
@@ -32,8 +32,8 @@
         <asp:Label ID="Label4" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Courier New" Font-Size="X-Large" Text="Должность: "></asp:Label>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <asp:DropDownList ID="PPS" runat="server" Width="200px" Visible="False">
-            <asp:ListItem Selected="True" Value="0">Доцент</asp:ListItem>
-            <asp:ListItem Value="0">Профессор</asp:ListItem>
+            <asp:ListItem    Value="0">Доцент</asp:ListItem>
+            <asp:ListItem  Value="0">Профессор</asp:ListItem>
             <asp:ListItem Value="0">Преподаватель</asp:ListItem>
             <asp:ListItem Value="0">Старший преподаватель</asp:ListItem>
             <asp:ListItem Value="0">Ассистент</asp:ListItem>
@@ -42,7 +42,7 @@
             <asp:ListItem Value="5">Директор института</asp:ListItem>
         </asp:DropDownList>
         <asp:DropDownList ID="NR" runat="server" Width="200px" Visible="False">
-            <asp:ListItem Selected="True" Value="0">Научный сотрудник</asp:ListItem>
+            <asp:ListItem   Value="0">Научный сотрудник</asp:ListItem>
             <asp:ListItem Value="0">Младший научный сотрудник</asp:ListItem>
             <asp:ListItem Value="0">Старший научный сотрудник</asp:ListItem>
             <asp:ListItem Value="0">Ведущий научный сотрудник</asp:ListItem>
@@ -57,9 +57,9 @@
         <br />
         <asp:Label ID="Label5" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Courier New" Font-Size="X-Large" Text="Ставка(основная):"></asp:Label>
         &nbsp;<asp:DropDownList ID="stavka" runat="server">
+              <asp:ListItem>1,0</asp:ListItem>
             <asp:ListItem>1,5</asp:ListItem>
-            <asp:ListItem>1,25</asp:ListItem>
-            <asp:ListItem Selected="True">1,0</asp:ListItem>
+            <asp:ListItem>1,25</asp:ListItem>        
             <asp:ListItem>0,75</asp:ListItem>
             <asp:ListItem>0,5</asp:ListItem>
             <asp:ListItem>0,25</asp:ListItem>
@@ -68,10 +68,11 @@
         <br />
         <asp:Label ID="Label6" runat="server" Font-Bold="True" Font-Italic="False" Font-Names="Courier New" Font-Size="X-Large" Text="Ученая степень, звание (необязательное поле): "></asp:Label>
         <br />
+
         <asp:DropDownList ID="degree" runat="server" Width="200px">
+                 <asp:ListItem   Value="0">Нет звания</asp:ListItem>
             <asp:ListItem>Доцент</asp:ListItem>
-            <asp:ListItem>Профессор</asp:ListItem>
-            <asp:ListItem Selected="True" Value="0">Нет звания</asp:ListItem>
+            <asp:ListItem>Профессор</asp:ListItem>      
         </asp:DropDownList>
         <br />
         <br />

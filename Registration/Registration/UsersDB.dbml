@@ -1,5 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="RankDB" Class="UsersDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-QB5CCK4;Initial Catalog=RankDB;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Release_ConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.EmailCopies" Member="EmailCopies">
+    <Type Name="EmailCopies">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EmailTo" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="EmailFrom" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="EmailTitle" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="EmailContent" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="EmailAttachment" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="SendDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SendOk" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ErrorMessage" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EmailSendTable" Member="EmailSendTable">
+    <Type Name="EmailSendTable">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="SMTPName" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Port" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="SendOk" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="SendError" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EmailTemplate" Member="EmailTemplate">
+    <Type Name="EmailTemplate">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="EmailTitle" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="EmailContent" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Comment" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="NameRus" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.FirstLevelSubdivisionTable" Member="FirstLevelSubdivisionTable">
     <Type Name="FirstLevelSubdivisionTable">
       <Column Name="FirstLevelSubdivisionTableID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -124,6 +159,7 @@
       <Column Name="Weight" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="EditUserType" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="OneOrManyAuthor" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Number" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Rank_Parametrs_Rank_Articles" Member="Rank_Articles" ThisKey="ID" OtherKey="FK_parametr" Type="Rank_Articles" />
       <Association Name="Rank_Parametrs_Rank_ArticleValues" Member="Rank_ArticleValues" ThisKey="ID" OtherKey="FK_Param" Type="Rank_ArticleValues" />
       <Association Name="Rank_Parametrs_Rank_DifficaltPoint" Member="Rank_DifficaltPoint" ThisKey="ID" OtherKey="fk_parametr" Type="Rank_DifficaltPoint" />
@@ -203,41 +239,6 @@
       <Association Name="ThirdLevelSubdivisionTable_Rank_StructPoints" Member="Rank_StructPoints" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_thirdlvl" Type="Rank_StructPoints" />
       <Association Name="ThirdLevelSubdivisionTable_UsersTable" Member="UsersTable" ThisKey="ThirdLevelSubdivisionTableID" OtherKey="FK_ThirdLevelSubdivisionTable" Type="UsersTable" />
       <Association Name="SecondLevelSubdivisionTable_ThirdLevelSubdivisionTable" Member="SecondLevelSubdivisionTable" ThisKey="FK_SecondLevelSubdivisionTable" OtherKey="SecondLevelSubdivisionTableID" Type="SecondLevelSubdivisionTable" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.EmailTemplate" Member="EmailTemplate">
-    <Type Name="EmailTemplate">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="EmailTitle" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="EmailContent" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Comment" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="NameRus" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.EmailSendTable" Member="EmailSendTable">
-    <Type Name="EmailSendTable">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Email" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="SMTPName" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="Port" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Password" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="SendOk" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="SendError" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.EmailCopies" Member="EmailCopies">
-    <Type Name="EmailCopies">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="EmailTo" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="EmailFrom" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="EmailTitle" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="EmailContent" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="EmailAttachment" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="SendDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="SendOk" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="ErrorMessage" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
     </Type>
   </Table>
   <Table Name="dbo.UsersTable" Member="UsersTable">

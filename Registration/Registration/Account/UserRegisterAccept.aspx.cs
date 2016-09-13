@@ -15,10 +15,10 @@ namespace Registration.Account
     {
         UsersDBDataContext rating = new UsersDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
-        {
-          
+        {       
             if (!IsPostBack)
             {
+                Session["edituser"] = null;
                 RefreshGrid();
             }
         }
@@ -34,11 +34,8 @@ namespace Registration.Account
             dataTable.Columns.Add(new DataColumn("stavka", typeof(string)));
             dataTable.Columns.Add(new DataColumn("degree", typeof(string)));
             dataTable.Columns.Add(new DataColumn("fio", typeof(string)));
-
-
             List<UsersTable> authorList = (from a in rating.UsersTable where a.Active == false select a).ToList();
-        
-           
+                  
             foreach (UsersTable value in authorList)
             {
                 DataRow dataRow = dataTable.NewRow();
@@ -114,7 +111,6 @@ namespace Registration.Account
                                              && a.Active == true
                                              select a).FirstOrDefault();
                 Action.MassMailing(author.Email, EmailParams.EmailTitle,
-
                     EmailParams.EmailContent.Replace("#LINK#", ConfigurationManager.AppSettings.Get("SiteName") + "/Account/UserRegister?&id=" + passCode), null); 
                 //       LogHandler.LogWriter.WriteLog(LogCategory.INFO, "0RN0: Admin(mon) " + (string)ViewState["Login"] + " has registered a new user (With emailSend): " + EmailText.Text + "from ip: " + Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(ip => ip.ToString()).FirstOrDefault());
 

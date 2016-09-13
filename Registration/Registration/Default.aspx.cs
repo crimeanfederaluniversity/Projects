@@ -11,7 +11,7 @@ namespace Registration
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Response.Redirect("~/Account/PersonalInfo.aspx");
         }
     }
 }
