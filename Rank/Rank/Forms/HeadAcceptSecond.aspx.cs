@@ -65,7 +65,13 @@ namespace Rank.Forms
             dataTable.Columns.Add(new DataColumn("Point", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Status", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Color", typeof(string)));
-            List<Rank_Parametrs> allparam = (from a in ratingDB.Rank_Parametrs where a.Active == true && (a.EditUserType == 1 || a.EditUserType == 2) select a).ToList();
+            DataTable dataTable2 = new DataTable();
+            dataTable2.Columns.Add(new DataColumn("ID", typeof(string)));
+            dataTable2.Columns.Add(new DataColumn("Parametr", typeof(string)));
+            dataTable2.Columns.Add(new DataColumn("Number", typeof(string)));
+            dataTable2.Columns.Add(new DataColumn("Point", typeof(string)));
+            List<Rank_Parametrs> allparam = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.EditUserType == 1  select a).ToList();
+            List<Rank_Parametrs> allparam2 = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.EditUserType == 0 select a).ToList();
             if (allparam != null)
             {              
                 foreach (Rank_Parametrs tmp in allparam)
@@ -121,12 +127,12 @@ namespace Rank.Forms
                     }
                     if (userarticles != null && userarticles.Count != 0)
                     {
-                        dataRow["Status"] = "Ожидает Вашего утверждения";
+                        dataRow["Status"] = "Ожидает верификации";
                         dataRow["Color"] = 1; // красный                       
                     }
                     else
                     {
-                        dataRow["Status"] = "Не требует утверждения";
+                        dataRow["Status"] = "Верифицировано";
                         dataRow["Color"] = "";
                     }
 
@@ -136,7 +142,35 @@ namespace Rank.Forms
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
             }
-            
+            if (allparam2 != null)
+            {
+                foreach (var tmp in allparam2)
+                {
+                    Rank_UserParametrValue point = (from a in ratingDB.Rank_UserParametrValue
+                                                    where a.Active == true && a.FK_parametr == tmp.ID && a.FK_user == userpoints
+                                                    select a).FirstOrDefault();
+
+                    DataRow dataRow = dataTable2.NewRow();
+                    dataRow["ID"] = tmp.ID;
+                    dataRow["Parametr"] = tmp.Name;
+                    dataRow["Number"] = tmp.Number;
+                    UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+                    List<Rank_Articles> userarticles = new List<Rank_Articles>();
+
+                    if (point != null)
+                    {
+                        dataRow["Point"] = point.Value;
+                    }
+                    else
+                    {
+                        dataRow["Point"] = "";
+                    }
+                    dataTable2.Rows.Add(dataRow);
+                }
+                GridView2.DataSource = dataTable2;
+                GridView2.DataBind();
+            }
+
         }
         protected void ShowButtonClik(object sender, EventArgs e)
         {

@@ -945,11 +945,28 @@ namespace Rank.Forms
             bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
 
             int userID = (int)userId;
+            UsersTable rights = (from item in ratingDB.UsersTable
+                                 where item.Active == true
+                                  && item.UsersTableID == userID
+                                 select item).FirstOrDefault();
             Rank_Articles send = (from a in ratingDB.Rank_Articles
                                   where a.Active == true && a.ID == article 
                                   select a).FirstOrDefault();
-            send.Status = 1;
-            ratingDB.SubmitChanges();
+       
+            if (rights.AccessLevel == 9)
+            {
+                if (paramId != 19)
+                {
+                    send.Status = 4;
+                    ratingDB.SubmitChanges();
+                }
+            }
+            else
+            {
+                send.Status = 1;
+                ratingDB.SubmitChanges();
+            }
+
             Calculate userpoints = new Calculate();
             userpoints.CalculateUserParametrPoint(paramId, userID);
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Отправлено на утверждение руководителю Вашего структурного подразделения! Баллы показателя пересчитаны с учетом новых данных.');", true);

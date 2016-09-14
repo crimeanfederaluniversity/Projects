@@ -176,7 +176,20 @@ namespace Rank.Forms
                 DataRow dataRow = dataTable.NewRow();
                 
                 dataRow["ID"] = tmp.ID;
-                dataRow["Name"] = tmp.Name;
+                Rank_ArticleValues name = (from a in ratingDB.Rank_ArticleValues
+                                           where a.Active == true && a.FK_Article == tmp.ID
+                                           join b in ratingDB.Rank_Fields on a.FK_Field equals b.ID
+                                           where b.Active == true && b.namefield == true
+                                           select a).FirstOrDefault();
+
+                if (name != null && name.Value != null)
+                {
+                    dataRow["Name"] = name.Value;
+                }
+                else
+                {
+                    dataRow["Name"] = "Нет названия";
+                }
                 dataRow["Date"] = tmp.AddDate;
                 if (userarticlepoint != null)
                 {

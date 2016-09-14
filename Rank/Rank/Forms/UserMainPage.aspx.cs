@@ -41,7 +41,7 @@ namespace Rank.Forms
                     }
                     else
                     {
-                        GridView1.Columns[2].Visible = false;
+                        GridView1.Columns[3].Visible = false;
                         GridView2.Visible = false;              
                     }
                 }
@@ -74,10 +74,19 @@ namespace Rank.Forms
             dataTable2.Columns.Add(new DataColumn("Parametr", typeof(string)));
             dataTable2.Columns.Add(new DataColumn("Point", typeof(string)));
             dataTable2.Columns.Add(new DataColumn("Number", typeof(string)));
+            List<Rank_Parametrs> allparam1 = new List<Rank_Parametrs>();
+            List<Rank_Parametrs> allparam2 = new List<Rank_Parametrs>();
+            if (rights.TypeOfPosition == true)
+            {
+                allparam1 = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.EditUserType == 0 select a).OrderBy(mc => mc.Number).ToList();
+                allparam2 = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.EditUserType == 1 select a).OrderBy(mc => mc.Number).ToList();
+            }
+            else
+            {
+                allparam1 = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.UserType == 2 && a.EditUserType == 0 select a).OrderBy(mc => mc.Number).ToList();
+                allparam2 = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.UserType == 2 && a.EditUserType == 1 select a).OrderBy(mc => mc.Number).ToList();
+            }
 
-            List<Rank_Parametrs> allparam1 = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.EditUserType == 0 select a).OrderBy(mc=>mc.Number).ToList();
-            List<Rank_Parametrs> allparam2 = (from a in ratingDB.Rank_Parametrs where a.Active == true && a.EditUserType == 1 select a).OrderBy(mc => mc.Number).ToList();
-       
             List<Rank_Articles> allarticleList = (from b in ratingDB.Rank_Articles
                                                     where b.Active == true
                                                     join a in ratingDB.Rank_UserArticleMappingTable on b.ID equals a.FK_Article
@@ -151,7 +160,7 @@ namespace Rank.Forms
                 GridView1.DataSource = dataTable1;
                 GridView1.DataBind();
             }
-            /*if (allparam2 != null)
+            if (allparam2 != null)
             {
                 foreach (var tmp in allparam2)
                 {
@@ -183,11 +192,11 @@ namespace Rank.Forms
                     {
                         dataRow["Point"] = "";
                     }
-                    dataTable2.Rows.Add(dataRow);           
+                    dataTable2.Rows.Add(dataRow);
                 }
                 GridView2.DataSource = dataTable2;
                 GridView2.DataBind();
-            }*/
+            }
         }
 
         protected void EditButtonClik(object sender, EventArgs e)

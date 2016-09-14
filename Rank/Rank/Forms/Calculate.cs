@@ -11,7 +11,7 @@ namespace Rank.Forms
         public void CalculateUserArticlePoint(int paramId, int articleid, int userId) // для конкретного пользователя баллы за отдельную статью 
         {
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userId select item).FirstOrDefault();
-            if (rights.AccessLevel != 9 && rights.AccessLevel != 10)
+            if (rights.AccessLevel != 9)
             {
                 Rank_Parametrs weight = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
                 Rank_Mark mark = (from a in ratingDB.Rank_Mark
@@ -73,7 +73,7 @@ namespace Rank.Forms
         public void CalculateUserParametrPoint(int paramId,  int userId)  // посчитать баллы показателей индивидуального рейтинга
         {
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userId select item).FirstOrDefault();
-            if (rights.AccessLevel != 9 && rights.AccessLevel != 10)
+            if (rights.AccessLevel != 9 )
             {
                 Rank_UserParametrValue calculate = (from a in ratingDB.Rank_UserParametrValue
                                                     where a.Active == true && a.FK_parametr == paramId && a.FK_user == userId

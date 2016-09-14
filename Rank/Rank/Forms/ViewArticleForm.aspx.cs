@@ -119,11 +119,15 @@ namespace Rank.Forms
             }
 
 
-            if (userarticles != null )
+            if (userarticles != null)
             {
                 Button2.Visible = true;
             }
-            if(rights.AccessLevel == 0)
+            Rank_UserArticleMappingTable createomr = (from item in ratingDB.Rank_UserArticleMappingTable
+                                                      where item.FK_Article == article
+   && item.CreateUser == true
+                                                      select item).FirstOrDefault();
+            if (rights.AccessLevel == 0 || (createomr != null && rights.AccessLevel == 9))
             {
                 Button2.Visible = false;
             }
@@ -385,14 +389,23 @@ namespace Rank.Forms
         protected void Button2_Click(object sender, EventArgs e)
         {
             int article = 0;
-            object str_articleID =  Session["articleID"] ?? String.Empty;
+            object str_articleID = Session["articleID"] ?? String.Empty;
             bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
- 
             Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
             send.Status = 2;
             ratingDB.SubmitChanges();
+            Calculate userpoints = new Calculate();
+            int paramId = Convert.ToInt32(Session["parametrID"]);
+            var view = Session["showuserID"];
+            int ruk = Convert.ToInt32(Session["showuserID"]);
+            userpoints.CalculateUserParametrPoint(paramId, ruk);
             Response.Redirect("~/Forms/UserArticlePage.aspx");
 
+        }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Forms/CreateEditForm.aspx");
         }
     }
 }
