@@ -29,7 +29,7 @@
             }          
         }
     </script>
-<body onload="loadPage()">
+<body onload="loadPage()" >
     <form runat="server">
         <asp:ScriptManager  EnablePageMethods="true"  runat="server">
             <Scripts>

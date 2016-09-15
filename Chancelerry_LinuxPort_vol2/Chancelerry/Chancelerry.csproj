@@ -79,10 +79,6 @@
     <Reference Include="Mono.Data.Sqlite">
       <HintPath>F:\YandexDisk\Работа\dblinq2007-master\LIBS!\Mono.Data.Sqlite.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Npgsql.2.2.7\lib\net45\Mono.Security.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="MySql.Data">
       <HintPath>F:\YandexDisk\Работа\dblinq2007-master\LIBS!\MySql.Data.dll</HintPath>
     </Reference>

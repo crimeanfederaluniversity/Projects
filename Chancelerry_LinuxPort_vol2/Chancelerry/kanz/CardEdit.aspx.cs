@@ -58,7 +58,9 @@ namespace Chancelerry.kanz
         protected void CreateButton_Click(object sender, EventArgs e)
         {
             UpdateSessionValues();
+            
             CardCreateEdit cardCreateEdit = new CardCreateEdit();
+           
             cardCreateEdit.SaveCard(_registerId, _cardId, createdFields, createdFileUploads,true);
             string lastPage = (string) Session["currentPage"];
             lastPage = "RegisterView.aspx"+lastPage;

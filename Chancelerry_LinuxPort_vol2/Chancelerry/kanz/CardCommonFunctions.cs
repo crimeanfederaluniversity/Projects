@@ -1117,6 +1117,9 @@ namespace Chancelerry.kanz
                     }
                 case "autoIncrement": //int
                     {
+                       // fieldRangeValidator.Type = ValidationDataType.String;
+
+
                         fieldRangeValidator.MinimumValue = int.MinValue.ToString();
                         fieldRangeValidator.MaximumValue = int.MaxValue.ToString();
                         fieldRangeValidator.Type = ValidationDataType.Integer;
@@ -1130,7 +1133,7 @@ namespace Chancelerry.kanz
                         fieldRangeValidator.MaximumValue = int.MaxValue.ToString();
                         fieldRangeValidator.Type = ValidationDataType.Integer;
                         fieldRangeValidator.ErrorMessage = "!";
-                        fieldRangeValidator.Enabled = true;
+                        fieldRangeValidator.Enabled = false;
                         break;
                     }
                 case "autoDate": //date
@@ -1987,6 +1990,15 @@ namespace Chancelerry.kanz
         //  private int _userId = 1;
         private readonly ChancelerryDb chancDb = new ChancelerryDb(new NpgsqlConnection(WebConfigurationManager.AppSettings["ConnectionStringToPostgre"]));
         private readonly CardCommonFunctions _common = new CardCommonFunctions();
+
+        public bool WillCardBeUnique(int registerId, int mainFieldId)
+        {
+            return !(from a in chancDb.CollectedCards
+                where a.Active == true
+                      && a.FkRegister == registerId
+                      && a.MaInFieldID == mainFieldId
+                select a).Any();
+        }
         public int CreateNewCardInRegister(int registerId, int fieldId)
         {
             CollectedCards newCard = new CollectedCards();
@@ -2025,12 +2037,19 @@ namespace Chancelerry.kanz
                 if (currentTextBox.Attributes["iamfieldid"] != null)
                 {
                     if (currentTextBox.Attributes["iamfieldid"] == "1")
-                    {
+                    {                     
                         Int32.TryParse(currentTextBox.Text, out mainfieldId);
+
+                        while (!WillCardBeUnique(registerId, mainfieldId))
+                        {
+                            mainfieldId++;
+                        }
+                        currentTextBox.Text = mainfieldId.ToString();
                     }
                 }
             }
 
+      
             if (cardId == 0)
                 cardId = CreateNewCardInRegister(registerId, mainfieldId);
             SaveFieldsValues(fieldsToSave, filesToSave, cardId);
