@@ -36,7 +36,7 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Просмотр и верификация данных работника">
                 <ItemTemplate>
-                    <asp:Button ID="ShowButton" runat="server" CommandName="Select" Text="Верифицировать данные" Width="200px" CommandArgument='<%# Eval("ID") %>' OnClick="ShowButtonClik" />
+                    <asp:Button ID="ShowButton" runat="server" CommandName="Select" Text="Просмотреть и верифицировать данные" Width="300px" CommandArgument='<%# Eval("ID") %>' OnClick="ShowButtonClik" />
                 </ItemTemplate>
             </asp:TemplateField>
               

@@ -33,11 +33,7 @@ namespace Rank.Forms
                     Rank_ArticleValues ipp = (from a in ratingDB.Rank_ArticleValues
                                               where a.Active == true && a.FK_Field == 1183 && a.FK_Article == articleid
                                               select a).FirstOrDefault();
-                    Rank_ArticleValues drop19 = (from a in ratingDB.Rank_ArticleValues
-                                              where a.Active == true && a.FK_Field == 1159 && a.FK_Article == articleid
-                                              select a).FirstOrDefault();
-                    double allsum = 0;
-                 
+                    double allsum = 0;                 
                     if ( mark != null && mark.Points != null && point != null && point.Value != null && ipp.Value != null)
                     {
                       Rank_DropDownValues IPP = (from a in ratingDB.Rank_DropDownValues
@@ -46,8 +42,7 @@ namespace Rank.Forms
                             if (IPP.FloatValue.HasValue)
                             {
                                 allsum = IPP.FloatValue.Value * mark.Points.Value * point.Value.Value;
-                            }
-                           
+                            }                           
                         }                          
                     articlevalue.ValuebyArticle = allsum;
                     ratingDB.SubmitChanges();
@@ -219,7 +214,7 @@ namespace Rank.Forms
         public void CalculateStructPoint(int userId)
         {
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userId select item).FirstOrDefault();
-            if (rights.AccessLevel == 1) // рейтинг кафедры
+            if (rights.AccessLevel == 0) // рейтинг кафедры
             {               
                 Rank_StructPoints point = (from a in ratingDB.Rank_StructPoints
                                            where a.Active == true  &&
@@ -268,22 +263,21 @@ namespace Rank.Forms
                 }
 
             }
-            if (rights.AccessLevel == 2) // рейтинг факультета
-            {
-                Rank_StructPoints point = (from a in ratingDB.Rank_StructPoints
+            // рейтинг факультета           
+                Rank_StructPoints point2 = (from a in ratingDB.Rank_StructPoints
                                            where a.Active == true  &&
                                            (a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable
                                             && a.FK_secondlvl == rights.FK_SecondLevelSubdivisionTable
                                             && a.FK_thirdlvl == null)
                                            select a).FirstOrDefault();
-                if (point == null)
+                if (point2 == null)
                 {
-                    point = new Rank_StructPoints();
-                    point.Active = true;
-                    point.FK_firstlvl = rights.FK_FirstLevelSubdivisionTable;
-                    point.FK_secondlvl = rights.FK_SecondLevelSubdivisionTable;
-                    point.FK_thirdlvl = null;
-                    ratingDB.Rank_StructPoints.InsertOnSubmit(point);
+                    point2 = new Rank_StructPoints();
+                    point2.Active = true;
+                    point2.FK_firstlvl = rights.FK_FirstLevelSubdivisionTable;
+                    point2.FK_secondlvl = rights.FK_SecondLevelSubdivisionTable;
+                    point2.FK_thirdlvl = null;
+                    ratingDB.Rank_StructPoints.InsertOnSubmit(point2);
                     ratingDB.SubmitChanges();
                 }
                 List<Rank_StructPoints> faculty = (from a in ratingDB.Rank_StructPoints
@@ -300,27 +294,25 @@ namespace Rank.Forms
                         }
                     }
                     double reitingfac = sum / faculty.Count;
-                    point.Value = reitingfac;
+                    point2.Value = reitingfac;
                     ratingDB.SubmitChanges();
-                }
-
-            }
-            if (rights.AccessLevel == 4) // рейтинг академии
-            {
-                Rank_StructPoints point = (from a in ratingDB.Rank_StructPoints
+                }           
+          // рейтинг академии
+            
+                Rank_StructPoints point3 = (from a in ratingDB.Rank_StructPoints
                                            where a.Active == true && 
                                            (a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable
                                             && a.FK_secondlvl == null
                                             && a.FK_thirdlvl == null)
                                            select a).FirstOrDefault();
-                if (point == null)
+                if (point3 == null)
                 {
-                    point = new Rank_StructPoints();
-                    point.Active = true;
-                    point.FK_firstlvl = rights.FK_FirstLevelSubdivisionTable;
-                    point.FK_secondlvl = null;
-                    point.FK_thirdlvl = null;
-                   ratingDB.Rank_StructPoints.InsertOnSubmit(point);
+                    point3 = new Rank_StructPoints();
+                    point3.Active = true;
+                    point3.FK_firstlvl = rights.FK_FirstLevelSubdivisionTable;
+                    point3.FK_secondlvl = null;
+                    point3.FK_thirdlvl = null;
+                   ratingDB.Rank_StructPoints.InsertOnSubmit(point3);
                     ratingDB.SubmitChanges();
                 }
                 List<Rank_StructPoints> academy = (from a in ratingDB.Rank_StructPoints
@@ -338,12 +330,12 @@ namespace Rank.Forms
                         }
                     }
                     double reitingacad = sum / academy.Count;
-                    point.Value = reitingacad;
+                    point3.Value = reitingacad;
                     ratingDB.SubmitChanges();
                 }
 
             }
-        }
+        
         
      
     }

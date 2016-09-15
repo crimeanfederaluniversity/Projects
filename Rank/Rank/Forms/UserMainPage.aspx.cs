@@ -228,20 +228,58 @@ namespace Rank.Forms
                 object str_UserID = Session["UserID"] ?? String.Empty;
                 bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
 
+                int showuser = 0;
+                object str_showuserID = Session["showuserID"] ?? String.Empty;
+                bool isSet_showuserID = int.TryParse(str_showuserID.ToString(), out showuser); 
+
                 int userID = (int)userId;
                 UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
                 Button but = (e.Row.FindControl("EditButton") as Button);
-                if (rights.AccessLevel == 9)
+                if (showuser != 0)
                 {
-                but.Text = "Внести данные";
+                    List<Rank_UserArticleMappingTable> info = (from a in ratingDB.Rank_UserArticleMappingTable
+                                                               where a.Active == true && a.UserConfirm == true
+                                                                && a.FK_User == showuser
+                                                               join b in ratingDB.Rank_Articles on a.FK_Article equals b.ID
+                                                               where b.Active == true
+                                                               && b.FK_parametr == Convert.ToInt32(but.CommandArgument)
+                                                               select a).ToList();
+                    if(info.Count == 0)
+                    {
+                        but.Enabled = false;
+
+                    }
+                }
+                else
+                {
+                    if (rights.AccessLevel != 9)
+                    {
+                        List<Rank_UserArticleMappingTable> info = (from a in ratingDB.Rank_UserArticleMappingTable
+                                                                   where a.Active == true && a.UserConfirm == true
+                                                                    && a.FK_User == userID
+                                                                   join b in ratingDB.Rank_Articles on a.FK_Article equals b.ID
+                                                                   where b.Active == true
+                                                                   && b.FK_parametr == Convert.ToInt32(but.CommandArgument)
+                                                                   select a).ToList();
+                        if (info.Count == 0)
+                        {
+                            but.Enabled = false;
+
+                        }
+                    }
+                }
+               
+                if (rights.AccessLevel == 9)
+                    {
+                        but.Text = "Внести данные";
                     }
                     else
                     {
                         but.Text = "Просмотреть";
-                    }                    
-                                  
+                    }                                                      
             }
         }
+        
         protected void Button2_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Forms/UserArticleAccept.aspx");

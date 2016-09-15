@@ -9,7 +9,7 @@
               <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Подтвердить мое соавторство" Width="401px" />
           &nbsp;</p>
           <asp:Label ID="Label3" runat="server" Font-Bold="True" Text="Внести мои данные по показателям рейтинга"></asp:Label>
-          <asp:GridView ID="GridView2" AutoGenerateColumns="false" runat="server">
+          <asp:GridView ID="GridView2" AutoGenerateColumns="false" runat="server"   >
              <Columns>
                   <asp:TemplateField HeaderText="" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "false" >
                         <ItemTemplate> 

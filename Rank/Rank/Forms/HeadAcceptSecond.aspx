@@ -4,7 +4,7 @@
     <h4>Рейтинговый балл работника за 2016 год:<asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>  </h4>
     
     <br />
-    Просмотр и верификация данных работника:<asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" OnRowDataBound ="GridView1_RowDataBound">
+    <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" OnRowDataBound ="GridView1_RowDataBound">
         <Columns>
             <asp:TemplateField HeaderText="" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "false" >
                 <ItemTemplate>
@@ -35,16 +35,16 @@
                      <asp:Label ID="Color"  runat="server" Visible="false" Text='<%# Bind("Color") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:TemplateField HeaderText="Перейти">
+            <asp:TemplateField HeaderText="Просмотр и верификация данных работника">
                 <ItemTemplate>
-                    <asp:Button ID="ShowButton" runat="server" CommandName="Select" Text="Верифицировать данные" Width="200px" CommandArgument='<%# Eval("ID") %>' OnClick="ShowButtonClik" />
+                    <asp:Button ID="ShowButton" runat="server" CommandName="Select" Text="Просмотреть и верифицировать данные" Width="300px" CommandArgument='<%# Eval("ID") %>' OnClick="ShowButtonClik" />
                 </ItemTemplate>
             </asp:TemplateField>
  
         </Columns>
     </asp:GridView>
         <br />
-    Просмотр данных работника:<asp:GridView ID="GridView2" AutoGenerateColumns="false" runat="server"  >
+    <asp:GridView ID="GridView2" AutoGenerateColumns="false" runat="server" OnRowDataBound ="GridView1_RowDataBound" >
         <Columns>
             <asp:TemplateField HeaderText="" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "false" >
                 <ItemTemplate>
@@ -70,7 +70,7 @@
                 </ItemTemplate>
             </asp:TemplateField>
  
-            <asp:TemplateField HeaderText="Перейти">
+            <asp:TemplateField HeaderText="Просмотр данных работника">
                 <ItemTemplate>
                     <asp:Button ID="ShowButton" runat="server" CommandName="Select" Text="Просмотреть данные" Width="200px" CommandArgument='<%# Eval("ID") %>' OnClick="ShowButtonClik" />
                 </ItemTemplate>

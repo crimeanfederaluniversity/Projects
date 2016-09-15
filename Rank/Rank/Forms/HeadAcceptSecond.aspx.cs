@@ -58,7 +58,7 @@ namespace Rank.Forms
             object str_showuserID =  Session["showuserID"] ?? String.Empty;
             bool isSet_showuserID = int.TryParse(str_showuserID.ToString(), out userpoints);
 
-            Rank_UserRatingPoints bal = (from item in ratingDB.Rank_UserRatingPoints where item.FK_User == userID select item).FirstOrDefault();
+            Rank_UserRatingPoints bal = (from item in ratingDB.Rank_UserRatingPoints where item.FK_User == userpoints select item).FirstOrDefault();
             if(bal != null && bal.Value.HasValue)
             {
                 Label2.Text = bal.Value.Value.ToString();
@@ -215,6 +215,36 @@ namespace Rank.Forms
                 {
                     e.Row.Style.Add("background-color", "rgba(0, 255, 0, 0.3)");
                 }
+            }
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                int userId = 0;
+                object str_UserID = Session["UserID"] ?? String.Empty;
+                bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
+
+                int showuser = 0;
+                object str_showuserID = Session["showuserID"] ?? String.Empty;
+                bool isSet_showuserID = int.TryParse(str_showuserID.ToString(), out showuser);
+
+                int userID = (int)userId;
+                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+                Button but = (e.Row.FindControl("ShowButton") as Button);
+                if (showuser != 0)
+                {
+                    List<Rank_UserArticleMappingTable> info = (from a in ratingDB.Rank_UserArticleMappingTable
+                                                               where a.Active == true && a.UserConfirm == true
+                                                                && a.FK_User == showuser
+                                                               join b in ratingDB.Rank_Articles on a.FK_Article equals b.ID
+                                                               where b.Active == true
+                                                               && b.FK_parametr == Convert.ToInt32(but.CommandArgument)
+                                                               select a).ToList();
+                    if (info.Count == 0)
+                    {
+                        but.Enabled = false;
+
+                    }
+                }
+                             
             }
         }
     }
