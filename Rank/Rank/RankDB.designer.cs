@@ -78,9 +78,6 @@ namespace Rank
     partial void InsertRank_UserParametrValue(Rank_UserParametrValue instance);
     partial void UpdateRank_UserParametrValue(Rank_UserParametrValue instance);
     partial void DeleteRank_UserParametrValue(Rank_UserParametrValue instance);
-    partial void InsertRank_UserRatingPoints(Rank_UserRatingPoints instance);
-    partial void UpdateRank_UserRatingPoints(Rank_UserRatingPoints instance);
-    partial void DeleteRank_UserRatingPoints(Rank_UserRatingPoints instance);
     partial void InsertSecondLevelSubdivisionTable(SecondLevelSubdivisionTable instance);
     partial void UpdateSecondLevelSubdivisionTable(SecondLevelSubdivisionTable instance);
     partial void DeleteSecondLevelSubdivisionTable(SecondLevelSubdivisionTable instance);
@@ -90,6 +87,9 @@ namespace Rank
     partial void InsertUsersTable(UsersTable instance);
     partial void UpdateUsersTable(UsersTable instance);
     partial void DeleteUsersTable(UsersTable instance);
+    partial void InsertRank_UserRatingPoints(Rank_UserRatingPoints instance);
+    partial void UpdateRank_UserRatingPoints(Rank_UserRatingPoints instance);
+    partial void DeleteRank_UserRatingPoints(Rank_UserRatingPoints instance);
     #endregion
 		
 		public RankDBDataContext() : 
@@ -250,14 +250,6 @@ namespace Rank
 			}
 		}
 		
-		public System.Data.Linq.Table<Rank_UserRatingPoints> Rank_UserRatingPoints
-		{
-			get
-			{
-				return this.GetTable<Rank_UserRatingPoints>();
-			}
-		}
-		
 		public System.Data.Linq.Table<SecondLevelSubdivisionTable> SecondLevelSubdivisionTable
 		{
 			get
@@ -279,6 +271,14 @@ namespace Rank
 			get
 			{
 				return this.GetTable<UsersTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Rank_UserRatingPoints> Rank_UserRatingPoints
+		{
+			get
+			{
+				return this.GetTable<Rank_UserRatingPoints>();
 			}
 		}
 	}
@@ -4804,181 +4804,6 @@ namespace Rank
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rank_UserRatingPoints")]
-	public partial class Rank_UserRatingPoints : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private System.Nullable<bool> _Active;
-		
-		private System.Nullable<int> _FK_User;
-		
-		private System.Nullable<double> _Value;
-		
-		private EntityRef<UsersTable> _UsersTable;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnActiveChanging(System.Nullable<bool> value);
-    partial void OnActiveChanged();
-    partial void OnFK_UserChanging(System.Nullable<int> value);
-    partial void OnFK_UserChanged();
-    partial void OnValueChanging(System.Nullable<double> value);
-    partial void OnValueChanged();
-    #endregion
-		
-		public Rank_UserRatingPoints()
-		{
-			this._UsersTable = default(EntityRef<UsersTable>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
-		public System.Nullable<bool> Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_User", DbType="Int")]
-		public System.Nullable<int> FK_User
-		{
-			get
-			{
-				return this._FK_User;
-			}
-			set
-			{
-				if ((this._FK_User != value))
-				{
-					if (this._UsersTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFK_UserChanging(value);
-					this.SendPropertyChanging();
-					this._FK_User = value;
-					this.SendPropertyChanged("FK_User");
-					this.OnFK_UserChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value", DbType="Float")]
-		public System.Nullable<double> Value
-		{
-			get
-			{
-				return this._Value;
-			}
-			set
-			{
-				if ((this._Value != value))
-				{
-					this.OnValueChanging(value);
-					this.SendPropertyChanging();
-					this._Value = value;
-					this.SendPropertyChanged("Value");
-					this.OnValueChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_Rank_UserRatingPoints", Storage="_UsersTable", ThisKey="FK_User", OtherKey="UsersTableID", IsForeignKey=true)]
-		public UsersTable UsersTable
-		{
-			get
-			{
-				return this._UsersTable.Entity;
-			}
-			set
-			{
-				UsersTable previousValue = this._UsersTable.Entity;
-				if (((previousValue != value) 
-							|| (this._UsersTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UsersTable.Entity = null;
-						previousValue.Rank_UserRatingPoints.Remove(this);
-					}
-					this._UsersTable.Entity = value;
-					if ((value != null))
-					{
-						value.Rank_UserRatingPoints.Add(this);
-						this._FK_User = value.UsersTableID;
-					}
-					else
-					{
-						this._FK_User = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("UsersTable");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SecondLevelSubdivisionTable")]
 	public partial class SecondLevelSubdivisionTable : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -6143,6 +5968,205 @@ namespace Rank
 		{
 			this.SendPropertyChanging();
 			entity.UsersTable = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rank_UserRatingPoints")]
+	public partial class Rank_UserRatingPoints : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private System.Nullable<bool> _Active;
+		
+		private System.Nullable<int> _FK_User;
+		
+		private System.Nullable<double> _Value;
+		
+		private System.Nullable<bool> _Headtype;
+		
+		private EntityRef<UsersTable> _UsersTable;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    partial void OnFK_UserChanging(System.Nullable<int> value);
+    partial void OnFK_UserChanged();
+    partial void OnValueChanging(System.Nullable<double> value);
+    partial void OnValueChanged();
+    partial void OnHeadtypeChanging(System.Nullable<bool> value);
+    partial void OnHeadtypeChanged();
+    #endregion
+		
+		public Rank_UserRatingPoints()
+		{
+			this._UsersTable = default(EntityRef<UsersTable>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FK_User", DbType="Int")]
+		public System.Nullable<int> FK_User
+		{
+			get
+			{
+				return this._FK_User;
+			}
+			set
+			{
+				if ((this._FK_User != value))
+				{
+					if (this._UsersTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFK_UserChanging(value);
+					this.SendPropertyChanging();
+					this._FK_User = value;
+					this.SendPropertyChanged("FK_User");
+					this.OnFK_UserChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value", DbType="Float")]
+		public System.Nullable<double> Value
+		{
+			get
+			{
+				return this._Value;
+			}
+			set
+			{
+				if ((this._Value != value))
+				{
+					this.OnValueChanging(value);
+					this.SendPropertyChanging();
+					this._Value = value;
+					this.SendPropertyChanged("Value");
+					this.OnValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Headtype", DbType="Bit")]
+		public System.Nullable<bool> Headtype
+		{
+			get
+			{
+				return this._Headtype;
+			}
+			set
+			{
+				if ((this._Headtype != value))
+				{
+					this.OnHeadtypeChanging(value);
+					this.SendPropertyChanging();
+					this._Headtype = value;
+					this.SendPropertyChanged("Headtype");
+					this.OnHeadtypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsersTable_Rank_UserRatingPoints", Storage="_UsersTable", ThisKey="FK_User", OtherKey="UsersTableID", IsForeignKey=true)]
+		public UsersTable UsersTable
+		{
+			get
+			{
+				return this._UsersTable.Entity;
+			}
+			set
+			{
+				UsersTable previousValue = this._UsersTable.Entity;
+				if (((previousValue != value) 
+							|| (this._UsersTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._UsersTable.Entity = null;
+						previousValue.Rank_UserRatingPoints.Remove(this);
+					}
+					this._UsersTable.Entity = value;
+					if ((value != null))
+					{
+						value.Rank_UserRatingPoints.Add(this);
+						this._FK_User = value.UsersTableID;
+					}
+					else
+					{
+						this._FK_User = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("UsersTable");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }
