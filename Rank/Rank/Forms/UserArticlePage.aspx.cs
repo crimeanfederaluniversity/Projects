@@ -23,8 +23,8 @@ namespace Rank.Forms
             int paramId = (int)IdParam;
 
             Refresh();
-            //Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
-            //Label1.Text = name.Name;
+            Rank_Parametrs name = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
+            Label1.Text = name.Name;
             int userId = 0;
             object str_UserID =  Session["UserID"] ?? String.Empty;
             bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
@@ -33,7 +33,15 @@ namespace Rank.Forms
                 Response.Redirect("~/Default.aspx");
 
             int userID = (int)userId;
-            //UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+            UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+            if((name.EditUserType == 1 && rights.AccessLevel == 9) || (name.EditUserType == 0 && rights.AccessLevel != 9)|| (name.ID == 37))
+            {
+                Button2.Visible = false;
+            }
+            else
+            {
+                Button2.Visible = true;
+            }
 
             int edituserId = 0;
             object str_showuserID =  Session["showuserID"] ?? String.Empty;
@@ -44,26 +52,11 @@ namespace Rank.Forms
  
                 Button2.Visible = false;
                 int edituser = (int)edituserId;
-                //UsersTable username = (from item in ratingDB.UsersTable where item.UsersTableID == edituser select item).FirstOrDefault();
+                UsersTable username = (from item in ratingDB.UsersTable where item.UsersTableID == edituser select item).FirstOrDefault();
                 Label2.Visible = true;
-                //Label2.Text = username.Surname + " " + username.Name + " " + username.Patronimyc;
+                Label2.Text = username.Surname + " " + username.Name + " " + username.Patronimyc;
           
              }
-
-            /*else
-            {              
-                if ((rights.AccessLevel == 9 && name.EditUserType != 0  && name.EditUserType != 2) || (rights.AccessLevel != 10 && name.EditUserType == 3)
-                  || (rights.AccessLevel != 9 && rights.AccessLevel != 10 && name.EditUserType != 1 && name.EditUserType != 2) || (rights.AccessLevel != 9 &&  paramId == 19))
-                {
-                
-                }
-                else
-                {
-                    TextBox1.Visible = true;
-                    Label4.Visible = true;
-                    Button2.Visible = true;
-                }
-            }*/
 
         }
       
@@ -83,7 +76,6 @@ namespace Rank.Forms
             dataTable.Columns.Add("Point", typeof(string));
             dataTable.Columns.Add("Color", typeof(string));
             List<Rank_Articles> userparamarticle = new List<Rank_Articles>();
-
             int userId = 0;
             object str_UserID = Session["UserID"] ?? String.Empty;
             bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
@@ -108,7 +100,7 @@ namespace Rank.Forms
                 UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();                           
                 if (rights.AccessLevel != 0)
                 {                 
-                    userparamarticle = (from a in ratingDB.Rank_Articles  where a.Active == true && a.FK_parametr == paramId //&& a.Status != 0
+                    userparamarticle = (from a in ratingDB.Rank_Articles  where a.Active == true && a.FK_parametr == paramId && a.Status != 0
                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                         where b.FK_User == edituser && b.Active == true && b.UserConfirm == true 
                                         select a).ToList();
@@ -118,20 +110,16 @@ namespace Rank.Forms
             {
                 Button2.Visible = true;
                 UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-                if (rights.AccessLevel == 10 )
-                {
-                    GridView1.Columns[4].Visible = false;
-                    userparamarticle = (from a in ratingDB.Rank_Articles  where a.Active == true && a.FK_parametr == 16 select a).ToList();
-                }
+             
                 if (rights.AccessLevel == 9)
                 {
-                   GridView1.Columns[4].Visible = false;
+                   GridView1.Columns[2].Visible = false;
                     userparamarticle = (from a in ratingDB.Rank_Articles  where a.Active == true && a.FK_parametr == paramId
                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                         where b.FK_User == userID && b.Active == true && b.CreateUser == true
                                         select a).ToList();
                 }
-                if (rights.AccessLevel != 10 && rights.AccessLevel != 9 )
+                if ( rights.AccessLevel != 9 )
                     {
                     userparamarticle = (from a in ratingDB.Rank_Articles
                                             where a.Active == true && a.FK_parametr == parametrID
@@ -193,9 +181,7 @@ namespace Rank.Forms
                 dataRow["Date"] = tmp.AddDate;
                 if (userarticlepoint != null)
                 {
-
-                        dataRow["Point"] = userarticlepoint.ValuebyArticle;
-
+                    dataRow["Point"] = userarticlepoint.ValuebyArticle;
                 }
 
 
@@ -221,7 +207,7 @@ namespace Rank.Forms
         if (tmp.Status == 2)
         {
             dataRow["Color"] = 3;
-            dataRow["Status"] = "Утверждена руководителем";
+            dataRow["Status"] = "Верифицировано руководителем";
             GridView1.Columns[6].Visible = false;
         }
         if (tmp.Status == 3)
@@ -231,7 +217,7 @@ namespace Rank.Forms
         }
         if (tmp.Status == 4)
         {
-            dataRow["Status"] = "Утверждено ОМР";
+            dataRow["Status"] = "Верифицировано ОМР";
 
         }
                 dataTable.Rows.Add(dataRow);

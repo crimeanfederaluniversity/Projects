@@ -58,6 +58,15 @@ namespace Rank.Forms
             object str_showuserID =  Session["showuserID"] ?? String.Empty;
             bool isSet_showuserID = int.TryParse(str_showuserID.ToString(), out userpoints);
 
+            Rank_UserRatingPoints bal = (from item in ratingDB.Rank_UserRatingPoints where item.FK_User == userID select item).FirstOrDefault();
+            if(bal != null && bal.Value.HasValue)
+            {
+                Label2.Text = bal.Value.Value.ToString();
+            }
+            else
+            {
+                Label2.Text = "0";
+            }          
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add(new DataColumn("ID", typeof(string)));
             dataTable.Columns.Add(new DataColumn("Parametr", typeof(string)));
@@ -88,7 +97,7 @@ namespace Rank.Forms
                     if (rights.AccessLevel == 1)
                     {
                         userarticles = (from a in ratingDB.Rank_Articles
-                                        where a.Active == true && a.Status == 1
+                                        where a.Active == true && a.Status == 1 && a.FK_parametr ==  tmp.ID
                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                         where b.Active == true && b.FK_User == userpoints && b.UserConfirm == true && b.CreateUser == true
                                         join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
@@ -99,7 +108,7 @@ namespace Rank.Forms
                     if (rights.AccessLevel == 2)
                     {
                         userarticles = (from a in ratingDB.Rank_Articles
-                                        where a.Active == true && a.Status == 1
+                                        where a.Active == true && a.Status == 1 && a.FK_parametr == tmp.ID
                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                         where b.Active == true && b.FK_User == userpoints  && b.UserConfirm == true && b.CreateUser == true
                                         join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
@@ -110,7 +119,7 @@ namespace Rank.Forms
                     if (rights.AccessLevel == 4)
                     {
                         userarticles = (from a in ratingDB.Rank_Articles
-                                        where a.Active == true && a.Status == 1
+                                        where a.Active == true && a.Status == 1 && a.FK_parametr == tmp.ID
                                         join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                         where b.Active == true && b.FK_User == userpoints && b.UserConfirm == true && b.CreateUser == true
                                         join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID

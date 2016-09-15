@@ -91,7 +91,7 @@ namespace Rank.Forms
                     }
                     if (paramId == 2)
                     {
-                        Label17.Text = "- гриф УМС СП(Ф)  – 40";
+                        Label17.Text = "- с рекомендацией Ученого совета СП(Ф)  – 40";
                     }
                     if (marks.Count == 1)
                     {
@@ -172,15 +172,16 @@ namespace Rank.Forms
             bool isSet_articleIDSet = int.TryParse(str_articleID.ToString(), out article);
 
             Rank_Articles mark = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == article select a).FirstOrDefault();
-            if(DropDownList2.SelectedIndex != 0)
-            {
-                int value = 0;
-                object str_ddl2Value =  Session["ddl2Value"] ?? String.Empty;
-                bool isSet_ddl2ValueSet = int.TryParse(str_ddl2Value.ToString(), out value);
 
+            int value = 0;
+            String str_ddl2Value = DropDownList2.SelectedItem == null ? String.Empty : DropDownList2.SelectedItem.Value;
+            bool isSet_ddl2ValueSet = int.TryParse(str_ddl2Value, out value);
+
+            if (isSet_ddl2ValueSet)
+            {
                 mark.FK_mark = value;
+                ratingDB.SubmitChanges();
             }
-            ratingDB.SubmitChanges();
             TableDiv.Controls.Clear();
             TableDiv.Controls.Add(CreateNewTable());
         }
@@ -651,8 +652,7 @@ namespace Rank.Forms
         }
         protected void SaveButtonClick(object sender, EventArgs e)
         {
-            SaveAll();
-            Calculate userpoints = new Calculate();
+            SaveAll();         
             TableDiv.Controls.Clear();
             TableDiv.Controls.Add(CreateNewTable());
 
@@ -695,11 +695,7 @@ namespace Rank.Forms
                     ratingDB.SubmitChanges();
                 }             
             }
-            List<Rank_UserArticleMappingTable> authorList = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.FK_Article == article select a).ToList();
-            foreach(var a in authorList)
-            {
-                userpoints.CalculateUserArticlePoint(paramId, article, a.FK_User.Value);
-            }        
+                  
             Response.Redirect("~/Forms/CreateEditForm.aspx");
         }
         protected void PoiskRefresh()
@@ -859,27 +855,31 @@ namespace Rank.Forms
                 newValue.Active = true;
                 newValue.FK_Article = article;
                 newValue.FK_User = btnCmdArg;
-                if (rights.AccessLevel == 9 || rights.AccessLevel == 10)
+                if (rights.AccessLevel == 9 )
                 {
                     newValue.UserConfirm = true;
-                    if(paramId == 19)
-                    {
-                        newValue.CreateUser = true;
-                    }
-                    else
-                    {
-                        newValue.CreateUser = false;
-                    }                  
+                    newValue.CreateUser = false;                                      
                 }
                 else
                 {
                     newValue.UserConfirm = false;
                 }
-
-                int selectedValue;
-                int.TryParse(ddlPoint.SelectedValue, out selectedValue);
-
-                newValue.FK_point = selectedValue;
+               
+                List<Rank_DifficaltPoint> points = (from item in ratingDB.Rank_DifficaltPoint where item.Active == true && item.fk_parametr == paramId select item).ToList();
+                if (points.Count == 1)
+                {
+                    foreach(var a in points)
+                    {
+                        newValue.FK_point  = a.ID;
+                    }
+                  
+                }
+                else
+                {
+                    int selectedValue;
+                    int.TryParse(ddlPoint.SelectedValue, out selectedValue);
+                    newValue.FK_point = selectedValue;
+                }                                             
                 ratingDB.Rank_UserArticleMappingTable.InsertOnSubmit(newValue);
                 ratingDB.SubmitChanges();
                 DropDownList3.SelectedIndex = 0;
@@ -919,8 +919,8 @@ namespace Rank.Forms
 
         protected void SendButtonClick(object sender, EventArgs e)
         {
+            Calculate userpoints = new Calculate();
             List<Rank_Fields> allFields = new List<Rank_Fields>();
-
             int article = 0;
             object str_articleID =  Session["articleID"] ?? String.Empty;
             bool isSet_articleID = int.TryParse(str_articleID.ToString(), out article);
@@ -932,10 +932,8 @@ namespace Rank.Forms
                 {
                     Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Пожалуйста, заполните все поля!');", true);
                     break;
-                }
-             
+                }             
             }
-
             int paramId = 0;
             object str_parametrID =  Session["parametrID"] ?? String.Empty;
             bool isSet_parametrID = int.TryParse(str_parametrID.ToString(), out paramId);
@@ -954,24 +952,39 @@ namespace Rank.Forms
                                   select a).FirstOrDefault();
        
             if (rights.AccessLevel == 9)
-            {
-                if (paramId != 19)
+            {                            
+                   send.Status = 4;
+                   ratingDB.SubmitChanges();
+                List<Rank_UserArticleMappingTable> bali = (from a in ratingDB.Rank_UserArticleMappingTable where a.Active == true && a.UserConfirm == true select a).ToList();
+                if(bali != null)
                 {
-                    send.Status = 4;
-                    ratingDB.SubmitChanges();
+                    foreach(var user in bali)
+                    {
+                        userpoints.CalculateUserArticlePoint(paramId, article, user.FK_User.Value);
+                        userpoints.CalculateUserParametrPoint(paramId, user.FK_User.Value);                      
+                        userpoints.CalculateStructPoint(user.FK_User.Value);
+                        UsersTable head  = (from item in ratingDB.UsersTable  where item.Active == true && item.AccessLevel!= 0 && item.UsersTableID == user.FK_User.Value select item).FirstOrDefault();
+                        if (head != null)
+                        {
+                            userpoints.CalculateHeadParametrPoint(user.FK_User.Value);
+                        }
+                    }
                 }
+                else
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Данные должны быть прикреплены к пользователю в системе!');", true);
+                }
+              
             }
             else
             {
                 send.Status = 1;
                 ratingDB.SubmitChanges();
-            }
-
-            Calculate userpoints = new Calculate();
-            userpoints.CalculateUserParametrPoint(paramId, userID);
+                userpoints.CalculateUserArticlePoint(paramId, article, userID);
+              //  userpoints.CalculateUserParametrPoint(paramId, userID);                
+            }                  
             Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Отправлено на утверждение руководителю Вашего структурного подразделения! Баллы показателя пересчитаны с учетом новых данных.');", true);
             Response.Redirect("~/Forms/UserArticlePage.aspx");
-
         }
         protected void DeleteNotSystemAutorButtonClick(object sender, EventArgs e)
         {

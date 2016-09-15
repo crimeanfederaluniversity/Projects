@@ -48,7 +48,7 @@ namespace Rank.Forms
                 // надо в базе сделать аксес левел чтобы понятно у кого есть подчиненные и по его привязке к структуре вытаскивать всех под ним
                 if ( rights.FK_FirstLevelSubdivisionTable != null &&  rights.FK_SecondLevelSubdivisionTable != null && rights.FK_ThirdLevelSubdivisionTable != null)
                 {
-                    structusers = (from a in ratingDB.UsersTable  where a.Active == true &&
+                    structusers = (from a in ratingDB.UsersTable  where a.Active == true && a.UsersTableID != userId && a.AccessLevel < rights.AccessLevel && 
                                     (a.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable
                                     && a.FK_SecondLevelSubdivisionTable == rights.FK_SecondLevelSubdivisionTable
                                     && a.FK_ThirdLevelSubdivisionTable == rights.FK_ThirdLevelSubdivisionTable)
@@ -57,12 +57,12 @@ namespace Rank.Forms
             if (rights.FK_FirstLevelSubdivisionTable != null && rights.FK_SecondLevelSubdivisionTable != null )
             {
                 structusers = (from a in ratingDB.UsersTable
-                               where a.Active == true &&  (a.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable  && a.FK_SecondLevelSubdivisionTable == rights.FK_SecondLevelSubdivisionTable)
+                               where a.Active == true && a.UsersTableID != userId && a.AccessLevel < rights.AccessLevel && (a.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable  && a.FK_SecondLevelSubdivisionTable == rights.FK_SecondLevelSubdivisionTable)
                                select a).ToList();
             }
             if (rights.FK_FirstLevelSubdivisionTable != null)
             {
-                structusers = (from a in ratingDB.UsersTable   where a.Active == true &&  a.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable select a).ToList();
+                structusers = (from a in ratingDB.UsersTable   where a.Active == true && a.UsersTableID != userId && a.AccessLevel < rights.AccessLevel && a.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable select a).ToList();
             }
             if (rights.AccessLevel == 9)
             {
@@ -97,6 +97,7 @@ namespace Rank.Forms
                                         where c.AccessLevel == 0 && c.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable && c.FK_SecondLevelSubdivisionTable == rights.FK_SecondLevelSubdivisionTable
                                         && c.FK_ThirdLevelSubdivisionTable == rights.FK_ThirdLevelSubdivisionTable
                                         select a).ToList();
+
                         spoint = (from a in ratingDB.Rank_StructPoints where a.Active == true && a.FK_firstlvl == rights.FK_FirstLevelSubdivisionTable
                                   && a.FK_secondlvl == rights.FK_SecondLevelSubdivisionTable && a.FK_thirdlvl == rights.FK_ThirdLevelSubdivisionTable select a).FirstOrDefault();
                     }

@@ -86,15 +86,19 @@ namespace Rank.Forms
 
             Rank_Articles userarticles = new Rank_Articles();
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
-          
+            if(rights.AccessLevel == 9)
+            {
+                Button3.Visible = true;  
+            }
             if (rights.AccessLevel == 1)
             {
                 userarticles = (from a in ratingDB.Rank_Articles
                                 where a.Active == true && a.Status == 1 && a.ID == article
                                 join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                 where b.Active == true && b.FK_User == ruk && b.UserConfirm == true && b.CreateUser == true
-                                join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
-                                where c.AccessLevel == 0
+                                join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID                          
+                                where c.AccessLevel == 0 && c.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable && c.FK_SecondLevelSubdivisionTable == rights.FK_SecondLevelSubdivisionTable
+              && c.FK_ThirdLevelSubdivisionTable == rights.FK_ThirdLevelSubdivisionTable
                                 select a).FirstOrDefault();
             }
             if (rights.AccessLevel == 2)
@@ -104,7 +108,7 @@ namespace Rank.Forms
                                 join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                 where b.Active == true && b.FK_User == ruk && b.UserConfirm == true && b.CreateUser == true
                                 join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
-                                where c.AccessLevel == 1
+                                where c.AccessLevel == 1 && c.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable && c.FK_SecondLevelSubdivisionTable == rights.FK_SecondLevelSubdivisionTable
                                 select a).FirstOrDefault();
             }
             if (rights.AccessLevel == 4)
@@ -114,23 +118,28 @@ namespace Rank.Forms
                                 join b in ratingDB.Rank_UserArticleMappingTable on a.ID equals b.FK_Article
                                 where b.Active == true && b.FK_User == ruk && b.UserConfirm == true && b.CreateUser == true
                                 join c in ratingDB.UsersTable on b.FK_User equals c.UsersTableID
-                                where c.AccessLevel == 2
+                                where c.AccessLevel == 2 && c.FK_FirstLevelSubdivisionTable == rights.FK_FirstLevelSubdivisionTable
                                 select a).FirstOrDefault();
             }
-
-
             if (userarticles != null)
             {
                 Button2.Visible = true;
+                Button3.Visible = true;
             }
-            Rank_UserArticleMappingTable createomr = (from item in ratingDB.Rank_UserArticleMappingTable
-                                                      where item.FK_Article == article
-   && item.CreateUser == true
-                                                      select item).FirstOrDefault();
-            if (rights.AccessLevel == 0 || (createomr != null && rights.AccessLevel == 9))
+            else
             {
                 Button2.Visible = false;
+                Button3.Visible = false;
             }
+            Rank_UserArticleMappingTable createomr = (from item in ratingDB.Rank_UserArticleMappingTable
+                                                      where item.FK_Article == article  && item.CreateUser == true
+                                                      select item).FirstOrDefault();
+            if (rights.AccessLevel == 0 )
+            {
+                Button2.Visible = false;
+                Button3.Visible = false;
+            }
+      
             if (name.OneOrManyAuthor == true)
             {
                 Refresh();
@@ -399,6 +408,8 @@ namespace Rank.Forms
             var view = Session["showuserID"];
             int ruk = Convert.ToInt32(Session["showuserID"]);
             userpoints.CalculateUserParametrPoint(paramId, ruk);
+            userpoints.CalculateStructPoint(ruk);
+
             Response.Redirect("~/Forms/UserArticlePage.aspx");
 
         }

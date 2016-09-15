@@ -11,8 +11,7 @@ namespace Rank.Forms
         public void CalculateUserArticlePoint(int paramId, int articleid, int userId) // для конкретного пользователя баллы за отдельную статью 
         {
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userId select item).FirstOrDefault();
-            if (rights.AccessLevel != 9)
-            {
+          
                 Rank_Parametrs weight = (from item in ratingDB.Rank_Parametrs where item.ID == paramId select item).FirstOrDefault();
                 Rank_Mark mark = (from a in ratingDB.Rank_Mark
                                   join b in ratingDB.Rank_Articles
@@ -49,12 +48,9 @@ namespace Rank.Forms
                                 allsum = IPP.FloatValue.Value * mark.Points.Value * point.Value.Value;
                             }
                            
-                        }
-                 
-            
+                        }                          
                     articlevalue.ValuebyArticle = allsum;
                     ratingDB.SubmitChanges();
-
                 }
 
                 else
@@ -66,15 +62,13 @@ namespace Rank.Forms
                         articlevalue.ValuebyArticle = allsum;
                         ratingDB.SubmitChanges();
                     }
-                }
-            }
-
+                }           
         }
+ 
         public void CalculateUserParametrPoint(int paramId,  int userId)  // посчитать баллы показателей индивидуального рейтинга
         {
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userId select item).FirstOrDefault();
-            if (rights.AccessLevel != 9 )
-            {
+          
                 Rank_UserParametrValue calculate = (from a in ratingDB.Rank_UserParametrValue
                                                     where a.Active == true && a.FK_parametr == paramId && a.FK_user == userId
                                                     select a).FirstOrDefault();
@@ -92,9 +86,8 @@ namespace Rank.Forms
                 List<Rank_UserArticleMappingTable> userarticlevalue = (from a in ratingDB.Rank_UserArticleMappingTable
                                                                        where a.Active == true && a.FK_User == userId && a.UserConfirm == true
                                                                        join b in ratingDB.Rank_Articles on a.FK_Article equals b.ID
-                                                                       where b.Active == true && b.FK_parametr == paramId
-                                              
-                                                                       select a).ToList();
+                                                                       where b.Active == true && b.FK_parametr == paramId && b.Status != 0
+                                                                                                                      select a).ToList();
                 double sum = 0;
                 foreach (var tmp in userarticlevalue)
                 { if (tmp.ValuebyArticle.HasValue)
@@ -104,28 +97,66 @@ namespace Rank.Forms
                 }
                 calculate.Value = sum;
                 ratingDB.SubmitChanges();
-            }
+
+            // рейтинг индивидуальный
+            
+                Rank_UserRatingPoints point = (from a in ratingDB.Rank_UserRatingPoints
+                                               where a.Active == true && a.FK_User == userId
+                                               select a).FirstOrDefault();
+                if (point == null)
+                {
+                    point = new Rank_UserRatingPoints();
+                    point.Active = true;
+                    point.FK_User = userId;
+                    ratingDB.Rank_UserRatingPoints.InsertOnSubmit(point);
+                    ratingDB.SubmitChanges();
+                }
+                Rank_UserRatingPoints calculate0 = (from a in ratingDB.Rank_UserRatingPoints
+                                                    where a.Active == true && a.FK_User == userId
+                                                    select a).FirstOrDefault();
+
+                List<Rank_UserParametrValue> allparam = (from a in ratingDB.Rank_UserParametrValue
+                                                         where a.Active == true && a.FK_user == userId
+                                                         select a).ToList();
+                double userrating = 0;
+                if (allparam != null)
+                {
+                    foreach (var a in allparam)
+                    {
+                        if (a.Value.HasValue)
+                        {
+                            userrating = userrating + a.Value.Value;
+                        }
+                    }
+                }
+                calculate0.Value = userrating;
+                ratingDB.SubmitChanges();
+            
         }
         
         public void CalculateHeadParametrPoint( int userId)  // посчитать баллы показателей руководителей
         {
             Rank_UserRatingPoints point = (from a in ratingDB.Rank_UserRatingPoints
-                                           where a.Active == true && a.FK_User == userId
+                                           where a.Active == true && a.FK_User == userId && a.Headtype == true
                                           select a).FirstOrDefault();
             if (point == null)
             {
                 point = new Rank_UserRatingPoints();
                 point.Active = true;
                 point.FK_User = userId;
+                point.Headtype = true;
                 ratingDB.Rank_UserRatingPoints.InsertOnSubmit(point);
                 ratingDB.SubmitChanges();
             }
             UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userId select item).FirstOrDefault();
+
+
+            
             if (rights.AccessLevel == 1)// рейтинг завкафедры
             {
 
                 Rank_UserRatingPoints calculate1 = (from a in ratingDB.Rank_UserRatingPoints
-                                                   where a.Active == true && a.FK_User == userId
+                                                   where a.Active == true && a.FK_User == userId && a.Headtype == false
                                                    select a).FirstOrDefault();
 
                 Rank_StructPoints kafpoint = (from a in ratingDB.Rank_StructPoints
@@ -146,7 +177,7 @@ namespace Rank.Forms
             if (rights.AccessLevel == 2)// рейтинг декана
             {
                 Rank_UserRatingPoints calculate2 = (from a in ratingDB.Rank_UserRatingPoints
-                                                    where a.Active == true && a.FK_User == userId
+                                                    where a.Active == true && a.FK_User == userId && a.Headtype == false
                                                     select a).FirstOrDefault();
 
                 Rank_StructPoints facpoint = (from a in ratingDB.Rank_StructPoints
@@ -164,12 +195,12 @@ namespace Rank.Forms
 
             }
 
-            if (rights.AccessLevel == 5)// рейтинг директор
+            if (rights.AccessLevel == 4)// рейтинг директор
             {
 
                 Rank_UserRatingPoints calculate3 = (from a in ratingDB.Rank_UserRatingPoints
-                                                   where a.Active == true && a.FK_User == userId
-                                                   select a).FirstOrDefault();
+                                                   where a.Active == true && a.FK_User == userId && a.Headtype == false
+                                                    select a).FirstOrDefault();
 
                 Rank_StructPoints acadpoint = (from a in ratingDB.Rank_StructPoints
                                                where a.Active == true &&
@@ -224,8 +255,8 @@ namespace Rank.Forms
                         }                        
                         
                         Rank_UserRatingPoints calculate = (from a in ratingDB.Rank_UserRatingPoints
-                                                            where a.Active == true  && a.FK_User == tmp.UsersTableID                                                     
-                                                            select a).FirstOrDefault();
+                                                            where a.Active == true  && a.FK_User == tmp.UsersTableID && a.Headtype == false
+                                                           select a).FirstOrDefault();
                         if (calculate != null &&  calculate.Value.HasValue)
                         {
                             sum = sum + calculate.Value.Value;
@@ -274,7 +305,7 @@ namespace Rank.Forms
                 }
 
             }
-            if (rights.AccessLevel == 5) // рейтинг академии
+            if (rights.AccessLevel == 4) // рейтинг академии
             {
                 Rank_StructPoints point = (from a in ratingDB.Rank_StructPoints
                                            where a.Active == true && 

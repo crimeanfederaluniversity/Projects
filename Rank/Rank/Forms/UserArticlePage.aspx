@@ -2,13 +2,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
         <div>
       
-              &nbsp;&nbsp;
-    
-              <h3><asp:Label ID="Label1" runat="server" Text="Название показателя"></asp:Label>
+              <h3><asp:Label ID="Label1" runat="server" Text=""></asp:Label>
    
               </h3>
               <p>
-                  <asp:Label ID="Label2" runat="server" Text="ФИО" Visible="False"></asp:Label>
+                  <asp:Label ID="Label2" runat="server" Text="" Visible="False"></asp:Label>
               </p>
               <p>
                 <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Добавить" Visible="False" />
@@ -28,24 +26,21 @@
                         </ItemTemplate>
                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
-
+                              <asp:TemplateField HeaderText="Баллы" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
+                        <ItemTemplate> 
+                            <asp:Label ID="Point" runat="server" Text='<%# Bind("Point") %>'  Visible="True"></asp:Label>                        
+                        </ItemTemplate>
+               <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
+                    </asp:TemplateField> 
                   <asp:TemplateField HeaderText="Дата добавления" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="Date" runat="server" Text='<%# Bind("Date") %>'  Visible="True"></asp:Label>
                         </ItemTemplate>
                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
-
                  <asp:TemplateField HeaderText="Текущий статус" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
                         <ItemTemplate> 
                             <asp:Label ID="Status" runat="server" Text='<%# Bind("Status") %>'  Visible="True"></asp:Label>
-                        </ItemTemplate>
-               <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
-                    </asp:TemplateField> 
-                          <asp:TemplateField HeaderText="Баллы" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "True" >
-                        <ItemTemplate> 
-                            <asp:Label ID="Point" runat="server" Text='<%# Bind("Point") %>'  Visible="True"></asp:Label>
-                         
                         </ItemTemplate>
                <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle"></HeaderStyle>
                     </asp:TemplateField> 
