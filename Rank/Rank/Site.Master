@@ -18,7 +18,7 @@
 <body>
     <form runat="server">
         <asp:ScriptManager runat="server">
-            <Scripts>
+            <Scripts>          
                 <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
                <%-- <asp:ScriptReference Name="MsAjaxBundle" Assembly="System.Web" Path="~/Scripts/WebForms/MSAjax/MicrosoftAjax.js"/>
@@ -58,12 +58,12 @@
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
                          
-                                <li><a runat="server" href="~/Account/Login">Вход</a></li>
+                                <li><a runat="server" href="~/Account/Login.aspx">Вход</a></li>
                             </ul>
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                     <li><a runat="server" href="~/Account/PersonalInfo" title="Manage your account"><%: Context.User.Identity.GetUserName()  %></a></li>
+                                     <li><a runat="server" href="~/Account/PersonalInfo.aspx" title="Manage your account"><%: Context.User.Identity.GetUserName()  %></a></li>
                                 <li>
                               
                                  <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Выход" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />

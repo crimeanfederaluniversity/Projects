@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -13,7 +14,20 @@ namespace Rank.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (Session["userID"] != null)
+            {
+
+
+                Response.Redirect("~/Default.aspx");
+            }
+            else
+            {
+                if (Context.User.Identity.IsAuthenticated)
+                {
+                    FormsAuthentication.SignOut();
+                    Response.Redirect("Login.aspx");
+                }
+            }
         }
         protected void Button1_Click(object sender, EventArgs e)
         { 
@@ -21,11 +35,11 @@ namespace Rank.Account
                 var user = (from u in rating.UsersTable
                             where u.Email == UserName.Text && u.Password == Password.Text && u.Active == true
                             select u).FirstOrDefault();
-
                 if (user != null)
                 {
                     Session["userID"] = user.UsersTableID;
                     Response.Redirect("~/Default.aspx");
+                 
                 }
                 else
                 {

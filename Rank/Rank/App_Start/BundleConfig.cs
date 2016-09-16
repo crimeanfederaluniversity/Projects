@@ -34,13 +34,13 @@ namespace Rank
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                             "~/Scripts/modernizr-*"));
 
-            ScriptManager.ScriptResourceMapping.AddDefinition(
+           /* ScriptManager.ScriptResourceMapping.AddDefinition(
                 "respond",
                 new ScriptResourceDefinition
                 {
                     Path = "~/Scripts/respond.min.js",
                     DebugPath = "~/Scripts/respond.js",
-                });
+                });*/
         }
     }
 }

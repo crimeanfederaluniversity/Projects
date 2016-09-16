@@ -33,7 +33,7 @@ namespace Rank.Account
 
             if (!IsPostBack)
             {
-                Label1.Text += userTable.Surname.ToString() + userTable.Name.ToString() + userTable.Patronimyc.ToString();
+                Label1.Text += userTable.Surname +" "+ userTable.Name+" " + userTable.Patronimyc;
                 Label2.Text += userTable.Email;
                 Label3.Text = first + " " + second + " " + third;
 

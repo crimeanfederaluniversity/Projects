@@ -74,7 +74,9 @@ namespace Rank
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
-            Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            Response.Redirect("~/Account/Login.aspx");
         }
     }
 

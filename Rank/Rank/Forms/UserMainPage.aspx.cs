@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.AspNet.Identity;
 
 namespace Rank.Forms
 {
@@ -13,6 +15,10 @@ namespace Rank.Forms
         RankDBDataContext ratingDB = new RankDBDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            bool qwe = FormsAuthentication.IsEnabled;
+            string name = Context.User.Identity.GetUserName();
+
             int userId = 0;
             object str_UserID = Session["UserID"] ?? String.Empty;
             bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
