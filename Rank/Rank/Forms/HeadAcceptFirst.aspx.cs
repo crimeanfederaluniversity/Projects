@@ -186,6 +186,50 @@ namespace Rank.Forms
                     e.Row.Style.Add("background-color", "rgba(0, 255, 0, 0.3)");
                 }
             }
-        }
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                int userId = 0;
+                object str_UserID = Session["UserID"] ?? String.Empty;
+                bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
+
+                int userID = (int)userId;
+                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+                Button but = (e.Row.FindControl("ShowButton") as Button);
+
+                List<Rank_UserArticleMappingTable> info = (from a in ratingDB.Rank_UserArticleMappingTable
+                                                           where a.Active == true && a.UserConfirm == true
+                                                            && a.FK_User == Convert.ToInt32(but.CommandArgument)
+                                                           join b in ratingDB.Rank_Articles on a.FK_Article equals b.ID
+                                                           where b.Active == true && b.Status != 0
+                                                           select a).ToList();
+                if(info == null)
+                {
+                    but.Text = "Просмотреть данные";
+                    but.Enabled = false;
+                }
+                if (info.Count == 0)
+                {
+                    but.Enabled = false;
+                    but.Text = "Просмотреть данные";
+                }
+                else
+                {
+                    foreach (var tmp in info)
+                    {
+                        Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == tmp.FK_Article && a.Status == 1 select a).FirstOrDefault();
+                        if (send != null)
+                        {
+                            but.Text = "Верифицировать данные";
+                        }
+                        else
+                        {
+                            but.Text = "Просмотреть данные";
+                        }
+                        
+                    }
+                }
+
+            }
+            }
     }
 }

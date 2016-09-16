@@ -4,7 +4,7 @@
     <h4>Рейтинговый балл работника за 2016 год:<asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>  </h4>
     
     <br />
-    <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" OnRowDataBound ="GridView1_RowDataBound">
+    <asp:GridView ID="GridView1" AutoGenerateColumns="false" runat="server" OnRowDataBound ="GridView2_RowDataBound">
         <Columns>
             <asp:TemplateField HeaderText="" HeaderStyle-HorizontalAlign="Center"   HeaderStyle-VerticalAlign="Middle" Visible = "false" >
                 <ItemTemplate>
@@ -37,10 +37,9 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Просмотр и верификация данных работника">
                 <ItemTemplate>
-                    <asp:Button ID="ShowButton" runat="server" CommandName="Select" Text="Просмотреть и верифицировать данные" Width="300px" CommandArgument='<%# Eval("ID") %>' OnClick="ShowButtonClik" />
+                    <asp:Button ID="ShowButton0" runat="server" CommandName="Select" Text="" Width="200px" CommandArgument='<%# Eval("ID") %>' OnClick="ShowButtonClik" />
                 </ItemTemplate>
-            </asp:TemplateField>
- 
+            </asp:TemplateField> 
         </Columns>
     </asp:GridView>
         <br />

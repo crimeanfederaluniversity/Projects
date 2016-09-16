@@ -164,7 +164,7 @@
          </span>
         <br />
         <asp:Button ID="SaveButton" runat="server" Text="Сохранить" OnClick="SaveButtonClick" Height="35px" Width="200px" />
-        &nbsp;&nbsp;&nbsp; <asp:Button ID="SendButton" runat="server" Text="Отправить" OnClick="SendButtonClick" Height="35px" Width="200px" OnClientClick ="return confirm('Вы уверены что хотите отправить данные на верификацию? После отправки редактирование будет невозможно!');" />
+        &nbsp;&nbsp;&nbsp; <asp:Button ID="SendButton" runat="server" Text="Отправить" OnClick="SendButtonClick" Height="35px" Width="200px" OnClientClick ="return confirm('Вы уверены что хотите отправить данные на верификацию? После отправки редактирование будет невозможно!');" Visible="False" />
 
     </div>
      </span></span>

@@ -229,6 +229,7 @@ namespace Rank.Forms
                 int userID = (int)userId;
                 UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
                 Button but = (e.Row.FindControl("ShowButton") as Button);
+
                 if (showuser != 0)
                 {
                     List<Rank_UserArticleMappingTable> info = (from a in ratingDB.Rank_UserArticleMappingTable
@@ -238,11 +239,83 @@ namespace Rank.Forms
                                                                where b.Active == true
                                                                && b.FK_parametr == Convert.ToInt32(but.CommandArgument)
                                                                select a).ToList();
+                    if(info == null)
+                    {
+                        but.Enabled = false;
+                        but.Text = "Просмотреть данные";
+                    }
+
                     if (info.Count == 0)
                     {
                         but.Enabled = false;
+                        but.Text = "Просмотреть данные";
+                    }
+
+                    foreach (var tmp in info)
+                    {
+                        Rank_Articles send = (from a in ratingDB.Rank_Articles where a.Active == true && a.ID == tmp.FK_Article && a.Status == 1 && a.FK_parametr == Convert.ToInt32(but.CommandArgument) select a).FirstOrDefault();
+                        if (send != null)
+                        {
+                            but.Text = "Верифицировать данные";
+                        }
+                        else
+                        {
+                            but.Text = "Просмотреть данные";
+                        }
+                    }
+                }
+            }
+        }
+          protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            Label lblColor = e.Row.FindControl("Color") as Label;
+            if (lblColor != null)
+            {
+                if (lblColor.Text == "1") // красный 
+                {
+                    e.Row.Style.Add("background-color", "rgba(255, 0, 0, 0.3)");
+                }
+                if (lblColor.Text == "2") // желтый
+                {
+                    e.Row.Style.Add("background-color", "rgba(255, 255, 0, 0.3)");
+                }
+                if (lblColor.Text == "3") // зеленый
+                {
+                    e.Row.Style.Add("background-color", "rgba(0, 255, 0, 0.3)");
+                }
+            }
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                int userId = 0;
+                object str_UserID = Session["UserID"] ?? String.Empty;
+                bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
+
+                int showuser = 0;
+                object str_showuserID = Session["showuserID"] ?? String.Empty;
+                bool isSet_showuserID = int.TryParse(str_showuserID.ToString(), out showuser);
+
+                int userID = (int)userId;
+                UsersTable rights = (from item in ratingDB.UsersTable where item.UsersTableID == userID select item).FirstOrDefault();
+ 
+                Button but0= (e.Row.FindControl("ShowButton0") as Button);
+                if (showuser != 0)
+                {
+ 
+                    List<Rank_UserArticleMappingTable> info0 = (from a in ratingDB.Rank_UserArticleMappingTable
+                                                               where a.Active == true && a.UserConfirm == true
+                                                                && a.FK_User == showuser
+                                                               join b in ratingDB.Rank_Articles on a.FK_Article equals b.ID
+                                                               where b.Active == true
+                                                               && b.FK_parametr == Convert.ToInt32(but0.CommandArgument)
+                                                               select a).ToList();
+           
+                    if (info0.Count == 0)
+                    {               
+                        but0.Enabled = false;
 
                     }
+
+
                 }
                              
             }

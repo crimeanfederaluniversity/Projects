@@ -664,7 +664,12 @@ namespace Rank.Forms
             object str_UserID =  Session["UserID"] ?? String.Empty;
             bool isSet_UserID = int.TryParse(str_UserID.ToString(), out userId);
 
+            int viewuser = 0;
+            object str_showuserID = Session["showuserID"] ?? String.Empty;
+            bool isSet_showuserIDSet = int.TryParse(str_showuserID.ToString(), out viewuser);
+
             int userID = (int)userId;
+
             UsersTable rights = (from item in ratingDB.UsersTable where item.Active == true && item.UsersTableID == userID select item).FirstOrDefault();
             List<Rank_Mark> marks = (from item in ratingDB.Rank_Mark where item.Active == true && item.fk_parametr == paramId select item).ToList();
 
@@ -695,8 +700,15 @@ namespace Rank.Forms
                     ratingDB.SubmitChanges();
                 }             
             }
-                  
-            Response.Redirect("~/Forms/CreateEditForm.aspx");
+            if (viewuser == 0)
+            {
+                Page.ClientScript.RegisterClientScriptBlock(typeof(Page), "Script", "alert('Форма успешно сохранена!Теперь Вы можете отправить данные на верификацию.');", true);
+                SendButton.Visible = true;
+            }
+            else
+            {
+                Response.Redirect("~/Forms/ViewArticleForm.aspx");
+            }
         }
         protected void PoiskRefresh()
         { 
